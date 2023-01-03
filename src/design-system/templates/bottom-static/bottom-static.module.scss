@@ -1,7 +1,10 @@
 .container {
-  height: 100vh;
+  height: calc(100vh - 8rem);
   display: grid;
-  grid-template-rows: 1fr 200px;
+  grid-template-rows: 1fr 10rem;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 .top {

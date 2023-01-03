@@ -1,5 +1,6 @@
 import { Navigate, Route } from '@tanstack/react-location';
 import { ChangePassword } from '../design-system/pages/change-password/change-password';
+import { getJobDetail } from '../design-system/pages/job-detail/job-detail.services';
 import { getJobList } from '../design-system/pages/jobs/jobs-cursor/jobs-cursor.services';
 import { SignUpUserComplete } from '../design-system/pages/sign-up/sign-up-user-complete/sign-up-user-complete';
 import { SignUpUserEmail } from '../design-system/pages/sign-up/sign-up-user-email/sign-up-user-email';
@@ -12,13 +13,13 @@ export const routes: Route[] = [
   {
     path: 'intro',
     element: () =>
-      import('../design-system/pages/intro/intro').then((mod) => <mod.Intro />),
+      import('../design-system/pages/intro/intro').then((m) => <m.Intro />),
   },
   {
     path: 'sign-in',
     element: () =>
-      import('../design-system/pages/sign-in/sign-in').then((mod) => (
-        <mod.SignIn />
+      import('../design-system/pages/sign-in/sign-in').then((m) => (
+        <m.SignIn />
       )),
   },
   { path: 'change-password', element: <ChangePassword /> },
@@ -41,7 +42,9 @@ export const routes: Route[] = [
     children: [
       {
         path: '/jobs/:id',
-        element: () => import('../design-system/pages/job-detail/job-detail').then((m) => (
+        loader: ({ params }) => getJobDetail(params.id),
+        element: () =>
+          import('../design-system/pages/job-detail/job-detail').then((m) => (
             <m.JobDetail />
           )),
       },

@@ -22,6 +22,6 @@ export function getList(job: Job) {
   return [
     convertSnakeCaseToLowerCase(job.project_type),
     convertSnakeCaseToLowerCase(job.payment_type),
-    convertSnakeCaseToLowerCase(EXPERIENCE_LEVEL_OPTIONS[job.experience_level].label),
+    // convertSnakeCaseToLowerCase(EXPERIENCE_LEVEL_OPTIONS[job.experience_level]?.label),
   ];
 }

@@ -15,7 +15,7 @@ export const Primary = Template.bind({});
 Primary.args = {
   title: 'Network',
   list: [
-    { label: 'Connections', icon: '/src/assets/icons/network.svg' },
-    { label: 'Followers', icon: '/src/assets/icons/followers.svg' },
+    { label: 'Connections', icon: '/icons/network.svg' },
+    { label: 'Followers', icon: '/icons/followers.svg' },
   ],
 };

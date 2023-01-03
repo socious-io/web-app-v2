@@ -7,8 +7,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-size: 65%;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
-img {
-    padding: .5rem;
+.img {
+  height: 100%;
 }

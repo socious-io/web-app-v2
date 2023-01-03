@@ -40,7 +40,7 @@ export type Job = {
   geoname_id: null;
   job_category_id: '4b7b8490-cde2-43e6-be2f-730c5ec0e163';
   identity_type: 'organizations';
-  identity_meta: Partial<{
+  identity_meta: {
     id: '24bbb590-cfc5-45e3-a38e-0d40b8974e00';
     city: 'California, Maryland';
     name: string;
@@ -48,9 +48,9 @@ export type Job = {
     image: string;
     status: 'ACTIVE';
     address: null;
-    country: 'US';
-    shortname: 'azin_org8315';
-  }>;
+    country: string;
+    shortname: string;
+  };
   job_category: {
     id: '4b7b8490-cde2-43e6-be2f-730c5ec0e163';
     name: 'Data science';

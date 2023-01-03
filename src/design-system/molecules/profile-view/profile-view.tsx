@@ -7,7 +7,7 @@ export const ProfileView = (props: ProfileViewProps): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Avatar type={type} />
+      <Avatar img={img} type={type} />
       <div className={css.detail}>
         <div className={css.name}>{name}</div>
         <div className={css.location}>{location}</div>

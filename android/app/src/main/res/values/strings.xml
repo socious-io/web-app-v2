@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Socious</string>
+    <string name="title_activity_main">Socious</string>
+    <string name="package_name">jp.socious.network</string>
+    <string name="custom_url_scheme">jp.socious.network</string>
+</resources>

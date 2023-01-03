@@ -2,9 +2,9 @@ import css from './card.module.scss';
 import { CardProps } from './card.types';
 
 export const Card = (props: CardProps): JSX.Element => {
-  const { children, ...rest } = props;
+  const { children, onClick, ...rest } = props;
   return (
-    <div style={rest} className={css.container}>
+    <div onClick={onClick} style={rest} className={css.container}>
       {children}
     </div>
   );

@@ -9,7 +9,7 @@ export const MenuCursor = (): JSX.Element => {
       <div className={css.menu}>
         <div className={css.menuItems}>
           <div className={css.logo}>
-            <img height={32} src="/src/assets/icons/logo-white.svg" />
+            <img height={32} src="icons/logo-white.svg" />
           </div>
           <ul className={css.navContainer}>
             {menuList.map((item) => (

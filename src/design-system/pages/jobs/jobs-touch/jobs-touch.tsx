@@ -23,7 +23,7 @@ export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
         <div className={css.menu}>
           <Avatar size="2.25rem" type="user" />
           <div className={css.search}>Search Jobs</div>
-          <img className={css.logo} src="/src/assets/icons/logo-white.svg" />
+          <img className={css.logo} src="icons/logo-white.svg" />
         </div>
         <div>
           <div className={css.title}>Jobs</div>

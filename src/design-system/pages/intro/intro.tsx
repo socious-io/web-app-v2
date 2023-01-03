@@ -33,12 +33,15 @@ export const Intro = (): JSX.Element => {
         />
       </div>
       <div className={css.buttonContainer}>
-        <Button onClick={() => navigate({ to: '/sign-up' })} color="blue">
+        <Button
+          onClick={() => navigate({ to: '/sign-up/user/email' })}
+          color="blue"
+        >
           Join now
         </Button>
-        <Button
-        onClick={() => navigate({ to: '/sign-in' })}
-        color="white">Sign in</Button>
+        <Button onClick={() => navigate({ to: '/sign-in' })} color="white">
+          Sign in
+        </Button>
       </div>
     </BottomStatic>
   );
