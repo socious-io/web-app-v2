@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)"
+options: "0d37687ea551bd87462ce53175f8bf93d2fc41314c97ec8abd3686da17071f42"
+build_start_time: [1672764718, 333564996]
+build_end_time: [1672764718, 351560115]
+inputs:
+  "/Users/sajadabbasi/Projects/socious-web-app/ios/App/App/AppDelegate.swift": !private [1670254002, 0]

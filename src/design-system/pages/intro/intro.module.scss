@@ -1,0 +1,16 @@
+.sliderContainer {
+  display: grid;
+  grid-template-rows: 90px 1fr 54px 54px;
+  align-items: center;
+  justify-items: center;
+}
+
+.buttonContainer {
+  padding: 0 2rem;
+  height: 100%;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}

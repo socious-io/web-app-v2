@@ -1,0 +1,36 @@
+.header,
+.tabItem {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  height: 3.5em;
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 1px solid #c3c8d9;
+  color: var(--color-primary-01);
+}
+.tabItem {
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.tabLabel {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-weight: 400;
+  font-size: var(font-size-m);
+  color: var(--color-gray-03);
+}
+
+.active {
+  font-weight: 600;
+  color: var(--color-primary-01);
+  border-bottom: 4px solid var(--color-primary-01);
+}

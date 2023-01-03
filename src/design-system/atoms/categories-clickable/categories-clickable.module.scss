@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.item {
+  height: 1.5rem;
+  padding: 0 9px;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  font-family: 'Work Sans';
+  border-radius: 2rem;
+  background-color: #f2f5ef;
+  color: var(--color-secondary-02);
+}

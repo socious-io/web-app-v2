@@ -1,0 +1,72 @@
+.container {
+  padding: 1rem;
+  box-sizing: border-box;
+  height: 7.8rem;
+  border-radius: 1rem;
+  border: 1px solid;
+  border-color: var(--color-gray-04);
+  display: flex;
+}
+
+.right {
+  text-align: right;
+  margin-left: auto;
+}
+
+.typeName {
+  color: var(--color-secondary-02);
+  height: 18.5px;
+  font-weight: 600;
+  font-size: var(--font-size-m);
+}
+
+.organizationContainer {
+  padding: 0.5rem 0;
+  display: grid;
+  column-gap: 0.5rem;
+  grid-template-columns: 3rem 1fr;
+  grid-template-areas:
+    'organizationImage name'
+    'organizationImage amount';
+}
+
+.organizationImage {
+  grid-area: organizationImage;
+}
+
+.organizationName {
+  grid-area: name;
+  color: var(--color-black-01);
+  font-size: var(--font-size-l);
+  font-family: sans-serif;
+  font-weight: 400;
+}
+.amount {
+  grid-area: amount;
+  color: var(--color-gray-01);
+  font-size: 0.875rem;
+  font-family: sans-serif;
+}
+
+.date {
+  color: #d1d3da;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.percent {
+  height: 2rem;
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--color-success-01);
+  font-size: var(--font-size-xl);
+  font-family: sans-serif;
+}
+
+.total {
+  font-size: 0.875rem;
+  color: var(--color-gray-01);
+  font-family: sans-serif;
+}

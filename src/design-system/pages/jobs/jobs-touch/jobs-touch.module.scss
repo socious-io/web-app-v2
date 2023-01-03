@@ -1,0 +1,48 @@
+.header {
+  height: 13rem;
+  padding: 1rem;
+  padding-top: 3.75rem;
+  background-image: url('/src/assets/images/jobs-page-header.png');
+  background-size: cover;
+  background-position: 30%;
+  background-color: var(--color-gray-04);
+}
+
+.menu {
+  margin-bottom: 1.625rem;
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  grid-template-rows: 2.25rem;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search {
+  height: 100%;
+  background: #ffffff;
+  border: 1px solid var(--color-gray-04);
+  border-radius: 50px;
+  color: var(--color-gray-03);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-m);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  color: #ffffff;
+  font-weight: 600;
+  font-family: 'Hahmlet';
+}
+
+.tagline {
+  color: #d4d2d0;
+  font-size: var(--font-size-m);
+}
+
+.logo {
+  padding: 0;
+  margin: 0;
+  height: 2rem;
+}

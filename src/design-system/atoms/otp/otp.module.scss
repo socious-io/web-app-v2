@@ -1,0 +1,22 @@
+.container {
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  gap: 7.8px;
+}
+
+.box {
+  min-width: 3rem;
+  width: 3rem;
+  border: 1px solid #bec0c7;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  font-family: 'Work Sans';
+  caret-color: transparent;
+}
+
+.box:focus {
+  border: 2px solid #9d9d9d;
+}

@@ -1,0 +1,58 @@
+.container {
+    min-width: 620px;
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-rows: 4rem 1fr;
+}
+
+.body {
+  overflow-y: scroll;
+}
+
+.menu {
+  background-color: var(--color-primary-01);
+  display: flex;
+  justify-content: center;
+}
+
+.menuItems {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+   margin: 0 3rem;
+  max-width: 60rem;
+  width: 100%;
+  height: 100%;
+}
+
+.navContainer {
+  display: flex;
+  margin-right: 3rem;
+  gap: 2.8rem;
+  align-items: center;
+}
+
+.navItem {
+  height: 2.625rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.navIcon {
+  padding: 0;
+}
+
+.navLabel {
+  color: var(--color-gray-03);
+  font-size: var(--font-size-s);
+}
+
+.logo {
+  margin-right: auto;
+  img {
+    padding: 0;
+  }
+}

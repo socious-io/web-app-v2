@@ -1,0 +1,24 @@
+.container {
+  width: 6.875rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.impactBarContainer {
+  width: 3.625rem;
+  padding: 4px 0 8px 0;
+}
+
+.label {
+  height: 40px;
+  font-weight: 600;
+  text-align: center;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

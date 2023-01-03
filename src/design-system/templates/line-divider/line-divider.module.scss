@@ -1,0 +1,14 @@
+.container {
+  padding: 1rem;
+  border-bottom: 1px solid #c3c8d9;
+}
+
+.title {
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-m);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-black-01);
+}

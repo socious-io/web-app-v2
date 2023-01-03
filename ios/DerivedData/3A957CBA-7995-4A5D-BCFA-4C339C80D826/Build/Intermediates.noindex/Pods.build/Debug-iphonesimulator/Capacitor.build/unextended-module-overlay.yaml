@@ -1,0 +1,14 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/sajadabbasi/Projects/socious-web-app/ios/DerivedData/3A957CBA-7995-4A5D-BCFA-4C339C80D826/Build/Products/Debug-iphonesimulator/Capacitor/Capacitor.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/sajadabbasi/Projects/socious-web-app/ios/DerivedData/3A957CBA-7995-4A5D-BCFA-4C339C80D826/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Capacitor.build/unextended-module.modulemap",
+    }]
+  }]
+}

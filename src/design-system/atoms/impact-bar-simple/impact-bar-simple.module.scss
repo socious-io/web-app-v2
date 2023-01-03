@@ -1,0 +1,47 @@
+.container {
+  height: 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.barContainer {
+  height: 0.75rem;
+  background: #f2f5ef;
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.innerBar {
+  width: 100%;
+  height: 100%;
+  background: var(--color-success-01);
+  border-radius: 1rem;
+  transform: translateX(calc(-100% + 0.75rem));
+  position: relative;
+}
+
+.bullet {
+  width: 0.75rem;
+  height: 0.75rem;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  border-radius: 1rem;
+  box-sizing: border-box;
+  border: 2px solid var(--color-success-01);
+}
+
+.indicators {
+  display: flex;
+  flex-direction: row;
+  margin-top: auto;
+  font-size: 10px;
+  color: var(--color-gray-01);
+  font-weight: 400;
+  font-family: sans-serif;
+  :last-child {
+    margin-left: auto;
+  }
+}

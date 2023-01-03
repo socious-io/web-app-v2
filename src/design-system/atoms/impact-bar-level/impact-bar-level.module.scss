@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border: 8px solid #ffffff;
+  position: relative;
+  border-radius: 1rem;
+  margin: 2rem 0;
+}
+
+.barContainer {
+  height: 1rem;
+  background: #ccf1e7;
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.innerBar {
+  width: 100%;
+  height: 100%;
+  background: var(--color-success-01);
+  border-radius: 1rem;
+  transform: translateX(calc(-100% + 0.75rem));
+  position: relative;
+}
+
+.bullet {
+  width: 0.75rem;
+  height: 1rem;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  border-radius: 1rem;
+  box-sizing: border-box;
+  border: 2px solid var(--color-success-01);
+}
+
+.prevLevel {
+  position: absolute;
+  left: 0;
+  bottom: 2rem;
+  font-family: sans-serif;
+  font-size: var(--font-size-s);
+  color: white;
+}
+
+.nextLevel {
+  position: absolute;
+  right: 0;
+  bottom: 2rem;
+  font-family: sans-serif;
+  font-size: var(--font-size-s);
+  color: white;
+}
+
+.currentLevel {
+  width: 6.25rem;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2rem;
+  font-size: var(--font-size-m);
+  font-family: sans-serif;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+}
+
+.startNumber {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 2rem;
+  font-size: var(--font-size-s);
+  font-family: sans-serif;
+  color: white;
+}
+
+.endNumber {
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  font-size: var(--font-size-s);
+  font-family: sans-serif;
+  color: white;
+}

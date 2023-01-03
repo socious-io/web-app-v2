@@ -1,23 +1,13 @@
-import { Intro } from './design-system/intro/intro';
+import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
+import { routes } from './core/routes';
+
+const location = new ReactLocation();
 
 function App() {
   return (
-    <>
-    <ul>
-
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-      <Intro />
-    </>
+    <Router location={location} routes={routes}>
+      <Outlet />
+    </Router>
   );
 }
 

@@ -1,0 +1,16 @@
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Avatar } from '../design-system/atoms/avatar/avatar';
+
+export default {
+  title: 'ATOM/Avatar',
+  component: Avatar,
+} as ComponentMeta<typeof Avatar>;
+
+const Template: ComponentStory<typeof Avatar> = (args) => <Avatar {...args} />;
+
+export const Primary = Template.bind({});
+
+Primary.args = {
+  type: 'user',
+  size: '3rem'
+};

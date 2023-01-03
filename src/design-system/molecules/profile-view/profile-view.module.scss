@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.detail {
+  margin-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-weight: 600;
+  font-size: var(--font-size-s2);
+}
+
+.location {
+  color: var(--color-gray-01);
+  font-weight: 400;
+  font-size: var(--font-size-s2);
+}

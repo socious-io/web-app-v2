@@ -1,0 +1,26 @@
+.container {
+  height: 6rem;
+  border-bottom: 1px solid #c3c8d9;
+  background: #fff;
+  display: grid;
+  grid-template-columns: 60px 1fr 60px;
+  justify-content: center;
+  align-content: flex-end;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.img {
+  margin-top: 2px;
+}
+
+.img,
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

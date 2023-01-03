@@ -1,0 +1,29 @@
+dependencies: \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/Capacitor/Capacitor/WKWebView+Capacitor.m \
+  /Users/sajadabbasi/Projects/socious-web-app/ios/DerivedData/3A957CBA-7995-4A5D-BCFA-4C339C80D826/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/Capacitor.build/module.modulemap \
+  /Users/sajadabbasi/Projects/socious-web-app/ios/App/Pods/Target\ Support\ Files/Capacitor/Capacitor-prefix.pch \
+  /Users/sajadabbasi/Projects/socious-web-app/ios/DerivedData/3A957CBA-7995-4A5D-BCFA-4C339C80D826/Build/Products/Debug-iphonesimulator/Capacitor/Capacitor.framework/Headers/Capacitor-Swift.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/Capacitor/Capacitor/Capacitor.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPPlugin.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPPluginCall.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPBridgedPlugin.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPPluginMethod.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPInstanceDescriptor.h \
+  /Users/sajadabbasi/Projects/socious-web-app/ios/DerivedData/3A957CBA-7995-4A5D-BCFA-4C339C80D826/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/CapacitorCordova.build/module.modulemap \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/NSDictionary+CordovaPreferences.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVPlugin+Resources.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVConfigParser.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVPluginManager.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVCommandDelegateImpl.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVScreenOrientationDelegate.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVURLProtocol.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVInvokedUrlCommand.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVCommandDelegate.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVPluginResult.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVPlugin.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVAvailability.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDV.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/CDVViewController.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/Classes/Public/AppDelegate.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/CapacitorCordova/CapacitorCordova/CapacitorCordova.h \
+  /Users/sajadabbasi/Projects/socious-web-app/node_modules/@capacitor/ios/Capacitor/Capacitor/CAPInstanceConfiguration.h

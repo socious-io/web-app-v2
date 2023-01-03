@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-off-white-01);
+}
+
+.boundaries {
+  width: 61rem;
+  margin: 2.5rem 2.5rem 0 2.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.sidebar {
+  width: 20rem;
+}
+
+.main {
+  width: 100%;
+  max-width: 38.5rem;
+}

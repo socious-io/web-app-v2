@@ -1,0 +1,15 @@
+.container {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  font-family: 'Hahmlet', sans-serif;
+  font-size: var(--font-size-m);
+  color: var(--font-color-primary);
+}
+
+.etc {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: pre-wrap;
+}
