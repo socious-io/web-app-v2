@@ -19,4 +19,7 @@
   --font-size-l: 1.5rem;
   --font-size-xl: 2.25rem;
   --font-color-primary: #1f2128;
+
+  --safe-area: 8rem;
+  --window-height: calc(100vh - var(--safe-area));
 }

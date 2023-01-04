@@ -2,6 +2,7 @@ import { Navigate, Route } from '@tanstack/react-location';
 import { ChangePassword } from '../design-system/pages/change-password/change-password';
 import { getJobDetail } from '../design-system/pages/job-detail/job-detail.services';
 import { getJobList } from '../design-system/pages/jobs/jobs-cursor/jobs-cursor.services';
+import { OrganizationCreateLayout } from '../design-system/pages/organization-create/organization-create-layout/organization-create-layout';
 import { SignUpUserComplete } from '../design-system/pages/sign-up/sign-up-user-complete/sign-up-user-complete';
 import { SignUpUserEmail } from '../design-system/pages/sign-up/sign-up-user-email/sign-up-user-email';
 import { SignUpUserVerification } from '../design-system/pages/sign-up/sign-up-user-verification/sign-up-user-verification';
@@ -33,6 +34,15 @@ export const routes: Route[] = [
           { path: '/verification', element: <SignUpUserVerification /> },
           { path: '/complete', element: <SignUpUserComplete /> },
         ],
+      },
+    ],
+  },
+  {
+    path: 'organization',
+    children: [
+      {
+        path: 'create',
+        element: <OrganizationCreateLayout />,
       },
     ],
   },

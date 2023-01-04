@@ -1,5 +1,5 @@
 .container {
-  height: calc(100vh - 8rem);
+  height: var(--window-height);
   display: grid;
   grid-template-rows: 1fr 10rem;
   position: absolute;
