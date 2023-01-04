@@ -1,5 +1,6 @@
+import { CSSProperties } from 'react';
 
-export type HeaderProps = {
-    onBack?: () => void;
-    title: string;
+export interface HeaderProps extends CSSProperties {
+  onBack?: () => void;
+  title: string;
 }
