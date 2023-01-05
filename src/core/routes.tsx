@@ -43,6 +43,15 @@ export const routes: Route[] = [
       {
         path: 'create',
         element: <OrganizationCreateLayout />,
+        children: [
+          {
+            path: 'type',
+            element: () =>
+              import(
+                '../design-system/pages/organization-create/organization-create-type/organization-create-type'
+              ).then((m) => <m.OrganizationCreateType />),
+          },
+        ],
       },
     ],
   },
