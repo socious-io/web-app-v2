@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  font-size: var(--font-size-m);
+  border-radius: 16px;
+  padding: 1rem;
+  position: relative;
+}
+
+.active {
+  color: #fff;
+  background-color: var(--color-secondary-02);
+}
+
+.icon {
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  background-color: var(--color-secondary-02);
+  bottom: 0;
+  margin: auto;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+}
