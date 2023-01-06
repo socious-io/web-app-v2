@@ -1,0 +1,28 @@
+.container {
+  height: 2.25rem;
+  border-radius: 30px;
+  background-color: var(--color-off-white-01);
+  border: 1px solid var(--color-gray-04);
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+}
+
+.input {
+  padding-right: 1rem;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input::placeholder {
+  color: var(--color-gray-03);
+  opacity: 1; /* Firefox */
+}
+
+.input::-ms-input-placeholder {
+  color: var(--color-gray-03);
+  color: red;
+}
