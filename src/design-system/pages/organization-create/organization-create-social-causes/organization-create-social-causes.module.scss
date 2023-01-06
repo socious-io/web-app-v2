@@ -1,0 +1,36 @@
+.bottom {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 1rem 0 1rem;
+}
+
+.question {
+  height: 4.875rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  padding-left: 1.5rem;
+  color: var(--color-black-01);
+  border-bottom: 1px solid var(--color-gray-03);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-family: 'Hahmlet';
+  font-weight: 600;
+}
+
+.limitStatement {
+  color: var(--color-gray-01);
+}
+
+.categoryTitle {
+  padding-bottom: 1.5rem;
+  padding-top: 0.5rem;
+  font-weight: 600;
+}
+
+.categoriesContainer {
+  padding: 1rem;
+}
