@@ -4,11 +4,23 @@
 }
 
 .title {
-    height: 1.5rem;
-    display: flex;
-    align-items: center;
-    font-size: var(--font-size-m);
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-m);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-black-01);
+}
+
+.space {
+  border-bottom: 0;
+  padding: 1.25rem 1rem;
+
+  .title {
+    font-size: 1.25rem;
+    color: var(--color-gray-03);
     font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--color-black-01);
+    font-family: 'Hahmlet';
+  }
 }
