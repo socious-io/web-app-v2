@@ -58,6 +58,13 @@ export const routes: Route[] = [
                 '../design-system/pages/organization-create/organization-create-social-causes/organization-create-social-causes'
               ).then((m) => <m.OrganizationCreateSocialCauses />),
           },
+          {
+            path: 'profile',
+            element: () =>
+              import(
+                '../design-system/pages/organization-create/profile/profile'
+              ).then((m) => <m.Profile />),
+          },
         ],
       },
     ],

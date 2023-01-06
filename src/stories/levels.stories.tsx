@@ -1,4 +1,3 @@
-import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {Levels} from '../../src/design-system/pages/levels/levels';
 
