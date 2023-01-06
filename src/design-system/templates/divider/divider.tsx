@@ -1,7 +1,7 @@
-import css from './line-divider.module.scss';
-import { LineDividerProps } from './line-divider.types';
+import css from './divider.module.scss';
+import { DividerProps } from './divider.types';
 
-export const LineDivider = (props: LineDividerProps): JSX.Element => {
+export const Divider = (props: DividerProps): JSX.Element => {
   const { children, title, ...rest } = props;
   return (
     <div style={rest} className={css.container}>

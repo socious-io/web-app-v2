@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import { Button } from '../../../atoms/button/button';
 import { CategoriesClickable } from '../../../atoms/categories-clickable/categories-clickable';
@@ -8,6 +9,7 @@ import { SOCIAL_CAUSES } from './organization-create-social-causes.services';
 
 export const OrganizationCreateSocialCauses = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState('');
+  const navigate = useNavigate();
 
   return (
     <div className={css.container}>
@@ -38,7 +40,9 @@ export const OrganizationCreateSocialCauses = (): JSX.Element => {
             </div>
           </div>
           <div className={css.bottom}>
-            <Button>Continue</Button>
+            <Button onClick={() => navigate({ to: '../profile' })}>
+              Continue
+            </Button>
           </div>
         </BottomStatic>
       </div>
