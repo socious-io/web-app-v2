@@ -51,6 +51,13 @@ export const routes: Route[] = [
                 '../design-system/pages/organization-create/organization-create-type/organization-create-type'
               ).then((m) => <m.OrganizationCreateType />),
           },
+          {
+            path: 'social-causes',
+            element: () =>
+              import(
+                '../design-system/pages/organization-create/organization-create-social-causes/organization-create-social-causes'
+              ).then((m) => <m.OrganizationCreateSocialCauses />),
+          },
         ],
       },
     ],
