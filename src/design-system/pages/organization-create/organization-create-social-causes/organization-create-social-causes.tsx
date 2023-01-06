@@ -14,23 +14,26 @@ export const OrganizationCreateSocialCauses = (): JSX.Element => {
       <div className={css.container}>
         <BottomStatic>
           <div>
-            <div className={css.question}>
+            <div className={css.header}>
               <div className={css.title}> What are your social causes?</div>
               <div className={css.limitStatement}>
                 Select up to 5 social causes.
-                <Search
-                  placeholder="Search"
-                  value={searchValue}
-                  onValueChange={setSearchValue}
-                />
+                <div className={css.search}>
+                  <Search
+                    placeholder="Search"
+                    value={searchValue}
+                    onValueChange={setSearchValue}
+                  />
+                </div>
               </div>
             </div>
             <div className={css.categoriesContainer}>
               <div className={css.categoryTitle}>Popular</div>
               <CategoriesClickable
+                clickable
                 onChange={console.log}
                 list={SOCIAL_CAUSES}
-                selected={['Mental Health', 'Biodiversity']}
+                selected={[]}
               />
             </div>
           </div>

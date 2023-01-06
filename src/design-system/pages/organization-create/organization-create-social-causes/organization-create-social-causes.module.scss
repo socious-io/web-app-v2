@@ -4,13 +4,12 @@
   padding: 1rem 1rem 0 1rem;
 }
 
-.question {
-  height: 4.875rem;
+.header {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.4rem;
-  padding-left: 1.5rem;
+  padding: 1.5rem 1.5rem 0.625rem 1.5rem;
   color: var(--color-black-01);
   border-bottom: 1px solid var(--color-gray-03);
 }
@@ -33,4 +32,8 @@
 
 .categoriesContainer {
   padding: 1rem;
+}
+
+.search {
+  margin-top: 1.625rem;
 }
