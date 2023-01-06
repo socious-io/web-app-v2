@@ -1,14 +1,36 @@
-.container {
+.default {
   display: grid;
   grid-template-rows: 1rem 2.5rem;
   gap: 4px;
+
+  .textbox {
+    border-bottom: 2px solid #e4e6ed;
+    font-size: var(--font-size-m);
+
+    &::placeholder {
+      color: var(--color-gray-02);
+    }
+  }
 }
 
-.textbox {
-  border-bottom: 2px solid #e4e6ed;
-  font-size: var(--font-size-m);
+.outline {
+  display: grid;
+  grid-template-rows: 1.5rem 2.75rem;
+  gap: 4px;
 
-  &::placeholder {
-    color: var(--color-gray-02);
+  .label {
+    font-weight: 600;
+  }
+
+  .textbox {
+    border: 1px solid var(--color-gray-04);
+    font-size: var(--font-size-m);
+    background: #fff;
+    border-radius: 8px;
+    text-indent: 0.75rem;
+
+    &::placeholder {
+      color: var(--color-gray-03);
+    }
   }
 }

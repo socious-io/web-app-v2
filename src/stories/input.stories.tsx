@@ -9,8 +9,16 @@ export default {
 const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />;
 
 export const Primary = Template.bind({});
+export const outline = Template.bind({});
 
 Primary.args = {
   label: 'Enter your email address',
   placeholder: 'Email',
+  variant: undefined,
+};
+
+outline.args = {
+  label: 'Enter your email address',
+  placeholder: 'Email',
+  variant: 'outline',
 };
