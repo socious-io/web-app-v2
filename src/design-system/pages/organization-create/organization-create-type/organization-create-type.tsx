@@ -2,34 +2,29 @@ import css from './organization-create-type.module.scss';
 import { BottomStatic } from '../../../templates/bottom-static/bottom-static';
 import { Button } from '../../../atoms/button/button';
 import { TypeSelector } from '../../../atoms/type-selector/type-selector';
-
-const list = [
-  { value: '1', label: 'Social Business' },
-  { value: '2', label: 'Non-profit / Charity' },
-  { value: '3', label: 'Social Co-operative' },
-  { value: '4', label: 'Impact Investing Funds/Foundations' },
-  { value: '5', label: 'Public Institution' },
-  { value: '6', label: 'Intergovernmental Organization (e.g. UN)' },
-  { value: '7', label: 'Impact department of a for profit company (e.g. CSR)' },
-  { value: '8', label: 'Other' },
-];
+import { useNavigate } from '@tanstack/react-location';
+import { ORGANIZATION_TYPE } from './organization-create-type.services';
 
 export const OrganizationCreateType = (): JSX.Element => {
+  const navigate = useNavigate();
+
   return (
     <div className={css.container}>
       <BottomStatic>
         <div>
           <div className={css.question}>What type of organization?</div>
-          <div className={css.main}>
+          <div>
             <TypeSelector
               padding="2rem 1rem"
               onChange={console.log}
-              list={list}
+              list={ORGANIZATION_TYPE}
             />
           </div>
         </div>
         <div className={css.bottom}>
-          <Button>Continue</Button>
+          <Button onClick={() => navigate({ to: '../social-causes' })}>
+            Continue
+          </Button>
         </div>
       </BottomStatic>
     </div>
