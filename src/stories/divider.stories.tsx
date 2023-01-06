@@ -19,6 +19,7 @@ export const Primary = Template.bind({});
 
 Primary.args = {
   title: 'TITLE',
+  divider: 'line',
   children:
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quibusdam laboriosam possimus laborum ratione quas dolorum voluptatibus obcaecati dolorem provident eius iusto',
 };
