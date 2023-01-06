@@ -5,10 +5,13 @@ import { CategoriesClickableProps } from './categories-clickable.types';
 export const CategoriesClickable = (
   props: CategoriesClickableProps
 ): JSX.Element => {
-  const { list, selected = [], onChange, ...rest } = props;
+  const { list, clickable = false, selected = [], onChange, ...rest } = props;
   const [selectedList, setSelectedList] = useState<string[]>(selected);
 
   function onLabelClick(value: string) {
+    if (!clickable) {
+      return;
+    }
     const exist = selectedList.includes(value);
     const newList = exist
       ? selectedList.filter((item) => item !== value)
@@ -28,6 +31,7 @@ export const CategoriesClickable = (
     <div style={rest} className={css.container}>
       {list.map(({ value, label }) => (
         <div
+          style={{ cursor: clickable ? 'pointer' : 'default' }}
           onClick={onLabelClick(value)}
           key={value}
           className={`${css.item} ${setSelectedStyle(value)}`}
