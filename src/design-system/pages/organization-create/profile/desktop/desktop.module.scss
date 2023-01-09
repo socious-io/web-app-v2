@@ -1,3 +1,21 @@
 .input {
   margin-bottom: 1rem;
 }
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(102, 102, 102);
+  background-color: var(--color-gray-01);
+}
+
+.card {
+  border: 7px solid #000;
+  height: 90vh;
+  max-height: 900px;
+  width: 600px;
+  overflow: scroll;
+}

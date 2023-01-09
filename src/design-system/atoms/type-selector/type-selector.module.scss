@@ -6,8 +6,9 @@
 .item {
   font-size: var(--font-size-m);
   border-radius: 16px;
-  padding: 1rem;
+  padding: 0.75rem;
   position: relative;
+  cursor: pointer;
 }
 
 .active {
