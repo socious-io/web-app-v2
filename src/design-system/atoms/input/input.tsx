@@ -3,7 +3,7 @@ import css from './input.module.scss';
 import { InputProps } from './input.types';
 
 export const Input = (props: InputProps): JSX.Element => {
-  const { label, variant, onValueChange, ...rest } = props;
+  const { label, className, variant, onValueChange, ...rest } = props;
 
   function onChange(value: FormEvent<HTMLInputElement>) {
     const v = (value.target as HTMLInputElement).value;
@@ -15,8 +15,10 @@ export const Input = (props: InputProps): JSX.Element => {
   }
 
   return (
-    <div className={setClassName(variant)}>
-      <label className={css.label} htmlFor={label}>{label}</label>
+    <div className={`${setClassName(variant)} ${className}`}>
+      <label className={css.label} htmlFor={label}>
+        {label}
+      </label>
       <input
         id={label}
         className={css.textbox}
