@@ -6,5 +6,6 @@ type ReactHTMLInputElement = React.DetailedHTMLProps<
 export interface InputProps extends ReactHTMLInputElement {
   label: string;
   variant?: 'outline';
+  className?: string;
   onValueChange?: (value: string) => void;
 }
