@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import css from './steps.module.scss';
 import { StepsProps } from './steps.types';
 
@@ -26,16 +26,6 @@ export const Steps = (props: StepsProps): JSX.Element => {
     onStepClick?.(v + 1);
     return v + 1;
   }
-
-  useEffect(() => {
-    // if (!autoPlay) {
-    //   return;
-    // }
-    // const interval = setInterval(() => {
-    //   setStep(update);
-    // }, 2000);
-    // return () => clearInterval(interval);
-  }, []);
 
   return (
     <div style={rest} className={css.container}>

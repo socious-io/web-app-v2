@@ -1,2 +1,1 @@
-
-export type OrganizationCreateLayoutProps {}
+export type OrganizationCreateLayoutProps = {};

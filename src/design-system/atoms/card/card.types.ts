@@ -1,6 +1,7 @@
-import { CSSProperties, Children } from 'react';
+import { CSSProperties } from 'react';
 
 export interface CardProps extends CSSProperties {
   children: React.ReactNode;
-  onClick: () => void;
+  className?: string;
+  onClick?: () => void;
 }
