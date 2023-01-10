@@ -66,6 +66,13 @@ export const routes: Route[] = [
                 <m.Mission />
               )),
           },
+          {
+            path: 'culture',
+            element: () =>
+              import('../design-system/pages/organization-create/culture/culture').then((m) => (
+                <m.Culture />
+              )),
+          },
         ],
       },
     ],
