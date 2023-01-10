@@ -3,7 +3,7 @@ import css from './steps.module.scss';
 import { StepsProps } from './steps.types';
 
 export const Steps = (props: StepsProps): JSX.Element => {
-  const { length, current, autoPlay, onStepClick, ...rest } = props;
+  const { length, current, autoPlay, onStepClick, clickable = true, ...rest } = props;
   const steps: number[] = Array.from(Array(length).keys());
   const [step, setStep] = useState(current);
 
@@ -13,8 +13,10 @@ export const Steps = (props: StepsProps): JSX.Element => {
 
   function click(i: number) {
     return () => {
-      setStep(i + 1);
-      onStepClick?.(i + 1);
+      if (clickable === true) {
+        setStep(i + 1);
+        onStepClick?.(i + 1);
+      }
     };
   }
 
