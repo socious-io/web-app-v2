@@ -48,9 +48,9 @@ export const routes: Route[] = [
           {
             path: 'social-causes',
             element: () =>
-              import(
-                '../design-system/pages/organization-create/organization-create-social-causes/organization-create-social-causes'
-              ).then((m) => <m.OrganizationCreateSocialCauses />),
+              import('../design-system/pages/organization-create/social-causes/social-causes').then(
+                (m) => <m.OrganizationCreateSocialCauses />
+              ),
           },
           {
             path: 'profile',
