@@ -41,9 +41,9 @@ export const routes: Route[] = [
           {
             path: 'type',
             element: () =>
-              import(
-                '../design-system/pages/organization-create/organization-create-type/organization-create-type'
-              ).then((m) => <m.OrganizationCreateType />),
+              import('../design-system/pages/organization-create/type/type').then((m) => (
+                <m.Type />
+              )),
           },
           {
             path: 'social-causes',

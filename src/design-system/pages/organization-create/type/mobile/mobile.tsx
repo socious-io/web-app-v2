@@ -2,7 +2,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { Button } from '../../../../atoms/button/button';
 import { Steps } from '../../../../atoms/steps/steps';
 import { TypeSelector } from '../../../../atoms/type-selector/type-selector';
-import { ORGANIZATION_TYPE } from '../organization-create-type.services';
+import { ORGANIZATION_TYPE } from '../type.services';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
