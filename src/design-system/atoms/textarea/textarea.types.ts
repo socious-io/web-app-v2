@@ -4,7 +4,7 @@ type ReactHTMLTextareaElement = React.DetailedHTMLProps<
 >;
 
 export interface TextareaProps extends ReactHTMLTextareaElement {
-  label: string;
+  label?: string;
   variant?: 'outline';
   className?: string;
   onValueChange?: (value: string) => void;
