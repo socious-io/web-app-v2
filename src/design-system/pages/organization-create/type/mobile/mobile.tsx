@@ -15,7 +15,7 @@ export const Mobile = (): JSX.Element => {
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.stepsContainer}>
-          <Steps length={5} current={1} />
+          <Steps clickable={false} length={5} current={1} />
         </div>
       </div>
       <div className={css.question}>What type of organization?</div>
