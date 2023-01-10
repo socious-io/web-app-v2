@@ -5,9 +5,10 @@ const config: CapacitorConfig = {
   appName: 'Socious',
   webDir: 'dist',
   bundledWebRuntime: false,
-//   server: {
-//     hostname: 'dev.socious.io',
-//   },
+  server: {
+    url: 'http://0.0.0.0:3000',
+    cleartext: true,
+  },
 };
 
 export default config;
