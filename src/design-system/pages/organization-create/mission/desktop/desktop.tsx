@@ -18,6 +18,7 @@ export const Desktop = (): JSX.Element => {
           <div className={css.stepsContainer}>
             <Steps clickable={false} length={5} current={4} />
           </div>
+          <div className={css.skip}>Skip</div>
         </div>
         <div className={css.question}>What's your organization's mission?</div>
         <div className={css.main}>

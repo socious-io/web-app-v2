@@ -24,6 +24,11 @@
     display: flex;
     justify-content: center;
   }
+
+  .skip {
+    color: var(--color-primary-01);
+    cursor: pointer;
+  }
 }
 
 .question {
