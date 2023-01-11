@@ -49,7 +49,7 @@ export const routes: Route[] = [
             path: 'social-causes',
             element: () =>
               import('../design-system/pages/organization-create/social-causes/social-causes').then(
-                (m) => <m.OrganizationCreateSocialCauses />
+                (m) => <m.SocialCauses />
               ),
           },
           {
