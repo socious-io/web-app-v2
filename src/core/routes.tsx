@@ -87,6 +87,13 @@ export const routes: Route[] = [
                 <m.Succeed />
               )),
           },
+          {
+            path: 'verified',
+            element: () =>
+              import('../design-system/pages/organization-create/verified/verified').then((m) => (
+                <m.Verified />
+              )),
+          },
         ],
       },
     ],
