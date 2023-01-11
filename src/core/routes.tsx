@@ -73,6 +73,13 @@ export const routes: Route[] = [
                 <m.Culture />
               )),
           },
+          {
+            path: 'social-impact',
+            element: () =>
+              import('../design-system/pages/organization-create/social-impact/social-impact').then(
+                (m) => <m.SocialImpact />
+              ),
+          },
         ],
       },
     ],
