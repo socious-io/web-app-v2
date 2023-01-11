@@ -80,6 +80,13 @@ export const routes: Route[] = [
                 (m) => <m.SocialImpact />
               ),
           },
+          {
+            path: 'succeed',
+            element: () =>
+              import('../design-system/pages/organization-create/succeed/succeed').then((m) => (
+                <m.Succeed />
+              )),
+          },
         ],
       },
     ],
