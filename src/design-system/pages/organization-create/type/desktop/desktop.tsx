@@ -13,11 +13,11 @@ export const Desktop = (): JSX.Element => {
     <div className={css.container}>
       <Card padding="0" className={css.card}>
         <div className={css.header}>
-          <div className={css.chevron}>
+          <div className={css.chevron} onClick={() => navigate({ to: '/jobs' })}>
             <img height={24} src="/icons/chevron-left.svg" />
           </div>
           <div className={css.stepsContainer}>
-            <Steps clickable={false} length={5} current={1} />
+            <Steps clickable={false} length={6} current={1} />
           </div>
         </div>
         <div className={css.question}>What type of organization?</div>
