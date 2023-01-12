@@ -39,6 +39,13 @@ export const routes: Route[] = [
         path: 'create',
         children: [
           {
+            path: 'intro',
+            element: () =>
+              import('../design-system/pages/organization-create/intro/intro').then((m) => (
+                <m.Intro />
+              )),
+          },
+          {
             path: 'type',
             element: () =>
               import('../design-system/pages/organization-create/type/type').then((m) => (
