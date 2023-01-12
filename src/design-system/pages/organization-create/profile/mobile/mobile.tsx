@@ -17,11 +17,11 @@ export const Mobile = (): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron}>
+        <div className={css.chevron} onClick={() => navigate({ to: '../social-causes' })}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.stepsContainer}>
-          <Steps clickable={false} length={5} current={3} />
+          <Steps clickable={false} length={6} current={3} />
         </div>
       </div>
       <div className={css.questionContainer}>
@@ -44,7 +44,7 @@ export const Mobile = (): JSX.Element => {
         </Divider>
       </div>
       <div className={css.bottom}>
-        <Button onClick={() => navigate({ to: '../social-causes' })}>Continue</Button>
+        <Button onClick={() => navigate({ to: '../mission' })}>Continue</Button>
       </div>
     </div>
   );
