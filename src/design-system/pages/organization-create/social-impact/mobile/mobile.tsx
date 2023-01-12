@@ -10,11 +10,11 @@ export const Mobile = (): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron}>
+        <div className={css.chevron} onClick={() => navigate({ to: '../culture' })}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.stepsContainer}>
-          <Steps clickable={false} length={5} current={5} />
+          <Steps clickable={false} length={6} current={6} />
         </div>
         <div className={css.skip}>Skip</div>
       </div>
@@ -23,7 +23,7 @@ export const Mobile = (): JSX.Element => {
         <Textarea variant="outline" placeholder="Your organization's achievements" />
       </div>
       <div className={css.bottom}>
-        <Button onClick={() => navigate({ to: '../social-causes' })}>Continue</Button>
+        <Button onClick={() => navigate({ to: '../succeed' })}>Continue</Button>
       </div>
     </div>
   );
