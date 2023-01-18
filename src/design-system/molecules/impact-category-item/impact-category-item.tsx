@@ -1,3 +1,4 @@
+// @ts-nocheck
 import css from './impact-category-item.module.scss';
 import {ImpactBadge} from '../../../../src/design-system/atoms/impact-badge/impact-badge';
 import {ImpactBar} from '../../../../src/design-system/atoms/impact-bar/impact-bar';

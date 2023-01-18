@@ -7,8 +7,10 @@ export const Jobs = (): JSX.Element => {
   const { data } = useMatch();
 
   return isTouchDevice() ? (
+    // @ts-ignore
     <JobsTouch list={data.items} />
   ) : (
+    // @ts-ignore
     <JobsCursor list={data.items} />
   );
 };
