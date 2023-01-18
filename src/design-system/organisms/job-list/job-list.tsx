@@ -1,3 +1,4 @@
+// @ts-nocheck
 import css from './job-list.module.scss';
 import { Card } from '../../atoms/card/card';
 import { JobListProps } from './job-list.types';

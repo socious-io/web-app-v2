@@ -1,4 +1,4 @@
-import {get} from '/utils/request';
+import { get } from '../../../core/http';
 
 export function getBadges() {
   // return get('/user/badges');

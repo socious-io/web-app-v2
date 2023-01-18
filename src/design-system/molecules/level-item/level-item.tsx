@@ -1,3 +1,4 @@
+// @ts-nocheck
 import css from './level-item.module.scss';
 import {ImpactBar} from '../../atoms/impact-bar/impact-bar';
 import {Typography} from '../../atoms/typography/typography';

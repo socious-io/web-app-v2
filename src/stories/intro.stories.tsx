@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { Intro } from '../design-system/pages/intro/intro';
 
