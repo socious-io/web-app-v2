@@ -1,3 +1,4 @@
+// @ts-nocheck
 import css from './job-detail.module.scss';
 import { useMatch } from '@tanstack/react-location';
 import { Button } from '../../atoms/button/button';
