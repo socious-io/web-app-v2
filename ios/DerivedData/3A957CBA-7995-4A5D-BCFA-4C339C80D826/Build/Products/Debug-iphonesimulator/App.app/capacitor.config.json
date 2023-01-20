@@ -1,9 +1,0 @@
-{
-	"appId": "jp.socious.network",
-	"appName": "Socious",
-	"webDir": "dist",
-	"bundledWebRuntime": false,
-	"server": {
-		"hostname": "dev.socious.io"
-	}
-}
