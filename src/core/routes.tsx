@@ -8,6 +8,7 @@ import { SignUpUserVerification } from '../design-system/pages/sign-up/sign-up-u
 import { MenuCursor as RootCursorLayout } from '../design-system/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../design-system/templates/menu-touch/menu-touch';
 import { isTouchDevice } from './device-type-detector';
+import { getNotificationList } from '../design-system/pages/notifications/notifications.service';
 
 export const routes: Route[] = [
   {
@@ -119,6 +120,11 @@ export const routes: Route[] = [
         path: '/jobs',
         element: () => import('../design-system/pages/jobs/jobs').then((m) => <m.Jobs />),
         loader: () => getJobList({ page: 1 }),
+      },
+      {
+        path: 'notifications',
+        element: () => import('../design-system/pages/notifications/notifications').then((m) => <m.Notifications />),
+        loader: () => getNotificationList({ page: 1 }),
       },
       {
         element: <Navigate to="intro" />,
