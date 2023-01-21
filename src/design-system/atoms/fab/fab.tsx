@@ -3,7 +3,7 @@ import { FabProps } from './fab.types';
 
 export const Fab = (props: FabProps): JSX.Element => {
   return (
-    <div className={css.container}>
+    <div onClick={props.onClick} className={css.container}>
       <img height={24} src="/icons/plus.svg" />
     </div>
   );
