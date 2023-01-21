@@ -15,4 +15,6 @@ Primary.args = {
   text: 'Hello, How are you?',
   img: '',
   date: '2 months ago',
+  date2: '1 minutes ago',
+  badge: '2',
 };

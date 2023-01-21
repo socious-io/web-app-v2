@@ -5,4 +5,6 @@ export interface ContactItemProps extends CSSProperties {
   text: string;
   img: string;
   date: string;
+  date2: string;
+  badge: string;
 }
