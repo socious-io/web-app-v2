@@ -17,6 +17,6 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
-  "exclude": ["src/stories/*", "src/stories", "src/design-system/*"],
+//   "exclude": ["src/stories/*", "src/stories", "src/design-system/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
