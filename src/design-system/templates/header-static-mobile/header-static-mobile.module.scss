@@ -1,0 +1,14 @@
+.container {
+  height: var(--window-height);
+  margin-top: var(--safe-area);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.header {
+  border-bottom: 1px solid var(--border-gray-01);
+}
+
+.body {
+  overflow-y: scroll;
+}
