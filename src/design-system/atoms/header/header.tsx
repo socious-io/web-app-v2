@@ -8,7 +8,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
     <div style={rest} onClick={onBack} className={css.container}>
       <img className={css.img} src="/icons/chevron-left.svg" />
       <div className={css.title}>{title}</div>
-      {/* <div>...</div> */}
+      {props.right && <div className={css.right}>{props.right}</div>}
     </div>
   );
 };
