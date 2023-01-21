@@ -1,35 +1,17 @@
 import { Avatar } from '../../../../atoms/avatar/avatar';
+import { Fab } from '../../../../atoms/fab/fab';
 import { Header } from '../../../../atoms/header/header';
+import { ContactList } from '../../../../organisms/contact-list/contact-list';
 import { HeaderStaticMobile } from '../../../../templates/header-static-mobile/header-static-mobile';
 
 export const Mobile = (): JSX.Element => {
   return (
-    <HeaderStaticMobile>
-      <Header height="auto" title="title" right={<Avatar size="2rem" type="user" />} />
-      <div>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati facere asperiores
-        accusamus! Provident eos, placeat ipsum harum sint veniam esse suscipit architecto
-        reiciendis molestiae, repellat commodi fuga. Tenetur, quisquam at! Lorem ipsum dolor, sit
-        amet consectetur adipisicing elit. Obcaecati facere asperiores Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Obcaecati facere asperiores Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Obcaecati facere asperiores accusamus! Provident eos, placeat
-        ipsum harum sint veniam esse suscipit architecto reiciendis molestiae, repellat commodi
-        fuga. Tenetur, quisquam at! Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        Obcaecati facere asperiores Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        Obcaecati facere asperiores Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        Obcaecati facere asperiores accusamus! Provident eos, placeat ipsum harum sint veniam esse
-        suscipit architecto reiciendis molestiae, repellat commodi fuga. Tenetur, quisquam at!
-        accusamus! Provident eos, placeat ipsum harum sint veniam esse suscipit architecto
-        reiciendis molestiae, repellat commodi fuga. Tenetur, quisquam at! accusamus! Provident eos,
-        placeat ipsum harum sint veniam esse suscipit architecto reiciendis molestiae, repellat
-        commodi fuga. Tenetur, quisquam at! accusamus! Provident eos, placeat ipsum harum sint
-        veniam esse suscipit architecto reiciendis molestiae, repellat commodi fuga. Tenetur,
-        quisquam at! accusamus! Provident eos, placeat ipsum harum sint veniam esse suscipit
-        architecto reiciendis molestiae, repellat commodi fuga. Tenetur, quisquam at! Lorem ipsum
-        dolor, sit amet consectetur adipisicing elit. Obcaecati facere asperiores accusamus!
-        Provident eos, placeat ipsum harum sint veniam esse suscipit architecto reiciendis
-        molestiae, repellat commodi fuga. Tenetur, quisquam at!
-      </div>
-    </HeaderStaticMobile>
+    <>
+      <HeaderStaticMobile>
+        <Header border="0" height="auto" title="Chats" right={<Avatar size="2rem" type="user" />} />
+        <ContactList list={[]} onSearch={console.log} />
+      </HeaderStaticMobile>
+      <Fab onClick={console.log} />
+    </>
   );
 };
