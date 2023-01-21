@@ -127,6 +127,10 @@ export const routes: Route[] = [
         loader: () => getNotificationList({ page: 1 }),
       },
       {
+        path: 'feed',
+        element: () => import('../design-system/pages/feed/feed').then((m) => <m.Feed />),
+      },
+      {
         element: <Navigate to="intro" />,
       },
     ],
