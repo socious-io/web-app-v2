@@ -10,6 +10,7 @@ export default {
 const Template: ComponentStory<typeof ContactList> = (args) => <ContactList {...args} />;
 
 export const Primary = Template.bind({});
+export const Secondary = Template.bind({});
 
 const DATA: ContactListProps['list'] = [
   {
@@ -19,7 +20,7 @@ const DATA: ContactListProps['list'] = [
     img: '',
     date: '2 min ago',
     date2: '5 min ago',
-    badge: '2',
+    badge: '1',
   },
   {
     id: '2',
@@ -28,7 +29,7 @@ const DATA: ContactListProps['list'] = [
     img: '',
     date: '2 min ago',
     date2: '5 min ago',
-    badge: '2',
+    badge: '3',
   },
   {
     id: '3',
@@ -46,11 +47,20 @@ const DATA: ContactListProps['list'] = [
     img: '',
     date: '2 min ago',
     date2: '5 min ago',
-    badge: '2',
+    badge: '1',
   },
 ];
 
 Primary.args = {
   list: DATA,
   onSearch: console.log,
+};
+
+Secondary.args = {
+  list: [],
+  onSearch: console.log,
+  message: {
+    title: 'Message your friends',
+    body: 'Let"s make a great conversation with your trustworthy friends, partners',
+  },
 };
