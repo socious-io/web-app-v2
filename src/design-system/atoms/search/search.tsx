@@ -3,12 +3,23 @@ import css from './search.module.scss';
 import { SearchProps } from './search.types';
 
 export const Search = (props: SearchProps): JSX.Element => {
-  const { value, onValueChange, onChange, placeholder, ...rest } = props;
+  const { value, defaultValue, onValueChange, onChange, placeholder, ...rest } = props;
 
   function onInputChange(e: ChangeEvent<HTMLInputElement>) {
     onChange?.(e);
     onValueChange?.(e.target.value);
   }
+
+  const setValueProps = () => {
+    const obj = {};
+    if (defaultValue !== undefined) {
+      Object.assign(obj, { defaultValue });
+    }
+    if (value !== undefined) {
+      Object.assign(obj, { value });
+    }
+    return obj;
+  };
 
   return (
     <div style={rest} className={css.container}>
@@ -19,7 +30,7 @@ export const Search = (props: SearchProps): JSX.Element => {
         placeholder={placeholder}
         type="search"
         onChange={onInputChange}
-        value={value}
+        {...setValueProps()}
         className={css.input}
       />
     </div>
