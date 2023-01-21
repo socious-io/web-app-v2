@@ -6,7 +6,7 @@
   grid-template-columns: 60px 1fr 60px;
   justify-content: center;
   align-content: flex-end;
-  padding: 0 0.5rem 0.5rem 0.5rem;
+  padding: 0 0.75rem 0.75rem 0.75rem;
 }
 
 .title {
@@ -23,4 +23,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
 }
