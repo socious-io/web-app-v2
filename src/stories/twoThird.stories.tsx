@@ -1,4 +1,3 @@
-import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {TwoThird} from '../../src/design-system/templates/two-third/two-third';
 
