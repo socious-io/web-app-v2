@@ -1,4 +1,4 @@
-export type FeedCardProps = {
+export type FeedItemProps = {
     imgAvatar: string;
     date: string;
     img: string;

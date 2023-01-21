@@ -3,14 +3,14 @@ import { Card } from '../../atoms/card/card';
 import { CategoriesClickable } from '../../atoms/categories-clickable/categories-clickable';
 import { Typography } from '../../atoms/typography/typography';
 import { ProfileView } from '../profile-view/profile-view';
-import css from './feed-card.module.scss';
+import css from './feed-item.module.scss';
 
 const catList = [{ label: 'environment', value: '1' }, { label: 'charity', value: '2' }];
 const actionList = [{ label: 'Like', iconName: 'heart-blue' }, { label: 'Comment', iconName: 'comment-blue' }, { label: 'Share', iconName: 'share-blue' }];
 
-export const FeedCard = (): JSX.Element => {
+export const FeedItem = (): JSX.Element => {
     return (
-        <div className={css.container}>
+        <>
             <Card>
                 <ProfileView type='user' name='Name liked' />
                 <div className={css.img}>
@@ -26,6 +26,6 @@ export const FeedCard = (): JSX.Element => {
                     <ActionList list={actionList} />
                 </div>
             </Card>
-        </div>
+        </>
     );
 };
