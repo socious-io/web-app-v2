@@ -106,6 +106,18 @@ export const routes: Route[] = [
     ],
   },
   {
+    path: '/chats',
+    children: [
+      {
+        path: 'contacts',
+        element: () =>
+          import('../design-system/pages/chat/contact-list/contact-list').then((m) => (
+            <m.ContactList />
+          )),
+      },
+    ],
+  },
+  {
     path: '',
     element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
     children: [
