@@ -4,28 +4,23 @@ import { CategoriesClickable } from '../../atoms/categories-clickable/categories
 import { Typography } from '../../atoms/typography/typography';
 import { ProfileView } from '../profile-view/profile-view';
 import css from './feed-item.module.scss';
+import { FeedItemProps } from './feed-item.types';
 
-const catList = [{ label: 'environment', value: '1' }, { label: 'charity', value: '2' }];
-const actionList = [{ label: 'Like', iconName: 'heart-blue' }, { label: 'Comment', iconName: 'comment-blue' }, { label: 'Share', iconName: 'share-blue' }];
 
-export const FeedItem = (): JSX.Element => {
+export const FeedItem = (props: FeedItemProps): JSX.Element => {
     return (
-        <>
-            <Card>
-                <ProfileView type='user' name='Name liked' />
-                <div className={css.img}>
-                    <img src='' />
-                </div>
-                <CategoriesClickable list={catList} />
-                <div className={css.text}>
-                    <Typography type='body' lineLimit={3} size='s2'>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. At similique et earum, nisi nesciunt fuga velit vero nobis harum illum iste dignissimos distinctio culpa dicta esse placeat debitis laboriosam recusandae.
-                    </Typography>
-                </div>
-                <div>
-                    <ActionList list={actionList} />
-                </div>
-            </Card>
-        </>
+        <Card>
+            <ProfileView type='user' name={props.name} img={props.imgAvatar} />
+            <div className={css.img}>
+                <img src={props.img} />
+            </div>
+            <CategoriesClickable list={props.categories} />
+            <div className={css.text}>
+                <Typography type='body' lineLimit={3} size='s2'>{props.text}</Typography>
+            </div>
+            <div>
+                <ActionList list={props.actionList} />
+            </div>
+        </Card>
     );
 };
