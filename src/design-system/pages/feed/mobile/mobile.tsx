@@ -1,4 +1,5 @@
 
+import { RelativeTime } from '../../../../core/relative-time';
 import { Avatar } from '../../../atoms/avatar/avatar';
 import { FeedItemProps } from '../../../molecules/feed-item/feed-item.types';
 import { FeedList } from '../../../organisms/feed-list/feed-list';
@@ -38,6 +39,9 @@ const feedList: FeedItemProps[] = [
 ];
 
 export const Mobile = () => {
+    const x = RelativeTime('2023-01-22T11:00:31.820Z');
+    console.log('xxx ===>', x);
+
     return (
         <div className={css.container}>
             <div className={css.header}>
