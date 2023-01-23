@@ -1,5 +1,6 @@
 import { Navigate, Route } from '@tanstack/react-location';
 import { ChangePassword } from '../design-system/pages/change-password/change-password';
+import { getChatsSummery } from '../design-system/pages/chat/contact-list/contact-list.services';
 import { getJobDetail } from '../design-system/pages/job-detail/job-detail.services';
 import { getJobList } from '../design-system/pages/jobs/jobs-cursor/jobs-cursor.services';
 import { SignUpUserComplete } from '../design-system/pages/sign-up/sign-up-user-complete/sign-up-user-complete';
@@ -111,6 +112,7 @@ export const routes: Route[] = [
     children: [
       {
         path: 'contacts',
+        loader: () => getChatsSummery({page: 1}),
         element: () =>
           import('../design-system/pages/chat/contact-list/contact-list').then((m) => (
             <m.ContactList />

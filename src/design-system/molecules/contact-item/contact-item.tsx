@@ -4,12 +4,13 @@ import css from './contact-item.module.scss';
 import { ContactItemProps } from './contact-item.types';
 
 export const ContactItem = (props: ContactItemProps): JSX.Element => {
+    console.log('tt: ', props.type)
   return (
     <div className={css.container}>
-      <ProfileView location={props.text} name={props.name} type="user" />
+      <ProfileView img={props.img} location={props.text} name={props.name} type={props.type} />
       <div className={css.right}>
         <div className={css.time}>{props.date2}</div>
-        <Badge value={props.badge} />
+        <Badge visibility={+props.badge ? 'visible' : 'hidden'} value={props.badge} />
       </div>
     </div>
   );
