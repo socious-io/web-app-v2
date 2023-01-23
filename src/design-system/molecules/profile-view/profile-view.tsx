@@ -1,5 +1,5 @@
-import { Avatar } from '../../atoms/avatar/avatar';
 import css from './profile-view.module.scss';
+import { Avatar } from '../../atoms/avatar/avatar';
 import { ProfileViewProps } from './profile-view.types';
 
 export const ProfileView = (props: ProfileViewProps): JSX.Element => {
