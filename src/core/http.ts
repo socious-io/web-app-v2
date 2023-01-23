@@ -1,27 +1,15 @@
-const base = 'https://dev.socious.io/api/v2';
+import axios from 'axios';
+
+const http = axios.create({
+  baseURL: 'https://dev.socious.io/api/v2',
+  withCredentials: true,
+  timeout: 100000,
+});
 
 export async function post(uri: string, payload: unknown) {
-  const options = {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      credentials: 'include',
-    },
-    body: JSON.stringify(payload),
-  };
-
-  return fetch(`${base}/${uri}`, options).then((resp) => resp.json());
+  return http.post(uri, payload);
 }
 
 export async function get(uri: string) {
-  const options = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      credentials: 'include',
-    },
-  };
-  return fetch(`${base}/${uri}`, options).then((resp) => resp.json());
+  return http.get(uri);
 }

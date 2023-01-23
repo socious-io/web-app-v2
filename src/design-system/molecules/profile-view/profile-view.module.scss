@@ -11,11 +11,20 @@
 }
 
 .name {
+  width: 10rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-weight: 600;
   font-size: var(--font-size-s2);
 }
 
 .location {
+  width: 10rem;
+  max-width: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: var(--color-gray-01);
   font-weight: 400;
   font-size: var(--font-size-s2);
