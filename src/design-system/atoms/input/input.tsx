@@ -14,11 +14,25 @@ export const Input = (props: InputProps): JSX.Element => {
     return v ? css.outline : css.default;
   }
 
+  if (label) {
+    return (
+      <div className={`${setClassName(variant)} ${className}`}>
+        <label className={css.label} htmlFor={label}>
+          {label}
+        </label>
+        <input
+          id={label}
+          className={css.textbox}
+          onChange={onChange}
+          role="textbox"
+          {...rest}
+        ></input>
+      </div>
+    );
+  }
+
   return (
-    <div className={`${setClassName(variant)} ${className}`}>
-      <label className={css.label} htmlFor={label}>
-        {label}
-      </label>
+    <div style={{ gridTemplateRows: '2.5rem' }} className={`${setClassName(variant)} ${className}`}>
       <input
         id={label}
         className={css.textbox}

@@ -1,0 +1,16 @@
+.container {
+  height: var(--window-height);
+  margin-top: var(--safe-area);
+  display: grid;
+  grid-template-rows: auto 1fr 5.75rem;
+}
+
+.main {
+  padding: 1rem;
+  overflow-y: scroll;
+  border-bottom: 1px solid var(--border-gray-01);
+}
+
+.header {
+  border-bottom: 1px solid var(--border-gray-01);
+}
