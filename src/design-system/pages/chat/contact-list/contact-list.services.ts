@@ -1,4 +1,5 @@
 import { get } from '../../../../core/http';
+import { toRelativeTime } from '../../../../core/relative-time';
 import { SummaryReq } from '../../../../core/types';
 import { setChatList } from '../../../../store/reducers/chat.reducer';
 import store, { RootState } from '../../../../store/store';
@@ -19,8 +20,8 @@ export function chatEntityToContactListAdaptor(
       id: item.id,
       name: item.participants[0]?.identity_meta?.name,
       text: item.last_message?.text,
-      date: item.created_at,
-      date2: item.updated_at,
+      date: toRelativeTime(item.created_at),
+      date2: toRelativeTime(item.updated_at),
       badge: item.unread_count,
       img: item.participants.length > 0 ? item.participants[0]?.identity_meta?.avatar : '',
       type: item.participants.length > 0 ? item.participants[0]?.identity_type : 'user',

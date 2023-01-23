@@ -16,7 +16,12 @@ export const Mobile = (): JSX.Element => {
   return (
     <>
       <HeaderStaticMobile>
-        <Header border="0" height="auto" title="Chats" right={<Avatar size="2rem" type="user" />} />
+        <Header
+          border="0"
+          height="auto"
+          title="Chats"
+          right={<Avatar size="2rem" type="users" />}
+        />
         <ContactList list={chatEntity} onSearch={console.log} />
       </HeaderStaticMobile>
       <Fab onClick={console.log} />
