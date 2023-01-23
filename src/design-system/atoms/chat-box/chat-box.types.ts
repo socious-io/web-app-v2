@@ -1,7 +1,6 @@
 import { CSSProperties } from 'react';
 
 export interface ChatBoxProps extends CSSProperties {
-  text: string;
-  type: 'receive' | 'sender';
+  type: 'receiver' | 'sender';
   children: React.ReactNode;
 }
