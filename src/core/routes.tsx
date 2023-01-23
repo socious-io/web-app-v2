@@ -111,6 +111,13 @@ export const routes: Route[] = [
     path: '/chats',
     children: [
       {
+        path: 'contacts/:id',
+        element: () =>
+          import('../design-system/pages/chat/message-detail/message-detail').then((m) => (
+            <m.MessageDetail />
+          )),
+      },
+      {
         path: 'contacts',
         loader: () => getChatsSummery({ page: 1 }),
         element: () =>
