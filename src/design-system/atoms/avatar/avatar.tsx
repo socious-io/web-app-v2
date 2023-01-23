@@ -13,6 +13,8 @@ export const Avatar = (props: AvatarProps): JSX.Element => {
     ...rest,
     width: size,
     height: size,
+    minWidth: size,
+    minHeight: size,
     backgroundImage: `url(${images[type]})`,
   };
 
