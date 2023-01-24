@@ -12,7 +12,7 @@ export const FeedItem = (props: FeedItemProps): JSX.Element => {
         <Card>
             <ProfileView type='user' name={props.name} img={props.imgAvatar} />
             <div className={css.img}>
-                <img src={props.img} />
+                <img src='images/jobs-page-header.png' />
             </div>
             <CategoriesClickable list={props.categories} />
             <div className={css.text}>
