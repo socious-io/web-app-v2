@@ -1,4 +1,4 @@
-export type IdentityMeta = {
+export type UserIdentityMeta = {
   address: string;
   city: string;
   country: string;
@@ -41,16 +41,6 @@ export type SummaryReq = {
   }[];
 };
 
-export type FollowingsReq = {
-  created_at: string;
-  following: boolean;
-  id: string;
-  identity_id: string;
-  identity_meta: IdentityMeta;
-  identity_type: 'organizations' | 'users';
-  mutual: boolean;
-};
-
 export type MessagesReq = {
   chat_id: string;
   created_at: string;
@@ -65,7 +55,7 @@ export type MessagesReq = {
   updated_at: string;
 };
 
-export type ParticipantIdentityMeta = {
+export type IdentityMeta = {
   address: string;
   avatar: string;
   image?: string;
@@ -84,12 +74,44 @@ export type ParticipantsReq = {
   created_at: string;
   id: string;
   identity_id: string;
-  identity_meta: ParticipantIdentityMeta;
+  identity_meta: IdentityMeta;
   identity_type: 'organizations' | 'users';
   joined_by: string;
   last_read_at: string;
   last_read_id: string;
   muted_until: string;
   type: string;
+  updated_at: string;
+};
+
+export type FollowingsReq = {
+  id: string;
+  identity_id: string;
+  identity_type: 'users' | 'organizations';
+  mutual: boolean;
+  identity_meta: IdentityMeta;
+  following: boolean;
+  created_at: string;
+};
+
+export type Pagination<T> = {
+  items: T;
+  limit: number;
+  page: number;
+  total_counts: number;
+};
+
+export type PostMessagePayload = { id: string; text: string };
+
+export type PostMessageResp = {
+  chat_id: string;
+  created_at: string;
+  deleted_at: string;
+  id: string;
+  identity_id: string;
+  media: string;
+  replied: boolean;
+  reply_id: string;
+  text: string;
   updated_at: string;
 };

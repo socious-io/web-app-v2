@@ -41,7 +41,7 @@ export const Mobile = (): JSX.Element => {
           onSearch={onSearch}
         />
       </HeaderStaticMobile>
-      <Fab onClick={console.log} />
+      <Fab onClick={() => navigate({ to: '/chats/new' })} />
     </>
   );
 };
