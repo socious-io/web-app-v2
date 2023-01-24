@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../store/store';
 import { Avatar } from '../../../../atoms/avatar/avatar';
@@ -12,6 +13,7 @@ export const Mobile = (): JSX.Element => {
   const chatEntity: ContactItem[] = useSelector<RootState>((state) => {
     return chatEntityToContactListAdaptor(state.chat.entities);
   }) as ContactItem[];
+  const navigate = useNavigate();
 
   return (
     <>
@@ -22,7 +24,11 @@ export const Mobile = (): JSX.Element => {
           title="Chats"
           right={<Avatar size="2rem" type="users" />}
         />
-        <ContactList list={chatEntity} onSearch={console.log} />
+        <ContactList
+          onContactClick={(contact) => navigate({ to: contact.id })}
+          list={chatEntity}
+          onSearch={console.log}
+        />
       </HeaderStaticMobile>
       <Fab onClick={console.log} />
     </>

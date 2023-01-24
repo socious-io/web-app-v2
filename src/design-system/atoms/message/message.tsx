@@ -5,7 +5,7 @@ import css from './message.module.scss';
 import { MessageProps } from './message.types';
 
 export const Message = (props: MessageProps): JSX.Element => {
-  const { text, type, img, ...rest } = props;
+  const { text, type, userType, img, ...rest } = props;
 
   function setStyle(type: MessageProps['type']): CSSProperties {
     switch (type) {
@@ -24,7 +24,7 @@ export const Message = (props: MessageProps): JSX.Element => {
 
   return (
     <div style={setStyle(type)} className={css.container}>
-      <Avatar size="2rem" img={img} type="users" />
+      <Avatar size="2rem" img={img} type={userType} />
       <ChatBox type={type}>{text}</ChatBox>
     </div>
   );
