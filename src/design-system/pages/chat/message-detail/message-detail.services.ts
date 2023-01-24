@@ -1,5 +1,11 @@
-import { ParticipantIdentityMeta, ParticipantsReq } from './../../../../core/types';
-import { get } from '../../../../core/http';
+import {
+  Pagination,
+  IdentityMeta,
+  ParticipantsReq,
+  PostMessagePayload,
+  PostMessageResp,
+} from './../../../../core/types';
+import { get, post } from '../../../../core/http';
 import { MessagesReq } from '../../../../core/types';
 import { Message } from '../../../atoms/message/message.types';
 
@@ -33,8 +39,8 @@ function getIdentityType(
 export function getParticipantDetail(
   id: string,
   participants: ParticipantsReq[] = []
-): ParticipantIdentityMeta {
-  return participants.find((p) => p.identity_id !== id)?.identity_meta as ParticipantIdentityMeta;
+): IdentityMeta {
+  return participants.find((p) => p.identity_id !== id)?.identity_meta as IdentityMeta;
 }
 
 export function chatListAdaptor(
