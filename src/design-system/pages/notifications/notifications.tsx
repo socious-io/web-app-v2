@@ -7,7 +7,6 @@ import { getNotificationList } from './notifications.service';
 
 export const Notifications = (): JSX.Element => {
   const { data } = useMatch();
-  console.log('dd: ', data);
 
   const [notificationList, setNotificationList] = useState(data.items);
   const [page, setPage] = useState(1);

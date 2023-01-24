@@ -1,39 +1,35 @@
-import { ChatList } from '../../../../organisms/chat-list/chat-list';
-import { Header } from './header/header';
 import css from './mobile.module.scss';
+import { useMatch } from '@tanstack/react-location';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { IdentityReq } from '../../../../../core/types';
+import { RootState } from '../../../../../store/store';
+import { SendBox } from '../../../../molecules/send-box/send-box';
+import { ChatList } from '../../../../organisms/chat-list/chat-list';
+import { chatListAdaptor, getParticipantDetail } from '../message-detail.services';
+import { MessageLoader } from '../message-detail.types';
+import { Header } from './header/header';
 
-const DATA = [
-  {
-    img: '',
-    type: 'sender',
-    text: 'orem ipsum dolor sit amet, consectetur adipisicing elit. Aut numquam illo laborum eius inventore et, eligendi fuga suscipit nisi fugit voluptates, praesentium voluptatum adipisci incidunt amet consectetur iusto. Iure, id',
-  },
-  {
-    img: '',
-    type: 'receiver',
-    text: ' voluptatum adipisci incidunt amet consectetur iusto. Iure, id',
-  },
-  {
-    img: '',
-    type: 'sender',
-    text: 'orem ipsum dolor sit amet, consectetur adipisicing elit. Aut numquam illo laborum eius inventore et, eligendi fuga suscipit nisi fugit voluptates, praesentium voluptatum adipisci incidunt amet consectetur iusto. Iure, id',
-  },
-  {
-    img: '',
-    type: 'receiver',
-    text: ' voluptatum adipisci incidunt amet consectetur iusto. Iure, id',
-  },
-];
 export const Mobile = (): JSX.Element => {
+  const [sendingValue, setSendingValue] = useState('');
+  const identity = useSelector<RootState, IdentityReq>((state) => {
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  });
+  const { participants, messages } = useMatch<MessageLoader>().data;
+  const chatList = chatListAdaptor(identity.id, messages, participants);
+  const participantDetail = getParticipantDetail(identity.id, participants);
+
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <Header type={'users'} name={'name'} lastOnline={'2 months ago'} />
+        <Header type={identity.type} name={participantDetail.name} img={participantDetail.avatar} />
       </div>
       <div className={css.main}>
-        <ChatList list={[...DATA, ...DATA]} />
+        <ChatList list={chatList} />
       </div>
-      <div>SENDING....</div>
+      <div className={css.sendBoxContainer}>
+        <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={console.log} img="" />
+      </div>
     </div>
   );
 };

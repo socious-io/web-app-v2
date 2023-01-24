@@ -9,7 +9,13 @@ export const ChatList = (props: ChatListProps): JSX.Element => {
       {list.map((msg) => {
         return (
           <div key={msg.id} className={css.item}>
-            <Message id={msg.id} img={msg.img} type={msg.type} text={msg.text} />
+            <Message
+              userType={msg.userType}
+              id={msg.id}
+              img={msg.img}
+              type={msg.type}
+              text={msg.text}
+            />
           </div>
         );
       })}
