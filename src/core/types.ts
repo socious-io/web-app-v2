@@ -10,6 +10,25 @@ export type IdentityMeta = {
   status: string;
 };
 
+export type IdentityReq = {
+  created_at: string;
+  current: boolean;
+  id: string;
+  primary: boolean;
+  type: 'organizations' | 'users';
+  meta: {
+    address: string;
+    city: string;
+    country: string;
+    email: string;
+    id: string;
+    image: string;
+    name: string;
+    shortname: string;
+    status: string;
+  };
+};
+
 export type SummaryReq = {
   items: {
     id: string;
@@ -28,6 +47,49 @@ export type FollowingsReq = {
   id: string;
   identity_id: string;
   identity_meta: IdentityMeta;
-  identity_type: 'organizations' | 'user';
+  identity_type: 'organizations' | 'users';
   mutual: boolean;
+};
+
+export type MessagesReq = {
+  chat_id: string;
+  created_at: string;
+  deleted_at: string;
+  id: string;
+  identity_id: string;
+  media: string;
+  media_url: string;
+  replied: boolean;
+  reply_id: string;
+  text: string;
+  updated_at: string;
+};
+
+export type ParticipantIdentityMeta = {
+  address: string;
+  avatar: string;
+  image?: string;
+  city: string;
+  country: string;
+  email: string;
+  id: string;
+  name: string;
+  status: string;
+  username: string;
+};
+
+export type ParticipantsReq = {
+  all_read: boolean;
+  chat_id: string;
+  created_at: string;
+  id: string;
+  identity_id: string;
+  identity_meta: ParticipantIdentityMeta;
+  identity_type: 'organizations' | 'users';
+  joined_by: string;
+  last_read_at: string;
+  last_read_id: string;
+  muted_until: string;
+  type: string;
+  updated_at: string;
 };
