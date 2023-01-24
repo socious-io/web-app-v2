@@ -145,7 +145,7 @@ export const routes: Route[] = [
           },
           {
             path: 'contacts',
-            loader: () => getChatsSummery({ page: 1 }),
+            loader: () => getChatsSummery({ page: 1, filter: '' }),
             element: () =>
               import('../design-system/pages/chat/contact-list/contact-list').then((m) => (
                 <m.ContactList />
