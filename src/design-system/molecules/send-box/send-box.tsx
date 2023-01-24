@@ -1,12 +1,11 @@
 import { ChangeEvent } from 'react';
-import { Avatar } from '../../atoms/avatar/avatar';
 import { Input } from '../../atoms/input/input';
 import css from './send-box.module.scss';
 import { SendBoxProps } from './send-box.types';
 
 export const SendBox = (props: SendBoxProps): JSX.Element => {
   function onChange(e: ChangeEvent<HTMLInputElement>) {
-    props.onValueChange(e.target.value);
+    props.onValueChange?.(e.target.value);
   }
 
   function setStyle() {
@@ -18,7 +17,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Avatar size="2rem" img={props.img} type="users" />
+      {/* <Avatar size="2rem" img={props.img} type="users" /> */}
       <Input
         value={props.value}
         onChange={onChange}

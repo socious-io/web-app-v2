@@ -1,14 +1,49 @@
-import { ParticipantIdentityMeta, ParticipantsReq } from './../../../../core/types';
-import { get } from '../../../../core/http';
+import {
+  Pagination,
+  ParticipantIdentityMeta,
+  ParticipantsReq,
+  PostMessagePayload,
+  PostMessageResp,
+} from './../../../../core/types';
+import { get, post } from '../../../../core/http';
 import { MessagesReq } from '../../../../core/types';
 import { Message } from '../../../atoms/message/message.types';
+import { OnPostMessageParams } from './message-detail.types';
 
-export async function getMessagesById(payload: { id: string; page: number }): Promise<MessagesReq> {
-  return get(`chats/${payload.id}/messages?page=${payload.page}`).then(({ data }) => data.items);
+export async function getMessagesById(payload: {
+  id: string;
+  page: number;
+}): Promise<Pagination<MessagesReq>> {
+  return get(`chats/${payload.id}/messages?page=${payload.page}`).then(({ data }) => data);
+}
+
+export async function postMessage(payload: PostMessagePayload): Promise<PostMessageResp> {
+  return post(`chats/${payload.id}/messages`, { text: payload.text }).then(({ data }) => data);
 }
 
 export async function getParticipantsById(id: string): Promise<MessagesReq> {
-  return get(`chats/${id}/participants`).then(({ data }) => data.items);
+  return get(`chats/${id}/participants`).then(({ data }) => data);
+}
+
+async function getRead(id: string, messageId: string): Promise<unknown> {
+  return post(`chats/update/${id}/messages/${messageId}/read`, {}).then(({ data }) => data);
+}
+
+export async function setMessageAsRead(id: string, messageId: string): Promise<boolean> {
+  return getRead(id, messageId).then(() => {
+    return true;
+  });
+}
+
+export async function onPostMessage(payload: OnPostMessageParams): Promise<Message> {
+  const resp = await postMessage(payload);
+  return {
+    id: resp.id,
+    identityType: payload.identity.type,
+    img: payload.identity.meta.image,
+    text: resp.text,
+    type: 'sender',
+  };
 }
 
 function getImage(myId: string, msgId: string, participants: ParticipantsReq[]): string {

@@ -6,7 +6,7 @@ import { IdentityReq } from '../../../../../core/types';
 import { RootState } from '../../../../../store/store';
 import { SendBox } from '../../../../molecules/send-box/send-box';
 import { ChatList } from '../../../../organisms/chat-list/chat-list';
-import { chatListAdaptor, getParticipantDetail } from '../message-detail.services';
+import { chatListAdaptor, getParticipantDetail, onPostMessage } from '../message-detail.services';
 import { MessageLoader } from '../message-detail.types';
 import { Header } from './header/header';
 
@@ -15,9 +15,19 @@ export const Mobile = (): JSX.Element => {
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-  const { participants, messages } = useMatch<MessageLoader>().data;
-  const chatList = chatListAdaptor(identity.id, messages, participants);
-  const participantDetail = getParticipantDetail(identity.id, participants);
+  const resolver = useMatch<MessageLoader>();
+  const id = resolver.params.id;
+  const { messages, participants } = resolver.data;
+  const chatList = chatListAdaptor(identity.id, messages!.items, participants!.items);
+  const participantDetail = getParticipantDetail(identity.id, participants!.items);
+  const [list, setList] = useState(chatList);
+
+  function onSend() {
+    const params = { id, identity, text: sendingValue };
+    onPostMessage(params)
+      .then((resp) => setList([...list, resp]))
+      .then(() => setSendingValue(''));
+  }
 
   return (
     <div className={css.container}>
@@ -25,10 +35,10 @@ export const Mobile = (): JSX.Element => {
         <Header type={identity.type} name={participantDetail.name} img={participantDetail.avatar} />
       </div>
       <div className={css.main}>
-        <ChatList list={chatList} />
+        <ChatList list={list} />
       </div>
       <div className={css.sendBoxContainer}>
-        <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={console.log} img="" />
+        <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={onSend} />
       </div>
     </div>
   );

@@ -1,9 +1,15 @@
 import { MakeGenerics } from '@tanstack/react-location';
-import { MessagesReq, ParticipantsReq } from '../../../../core/types';
+import { IdentityReq, MessagesReq, Pagination, ParticipantsReq } from '../../../../core/types';
 
 export type MessageLoader = MakeGenerics<{
   LoaderData: {
-    messages: MessagesReq[];
-    participants: ParticipantsReq[];
+    messages: Pagination<MessagesReq[]>;
+    participants: Pagination<ParticipantsReq[]>;
   };
 }>;
+
+export type OnPostMessageParams = {
+  id: string;
+  identity: IdentityReq;
+  text: string;
+};
