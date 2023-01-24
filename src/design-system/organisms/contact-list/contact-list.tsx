@@ -4,7 +4,7 @@ import css from './contact-list.module.scss';
 import { ContactListProps } from './contact-list.types';
 
 export const ContactList = (props: ContactListProps): JSX.Element => {
-  const { list, message, onSearch, ...rest } = props;
+  const { list, message, onSearch, onContactClick, ...rest } = props;
 
   const messageJSX = (
     <div className={css.message}>
@@ -20,9 +20,11 @@ export const ContactList = (props: ContactListProps): JSX.Element => {
       </div>
       <div>
         {message && list.length === 0 && messageJSX}
-        {list.map((contactData) => (
-          <ContactItem key={contactData.id} {...contactData} />
-        ))}
+        {list.map((contactData) => {
+          return (
+            <ContactItem onContactClick={onContactClick} key={contactData.id} {...contactData} />
+          );
+        })}
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import { CSSProperties } from 'react';
-import { ContactItemProps } from '../../molecules/contact-item/contact-item.types';
+import { ContactItem } from '../../molecules/contact-item/contact-item.types';
 
 export interface ContactListProps extends CSSProperties {
-  list: ContactItemProps[];
+  list: ContactItem[];
   message?: { title: string; body?: string };
+  onContactClick: (item: ContactItem) => void;
   onSearch: (v: string) => void;
 }

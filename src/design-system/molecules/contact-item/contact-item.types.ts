@@ -5,18 +5,19 @@ export type ContactItem = {
   name: string;
   text: string;
   img: string;
-  type: 'organizations' | 'user';
+  type: 'organizations' | 'users';
   date: string;
   date2: string;
   badge: string;
 };
 
 export interface ContactItemProps extends CSSProperties {
+  onContactClick: (v: ContactItem) => void;
   id: string;
   name: string;
   text: string;
   img: string;
-  type: 'organizations' | 'user';
+  type: 'organizations' | 'users';
   date: string;
   date2: string;
   badge: string;

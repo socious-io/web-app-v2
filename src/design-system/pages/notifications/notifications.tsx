@@ -1,3 +1,4 @@
+import { useMatch } from '@tanstack/react-location';
 import { useState } from 'react';
 import { isTouchDevice } from '../../../core/device-type-detector';
 import { Desktop } from './desktop/desktop';
@@ -5,9 +6,10 @@ import { Mobile } from './mobile/mobile';
 import { getNotificationList } from './notifications.service';
 import { NotificationProps } from './notifications.types';
 
-export const Notifications = (props: NotificationProps): JSX.Element => {
-  const { list } = props;
-  const [notificationList, setNotificationList] = useState(list);
+export const Notifications = (): JSX.Element => {
+  const { data } = useMatch();
+
+  const [notificationList, setNotificationList] = useState(data.items);
   const [page, setPage] = useState(1);
 
   function onMorePage() {
@@ -17,7 +19,9 @@ export const Notifications = (props: NotificationProps): JSX.Element => {
     });
   }
 
-  
-
-  return isTouchDevice() ? <Mobile onMorePageClick={onMorePage} list={notificationList} /> : <Desktop />;
+  return isTouchDevice() ? (
+    <Mobile onMorePageClick={onMorePage} list={notificationList} />
+  ) : (
+    <Desktop />
+  );
 };
