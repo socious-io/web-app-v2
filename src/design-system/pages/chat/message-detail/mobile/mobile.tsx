@@ -1,5 +1,5 @@
 import css from './mobile.module.scss';
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../../../../core/types';
@@ -12,6 +12,7 @@ import { Header } from './header/header';
 
 export const Mobile = (): JSX.Element => {
   const [sendingValue, setSendingValue] = useState('');
+  const navigate = useNavigate();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
@@ -32,7 +33,12 @@ export const Mobile = (): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <Header type={identity.type} name={participantDetail.name} img={participantDetail.avatar} />
+        <Header
+          onBack={() => navigate({ to: '/chats/contacts' })}
+          type={identity.type}
+          name={participantDetail.name}
+          img={participantDetail.avatar}
+        />
       </div>
       <div className={css.main}>
         <ChatList list={list} />
