@@ -1,6 +1,6 @@
 import {
   Pagination,
-  ParticipantIdentityMeta,
+  IdentityMeta,
   ParticipantsReq,
   PostMessagePayload,
   PostMessageResp,
@@ -68,8 +68,8 @@ function getIdentityType(
 export function getParticipantDetail(
   id: string,
   participants: ParticipantsReq[] = []
-): ParticipantIdentityMeta {
-  return participants.find((p) => p.identity_id !== id)?.identity_meta as ParticipantIdentityMeta;
+): IdentityMeta {
+  return participants.find((p) => p.identity_id !== id)?.identity_meta as IdentityMeta;
 }
 
 export function chatListAdaptor(

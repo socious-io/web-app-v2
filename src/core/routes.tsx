@@ -17,6 +17,7 @@ import {
 import { getIdentities } from './api';
 import store from '../store/store';
 import { setIdentityList } from '../store/reducers/identity.reducer';
+import { getFollowings } from '../design-system/pages/chat/new-chat/new-chat.services';
 
 export const routes: Route[] = [
   {
@@ -125,6 +126,12 @@ export const routes: Route[] = [
       {
         path: '/chats',
         children: [
+          {
+            path: 'new',
+            loader: () => getFollowings({ page: 1, name: '' }),
+            element: () =>
+              import('../design-system/pages/chat/new-chat/new-chat').then((m) => <m.NewChat />),
+          },
           {
             path: 'contacts/:id',
             loader: async ({ params }) => {
