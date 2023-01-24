@@ -4,8 +4,11 @@ import { setChatList } from '../../../../store/reducers/chat.reducer';
 import store, { RootState } from '../../../../store/store';
 import { ContactItem } from '../../../molecules/contact-item/contact-item.types';
 
-export async function getChatsSummery(payload: { page: number }): Promise<SummaryReq> {
-  return get(`chats/summary?page=${payload.page}`).then(({ data }) => {
+export async function getChatsSummery(payload: {
+  page: number;
+  filter: string;
+}): Promise<SummaryReq> {
+  return get(`chats/summary?filter=${payload.filter}&page=${payload.page}`).then(({ data }) => {
     store.dispatch(setChatList(data));
     return data;
   });

@@ -25,11 +25,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
         return (
           <Card key={job.id} cursor="pointer" onClick={goToJobDetail(job.id)}>
             <div className={css.header}>
-              <Avatar
-                marginRight="0.5rem"
-                type="organization"
-                img={job.identity_meta.image}
-              />
+              <Avatar marginRight="0.5rem" type="organizations" img={job.identity_meta.image} />
               <div className={css.orgNameAndLocation}>
                 <div>{job.identity_meta?.name}</div>
                 <div className={css.orgLocation}>{job.city}</div>
@@ -41,10 +37,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
               <Typography marginBottom="1rem" lineLimit={3} size="s2">
                 {job.description}
               </Typography>
-              <CategoriesClickable
-                marginBottom="1rem"
-                list={getCausesList(job.causes_tags)}
-              />
+              <CategoriesClickable marginBottom="1rem" list={getCausesList(job.causes_tags)} />
             </div>
             <div className={css.footer}>{isoToStandard(job.updated_at)}</div>
           </Card>
