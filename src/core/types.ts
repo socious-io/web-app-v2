@@ -93,3 +93,25 @@ export type ParticipantsReq = {
   type: string;
   updated_at: string;
 };
+
+export type Pagination<T> = {
+  items: T;
+  limit: number;
+  page: number;
+  total_counts: number;
+};
+
+export type PostMessagePayload = { id: string; text: string };
+
+export type PostMessageResp = {
+  chat_id: string;
+  created_at: string;
+  deleted_at: string;
+  id: string;
+  identity_id: string;
+  media: string;
+  replied: boolean;
+  reply_id: string;
+  text: string;
+  updated_at: string;
+};
