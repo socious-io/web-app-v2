@@ -1,6 +1,5 @@
 import { Avatar } from '../../../atoms/avatar/avatar';
 import { Card } from '../../../atoms/card/card';
-import { Dropdown } from '../../../atoms/dropdown/dropdown';
 import { CardMenu } from '../../../molecules/card-menu/card-menu';
 import { FeedItemProps } from '../../../molecules/feed-item/feed-item.types';
 import { FeedList } from '../../../organisms/feed-list/feed-list';
