@@ -42,7 +42,6 @@ const feedList: FeedItemProps[] = [
 
 export const Desktop = () => {
 
-
     return (
         <TwoColumnCursor>
             <div className={css.sidebar}>
