@@ -6,7 +6,7 @@ import { Avatar } from '../../../atoms/avatar/avatar';
 import { Card } from '../../../atoms/card/card';
 import { FeedItemProps } from '../../../molecules/feed-item/feed-item.types';
 import { FeedList } from '../../../organisms/feed-list/feed-list';
-import { CreateDialog } from '../create-dialog/create-dialog';
+import { DialogCreate } from '../dialog-create/dialog-create';
 import css from './mobile.module.scss';
 
 const feedList: FeedItemProps[] = [
@@ -78,7 +78,7 @@ export const Mobile = () => {
             </div>
             <FeedList list={feedList} />
             <Dialog fullScreen open={openDialog}>
-                <CreateDialog onClose={handleClose} />
+                <DialogCreate onClose={handleClose} />
             </Dialog>
         </div>
     )

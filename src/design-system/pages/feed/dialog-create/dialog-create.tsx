@@ -1,5 +1,5 @@
-import { CreateDialogProps } from "./create-dialog.types";
-import css from './create-dialog.module.scss';
+import { DialogCreateProps } from "./dialog-create.types";
+import css from './dialog-create.module.scss';
 import { Avatar } from "../../../atoms/avatar/avatar";
 import { Dropdown } from "../../../atoms/dropdown/dropdown";
 import { Textarea } from "../../../atoms/textarea/textarea";
@@ -7,7 +7,7 @@ import { Button } from "../../../atoms/button/button";
 
 const list = [{ value: '1', title: 'mouth' }, { value: '2', title: 'donky' }]
 
-export const CreateDialog = ({ onClose }: CreateDialogProps) => {
+export const DialogCreate = ({ onClose }: DialogCreateProps) => {
 
     const getValue = () => {
 
