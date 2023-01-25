@@ -1,61 +1,60 @@
 input {
-    position: absolute;
-    opacity: 0;
-    z-index: -1;
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
 }
 
 .tabs {
-    overflow: hidden;
-    border-top: 1px solid #C3C8D9;
+  overflow: hidden;
+//   border-top: 1px solid var(--border-gray-01);
 }
 
 .tab {
-    width: 100%;
-    color: white;
-    overflow: hidden;
+  width: 100%;
+  color: white;
+  overflow: hidden;
 
-    label {
-        display: flex;
-        justify-content: space-between;
-        padding: 1em;
-        background: #ffffff;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 80ms ease;
-        border-bottom: 1px solid #C3C8D9;
+  label {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    background: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 80ms ease;
+    border-bottom: 1px solid var(--border-gray-01);
 
-        &::after {
-            content: "\276F";
-            transition: all 0.35s;
-        }
+    &::after {
+      content: url('/icons/arrow-down-black.svg');
+      transition: all 0.35s;
     }
+  }
 
-    &Content {
-        max-height: 0;
-        padding: 0 1em;
-        background: white;
-        transition: all 0.35s;
-    }
+  &Content {
+    max-height: 0;
+    // padding: 0 1em;
+    background: white;
+    transition: all 0.35s;
+  }
 }
 
 input:checked {
-    +.tabLabel {
-        background-color: #ffffff;
-        transition: 0.5s;
-        height: 3.75rem;
-        size: 1rem;
-        color: var(--color-black-01);
-        font-weight: 600;
+  + .tabLabel {
+    background-color: #ffffff;
+    transition: 0.5s;
+    height: 3.75rem;
+    size: 1rem;
+    color: var(--color-black-01);
+    font-weight: 600;
 
-
-        &::after {
-            transform: rotate(-90deg);
-        }
+    &::after {
+      transform: rotate(-180deg);
     }
+  }
 
-    ~.tabContent {
-        max-height: 100vh;
-        padding: 1em;
-        border-bottom: 1px solid #C3C8D9;
-    }
+  ~ .tabContent {
+    max-height: 100vh;
+    // padding: 1em;
+    border-bottom: 1px solid var(--border-gray-01);
+  }
 }

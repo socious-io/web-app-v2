@@ -161,6 +161,11 @@ export const routes: Route[] = [
         ],
       },
       {
+        path: '/jobs/my-jobs',
+        element: () =>
+          import('../design-system/pages/job-create/my-jobs/my-jobs').then((m) => <m.MyJobs />),
+      },
+      {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
           {
