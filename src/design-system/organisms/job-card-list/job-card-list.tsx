@@ -8,13 +8,17 @@ export const JobCardList = (props: JobCardListProps): JSX.Element => {
       <div className={css.list}>
         {props.list.map((job) => {
           return (
-            <div onClick={() => props.onClick(job?.id)}>
+            <div key={job.id} onClick={() => props.onItemClick(job?.id)}>
               <JobCard {...job} />
             </div>
           );
         })}
       </div>
-      {props.showMore && <div className={css.seeMore}>See more</div>}
+      {props.showMore && (
+        <div onClick={props.onSeeMoreClick} className={css.seeMore}>
+          See more
+        </div>
+      )}
     </div>
   );
 };

@@ -1,11 +1,12 @@
 import { GetJobs, Pagination } from './../../../../core/types';
 import { get } from '../../../../core/http';
 import { JobCardProps } from '../../../molecules/job-card/job-card.types';
+import { isoToStandard } from '../../../../core/time';
 
 export async function getActiveJobs(payload: {
   identityId: string;
   page: number;
-}): Promise<Pagination<GetJobs>> {
+}): Promise<Pagination<GetJobs[]>> {
   return get(`/projects?identity_id=${payload.identityId}&status=ACTIVE&page=${payload.page}`).then(
     ({ data }) => data
   );
@@ -14,7 +15,7 @@ export async function getActiveJobs(payload: {
 export async function getDraftJobs(payload: {
   identityId: string;
   page: number;
-}): Promise<Pagination<GetJobs>> {
+}): Promise<Pagination<GetJobs[]>> {
   return get(`/projects?identity_id=${payload.identityId}&status=DRAFT&page=${payload.page}`).then(
     ({ data }) => data
   );
@@ -25,7 +26,7 @@ function jobToJobCardAdaptor(job: GetJobs): JobCardProps {
     id: job.id,
     title: job.title,
     body: `${job.applicants} applicant`,
-    date: job.updated_at,
+    date: isoToStandard(job.updated_at),
   };
 }
 
