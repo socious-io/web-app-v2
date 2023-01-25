@@ -1,12 +1,12 @@
 .container {
   height: 6rem;
-  border-bottom: 1px solid #c3c8d9;
+  border-bottom: 1px solid var(--border-gray-01);
   background: #fff;
   display: grid;
   grid-template-columns: 60px 1fr 60px;
   justify-content: center;
   align-content: flex-end;
-  padding: 0 0.5rem 0.5rem 0.5rem;
+  padding: 0 0.75rem 0.75rem 0.75rem;
 }
 
 .title {
@@ -23,4 +23,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
 }

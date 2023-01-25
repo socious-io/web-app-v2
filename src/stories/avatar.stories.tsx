@@ -11,6 +11,6 @@ const Template: ComponentStory<typeof Avatar> = (args) => <Avatar {...args} />;
 export const Primary = Template.bind({});
 
 Primary.args = {
-  type: 'user',
+  type: 'users',
   size: '3rem'
 };
