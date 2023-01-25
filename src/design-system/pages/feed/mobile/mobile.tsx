@@ -1,8 +1,12 @@
 
+import { Dialog } from '@mui/material';
+import { useState } from 'react';
 import { RelativeTime } from '../../../../core/relative-time';
 import { Avatar } from '../../../atoms/avatar/avatar';
+import { Card } from '../../../atoms/card/card';
 import { FeedItemProps } from '../../../molecules/feed-item/feed-item.types';
 import { FeedList } from '../../../organisms/feed-list/feed-list';
+import { CreateDialog } from '../create-dialog/create-dialog';
 import css from './mobile.module.scss';
 
 const feedList: FeedItemProps[] = [
@@ -39,8 +43,17 @@ const feedList: FeedItemProps[] = [
 ];
 
 export const Mobile = () => {
+    const [openDialog, setOpenDialog] = useState(false);
     const x = RelativeTime('2023-01-22T11:00:31.820Z');
     console.log('xxx ===>', x);
+
+    const handleClickOpen = () => {
+        setOpenDialog(true);
+    };
+
+    const handleClose = () => {
+        setOpenDialog(false);
+    };
 
     return (
         <div className={css.container}>
@@ -55,7 +68,18 @@ export const Mobile = () => {
                     <div className={css.tagline}>See What is happening in your network</div>
                 </div>
             </div>
+            <div className={css.create}>
+                <Card>
+                    <div className={css.createWrapper}>
+                        <Avatar size="3rem" type="user" />
+                        <div onClick={handleClickOpen} className={css.createButton}>Create a post</div>
+                    </div>
+                </Card>
+            </div>
             <FeedList list={feedList} />
+            <Dialog fullScreen open={openDialog}>
+                <CreateDialog onClose={handleClose} />
+            </Dialog>
         </div>
     )
 }
