@@ -18,12 +18,17 @@ import { getIdentities } from './api';
 import store from '../store/store';
 import { setIdentityList } from '../store/reducers/identity.reducer';
 import { getFollowings } from '../design-system/pages/chat/new-chat/new-chat.services';
+import {
+  getActiveJobs,
+  getDraftJobs,
+} from '../design-system/pages/job-create/my-jobs/my-jobs.services';
 
 export const routes: Route[] = [
   {
     path: '',
     loader: async () => {
       const resp = await getIdentities();
+      console.log('identityId: ', resp.filter((item) => item.current)[0].id);
       store.dispatch(setIdentityList(resp));
       return resp;
     },
@@ -161,7 +166,18 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/jobs/my-jobs',
+        path: '/jobs/my-jobs/:id',
+        loader: async ({ params }) => {
+          const requests = [
+            getActiveJobs({ identityId: params.id, page: 1 }),
+            getDraftJobs({ identityId: params.id, page: 1 }),
+          ];
+          const [activeJobs, draftJobs] = await Promise.all(requests);
+          return {
+            activeJobs,
+            draftJobs,
+          };
+        },
         element: () =>
           import('../design-system/pages/job-create/my-jobs/my-jobs').then((m) => <m.MyJobs />),
       },
