@@ -98,7 +98,7 @@ export type Pagination<T> = {
   items: T;
   limit: number;
   page: number;
-  total_counts: number;
+  total_count: number;
 };
 
 export type PostMessagePayload = { id: string; text: string };
@@ -117,6 +117,7 @@ export type PostMessageResp = {
 };
 
 export type GetJobs = {
+  id: string;
   applicants: number;
   causes_tags: string[];
   title: string;

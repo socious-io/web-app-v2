@@ -1,5 +1,6 @@
 import { GetJobs, Pagination } from './../../../../core/types';
 import { get } from '../../../../core/http';
+import { JobCardProps } from '../../../molecules/job-card/job-card.types';
 
 export async function getActiveJobs(payload: {
   identityId: string;
@@ -17,4 +18,17 @@ export async function getDraftJobs(payload: {
   return get(`/projects?identity_id=${payload.identityId}&status=DRAFT&page=${payload.page}`).then(
     ({ data }) => data
   );
+}
+
+function jobToJobCardAdaptor(job: GetJobs): JobCardProps {
+  return {
+    id: job.id,
+    title: job.title,
+    body: `${job.applicants} applicant`,
+    date: job.updated_at,
+  };
+}
+
+export function jobListToJobCardListAdaptor(jobs: GetJobs[]): JobCardProps[] {
+  return jobs.map((job) => jobToJobCardAdaptor(job));
 }

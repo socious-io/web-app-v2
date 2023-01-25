@@ -2,20 +2,29 @@ import css from './mobile.module.scss';
 import { Accordion } from '../../../../atoms/accordion/accordion';
 import { Header } from '../../../../atoms/header/header';
 import { Tabs } from '../../../../atoms/tabs/tabs';
+import { JobCard } from '../../../../molecules/job-card/job-card';
+import { useMatch } from '@tanstack/react-location';
+import { GetJobs, Pagination } from '../../../../../core/types';
 
 export const Mobile = (): JSX.Element => {
+  const resolver = useMatch().ownData;
+  const activeJobs = resolver.activeJobs as Pagination<GetJobs>;
+  const draftJobs = resolver.draftJobs as Pagination<GetJobs>;
+  const onGoingTitle = `On-Going (${activeJobs.total_count})`;
+  const draftTitle = `Drafts (${draftJobs.total_count})`;
+
   const tabs = [
     {
       name: 'Created',
       content: (
         <>
-          <Accordion id="1" title="On-going">
+          <Accordion id="on-going" title={onGoingTitle}>
             <div style={{ background: 'red' }}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum eveniet beatae nam
+              {/* <JobCard id="1" title="" date="" body="" /> */}
             </div>
           </Accordion>
-          <Accordion id="2" title="Drafts">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus ipsum officia
+          <Accordion id="drafts" title={draftTitle}>
+            {/* <JobCard id="1" title="" date="" body="" /> */}
           </Accordion>
         </>
       ),
