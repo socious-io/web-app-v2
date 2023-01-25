@@ -1,0 +1,15 @@
+.container {
+  height: 2.75rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr 2rem;
+  align-items: center;
+}
+
+.sendIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}

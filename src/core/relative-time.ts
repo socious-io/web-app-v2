@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const RelativeTime = (date: string) => {
+export const toRelativeTime = (date: string) => {
     const isoStr = date;
     const newDate = new Date(isoStr);
     const timestamp = newDate.getTime();

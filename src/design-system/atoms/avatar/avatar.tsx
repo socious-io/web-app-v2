@@ -2,17 +2,19 @@ import css from './avatar.module.scss';
 import { AvatarProps } from './avatar.types';
 
 export const Avatar = (props: AvatarProps): JSX.Element => {
-  const { size, type, img, ...rest } = props;
+  const { size, type = 'users', img, ...rest } = props;
 
   const images: Record<AvatarProps['type'], string> = {
-    organization: '/icons/organization.svg',
-    user: '/icons/user.svg',
+    organizations: '/icons/organization.svg',
+    users: '/icons/user.svg',
   };
 
   const style = {
     ...rest,
     width: size,
     height: size,
+    minWidth: size,
+    minHeight: size,
     backgroundImage: `url(${images[type]})`,
   };
 
