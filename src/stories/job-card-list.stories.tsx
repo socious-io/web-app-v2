@@ -34,5 +34,5 @@ const list: JobCardProps[] = [
 
 Primary.args = {
   list,
-  onClick: console.log,
+  onItemClick: console.log,
 };
