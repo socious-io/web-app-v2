@@ -61,6 +61,7 @@ export const SocialCauses = {
   INNOVATION: 'INNOVATION',
 };
 
+
 export const SDG = {
   HEALTH: 'HEALTH',
   LIFE: 'LIFE',

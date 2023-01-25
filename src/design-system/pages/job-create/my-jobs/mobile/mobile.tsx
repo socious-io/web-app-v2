@@ -2,7 +2,7 @@ import css from './mobile.module.scss';
 import { Accordion } from '../../../../atoms/accordion/accordion';
 import { Header } from '../../../../atoms/header/header';
 import { Tabs } from '../../../../atoms/tabs/tabs';
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import {
   getActiveJobs,
@@ -11,8 +11,10 @@ import {
 } from '../../my-jobs/my-jobs.services';
 import { MyJobsResolver } from '../my-jobs.types';
 import { JobCardList } from '../../../../organisms/job-card-list/job-card-list';
+import { Fab } from '../../../../atoms/fab/fab';
 
 export const Mobile = (): JSX.Element => {
+  const navigate = useNavigate();
   const resolver = useMatch();
   const { activeJobs, draftJobs } = resolver.ownData as MyJobsResolver;
   const onGoingTitle = `On-Going (${activeJobs.total_count})`;
@@ -45,7 +47,7 @@ export const Mobile = (): JSX.Element => {
         limit: draftJobs.limit,
         total_count: draftJobs.total_count,
       }))
-      .then(setActiveJobList);
+      .then(setDraftJobList);
   }
 
   const tabs = [
@@ -89,6 +91,7 @@ export const Mobile = (): JSX.Element => {
       <div className={css.tabContainer}>
         <Tabs tabs={tabs} />
       </div>
+      <Fab onClick={() => navigate({ to: '/jobs/create/social-causes' })} />
     </div>
   );
 };

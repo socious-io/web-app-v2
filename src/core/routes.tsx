@@ -182,6 +182,18 @@ export const routes: Route[] = [
           import('../design-system/pages/job-create/my-jobs/my-jobs').then((m) => <m.MyJobs />),
       },
       {
+        path: '/jobs/create',
+        children: [
+          {
+            path: 'social-causes',
+            element: () =>
+              import('../design-system/pages/job-create/social-causes/social-causes').then((m) => (
+                <m.SocialCauses />
+              )),
+          },
+        ],
+      },
+      {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
           {
