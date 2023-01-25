@@ -1,5 +1,5 @@
 export type AccordionProps = {
-    children: JSX.Element[] | JSX.Element;
-    title: string;
-    id: string;
-}
+  children: React.ReactNode;
+  title: string;
+  id: string;
+};
