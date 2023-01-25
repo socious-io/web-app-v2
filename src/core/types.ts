@@ -115,3 +115,11 @@ export type PostMessageResp = {
   text: string;
   updated_at: string;
 };
+
+export type GetJobs = {
+  applicants: number;
+  causes_tags: string[];
+  title: string;
+  status: 'ACTIVE' | 'DRAFT';
+  updated_at: string;
+};
