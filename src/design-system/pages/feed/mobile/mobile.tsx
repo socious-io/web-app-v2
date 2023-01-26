@@ -44,8 +44,6 @@ const feedList: FeedItemProps[] = [
 
 export const Mobile = () => {
     const [openDialog, setOpenDialog] = useState(false);
-    const x = RelativeTime('2023-01-22T11:00:31.820Z');
-    console.log('xxx ===>', x);
 
     const handleClickOpen = () => {
         setOpenDialog(true);

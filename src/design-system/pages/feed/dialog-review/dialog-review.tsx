@@ -8,9 +8,7 @@ import { DialogCreate } from '../dialog-create/dialog-create';
 import css from './dialog-review.module.scss';
 import { DialogReviewProps } from './dialog-review.types';
 
-const list = [{ label: 'environment', value: '1' }, { label: 'charity', value: '2' }];
-
-export const DialogReview = ({ onClose }: DialogReviewProps) => {
+export const DialogReview = (props: DialogReviewProps) => {
     const [openDialog, setOpenDialog] = useState(false);
 
     const handleClickOpen = () => {
@@ -19,8 +17,13 @@ export const DialogReview = ({ onClose }: DialogReviewProps) => {
 
     const handleClose = () => {
         setOpenDialog(false);
-        onClose();
+        props.onClose();
     };
+
+    const obj = [{
+        label: props.soucialValue,
+        value: props.soucialValue
+    }]
 
 
     return (
@@ -30,22 +33,20 @@ export const DialogReview = ({ onClose }: DialogReviewProps) => {
                     <img src='icons/chevron-left.svg' />
                 </div>
                 <span className={css.title}>Review Post</span>
-                <div onClick={onClose}>
+                <div onClick={props.onClose}>
                     <img src='icons/close-black.svg' />
                 </div>
             </div>
             <div className={css.social}>
                 <Avatar type='user' />
-                <div>
-                    <CategoriesClickable list={list} />
-                </div>
+                <CategoriesClickable list={obj} />
             </div>
             <div className={css.text}>
-                hhhggg
+                {props.text}
             </div>
             <div className={css.image}>
                 <Card>
-                    <img src='images/jobs-page-header.png' />
+                    <img src={props.imgUrl} />
                 </Card>
             </div>
             <div className={css.footer}>
