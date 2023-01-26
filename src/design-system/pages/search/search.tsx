@@ -1,7 +1,7 @@
 import { FilterMenu } from '../../molecules/filter-menu/filter-menu';
 import css from './search.module.scss';
 
-const list = [{ label: 'project', value: '1' }, { label: 'date posted', value: '2' }, { label: 'social ', value: '3' },]
+const list = [{ label: 'project', value: '1' }, { label: 'date posted', value: '2' }, { label: 'social ', value: '3' }, { label: 'social ', value: '4' },]
 
 
 export const Search = () => {

@@ -1,5 +1,4 @@
 .container {
-    background-color: aqua;
     display: flex;
     overflow-x: scroll;
     gap: 1rem
@@ -10,8 +9,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.8rem;
+    gap: 0.25rem;
     padding: 1rem;
+
+}
+
+.item span {
+    white-space: nowrap;
 }
 
 .active {

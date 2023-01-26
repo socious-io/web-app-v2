@@ -14,11 +14,15 @@ export const FilterMenu = ({ list, selectedValue, onGetValue }: FilterMenuProps)
                 list.map(item =>
                     <div key={item.value} onClick={() => onClick(item.value)}
                         className={`${css.item} ${item.value === selectedValue ? css.active : ''}`}>
-                        <span>Oraganizations</span>
-                        <img src='/icons/arrow-down-black.svg' />
+                        <span>{item.label}</span>
+                        {
+                            item.value === selectedValue
+                                ? <img src='/icons/arrow-down-white.svg' />
+                                : <img src='/icons/arrow-down-black.svg' />
+                        }
+
                     </div>)
             }
-
         </div>
     );
 };
