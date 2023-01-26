@@ -225,6 +225,10 @@ export const routes: Route[] = [
             element: () => import('../design-system/pages/feed/feed').then((m) => <m.Feed />),
           },
           {
+            path: 'search',
+            element: () => import('../design-system/pages/search/search').then((m) => <m.Search />),
+          },
+          {
             element: <Navigate to="intro" />,
           },
         ],
