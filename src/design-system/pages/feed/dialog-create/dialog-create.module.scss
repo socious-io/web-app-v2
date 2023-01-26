@@ -31,7 +31,8 @@
 .text {
     padding: 1rem;
     min-height: 200px;
-    border-bottom: 1px solid var(--border-gray-01);
+    // border: 1px solid var(--border-gray-01);
+    // margin: 1rem;
 }
 
 .image {
@@ -41,6 +42,16 @@
     align-items: center;
     padding: 1.25rem;
     background-color: var(--color-off-white-01);
+    position: relative;
+}
+
+.image input {
+    position: absolute;
+    top: 9px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    opacity: 0;
 }
 
 .footer {
