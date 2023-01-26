@@ -191,6 +191,11 @@ export const routes: Route[] = [
                 <m.SocialCauses />
               )),
           },
+          {
+            path: 'skills',
+            element: () =>
+              import('../design-system/pages/job-create/skills/skills').then((m) => <m.Skills />),
+          },
         ],
       },
       {
