@@ -46,3 +46,25 @@
     margin: 0;
     height: 2rem;
 }
+
+.create {
+    margin: 1.5rem 1rem 0.5rem 1rem;
+}
+
+.createWrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem
+}
+
+.createButton {
+    background-color: var(--color-off-white-01);
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0 1.5rem;
+    color: var(--color-primary-01);
+    font-size: 1rem;
+}
