@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toCategoriesAdaptor } from '../../../../../core/adaptors';
 import { Comment } from '../../../../molecules/comment/comment';
 import { FeedItem } from '../../../../molecules/feed-item/feed-item';
 import { SendBox } from '../../../../molecules/send-box/send-box';
 import css from './mobile.module.scss';
-import { comments } from './mobile.service';
-import { MobileProps } from './mobile.types';
+import { comments, getComments } from './mobile.service';
+import { CommentModel, MobileProps } from './mobile.types';
 
 export const Mobile = ({ data }: MobileProps) => {
     const [message, setMessage] = useState('');
+    const [commentList, setCommentList] = useState<CommentModel[]>();
 
     const actionList = (likes: number, liked: boolean) => [
         { label: 'Like', iconName: 'heart-blue', like: likes, isLiked: liked },
@@ -18,15 +19,18 @@ export const Mobile = ({ data }: MobileProps) => {
     const changeMessageHandler = (value: string) => {
         console.log('value ==> ', value);
         setMessage(value);
-
-
     }
 
     const sendMessage = () => {
-        comments(message, data.id).then(resp => {
-            console.log('resp', resp);
-        });
+        comments(message, data.id).then();
     }
+
+    useEffect(() => {
+        getComments(data.id).then(resp => {
+            console.log('resp', resp);
+            setCommentList(resp.items)
+        });
+    }, [])
 
     return (
 
@@ -53,7 +57,7 @@ export const Mobile = ({ data }: MobileProps) => {
                 <SendBox onValueChange={changeMessageHandler} onSend={sendMessage} />
             </div>
             <div className={css.messages}>
-               <Comment/>
+                <Comment list={commentList} />
             </div>
         </div>
     )

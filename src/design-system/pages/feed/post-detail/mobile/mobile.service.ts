@@ -1,6 +1,7 @@
 import { get, post } from "../../../../../core/http";
 import { SearchReq } from "../../../../../core/types";
 import { Feed } from "../../../../organisms/feed-list/feed-list.types";
+import { CommentModel } from "./mobile.types";
 
 export async function getPostDetail(id: string): Promise<Feed> {
   return get(`posts/${id}`).then(({ data }) => data);
@@ -11,4 +12,8 @@ export async function comments(content: string, id: string): Promise<SearchReq> 
     content
   }
   return post(`posts/${id}/comments`, body).then(({ data }) => data);
+}
+
+export async function getComments(id: string): Promise<SearchReq> {
+  return get(`posts/${id}/comments?page=1`).then(({ data }) => data);
 }
