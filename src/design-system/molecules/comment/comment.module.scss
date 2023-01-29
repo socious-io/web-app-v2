@@ -1,0 +1,25 @@
+.container {
+    // background-color: aqua;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem
+}
+
+.date {
+    color: var(--color-gray-01);
+}
+
+.messageBox {
+    margin: 0.75rem 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.like {
+    display: flex;
+    gap: 0.5rem;
+    background-color: bisque;
+}

@@ -1,3 +1,5 @@
+import { JobItems, PostItems } from "../design-system/pages/search/search.types";
+
 export type UserIdentityMeta = {
   address: string;
   city: string;
@@ -125,3 +127,5 @@ export type GetJobs = {
   status: 'ACTIVE' | 'DRAFT';
   updated_at: string;
 };
+
+export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
