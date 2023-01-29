@@ -4,10 +4,11 @@ import { JobListProps } from './job-list.types';
 import { Categories } from '../../atoms/categories/categories';
 import { Typography } from '../../atoms/typography/typography';
 import { CategoriesClickable } from '../../atoms/categories-clickable/categories-clickable';
-import { getCausesList, getList } from './job-list.services';
+import { getList } from './job-list.services';
 import { Avatar } from '../../atoms/avatar/avatar';
 import { useNavigate } from '@tanstack/react-location';
 import { toRelativeTime } from '../../../core/relative-time';
+import { socialCausesToCategory } from '../../../core/adaptors';
 
 export const JobList = (props: JobListProps): JSX.Element => {
   const { data, onMorePageClick, ...rest } = props;
@@ -21,8 +22,6 @@ export const JobList = (props: JobListProps): JSX.Element => {
   return (
     <div style={rest} className={css.container}>
       {data.map((job) => {
-        console.log('jj: ', job);
-        
         return (
           <Card key={job.id} cursor="pointer" onClick={goToJobDetail(job.id)}>
             <div className={css.header}>
@@ -38,7 +37,10 @@ export const JobList = (props: JobListProps): JSX.Element => {
               <Typography marginBottom="1rem" lineLimit={3} size="s2">
                 {job.description}
               </Typography>
-              <CategoriesClickable marginBottom="1rem" list={getCausesList(job.causes_tags)} />
+              <CategoriesClickable
+                marginBottom="1rem"
+                list={socialCausesToCategory(job.causes_tags)}
+              />
             </div>
             <div className={css.footer}>{toRelativeTime(job.updated_at)}</div>
           </Card>

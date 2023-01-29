@@ -1,3 +1,8 @@
 export function convertSnakeCaseToLowerCase(value: string): string {
-  return value.toLowerCase()?.replaceAll('_', ' ');
+  try {
+    return value.toLowerCase()?.replaceAll('_', ' ');
+  } catch {
+    console.error('value could not be transform to lowercase');
+    return '';
+  }
 }
