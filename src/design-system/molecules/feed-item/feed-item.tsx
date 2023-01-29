@@ -10,7 +10,7 @@ import { FeedItemProps } from './feed-item.types';
 export const FeedItem = (props: FeedItemProps): JSX.Element => {
     return (
         <Card>
-            <ProfileView type='user' name={props.name} img={props.imgAvatar} />
+            <ProfileView type={props.type} name={props.name} img={props.imgAvatar} />
             <div className={css.img}>
                 <img src={props.img} />
             </div>
