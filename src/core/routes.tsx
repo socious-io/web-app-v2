@@ -22,6 +22,7 @@ import {
   getActiveJobs,
   getDraftJobs,
 } from '../design-system/pages/job-create/my-jobs/my-jobs.services';
+import { getFeedList } from '../design-system/pages/feed/mobile/mobile.service';
 
 export const routes: Route[] = [
   {
@@ -221,8 +222,9 @@ export const routes: Route[] = [
             loader: () => getNotificationList({ page: 1 }),
           },
           {
-            path: 'feed',
+            path: 'feeds',
             element: () => import('../design-system/pages/feed/feed').then((m) => <m.Feed />),
+            loader: () => getFeedList({ page: 1 }),
           },
           {
             path: 'search',

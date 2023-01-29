@@ -10,3 +10,12 @@ export function skillsToCategoryAdaptor() {
     return { value: key, label: value };
   });
 }
+
+export function toCategoriesAdaptor(categories: string[] = []) {
+  if (!categories) {
+    return [];
+  }
+  return categories.map(cat => {
+    return SOCIAL_CAUSES[cat];
+  })
+}

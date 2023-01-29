@@ -1,69 +1,26 @@
 import { useState } from 'react';
-import { toRelativeTime } from '../../../../core/relative-time';
 import { Dialog } from '@mui/material';
 import { Avatar } from '../../../atoms/avatar/avatar';
 import { Card } from '../../../atoms/card/card';
-import { FeedItemProps } from '../../../molecules/feed-item/feed-item.types';
 import { FeedList } from '../../../organisms/feed-list/feed-list';
 import { DialogCreate } from '../dialog-create/dialog-create';
 import css from './mobile.module.scss';
+import { FeedsMobileProps } from './mobile.types';
+import { getFeedList } from './mobile.service';
 
-const feedList: FeedItemProps[] = [
-  {
-    id: '1',
-    imgAvatar: '',
-    img: '',
-    date: '8 min',
-    categories: [
-      { label: 'environment', value: '1' },
-      { label: 'charity', value: '2' },
-    ],
-    text: ' Lorem ipsum dolor sit amet consectetur adipisicing elit. At similique et earum, nisi nesciunt fuga velit vero nobis harum illum iste dignissimos distinctio culpa dicta esse placeat debitis laboriosam recusandae. ',
-    name: 'sara kave',
-    actionList: [
-      { label: 'Like', iconName: 'heart-blue' },
-      { label: 'Comment', iconName: 'comment-blue' },
-      { label: 'Share', iconName: 'share-blue' },
-    ],
-  },
-  {
-    id: '2',
-    imgAvatar: '',
-    img: '',
-    date: '8 min',
-    categories: [
-      { label: 'environment', value: '1' },
-      { label: 'charity', value: '2' },
-    ],
-    text: ' Lorem ipsum dolor sit amet consectetur adipisicing elit. At similique et earum, nisi nesciunt fuga velit vero nobis harum illum iste dignissimos distinctio culpa dicta esse placeat debitis laboriosam recusandae. ',
-    name: 'sajad abbasi',
-    actionList: [
-      { label: 'Like', iconName: 'heart-blue' },
-      { label: 'Comment', iconName: 'comment-blue' },
-      { label: 'Share', iconName: 'share-blue' },
-    ],
-  },
-  {
-    id: '3',
-    imgAvatar: '',
-    img: '',
-    date: '8 min',
-    categories: [
-      { label: 'environment', value: '1' },
-      { label: 'charity', value: '2' },
-    ],
-    text: ' Lorem ipsum dolor sit amet consectetur adipisicing elit. At similique et earum, nisi nesciunt fuga velit vero nobis harum illum iste dignissimos distinctio culpa dicta esse placeat debitis laboriosam recusandae. ',
-    name: 'siera yun',
-    actionList: [
-      { label: 'Like', iconName: 'heart-blue' },
-      { label: 'Comment', iconName: 'comment-blue' },
-      { label: 'Share', iconName: 'share-blue' },
-    ],
-  },
-];
-
-export const Mobile = () => {
+export const Mobile = ({ list }: FeedsMobileProps) => {
+  console.log('list: ', list)
   const [openDialog, setOpenDialog] = useState(false);
+  const [feedList, setFeedList] = useState(list.items);
+  const [page, setPage] = useState(1);
+
+  function onMorePage() {
+
+    getFeedList({ page: page + 1 }).then((resp) => {
+      setPage((v) => v + 1);
+      setFeedList((list) => [...list, ...resp.items]);
+    });
+  }
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -96,7 +53,7 @@ export const Mobile = () => {
           </div>
         </Card>
       </div>
-      <FeedList list={feedList} />
+      <FeedList data={feedList} onMorePageClick={onMorePage} />
       <Dialog fullScreen open={openDialog}>
         <DialogCreate onClose={handleClose} />
       </Dialog>
