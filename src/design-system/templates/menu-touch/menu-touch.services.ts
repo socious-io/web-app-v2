@@ -1,22 +1,22 @@
 export const menuList = [
   {
     label: 'Jobs',
-    icon: '/icons/jobs.svg',
+    icon: '/icons/menu/jobs',
     route: '/jobs',
   },
   {
     label: 'Feeds',
-    icon: '/icons/feeds.svg',
+    icon: '/icons/menu/feeds',
     route: '/feeds',
   },
   {
     label: 'Chat',
-    icon: '/icons/chat.svg',
+    icon: '/icons/menu/chat',
     route: '/chats/contacts',
   },
   {
     label: 'Notifications',
-    icon: '/icons/notifications.svg',
+    icon: '/icons/menu/notifications',
     route: '/notifications',
   },
 ];

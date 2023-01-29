@@ -11,11 +11,21 @@ export function skillsToCategoryAdaptor() {
   });
 }
 
-export function toCategoriesAdaptor(categories: string[] = []) {
+export function socialCausesToCategory(categories: string[] = []) {
   if (!categories) {
     return [];
   }
-  return categories.map(cat => {
+  return categories.map((cat) => {
     return SOCIAL_CAUSES[cat];
-  })
+  });
+}
+
+export function skillsToCategory(skills: string[] = []) {
+  try {
+    return skills.map((name) => {
+      return { value: name, label: SKILLS[name] };
+    });
+  } catch {
+    return [];
+  }
 }

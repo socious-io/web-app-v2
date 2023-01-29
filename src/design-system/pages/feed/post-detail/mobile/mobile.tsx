@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { toCategoriesAdaptor } from '../../../../../core/adaptors';
+import { socialCausesToCategory } from '../../../../../core/adaptors';
 import { Comment } from '../../../../molecules/comment/comment';
 import { FeedItem } from '../../../../molecules/feed-item/feed-item';
 import { SendBox } from '../../../../molecules/send-box/send-box';
@@ -47,7 +47,7 @@ export const Mobile = ({ data }: MobileProps) => {
                 name={data.identity_meta.name}
                 actionList={actionList(data.likes, data.liked)}
                 date={data.created_at}
-                categories={toCategoriesAdaptor(data.causes_tags)}
+                categories={socialCausesToCategory(data.causes_tags)}
             />
             <div className={css.sendBox}>
                 <SendBox onValueChange={changeMessageHandler} onSend={sendMessage} />

@@ -1,7 +1,7 @@
 import { FeedItem } from "../../molecules/feed-item/feed-item";
 import { FeedListProps } from "./feed-list.types";
 import css from './feed-list.module.scss';
-import { toCategoriesAdaptor } from "../../../core/adaptors";
+import { socialCausesToCategory } from "../../../core/adaptors";
 import { useNavigate } from "@tanstack/react-location";
 
 
@@ -33,7 +33,7 @@ export const FeedList = ({ data, onMorePageClick }: FeedListProps) => {
                     name={item.identity_meta.name}
                     actionList={actionList(item.id, item.likes, item.liked)}
                     date={item.created_at}
-                    categories={toCategoriesAdaptor(item.causes_tags)}
+                    categories={socialCausesToCategory(item.causes_tags)}
                 />)
             }
             <div className={css.seeMore} onClick={() => onMorePageClick()}>
