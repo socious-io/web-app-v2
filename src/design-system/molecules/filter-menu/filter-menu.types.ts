@@ -7,4 +7,11 @@ export type FilterMenuProps = {
 type Obj = {
     label: string,
     value: string,
+    type: 'modal' | 'dropdown';
+    subMenu?: subMenuList[];
+}
+
+type subMenuList = {
+    label: string;
+    value: string;
 }
