@@ -1,5 +1,8 @@
 .container {
     // background-color: aqua;
+    margin: 2rem 0;
+    border-bottom: 1px solid var(--border-gray-01);
+    padding-bottom: 1rem;
 }
 
 .info {
@@ -12,14 +15,15 @@
     color: var(--color-gray-01);
 }
 
+.wrapper {
+    margin-left: calc(100vw - 95%);
+}
+
 .messageBox {
     margin: 0.75rem 0;
-    display: flex;
-    justify-content: flex-end;
 }
 
 .like {
     display: flex;
     gap: 0.5rem;
-    background-color: bisque;
 }
