@@ -5,5 +5,7 @@ export type ActionListProps = {
 export type ActionObj = {
     label: string;
     iconName: string;
+    like?: number;
+    isLiked?:boolean;
     onClick?: () => void;
 }

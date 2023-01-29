@@ -3,8 +3,9 @@ export type FeedItemProps = {
     imgAvatar: string;
     date: string;
     img: string;
-    categories: { value: string; label: string }[];
+    categories?: { value: string; label: string }[];
     text: string;
     name: string;
     actionList: { label: string; iconName: string }[];
+    type: 'organizations' | 'users';
 }

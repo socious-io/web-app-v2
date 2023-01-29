@@ -1,6 +1,6 @@
 export type SendBoxProps = {
   onValueChange?: (value: string) => void;
   onSend?: () => void;
-  value: string;
+  value?: string;
   img?: string;
 };
