@@ -2,17 +2,24 @@ import { FeedItem } from "../../molecules/feed-item/feed-item";
 import { FeedListProps } from "./feed-list.types";
 import css from './feed-list.module.scss';
 import { toCategoriesAdaptor } from "../../../core/adaptors";
+import { useNavigate } from "@tanstack/react-location";
 
-const navigateTOPostDetail = (id: string) => {
-    console.log('jjjj', id);
-}
 
-const actionList = (id: string, likes: number, liked: boolean) => [
-    { label: 'Like', iconName: 'heart-blue', like: likes, isLiked: liked },
-    { label: 'Comment', iconName: 'comment-blue', onClick: () => navigateTOPostDetail(id) },
-];
+
+
 
 export const FeedList = ({ data, onMorePageClick }: FeedListProps) => {
+
+    const navigate = useNavigate();
+
+    const actionList = (id: string, likes: number, liked: boolean) => [
+        { label: 'Like', iconName: 'heart-blue', like: likes, isLiked: liked },
+        { label: 'Comment', iconName: 'comment-blue', onClick: () => navigateTOPostDetail(id) },
+    ];
+
+    const navigateTOPostDetail = (id: string) => {
+        navigate({ to: `./${id}` });
+    }
 
     return (
         <div className={css.container}>
