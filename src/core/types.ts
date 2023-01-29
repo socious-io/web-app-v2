@@ -22,7 +22,8 @@ export type IdentityReq = {
     country: string;
     email: string;
     id: string;
-    image: string;
+    image?: string;
+    avatar?: string;
     name: string;
     shortname: string;
     status: string;

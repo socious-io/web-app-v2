@@ -38,6 +38,7 @@ export const SignIn = (): JSX.Element => {
         </div>
         <form className={css.formContainer}>
           <Input
+            variant="outline"
             autoComplete="username"
             label="Email"
             value={account.email}
@@ -45,6 +46,7 @@ export const SignIn = (): JSX.Element => {
             placeholder="Email"
           />
           <Input
+            variant="outline"
             autoComplete="current-password"
             type="password"
             label="Password"
@@ -64,9 +66,7 @@ export const SignIn = (): JSX.Element => {
           </Button>
           <Typography marginTop="1rem">
             <span>Not a member? </span>
-            <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>
-              Sign up
-            </Link>
+            <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>Sign up</Link>
           </Typography>
         </div>
       </div>

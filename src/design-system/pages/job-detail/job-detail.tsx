@@ -1,6 +1,6 @@
 // @ts-nocheck
 import css from './job-detail.module.scss';
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Button } from '../../atoms/button/button';
 import { CategoriesClickable } from '../../atoms/categories-clickable/categories-clickable';
 import { Categories } from '../../atoms/categories/categories';
@@ -11,17 +11,19 @@ import { JobDetailProps, Loader } from './job-detail.types';
 import { Divider } from '../../templates/divider/divider';
 
 export const JobDetail = (props: JobDetailProps): JSX.Element => {
+  const navigate = useNavigate();
   const { data: job } = useMatch<Loader>();
+  console.log('xjj: ', job);
 
   return (
     <div className={css.container}>
-      <Header title="Full Stack Developer" />
+      <Header onBack={() => navigate({ to: '/jobs' })} title={job?.job_category.name} />
       <Divider>
         <ProfileView
           name={job.identity_meta.name}
           location={job.identity_meta.city}
           img={job.identity_meta.image}
-          type="organization"
+          type={job?.identity_type}
         />
         <div className={css.jobTitle}>{job.title}</div>
         <Categories marginBottom="1rem" list={getCategories(job)} />
