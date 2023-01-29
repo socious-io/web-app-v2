@@ -30,11 +30,11 @@ export const DialogReview = (props: DialogReviewProps) => {
         <div className={css.container}>
             <div className={css.header}>
                 <div onClick={handleClickOpen}>
-                    <img src='icons/chevron-left.svg' />
+                    <img src='/icons/chevron-left.svg' />
                 </div>
                 <span className={css.title}>Review Post</span>
                 <div onClick={props.onClose}>
-                    <img src='icons/close-black.svg' />
+                    <img src='/icons/close-black.svg' />
                 </div>
             </div>
             <div className={css.social}>

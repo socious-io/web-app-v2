@@ -1,0 +1,17 @@
+.container {
+    padding: 0 1rem;
+    background-color: var(--color-off-white-01);
+}
+
+.header {
+    height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    padding-top: var(--safe-area);
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+
+}

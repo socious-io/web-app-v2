@@ -23,6 +23,7 @@ import {
   getDraftJobs,
 } from '../design-system/pages/job-create/my-jobs/my-jobs.services';
 import { getFeedList } from '../design-system/pages/feed/mobile/mobile.service';
+import { getPostDetail } from '../design-system/pages/feed/post-detail/mobile/mobile.service';
 
 export const routes: Route[] = [
   {
@@ -200,6 +201,14 @@ export const routes: Route[] = [
         ],
       },
       {
+        path: '/feeds/:id',
+        loader: ({ params }) => {
+          return getPostDetail(params.id)
+        },
+        element: () =>
+          import('../design-system/pages/feed/post-detail/post-detail').then((m) => <m.PostDetail />),
+      },
+      {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
           {
@@ -221,6 +230,7 @@ export const routes: Route[] = [
               )),
             loader: () => getNotificationList({ page: 1 }),
           },
+        
           {
             path: 'feeds',
             element: () => import('../design-system/pages/feed/feed').then((m) => <m.Feed />),
