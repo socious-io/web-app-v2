@@ -11,15 +11,17 @@ export const Comment = () => {
                 <span className={css.date}>2 min ago</span>
             </div>
 
-            <div className={css.messageBox}>
-                <ChatBox type='sender'>
-                    ddd
-                </ChatBox>
-            </div>
+            <div className={css.wrapper}>
+                <div className={css.messageBox}>
+                    <ChatBox type='sender'>
+                        ddd
+                    </ChatBox>
+                </div>
 
-            <div className={css.like}>
-                <img src="/icons/heart-blue.svg" />
-                <span>0 likes</span>
+                <div className={css.like}>
+                    <img src="/icons/heart-blue.svg" />
+                    <span>0 likes</span>
+                </div>
             </div>
         </div>
     )
