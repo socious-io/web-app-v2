@@ -1,69 +1,70 @@
 .container {
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .header {
-    height: 4.5rem;
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border-gray-01);
-    padding: 1.25rem;
-    padding-top: var(--safe-area);
+  height: 4.5rem;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-gray-01);
+  padding: 1.25rem;
+  padding-top: var(--safe-area);
 }
 
 .title {
-    font-weight: 600;
-    font-size: 1.25rem;
+  font-weight: 600;
+  font-size: 1.25rem;
 }
 
 .social {
-    display: flex;
-    gap: 0.75rem;
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-gray-01);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-gray-01);
 }
 
 .text {
-    padding: 1rem;
-    min-height: 200px;
+  padding: 1rem;
+  min-height: 200px;
 }
 
 .image {
-    display: flex;
-    justify-content: flex-end;
-    height: 3rem;
-    align-items: center;
-    padding: 1.25rem;
-    background-color: var(--color-off-white-01);
-    position: relative;
+  display: flex;
+  justify-content: flex-end;
+  height: 3rem;
+  align-items: center;
+  padding: 1.25rem;
+  background-color: var(--color-off-white-01);
+  position: relative;
 }
 
 .image input {
-    position: absolute;
-    top: 9px;
-    right: 20px;
-    width: 24px;
-    height: 24px;
-    opacity: 0;
+  position: absolute;
+  top: 9px;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
 }
 
 .footer {
-    background-color: aquamarine;
-    margin-top: auto;
+  background-color: aquamarine;
+  margin-top: auto;
 }
 
 .button {
-    display: flex;
-    justify-content: flex-end;
-    background-color: #ffffff;
-    padding: 2.5rem 1rem;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #ffffff;
+  padding: 2.5rem 1rem;
 }
 
 .button Button {
-    width: 10.18rem;
+  width: 10.18rem;
 }

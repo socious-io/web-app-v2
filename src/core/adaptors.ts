@@ -5,6 +5,12 @@ export function socialCausesToCategoryAdaptor() {
   return Object.entries(SOCIAL_CAUSES).map(([, value]) => value);
 }
 
+export function socialCausesToDropdownAdaptor() {
+  return Object.entries(SOCIAL_CAUSES).map(([, value]) => {
+    return { title: value.label, value: value.value };
+  });
+}
+
 export function skillsToCategoryAdaptor() {
   return Object.entries(SKILLS).map(([key, value]) => {
     return { value: key, label: value };

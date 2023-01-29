@@ -18,14 +18,12 @@ export const ContactList = (props: ContactListProps): JSX.Element => {
       <div className={css.searchContainer}>
         <Search flex="1" placeholder="search name" onValueChange={onSearch} />
       </div>
-      <div>
-        {message && list.length === 0 && messageJSX}
-        {list.map((contactData) => {
-          return (
-            <ContactItem onContactClick={onContactClick} key={contactData.id} {...contactData} />
-          );
-        })}
-      </div>
+      {message && list.length === 0 && messageJSX}
+      {list.map((contactData) => {
+        return (
+          <ContactItem onContactClick={onContactClick} key={contactData.id} {...contactData} />
+        );
+      })}
     </div>
   );
 };
