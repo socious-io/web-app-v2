@@ -196,6 +196,11 @@ export const routes: Route[] = [
             element: () =>
               import('../design-system/pages/job-create/skills/skills').then((m) => <m.Skills />),
           },
+          {
+            path: 'info',
+            element: () =>
+              import('../design-system/pages/job-create/info/info').then((m) => <m.Info />),
+          },
         ],
       },
       {
