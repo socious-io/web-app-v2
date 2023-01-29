@@ -5,7 +5,9 @@ import { search } from './search.services';
 import { useEffect, useState } from 'react';
 import { PayloadModel } from './search.types';
 
-const list = [{ label: 'Projects', value: 'projects' }, { label: 'Posts', value: 'posts' }, { label: 'social ', value: '3' }, { label: 'social ', value: '4' },]
+const subMenuList = [{ label: 'Projects', value: 'projects' }, { label: 'Posts', value: 'posts' }];
+
+const list = [{ label: 'Projects', value: 'projects', type: 'dropdown', subMenu: subMenuList }, { label: 'Socila Causes', value: 'social', type: 'modal' }, { label: 'Skills ', value: 'skills', type: 'modal' }]
 
 
 
