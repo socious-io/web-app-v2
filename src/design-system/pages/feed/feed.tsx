@@ -5,7 +5,5 @@ import { Mobile } from "./mobile/mobile";
 
 export const Feed = () => {
     const data = useMatch().ownData;
-    console.log('dd: ', data);
-    //@ts-ignore
     return isTouchDevice() ? <Mobile list={data} /> : <Desktop />;
 }

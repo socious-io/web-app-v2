@@ -1,6 +1,6 @@
+import { CommentModel } from "../../pages/feed/post-detail/mobile/mobile.types";
+
 export type CommentProps = {
-    name: string;
-    date: string;
-    content: string;
-    like: number;
+    list: CommentModel[];
+
 }
