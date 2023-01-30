@@ -5,7 +5,6 @@ import { Card } from '../../../../atoms/card/card';
 import { CategoriesClickable } from '../../../../atoms/categories-clickable/categories-clickable';
 import { Search } from '../../../../atoms/search/search';
 import { Steps } from '../../../../atoms/steps/steps';
-import { SOCIAL_CAUSES } from '../social-causes.services';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
@@ -37,12 +36,12 @@ export const Desktop = (): JSX.Element => {
         </div>
         <div className={css.main}>
           <div className={css.categoryTitle}>Popular</div>
-          <CategoriesClickable
+          {/* <CategoriesClickable
             clickable
             onChange={console.log}
             list={SOCIAL_CAUSES}
             selected={[]}
-          />
+          /> */}
         </div>
         <div className={css.buttonContainer}>
           <Button onClick={() => navigate({ to: '../profile' })}>Continue</Button>
