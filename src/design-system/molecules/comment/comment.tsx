@@ -5,6 +5,7 @@ import css from './comment.module.scss';
 import { CommentProps } from './comment.types';
 
 export const Comment = (props: CommentProps) => {
+
   return (
     <>
       {props.list.map((item) => (
@@ -25,8 +26,12 @@ export const Comment = (props: CommentProps) => {
               <span>{item.likes} likes</span>
             </div>
           </div>
+
         </div>
       ))}
+      <div className={css.seeMore} onClick={() => props.onMorePageClick()}>
+        See more
+      </div>
     </>
   );
 };
