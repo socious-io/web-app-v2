@@ -26,3 +26,10 @@
     display: flex;
     gap: 0.5rem;
 }
+
+.seeMore {
+    text-align: center;
+    font-weight: 600;
+    font-size: var(--font-size-s2);
+    color: var(--color-primary-01);
+  }
