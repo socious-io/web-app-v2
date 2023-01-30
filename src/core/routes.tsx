@@ -211,7 +211,7 @@ export const routes: Route[] = [
       {
         path: '/feeds/:id',
         loader: async ({ params }) => {
-          const requests = [getPostDetail(params.id), getComments(params.id)];
+          const requests = [getPostDetail(params.id), getComments(params.id, 1)];
           const [post, comments] = await Promise.all(requests);
           return { post, comments };
         },
