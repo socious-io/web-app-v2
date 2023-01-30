@@ -1,4 +1,5 @@
-import { useNavigate } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../../../../core/types';
 import { RootState } from '../../../../../store/store';
@@ -11,9 +12,10 @@ import { HeaderStaticMobile } from '../../../../templates/header-static-mobile/h
 import { chatEntityToContactListAdaptor, getChatsSummery } from '../contact-list.services';
 
 export const Mobile = (): JSX.Element => {
-  const chatEntity: ContactItem[] = useSelector<RootState>((state) => {
-    return chatEntityToContactListAdaptor(state.chat.entities);
-  }) as ContactItem[];
+  const resolver = useMatch();
+  const initialState = chatEntityToContactListAdaptor(resolver.ownData.items);
+  const [chats, setChats] = useState<ContactItem[]>(initialState);
+  const [state, setState] = useState({ page: 1, filter: '' });
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -22,7 +24,20 @@ export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
 
   function onSearch(value: string) {
-    getChatsSummery({ page: 1, filter: value });
+    const payload = { page: 1, filter: value };
+    getChatsSummery(payload).then((resp) => {
+      setChats(chatEntityToContactListAdaptor(resp.items));
+      setState(payload);
+    });
+  }
+
+  function onScroll(page: number) {
+    const payload = { ...state, page: state.page + 1 };
+    getChatsSummery(payload).then((resp) => {
+      const newList = chatEntityToContactListAdaptor(resp.items);
+      setChats([...chats, ...newList]);
+      setState(payload);
+    });
   }
 
   return (
@@ -36,8 +51,10 @@ export const Mobile = (): JSX.Element => {
           right={<Avatar size="2rem" type="users" img={identity.meta.image} />}
         />
         <ContactList
+          height="calc(var(--window-height) - var(--safe-area) + 1.5rem)"
+          onScroll={onScroll}
           onContactClick={(contact) => navigate({ to: contact.id })}
-          list={chatEntity}
+          list={chats}
           onSearch={onSearch}
         />
       </HeaderStaticMobile>
