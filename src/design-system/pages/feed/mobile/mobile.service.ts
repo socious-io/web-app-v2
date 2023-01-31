@@ -24,3 +24,11 @@ type PostPayloadReq = {
 export async function submitPost(payload: PostPayloadReq) {
   return post('/posts', payload).then(({ data }) => data);
 }
+
+export async function like(id: string) {
+  return post(`/posts/${id}/like`, {}).then();
+}
+
+export async function unlike(id: string) {
+  return post(`/posts/${id}/unlike`, {}).then();
+}
