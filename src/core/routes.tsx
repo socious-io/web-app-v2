@@ -27,6 +27,8 @@ import {
   getComments,
   getPostDetail,
 } from '../design-system/pages/feed/post-detail/mobile/mobile.service';
+import { getUserDetail } from '../design-system/pages/profile/profile.services';
+import { UserType } from './types';
 
 export const routes: Route[] = [
   {
@@ -59,6 +61,14 @@ export const routes: Route[] = [
             ],
           },
         ],
+      },
+      {
+        path: 'profile/:userType/:id',
+        loader: ({ params }) => {
+          const userType = params.userType as UserType;
+          return getUserDetail({ id: params.id, userType });
+        },
+        element: () => import('../design-system/pages/profile/profile').then((m) => <m.Profile />),
       },
       {
         path: 'organization',
