@@ -9,7 +9,7 @@ import { Button } from '../../../atoms/button/button';
 import { Card } from '../../../atoms/card/card';
 import { CategoriesClickable } from '../../../atoms/categories-clickable/categories-clickable';
 import { DialogCreate } from '../dialog-create/dialog-create';
-import { submitPost, uploadImage } from '../mobile/mobile.service';
+import { getFeedList, submitPost, uploadImage } from '../mobile/mobile.service';
 import css from './dialog-review.module.scss';
 import { DialogReviewProps } from './dialog-review.types';
 
@@ -44,8 +44,10 @@ export const DialogReview = (props: DialogReviewProps) => {
       media: imageId,
     };
     submitPost(payload).then(() => {
-      navigate({ to: '/feeds' });
-      handleClose();
+      getFeedList({ page: 1 }).then((resp) => {
+        // props.setFeedList(resp.items);
+        handleClose();
+      });
     });
   }
 
