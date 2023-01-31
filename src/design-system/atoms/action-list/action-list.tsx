@@ -1,5 +1,5 @@
 import css from './action-list.module.scss';
-import { ActionListProps, ActionObj } from './action-list.types';
+import { ActionListProps } from './action-list.types';
 
 
 export const ActionList = ({ list }: ActionListProps) => {
