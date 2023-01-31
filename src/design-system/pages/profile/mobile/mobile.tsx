@@ -2,7 +2,7 @@ import css from './mobile.module.scss';
 import { Avatar } from '../../../atoms/avatar/avatar';
 import { Button } from '../../../atoms/button/button';
 import { ThreeDotsButton } from '../../../atoms/three-dots-button/three-dots-button';
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Divider } from '../../../templates/divider/divider';
 import { ProfileReq } from '../profile.types';
 import { CategoriesClickable } from '../../../atoms/categories-clickable/categories-clickable';
@@ -10,12 +10,19 @@ import { socialCausesToCategory } from '../../../../core/adaptors';
 
 export const Mobile = (): JSX.Element => {
   const data = useMatch().ownData as ProfileReq;
-
   const socialCauses = socialCausesToCategory(data.social_causes);
+  const navigate = useNavigate();
+
+  function onClose() {
+    navigate({ to: '/jobs' });
+  }
 
   return (
     <div className={css.container}>
       <div className={css.header}>
+        <div onClick={onClose} className={css.close}>
+          <img src="/icons/close-black.svg" />
+        </div>
         <div style={{ backgroundImage: `url(${data.cover_image.url})` }} className={css.cover}>
           <div className={css.avatarContainer}>
             <Avatar img={data.image.url} size="8rem" type="users" />
@@ -41,22 +48,26 @@ export const Mobile = (): JSX.Element => {
         </Divider>
         <Divider title="Contact">
           <div className={css.contactItem}>
-            <img src="/icons/pin.svg" />
+            <img height={22} src="/icons/pin-green.svg" />
             <div className={css.contactData}>{data.address}</div>
           </div>
           <div className={css.contactItem}>
-            <img src="/icons/suitcase.svg" />
-            <div className={css.contactData}>
+            <img height={22} src="/icons/phone-green.svg" />
+            <a href={`tel:${data.mobile_country_code}${data.phone}`} className={css.contactData}>
               {data.mobile_country_code} {data.phone}
-            </div>
+            </a>
           </div>
           <div className={css.contactItem}>
-            <img src="/icons/network.svg" />
-            <div className={css.contactData}>{data.email}</div>
+            <img height={22} src="/icons/email-green.svg" />
+            <a href={`mailto:${data.email}`} className={css.contactData}>
+              {data.email}
+            </a>
           </div>
           <div className={css.contactItem}>
-            <img src="/icons/part-time.svg" />
-            <div className={css.contactData}>{data.website}</div>
+            <img height={22} src="/icons/world-green.svg" />
+            <a href={data.website} target="_blank" className={css.contactData}>
+              {data.website}
+            </a>
           </div>
         </Divider>
         <Divider title="Mission">

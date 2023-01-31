@@ -4,17 +4,28 @@ import css from './feed-list.module.scss';
 import { socialCausesToCategory } from "../../../core/adaptors";
 import { useNavigate } from "@tanstack/react-location";
 
-
-
-
-
-export const FeedList = ({ data, onMorePageClick }: FeedListProps) => {
+export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike }: FeedListProps) => {
 
     const navigate = useNavigate();
 
     const actionList = (id: string, likes: number, liked: boolean) => [
-        { label: 'Like', iconName: 'heart-blue', like: likes, isLiked: liked },
-        { label: 'Comment', iconName: 'comment-blue', onClick: () => navigateTOPostDetail(id) },
+        {
+            label: 'Like',
+            iconName: 'heart-blue',
+            like: likes,
+            isLiked: liked,
+            type: 'like',
+            onClick: () => {
+                const obj = data.find(item => item.id === id);
+                obj!.liked ? onRemoveLike(id) : onLike(id);
+            },
+            onLike: () => onLike(id),
+            onRemoveLike: () => onRemoveLike(id)
+        },
+        {
+            label: 'Comment',
+            iconName: 'comment-blue', onClick: () => navigateTOPostDetail(id), type: 'comment'
+        },
     ];
 
     const navigateTOPostDetail = (id: string) => {

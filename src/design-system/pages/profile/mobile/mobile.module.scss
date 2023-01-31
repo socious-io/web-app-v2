@@ -1,6 +1,22 @@
 .header {
   display: grid;
+  position: relative;
   grid-template-rows: 8rem 6rem;
+
+  .close {
+    position: absolute;
+    width: 2.25rem;
+    height: 2.25rem;
+    top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 2rem;
+    z-index: 2;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid var(--border-gray-01);
+  }
 
   .cover {
     height: 8rem;
