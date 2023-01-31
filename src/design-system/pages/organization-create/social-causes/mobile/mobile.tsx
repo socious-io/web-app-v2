@@ -1,10 +1,11 @@
 import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
+import { socialCausesToCategoryAdaptor } from '../../../../../core/adaptors';
 import { Button } from '../../../../atoms/button/button';
 import { CategoriesClickable } from '../../../../atoms/categories-clickable/categories-clickable';
 import { Search } from '../../../../atoms/search/search';
 import { Steps } from '../../../../atoms/steps/steps';
-import { SOCIAL_CAUSES } from '../social-causes.services';
+// import { SOCIAL_CAUSES } from '../social-causes.services';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
@@ -35,7 +36,12 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.main}>
         <div className={css.categoryTitle}>Popular</div>
-        <CategoriesClickable clickable onChange={console.log} list={SOCIAL_CAUSES} selected={[]} />
+        <CategoriesClickable
+          clickable
+          onChange={console.log}
+          list={socialCausesToCategoryAdaptor()}
+          selected={[]}
+        />
       </div>
 
       <div className={css.bottom}>
