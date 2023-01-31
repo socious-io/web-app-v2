@@ -7,19 +7,30 @@ import { DialogCreate } from '../dialog-create/dialog-create';
 import css from './mobile.module.scss';
 import { FeedsMobileProps } from './mobile.types';
 import { getFeedList, like, unlike } from './mobile.service';
+import { Search } from '../../../atoms/search/search';
+import { useSelector } from 'react-redux';
+import { IdentityReq } from '../../../../core/types';
+import { RootState } from '../../../../store/store';
+import { useNavigate } from '@tanstack/react-location';
 
 export const Mobile = ({ list }: FeedsMobileProps) => {
+  const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [feedList, setFeedList] = useState(list.items);
   const [page, setPage] = useState(1);
 
   function onMorePage() {
-
     getFeedList({ page: page + 1 }).then((resp) => {
       setPage((v) => v + 1);
       setFeedList((list) => [...list, ...resp.items]);
     });
-  }
+  };
+
+  const identity = useSelector<RootState, IdentityReq>((state) => {
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  });
+
+  const avatarImg = identity.meta.avatar || identity.meta.image;
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -49,13 +60,23 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
     })
   }
 
+  const onChangeSearch = () => {
+
+  }
+
+  const navigateToChat = () => {
+    // navigate({ to: './chats' });
+  }
+
   return (
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.menu}>
-          <Avatar size="2.25rem" type="organizations" />
-          <div className={css.search}>Search Jobs</div>
-          <img className={css.logo} src="icons/logo-white.svg" />
+          <Avatar size="2.25rem" type={identity.type} img={avatarImg} />
+          <Search placeholder='Search' onValueChange={onChangeSearch} />
+          <div onClick={navigateToChat}>
+            <img className={css.logo} src="icons/chat-white.svg" />
+          </div>
         </div>
         <div>
           <div className={css.title}>Feed</div>
