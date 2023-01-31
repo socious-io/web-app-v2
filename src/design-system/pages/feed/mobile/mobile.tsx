@@ -6,10 +6,9 @@ import { FeedList } from '../../../organisms/feed-list/feed-list';
 import { DialogCreate } from '../dialog-create/dialog-create';
 import css from './mobile.module.scss';
 import { FeedsMobileProps } from './mobile.types';
-import { getFeedList } from './mobile.service';
+import { getFeedList, like, unlike } from './mobile.service';
 
 export const Mobile = ({ list }: FeedsMobileProps) => {
-  console.log('list: ', list)
   const [openDialog, setOpenDialog] = useState(false);
   const [feedList, setFeedList] = useState(list.items);
   const [page, setPage] = useState(1);
@@ -29,6 +28,26 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
   const handleClose = () => {
     setOpenDialog(false);
   };
+
+  const onLike = (id: string) => {
+    like(id).then(() => {
+      const clone = [...feedList];
+      const ref = clone.find(item => item.id === id);
+      ref.liked = true;
+      ref.likes = ref.likes + 1;
+      setFeedList(clone);
+    })
+  }
+
+  const onRemoveLike = (id: string) => {
+    unlike(id).then(() => {
+      const clone = [...feedList];
+      const ref = clone.find(item => item.id === id);
+      ref.liked = false;
+      ref.likes = ref.likes - 1;
+      setFeedList(clone);
+    })
+  }
 
   return (
     <div className={css.container}>
@@ -53,7 +72,7 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
           </div>
         </Card>
       </div>
-      <FeedList data={feedList} onMorePageClick={onMorePage} />
+      <FeedList data={feedList} onLike={onLike} onRemoveLike={onRemoveLike} onMorePageClick={onMorePage} />
       <Dialog fullScreen open={openDialog}>
         <DialogCreate onClose={handleClose} />
       </Dialog>
