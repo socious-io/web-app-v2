@@ -4,15 +4,18 @@ import { Search as SearchAtom } from '../../atoms/search/search'
 import { search } from './search.services';
 import { useEffect, useState } from 'react';
 import { PayloadModel } from './search.types';
+import { FeedList } from '../../organisms/feed-list/feed-list';
 
-const subMenuList = [{ label: 'Projects', value: 'projects' }, { label: 'Posts', value: 'posts' }];
+// const subMenuList = [{ label: 'Projects', value: 'projects' }, { label: 'Posts', value: 'posts' }];
 
-const list = [{ label: 'Projects', value: 'projects', type: 'dropdown', subMenu: subMenuList }, { label: 'Socila Causes', value: 'social', type: 'modal' }, { label: 'Skills ', value: 'skills', type: 'modal' }]
+const menuList = [{ label: 'Projects', value: 'projects' }, { label: 'Posts', value: 'posts' }, { label: 'Socila Causes', value: 'social' }, { label: 'Skills ', value: 'skills' }]
 
 
 
 
 export const Search = () => {
+    const [result, setResult] = useState();
+    const [list, setList] = useState();
 
     const [state, setState] = useState<PayloadModel>({
         page: 1,
@@ -35,11 +38,25 @@ export const Search = () => {
     const getResponse = (state: PayloadModel) => {
         search(state).then(resp => {
             console.log('resp', resp);
+            setResult(resp.items.length);
+            setList(resp.items);
         });
     };
 
     const onValueChange = (value: string) => {
         console.log('value ==>', value);
+    }
+
+    const onLike = () => {
+
+    }
+
+    const onRemoveLike = () => {
+
+    }
+
+    const onMorePage = () => {
+
     }
 
     return (
@@ -51,12 +68,17 @@ export const Search = () => {
                 </div>
             </div>
             <div className={css.menu}>
-                <FilterMenu list={list} selectedValue='projects' onGetValue={onChangeMenu} />
+                <FilterMenu list={menuList} selectedValue='projects' onGetValue={onChangeMenu} />
             </div>
             <div className={css.result}>
-                <span>22 Results</span>
-                <img src="/icons/image.svg" />
+                <span>{result} Results</span>
+                <img src="/icons/filter-blue.svg" />
             </div>
+
+            <div className={css.mainList}>
+                <FeedList data={list} onLike={onLike} onRemoveLike={onRemoveLike} onMorePageClick={onMorePage} />
+            </div>
+
         </div>
     );
 };
