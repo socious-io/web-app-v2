@@ -19,6 +19,7 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
   const [feedList, setFeedList] = useState(list.items);
   const [page, setPage] = useState(1);
 
+
   function onMorePage() {
     getFeedList({ page: page + 1 }).then((resp) => {
       setPage((v) => v + 1);
