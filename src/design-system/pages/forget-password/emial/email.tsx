@@ -1,8 +1,16 @@
+
+import { useNavigate } from '@tanstack/react-location';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
 import css from './email.module.scss';
 
 export const Email = () => {
+    const navigate = useNavigate();
+
+    const navigateToOtp = () => {
+        navigate({ to: '../otp' });
+    }
+
     return (
         <div className={css.container}>
             <div className={css.header}>
@@ -17,7 +25,7 @@ export const Email = () => {
                 </div>
             </div>
             <div className={css.footer}>
-                <Button color='blue' >
+                <Button color='blue' onClick={navigateToOtp}>
                     Get a verification code
                 </Button>
             </div>
