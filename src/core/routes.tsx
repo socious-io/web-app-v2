@@ -27,6 +27,7 @@ import {
   getComments,
   getPostDetail,
 } from '../design-system/pages/feed/post-detail/mobile/mobile.service';
+import { search } from '../design-system/pages/search/search.services';
 
 export const routes: Route[] = [
   {
@@ -221,6 +222,13 @@ export const routes: Route[] = [
           )),
       },
       {
+        path: 'search',
+        element: () => import('../design-system/pages/search/search').then((m) => <m.Search />),
+        loader: (p) => {
+          return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 })
+        },
+      },
+      {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
           {
@@ -247,10 +255,6 @@ export const routes: Route[] = [
             path: 'feeds',
             element: () => import('../design-system/pages/feed/feed').then((m) => <m.Feed />),
             loader: () => getFeedList({ page: 1 }),
-          },
-          {
-            path: 'search',
-            element: () => import('../design-system/pages/search/search').then((m) => <m.Search />),
           },
           {
             element: <Navigate to="intro" />,

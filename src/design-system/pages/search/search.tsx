@@ -1,10 +1,10 @@
-import { FilterMenu } from '../../molecules/filter-menu/filter-menu';
 import css from './search.module.scss';
 import { Search as SearchAtom } from '../../atoms/search/search'
 import { search } from './search.services';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { PayloadModel } from './search.types';
-import { FeedList } from '../../organisms/feed-list/feed-list';
+import { useMatch, useMatchRoute } from '@tanstack/react-location';
+import { JobList } from '../../organisms/job-list/job-list';
 
 // const subMenuList = [{ label: 'Projects', value: 'projects' }, { label: 'Posts', value: 'posts' }];
 
@@ -14,31 +14,26 @@ const menuList = [{ label: 'Projects', value: 'projects' }, { label: 'Posts', va
 
 
 export const Search = () => {
-    const [result, setResult] = useState();
-    const [list, setList] = useState();
+    const data = useMatch().ownData;
+    const [list, setList] = useState(data.items);
+    const [result, setResult] = useState(data.total_count);
 
     const [state, setState] = useState<PayloadModel>({
         page: 1,
         filter: {},
-        type: '',
+        type: 'projects',
         q: 'socious'
-
     });
 
-    useEffect(() => {
-        onChangeMenu('projects');
-    }, []);
-
-    const onChangeMenu = (value: string) => {
-        const payload = { ...state, type: value };
-        setState(payload);
-        getResponse(payload);
-    }
+    // const onChangeMenu = (value: string) => {
+    //     const payload = { ...state, type: value };
+    //     setState(payload);
+    //     getResponse(payload);
+    // }
 
     const getResponse = (state: PayloadModel) => {
         search(state).then(resp => {
-            console.log('resp', resp);
-            setResult(resp.items.length);
+            // setResult(resp.items.length);
             setList(resp.items);
         });
     };
@@ -67,16 +62,19 @@ export const Search = () => {
                     <SearchAtom placeholder='Search' onValueChange={onValueChange} />
                 </div>
             </div>
-            <div className={css.menu}>
+            {/* <div className={css.menu}>
                 <FilterMenu list={menuList} selectedValue='projects' onGetValue={onChangeMenu} />
-            </div>
+            </div> */}
             <div className={css.result}>
                 <span>{result} Results</span>
                 <img src="/icons/filter-blue.svg" />
             </div>
 
             <div className={css.mainList}>
-                <FeedList data={list} onLike={onLike} onRemoveLike={onRemoveLike} onMorePageClick={onMorePage} />
+                {/* <FeedList data={list} onLike={onLike} onRemoveLike={onRemoveLike} onMorePageClick={onMorePage} /> */}
+                <JobList data={list} onMorePageClick={onMorePage} />
+
+
             </div>
 
         </div>

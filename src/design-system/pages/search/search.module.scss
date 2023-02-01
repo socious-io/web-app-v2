@@ -1,5 +1,5 @@
 .container {
-    background-color: #ffffff;
+    // background-color: #ffffff;
 }
 
 .header {
@@ -8,6 +8,7 @@
     gap: 2rem;
     border-bottom: 1px solid var(--border-gray-01);
     padding: 0.62rem 1.43rem;
+    background-color: #ffffff;
 }
 
 .search {
@@ -31,4 +32,8 @@
     padding: 0 1.43rem;
     justify-content: space-between;
     background-color: var(--color-off-white-01);
+}
+
+.mainList {
+    padding: 1rem;
 }
