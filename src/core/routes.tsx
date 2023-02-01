@@ -44,6 +44,13 @@ export const routes: Route[] = [
         element: () => import('../design-system/pages/intro/intro').then((m) => <m.Intro />),
       },
       {
+        path: 'forget-password',
+        children: [{
+          path: '/email',
+          element: () => import('../design-system/pages/forget-password/emial/email').then((m) => <m.Email />),
+        }],
+      },
+      {
         path: 'sign-in',
         element: () => import('../design-system/pages/sign-in/sign-in').then((m) => <m.SignIn />),
       },
@@ -228,6 +235,7 @@ export const routes: Route[] = [
           return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 })
         },
       },
+
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [

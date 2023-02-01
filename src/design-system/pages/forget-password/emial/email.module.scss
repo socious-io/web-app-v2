@@ -1,0 +1,32 @@
+.container {
+    background-color: #ffffff;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 6rem 1fr 6.75rem;
+}
+
+.header {
+    padding: 5rem 1.43rem 1.43rem 1.43rem;
+}
+
+.main {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.forgetPass {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+}
+
+.footer {
+    padding: 1rem 1rem 0 1rem;
+    border-top: 1px solid var(--border-gray-01);
+}
