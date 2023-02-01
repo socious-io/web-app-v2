@@ -45,10 +45,20 @@ export const routes: Route[] = [
       },
       {
         path: 'forget-password',
-        children: [{
-          path: '/email',
-          element: () => import('../design-system/pages/forget-password/emial/email').then((m) => <m.Email />),
-        }],
+        children: [
+          {
+            path: '/email',
+            element: () => import('../design-system/pages/forget-password/emial/email').then((m) => <m.Email />),
+          },
+          {
+            path: '/otp',
+            element: () => import('../design-system/pages/forget-password/otp/otp').then((m) => <m.Otp />),
+          },
+          {
+            path: '/password',
+            element: () => import('../design-system/pages/forget-password/password/password').then((m) => <m.Password />),
+          },
+        ],
       },
       {
         path: 'sign-in',
