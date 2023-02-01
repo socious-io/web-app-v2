@@ -3,10 +3,12 @@ import { SearchReq } from "../../../core/types";
 import { PayloadModel } from "./search.types";
 
 export async function search(payload: PayloadModel): Promise<SearchReq> {
-    const body = {
+    let body = {
         filter: payload.filter,
-        q: payload.q,
-        type: payload.type
+        type: payload.type,
+    }
+    if (payload.q) {
+        Object.assign(body, { q: payload.q });
     }
     return post(`search?page=${payload.page}&limit=50`, body).then(({ data }) => data);
 }
