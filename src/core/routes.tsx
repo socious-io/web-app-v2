@@ -9,7 +9,6 @@ import { SignUpUserVerification } from '../design-system/pages/sign-up/sign-up-u
 import { MenuCursor as RootCursorLayout } from '../design-system/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../design-system/templates/menu-touch/menu-touch';
 import { isTouchDevice } from './device-type-detector';
-import { getNotificationList } from '../design-system/pages/notifications/notifications.service';
 import {
   getMessagesById,
   getParticipantsById,
@@ -28,6 +27,7 @@ import {
   getPostDetail,
 } from '../design-system/pages/feed/post-detail/mobile/mobile.service';
 import { search } from '../design-system/pages/search/search.services';
+import { getNotificationList } from '../design-system/pages/notifications/mobile/mobile.service';
 
 export const routes: Route[] = [
   {

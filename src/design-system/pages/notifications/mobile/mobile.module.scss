@@ -1,4 +1,23 @@
-// .notificationWrapper {
-//     background-color: rgb(255, 255, 255);
-//     padding: 10px;
-// }
+.container {
+    background-color: rgb(255, 255, 255);
+}
+
+.header {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--safe-area) 1rem 0.812rem 1rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.main {
+    margin-top: 11rem;
+}
