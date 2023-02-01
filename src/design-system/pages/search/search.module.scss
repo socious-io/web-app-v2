@@ -3,12 +3,15 @@
 }
 
 .header {
-    margin-top: var(--safe-area);
+    padding: var(--safe-area) 1.43rem 0.62rem 1.43rem;
     display: flex;
     gap: 2rem;
     border-bottom: 1px solid var(--border-gray-01);
-    padding: 0.62rem 1.43rem;
     background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    align-items: center;
 }
 
 .search {
@@ -36,4 +39,15 @@
 
 .mainList {
     padding: 1rem;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.main {
+    margin-top: 11rem;
+    overflow-y: scroll;
 }
