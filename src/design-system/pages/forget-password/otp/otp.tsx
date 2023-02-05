@@ -7,7 +7,7 @@ export const Otp = () => {
     const navigate = useNavigate();
 
     const navigateToPassword = () => {
-        navigate({ to: '../otp' });
+        navigate({ to: '../password' });
     }
 
     const backToPerviousPage = () => {
