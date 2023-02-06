@@ -140,4 +140,18 @@ export type CategoriesResp = {
   }[];
 };
 
+export type Cities = {
+  country_code: string;
+  id: number;
+  name: string;
+  population: number;
+  region_id: string;
+  region_iso: string;
+  region_name: string;
+  subregion_id: string;
+  subregion_iso: string;
+  subregion_name: string;
+  type: string;
+};
+
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;

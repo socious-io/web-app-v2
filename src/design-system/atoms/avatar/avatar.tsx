@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import css from './avatar.module.scss';
 import { AvatarProps } from './avatar.types';
 
@@ -9,7 +10,7 @@ export const Avatar = (props: AvatarProps): JSX.Element => {
     users: '/icons/user.svg',
   };
 
-  const style = {
+  const style: CSSProperties = {
     ...rest,
     width: size,
     height: size,

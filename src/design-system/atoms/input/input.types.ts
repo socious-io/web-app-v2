@@ -8,5 +8,6 @@ export interface InputProps extends ReactHTMLInputElement {
   variant?: 'outline';
   className?: string;
   errors?: string[];
+  optional?: boolean;
   onValueChange?: (value: string) => void;
 }

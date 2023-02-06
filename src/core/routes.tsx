@@ -9,7 +9,6 @@ import { SignUpUserVerification } from '../design-system/pages/sign-up/sign-up-u
 import { MenuCursor as RootCursorLayout } from '../design-system/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../design-system/templates/menu-touch/menu-touch';
 import { isTouchDevice } from './device-type-detector';
-import { getNotificationList } from '../design-system/pages/notifications/notifications.service';
 import {
   getMessagesById,
   getParticipantsById,
@@ -30,6 +29,8 @@ import {
 import { getUserDetail } from '../design-system/pages/profile/profile.services';
 import { UserType } from './types';
 import { getJobCategories } from '../design-system/pages/job-create/info/info.services';
+import { search } from '../design-system/pages/search/search.services';
+import { getNotificationList } from '../design-system/pages/notifications/mobile/mobile.service';
 
 export const routes: Route[] = [
   {
@@ -233,6 +234,13 @@ export const routes: Route[] = [
           )),
       },
       {
+        path: 'search',
+        element: () => import('../design-system/pages/search/search').then((m) => <m.Search />),
+        loader: (p) => {
+          return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 });
+        },
+      },
+      {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
           {
@@ -259,10 +267,6 @@ export const routes: Route[] = [
             path: 'feeds',
             element: () => import('../design-system/pages/feed/feed').then((m) => <m.Feed />),
             loader: () => getFeedList({ page: 1 }),
-          },
-          {
-            path: 'search',
-            element: () => import('../design-system/pages/search/search').then((m) => <m.Search />),
           },
           {
             element: <Navigate to="intro" />,

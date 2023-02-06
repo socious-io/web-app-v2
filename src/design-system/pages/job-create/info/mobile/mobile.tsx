@@ -1,18 +1,16 @@
 import css from './mobile.module.scss';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { useSelector } from 'react-redux';
-import { CategoriesResp, IdentityReq } from '../../../../../core/types';
-import { RootState } from '../../../../../store/store';
+import { CategoriesResp } from '../../../../../core/types';
 import { Input } from '../../../../atoms/input/input';
 import { Textarea } from '../../../../atoms/textarea/textarea';
 import { Divider } from '../../../../templates/divider/divider';
 import { Dropdown } from '../../../../atoms/dropdown/dropdown';
 import { RadioGroup } from '../../../../molecules/radio-group/radio-group';
-import { formModel } from '../info.services';
+import { formModel, getCityList } from '../info.services';
 import { Button } from '../../../../atoms/button/button';
 import { useForm } from '../../../../../hooks/useForm';
 import { COUNTRIES } from '../../../../../core/constants/COUNTRIES';
-import { jobCategoriesToDropdown } from '../../../../../core/adaptors';
+import { citiesToCategories, jobCategoriesToDropdown } from '../../../../../core/adaptors';
 import { PROJECT_REMOTE_PREFERENCES } from '../../../../../core/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_PAYMENT_TYPE } from '../../../../../core/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_TYPE } from '../../../../../core/constants/PROJECT_TYPES';
@@ -20,15 +18,21 @@ import { PROJECT_LENGTH } from '../../../../../core/constants/PROJECT_LENGTH';
 import { CURRENCIES } from '../../../../../core/constants/PAYMENT_CURRENCY';
 import { PROJECT_PAYMENT_SCHEME } from '../../../../../core/constants/PROJECT_PAYMENT_SCHEME';
 import { EXPERIENCE_LEVEL } from '../../../../../core/constants/EXPERIENCE_LEVEL';
+import { useState } from 'react';
+import { DropdownItem } from '../../../../atoms/dropdown/dropdown.types';
+
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
+  const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
   const resolvedJobCategories = useMatch().ownData.categories as CategoriesResp['categories'];
   const categories = jobCategoriesToDropdown(resolvedJobCategories);
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
-  });
+  function updateCityList(countryCode: string) {
+    getCityList(countryCode)
+      .then(({ items }) => citiesToCategories(items))
+      .then(setCities);
+  }
 
   return (
     <div className={css.container}>
@@ -65,9 +69,9 @@ export const Mobile = (): JSX.Element => {
                 label="Country"
                 placeholder="country"
                 list={COUNTRIES}
-                onGetValue={console.log}
+                onValueChange={updateCityList}
               />
-              <Dropdown label="City" placeholder="city" list={[]} onGetValue={console.log} />
+              <Dropdown label="City" placeholder="city" list={cities} />
               <Dropdown
                 label="Remote Preference"
                 placeholder="Remote Preference"
@@ -133,7 +137,7 @@ export const Mobile = (): JSX.Element => {
             </div>
           </Divider>
           <div className={css.btnContainer}>
-            <Button>Continue</Button>
+            <Button disabled={form.isInvalid}>Continue</Button>
           </div>
         </form>
       </div>

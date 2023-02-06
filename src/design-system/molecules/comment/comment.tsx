@@ -29,9 +29,14 @@ export const Comment = (props: CommentProps) => {
 
         </div>
       ))}
-      <div className={css.seeMore} onClick={() => props.onMorePageClick()}>
-        See more
-      </div>
+
+      {
+        props.showSeeMore &&
+        (<div className={css.seeMore} onClick={() => props.onMorePageClick()}>
+          See more
+        </div>)
+      }
+
     </>
   );
 };
