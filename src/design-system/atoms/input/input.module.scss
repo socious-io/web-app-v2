@@ -1,6 +1,6 @@
 .default {
   display: grid;
-  grid-template-rows: 1rem 2.5rem;
+  grid-template-rows: 1rem 2.5rem auto;
   gap: 4px;
 
   .textbox {
@@ -33,4 +33,9 @@
       color: var(--color-gray-03);
     }
   }
+}
+
+.errorItem {
+  font-size: var(--font-size-s);
+  color: var(--color-error-01);
 }
