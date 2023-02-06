@@ -1,32 +1,30 @@
 import css from './mobile.module.scss';
-import { useNavigate } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from '../../../../../core/types';
+import { CategoriesResp, IdentityReq } from '../../../../../core/types';
 import { RootState } from '../../../../../store/store';
 import { Input } from '../../../../atoms/input/input';
 import { Textarea } from '../../../../atoms/textarea/textarea';
 import { Divider } from '../../../../templates/divider/divider';
 import { Dropdown } from '../../../../atoms/dropdown/dropdown';
 import { RadioGroup } from '../../../../molecules/radio-group/radio-group';
-import { jobLength, jobType, paymentTerms, paymentTypeRadioList } from '../info.services';
+import { formModel } from '../info.services';
 import { Button } from '../../../../atoms/button/button';
-import { createForm } from '../../../../../core/form';
-
-const form = createForm({
-  jobTitle: {
-    value: '',
-    validations: [
-      {
-        validation: 'regex',
-        errorMsg: 'bla mal pla is wrong',
-      },
-    ],
-    required: true,
-  },
-});
-
+import { useForm } from '../../../../../hooks/useForm';
+import { COUNTRIES } from '../../../../../core/constants/COUNTRIES';
+import { jobCategoriesToDropdown } from '../../../../../core/adaptors';
+import { PROJECT_REMOTE_PREFERENCES } from '../../../../../core/constants/PROJECT_REMOTE_PREFERENCE';
+import { PROJECT_PAYMENT_TYPE } from '../../../../../core/constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_TYPE } from '../../../../../core/constants/PROJECT_TYPES';
+import { PROJECT_LENGTH } from '../../../../../core/constants/PROJECT_LENGTH';
+import { CURRENCIES } from '../../../../../core/constants/PAYMENT_CURRENCY';
+import { PROJECT_PAYMENT_SCHEME } from '../../../../../core/constants/PROJECT_PAYMENT_SCHEME';
+import { EXPERIENCE_LEVEL } from '../../../../../core/constants/EXPERIENCE_LEVEL';
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
+  const form = useForm(formModel);
+  const resolvedJobCategories = useMatch().ownData.categories as CategoriesResp['categories'];
+  const categories = jobCategoriesToDropdown(resolvedJobCategories);
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -48,53 +46,80 @@ export const Mobile = (): JSX.Element => {
         <form>
           <Divider title="Job information" divider="space">
             <div className={css.dividerContainer}>
-              <Input placeholder="title" variant="outline" label="Job title" />
-              <Input placeholder="category" variant="outline" label="Job category" />
+              <Input
+                onValueChange={form.jobTitle.update}
+                errors={form.jobTitle.errors}
+                value={form.jobTitle.value}
+                placeholder="title"
+                variant="outline"
+                label="Job title"
+              />
+              <Dropdown
+                label="Job category"
+                placeholder="Project Length"
+                list={categories}
+                onGetValue={console.log}
+              />
               <Textarea placeholder="job description" label="Job description" variant="outline" />
               <Dropdown
                 label="Country"
-                placeholder="Country"
-                list={jobType}
+                placeholder="country"
+                list={COUNTRIES}
+                onGetValue={console.log}
+              />
+              <Dropdown label="City" placeholder="city" list={[]} onGetValue={console.log} />
+              <Dropdown
+                label="Remote Preference"
+                placeholder="Remote Preference"
+                list={PROJECT_REMOTE_PREFERENCES}
                 onGetValue={console.log}
               />
               <Dropdown
-                label="Job type"
-                placeholder="Job type"
-                list={jobType}
+                label="Project Type"
+                placeholder="Project Type"
+                list={PROJECT_TYPE}
                 onGetValue={console.log}
               />
               <Dropdown
-                label="Job length"
-                placeholder="Job length"
-                list={jobLength}
+                label="Project Length"
+                placeholder="Project Length"
+                list={PROJECT_LENGTH}
                 onGetValue={console.log}
               />
             </div>
           </Divider>
           <Divider title="Payment" divider="space">
             <div className={css.dividerContainer}>
+              <Dropdown
+                label="Payment Currency"
+                placeholder="payment currency"
+                list={CURRENCIES}
+                onGetValue={console.log}
+              />
               <RadioGroup
                 name="paymentType"
                 value={'PAID'}
                 onChange={console.log}
                 label="Payment type"
-                list={paymentTypeRadioList}
+                list={PROJECT_PAYMENT_TYPE}
               />
               <RadioGroup
-                name="PaymentTerms"
-                value={'PAID'}
-                onChange={console.log}
-                label="Payment terms"
-                list={paymentTerms}
+                name="PaymentScheme"
+                value="PAID"
+                onChange={form.paymentTerms.update}
+                label="Payment scheme"
+                list={PROJECT_PAYMENT_SCHEME}
               />
-              <div className={css.paymentRange}>
-                <div className={css.paymentRangeTitle}>Payment range</div>
-                <div className={css.paymentRangeInputs}>
-                  <Input variant="outline" label="Minimum" placeholder="minimum" />
-                  <Input variant="outline" label="Maximum" placeholder="maximum" />
+              {form.paymentTerms.value === 'HOURLY' && (
+                <div className={css.paymentRange}>
+                  <div className={css.paymentRangeTitle}>Total commitment</div>
+                  <div className={css.paymentRangeInputs}>
+                    <Input variant="outline" label="Minimum" placeholder="minimum" />
+                    <Input variant="outline" label="Maximum" placeholder="maximum" />
+                  </div>
+                  {/* <div className={css.priceNotifying}>Prices will be shown in USD ($)</div> */}
                 </div>
-                <div className={css.priceNotifying}>Prices will be shown in USD ($)</div>
-              </div>
+              )}
             </div>
           </Divider>
           <Divider title="Experience & skills" divider="space">
@@ -102,7 +127,7 @@ export const Mobile = (): JSX.Element => {
               <Dropdown
                 label="Experience level"
                 placeholder="Experience level"
-                list={jobLength}
+                list={EXPERIENCE_LEVEL}
                 onGetValue={console.log}
               />
             </div>

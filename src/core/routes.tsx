@@ -29,6 +29,7 @@ import {
 } from '../design-system/pages/feed/post-detail/mobile/mobile.service';
 import { getUserDetail } from '../design-system/pages/profile/profile.services';
 import { UserType } from './types';
+import { getJobCategories } from '../design-system/pages/job-create/info/info.services';
 
 export const routes: Route[] = [
   {
@@ -213,6 +214,7 @@ export const routes: Route[] = [
           },
           {
             path: 'info',
+            loader: () => getJobCategories(),
             element: () =>
               import('../design-system/pages/job-create/info/info').then((m) => <m.Info />),
           },

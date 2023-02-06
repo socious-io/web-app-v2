@@ -1,4 +1,4 @@
-type FormBehaviors = {
+export type FormBehaviors = {
   validations: {
     validation: string;
     errorMsg: string;
@@ -7,15 +7,16 @@ type FormBehaviors = {
   required: boolean;
 };
 
-type FormOutput = {
+export type FormOutput = {
   validations: FormBehaviors['validations'];
   value: string;
   required: boolean;
   isValid: boolean;
+  errors: string[];
   update: (v: string) => void;
 };
 
-type Form = Record<string, FormBehaviors>;
+export type Form = Record<string, FormBehaviors>;
 
 const generateField = (fieldValue: FormBehaviors): FormOutput => {
   return {

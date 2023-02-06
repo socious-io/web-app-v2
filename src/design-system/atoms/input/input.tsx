@@ -3,7 +3,7 @@ import css from './input.module.scss';
 import { InputProps } from './input.types';
 
 export const Input = (props: InputProps): JSX.Element => {
-  const { label, className, variant, onValueChange, ...rest } = props;
+  const { label, className, errors = [], variant, onValueChange, ...rest } = props;
 
   function onChange(value: FormEvent<HTMLInputElement>) {
     const v = (value.target as HTMLInputElement).value;
@@ -27,6 +27,15 @@ export const Input = (props: InputProps): JSX.Element => {
           role="textbox"
           {...rest}
         ></input>
+        <div className={css.errorsContainer}>
+          {errors.map((error) => {
+            return (
+              <div className={css.errorItem} key={error}>
+                {error}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

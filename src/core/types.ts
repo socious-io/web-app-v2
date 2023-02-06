@@ -130,4 +130,14 @@ export type GetJobs = {
   updated_at: string;
 };
 
+export type CategoriesResp = {
+  categories: {
+    created_at: string;
+    hourly_wage_dollars: number;
+    id: string;
+    name: string;
+    updated_at: string;
+  }[];
+};
+
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;

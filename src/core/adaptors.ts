@@ -1,5 +1,6 @@
 import { SKILLS } from './constants/SKILLS';
 import { SOCIAL_CAUSES } from './constants/SOCIAL_CAUSES';
+import { CategoriesResp } from './types';
 
 export function socialCausesToCategoryAdaptor() {
   return Object.entries(SOCIAL_CAUSES).map(([, value]) => value);
@@ -23,6 +24,17 @@ export function socialCausesToCategory(categories: string[] = []) {
   }
   return categories.map((cat) => {
     return SOCIAL_CAUSES[cat];
+  });
+}
+
+export function jobCategoriesToDropdown(
+  categories: CategoriesResp['categories']
+): { title: string; value: string }[] {
+  return categories.map((item) => {
+    return {
+      title: item.name,
+      value: item.id,
+    };
   });
 }
 
