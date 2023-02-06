@@ -1,6 +1,7 @@
+import { Dropdown, DropdownProps } from '../design-system/atoms/dropdown/dropdown.types';
 import { SKILLS } from './constants/SKILLS';
 import { SOCIAL_CAUSES } from './constants/SOCIAL_CAUSES';
-import { CategoriesResp } from './types';
+import { CategoriesResp, Cities } from './types';
 
 export function socialCausesToCategoryAdaptor() {
   return Object.entries(SOCIAL_CAUSES).map(([, value]) => value);
@@ -34,6 +35,15 @@ export function jobCategoriesToDropdown(
     return {
       title: item.name,
       value: item.id,
+    };
+  });
+}
+
+export function citiesToCategories(cities: Cities[]): Dropdown[] {
+  return cities.map((city) => {
+    return {
+      title: city.name,
+      value: city.id,
     };
   });
 }

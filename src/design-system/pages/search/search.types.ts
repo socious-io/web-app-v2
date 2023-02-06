@@ -45,8 +45,8 @@ export interface IdentityMetaObj {
 
 export interface PayloadModel {
     page?: number;
-    filter?: undefined;
+    filter: Record<string, string>;
     type: string;
     q: string;
-    }
+}
 

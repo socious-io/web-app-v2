@@ -1,5 +1,5 @@
 import { DispatchWithoutAction, useReducer, useRef } from 'react';
-import { Form, FormBehaviors, FormOutput } from '../core/form';
+import { FormGroup, FormBehaviors, FormOutput } from '../core/form';
 
 const generateField = (fieldValue: FormBehaviors, rerender: DispatchWithoutAction): FormOutput => {
   const obj = {
@@ -29,6 +29,7 @@ const generateField = (fieldValue: FormBehaviors, rerender: DispatchWithoutActio
     obj.value = v;
     obj.errors = validateField(v);
     obj.isValid = obj.errors.length > 0 ? false : true;
+    obj.isValid = false;
     rerender();
   };
 
@@ -37,7 +38,10 @@ const generateField = (fieldValue: FormBehaviors, rerender: DispatchWithoutActio
   return obj;
 };
 
-const createForm = (form: Form, rerender: DispatchWithoutAction): Record<string, FormOutput> => {
+const createForm = (
+  form: FormGroup,
+  rerender: DispatchWithoutAction
+): Record<string, FormOutput> => {
   const obj = {} as Record<string, FormOutput>;
   Object.entries(form).forEach(([fieldName, values]) => {
     obj[fieldName] = generateField(values, rerender);
@@ -45,7 +49,7 @@ const createForm = (form: Form, rerender: DispatchWithoutAction): Record<string,
   return obj;
 };
 
-export const useForm = (form: Form) => {
+export const useForm = (form: FormGroup) => {
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
   const ref = useRef(createForm(form, forceUpdate));
   return ref.current;

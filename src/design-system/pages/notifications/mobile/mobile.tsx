@@ -1,11 +1,40 @@
 import css from './mobile.module.scss';
 import { NotificationMobileProps } from './mobile.types';
-import {NotificationList} from '../../../organisms/notification-list/notification-list';
+import { NotificationList } from '../../../organisms/notification-list/notification-list';
+import { useState } from 'react';
+import { getNotificationList } from './mobile.service';
+import { Avatar } from '../../../atoms/avatar/avatar';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/store';
+import { IdentityReq } from '../../../../core/types';
 
-export const Mobile = ({ list , onMorePageClick }: NotificationMobileProps): JSX.Element => {
+export const Mobile = ({ list }: NotificationMobileProps): JSX.Element => {
+    const [notificationList, setNotificationList] = useState(list.items);
+    const [page, setPage] = useState(1);
+
+    const identity = useSelector<RootState, IdentityReq>((state) => {
+        return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+    });
+
+    const avatarImg = identity.meta.avatar || identity.meta.image;
+
+    const onMorePageClick = () => {
+        getNotificationList({ page: page + 1 }).then((resp) => {
+            setPage((v) => v + 1);
+            setNotificationList((list) => [...list, ...resp.items]);
+        });
+    }
+
     return (
         <div className={css.container}>
-            <NotificationList onMorePageClick={onMorePageClick} list={list}/>
+            <div className={css.header}>
+                <Avatar size="2.25rem" type={identity.type} img={avatarImg} />
+                <span className={css.title}>Notifications</span>
+                <img style={{ visibility: 'hidden' }} src="/icons/settings-black.svg" />
+            </div>
+            <div className={css.main}>
+                <NotificationList onMorePageClick={onMorePageClick} list={notificationList} />
+            </div>
         </div>
     );
 };

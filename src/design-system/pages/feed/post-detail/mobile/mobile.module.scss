@@ -1,6 +1,5 @@
 .container {
-    padding: 0 1rem 1rem 1rem;
-    // background-color: var(--color-off-white-01);
+    grid: auto 1fr;
 }
 
 .header {
@@ -13,4 +12,10 @@
 
 .messages {
     // overflow-y: scroll;
+}
+
+.main {
+    padding: 0 1rem 1rem 1rem;
+    overflow-y: scroll;
+    background-color: var(--color-off-white-01);
 }
