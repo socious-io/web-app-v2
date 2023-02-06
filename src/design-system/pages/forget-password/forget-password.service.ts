@@ -9,7 +9,7 @@ export async function forgetPassword(email: string) {
 }
 
 export async function confirm(email: string, code: string) {
-    return get(`/auth/otp/confirm/web?email=${email}&code=${code}`).then();
+    return get(`/auth/otp/confirm/web?email=${email}&code=${code}`).then(({ data }) => data);
 }
 
 export async function changePassword(password: string) {

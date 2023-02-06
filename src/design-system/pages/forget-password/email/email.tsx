@@ -14,7 +14,7 @@ export const Email = () => {
         forgetPassword(email).then((resp) => {
             console.log('resp', resp);
             if (resp.message === 'success') {
-                navigate({ to: '../otp' });
+                navigate({ to: `../otp?email=${email}` });
             }
         })
     }
