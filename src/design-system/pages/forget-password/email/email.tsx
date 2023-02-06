@@ -1,14 +1,22 @@
 
 import { useNavigate } from '@tanstack/react-location';
+import { useState } from 'react';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
+import { forgetPassword } from '../forget-password.service';
 import css from './email.module.scss';
 
 export const Email = () => {
     const navigate = useNavigate();
+    const [email, setEmail] = useState('');
 
     const navigateToOtp = () => {
-        navigate({ to: '../otp' });
+        forgetPassword(email).then((resp) => {
+            console.log('resp', resp);
+            if (resp.message === 'success') {
+                navigate({ to: '../otp' });
+            }
+        })
     }
 
     return (
@@ -20,12 +28,12 @@ export const Email = () => {
                 <div className={css.forgetPass}>
                     <div className={css.title}>Forget your password</div>
                     <div className={css.input}>
-                        <Input variant='outline' placeholder='Email' label='Email' />
+                        <Input variant='outline' placeholder='Email' label='Email' value={email} onValueChange={(state) => setEmail(state)} />
                     </div>
                 </div>
             </div>
             <div className={css.footer}>
-                <Button color='blue' onClick={navigateToOtp}>
+                <Button color='blue' onClick={navigateToOtp} disabled={!email}>
                     Get a verification code
                 </Button>
             </div>
