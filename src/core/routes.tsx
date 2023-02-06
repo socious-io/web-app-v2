@@ -48,7 +48,7 @@ export const routes: Route[] = [
         children: [
           {
             path: '/email',
-            element: () => import('../design-system/pages/forget-password/emial/email').then((m) => <m.Email />),
+            element: () => import('../design-system/pages/forget-password/email/email').then((m) => <m.Email />),
           },
           {
             path: '/otp',
