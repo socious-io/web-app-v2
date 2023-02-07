@@ -26,6 +26,9 @@ import {
   getComments,
   getPostDetail,
 } from '../design-system/pages/feed/post-detail/mobile/mobile.service';
+import { getUserDetail } from '../design-system/pages/profile/profile.services';
+import { UserType } from './types';
+import { getJobCategories } from '../design-system/pages/job-create/info/info.services';
 import { search } from '../design-system/pages/search/search.services';
 import { getNotificationList } from '../design-system/pages/notifications/mobile/mobile.service';
 
@@ -77,6 +80,14 @@ export const routes: Route[] = [
             ],
           },
         ],
+      },
+      {
+        path: 'profile/:userType/:id',
+        loader: ({ params }) => {
+          const userType = params.userType as UserType;
+          return getUserDetail({ id: params.id, userType });
+        },
+        element: () => import('../design-system/pages/profile/profile').then((m) => <m.Profile />),
       },
       {
         path: 'organization',
@@ -221,6 +232,7 @@ export const routes: Route[] = [
           },
           {
             path: 'info',
+            loader: () => getJobCategories(),
             element: () =>
               import('../design-system/pages/job-create/info/info').then((m) => <m.Info />),
           },
@@ -242,7 +254,7 @@ export const routes: Route[] = [
         path: 'search',
         element: () => import('../design-system/pages/search/search').then((m) => <m.Search />),
         loader: (p) => {
-          return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 })
+          return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 });
         },
       },
 

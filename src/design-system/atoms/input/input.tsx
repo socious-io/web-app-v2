@@ -1,12 +1,20 @@
-import { FormEvent } from 'react';
+import { ChangeEvent } from 'react';
 import css from './input.module.scss';
 import { InputProps } from './input.types';
 
 export const Input = (props: InputProps): JSX.Element => {
-  const { label, className, variant, onValueChange, ...rest } = props;
+  const {
+    label,
+    optional = false,
+    className,
+    errors = [],
+    variant,
+    onValueChange,
+    ...rest
+  } = props;
 
-  function onChange(value: FormEvent<HTMLInputElement>) {
-    const v = (value.target as HTMLInputElement).value;
+  function onChange(value: ChangeEvent<HTMLInputElement>) {
+    const v = value.target.value;
     onValueChange?.(v);
   }
 
@@ -18,7 +26,13 @@ export const Input = (props: InputProps): JSX.Element => {
     return (
       <div className={`${setClassName(variant)} ${className}`}>
         <label className={css.label} htmlFor={label}>
-          {label}
+          {optional ? (
+            <div>
+              {label} <span className={css.optionalLabel}>(optional)</span>
+            </div>
+          ) : (
+            label
+          )}
         </label>
         <input
           id={label}
@@ -27,6 +41,15 @@ export const Input = (props: InputProps): JSX.Element => {
           role="textbox"
           {...rest}
         ></input>
+        <div className={css.errorsContainer}>
+          {errors.map((error) => {
+            return (
+              <div className={css.errorItem} key={error}>
+                {error}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

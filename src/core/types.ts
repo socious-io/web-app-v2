@@ -1,4 +1,6 @@
-import { JobItems, PostItems } from "../design-system/pages/search/search.types";
+import { JobItems, PostItems } from '../design-system/pages/search/search.types';
+
+export type UserType = 'users' | 'organizations';
 
 export type UserIdentityMeta = {
   address: string;
@@ -126,6 +128,30 @@ export type GetJobs = {
   title: string;
   status: 'ACTIVE' | 'DRAFT';
   updated_at: string;
+};
+
+export type CategoriesResp = {
+  categories: {
+    created_at: string;
+    hourly_wage_dollars: number;
+    id: string;
+    name: string;
+    updated_at: string;
+  }[];
+};
+
+export type Cities = {
+  country_code: string;
+  id: number;
+  name: string;
+  population: number;
+  region_id: string;
+  region_iso: string;
+  region_name: string;
+  subregion_id: string;
+  subregion_iso: string;
+  subregion_name: string;
+  type: string;
 };
 
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
