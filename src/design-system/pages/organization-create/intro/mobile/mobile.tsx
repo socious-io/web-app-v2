@@ -1,8 +1,12 @@
+import { useNavigate } from '@tanstack/react-location';
 import { Button } from '../../../../atoms/button/button';
 import { LIST_ITEM } from '../intro.services';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
+
+    const navigate = useNavigate();
+
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -30,7 +34,7 @@ export const Mobile = (): JSX.Element => {
         </div>
       </div>
       <div className={css.bottom}>
-        <Button>Continue</Button>
+        <Button onClick={() => navigate({to: '../type'}) }>Continue</Button>
       </div>
     </div>
   );
