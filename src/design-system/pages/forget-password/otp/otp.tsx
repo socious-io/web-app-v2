@@ -9,6 +9,8 @@ export const Otp = () => {
     const navigate = useNavigate();
     const queryParam = useMatch().search;
     const email = queryParam.email;
+    console.log('email ==>', email);
+
 
 
     const [state, setState] = useState({

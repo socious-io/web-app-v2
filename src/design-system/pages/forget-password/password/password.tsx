@@ -4,6 +4,8 @@ import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
 import css from './password.module.scss';
 import { PasswordQuality } from '../../../atoms/password-quality/password-quality';
+import { useState } from 'react';
+import { changePassword } from '../forget-password.service';
 
 const validator = [
     {
@@ -18,17 +20,32 @@ const validator = [
 
 export const Password = () => {
     const navigate = useNavigate();
+    const [state, setState] = useState({
+        password: '',
+        newPassword: ''
+    })
 
-    const changePassword = () => {
-        // navigate({ to: '../otp' });
+    const onChangePassword = () => {
+        console.log('tate.password', state.password);
+
+        changePassword(state.password).then(resp => {
+            if (resp.message === 'success') {
+                navigate({ to: `../../jobs` });
+            }
+        })
     }
 
     const backToPerviousPage = () => {
         navigate({ to: '../otp' });
     }
-    //     name: 'characters' | 'number';
-    //     amount: number;
-    //   };
+
+    const onChangePasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setState({ ...state, password: e.target.value })
+    }
+
+    const onChangeNewPasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setState({ ...state, newPassword: e.target.value })
+    }
 
     return (
         <div className={css.container}>
@@ -40,13 +57,13 @@ export const Password = () => {
             <div className={css.main}>
                 <span className={css.title}>Reset your password </span>
                 <div className={css.newPassword}>
-                    <Input variant='outline' placeholder='New password' label='New password' />
-                    <Input variant='outline' placeholder='Confirm new password' label='Confirm new password' />
-                    <PasswordQuality value='Saaraa@123' validators={validator} />
+                    <Input variant='outline' placeholder='New password' label='New password' onChange={onChangePasswordHandler} />
+                    <Input variant='outline' placeholder='Confirm new password' label='Confirm new password' onChange={onChangeNewPasswordHandler} />
+                    <PasswordQuality value={state.password} validators={validator} />
                 </div>
             </div>
             <div className={css.footer}>
-                <Button color='blue' onClick={changePassword}>
+                <Button color='blue' onClick={onChangePassword}>
                     Change your password
                 </Button>
             </div>
