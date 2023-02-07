@@ -29,10 +29,10 @@ export const Mobile = (): JSX.Element => {
     });
   };
 
-  function createRadioQuestion(question: QuestionsRes): JSX.Element {
+  function createRadioQuestion(question: QuestionsRes, i: number): JSX.Element {
     return (
       <RadioGroup
-        label={question.question}
+        label={`${i} - ${question.question}`}
         list={convertOptionsToRadioGroup(question.options)}
         value=""
         name="radio"
@@ -41,10 +41,14 @@ export const Mobile = (): JSX.Element => {
     );
   }
 
-  function createTextQuestion(question: QuestionsRes): JSX.Element {
+  function createTextQuestion(question: QuestionsRes, i: number): JSX.Element {
     return (
       <div>
-        <Textarea placeholder="Your answer..." variant="outline" label={question.question} />
+        <Textarea
+          placeholder="Your answer..."
+          variant="outline"
+          label={`${i} - ${question.question}`}
+        />
       </div>
     );
   }
@@ -52,11 +56,13 @@ export const Mobile = (): JSX.Element => {
   const renderQuestions = () => {
     return (
       <div className={css.questionsContainer}>
-        {questions.map((item) => {
+        {questions.map((item, i) => {
           const isMultipleChoice = item.options;
           return (
             <div key={item.id} className={css.questions}>
-              {isMultipleChoice ? createRadioQuestion(item) : createTextQuestion(item)}
+              {isMultipleChoice
+                ? createRadioQuestion(item, i + 1)
+                : createTextQuestion(item, i + 1)}
             </div>
           );
         })}
