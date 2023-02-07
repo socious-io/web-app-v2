@@ -17,5 +17,5 @@ export async function changePassword(password: string) {
         password
     }
 
-    return post('/user/change-password-direct', body).then();
+    return post('/user/change-password-direct', body).then(({ data }) => data);
 }
