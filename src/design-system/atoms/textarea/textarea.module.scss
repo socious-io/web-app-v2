@@ -1,6 +1,6 @@
 .outline {
   display: grid;
-  grid-template-rows: 1.5rem auto;
+  grid-template-rows: minmax(1.5rem, auto) auto;
   gap: 4px;
 
   .label {

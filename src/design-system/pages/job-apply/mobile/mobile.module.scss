@@ -1,0 +1,29 @@
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: var(--safe-area) 1fr;
+}
+
+.main {
+  overflow-y: scroll;
+}
+
+.jobTitle {
+  font-weight: 600;
+  padding: 1rem 0;
+}
+
+.questions {
+  margin-bottom: 1rem;
+}
+
+.contactContainer {
+  display: grid;
+  grid-template-columns: 1fr 50px;
+}
+
+.btnContainer {
+  display: flex;
+  height: 8rem;
+  padding: 1rem 1rem 0 1rem;
+}
