@@ -140,6 +140,17 @@ export type CategoriesResp = {
   }[];
 };
 
+export type QuestionsRes = {
+  created_at: string;
+  id: string;
+  old_id: number;
+  options: null | string[];
+  project_id: string;
+  question: string;
+  required: boolean;
+  updated_at: string;
+};
+
 export type Cities = {
   country_code: string;
   id: number;

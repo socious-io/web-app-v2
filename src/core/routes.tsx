@@ -31,6 +31,8 @@ import { UserType } from './types';
 import { getJobCategories } from '../design-system/pages/job-create/info/info.services';
 import { search } from '../design-system/pages/search/search.services';
 import { getNotificationList } from '../design-system/pages/notifications/mobile/mobile.service';
+import { getScreeningQuestions } from '../design-system/pages/job-apply/job-apply.services';
+import { logDOM } from '@testing-library/dom';
 
 export const routes: Route[] = [
   {
@@ -51,15 +53,20 @@ export const routes: Route[] = [
         children: [
           {
             path: '/email',
-            element: () => import('../design-system/pages/forget-password/email/email').then((m) => <m.Email />),
+            element: () =>
+              import('../design-system/pages/forget-password/email/email').then((m) => <m.Email />),
           },
           {
             path: '/otp',
-            element: () => import('../design-system/pages/forget-password/otp/otp').then((m) => <m.Otp />),
+            element: () =>
+              import('../design-system/pages/forget-password/otp/otp').then((m) => <m.Otp />),
           },
           {
             path: '/password',
-            element: () => import('../design-system/pages/forget-password/password/password').then((m) => <m.Password />),
+            element: () =>
+              import('../design-system/pages/forget-password/password/password').then((m) => (
+                <m.Password />
+              )),
           },
         ],
       },
@@ -257,7 +264,17 @@ export const routes: Route[] = [
           return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 });
         },
       },
-
+      {
+        path: '/jobs/:id/apply',
+        // loader: ({ params }) => getJobDetail(params.id),
+        loader: async ({ params }) => {
+          const requests = [getJobDetail(params.id), getScreeningQuestions(params.id)];
+          const [jobDetail, screeningQuestions] = await Promise.all(requests);
+          return { jobDetail, screeningQuestions };
+        },
+        element: () =>
+          import('../design-system/pages/job-apply/job-apply').then((m) => <m.JobApply />),
+      },
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
