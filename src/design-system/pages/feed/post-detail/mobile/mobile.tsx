@@ -12,7 +12,6 @@ import { Pagination } from '../../../../../core/types';
 import { Header } from '../../../../atoms/header/header';
 import { like, unlike } from '../../mobile/mobile.service';
 import { likeComment, removeCommentLike } from '../post-detail.services';
-import { logDOM } from '@testing-library/dom';
 
 export const Mobile = () => {
   const resolver = useMatch();
@@ -116,6 +115,7 @@ export const Mobile = () => {
           text={postObj.content}
           name={postObj.identity_meta.name}
           actionList={actionList(postObj.likes, postObj.liked)}
+          lineLimit="none"
           date={postObj.created_at}
           categories={socialCausesToCategory(postObj.causes_tags)}
         />

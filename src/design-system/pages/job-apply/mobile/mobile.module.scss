@@ -27,3 +27,24 @@
   height: 8rem;
   padding: 1rem 1rem 0 1rem;
 }
+
+.linkContainer {
+  display: grid;
+  gap: 1rem;
+}
+
+.uploadYourResume {
+  margin-bottom: 0.25rem;
+}
+
+.acceptedType {
+  margin-bottom: 1rem;
+  color: var(--color-gray-01);
+}
+
+.fileInput {
+  position: absolute;
+  left: 0;
+  width: 9.75rem;
+  visibility: hidden;
+}

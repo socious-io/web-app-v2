@@ -4,7 +4,7 @@ export interface TypographyProps extends CSSProperties {
   children: React.ReactNode;
   size?: 'm' | 'l' | 's' | 'xl' | 's2';
   type?: 'heading' | 'body';
-  lineLimit?: number;
+  lineLimit?: number | 'none';
 }
 
 export type TypeList = Record<

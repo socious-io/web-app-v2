@@ -3,6 +3,7 @@ import { QuestionsRes } from '../../../../core/types';
 import { Button } from '../../../atoms/button/button';
 import { Checkbox } from '../../../atoms/checkbox/checkbox';
 import { Header } from '../../../atoms/header/header';
+import { Input } from '../../../atoms/input/input';
 import { Textarea } from '../../../atoms/textarea/textarea';
 import { Typography } from '../../../atoms/typography/typography';
 import { ProfileView } from '../../../molecules/profile-view/profile-view';
@@ -92,12 +93,24 @@ export const Mobile = (): JSX.Element => {
           <Textarea placeholder="write a message..." label="Message" variant="outline" />
         </Divider>
         <Divider divider="line" title="Resume">
-          <div>Upload your resume</div>
-          <div>DOC, DOCX, PDF (10MB)</div>
-          <Button color="white">Upload File</Button>
+          <div className={css.uploadYourResume}>Upload your resume</div>
+          <div className={css.acceptedType}>DOC, DOCX, PDF (10MB)</div>
+          <Button
+            position="relative"
+            icon="/icons/attachment.svg"
+            width="9.75rem"
+            size="s"
+            color="white"
+          >
+            <input type="file" className={css.fileInput} />
+            Upload File
+          </Button>
         </Divider>
         <Divider divider="line" title="Link">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi explicabo optio aliquid
+          <div className={css.linkContainer}>
+            <Input variant="outline" placeholder="Link name" label="Link name" />
+            <Input placeholder="domain.com" variant="outline" label="Link URL" />
+          </div>
         </Divider>
         {questions.length > 0 && (
           <Divider divider="line" title="Screening questions">
@@ -107,7 +120,7 @@ export const Mobile = (): JSX.Element => {
         <Divider divider="line" title="Contact info">
           <div className={css.contactContainer}>
             <div>Share contact information with Organization?</div>
-            <Checkbox label="" id="" checked />
+            <Checkbox label="" id="" checked={false} />
           </div>
         </Divider>
         <div className={css.btnContainer}>
