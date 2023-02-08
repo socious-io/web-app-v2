@@ -10,6 +10,7 @@ export type CommentModel = {
     id: string;
     likes: number;
     liked: boolean;
+    post_id: string;
     identity_meta: IdentityMeta;
 }
 

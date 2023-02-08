@@ -165,4 +165,12 @@ export type Cities = {
   type: string;
 };
 
+export type LikeResp = {
+  comment_id: string;
+  created_at: string;
+  id: string;
+  identity_id: string;
+  post_id: string;
+};
+
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
