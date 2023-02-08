@@ -285,6 +285,10 @@ export const routes: Route[] = [
         },
       },
       {
+        path: 'privacy-policy',
+        element: () => import('../design-system/pages/privacy-policy/privacy-policy').then((m) => <m.PrivacyPolicy />),
+      },
+      {
         path: '/jobs/:id/apply',
         loader: async ({ params }) => {
           const requests = [getJobDetail(params.id), getScreeningQuestions(params.id)];
