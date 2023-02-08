@@ -36,7 +36,7 @@ export const Password = () => {
     }
 
     const cancel = () => {
-
+        navigate({ to: '../../jobs' });
     }
 
     return (
