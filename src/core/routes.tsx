@@ -71,6 +71,21 @@ export const routes: Route[] = [
         ],
       },
       {
+        path: 'delete-profile',
+        children: [
+          {
+            path: '/delete',
+            element: () =>
+              import('../design-system/pages/delete-profile/delete/delete').then((m) => <m.Delete />),
+          },
+          {
+            path: '/password',
+            element: () =>
+              import('../design-system/pages/delete-profile/password/password').then((m) => <m.Password />),
+          },
+        ],
+      },
+      {
         path: 'sign-in',
         element: () => import('../design-system/pages/sign-in/sign-in').then((m) => <m.SignIn />),
       },
