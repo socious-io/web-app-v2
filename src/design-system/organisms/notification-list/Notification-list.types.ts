@@ -8,7 +8,6 @@ export type Notifications = {
     created_at: string;
     data: DataObj;
     id: string;
-    type: string;
 }
 
 export type DataObj = {
@@ -25,6 +24,7 @@ export type BodyObj = {
 
 export type IdentityObj ={
     meta: MetaObj;
+    type: string;
 }
 
 export type MetaObj = {

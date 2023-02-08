@@ -20,9 +20,8 @@ export const NotificationList = ({ list, onMorePageClick }: NotificationListProp
           onClick={() => navigateToPost(item.data.parentId)}
           key={item.id}
           body={item.data.body.body}
-          type={item.type}
+          type={item.data.identity.type}
           date={item.created_at}
-          id={item.id}
           img={avatarImage(item)}
         />
       ))}
