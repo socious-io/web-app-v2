@@ -46,5 +46,21 @@
   position: absolute;
   left: 0;
   width: 9.75rem;
-  visibility: hidden;
+  opacity: 0;
+}
+
+.uploadedResume {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  .trashIcon {
+    background-color: white;
+    border: 1px solid var(--color-gray-03);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    align-items: center;
+  }
 }
