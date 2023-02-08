@@ -1,3 +1,4 @@
+import css from './mobile.module.scss';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { QuestionsRes } from '../../../../core/types';
 import { Button } from '../../../atoms/button/button';
@@ -7,51 +8,27 @@ import { Input } from '../../../atoms/input/input';
 import { Textarea } from '../../../atoms/textarea/textarea';
 import { Typography } from '../../../atoms/typography/typography';
 import { ProfileView } from '../../../molecules/profile-view/profile-view';
-import { RadioGroup } from '../../../molecules/radio-group/radio-group';
-import type { RadioGroupProps } from '../../../molecules/radio-group/radio-group.types';
 import { Job } from '../../../organisms/job-list/job-list.types';
 import { Divider } from '../../../templates/divider/divider';
-import css from './mobile.module.scss';
+import { createRadioQuestion, createTextQuestion, resumeInitialState } from '../job-apply.services';
+import { ChangeEvent, useState } from 'react';
+import { Resume } from '../job-apply.types';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
+  const [resume, setResume] = useState<Resume>(resumeInitialState);
   const { jobDetail, screeningQuestions } = useMatch().ownData as {
     jobDetail: Job;
     screeningQuestions: { questions: QuestionsRes[] };
   };
-
   const questions = screeningQuestions.questions;
 
-  const convertOptionsToRadioGroup = (
-    options: QuestionsRes['options']
-  ): RadioGroupProps['list'] => {
-    return (options as string[]).map((option) => {
-      return { label: option, value: option };
-    });
-  };
-
-  function createRadioQuestion(question: QuestionsRes, i: number): JSX.Element {
-    return (
-      <RadioGroup
-        label={`${i}. ${question.question}`}
-        list={convertOptionsToRadioGroup(question.options)}
-        value=""
-        name="radio"
-        onChange={console.log}
-      />
-    );
-  }
-
-  function createTextQuestion(question: QuestionsRes, i: number): JSX.Element {
-    return (
-      <div>
-        <Textarea
-          placeholder="Your answer..."
-          variant="outline"
-          label={`${i}. ${question.question}`}
-        />
-      </div>
-    );
+  function onResumeLoad(e: ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      return;
+    }
+    setResume({ name: files[0].name, file: files[0] });
   }
 
   const renderQuestions = () => {
@@ -71,13 +48,36 @@ export const Mobile = (): JSX.Element => {
     );
   };
 
-  const onBack = () => {
-    navigate({ to: '..' });
-  };
+  const uploadedResume = (
+    <div className={css.uploadedResume}>
+      <img src="/icons/attachment-black.svg" />
+      <div>{resume.name}</div>
+      <div onClick={() => setResume(resumeInitialState)} className={css.trashIcon}>
+        <img src="/icons/trash-bin.svg" />
+      </div>
+    </div>
+  );
+
+  const uploadResumeBtn = (
+    <>
+      <div className={css.uploadYourResume}>Upload your resume</div>
+      <div className={css.acceptedType}>DOC, DOCX, PDF (10MB)</div>
+      <Button
+        position="relative"
+        icon="/icons/attachment.svg"
+        width="9.75rem"
+        size="s"
+        color="white"
+      >
+        <input onChange={onResumeLoad} type="file" className={css.fileInput} />
+        Upload File
+      </Button>
+    </>
+  );
 
   return (
     <div className={css.container}>
-      <Header onBack={onBack} height="var(--safe-area)" title="Apply" />
+      <Header onBack={() => navigate({ to: '..' })} height="var(--safe-area)" title="Apply" />
       <div className={css.main}>
         <Divider>
           <ProfileView
@@ -93,18 +93,7 @@ export const Mobile = (): JSX.Element => {
           <Textarea placeholder="write a message..." label="Message" variant="outline" />
         </Divider>
         <Divider divider="line" title="Resume">
-          <div className={css.uploadYourResume}>Upload your resume</div>
-          <div className={css.acceptedType}>DOC, DOCX, PDF (10MB)</div>
-          <Button
-            position="relative"
-            icon="/icons/attachment.svg"
-            width="9.75rem"
-            size="s"
-            color="white"
-          >
-            <input type="file" className={css.fileInput} />
-            Upload File
-          </Button>
+          {resume.name ? uploadedResume : uploadResumeBtn}
         </Divider>
         <Divider divider="line" title="Link">
           <div className={css.linkContainer}>
