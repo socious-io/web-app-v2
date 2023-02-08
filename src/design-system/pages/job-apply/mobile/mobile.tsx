@@ -32,7 +32,7 @@ export const Mobile = (): JSX.Element => {
   function createRadioQuestion(question: QuestionsRes, i: number): JSX.Element {
     return (
       <RadioGroup
-        label={`${i} - ${question.question}`}
+        label={`${i}. ${question.question}`}
         list={convertOptionsToRadioGroup(question.options)}
         value=""
         name="radio"
@@ -47,7 +47,7 @@ export const Mobile = (): JSX.Element => {
         <Textarea
           placeholder="Your answer..."
           variant="outline"
-          label={`${i} - ${question.question}`}
+          label={`${i}. ${question.question}`}
         />
       </div>
     );

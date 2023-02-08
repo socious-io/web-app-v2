@@ -5,6 +5,17 @@ import css from './comment.module.scss';
 import { CommentProps } from './comment.types';
 
 export const Comment = (props: CommentProps) => {
+  const onHeartClick = (data: CommentProps['list'][0]) => {
+    if (data.liked) {
+      props.onLikeRemove(data.post_id, data.id);
+    } else {
+      props.onLike(data.post_id, data.id);
+    }
+  };
+
+  const heartIcon = (data: CommentProps['list'][0]): JSX.Element => {
+    return data.liked ? <img src="/icons/heart-filled.svg" /> : <img src="/icons/heart-blue.svg" />;
+  };
 
   return (
     <>
@@ -21,22 +32,19 @@ export const Comment = (props: CommentProps) => {
               <ChatBox type="sender">{item.content}</ChatBox>
             </div>
 
-            <div className={css.like}>
-              <img src="/icons/heart-blue.svg" />
+            <div className={css.like} onClick={() => onHeartClick(item)}>
+              {heartIcon(item)}
               <span>{item.likes} likes</span>
             </div>
           </div>
-
         </div>
       ))}
 
-      {
-        props.showSeeMore &&
-        (<div className={css.seeMore} onClick={() => props.onMorePageClick()}>
+      {props.showSeeMore && (
+        <div className={css.seeMore} onClick={() => props.onMorePageClick()}>
           See more
-        </div>)
-      }
-
+        </div>
+      )}
     </>
   );
 };
