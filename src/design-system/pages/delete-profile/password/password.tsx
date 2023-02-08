@@ -23,16 +23,16 @@ export const Password = () => {
     }
 
     const deleteMyAccount = () => {
-        // login(email, password).then(resp => {
-        //     if (resp.message === 'success') {
-        //         deleteAccount(' ').then(resp => {
-        //             if (resp.message === 'success') {
-        //                 navigate({ to: '../confirm' });
-        //             }
-        //         });
-        //     }
-        // });
-        navigate({ to: `../confirm?email=${email}` });
+        login(email, password).then(resp => {
+            if (resp.message === 'success') {
+                deleteAccount(' ').then(resp => {
+                    if (resp.message === 'success') {
+                        navigate({ to: `../confirm?email=${email}` });
+                    }
+                });
+            }
+        });
+
     }
 
     const cancel = () => {
