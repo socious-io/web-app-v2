@@ -1,19 +1,38 @@
 import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { IdentityReq } from '../../../../core/types';
+import { RootState } from '../../../../store/store';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
+import { deleteAccount, login } from '../delete-profile.service';
 import css from './password.module.scss';
 
 export const Password = () => {
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
 
+    const identity = useSelector<RootState, IdentityReq>((state) => {
+        return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+    });
+    const email = identity.meta.email;
+
+
     const backToPerviousPage = () => {
         navigate({ to: '../delete' });
     }
 
-    const navigateToEmail = () => {
-        navigate({ to: '../email' });
+    const deleteMyAccount = () => {
+        // login(email, password).then(resp => {
+        //     if (resp.message === 'success') {
+        //         deleteAccount(' ').then(resp => {
+        //             if (resp.message === 'success') {
+        //                 navigate({ to: '../confirm' });
+        //             }
+        //         });
+        //     }
+        // });
+        navigate({ to: `../confirm?email=${email}` });
     }
 
     const cancel = () => {
@@ -37,7 +56,7 @@ export const Password = () => {
                 </div>
             </div>
             <div className={css.footer}>
-                <Button color='red' onClick={navigateToEmail}>
+                <Button color='red' onClick={deleteMyAccount}>
                     Delete my accoount
                 </Button>
                 <Button color='white' onClick={cancel}>
