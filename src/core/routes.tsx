@@ -266,7 +266,6 @@ export const routes: Route[] = [
       },
       {
         path: '/jobs/:id/apply',
-        // loader: ({ params }) => getJobDetail(params.id),
         loader: async ({ params }) => {
           const requests = [getJobDetail(params.id), getScreeningQuestions(params.id)];
           const [jobDetail, screeningQuestions] = await Promise.all(requests);

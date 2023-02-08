@@ -11,6 +11,10 @@
   border-color: var(--color-gray-04);
   background-color: var(--color-white);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
 }
 
 .button:disabled {
