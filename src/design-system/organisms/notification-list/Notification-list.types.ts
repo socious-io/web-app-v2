@@ -28,6 +28,7 @@ export type IdentityObj ={
 }
 
 export type MetaObj = {
-    avatar: string;
+    avatar?: string;
+    image?: string;
     name: string;
 }
