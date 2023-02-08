@@ -83,6 +83,11 @@ export const routes: Route[] = [
             element: () =>
               import('../design-system/pages/delete-profile/password/password').then((m) => <m.Password />),
           },
+          {
+            path: '/confirm',
+            element: () =>
+              import('../design-system/pages/delete-profile/confirm/confirm').then((m) => <m.Confirm />),
+          },
         ],
       },
       {
