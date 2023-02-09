@@ -48,22 +48,23 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
   };
 
   const onLike = (id: string) => {
+    const clone = [...feedList];
+    const ref = clone.find(item => item.id === id);
+    ref.liked = true;
+    ref.likes = ref.likes + 1;
+    setFeedList(clone);
     like(id).then(() => {
-      const clone = [...feedList];
-      const ref = clone.find(item => item.id === id);
-      ref.liked = true;
-      ref.likes = ref.likes + 1;
-      setFeedList(clone);
     })
   }
 
   const onRemoveLike = (id: string) => {
+    const clone = [...feedList];
+    const ref = clone.find(item => item.id === id);
+    ref.liked = false;
+    ref.likes = ref.likes - 1;
+    setFeedList(clone);
+
     unlike(id).then(() => {
-      const clone = [...feedList];
-      const ref = clone.find(item => item.id === id);
-      ref.liked = false;
-      ref.likes = ref.likes - 1;
-      setFeedList(clone);
     })
   }
 
