@@ -232,7 +232,7 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/jobs/my-jobs/:id',
+        path: '/jobs/created/:id',
         loader: async ({ params }) => {
           const requests = [
             getActiveJobs({ identityId: params.id, page: 1 }),
@@ -305,6 +305,22 @@ export const routes: Route[] = [
         },
         element: () =>
           import('../design-system/pages/job-apply/apply/apply').then((m) => <m.JobApply />),
+      },
+      {
+        path: '/jobs/applied/:id',
+        loader: async ({ params }) => {
+          const requests = [
+            getActiveJobs({ identityId: params.id, page: 1 }),
+            getDraftJobs({ identityId: params.id, page: 1 }),
+          ];
+          const [activeJobs, draftJobs] = await Promise.all(requests);
+          return {
+            activeJobs,
+            draftJobs,
+          };
+        },
+        element: () =>
+          import('../design-system/pages/job-apply/my-jobs/my-jobs').then((m) => <m.MyJobs />),
       },
       {
         path: '/jobs/:id/confirm',
