@@ -304,6 +304,13 @@ export const routes: Route[] = [
           )),
       },
       {
+        path: 'terms-conditions',
+        element: () =>
+          import('../design-system/pages/terms-conditions/terms-conditions').then((m) => (
+            <m.TermsConditions />
+          )),
+      },
+      {
         path: '/jobs/:id/apply',
         loader: async ({ params }) => {
           const requests = [getJobDetail(params.id), getScreeningQuestions(params.id)];
