@@ -1,0 +1,39 @@
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 8rem;
+}
+
+.title {
+  color: var(--color-primary-01);
+  font-family: 'Hahmlet';
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--font-size-l);
+}
+
+.main {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  gap: 0.5rem;
+}
+
+.message {
+  line-height: 150%;
+}
+
+.companyName {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btnContainer {
+  border-top: 1px solid var(--border-gray-01);
+  padding: 1rem 1rem 0 1rem;
+}

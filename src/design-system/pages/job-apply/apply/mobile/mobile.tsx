@@ -5,7 +5,6 @@ import { QuestionsRes } from '../../../../../core/types';
 import { Textarea } from '../../../../atoms/textarea/textarea';
 import { ProfileView } from '../../../../molecules/profile-view/profile-view';
 import { Job } from '../../../../organisms/job-list/job-list.types';
-import { Header } from '../../../achievements/header/header';
 import { resumeInitialState, createRadioQuestion, createTextQuestion } from '../apply.services';
 import { Resume } from '../apply.types';
 import { Divider } from '../../../../templates/divider/divider';
@@ -13,6 +12,8 @@ import { Input } from '../../../../atoms/input/input';
 import { Typography } from '../../../../atoms/typography/typography';
 import { Button } from '../../../../atoms/button/button';
 import { Checkbox } from '../../../../atoms/checkbox/checkbox';
+import { Header } from '../../../../atoms/header/header';
+import { printWhen, when } from '../../../../../utils/utils';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -34,16 +35,18 @@ export const Mobile = (): JSX.Element => {
   const renderQuestions = () => {
     return (
       <div className={css.questionsContainer}>
-        {questions.map((item, i) => {
-          const isMultipleChoice = item.options;
-          return (
-            <div key={item.id} className={css.questions}>
-              {isMultipleChoice
-                ? createRadioQuestion(item, i + 1)
-                : createTextQuestion(item, i + 1)}
-            </div>
-          );
-        })}
+        <Divider divider="line" title="Screening questions">
+          {questions.map((item, i) => {
+            const isMultipleChoice = item.options;
+            return (
+              <div key={item.id} className={css.questions}>
+                {isMultipleChoice
+                  ? createRadioQuestion(item, i + 1)
+                  : createTextQuestion(item, i + 1)}
+              </div>
+            );
+          })}
+        </Divider>
       </div>
     );
   };
@@ -101,11 +104,7 @@ export const Mobile = (): JSX.Element => {
             <Input placeholder="domain.com" variant="outline" label="Link URL" />
           </div>
         </Divider>
-        {questions.length > 0 && (
-          <Divider divider="line" title="Screening questions">
-            {renderQuestions()}
-          </Divider>
-        )}
+        {printWhen(renderQuestions(), !!questions.length)}
         <Divider divider="line" title="Contact info">
           <div className={css.contactContainer}>
             <div>Share contact information with Organization?</div>
@@ -113,7 +112,9 @@ export const Mobile = (): JSX.Element => {
           </div>
         </Divider>
         <div className={css.btnContainer}>
-          <Button onClick={() => navigate({ to: '' })}>Submit application</Button>
+          <Button onClick={() => navigate({ to: `../confirm?company=${jobDetail.identity_meta.name}` })}>
+            Submit application
+          </Button>
         </div>
       </div>
     </div>
