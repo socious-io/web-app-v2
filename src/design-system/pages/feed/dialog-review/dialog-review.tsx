@@ -69,15 +69,17 @@ export const DialogReview = (props: DialogReviewProps) => {
           <img src="/icons/close-black.svg" />
         </div>
       </div>
-      <div className={css.social}>
-        <Avatar img={avatarImg} type={identity.type} />
-        <CategoriesClickable list={obj} />
-      </div>
-      <div className={css.text}>{props.text}</div>
-      <div className={css.image}>
-        <Card>
-          <img src={props.imgUrl} />
-        </Card>
+      <div className={css.main}>
+        <div className={css.social}>
+          <Avatar img={avatarImg} type={identity.type} />
+          <CategoriesClickable list={obj} />
+        </div>
+        <div className={css.text}>{props.text}</div>
+        <div className={css.image}>
+          <Card>
+            <img src={props.imgUrl} />
+          </Card>
+        </div>
       </div>
       <div className={css.footer}>
         <div className={css.button}>
