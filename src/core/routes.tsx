@@ -31,8 +31,7 @@ import { UserType } from './types';
 import { getJobCategories } from '../design-system/pages/job-create/info/info.services';
 import { search } from '../design-system/pages/search/search.services';
 import { getNotificationList } from '../design-system/pages/notifications/mobile/mobile.service';
-import { getScreeningQuestions } from '../design-system/pages/job-apply/job-apply.services';
-import { logDOM } from '@testing-library/dom';
+import { getScreeningQuestions } from '../design-system/pages/job-apply/apply/apply.services';
 
 export const routes: Route[] = [
   {
@@ -76,17 +75,23 @@ export const routes: Route[] = [
           {
             path: '/delete',
             element: () =>
-              import('../design-system/pages/delete-profile/delete/delete').then((m) => <m.Delete />),
+              import('../design-system/pages/delete-profile/delete/delete').then((m) => (
+                <m.Delete />
+              )),
           },
           {
             path: '/password',
             element: () =>
-              import('../design-system/pages/delete-profile/password/password').then((m) => <m.Password />),
+              import('../design-system/pages/delete-profile/password/password').then((m) => (
+                <m.Password />
+              )),
           },
           {
             path: '/confirm',
             element: () =>
-              import('../design-system/pages/delete-profile/confirm/confirm').then((m) => <m.Confirm />),
+              import('../design-system/pages/delete-profile/confirm/confirm').then((m) => (
+                <m.Confirm />
+              )),
           },
         ],
       },
@@ -286,7 +291,10 @@ export const routes: Route[] = [
       },
       {
         path: 'privacy-policy',
-        element: () => import('../design-system/pages/privacy-policy/privacy-policy').then((m) => <m.PrivacyPolicy />),
+        element: () =>
+          import('../design-system/pages/privacy-policy/privacy-policy').then((m) => (
+            <m.PrivacyPolicy />
+          )),
       },
       {
         path: '/jobs/:id/apply',
@@ -296,7 +304,7 @@ export const routes: Route[] = [
           return { jobDetail, screeningQuestions };
         },
         element: () =>
-          import('../design-system/pages/job-apply/job-apply').then((m) => <m.JobApply />),
+          import('../design-system/pages/job-apply/apply/apply').then((m) => <m.JobApply />),
       },
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
