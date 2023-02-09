@@ -5,73 +5,100 @@ import { Tabs } from '../../../../atoms/tabs/tabs';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import {
-  getActiveJobs,
-  getDraftJobs,
-  jobListToJobCardListAdaptor,
-} from '../../my-jobs/my-jobs.services';
-import { MyJobsResolver } from '../my-jobs.types';
+  AwaitingResp,
+  DeclinedResp,
+  EndedResp,
+  Loader,
+  OnGoingResp,
+  PendingResp,
+} from '../my-jobs.types';
 import { JobCardList } from '../../../../organisms/job-card-list/job-card-list';
-import { Fab } from '../../../../atoms/fab/fab';
+import {
+  getAwaitingReviewList,
+  getDeclinedApplicants,
+  getEndedList,
+  getOnGoingList,
+  getPendingApplicants,
+} from '../my-jobs.services';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const resolver = useMatch();
-  const { activeJobs, draftJobs } = resolver.ownData as MyJobsResolver;
-  const onGoingTitle = `On-Going (${activeJobs.total_count})`;
-  const draftTitle = `Drafts (${draftJobs.total_count})`;
-  const adoptedJobList = jobListToJobCardListAdaptor(activeJobs.items);
-  const adoptedDraftList = jobListToJobCardListAdaptor(draftJobs.items);
-  const [activeJobList, setActiveJobList] = useState({ ...activeJobs, items: adoptedJobList });
-  const [draftJobList, setDraftJobList] = useState({ ...draftJobs, items: adoptedDraftList });
+  const {
+    pendingApplicants,
+    awaitingApplicants,
+    declinedApplicants,
+    onGoingApplicants,
+    endedApplicants,
+  } = resolver.ownData as Loader;
+  const [pendingList, setPendingList] = useState<PendingResp>(pendingApplicants);
+  const [awaitingList, setAwaitingList] = useState<AwaitingResp>(awaitingApplicants);
+  const [declinedList, setDeclinedList] = useState<AwaitingResp>(declinedApplicants);
+  const [onGoingList, setOnGoingList] = useState<OnGoingResp>(onGoingApplicants);
+  const [endedList, setEndedList] = useState<OnGoingResp>(endedApplicants);
 
-  async function updateActiveJobList() {
-    const identityId = resolver.params.id;
-    const payload = { identityId, page: activeJobList.page + 1 };
-    getActiveJobs(payload)
-      .then(({ items }) => ({
-        items: [...activeJobList.items, ...jobListToJobCardListAdaptor(items)],
-        page: payload.page,
-        limit: activeJobs.limit,
-        total_count: activeJobs.total_count,
-      }))
-      .then(setActiveJobList);
+  async function updatePendingList(page: number) {
+    const update = (resp: PendingResp) =>
+      setPendingList((prev) => ({ ...prev, items: [...prev.items, ...resp.items] }));
+    getPendingApplicants({ page }).then(update);
   }
 
-  async function updateDraftJobList() {
-    const identityId = resolver.params.id;
-    const payload = { identityId, page: draftJobList.page + 1 };
-    getDraftJobs(payload)
-      .then(({ items }) => ({
-        items: [...draftJobList.items, ...jobListToJobCardListAdaptor(items)],
-        page: payload.page,
-        limit: draftJobs.limit,
-        total_count: draftJobs.total_count,
-      }))
-      .then(setDraftJobList);
+  async function updateAwaitingList(page: number) {
+    const update = (resp: AwaitingResp) =>
+      setAwaitingList((prev) => ({ ...prev, items: [...prev.items, ...resp.items] }));
+    getAwaitingReviewList({ page }).then(update);
+  }
+
+  async function updateDeclinedList(page: number) {
+    const update = (resp: DeclinedResp) =>
+      setDeclinedList((prev) => ({ ...prev, items: [...prev.items, ...resp.items] }));
+    getDeclinedApplicants({ page }).then(update);
+  }
+
+  async function updateOnGoingList(page: number) {
+    const update = (resp: OnGoingResp) =>
+      setOnGoingList((prev) => ({ ...prev, items: [...prev.items, ...resp.items] }));
+    getOnGoingList({ page }).then(update);
+  }
+
+  async function updateEndedList(page: number) {
+    const update = (resp: EndedResp) =>
+      setEndedList((prev) => ({ ...prev, items: [...prev.items, ...resp.items] }));
+    getEndedList({ page }).then(update);
   }
 
   const tabs = [
     {
-      name: 'Created',
+      name: 'Applied',
       content: (
         <>
-          <Accordion id="on-going" title={onGoingTitle}>
+          <Accordion id="Pending" title={`Pending (${pendingList.total_count})`}>
             <div className={css.listContainer}>
               <JobCardList
-                list={activeJobList.items}
+                list={pendingList.items}
                 onItemClick={console.log}
-                showMore={activeJobList.items.length < activeJobs.total_count}
-                onSeeMoreClick={updateActiveJobList}
+                totalCount={pendingList.total_count}
+                onSeeMoreClick={updatePendingList}
               />
             </div>
           </Accordion>
-          <Accordion id="drafts" title={draftTitle}>
+          <Accordion id="awaiting-review" title={`Awaiting review (${awaitingList.total_count})`}>
             <div className={css.listContainer}>
               <JobCardList
-                list={draftJobList.items}
+                list={awaitingList.items}
                 onItemClick={console.log}
-                showMore={draftJobList.items.length < draftJobs.total_count}
-                onSeeMoreClick={updateDraftJobList}
+                totalCount={awaitingList.total_count}
+                onSeeMoreClick={updateAwaitingList}
+              />
+            </div>
+          </Accordion>
+          <Accordion id="declined" title={`Declined (${declinedList.total_count})`}>
+            <div className={css.listContainer}>
+              <JobCardList
+                list={declinedList.items}
+                onItemClick={console.log}
+                totalCount={declinedList.total_count}
+                onSeeMoreClick={updateDeclinedList}
               />
             </div>
           </Accordion>
@@ -80,8 +107,31 @@ export const Mobile = (): JSX.Element => {
       default: true,
     },
     {
-      name: 'archived',
-      content: <></>,
+      name: 'Hired',
+      content: (
+        <>
+          <Accordion id="on-going" title={`On-Going (${onGoingList.total_count})`}>
+            <div className={css.listContainer}>
+              <JobCardList
+                list={onGoingList.items}
+                onItemClick={console.log}
+                totalCount={onGoingList.total_count}
+                onSeeMoreClick={updateOnGoingList}
+              />
+            </div>
+          </Accordion>
+          <Accordion id="ended" title={`Ended (${endedList.total_count})`}>
+            <div className={css.listContainer}>
+              <JobCardList
+                list={endedList.items}
+                onItemClick={console.log}
+                totalCount={endedList.total_count}
+                onSeeMoreClick={updateEndedList}
+              />
+            </div>
+          </Accordion>
+        </>
+      ),
     },
   ];
 
@@ -91,7 +141,6 @@ export const Mobile = (): JSX.Element => {
       <div className={css.tabContainer}>
         <Tabs tabs={tabs} />
       </div>
-      <Fab onClick={() => navigate({ to: '/jobs/create/social-causes' })} />
     </div>
   );
 };
