@@ -1,10 +1,8 @@
-import type { RadioGroupProps } from '../../molecules/radio-group/radio-group.types';
-import { get } from '../../../core/http';
-import { QuestionsRes } from '../../../core/types';
-import { list } from '../intro/intro.constants';
-import { Textarea } from '../../atoms/textarea/textarea';
-import { RadioGroup } from '../../molecules/radio-group/radio-group';
-import { Resume } from './job-apply.types';
+import { RadioGroupProps, RadioGroup } from '@mui/material';
+import { get } from '../../../../core/http';
+import { QuestionsRes } from '../../../../core/types';
+import { Textarea } from '../../../atoms/textarea/textarea';
+import { Resume } from './apply.types';
 
 export async function getScreeningQuestions(id: string): Promise<QuestionsRes> {
   return get(`projects/${id}/questions`).then(({ data }) => data);
