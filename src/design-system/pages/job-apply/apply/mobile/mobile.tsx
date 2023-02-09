@@ -1,18 +1,18 @@
 import css from './mobile.module.scss';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { QuestionsRes } from '../../../../core/types';
-import { Button } from '../../../atoms/button/button';
-import { Checkbox } from '../../../atoms/checkbox/checkbox';
-import { Header } from '../../../atoms/header/header';
-import { Input } from '../../../atoms/input/input';
-import { Textarea } from '../../../atoms/textarea/textarea';
-import { Typography } from '../../../atoms/typography/typography';
-import { ProfileView } from '../../../molecules/profile-view/profile-view';
-import { Job } from '../../../organisms/job-list/job-list.types';
-import { Divider } from '../../../templates/divider/divider';
-import { createRadioQuestion, createTextQuestion, resumeInitialState } from '../job-apply.services';
 import { ChangeEvent, useState } from 'react';
-import { Resume } from '../job-apply.types';
+import { QuestionsRes } from '../../../../../core/types';
+import { Textarea } from '../../../../atoms/textarea/textarea';
+import { ProfileView } from '../../../../molecules/profile-view/profile-view';
+import { Job } from '../../../../organisms/job-list/job-list.types';
+import { Header } from '../../../achievements/header/header';
+import { resumeInitialState, createRadioQuestion, createTextQuestion } from '../apply.services';
+import { Resume } from '../apply.types';
+import { Divider } from '../../../../templates/divider/divider';
+import { Input } from '../../../../atoms/input/input';
+import { Typography } from '../../../../atoms/typography/typography';
+import { Button } from '../../../../atoms/button/button';
+import { Checkbox } from '../../../../atoms/checkbox/checkbox';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -113,7 +113,7 @@ export const Mobile = (): JSX.Element => {
           </div>
         </Divider>
         <div className={css.btnContainer}>
-          <Button>Submit application</Button>
+          <Button onClick={() => navigate({ to: '' })}>Submit application</Button>
         </div>
       </div>
     </div>
