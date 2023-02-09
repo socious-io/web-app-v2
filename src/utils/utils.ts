@@ -4,7 +4,7 @@ export function when<T, P>(value: boolean, fn: (params?: P) => T, params?: P) {
   }
 }
 
-export function printWhen(content: unknown, conditions: boolean) {
+export function printWhen(content: unknown, conditions: boolean | undefined | null) {
   return conditions ? content : null;
 }
 

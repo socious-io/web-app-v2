@@ -3,4 +3,5 @@ export type JobCardProps = {
   title: string;
   body: string;
   date: string;
+  img?: string
 };
