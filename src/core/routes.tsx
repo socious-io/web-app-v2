@@ -307,6 +307,11 @@ export const routes: Route[] = [
           import('../design-system/pages/job-apply/apply/apply').then((m) => <m.JobApply />),
       },
       {
+        path: '/jobs/:id/confirm',
+        element: () =>
+          import('../design-system/pages/job-apply/confirm/confirm').then((m) => <m.Confirm />),
+      },
+      {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
           {
