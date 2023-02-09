@@ -8,5 +8,6 @@ export type ActionObj = {
     iconName: string;
     like?: number;
     isLiked?: boolean;
+    type: 'like' | 'comment'
     onClick?: (item: ActionObj) => void;
 }
