@@ -5,6 +5,7 @@ export interface FeedListProps extends CSSProperties {
     onMorePageClick: () => void;
     onLike: (id: string) => void;
     onRemoveLike: (id: string) => void;
+    showSeeMore: boolean;
 }
 
 export type Feed = {
