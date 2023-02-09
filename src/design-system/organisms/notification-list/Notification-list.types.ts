@@ -2,6 +2,7 @@
 export interface NotificationListProps {
     list: Notifications[];
     onMorePageClick: () => void;
+    showSeeMore: boolean;
 }
 
 export type Notifications = {

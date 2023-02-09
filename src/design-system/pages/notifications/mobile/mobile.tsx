@@ -11,6 +11,14 @@ import { IdentityReq } from '../../../../core/types';
 export const Mobile = ({ list }: NotificationMobileProps): JSX.Element => {
   const [notificationList, setNotificationList] = useState(list.items);
   const [page, setPage] = useState(1);
+  const totalCount = list.total_count;
+
+  const onShowSeeMore = (length: number): boolean => {
+    if (length < totalCount) {
+      return true
+    }
+    return false
+  }
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -33,7 +41,7 @@ export const Mobile = ({ list }: NotificationMobileProps): JSX.Element => {
         <img style={{ visibility: 'hidden' }} src="/icons/settings-black.svg" />
       </div>
       <div className={css.main}>
-        <NotificationList onMorePageClick={onMorePageClick} list={notificationList} />
+        <NotificationList onMorePageClick={onMorePageClick} list={notificationList} showSeeMore={onShowSeeMore(notificationList.length)} />
       </div>
     </div>
   );
