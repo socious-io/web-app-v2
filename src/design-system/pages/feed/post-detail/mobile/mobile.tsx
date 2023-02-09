@@ -25,7 +25,13 @@ export const Mobile = () => {
   const [postObj, setPostObj] = useState<Feed>(post);
   const [page, setPage] = useState(1);
   const totalCount = comments.total_count;
-  const showSeeMoreComment = comments.items.length < totalCount ? true : false;
+
+  const onShowSeeMore = (length: number): boolean => {
+    if (length < totalCount) {
+      return true
+    }
+    return false
+  }
 
   const actionList = (likes: number, liked: boolean) => [
     {
@@ -128,7 +134,7 @@ export const Mobile = () => {
             onLike={onCommentLike}
             onLikeRemove={onCommentLikeRemove}
             onMorePageClick={onMorePage}
-            showSeeMore={showSeeMoreComment}
+            showSeeMore={onShowSeeMore(commentList.length)}
           />
         </div>
       </div>

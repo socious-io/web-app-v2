@@ -27,7 +27,7 @@ export const Delete = () => {
             <div className={css.main}>
                 <div className={css.content}>
                     <span className={css.title}>Are you sure? </span>
-                    <span className={css.text}>Deleteing your account will erase all your existing activity on Socious, including connections you've made, and jobs you've conterbuted to.</span>
+                    <span className={css.text}>Deleteing your account will erase all your existing activity on Socious, including connections you've made, and jobs you've contributed to.</span>
                     <br />
                     <span>This action is irreversible.</span>
                 </div>

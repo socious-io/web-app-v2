@@ -17,6 +17,13 @@ export const Comment = (props: CommentProps) => {
     return data.liked ? <img src="/icons/heart-filled.svg" /> : <img src="/icons/heart-blue.svg" />;
   };
 
+  const checkingLikeOrLikes = (likes: number) => {
+    if (likes <= 1) {
+      return 'Like'
+    }
+    return 'Likes'
+  }
+
   return (
     <>
       {props.list.map((item) => (
@@ -34,7 +41,7 @@ export const Comment = (props: CommentProps) => {
 
             <div className={css.like} onClick={() => onHeartClick(item)}>
               {heartIcon(item)}
-              <span>{item.likes} likes</span>
+              <span>{item.likes} {checkingLikeOrLikes(item.likes)}</span>
             </div>
           </div>
         </div>
