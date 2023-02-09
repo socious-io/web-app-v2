@@ -3,7 +3,7 @@ import { NotificationItem } from '../../molecules/notification-item/notification
 import css from './notification-list.module.scss';
 import { useNavigate } from '@tanstack/react-location';
 
-export const NotificationList = ({ list, onMorePageClick }: NotificationListProps): JSX.Element => {
+export const NotificationList = ({ list, onMorePageClick, showSeeMore }: NotificationListProps): JSX.Element => {
   const navigate = useNavigate();
 
   const navigateToPost = (id: string) => {
@@ -25,9 +25,10 @@ export const NotificationList = ({ list, onMorePageClick }: NotificationListProp
           img={avatarImage(item)}
         />
       ))}
-      <div className={css.seeMore} onClick={() => onMorePageClick()}>
+
+      {showSeeMore && (<div className={css.seeMore} onClick={() => onMorePageClick()}>
         See more
-      </div>
+      </div>)}
     </div>
   );
 };

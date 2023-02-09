@@ -4,12 +4,12 @@ import css from './feed-list.module.scss';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { useNavigate } from '@tanstack/react-location';
 
-export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike }: FeedListProps) => {
+export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeMore }: FeedListProps) => {
   const navigate = useNavigate();
 
   const actionList = (id: string, likes: number, liked: boolean) => [
     {
-      label: 'Like',
+      label: likes < 2 ? 'Like' : 'Likes',
       iconName: 'heart-blue',
       like: likes,
       isLiked: liked,
@@ -48,9 +48,11 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike }: FeedLi
           categories={socialCausesToCategory(item.causes_tags)}
         />
       ))}
-      <div className={css.seeMore} onClick={() => onMorePageClick()}>
-        See more
-      </div>
+      {showSeeMore && (
+        <div className={css.seeMore} onClick={() => onMorePageClick()}>
+          See more
+        </div>
+      )}
     </div>
   );
 };
