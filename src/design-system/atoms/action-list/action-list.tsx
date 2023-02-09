@@ -1,8 +1,15 @@
 import css from './action-list.module.scss';
-import { ActionListProps } from './action-list.types';
+import { ActionListProps, ActionObj } from './action-list.types';
 
 
 export const ActionList = ({ list }: ActionListProps) => {
+
+    const checkLike = (item: ActionObj ) => {
+        if (item.type === 'like') {
+            console.log('hi');
+            
+        }
+    }
 
 
     return (

@@ -9,7 +9,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
 
   const actionList = (id: string, likes: number, liked: boolean) => [
     {
-      label: 'Like',
+      label: likes < 2 ? 'Like' : 'Likes',
       iconName: 'heart-blue',
       like: likes,
       isLiked: liked,
