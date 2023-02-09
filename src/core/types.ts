@@ -173,4 +173,78 @@ export type LikeResp = {
   post_id: string;
 };
 
+export type UserApplicantResp = {
+  closed_at: string;
+  cover_letter: string;
+  created_at: string;
+  cv_link: string;
+  cv_name: string;
+  deleted_at: string;
+  feedback: string;
+  id: string;
+  offer_message: string;
+  offer_rate: string;
+  old_id: string;
+  payment_rate: string;
+  payment_type: string;
+  organization: {
+    meta: {
+      name: string;
+      image: string;
+    };
+  };
+  project: {
+    title: string;
+  };
+};
+
+export type MissionsResp = Pagination<
+  {
+    id: string;
+    created_at: string;
+    project: {
+      title: string;
+    };
+    assigner: {
+      meta: {
+        image: string;
+        name: string;
+      };
+    };
+  }[]
+>;
+
+export type DeclinedApplicantListResp = Pagination<
+  {
+    id: string;
+    created_at: string;
+    project: {
+      title: string;
+    };
+    organization: {
+      meta: {
+        image: string;
+        name: string;
+      };
+    };
+  }[]
+>;
+
+export type AwaitingReviewApplicantListResp = Pagination<
+  {
+    id: string;
+    created_at: string;
+    project: {
+      description: string;
+      title: string;
+    };
+    offerer: {
+      meta: {
+        image: string;
+        name: string;
+      };
+    };
+  }[]
+>;
+
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
