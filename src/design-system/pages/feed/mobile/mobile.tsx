@@ -11,13 +11,12 @@ import { Search } from '../../../atoms/search/search';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../../../core/types';
 import { RootState } from '../../../../store/store';
-import { useNavigate } from '@tanstack/react-location';
 
 export const Mobile = ({ list }: FeedsMobileProps) => {
-  const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [feedList, setFeedList] = useState(list.items);
   const [page, setPage] = useState(1);
+  const totalCount = list.total_count;
 
 
   function onMorePage() {
@@ -26,6 +25,13 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
       setFeedList((list) => [...list, ...resp.items]);
     });
   };
+
+  const onShowSeeMore = (length: number): boolean => {
+    if (length < totalCount) {
+      return true
+    }
+    return false
+  }
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -94,7 +100,10 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
           </div>
         </Card>
       </div>
-      <FeedList data={feedList} onLike={onLike} onRemoveLike={onRemoveLike} onMorePageClick={onMorePage} />
+      <FeedList data={feedList} onLike={onLike}
+        onRemoveLike={onRemoveLike}
+        onMorePageClick={onMorePage}
+        showSeeMore={onShowSeeMore(feedList.length)} />
       <Dialog fullScreen open={openDialog}>
         <DialogCreate onClose={handleClose} />
       </Dialog>
