@@ -32,6 +32,13 @@ import { getJobCategories } from '../design-system/pages/job-create/info/info.se
 import { search } from '../design-system/pages/search/search.services';
 import { getNotificationList } from '../design-system/pages/notifications/mobile/mobile.service';
 import { getScreeningQuestions } from '../design-system/pages/job-apply/apply/apply.services';
+import {
+  getAwaitingReviewList,
+  getDeclinedApplicants,
+  getEndedList,
+  getOnGoingList,
+  getPendingApplicants,
+} from '../design-system/pages/job-apply/my-jobs/my-jobs.services';
 
 export const routes: Route[] = [
   {
@@ -308,15 +315,27 @@ export const routes: Route[] = [
       },
       {
         path: '/jobs/applied/:id',
-        loader: async ({ params }) => {
+        loader: async () => {
           const requests = [
-            getActiveJobs({ identityId: params.id, page: 1 }),
-            getDraftJobs({ identityId: params.id, page: 1 }),
+            getPendingApplicants({ page: 1 }),
+            getAwaitingReviewList({ page: 1 }),
+            getDeclinedApplicants({ page: 1 }),
+            getOnGoingList({ page: 1 }),
+            getEndedList({ page: 1 }),
           ];
-          const [activeJobs, draftJobs] = await Promise.all(requests);
+          const [
+            pendingApplicants,
+            awaitingApplicants,
+            declinedApplicants,
+            onGoingApplicants,
+            endedApplicants,
+          ] = await Promise.all(requests);
           return {
-            activeJobs,
-            draftJobs,
+            pendingApplicants,
+            awaitingApplicants,
+            declinedApplicants,
+            onGoingApplicants,
+            endedApplicants,
           };
         },
         element: () =>
