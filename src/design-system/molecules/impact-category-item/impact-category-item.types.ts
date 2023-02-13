@@ -1,7 +1,9 @@
-import {SDG} from '../../../../src/design-system/atoms/impact-badge/impact-badge.constant';
+import { BADGES } from '../../../core/constants/constants';
 
 export type ImpactCategoryItemProps = {
-  category: keyof typeof SDG;
+  color: string;
+  iconUrl: string;
+  label: string;
 };
 
 type Item = {
@@ -10,7 +12,7 @@ type Item = {
   mission_id: string;
   identity_id: string;
   social_cause: string;
-  social_cause_category: keyof typeof SDG;
+  //   social_cause_category: keyof typeof SDG;
   created_at: string;
   mission: Mission;
 };

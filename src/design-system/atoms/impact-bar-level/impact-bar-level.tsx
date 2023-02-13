@@ -1,10 +1,9 @@
-import {CSSProperties} from 'react';
+import { CSSProperties } from 'react';
 import css from './impact-bar-level.module.scss';
-import {ImpactBarLevelProps} from './impact-bar-level.types';
+import { ImpactBarLevelProps } from './impact-bar-level.types';
 
 export const ImpactBarLevel = (props: ImpactBarLevelProps): JSX.Element => {
-  const {start, end, current, nextLevel, currentLevel, prevLevel, ...rest} =
-    props;
+  const { start, end, current, nextLevel, currentLevel, prevLevel, ...rest } = props;
 
   const curr = current - start;
   const diff = end - start;
@@ -37,12 +36,12 @@ export const ImpactBarLevel = (props: ImpactBarLevelProps): JSX.Element => {
 
   return (
     <div className={css.container} style={rest}>
-      <div className={css.currentLevel}>{prevLevel}</div>
+      {/* <div className={css.currentLevel}>{currentLevel}</div> */}
       <div className={css.nextLevel}>{nextLevel}</div>
-      <div className={css.prevLevel}>{currentLevel}</div>
-      <div className={css.currentLevel}>{prevLevel}</div>
-      <div className={css.startNumber}>{start}</div>
-      <div className={css.endNumber}>{end}</div>
+      <div className={css.prevLevel}>{prevLevel}</div>
+      <div className={css.currentLevel}>{currentLevel}</div>
+      <div className={css.startNumber}>{start.toLocaleString('en-US')}</div>
+      <div className={css.endNumber}>{end.toLocaleString('en-US')}</div>
       <div className={css.barContainer} role="progressbar">
         <div style={style} className={css.innerBar}>
           <div className={css.bullet}></div>

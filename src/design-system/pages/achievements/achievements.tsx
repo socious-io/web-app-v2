@@ -1,8 +1,7 @@
-import {TwoThird} from '../../../../src/design-system/templates/two-third/two-third';
-import {AchievementsProps} from './achievements.types';
-import {Body} from './body/body';
-import {Header} from './header/header';
+import { isTouchDevice } from '../../../core/device-type-detector';
+import { Desktop } from './desktop/desktop';
+import { Mobile } from './mobile/achievements';
 
-export const Achievements = (props: AchievementsProps): JSX.Element => {
-  return <TwoThird top={<Header point={35} />} bottom={<Body />} />;
+export const Achievements = (): JSX.Element => {
+  return isTouchDevice() ? <Mobile /> : <Desktop />;
 };
