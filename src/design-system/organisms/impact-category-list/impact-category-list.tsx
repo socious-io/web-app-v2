@@ -1,22 +1,29 @@
 import css from './impact-category-list.module.scss';
-import {ImpactCategoryItem} from '../../../../src/design-system/molecules/impact-category-item/impact-category-item';
-import {ImpactCategoryListProps} from './impact-category-list.types';
-import {
-  LIST,
-  SDG,
-} from '../../../../src/design-system/atoms/impact-badge/impact-badge.constant';
+import { ImpactCategoryItem } from '../../../../src/design-system/molecules/impact-category-item/impact-category-item';
+import { ImpactCategoryListProps } from './impact-category-list.types';
+import { BADGES } from '../../../core/constants/constants';
 
-const badges = Object.entries(LIST);
+export const ImpactCategoryList = (props: ImpactCategoryListProps): JSX.Element => {
+  const { activeList, ...rest } = props;
 
-export const ImpactCategoryList = (
-  props: ImpactCategoryListProps,
-): JSX.Element => {
-  const {data, ...rest} = props;
+  function isActive(name: string) {
+    return activeList.includes(name);
+  }
+
   return (
     <div className={css.container} style={rest}>
-      {badges.map(([key]) => {
-        const category = key as keyof typeof SDG;
-        return <ImpactCategoryItem category={category} key={key} />;
+      {Object.entries(BADGES).map((badge) => {
+        const b = badge[1];
+        return (
+          <div style={{ opacity: isActive(b.value) ? '1' : '0.5' }}>
+            <ImpactCategoryItem
+              iconUrl={`/sdg/${b.value}.svg`}
+              key={b.value}
+              color={b.color}
+              label={b.label}
+            />
+          </div>
+        );
       })}
     </div>
   );
