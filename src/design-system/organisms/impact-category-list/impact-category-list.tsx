@@ -15,7 +15,7 @@ export const ImpactCategoryList = (props: ImpactCategoryListProps): JSX.Element 
       {Object.entries(BADGES).map((badge) => {
         const b = badge[1];
         return (
-          <div style={{ opacity: isActive(b.value) ? '1' : '0.5' }}>
+          <div key={b.value} style={{ opacity: isActive(b.value) ? '1' : '0.5' }}>
             <ImpactCategoryItem
               iconUrl={`/sdg/${b.value}.svg`}
               key={b.value}
