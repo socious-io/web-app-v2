@@ -5,6 +5,7 @@ export interface TypographyProps extends CSSProperties {
   size?: 'm' | 'l' | 's' | 'xl' | 's2';
   type?: 'heading' | 'body';
   lineLimit?: number | 'none';
+  className?: string;
 }
 
 export type TypeList = Record<
