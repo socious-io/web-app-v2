@@ -12,6 +12,7 @@ export type CommentModel = {
     liked: boolean;
     post_id: string;
     identity_meta: IdentityMeta;
+    identity_type: 'organizations' | 'users';
 }
 
 type IdentityMeta = {
