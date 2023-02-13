@@ -17,5 +17,6 @@ export type CommentModel = {
 
 type IdentityMeta = {
     name: string;
-    avatar: string
+    avatar: string;
+    image: string;
 }

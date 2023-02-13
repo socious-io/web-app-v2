@@ -30,7 +30,7 @@ export const Comment = (props: CommentProps) => {
       {props.list.map((item) => (
         <div key={item.id} className={css.container}>
           <div className={css.info}>
-            <Avatar type={item.identity_type} size="2rem" img={item.identity_meta.avatar} />
+            <Avatar type={item.identity_type} size="2rem" img={item.identity_type === 'users' ? item.identity_meta.avatar : item.identity_meta.image} />
             <span>{item.identity_meta.name}</span>
             <span className={css.date}>{toRelativeTime(item.created_at)}</span>
           </div>
