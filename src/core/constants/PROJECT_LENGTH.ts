@@ -5,3 +5,10 @@ export const PROJECT_LENGTH = [
   { title: '3-6 months', value: '3_6_MONTHS' },
   { title: 'More than 6 months', value: '6_MONTHS_OR_MORE' },
 ];
+export function translateProjectLength(value: string) {
+  const obj = PROJECT_LENGTH.find((item) => item.value === value);
+  if (obj) {
+    return obj.title;
+  }
+  return '';
+}

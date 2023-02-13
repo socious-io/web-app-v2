@@ -42,7 +42,8 @@ import {
 import {
   getBadges,
   getImpactPoints,
-} from '../design-system/pages/achievements/ahievements.services';
+} from '../design-system/pages/achievements/achievements.services';
+import { getJobOverview } from '../design-system/pages/job-offer-reject/job-offer-reject.services';
 
 export const routes: Route[] = [
   {
@@ -255,6 +256,18 @@ export const routes: Route[] = [
         ],
       },
       {
+        path: '/jobs/created/:id/:type',
+        loader: async ({ params }) => {
+          const requests = [getJobOverview(params.id), getScreeningQuestions(params.id)];
+          const [jobOverview, screeningQuestions] = await Promise.all(requests);
+          return { jobOverview, screeningQuestions };
+        },
+        element: () =>
+          import('../design-system/pages/job-offer-reject/job-offer-reject').then((m) => (
+            <m.JobOfferReject />
+          )),
+      },
+      {
         path: '/jobs/created/:id',
         loader: async ({ params }) => {
           const requests = [
@@ -262,10 +275,7 @@ export const routes: Route[] = [
             getDraftJobs({ identityId: params.id, page: 1 }),
           ];
           const [activeJobs, draftJobs] = await Promise.all(requests);
-          return {
-            activeJobs,
-            draftJobs,
-          };
+          return { activeJobs, draftJobs };
         },
         element: () =>
           import('../design-system/pages/job-create/my-jobs/my-jobs').then((m) => <m.MyJobs />),
