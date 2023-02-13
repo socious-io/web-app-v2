@@ -247,4 +247,10 @@ export type AwaitingReviewApplicantListResp = Pagination<
   }[]
 >;
 
+export type BadgesResp = {
+  count: number;
+  social_cause_category: string;
+  total_points: number;
+}[];
+
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;

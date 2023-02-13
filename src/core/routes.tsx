@@ -39,6 +39,10 @@ import {
   getOnGoingList,
   getPendingApplicants,
 } from '../design-system/pages/job-apply/my-jobs/my-jobs.services';
+import {
+  getBadges,
+  getImpactPoints,
+} from '../design-system/pages/achievements/ahievements.services';
 
 export const routes: Route[] = [
   {
@@ -127,6 +131,18 @@ export const routes: Route[] = [
           return getUserDetail({ id: params.id, userType });
         },
         element: () => import('../design-system/pages/profile/profile').then((m) => <m.Profile />),
+      },
+      {
+        path: '/achievements',
+        loader: async () => {
+          const requests = [getBadges(), getImpactPoints()];
+          const [badges, impactPoints] = await Promise.all(requests);
+          return { badges, impactPoints };
+        },
+        element: () =>
+          import('../design-system/pages/achievements/achievements').then((m) => (
+            <m.Achievements />
+          )),
       },
       {
         path: 'organization',
