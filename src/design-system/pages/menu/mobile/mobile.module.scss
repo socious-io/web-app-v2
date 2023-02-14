@@ -1,5 +1,116 @@
 .container {
-    width: 18rem;
     height: 100vh;
-    background-color: aqua;
+    background-color: black;
+    top: 0;
+    bottom: 0;
+    color: aliceblue;
+    width: 100vw;
+    opacity: 0.6;
+    position: absolute;
+
+}
+
+.sidbar {
+    height: 100vh;
+    width: 18rem;
+    background-color: var(--color-off-white-01);
+    position: fixed;
+    top: 0;
+    bottom: 0px;
+    overflow-y: scroll;
+
+}
+
+.deactive {
+    transform: translateX(-100vw);
+    transition: transform 1s ease-out, visibility 1s;
+    visibility: hidden;
+}
+
+.active {
+    transform: translateX(0px);
+    transition: transform 1s ease-out, visibility 0s;
+    visibility: visible;
+    width: 100vw;
+}
+
+.header {
+    padding: var(--safe-area) 1rem 0 1rem;
+    border: 1px solid var(--border-gray-01);
+}
+
+.info {
+    display: flex;
+    gap: 1rem;
+}
+
+.nameInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.fullname {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.profile {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-primary-01);
+}
+
+.organization {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.dotIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.62rem;
+    border: 1px solid var(--border-gray-01);
+    border-radius: 50%;
+    background-color: #ffffff;
+}
+
+.connections {
+    display: flex;
+    gap: 1rem;
+    margin: 0.8rem 0;
+
+    span {
+        color: var(--color-gray-02);
+        font-size: 0.875rem;
+        font-weight: 400;
+    }
+}
+
+.items {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border: 1px solid var(--border-gray-01);
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-primary-01);
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.redText {
+    color: var(--color-error-01);
 }
