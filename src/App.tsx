@@ -9,8 +9,9 @@ const location = new ReactLocation();
 function App() {
   return (
     <Provider store={store}>
+
       <Router location={location} routes={routes}>
-        {/* <Menu /> */}
+        <Menu />
         <Outlet />
       </Router>
     </Provider>
