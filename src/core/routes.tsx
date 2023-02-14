@@ -40,10 +40,16 @@ import {
   getPendingApplicants,
 } from '../design-system/pages/job-apply/my-jobs/my-jobs.services';
 import {
+  getDeclinedList,
+  getEndHiredList,
+  getHiredList,
+  getJobOverview,
+  getToReviewList,
+} from '../design-system/pages/job-offer-reject/job-offer-reject.services';
+import {
   getBadges,
   getImpactPoints,
-} from '../design-system/pages/achievements/achievements.services';
-import { getJobOverview } from '../design-system/pages/job-offer-reject/job-offer-reject.services';
+} from '../design-system/pages/achievements/ahievements.services';
 
 export const routes: Route[] = [
   {
@@ -258,9 +264,30 @@ export const routes: Route[] = [
       {
         path: '/jobs/created/:id/:type',
         loader: async ({ params }) => {
-          const requests = [getJobOverview(params.id), getScreeningQuestions(params.id)];
-          const [jobOverview, screeningQuestions] = await Promise.all(requests);
-          return { jobOverview, screeningQuestions };
+          const requests = [
+            getJobOverview(params.id),
+            getScreeningQuestions(params.id),
+            getToReviewList({ id: params.id, page: 1 }),
+            getDeclinedList({ id: params.id, page: 1 }),
+            getHiredList({ id: params.id, page: 1 }),
+            getEndHiredList({ id: params.id, page: 1 }),
+          ];
+          const [
+            jobOverview,
+            screeningQuestions,
+            reviewList,
+            declinedList,
+            hiredList,
+            endHiredList,
+          ] = await Promise.all(requests);
+          return {
+            jobOverview,
+            screeningQuestions,
+            reviewList,
+            declinedList,
+            hiredList,
+            endHiredList,
+          };
         },
         element: () =>
           import('../design-system/pages/job-offer-reject/job-offer-reject').then((m) => (
