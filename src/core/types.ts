@@ -200,10 +200,21 @@ export type UserApplicantResp = {
 
 export type MissionsResp = Pagination<
   {
+    applicant: {
+      cover_letter: string;
+    };
     id: string;
     created_at: string;
     project: {
       title: string;
+    };
+    assignee: {
+      meta: {
+        id: string;
+        avatar: string;
+        name: string;
+        username: string;
+      };
     };
     assigner: {
       meta: {
