@@ -4,14 +4,20 @@ import { JobList } from '../../../organisms/job-list/job-list';
 import { JobsTouchProps } from './jobs-touch.types';
 import { useState } from 'react';
 import { getJobList } from '../jobs-cursor/jobs-cursor.services';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IdentityReq } from '../../../../core/types';
 import { RootState } from '../../../../store/store';
+import { visibility } from '../../../../store/reducers/menu.reducer';
 
 export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
+  const dispatch = useDispatch();
   const { list } = props;
   const [jobList, setJobList] = useState(list);
   const [page, setPage] = useState(1);
+
+  function openSidebar() {
+    dispatch(visibility(true));
+  }
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -30,7 +36,7 @@ export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.menu}>
-          <Avatar img={avatarImg} size="2.25rem" type={identity.type} />
+          <Avatar onClick={openSidebar} img={avatarImg} size="2.25rem" type={identity.type} />
           <div className={css.search}>Search Jobs</div>
           <img className={css.logo} src="icons/logo-white.svg" />
         </div>
