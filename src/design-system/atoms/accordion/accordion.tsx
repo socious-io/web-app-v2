@@ -5,7 +5,7 @@ export const Accordion = ({ title, children, id }: AccordionProps): JSX.Element 
   return (
     <div className={css.tabs}>
       <div className={css.tab}>
-        <input type="checkbox" id={id} />
+        <input className={css.input} type="checkbox" id={id} />
         <label className={css.tabLabel} htmlFor={id}>
           {title}
         </label>
