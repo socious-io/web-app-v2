@@ -1,4 +1,4 @@
-import { Pagination, UserApplicantResp } from '../../../../core/types';
+import { Pagination, UserApplicantResp } from '../../../../../../core/types';
 
 export type ApplicantsProps = {
   toReviewList: Pagination<UserApplicantResp[]>;

@@ -141,14 +141,16 @@ export type CategoriesResp = {
 };
 
 export type QuestionsRes = {
-  created_at: string;
-  id: string;
-  old_id: number;
-  options: null | string[];
-  project_id: string;
-  question: string;
-  required: boolean;
-  updated_at: string;
+  questions: {
+    created_at: string;
+    id: string;
+    old_id: number;
+    options: null | string[];
+    project_id: string;
+    question: string;
+    required: boolean;
+    updated_at: string;
+  }[];
 };
 
 export type Cities = {
@@ -195,6 +197,19 @@ export type UserApplicantResp = {
   };
   project: {
     title: string;
+  };
+};
+
+export type ApplicantResp = {
+  id: string;
+  project_id: string;
+  answers: string[];
+  cover_letter: string;
+  created_at: string;
+  share_contact_info: string;
+  user: {
+    name: string;
+    avatar: string;
   };
 };
 

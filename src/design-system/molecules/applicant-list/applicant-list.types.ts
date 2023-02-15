@@ -10,4 +10,5 @@ export type Applicant = {
 export type ApplicantListProps = {
   list: Applicant[];
   hireable: boolean;
+  onApplicantClick?: (applicantId: string) => void;
 };

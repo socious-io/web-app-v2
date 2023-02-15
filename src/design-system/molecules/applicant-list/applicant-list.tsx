@@ -9,7 +9,7 @@ export const ApplicantList = (props: ApplicantListProps): JSX.Element => {
   const hireBtn = (
     <div className={css.footerItem}>
       <img src="/icons/user-accept-blue.svg" />
-      <div className={css.footerLabel}>Hire</div>
+      <div className={css.footerLabel}>Offer</div>
     </div>
   );
 
@@ -25,7 +25,7 @@ export const ApplicantList = (props: ApplicantListProps): JSX.Element => {
       <div key={applicant.id} className={css.applicantContainer}>
         <ProfileView name={applicant.name} img={applicant.image} type="users" />
         <div className={css.applyDate}>{applicant.applyDate}</div>
-        <ChatBox type="receiver">
+        <ChatBox onClick={() => props.onApplicantClick?.(applicant.id)} type="receiver">
           <Typography lineLimit={3}>{applicant.coverLetter}</Typography>
         </ChatBox>
         <div className={css.applicantFooter}>

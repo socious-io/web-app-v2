@@ -1,10 +1,10 @@
-import { skillsToCategory, socialCausesToCategory } from '../../../../core/adaptors';
-import { translateProjectLength } from '../../../../core/constants/PROJECT_LENGTH';
-import { translatePaymentType } from '../../../../core/constants/PROJECT_PAYMENT_TYPE';
-import { translateProjectType } from '../../../../core/constants/PROJECT_TYPES';
-import { printWhen } from '../../../../utils/utils';
-import { CategoriesClickable } from '../../../atoms/categories-clickable/categories-clickable';
-import { Divider } from '../../../templates/divider/divider';
+import { skillsToCategory, socialCausesToCategory } from '../../../../../../core/adaptors';
+import { translateProjectLength } from '../../../../../../core/constants/PROJECT_LENGTH';
+import { translatePaymentType } from '../../../../../../core/constants/PROJECT_PAYMENT_TYPE';
+import { translateProjectType } from '../../../../../../core/constants/PROJECT_TYPES';
+import { printWhen } from '../../../../../../utils/utils';
+import { CategoriesClickable } from '../../../../../atoms/categories-clickable/categories-clickable';
+import { Divider } from '../../../../../templates/divider/divider';
 import css from './overview.module.scss';
 import { OverviewProps } from './overview.types';
 

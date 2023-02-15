@@ -1,6 +1,12 @@
-import { get } from '../../../core/http';
+import { get, post } from '../../../core/http';
 import { isoToStandard } from '../../../core/time';
-import { MissionsResp, Pagination, UserApplicantResp } from '../../../core/types';
+import {
+  ApplicantResp,
+  MissionsResp,
+  Pagination,
+  QuestionsRes,
+  UserApplicantResp,
+} from '../../../core/types';
 import { Applicant } from '../../molecules/applicant-list/applicant-list.types';
 import { Job } from '../../organisms/job-list/job-list.types';
 
@@ -32,6 +38,10 @@ export async function getHiredList(payload: { id: string; page: number }): Promi
   ).then(({ data }) => data);
 }
 
+export async function getScreeningQuestions(id: string): Promise<QuestionsRes> {
+  return get(`projects/${id}/questions`).then(({ data }) => data);
+}
+
 export async function getEndHiredList(payload: {
   id: string;
   page: number;
@@ -39,6 +49,15 @@ export async function getEndHiredList(payload: {
   return get(
     `projects/${payload.id}/missions?limit=100&filter.status=CONFIRMED,CANCELED,KICKED_OUT&page=${payload.page}`
   ).then(({ data }) => data);
+}
+
+export async function getApplicantDetail(applicantId: string): Promise<ApplicantResp> {
+  return get(`/applicants/${applicantId}`).then(({ data }) => data);
+}
+
+// https://dev.socious.io/api/v2/applicants/0d8442d9-71c1-4442-bea0-82282a232dc1/reject
+export async function rejectApplicant(id: string): Promise<ApplicantResp> {
+  return post(`/applicants/${id}/reject`, {}).then(({ data }) => data);
 }
 
 export function applicantToApplicantListAdaptor(applicant: UserApplicantResp[]): Applicant[] {

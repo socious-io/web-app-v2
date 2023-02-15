@@ -1,11 +1,11 @@
 import css from './mobile.module.scss';
 import { useMatch } from '@tanstack/react-location';
-import { Header } from '../../../atoms/header/header';
-import { Tabs } from '../../../atoms/tabs/tabs';
-import { Loader } from '../job-offer-reject.types';
-import { Overview } from '../overview/overview';
-import { Applicants } from '../applicants/applicants';
-import { Hired } from '../hired/hired';
+import { Header } from '../../../../atoms/header/header';
+import { Tabs } from '../../../../atoms/tabs/tabs';
+import { Loader } from '../../job-offer-reject.types';
+import { Overview } from '../components/overview/overview';
+import { Applicants } from '../components/applicants/applicants';
+import { Hired } from '../components/hired/hired';
 
 export const Mobile = (): JSX.Element => {
   const resolver = useMatch().ownData as Loader;
