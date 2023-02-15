@@ -1,22 +1,26 @@
+import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { getIdentities } from '../../../../core/api';
 import { IdentityReq } from '../../../../core/types';
 import { RootState } from '../../../../store/store';
 import { Avatar } from '../../../atoms/avatar/avatar';
 import { Button } from '../../../atoms/button/button';
+import { getSession } from '../menu.service';
 import css from './mobile.module.scss';
 import { AccountsModel } from './mobile.types';
 
 export const Mobile = () => {
-    const [isOpen, setIsOpen] = useState(true);
+    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
 
 
     const identity = useSelector<RootState, IdentityReq>((state) => {
         return state.identity.entities.find((identity) => identity.current) as IdentityReq;
     });
 
-    const avatarImg = identity.meta.avatar || identity.meta.image;
-    const avatarType = identity.type;
+    const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
+    const avatarType = identity?.type;
 
     const accountList = useSelector<RootState, AccountsModel[]>((state) => {
         return state.identity.entities.map(item => {
@@ -32,6 +36,14 @@ export const Mobile = () => {
 
     const closePage = () => {
         console.log('dddd');
+    }
+
+    const navigatTojobs = (id: string) => {
+        getSession(id).then(resp => {
+            if (resp.message === "success") {
+                getIdentities().then(() => navigate({ to: '../jobs' }));
+            }
+        })
     }
 
     return (
@@ -71,7 +83,7 @@ export const Mobile = () => {
                 <div className={css.items}>
                     <div className={css.title}>Switch To</div>
                     {
-                        accountList.map(item => <div key={item.id} className={css.row}>
+                        accountList.map(item => <div onClick={() => navigatTojobs(item.id)} key={item.id} className={css.row}>
                             <Avatar size='2rem' type={item.type} img={item.image} />
                             <span>{item.name}</span>
                         </div>)
