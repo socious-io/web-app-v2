@@ -266,6 +266,18 @@ export const routes: Route[] = [
         path: '/jobs/created/:id/overview',
         children: [
           {
+            path: '/:applicantId/offer',
+            loader: async ({ params }) => {
+              const requests = [getApplicantDetail(params.applicantId)];
+              const [applicantDetail] = await Promise.all(requests);
+              return { applicantDetail };
+            },
+            element: () =>
+              import('../design-system/pages/job-offer-reject/offer/offer').then((m) => (
+                <m.Offer />
+              )),
+          },
+          {
             path: '/:applicantId',
             loader: async ({ params }) => {
               const requests = [

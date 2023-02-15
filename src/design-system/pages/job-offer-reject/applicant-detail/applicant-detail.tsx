@@ -1,9 +1,9 @@
+import css from './applicant-detail.module.scss';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Accordion } from '../../../atoms/accordion/accordion';
 import { Button } from '../../../atoms/button/button';
 import { Header } from '../../../atoms/header/header';
 import { rejectApplicant } from '../job-offer-reject.services';
-import css from './applicant-detail.module.scss';
 import { Resolver } from './applicant-detail.types';
 
 export const ApplicantDetail = (): JSX.Element => {
@@ -12,6 +12,10 @@ export const ApplicantDetail = (): JSX.Element => {
 
   function navigateToOverview() {
     navigate({ to: `/jobs/created/${applicantDetail.project_id}/overview` });
+  }
+
+  function onOffer() {
+    navigate({ to: `./offer` });
   }
 
   function onReject(id: string) {
@@ -43,7 +47,7 @@ export const ApplicantDetail = (): JSX.Element => {
         </Accordion>
       </div>
       <div className={css.btnContainer}>
-        <Button>Offer</Button>
+        <Button onClick={onOffer}>Offer</Button>
         <Button onClick={onReject(applicantDetail.id)} color="white">
           Reject
         </Button>

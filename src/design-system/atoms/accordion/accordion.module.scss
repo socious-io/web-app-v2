@@ -1,4 +1,4 @@
-input {
+.input {
   position: absolute;
   opacity: 0;
   z-index: -1;
@@ -14,7 +14,7 @@ input {
   color: white;
   overflow: hidden;
 
-  label {
+  .tabLabel {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,13 +33,12 @@ input {
 
   &Content {
     max-height: 0;
-    // padding: 0 1em;
     background: white;
     transition: all 0.35s;
   }
 }
 
-input:checked {
+.input:checked {
   + .tabLabel {
     background-color: #ffffff;
     transition: 0.5s;

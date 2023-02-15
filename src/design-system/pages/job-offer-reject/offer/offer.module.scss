@@ -1,0 +1,25 @@
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto 1fr 8rem;
+}
+
+.sentTo {
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--border-gray-01);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.btnContainer {
+  border-top: 1px solid var(--border-gray-01);
+  padding: 1rem;
+}
