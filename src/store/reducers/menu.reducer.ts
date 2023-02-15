@@ -1,13 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const menuSlice = createSlice({
-    name: 'menu_visibility',
-    initialState: { isOpen: false },
-    reducers: {
-        visiblity: (state, action) => {
-            state.isOpen = action.payload;
-        },
+  name: 'menu_visibility',
+  initialState: true,
+  reducers: {
+    visibility: (state, action) => {
+      state = action.payload;
+      return action.payload;
     },
+  },
 });
 
-export const { visiblity } = menuSlice.actions;
+export const { visibility } = menuSlice.actions;
