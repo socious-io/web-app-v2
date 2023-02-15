@@ -1,7 +1,7 @@
 import css from './hired.module.scss';
-import { Accordion } from '../../../atoms/accordion/accordion';
-import { ApplicantList } from '../../../molecules/applicant-list/applicant-list';
-import { missionToApplicantListAdaptor } from '../job-offer-reject.services';
+import { Accordion } from '../../../../../atoms/accordion/accordion';
+import { ApplicantList } from '../../../../../molecules/applicant-list/applicant-list';
+import { missionToApplicantListAdaptor } from '../../../job-offer-reject.services';
 import { HiredProps } from './hired.types';
 
 export const Hired = (props: HiredProps): JSX.Element => {

@@ -40,6 +40,7 @@ import {
   getPendingApplicants,
 } from '../design-system/pages/job-apply/my-jobs/my-jobs.services';
 import {
+  getApplicantDetail,
   getDeclinedList,
   getEndHiredList,
   getHiredList,
@@ -262,37 +263,56 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/jobs/created/:id/:type',
-        loader: async ({ params }) => {
-          const requests = [
-            getJobOverview(params.id),
-            getScreeningQuestions(params.id),
-            getToReviewList({ id: params.id, page: 1 }),
-            getDeclinedList({ id: params.id, page: 1 }),
-            getHiredList({ id: params.id, page: 1 }),
-            getEndHiredList({ id: params.id, page: 1 }),
-          ];
-          const [
-            jobOverview,
-            screeningQuestions,
-            reviewList,
-            declinedList,
-            hiredList,
-            endHiredList,
-          ] = await Promise.all(requests);
-          return {
-            jobOverview,
-            screeningQuestions,
-            reviewList,
-            declinedList,
-            hiredList,
-            endHiredList,
-          };
-        },
-        element: () =>
-          import('../design-system/pages/job-offer-reject/job-offer-reject').then((m) => (
-            <m.JobOfferReject />
-          )),
+        path: '/jobs/created/:id/overview',
+        children: [
+          {
+            path: '/:applicantId',
+            loader: async ({ params }) => {
+              const requests = [
+                getScreeningQuestions(params.id),
+                getApplicantDetail(params.applicantId),
+              ];
+              const [screeningQuestions, applicantDetail] = await Promise.all(requests);
+              return { applicantDetail, screeningQuestions };
+            },
+            element: () =>
+              import(
+                '../design-system/pages/job-offer-reject/applicant-detail/applicant-detail'
+              ).then((m) => <m.ApplicantDetail />),
+          },
+          {
+            loader: async ({ params }) => {
+              const requests = [
+                getJobOverview(params.id),
+                getScreeningQuestions(params.id),
+                getToReviewList({ id: params.id, page: 1 }),
+                getDeclinedList({ id: params.id, page: 1 }),
+                getHiredList({ id: params.id, page: 1 }),
+                getEndHiredList({ id: params.id, page: 1 }),
+              ];
+              const [
+                jobOverview,
+                screeningQuestions,
+                reviewList,
+                declinedList,
+                hiredList,
+                endHiredList,
+              ] = await Promise.all(requests);
+              return {
+                jobOverview,
+                screeningQuestions,
+                reviewList,
+                declinedList,
+                hiredList,
+                endHiredList,
+              };
+            },
+            element: () =>
+              import('../design-system/pages/job-offer-reject/job-offer-reject').then((m) => (
+                <m.JobOfferReject />
+              )),
+          },
+        ],
       },
       {
         path: '/jobs/created/:id',

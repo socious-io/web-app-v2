@@ -21,7 +21,7 @@ export const ChatBox = (props: ChatBoxProps): JSX.Element => {
   }
 
   return (
-    <div style={setStyle(type)} className={css.container}>
+    <div onClick={props?.onClick} style={setStyle(type)} className={css.container}>
       {children}
     </div>
   );
