@@ -4,7 +4,7 @@ import { TypeSelectorProps } from './type-selector.types';
 
 export const TypeSelector = (props: TypeSelectorProps): JSX.Element => {
   const { list, onChange, ...rest } = props;
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(props.value);
 
   function onSelect(v: string) {
     setValue(v);
@@ -21,9 +21,7 @@ export const TypeSelector = (props: TypeSelectorProps): JSX.Element => {
             onClick={() => onSelect(item.value)}
           >
             {item.label}
-            {value === item.value && (
-              <img className={css.icon} src="/icons/tick-white.svg" />
-            )}
+            {value === item.value && <img className={css.icon} src="/icons/tick-white.svg" />}
           </div>
         );
       })}

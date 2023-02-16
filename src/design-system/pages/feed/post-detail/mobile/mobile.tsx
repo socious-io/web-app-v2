@@ -90,7 +90,6 @@ export const Mobile = () => {
     return () => {
       const clone = [...commentList];
       const comment = clone.find((item) => item.id === commentId);
-      console.log('comment: ', comment);
       if (comment) {
         comment.liked = type === 'like' ? true : false;
         comment.likes = type === 'like' ? comment.likes + 1 : comment.likes - 1;
