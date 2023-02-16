@@ -10,10 +10,13 @@ export type CommentModel = {
     id: string;
     likes: number;
     liked: boolean;
+    post_id: string;
     identity_meta: IdentityMeta;
+    identity_type: 'organizations' | 'users';
 }
 
 type IdentityMeta = {
     name: string;
-    avatar: string
+    avatar: string;
+    image: string;
 }

@@ -1,4 +1,6 @@
-import { JobItems, PostItems } from "../design-system/pages/search/search.types";
+import { JobItems, PostItems } from '../design-system/pages/search/search.types';
+
+export type UserType = 'users' | 'organizations';
 
 export type UserIdentityMeta = {
   address: string;
@@ -127,5 +129,154 @@ export type GetJobs = {
   status: 'ACTIVE' | 'DRAFT';
   updated_at: string;
 };
+
+export type CategoriesResp = {
+  categories: {
+    created_at: string;
+    hourly_wage_dollars: number;
+    id: string;
+    name: string;
+    updated_at: string;
+  }[];
+};
+
+export type QuestionsRes = {
+  questions: {
+    created_at: string;
+    id: string;
+    old_id: number;
+    options: null | string[];
+    project_id: string;
+    question: string;
+    required: boolean;
+    updated_at: string;
+  }[];
+};
+
+export type Cities = {
+  country_code: string;
+  id: number;
+  name: string;
+  population: number;
+  region_id: string;
+  region_iso: string;
+  region_name: string;
+  subregion_id: string;
+  subregion_iso: string;
+  subregion_name: string;
+  type: string;
+};
+
+export type LikeResp = {
+  comment_id: string;
+  created_at: string;
+  id: string;
+  identity_id: string;
+  post_id: string;
+};
+
+export type UserApplicantResp = {
+  closed_at: string;
+  cover_letter: string;
+  created_at: string;
+  cv_link: string;
+  cv_name: string;
+  deleted_at: string;
+  feedback: string;
+  id: string;
+  offer_message: string;
+  offer_rate: string;
+  old_id: string;
+  payment_rate: string;
+  payment_type: string;
+  organization: {
+    meta: {
+      name: string;
+      image: string;
+    };
+  };
+  project: {
+    title: string;
+  };
+};
+
+export type ApplicantResp = {
+  id: string;
+  project_id: string;
+  answers: string[];
+  cover_letter: string;
+  created_at: string;
+  share_contact_info: string;
+  user: {
+    name: string;
+    avatar: string;
+  };
+};
+
+export type MissionsResp = Pagination<
+  {
+    applicant: {
+      cover_letter: string;
+    };
+    id: string;
+    created_at: string;
+    project: {
+      title: string;
+    };
+    assignee: {
+      meta: {
+        id: string;
+        avatar: string;
+        name: string;
+        username: string;
+      };
+    };
+    assigner: {
+      meta: {
+        image: string;
+        name: string;
+      };
+    };
+  }[]
+>;
+
+export type DeclinedApplicantListResp = Pagination<
+  {
+    id: string;
+    created_at: string;
+    project: {
+      title: string;
+    };
+    organization: {
+      meta: {
+        image: string;
+        name: string;
+      };
+    };
+  }[]
+>;
+
+export type AwaitingReviewApplicantListResp = Pagination<
+  {
+    id: string;
+    created_at: string;
+    project: {
+      description: string;
+      title: string;
+    };
+    offerer: {
+      meta: {
+        image: string;
+        name: string;
+      };
+    };
+  }[]
+>;
+
+export type BadgesResp = {
+  count: number;
+  social_cause_category: string;
+  total_points: number;
+}[];
 
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;

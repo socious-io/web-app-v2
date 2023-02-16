@@ -1,15 +1,16 @@
+import { CSSProperties } from 'react';
 import css from './avatar.module.scss';
 import { AvatarProps } from './avatar.types';
 
 export const Avatar = (props: AvatarProps): JSX.Element => {
-  const { size, type = 'users', img, ...rest } = props;
+  const { size, onClick, type = 'users', img, ...rest } = props;
 
   const images: Record<AvatarProps['type'], string> = {
     organizations: '/icons/organization.svg',
     users: '/icons/user.svg',
   };
 
-  const style = {
+  const style: CSSProperties = {
     ...rest,
     width: size,
     height: size,
@@ -19,7 +20,7 @@ export const Avatar = (props: AvatarProps): JSX.Element => {
   };
 
   return (
-    <div style={style} className={css.container}>
+    <div onClick={props.onClick} style={style} className={css.container}>
       {img && <img className={css.img} src={img} />}
     </div>
   );

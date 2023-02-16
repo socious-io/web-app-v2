@@ -12,3 +12,25 @@
 .text {
     margin: 0.875rem 0;
 }
+
+.header {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.info {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.date {
+    color: var(--color-gray-01);
+}

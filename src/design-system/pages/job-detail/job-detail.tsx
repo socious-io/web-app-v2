@@ -14,6 +14,10 @@ export const JobDetail = (props: JobDetailProps): JSX.Element => {
   const navigate = useNavigate();
   const { data: job } = useMatch<Loader>();
 
+  function onApply() {
+    navigate({ to: './apply' });
+  }
+
   return (
     <div className={css.container}>
       <Header onBack={() => navigate({ to: '/jobs' })} title={job?.job_category.name} />
@@ -26,7 +30,7 @@ export const JobDetail = (props: JobDetailProps): JSX.Element => {
         />
         <div className={css.jobTitle}>{job.title}</div>
         <Categories marginBottom="1rem" list={getCategories(job)} />
-        <Button>Apply now</Button>
+        <Button onClick={onApply}>Apply now</Button>
       </Divider>
       <Divider title="Social cause">
         <CategoriesClickable list={socialCausesToCategory(job.causes_tags)} />

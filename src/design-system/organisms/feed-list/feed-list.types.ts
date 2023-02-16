@@ -3,6 +3,9 @@ import { CSSProperties } from "react";
 export interface FeedListProps extends CSSProperties {
     data: Feed[];
     onMorePageClick: () => void;
+    onLike: (id: string) => void;
+    onRemoveLike: (id: string) => void;
+    showSeeMore: boolean;
 }
 
 export type Feed = {
