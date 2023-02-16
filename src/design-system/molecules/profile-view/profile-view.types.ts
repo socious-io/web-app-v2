@@ -5,5 +5,5 @@ export interface ProfileViewProps extends CSSProperties {
   img?: string;
   size?: string;
   name: string;
-  location?: string;
+  location?: JSX.Element;
 }
