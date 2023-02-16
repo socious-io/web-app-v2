@@ -7,16 +7,18 @@ import { Typography } from '../../atoms/typography/typography';
 import { BottomStatic } from '../../templates/bottom-static/bottom-static';
 import { accountInitialState, login } from './sign-in.services';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 export const SignIn = (): JSX.Element => {
+  const { register, formState, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const [account, setAccount] = useState(accountInitialState);
+  //   const [account, setAccount] = useState(accountInitialState);
 
-  function updateAccount(field: keyof typeof accountInitialState) {
-    return (value: string) => {
-      setAccount({ ...account, [field]: value });
-    };
-  }
+  //   function updateAccount(field: keyof typeof accountInitialState) {
+  //     return (value: string) => {
+  //       setAccount({ ...account, [field]: value });
+  //     };
+  //   }
 
   function goToJobList(navigator: typeof navigate) {
     return (loginSucceed: boolean): void => {
@@ -25,7 +27,7 @@ export const SignIn = (): JSX.Element => {
   }
 
   async function signIn() {
-    login(account).then(goToJobList(navigate));
+    // login(account).then(goToJobList(navigate));
   }
 
   return (
@@ -41,8 +43,7 @@ export const SignIn = (): JSX.Element => {
             variant="outline"
             autoComplete="username"
             label="Email"
-            value={account.email}
-            onValueChange={updateAccount('email')}
+            {...register('username', { required: true })}
             placeholder="Email"
           />
           <Input
@@ -50,8 +51,8 @@ export const SignIn = (): JSX.Element => {
             autoComplete="current-password"
             type="password"
             label="Password"
-            value={account.password}
-            onValueChange={updateAccount('password')}
+            errors={['blaaaaa']}
+            {...register('password', { required: true })}
             placeholder="Password"
           />
         </form>
