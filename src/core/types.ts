@@ -31,6 +31,7 @@ export type IdentityReq = {
     name: string;
     shortname: string;
     status: string;
+    username: string;
   };
 };
 

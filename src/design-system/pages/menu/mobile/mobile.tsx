@@ -8,6 +8,7 @@ import { visibility } from '../../../../store/reducers/menu.reducer';
 import { RootState } from '../../../../store/store';
 import { Avatar } from '../../../atoms/avatar/avatar';
 import { Button } from '../../../atoms/button/button';
+import { ProfileView } from '../../../molecules/profile-view/profile-view';
 import { getSession } from '../menu.service';
 import css from './mobile.module.scss';
 import { AccountsModel } from './mobile.types';
@@ -53,6 +54,15 @@ export const Mobile = () => {
     });
   };
 
+  function navigateToProfile() {
+    if (identity.type === 'users') {
+      navigate({ to: `/profile/users/${identity.meta.username}` });
+    } else {
+      navigate({ to: `/profile/organizations/${identity.meta.shortname}` });
+    }
+    closePage();
+  }
+
   function sidebarStyles(isVisible: boolean): CSSProperties {
     if (isVisible) {
       return {
@@ -92,11 +102,17 @@ export const Mobile = () => {
             </div>
           </div>
           <div className={css.info}>
-            <Avatar size="3rem" type={avatarType} img={avatarImg} />
-            <div className={css.nameInfo}>
-              <span className={css.fullname}>Azin Zare</span>
-              <span className={css.profile}>view my profile</span>
-            </div>
+            <ProfileView
+              name={identity?.meta?.name}
+              location={
+                <div className={css.profileLink} onClick={navigateToProfile}>
+                  View my profile
+                </div>
+              }
+              size="3rem"
+              type={avatarType}
+              img={avatarImg}
+            />
           </div>
           <div className={css.connections}>
             <span>4 Connections</span>

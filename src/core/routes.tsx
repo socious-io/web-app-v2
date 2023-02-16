@@ -26,7 +26,10 @@ import {
   getComments,
   getPostDetail,
 } from '../design-system/pages/feed/post-detail/mobile/mobile.service';
-import { getUserDetail } from '../design-system/pages/profile/profile.services';
+import {
+  getOrganizationDetail,
+  getUserDetail,
+} from '../design-system/pages/profile/profile.services';
 import { UserType } from './types';
 import { getJobCategories } from '../design-system/pages/job-create/info/info.services';
 import { search } from '../design-system/pages/search/search.services';
@@ -136,7 +139,10 @@ export const routes: Route[] = [
         path: 'profile/:userType/:id',
         loader: ({ params }) => {
           const userType = params.userType as UserType;
-          return getUserDetail({ id: params.id, userType });
+          if (userType === 'users') {
+            return getUserDetail(params.id);
+          }
+          return getOrganizationDetail(params.id);
         },
         element: () => import('../design-system/pages/profile/profile').then((m) => <m.Profile />),
       },
