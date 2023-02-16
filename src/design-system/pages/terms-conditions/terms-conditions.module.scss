@@ -1,0 +1,22 @@
+.container {
+    padding: 11rem 2rem 2rem 2rem;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+
+    strong {
+        color: var(--color-primary-01);
+        font-weight: 600;
+    }
+}
+
+.header {
+    background-color: #ffffff;
+    display: flex;
+    padding: var(--safe-area) 0 1rem 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}

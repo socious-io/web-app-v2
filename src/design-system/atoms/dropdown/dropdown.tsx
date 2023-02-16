@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import css from './dropdown.module.scss';
 import { DropdownProps } from './dropdown.types';
 import { Items } from './items/items';
@@ -7,6 +7,8 @@ export const Dropdown = ({
   list,
   onGetValue,
   selectedValue,
+  onValueChange,
+  onSearch,
   label,
   placeholder,
 }: DropdownProps) => {
@@ -24,7 +26,9 @@ export const Dropdown = ({
 
   const onClickItems = (title: string, value: string) => {
     setState({ isListOpen: false, headerTitle: title });
-    onGetValue(value);
+    // TODO: we should deprecate onGetValue
+    onGetValue?.(value);
+    onValueChange?.(value);
   };
 
   useEffect(() => {
@@ -34,9 +38,11 @@ export const Dropdown = ({
     }
   }, []);
 
-  const onChangeHandler = (e: any) => {
-    setState({ isListOpen: true, headerTitle: e.target.value });
-    const newList = list.filter((item) => item.title.toLowerCase().includes(e.target.value));
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const v = e.target.value;
+    onSearch?.(v);
+    setState({ isListOpen: true, headerTitle: v });
+    const newList = list.filter((item) => item.title.toLowerCase().includes(v));
     setFilterList(newList);
   };
 

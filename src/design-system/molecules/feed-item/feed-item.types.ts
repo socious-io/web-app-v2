@@ -8,4 +8,5 @@ export type FeedItemProps = {
     name: string;
     actionList: { label: string; iconName: string }[];
     type: 'organizations' | 'users';
+    lineLimit?: number | 'none';
 }

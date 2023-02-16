@@ -1,0 +1,30 @@
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr 10rem;
+}
+
+.main {
+  overflow-y: scroll;
+}
+
+.accordionContainer {
+  padding: 1rem;
+}
+
+.question {
+  padding: 1rem 0 0.5rem 0;
+}
+
+.answer {
+  color: var(--color-gray-01);
+}
+
+.btnContainer {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  border-top: 1px solid var(--border-gray-01);
+}

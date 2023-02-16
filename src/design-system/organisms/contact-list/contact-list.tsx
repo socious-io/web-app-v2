@@ -2,6 +2,7 @@ import { Search } from '../../atoms/search/search';
 import { ContactItem } from '../../molecules/contact-item/contact-item';
 import css from './contact-list.module.scss';
 import { ContactListProps } from './contact-list.types';
+import InfiniteScroll from 'react-infinite-scroller';
 
 export const ContactList = (props: ContactListProps): JSX.Element => {
   const { list, message, onSearch, onContactClick, ...rest } = props;
@@ -19,11 +20,27 @@ export const ContactList = (props: ContactListProps): JSX.Element => {
         <Search flex="1" placeholder="search name" onValueChange={onSearch} />
       </div>
       {message && list.length === 0 && messageJSX}
-      {list.map((contactData) => {
-        return (
-          <ContactItem onContactClick={onContactClick} key={contactData.id} {...contactData} />
-        );
-      })}
+      <div style={{ height: props.height, overflow: 'auto' }}>
+        <InfiniteScroll
+          initialLoad={false}
+          threshold={400}
+          useWindow={false}
+          pageStart={1}
+          loadMore={props.onScroll}
+          hasMore={true}
+        >
+          {list.map((contactData, i) => {
+            return (
+              <ContactItem
+                onContactClick={onContactClick}
+                // TODO: find a unique value for key
+                key={i}
+                {...contactData}
+              />
+            );
+          })}
+        </InfiniteScroll>
+      </div>
     </div>
   );
 };

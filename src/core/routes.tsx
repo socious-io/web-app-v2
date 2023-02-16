@@ -9,7 +9,6 @@ import { SignUpUserVerification } from '../design-system/pages/sign-up/sign-up-u
 import { MenuCursor as RootCursorLayout } from '../design-system/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../design-system/templates/menu-touch/menu-touch';
 import { isTouchDevice } from './device-type-detector';
-import { getNotificationList } from '../design-system/pages/notifications/notifications.service';
 import {
   getMessagesById,
   getParticipantsById,
@@ -27,6 +26,31 @@ import {
   getComments,
   getPostDetail,
 } from '../design-system/pages/feed/post-detail/mobile/mobile.service';
+import { getUserDetail } from '../design-system/pages/profile/profile.services';
+import { UserType } from './types';
+import { getJobCategories } from '../design-system/pages/job-create/info/info.services';
+import { search } from '../design-system/pages/search/search.services';
+import { getNotificationList } from '../design-system/pages/notifications/mobile/mobile.service';
+import { getScreeningQuestions } from '../design-system/pages/job-apply/apply/apply.services';
+import {
+  getAwaitingReviewList,
+  getDeclinedApplicants,
+  getEndedList,
+  getOnGoingList,
+  getPendingApplicants,
+} from '../design-system/pages/job-apply/my-jobs/my-jobs.services';
+import {
+  getApplicantDetail,
+  getDeclinedList,
+  getEndHiredList,
+  getHiredList,
+  getJobOverview,
+  getToReviewList,
+} from '../design-system/pages/job-offer-reject/job-offer-reject.services';
+import {
+  getBadges,
+  getImpactPoints,
+} from '../design-system/pages/achievements/ahievements.services';
 
 export const routes: Route[] = [
   {
@@ -41,6 +65,54 @@ export const routes: Route[] = [
       {
         path: 'intro',
         element: () => import('../design-system/pages/intro/intro').then((m) => <m.Intro />),
+      },
+      {
+        path: 'forget-password',
+        children: [
+          {
+            path: '/email',
+            element: () =>
+              import('../design-system/pages/forget-password/email/email').then((m) => <m.Email />),
+          },
+          {
+            path: '/otp',
+            element: () =>
+              import('../design-system/pages/forget-password/otp/otp').then((m) => <m.Otp />),
+          },
+          {
+            path: '/password',
+            element: () =>
+              import('../design-system/pages/forget-password/password/password').then((m) => (
+                <m.Password />
+              )),
+          },
+        ],
+      },
+      {
+        path: 'delete-profile',
+        children: [
+          {
+            path: '/delete',
+            element: () =>
+              import('../design-system/pages/delete-profile/delete/delete').then((m) => (
+                <m.Delete />
+              )),
+          },
+          {
+            path: '/password',
+            element: () =>
+              import('../design-system/pages/delete-profile/password/password').then((m) => (
+                <m.Password />
+              )),
+          },
+          {
+            path: '/confirm',
+            element: () =>
+              import('../design-system/pages/delete-profile/confirm/confirm').then((m) => (
+                <m.Confirm />
+              )),
+          },
+        ],
       },
       {
         path: 'sign-in',
@@ -59,6 +131,26 @@ export const routes: Route[] = [
             ],
           },
         ],
+      },
+      {
+        path: 'profile/:userType/:id',
+        loader: ({ params }) => {
+          const userType = params.userType as UserType;
+          return getUserDetail({ id: params.id, userType });
+        },
+        element: () => import('../design-system/pages/profile/profile').then((m) => <m.Profile />),
+      },
+      {
+        path: '/achievements',
+        loader: async () => {
+          const requests = [getBadges(), getImpactPoints()];
+          const [badges, impactPoints] = await Promise.all(requests);
+          return { badges, impactPoints };
+        },
+        element: () =>
+          import('../design-system/pages/achievements/achievements').then((m) => (
+            <m.Achievements />
+          )),
       },
       {
         path: 'organization',
@@ -171,17 +263,78 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/jobs/my-jobs/:id',
+        path: '/jobs/created/:id/overview',
+        children: [
+          {
+            path: '/:applicantId/offer',
+            loader: async ({ params }) => {
+              const requests = [getApplicantDetail(params.applicantId)];
+              const [applicantDetail] = await Promise.all(requests);
+              return { applicantDetail };
+            },
+            element: () =>
+              import('../design-system/pages/job-offer-reject/offer/offer').then((m) => (
+                <m.Offer />
+              )),
+          },
+          {
+            path: '/:applicantId',
+            loader: async ({ params }) => {
+              const requests = [
+                getScreeningQuestions(params.id),
+                getApplicantDetail(params.applicantId),
+              ];
+              const [screeningQuestions, applicantDetail] = await Promise.all(requests);
+              return { applicantDetail, screeningQuestions };
+            },
+            element: () =>
+              import(
+                '../design-system/pages/job-offer-reject/applicant-detail/applicant-detail'
+              ).then((m) => <m.ApplicantDetail />),
+          },
+          {
+            loader: async ({ params }) => {
+              const requests = [
+                getJobOverview(params.id),
+                getScreeningQuestions(params.id),
+                getToReviewList({ id: params.id, page: 1 }),
+                getDeclinedList({ id: params.id, page: 1 }),
+                getHiredList({ id: params.id, page: 1 }),
+                getEndHiredList({ id: params.id, page: 1 }),
+              ];
+              const [
+                jobOverview,
+                screeningQuestions,
+                reviewList,
+                declinedList,
+                hiredList,
+                endHiredList,
+              ] = await Promise.all(requests);
+              return {
+                jobOverview,
+                screeningQuestions,
+                reviewList,
+                declinedList,
+                hiredList,
+                endHiredList,
+              };
+            },
+            element: () =>
+              import('../design-system/pages/job-offer-reject/job-offer-reject').then((m) => (
+                <m.JobOfferReject />
+              )),
+          },
+        ],
+      },
+      {
+        path: '/jobs/created/:id',
         loader: async ({ params }) => {
           const requests = [
             getActiveJobs({ identityId: params.id, page: 1 }),
             getDraftJobs({ identityId: params.id, page: 1 }),
           ];
           const [activeJobs, draftJobs] = await Promise.all(requests);
-          return {
-            activeJobs,
-            draftJobs,
-          };
+          return { activeJobs, draftJobs };
         },
         element: () =>
           import('../design-system/pages/job-create/my-jobs/my-jobs').then((m) => <m.MyJobs />),
@@ -203,6 +356,7 @@ export const routes: Route[] = [
           },
           {
             path: 'info',
+            loader: () => getJobCategories(),
             element: () =>
               import('../design-system/pages/job-create/info/info').then((m) => <m.Info />),
           },
@@ -211,7 +365,7 @@ export const routes: Route[] = [
       {
         path: '/feeds/:id',
         loader: async ({ params }) => {
-          const requests = [getPostDetail(params.id), getComments(params.id)];
+          const requests = [getPostDetail(params.id), getComments(params.id, 1)];
           const [post, comments] = await Promise.all(requests);
           return { post, comments };
         },
@@ -219,6 +373,70 @@ export const routes: Route[] = [
           import('../design-system/pages/feed/post-detail/post-detail').then((m) => (
             <m.PostDetail />
           )),
+      },
+      {
+        path: 'search',
+        element: () => import('../design-system/pages/search/search').then((m) => <m.Search />),
+        loader: (p) => {
+          return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 });
+        },
+      },
+      {
+        path: 'privacy-policy',
+        element: () =>
+          import('../design-system/pages/privacy-policy/privacy-policy').then((m) => (
+            <m.PrivacyPolicy />
+          )),
+      },
+      {
+        path: 'terms-conditions',
+        element: () =>
+          import('../design-system/pages/terms-conditions/terms-conditions').then((m) => (
+            <m.TermsConditions />
+          )),
+      },
+      {
+        path: '/jobs/:id/apply',
+        loader: async ({ params }) => {
+          const requests = [getJobDetail(params.id), getScreeningQuestions(params.id)];
+          const [jobDetail, screeningQuestions] = await Promise.all(requests);
+          return { jobDetail, screeningQuestions };
+        },
+        element: () =>
+          import('../design-system/pages/job-apply/apply/apply').then((m) => <m.JobApply />),
+      },
+      {
+        path: '/jobs/applied/:id',
+        loader: async () => {
+          const requests = [
+            getPendingApplicants({ page: 1 }),
+            getAwaitingReviewList({ page: 1 }),
+            getDeclinedApplicants({ page: 1 }),
+            getOnGoingList({ page: 1 }),
+            getEndedList({ page: 1 }),
+          ];
+          const [
+            pendingApplicants,
+            awaitingApplicants,
+            declinedApplicants,
+            onGoingApplicants,
+            endedApplicants,
+          ] = await Promise.all(requests);
+          return {
+            pendingApplicants,
+            awaitingApplicants,
+            declinedApplicants,
+            onGoingApplicants,
+            endedApplicants,
+          };
+        },
+        element: () =>
+          import('../design-system/pages/job-apply/my-jobs/my-jobs').then((m) => <m.MyJobs />),
+      },
+      {
+        path: '/jobs/:id/confirm',
+        element: () =>
+          import('../design-system/pages/job-apply/confirm/confirm').then((m) => <m.Confirm />),
       },
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
@@ -247,10 +465,6 @@ export const routes: Route[] = [
             path: 'feeds',
             element: () => import('../design-system/pages/feed/feed').then((m) => <m.Feed />),
             loader: () => getFeedList({ page: 1 }),
-          },
-          {
-            path: 'search',
-            element: () => import('../design-system/pages/search/search').then((m) => <m.Search />),
           },
           {
             element: <Navigate to="intro" />,

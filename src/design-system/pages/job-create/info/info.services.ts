@@ -1,19 +1,38 @@
-export const jobType = [
-  { title: 'label', value: 'lable' },
-  { title: 'label', value: 'lable2' },
-];
+import { get } from '../../../../core/http';
+import { CategoriesResp, Cities, Pagination } from '../../../../core/types';
 
-export const jobLength = [
-  { title: 'label', value: 'lable' },
-  { title: 'label', value: 'lable2' },
-];
+export async function getJobCategories(): Promise<CategoriesResp> {
+  return get('/projects/categories').then(({ data }) => data);
+}
 
-export const paymentTypeRadioList = [
-  { label: 'Paid', value: 'PAID' },
-  { label: 'Volunteer', value: 'VOLUNTEER' },
-];
+export async function getCityList(countryCode: string): Promise<Pagination<Cities[]>> {
+  return get(`/geo/locations/country/${countryCode}?limit=1200`).then(({ data }) => data);
+}
 
-export const paymentTerms = [
-  { label: 'Fixed', value: 'FIXED' },
-  { label: 'Hourly', value: 'HOURLY' },
-];
+export const formModel = {
+  jobCategory: {
+    value: '',
+    validations: [
+      {
+        validation: '^[a-zA-Z]{7}$',
+        errorMsg: 'length should be 7',
+      },
+    ],
+    required: true,
+  },
+  jobTitle: {
+    value: '',
+    validations: [
+      //   {
+      //     validation: '^[a-zA-Z]{7}$',
+      //     errorMsg: 'bla mal pla is wrong',
+      //   },
+    ],
+    required: true,
+  },
+  paymentTerms: {
+    value: '',
+    validations: [],
+    required: true,
+  },
+};

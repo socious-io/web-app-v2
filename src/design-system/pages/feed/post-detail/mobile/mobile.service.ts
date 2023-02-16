@@ -13,6 +13,6 @@ export async function addComment(content: string, id: string): Promise<SearchReq
   return post(`posts/${id}/comments`, body).then(({ data }) => data);
 }
 
-export async function getComments(id: string): Promise<SearchReq> {
-  return get(`posts/${id}/comments?page=1`).then(({ data }) => data);
+export async function getComments(id: string , page: number): Promise<SearchReq> {
+  return get(`posts/${id}/comments?page=${page}`).then(({ data }) => data);
 }

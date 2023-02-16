@@ -1,4 +1,4 @@
-type FormBehaviors = {
+export type FormBehaviors = {
   validations: {
     validation: string;
     errorMsg: string;
@@ -7,15 +7,20 @@ type FormBehaviors = {
   required: boolean;
 };
 
-type FormOutput = {
+export type FormOutput = {
   validations: FormBehaviors['validations'];
   value: string;
   required: boolean;
   isValid: boolean;
+  errors: string[];
   update: (v: string) => void;
 };
 
-type Form = Record<string, FormBehaviors>;
+export type FormModel = Record<string, FormBehaviors>;
+export type FormGroup = {
+  [key in T]: FormOutput;
+  // Record<string, FormOutput>
+};
 
 const generateField = (fieldValue: FormBehaviors): FormOutput => {
   return {
@@ -29,7 +34,7 @@ const generateField = (fieldValue: FormBehaviors): FormOutput => {
   };
 };
 
-export const createForm = (form: Form): Record<string, FormOutput> => {
+export const createForm = (form: FormModel): Record<string, FormOutput> => {
   const obj = {} as Record<string, FormOutput>;
   Object.entries(form).forEach(([fieldName, values]) => {
     obj[fieldName] = generateField(values);

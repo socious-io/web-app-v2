@@ -1,9 +1,10 @@
-import {SDG} from './impact-badge.constant';
+import { BADGES } from '../../../core/constants/constants';
 
 export type ImpactBadgeProps = {
-  name: string;
+  color: string;
+  iconUrl: string;
 };
 
-type KEYS = keyof typeof SDG;
+type KEYS = keyof typeof BADGES;
 
-export type Badge = Record<KEYS, {name: string; color: string}>;
+export type Badge = Record<KEYS, ImpactBadgeProps>;

@@ -4,4 +4,5 @@ export type DialogReviewProps = {
     imgFile: string;
     text: string,
     imgUrl: string,
+    // setFeedList: () => void
 }
