@@ -7,7 +7,7 @@ export async function login(payload: LoginPayload): Promise<boolean> {
   });
 }
 
-export const accountInitialState = {
-  email: '',
-  password: '',
-};
+// export const accountInitialState = {
+//   email: '',
+//   password: '',
+// };

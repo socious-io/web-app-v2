@@ -1,5 +1,5 @@
 import css from './sign-up-user-complete.module.scss';
-import { useReducer } from 'react';
+import { ChangeEvent, useReducer } from 'react';
 import { useNavigate } from '@tanstack/react-location';
 import { Button } from '../../../atoms/button/button';
 import { Link } from '../../../atoms/link/link';
@@ -12,15 +12,16 @@ import {
   passwordQualityValidators,
   reducer,
 } from './sign-up-user.complete.services';
-import { register } from './sign-up-user-complete.services';
+import { registerUser } from './sign-up-user-complete.services';
 
 export const SignUpUserComplete = (): JSX.Element => {
   const navigate = useNavigate();
   const [formState, dispatch] = useReducer(reducer, formInitialState);
+  const basicValidity = formState.firstName && formState.lastName && formState.password;
 
   function updateForm(field: keyof typeof formInitialState) {
-    return (value: string) => {
-      dispatch({ type: field, value });
+    return (e: ChangeEvent<HTMLInputElement>) => {
+      dispatch({ type: field, value: e.target.value });
     };
   }
 
@@ -30,7 +31,7 @@ export const SignUpUserComplete = (): JSX.Element => {
       first_name: form.firstName,
       last_name: form.lastName,
     };
-    return () => register(payload).then(() => navigate({ to: '/jobs' }));
+    return () => registerUser(payload).then(() => navigate({ to: '/jobs' }));
   }
 
   return (
@@ -48,18 +49,18 @@ export const SignUpUserComplete = (): JSX.Element => {
           <Input
             value={formState.firstName}
             autoComplete="firstName"
-            onValueChange={updateForm('firstName')}
+            onChange={updateForm('firstName')}
             label="Your First Name"
             placeholder="First name"
           />
           <Input
-            onValueChange={updateForm('lastName')}
+            onChange={updateForm('lastName')}
             autoComplete="lastName"
             label="Your Last Name"
             placeholder="Last name"
           />
           <Input
-            onValueChange={updateForm('password')}
+            onChange={updateForm('password')}
             type="password"
             label="Choose a Password"
             autoComplete="new-password"
@@ -67,23 +68,19 @@ export const SignUpUserComplete = (): JSX.Element => {
           />
         </form>
         <div className={css.passwordQuality}>
-          <PasswordQuality
-            value={formState.password}
-            validators={passwordQualityValidators}
-          />
+          <PasswordQuality value={formState.password} validators={passwordQualityValidators} />
         </div>
 
         <div className={css.passwordQuality}>
           <Typography textAlign="center">
-            By signing up, you agree to Socious'{' '}
-            <Link onClick={console.log}>Terms of Service</Link> and{' '}
-            <Link onClick={console.log}>Privacy Policy</Link>
+            By signing up, you agree to Socious' <Link onClick={console.log}>Terms of Service</Link>{' '}
+            and <Link onClick={console.log}>Privacy Policy</Link>
           </Typography>
         </div>
       </div>
       <div>
         <div className={css.bottom}>
-          <Button onClick={onSubmit(formState)} color="blue">
+          <Button disabled={!basicValidity} onClick={onSubmit(formState)}>
             Join
           </Button>
           <Typography marginTop="1rem">
