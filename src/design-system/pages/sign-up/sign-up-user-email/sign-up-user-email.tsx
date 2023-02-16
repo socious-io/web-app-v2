@@ -1,5 +1,7 @@
 import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { REGEX } from '../../../../core/constants/REGEX';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
 import { Link } from '../../../atoms/link/link';
@@ -9,10 +11,11 @@ import css from './sign-up-user-email.module.scss';
 import { preRegister } from './sign-up-user-email.services';
 
 export const SignUpUserEmail = (): JSX.Element => {
-  const [email, setEmail] = useState('');
+  const { register, handleSubmit, formState } = useForm();
+
   const navigate = useNavigate();
 
-  function onSubmit() {
+  function onSubmit({ email }: { email: string }) {
     preRegister({ email })
       .then(() => localStorage.setItem('email', email))
       .then(() => navigate({ to: '../verification' }));
@@ -30,17 +33,16 @@ export const SignUpUserEmail = (): JSX.Element => {
           </Typography>
         </div>
         <Input
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
+          register={register}
+          name="email"
+          validations={{ pattern: REGEX.email }}
           label="Enter your email address"
           placeholder="Email"
         />
       </div>
       <div>
         <div className={css.bottom}>
-          <Button onClick={onSubmit} color="blue">
-            Continue
-          </Button>
+          <Button disabled={!formState.isValid} onClick={handleSubmit(onSubmit)}>Continue</Button>
           <Typography marginTop="1rem">
             <span>Already a member? </span>
             <Link onClick={() => navigate({ to: '/sign-in' })}>Sign in</Link>
