@@ -5,20 +5,18 @@ import { Input } from '../../atoms/input/input';
 import { Link } from '../../atoms/link/link';
 import { Typography } from '../../atoms/typography/typography';
 import { BottomStatic } from '../../templates/bottom-static/bottom-static';
-import { accountInitialState, login } from './sign-in.services';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { LoginPayload } from './sign-in.types';
+import { login } from './sign-in.services';
+import { REGEX } from '../../../core/constants/REGEX';
 
 export const SignIn = (): JSX.Element => {
-  const { register, formState, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm();
   const navigate = useNavigate();
-  //   const [account, setAccount] = useState(accountInitialState);
-
-  //   function updateAccount(field: keyof typeof accountInitialState) {
-  //     return (value: string) => {
-  //       setAccount({ ...account, [field]: value });
-  //     };
-  //   }
 
   function goToJobList(navigator: typeof navigate) {
     return (loginSucceed: boolean): void => {
@@ -26,8 +24,8 @@ export const SignIn = (): JSX.Element => {
     };
   }
 
-  async function signIn() {
-    // login(account).then(goToJobList(navigate));
+  async function onLogin(credentials: LoginPayload) {
+    login(credentials).then(goToJobList(navigate));
   }
 
   return (
@@ -40,19 +38,20 @@ export const SignIn = (): JSX.Element => {
         </div>
         <form className={css.formContainer}>
           <Input
-            variant="outline"
-            autoComplete="username"
+            autoComplete="Email"
             label="Email"
-            {...register('username', { required: true })}
+            name="email"
+            validations={{ pattern: REGEX.email }}
+            register={register}
             placeholder="Email"
           />
           <Input
-            variant="outline"
             autoComplete="current-password"
             type="password"
             label="Password"
-            errors={['blaaaaa']}
-            {...register('password', { required: true })}
+            name="password"
+            validations={{ minLength: 6 }}
+            register={register}
             placeholder="Password"
           />
         </form>
@@ -62,7 +61,7 @@ export const SignIn = (): JSX.Element => {
       </div>
       <div>
         <div className={css.bottom}>
-          <Button onClick={signIn} color="blue">
+          <Button disabled={!isValid} onClick={handleSubmit(onLogin)}>
             Sign in
           </Button>
           <Typography marginTop="1rem">
