@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const menuSlice = createSlice({
   name: 'menu_visibility',
-  initialState: true,
+  initialState: false,
   reducers: {
     visibility: (state, action) => {
       state = action.payload;
