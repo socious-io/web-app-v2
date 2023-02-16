@@ -3,7 +3,7 @@ import { FormEvent } from 'react';
 import { TextareaProps } from './textarea.types';
 
 export const Textarea = (props: TextareaProps): JSX.Element => {
-  const { label, className, variant, onValueChange, ...rest } = props;
+  const { label, className, variant = 'outline', onValueChange, ...rest } = props;
 
   function onChange(value: FormEvent<HTMLTextAreaElement>) {
     const v = (value.target as HTMLTextAreaElement).value;
@@ -15,9 +15,11 @@ export const Textarea = (props: TextareaProps): JSX.Element => {
   }
 
   if (!label) {
-    return <div className={`${setClassName(variant)} ${css.noLabel}`}>
-      <textarea id={label} className={css.textbox} onChange={onChange} role="textbox" {...rest} />
-    </div>;
+    return (
+      <div className={`${setClassName(variant)} ${css.noLabel}`}>
+        <textarea id={label} className={css.textbox} onChange={onChange} role="textbox" {...rest} />
+      </div>
+    );
   }
 
   return (
