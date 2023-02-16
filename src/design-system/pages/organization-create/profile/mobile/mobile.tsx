@@ -7,8 +7,8 @@ import { Divider } from '../../../../templates/divider/divider';
 import css from './mobile.module.scss';
 
 const sharedProps: Record<string, string> = {
-  className: css.input,
-  variant: 'outline',
+  //   className: css.input,
+  //   variant: 'outline',
 };
 
 export const Mobile = (): JSX.Element => {
@@ -27,7 +27,7 @@ export const Mobile = (): JSX.Element => {
       <div className={css.questionContainer}>
         <div className={css.question}>Organization profile</div>
         <div className={css.limitStatement}>
-          [todo] Select up to 5 social causes that you are passionate about
+          Fill the required Select up to 5 social causes that you are passionate about
         </div>
       </div>
       <div className={css.main}>
