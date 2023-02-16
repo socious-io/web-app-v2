@@ -4,13 +4,12 @@ import { LIST_ITEM } from '../intro.services';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.back} onClick={console.log}>
+        <div className={css.back} onClick={() => navigate({to: '/jobs'})}>
           <img src="/icons/chevron-left-white.svg" />
         </div>
         <div className={css.title}>Add your organization</div>
@@ -34,7 +33,7 @@ export const Mobile = (): JSX.Element => {
         </div>
       </div>
       <div className={css.bottom}>
-        <Button onClick={() => navigate({to: '../type'}) }>Continue</Button>
+        <Button onClick={() => navigate({ to: '../type' })}>Continue</Button>
       </div>
     </div>
   );

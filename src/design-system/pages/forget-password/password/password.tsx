@@ -26,8 +26,6 @@ export const Password = () => {
     })
 
     const onChangePassword = () => {
-        console.log('tate.password', state.password);
-
         changePassword(state.password).then(resp => {
             if (resp.message === 'success') {
                 navigate({ to: `../../jobs` });
