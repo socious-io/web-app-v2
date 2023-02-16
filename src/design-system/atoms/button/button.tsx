@@ -25,26 +25,18 @@ const sizeStyle: Record<NonNullable<ButtonProps['size']>, CSSProperties> = {
 };
 
 export function Button(props: ButtonProps): JSX.Element {
-  const {
-    onClick,
-    color = 'blue',
-    disabled = false,
-    size = 'm',
-    icon,
-    children,
-    className,
-    ...rest
-  } = props;
+  const { color = 'blue', disabled = false, size = 'm', type = 'button', ...rest } = props;
 
   return (
     <button
-      onClick={onClick}
+      type={type}
+      onClick={props.onClick}
       disabled={disabled}
       style={{ ...colorStyle[color], ...sizeStyle[size], ...rest }}
-      className={`${css.button} ${className}`}
+      className={`${css.button} ${props.className}`}
     >
-      {icon && <img height={18} src={icon} />}
-      {children}
+      {props.icon && <img height={18} src={props.icon} />}
+      {props.children}
     </button>
   );
 }

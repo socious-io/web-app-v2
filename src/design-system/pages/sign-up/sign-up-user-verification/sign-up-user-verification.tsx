@@ -45,7 +45,7 @@ export const SignUpUserVerification = (): JSX.Element => {
       </div>
       <div>
         <div className={css.bottom}>
-          <Button onClick={onSubmit} color="blue">
+          <Button disabled={otp.length !== 6} onClick={onSubmit} color="blue">
             Verify email
           </Button>
           <Typography marginTop="1rem">

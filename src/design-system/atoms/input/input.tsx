@@ -1,52 +1,37 @@
-import { ChangeEvent } from 'react';
+import { useEffect } from 'react';
 import css from './input.module.scss';
 import { InputProps } from './input.types';
 
 export const Input = (props: InputProps): JSX.Element => {
-  const {
-    label,
-    optional = false,
-    register,
-    className,
-    errors = [],
-    variant,
-    onValueChange,
-    ...rest
-  } = props;
-
-  function onChange(value: ChangeEvent<HTMLInputElement>) {
-    const v = value.target.value;
-    onValueChange?.(v);
-  }
+  const { optional = false, register, errors = [], variant = 'outline', ...rest } = props;
 
   function setClassName(v: InputProps['variant']) {
     return v ? css.outline : css.default;
   }
 
-  if (label) {
+  if (props.label) {
     return (
-      <div className={`${setClassName(variant)} ${className}`}>
-        <label className={css.label} htmlFor={label}>
+      <div className={`${setClassName(variant)} ${props.className}`}>
+        <label className={css.label} htmlFor={props.label}>
           {optional ? (
             <div>
-              {label} <span className={css.optionalLabel}>(optional)</span>
+              {props.label} <span className={css.optionalLabel}>(optional)</span>
             </div>
           ) : (
-            label
+            props.label
           )}
         </label>
         <input
-          id={label}
+          id={props.label}
           className={css.textbox}
-          onChange={onChange}
           role="textbox"
-          {...register?.(label, { required: !optional })}
           {...rest}
+          {...register?.(props.name, { required: !optional, ...props.validations })}
         ></input>
         <div className={css.errorsContainer}>
-          {errors.map((error) => {
+          {errors.map((error, i) => {
             return (
-              <div className={css.errorItem} key={error}>
+              <div className={css.errorItem} key={i}>
                 {error}
               </div>
             );
@@ -57,13 +42,16 @@ export const Input = (props: InputProps): JSX.Element => {
   }
 
   return (
-    <div style={{ gridTemplateRows: '2.5rem' }} className={`${setClassName(variant)} ${className}`}>
+    <div
+      style={{ gridTemplateRows: '2.5rem' }}
+      className={`${setClassName(variant)} ${props.className}`}
+    >
       <input
-        id={label}
+        id={props.label}
         className={css.textbox}
-        onChange={onChange}
         role="textbox"
         {...rest}
+        {...register?.(props.name, { required: !optional, ...props.validations })}
       ></input>
     </div>
   );
