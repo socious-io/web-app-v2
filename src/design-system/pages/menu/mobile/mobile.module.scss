@@ -2,6 +2,7 @@
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 2;
 }
 
 .bg {
@@ -33,13 +34,18 @@
   gap: 1rem;
 }
 
+.profileLink {
+  color: var(--color-primary-01);
+  font-weight: bold;
+}
+
 .nameInfo {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.fullname {
+.fullName {
   font-size: 1rem;
   font-weight: 600;
 }

@@ -1,8 +1,3 @@
-export type getUserDetailReq = {
-  userType: 'users' | 'organizations';
-  id: string;
-};
-
 export type ProfileReq = {
   id: string;
   name: string;
