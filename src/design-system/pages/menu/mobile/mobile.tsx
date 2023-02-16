@@ -54,6 +54,11 @@ export const Mobile = () => {
     });
   };
 
+  const navigateToCreateOrg = () => {
+    navigate({ to: `/organization/create/intro` });
+    closePage();
+  };
+
   function navigateToProfile() {
     if (identity.type === 'users') {
       navigate({ to: `/profile/users/${identity.meta.username}` });
@@ -94,7 +99,7 @@ export const Mobile = () => {
       <div style={sidebarStyles(isVisible)} className={css.sidebar}>
         <div className={css.header}>
           <div className={css.organization}>
-            <Button color="white" width="160px">
+            <Button onClick={navigateToCreateOrg} color="white" width="160px">
               Add organization
             </Button>
             <div className={css.dotIcon}>
@@ -132,12 +137,14 @@ export const Mobile = () => {
         </div>
         <div className={css.items}>
           <div className={css.title}>Switch To</div>
-          {accountList.map((item) => (
-            <div onClick={() => navigateToJobs(item.id)} key={item.id} className={css.row}>
-              <Avatar size="2rem" type={item.type} img={item.image} />
-              <span>{item.name}</span>
-            </div>
-          ))}
+          {accountList.map((item) => {
+            return (
+              <div onClick={() => navigateToJobs(item.id)} key={item.id} className={css.row}>
+                <Avatar size="2rem" type={item.type} img={item.image} />
+                <span>{item.name}</span>
+              </div>
+            );
+          })}
         </div>
         <div className={css.items}>
           <div className={css.title}>Settings</div>
