@@ -10,6 +10,8 @@ export const createOrgWizardSlice = createSlice({
   initialState: {
     type: '',
     socialCauses: [],
+    mission: '',
+    culture: '',
   },
   reducers: {
     setOrgType: (state, action) => {
@@ -18,7 +20,13 @@ export const createOrgWizardSlice = createSlice({
     setSocialCauses: (state, action) => {
       state.socialCauses = action.payload;
     },
+    setMission: (state, action) => {
+      state.mission = action.payload;
+    },
+    setCulture: (state, action) => {
+      state.culture = action.payload;
+    },
   },
 });
 
-export const { setOrgType, setSocialCauses } = createOrgWizardSlice.actions;
+export const { setOrgType, setSocialCauses, setMission, setCulture } = createOrgWizardSlice.actions;

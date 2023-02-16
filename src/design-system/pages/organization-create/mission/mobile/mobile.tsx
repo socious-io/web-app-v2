@@ -3,9 +3,26 @@ import { useNavigate } from '@tanstack/react-location';
 import { Button } from '../../../../atoms/button/button';
 import { Steps } from '../../../../atoms/steps/steps';
 import { Textarea } from '../../../../atoms/textarea/textarea';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../../store/store';
+import { setMission } from '../../../../../store/reducers/createOrgWizard.reducer';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const missionValue = useSelector<RootState, string>((state) => {
+    return state.createOrgWizard.mission;
+  });
+
+  function navigateToCulture() {
+    navigate({ to: '../culture' });
+  }
+
+  function onSkip() {
+    dispatch(setMission(''));
+    navigateToCulture();
+  }
 
   return (
     <div className={css.container}>
@@ -16,14 +33,22 @@ export const Mobile = (): JSX.Element => {
         <div className={css.stepsContainer}>
           <Steps clickable={false} length={6} current={4} />
         </div>
-        <div className={css.skip}>Skip</div>
+        <div onClick={onSkip} className={css.skip}>
+          Skip
+        </div>
       </div>
       <div className={css.question}>What's your organization's mission?</div>
       <div className={css.main}>
-        <Textarea variant="outline" placeholder="Your organization's mission" />
+        <Textarea
+          value={missionValue}
+          onValueChange={(value) => dispatch(setMission(value))}
+          placeholder="Your organization's mission"
+        />
       </div>
       <div className={css.bottom}>
-        <Button onClick={() => navigate({ to: '../culture' })}>Continue</Button>
+        <Button disabled={!missionValue} onClick={navigateToCulture}>
+          Continue
+        </Button>
       </div>
     </div>
   );

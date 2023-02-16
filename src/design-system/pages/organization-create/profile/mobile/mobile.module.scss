@@ -51,10 +51,12 @@
 
 .main {
   border-bottom: 1px solid var(--color-gray-03);
-  .input {
-    margin-bottom: 1rem;
-  }
   overflow: scroll;
+}
+
+.formContainer{
+  display: grid;
+  gap: 1rem;
 }
 
 .bottom {
