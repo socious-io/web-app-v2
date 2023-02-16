@@ -6,6 +6,7 @@ export const Input = (props: InputProps): JSX.Element => {
   const {
     label,
     optional = false,
+    register,
     className,
     errors = [],
     variant,
@@ -39,6 +40,7 @@ export const Input = (props: InputProps): JSX.Element => {
           className={css.textbox}
           onChange={onChange}
           role="textbox"
+          {...register?.(label, { required: !optional })}
           {...rest}
         ></input>
         <div className={css.errorsContainer}>

@@ -3,6 +3,7 @@ import { CSSProperties } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIdentities } from '../../../../core/api';
 import { IdentityReq } from '../../../../core/types';
+import { setIdentityList } from '../../../../store/reducers/identity.reducer';
 import { visibility } from '../../../../store/reducers/menu.reducer';
 import { RootState } from '../../../../store/store';
 import { Avatar } from '../../../atoms/avatar/avatar';
@@ -38,14 +39,16 @@ export const Mobile = () => {
   });
 
   const closePage = () => {
-    console.log('close');
     dispatch(visibility(false));
   };
 
   const navigateToJobs = (id: string) => {
     getSession(id).then((resp) => {
       if (resp.message === 'success') {
-        getIdentities().then(() => navigate({ to: '/jobs' }));
+        getIdentities()
+          .then((resp) => dispatch(setIdentityList(resp)))
+          .then(() => navigate({ to: '/jobs' }))
+          .then(closePage);
       }
     });
   };
