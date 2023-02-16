@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 const http = axios.create({
-  baseURL: 'https://dev.socious.io/api/v2',
+  baseURL: process.env.BASE_URL || 'https://dev.socious.io/api/v2',
   withCredentials: true,
   timeout: 100000,
 });
