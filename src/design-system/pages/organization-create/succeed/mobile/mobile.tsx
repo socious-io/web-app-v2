@@ -1,7 +1,9 @@
+import { useNavigate } from '@tanstack/react-location';
 import { Button } from '../../../../atoms/button/button';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
+    const navigate = useNavigate();
   return (
     <div className={css.container}>
       <div className={css.imgContainer}>
@@ -12,7 +14,7 @@ export const Mobile = (): JSX.Element => {
         <div className={css.secondary}>You have successfully created a page for Green Peace!</div>
       </div>
       <div className={css.bottom}>
-        <Button>Continue</Button>
+        <Button onClick={() => navigate({to: '../verified'})}>Continue</Button>
       </div>
     </div>
   );
