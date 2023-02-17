@@ -109,3 +109,7 @@
 .redText {
   color: var(--color-error-01);
 }
+
+.redIcon path {
+  fill: red !important;
+}

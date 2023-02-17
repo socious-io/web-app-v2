@@ -6,7 +6,7 @@ export const Delete = () => {
     const navigate = useNavigate();
 
     const backToPerviousPage = () => {
-
+        navigate({ to: '../../jobs' });
     }
 
     const navigateToPassword = () => {
