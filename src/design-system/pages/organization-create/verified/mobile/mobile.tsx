@@ -1,9 +1,11 @@
+import { useNavigate } from '@tanstack/react-location';
 import { Button } from '../../../../atoms/button/button';
 import { getProcess } from '../verified.services';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const processes = getProcess('verify@socious.com');
+  const navigate = useNavigate();
 
   return (
     <div className={css.container}>
@@ -39,7 +41,7 @@ export const Mobile = (): JSX.Element => {
         </div>
       </div>
       <div className={css.bottom}>
-        <Button>Continue</Button>
+        <Button onClick={() => navigate({ to: '/jobs' })}>Continue</Button>
       </div>
     </div>
   );
