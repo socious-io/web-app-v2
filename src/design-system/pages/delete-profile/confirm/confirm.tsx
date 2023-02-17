@@ -22,7 +22,7 @@ export const Confirm = () => {
                 <span>Your account has been deleted.</span>
             </div>
             <div className={css.content}>
-                <span className={css.text}>You will recieve a confirmation</span>
+                <span className={css.text}>You will receive a confirmation</span>
                 <div className={css.email}>
                     <span>email at: </span>
                     <span>{email}</span>
