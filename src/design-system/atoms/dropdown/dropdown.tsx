@@ -1,22 +1,11 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import css from './dropdown.module.scss';
 import { DropdownProps } from './dropdown.types';
 import { Items } from './items/items';
 
-export const Dropdown = ({
-  list,
-  onGetValue,
-  selectedValue,
-  onValueChange,
-  onSearch,
-  label,
-  placeholder,
-}: DropdownProps) => {
-  const [state, setState] = useState({
-    isListOpen: false,
-    headerTitle: '',
-  });
-
+export const Dropdown = (props: DropdownProps) => {
+  const { list, onGetValue, selectedValue, label, placeholder } = props;
+  const [state, setState] = useState({ isListOpen: false, headerTitle: '' });
   const [filterList, setFilterList] = useState(list);
 
   const onToggleList = () => {
@@ -26,9 +15,8 @@ export const Dropdown = ({
 
   const onClickItems = (title: string, value: string) => {
     setState({ isListOpen: false, headerTitle: title });
-    // TODO: we should deprecate onGetValue
+    props.onValueChange?.(value);
     onGetValue?.(value);
-    onValueChange?.(value);
   };
 
   useEffect(() => {
@@ -38,26 +26,19 @@ export const Dropdown = ({
     }
   }, []);
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const v = e.target.value;
-    onSearch?.(v);
-    setState({ isListOpen: true, headerTitle: v });
-    const newList = list.filter((item) => item.title.toLowerCase().includes(v));
+  const onChangeHandler = (e: any) => {
+    setState({ isListOpen: true, headerTitle: e.target.value });
+    const newList = list.filter((item) => item.title.includes(e.target.value));
     setFilterList(newList);
   };
 
   return (
     <div className={css.container}>
-      {label && <div className={css.label}>{label}</div>}
+      <div className={css.label}>{label}</div>
       <div className={css.wrapper}>
         <div className={css.header}>
           <div className={css.title}>
-            <input
-              type="text"
-              placeholder={placeholder}
-              onChange={onChangeHandler}
-              value={state.headerTitle}
-            />
+            <input type="text" placeholder={placeholder} onChange={onChangeHandler} value={state.headerTitle} />
           </div>
           <div onClick={onToggleList} className={css.icon}>
             <img src="/icons/arrow-down-black.svg" />

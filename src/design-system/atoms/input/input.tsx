@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import css from './input.module.scss';
 import { InputProps } from './input.types';
 
@@ -42,10 +41,7 @@ export const Input = (props: InputProps): JSX.Element => {
   }
 
   return (
-    <div
-      style={{ gridTemplateRows: '2.5rem' }}
-      className={`${setClassName(variant)} ${props.className}`}
-    >
+    <div style={{ gridTemplateRows: '2.5rem' }} className={`${setClassName(variant)} ${props.className}`}>
       <input
         id={props.label}
         className={css.textbox}
