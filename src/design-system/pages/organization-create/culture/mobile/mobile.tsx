@@ -1,10 +1,11 @@
 import { useNavigate } from '@tanstack/react-location';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCulture } from '../../../../../store/reducers/createOrgWizard.reducer';
+import { CreateOrgWizard, resetCreateOrgWizard, setCulture } from '../../../../../store/reducers/createOrgWizard.reducer';
 import { RootState } from '../../../../../store/store';
 import { Button } from '../../../../atoms/button/button';
 import { Steps } from '../../../../atoms/steps/steps';
 import { Textarea } from '../../../../atoms/textarea/textarea';
+import { addOrganization, wizardFormToPayloadAdaptor } from '../../organization-create';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
@@ -15,13 +16,26 @@ export const Mobile = (): JSX.Element => {
     return state.createOrgWizard.culture;
   });
 
+  const form = useSelector<RootState, CreateOrgWizard>((state) => {
+    return state.createOrgWizard;
+  });
+
   function navigateToSuccess() {
     navigate({ to: '../succeed' });
   }
 
   function onSkip() {
     dispatch(setCulture(''));
-    navigateToSuccess();
+    submitOrganization(form);
+  }
+
+  function submitOrganization(wizardForm: CreateOrgWizard) {
+    const payload = wizardFormToPayloadAdaptor(wizardForm);
+    addOrganization(payload)
+      .then(navigateToSuccess)
+      .then(() => {
+        dispatch(resetCreateOrgWizard());
+      });
   }
 
   return (
@@ -46,7 +60,7 @@ export const Mobile = (): JSX.Element => {
         />
       </div>
       <div className={css.bottom}>
-        <Button disabled={!cultureValue} onClick={navigateToSuccess}>
+        <Button disabled={!cultureValue} onClick={() => submitOrganization(form)}>
           Continue
         </Button>
       </div>

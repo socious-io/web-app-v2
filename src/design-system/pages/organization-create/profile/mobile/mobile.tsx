@@ -91,7 +91,11 @@ export const Mobile = (): JSX.Element => {
               label="City"
               placeholder="City"
               list={cities}
-              onValueChange={(value) => updateField('city', value)}
+              onValueChange={(value) => {
+                const cityName = cities.find((city) => city.value === value)!.title;
+                updateField('geoname_id', value);
+                updateField('city', cityName);
+              }}
             />
             <Input
               value={formValues.address}
@@ -106,7 +110,13 @@ export const Mobile = (): JSX.Element => {
                 Phone Number <span className={css.labelOptional}>(optional)</span>
               </div>
               <div className={css.phoneNumber}>
-                <Input value={formValues.countryCode} register={register} name="countryCode" optional placeholder="+1" />
+                <Input
+                  value={formValues.countryMobileCode}
+                  register={register}
+                  name="countryMobileCode"
+                  optional
+                  placeholder="+1"
+                />
                 <Input
                   value={formValues.phoneNumber}
                   register={register}

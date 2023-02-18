@@ -40,8 +40,11 @@ export const Mobile = (): JSX.Element => {
       <div className={css.question}>What's your organization's mission?</div>
       <div className={css.main}>
         <Textarea
-          value={missionValue}
-          onValueChange={(value) => dispatch(setMission(value))}
+          defaultValue={missionValue}
+          onValueChange={(value) => {
+            dispatch(setMission(value));
+            console.log('value: ', value);
+          }}
           placeholder="Your organization's mission"
         />
       </div>
