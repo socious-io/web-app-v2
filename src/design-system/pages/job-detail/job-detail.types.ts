@@ -4,7 +4,5 @@ import { Job } from '../../organisms/job-list/job-list.types';
 export type JobDetailProps = {};
 
 export type Loader = MakeGenerics<{
-  LoaderData: {
-    job: Job;
-  };
+  LoaderData: Job;
 }>;

@@ -41,7 +41,6 @@ export const DialogCreate = ({ onClose }: DialogCreateProps) => {
   };
 
   const getSocialValue = (value: string) => {
-    console.log('value', value);
     setState({ ...state, social: value });
   };
 

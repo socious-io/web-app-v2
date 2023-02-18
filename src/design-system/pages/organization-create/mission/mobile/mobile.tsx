@@ -43,7 +43,6 @@ export const Mobile = (): JSX.Element => {
           defaultValue={missionValue}
           onValueChange={(value) => {
             dispatch(setMission(value));
-            console.log('value: ', value);
           }}
           placeholder="Your organization's mission"
         />

@@ -9,28 +9,41 @@ import { getCategories } from './job-detail.services';
 import { JobDetailProps, Loader } from './job-detail.types';
 import { Divider } from '../../templates/divider/divider';
 import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors';
+import { Job } from '../../organisms/job-list/job-list.types';
+import { printWhen } from '../../../utils/utils';
 
 export const JobDetail = (props: JobDetailProps): JSX.Element => {
   const navigate = useNavigate();
-  const { data: job } = useMatch<Loader>();
+  // FIX: fix the typing
+  const { data: job } = useMatch() as unknown as { data: Job };
 
   function onApply() {
     navigate({ to: './apply' });
   }
 
+  const applicationSubmittedJSX = (
+    <div className={css.appSubmitted}>
+      <img src="/icons/document-check-black.svg" />
+      <div>Application submitted</div>
+    </div>
+  );
+
   return (
     <div className={css.container}>
-      <Header onBack={() => navigate({ to: '/jobs' })} title={job?.job_category.name} />
+      <Header onBack={() => navigate({ to: '/jobs' })} title={job.job_category.name} />
+      {printWhen(applicationSubmittedJSX, job.applied)}
       <Divider>
         <ProfileView
           name={job.identity_meta.name}
           location={job.identity_meta.city}
           img={job.identity_meta.image}
-          type={job?.identity_type}
+          type={job.identity_type}
         />
         <div className={css.jobTitle}>{job.title}</div>
         <Categories marginBottom="1rem" list={getCategories(job)} />
-        <Button onClick={onApply}>Apply now</Button>
+        <Button disabled={job.applied} onClick={onApply}>
+          Apply now
+        </Button>
       </Divider>
       <Divider title="Social cause">
         <CategoriesClickable list={socialCausesToCategory(job.causes_tags)} />
