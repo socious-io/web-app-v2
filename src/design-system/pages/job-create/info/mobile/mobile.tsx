@@ -8,7 +8,6 @@ import { Dropdown } from '../../../../atoms/dropdown/dropdown';
 import { RadioGroup } from '../../../../molecules/radio-group/radio-group';
 import { formModel, getCityList } from '../info.services';
 import { Button } from '../../../../atoms/button/button';
-import { useForm } from '../../../../../hooks/useForm';
 import { COUNTRIES } from '../../../../../core/constants/COUNTRIES';
 import { citiesToCategories, jobCategoriesToDropdown } from '../../../../../core/adaptors';
 import { PROJECT_REMOTE_PREFERENCES } from '../../../../../core/constants/PROJECT_REMOTE_PREFERENCE';
@@ -24,7 +23,7 @@ import { DropdownItem } from '../../../../atoms/dropdown/dropdown.types';
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const [cities, setCities] = useState<DropdownItem[]>([]);
-  const form = useForm(formModel);
+  //   const form = useForm(formModel);
   const resolvedJobCategories = useMatch().ownData.categories as CategoriesResp['categories'];
   const categories = jobCategoriesToDropdown(resolvedJobCategories);
 
@@ -50,27 +49,10 @@ export const Mobile = (): JSX.Element => {
         <form>
           <Divider title="Job information" divider="space">
             <div className={css.dividerContainer}>
-              <Input
-                onValueChange={form.jobTitle.update}
-                errors={form.jobTitle.errors}
-                value={form.jobTitle.value}
-                placeholder="title"
-                variant="outline"
-                label="Job title"
-              />
-              <Dropdown
-                label="Job category"
-                placeholder="Project Length"
-                list={categories}
-                onGetValue={console.log}
-              />
+              <Input errors={[]} placeholder="title" variant="outline" label="Job title" />
+              <Dropdown label="Job category" placeholder="Project Length" list={categories} onGetValue={console.log} />
               <Textarea placeholder="job description" label="Job description" variant="outline" />
-              <Dropdown
-                label="Country"
-                placeholder="country"
-                list={COUNTRIES}
-                onValueChange={updateCityList}
-              />
+              <Dropdown label="Country" placeholder="country" list={COUNTRIES} onValueChange={updateCityList} />
               <Dropdown label="City" placeholder="city" list={cities} />
               <Dropdown
                 label="Remote Preference"
@@ -78,28 +60,13 @@ export const Mobile = (): JSX.Element => {
                 list={PROJECT_REMOTE_PREFERENCES}
                 onGetValue={console.log}
               />
-              <Dropdown
-                label="Project Type"
-                placeholder="Project Type"
-                list={PROJECT_TYPE}
-                onGetValue={console.log}
-              />
-              <Dropdown
-                label="Project Length"
-                placeholder="Project Length"
-                list={PROJECT_LENGTH}
-                onGetValue={console.log}
-              />
+              <Dropdown label="Project Type" placeholder="Project Type" list={PROJECT_TYPE} onGetValue={console.log} />
+              <Dropdown label="Project Length" placeholder="Project Length" list={PROJECT_LENGTH} onGetValue={console.log} />
             </div>
           </Divider>
           <Divider title="Payment" divider="space">
             <div className={css.dividerContainer}>
-              <Dropdown
-                label="Payment Currency"
-                placeholder="payment currency"
-                list={CURRENCIES}
-                onGetValue={console.log}
-              />
+              <Dropdown label="Payment Currency" placeholder="payment currency" list={CURRENCIES} onGetValue={console.log} />
               <RadioGroup
                 name="paymentType"
                 value={'PAID'}
@@ -110,11 +77,11 @@ export const Mobile = (): JSX.Element => {
               <RadioGroup
                 name="PaymentScheme"
                 value="PAID"
-                onChange={form.paymentTerms.update}
+                onChange={console.log}
                 label="Payment scheme"
                 list={PROJECT_PAYMENT_SCHEME}
               />
-              {form.paymentTerms.value === 'HOURLY' && (
+              {/* {form.paymentTerms.value === 'HOURLY' && (
                 <div className={css.paymentRange}>
                   <div className={css.paymentRangeTitle}>Total commitment</div>
                   <div className={css.paymentRangeInputs}>
@@ -122,8 +89,8 @@ export const Mobile = (): JSX.Element => {
                     <Input variant="outline" label="Maximum" placeholder="maximum" />
                   </div>
                   {/* <div className={css.priceNotifying}>Prices will be shown in USD ($)</div> */}
-                </div>
-              )}
+              {/* </div> */}
+              {/* )} */}
             </div>
           </Divider>
           <Divider title="Experience & skills" divider="space">
@@ -137,7 +104,7 @@ export const Mobile = (): JSX.Element => {
             </div>
           </Divider>
           <div className={css.btnContainer}>
-            <Button disabled={form.isInvalid}>Continue</Button>
+            <Button>Continue</Button>
           </div>
         </form>
       </div>
