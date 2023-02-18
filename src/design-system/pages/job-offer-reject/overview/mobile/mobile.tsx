@@ -1,5 +1,5 @@
 import css from './mobile.module.scss';
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate, useRouter } from '@tanstack/react-location';
 import { Header } from '../../../../atoms/header/header';
 import { Tabs } from '../../../../atoms/tabs/tabs';
 import { Loader } from '../../job-offer-reject.types';
@@ -9,19 +9,17 @@ import { Hired } from '../components/hired/hired';
 
 export const Mobile = (): JSX.Element => {
   const resolver = useMatch().ownData as Loader;
+  const navigate = useNavigate();
+
   const tabs = [
     {
       name: 'Overview',
-      content: (
-        <Overview questions={resolver.screeningQuestions.questions} data={resolver.jobOverview} />
-      ),
+      content: <Overview questions={resolver.screeningQuestions.questions} data={resolver.jobOverview} />,
       default: true,
     },
     {
       name: 'Applicants',
-      content: (
-        <Applicants toReviewList={resolver.reviewList} declinedList={resolver.declinedList} />
-      ),
+      content: <Applicants toReviewList={resolver.reviewList} declinedList={resolver.declinedList} />,
     },
     {
       name: 'Hired',
@@ -31,7 +29,12 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Header border="0" paddingTop="var(--safe-area)" title={resolver.jobOverview.title} />
+      <Header
+        onBack={() => navigate({ to: `/jobs/created/${resolver.jobOverview.identity_id}` })}
+        border="0"
+        paddingTop="var(--safe-area)"
+        title={resolver.jobOverview.title}
+      />
       <div className={css.tabContainer}>
         <Tabs tabs={tabs} />
       </div>
