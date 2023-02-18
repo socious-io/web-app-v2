@@ -10,6 +10,7 @@ export const Mobile = (): JSX.Element => {
   const organizationName = useSelector<RootState, string>((state) => {
     return state.createOrgWizard.organizationName;
   });
+  console.log('orgname: ', organizationName)
 
   return (
     <div className={css.container}>
@@ -18,7 +19,7 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.statement}>
         <div className={css.primary}>Organization created</div>
-        <div className={css.secondary}>You have successfully created a page for {organizationName}!</div>
+        <div className={css.secondary}>You have successfully created an organization page!</div>
       </div>
       <div className={css.bottom}>
         <Button onClick={() => navigate({ to: '../verified' })}>Continue</Button>
