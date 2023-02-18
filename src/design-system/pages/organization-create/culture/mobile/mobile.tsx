@@ -12,8 +12,8 @@ export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const cultureValue = useSelector<RootState, string>((state) => {
-    return state.createOrgWizard.culture;
+  const cultureValue = useSelector<RootState, string | undefined>((state) => {
+    return state.createOrgWizard?.culture;
   });
 
   const form = useSelector<RootState, CreateOrgWizard>((state) => {
