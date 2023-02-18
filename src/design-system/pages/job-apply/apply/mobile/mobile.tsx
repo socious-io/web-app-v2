@@ -5,7 +5,7 @@ import { QuestionsRes } from '../../../../../core/types';
 import { Textarea } from '../../../../atoms/textarea/textarea';
 import { ProfileView } from '../../../../molecules/profile-view/profile-view';
 import { Job } from '../../../../organisms/job-list/job-list.types';
-import { resumeInitialState, createRadioQuestion, createTextQuestion } from '../apply.services';
+import { resumeInitialState, createRadioQuestion, createTextQuestion, submit, applyApplication } from '../apply.services';
 import { Resume } from '../apply.types';
 import { Divider } from '../../../../templates/divider/divider';
 import { Input } from '../../../../atoms/input/input';
@@ -13,11 +13,17 @@ import { Typography } from '../../../../atoms/typography/typography';
 import { Button } from '../../../../atoms/button/button';
 import { Checkbox } from '../../../../atoms/checkbox/checkbox';
 import { Header } from '../../../../atoms/header/header';
-import { printWhen, when } from '../../../../../utils/utils';
+import { printWhen } from '../../../../../utils/utils';
+
+const formInitialState = {
+  cover_letter: '',
+  cv_link: '',
+  cv_name: '',
+};
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
-
+  const [form, setForm] = useState(formInitialState);
   const [resume, setResume] = useState<Resume>(resumeInitialState);
   const { jobDetail, screeningQuestions } = useMatch().ownData as {
     jobDetail: Job;
@@ -31,6 +37,25 @@ export const Mobile = (): JSX.Element => {
       return;
     }
     setResume({ name: files[0].name, file: files[0] });
+  }
+
+  function updateFormState(fieldName: string) {
+    return (value: string) => {
+      setForm((prev) => ({ ...prev, [fieldName]: value }));
+    };
+  }
+
+  function navigateToJobDetail() {
+    navigate({ to: '..' });
+  }
+
+  function onSubmit() {
+    if (resume.file) {
+      submit(jobDetail.id, resume.file, form).then(navigateToJobDetail);
+    } else {
+      applyApplication(jobDetail.id, form).then(navigateToJobDetail);
+    }
+    // navigate({ to: `../confirm?company=${jobDetail.identity_meta.name`}`);
   }
 
   const renderQuestions = () => {
@@ -86,15 +111,25 @@ export const Mobile = (): JSX.Element => {
           <Typography lineLimit={3}>{jobDetail.description}</Typography>
         </Divider>
         <Divider divider="line" title="Cover letter">
-          <Textarea placeholder="write a message..." label="Message" variant="outline" />
+          <Textarea onValueChange={updateFormState('cover_letter')} placeholder="write a message..." label="Message" />
         </Divider>
         <Divider divider="line" title="Resume">
           {resume.name ? uploadedResume : uploadResumeBtn}
         </Divider>
         <Divider divider="line" title="Link">
           <div className={css.linkContainer}>
-            <Input variant="outline" placeholder="Link name" label="Link name" />
-            <Input placeholder="domain.com" variant="outline" label="Link URL" />
+            <Input
+              onChange={(e) => updateFormState('cv_name')(e.target.value)}
+              optional
+              placeholder="Link name"
+              label="Link name"
+            />
+            <Input
+              onChange={(e) => updateFormState('cv_name')(e.target.value)}
+              optional
+              placeholder="domain.com"
+              label="Link URL"
+            />
           </div>
         </Divider>
         {printWhen(renderQuestions(), !!questions.length)}
@@ -105,7 +140,7 @@ export const Mobile = (): JSX.Element => {
           </div>
         </Divider>
         <div className={css.btnContainer}>
-          <Button onClick={() => navigate({ to: `../confirm?company=${jobDetail.identity_meta.name}` })}>
+          <Button disabled={!form.cover_letter} onClick={onSubmit}>
             Submit application
           </Button>
         </div>

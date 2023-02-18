@@ -14,7 +14,7 @@ import { printWhen } from '../../../utils/utils';
 
 export const JobDetail = (props: JobDetailProps): JSX.Element => {
   const navigate = useNavigate();
-  // FIX: fix the typing
+  // TODO: fix the typing
   const { data: job } = useMatch() as unknown as { data: Job };
 
   function onApply() {

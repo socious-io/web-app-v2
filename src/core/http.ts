@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 const http = axios.create({
   baseURL: 'https://dev.socious.io/api/v2',
@@ -6,8 +6,8 @@ const http = axios.create({
   timeout: 100000,
 });
 
-export async function post(uri: string, payload: unknown) {
-  return http.post(uri, payload);
+export async function post(uri: string, payload: unknown, config?: AxiosRequestConfig<unknown>) {
+  return http.post(uri, payload, config);
 }
 
 export async function get(uri: string) {

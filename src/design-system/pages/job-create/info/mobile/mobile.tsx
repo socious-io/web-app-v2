@@ -6,7 +6,7 @@ import { Textarea } from '../../../../atoms/textarea/textarea';
 import { Divider } from '../../../../templates/divider/divider';
 import { Dropdown } from '../../../../atoms/dropdown/dropdown';
 import { RadioGroup } from '../../../../molecules/radio-group/radio-group';
-import { formModel, getCityList } from '../info.services';
+import { getCityList } from '../info.services';
 import { Button } from '../../../../atoms/button/button';
 import { COUNTRIES } from '../../../../../core/constants/COUNTRIES';
 import { citiesToCategories, jobCategoriesToDropdown } from '../../../../../core/adaptors';

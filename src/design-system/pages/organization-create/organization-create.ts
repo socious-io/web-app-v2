@@ -25,13 +25,6 @@ export function wizardFormToPayloadAdaptor(wizardForm: CreateOrgWizard): AddOrga
     country: wizardForm.country,
     city: wizardForm.city,
     geoname_id: wizardForm.geoname_id,
-    // phone: wizardForm.phoneNumber,
-    // mission: wizardForm.mission,
-    // culture: wizardForm.culture,
-    // mobile_country_code: wizardForm.countryMobileCode,
-    // address: wizardForm.address,
-    // website: wizardForm.website,
-    // description: '',
   };
   Object.keys(optionalProps).forEach(([key, value]) => {
     if (wizardForm[value]) {
