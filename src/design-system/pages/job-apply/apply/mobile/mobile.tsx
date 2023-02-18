@@ -17,6 +17,7 @@ import { printWhen, when } from '../../../../../utils/utils';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
+
   const [resume, setResume] = useState<Resume>(resumeInitialState);
   const { jobDetail, screeningQuestions } = useMatch().ownData as {
     jobDetail: Job;
@@ -40,9 +41,7 @@ export const Mobile = (): JSX.Element => {
             const isMultipleChoice = item.options;
             return (
               <div key={item.id} className={css.questions}>
-                {isMultipleChoice
-                  ? createRadioQuestion(item, i + 1)
-                  : createTextQuestion(item, i + 1)}
+                {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1)}
               </div>
             );
           })}
@@ -65,13 +64,7 @@ export const Mobile = (): JSX.Element => {
     <>
       <div className={css.uploadYourResume}>Upload your resume</div>
       <div className={css.acceptedType}>DOC, DOCX, PDF (10MB)</div>
-      <Button
-        position="relative"
-        icon="/icons/attachment.svg"
-        width="9.75rem"
-        size="s"
-        color="white"
-      >
+      <Button position="relative" icon="/icons/attachment.svg" width="9.75rem" size="s" color="white">
         <input onChange={onResumeLoad} type="file" className={css.fileInput} />
         Upload File
       </Button>

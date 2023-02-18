@@ -10,7 +10,6 @@ export const Mobile = (): JSX.Element => {
   const organizationName = useSelector<RootState, string>((state) => {
     return state.createOrgWizard.organizationName;
   });
-  console.log('orgname: ', organizationName)
 
   return (
     <div className={css.container}>

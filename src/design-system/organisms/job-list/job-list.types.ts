@@ -7,6 +7,7 @@ export interface JobListProps extends CSSProperties {
 
 export type Job = {
   id: string;
+  applied: boolean;
   identity_id: string;
   description: string;
   project_type: 'FULL_TIME';
