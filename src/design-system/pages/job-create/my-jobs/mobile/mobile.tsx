@@ -4,11 +4,7 @@ import { Header } from '../../../../atoms/header/header';
 import { Tabs } from '../../../../atoms/tabs/tabs';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
-import {
-  getActiveJobs,
-  getDraftJobs,
-  jobListToJobCardListAdaptor,
-} from '../../my-jobs/my-jobs.services';
+import { getActiveJobs, getDraftJobs, jobListToJobCardListAdaptor } from '../../my-jobs/my-jobs.services';
 import { MyJobsResolver } from '../my-jobs.types';
 import { JobCardList } from '../../../../organisms/job-card-list/job-card-list';
 import { Fab } from '../../../../atoms/fab/fab';
@@ -87,7 +83,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Header border="0" paddingTop={'var(--safe-area)'} title="My Jobs" />
+      <Header onBack={() => navigate({ to: '/jobs' })} border="0" paddingTop={'var(--safe-area)'} title="My Jobs" />
       <div className={css.tabContainer}>
         <Tabs tabs={tabs} />
       </div>

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IdentityReq } from '../../../../core/types';
 import { RootState } from '../../../../store/store';
 import { visibility } from '../../../../store/reducers/menu.reducer';
+import { Search } from '../../../atoms/search/search';
 
 export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
       <div className={css.header}>
         <div className={css.menu}>
           <Avatar onClick={openSidebar} img={avatarImg} size="2.25rem" type={identity.type} />
-          <div className={css.search}>Search Jobs</div>
+          <Search placeholder="Search Jobs" onValueChange={console.log} />
           <img className={css.logo} src="icons/logo-white.svg" />
         </div>
         <div>
