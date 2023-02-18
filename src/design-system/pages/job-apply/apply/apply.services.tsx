@@ -1,11 +1,22 @@
 import { RadioGroupProps, RadioGroup } from '@mui/material';
-import { get } from '../../../../core/http';
+import { get, post } from '../../../../core/http';
 import { QuestionsRes } from '../../../../core/types';
 import { Textarea } from '../../../atoms/textarea/textarea';
-import { Resume } from './apply.types';
+import { ApplyApplicationPayload, Resume } from './apply.types';
 
 export async function getScreeningQuestions(id: string): Promise<QuestionsRes> {
   return get(`projects/${id}/questions`).then(({ data }) => data);
+}
+
+export async function applyApplication(id: string, payload: ApplyApplicationPayload): Promise<unknown> {
+  const clone = { cover_letter: payload.cover_letter };
+  if (payload.cv_link !== '') {
+    Object.assign(clone, { cv_link: payload.cv_link });
+  }
+  if (payload.cv_name !== '') {
+    Object.assign(clone, { cv_name: payload.cv_name });
+  }
+  return post(`/projects/${id}/applicants`, clone);
 }
 
 const convertOptionsToRadioGroup = (options: QuestionsRes['options']): RadioGroupProps['list'] => {
@@ -14,14 +25,26 @@ const convertOptionsToRadioGroup = (options: QuestionsRes['options']): RadioGrou
   });
 };
 
+async function uploadResume(file: File): Promise<{ id: string }> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const header = {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  };
+  return post('/media/upload', formData, header).then(({ data }) => data);
+}
+
+export async function submit(id: string, file: File, payload: ApplyApplicationPayload) {
+  const uploadedResume = await uploadResume(file);
+  const clonePayload = { ...payload };
+  clonePayload.attachment = uploadedResume.id;
+  return applyApplication(id, clonePayload);
+}
+
 export function createTextQuestion(question: QuestionsRes, i: number): JSX.Element {
   return (
     <div>
-      <Textarea
-        placeholder="Your answer..."
-        variant="outline"
-        label={`${i}. ${question.question}`}
-      />
+      <Textarea optional placeholder="Your answer..." label={`${i}. ${question.question}`} />
     </div>
   );
 }
