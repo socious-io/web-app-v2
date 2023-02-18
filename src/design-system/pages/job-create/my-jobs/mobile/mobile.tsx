@@ -46,6 +46,10 @@ export const Mobile = (): JSX.Element => {
       .then(setDraftJobList);
   }
 
+  function navigateToOverview(id?: string) {
+    navigate({ to: `../${id}/overview` });
+  }
+
   const tabs = [
     {
       name: 'Created',
@@ -55,7 +59,7 @@ export const Mobile = (): JSX.Element => {
             <div className={css.listContainer}>
               <JobCardList
                 list={activeJobList.items}
-                onItemClick={console.log}
+                onItemClick={navigateToOverview}
                 showMore={activeJobList.items.length < activeJobs.total_count}
                 onSeeMoreClick={updateActiveJobList}
               />
@@ -65,7 +69,7 @@ export const Mobile = (): JSX.Element => {
             <div className={css.listContainer}>
               <JobCardList
                 list={draftJobList.items}
-                onItemClick={console.log}
+                onItemClick={navigateToOverview}
                 showMore={draftJobList.items.length < draftJobs.total_count}
                 onSeeMoreClick={updateDraftJobList}
               />

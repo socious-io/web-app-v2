@@ -30,7 +30,7 @@ export const Mobile = (): JSX.Element => {
       <div className={css.header}>
         <div
           className={css.chevron}
-          onClick={() => navigate({ to: `/jobs/my-jobs/${identity.meta.id}` })}
+          onClick={() => navigate({ to: `/jobs/created/${identity.meta.id}` })}
         >
           <img height={24} src="/icons/chevron-left.svg" />
         </div>

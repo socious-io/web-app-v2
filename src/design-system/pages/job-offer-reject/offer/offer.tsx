@@ -29,7 +29,7 @@ export const Offer = (): JSX.Element => {
         <Dropdown label="Payment type" list={PROJECT_PAYMENT_TYPE_DROPDOWN} placeholder="payment type" />
         <Dropdown label="Payment mode" list={PROJECT_PAYMENT_SCHEME_DROPDOWN} placeholder="payment mode" />
         <Input optional variant="outline" label="Estimated total hours" placeholder="hrs" />
-        <Textarea variant="outline" label="Message" placeholder="Write message" />
+        <Textarea label="Message" placeholder="Write message" />
       </div>
       <div className={css.btnContainer}>
         <Button>send offer</Button>
