@@ -7,7 +7,8 @@ import {
   setBio,
   setCity,
   setCountry,
-  setCountryCode,
+  setCountryMobileCode,
+  setGeonameId,
   setOrganizationEmail,
   setOrganizationName,
   setPhoneNumber,
@@ -25,7 +26,7 @@ export function updateCityList(dispatcher: Dispatch<SetStateAction<DropdownItem[
 }
 
 export function formIsValid(isValid: boolean, formValues: CreateOrgWizard): boolean {
-  return isValid === false || formValues.city === 0;
+  return isValid === false || formValues.geoname_id === 0;
 }
 
 export function updateForm(dispatch: Dispatch<AnyAction>) {
@@ -37,12 +38,14 @@ export function updateForm(dispatch: Dispatch<AnyAction>) {
       case 'bio':
         dispatch(setBio(value));
         break;
-      case 'bio':
       case 'organizationEmail':
         dispatch(setOrganizationEmail(value));
         break;
       case 'country':
         dispatch(setCountry(value));
+        break;
+      case 'geoname_id':
+        dispatch(setGeonameId(value));
         break;
       case 'city':
         dispatch(setCity(value));
@@ -50,8 +53,8 @@ export function updateForm(dispatch: Dispatch<AnyAction>) {
       case 'address':
         dispatch(setAddress(value));
         break;
-      case 'countryCode':
-        dispatch(setCountryCode(value));
+      case 'countryMobileCode':
+        dispatch(setCountryMobileCode(value));
         break;
       case 'phoneNumber':
         dispatch(setPhoneNumber(value));

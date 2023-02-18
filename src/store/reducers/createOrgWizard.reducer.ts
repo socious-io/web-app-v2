@@ -3,36 +3,42 @@ import { createSlice } from '@reduxjs/toolkit';
 export type CreateOrgWizard = {
   type: string;
   socialCauses: string[];
-  mission: string;
-  culture: string;
   organizationName: string;
   bio: string;
   organizationEmail: string;
   country: string;
-  city: number;
-  address: string;
-  countryCode: string;
-  phoneNumber: string;
-  website: string;
+  city: string;
+  geoname_id: number;
+  address?: string;
+  countryMobileCode?: string;
+  phoneNumber?: string;
+  website?: string;
+  mission?: string;
+  culture?: string;
+  //   description: string;
+};
+
+const initialState: CreateOrgWizard = {
+  type: '',
+  socialCauses: [],
+  mission: '',
+  culture: '',
+  organizationName: '',
+  bio: '',
+  organizationEmail: '',
+  geoname_id: 0,
+  country: '',
+  city: '',
+  address: '',
+  countryMobileCode: '',
+  phoneNumber: '',
+  website: '',
+  //   description: '',
 };
 
 export const createOrgWizardSlice = createSlice({
   name: 'create-org-wizard',
-  initialState: {
-    type: '',
-    socialCauses: [],
-    mission: '',
-    culture: '',
-    organizationName: '',
-    bio: '',
-    organizationEmail: '',
-    country: '',
-    city: 0,
-    address: '',
-    countryCode: '',
-    phoneNumber: '',
-    website: '',
-  },
+  initialState,
   reducers: {
     setOrgType: (state, action) => {
       state.type = action.payload;
@@ -61,17 +67,23 @@ export const createOrgWizardSlice = createSlice({
     setCity: (state, action) => {
       state.city = action.payload;
     },
+    setGeonameId: (state, action) => {
+      state.geoname_id = action.payload;
+    },
     setAddress: (state, action) => {
       state.address = action.payload;
     },
-    setCountryCode: (state, action) => {
-      state.countryCode = action.payload;
+    setCountryMobileCode: (state, action) => {
+      state.countryMobileCode = action.payload;
     },
     setPhoneNumber: (state, action) => {
       state.phoneNumber = action.payload;
     },
     setWebsite: (state, action) => {
       state.website = action.payload;
+    },
+    resetCreateOrgWizard: () => {
+      return initialState;
     },
   },
 });
@@ -87,7 +99,9 @@ export const {
   setCountry,
   setCity,
   setAddress,
-  setCountryCode,
+  setCountryMobileCode,
   setPhoneNumber,
   setWebsite,
+  setGeonameId,
+  resetCreateOrgWizard,
 } = createOrgWizardSlice.actions;
