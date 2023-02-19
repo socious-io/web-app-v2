@@ -5,6 +5,7 @@ import { Items } from './items/items';
 
 export const Dropdown = (props: DropdownProps) => {
   const { list, onGetValue, selectedValue, label, placeholder } = props;
+
   const [state, setState] = useState({ isListOpen: false, headerTitle: '' });
   const [filterList, setFilterList] = useState(list);
 
@@ -28,7 +29,7 @@ export const Dropdown = (props: DropdownProps) => {
 
   const onChangeHandler = (e: any) => {
     setState({ isListOpen: true, headerTitle: e.target.value });
-    const newList = list.filter((item) => item.title.includes(e.target.value));
+    const newList = list.filter((item) => item.title.toLowerCase().includes(e.target.value));
     setFilterList(newList);
   };
 
