@@ -6,15 +6,15 @@ import css from './applicant-list.module.scss';
 import { Applicant, ApplicantListProps } from './applicant-list.types';
 
 export const ApplicantList = (props: ApplicantListProps): JSX.Element => {
-  const hireBtn = (
-    <div className={css.footerItem}>
+  const hireBtn = (id: string) => (
+    <div onClick={() => props.onOfferClick?.(id)} className={css.footerItem}>
       <img src="/icons/user-accept-blue.svg" />
       <div className={css.footerLabel}>Offer</div>
     </div>
   );
 
-  const rejectBtn = (
-    <div className={css.footerItem}>
+  const rejectBtn = (id: string) => (
+    <div onClick={() => props.onRejectClick?.(id)} className={css.footerItem}>
       <img src="/icons/user-reject-blue.svg" />
       <div className={css.footerLabel}>Reject</div>
     </div>
@@ -30,8 +30,8 @@ export const ApplicantList = (props: ApplicantListProps): JSX.Element => {
         </ChatBox>
         <div className={css.applicantFooter}>
           <>
-            {printWhen(hireBtn, props.hireable)}
-            {printWhen(rejectBtn, props.hireable)}
+            {printWhen(hireBtn(applicant.id), props.hireable)}
+            {printWhen(rejectBtn(applicant.id), props.hireable)}
             <div className={css.footerItem}>
               <img src="/icons/message-blue.svg" />
               <div className={css.footerLabel}>Message</div>
