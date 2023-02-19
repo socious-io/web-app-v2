@@ -204,7 +204,7 @@ export type UserApplicantResp = {
 export type ApplicantResp = {
   id: string;
   project_id: string;
-  answers: string[];
+  answers: { answer: string }[];
   cover_letter: string;
   created_at: string;
   share_contact_info: string;
@@ -279,5 +279,11 @@ export type BadgesResp = {
   social_cause_category: string;
   total_points: number;
 }[];
+
+export type OfferPayload = {
+  assignment_total: number;
+  offer_message: string;
+  total_hours: string;
+};
 
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
