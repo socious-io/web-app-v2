@@ -1,5 +1,5 @@
-import { Radio } from '../../atoms/radio/radio';
 import css from './radio-group.module.scss';
+import { Radio } from '../../atoms/radio/radio';
 import { RadioGroupProps } from './radio-group.types';
 
 export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
@@ -15,6 +15,7 @@ export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
               label={radio.label}
               value={radio.value}
               id={radio.value}
+              checked={radio.value === props.value}
             />
           </div>
         );

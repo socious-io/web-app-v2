@@ -27,9 +27,7 @@ export function socialCausesToCategory(categories: string[] = []) {
   });
 }
 
-export function jobCategoriesToDropdown(
-  categories: CategoriesResp['categories']
-): { title: string; value: string }[] {
+export function jobCategoriesToDropdown(categories: CategoriesResp['categories']): { title: string; value: string }[] {
   return categories.map((item) => {
     return {
       title: item.name,

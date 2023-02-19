@@ -156,8 +156,8 @@ export const Mobile = () => {
             />
           </div>
           <div className={css.connections}>
-            <span>4 Connections</span>
-            <span>11 Followers</span>
+            {/* <span>4 Connections</span>
+            <span>11 Followers</span> */}
           </div>
         </div>
         <div className={css.items}>

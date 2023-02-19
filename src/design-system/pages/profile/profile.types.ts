@@ -1,6 +1,7 @@
 export type ProfileReq = {
   id: string;
   name: string;
+  avatar?: { url: string };
   bio: string;
   description: string;
   email: string;
