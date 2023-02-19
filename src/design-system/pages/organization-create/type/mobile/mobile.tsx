@@ -36,7 +36,9 @@ export const Mobile = (): JSX.Element => {
         />
       </div>
       <div className={css.bottom}>
-        <Button disabled={!type} onClick={() => navigate({ to: '../social-causes' })}>Continue</Button>
+        <Button disabled={!type} onClick={() => navigate({ to: '../social-causes' })}>
+          Continue
+        </Button>
       </div>
     </div>
   );

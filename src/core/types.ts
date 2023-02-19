@@ -286,4 +286,22 @@ export type OfferPayload = {
   total_hours: string;
 };
 
+export type CreatePostPayload = {
+  title: string;
+  description: string;
+  remote_preference: string;
+  country: string;
+  project_type: string;
+  project_length: string;
+  payment_type: string;
+  causes_tags: string[];
+  skills: string[];
+  status: string;
+  experience_level: number;
+  job_category_id: string;
+  payment_scheme: string;
+  city: string;
+  payment_currency: string;
+};
+
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;

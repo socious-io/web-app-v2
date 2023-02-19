@@ -1,6 +1,6 @@
 export type DropdownProps = {
   list: Items[];
-  selectedValue?: string;
+  selectedValue?: string | number;
   /** @deprecated  deprecated in favor of onValueChange */
   onGetValue?: (value: string) => void;
   onValueChange?: (value: string) => void;

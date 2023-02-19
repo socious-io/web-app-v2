@@ -6,7 +6,7 @@ import { Textarea } from '../../../../atoms/textarea/textarea';
 import { Divider } from '../../../../templates/divider/divider';
 import { Dropdown } from '../../../../atoms/dropdown/dropdown';
 import { RadioGroup } from '../../../../molecules/radio-group/radio-group';
-import { getCityList } from '../info.services';
+import { createPost, getCityList } from '../info.services';
 import { Button } from '../../../../atoms/button/button';
 import { COUNTRIES } from '../../../../../core/constants/COUNTRIES';
 import { citiesToCategories, jobCategoriesToDropdown } from '../../../../../core/adaptors';
@@ -17,13 +17,30 @@ import { PROJECT_LENGTH } from '../../../../../core/constants/PROJECT_LENGTH';
 import { CURRENCIES } from '../../../../../core/constants/PAYMENT_CURRENCY';
 import { PROJECT_PAYMENT_SCHEME } from '../../../../../core/constants/PROJECT_PAYMENT_SCHEME';
 import { EXPERIENCE_LEVEL } from '../../../../../core/constants/EXPERIENCE_LEVEL';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { DropdownItem } from '../../../../atoms/dropdown/dropdown.types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../../store/store';
+import {
+  CreatePostWizard,
+  setPostCity,
+  setPostCountry,
+  setPostDescriptionTitle,
+  setPostExperienceLevel,
+  setPostJobCategoryId,
+  setPostPaymentCurrency,
+  setPostPaymentScheme,
+  setPostPaymentType,
+  setPostProjectLength,
+  setPostProjectType,
+  setPostRemotePreference,
+  setPostTitle,
+} from '../../../../../store/reducers/createPostWizard.reducer';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [cities, setCities] = useState<DropdownItem[]>([]);
-  //   const form = useForm(formModel);
   const resolvedJobCategories = useMatch().ownData.categories as CategoriesResp['categories'];
   const categories = jobCategoriesToDropdown(resolvedJobCategories);
 
@@ -31,6 +48,16 @@ export const Mobile = (): JSX.Element => {
     getCityList(countryCode)
       .then(({ items }) => citiesToCategories(items))
       .then(setCities);
+  }
+
+  const form = useSelector<RootState, CreatePostWizard>((state) => {
+    return state.createPostWizard;
+  });
+
+  function submit(payload: CreatePostWizard) {
+    createPost(payload).then((resp) => {
+      navigate({ to: `/jobs/created/${resp.identity_id}` });
+    });
   }
 
   return (
@@ -49,62 +76,111 @@ export const Mobile = (): JSX.Element => {
         <form>
           <Divider title="Job information" divider="space">
             <div className={css.dividerContainer}>
-              <Input errors={[]} placeholder="title" variant="outline" label="Job title" />
-              <Dropdown label="Job category" placeholder="Project Length" list={categories} onGetValue={console.log} />
-              <Textarea placeholder="job description" label="Job description" variant="outline" />
-              <Dropdown label="Country" placeholder="country" list={COUNTRIES} onValueChange={updateCityList} />
-              <Dropdown label="City" placeholder="city" list={cities} />
+              <Input
+                value={form.title}
+                onChange={(e) => dispatch(setPostTitle(e.target.value))}
+                errors={[]}
+                placeholder="title"
+                variant="outline"
+                label="Job title"
+              />
               <Dropdown
+                selectedValue={form.job_category_id}
+                onValueChange={(value) => dispatch(setPostJobCategoryId(value))}
+                label="Job category"
+                placeholder="Project Length"
+                list={categories}
+              />
+              <Textarea
+                onValueChange={(value) => dispatch(setPostDescriptionTitle(value))}
+                value={form.description}
+                placeholder="job description"
+                label="Job description"
+              />
+              <Dropdown
+                label="Country"
+                placeholder="country"
+                list={COUNTRIES}
+                selectedValue={form.country}
+                onValueChange={(value) => {
+                  updateCityList(value);
+                  dispatch(setPostCountry(value));
+                }}
+              />
+              <Dropdown
+                label="City"
+                placeholder="city"
+                selectedValue={form.city}
+                list={cities}
+                onValueChange={(value) => {
+                  const cityName = cities.find((city) => city.value === value)?.title;
+                  dispatch(setPostCity(cityName));
+                }}
+              />
+              <Dropdown
+                selectedValue={form.remote_preference}
+                onValueChange={(value) => dispatch(setPostRemotePreference(value))}
                 label="Remote Preference"
                 placeholder="Remote Preference"
                 list={PROJECT_REMOTE_PREFERENCES}
-                onGetValue={console.log}
               />
-              <Dropdown label="Project Type" placeholder="Project Type" list={PROJECT_TYPE} onGetValue={console.log} />
-              <Dropdown label="Project Length" placeholder="Project Length" list={PROJECT_LENGTH} onGetValue={console.log} />
+              <Dropdown
+                selectedValue={form.project_type}
+                onValueChange={(value) => dispatch(setPostProjectType(value))}
+                label="Project Type"
+                placeholder="Project Type"
+                list={PROJECT_TYPE}
+              />
+              <Dropdown
+                selectedValue={form.project_length}
+                onValueChange={(value) => dispatch(setPostProjectLength(value))}
+                label="Project Length"
+                placeholder="Project Length"
+                list={PROJECT_LENGTH}
+              />
             </div>
           </Divider>
           <Divider title="Payment" divider="space">
             <div className={css.dividerContainer}>
-              <Dropdown label="Payment Currency" placeholder="payment currency" list={CURRENCIES} onGetValue={console.log} />
+              <Dropdown
+                selectedValue={form.payment_currency}
+                onValueChange={(value) => dispatch(setPostPaymentCurrency(value))}
+                label="Payment Currency"
+                placeholder="payment currency"
+                list={CURRENCIES}
+              />
               <RadioGroup
                 name="paymentType"
-                value={'PAID'}
-                onChange={console.log}
+                value={form.payment_type}
+                onChange={(value) => dispatch(setPostPaymentType(value))}
                 label="Payment type"
                 list={PROJECT_PAYMENT_TYPE}
               />
               <RadioGroup
                 name="PaymentScheme"
-                value="PAID"
-                onChange={console.log}
+                value={form.payment_scheme}
+                onChange={(value) => dispatch(setPostPaymentScheme(value))}
                 label="Payment scheme"
                 list={PROJECT_PAYMENT_SCHEME}
               />
-              {/* {form.paymentTerms.value === 'HOURLY' && (
-                <div className={css.paymentRange}>
-                  <div className={css.paymentRangeTitle}>Total commitment</div>
-                  <div className={css.paymentRangeInputs}>
-                    <Input variant="outline" label="Minimum" placeholder="minimum" />
-                    <Input variant="outline" label="Maximum" placeholder="maximum" />
-                  </div>
-                  {/* <div className={css.priceNotifying}>Prices will be shown in USD ($)</div> */}
-              {/* </div> */}
-              {/* )} */}
             </div>
           </Divider>
           <Divider title="Experience & skills" divider="space">
             <div className={css.dividerContainer}>
               <Dropdown
+                selectedValue={form.experience_level}
+                onValueChange={(value) => {
+                  console.log('value: ', value);
+                  dispatch(setPostExperienceLevel(+value));
+                }}
                 label="Experience level"
                 placeholder="Experience level"
                 list={EXPERIENCE_LEVEL}
-                onGetValue={console.log}
               />
             </div>
           </Divider>
           <div className={css.btnContainer}>
-            <Button>Continue</Button>
+            <Button onClick={() => submit(form)}>Continue</Button>
           </div>
         </form>
       </div>
