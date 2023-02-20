@@ -1,3 +1,4 @@
+import { spinnerSlice } from './reducers/spinner.reducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { chatSlice } from './reducers/chat.reducer';
 import { createOrgWizardSlice } from './reducers/createOrgWizard.reducer';
@@ -12,6 +13,7 @@ const store = configureStore({
     menu: menuSlice.reducer,
     createOrgWizard: createOrgWizardSlice.reducer,
     createPostWizard: createPostWizardSlice.reducer,
+    spinner: spinnerSlice.reducer,
   },
 });
 

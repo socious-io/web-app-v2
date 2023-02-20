@@ -1,0 +1,9 @@
+.container {
+  position: fixed;
+  opacity: 0;
+  transition: opacity 300ms 0s;
+  z-index: 3;
+  top: 0px;
+  right: 0px;
+  width: 100vw;
+}
