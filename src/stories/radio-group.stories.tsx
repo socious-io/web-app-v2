@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { RadioGroup } from '../design-system/molecules/radio-group/radio-group';
+import { RadioGroup } from '../components/molecules/radio-group/radio-group';
 
 export default {
   title: 'MOLECULES/RadioGroup',

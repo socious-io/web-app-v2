@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import { Achievements } from '../design-system/pages/achievements/achievements';
+import { Achievements } from '../pages/achievements/achievements';
 
 export default {
   title: 'PAGE/Achievements',

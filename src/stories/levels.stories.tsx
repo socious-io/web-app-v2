@@ -1,5 +1,5 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {Levels} from '../../src/design-system/pages/levels/levels';
+import {Levels} from '../pages/levels/levels';
 
 export default {
   title: 'PAGE/Levels',

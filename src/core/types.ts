@@ -1,4 +1,4 @@
-import { JobItems, PostItems } from '../design-system/pages/search/search.types';
+import { JobItems, PostItems } from '../pages/search/search.types';
 
 export type UserType = 'users' | 'organizations';
 

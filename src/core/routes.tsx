@@ -1,35 +1,35 @@
 import { Navigate, Route } from '@tanstack/react-location';
-import { ChangePassword } from '../design-system/pages/change-password/change-password';
-import { getChatsSummery } from '../design-system/pages/chat/contact-list/contact-list.services';
-import { getJobDetail } from '../design-system/pages/job-detail/job-detail.services';
-import { getJobList } from '../design-system/pages/jobs/jobs-cursor/jobs-cursor.services';
-import { SignUpUserComplete } from '../design-system/pages/sign-up/sign-up-user-complete/sign-up-user-complete';
-import { SignUpUserEmail } from '../design-system/pages/sign-up/sign-up-user-email/sign-up-user-email';
-import { SignUpUserVerification } from '../design-system/pages/sign-up/sign-up-user-verification/sign-up-user-verification';
-import { MenuCursor as RootCursorLayout } from '../design-system/templates/menu-cursor/menu-cursor';
-import { MenuTouch as RootTouchLayout } from '../design-system/templates/menu-touch/menu-touch';
+import { ChangePassword } from '../pages/change-password/change-password';
+import { getChatsSummery } from '../pages/chat/contact-list/contact-list.services';
+import { getJobDetail } from '../pages/job-detail/job-detail.services';
+import { getJobList } from '../pages/jobs/jobs-cursor/jobs-cursor.services';
+import { SignUpUserComplete } from '../pages/sign-up/sign-up-user-complete/sign-up-user-complete';
+import { SignUpUserEmail } from '../pages/sign-up/sign-up-user-email/sign-up-user-email';
+import { SignUpUserVerification } from '../pages/sign-up/sign-up-user-verification/sign-up-user-verification';
+import { MenuCursor as RootCursorLayout } from '../components/templates/menu-cursor/menu-cursor';
+import { MenuTouch as RootTouchLayout } from '../components/templates/menu-touch/menu-touch';
 import { isTouchDevice } from './device-type-detector';
-import { getMessagesById, getParticipantsById } from '../design-system/pages/chat/message-detail/message-detail.services';
+import { getMessagesById, getParticipantsById } from '../pages/chat/message-detail/message-detail.services';
 import { getIdentities } from './api';
 import store from '../store/store';
 import { setIdentityList } from '../store/reducers/identity.reducer';
-import { getFollowings } from '../design-system/pages/chat/new-chat/new-chat.services';
-import { getActiveJobs, getDraftJobs } from '../design-system/pages/job-create/my-jobs/my-jobs.services';
-import { getFeedList } from '../design-system/pages/feed/mobile/mobile.service';
-import { getComments, getPostDetail } from '../design-system/pages/feed/post-detail/mobile/mobile.service';
-import { getOrganizationDetail, getUserDetail } from '../design-system/pages/profile/profile.services';
+import { getFollowings } from '../pages/chat/new-chat/new-chat.services';
+import { getActiveJobs, getDraftJobs } from '../pages/job-create/my-jobs/my-jobs.services';
+import { getFeedList } from '../pages/feed/mobile/mobile.service';
+import { getComments, getPostDetail } from '../pages/feed/post-detail/mobile/mobile.service';
+import { getOrganizationDetail, getUserDetail } from '../pages/profile/profile.services';
 import { UserType } from './types';
-import { getJobCategories } from '../design-system/pages/job-create/info/info.services';
-import { search } from '../design-system/pages/search/search.services';
-import { getNotificationList } from '../design-system/pages/notifications/mobile/mobile.service';
-import { getScreeningQuestions } from '../design-system/pages/job-apply/apply/apply.services';
+import { getJobCategories } from '../pages/job-create/info/info.services';
+import { search } from '../pages/search/search.services';
+import { getNotificationList } from '../pages/notifications/mobile/mobile.service';
+import { getScreeningQuestions } from '../pages/job-apply/apply/apply.services';
 import {
   getAwaitingReviewList,
   getDeclinedApplicants,
   getEndedList,
   getOnGoingList,
   getPendingApplicants,
-} from '../design-system/pages/job-apply/my-jobs/my-jobs.services';
+} from '../pages/job-apply/my-jobs/my-jobs.services';
 import {
   getApplicantDetail,
   getDeclinedList,
@@ -37,8 +37,8 @@ import {
   getHiredList,
   getJobOverview,
   getToReviewList,
-} from '../design-system/pages/job-offer-reject/job-offer-reject.services';
-import { getBadges, getImpactPoints } from '../design-system/pages/achievements/ahievements.services';
+} from '../pages/job-offer-reject/job-offer-reject.services';
+import { getBadges, getImpactPoints } from '../pages/achievements/ahievements.services';
 
 export const routes: Route[] = [
   {
@@ -52,22 +52,22 @@ export const routes: Route[] = [
     children: [
       {
         path: 'intro',
-        element: () => import('../design-system/pages/intro/intro').then((m) => <m.Intro />),
+        element: () => import('../pages/intro/intro').then((m) => <m.Intro />),
       },
       {
         path: 'forget-password',
         children: [
           {
             path: '/email',
-            element: () => import('../design-system/pages/forget-password/email/email').then((m) => <m.Email />),
+            element: () => import('../pages/forget-password/email/email').then((m) => <m.Email />),
           },
           {
             path: '/otp',
-            element: () => import('../design-system/pages/forget-password/otp/otp').then((m) => <m.Otp />),
+            element: () => import('../pages/forget-password/otp/otp').then((m) => <m.Otp />),
           },
           {
             path: '/password',
-            element: () => import('../design-system/pages/forget-password/password/password').then((m) => <m.Password />),
+            element: () => import('../pages/forget-password/password/password').then((m) => <m.Password />),
           },
         ],
       },
@@ -76,21 +76,21 @@ export const routes: Route[] = [
         children: [
           {
             path: '/delete',
-            element: () => import('../design-system/pages/delete-profile/delete/delete').then((m) => <m.Delete />),
+            element: () => import('../pages/delete-profile/delete/delete').then((m) => <m.Delete />),
           },
           {
             path: '/password',
-            element: () => import('../design-system/pages/delete-profile/password/password').then((m) => <m.Password />),
+            element: () => import('../pages/delete-profile/password/password').then((m) => <m.Password />),
           },
           {
             path: '/confirm',
-            element: () => import('../design-system/pages/delete-profile/confirm/confirm').then((m) => <m.Confirm />),
+            element: () => import('../pages/delete-profile/confirm/confirm').then((m) => <m.Confirm />),
           },
         ],
       },
       {
         path: 'sign-in',
-        element: () => import('../design-system/pages/sign-in/sign-in').then((m) => <m.SignIn />),
+        element: () => import('../pages/sign-in/sign-in').then((m) => <m.SignIn />),
       },
       { path: 'change-password', element: <ChangePassword /> },
       {
@@ -115,7 +115,7 @@ export const routes: Route[] = [
           }
           return getOrganizationDetail(params.id);
         },
-        element: () => import('../design-system/pages/profile/profile').then((m) => <m.Profile />),
+        element: () => import('../pages/profile/profile').then((m) => <m.Profile />),
       },
       {
         path: '/achievements',
@@ -124,7 +124,7 @@ export const routes: Route[] = [
           const [badges, impactPoints] = await Promise.all(requests);
           return { badges, impactPoints };
         },
-        element: () => import('../design-system/pages/achievements/achievements').then((m) => <m.Achievements />),
+        element: () => import('../pages/achievements/achievements').then((m) => <m.Achievements />),
       },
       {
         path: 'organization',
@@ -134,50 +134,50 @@ export const routes: Route[] = [
             children: [
               {
                 path: 'intro',
-                element: () => import('../design-system/pages/organization-create/intro/intro').then((m) => <m.Intro />),
+                element: () => import('../pages/organization-create/intro/intro').then((m) => <m.Intro />),
               },
               {
                 path: 'type',
-                element: () => import('../design-system/pages/organization-create/type/type').then((m) => <m.Type />),
+                element: () => import('../pages/organization-create/type/type').then((m) => <m.Type />),
               },
               {
                 path: 'social-causes',
                 element: () =>
-                  import('../design-system/pages/organization-create/social-causes/social-causes').then((m) => (
+                  import('../pages/organization-create/social-causes/social-causes').then((m) => (
                     <m.SocialCauses />
                   )),
               },
               {
                 path: 'profile',
                 element: () =>
-                  import('../design-system/pages/organization-create/profile/profile').then((m) => <m.Profile />),
+                  import('../pages/organization-create/profile/profile').then((m) => <m.Profile />),
               },
               {
                 path: 'mission',
                 element: () =>
-                  import('../design-system/pages/organization-create/mission/mission').then((m) => <m.Mission />),
+                  import('../pages/organization-create/mission/mission').then((m) => <m.Mission />),
               },
               {
                 path: 'culture',
                 element: () =>
-                  import('../design-system/pages/organization-create/culture/culture').then((m) => <m.Culture />),
+                  import('../pages/organization-create/culture/culture').then((m) => <m.Culture />),
               },
               {
                 path: 'social-impact',
                 element: () =>
-                  import('../design-system/pages/organization-create/social-impact/social-impact').then((m) => (
+                  import('../pages/organization-create/social-impact/social-impact').then((m) => (
                     <m.SocialImpact />
                   )),
               },
               {
                 path: 'succeed',
                 element: () =>
-                  import('../design-system/pages/organization-create/succeed/succeed').then((m) => <m.Succeed />),
+                  import('../pages/organization-create/succeed/succeed').then((m) => <m.Succeed />),
               },
               {
                 path: 'verified',
                 element: () =>
-                  import('../design-system/pages/organization-create/verified/verified').then((m) => <m.Verified />),
+                  import('../pages/organization-create/verified/verified').then((m) => <m.Verified />),
               },
             ],
           },
@@ -189,7 +189,7 @@ export const routes: Route[] = [
           {
             path: 'new',
             loader: () => getFollowings({ page: 1, name: '' }),
-            element: () => import('../design-system/pages/chat/new-chat/new-chat').then((m) => <m.NewChat />),
+            element: () => import('../pages/chat/new-chat/new-chat').then((m) => <m.NewChat />),
           },
           {
             path: 'contacts/:id',
@@ -202,12 +202,12 @@ export const routes: Route[] = [
               };
             },
             element: () =>
-              import('../design-system/pages/chat/message-detail/message-detail').then((m) => <m.MessageDetail />),
+              import('../pages/chat/message-detail/message-detail').then((m) => <m.MessageDetail />),
           },
           {
             path: 'contacts',
             loader: () => getChatsSummery({ page: 1, filter: '' }),
-            element: () => import('../design-system/pages/chat/contact-list/contact-list').then((m) => <m.ContactList />),
+            element: () => import('../pages/chat/contact-list/contact-list').then((m) => <m.ContactList />),
           },
         ],
       },
@@ -221,7 +221,7 @@ export const routes: Route[] = [
               const [applicantDetail] = await Promise.all(requests);
               return { applicantDetail };
             },
-            element: () => import('../design-system/pages/job-offer-reject/offer/offer').then((m) => <m.Offer />),
+            element: () => import('../pages/job-offer-reject/offer/offer').then((m) => <m.Offer />),
           },
           {
             path: '/:applicantId',
@@ -231,7 +231,7 @@ export const routes: Route[] = [
               return { applicantDetail, screeningQuestions };
             },
             element: () =>
-              import('../design-system/pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => (
+              import('../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => (
                 <m.ApplicantDetail />
               )),
           },
@@ -258,7 +258,7 @@ export const routes: Route[] = [
               };
             },
             element: () =>
-              import('../design-system/pages/job-offer-reject/job-offer-reject').then((m) => <m.JobOfferReject />),
+              import('../pages/job-offer-reject/job-offer-reject').then((m) => <m.JobOfferReject />),
           },
         ],
       },
@@ -272,7 +272,7 @@ export const routes: Route[] = [
           const [activeJobs, draftJobs] = await Promise.all(requests);
           return { activeJobs, draftJobs };
         },
-        element: () => import('../design-system/pages/job-create/my-jobs/my-jobs').then((m) => <m.MyJobs />),
+        element: () => import('../pages/job-create/my-jobs/my-jobs').then((m) => <m.MyJobs />),
       },
       {
         path: '/jobs/create',
@@ -280,16 +280,16 @@ export const routes: Route[] = [
           {
             path: 'social-causes',
             element: () =>
-              import('../design-system/pages/job-create/social-causes/social-causes').then((m) => <m.SocialCauses />),
+              import('../pages/job-create/social-causes/social-causes').then((m) => <m.SocialCauses />),
           },
           {
             path: 'skills',
-            element: () => import('../design-system/pages/job-create/skills/skills').then((m) => <m.Skills />),
+            element: () => import('../pages/job-create/skills/skills').then((m) => <m.Skills />),
           },
           {
             path: 'info',
             loader: () => getJobCategories(),
-            element: () => import('../design-system/pages/job-create/info/info').then((m) => <m.Info />),
+            element: () => import('../pages/job-create/info/info').then((m) => <m.Info />),
           },
         ],
       },
@@ -300,22 +300,22 @@ export const routes: Route[] = [
           const [post, comments] = await Promise.all(requests);
           return { post, comments };
         },
-        element: () => import('../design-system/pages/feed/post-detail/post-detail').then((m) => <m.PostDetail />),
+        element: () => import('../pages/feed/post-detail/post-detail').then((m) => <m.PostDetail />),
       },
       {
         path: 'search',
-        element: () => import('../design-system/pages/search/search').then((m) => <m.Search />),
+        element: () => import('../pages/search/search').then((m) => <m.Search />),
         loader: (p) => {
           return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 });
         },
       },
       {
         path: 'privacy-policy',
-        element: () => import('../design-system/pages/privacy-policy/privacy-policy').then((m) => <m.PrivacyPolicy />),
+        element: () => import('../pages/privacy-policy/privacy-policy').then((m) => <m.PrivacyPolicy />),
       },
       {
         path: 'terms-conditions',
-        element: () => import('../design-system/pages/terms-conditions/terms-conditions').then((m) => <m.TermsConditions />),
+        element: () => import('../pages/terms-conditions/terms-conditions').then((m) => <m.TermsConditions />),
       },
       {
         path: '/jobs/:id/apply',
@@ -324,7 +324,7 @@ export const routes: Route[] = [
           const [jobDetail, screeningQuestions] = await Promise.all(requests);
           return { jobDetail, screeningQuestions };
         },
-        element: () => import('../design-system/pages/job-apply/apply/apply').then((m) => <m.JobApply />),
+        element: () => import('../pages/job-apply/apply/apply').then((m) => <m.JobApply />),
       },
       {
         path: '/jobs/applied/:id',
@@ -346,11 +346,11 @@ export const routes: Route[] = [
             endedApplicants,
           };
         },
-        element: () => import('../design-system/pages/job-apply/my-jobs/my-jobs').then((m) => <m.MyJobs />),
+        element: () => import('../pages/job-apply/my-jobs/my-jobs').then((m) => <m.MyJobs />),
       },
       {
         path: '/jobs/:id/confirm',
-        element: () => import('../design-system/pages/job-apply/confirm/confirm').then((m) => <m.Confirm />),
+        element: () => import('../pages/job-apply/confirm/confirm').then((m) => <m.Confirm />),
       },
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
@@ -358,22 +358,22 @@ export const routes: Route[] = [
           {
             path: '/jobs/:id',
             loader: ({ params }) => getJobDetail(params.id),
-            element: () => import('../design-system/pages/job-detail/job-detail').then((m) => <m.JobDetail />),
+            element: () => import('../pages/job-detail/job-detail').then((m) => <m.JobDetail />),
           },
           {
             path: '/jobs',
-            element: () => import('../design-system/pages/jobs/jobs').then((m) => <m.Jobs />),
+            element: () => import('../pages/jobs/jobs').then((m) => <m.Jobs />),
             loader: () => getJobList({ page: 1 }),
           },
           {
             path: 'notifications',
-            element: () => import('../design-system/pages/notifications/notifications').then((m) => <m.Notifications />),
+            element: () => import('../pages/notifications/notifications').then((m) => <m.Notifications />),
             loader: () => getNotificationList({ page: 1 }),
           },
 
           {
             path: 'feeds',
-            element: () => import('../design-system/pages/feed/feed').then((m) => <m.Feed />),
+            element: () => import('../pages/feed/feed').then((m) => <m.Feed />),
             loader: () => getFeedList({ page: 1 }),
           },
           {

@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { ChatBox } from '../design-system/atoms/chat-box/chat-box';
+import { ChatBox } from '../components/atoms/chat-box/chat-box';
 
 export default {
   title: 'ATOM/ChatBox',
