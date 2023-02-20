@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { JobList } from '../design-system/organisms/job-list/job-list';
+import { JobList } from '../components/organisms/job-list/job-list';
 
 export default {
   title: 'ORGANISM/JobList',

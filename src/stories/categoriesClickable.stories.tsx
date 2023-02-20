@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { CategoriesClickable } from '../design-system/atoms/categories-clickable/categories-clickable';
+import { CategoriesClickable } from '../components/atoms/categories-clickable/categories-clickable';
 
 export default {
   title: 'ATOM/CategoriesClickable',

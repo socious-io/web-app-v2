@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {JobHistoryItem} from '../../src/design-system/molecules/job-history-item/job-history-item';
+import {JobHistoryItem} from '../components/molecules/job-history-item/job-history-item';
 
 export default {
   title: 'MOLECULES/JobHistoryItem',

@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {ImpactBar} from '../../src/design-system/atoms/impact-bar/impact-bar';
+import {ImpactBar} from '../components/atoms/impact-bar/impact-bar';
 
 export default {
   title: 'ATOM/ImpactBar',

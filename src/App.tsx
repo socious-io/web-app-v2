@@ -2,8 +2,8 @@ import { Provider, useSelector } from 'react-redux';
 import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
 import { routes } from './core/routes';
 import store from './store/store';
-import { Menu } from './design-system/pages/menu/menu';
-import { Spinner } from './design-system/atoms/spinner/spinner';
+import { Menu } from './pages/menu/menu';
+import { Spinner } from './components/atoms/spinner/spinner';
 
 const location = new ReactLocation();
 

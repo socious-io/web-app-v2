@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { PasswordQuality } from '../design-system/atoms/password-quality/password-quality';
+import { PasswordQuality } from '../components/atoms/password-quality/password-quality';
 
 export default {
   title: 'ATOM/PasswordQuality',
