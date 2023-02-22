@@ -6,7 +6,7 @@ import { Divider } from '../../../components/templates/divider/divider';
 import { ProfileReq } from '../profile.types';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
 import { socialCausesToCategory } from '../../../core/adaptors';
-import { printWhen } from '../../../utils/utils';
+import { printWhen } from '../../../core/utils';
 
 export const Mobile = (): JSX.Element => {
   const data = useMatch().ownData as ProfileReq;

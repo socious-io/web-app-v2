@@ -13,7 +13,7 @@ import { Typography } from '../../../../components/atoms/typography/typography';
 import { Button } from '../../../../components/atoms/button/button';
 import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
 import { Header } from '../../../../components/atoms/header/header';
-import { printWhen } from '../../../../utils/utils';
+import { printWhen } from '../../../../core/utils';
 
 const formInitialState = {
   cover_letter: '',

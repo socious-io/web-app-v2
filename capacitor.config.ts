@@ -9,6 +9,14 @@ const config: CapacitorConfig = {
     url: 'http://192.168.1.6:3000',
     cleartext: true,
   },
+  plugins: {
+    CapacitorHttp: {
+      enabled: true,
+    },
+    CapacitorCookies: {
+      enabled: true,
+    },
+  },
 };
 
 export default config;
