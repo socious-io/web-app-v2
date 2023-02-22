@@ -5,17 +5,12 @@ import { Input } from '../../components/atoms/input/input';
 import { Link } from '../../components/atoms/link/link';
 import { Typography } from '../../components/atoms/typography/typography';
 import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
-import { useForm } from 'react-hook-form';
 import { LoginPayload } from './sign-in.types';
 import { login } from './sign-in.services';
-import { REGEX } from '../../constants/REGEX';
+import { formModel } from './sign-in.form';
+import { useForm } from '../../core/form';
 
 export const SignIn = (): JSX.Element => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm();
   const navigate = useNavigate();
 
   function goToJobList(navigator: typeof navigate) {
@@ -28,6 +23,9 @@ export const SignIn = (): JSX.Element => {
     login(credentials).then(goToJobList(navigate));
   }
 
+  const form = useForm(formModel);
+  console.log('form: ', form);
+
   return (
     <BottomStatic>
       <div className={css.top}>
@@ -37,21 +35,13 @@ export const SignIn = (): JSX.Element => {
           </Typography>
         </div>
         <form className={css.formContainer}>
+          <Input register={form} autoComplete="Email" label="Email" name="email" placeholder="Email" />
           <Input
-            autoComplete="Email"
-            label="Email"
-            name="email"
-            validations={{ pattern: REGEX.email }}
-            register={register}
-            placeholder="Email"
-          />
-          <Input
+            register={form}
             autoComplete="current-password"
             type="password"
             label="Password"
             name="password"
-            validations={{ minLength: 6 }}
-            register={register}
             placeholder="Password"
           />
         </form>
@@ -61,9 +51,12 @@ export const SignIn = (): JSX.Element => {
       </div>
       <div>
         <div className={css.bottom}>
-          <Button disabled={!isValid} onClick={handleSubmit(onLogin)}>
+          <Button disabled={!form.isValid} onClick={console.log}>
             Sign in
           </Button>
+          {/* <Button disabled={!isValid} onClick={handleSubmit(onLogin)}>
+            Sign in
+          </Button> */}
           <Typography marginTop="1rem">
             <span>Not a member? </span>
             <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>Sign up</Link>
