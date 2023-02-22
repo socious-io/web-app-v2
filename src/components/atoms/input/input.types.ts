@@ -1,19 +1,13 @@
-import { ChangeEventHandler, FocusEventHandler } from 'react';
-import {  FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import { FormGroup, FormModel } from '../../../core/form/useForm/useForm.types';
 
-type ReactHTMLInputElement = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->;
-export interface InputProps<T = unknown> extends ReactHTMLInputElement {
-  label?: Path<T extends FieldValues>;
-  register?: UseFormRegister<T extends FieldValues>;
+type ReactHTMLInputElement = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+export interface InputProps extends ReactHTMLInputElement {
   name?: string;
   variant?: 'outline';
   className?: string;
   errors?: string[];
   validations?: Record<string, any>;
   optional?: boolean;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  onBlur?: FocusEventHandler<HTMLInputElement>;
+  label?: string;
+  register: (model: FormModel) => Required<FormGroup>;
 }

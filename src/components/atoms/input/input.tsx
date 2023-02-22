@@ -1,8 +1,27 @@
+import { forwardRef } from 'react';
+import { printWhen } from '../../../core/utils';
 import css from './input.module.scss';
 import { InputProps } from './input.types';
 
-export const Input = (props: InputProps): JSX.Element => {
-  const { optional = false, register, errors = [], variant = 'outline', ...rest } = props;
+export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
+  const { optional = false, variant = 'outline', ...rest } = props;
+
+  const controlErrors = props?.register?.controls[props.name]?.errors || [];
+  const isDirty = props.register?.controls[props.name].isDirty;
+
+  const errors = Object.values(controlErrors);
+
+  const errorsJSX = (
+    <div className={css.errorsContainer}>
+      {errors.map((error, i) => {
+        return (
+          <div className={css.errorItem} key={i}>
+            {error}
+          </div>
+        );
+      })}
+    </div>
+  );
 
   function setClassName(v: InputProps['variant']) {
     return v ? css.outline : css.default;
@@ -25,17 +44,9 @@ export const Input = (props: InputProps): JSX.Element => {
           className={css.textbox}
           role="textbox"
           {...rest}
-          {...register?.(props.name, { required: !optional, ...props.validations })}
+          {...props?.register?.bind(props.name)}
         ></input>
-        <div className={css.errorsContainer}>
-          {errors.map((error, i) => {
-            return (
-              <div className={css.errorItem} key={i}>
-                {error}
-              </div>
-            );
-          })}
-        </div>
+        {printWhen(errorsJSX, isDirty)}
       </div>
     );
   }
@@ -47,8 +58,8 @@ export const Input = (props: InputProps): JSX.Element => {
         className={css.textbox}
         role="textbox"
         {...rest}
-        {...register?.(props.name, { required: !optional, ...props.validations })}
+        {...props?.register?.bind(props.name)}
       ></input>
     </div>
   );
-};
+});
