@@ -6,21 +6,17 @@ import { InputProps } from './input.types';
 export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
   const { optional = false, variant = 'outline', ...rest } = props;
   const [outline, setOutline] = useState(false);
-
   const controlErrors = props?.register?.controls[props.name]?.errors || [];
   const isDirty = props.register?.controls[props.name].isDirty;
-
-  const errors = Object.values(controlErrors);
+  const errors = Object.values(controlErrors) as string[];
 
   const errorsJSX = (
-    <div style={{ height: `${errors.length}rem`}} className={css.errorsContainer}>
-      {errors.map((error, i) => {
-        return (
-          <div className={css.errorItem} key={i}>
-            {error}
-          </div>
-        );
-      })}
+    <div style={{ height: `${errors.length}rem` }} className={css.errorsContainer}>
+      {errors.map((error, i) => (
+        <div className={css.errorItem} key={i}>
+          <>{error}</>
+        </div>
+      ))}
     </div>
   );
 
