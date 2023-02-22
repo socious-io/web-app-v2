@@ -9,7 +9,6 @@ import { login } from './sign-in.services';
 import { formModel } from './sign-in.form';
 import { useForm } from '../../core/form';
 import { getFormValues } from '../../core/form/customValidators/formValues';
-import { PayloadAction } from '@reduxjs/toolkit';
 import { LoginPayload } from './sign-in.types';
 
 export const SignIn = (): JSX.Element => {

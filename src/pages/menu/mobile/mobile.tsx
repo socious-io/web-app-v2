@@ -129,6 +129,20 @@ export const Mobile = () => {
     </div>
   );
 
+  const switchToJSX = (
+    <div className={css.items}>
+      <div className={css.title}>Switch To</div>
+      {accountList.map((item) => {
+        return (
+          <div onClick={() => navigateToJobs(item.id)} key={item.id} className={css.row}>
+            <Avatar size="2rem" type={item.type} img={item.image} />
+            <span>{item.name}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+
   return (
     <div className={css.container}>
       <div style={bgStyles(isVisible)} className={css.bg} onClick={closeSidebar} />
@@ -169,17 +183,7 @@ export const Mobile = () => {
           </div> */}
           {printWhen(createdLinkJSX, identity?.type === 'organizations')}
         </div>
-        <div className={css.items}>
-          <div className={css.title}>Switch To</div>
-          {accountList.map((item) => {
-            return (
-              <div onClick={() => navigateToJobs(item.id)} key={item.id} className={css.row}>
-                <Avatar size="2rem" type={item.type} img={item.image} />
-                <span>{item.name}</span>
-              </div>
-            );
-          })}
-        </div>
+        {printWhen(switchToJSX, accountList.length > 1)}
         <div className={css.items}>
           <div className={css.title}>Settings</div>
           <div className={css.row} onClick={() => navigateToRoute('privacy-policy')}>

@@ -1,23 +1,24 @@
+import css from './sign-up-user-email.module.scss';
 import { useNavigate } from '@tanstack/react-location';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { REGEX } from '../../../constants/REGEX';
 import { Button } from '../../../components/atoms/button/button';
 import { Input } from '../../../components/atoms/input/input';
 import { Link } from '../../../components/atoms/link/link';
 import { Typography } from '../../../components/atoms/typography/typography';
 import { BottomStatic } from '../../../components/templates/bottom-static/bottom-static';
-import css from './sign-up-user-email.module.scss';
 import { preRegister } from './sign-up-user-email.services';
+import { formModel } from './sign-up-user-email.form';
+import { useForm } from '../../../core/form';
+import { getFormValues } from '../../../core/form/customValidators/formValues';
 
 export const SignUpUserEmail = (): JSX.Element => {
-  const { register, handleSubmit, formState } = useForm();
-
+  const form = useForm(formModel);
   const navigate = useNavigate();
 
-  function onSubmit({ email }: { email: string }) {
-    preRegister({ email })
-      .then(() => localStorage.setItem('email', email))
+  function onSubmit() {
+    const formValues = getFormValues(form);
+    preRegister(formValues)
+      .then(() => localStorage.setItem('email', formValues.email))
       .then(() => navigate({ to: '../verification' }));
   }
 
@@ -33,7 +34,7 @@ export const SignUpUserEmail = (): JSX.Element => {
           </Typography>
         </div>
         <Input
-          register={register}
+          register={form}
           name="email"
           validations={{ pattern: REGEX.email }}
           label="Enter your email address"
@@ -42,7 +43,9 @@ export const SignUpUserEmail = (): JSX.Element => {
       </div>
       <div>
         <div className={css.bottom}>
-          <Button disabled={!formState.isValid} onClick={handleSubmit(onSubmit)}>Continue</Button>
+          <Button disabled={!form.isValid} onClick={onSubmit}>
+            Continue
+          </Button>
           <Typography marginTop="1rem">
             <span>Already a member? </span>
             <Link onClick={() => navigate({ to: '/sign-in' })}>Sign in</Link>

@@ -1,4 +1,4 @@
-import { FormGroup, FormModel } from '../../../core/form/useForm/useForm.types';
+import { FormGroup } from '../../../core/form/useForm/useForm.types';
 
 type ReactHTMLInputElement = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 export interface InputProps extends ReactHTMLInputElement {
@@ -9,5 +9,5 @@ export interface InputProps extends ReactHTMLInputElement {
   validations?: Record<string, any>;
   optional?: boolean;
   label?: string;
-  register: (model: FormModel) => Required<FormGroup>;
+  register?: Required<FormGroup>;
 }
