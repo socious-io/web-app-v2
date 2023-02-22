@@ -22,14 +22,16 @@ export const attachBindToFormGroup =
                     // why? native inputs send "object" as e, custom inputs send "primitives"
                     const control = formGroup.controls[controlName];
                     const value = typeof e === 'object' ? getValueBasedOnType(e) : e;
+                    console.log('test: control.value: ', value);
                     formGroup.isDirty = true;
-                    formGroup.isValid = generateFormGroupIsValidProp(formGroup.controls);
                     control.value = value;
-                    control.isDirty = true;
                     control.isValid = generateControlIsValidProp(
                         value,
                         control._validators
                     );
+                    formGroup.isValid = generateFormGroupIsValidProp(formGroup.controls);
+                    console.log('formGroup: ', formGroup);
+                    control.isDirty = true;
                     control.errors = generateControlErrorsProp(
                         value,
                         control._validators

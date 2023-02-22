@@ -8,6 +8,8 @@ export const generateControlIsValidProp = (
 };
 
 export const generateFormGroupIsValidProp = (controls: Controls): boolean => {
-    return Object.values(controls).every(c => c.isValid);
-    // return Object.entries(controls).every((control) => control[1].isValid);
+    return Object.values(controls).every((c) => {
+        console.log('test: ', c);
+        return c.isValid;
+    });
 };
