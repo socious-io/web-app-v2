@@ -1,10 +1,11 @@
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { printWhen } from '../../../core/utils';
 import css from './input.module.scss';
 import { InputProps } from './input.types';
 
 export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
   const { optional = false, variant = 'outline', ...rest } = props;
+  const [outline, setOutline] = useState(false);
 
   const controlErrors = props?.register?.controls[props.name]?.errors || [];
   const isDirty = props.register?.controls[props.name].isDirty;
@@ -12,7 +13,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
   const errors = Object.values(controlErrors);
 
   const errorsJSX = (
-    <div className={css.errorsContainer}>
+    <div style={{ height: `${errors.length}rem`}} className={css.errorsContainer}>
       {errors.map((error, i) => {
         return (
           <div className={css.errorItem} key={i}>
@@ -29,7 +30,11 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
 
   if (props.label) {
     return (
-      <div className={`${setClassName(variant)} ${props.className}`}>
+      <div
+        onFocus={() => setOutline(true)}
+        onBlur={() => setOutline(false)}
+        className={`${setClassName(variant)} ${props.className}`}
+      >
         <label className={css.label} htmlFor={props.label}>
           {optional ? (
             <div>
@@ -40,6 +45,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
           )}
         </label>
         <input
+          style={{ borderColor: outline ? 'var(--color-primary-01)' : '' }}
           id={props.label}
           className={css.textbox}
           role="textbox"
