@@ -2,11 +2,11 @@ import { skillsToCategory, socialCausesToCategory } from '../../../../../core/ad
 import { translateProjectLength } from '../../../../../constants/PROJECT_LENGTH';
 import { translatePaymentType } from '../../../../../constants/PROJECT_PAYMENT_TYPE';
 import { translateProjectType } from '../../../../../constants/PROJECT_TYPES';
-import { printWhen } from '../../../../../utils/utils';
 import { CategoriesClickable } from '../../../../../components/atoms/categories-clickable/categories-clickable';
 import { Divider } from '../../../../../components/templates/divider/divider';
 import css from './overview.module.scss';
 import { OverviewProps } from './overview.types';
+import { printWhen } from '../../../../../core/utils';
 
 export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
   const paymentRange = (

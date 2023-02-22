@@ -1,4 +1,4 @@
-import { printWhen } from '../../../utils/utils';
+import { printWhen } from '../../../core/utils';
 import { ChatBox } from '../../atoms/chat-box/chat-box';
 import { Typography } from '../../atoms/typography/typography';
 import { ProfileView } from '../profile-view/profile-view';

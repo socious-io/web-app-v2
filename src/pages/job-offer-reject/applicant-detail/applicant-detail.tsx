@@ -5,7 +5,7 @@ import { Button } from '../../../components/atoms/button/button';
 import { Header } from '../../../components/atoms/header/header';
 import { rejectApplicant } from '../job-offer-reject.services';
 import { Resolver } from './applicant-detail.types';
-import { printWhen } from '../../../utils/utils';
+import { printWhen } from '../../../core/utils';
 
 export const ApplicantDetail = (): JSX.Element => {
   const { screeningQuestions, applicantDetail } = useMatch().ownData as Resolver;
