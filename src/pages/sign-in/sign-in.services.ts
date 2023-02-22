@@ -6,8 +6,3 @@ export async function login(payload: LoginPayload): Promise<boolean> {
     return resp.data.message === 'success';
   });
 }
-
-// export const accountInitialState = {
-//   email: '',
-//   password: '',
-// };
