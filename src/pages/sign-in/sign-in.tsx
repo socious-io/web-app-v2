@@ -5,13 +5,16 @@ import { Input } from '../../components/atoms/input/input';
 import { Link } from '../../components/atoms/link/link';
 import { Typography } from '../../components/atoms/typography/typography';
 import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
-import { LoginPayload } from './sign-in.types';
 import { login } from './sign-in.services';
 import { formModel } from './sign-in.form';
 import { useForm } from '../../core/form';
+import { getFormValues } from '../../core/form/customValidators/formValues';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { LoginPayload } from './sign-in.types';
 
 export const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
+  const form = useForm(formModel);
 
   function goToJobList(navigator: typeof navigate) {
     return (loginSucceed: boolean): void => {
@@ -19,12 +22,10 @@ export const SignIn = (): JSX.Element => {
     };
   }
 
-  async function onLogin(credentials: LoginPayload) {
-    login(credentials).then(goToJobList(navigate));
+  async function onLogin() {
+    const formValues = getFormValues(form) as LoginPayload;
+    login(formValues).then(goToJobList(navigate));
   }
-
-  const form = useForm(formModel);
-  console.log('form: ', form);
 
   return (
     <BottomStatic>
@@ -51,12 +52,9 @@ export const SignIn = (): JSX.Element => {
       </div>
       <div>
         <div className={css.bottom}>
-          <Button disabled={!form.isValid} onClick={console.log}>
+          <Button disabled={!form.isValid} onClick={onLogin}>
             Sign in
           </Button>
-          {/* <Button disabled={!isValid} onClick={handleSubmit(onLogin)}>
-            Sign in
-          </Button> */}
           <Typography marginTop="1rem">
             <span>Not a member? </span>
             <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>Sign up</Link>

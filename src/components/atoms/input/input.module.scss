@@ -26,6 +26,7 @@
   .textbox {
     width: 100%;
     border: 1px solid var(--color-gray-04);
+    transition: border-color 100ms 0s;
     font-size: var(--font-size-m);
     background: #fff;
     border-radius: 8px;
@@ -38,6 +39,10 @@
 }
 
 .errorItem {
+//   height: 16px;
+  display: flex;
+  align-items: center;
+//   border: 1px solid #000;
   font-size: var(--font-size-s);
   color: var(--color-error-01);
 }
@@ -46,4 +51,8 @@
   color: var(--color-gray-02);
   font-weight: 400;
   font-size: var(--font-size-s);
+}
+
+.errorsContainer {
+  transition: height 300ms 0s;
 }

@@ -9,7 +9,6 @@ export const generateControlIsValidProp = (
 
 export const generateFormGroupIsValidProp = (controls: Controls): boolean => {
     return Object.values(controls).every((c) => {
-        console.log('test: ', c);
         return c.isValid;
     });
 };
