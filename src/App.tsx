@@ -1,4 +1,4 @@
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
 import { routes } from './core/routes';
 import store from './store/store';
@@ -11,7 +11,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router location={location} routes={routes}>
-        <Spinner/>
+        <Spinner />
         <Menu />
         <Outlet />
       </Router>

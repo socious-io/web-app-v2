@@ -14,9 +14,13 @@
   "dependencies": {
     "@capacitor/android": "^4.6.1",
     "@capacitor/core": "^4.6.1",
+    "@capacitor/dialog": "^4.1.0",
+    "@capacitor/haptics": "^4.1.0",
     "@capacitor/ios": "^4.6.1",
+    "@capacitor/toast": "^4.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@ionic/pwa-elements": "^3.1.1",
     "@mui/material": "^5.11.6",
     "@reduxjs/toolkit": "^1.9.1",
     "@tanstack/react-location": "^3.7.4",
