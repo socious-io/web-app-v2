@@ -24,7 +24,7 @@ export const Mobile = ({ list }: NotificationMobileProps): JSX.Element => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
-  const avatarImg = identity.meta.avatar || identity.meta.image;
+  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   const onMorePageClick = () => {
     getNotificationList({ page: page + 1 }).then((resp) => {

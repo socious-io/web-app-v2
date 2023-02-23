@@ -5,8 +5,6 @@ import { Link } from '../../../components/atoms/link/link';
 import { Typography } from '../../../components/atoms/typography/typography';
 import { BottomStatic } from '../../../components/templates/bottom-static/bottom-static';
 import { Input } from '../../../components/atoms/input/input';
-import { PasswordQuality } from '../../../components/atoms/password-quality/password-quality';
-import { passwordQualityValidators } from './sign-up-user.complete.services';
 import { registerUser } from './sign-up-user-complete.services';
 import { useForm } from '../../../core/form';
 import { formModel } from './sign-up-user-complete.form';
