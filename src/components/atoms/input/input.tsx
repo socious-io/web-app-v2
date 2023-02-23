@@ -14,7 +14,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
     <div style={{ height: `${errors.length}rem` }} className={css.errorsContainer}>
       {errors.map((error, i) => (
         <div className={css.errorItem} key={i}>
-          <>{error}</>
+          <>- {error}</>
         </div>
       ))}
     </div>
