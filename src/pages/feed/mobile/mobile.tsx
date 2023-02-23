@@ -37,7 +37,7 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
-  const avatarImg = identity.meta.avatar || identity.meta.image;
+  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   const handleClickOpen = () => {
     setOpenDialog(true);
