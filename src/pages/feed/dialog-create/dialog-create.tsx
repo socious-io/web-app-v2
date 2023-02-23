@@ -25,7 +25,7 @@ export const DialogCreate = ({ onClose }: DialogCreateProps) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
-  const avatarImg = identity.meta.avatar || identity.meta.image;
+  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   const isDisable = () => {
     return [state.social, state.text].every((item) => !!item);
@@ -77,19 +77,10 @@ export const DialogCreate = ({ onClose }: DialogCreateProps) => {
       </div>
       <div className={css.social}>
         <Avatar img={avatarImg} type={identity.type} />
-        <Dropdown
-          placeholder="Social Cause"
-          list={socialCausesToDropdownAdaptor()}
-          onGetValue={getSocialValue}
-        />
+        <Dropdown placeholder="Social Cause" list={socialCausesToDropdownAdaptor()} onGetValue={getSocialValue} />
       </div>
       <div className={css.text}>
-        <Textarea
-          rows="15"
-          variant="outline"
-          onChange={onChangeTextHandler}
-          placeholder="I feel like ..."
-        />
+        <Textarea rows="15" variant="outline" onChange={onChangeTextHandler} placeholder="I feel like ..." />
       </div>
       <div className={css.footer}>
         <div className={css.image}>

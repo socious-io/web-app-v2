@@ -9,27 +9,21 @@ import { PasswordQuality } from '../../../components/atoms/password-quality/pass
 import { passwordQualityValidators } from './sign-up-user.complete.services';
 import { registerUser } from './sign-up-user-complete.services';
 import { useForm } from '../../../core/form';
-import { formModel } from '../sign-up-user-email/sign-up-user-email.form';
+import { formModel } from './sign-up-user-complete.form';
+import { getFormValues } from '../../../core/form/customValidators/formValues';
 
 export const SignUpUserComplete = (): JSX.Element => {
   const navigate = useNavigate();
   const form = useForm(formModel);
-  //   const [formState, dispatch] = useReducer(reducer, formInitialState);
-  //   const basicValidity = formState.firstName && formState.lastName && formState.password;
 
-  //   function updateForm(field: keyof typeof formInitialState) {
-  //     return (e: ChangeEvent<HTMLInputElement>) => {
-  //       dispatch({ type: field, value: e.target.value });
-  //     };
-  //   }
-
-  function onSubmit(form) {
+  function onSubmit() {
+    const formValues = getFormValues(form);
     const payload = {
       email: localStorage.getItem('email') as string,
-      first_name: form.firstName,
-      last_name: form.lastName,
+      first_name: formValues.firstName,
+      last_name: formValues.lastName,
     };
-    return () => registerUser(payload).then(() => navigate({ to: '/jobs' }));
+    registerUser(payload).then(() => navigate({ to: '/jobs' }));
   }
 
   return (
@@ -40,22 +34,36 @@ export const SignUpUserComplete = (): JSX.Element => {
             Complete your profile
           </Typography>
           <Typography color="var(--color-gray-01)" type="body">
-            I believe we need some text here
+            What should we call you?
           </Typography>
         </div>
         <form className={css.formContainer}>
-          <Input autoComplete="firstName" label="Your First Name" placeholder="First name" />
-          <Input autoComplete="lastName" label="Your Last Name" placeholder="Last name" />
-          <Input type="password" label="Choose a Password" autoComplete="new-password" placeholder="Password" />
+          <Input
+            register={form}
+            name="firstName"
+            autoComplete="firstName"
+            label="Your First Name"
+            placeholder="First name"
+          />
+          <Input register={form} name="lastName" autoComplete="lastName" label="Your Last Name" placeholder="Last name" />
+          <Input
+            register={form}
+            name="password"
+            type="password"
+            label="Choose a Password"
+            autoComplete="new-password"
+            placeholder="Password"
+          />
         </form>
-        <div className={css.passwordQuality}>
-          <PasswordQuality value={''} validators={passwordQualityValidators} />
-        </div>
+        {/* <div className={css.passwordQuality}>
+          <PasswordQuality value={form.controls.password.value} validators={passwordQualityValidators} />
+        </div> */}
 
         <div className={css.passwordQuality}>
           <Typography textAlign="center" paddingBottom="1rem">
-            By signing up, you agree to Socious' <Link onClick={console.log}>Terms of Service</Link> and{' '}
-            <Link onClick={console.log}>Privacy Policy</Link>
+            By signing up, you agree to Socious'{' '}
+            <Link onClick={() => navigate({ to: '/terms-conditions' })}>Terms of Service</Link> and{' '}
+            <Link onClick={() => navigate({ to: '/privacy-policy' })}>Privacy Policy</Link>
           </Typography>
         </div>
       </div>
@@ -64,7 +72,9 @@ export const SignUpUserComplete = (): JSX.Element => {
           {/* <Button disabled={!basicValidity} onClick={onSubmit(formState)}>
             Join
           </Button> */}
-          <Button>Join</Button>
+          <Button onClick={onSubmit} disabled={!form.isValid}>
+            Join
+          </Button>
           <Typography marginTop="1rem">
             <span>Already a member? </span>
             <Link onClick={() => navigate({ to: '/sign-in' })}>Sign in</Link>
