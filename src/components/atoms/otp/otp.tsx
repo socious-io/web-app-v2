@@ -1,10 +1,14 @@
-import { useRef, KeyboardEvent, MutableRefObject, useCallback } from 'react';
+import { useRef, KeyboardEvent, MutableRefObject, useCallback, useEffect } from 'react';
 import css from './otp.module.scss';
 import { OtpProps } from './otp.types';
 
 export const Otp = (props: OtpProps): JSX.Element => {
-  const { length, disabled = false, onChange } = props;
+  const { length, disabled = false, value, onChange } = props;
   const boxesRef = useRef<HTMLInputElement[]>([]);
+
+  useEffect(() => {
+    boxesRef.current.forEach((box, i) => (box.value = value?.charAt(i)));
+  }, [value]);
 
   const list = Array.from(Array(length).keys());
 
@@ -35,7 +39,7 @@ export const Otp = (props: OtpProps): JSX.Element => {
   }
 
   function getValue(boxesRef: MutableRefObject<HTMLInputElement[]>) {
-    return boxesRef.current.map(el => el.value).join('');
+    return boxesRef.current.map((el) => el.value).join('');
   }
 
   function onKeyDown(boxNo: number) {

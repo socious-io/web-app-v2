@@ -7,21 +7,32 @@ import { BottomStatic } from '../../../components/templates/bottom-static/bottom
 import { Otp } from '../../../components/atoms/otp/otp';
 import { confirmOTP, resendOTP } from './sign-up-user-verification.services';
 import { useState } from 'react';
+import { Dialog } from '@capacitor/dialog';
 
 export const SignUpUserVerification = (): JSX.Element => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState('');
 
+  function onIncorrectOtp(resp: { error: string }) {
+    Dialog.alert({ title: 'Failed to proceed', message: resp.error || 'OTP is incorrect' }).then(() => setOtp(''));
+  }
+
   function onSubmit() {
     const email = localStorage.getItem('email') as string;
-    confirmOTP(email, otp).then(() => {
-      navigate({ to: '../complete' });
-    });
+    confirmOTP(email, otp)
+      .then(() => {
+        navigate({ to: '../complete' });
+      })
+      .catch(onIncorrectOtp);
+  }
+
+  function onResendSucceed() {
+    Dialog.alert({ title: 'Success', message: 'OTP has been successfully sent' }).then(() => setOtp(''));
   }
 
   function onResendRequest() {
     const email = localStorage.getItem('email') as string;
-    resendOTP(email).then(console.log);
+    resendOTP(email).then(onResendSucceed);
   }
 
   return (
@@ -35,7 +46,7 @@ export const SignUpUserVerification = (): JSX.Element => {
             We've sent a code to {localStorage.getItem('email')}
           </Typography>
         </div>
-        <Otp onChange={setOtp} length={6} />
+        <Otp value={otp} onChange={setOtp} length={6} />
         <div className={css.didNotReceivedCode}>
           <Typography textAlign="center">
             <span>Didn't received a code? </span>
