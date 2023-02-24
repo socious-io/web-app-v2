@@ -2,6 +2,11 @@ import { JobItems, PostItems } from '../pages/search/search.types';
 
 export type UserType = 'users' | 'organizations';
 
+export type LoginResp = {
+  error?: string;
+  message?: 'success';
+};
+
 export type UserIdentityMeta = {
   address: string;
   city: string;

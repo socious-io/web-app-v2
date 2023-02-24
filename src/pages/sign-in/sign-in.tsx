@@ -10,20 +10,29 @@ import { formModel } from './sign-in.form';
 import { useForm } from '../../core/form';
 import { getFormValues } from '../../core/form/customValidators/formValues';
 import { LoginPayload } from './sign-in.types';
+import { getIdentities } from '../../core/api';
+import { setIdentityList } from '../../store/reducers/identity.reducer';
+import store from '../../store/store';
+import { LoginResp } from '../../core/types';
+import { Dialog } from '@capacitor/dialog';
 
 export const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
   const form = useForm(formModel);
 
-  function goToJobList(navigator: typeof navigate) {
-    return (loginSucceed: boolean): void => {
-      loginSucceed && navigator({ to: '/jobs', replace: true });
-    };
+  async function onLoginSucceed() {
+    const resp = await getIdentities();
+    store.dispatch(setIdentityList(resp));
+    navigate({ to: '/jobs', replace: true });
+  }
+
+  function onLoginFailed(resp: LoginResp) {
+    Dialog.alert({ title: 'Login Error', message: resp.error || 'Failed to login' });
   }
 
   async function onLogin() {
     const formValues = getFormValues(form) as LoginPayload;
-    login(formValues).then(goToJobList(navigate));
+    login(formValues).then(onLoginSucceed).catch(onLoginFailed);
   }
 
   return (

@@ -45,7 +45,6 @@ export const routes: Route[] = [
     path: '',
     loader: async () => {
       const resp = await getIdentities();
-      console.log('identityId: ', resp.filter((item) => item.current)[0].id);
       store.dispatch(setIdentityList(resp));
       return resp;
     },
@@ -143,41 +142,32 @@ export const routes: Route[] = [
               {
                 path: 'social-causes',
                 element: () =>
-                  import('../pages/organization-create/social-causes/social-causes').then((m) => (
-                    <m.SocialCauses />
-                  )),
+                  import('../pages/organization-create/social-causes/social-causes').then((m) => <m.SocialCauses />),
               },
               {
                 path: 'profile',
-                element: () =>
-                  import('../pages/organization-create/profile/profile').then((m) => <m.Profile />),
+                element: () => import('../pages/organization-create/profile/profile').then((m) => <m.Profile />),
               },
               {
                 path: 'mission',
-                element: () =>
-                  import('../pages/organization-create/mission/mission').then((m) => <m.Mission />),
+                element: () => import('../pages/organization-create/mission/mission').then((m) => <m.Mission />),
               },
               {
                 path: 'culture',
-                element: () =>
-                  import('../pages/organization-create/culture/culture').then((m) => <m.Culture />),
+                element: () => import('../pages/organization-create/culture/culture').then((m) => <m.Culture />),
               },
               {
                 path: 'social-impact',
                 element: () =>
-                  import('../pages/organization-create/social-impact/social-impact').then((m) => (
-                    <m.SocialImpact />
-                  )),
+                  import('../pages/organization-create/social-impact/social-impact').then((m) => <m.SocialImpact />),
               },
               {
                 path: 'succeed',
-                element: () =>
-                  import('../pages/organization-create/succeed/succeed').then((m) => <m.Succeed />),
+                element: () => import('../pages/organization-create/succeed/succeed').then((m) => <m.Succeed />),
               },
               {
                 path: 'verified',
-                element: () =>
-                  import('../pages/organization-create/verified/verified').then((m) => <m.Verified />),
+                element: () => import('../pages/organization-create/verified/verified').then((m) => <m.Verified />),
               },
             ],
           },
@@ -201,8 +191,7 @@ export const routes: Route[] = [
                 participants,
               };
             },
-            element: () =>
-              import('../pages/chat/message-detail/message-detail').then((m) => <m.MessageDetail />),
+            element: () => import('../pages/chat/message-detail/message-detail').then((m) => <m.MessageDetail />),
           },
           {
             path: 'contacts',
@@ -231,9 +220,7 @@ export const routes: Route[] = [
               return { applicantDetail, screeningQuestions };
             },
             element: () =>
-              import('../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => (
-                <m.ApplicantDetail />
-              )),
+              import('../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => <m.ApplicantDetail />),
           },
           {
             loader: async ({ params }) => {
@@ -257,8 +244,7 @@ export const routes: Route[] = [
                 endHiredList,
               };
             },
-            element: () =>
-              import('../pages/job-offer-reject/job-offer-reject').then((m) => <m.JobOfferReject />),
+            element: () => import('../pages/job-offer-reject/job-offer-reject').then((m) => <m.JobOfferReject />),
           },
         ],
       },
@@ -279,8 +265,7 @@ export const routes: Route[] = [
         children: [
           {
             path: 'social-causes',
-            element: () =>
-              import('../pages/job-create/social-causes/social-causes').then((m) => <m.SocialCauses />),
+            element: () => import('../pages/job-create/social-causes/social-causes').then((m) => <m.SocialCauses />),
           },
           {
             path: 'skills',
