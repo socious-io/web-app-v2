@@ -4,10 +4,8 @@ import { routes } from './core/routes';
 import store from './store/store';
 import { Menu } from './pages/menu/menu';
 import { Spinner } from './components/atoms/spinner/spinner';
-import { hapticsImpactMedium } from './core/haptic/haptic';
 
 const location = new ReactLocation();
-hapticsImpactMedium();
 
 function App() {
   return (

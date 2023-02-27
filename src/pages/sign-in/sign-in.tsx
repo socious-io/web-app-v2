@@ -55,7 +55,7 @@ export const SignIn = (): JSX.Element => {
           />
         </form>
         <div className={css.forgotPassword}>
-          <Link onClick={console.log}>Forgot your password?</Link>
+          <Link onClick={() => navigate({ to: '/forget-password/email' })}>Forgot your password?</Link>
         </div>
       </div>
       <div>
