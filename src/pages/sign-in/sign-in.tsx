@@ -14,7 +14,7 @@ import { getIdentities } from '../../core/api';
 import { setIdentityList } from '../../store/reducers/identity.reducer';
 import store from '../../store/store';
 import { LoginResp } from '../../core/types';
-import { Dialog } from '@capacitor/dialog';
+import { dialog } from '../../core/dialog/dialog';
 
 export const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export const SignIn = (): JSX.Element => {
   }
 
   function onLoginFailed(resp: LoginResp) {
-    Dialog.alert({ title: 'Login Error', message: resp.error || 'Failed to login' });
+    dialog.alert({ title: 'Login Error', message: resp.error || 'Failed to login' });
   }
 
   async function onLogin() {

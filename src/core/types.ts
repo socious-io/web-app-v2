@@ -309,4 +309,6 @@ export type CreatePostPayload = {
   payment_currency: string;
 };
 
+export type Error = { error: string };
+
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;

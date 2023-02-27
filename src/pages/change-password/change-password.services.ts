@@ -1,11 +1,9 @@
 import { post } from '../../core/http';
 import { Validator } from '../../components/atoms/password-quality/password-quality.types';
 
-export async function changePassword(payload: {
-  current_password: string;
-  password: string;
-}) {
-  return post('user/change-password', payload);
+export async function changePassword(payload: { current_password: string; password: string }) {
+  return post('user/change-password', payload)
+    .then(({ data }) => data)
 }
 
 export const formInitialState = {
@@ -19,10 +17,7 @@ type Actions = {
   type: keyof typeof formInitialState;
 };
 
-export function reducer(
-  state: typeof formInitialState,
-  { type, value }: Actions
-) {
+export function reducer(state: typeof formInitialState, { type, value }: Actions) {
   switch (type) {
     case 'currentPassword':
       return { ...state, currentPassword: value };
