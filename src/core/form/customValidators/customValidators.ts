@@ -1,4 +1,5 @@
 import { REGEX } from '../../../constants/REGEX';
+import { minLength, required } from '../useForm/validations';
 
 export const email = () => ({
     name: 'email',

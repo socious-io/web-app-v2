@@ -7,14 +7,14 @@ import { BottomStatic } from '../../../components/templates/bottom-static/bottom
 import { Otp } from '../../../components/atoms/otp/otp';
 import { confirmOTP, resendOTP } from './sign-up-user-verification.services';
 import { useState } from 'react';
-import { Dialog } from '@capacitor/dialog';
+import { dialog } from '../../../core/dialog/dialog';
 
 export const SignUpUserVerification = (): JSX.Element => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState('');
 
   function onIncorrectOtp(resp: { error: string }) {
-    Dialog.alert({ title: 'Failed to proceed', message: resp.error || 'OTP is incorrect' }).then(() => setOtp(''));
+    dialog.alert({ title: 'Failed to proceed', message: resp.error || 'OTP is incorrect' }).then(() => setOtp(''));
   }
 
   function onSubmit() {
@@ -27,7 +27,7 @@ export const SignUpUserVerification = (): JSX.Element => {
   }
 
   function onResendSucceed() {
-    Dialog.alert({ title: 'Success', message: 'OTP has been successfully sent' }).then(() => setOtp(''));
+    dialog.alert({ title: 'Success', message: 'OTP has been successfully sent' }).then(() => setOtp(''));
   }
 
   function onResendRequest() {

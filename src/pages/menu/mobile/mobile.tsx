@@ -194,10 +194,10 @@ export const Mobile = () => {
             <img src="/icons/document-one-black.svg" />
             <span>Terms & conditions</span>
           </div>
-          {/* <div className={css.row} onClick={() => navigateToRoute('change-password')}>
+          <div className={css.row} onClick={() => navigateToRoute('change-password')}>
             <img src="/icons/key-black.svg" width={22} height={22} />
             <span>Change password</span>
-          </div> */}
+          </div>
           <div className={css.row} onClick={() => navigateToRoute('delete-profile/delete')}>
             <img src="/icons/delete-account-black.svg" />
             <span>Delete Account</span>
