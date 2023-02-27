@@ -7,11 +7,13 @@ import { Button } from '../../../components/atoms/button/button';
 import { Input } from '../../../components/atoms/input/input';
 import { deleteAccount, login } from '../delete-profile.service';
 import css from './password.module.scss';
+import { useForm } from '../../../core/form';
+import { formModel } from './password.form';
+import { handleError } from '../../../core/api';
 
 export const Password = () => {
   const navigate = useNavigate();
-  const [password, setPassword] = useState('');
-
+  const form = useForm(formModel);
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
@@ -22,15 +24,17 @@ export const Password = () => {
   };
 
   const deleteMyAccount = () => {
-    login(email, password).then((resp) => {
-      if (resp.message === 'success') {
-        deleteAccount(' ').then((resp) => {
-          if (resp.message === 'success') {
-            navigate({ to: `../confirm?email=${email}` });
-          }
-        });
-      }
-    });
+    login(email, form.controls.password.value)
+      .then((resp) => {
+        if (resp.message === 'success') {
+          deleteAccount().then((resp) => {
+            if (resp.message === 'success') {
+              navigate({ to: `../confirm?email=${email}` });
+            }
+          });
+        }
+      })
+      .catch(handleError());
   };
 
   const cancel = () => {
@@ -50,18 +54,12 @@ export const Password = () => {
           <span className={css.text}>Please enter your password to delete your account. </span>
         </div>
         <div className={css.input}>
-          <Input
-            variant="outline"
-            placeholder="Enter password"
-            label="Enter password"
-            value={password}
-            onValueChange={(state) => setPassword(state)}
-          />
+          <Input type="password" register={form} name="password" placeholder="Enter password" label="Enter password" />
         </div>
       </div>
       <div className={css.footer}>
-        <Button color="red" onClick={deleteMyAccount}>
-          Delete my accoount
+        <Button disabled={!form.isValid} color="red" onClick={deleteMyAccount}>
+          Delete my account
         </Button>
         <Button color="white" onClick={cancel}>
           Cancel
