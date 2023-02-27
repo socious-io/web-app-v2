@@ -3,8 +3,9 @@ import { Button } from '../../../components/atoms/button/button';
 import css from './otp.module.scss';
 import { Otp as OtpCom } from '../../../components/atoms/otp/otp';
 import { useState } from 'react';
-import { confirm } from '../forget-password.service';
+import { confirm, forgetPassword } from '../forget-password.service';
 import { handleError } from '../../../core/api';
+import { dialog } from '../../../core/dialog/dialog';
 
 export const Otp = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export const Otp = () => {
   const email = queryParam.email;
   const [otpValue, setOtpValue] = useState('');
 
-  const submit = () => {
+  function submit() {
     confirm(email, otpValue)
       .then((resp) => {
         if (resp.message === 'success') {
@@ -20,10 +21,19 @@ export const Otp = () => {
         }
       })
       .catch((err) => {
-        handleError('Failed')(err);
+        handleError()(err);
         setOtpValue('');
       });
-  };
+  }
+
+  function onResendOtp() {
+    forgetPassword(email)
+      .then(() => dialog.alert({ title: 'success', message: 'OTP has been successfully seen to your email' }))
+      .catch((err) => {
+        handleError()(err);
+        setOtpValue('');
+      });
+  }
 
   const backToPerviousPage = () => {
     navigate({ to: '../email' });
@@ -48,8 +58,11 @@ export const Otp = () => {
         </div>
       </div>
       <div className={css.footer}>
-        <Button color="blue" onClick={submit} disabled={!(otpValue.length === 6)}>
+        <Button onClick={submit} disabled={!(otpValue.length === 6)}>
           Verify
+        </Button>
+        <Button font-weight="normal" border={0} color="white" onClick={onResendOtp}>
+          Resend code
         </Button>
       </div>
     </div>
