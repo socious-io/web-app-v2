@@ -5,6 +5,6 @@ import { FormModel } from '../../../core/form/useForm/useForm.types';
 export const formModel: FormModel = {
   password: {
     initialValue: '',
-    validators: [required(), minLength(6)],
+    validators: [required()],
   },
 };
