@@ -5,23 +5,30 @@ import { Link } from '../../../components/atoms/link/link';
 import { Typography } from '../../../components/atoms/typography/typography';
 import { BottomStatic } from '../../../components/templates/bottom-static/bottom-static';
 import { Input } from '../../../components/atoms/input/input';
-import { registerUser } from './sign-up-user-complete.services';
+import { changePasswordDirect, registerUser } from './sign-up-user-complete.services';
 import { useForm } from '../../../core/form';
 import { formModel } from './sign-up-user-complete.form';
 import { getFormValues } from '../../../core/form/customValidators/formValues';
+import { handleError } from '../../../core/api';
 
 export const SignUpUserComplete = (): JSX.Element => {
   const navigate = useNavigate();
   const form = useForm(formModel);
 
-  function onSubmit() {
-    const formValues = getFormValues(form);
+  async function onSubmit() {
+    const password = form.controls.password.value;
     const payload = {
       email: localStorage.getItem('email') as string,
-      first_name: formValues.firstName,
-      last_name: formValues.lastName,
+      first_name: form.controls.firstName.value,
+      last_name: form.controls.lastName.value,
     };
-    registerUser(payload).then(() => navigate({ to: '/jobs' }));
+    // registerUser(payload)
+    //   .then(() => changePasswordDirect(password))
+    //   .then(() => navigate({ to: '/jobs' }))
+    //   .catch(handleError());
+    changePasswordDirect(password)
+      .then(() => navigate({ to: '/jobs' }))
+      .catch(handleError());
   }
 
   return (
