@@ -6,7 +6,7 @@ import { Input } from '../../../components/atoms/input/input';
 import { Link } from '../../../components/atoms/link/link';
 import { Typography } from '../../../components/atoms/typography/typography';
 import { BottomStatic } from '../../../components/templates/bottom-static/bottom-static';
-import { preRegister } from './sign-up-user-email.services';
+import { register } from './sign-up-user-email.services';
 import { formModel } from './sign-up-user-email.form';
 import { useForm } from '../../../core/form';
 import { getFormValues } from '../../../core/form/customValidators/formValues';
@@ -18,7 +18,7 @@ export const SignUpUserEmail = (): JSX.Element => {
 
   function onSubmit() {
     const formValues = getFormValues(form);
-    preRegister(formValues)
+    register(formValues)
       .then(() => localStorage.setItem('email', formValues.email))
       .then(() => navigate({ to: '../verification' }))
       .catch(handleError());
