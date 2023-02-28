@@ -117,6 +117,10 @@ export const routes: Route[] = [
         element: () => import('../pages/profile/profile').then((m) => <m.Profile />),
       },
       {
+        path: 'payment',
+        element: () => import('../pages/payment/payment').then((m) => <m.Payment />),
+      },
+      {
         path: '/achievements',
         loader: async () => {
           const requests = [getBadges(), getImpactPoints()];

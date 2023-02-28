@@ -10,6 +10,7 @@ import { preRegister } from './sign-up-user-email.services';
 import { formModel } from './sign-up-user-email.form';
 import { useForm } from '../../../core/form';
 import { getFormValues } from '../../../core/form/customValidators/formValues';
+import { handleError } from '../../../core/api';
 
 export const SignUpUserEmail = (): JSX.Element => {
   const form = useForm(formModel);
@@ -19,7 +20,8 @@ export const SignUpUserEmail = (): JSX.Element => {
     const formValues = getFormValues(form);
     preRegister(formValues)
       .then(() => localStorage.setItem('email', formValues.email))
-      .then(() => navigate({ to: '../verification' }));
+      .then(() => navigate({ to: '../verification' }))
+      .catch(handleError());
   }
 
   return (
