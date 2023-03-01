@@ -14,16 +14,14 @@ import { Button } from '../../../../components/atoms/button/button';
 import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
 import { Header } from '../../../../components/atoms/header/header';
 import { printWhen } from '../../../../core/utils';
-
-const formInitialState = {
-  cover_letter: '',
-  cv_link: '',
-  cv_name: '',
-};
+import { useForm } from '../../../../core/form';
+import { formModel } from '../apply.form';
+import { getFormValues } from '../../../../core/form/customValidators/formValues';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
-  const [form, setForm] = useState(formInitialState);
+  const form = useForm(formModel);
+  console.log('form: ', form)
   const [resume, setResume] = useState<Resume>(resumeInitialState);
   const { jobDetail, screeningQuestions } = useMatch().ownData as {
     jobDetail: Job;
@@ -39,21 +37,16 @@ export const Mobile = (): JSX.Element => {
     setResume({ name: files[0].name, file: files[0] });
   }
 
-  function updateFormState(fieldName: string) {
-    return (value: string) => {
-      setForm((prev) => ({ ...prev, [fieldName]: value }));
-    };
-  }
-
   function navigateToJobDetail() {
     navigate({ to: '..' });
   }
 
   function onSubmit() {
+    const payload = getFormValues(form);
     if (resume.file) {
-      submit(jobDetail.id, resume.file, form).then(navigateToJobDetail);
+      submit(jobDetail.id, resume.file, payload).then(navigateToJobDetail);
     } else {
-      applyApplication(jobDetail.id, form).then(navigateToJobDetail);
+      applyApplication(jobDetail.id, payload).then(navigateToJobDetail);
     }
     // navigate({ to: `../confirm?company=${jobDetail.identity_meta.name`}`);
   }
@@ -111,25 +104,15 @@ export const Mobile = (): JSX.Element => {
           <Typography lineLimit={3}>{jobDetail.description}</Typography>
         </Divider>
         <Divider divider="line" title="Cover letter">
-          <Textarea onValueChange={updateFormState('cover_letter')} placeholder="write a message..." label="Message" />
+          <Textarea register={form} name="cover_letter" placeholder="write a message..." label="Message" />
         </Divider>
         <Divider divider="line" title="Resume">
           {resume.name ? uploadedResume : uploadResumeBtn}
         </Divider>
         <Divider divider="line" title="Link">
           <div className={css.linkContainer}>
-            <Input
-              onChange={(e) => updateFormState('cv_name')(e.target.value)}
-              optional
-              placeholder="Link name"
-              label="Link name"
-            />
-            <Input
-              onChange={(e) => updateFormState('cv_name')(e.target.value)}
-              optional
-              placeholder="domain.com"
-              label="Link URL"
-            />
+            <Input register={form} name="cv_name" optional placeholder="Link name" label="Link name" />
+            <Input register={form} name="cv_link" optional placeholder="domain.com" label="Link URL" />
           </div>
         </Divider>
         {printWhen(renderQuestions(), !!questions.length)}
@@ -140,7 +123,7 @@ export const Mobile = (): JSX.Element => {
           </div>
         </Divider>
         <div className={css.btnContainer}>
-          <Button disabled={!form.cover_letter} onClick={onSubmit}>
+          <Button disabled={!form.controls.cover_letter.value} onClick={onSubmit}>
             Submit application
           </Button>
         </div>
