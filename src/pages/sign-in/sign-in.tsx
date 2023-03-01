@@ -10,11 +10,9 @@ import { formModel } from './sign-in.form';
 import { useForm } from '../../core/form';
 import { getFormValues } from '../../core/form/customValidators/formValues';
 import { LoginPayload } from './sign-in.types';
-import { getIdentities } from '../../core/api';
+import { getIdentities, handleError } from '../../core/api';
 import { setIdentityList } from '../../store/reducers/identity.reducer';
 import store from '../../store/store';
-import { LoginResp } from '../../core/types';
-import { dialog } from '../../core/dialog/dialog';
 
 export const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
@@ -26,13 +24,9 @@ export const SignIn = (): JSX.Element => {
     navigate({ to: '/jobs', replace: true });
   }
 
-  function onLoginFailed(resp: LoginResp) {
-    dialog.alert({ title: 'Login Error', message: resp.error || 'Failed to login' });
-  }
-
   async function onLogin() {
     const formValues = getFormValues(form) as LoginPayload;
-    login(formValues).then(onLoginSucceed).catch(onLoginFailed);
+    login(formValues).then(onLoginSucceed).catch(handleError('Login Failed'));
   }
 
   return (
