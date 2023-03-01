@@ -29,7 +29,7 @@ export const Email = () => {
       </div>
       <div className={css.main}>
         <div className={css.forgetPass}>
-          <div className={css.title}>Forget your password</div>
+          <div className={css.title}>Forget your password?</div>
           <div className={css.input}>
             <Input register={form} name="email" variant="outline" placeholder="Email" label="Email" />
           </div>
