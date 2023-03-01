@@ -1,24 +1,29 @@
 import { useNavigate } from '@tanstack/react-location';
 import { useDispatch, useSelector } from 'react-redux';
-import { CreateOrgWizard, resetCreateOrgWizard, setCulture } from '../../../../store/reducers/createOrgWizard.reducer';
+import { CreateOrgWizard, setCulture } from '../../../../store/reducers/createOrgWizard.reducer';
 import { RootState } from '../../../../store/store';
 import { Button } from '../../../../components/atoms/button/button';
 import { Steps } from '../../../../components/atoms/steps/steps';
 import { Textarea } from '../../../../components/atoms/textarea/textarea';
 import { addOrganization, wizardFormToPayloadAdaptor } from '../../organization-create';
 import css from './mobile.module.scss';
+import { required, useForm } from '../../../../core/form';
+import { handleError } from '../../../../core/api';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const cultureValue = useSelector<RootState, string | undefined>((state) => {
-    return state.createOrgWizard?.culture;
+  const cultureValue = useSelector<RootState, string>((state) => {
+    return state.createOrgWizard?.culture || '';
   });
 
-  const form = useSelector<RootState, CreateOrgWizard>((state) => {
+  const formState = useSelector<RootState, CreateOrgWizard>((state) => {
     return state.createOrgWizard;
   });
+
+  const form = useForm({ culture: { initialValue: cultureValue, validators: [required()] } });
+  form.controls.culture.subscribe((v) => dispatch(setCulture(v)));
 
   function navigateToSuccess() {
     navigate({ to: '../succeed' });
@@ -26,16 +31,12 @@ export const Mobile = (): JSX.Element => {
 
   function onSkip() {
     dispatch(setCulture(''));
-    submitOrganization(form);
+    submitOrganization(formState);
   }
 
   function submitOrganization(wizardForm: CreateOrgWizard) {
     const payload = wizardFormToPayloadAdaptor(wizardForm);
-    addOrganization(payload)
-      .then(navigateToSuccess)
-      .then(() => {
-        dispatch(resetCreateOrgWizard());
-      });
+    addOrganization(payload).then(navigateToSuccess).catch(handleError());
   }
 
   return (
@@ -53,14 +54,10 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.question}>Tell us about your organization's culture.</div>
       <div className={css.main}>
-        <Textarea
-          value={cultureValue}
-          onValueChange={(value) => dispatch(setCulture(value))}
-          placeholder="Your organization's culture"
-        />
+        <Textarea name="culture" register={form} placeholder="Your organization's culture" />
       </div>
       <div className={css.bottom}>
-        <Button disabled={!cultureValue} onClick={() => submitOrganization(form)}>
+        <Button disabled={!cultureValue} onClick={() => submitOrganization(formState)}>
           Continue
         </Button>
       </div>

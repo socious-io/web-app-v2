@@ -4,7 +4,7 @@ import { TextareaProps } from './textarea.types';
 
 export const Textarea = (props: TextareaProps): JSX.Element => {
   const [outline, setOutline] = useState(false);
-  const { optional = false, register, errors = [], variant = 'outline', onValueChange, ...rest } = props;
+  const { optional = false, register, errors = [], variant = 'outline', ...rest } = props;
   //   const registerField = register?.(props.name, { required: !optional, ...props.validations });
 
   function setClassName(v: TextareaProps['variant']) {
