@@ -170,7 +170,6 @@ export const Mobile = (): JSX.Element => {
               <Dropdown
                 selectedValue={form.experience_level}
                 onValueChange={(value) => {
-                  console.log('value: ', value);
                   dispatch(setPostExperienceLevel(+value));
                 }}
                 label="Experience level"

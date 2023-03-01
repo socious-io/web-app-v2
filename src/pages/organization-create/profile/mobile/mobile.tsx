@@ -43,6 +43,7 @@ export const Mobile = (): JSX.Element => {
         <div className={css.question}>Organization profile</div>
         <div className={css.limitStatement}>Fill the required fields</div>
       </div>
+
       <div className={css.main}>
         <Divider title="Basic info" divider="space">
           <div className={css.formContainer}>

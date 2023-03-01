@@ -3,10 +3,12 @@ import css from './dropdown.module.scss';
 import { DropdownProps } from './dropdown.types';
 import { Items } from './items/items';
 
+const initialState = { isListOpen: false, headerTitle: '' };
+
 export const Dropdown = (props: DropdownProps) => {
   const { list, onGetValue, selectedValue, label, placeholder } = props;
 
-  const [state, setState] = useState({ isListOpen: false, headerTitle: '' });
+  const [state, setState] = useState(initialState);
   const [filterList, setFilterList] = useState(list);
 
   const onToggleList = () => {
@@ -19,6 +21,11 @@ export const Dropdown = (props: DropdownProps) => {
     props.onValueChange?.(value);
     onGetValue?.(value);
   };
+
+  useEffect(() => {
+    setFilterList(list);
+    setState({ isListOpen: false, headerTitle: '' });
+  }, [list]);
 
   useEffect(() => {
     const selectedTitle = list.find((item) => item.value === selectedValue)?.title;
