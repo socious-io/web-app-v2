@@ -19,6 +19,7 @@ export const Mobile = (): JSX.Element => {
       <div className={css.statement}>
         <div className={css.primary}>Organization created</div>
         <div className={css.secondary}>You have successfully created an organization page!</div>
+        {/* <div className={css.secondary}>You have successfully created a page for Green Peace!</div> */}
       </div>
       <div className={css.bottom}>
         <Button onClick={() => navigate({ to: '../verified' })}>Continue</Button>

@@ -1,7 +1,6 @@
 import css from './mobile.module.scss';
 import { useNavigate } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { COUNTRIES } from '../../../../constants/COUNTRIES';
 import { CreateOrgWizard } from '../../../../store/reducers/createOrgWizard.reducer';
@@ -13,25 +12,22 @@ import { Input } from '../../../../components/atoms/input/input';
 import { Steps } from '../../../../components/atoms/steps/steps';
 import { Textarea } from '../../../../components/atoms/textarea/textarea';
 import { Divider } from '../../../../components/templates/divider/divider';
-import { formIsValid, updateCityList, updateForm } from '../profile.services';
-import { REGEX } from '../../../../constants/REGEX';
+import { formModel, updateForm } from '../profile.services';
+import { useForm } from '../../../../core/form';
 
 export const Mobile = (): JSX.Element => {
+  const formState = useSelector<RootState, CreateOrgWizard>((state) => state.createOrgWizard);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const updateField = updateForm(dispatch);
+  const form = useForm(formModel(formState));
+
   const [cities, setCities] = useState<DropdownItem[]>([]);
-  const formValues = useSelector<RootState, CreateOrgWizard>((state) => state.createOrgWizard);
-  const { register, watch, formState } = useForm();
 
-  function formWatcher(value: CreateOrgWizard, field: { name: keyof CreateOrgWizard }) {
-    updateField(field.name, value[field.name]);
-  }
-
-  useEffect(() => {
-    const subscription = watch(formWatcher);
-    return () => subscription.unsubscribe();
-  }, []);
+  Object.keys(formModel(formState)).forEach((prop) => {
+    const p = prop as keyof ReturnType<typeof formModel>;
+    form.controls[prop].subscribe((v) => updateField(p, v));
+  });
 
   return (
     <div className={css.container}>
@@ -50,35 +46,24 @@ export const Mobile = (): JSX.Element => {
       <div className={css.main}>
         <Divider title="Basic info" divider="space">
           <div className={css.formContainer}>
-            <Input
-              register={register}
-              name="organizationName"
-              value={formValues.organizationName}
-              label="Organization name"
-              placeholder="Organization name"
-            />
-            <Textarea
-              value={formValues.bio}
-              register={register}
-              name="bio"
-              label="Bio"
-              placeholder="Your organization's bio"
-            />
+            <Input register={form} name="organizationName" label="Organization name" placeholder="Organization name" />
+            <Textarea register={form} name="bio" label="Bio" placeholder="Your organization's bio" />
           </div>
         </Divider>
         <Divider title="Contact" divider="space">
           <div className={css.formContainer}>
             <Input
-              register={register}
-              value={formValues.organizationEmail}
-              validations={{ pattern: REGEX.email }}
+              register={form}
+              //   value={formValues.organizationEmail}
+              //   validations={{ pattern: REGEX.email }}
               name="organizationEmail"
               label="Organization email"
               placeholder="Organization email"
             />
-            <Dropdown
+            {/* <Dropdown
               selectedValue={formValues.country}
               label="Country"
+            //   name="country"
               list={COUNTRIES}
               placeholder="Country"
               onValueChange={(value) => {
@@ -96,10 +81,10 @@ export const Mobile = (): JSX.Element => {
                 updateField('geoname_id', value);
                 updateField('city', cityName);
               }}
-            />
+            /> */}
             <Input
-              value={formValues.address}
-              register={register}
+              //   value={formValues.address}
+              register={form}
               name="address"
               optional
               label="Address"
@@ -111,15 +96,15 @@ export const Mobile = (): JSX.Element => {
               </div>
               <div className={css.phoneNumber}>
                 <Input
-                  value={formValues.countryMobileCode}
-                  register={register}
+                  //   value={formValues.countryMobileCode}
+                  register={form}
                   name="countryMobileCode"
                   optional
                   placeholder="+1"
                 />
                 <Input
-                  value={formValues.phoneNumber}
-                  register={register}
+                  //   value={formValues.phoneNumber}
+                  register={form}
                   name="phoneNumber"
                   optional
                   placeholder="Phone number"
@@ -127,8 +112,8 @@ export const Mobile = (): JSX.Element => {
               </div>
             </div>
             <Input
-              value={formValues.website}
-              register={register}
+              //   value={formValues.website}
+              register={form}
               name="website"
               optional
               label="Website"
@@ -138,7 +123,7 @@ export const Mobile = (): JSX.Element => {
         </Divider>
       </div>
       <div className={css.bottom}>
-        <Button disabled={formIsValid(formState.isValid, formValues)} onClick={() => navigate({ to: '../mission' })}>
+        <Button disabled={!form.isValid} onClick={() => navigate({ to: '../mission' })}>
           Continue
         </Button>
       </div>
