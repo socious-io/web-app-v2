@@ -28,7 +28,7 @@ export const Otp = () => {
 
   function onResendOtp() {
     forgetPassword(email)
-      .then(() => dialog.alert({ title: 'success', message: 'OTP has been successfully seen to your email' }))
+      .then(() => dialog.alert({ title: 'success', message: 'OTP has been successfully sent to your email' }))
       .catch((err) => {
         handleError()(err);
         setOtpValue('');
@@ -50,7 +50,7 @@ export const Otp = () => {
         <div className={css.content}>
           <span className={css.title}>Making sure it's you </span>
           <span className={css.text}>
-            A message with a verification code has been send to your email. Enter the code to continue.
+            A message with a verification code has been sent to your email. Enter the code to continue.
           </span>
         </div>
         <div className={css.otp}>
