@@ -6,13 +6,12 @@ import { Categories } from '../../components/atoms/categories/categories';
 import { Header } from '../../components/atoms/header/header';
 import { ProfileView } from '../../components/molecules/profile-view/profile-view';
 import { getCategories } from './job-detail.services';
-import { JobDetailProps, Loader } from './job-detail.types';
 import { Divider } from '../../components/templates/divider/divider';
 import { skillsToCategory, socialCausesToCategory } from '../../core/adaptors';
 import { Job } from '../../components/organisms/job-list/job-list.types';
 import { printWhen } from '../../core/utils';
 
-export const JobDetail = (props: JobDetailProps): JSX.Element => {
+export const JobDetail = (): JSX.Element => {
   const navigate = useNavigate();
   const { data: job } = useMatch() as unknown as { data: Job };
 

@@ -10,25 +10,27 @@ import { useForm } from '../../../core/form';
 import { formModel } from './sign-up-user-complete.form';
 import { handleError } from '../../../core/api';
 import { preRegister } from '../sign-up-user-email/sign-up-user-email.services';
+import { updateProfile } from './sign-up-user.complete.services';
 
 export const SignUpUserComplete = (): JSX.Element => {
   const navigate = useNavigate();
   const form = useForm(formModel);
 
+  function setProfileName() {
+    const payload = {
+      firstName: form.controls.firstName.value,
+      lastName: form.controls.lastName.value,
+    };
+    updateProfile(payload);
+  }
+
   async function onSubmit() {
     const password = form.controls.password.value;
-    const payload = {
-      email: localStorage.getItem('email') as string,
-      first_name: form.controls.firstName.value,
-      last_name: form.controls.lastName.value,
-    };
-    try {
-      await preRegister(payload);
-      await changePasswordDirect(password);
-      navigate({ to: '/jobs' });
-    } catch (err) {
-      handleError()(err);
-    }
+    await preRegister(password);
+    changePasswordDirect(password)
+      .then(setProfileName)
+      .then(() => navigate({ to: '/jobs' }))
+      .catch(handleError());
   }
 
   return (

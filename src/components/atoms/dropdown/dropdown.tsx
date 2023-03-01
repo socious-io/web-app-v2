@@ -36,7 +36,7 @@ export const Dropdown = (props: DropdownProps) => {
 
   const onChangeHandler = (e: any) => {
     setState({ isListOpen: true, headerTitle: e.target.value });
-    const newList = list.filter((item) => item.title.toLowerCase().includes(e.target.value));
+    const newList = list.filter((item) => item.title.toLowerCase().includes(e.target.value.toLowerCase()));
     setFilterList(newList);
   };
 
