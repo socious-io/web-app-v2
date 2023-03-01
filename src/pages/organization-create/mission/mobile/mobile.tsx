@@ -6,14 +6,17 @@ import { Textarea } from '../../../../components/atoms/textarea/textarea';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import { setMission } from '../../../../store/reducers/createOrgWizard.reducer';
+import { required, useForm } from '../../../../core/form';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const missionValue = useSelector<RootState, string>((state) => {
+  const missionValue = useSelector<RootState, string | undefined>((state) => {
     return state.createOrgWizard.mission;
   });
+  const form = useForm({ mission: { initialValue: missionValue, validators: [required()] } });
+
+  form.controls.mission.subscribe((v) => dispatch(setMission(v)));
 
   function navigateToCulture() {
     navigate({ to: '../culture' });
@@ -39,13 +42,7 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.question}>What's your organization's mission?</div>
       <div className={css.main}>
-        <Textarea
-          defaultValue={missionValue}
-          onValueChange={(value) => {
-            dispatch(setMission(value));
-          }}
-          placeholder="Your organization's mission"
-        />
+        <Textarea register={form} name="mission" placeholder="Your organization's mission" />
       </div>
       <div className={css.bottom}>
         <Button disabled={!missionValue} onClick={navigateToCulture}>
