@@ -26,9 +26,11 @@ export const ChangePassword = (): JSX.Element => {
       password: formValues.password,
     };
     return () =>
-      changePassword(payload).catch((err) => {
-        onSubmitError(err.response.data);
-      });
+      changePassword(payload)
+        .then(() => navigate({ to: '/jobs' }))
+        .catch((err) => {
+          onSubmitError(err.response.data);
+        });
   }
 
   const formIsValid = form.isValid && form.controls.password.value === form.controls.confirm_new_password.value;
@@ -40,14 +42,23 @@ export const ChangePassword = (): JSX.Element => {
         <div className={css.header}></div>
         <form className={css.form}>
           <Input
+            autoComplete="password"
             register={form}
             name="current_password"
             label="Current password"
             type="password"
             placeholder="Current password"
           />
-          <Input register={form} name="password" label="New password" type="password" placeholder="New password" />
           <Input
+            autoComplete="new-password"
+            register={form}
+            name="password"
+            label="New password"
+            type="password"
+            placeholder="New password"
+          />
+          <Input
+            autoComplete="new-password"
             register={form}
             name="confirm_new_password"
             label="Confirm new password"

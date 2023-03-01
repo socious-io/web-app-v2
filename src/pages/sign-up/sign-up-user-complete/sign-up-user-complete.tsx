@@ -23,11 +23,10 @@ export const SignUpUserComplete = (): JSX.Element => {
       last_name: form.controls.lastName.value,
     };
     try {
-      await preRegister({ email: payload.email });
+      await preRegister(payload);
       await changePasswordDirect(password);
       navigate({ to: '/jobs' });
     } catch (err) {
-      console.log('err: ', err);
       handleError()(err);
     }
   }
