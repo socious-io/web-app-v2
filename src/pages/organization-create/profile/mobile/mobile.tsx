@@ -1,6 +1,6 @@
 import css from './mobile.module.scss';
 import { useNavigate } from '@tanstack/react-location';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { COUNTRIES } from '../../../../constants/COUNTRIES';
 import { CreateOrgWizard } from '../../../../store/reducers/createOrgWizard.reducer';
@@ -12,8 +12,9 @@ import { Input } from '../../../../components/atoms/input/input';
 import { Steps } from '../../../../components/atoms/steps/steps';
 import { Textarea } from '../../../../components/atoms/textarea/textarea';
 import { Divider } from '../../../../components/templates/divider/divider';
-import { formModel, updateForm } from '../profile.services';
+import { formIsInvalid, updateCityList, updateForm } from '../profile.services';
 import { useForm } from '../../../../core/form';
+import { formModel } from '../profile.form';
 
 export const Mobile = (): JSX.Element => {
   const formState = useSelector<RootState, CreateOrgWizard>((state) => state.createOrgWizard);
@@ -21,7 +22,6 @@ export const Mobile = (): JSX.Element => {
   const dispatch = useDispatch();
   const updateField = updateForm(dispatch);
   const form = useForm(formModel(formState));
-
   const [cities, setCities] = useState<DropdownItem[]>([]);
 
   Object.keys(formModel(formState)).forEach((prop) => {
@@ -52,18 +52,10 @@ export const Mobile = (): JSX.Element => {
         </Divider>
         <Divider title="Contact" divider="space">
           <div className={css.formContainer}>
-            <Input
-              register={form}
-              //   value={formValues.organizationEmail}
-              //   validations={{ pattern: REGEX.email }}
-              name="organizationEmail"
-              label="Organization email"
-              placeholder="Organization email"
-            />
-            {/* <Dropdown
-              selectedValue={formValues.country}
+            <Input register={form} name="organizationEmail" label="Organization email" placeholder="Organization email" />
+            <Dropdown
+              selectedValue={formState.country}
               label="Country"
-            //   name="country"
               list={COUNTRIES}
               placeholder="Country"
               onValueChange={(value) => {
@@ -72,7 +64,7 @@ export const Mobile = (): JSX.Element => {
               }}
             />
             <Dropdown
-              selectedValue={formValues.city}
+              selectedValue={formState.city}
               label="City"
               placeholder="City"
               list={cities}
@@ -81,49 +73,23 @@ export const Mobile = (): JSX.Element => {
                 updateField('geoname_id', value);
                 updateField('city', cityName);
               }}
-            /> */}
-            <Input
-              //   value={formValues.address}
-              register={form}
-              name="address"
-              optional
-              label="Address"
-              placeholder="Address"
             />
+            <Input register={form} name="address" optional label="Address" placeholder="Address" />
             <div>
               <div className={css.phoneNumberLabel}>
                 Phone Number <span className={css.labelOptional}>(optional)</span>
               </div>
               <div className={css.phoneNumber}>
-                <Input
-                  //   value={formValues.countryMobileCode}
-                  register={form}
-                  name="countryMobileCode"
-                  optional
-                  placeholder="+1"
-                />
-                <Input
-                  //   value={formValues.phoneNumber}
-                  register={form}
-                  name="phoneNumber"
-                  optional
-                  placeholder="Phone number"
-                />
+                <Input register={form} name="countryMobileCode" optional placeholder="+1" />
+                <Input register={form} name="phoneNumber" optional placeholder="Phone number" />
               </div>
             </div>
-            <Input
-              //   value={formValues.website}
-              register={form}
-              name="website"
-              optional
-              label="Website"
-              placeholder="Website"
-            />
+            <Input register={form} name="website" optional label="Website" placeholder="Website" />
           </div>
         </Divider>
       </div>
       <div className={css.bottom}>
-        <Button disabled={!form.isValid} onClick={() => navigate({ to: '../mission' })}>
+        <Button disabled={formIsInvalid(form.isValid, formState)} onClick={() => navigate({ to: '../mission' })}>
           Continue
         </Button>
       </div>
