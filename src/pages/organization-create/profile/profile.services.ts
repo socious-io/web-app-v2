@@ -16,6 +16,7 @@ import {
 } from '../../../store/reducers/createOrgWizard.reducer';
 import { DropdownItem } from '../../../components/atoms/dropdown/dropdown.types';
 import { getCityList } from '../../job-create/info/info.services';
+import { ControlObjectModel, FormModel } from '../../../core/form/useForm/useForm.types';
 
 export function updateCityList(dispatcher: Dispatch<SetStateAction<DropdownItem[]>>) {
   return (countryCode: string) => {
@@ -25,9 +26,33 @@ export function updateCityList(dispatcher: Dispatch<SetStateAction<DropdownItem[
   };
 }
 
-export function formIsValid(isValid: boolean, formValues: CreateOrgWizard): boolean {
-  return isValid === false || formValues.geoname_id === 0;
+export function formModel(formState: CreateOrgWizard) {
+  return {
+    organizationName: { initialValue: formState.organizationName },
+    bio: { initialValue: formState.bio },
+    organizationEmail: { initialValue: formState.organizationEmail },
+    country: { initialValue: formState.country },
+    address: { initialValue: formState.address },
+    countryMobileCode: { initialValue: formState.countryMobileCode },
+    phoneNumber: { initialValue: formState.phoneNumber },
+    website: { initialValue: formState.website },
+  };
 }
+
+// export const formModel: FormModel = {
+//   organizationName: { initialValue: '' },
+//   bio: { initialValue: '' },
+//   organizationEmail: { initialValue: '' },
+//   country: { initialValue: '' },
+//   address: { initialValue: '' },
+//   countryMobileCode: { initialValue: '' },
+//   phoneNumber: { initialValue: '' },
+//   website: { initialValue: '' },
+// };
+
+// export function formIsValid(isValid: boolean, formValues: CreateOrgWizard): boolean {
+//   return isValid === false || formValues.geoname_id === 0;
+// }
 
 export function updateForm(dispatch: Dispatch<AnyAction>) {
   return (fieldName: keyof CreateOrgWizard, value: string | number | string[]) => {

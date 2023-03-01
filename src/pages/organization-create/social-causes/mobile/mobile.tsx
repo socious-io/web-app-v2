@@ -24,7 +24,7 @@ export const Mobile = (): JSX.Element => {
     setList(filtered);
   }
 
-  const isValid = socialCauses.length > 0 && socialCauses.length <= 5;
+  const isValid = socialCauses.length > 0 && socialCauses.length <= 1;
 
   function onChange(value: string[]) {
     dispatch(setSocialCauses(value));
@@ -42,7 +42,7 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.questionContainer}>
         <div className={css.question}>What are your social causes?</div>
-        <div className={css.limitStatement}>Select up to 5 social causes.</div>
+        <div className={css.limitStatement}>Select up to 1 social causes.</div>
       </div>
       <div className={css.search}>
         <Search width="100%" placeholder="Search" onValueChange={onSearch} />
