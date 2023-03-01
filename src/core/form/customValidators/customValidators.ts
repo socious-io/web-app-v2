@@ -1,8 +1,8 @@
 import { REGEX } from '../../../constants/REGEX';
-import { minLength, required } from '../useForm/validations';
+import { ControlPrimitiveValue, Validator } from '../useForm/useForm.types';
 
-export const email = () => ({
+export const email = (): Validator => ({
     name: 'email',
     message: 'incorrect email',
-    validateWith: (value: string) => REGEX.email.test(value),
+    validateWith: (value: ControlPrimitiveValue) => REGEX.email.test(value as string),
 });
