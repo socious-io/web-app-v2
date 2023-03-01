@@ -32,7 +32,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.1",
     "react-infinite-scroller": "^1.2.6",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "web3": "^1.8.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.7",
