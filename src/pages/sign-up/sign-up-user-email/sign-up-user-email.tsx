@@ -11,13 +11,15 @@ import { formModel } from './sign-up-user-email.form';
 import { useForm } from '../../../core/form';
 import { getFormValues } from '../../../core/form/customValidators/formValues';
 import { handleError } from '../../../core/api';
+import { preRegister } from '../sign-up-user-email/sign-up-user-email.services';
 
 export const SignUpUserEmail = (): JSX.Element => {
   const form = useForm(formModel);
   const navigate = useNavigate();
 
-  function onSubmit() {
+  async function onSubmit() {
     const formValues = getFormValues(form);
+    await preRegister({ email: form.controls.email.value });
     register(formValues)
       .then(() => localStorage.setItem('email', formValues.email))
       .then(() => navigate({ to: '../verification' }))

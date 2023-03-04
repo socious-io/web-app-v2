@@ -25,8 +25,8 @@ export function updateCityList(dispatcher: Dispatch<SetStateAction<DropdownItem[
   };
 }
 
-export function formIsInvalid(isValid: boolean, formValues: CreateOrgWizard): boolean {
-  return isValid === false || formValues.geoname_id === 0;
+export function formIsInvalid(isValid: boolean, formValues: CreateOrgWizard, agreement: boolean): boolean {
+  return isValid === false || formValues.geoname_id === 0 || agreement === false;
 }
 
 export function updateForm(dispatch: Dispatch<AnyAction>) {

@@ -15,6 +15,7 @@ import { Divider } from '../../../../components/templates/divider/divider';
 import { formIsInvalid, updateCityList, updateForm } from '../profile.services';
 import { useForm } from '../../../../core/form';
 import { formModel } from '../profile.form';
+import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
 
 export const Mobile = (): JSX.Element => {
   const formState = useSelector<RootState, CreateOrgWizard>((state) => state.createOrgWizard);
@@ -23,6 +24,7 @@ export const Mobile = (): JSX.Element => {
   const updateField = updateForm(dispatch);
   const form = useForm(formModel(formState));
   const [cities, setCities] = useState<DropdownItem[]>([]);
+  const [agreement, setAgreement] = useState(false);
 
   Object.keys(formModel(formState)).forEach((prop) => {
     const p = prop as keyof ReturnType<typeof formModel>;
@@ -86,11 +88,21 @@ export const Mobile = (): JSX.Element => {
               </div>
             </div>
             <Input register={form} name="website" optional label="Website" placeholder="Website" />
+            <div className={css.agreement}>
+              <Checkbox
+                label="I verify that I am an authorized representative of this organization and have the right to act on its behalf
+                in the creation and management of this page."
+                id="agreement"
+                onChange={setAgreement}
+                checked={agreement}
+              />
+              <span></span>
+            </div>
           </div>
         </Divider>
       </div>
       <div className={css.bottom}>
-        <Button disabled={formIsInvalid(form.isValid, formState)} onClick={() => navigate({ to: '../mission' })}>
+        <Button disabled={formIsInvalid(form.isValid, formState, agreement)} onClick={() => navigate({ to: '../mission' })}>
           Continue
         </Button>
       </div>

@@ -9,10 +9,9 @@ import { changePasswordDirect } from './sign-up-user-complete.services';
 import { useForm } from '../../../core/form';
 import { formModel } from './sign-up-user-complete.form';
 import { getIdentities, handleError } from '../../../core/api';
-import { preRegister } from '../sign-up-user-email/sign-up-user-email.services';
 import { updateProfile } from './sign-up-user.complete.services';
-import { setIdentityList } from '../../../store/reducers/identity.reducer';
 import { useDispatch } from 'react-redux';
+import { setIdentityList } from '../../../store/reducers/identity.reducer';
 
 export const SignUpUserComplete = (): JSX.Element => {
   const navigate = useNavigate();
@@ -22,18 +21,18 @@ export const SignUpUserComplete = (): JSX.Element => {
   async function setProfileName() {
     const identities = await getIdentities();
     dispatch(setIdentityList(identities));
-    const username = identities.find((identity) => identity.current)!.meta.username;
+    const username = identities.find((identity) => identity.current)?.meta.username;
+
     const payload = {
+      username,
       firstName: form.controls.firstName.value,
       lastName: form.controls.lastName.value,
-      username,
     };
     updateProfile(payload);
   }
 
   async function onSubmit() {
-    const password = form.controls.password.value;
-    await preRegister(password);
+    const password = form.controls.password.value as string;
     changePasswordDirect(password)
       .then(setProfileName)
       .then(() => navigate({ to: '/jobs' }))

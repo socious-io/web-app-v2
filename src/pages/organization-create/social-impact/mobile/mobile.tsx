@@ -20,7 +20,7 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.question}>What social impact has your organization made?</div>
       <div className={css.main}>
-        <Textarea variant="outline" placeholder="Your organization's achievements" />
+        <Textarea placeholder="Your organization's achievements" />
       </div>
       <div className={css.bottom}>
         <Button onClick={() => navigate({ to: '../succeed' })}>Continue</Button>
