@@ -2,8 +2,8 @@ import { Provider } from 'react-redux';
 import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
 import { routes } from './core/routes';
 import store from './store/store';
-import { Menu } from './pages/menu/menu';
 import { Spinner } from './components/atoms/spinner/spinner';
+import { Sidebar } from './pages/sidebar/sidebar';
 
 const location = new ReactLocation();
 
@@ -12,7 +12,7 @@ function App() {
     <Provider store={store}>
       <Router location={location} routes={routes}>
         <Spinner />
-        <Menu />
+        <Sidebar />
         <Outlet />
       </Router>
     </Provider>

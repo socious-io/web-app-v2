@@ -21,7 +21,6 @@ import { getFormValues } from '../../../../core/form/customValidators/formValues
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const form = useForm(formModel);
-  console.log('form: ', form)
   const [resume, setResume] = useState<Resume>(resumeInitialState);
   const { jobDetail, screeningQuestions } = useMatch().ownData as {
     jobDetail: Job;

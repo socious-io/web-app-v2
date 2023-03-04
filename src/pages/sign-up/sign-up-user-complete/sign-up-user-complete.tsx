@@ -8,18 +8,25 @@ import { Input } from '../../../components/atoms/input/input';
 import { changePasswordDirect } from './sign-up-user-complete.services';
 import { useForm } from '../../../core/form';
 import { formModel } from './sign-up-user-complete.form';
-import { handleError } from '../../../core/api';
+import { getIdentities, handleError } from '../../../core/api';
 import { preRegister } from '../sign-up-user-email/sign-up-user-email.services';
 import { updateProfile } from './sign-up-user.complete.services';
+import { setIdentityList } from '../../../store/reducers/identity.reducer';
+import { useDispatch } from 'react-redux';
 
 export const SignUpUserComplete = (): JSX.Element => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const form = useForm(formModel);
 
-  function setProfileName() {
+  async function setProfileName() {
+    const identities = await getIdentities();
+    dispatch(setIdentityList(identities));
+    const username = identities.find((identity) => identity.current)!.meta.username;
     const payload = {
       firstName: form.controls.firstName.value,
       lastName: form.controls.lastName.value,
+      username,
     };
     updateProfile(payload);
   }
