@@ -8,7 +8,8 @@ import { Textarea } from '../../../../components/atoms/textarea/textarea';
 import { addOrganization, wizardFormToPayloadAdaptor } from '../../organization-create';
 import css from './mobile.module.scss';
 import { required, useForm } from '../../../../core/form';
-import { handleError } from '../../../../core/api';
+import { getIdentities, handleError } from '../../../../core/api';
+import { setIdentityList } from '../../../../store/reducers/identity.reducer';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -34,9 +35,14 @@ export const Mobile = (): JSX.Element => {
     submitOrganization(formState);
   }
 
+  async function updateIdentityList() {
+    const identities = await getIdentities();
+    dispatch(setIdentityList(identities));
+  }
+
   function submitOrganization(wizardForm: CreateOrgWizard) {
     const payload = wizardFormToPayloadAdaptor(wizardForm);
-    addOrganization(payload).then(navigateToSuccess).catch(handleError());
+    addOrganization(payload).then(navigateToSuccess).then(updateIdentityList).catch(handleError());
   }
 
   return (
