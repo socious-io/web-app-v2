@@ -1,8 +1,9 @@
 import { Validator } from '../../../components/atoms/password-quality/password-quality.types';
 import { post } from '../../../core/http';
 
-export function updateProfile(payload: { firstName: string; lastName: string }) {
+export function updateProfile(payload: { username: string; firstName: string; lastName: string }) {
   const adopted = {
+    username: payload.username,
     first_name: payload.firstName,
     last_name: payload.lastName,
   };

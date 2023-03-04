@@ -7,7 +7,6 @@ export const Mobile = (): JSX.Element => {
   const [amount, setAmount] = useState('');
 
   function onAmountChange(e: ChangeEvent<HTMLInputElement>) {
-    console.log('e:', e.target.value);
     setAmount(e.target.value);
   }
 

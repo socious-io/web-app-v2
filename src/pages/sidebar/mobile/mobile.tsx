@@ -9,7 +9,7 @@ import { RootState } from '../../../store/store';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Button } from '../../../components/atoms/button/button';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
-import { getSession, logout } from '../menu.service';
+import { getSession, logout } from '../sidebar.service';
 import css from './mobile.module.scss';
 import { AccountsModel } from './mobile.types';
 import { printWhen } from '../../../core/utils';
