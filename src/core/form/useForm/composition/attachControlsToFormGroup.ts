@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-param-reassign */
-
 import { generateControlErrorsProp } from '../useForm.helper';
 import {
     NormalizedModel,
