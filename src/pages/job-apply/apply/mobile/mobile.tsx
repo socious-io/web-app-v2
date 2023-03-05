@@ -47,7 +47,6 @@ export const Mobile = (): JSX.Element => {
     } else {
       applyApplication(jobDetail.id, payload).then(navigateToJobDetail);
     }
-    // navigate({ to: `../confirm?company=${jobDetail.identity_meta.name`}`);
   }
 
   const renderQuestions = () => {
@@ -97,7 +96,7 @@ export const Mobile = (): JSX.Element => {
             img={jobDetail.identity_meta?.image}
             type={jobDetail.identity_type}
             name={jobDetail.identity_meta.name}
-            location={jobDetail.identity_meta.city}
+            location={`${jobDetail.identity_meta.city}, ${jobDetail.identity_meta.country}`}
           />
           <div className={css.jobTitle}>{jobDetail.title}</div>
           <Typography lineLimit={3}>{jobDetail.description}</Typography>
