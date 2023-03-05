@@ -10,10 +10,23 @@ import { Divider } from '../../components/templates/divider/divider';
 import { skillsToCategory, socialCausesToCategory } from '../../core/adaptors';
 import { Job } from '../../components/organisms/job-list/job-list.types';
 import { printWhen } from '../../core/utils';
+import { useSelector } from 'react-redux';
+import { IdentityReq } from '../../core/types';
+import { RootState } from '../../store/store';
 
 export const JobDetail = (): JSX.Element => {
   const navigate = useNavigate();
   const { data: job } = useMatch() as unknown as { data: Job };
+
+  const buttonJSX = (
+    <Button disabled={job.applied} onClick={onApply}>
+      Apply now
+    </Button>
+  );
+
+  const identity = useSelector<RootState, IdentityReq>((state) => {
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  });
 
   function onApply() {
     navigate({ to: './apply' });
@@ -39,9 +52,7 @@ export const JobDetail = (): JSX.Element => {
         />
         <div className={css.jobTitle}>{job.title}</div>
         <Categories marginBottom="1rem" list={getCategories(job)} />
-        <Button disabled={job.applied} onClick={onApply}>
-          Apply now
-        </Button>
+        {printWhen(buttonJSX, identity.type === 'users')}
       </Divider>
       <Divider title="Social cause">
         <CategoriesClickable list={socialCausesToCategory(job.causes_tags)} />
