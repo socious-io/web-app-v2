@@ -39,6 +39,8 @@ import {
   getToReviewList,
 } from '../pages/job-offer-reject/job-offer-reject.services';
 import { getBadges, getImpactPoints } from '../pages/achievements/ahievements.services';
+import { getOfferDetail, receivedOfferLoader } from '../pages/offer-received/offer-received.services';
+import { endpoint } from './endpoints';
 
 export const routes: Route[] = [
   {
@@ -318,6 +320,7 @@ export const routes: Route[] = [
       },
       {
         path: '/jobs/received-offer/:id',
+        loader: ({ params }) => receivedOfferLoader(params),
         element: () => import('../pages/offer-received/offer-received').then((m) => <m.OfferReceived />),
       },
       {

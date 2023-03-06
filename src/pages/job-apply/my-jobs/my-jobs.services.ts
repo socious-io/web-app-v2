@@ -1,6 +1,6 @@
 import { toRelativeTime } from '../../../core/relative-time';
 import {
-  AwaitingReviewApplicantListResp,
+  GetOffer,
   Pagination,
   UserApplicantResp,
   DeclinedApplicantListResp,
@@ -107,7 +107,7 @@ function declinedListToJobCardList(applicants: DeclinedApplicantListResp['items'
 }
 
 function awaitingItemToJobCardAdaptor(
-  applicant: AwaitingReviewApplicantListResp['items'][0]
+  applicant: GetOffer['items'][0]
 ): JobCardProps {
   return {
     id: applicant.id,
@@ -119,7 +119,7 @@ function awaitingItemToJobCardAdaptor(
 }
 
 function awaitingListToJobCardList(
-  applicants: AwaitingReviewApplicantListResp['items']
+  applicants: GetOffer['items']
 ): JobCardProps[] {
   return applicants.map(awaitingItemToJobCardAdaptor);
 }
