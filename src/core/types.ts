@@ -262,22 +262,30 @@ export type DeclinedApplicantListResp = Pagination<
   }[]
 >;
 
-export type AwaitingReviewApplicantListResp = Pagination<
-  {
-    id: string;
-    created_at: string;
-    project: {
-      description: string;
-      title: string;
+export type Offer = {
+  applicant: {
+    cover_letter: string;
+  };
+  id: string;
+  created_at: string;
+  offer_message: string;
+  project: {
+    description: string;
+    title: string;
+  };
+  offerer: {
+    type: UserType;
+    meta: {
+      image: string;
+      name: string;
+      city: string;
+      country: string;
     };
-    offerer: {
-      meta: {
-        image: string;
-        name: string;
-      };
-    };
-  }[]
->;
+  };
+  total_hours: number;
+};
+
+export type GetOffer = Pagination<Offer[]>;
 
 export type BadgesResp = {
   count: number;

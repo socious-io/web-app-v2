@@ -1,3 +1,5 @@
+/** @deprecated use core/api/endpoints instead */
+
 import { AxiosError } from 'axios';
 import { dialog } from './dialog/dialog';
 import { get } from './http';
