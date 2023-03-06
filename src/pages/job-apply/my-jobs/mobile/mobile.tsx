@@ -69,7 +69,7 @@ export const Mobile = (): JSX.Element => {
             <div className={css.listContainer}>
               <JobCardList
                 list={awaitingList.items}
-                onItemClick={console.log}
+                onItemClick={id => navigate({to: `/jobs/received-offer/${id}`})}
                 totalCount={awaitingList.total_count}
                 onSeeMoreClick={updateAwaitingList}
               />

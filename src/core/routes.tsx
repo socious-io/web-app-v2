@@ -306,6 +306,7 @@ export const routes: Route[] = [
         path: 'terms-conditions',
         element: () => import('../pages/terms-conditions/terms-conditions').then((m) => <m.TermsConditions />),
       },
+
       {
         path: '/jobs/:id/apply',
         loader: async ({ params }) => {
@@ -314,6 +315,10 @@ export const routes: Route[] = [
           return { jobDetail, screeningQuestions };
         },
         element: () => import('../pages/job-apply/apply/apply').then((m) => <m.JobApply />),
+      },
+      {
+        path: '/jobs/received-offer/:id',
+        element: () => import('../pages/offer-received/offer-received').then((m) => <m.OfferReceived />),
       },
       {
         path: '/jobs/applied/:id',
