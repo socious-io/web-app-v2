@@ -1,4 +1,5 @@
 import { useMatch } from '@tanstack/react-location';
+import { useState } from 'react';
 import { Accordion } from '../../../components/atoms/accordion/accordion';
 import { Button } from '../../../components/atoms/button/button';
 import { Header } from '../../../components/atoms/header-v2/header';
@@ -6,47 +7,79 @@ import { Typography } from '../../../components/atoms/typography/typography';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
 import { Divider } from '../../../components/templates/divider/divider';
 import { TopFixedMobile } from '../../../components/templates/top-fixed-mobile/top-fixed-mobile';
+import { translatePaymentTerms } from '../../../constants/PROJECT_PAYMENT_SCHEME';
+import { translatePaymentType } from '../../../constants/PROJECT_PAYMENT_TYPE';
+import { translateRemotePreferences } from '../../../constants/PROJECT_REMOTE_PREFERENCE';
+import { dialog } from '../../../core/dialog/dialog';
+import { endpoint } from '../../../core/endpoints';
+import { printWhen } from '../../../core/utils';
 import { Resolver } from '../offer-received.types';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const { job, offer } = useMatch().ownData as Resolver;
-  console.log('offer', offer);
+  const { offer } = useMatch().ownData as Resolver;
+  const [approved, setApproved] = useState(offer.status === 'APPROVED');
+
+  function onAccept(id: string) {
+    return () =>
+      endpoint.post.offers['{offer_id}/approve'](id).then(() => {
+        dialog.alert({ title: 'Successful', message: 'You have successfully approved the offer' }).then(() => {
+          setApproved(false);
+        });
+      });
+  }
+
+  function onDeclined(id: string) {
+    return () => endpoint.post.offers['{offer_id}/withdrawn'](id);
+  }
+
+  const congratulationsBoxJSX = (
+    <div className={css.congratulations}>
+      <img src="/icons/mail-inbox-envelope-favorite-white.svg" />
+      <div>
+        <div className={css.congratulationsText}>Congratulations, you received an offer.</div>
+        <div className={css.congratulationsText}>Accept the offer to start working on this mission.</div>
+      </div>
+    </div>
+  );
+
+  const buttonsJSX = (
+    <div className={css.btnContainer}>
+      <Button onClick={onAccept(offer.id)}>Accept offer</Button>
+      <Button onClick={onDeclined(offer.id)} color="white">
+        Decline
+      </Button>
+    </div>
+  );
 
   return (
     <TopFixedMobile>
-      <Header title="title" onBack={console.log} />
+      <Header title="title" onBack={() => history.back()} />
       <div className={css.body}>
-        <div className={css.congratulations}>
-          <img src="/icons/mail-inbox-envelope-favorite-white.svg" />
-          <div>
-            <div className={css.congratulationsText}>Congratulations, you received an offer.</div>
-            <div className={css.congratulationsText}>Accept the offer to start working on this mission.</div>
-          </div>
-        </div>
+        {printWhen(congratulationsBoxJSX, approved)}
         <Accordion title="Mission details" id="mission-details">
           <div className={css.missionDetailContainer}>
             <div className={css.missionDetailMessage}>{offer.offer_message}</div>
             <div className={css.detailItemContainer}>
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Payment type</div>
-                <div className={css.detailItemValue}>Unspecified</div>
+                <div className={css.detailItemValue}>{translatePaymentType(offer.project.payment_type)}</div>
               </div>
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Payment terms</div>
-                <div className={css.detailItemValue}>Unspecified</div>
+                <div className={css.detailItemValue}>{translatePaymentTerms(offer.project.payment_scheme)}</div>
               </div>
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Payment mode</div>
-                <div className={css.detailItemValue}>Unspecified</div>
+                <div className={css.detailItemValue}>{translateRemotePreferences(offer.project.remote_preference)}</div>
               </div>
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Mission total</div>
-                <div className={css.detailItemValue}>Unspecified</div>
+                <div className={css.detailItemValue}>{offer.assignment_total}</div>
               </div>
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Due date</div>
-                <div className={css.detailItemValue}>Unspecified</div>
+                <div className={css.detailItemValue}>{offer.due_date || 'Unspecified'}</div>
               </div>
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Estimate total hours</div>
@@ -80,16 +113,14 @@ export const Mobile = (): JSX.Element => {
             </Divider> */}
           </div>
         </Accordion>
-        <Accordion title="About Company" id="about-company">
-          <Typography>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam inventore quod ipsa veniam enim vitae provident,
-            beatae dolore ipsam dicta vel maxime vero harum exercitationem at maiores odit sunt alias?
-          </Typography>
-        </Accordion>
-        <div className={css.btnContainer}>
-          <Button>Accept offer</Button>
-          <Button color="white">Decline</Button>
-        </div>
+        {/* <Accordion title="About Company" id="about-company">
+          <div className={css.aboutCompany}>
+            <Typography>
+              // TODO: Ehsan will add the prop later Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
+            </Typography>
+          </div>
+        </Accordion> */}
+        {printWhen(buttonsJSX, approved)}
       </div>
     </TopFixedMobile>
   );
