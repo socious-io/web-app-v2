@@ -269,9 +269,15 @@ export type Offer = {
   id: string;
   created_at: string;
   offer_message: string;
+  assignment_total: number;
+  due_date: string;
+  status: string;
   project: {
     description: string;
     title: string;
+    payment_type: string;
+    payment_scheme: string;
+    remote_preference: string;
   };
   offerer: {
     type: UserType;
