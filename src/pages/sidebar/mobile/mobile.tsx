@@ -19,7 +19,9 @@ export const Mobile = () => {
   const navigate = useNavigate();
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+    return state.identity.entities.find(
+      (identity) => identity.current,
+    ) as IdentityReq;
   });
 
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
@@ -45,14 +47,11 @@ export const Mobile = () => {
   };
 
   const navigateToJobs = (id: string) => {
-    getSession(id).then((resp) => {
-      if (resp.message === 'success') {
-        getIdentities()
-          .then((resp) => dispatch(setIdentityList(resp)))
-          .then(() => navigate({ to: '/jobs' }))
-          .then(closeSidebar);
-      }
-    });
+    getSession(id);
+    getIdentities()
+      .then((resp) => dispatch(setIdentityList(resp)))
+      .then(() => navigate({ to: '/jobs' }))
+      .then(closeSidebar);
   };
 
   const navigateToCreateOrg = () => {
@@ -134,7 +133,11 @@ export const Mobile = () => {
       <div className={css.title}>Switch To</div>
       {accountList.map((item) => {
         return (
-          <div onClick={() => navigateToJobs(item.id)} key={item.id} className={css.row}>
+          <div
+            onClick={() => navigateToJobs(item.id)}
+            key={item.id}
+            className={css.row}
+          >
             <Avatar size="2rem" type={item.type} img={item.image} />
             <span>{item.name}</span>
           </div>
@@ -145,7 +148,11 @@ export const Mobile = () => {
 
   return (
     <div className={css.container}>
-      <div style={bgStyles(isVisible)} className={css.bg} onClick={closeSidebar} />
+      <div
+        style={bgStyles(isVisible)}
+        className={css.bg}
+        onClick={closeSidebar}
+      />
       <div style={sidebarStyles(isVisible)} className={css.sidebar}>
         <div className={css.header}>
           <div className={css.organization}>
@@ -186,26 +193,42 @@ export const Mobile = () => {
         {printWhen(switchToJSX, accountList.length > 1)}
         <div className={css.items}>
           <div className={css.title}>Settings</div>
-          <div className={css.row} onClick={() => navigateToRoute('privacy-policy')}>
+          <div
+            className={css.row}
+            onClick={() => navigateToRoute('privacy-policy')}
+          >
             <img src="/icons/document-one-black.svg" />
             <span>Privacy policy</span>
           </div>
-          <div className={css.row} onClick={() => navigateToRoute('terms-conditions')}>
+          <div
+            className={css.row}
+            onClick={() => navigateToRoute('terms-conditions')}
+          >
             <img src="/icons/document-one-black.svg" />
             <span>Terms & conditions</span>
           </div>
-          <div className={css.row} onClick={() => navigateToRoute('change-password')}>
+          <div
+            className={css.row}
+            onClick={() => navigateToRoute('change-password')}
+          >
             <img src="/icons/key-black.svg" width={22} height={22} />
             <span>Change password</span>
           </div>
-          <div className={css.row} onClick={() => navigateToRoute('delete-profile/delete')}>
+          <div
+            className={css.row}
+            onClick={() => navigateToRoute('delete-profile/delete')}
+          >
             <img src="/icons/delete-account-black.svg" />
             <span>Delete Account</span>
           </div>
         </div>
         <div className={css.items}>
           <div className={css.row} onClick={() => navigateToSignIn()}>
-            <img src="/icons/logout-red.svg" height={22} className={css.redIcon} />
+            <img
+              src="/icons/logout-red.svg"
+              height={22}
+              className={css.redIcon}
+            />
             <span>Log out</span>
           </div>
         </div>
