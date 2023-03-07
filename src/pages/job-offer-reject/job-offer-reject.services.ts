@@ -3,6 +3,36 @@ import { isoToStandard } from '../../core/time';
 import { ApplicantResp, MissionsResp, OfferPayload, Pagination, QuestionsRes, UserApplicantResp } from '../../core/types';
 import { Applicant } from '../../components/molecules/applicant-list/applicant-list.types';
 import { Job } from '../../components/organisms/job-list/job-list.types';
+import { endpoint } from '../../core/endpoints';
+
+export async function jobOfferRejectLoader({ params }: { params: { id: string } }) {
+  const requests = [
+    getJobOverview(params.id),
+    getScreeningQuestions(params.id),
+    getToReviewList({ id: params.id, page: 1 }),
+    getDeclinedList({ id: params.id, page: 1 }),
+    getHiredList({ id: params.id, page: 1 }),
+    getEndHiredList({ id: params.id, page: 1 }),
+    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'PENDING' }),
+    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'APPROVED' }),
+    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'HIRED' }),
+    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'CLOSED,CANCELED,WITHDRAWN' }),
+  ];
+  const [jobOverview, screeningQuestions, reviewList, declinedList, hiredList, endHiredList, sent, approved, hired, closed] =
+    await Promise.all(requests);
+  return {
+    jobOverview,
+    screeningQuestions,
+    reviewList,
+    declinedList,
+    hiredList,
+    endHiredList,
+    sent,
+    approved,
+    hired,
+    closed,
+  };
+}
 
 export async function getJobOverview(id: string): Promise<Job> {
   return get(`projects/${id}`).then(({ data }) => data);
