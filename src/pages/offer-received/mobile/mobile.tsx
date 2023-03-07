@@ -1,4 +1,5 @@
 import { useMatch } from '@tanstack/react-location';
+import { useState } from 'react';
 import { Accordion } from '../../../components/atoms/accordion/accordion';
 import { Button } from '../../../components/atoms/button/button';
 import { Header } from '../../../components/atoms/header-v2/header';
@@ -9,6 +10,7 @@ import { TopFixedMobile } from '../../../components/templates/top-fixed-mobile/t
 import { translatePaymentTerms } from '../../../constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from '../../../constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from '../../../constants/PROJECT_REMOTE_PREFERENCE';
+import { dialog } from '../../../core/dialog/dialog';
 import { endpoint } from '../../../core/endpoints';
 import { printWhen } from '../../../core/utils';
 import { Resolver } from '../offer-received.types';
@@ -16,9 +18,15 @@ import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const { offer } = useMatch().ownData as Resolver;
+  const [approved, setApproved] = useState(offer.status === 'APPROVED');
 
   function onAccept(id: string) {
-    return () => endpoint.post.offers['{offer_id}/approve'](id);
+    return () =>
+      endpoint.post.offers['{offer_id}/approve'](id).then(() => {
+        dialog.alert({ title: 'Successful', message: 'You have successfully approved the offer' }).then(() => {
+          setApproved(false);
+        });
+      });
   }
 
   function onDeclined(id: string) {
@@ -48,7 +56,7 @@ export const Mobile = (): JSX.Element => {
     <TopFixedMobile>
       <Header title="title" onBack={() => history.back()} />
       <div className={css.body}>
-        {printWhen(congratulationsBoxJSX, offer.status === 'APPROVED')}
+        {printWhen(congratulationsBoxJSX, approved)}
         <Accordion title="Mission details" id="mission-details">
           <div className={css.missionDetailContainer}>
             <div className={css.missionDetailMessage}>{offer.offer_message}</div>
@@ -112,7 +120,7 @@ export const Mobile = (): JSX.Element => {
             </Typography>
           </div>
         </Accordion> */}
-        {printWhen(buttonsJSX, offer.status === 'APPROVED')}
+        {printWhen(buttonsJSX, approved)}
       </div>
     </TopFixedMobile>
   );
