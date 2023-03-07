@@ -4,7 +4,7 @@ export type GetProject = (id: string) => {
   city: string;
 };
 
-export type GetOffer = {
+export type Offer = {
   id: string;
   created_at: string;
   project_id: string;
@@ -16,6 +16,12 @@ export type GetOffer = {
   offerer: {
     meta: {
       image: string;
+      name: string;
+    };
+  };
+  recipient: {
+    meta: {
+      avatar: string | null;
       name: string;
     };
   };

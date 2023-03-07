@@ -2,7 +2,6 @@ import { useNavigate } from '@tanstack/react-location';
 import { Accordion } from '../../../../../components/atoms/accordion/accordion';
 import { ApplicantList } from '../../../../../components/molecules/applicant-list/applicant-list';
 import { applicantToApplicantListAdaptor, rejectApplicant } from '../../../job-offer-reject.services';
-import css from './applicants.module.scss';
 import { ApplicantsProps } from './applicants.types';
 
 export const Applicants = (props: ApplicantsProps): JSX.Element => {
@@ -24,7 +23,7 @@ export const Applicants = (props: ApplicantsProps): JSX.Element => {
   }
 
   return (
-    <div className={css.container}>
+    <div>
       <Accordion id="to-review" title={`To review (${toReviewList.total_count})`}>
         <ApplicantList
           onApplicantClick={onApplicantClick}
