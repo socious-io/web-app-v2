@@ -5,10 +5,6 @@ const config: CapacitorConfig = {
   appName: 'Socious',
   webDir: 'dist',
   bundledWebRuntime: false,
-  server: {
-    url: 'http://192.168.1.6:3000',
-    cleartext: true,
-  },
   plugins: {
     CapacitorHttp: {
       enabled: true,
