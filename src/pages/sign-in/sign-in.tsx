@@ -5,7 +5,7 @@ import { Input } from '../../components/atoms/input/input';
 import { Link } from '../../components/atoms/link/link';
 import { Typography } from '../../components/atoms/typography/typography';
 import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
-import { login } from './sign-in.services';
+import { endpoint } from '../../core/endpoints';
 import { formModel } from './sign-in.form';
 import { useForm } from '../../core/form';
 import { getFormValues } from '../../core/form/customValidators/formValues';
@@ -26,7 +26,10 @@ export const SignIn = (): JSX.Element => {
 
   async function onLogin() {
     const formValues = getFormValues(form) as LoginPayload;
-    login(formValues).then(onLoginSucceed).catch(handleError('Login Failed'));
+    endpoint.auth
+      .login(formValues)
+      .then(onLoginSucceed)
+      .catch(handleError('Login Failed'));
   }
 
   return (
@@ -38,7 +41,13 @@ export const SignIn = (): JSX.Element => {
           </Typography>
         </div>
         <form className={css.formContainer}>
-          <Input register={form} autoComplete="Email" label="Email" name="email" placeholder="Email" />
+          <Input
+            register={form}
+            autoComplete="Email"
+            label="Email"
+            name="email"
+            placeholder="Email"
+          />
           <Input
             register={form}
             autoComplete="current-password"
@@ -49,7 +58,9 @@ export const SignIn = (): JSX.Element => {
           />
         </form>
         <div className={css.forgotPassword}>
-          <Link onClick={() => navigate({ to: '/forget-password/email' })}>Forgot your password?</Link>
+          <Link onClick={() => navigate({ to: '/forget-password/email' })}>
+            Forgot your password?
+          </Link>
         </div>
       </div>
       <div>
@@ -59,7 +70,9 @@ export const SignIn = (): JSX.Element => {
           </Button>
           <Typography marginTop="1rem">
             <span>Not a member? </span>
-            <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>Sign up</Link>
+            <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>
+              Sign up
+            </Link>
           </Typography>
         </div>
       </div>

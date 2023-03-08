@@ -1,5 +1,5 @@
-/** @description this file mimics swagger */
 import { get, post } from '../http';
+import auth from './auth';
 import { Pagination } from '../types';
 import { Offer, GetProject } from './index.types';
 
@@ -14,6 +14,7 @@ function getDataProp<T = unknown>(resp: { data: T }) {
 }
 
 export const endpoint = {
+  auth,
   get: {
     projects: {
       project_id: (id: string) => get(`projects/${id}`).then(getDataProp) as Promise<GetProject>,

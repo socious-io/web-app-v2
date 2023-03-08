@@ -2,9 +2,20 @@ import { JobItems, PostItems } from '../pages/search/search.types';
 
 export type UserType = 'users' | 'organizations';
 
+export type LoginReq = {
+  email: string;
+  password: string;
+};
+
 export type LoginResp = {
   error?: string;
-  message?: 'success';
+  access_token?: string;
+  refresh_token?: string;
+  token_type?: 'Bearer';
+};
+
+export type RefreshReq = {
+  refresh_token: string;
 };
 
 export type UserIdentityMeta = {
