@@ -6,6 +6,7 @@ import { Loader } from '../../job-offer-reject.types';
 import { Overview } from '../components/overview/overview';
 import { Applicants } from '../components/applicants/applicants';
 import { Hired } from '../components/hired/hired';
+import { Offered } from '../components/offered/offered';
 
 export const Mobile = (): JSX.Element => {
   const resolver = useMatch().ownData as Loader;
@@ -20,6 +21,10 @@ export const Mobile = (): JSX.Element => {
     {
       name: 'Applicants',
       content: <Applicants toReviewList={resolver.reviewList} declinedList={resolver.declinedList} />,
+    },
+    {
+      name: 'Offered',
+      content: <Offered sent={resolver.sent} approved={resolver.approved} hired={resolver.hired} closed={resolver.closed} />,
     },
     {
       name: 'Hired',

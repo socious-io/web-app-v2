@@ -49,6 +49,7 @@ import {
   getHiredList,
   getJobOverview,
   getToReviewList,
+  jobOfferRejectLoader,
 } from '../pages/job-offer-reject/job-offer-reject.services';
 import {
   getBadges,
@@ -317,36 +318,8 @@ export const routes: Route[] = [
               ).then((m) => <m.ApplicantDetail />),
           },
           {
-            loader: async ({ params }) => {
-              const requests = [
-                getJobOverview(params.id),
-                getScreeningQuestions(params.id),
-                getToReviewList({ id: params.id, page: 1 }),
-                getDeclinedList({ id: params.id, page: 1 }),
-                getHiredList({ id: params.id, page: 1 }),
-                getEndHiredList({ id: params.id, page: 1 }),
-              ];
-              const [
-                jobOverview,
-                screeningQuestions,
-                reviewList,
-                declinedList,
-                hiredList,
-                endHiredList,
-              ] = await Promise.all(requests);
-              return {
-                jobOverview,
-                screeningQuestions,
-                reviewList,
-                declinedList,
-                hiredList,
-                endHiredList,
-              };
-            },
-            element: () =>
-              import('../pages/job-offer-reject/job-offer-reject').then((m) => (
-                <m.JobOfferReject />
-              )),
+            loader: (params) => jobOfferRejectLoader(params),
+            element: () => import('../pages/job-offer-reject/job-offer-reject').then((m) => <m.JobOfferReject />),
           },
         ],
       },
