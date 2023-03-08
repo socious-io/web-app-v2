@@ -18,12 +18,12 @@ import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const { offer } = useMatch().ownData as Resolver;
-  const [approved, setApproved] = useState(offer.status === 'APPROVED');
+  const [approved, setApproved] = useState(offer.status !== 'APPROVED');
 
   function onAccept(id: string) {
     return () =>
       endpoint.post.offers['{offer_id}/approve'](id).then(() => {
-        dialog.alert({ title: 'Successful', message: 'You have successfully approved the offer' }).then(() => {
+        dialog.alert({ title: 'Successful', message: 'You have successfully accepted the offer' }).then(() => {
           setApproved(false);
         });
       });
