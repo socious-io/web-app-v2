@@ -1,4 +1,3 @@
-import { CSSProperties } from 'react';
 import { DropdownItem } from './dropdown.types';
 
 export function setInitialValue(list: DropdownItem[], value?: string | number): string {

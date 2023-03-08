@@ -40,8 +40,9 @@ export function jobCategoriesToDropdown(categories: CategoriesResp['categories']
 export function citiesToCategories(cities: Cities[]): Dropdown[] {
   return cities.map((city) => {
     return {
-      title: `${city.name}, ${city.region_name}`,
-      value: city.id,
+      label: `${city.name}, ${city.region_name}`,
+      value: city.name
+    //   value: city.id,
     };
   });
 }
