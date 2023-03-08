@@ -33,7 +33,7 @@ const initialState: CreatePostWizard = {
   job_category_id: '',
   payment_scheme: '',
   city: '',
-  payment_currency: '',
+  payment_currency: 'USD',
 };
 
 export const createPostWizardSlice = createSlice({

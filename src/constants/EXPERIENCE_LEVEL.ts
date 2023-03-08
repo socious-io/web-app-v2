@@ -4,3 +4,10 @@ export const EXPERIENCE_LEVEL = [
   { value: 2, title: 'Intermediate' },
   { value: 3, title: 'Expert' },
 ];
+
+export const EXPERIENCE_LEVEL_V2 = [
+  { value: 0, label: 'No experience' },
+  { value: 1, label: 'Entry' },
+  { value: 2, label: 'Intermediate' },
+  { value: 3, label: 'Expert' },
+];

@@ -14,8 +14,5 @@ export interface TextareaProps<T = unknown> extends ReactHTMLTextareaElement {
   name?: string;
   optional?: boolean;
   errors?: string[];
-  //   validations?: Record<string, any>;
-  //   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
-  //   onBlur?: FocusEventHandler<HTMLTextAreaElement>;
   onValueChange?: (value: string) => void;
 }
