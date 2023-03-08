@@ -30,18 +30,9 @@ import {
   getOnGoingList,
   getPendingApplicants,
 } from '../pages/job-apply/my-jobs/my-jobs.services';
-import {
-  getApplicantDetail,
-  getDeclinedList,
-  getEndHiredList,
-  getHiredList,
-  getJobOverview,
-  getToReviewList,
-  jobOfferRejectLoader,
-} from '../pages/job-offer-reject/job-offer-reject.services';
+import { getApplicantDetail, jobOfferRejectLoader } from '../pages/job-offer-reject/job-offer-reject.services';
 import { getBadges, getImpactPoints } from '../pages/achievements/ahievements.services';
-import { getOfferDetail, receivedOfferLoader } from '../pages/offer-received/offer-received.services';
-import { endpoint } from './endpoints';
+import { receivedOfferLoader } from '../pages/offer-received/offer-received.services';
 
 export const routes: Route[] = [
   {

@@ -45,6 +45,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
           id={props.label}
           className={css.textbox}
           role="textbox"
+          onChange={props.onChange}
           {...rest}
           {...props?.register?.bind(props.name)}
         ></input>

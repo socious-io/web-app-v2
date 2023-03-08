@@ -1,8 +1,9 @@
+import { ChangeEvent } from 'react';
 import { FormGroup } from '../../../core/form/useForm/useForm.types';
 
 type ReactHTMLInputElement = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 export interface InputProps extends ReactHTMLInputElement {
-  name: string;
+  name?: string;
   variant?: 'outline';
   className?: string;
   errors?: string[];
@@ -10,4 +11,5 @@ export interface InputProps extends ReactHTMLInputElement {
   optional?: boolean;
   label?: string;
   register?: Required<FormGroup>;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }

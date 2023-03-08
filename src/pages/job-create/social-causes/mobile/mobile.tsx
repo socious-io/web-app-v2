@@ -33,7 +33,7 @@ export const Mobile = (): JSX.Element => {
     dispatch(resetCreatePostWizard());
   }
 
-  const isValid = selectedSocialCauses.length > 0 && selectedSocialCauses.length <= 5;
+  const isValid = selectedSocialCauses.length > 0 && selectedSocialCauses.length <= 1;
 
   return (
     <div className={css.container}>
@@ -45,7 +45,7 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.questionContainer}>
         <div className={css.question}>What is your job about?</div>
-        <div className={css.limitStatement}>Select up to 5 social cause</div>
+        <div className={css.limitStatement}>Select up to 1 social cause</div>
       </div>
       <div className={css.search}>
         <Search backgroundColor="var(--color-off-white-01)" width="100%" placeholder="Search" onValueChange={onSearch} />
