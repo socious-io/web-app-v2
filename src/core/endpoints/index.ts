@@ -30,7 +30,8 @@ export const endpoint = {
     offers: {
       '{offer_id}/approve': (id: string) => post(`offers/${id}/approve`, {}).then(getDataProp),
       '{offer_id}/withdrawn': (id: string) => post(`offers/${id}/withdrawn`, {}).then(getDataProp),
+      '{offer_id}/cancel': (id: string) => post(`offers/${id}/cancel`, {}).then(getDataProp),
+      '{offer_id}/hire': (id: string) => post(`offers/${id}/hire`, {}).then(getDataProp),
     },
   },
 };
-// https://dev.socious.io/api/v2/projects/5df3e0f1-896d-4c02-b8be-ce0f1e70aaaf/offers?filter.status=PENDING&page=1

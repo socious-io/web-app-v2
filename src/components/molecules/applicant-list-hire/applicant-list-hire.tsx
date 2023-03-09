@@ -7,7 +7,7 @@ import { Applicant, ApplicantListProps } from './applicant-list-hire.types';
 
 export const ApplicantListHire = (props: ApplicantListProps): JSX.Element => {
   const hireBtn = (id: string) => (
-    <div onClick={() => props.onOfferClick?.(id)} className={css.footerItem}>
+    <div onClick={() => props.onHireClick?.(id)} className={css.footerItem}>
       <img src="/icons/user-accept-blue.svg" />
       <div className={css.footerLabel}>Hire</div>
     </div>
