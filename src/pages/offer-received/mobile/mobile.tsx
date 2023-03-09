@@ -7,6 +7,7 @@ import { Typography } from '../../../components/atoms/typography/typography';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
 import { Divider } from '../../../components/templates/divider/divider';
 import { TopFixedMobile } from '../../../components/templates/top-fixed-mobile/top-fixed-mobile';
+import { StatusKeys } from '../../../constants/APPLICANT_STATUS';
 import { translatePaymentTerms } from '../../../constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from '../../../constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from '../../../constants/PROJECT_REMOTE_PREFERENCE';
@@ -18,13 +19,13 @@ import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const { offer } = useMatch().ownData as Resolver;
-  const [approved, setApproved] = useState(offer.status !== 'APPROVED');
+  const [status, setStatus] = useState<StatusKeys>(offer.status);
 
   function onAccept(id: string) {
     return () =>
       endpoint.post.offers['{offer_id}/approve'](id).then(() => {
         dialog.alert({ title: 'Offer accepted', message: 'You have successfully accepted the offer' }).then(() => {
-          setApproved(false);
+          setStatus('APPROVED');
         });
       });
   }
@@ -33,7 +34,7 @@ export const Mobile = (): JSX.Element => {
     return () => {
       endpoint.post.offers['{offer_id}/withdrawn'](id).then(() => {
         dialog.alert({ title: 'Offer declined', message: 'You have successfully declined the offer' }).then(() => {
-          setApproved(false);
+          setStatus('WITHRAWN');
         });
       });
     };
@@ -62,6 +63,18 @@ export const Mobile = (): JSX.Element => {
     </div>
   );
 
+  const withdrawnMessageBoxJSX = (
+    <div className={css.acceptedMessageBox}>
+      <img src="/icons/mail-inbox-envelope-check-black.svg" />
+      <div>
+        <div className={css.congratulationsText}>You withdrew this offer.</div>
+        <div className={css.congratulationsText}>
+          You have already withdrawn the offer from <span className={css.companyName}>{offer.offerer.meta.name}</span>.
+        </div>
+      </div>
+    </div>
+  );
+
   const buttonsJSX = (
     <div className={css.btnContainer}>
       <Button onClick={onAccept(offer.id)}>Accept offer</Button>
@@ -75,8 +88,9 @@ export const Mobile = (): JSX.Element => {
     <TopFixedMobile>
       <Header title="title" onBack={() => history.back()} />
       <div className={css.body}>
-        {printWhen(offeredMessageBoxJSX, approved)}
-        {printWhen(acceptedMessageBoxJSX, !approved)}
+        {printWhen(offeredMessageBoxJSX, status === 'PENDING')}
+        {printWhen(acceptedMessageBoxJSX, status === 'APPROVED')}
+        {printWhen(withdrawnMessageBoxJSX, status === 'WITHRAWN')}
         <Accordion title="Mission details" id="mission-details">
           <div className={css.missionDetailContainer}>
             <div className={css.missionDetailMessage}>{offer.offer_message}</div>
@@ -140,7 +154,7 @@ export const Mobile = (): JSX.Element => {
             </Typography>
           </div>
         </Accordion> */}
-        {printWhen(buttonsJSX, approved)}
+        {printWhen(buttonsJSX, status === 'PENDING')}
       </div>
     </TopFixedMobile>
   );

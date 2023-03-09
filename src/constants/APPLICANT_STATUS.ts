@@ -16,8 +16,8 @@ export const APPLICANT_STATUS_DICT = {
   HIRED: 'HIRED',
 };
 
-type StatusKeys = keyof typeof APPLICANT_STATUS_DICT;
-type Values = typeof APPLICANT_STATUS_DICT[StatusKeys];
+export type StatusKeys = keyof typeof APPLICANT_STATUS_DICT;
+export type Values = typeof APPLICANT_STATUS_DICT[StatusKeys];
 
 export function setApplicantStatusLabel(status: keyof typeof APPLICANT_STATUS): Values {
   if (!APPLICANT_STATUS_DICT[status]) {
