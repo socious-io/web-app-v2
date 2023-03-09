@@ -1,13 +1,9 @@
 import { toRelativeTime } from '../../../core/relative-time';
-import {
-  GetOffer,
-  Pagination,
-  UserApplicantResp,
-  DeclinedApplicantListResp,
-  MissionsResp,
-} from '../../../core/types';
+import { GetOffer, Pagination, UserApplicantResp, DeclinedApplicantListResp, MissionsResp } from '../../../core/types';
 import { get } from '../../../core/http';
 import { JobCardProps } from '../../../components/molecules/job-card/job-card.types';
+import { APPLICANT_STATUS, setApplicantStatusLabel } from '../../../constants/APPLICANT_STATUS';
+import { CSSProperties } from 'react';
 
 export async function getEndedList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
   return get(`/user/missions?status=COMPLETE,CONFIRMED&page=${payload.page}`)
@@ -18,9 +14,7 @@ export async function getEndedList(payload: { page: number }): Promise<Paginatio
     });
 }
 
-export async function getOnGoingList(payload: {
-  page: number;
-}): Promise<Pagination<JobCardProps[]>> {
+export async function getOnGoingList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
   return get(`/user/missions?status=ACTIVE&page=${payload.page}`)
     .then(({ data }) => data)
     .then((resp) => {
@@ -29,9 +23,7 @@ export async function getOnGoingList(payload: {
     });
 }
 
-export async function getDeclinedApplicants(payload: {
-  page: number;
-}): Promise<Pagination<JobCardProps[]>> {
+export async function getDeclinedApplicants(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
   return get(`/user/applicants?status=REJECTED&page=${payload.page}`)
     .then(({ data }) => data)
     .then((resp) => {
@@ -40,9 +32,7 @@ export async function getDeclinedApplicants(payload: {
     });
 }
 
-export async function getPendingApplicants(payload: {
-  page: number;
-}): Promise<Pagination<JobCardProps[]>> {
+export async function getPendingApplicants(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
   return get(`/user/applicants?status=PENDING&page=${payload.page}`)
     .then(({ data }) => data)
     .then((resp) => {
@@ -51,9 +41,7 @@ export async function getPendingApplicants(payload: {
     });
 }
 
-export async function getAwaitingReviewList(payload: {
-  page: number;
-}): Promise<Pagination<JobCardProps[]>> {
+export async function getAwaitingReviewList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
   return get(`/user/offers?status=PENDING,APPROVED&page=${payload.page}`)
     .then(({ data }) => data)
     .then((resp) => {
@@ -90,9 +78,7 @@ function onGoingListToJobCardList(applicants: MissionsResp['items']): JobCardPro
   return applicants.map(onGoingItemToJobCardAdaptor);
 }
 
-function declinedItemToJobCardAdaptor(
-  applicant: DeclinedApplicantListResp['items'][0]
-): JobCardProps {
+function declinedItemToJobCardAdaptor(applicant: DeclinedApplicantListResp['items'][0]): JobCardProps {
   return {
     id: applicant.id,
     title: applicant.project.title,
@@ -106,21 +92,65 @@ function declinedListToJobCardList(applicants: DeclinedApplicantListResp['items'
   return applicants.map(declinedItemToJobCardAdaptor);
 }
 
-function awaitingItemToJobCardAdaptor(
-  applicant: GetOffer['items'][0]
-): JobCardProps {
+function setStatusJSX(status: keyof typeof APPLICANT_STATUS) {
+  const label = setApplicantStatusLabel(status);
+
+  const pendingStyles: CSSProperties = {
+    padding: '10px',
+    height: '1.5rem',
+    backgroundColor: 'var(--color-success-01)',
+    borderRadius: '25px',
+    color: '#fff',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 'var(--font-size-s)',
+  };
+
+  const approvedStyles: CSSProperties = {
+    padding: '10px',
+    height: '1.5rem',
+    backgroundColor: 'var(--color-warning-01)',
+    borderRadius: '25px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 'var(--font-size-s)',
+  };
+
+  const defaultStyle: CSSProperties = {
+    padding: '10px',
+    height: '1.5rem',
+    backgroundColor: 'var(--color-gray-02)',
+    borderRadius: '25px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 'var(--font-size-s)',
+  };
+
+  switch (status) {
+    case 'PENDING':
+      return <div style={pendingStyles}>{label}</div>;
+    case 'APPROVED':
+      return <div style={approvedStyles}>{label}</div>;
+    default:
+      return <div style={defaultStyle}>{label}</div>;
+  }
+}
+
+function awaitingItemToJobCardAdaptor(applicant: GetOffer['items'][0]): JobCardProps {
   return {
     id: applicant.id,
     title: applicant.project.title,
     body: applicant.offerer.meta.name,
     img: applicant.offerer.meta.image,
     date: `Applied ${toRelativeTime(applicant.created_at)}`,
+    bottomRight: setStatusJSX(applicant.status),
   };
 }
 
-function awaitingListToJobCardList(
-  applicants: GetOffer['items']
-): JobCardProps[] {
+function awaitingListToJobCardList(applicants: GetOffer['items']): JobCardProps[] {
   return applicants.map(awaitingItemToJobCardAdaptor);
 }
 
