@@ -23,22 +23,41 @@ export const Mobile = (): JSX.Element => {
   function onAccept(id: string) {
     return () =>
       endpoint.post.offers['{offer_id}/approve'](id).then(() => {
-        dialog.alert({ title: 'Successful', message: 'You have successfully accepted the offer' }).then(() => {
+        dialog.alert({ title: 'Offer accepted', message: 'You have successfully accepted the offer' }).then(() => {
           setApproved(false);
         });
       });
   }
 
   function onDeclined(id: string) {
-    return () => endpoint.post.offers['{offer_id}/withdrawn'](id);
+    return () => {
+      endpoint.post.offers['{offer_id}/withdrawn'](id).then(() => {
+        dialog.alert({ title: 'Offer declined', message: 'You have successfully declined the offer' }).then(() => {
+          setApproved(false);
+        });
+      });
+    };
   }
 
-  const congratulationsBoxJSX = (
+  const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
       <img src="/icons/mail-inbox-envelope-favorite-white.svg" />
       <div>
         <div className={css.congratulationsText}>Congratulations, you received an offer.</div>
         <div className={css.congratulationsText}>Accept the offer to start working on this mission.</div>
+      </div>
+    </div>
+  );
+
+  const acceptedMessageBoxJSX = (
+    <div className={css.acceptedMessageBox}>
+      <img src="/icons/mail-inbox-envelope-check-black.svg" />
+      <div>
+        <div className={css.congratulationsText}>You accepted this offer.</div>
+        <div className={css.congratulationsText}>
+          We are just waiting for the final confirmation from{' '}
+          <span className={css.companyName}>{offer.offerer.meta.name}</span> to start the mission.
+        </div>
       </div>
     </div>
   );
@@ -56,7 +75,8 @@ export const Mobile = (): JSX.Element => {
     <TopFixedMobile>
       <Header title="title" onBack={() => history.back()} />
       <div className={css.body}>
-        {printWhen(congratulationsBoxJSX, approved)}
+        {printWhen(offeredMessageBoxJSX, approved)}
+        {printWhen(acceptedMessageBoxJSX, !approved)}
         <Accordion title="Mission details" id="mission-details">
           <div className={css.missionDetailContainer}>
             <div className={css.missionDetailMessage}>{offer.offer_message}</div>

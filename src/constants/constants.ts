@@ -187,7 +187,7 @@ export const SocialCausesSDGMapping = {
   INNOVATION: SDG.INDUSTRY_INNOVATION_INFRASTRUCTURE,
 };
 
-export const ApplicantStatus = {
+export const APPLICANT_STATUS = {
   PENDING: 'PENDING',
   OFFERED: 'OFFERED',
   REJECTED: 'REJECTED',
