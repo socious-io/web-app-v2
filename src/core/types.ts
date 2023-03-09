@@ -266,6 +266,12 @@ export type Offer = {
   applicant: {
     cover_letter: string;
   };
+  recipient: {
+    meta: {
+      name: string;
+      avatar: string | null;
+    };
+  };
   id: string;
   created_at: string;
   offer_message: string;

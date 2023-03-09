@@ -1,35 +1,24 @@
 import { Accordion } from '../../../../../components/atoms/accordion/accordion';
 import { ApplicantListHire } from '../../../../../components/molecules/applicant-list-hire/applicant-list-hire';
-import { Applicant } from '../../../../../components/molecules/applicant-list/applicant-list.types';
-import { Offer } from '../../../../../core/endpoints/index.types';
-import { isoToStandard } from '../../../../../core/time';
+import { endpoint } from '../../../../../core/endpoints';
 import css from './offered.module.scss';
+import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
 
-export function jobToApplicantListAdaptor(applicant: Offer[]): Applicant[] {
-  if (applicant.length === 0) {
-    return [];
-  }
-  return applicant.map((item) => {
-    return {
-      id: item.id,
-      name: item.recipient.meta.name,
-      image: item.recipient.meta.avatar || '',
-      profileLink: '',
-      applyDate: isoToStandard(item.created_at),
-      coverLetter: '',
-      //   status: item.status,
-    };
-  });
-}
-
 export const Offered = (props: OfferedProps): JSX.Element => {
+  async function onHire(offerId: string) {
+    return endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
+  }
+  async function onReject(offerId: string) {
+    return endpoint.post.offers['{offer_id}/cancel'](offerId).then(() => history.back());
+  }
+
   return (
     <div className={css.container}>
       <Accordion id="sent" title={`Sent (${props.sent.total_count})`}>
         <ApplicantListHire
           onApplicantClick={console.log}
-          onOfferClick={console.log}
+          onHireClick={console.log}
           onRejectClick={console.log}
           list={jobToApplicantListAdaptor(props.sent.items)}
         />
@@ -37,8 +26,8 @@ export const Offered = (props: OfferedProps): JSX.Element => {
       <Accordion id="approved" title={`Approved (${props.approved.total_count})`}>
         <ApplicantListHire
           onApplicantClick={console.log}
-          onOfferClick={console.log}
-          onRejectClick={console.log}
+          onHireClick={onHire}
+          onRejectClick={onReject}
           hireable
           list={jobToApplicantListAdaptor(props.approved.items)}
         />
@@ -46,7 +35,7 @@ export const Offered = (props: OfferedProps): JSX.Element => {
       <Accordion id="hired" title={`Hired (${props.hired.total_count})`}>
         <ApplicantListHire
           onApplicantClick={console.log}
-          onOfferClick={console.log}
+          onHireClick={console.log}
           onRejectClick={console.log}
           list={jobToApplicantListAdaptor(props.hired.items)}
         />
@@ -54,7 +43,7 @@ export const Offered = (props: OfferedProps): JSX.Element => {
       <Accordion id="closed" title={`Closed (${props.closed.total_count})`}>
         <ApplicantListHire
           onApplicantClick={console.log}
-          onOfferClick={console.log}
+          onHireClick={console.log}
           onRejectClick={console.log}
           list={jobToApplicantListAdaptor(props.closed.items)}
         />
