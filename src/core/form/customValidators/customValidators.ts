@@ -7,6 +7,14 @@ export const email = (): Validator => ({
     validateWith: (value: ControlPrimitiveValue) => REGEX.email.test(value as string),
 });
 
+export const noEmptyString = (): Validator => ({
+    name: 'noEmptyString',
+    message: 'field is required',
+    validateWith: (value: ControlPrimitiveValue) => {
+        return (value as string).trim().length > 0;
+    },
+});
+
 export const website = (): Validator => ({
     name: 'website',
     message: 'incorrect URL',
