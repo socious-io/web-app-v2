@@ -86,7 +86,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile>
-      <Header title="title" onBack={() => history.back()} />
+      <Header title={`${offer.job_category.name}`} onBack={() => history.back()} />
       <div className={css.body}>
         {printWhen(offeredMessageBoxJSX, status === 'PENDING')}
         {printWhen(acceptedMessageBoxJSX, status === 'APPROVED')}
@@ -147,13 +147,11 @@ export const Mobile = (): JSX.Element => {
             </Divider> */}
           </div>
         </Accordion>
-        {/* <Accordion title="About Company" id="about-company">
+        <Accordion title={`About ${offer.organization.name}`} id="about-company">
           <div className={css.aboutCompany}>
-            <Typography>
-              // TODO: Ehsan will add the prop later Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-            </Typography>
+            <Typography>{offer.organization.bio}</Typography>
           </div>
-        </Accordion> */}
+        </Accordion>
         {printWhen(buttonsJSX, status === 'PENDING')}
       </div>
     </TopFixedMobile>
