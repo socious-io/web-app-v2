@@ -42,7 +42,7 @@ export const JobDetail = (): JSX.Element => {
   return (
     <div className={css.container}>
       <Header onBack={() => navigate({ to: '/jobs' })} title={job.job_category.name} />
-      {printWhen(applicationSubmittedJSX, job.applied)}
+      {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
       <Divider>
         <ProfileView
           name={job.identity_meta.name}
