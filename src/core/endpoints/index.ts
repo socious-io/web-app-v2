@@ -25,6 +25,9 @@ export const endpoint = {
     offers: {
       offer_id: (id: string) => get(`offers/${id}`).then(getDataProp) as Promise<Offer>,
     },
+    missions: {
+      mission_id: (id: string) => get(`missions/${id}`).then(getDataProp),
+    },
   },
   post: {
     offers: {
@@ -32,6 +35,10 @@ export const endpoint = {
       '{offer_id}/withdrawn': (id: string) => post(`offers/${id}/withdrawn`, {}).then(getDataProp),
       '{offer_id}/cancel': (id: string) => post(`offers/${id}/cancel`, {}).then(getDataProp),
       '{offer_id}/hire': (id: string) => post(`offers/${id}/hire`, {}).then(getDataProp),
+    },
+    missions: {
+      '{mission_id}/complete': (id: string) => post(`missions/${id}/complete`, {}).then(getDataProp),
+      '{mission_id}/cancel': (id: string) => post(`missions/${id}/cancel`, {}).then(getDataProp),
     },
   },
 };

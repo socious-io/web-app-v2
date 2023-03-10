@@ -33,6 +33,7 @@ import {
 import { getApplicantDetail, jobOfferRejectLoader } from '../pages/job-offer-reject/job-offer-reject.services';
 import { getBadges, getImpactPoints } from '../pages/achievements/ahievements.services';
 import { receivedOfferLoader } from '../pages/offer-received/offer-received.services';
+import { endpoint } from './endpoints';
 
 export const routes: Route[] = [
   {
@@ -296,7 +297,16 @@ export const routes: Route[] = [
         element: () => import('../pages/offer-received/offer-received').then((m) => <m.OfferReceived />),
       },
       {
-        path: '/jobs/applied/:id',
+        path: '/jobs/applied/complete-mission/:id',
+        loader: async ({ params }) => {
+          const mission = await endpoint.get.missions.mission_id(params.id);
+          const offer = await endpoint.get.offers.offer_id(mission.offer_id);
+          return { mission, offer };
+        },
+        element: () => import('../pages/complete-mission/complete-mission').then((m) => <m.CompleteMission />),
+      },
+      {
+        path: '/jobs/applied',
         loader: async () => {
           const requests = [
             getPendingApplicants({ page: 1 }),
@@ -315,7 +325,12 @@ export const routes: Route[] = [
             endedApplicants,
           };
         },
-        element: () => import('../pages/job-apply/my-jobs/my-jobs').then((m) => <m.MyJobs />),
+        children: [
+          {
+            path: ':id',
+            element: () => import('../pages/job-apply/my-jobs/my-jobs').then((m) => <m.MyJobs />),
+          },
+        ],
       },
       {
         path: '/jobs/:id/confirm',
