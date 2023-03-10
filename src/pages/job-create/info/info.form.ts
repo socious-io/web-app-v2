@@ -1,4 +1,5 @@
 import { required } from '../../../core/form';
+import { noEmptyString } from '../../../core/form/customValidators/customValidators';
 import { FormModel } from '../../../core/form/useForm/useForm.types';
 import { CreatePostWizard } from '../../../store/reducers/createPostWizard.reducer';
 
@@ -6,7 +7,7 @@ export function formModel(formState: CreatePostWizard): FormModel {
   return {
     title: {
       initialValue: formState.title,
-      validators: [required()],
+      validators: [noEmptyString()],
     },
     job_category_id: {
       initialValue: formState.job_category_id,
@@ -14,7 +15,7 @@ export function formModel(formState: CreatePostWizard): FormModel {
     },
     description: {
       initialValue: formState.description,
-      validators: [required()],
+      validators: [noEmptyString()],
     },
     country: {
       initialValue: formState.country,
