@@ -104,6 +104,7 @@ export const Mobile = (): JSX.Element => {
                 register={form}
                 onValueChange={(option) => {
                   updateCityList(option.value as string);
+                  form.controls.city.setValue('');
                 }}
               />
               <Dropdown register={form} label="City" placeholder="city" name="city" value={formState.city} list={cities} />

@@ -31,18 +31,20 @@ export function socialCausesToCategory(categories: string[] = []) {
 export function jobCategoriesToDropdown(categories: CategoriesResp['categories']): DropdownItem[] {
   return categories.map((item) => {
     return {
+      id: item.id,
       label: item.name,
       value: item.id,
     };
   });
 }
 
-export function citiesToCategories(cities: Cities[]): Dropdown[] {
+export function citiesToCategories(cities: Cities[]): DropdownItem[] {
   return cities.map((city) => {
     return {
-      label: `${city.name}, ${city.region_name}`,
-      value: city.name
-    //   value: city.id,
+      id: city.id,
+      label: city.name,
+      value: city.name,
+      helperText: city.region_name,
     };
   });
 }
