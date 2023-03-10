@@ -62,8 +62,8 @@ export const Dropdown = (props: DropdownProps): JSX.Element => {
       </div>
       <div className={setOptionJSXClasses(visibility)} style={{ maxHeight: submenuHeightREM * size + 'rem' }}>
         {filteredList.map((option) => (
-          <div key={option.value} onClick={onOptionClick(option)} className={css.option}>
-            {option.label}
+          <div key={option.id || option.value} onClick={onOptionClick(option)} className={css.option}>
+            {option.label} <div className={css.helperText}>{option?.helperText}</div>
           </div>
         ))}
       </div>
