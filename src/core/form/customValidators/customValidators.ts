@@ -15,6 +15,14 @@ export const noEmptyString = (): Validator => ({
     },
 });
 
+export const number = (): Validator => ({
+    name: 'number',
+    message: 'value should be a number',
+    validateWith: (value: ControlPrimitiveValue) => {
+        return /^[0-9]*$/.test(value as string);
+    },
+});
+
 export const website = (): Validator => ({
     name: 'website',
     message: 'incorrect URL',

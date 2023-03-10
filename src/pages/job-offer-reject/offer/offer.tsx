@@ -22,7 +22,6 @@ export const Offer = (): JSX.Element => {
   const form = useForm(formModel);
   const formIsInvalid = !form.isValid || !paymentType || !paymentMode;
 
-  console.log('form: ', form);
   function navigateToOverview() {
     navigate({ to: '..' });
   }
