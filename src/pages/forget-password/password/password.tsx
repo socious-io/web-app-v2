@@ -3,7 +3,7 @@ import { Button } from '../../../components/atoms/button/button';
 import { Input } from '../../../components/atoms/input/input';
 import css from './password.module.scss';
 import { changePassword } from '../forget-password.service';
-import { handleError } from '../../../core/api';
+import { handleError } from '../../../core/http';
 import { formModel } from './password.form';
 import { useForm } from '../../../core/form';
 

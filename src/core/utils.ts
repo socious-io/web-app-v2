@@ -4,7 +4,10 @@ export function when<T, P>(value: boolean, fn: (params?: P) => T, params?: P) {
   }
 }
 
-export function printWhen(content: unknown, conditions: boolean | undefined | null): JSX.Element | null {
+export function printWhen(
+  content: unknown,
+  conditions: boolean | undefined | null,
+): JSX.Element | null {
   return conditions ? content : null;
 }
 
