@@ -1,0 +1,23 @@
+{
+  "printWidth": 80,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "semi": true,
+  "arrowParens": "always",
+  "overrides": [
+    {
+      "files": ["*.mjs", "*.cjs", "*.js"],
+      "options": {
+        "parser": "babel"
+      }
+    },
+
+    {
+      "files": ["*.mts", "*.cts", "*.ts"],
+      "options": {
+        "parser": "babel-ts"
+      }
+    }
+  ]
+}

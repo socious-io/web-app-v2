@@ -319,7 +319,10 @@ export const routes: Route[] = [
           },
           {
             loader: (params) => jobOfferRejectLoader(params),
-            element: () => import('../pages/job-offer-reject/job-offer-reject').then((m) => <m.JobOfferReject />),
+            element: () =>
+              import('../pages/job-offer-reject/job-offer-reject').then((m) => (
+                <m.JobOfferReject />
+              )),
           },
         ],
       },
