@@ -7,6 +7,7 @@ import { ProfileReq } from '../profile.types';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
+import { Link } from '../../../components/atoms/link/link';
 
 export const Mobile = (): JSX.Element => {
   const data = useMatch().ownData as ProfileReq;
@@ -75,34 +76,38 @@ export const Mobile = (): JSX.Element => {
         </div>
       </div>
       <div>
-        <>
-          <Divider>
-            <div className={css.bio}>{data.bio}</div>
-          </Divider>
-          <Divider title="Social Causes">
-            <CategoriesClickable list={socialCauses} />
-          </Divider>
-          <Divider title="Contact">
-            <>
-              {printWhen(contactLinkJSX, !!data.mobile_country_code)}
-              {printWhen(emailLinkJSX, !!data.email)}
-              {printWhen(websiteLinkJSX, !!data.website)}
-              {printWhen(cityLinkJSX, !!data.city)}
-            </>
-          </Divider>
+        <Divider>
           {printWhen(
-            <Divider title="Mission">
-              <div className={css.mission}>{data.mission}</div>
-            </Divider>,
-            !!data.mission
+            <div className={css.achievements}>
+              <Link onClick={() => navigate({ to: '/achievements' })}>Impact points: {data.impact_points}</Link>
+            </div>,
+            !!data.impact_points
           )}
-          {printWhen(
-            <Divider title="Culture">
-              <div className={css.culture}>{data.culture}</div>
-            </Divider>,
-            !!data.culture
-          )}
-        </>
+        </Divider>
+        <Divider>
+          <div className={css.bio}>{data.bio}</div>
+        </Divider>
+        <Divider title="Social Causes">
+          <CategoriesClickable list={socialCauses} />
+        </Divider>
+        <Divider title="Contact">
+          {printWhen(contactLinkJSX, !!data.mobile_country_code)}
+          {printWhen(emailLinkJSX, !!data.email)}
+          {printWhen(websiteLinkJSX, !!data.website)}
+          {printWhen(cityLinkJSX, !!data.city)}
+        </Divider>
+        {printWhen(
+          <Divider title="Mission">
+            <div className={css.mission}>{data.mission}</div>
+          </Divider>,
+          !!data.mission
+        )}
+        {printWhen(
+          <Divider title="Culture">
+            <div className={css.culture}>{data.culture}</div>
+          </Divider>,
+          !!data.culture
+        )}
       </div>
     </div>
   );

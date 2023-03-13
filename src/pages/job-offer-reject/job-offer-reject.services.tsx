@@ -125,7 +125,7 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
       paymentMode: translatePaymentTerms(item.project.payment_scheme),
       paymentType: translatePaymentType(item.project.payment_type),
       totalHour: '0',
-      totalMission: '2332 USDC',
+      totalMission: '0 USDC',
     };
   });
 }
