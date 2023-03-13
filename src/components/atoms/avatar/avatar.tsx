@@ -3,7 +3,7 @@ import css from './avatar.module.scss';
 import { AvatarProps } from './avatar.types';
 
 export const Avatar = (props: AvatarProps): JSX.Element => {
-  const { size, onClick, type = 'users', img, ...rest } = props;
+  const { size = '3rem', onClick, type = 'users', img, ...rest } = props;
 
   const images: Record<AvatarProps['type'], string> = {
     organizations: '/icons/organization.svg',

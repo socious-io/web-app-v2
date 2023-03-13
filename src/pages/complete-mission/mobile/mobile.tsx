@@ -1,4 +1,4 @@
-import { useMatch, useMatchRoute } from '@tanstack/react-location';
+import { useMatch } from '@tanstack/react-location';
 import { useState } from 'react';
 import { Accordion } from '../../../components/atoms/accordion/accordion';
 import { Button } from '../../../components/atoms/button/button';
@@ -36,10 +36,10 @@ export const Mobile = (): JSX.Element => {
     <div className={css.acceptedMessageBox}>
       <img src="/icons/mail-inbox-envelope-check-black.svg" />
       <div>
-        <div className={css.congratulationsText}>You marked this assignment completed.</div>
+        <div className={css.congratulationsText}>You marked this job as completed.</div>
         <div className={css.congratulationsText}>
-          You will get your payment once <span className={css.companyName}>{offer.offerer.meta.name}</span> confirmed your
-          assignment.
+          You will get your payment once <span className={css.companyName}>{offer.offerer.meta.name}</span> confirms your
+          job.
         </div>
       </div>
     </div>
