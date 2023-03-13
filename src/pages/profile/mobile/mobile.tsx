@@ -8,6 +8,7 @@ import { CategoriesClickable } from '../../../components/atoms/categories-clicka
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
 import { Link } from '../../../components/atoms/link/link';
+import { showActions } from '../profile.services';
 
 export const Mobile = (): JSX.Element => {
   const data = useMatch().ownData as ProfileReq;
@@ -67,7 +68,7 @@ export const Mobile = (): JSX.Element => {
         <div className={css.menu}>
           <div className={css.btnContainer}>
             {/* <Button width="6.5rem">Connect</Button> */}
-            <ThreeDotsButton onClick={console.log} />
+            <ThreeDotsButton onClick={() => showActions(data.id)} />
           </div>
           <div className={css.userConnections}>
             <div>{data.followings} connections</div>
