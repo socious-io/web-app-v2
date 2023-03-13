@@ -2,8 +2,11 @@ import { get, post } from '../../core/http';
 import { isoToStandard } from '../../core/time';
 import { ApplicantResp, MissionsResp, OfferPayload, Pagination, QuestionsRes, UserApplicantResp } from '../../core/types';
 import { Applicant } from '../../components/molecules/applicant-list/applicant-list.types';
+import { Applicant as ApplicantHire } from '../../components/molecules/applicant-list-pay/applicant-list-pay.types';
 import { Job } from '../../components/organisms/job-list/job-list.types';
 import { endpoint } from '../../core/endpoints';
+import { translatePaymentTerms } from '../../constants/PROJECT_PAYMENT_SCHEME';
+import { translatePaymentType } from '../../constants/PROJECT_PAYMENT_TYPE';
 
 export async function jobOfferRejectLoader({ params }: { params: { id: string } }) {
   const requests = [
@@ -103,6 +106,26 @@ export function missionToApplicantListAdaptor(mission: MissionsResp['items']): A
       profileLink: '',
       applyDate: isoToStandard(item.created_at),
       coverLetter: item.applicant?.cover_letter,
+    };
+  });
+}
+
+export function missionToApplicantListPayAdaptor(mission: MissionsResp['items']): ApplicantHire[] {
+  if (mission.length === 0) {
+    return [];
+  }
+  return mission.map((item) => {
+    return {
+      id: item.id,
+      name: item.assignee.meta.name,
+      image: item.assignee.meta.avatar,
+      hireDate: isoToStandard(item.created_at),
+      category: item.job_category.name,
+      status: item.status,
+      paymentMode: translatePaymentTerms(item.project.payment_scheme),
+      paymentType: translatePaymentType(item.project.payment_type),
+      totalHour: '0',
+      totalMission: '2332 USDC',
     };
   });
 }

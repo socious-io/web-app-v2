@@ -1,13 +1,13 @@
-import { AlertOptions, Dialog } from '@capacitor/dialog';
+import { AlertOptions, ConfirmOptions, Dialog, PromptOptions } from '@capacitor/dialog';
 
 export const dialog = {
   alert: async (options: AlertOptions) => {
     return Dialog.alert(options);
   },
-  confirm: async (options: AlertOptions) => {
+  confirm: async (options: ConfirmOptions) => {
     return Dialog.confirm(options);
   },
-  prompt: async (options: AlertOptions) => {
+  prompt: async (options: PromptOptions) => {
     return Dialog.prompt(options);
   },
 };
