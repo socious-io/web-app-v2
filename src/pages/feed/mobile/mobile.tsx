@@ -118,8 +118,8 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
         </Card>
       </div>
       <FeedList
-        onMoreClick={() => {
-          showActions();
+        onMoreClick={(id) => {
+          showActions(id);
         }}
         data={feedList}
         onLike={onLike}
