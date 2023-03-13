@@ -41,5 +41,9 @@ export const endpoint = {
       '{mission_id}/cancel': (id: string) => post(`missions/${id}/cancel`, {}).then(getDataProp),
       '{mission_id}/confirm': (id: string) => post(`missions/${id}/confirm`, {}).then(getDataProp),
     },
+    posts: {
+      '{post_id}/report': (id: string, payload?: { blocked: boolean; comment: string }) =>
+        post(`posts/${id}/report`, payload).then(getDataProp),
+    },
   },
 };
