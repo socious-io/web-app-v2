@@ -8,7 +8,7 @@ export type Applicant = {
   status: 'CLOSED' | 'COMPLETE' | 'CONFIRMED';
   paymentType: string;
   paymentMode: string;
-  totalHour: string;
+  totalHour: number;
   totalMission: string;
 };
 

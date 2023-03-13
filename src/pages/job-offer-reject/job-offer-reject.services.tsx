@@ -124,8 +124,8 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
       status: item.status,
       paymentMode: translatePaymentTerms(item.project.payment_scheme),
       paymentType: translatePaymentType(item.project.payment_type),
-      totalHour: '0',
-      totalMission: '0 USDC',
+      totalHour: item.offer.total_hours,
+      totalMission: `${item.offer.assignment_total} USD`,
     };
   });
 }

@@ -229,6 +229,14 @@ export type MissionsResp = Pagination<
     created_at: string;
     project: {
       title: string;
+      payment_scheme: string;
+      payment_type: string;
+    };
+    job_category: { name: string };
+    status: 'CLOSED' | 'COMPLETE';
+    offer: {
+      total_hours: number;
+      assignment_total: number;
     };
     assignee: {
       meta: {
