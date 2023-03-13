@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog } from '@mui/material';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Card } from '../../../components/atoms/card/card';
@@ -11,6 +11,30 @@ import { Search } from '../../../components/atoms/search/search';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../../core/types';
 import { RootState } from '../../../store/store';
+import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
+import { endpoint } from '../../../core/endpoints';
+import { dialog } from '../../../core/dialog/dialog';
+
+const showActions = async (id: string) => {
+  const result = await ActionSheet.showActions({
+    title: 'Select an option to perform',
+    message: 'Select an option to perform',
+    options: [{ title: 'Block' }, { title: 'Report' }, { title: 'Cancel', style: ActionSheetButtonStyle.Cancel }],
+  });
+
+  switch (result.index) {
+    case 0:
+      endpoint.post.posts['{post_id}/report'](id, { blocked: true, comment: 'comment' }).then(() => {
+        dialog.alert({ title: 'Blocked', message: 'You successfully blocked the feed' });
+      });
+      break;
+    case 1:
+      endpoint.post.posts['{post_id}/report'](id, { blocked: false, comment: 'comment' }).then(() => {
+        dialog.alert({ title: 'Report', message: 'You successfully Reported the feed' });
+      });
+      break;
+  }
+};
 
 export const Mobile = ({ list }: FeedsMobileProps) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -94,6 +118,9 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
         </Card>
       </div>
       <FeedList
+        onMoreClick={() => {
+          showActions();
+        }}
         data={feedList}
         onLike={onLike}
         onRemoveLike={onRemoveLike}

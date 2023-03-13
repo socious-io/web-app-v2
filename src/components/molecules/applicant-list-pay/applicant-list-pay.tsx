@@ -48,10 +48,10 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
               {applicant.totalHour} hrs
             </div>
           </div>
-          <div className={css.totalMission}>
+          {/* <div className={css.totalMission}>
             <div>Total mission</div>
             <div className={css.totalMissionValue}>{applicant.totalMission}</div>
-          </div>
+          </div> */}
         </div>
         <div className={css.applicantFooter}>
           {printWhen(confirmBtn(applicant.id), props.confirmable)}
