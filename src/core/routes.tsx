@@ -117,7 +117,8 @@ export const routes: Route[] = [
         element: () => import('../pages/profile/profile').then((m) => <m.Profile />),
       },
       {
-        path: 'payment',
+        path: 'payment/:id',
+        loader: ({ params }) => receivedOfferLoader(params),
         element: () => import('../pages/payment/payment').then((m) => <m.Payment />),
       },
       {
