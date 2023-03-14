@@ -18,7 +18,7 @@ export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const resolver = useMatch();
   const { pendingApplicants, awaitingApplicants, declinedApplicants, onGoingApplicants, endedApplicants } =
-    resolver.ownData as Loader;
+    resolver.data as Loader;
   const [pendingList, setPendingList] = useState<PendingResp>(pendingApplicants);
   const [awaitingList, setAwaitingList] = useState<AwaitingResp>(awaitingApplicants);
   const [declinedList, setDeclinedList] = useState<AwaitingResp>(declinedApplicants);
@@ -69,7 +69,7 @@ export const Mobile = (): JSX.Element => {
             <div className={css.listContainer}>
               <JobCardList
                 list={awaitingList.items}
-                onItemClick={id => navigate({to: `/jobs/received-offer/${id}`})}
+                onItemClick={(id) => navigate({ to: `/jobs/received-offer/${id}` })}
                 totalCount={awaitingList.total_count}
                 onSeeMoreClick={updateAwaitingList}
               />
@@ -97,7 +97,7 @@ export const Mobile = (): JSX.Element => {
             <div className={css.listContainer}>
               <JobCardList
                 list={onGoingList.items}
-                onItemClick={console.log}
+                onItemClick={(id) => navigate({ to: `../complete-mission/${id}` })}
                 totalCount={onGoingList.total_count}
                 onSeeMoreClick={updateOnGoingList}
               />

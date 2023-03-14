@@ -22,11 +22,6 @@ export const Offer = (): JSX.Element => {
   const form = useForm(formModel);
   const formIsInvalid = !form.isValid || !paymentType || !paymentMode;
 
-  console.log('form: ', form);
-  function navigateToOverview() {
-    navigate({ to: '..' });
-  }
-
   function onSubmit() {
     const payload: OfferPayload = {
       assignment_total: 1,
@@ -40,7 +35,7 @@ export const Offer = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Header onBack={navigateToOverview} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
+      <Header onBack={() => navigate({ to: '..' })} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
       <div className={css.sentTo}>An offer will be sent to {applicantDetail.user.name}.</div>
       <div className={css.form}>
         <Dropdown

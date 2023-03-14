@@ -17,6 +17,7 @@ import { printWhen } from '../../../../core/utils';
 import { useForm } from '../../../../core/form';
 import { formModel } from '../apply.form';
 import { getFormValues } from '../../../../core/form/customValidators/formValues';
+import { dialog } from '../../../../core/dialog/dialog';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -30,6 +31,11 @@ export const Mobile = (): JSX.Element => {
 
   function onResumeLoad(e: ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
+    const fileSizeMB = files![0].size / 1048576;
+    if (files && fileSizeMB > 10) {
+      dialog.alert({ title: 'Error', message: 'File cannot be over 10MB' });
+      return;
+    }
     if (!files || files.length === 0) {
       return;
     }
@@ -117,11 +123,11 @@ export const Mobile = (): JSX.Element => {
         <Divider divider="line" title="Contact info">
           <div className={css.contactContainer}>
             <div>Share contact information with Organization?</div>
-            <Checkbox label="" id="" checked={false} />
+            <Checkbox label="" id="" defaultChecked={false} />
           </div>
         </Divider>
         <div className={css.btnContainer}>
-          <Button disabled={!form.controls.cover_letter.value} onClick={onSubmit}>
+          <Button disabled={!form.isValid} onClick={onSubmit}>
             Submit application
           </Button>
         </div>

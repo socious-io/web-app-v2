@@ -7,6 +7,7 @@ import { Typography } from '../../../components/atoms/typography/typography';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
 import { Divider } from '../../../components/templates/divider/divider';
 import { TopFixedMobile } from '../../../components/templates/top-fixed-mobile/top-fixed-mobile';
+import { StatusKeys } from '../../../constants/APPLICANT_STATUS';
 import { translatePaymentTerms } from '../../../constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from '../../../constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from '../../../constants/PROJECT_REMOTE_PREFERENCE';
@@ -18,27 +19,58 @@ import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const { offer } = useMatch().ownData as Resolver;
-  const [approved, setApproved] = useState(offer.status !== 'APPROVED');
+  const [status, setStatus] = useState<StatusKeys>(offer.status);
 
   function onAccept(id: string) {
     return () =>
       endpoint.post.offers['{offer_id}/approve'](id).then(() => {
-        dialog.alert({ title: 'Successful', message: 'You have successfully accepted the offer' }).then(() => {
-          setApproved(false);
+        dialog.alert({ title: 'Offer accepted', message: 'You have successfully accepted the offer' }).then(() => {
+          setStatus('APPROVED');
         });
       });
   }
 
   function onDeclined(id: string) {
-    return () => endpoint.post.offers['{offer_id}/withdrawn'](id);
+    return () => {
+      endpoint.post.offers['{offer_id}/withdrawn'](id).then(() => {
+        dialog.alert({ title: 'Offer declined', message: 'You have successfully declined the offer' }).then(() => {
+          setStatus('WITHRAWN');
+        });
+      });
+    };
   }
 
-  const congratulationsBoxJSX = (
+  const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
       <img src="/icons/mail-inbox-envelope-favorite-white.svg" />
       <div>
         <div className={css.congratulationsText}>Congratulations, you received an offer.</div>
         <div className={css.congratulationsText}>Accept the offer to start working on this mission.</div>
+      </div>
+    </div>
+  );
+
+  const acceptedMessageBoxJSX = (
+    <div className={css.acceptedMessageBox}>
+      <img src="/icons/mail-inbox-envelope-check-black.svg" />
+      <div>
+        <div className={css.congratulationsText}>You accepted this offer.</div>
+        <div className={css.congratulationsText}>
+          We are just waiting for the final confirmation from{' '}
+          <span className={css.companyName}>{offer.offerer.meta.name}</span> to start the mission.
+        </div>
+      </div>
+    </div>
+  );
+
+  const withdrawnMessageBoxJSX = (
+    <div className={css.acceptedMessageBox}>
+      <img src="/icons/mail-inbox-envelope-check-black.svg" />
+      <div>
+        <div className={css.congratulationsText}>You withdrew this offer.</div>
+        <div className={css.congratulationsText}>
+          You have already withdrawn the offer from <span className={css.companyName}>{offer.offerer.meta.name}</span>.
+        </div>
       </div>
     </div>
   );
@@ -54,9 +86,11 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile>
-      <Header title="title" onBack={() => history.back()} />
+      <Header title={`${offer.job_category.name}`} onBack={() => history.back()} />
       <div className={css.body}>
-        {printWhen(congratulationsBoxJSX, approved)}
+        {printWhen(offeredMessageBoxJSX, status === 'PENDING')}
+        {printWhen(acceptedMessageBoxJSX, status === 'APPROVED')}
+        {printWhen(withdrawnMessageBoxJSX, status === 'WITHRAWN')}
         <Accordion title="Mission details" id="mission-details">
           <div className={css.missionDetailContainer}>
             <div className={css.missionDetailMessage}>{offer.offer_message}</div>
@@ -113,14 +147,12 @@ export const Mobile = (): JSX.Element => {
             </Divider> */}
           </div>
         </Accordion>
-        {/* <Accordion title="About Company" id="about-company">
+        <Accordion title={`About ${offer.organization.name}`} id="about-company">
           <div className={css.aboutCompany}>
-            <Typography>
-              // TODO: Ehsan will add the prop later Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-            </Typography>
+            <Typography>{offer.organization.bio}</Typography>
           </div>
-        </Accordion> */}
-        {printWhen(buttonsJSX, approved)}
+        </Accordion>
+        {printWhen(buttonsJSX, status === 'PENDING')}
       </div>
     </TopFixedMobile>
   );

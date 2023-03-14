@@ -37,10 +37,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
               <Typography marginBottom="1rem" lineLimit={3} size="s2">
                 {job.description}
               </Typography>
-              <CategoriesClickable
-                marginBottom="1rem"
-                list={socialCausesToCategory(job.causes_tags)}
-              />
+              <CategoriesClickable marginBottom="1rem" list={socialCausesToCategory(job.causes_tags)} />
             </div>
             <div className={css.footer}>{toRelativeTime(job.updated_at)}</div>
           </Card>

@@ -8,7 +8,7 @@ import css from './feed-item.module.scss';
 import { FeedItemProps } from './feed-item.types';
 
 export const FeedItem = (props: FeedItemProps): JSX.Element => {
-  const { type, actionList, date, lineLimit = 3, img, name, categories, imgAvatar } = props;
+  const { id, type, actionList, date, lineLimit = 3, img, name, categories, imgAvatar } = props;
   return (
     <Card>
       <div className={css.header}>
@@ -18,7 +18,7 @@ export const FeedItem = (props: FeedItemProps): JSX.Element => {
           <span className={css.date}>{toRelativeTime(date)}</span>
         </div>
 
-        <div className={css.icon}>
+        <div className={css.icon} onClick={props.onMoreClick}>
           <img src="/icons/three-dots-blue.svg" />
         </div>
       </div>
