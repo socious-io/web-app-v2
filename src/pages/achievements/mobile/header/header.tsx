@@ -5,8 +5,9 @@ import { HeaderProps } from './header.types';
 
 export const Header = (props: HeaderProps): JSX.Element => (
   <div className={css.container}>
+    <img onClick={() => history.back()} className={css.chevron} src="/icons/chevron-left.svg" />
     <div className={css.impactPointsContainer}>
-      <div className={css.impactPoints}>{props.point.toLocaleString('en-US')}</div>
+      <div className={css.impactPoints}>{Math.ceil(props.point)}</div>
       <div className={css.impactPointsLabel}>Impact Points</div>
     </div>
 
