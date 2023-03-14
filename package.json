@@ -12,7 +12,6 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@capacitor/action-sheet": "^4.1.0",
     "@capacitor/android": "^4.6.1",
     "@capacitor/core": "^4.6.1",
     "@capacitor/dialog": "^4.1.0",
