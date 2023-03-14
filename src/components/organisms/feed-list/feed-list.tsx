@@ -53,7 +53,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
       {data.map((item) => (
         <FeedItem
           onAvatarClick={() => redirectToProfile(item)}
-          onMoreClick={() => onMoreClick?.(item.id)}
+          onMoreClick={() => onMoreClick?.(item)}
           key={item.id}
           type={item.identity_type}
           img={item.media != null && item.media.length > 0 ? item.media[0]?.url : ''}

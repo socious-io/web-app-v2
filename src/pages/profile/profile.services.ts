@@ -13,7 +13,7 @@ export async function getOrganizationDetail(shortname: string) {
 
 export const showActions = async (id: string) => {
   const result = await ActionSheet.showActions({
-    title: 'Select an option to perform',
+    title: 'What do you want to do?',
     message: 'Select an option to perform',
     options: [{ title: 'Block' }, { title: 'Report' }, { title: 'Cancel', style: ActionSheetButtonStyle.Cancel }],
   });

@@ -15,22 +15,27 @@ import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { endpoint } from '../../../core/endpoints';
 import { dialog } from '../../../core/dialog/dialog';
 import { visibility } from '../../../store/reducers/menu.reducer';
+import { Feed } from '../../../components/organisms/feed-list/feed-list.types';
 
-const showActions = async (id: string) => {
+const showActions = async (feed: Feed) => {
+  const name = feed.identity_meta.name;
   const result = await ActionSheet.showActions({
-    title: 'Select an option to perform',
-    message: 'Select an option to perform',
-    options: [{ title: 'Block' }, { title: 'Report' }, { title: 'Cancel', style: ActionSheetButtonStyle.Cancel }],
+    title: 'What do you want to do?',
+    options: [
+      { title: `Block ${name}` },
+      { title: `Report ${name}` },
+      { title: 'Cancel', style: ActionSheetButtonStyle.Cancel },
+    ],
   });
 
   switch (result.index) {
     case 0:
-      endpoint.post.posts['{post_id}/report'](id, { blocked: true, comment: 'comment' }).then(() => {
+      endpoint.post.posts['{post_id}/report'](feed.id, { blocked: true, comment: 'comment' }).then(() => {
         dialog.alert({ title: 'Blocked', message: 'You successfully blocked the feed' });
       });
       break;
     case 1:
-      endpoint.post.posts['{post_id}/report'](id, { blocked: false, comment: 'comment' }).then(() => {
+      endpoint.post.posts['{post_id}/report'](feed.id, { blocked: false, comment: 'comment' }).then(() => {
         dialog.alert({ title: 'Report', message: 'You successfully Reported the feed' });
       });
       break;
@@ -124,8 +129,8 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
         </Card>
       </div>
       <FeedList
-        onMoreClick={(id) => {
-          showActions(id);
+        onMoreClick={(feed) => {
+          showActions(feed);
         }}
         data={feedList}
         onLike={onLike}

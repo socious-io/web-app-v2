@@ -6,9 +6,6 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   bundledWebRuntime: false,
   plugins: {
-    // CapacitorHttp: {
-    //   enabled: true,
-    // },
     CapacitorCookies: {
       enabled: true,
     },
