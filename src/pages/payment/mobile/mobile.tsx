@@ -171,12 +171,8 @@ export const Mobile = (): JSX.Element => {
                 onClick: () => connectWallet(),
                 children: (
                   <>
-                    <img
-                      src="/icons/connect-wallet.svg"
-                      width={18}
-                      height={18}
-                    />
-                    Connect Wallet
+                    <img src="/icons/metamask.svg" width={18} height={18} />
+                    Connect MetaMask
                   </>
                 ),
               },
