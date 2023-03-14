@@ -10,7 +10,7 @@ import { register } from './sign-up-user-email.services';
 import { formModel } from './sign-up-user-email.form';
 import { useForm } from '../../../core/form';
 import { getFormValues } from '../../../core/form/customValidators/formValues';
-import { handleError } from '../../../core/api';
+import { handleError } from '../../../core/http';
 import { preRegister } from '../sign-up-user-email/sign-up-user-email.services';
 
 export const SignUpUserEmail = (): JSX.Element => {

@@ -18,14 +18,16 @@ export const endpoint = {
   auth,
   get: {
     projects: {
-      project_id: (id: string) => get(`projects/${id}`).then(getDataProp) as Promise<GetProject>,
+      project_id: (id: string) =>
+        get(`projects/${id}`).then(getDataProp) as Promise<GetProject>,
       '{project_id}/offers': (payload: offerPayload) =>
-        get(`projects/${payload.id}/offers?filter.status=${payload.status}&page=${payload.page}`).then(
-          getDataProp
-        ) as Promise<Pagination<Offer[]>>,
+        get(
+          `projects/${payload.id}/offers?filter.status=${payload.status}&page=${payload.page}`,
+        ).then(getDataProp) as Promise<Pagination<Offer[]>>,
     },
     offers: {
-      offer_id: (id: string) => get(`offers/${id}`).then(getDataProp) as Promise<Offer>,
+      offer_id: (id: string) =>
+        get(`offers/${id}`).then(getDataProp) as Promise<Offer>,
     },
     missions: {
       mission_id: (id: string) => get(`missions/${id}`).then(getDataProp),
