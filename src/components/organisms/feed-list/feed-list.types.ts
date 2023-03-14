@@ -28,6 +28,8 @@ export type IdentityMeta = {
     name: string;
     image: string;
     avatar: string;
+    username: string;
+    shortname?: string;
 }
 
 export type Media = {
