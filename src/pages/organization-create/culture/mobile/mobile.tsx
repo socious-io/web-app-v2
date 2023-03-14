@@ -8,7 +8,8 @@ import { Textarea } from '../../../../components/atoms/textarea/textarea';
 import { addOrganization, wizardFormToPayloadAdaptor } from '../../organization-create';
 import css from './mobile.module.scss';
 import { required, useForm } from '../../../../core/form';
-import { getIdentities, handleError } from '../../../../core/api';
+import { handleError } from '../../../../core/http';
+import { getIdentities } from '../../../../core/api';
 import { setIdentityList } from '../../../../store/reducers/identity.reducer';
 
 export const Mobile = (): JSX.Element => {

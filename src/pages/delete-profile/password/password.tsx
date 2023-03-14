@@ -9,7 +9,7 @@ import { deleteAccount, login } from '../delete-profile.service';
 import css from './password.module.scss';
 import { useForm } from '../../../core/form';
 import { formModel } from './password.form';
-import { handleError } from '../../../core/api';
+import { handleError } from '../../../core/http';
 
 export const Password = () => {
   const navigate = useNavigate();

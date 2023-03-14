@@ -10,7 +10,8 @@ import { formModel } from './sign-in.form';
 import { useForm } from '../../core/form';
 import { getFormValues } from '../../core/form/customValidators/formValues';
 import { LoginPayload } from './sign-in.types';
-import { getIdentities, handleError } from '../../core/api';
+import { handleError } from '../../core/http';
+import { getIdentities } from '../../core/api';
 import { setIdentityList } from '../../store/reducers/identity.reducer';
 import store from '../../store/store';
 
@@ -29,7 +30,7 @@ export const SignIn = (): JSX.Element => {
     endpoint.auth
       .login(formValues)
       .then(onLoginSucceed)
-      .catch(handleError('Login Failed'));
+      .catch(handleError({title: 'Login Failed'}));
   }
 
   return (

@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-location';
 import { Button } from '../../../components/atoms/button/button';
 import { Input } from '../../../components/atoms/input/input';
-import { handleError } from '../../../core/api';
+import { handleError } from '../../../core/http';
 import { useForm } from '../../../core/form';
 import { forgetPassword } from '../forget-password.service';
 import { formModel } from './email.form';
@@ -19,7 +19,7 @@ export const Email = () => {
           navigate({ to: `../otp?email=${email}` });
         }
       })
-      .catch(handleError('Failed'));
+      .catch(handleError({section: 'FORGET_PASSWORD'}));
   };
 
   return (

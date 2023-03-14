@@ -4,9 +4,9 @@ import css from './otp.module.scss';
 import { Otp as OtpCom } from '../../../components/atoms/otp/otp';
 import { useState } from 'react';
 import { confirm, forgetPassword } from '../forget-password.service';
-import { handleError } from '../../../core/api';
+import { handleError } from '../../../core/http';
 import { dialog } from '../../../core/dialog/dialog';
-
+import translate from '../../../translations';
 export const Otp = () => {
   const navigate = useNavigate();
   const queryParam = useMatch().search;
@@ -28,7 +28,7 @@ export const Otp = () => {
 
   function onResendOtp() {
     forgetPassword(email)
-      .then(() => dialog.alert({ title: 'success', message: 'OTP has been successfully sent to your email' }))
+      .then(() => dialog.alert({ title: 'success', message: translate('OTP sent success') }))
       .catch((err) => {
         handleError()(err);
         setOtpValue('');
