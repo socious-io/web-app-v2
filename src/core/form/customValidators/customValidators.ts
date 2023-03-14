@@ -6,3 +6,30 @@ export const email = (): Validator => ({
     message: 'incorrect email',
     validateWith: (value: ControlPrimitiveValue) => REGEX.email.test(value as string),
 });
+
+export const noEmptyString = (): Validator => ({
+    name: 'noEmptyString',
+    message: 'field is required',
+    validateWith: (value: ControlPrimitiveValue) => {
+        return (value as string).trim().length > 0;
+    },
+});
+
+export const number = (): Validator => ({
+    name: 'number',
+    message: 'value should be a number',
+    validateWith: (value: ControlPrimitiveValue) => {
+        return /^[0-9]*$/.test(value as string);
+    },
+});
+
+export const website = (): Validator => ({
+    name: 'website',
+    message: 'incorrect URL',
+    validateWith: (value: ControlPrimitiveValue) => {
+        if (value === '') {
+            return true;
+        }
+        return /^(ftp|http|https):\/\/[^ "]+$/.test(value as string);
+    },
+});

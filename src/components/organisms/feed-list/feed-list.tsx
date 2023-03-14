@@ -4,7 +4,7 @@ import css from './feed-list.module.scss';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { useNavigate } from '@tanstack/react-location';
 
-export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeMore }: FeedListProps) => {
+export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeMore, onMoreClick }: FeedListProps) => {
   const navigate = useNavigate();
 
   const actionList = (id: string, likes: number, liked: boolean) => [
@@ -37,6 +37,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
     <div className={css.container}>
       {data.map((item) => (
         <FeedItem
+          onMoreClick={() => onMoreClick?.(item.id)}
           key={item.id}
           type={item.identity_type}
           img={item.media != null && item.media.length > 0 ? item.media[0]?.url : ''}

@@ -5,7 +5,6 @@ import { TextareaProps } from './textarea.types';
 export const Textarea = (props: TextareaProps): JSX.Element => {
   const [outline, setOutline] = useState(false);
   const { optional = false, register, errors = [], variant = 'outline', ...rest } = props;
-  //   const registerField = register?.(props.name, { required: !optional, ...props.validations });
 
   function setClassName(v: TextareaProps['variant']) {
     return v ? css.outline : css.default;
@@ -23,8 +22,9 @@ export const Textarea = (props: TextareaProps): JSX.Element => {
           id={props.label}
           className={css.textbox}
           role="textbox"
+          onChange={(e) => props.onValueChange?.(e.target.value)}
           {...rest}
-          {...props?.register?.bind(props.name)}
+          {...props?.register?.bind(props?.name)}
         />
       </div>
     );
@@ -40,6 +40,7 @@ export const Textarea = (props: TextareaProps): JSX.Element => {
         id={props.label}
         className={css.textbox}
         role="textbox"
+        onChange={(e) => props.onValueChange?.(e.target.value)}
         {...rest}
         {...props?.register?.bind(props.name)}
       />

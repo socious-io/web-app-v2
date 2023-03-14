@@ -8,6 +8,7 @@
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  position: relative;
 }
 
 .title {
@@ -23,4 +24,10 @@
 .date {
   font-size: var(--font-size-s2);
   color: var(--color-gray-01);
+}
+
+.bottomRight {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
 }

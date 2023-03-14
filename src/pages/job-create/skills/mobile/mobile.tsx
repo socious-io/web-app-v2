@@ -35,7 +35,7 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.questionContainer}>
         <div className={css.question}>Select up to 10 relevant skills</div>
-        <div className={css.limitStatement}>Skills used in this project</div>
+        <div className={css.limitStatement}>Skills used in this job</div>
       </div>
       <div className={css.search}>
         <Search backgroundColor="var(--color-off-white-01)" width="100%" placeholder="Search" onValueChange={onSearch} />

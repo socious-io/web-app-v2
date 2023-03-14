@@ -1,7 +1,7 @@
 import css from './checkbox.module.scss';
 import { CheckboxProps } from './checkbox.types';
 
-export const Checkbox = ({ checked, id, label, onChange, disabled }: CheckboxProps) => {
+export const Checkbox = ({ checked, id, label, onChange, disabled, defaultChecked }: CheckboxProps) => {
   return (
     <div className={css.container}>
       <input
@@ -9,6 +9,7 @@ export const Checkbox = ({ checked, id, label, onChange, disabled }: CheckboxPro
         type="checkbox"
         id={id}
         checked={checked}
+        defaultChecked={defaultChecked}
         disabled={disabled}
         onChange={() => onChange?.(!checked)}
       />

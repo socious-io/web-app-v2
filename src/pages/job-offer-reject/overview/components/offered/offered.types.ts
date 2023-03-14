@@ -1,8 +1,8 @@
-import { Pagination } from '../../../../../core/types';
+import { Offer, Pagination } from '../../../../../core/types';
 
 export type OfferedProps = {
-  sent: Pagination<unknown[]>;
-  approved: Pagination<unknown[]>;
-  hired: Pagination<unknown[]>;
-  closed: Pagination<unknown[]>;
+  sent: Pagination<Offer[]>;
+  approved: Pagination<Offer[]>;
+  hired: Pagination<Offer[]>;
+  closed: Pagination<Offer[]>;
 };

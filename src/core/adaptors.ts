@@ -1,3 +1,4 @@
+import { DropdownItem } from '../components/atoms/dropdown-v2/dropdown.types';
 import { SKILLS } from '../constants/SKILLS';
 import { SOCIAL_CAUSES } from '../constants/SOCIAL_CAUSES';
 import { CategoriesResp, Cities } from './types';
@@ -27,20 +28,23 @@ export function socialCausesToCategory(categories: string[] = []) {
   });
 }
 
-export function jobCategoriesToDropdown(categories: CategoriesResp['categories']): { title: string; value: string }[] {
+export function jobCategoriesToDropdown(categories: CategoriesResp['categories']): DropdownItem[] {
   return categories.map((item) => {
     return {
-      title: item.name,
+      id: item.id,
+      label: item.name,
       value: item.id,
     };
   });
 }
 
-export function citiesToCategories(cities: Cities[]): Dropdown[] {
+export function citiesToCategories(cities: Cities[]): DropdownItem[] {
   return cities.map((city) => {
     return {
-      title: `${city.name}, ${city.region_name}`,
-      value: city.id,
+      id: city.id,
+      label: city.name,
+      value: city.name,
+      helperText: city.region_name,
     };
   });
 }

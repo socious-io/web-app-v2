@@ -7,11 +7,11 @@ export const NotificationList = ({ list, onMorePageClick, showSeeMore }: Notific
   const navigate = useNavigate();
 
   const navigateToPost = (id: string) => {
-    navigate({ to: `../feeds/${id}` });
+    console.log('id: ', id);
+    // navigate({ to: `../feeds/${id}` });
   };
 
-  const avatarImage = (item: Notifications): string =>
-    item.data.identity.meta.avatar || item.data.identity.meta.image || '';
+  const avatarImage = (item: Notifications): string => item.data.identity.meta.avatar || item.data.identity.meta.image || '';
 
   return (
     <div>
@@ -26,9 +26,11 @@ export const NotificationList = ({ list, onMorePageClick, showSeeMore }: Notific
         />
       ))}
 
-      {showSeeMore && (<div className={css.seeMore} onClick={() => onMorePageClick()}>
-        See more
-      </div>)}
+      {showSeeMore && (
+        <div className={css.seeMore} onClick={() => onMorePageClick()}>
+          See more
+        </div>
+      )}
     </div>
   );
 };

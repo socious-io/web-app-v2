@@ -236,9 +236,18 @@ export type MissionsResp = Pagination<
       cover_letter: string;
     };
     id: string;
+    offer_id: string;
     created_at: string;
     project: {
       title: string;
+      payment_scheme: string;
+      payment_type: string;
+    };
+    job_category: { name: string };
+    status: 'CLOSED' | 'COMPLETE';
+    offer: {
+      total_hours: number;
+      assignment_total: number;
     };
     assignee: {
       meta: {
@@ -277,12 +286,25 @@ export type Offer = {
   applicant: {
     cover_letter: string;
   };
+  job_category: {
+    name: string;
+  };
+  recipient: {
+    meta: {
+      name: string;
+      avatar: string | null;
+    };
+  };
+  organization: {
+    name: string;
+    bio: string;
+  };
   id: string;
   created_at: string;
   offer_message: string;
   assignment_total: number;
   due_date: string;
-  status: string;
+  status: 'HIRED' | 'CLOSED';
   project: {
     description: string;
     title: string;
