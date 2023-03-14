@@ -1,5 +1,6 @@
 export type FeedItemProps = {
   onMoreClick?: () => void;
+  onAvatarClick?: () => void;
   id?: string;
   imgAvatar: string;
   date: string;

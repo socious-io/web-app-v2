@@ -13,11 +13,10 @@ export const FeedItem = (props: FeedItemProps): JSX.Element => {
     <Card>
       <div className={css.header}>
         <div className={css.info}>
-          <Avatar type={type} size="2rem" img={imgAvatar} />
+          <Avatar onClick={props.onAvatarClick} type={type} size="2rem" img={imgAvatar} />
           <span>{name}</span>
           <span className={css.date}>{toRelativeTime(date)}</span>
         </div>
-
         <div className={css.icon} onClick={props.onMoreClick}>
           <img src="/icons/three-dots-blue.svg" />
         </div>

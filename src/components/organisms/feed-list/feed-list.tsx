@@ -1,5 +1,5 @@
 import { FeedItem } from '../../molecules/feed-item/feed-item';
-import { FeedListProps } from './feed-list.types';
+import { Feed, FeedListProps } from './feed-list.types';
 import css from './feed-list.module.scss';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { useNavigate } from '@tanstack/react-location';
@@ -33,15 +33,31 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
     navigate({ to: `./${id}` });
   };
 
+  function redirectToProfile(feed: Feed) {
+    if (feed.identity_type === 'users') {
+      navigate({ to: `/profile/users/${feed.identity_meta.username}` });
+    } else {
+      navigate({ to: `/profile/organizations/${feed.identity_meta.shortname}` });
+    }
+  }
+
+  function setAvatar(feed: Feed) {
+    if (feed.identity_type === 'organizations') {
+      return feed.identity_meta.image;
+    }
+    return feed.identity_meta.avatar;
+  }
+
   return (
     <div className={css.container}>
       {data.map((item) => (
         <FeedItem
+          onAvatarClick={() => redirectToProfile(item)}
           onMoreClick={() => onMoreClick?.(item.id)}
           key={item.id}
           type={item.identity_type}
           img={item.media != null && item.media.length > 0 ? item.media[0]?.url : ''}
-          imgAvatar={item.identity_meta.avatar}
+          imgAvatar={setAvatar(item)}
           text={item.content}
           name={item.identity_meta.name}
           actionList={actionList(item.id, item.likes, item.liked)}
