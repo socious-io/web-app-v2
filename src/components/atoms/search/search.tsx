@@ -10,6 +10,13 @@ export const Search = (props: SearchProps): JSX.Element => {
     onValueChange?.(e.target.value);
   }
 
+  function onEnter(e: ChangeEvent<unknown>) {
+    const value = (e.target as HTMLInputElement)?.value;
+    if ('key' in e && e.key === 'Enter') {
+      props.onEnter?.(value);
+    }
+  }
+
   const setValueProps = () => {
     const obj = {};
     if (defaultValue !== undefined) {
@@ -29,6 +36,7 @@ export const Search = (props: SearchProps): JSX.Element => {
       <input
         placeholder={placeholder}
         type="search"
+        onKeyDown={onEnter}
         onChange={onInputChange}
         {...setValueProps()}
         className={css.input}
