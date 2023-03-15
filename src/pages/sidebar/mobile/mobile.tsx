@@ -13,15 +13,14 @@ import { getSession, logout } from '../sidebar.service';
 import css from './mobile.module.scss';
 import { AccountsModel } from './mobile.types';
 import { printWhen } from '../../../core/utils';
+import { hapticsImpactLight } from '../../../core/haptic/haptic';
 
 export const Mobile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find(
-      (identity) => identity.current,
-    ) as IdentityReq;
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
@@ -47,6 +46,7 @@ export const Mobile = () => {
   };
 
   const navigateToJobs = (id: string) => {
+    hapticsImpactLight();
     getSession(id);
     getIdentities()
       .then((resp) => dispatch(setIdentityList(resp)))
@@ -55,11 +55,13 @@ export const Mobile = () => {
   };
 
   const navigateToCreateOrg = () => {
+    hapticsImpactLight();
     navigate({ to: `/organization/create/intro` });
     closeSidebar();
   };
 
   function navigateToProfile() {
+    hapticsImpactLight();
     if (identity.type === 'users') {
       navigate({ to: `/profile/users/${identity.meta.username}` });
     } else {
@@ -69,6 +71,7 @@ export const Mobile = () => {
   }
 
   function navigateToSignIn() {
+    hapticsImpactLight();
     logout()
       .then(() => navigate({ to: '/sign-in' }))
       .then(closeSidebar);
@@ -100,16 +103,19 @@ export const Mobile = () => {
   }
 
   function navigateToCreatedJobs() {
+    hapticsImpactLight();
     navigate({ to: `/jobs/created/${identity.id}` });
     closeSidebar();
   }
 
   const navigateToRoute = (route: string) => {
+    hapticsImpactLight();
     navigate({ to: `../${route}` });
     closeSidebar();
   };
 
   function navigateToAppliedApplications() {
+    hapticsImpactLight();
     navigate({ to: `/jobs/applied/${identity.id}` });
     closeSidebar();
   }
@@ -134,7 +140,10 @@ export const Mobile = () => {
       {accountList.map((item) => {
         return (
           <div
-            onClick={() => navigateToJobs(item.id)}
+            onClick={() => {
+              hapticsImpactLight();
+              navigateToJobs(item.id);
+            }}
             key={item.id}
             className={css.row}
           >
@@ -148,11 +157,7 @@ export const Mobile = () => {
 
   return (
     <div className={css.container}>
-      <div
-        style={bgStyles(isVisible)}
-        className={css.bg}
-        onClick={closeSidebar}
-      />
+      <div style={bgStyles(isVisible)} className={css.bg} onClick={closeSidebar} />
       <div style={sidebarStyles(isVisible)} className={css.sidebar}>
         <div className={css.header}>
           <div className={css.organization}>
@@ -193,42 +198,26 @@ export const Mobile = () => {
         {printWhen(switchToJSX, accountList.length > 1)}
         <div className={css.items}>
           <div className={css.title}>Settings</div>
-          <div
-            className={css.row}
-            onClick={() => navigateToRoute('privacy-policy')}
-          >
+          <div className={css.row} onClick={() => navigateToRoute('privacy-policy')}>
             <img src="/icons/document-one-black.svg" />
             <span>Privacy policy</span>
           </div>
-          <div
-            className={css.row}
-            onClick={() => navigateToRoute('terms-conditions')}
-          >
+          <div className={css.row} onClick={() => navigateToRoute('terms-conditions')}>
             <img src="/icons/document-one-black.svg" />
             <span>Terms & conditions</span>
           </div>
-          <div
-            className={css.row}
-            onClick={() => navigateToRoute('change-password')}
-          >
+          <div className={css.row} onClick={() => navigateToRoute('change-password')}>
             <img src="/icons/key-black.svg" width={22} height={22} />
             <span>Change password</span>
           </div>
-          <div
-            className={css.row}
-            onClick={() => navigateToRoute('delete-profile/delete')}
-          >
+          <div className={css.row} onClick={() => navigateToRoute('delete-profile/delete')}>
             <img src="/icons/delete-account-black.svg" />
             <span>Delete Account</span>
           </div>
         </div>
         <div className={css.items}>
           <div className={css.row} onClick={() => navigateToSignIn()}>
-            <img
-              src="/icons/logout-red.svg"
-              height={22}
-              className={css.redIcon}
-            />
+            <img src="/icons/logout-red.svg" height={22} className={css.redIcon} />
             <span>Log out</span>
           </div>
         </div>

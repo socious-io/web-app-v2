@@ -10,6 +10,7 @@ import { RootState } from '../../../store/store';
 import { visibility } from '../../../store/reducers/menu.reducer';
 import { Search } from '../../../components/atoms/search/search';
 import { useNavigate } from '@tanstack/react-location';
+import { hapticsImpactLight } from '../../../core/haptic/haptic';
 
 export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
   const [page, setPage] = useState(1);
 
   function openSidebar() {
+    hapticsImpactLight();
     dispatch(visibility(true));
   }
 

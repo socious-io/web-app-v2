@@ -1,6 +1,7 @@
 import css from './button.module.scss';
 import { ButtonProps } from './button.types';
 import { CSSProperties } from 'react';
+import { hapticsImpactLight } from '../../../core/haptic/haptic';
 
 const colorStyle: Record<NonNullable<ButtonProps['color']>, CSSProperties> = {
   blue: {
@@ -27,10 +28,15 @@ const sizeStyle: Record<NonNullable<ButtonProps['size']>, CSSProperties> = {
 export function Button(props: ButtonProps): JSX.Element {
   const { color = 'blue', disabled = false, size = 'm', type = 'button', ...rest } = props;
 
+  function onClick() {
+    hapticsImpactLight();
+    props.onClick?.();
+  }
+
   return (
     <button
       type={type}
-      onClick={props.onClick}
+      onClick={onClick}
       disabled={disabled}
       style={{ ...colorStyle[color], ...sizeStyle[size], ...rest }}
       className={`${css.button} ${props.className}`}

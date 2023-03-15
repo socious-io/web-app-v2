@@ -1,6 +1,8 @@
 import { Outlet, useNavigate, useRouter } from '@tanstack/react-location';
+import { hapticsImpactLight } from '../../../core/haptic/haptic';
 import css from './menu-touch.module.scss';
 import { menuList } from './menu-touch.services';
+import { Menu } from './menu-touch.types';
 
 export const MenuTouch = (): JSX.Element => {
   const navigate = useNavigate();
@@ -8,6 +10,13 @@ export const MenuTouch = (): JSX.Element => {
 
   function isActive(route: string): boolean {
     return state.location.pathname === route;
+  }
+
+  function onMenuClick(item: Menu) {
+    return () => {
+      navigate({ to: item.route });
+      hapticsImpactLight();
+    };
   }
 
   return (
@@ -18,20 +27,13 @@ export const MenuTouch = (): JSX.Element => {
       <div className={css.menu}>
         <div className={css.navContainer}>
           {menuList.map((item) => (
-            <li
-              onClick={() => navigate({ to: item.route })}
-              key={item.label}
-              className={css.navItem}
-            >
+            <li onClick={onMenuClick(item)} key={item.label} className={css.navItem}>
               <img
                 className={css.navIcon}
                 height={24}
                 src={isActive(item.route) ? `${item.icon}-active.svg` : `${item.icon}.svg`}
               />
-              <div
-                style={{ color: isActive(item.route) ? 'var(--color-primary-01)' : '' }}
-                className={css.navLabel}
-              >
+              <div style={{ color: isActive(item.route) ? 'var(--color-primary-01)' : '' }} className={css.navLabel}>
                 {item.label}
               </div>
             </li>
