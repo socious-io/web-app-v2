@@ -12,5 +12,7 @@ export function formModel(formState: CreateOrgWizard): FormModel {
     countryMobileCode: { initialValue: formState.countryMobileCode },
     phoneNumber: { initialValue: formState.phoneNumber },
     website: { initialValue: formState.website },
+    country: { initialValue: formState.country, validators: [required()] },
+    city: { initialValue: formState.city, validators: [required()] },
   };
 }
