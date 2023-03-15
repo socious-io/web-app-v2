@@ -1,5 +1,5 @@
 import { compose } from 'ramda';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useId, useMemo, useRef } from 'react';
 import { useForceUpdate } from '../useForceUpdate/UseForceUpdate';
 import { attachAddRemoveControlToFormGroup } from './composition/attachAddRemoveControlToFormGroup';
 import { attachBindToFormGroup } from './composition/attachBindToFormGroup';
@@ -15,9 +15,11 @@ import {
     SetRefValue,
 } from './useForm.types';
 
-export const useForm = (model: FormModel): Required<FormGroup> => {
+export const useForm = (model: FormModel, name?: string): Required<FormGroup> => {
     const refs = useRef<ControlRefs>({});
     const rerender = useForceUpdate();
+    const id = useId();
+    const nameId = name || id;
 
     const addToRefs: AddToRef = (controlName, ref) => {
         const key = ref.type === 'radio' ? `${controlName}#${ref.value}` : controlName;
@@ -51,7 +53,7 @@ export const useForm = (model: FormModel): Required<FormGroup> => {
     const formGroup = useMemo<Required<FormGroup>>(() => {
         const convertModelToControl: GenerateFormGroup = compose(
             attachBindToFormGroup(addToRefs, rerender),
-            attachControlsToFormGroup(setRefValue, rerender),
+            attachControlsToFormGroup(setRefValue, rerender, nameId),
             normalizeModel
         );
         const formGroupWithControls = convertModelToControl(model);

@@ -19,7 +19,7 @@ export const Email = () => {
           navigate({ to: `../otp?email=${email}` });
         }
       })
-      .catch(handleError({section: 'FORGET_PASSWORD'}));
+      .catch(handleError({ section: 'FORGET_PASSWORD' }));
   };
 
   return (
