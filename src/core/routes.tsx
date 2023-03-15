@@ -78,8 +78,8 @@ export const routes: Route[] = [
     path: '',
     loader: async () => {
       try {
-        const resp = await getIdentities();
         await endpoint.auth.refreshToken();
+        const resp = await getIdentities();
         store.dispatch(setIdentityList(resp));
         return resp;
       } catch {

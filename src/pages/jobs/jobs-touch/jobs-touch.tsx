@@ -9,9 +9,11 @@ import { IdentityReq } from '../../../core/types';
 import { RootState } from '../../../store/store';
 import { visibility } from '../../../store/reducers/menu.reducer';
 import { Search } from '../../../components/atoms/search/search';
+import { useNavigate } from '@tanstack/react-location';
 
 export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { list } = props;
   const [jobList, setJobList] = useState(list);
   const [page, setPage] = useState(1);
@@ -33,12 +35,16 @@ export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
     });
   }
 
+  function onEnter(value: string) {
+    navigate({ to: `/search?q=${value}` });
+  }
+
   return (
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.menu}>
           <Avatar onClick={openSidebar} img={avatarImg} size="2.25rem" type={identity.type} />
-          <Search placeholder="Search Jobs" onValueChange={console.log} />
+          <Search placeholder="Search Jobs" onValueChange={console.log} onEnter={onEnter} />
           <img className={css.logo} src="icons/logo-white.svg" />
         </div>
         <div>
