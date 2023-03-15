@@ -11,7 +11,7 @@ import {
     generateFormGroupIsValidProp,
 } from '../useForm.validations';
 
-const baseFormGroup: FormGroup = {
+const formGroupBluePrint: FormGroup = {
     controls: {},
     bind: undefined,
     isValid: false,
@@ -22,9 +22,13 @@ const baseFormGroup: FormGroup = {
     reset: undefined,
 };
 
+const base: Record<string, FormGroup> = {};
+
 export const attachControlsToFormGroup =
-    (setRefValue: SetRefValue, rerender: () => void) =>
+    (setRefValue: SetRefValue, rerender: () => void, name: string) =>
     (model: NormalizedModel): FormGroup => {
+        base[name] = { ...formGroupBluePrint };
+        const baseFormGroup = base[name];
         const controls = Object.entries(model).reduce((prev, [controlName, value]) => {
             const { initialValue, validators, disabled } = value;
 
@@ -58,7 +62,8 @@ export const attachControlsToFormGroup =
                     };
                     const newControl = attachControlsToFormGroup(
                         setRefValue,
-                        rerender
+                        rerender,
+                        name
                     )(controlModel).controls[controlName];
                     baseFormGroup.controls[controlName] = newControl;
                     // @ts-ignore
@@ -119,7 +124,6 @@ export const attachControlsToFormGroup =
                 _subscribeCallbacks: [],
                 _validators: [...validators],
             };
-
             return { ...prev, [controlName]: control };
         }, {});
 

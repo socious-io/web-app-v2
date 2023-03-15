@@ -30,7 +30,7 @@ export const SignIn = (): JSX.Element => {
     endpoint.auth
       .login(formValues)
       .then(onLoginSucceed)
-      .catch(handleError({title: 'Login Failed'}));
+      .catch(handleError({ title: 'Login Failed' }));
   }
 
   return (
@@ -42,13 +42,7 @@ export const SignIn = (): JSX.Element => {
           </Typography>
         </div>
         <form className={css.formContainer}>
-          <Input
-            register={form}
-            autoComplete="Email"
-            label="Email"
-            name="email"
-            placeholder="Email"
-          />
+          <Input register={form} autoComplete="Email" label="Email" name="email" placeholder="Email" />
           <Input
             register={form}
             autoComplete="current-password"
@@ -59,9 +53,7 @@ export const SignIn = (): JSX.Element => {
           />
         </form>
         <div className={css.forgotPassword}>
-          <Link onClick={() => navigate({ to: '/forget-password/email' })}>
-            Forgot your password?
-          </Link>
+          <Link onClick={() => navigate({ to: '/forget-password/email' })}>Forgot your password?</Link>
         </div>
       </div>
       <div>
@@ -71,9 +63,7 @@ export const SignIn = (): JSX.Element => {
           </Button>
           <Typography marginTop="1rem">
             <span>Not a member? </span>
-            <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>
-              Sign up
-            </Link>
+            <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>Sign up</Link>
           </Typography>
         </div>
       </div>
