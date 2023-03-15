@@ -37,35 +37,56 @@ import { endpoint } from './endpoints';
 
 export const routes: Route[] = [
   {
-    path: '',
-    loader: async () => {
-      await endpoint.auth.refreshToken();
-      const resp = await getIdentities();
-      store.dispatch(setIdentityList(resp));
-      return resp;
-    },
+    path: 'intro',
+    element: () => import('../pages/intro/intro').then((m) => <m.Intro />),
+  },
+  {
+    path: 'sign-in',
+    element: () => import('../pages/sign-in/sign-in').then((m) => <m.SignIn />),
+  },
+  {
+    path: 'sign-up',
     children: [
       {
-        path: 'intro',
-        element: () => import('../pages/intro/intro').then((m) => <m.Intro />),
-      },
-      {
-        path: 'forget-password',
+        path: '/user',
         children: [
-          {
-            path: '/email',
-            element: () => import('../pages/forget-password/email/email').then((m) => <m.Email />),
-          },
-          {
-            path: '/otp',
-            element: () => import('../pages/forget-password/otp/otp').then((m) => <m.Otp />),
-          },
-          {
-            path: '/password',
-            element: () => import('../pages/forget-password/password/password').then((m) => <m.Password />),
-          },
+          { path: '/email', element: <SignUpUserEmail /> },
+          { path: '/verification', element: <SignUpUserVerification /> },
+          { path: '/complete', element: <SignUpUserComplete /> },
         ],
       },
+    ],
+  },
+  {
+    path: 'forget-password',
+    children: [
+      {
+        path: '/email',
+        element: () => import('../pages/forget-password/email/email').then((m) => <m.Email />),
+      },
+      {
+        path: '/otp',
+        element: () => import('../pages/forget-password/otp/otp').then((m) => <m.Otp />),
+      },
+      {
+        path: '/password',
+        element: () => import('../pages/forget-password/password/password').then((m) => <m.Password />),
+      },
+    ],
+  },
+  {
+    path: '',
+    loader: async () => {
+      try {
+        const resp = await getIdentities();
+        await endpoint.auth.refreshToken();
+        store.dispatch(setIdentityList(resp));
+        return resp;
+      } catch {
+        window.location.replace('/intro');
+      }
+    },
+    children: [
       {
         path: 'delete-profile',
         children: [
@@ -83,24 +104,7 @@ export const routes: Route[] = [
           },
         ],
       },
-      {
-        path: 'sign-in',
-        element: () => import('../pages/sign-in/sign-in').then((m) => <m.SignIn />),
-      },
       { path: 'change-password', element: <ChangePassword /> },
-      {
-        path: 'sign-up',
-        children: [
-          {
-            path: '/user',
-            children: [
-              { path: '/email', element: <SignUpUserEmail /> },
-              { path: '/verification', element: <SignUpUserVerification /> },
-              { path: '/complete', element: <SignUpUserComplete /> },
-            ],
-          },
-        ],
-      },
       {
         path: 'profile/:userType/:id',
         loader: ({ params }) => {
@@ -224,10 +228,7 @@ export const routes: Route[] = [
           },
           {
             loader: (params) => jobOfferRejectLoader(params),
-            element: () =>
-              import('../pages/job-offer-reject/job-offer-reject').then((m) => (
-                <m.JobOfferReject />
-              )),
+            element: () => import('../pages/job-offer-reject/job-offer-reject').then((m) => <m.JobOfferReject />),
           },
         ],
       },
@@ -365,7 +366,7 @@ export const routes: Route[] = [
             loader: () => getFeedList({ page: 1 }),
           },
           {
-            element: <Navigate to="intro" />,
+            element: <Navigate to="/jobs" />,
           },
         ],
       },
