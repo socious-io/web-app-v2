@@ -1,4 +1,6 @@
-export const menuList = [
+import { Menu } from './menu-touch.types';
+
+export const menuList: Menu[] = [
   {
     label: 'Jobs',
     icon: '/icons/menu/jobs',
