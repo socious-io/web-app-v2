@@ -1,28 +1,31 @@
 import css from './mobile.module.scss';
 import { useNavigate } from '@tanstack/react-location';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { COUNTRIES } from '../../../../constants/COUNTRIES';
 import { CreateOrgWizard } from '../../../../store/reducers/createOrgWizard.reducer';
 import { RootState } from '../../../../store/store';
 import { Button } from '../../../../components/atoms/button/button';
-import { Dropdown } from '../../../../components/atoms/dropdown/dropdown';
-import { DropdownItem } from '../../../../components/atoms/dropdown/dropdown.types';
 import { Input } from '../../../../components/atoms/input/input';
 import { Steps } from '../../../../components/atoms/steps/steps';
 import { Textarea } from '../../../../components/atoms/textarea/textarea';
 import { Divider } from '../../../../components/templates/divider/divider';
-import { formIsInvalid, updateCityList, updateForm } from '../profile.services';
+import { formIsInvalid, updateForm } from '../profile.services';
 import { useForm } from '../../../../core/form';
 import { formModel } from '../profile.form';
 import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
+import { Dropdown } from '../../../../components/atoms/dropdown-v2/dropdown';
+import { getCityList } from '../../../job-create/info/info.services';
+import { citiesToCategories } from '../../../../core/adaptors';
+import { DropdownItem } from '../../../../components/atoms/dropdown-v2/dropdown.types';
 
 export const Mobile = (): JSX.Element => {
   const formState = useSelector<RootState, CreateOrgWizard>((state) => state.createOrgWizard);
+  const memoizedFormState = useMemo(() => formModel(formState), []);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const updateField = updateForm(dispatch);
-  const form = useForm(formModel(formState));
+  const form = useForm(memoizedFormState);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const [agreement, setAgreement] = useState(false);
 
@@ -30,6 +33,12 @@ export const Mobile = (): JSX.Element => {
     const p = prop as keyof ReturnType<typeof formModel>;
     form.controls[prop].subscribe((v) => updateField(p, v));
   });
+
+  function updateCityList(countryCode: string) {
+    getCityList(countryCode)
+      .then(({ items }) => citiesToCategories(items))
+      .then(setCities);
+  }
 
   return (
     <div className={css.container}>
@@ -57,16 +66,27 @@ export const Mobile = (): JSX.Element => {
           <div className={css.formContainer}>
             <Input register={form} name="organizationEmail" label="Organization email" placeholder="Organization email" />
             <Dropdown
-              selectedValue={formState.country}
               label="Country"
+              placeholder="country"
+              name="country"
               list={COUNTRIES}
-              placeholder="Country"
-              onValueChange={(value) => {
-                updateCityList(setCities)(value);
-                updateField('country', value);
+              value={formState.country}
+              register={form}
+              onValueChange={(option) => {
+                updateCityList(option.value as string);
+                // form.controls.city.setValue('');
               }}
             />
             <Dropdown
+              register={form}
+              label="City"
+              placeholder="city"
+              name="city"
+              value={formState.city}
+              onValueChange={(options) => updateField('geoname_id', options.id)}
+              list={cities}
+            />
+            {/* <Dropdown
               selectedValue={formState.city}
               label="City"
               placeholder="City"
@@ -76,7 +96,7 @@ export const Mobile = (): JSX.Element => {
                 updateField('geoname_id', value);
                 updateField('city', cityName);
               }}
-            />
+            /> */}
             <Input register={form} name="address" optional label="Address" placeholder="Address" />
             <div>
               <div className={css.phoneNumberLabel}>
