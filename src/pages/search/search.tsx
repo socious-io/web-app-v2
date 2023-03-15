@@ -22,16 +22,17 @@ export const Search = () => {
     q,
   });
 
-  const getResponse = () => {
-    search(state).then((resp) => {
-      setResult(resp.items.length);
+  const getResponse = (newState: PayloadModel) => {
+    search(newState).then((resp) => {
+      setResult(resp.total_count);
       setList(resp.items);
     });
   };
 
   const onValueChange = (value: string) => {
-    setState({ ...state, q: value });
-    getResponse();
+    const newState = { ...state, q: value };
+    setState(newState);
+    getResponse(newState);
   };
 
   const onLike = () => {};

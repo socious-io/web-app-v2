@@ -6,5 +6,5 @@ export interface SearchProps extends CSSProperties {
   defaultValue?: string;
   onEnter?: (value: string) => void; 
   onChange?: ChangeEventHandler<HTMLInputElement>;
-  onValueChange: (value: string) => void;
+  onValueChange?: (value: string) => void;
 }

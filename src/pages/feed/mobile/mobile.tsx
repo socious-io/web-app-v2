@@ -16,6 +16,7 @@ import { endpoint } from '../../../core/endpoints';
 import { dialog } from '../../../core/dialog/dialog';
 import { visibility } from '../../../store/reducers/menu.reducer';
 import { Feed } from '../../../components/organisms/feed-list/feed-list.types';
+import { useNavigate } from '@tanstack/react-location';
 
 const showActions = async (feed: Feed) => {
   const name = feed.identity_meta.name;
@@ -48,6 +49,7 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
   const [page, setPage] = useState(1);
   const totalCount = list.total_count;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function onMorePage() {
     getFeedList({ page: page + 1 }).then((resp) => {
@@ -97,7 +99,9 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
     unlike(id).then(() => {});
   };
 
-  const onChangeSearch = () => {};
+  const onSearchEnter = (value: string) => {
+    navigate({ to: `/search?q=${value}` });
+  };
 
   const navigateToChat = () => {
     // navigate({ to: './chats' });
@@ -108,7 +112,7 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
       <div className={css.header}>
         <div className={css.menu}>
           <Avatar onClick={openSidebar} size="2.25rem" type={identity?.type} img={avatarImg} />
-          <Search placeholder="Search" onValueChange={onChangeSearch} />
+          <Search placeholder="Search" onEnter={onSearchEnter} />
           <div onClick={navigateToChat}>
             <img className={css.logo} src="icons/chat-white.svg" />
           </div>
