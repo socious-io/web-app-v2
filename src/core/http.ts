@@ -24,11 +24,7 @@ function getAuthHeaders(): { [key: string]: string | undefined } | undefined {
   };
 }
 
-export async function post(
-  uri: string,
-  payload: unknown,
-  config?: AxiosRequestConfig<unknown>,
-) {
+export async function post(uri: string, payload: unknown, config?: AxiosRequestConfig<unknown>) {
   const authHeaders = getAuthHeaders();
   config = config || {};
 
@@ -57,8 +53,7 @@ const errorSections: ErrorSection[] = ['AUTH', 'FORGET_PASSWORD'];
 
 export function handleError(params?: ErrorHandlerParams) {
   return (err: AxiosError<{ error: string }>) => {
-    const errMessage =
-      params?.message || err?.response?.data.error || 'An error accrued';
+    const errMessage = params?.message || err?.response?.data.error || 'An error accrued';
     const message = translate(errMessage, {
       cluster: 'ERROR',
       section: params?.section || getErrorSection(err?.request),
@@ -81,7 +76,7 @@ http.interceptors.request.use(
     store.dispatch(hideSpinner());
     // Do something with request error
     return Promise.reject(error);
-  },
+  }
 );
 
 http.interceptors.response.use(
@@ -97,11 +92,9 @@ http.interceptors.response.use(
     // Do something with response error
     // error.response.data. = 'OK'
     return Promise.reject(error);
-  },
+  }
 );
 
 function getErrorSection(request: XMLHttpRequest): string | undefined {
-  return errorSections.filter((s) =>
-    request.responseURL.toUpperCase().includes(s),
-  )[0];
+  return errorSections.filter((s) => request.responseURL.toUpperCase().includes(s))[0];
 }
