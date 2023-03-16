@@ -58,6 +58,6 @@ export type Job = {
     hourly_wage_dollars: 37.5;
     created_at: '2022-12-08T18:56:35.873285+00:00';
     updated_at: '2022-12-08T18:56:35.873285+00:00';
-  };
+  } | null;
   applicants: 2;
 };

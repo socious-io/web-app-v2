@@ -18,6 +18,7 @@ import { useForm } from '../../../../core/form';
 import { formModel } from '../apply.form';
 import { getFormValues } from '../../../../core/form/customValidators/formValues';
 import { dialog } from '../../../../core/dialog/dialog';
+import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -105,7 +106,7 @@ export const Mobile = (): JSX.Element => {
             location={`${jobDetail.identity_meta.city}, ${jobDetail.identity_meta.country}`}
           />
           <div className={css.jobTitle}>{jobDetail.title}</div>
-          <Typography lineLimit={3}>{jobDetail.description}</Typography>
+          <div>{convertMDToJSX(jobDetail.description, { length: 200 })}</div>
         </Divider>
         <Divider divider="line" title="Cover letter">
           <Textarea register={form} name="cover_letter" placeholder="write a message..." label="Message" />
