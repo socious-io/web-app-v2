@@ -5,7 +5,6 @@ import { Link } from '../../../components/atoms/link/link';
 import { Typography } from '../../../components/atoms/typography/typography';
 import { BottomStatic } from '../../../components/templates/bottom-static/bottom-static';
 import { Otp } from '../../../components/atoms/otp/otp';
-// import { confirmOTP, resendOTP } from './sign-up-user-verification.services';
 import { endpoint } from 'src/core/endpoints';
 import { useState } from 'react';
 import { dialog } from '../../../core/dialog/dialog';
