@@ -293,7 +293,11 @@ export type Offer = {
     meta: {
       name: string;
       avatar: string | null;
+      wallet_address: string | null;
+      city: string;
+      country: string;
     };
+    type: "users" | "organizations";
   };
   organization: {
     name: string;
