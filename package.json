@@ -29,6 +29,7 @@
     "@tanstack/react-location": "^3.7.4",
     "axios": "^1.2.3",
     "iso-country-currency": "^0.6.0",
+    "markdown-to-jsx": "^7.1.9",
     "moment": "^2.29.4",
     "ramda": "^0.28.0",
     "react": "^18.2.0",
