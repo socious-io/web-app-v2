@@ -5,6 +5,9 @@ const config: CapacitorConfig = {
   appName: 'Socious',
   webDir: 'dist',
   bundledWebRuntime: false,
+  server: {
+    hostname: 'socious.io',
+  },
   plugins: {
     CapacitorCookies: {
       enabled: true,

@@ -14,7 +14,6 @@ function keys(): { [key: string]: string } {
 
     data[splited[0].trim()] = splited[1].trim();
   }
-
   return data;
 }
 

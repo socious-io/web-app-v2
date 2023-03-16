@@ -13,6 +13,7 @@ import { printWhen } from '../../core/utils';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../core/types';
 import { RootState } from '../../store/store';
+import Markdown from 'markdown-to-jsx';
 
 export const JobDetail = (): JSX.Element => {
   const navigate = useNavigate();
@@ -57,7 +58,9 @@ export const JobDetail = (): JSX.Element => {
       <Divider title="Social cause">
         <CategoriesClickable list={socialCausesToCategory(job.causes_tags)} />
       </Divider>
-      <Divider title="Job description">{job.description}</Divider>
+      <Divider title="Job description">
+        <Markdown>{job.description}</Markdown>
+      </Divider>
       <Divider title="Skills">
         <CategoriesClickable list={skillsToCategory(job.skills)} />
       </Divider>
