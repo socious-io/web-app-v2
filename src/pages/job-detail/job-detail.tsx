@@ -13,6 +13,7 @@ import { printWhen } from '../../core/utils';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../core/types';
 import { RootState } from '../../store/store';
+import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
 
 export const JobDetail = (): JSX.Element => {
   const navigate = useNavigate();
@@ -39,9 +40,21 @@ export const JobDetail = (): JSX.Element => {
     </div>
   );
 
+  const skillsJSX = (
+    <Divider title="Skills">
+      <CategoriesClickable list={skillsToCategory(job.skills)} />
+    </Divider>
+  );
+
+  const socialCausesJSX = (
+    <Divider title="Social cause">
+      <CategoriesClickable list={socialCausesToCategory(job.causes_tags)} />
+    </Divider>
+  );
+
   return (
     <div className={css.container}>
-      <Header onBack={() => navigate({ to: '/jobs' })} title={job.job_category.name} />
+      <Header onBack={() => navigate({ to: '/jobs' })} title={job.job_category?.name || 'Job detail'} />
       {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
       <Divider>
         <ProfileView
@@ -54,13 +67,9 @@ export const JobDetail = (): JSX.Element => {
         <Categories marginBottom="1rem" list={getCategories(job)} />
         {printWhen(buttonJSX, identity.type === 'users')}
       </Divider>
-      <Divider title="Social cause">
-        <CategoriesClickable list={socialCausesToCategory(job.causes_tags)} />
-      </Divider>
-      <Divider title="Job description">{job.description}</Divider>
-      <Divider title="Skills">
-        <CategoriesClickable list={skillsToCategory(job.skills)} />
-      </Divider>
+      {printWhen(socialCausesJSX, !!job.causes_tags)}
+      <Divider title="Job description">{convertMDToJSX(job.description, { length: null })}</Divider>
+      {printWhen(skillsJSX, !!job.skills)}
     </div>
   );
 };
