@@ -17,6 +17,7 @@ import { dialog } from '../../../core/dialog/dialog';
 import { visibility } from '../../../store/reducers/menu.reducer';
 import { Feed } from '../../../components/organisms/feed-list/feed-list.types';
 import { useNavigate } from '@tanstack/react-location';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 const showActions = async (feed: Feed) => {
   const name = feed.identity_meta.name;
@@ -134,6 +135,7 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
       </div>
       <FeedList
         onMoreClick={(feed) => {
+          hapticsImpactLight();
           showActions(feed);
         }}
         data={feedList}

@@ -31,6 +31,7 @@ export const JobsTouch = (props: JobsTouchProps): JSX.Element => {
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   function onMorePage() {
+    hapticsImpactLight();
     getJobList({ page: page + 1 }).then((resp) => {
       setPage((v) => v + 1);
       setJobList((list) => [...list, ...resp.items]);

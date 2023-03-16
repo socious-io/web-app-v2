@@ -3,6 +3,7 @@ import { Feed, FeedListProps } from './feed-list.types';
 import css from './feed-list.module.scss';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { useNavigate } from '@tanstack/react-location';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeMore, onMoreClick }: FeedListProps) => {
   const navigate = useNavigate();
@@ -15,11 +16,18 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
       isLiked: liked,
       type: 'like',
       onClick: () => {
+        hapticsImpactLight();
         const obj = data.find((item) => item.id === id);
         obj!.liked ? onRemoveLike(id) : onLike(id);
       },
-      onLike: () => onLike(id),
-      onRemoveLike: () => onRemoveLike(id),
+      onLike: () => {
+        hapticsImpactLight();
+        return onLike(id);
+      },
+      onRemoveLike: () => {
+        hapticsImpactLight();
+        onRemoveLike(id);
+      },
     },
     {
       label: 'Comment',
@@ -30,10 +38,12 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
   ];
 
   const navigateToPostDetail = (id: string) => {
+    hapticsImpactLight();
     navigate({ to: `./${id}` });
   };
 
   function redirectToProfile(feed: Feed) {
+    hapticsImpactLight();
     if (feed.identity_type === 'users') {
       navigate({ to: `/profile/users/${feed.identity_meta.username}` });
     } else {
