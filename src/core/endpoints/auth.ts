@@ -3,6 +3,9 @@ import { Cookie } from '../../core/storage';
 import { LoginReq, LoginResp, RefreshReq } from '../../core/types';
 import { TOKEN } from '../../constants/AUTH';
 
+// refreshing lock for block app from calling it duplicate
+let refreshing = false;
+
 function saveAuthParams(res: LoginResp) {
   if (!res.access_token || !res.refresh_token) return;
   Cookie.add({
@@ -19,16 +22,35 @@ async function login(payload: LoginReq): Promise<LoginResp> {
 }
 
 async function refreshToken() {
-  const token = Cookie.get(TOKEN.refresh);
+  if (refreshing) return;
 
+  refreshing = true;
+
+  const token = Cookie.get(TOKEN.refresh);  
   if (!token) return;
 
   const payload: RefreshReq = { refresh_token: token };
+
   const { data } = await http.post('auth/refresh', payload);
+  Cookie.flush();
   saveAuthParams(data);
+  
+  refreshing = false;
+}
+
+export async function confirmOTP(email: string, otp: string): Promise<number> {
+  const {data, status} = await http.get(`auth/otp/confirm?email=${email}&code=${otp}`);
+  saveAuthParams(data);
+  return status
+}
+
+export async function resendOTP(email: string) {
+  return http.post('auth/resend-verify-code', {email});
 }
 
 export default {
   login,
   refreshToken,
+  confirmOTP,
+  resendOTP
 };
