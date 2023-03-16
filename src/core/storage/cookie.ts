@@ -1,6 +1,10 @@
 function save(items: { [key: string]: string }) {
   Object.entries(items)
-    .map(([k, v]) => `${k}=${v || ''}`)
+    /* 
+      '=' make cookies keys unsplitable so we just replace them with '**' and 
+      replace it again on fetching values
+    */
+    .map(([k, v]) => `${k}=${v?.replaceAll('=', '**') || ''}`)
     .map((v) => (document.cookie = v));
 }
 
@@ -25,7 +29,7 @@ function add(newItems: { [key: string]: string | undefined }) {
 }
 
 function get(key: string): string | undefined {
-  return keys()[key];
+  return keys()[key]?.replaceAll('**', '=');
 }
 
 function del(key: string): boolean {
@@ -41,7 +45,7 @@ function del(key: string): boolean {
 function flush() {
   const items = keys();
   Object.entries(items)
-    .map(([k]) => `${k}=`)
+    .map(([k]) => `${k}=;expires=Thu, 01 Jan 1970 00:00:00 GMT`)
     .map((v) => (document.cookie = v));
 }
 

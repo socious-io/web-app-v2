@@ -3,7 +3,8 @@ import { Button } from '../../../components/atoms/button/button';
 import css from './otp.module.scss';
 import { Otp as OtpCom } from '../../../components/atoms/otp/otp';
 import { useState } from 'react';
-import { confirm, forgetPassword } from '../forget-password.service';
+import { forgetPassword } from '../forget-password.service';
+import { endpoint } from 'src/core/endpoints';
 import { handleError } from '../../../core/http';
 import { dialog } from '../../../core/dialog/dialog';
 import translate from '../../../translations';
@@ -14,9 +15,9 @@ export const Otp = () => {
   const [otpValue, setOtpValue] = useState('');
 
   function submit() {
-    confirm(email, otpValue)
+    endpoint.auth.confirmOTP(email, otpValue)
       .then((resp) => {
-        if (resp.message === 'success') {
+        if (resp === 200) {
           navigate({ to: '../password' });
         }
       })
