@@ -19,5 +19,6 @@ export function translateProjectLength(value: string) {
   if (obj) {
     return obj.title;
   }
+  console.warn('Could not translate project_length');
   return '';
 }
