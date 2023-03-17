@@ -12,6 +12,7 @@ import { Pagination } from '../../../../core/types';
 import { Header } from '../../../../components/atoms/header/header';
 import { like, unlike } from '../../mobile/mobile.service';
 import { likeComment, removeCommentLike } from '../post-detail.services';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 export const Mobile = () => {
   const resolver = useMatch();
@@ -28,10 +29,10 @@ export const Mobile = () => {
 
   const onShowSeeMore = (length: number): boolean => {
     if (length < totalCount) {
-      return true
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   const actionList = (likes: number, liked: boolean) => [
     {
@@ -40,10 +41,17 @@ export const Mobile = () => {
       like: likes,
       isLiked: liked,
       onClick: () => {
+        hapticsImpactLight();
         postObj!.liked ? onRemoveLike(postObj.id) : onLike(postObj.id);
       },
-      onLike: () => onLike(postObj.id),
-      onRemoveLike: () => onRemoveLike(postObj.id),
+      onLike: () => {
+        hapticsImpactLight();
+        return onLike(postObj.id);
+      },
+      onRemoveLike: () => {
+        hapticsImpactLight();
+        onRemoveLike(postObj.id);
+      },
     },
     { label: 'Comment', iconName: 'comment-blue' },
   ];

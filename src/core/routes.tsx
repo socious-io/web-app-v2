@@ -76,7 +76,7 @@ export const routes: Route[] = [
   },
   {
     path: '',
-    loader: async () => {
+    loader: async (match, { dispatch }) => {
       try {
         await endpoint.auth.refreshToken();
         const resp = await getIdentities();
