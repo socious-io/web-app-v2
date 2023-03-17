@@ -73,6 +73,7 @@ export const Mobile = () => {
   function navigateToSignIn() {
     hapticsImpactLight();
     logout()
+      .then(() => console.log('logged out'))
       .then(() => navigate({ to: '/sign-in' }))
       .then(closeSidebar);
   }

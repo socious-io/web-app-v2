@@ -9,7 +9,7 @@ import translate from '../translations';
 export const http = axios.create({
   baseURL: 'https://socious.io/api/v2',
   withCredentials: true,
-  timeout: 100000,
+  timeout: 1000000,
 });
 
 function getAuthHeaders(): { [key: string]: string | undefined } | undefined {
