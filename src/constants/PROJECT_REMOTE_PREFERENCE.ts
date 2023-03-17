@@ -15,5 +15,6 @@ export function translateRemotePreferences(value: string) {
   if (obj) {
     return obj.title;
   }
+  console.warn('Could not translate remote_preferences');
   return '';
 }

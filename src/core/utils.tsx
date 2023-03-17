@@ -1,4 +1,4 @@
-export function when<T, P>(value: boolean, fn: (params?: P) => T, params?: P) {
+export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
   if (value) {
     return fn(params);
   }

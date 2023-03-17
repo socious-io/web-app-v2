@@ -1,3 +1,6 @@
+import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
+import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translateProjectType } from 'src/constants/PROJECT_TYPES';
 import { convertSnakeCaseToLowerCase } from '../../../core/stringTransformation';
 import { Job } from './job-list.types';
 
@@ -20,8 +23,8 @@ export function getCausesList(causes_tags: string[]): string[] {
 
 export function getList(job: Job) {
   return [
-    convertSnakeCaseToLowerCase(job.project_type),
-    convertSnakeCaseToLowerCase(job.payment_type),
-    // convertSnakeCaseToLowerCase(EXPERIENCE_LEVEL_OPTIONS[job.experience_level]?.label),
-  ];
+    translateProjectType(job.project_type),
+    translatePaymentType(job.payment_type),
+    translateExperienceLevel(job.experience_level),
+  ].filter(item => item);
 }
