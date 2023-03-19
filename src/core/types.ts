@@ -1,4 +1,5 @@
-import { JobItems, PostItems } from '../pages/search/search.types';
+import { AbiItem } from "web3-utils";
+import { JobItems, PostItems } from "../pages/search/search.types";
 
 export type UserType = 'users' | 'organizations';
 
@@ -228,6 +229,10 @@ export type ApplicantResp = {
     name: string;
     avatar: string;
   };
+  project: {
+    payment_scheme: string;
+    payment_type: string;
+  };
 };
 
 export type MissionsResp = Pagination<
@@ -326,6 +331,11 @@ export type Offer = {
     };
   };
   total_hours: number;
+  project_id: string;
+  escrow: {
+    address: string;
+    abi: AbiItem[];
+  };
 };
 
 export type GetOffer = Pagination<Offer[]>;

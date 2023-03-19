@@ -1,5 +1,6 @@
 import { useMatch } from '@tanstack/react-location';
 import { useState } from 'react';
+import Web3 from 'web3';
 import { Accordion } from '../../../components/atoms/accordion/accordion';
 import { Button } from '../../../components/atoms/button/button';
 import { Header } from '../../../components/atoms/header-v2/header';
@@ -7,6 +8,7 @@ import { Typography } from '../../../components/atoms/typography/typography';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
 import { Divider } from '../../../components/templates/divider/divider';
 import { TopFixedMobile } from '../../../components/templates/top-fixed-mobile/top-fixed-mobile';
+import { PaymentMethods } from 'src/components/templates/payment-methods';
 import { StatusKeys } from '../../../constants/APPLICANT_STATUS';
 import { translatePaymentTerms } from '../../../constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from '../../../constants/PROJECT_PAYMENT_TYPE';
@@ -19,7 +21,25 @@ import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const { offer } = useMatch().ownData as Resolver;
+  const { project: { payment_type } } = offer;
   const [status, setStatus] = useState<StatusKeys>(offer.status);
+  const [account, setAccount] = useState("");
+
+  const web3 = new Web3(window.ethereum);
+  web3.eth.getAccounts().then((accounts) => {
+    setAccount(accounts[0]);
+    web3.eth.defaultAccount = accounts[0];
+  });
+
+  async function connectWallet() {
+    await window.ethereum.enable();
+    const accounts = await web3.eth.getAccounts();
+    setAccount(accounts[0]);
+    web3.eth.defaultAccount = accounts[0];
+    endpoint.post.user["{user_id}/update_wallet"]({
+      wallet_address: accounts[0],
+    });
+  }
 
   function onAccept(id: string) {
     return () =>
@@ -77,7 +97,7 @@ export const Mobile = (): JSX.Element => {
 
   const buttonsJSX = (
     <div className={css.btnContainer}>
-      <Button onClick={onAccept(offer.id)}>Accept offer</Button>
+      <Button onClick={onAccept(offer.id)} disabled={!account && payment_type === 'PAID'}>Accept offer</Button>
       <Button onClick={onDeclined(offer.id)} color="white">
         Decline
       </Button>
@@ -152,6 +172,26 @@ export const Mobile = (): JSX.Element => {
             <Typography>{offer.organization.bio}</Typography>
           </div>
         </Accordion>
+        {payment_type === 'PAID' &&
+          <PaymentMethods
+            containerClassName={css.wallet}
+            payement_methods={[
+              {
+                button: {
+                  color: "white",
+                  onClick: () => connectWallet(),
+                  children: (
+                    <>
+                      <img src="/icons/metamask.svg" width={18} height={18} />
+                      Connect MetaMask
+                    </>
+                  ),
+                },
+                connected_address: account,
+                wallet_icon: 'metamask',
+              },
+            ]}
+          />}
         {printWhen(buttonsJSX, status === 'PENDING')}
       </div>
     </TopFixedMobile>
