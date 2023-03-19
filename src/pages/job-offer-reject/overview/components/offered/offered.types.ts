@@ -5,4 +5,5 @@ export type OfferedProps = {
   approved: Pagination<Offer[]>;
   hired: Pagination<Offer[]>;
   closed: Pagination<Offer[]>;
+  payment_type: string;
 };

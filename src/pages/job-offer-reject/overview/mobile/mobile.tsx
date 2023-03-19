@@ -1,5 +1,5 @@
 import css from './mobile.module.scss';
-import { useMatch, useNavigate, useRouter } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Header } from '../../../../components/atoms/header/header';
 import { Tabs } from '../../../../components/atoms/tabs/tabs';
 import { Loader } from '../../job-offer-reject.types';
@@ -9,8 +9,11 @@ import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 
 export const Mobile = (): JSX.Element => {
-  const resolver = useMatch().ownData as Loader;
   const navigate = useNavigate();
+  const resolver = useMatch().ownData as Loader;
+  const {
+    jobOverview: { payment_type },
+  } = resolver;
 
   const tabs = [
     {
@@ -24,7 +27,7 @@ export const Mobile = (): JSX.Element => {
     },
     {
       name: 'Offered',
-      content: <Offered sent={resolver.sent} approved={resolver.approved} hired={resolver.hired} closed={resolver.closed} />,
+      content: <Offered sent={resolver.sent} approved={resolver.approved} hired={resolver.hired} closed={resolver.closed} payment_type={payment_type} />,
     },
     {
       name: 'Hired',
