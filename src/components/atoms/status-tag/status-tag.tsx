@@ -15,6 +15,10 @@ export const StatusTag = (props: StatusTagProps): JSX.Element => {
     unspecified: {
       backgroundColor: '#ececec',
     },
+    red: {
+      color: 'white',
+      backgroundColor: '#DF3030',
+    }
   };
 
   return (
