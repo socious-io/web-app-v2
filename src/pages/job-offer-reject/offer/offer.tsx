@@ -3,11 +3,11 @@ import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Header } from '../../../components/atoms/header/header';
 import { Resolver } from './offer.types';
 import { Input } from '../../../components/atoms/input/input';
-import { Dropdown } from '../../../components/atoms/dropdown/dropdown';
 import { Textarea } from '../../../components/atoms/textarea/textarea';
 import { Button } from '../../../components/atoms/button/button';
-import { PROJECT_PAYMENT_TYPE_DROPDOWN } from '../../../constants/PROJECT_PAYMENT_TYPE';
-import { PROJECT_PAYMENT_SCHEME_DROPDOWN } from '../../../constants/PROJECT_PAYMENT_SCHEME';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { PROJECT_PAYMENT_TYPE } from '../../../constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_PAYMENT_SCHEME } from '../../../constants/PROJECT_PAYMENT_SCHEME';
 import { useState } from 'react';
 import { formModel } from './offer.services';
 import { offer } from '../job-offer-reject.services';
@@ -17,8 +17,9 @@ import { useForm } from '../../../core/form';
 export const Offer = (): JSX.Element => {
   const navigate = useNavigate();
   const { applicantDetail } = useMatch().ownData as Resolver;
-  const [paymentType, setPaymentType] = useState('');
-  const [paymentMode, setPaymentMode] = useState('');
+  const { project } = applicantDetail;
+  const [paymentType, setPaymentType] = useState(project.payment_type);
+  const [paymentMode, setPaymentMode] = useState(project.payment_scheme);
   const form = useForm(formModel);
   const formIsInvalid = !form.isValid || !paymentType || !paymentMode;
 
@@ -38,20 +39,33 @@ export const Offer = (): JSX.Element => {
       <Header onBack={() => navigate({ to: '..' })} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
       <div className={css.sentTo}>An offer will be sent to {applicantDetail.user.name}.</div>
       <div className={css.form}>
-        <Dropdown
-          onValueChange={(value) => setPaymentType(value)}
+        <RadioGroup
+          name="paymentType"
+          value={paymentType}
+          onChange={() => setPaymentType(project.payment_type)}
           label="Payment type"
-          list={PROJECT_PAYMENT_TYPE_DROPDOWN}
-          placeholder="payment type"
+          list={PROJECT_PAYMENT_TYPE}
         />
-        <Dropdown
-          onValueChange={(value) => setPaymentMode(value)}
-          label="Payment mode"
-          list={PROJECT_PAYMENT_SCHEME_DROPDOWN}
-          placeholder="payment mode"
+        <RadioGroup
+          name="PaymentScheme"
+          value={paymentMode}
+          onChange={() => setPaymentMode(project.payment_scheme)}
+          label="Payment scheme"
+          list={PROJECT_PAYMENT_SCHEME}
         />
-        <Input register={form} name="estimatedTotalHours" label="Estimated total hours" placeholder="hrs" />
-        <Textarea register={form} name="message" label="Message" placeholder="Write message" />
+
+        <Input
+          register={form}
+          name="estimatedTotalHours"
+          label="Estimated total hours"
+          placeholder="hrs"
+        />
+        <Textarea
+          register={form}
+          name="message"
+          label="Message"
+          placeholder="Write message"
+        />
       </div>
       <div className={css.btnContainer}>
         <Button onClick={onSubmit} disabled={formIsInvalid}>
