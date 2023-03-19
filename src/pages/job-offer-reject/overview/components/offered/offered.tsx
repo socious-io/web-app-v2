@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-location';
 import { Accordion } from '../../../../../components/atoms/accordion/accordion';
 import { ApplicantListHire } from '../../../../../components/molecules/applicant-list-hire/applicant-list-hire';
 import { endpoint } from '../../../../../core/endpoints';
@@ -6,8 +7,14 @@ import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
 
 export const Offered = (props: OfferedProps): JSX.Element => {
+  const navigate = useNavigate();
+
   async function onHire(offerId: string) {
-    return endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
+    if (props.payment_type === "PAID") {
+      navigate({ to: `/payment/${offerId}` });
+    } else {
+      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
+    }
   }
   async function onReject(offerId: string) {
     return endpoint.post.offers['{offer_id}/cancel'](offerId).then(() => history.back());
@@ -23,12 +30,16 @@ export const Offered = (props: OfferedProps): JSX.Element => {
           list={jobToApplicantListAdaptor(props.sent.items)}
         />
       </Accordion>
-      <Accordion id="approved" title={`Approved (${props.approved.total_count})`}>
+      <Accordion
+        id="approved"
+        title={`Approved (${props.approved.total_count})`}
+      >
         <ApplicantListHire
           onApplicantClick={console.log}
           onHireClick={onHire}
           onRejectClick={onReject}
           hireable
+          required_payment={props.payment_type  === 'PAID' && !props.approved.items[0]?.escrow}
           list={jobToApplicantListAdaptor(props.approved.items)}
         />
       </Accordion>
