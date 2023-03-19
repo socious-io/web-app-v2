@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { useMatch } from "@tanstack/react-location";
 import Web3 from "web3";
-import { useNavigate } from "@tanstack/react-location";
 import { Header } from "src/components/atoms/header-v2/header";
 import { Button } from "src/components/atoms/button/button";
 import { JobDescrioptionCard } from "src/components/templates/job-description-card";
 import { PaymentSummaryCard } from "src/components/templates/payment-summary-card";
 import { PaymentMethods } from "src/components/templates/payment-methods";
+import { TopFixedMobile } from "src/components/templates/top-fixed-mobile/top-fixed-mobile";
 import { Sticky } from "src/components/atoms/sticky";
 import config from "../crypto-config";
 import { confirmPayment } from "./mobile.service";
+import { endpoint } from "src/core/endpoints";
 import { getMonthName } from "src/core/time";
 //FIXME: create a general Resolver types to use in every page
 import { Resolver } from "src/pages/offer-received/offer-received.types";
 import css from "./mobile.module.scss";
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
   const { offer } = useMatch().ownData as Resolver;
   const offerId = offer.id;
   const {
@@ -29,6 +29,7 @@ export const Mobile = (): JSX.Element => {
     project: { payment_scheme },
     total_hours,
     assignment_total,
+    project_id,
   } = offer;
   //FIXME: if no contribute not allow to continue flow
   const contributor = offer.recipient.meta.wallet_address;
@@ -81,7 +82,7 @@ export const Mobile = (): JSX.Element => {
     const result = await escrowContract.methods
       .newEscrow(
         contributor,
-        "TEST_JOB_ID",
+        project_id,
         web3.utils.toWei(escrowAmount.toString()),
         verifiedORG,
         config.token.address
@@ -113,7 +114,9 @@ export const Mobile = (): JSX.Element => {
         txHash: result.txHash,
         meta: result,
       });
-      navigate({ to: "/hire" });
+      endpoint.post.offers['{offer_id}/hire'](offerId).then(() =>
+        history.back()
+      );
     } catch (e) {
       alert(JSON.stringify(e));
     }
@@ -134,83 +137,82 @@ export const Mobile = (): JSX.Element => {
     );
   }
   return (
-    <div>
-      <Header
-        title="Escrow payment"
-        onBack={() => navigate({ to: "/offer-received" })}
-      />
-      <div className={css["container"]}>
-        <JobDescrioptionCard
-          job_title={job_name}
-          start_date={start_date}
-          end_date="Present"
-          info_list={[
-            { icon: "suitcase", name: payment_scheme },
-            { icon: "hourglass", name: `${total_hours} hrs` },
-          ]}
-          img={avatar as string}
-          type={type}
-          name={applicant_name}
-          location={`${city}, ${country}`}
-        />
-        <div className={css["container__spacer"]}>
-          <PaymentSummaryCard
-            title="Payment summary"
-            list={[
-              { title: "Total assignement", price: assignment_total },
-              { title: " Socious commision", price: commision },
+    <TopFixedMobile>
+      <Header title="Escrow payment" onBack={() => history.back()} />
+      <>
+        <div className={css["container"]}>
+          <JobDescrioptionCard
+            job_title={job_name}
+            start_date={start_date}
+            end_date="Present"
+            info_list={[
+              { icon: "suitcase", name: payment_scheme },
+              { icon: "hourglass", name: `${total_hours} hrs` },
             ]}
-            total_price={total_price}
+            img={avatar as string}
+            type={type}
+            name={applicant_name}
+            location={`${city}, ${country}`}
+          />
+          <div className={css["container__spacer"]}>
+            <PaymentSummaryCard
+              title="Payment summary"
+              list={[
+                { title: "Total assignement", price: assignment_total },
+                { title: " Socious commision", price: commision },
+              ]}
+              total_price={total_price}
+            />
+          </div>
+          <PaymentMethods
+            payement_methods={[
+              {
+                button: {
+                  color: "white",
+                  onClick: () => connectWallet(),
+                  children: (
+                    <>
+                      <img src="/icons/metamask.svg" width={18} height={18} />
+                      Connect MetaMask
+                    </>
+                  ),
+                },
+                connected_address: account,
+                wallet_icon: 'metamask',
+              },
+              {
+                button: {
+                  color: "white",
+                  disabled: true,
+                  children: (
+                    <>
+                      <img src="/icons/debit.svg" width={18} height={18} />
+                      Add Credit Card
+                    </>
+                  ),
+                },
+              },
+            ]}
           />
         </div>
-        <PaymentMethods
-          payement_methods={[
-            {
-              button: {
-                color: "white",
-                onClick: () => connectWallet(),
-                children: (
-                  <>
-                    <img src="/icons/metamask.svg" width={18} height={18} />
-                    Connect MetaMask
-                  </>
-                ),
-              },
-              connected_address: account,
-            },
-            {
-              button: {
-                color: "white",
-                disabled: true,
-                children: (
-                  <>
-                    <img src="/icons/debit.svg" width={18} height={18} />
-                    Add Credit Card
-                  </>
-                ),
-              },
-            },
-          ]}
-        />
-      </div>
-
-      <Sticky>
-        <Button
-          color="blue"
-          disabled={process || !account}
-          className={css["footer__btn"]}
-          onClick={() => proceedPayment()}
-        >
-          Proceed with payment
-        </Button>
-        <Button
-          color="white"
-          className={`${css["footer__btn"]} ${css["footer__btn--cancel"]}`}
-          onClick={() => console.log("cancel")}
-        >
-          Cancel
-        </Button>
-      </Sticky>
-    </div>
+        <Sticky>
+          <Button
+            color="blue"
+            disabled={process || !account}
+            className={css["footer__btn"]}
+            onClick={() => proceedPayment()}
+          >
+            Proceed with payment
+          </Button>
+          <Button
+            color="white"
+            className={`${css["footer__btn"]} ${css["footer__btn--cancel"]}`}
+            onClick={() => console.log("cancel")}
+          >
+            Cancel
+          </Button>
+        </Sticky>
+      </>
+    </TopFixedMobile>
   );
 };
