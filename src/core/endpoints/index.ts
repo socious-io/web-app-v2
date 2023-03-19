@@ -36,6 +36,7 @@ export const endpoint = {
   post: {
     user: {
       '{user_id}/report': (id: string, payload: { blocked: boolean; comment: string }) => post(`user/${id}/report`, payload),
+      '{user_id}/update_wallet': (payload: { wallet_address: string }) => post(`user/update/wallet`, payload),
     },
     offers: {
       '{offer_id}/approve': (id: string) => post(`offers/${id}/approve`, {}).then(getDataProp),
