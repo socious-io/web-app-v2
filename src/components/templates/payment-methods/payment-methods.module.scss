@@ -8,15 +8,23 @@ $color-blue-dark: #2f4786;
   align-items: center;
   padding: 24px;
 
-  &__btn,
-  &__address {
+  &__btn {
     margin-bottom: 16px;
+    padding: 0 16px;
+  }
+
+  &__connected {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    max-width: 100%;
   }
 
   &__address {
     text-overflow: ellipsis;
     overflow: hidden;
     max-width: 100%;
+    color: var(--color-primary-01);
   }
 
   &__text {

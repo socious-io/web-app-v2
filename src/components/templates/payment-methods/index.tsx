@@ -10,21 +10,23 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   return (
     <Card className={`${css["connect"]} ${containerClassName}`}>
       {payement_methods.map((method) =>
-        !method.connected_address ? (
-          <Button
-            key={method.connected_address}
-            {...method.button}
-            className={`${css["connect__btn"]} ${method.button.className}`}
-          />
-        ) : (
-          <div
-            key={method.connected_address}
-            className={css["connect__address"]}
-          >
-            {method.connected_address}
-          </div>
-        )
-      )}
+      (
+        <Button
+          key={method.connected_address}
+          {...method.button}
+          className={`${css["connect__btn"]} ${method.button.className}`}
+        >
+          {!method.connected_address ? method.button.children :
+            <div
+              className={css["connect__connected"]}
+            >
+              <img src={`/icons/${method.wallet_icon}.svg`} width={18} height={18} />
+              <div className={css['connect__address']}>{method.connected_address}</div>
+            </div>
+          }
+        </Button>
+
+      ))}
       <div className={css["connect__text"]}>
         All payments in Socious are done with cryptocurrencies or credit card.
         By connecting a wallet, you agree to Socious’
