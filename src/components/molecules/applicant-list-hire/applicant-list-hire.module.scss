@@ -5,6 +5,12 @@
   gap: 1rem;
   border-bottom: 1px solid var(--border-gray-01);
 
+  .detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .applyDate {
     color: var(--color-gray-01);
     font-weight: 400;

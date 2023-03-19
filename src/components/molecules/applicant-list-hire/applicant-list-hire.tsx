@@ -1,3 +1,4 @@
+import { StatusTag } from 'src/components/atoms/status-tag/status-tag';
 import { printWhen } from '../../../core/utils';
 import { ChatBox } from '../../atoms/chat-box/chat-box';
 import { Typography } from '../../atoms/typography/typography';
@@ -24,8 +25,16 @@ export const ApplicantListHire = (props: ApplicantListProps): JSX.Element => {
     return (
       <div key={applicant.id} className={css.applicantContainer}>
         <ProfileView name={applicant.name} img={applicant.image} type="users" />
-        <div className={css.applyDate}>{applicant.applyDate}</div>
-        <ChatBox onClick={() => props.onApplicantClick?.(applicant.id)} type="receiver">
+        <div className={css.detail}>
+          <div className={css.applyDate}>{applicant.applyDate}</div>
+          {props.required_payment && (
+            <StatusTag color="red" label="Payment required" />
+          )}
+        </div>
+        <ChatBox
+          onClick={() => props.onApplicantClick?.(applicant.id)}
+          type="receiver"
+        >
           <Typography lineLimit={3}>{applicant.coverLetter}</Typography>
         </ChatBox>
         <div className={css.applicantFooter}>

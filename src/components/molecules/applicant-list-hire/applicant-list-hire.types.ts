@@ -10,6 +10,7 @@ export type Applicant = {
 export type ApplicantListProps = {
   list: Applicant[];
   hireable?: boolean;
+  required_payment?: boolean;
   onHireClick?: (id: string) => void;
   onRejectClick?: (id: string) => void;
   onMessageClick?: (id: string) => void;
