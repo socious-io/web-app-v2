@@ -1,3 +1,4 @@
+import { LoginReq, OtpConfirmReq, RefreshReq, ResendVerifyCode } from './../types';
 import { get, post } from '../http';
 import auth from './auth';
 import { Pagination } from '../types';
@@ -13,27 +14,32 @@ function getDataProp<T = unknown>(resp: { data: T }) {
   return resp.data;
 }
 
-// https://dev.socious.io/api/v2/user/1855f594-295d-4ba3-bf21-ac8eaf0ba9fb/report
 export const endpoint = {
   auth,
   get: {
+    auth: {
+      'otp/confirm': (payload: OtpConfirmReq) => get(`auth/otp/confirm?email=${payload.email}&code=${payload.otp}`),
+    },
     projects: {
-      project_id: (id: string) =>
-        get(`projects/${id}`).then(getDataProp) as Promise<GetProject>,
+      project_id: (id: string) => get(`projects/${id}`).then(getDataProp) as Promise<GetProject>,
       '{project_id}/offers': (payload: offerPayload) =>
-        get(
-          `projects/${payload.id}/offers?filter.status=${payload.status}&page=${payload.page}`,
-        ).then(getDataProp) as Promise<Pagination<Offer[]>>,
+        get(`projects/${payload.id}/offers?filter.status=${payload.status}&page=${payload.page}`).then(
+          getDataProp
+        ) as Promise<Pagination<Offer[]>>,
     },
     offers: {
-      offer_id: (id: string) =>
-        get(`offers/${id}`).then(getDataProp) as Promise<Offer>,
+      offer_id: (id: string) => get(`offers/${id}`).then(getDataProp) as Promise<Offer>,
     },
     missions: {
       mission_id: (id: string) => get(`missions/${id}`).then(getDataProp),
     },
   },
   post: {
+    auth: {
+      login: (payload: LoginReq) => post('/auth/login', payload).then(getDataProp),
+      refresh: (payload: RefreshReq) => post('/auth/refresh', payload).then(getDataProp),
+      'resend-verify-code': (payload: ResendVerifyCode) => post('/auth/resend-verify-code', payload).then(getDataProp),
+    },
     user: {
       '{user_id}/report': (id: string, payload: { blocked: boolean; comment: string }) => post(`user/${id}/report`, payload),
       '{user_id}/update_wallet': (payload: { wallet_address: string }) => post(`user/update/wallet`, payload),
@@ -55,6 +61,6 @@ export const endpoint = {
     },
     payments: {
       '{offer_id/confirm}': (id: string, body: any) => post(`/payments/offers/${id}`, body).then(getDataProp),
-    }
+    },
   },
 };

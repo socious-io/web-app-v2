@@ -26,7 +26,7 @@ async function refreshToken() {
 
   refreshing = true;
 
-  const token = Cookie.get(TOKEN.refresh);  
+  const token = Cookie.get(TOKEN.refresh);
   if (!token) return;
 
   const payload: RefreshReq = { refresh_token: token };
@@ -34,23 +34,23 @@ async function refreshToken() {
   const { data } = await http.post('auth/refresh', payload);
   Cookie.flush();
   saveAuthParams(data);
-  
+
   refreshing = false;
 }
 
 export async function confirmOTP(email: string, otp: string): Promise<number> {
-  const {data, status} = await http.get(`auth/otp/confirm?email=${email}&code=${otp}`);
+  const { data, status } = await http.get(`auth/otp/confirm?email=${email}&code=${otp}`);
   saveAuthParams(data);
-  return status
+  return status;
 }
 
 export async function resendOTP(email: string) {
-  return http.post('auth/resend-verify-code', {email});
+  return http.post('auth/resend-verify-code', { email });
 }
 
 export default {
   login,
   refreshToken,
   confirmOTP,
-  resendOTP
+  resendOTP,
 };
