@@ -15,7 +15,8 @@ export const Otp = () => {
   const [otpValue, setOtpValue] = useState('');
 
   function submit() {
-    endpoint.auth.confirmOTP(email, otpValue)
+    // endpoint.auth.confirmOTP(email, otpValue)
+    endpoint.post.auth['resend-verify-code']({ email })
       .then((resp) => {
         if (resp === 200) {
           navigate({ to: '../password' });

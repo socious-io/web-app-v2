@@ -8,6 +8,8 @@ import { Otp } from '../../../components/atoms/otp/otp';
 import { endpoint } from 'src/core/endpoints';
 import { useState } from 'react';
 import { dialog } from '../../../core/dialog/dialog';
+import { setAuthCookies } from 'src/pages/sign-in/sign-in.services';
+import { LoginResp } from 'src/core/types';
 
 export const SignUpUserVerification = (): JSX.Element => {
   const navigate = useNavigate();
@@ -17,13 +19,15 @@ export const SignUpUserVerification = (): JSX.Element => {
     dialog.alert({ title: 'Failed to proceed', message: resp.error || 'OTP is incorrect' }).then(() => setOtp(''));
   }
 
+  async function successOTP(resp: LoginResp) {
+    console.log('resp:', resp)
+    await setAuthCookies(resp);
+    navigate({ to: '../complete' });
+  }
+
   function onSubmit() {
     const email = localStorage.getItem('email') as string;
-    endpoint.auth.confirmOTP(email, otp)
-      .then(() => {
-        navigate({ to: '../complete' });
-      })
-      .catch(onIncorrectOtp);
+    endpoint.get.auth['otp/confirm']({ email, otp }).then(successOTP).catch(onIncorrectOtp);
   }
 
   function onResendSucceed() {

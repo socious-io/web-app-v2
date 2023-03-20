@@ -34,6 +34,7 @@ import { getApplicantDetail, jobOfferRejectLoader } from '../pages/job-offer-rej
 import { getBadges, getImpactPoints } from '../pages/achievements/ahievements.services';
 import { receivedOfferLoader } from '../pages/offer-received/offer-received.services';
 import { endpoint } from './endpoints';
+import { nonPermanentStorage } from './storage/non-permanent';
 
 export const routes: Route[] = [
   {
@@ -78,7 +79,8 @@ export const routes: Route[] = [
     path: '',
     loader: async (match, { dispatch }) => {
       try {
-        await endpoint.auth.refreshToken();
+        // const refreshToken = await nonPermanentStorage.get('refresh_token');
+        // const d =  await endpoint.post.auth.refresh({ refresh_token: refreshToken });
         const resp = await getIdentities();
         store.dispatch(setIdentityList(resp));
         return resp;
