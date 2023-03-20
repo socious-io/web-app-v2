@@ -1,5 +1,5 @@
-import { AbiItem } from "web3-utils";
-import { JobItems, PostItems } from "../pages/search/search.types";
+import { AbiItem } from 'web3-utils';
+import { JobItems, PostItems } from '../pages/search/search.types';
 
 export type UserType = 'users' | 'organizations';
 
@@ -17,6 +17,15 @@ export type LoginResp = {
 
 export type RefreshReq = {
   refresh_token: string;
+};
+
+export type ResendVerifyCode = {
+  email: string;
+};
+
+export type  OtpConfirmReq = {
+  email: string;
+  otp: string;
 };
 
 export type UserIdentityMeta = {
@@ -302,7 +311,7 @@ export type Offer = {
       city: string;
       country: string;
     };
-    type: "users" | "organizations";
+    type: 'users' | 'organizations';
   };
   organization: {
     name: string;
