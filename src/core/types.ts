@@ -10,9 +10,9 @@ export type LoginReq = {
 
 export type LoginResp = {
   error?: string;
-  access_token?: string;
-  refresh_token?: string;
-  token_type?: 'Bearer';
+  access_token: string;
+  refresh_token: string;
+  token_type: 'Bearer';
 };
 
 export type RefreshReq = {

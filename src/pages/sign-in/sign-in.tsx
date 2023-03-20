@@ -14,12 +14,15 @@ import { handleError } from '../../core/http';
 import { getIdentities } from '../../core/api';
 import { setIdentityList } from '../../store/reducers/identity.reducer';
 import store from '../../store/store';
+import { LoginResp } from 'src/core/types';
+import { setAuthCookies } from './sign-in.services';
 
 export const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
   const form = useForm(formModel);
 
-  async function onLoginSucceed() {
+  async function onLoginSucceed(loginResp: LoginResp) {
+    await setAuthCookies(loginResp);
     const resp = await getIdentities();
     store.dispatch(setIdentityList(resp));
     navigate({ to: '/jobs', replace: true });
@@ -27,7 +30,7 @@ export const SignIn = (): JSX.Element => {
 
   async function onLogin() {
     const formValues = getFormValues(form) as LoginPayload;
-    endpoint.auth
+    endpoint.post.auth
       .login(formValues)
       .then(onLoginSucceed)
       .catch(handleError({ title: 'Login Failed' }));

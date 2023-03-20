@@ -18,7 +18,8 @@ export const endpoint = {
   auth,
   get: {
     auth: {
-      'otp/confirm': (payload: OtpConfirmReq) => get(`auth/otp/confirm?email=${payload.email}&code=${payload.otp}`),
+      'otp/confirm': (payload: OtpConfirmReq) =>
+        get(`auth/otp/confirm?email=${payload.email}&code=${payload.otp}`).then(getDataProp),
     },
     projects: {
       project_id: (id: string) => get(`projects/${id}`).then(getDataProp) as Promise<GetProject>,
