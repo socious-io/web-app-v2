@@ -1,39 +1,39 @@
 import { get } from '../../core/http';
-import { convertSnakeCaseToLowerCase } from '../../core/stringTransformation';
 import { Job } from '../../components/organisms/job-list/job-list.types';
+import { translateProjectType } from 'src/constants/PROJECT_TYPES';
+import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
+import { when } from 'src/core/utils';
+import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 
 export async function getJobDetail(id: string): Promise<Job> {
   return get(`projects/${id}`).then(({ data }) => data);
 }
 
 export function getCategories(job: Job): Array<JSX.Element | string> {
-  const location = (
+  const list: Array<JSX.Element | string> = [];
+  const location = () => (
     <>
       <img style={{ marginRight: '2px' }} src="/icons/pin.svg" />
       {job.city}, {job.country}
     </>
   );
-  const type = (
+  const projectType = () => (
     <>
       <img style={{ marginRight: '2px' }} src="/icons/part-time.svg" />
-      {convertSnakeCaseToLowerCase(job.project_type)}
+      {translateProjectType(job.project_type)}
     </>
   );
-  const length = (
+  const projectLength = () => (
     <>
       <img style={{ marginRight: '2px' }} src="/icons/time.svg" />
-      {convertSnakeCaseToLowerCase(job.project_length)}
+      {translateProjectLength(job.project_length)}
     </>
   );
-  return [location, type, convertSnakeCaseToLowerCase(job.remote_preference), length];
-}
 
-function convertCausesToLowerCase(causes: string[]): string[] {
-  return causes.map((cause) => {
-    return convertSnakeCaseToLowerCase(cause);
-  });
-}
+  when(job.country, () => list.push(location()));
+  when(job.project_type, () => list.push(projectType()));
+  when(job.project_length, () => list.push(projectLength()));
+  when(job.remote_preference, () => list.push(translateRemotePreferences(job.remote_preference)));
 
-export function toLowerCase(causes_tags: string[]): string[] {
-  return convertCausesToLowerCase(causes_tags);
+  return list;
 }
