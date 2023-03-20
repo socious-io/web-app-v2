@@ -9,7 +9,6 @@ import { useNavigate } from '@tanstack/react-location';
 import { toRelativeTime } from '../../../core/relative-time';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 export const JobList = (props: JobListProps): JSX.Element => {
   const { data, onMorePageClick, ...rest } = props;
@@ -17,7 +16,6 @@ export const JobList = (props: JobListProps): JSX.Element => {
   const navigate = useNavigate();
 
   function goToJobDetail(id: string) {
-    hapticsImpactLight();
     return () => navigate({ to: `./${id}` });
   }
 
