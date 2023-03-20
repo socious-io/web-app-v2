@@ -16,16 +16,16 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
       isLiked: liked,
       type: 'like',
       onClick: () => {
-        hapticsImpactLight();
+        // hapticsImpactLight();
         const obj = data.find((item) => item.id === id);
         obj!.liked ? onRemoveLike(id) : onLike(id);
       },
       onLike: () => {
-        hapticsImpactLight();
+        // hapticsImpactLight();
         return onLike(id);
       },
       onRemoveLike: () => {
-        hapticsImpactLight();
+        // hapticsImpactLight();
         onRemoveLike(id);
       },
     },
@@ -43,7 +43,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
   };
 
   function redirectToProfile(feed: Feed) {
-    hapticsImpactLight();
+    // hapticsImpactLight();
     if (feed.identity_type === 'users') {
       navigate({ to: `/profile/users/${feed.identity_meta.username}` });
     } else {
