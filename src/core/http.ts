@@ -2,36 +2,31 @@ import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import { dialog } from './dialog/dialog';
 import { hideSpinner, showSpinner } from '../store/reducers/spinner.reducer';
 import store from '../store/store';
-import { TOKEN } from '../constants/AUTH';
-import { Cookie } from './storage';
 import translate from '../translations';
 import { nonPermanentStorage } from './storage/non-permanent';
 
 export const http = axios.create({
-  baseURL: 'https://dev.socious.io/api/v2',
-  //   baseURL: 'https://socious.io/api/v2',
+    baseURL: 'https://dev.socious.io/api/v2',
+//   baseURL: 'https://socious.io/api/v2',
   withCredentials: true,
   timeout: 1000000,
 });
 
 async function getAuthHeaders(): Promise<unknown> {
-  //   const token = Cookie.get(TOKEN.access);
-  //   const prefix = Cookie.get(TOKEN.type);
   const token = await nonPermanentStorage.get('access_token');
   const prefix = await nonPermanentStorage.get('token_type');
-  console.log('tokeN:', token);
+  const currentIdentity = await nonPermanentStorage.get('identity');
 
   if (!token || !prefix) return;
 
   return {
     Authorization: `${prefix} ${token}`,
-    'Current-Identity': Cookie.get('identity'),
+    'Current-Identity': currentIdentity,
   };
 }
 
 export async function post(uri: string, payload: unknown, config?: AxiosRequestConfig<unknown>) {
   const authHeaders = await getAuthHeaders();
-  console.log('authHeaders:', authHeaders);
   config = config || {};
 
   if (authHeaders) config.headers = { ...config.headers, ...authHeaders };
@@ -41,8 +36,6 @@ export async function post(uri: string, payload: unknown, config?: AxiosRequestC
 
 export async function get(uri: string, config?: AxiosRequestConfig<unknown>) {
   const authHeaders = await getAuthHeaders();
-  console.log('authHeaders:', authHeaders);
-
   config = config || {};
   if (authHeaders) config.headers = { ...config.headers, ...authHeaders };
 
@@ -91,14 +84,11 @@ http.interceptors.response.use(
   function (response) {
     store.dispatch(hideSpinner());
     // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     return response;
   },
   function (error) {
     store.dispatch(hideSpinner());
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    // error.response.data. = 'OK'
     return Promise.reject(error);
   }
 );

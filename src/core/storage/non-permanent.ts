@@ -14,10 +14,18 @@ async function set(payload: SetOptions): Promise<void> {
 
 async function get(key: string) {
   if (isNative) {
-    return Preferences.get({ key }).then(({value}) => value);
+    return Preferences.get({ key }).then(({ value }) => value);
   } else {
     return Cookies.get(key);
   }
 }
 
-export const nonPermanentStorage = { set, get };
+async function clear() {
+  if (isNative) {
+    return Preferences.clear();
+  } else {
+    document.cookie = '';
+  }
+}
+
+export const nonPermanentStorage = { set, get, clear };
