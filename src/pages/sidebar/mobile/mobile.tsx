@@ -9,11 +9,12 @@ import { RootState } from '../../../store/store';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Button } from '../../../components/atoms/button/button';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
-import { getSession, logout } from '../sidebar.service';
+import { setIdentityHeader, logout } from '../sidebar.service';
 import css from './mobile.module.scss';
 import { AccountsModel } from './mobile.types';
 import { printWhen } from '../../../core/utils';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 
 export const Mobile = () => {
   const dispatch = useDispatch();
@@ -45,9 +46,9 @@ export const Mobile = () => {
     dispatch(visibility(false));
   };
 
-  const navigateToJobs = (id: string) => {
+  const switchAccount = async (id: string) => {
     hapticsImpactLight();
-    getSession(id);
+    await setIdentityHeader(id);
     getIdentities()
       .then((resp) => dispatch(setIdentityList(resp)))
       .then(() => navigate({ to: '/jobs' }))
@@ -74,7 +75,8 @@ export const Mobile = () => {
     hapticsImpactLight();
     logout()
       .then(() => navigate({ to: '/sign-in' }))
-      .then(closeSidebar);
+      .then(closeSidebar)
+      .then(() => nonPermanentStorage.clear());
   }
 
   function sidebarStyles(isVisible: boolean): CSSProperties {
@@ -141,8 +143,7 @@ export const Mobile = () => {
         return (
           <div
             onClick={() => {
-              hapticsImpactLight();
-              navigateToJobs(item.id);
+              switchAccount(item.id);
             }}
             key={item.id}
             className={css.row}
