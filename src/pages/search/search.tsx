@@ -35,10 +35,6 @@ export const Search = () => {
     getResponse(newState);
   };
 
-  const onLike = () => {};
-
-  const onRemoveLike = () => {};
-
   const onMorePageClick = () => {
     search({ ...state, page: page + 1 }).then((resp) => {
       setPage((v) => v + 1);

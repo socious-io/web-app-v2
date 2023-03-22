@@ -3,7 +3,6 @@ import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Button } from '../../components/atoms/button/button';
 import { CategoriesClickable } from '../../components/atoms/categories-clickable/categories-clickable';
 import { Categories } from '../../components/atoms/categories/categories';
-import { Header } from '../../components/atoms/header/header';
 import { ProfileView } from '../../components/molecules/profile-view/profile-view';
 import { getCategories } from './job-detail.services';
 import { Divider } from '../../components/templates/divider/divider';
@@ -14,6 +13,8 @@ import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../core/types';
 import { RootState } from '../../store/store';
 import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 
 export const JobDetail = (): JSX.Element => {
   const navigate = useNavigate();
@@ -53,23 +54,25 @@ export const JobDetail = (): JSX.Element => {
   );
 
   return (
-    <div className={css.container}>
-      <Header onBack={() => navigate({ to: '/jobs' })} title={job.job_category?.name || 'Job detail'} />
-      {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
-      <Divider>
-        <ProfileView
-          name={job.identity_meta.name}
-          location={job.identity_meta.city}
-          img={job.identity_meta.image}
-          type={job.identity_type}
-        />
-        <div className={css.jobTitle}>{job.title}</div>
-        <Categories marginBottom="1rem" list={getCategories(job)} />
-        {printWhen(buttonJSX, identity.type === 'users')}
-      </Divider>
-      {printWhen(socialCausesJSX, !!job.causes_tags)}
-      <Divider title="Job description">{convertMDToJSX(job.description, { length: null })}</Divider>
-      {printWhen(skillsJSX, !!job.skills)}
-    </div>
+    <TopFixedMobile containsMenu>
+      <Header onBack={() => history.back()} title={job.job_category?.name || 'Job detail'} />
+      <div>
+        {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
+        <Divider>
+          <ProfileView
+            name={job.identity_meta.name}
+            location={job.identity_meta.city}
+            img={job.identity_meta.image}
+            type={job.identity_type}
+          />
+          <div className={css.jobTitle}>{job.title}</div>
+          <Categories marginBottom="1rem" list={getCategories(job)} />
+          {printWhen(buttonJSX, identity.type === 'users')}
+        </Divider>
+        {printWhen(socialCausesJSX, !!job.causes_tags)}
+        <Divider title="Job description">{convertMDToJSX(job.description, { length: null })}</Divider>
+        {printWhen(skillsJSX, !!job.skills)}
+      </div>
+    </TopFixedMobile>
   );
 };

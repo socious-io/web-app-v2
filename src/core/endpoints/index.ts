@@ -1,6 +1,5 @@
 import { LoginReq, OtpConfirmReq, RefreshReq, ResendVerifyCode } from './../types';
 import { get, post } from '../http';
-import auth from './auth';
 import { Pagination } from '../types';
 import { Offer, GetProject } from './index.types';
 
@@ -15,7 +14,6 @@ function getDataProp<T = unknown>(resp: { data: T }) {
 }
 
 export const endpoint = {
-  auth,
   get: {
     auth: {
       'otp/confirm': (payload: OtpConfirmReq) =>

@@ -9,7 +9,6 @@ import { resumeInitialState, createRadioQuestion, createTextQuestion, submit, ap
 import { Resume } from '../apply.types';
 import { Divider } from '../../../../components/templates/divider/divider';
 import { Input } from '../../../../components/atoms/input/input';
-import { Typography } from '../../../../components/atoms/typography/typography';
 import { Button } from '../../../../components/atoms/button/button';
 import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
 import { Header } from '../../../../components/atoms/header/header';
@@ -96,7 +95,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Header onBack={() => navigate({ to: '..' })} height="var(--safe-area)" title="Apply" />
+      <Header onBack={() => history.back()} height="var(--safe-area)" title="Apply" />
       <div className={css.main}>
         <Divider>
           <ProfileView

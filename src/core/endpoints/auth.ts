@@ -1,10 +1,10 @@
-import { http } from '../http';
-import { Cookie } from '../../core/storage';
-import { LoginReq, LoginResp, RefreshReq } from '../../core/types';
-import { TOKEN } from '../../constants/AUTH';
+// import { http } from '../http';
+// import { Cookie } from '../../core/storage';
+// import { LoginReq, LoginResp, RefreshReq } from '../../core/types';
+// import { TOKEN } from '../../constants/AUTH';
 
 // refreshing lock for block app from calling it duplicate
-let refreshing = false;
+// let refreshing = false;
 
 // function saveAuthParams(res: LoginResp) {
 //   if (!res.access_token || !res.refresh_token) return;
@@ -48,9 +48,9 @@ let refreshing = false;
 //   return http.post('auth/resend-verify-code', { email });
 // }
 
-export default {
+// export default {
   //   login,
   //   refreshToken,
   //   confirmOTP,
 //   resendOTP,
-};
+// };

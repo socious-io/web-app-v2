@@ -2,7 +2,7 @@
   display: grid;
   height: 100vh;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 5.18rem;
+  grid-template-rows: 1fr var(--menu-height);
   background-color: var(--color-off-white-01);
 }
 
