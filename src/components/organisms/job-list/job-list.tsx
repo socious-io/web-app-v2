@@ -16,7 +16,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
   const navigate = useNavigate();
 
   function goToJobDetail(id: string) {
-    return () => navigate({ to: `./${id}` });
+    return () => navigate({ to: `/jobs/${id}` });
   }
 
   return (
