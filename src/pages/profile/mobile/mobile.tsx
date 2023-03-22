@@ -9,12 +9,21 @@ import { socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
 import { Link } from '../../../components/atoms/link/link';
 import { showActions } from '../profile.services';
+import { useSelector } from 'react-redux';
+import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
 
 export const Mobile = (): JSX.Element => {
   const data = useMatch().ownData as ProfileReq;
   const socialCauses = socialCausesToCategory(data.social_causes);
   const navigate = useNavigate();
   const avatarImage = data.avatar?.url ? data.avatar?.url : data.image?.url;
+
+  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
+
+  const profileBelongToCurrentUser = currentIdentity?.id === data.id;
 
   function onClose() {
     navigate({ to: '/jobs' });
@@ -68,7 +77,7 @@ export const Mobile = (): JSX.Element => {
         <div className={css.menu}>
           <div className={css.btnContainer}>
             {/* <Button width="6.5rem">Connect</Button> */}
-            <ThreeDotsButton onClick={() => showActions(data.id)} />
+            {printWhen(<ThreeDotsButton onClick={() => showActions(data.id)} />, !profileBelongToCurrentUser)}
           </div>
           <div className={css.userConnections}>
             <div>{data.followings} connections</div>
@@ -78,12 +87,9 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div>
         <Divider>
-          {printWhen(
-            <div className={css.achievements}>
-              <Link onClick={() => navigate({ to: '/achievements' })}>Impact points: {data.impact_points}</Link>
-            </div>,
-            !!data.impact_points
-          )}
+          <div className={css.achievements}>
+            <Link onClick={() => navigate({ to: '/achievements' })}>Impact points: {data.impact_points}</Link>
+          </div>
         </Divider>
         <Divider>
           <div className={css.bio}>{data.bio}</div>
