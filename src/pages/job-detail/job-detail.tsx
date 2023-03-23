@@ -55,7 +55,7 @@ export const JobDetail = (): JSX.Element => {
 
   return (
     <TopFixedMobile containsMenu>
-      <Header onBack={() => history.back()} title={job.job_category?.name || 'Job detail'} />
+      <Header title={job.job_category?.name || 'Job detail'} />
       <div>
         {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
         <Divider>

@@ -1,7 +1,6 @@
 import { Navigate, Route } from '@tanstack/react-location';
 import { ChangePassword } from '../../pages/change-password/change-password';
 import { getChatsSummery } from '../../pages/chat/contact-list/contact-list.services';
-import { getJobDetail } from '../../pages/job-detail/job-detail.services';
 import { getJobList } from '../../pages/jobs/jobs-cursor/jobs-cursor.services';
 import { SignUpUserComplete } from '../../pages/sign-up/sign-up-user-complete/sign-up-user-complete';
 import { SignUpUserEmail } from '../../pages/sign-up/sign-up-user-email/sign-up-user-email';
@@ -32,6 +31,7 @@ import { getBadges, getImpactPoints } from '../../pages/achievements/achievement
 import { receivedOfferLoader } from '../../pages/offer-received/offer-received.services';
 import { endpoint } from '../endpoints';
 import { jobsLoader } from 'src/pages/jobs/jobs.loader';
+import { Intro } from '../../pages/intro/intro';
 
 export const routes: Route[] = [
   {
@@ -75,6 +75,7 @@ export const routes: Route[] = [
   {
     path: '',
     loader: jobsLoader,
+    errorElement: <Intro />,
     children: [
       {
         path: 'delete-profile',
@@ -280,7 +281,7 @@ export const routes: Route[] = [
       {
         path: '/jobs/:id/apply',
         loader: async ({ params }) => {
-          const requests = [getJobDetail(params.id), getScreeningQuestions(params.id)];
+          const requests = [endpoint.get.projects.project_id(params.id), getScreeningQuestions(params.id)];
           const [jobDetail, screeningQuestions] = await Promise.all(requests);
           return { jobDetail, screeningQuestions };
         },
@@ -336,7 +337,7 @@ export const routes: Route[] = [
         children: [
           {
             path: '/jobs/:id',
-            loader: ({ params }) => getJobDetail(params.id),
+            loader: ({ params }) => endpoint.get.projects.project_id(params.id),
             element: () => import('../../pages/job-detail/job-detail').then((m) => <m.JobDetail />),
           },
           {

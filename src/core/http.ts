@@ -12,33 +12,32 @@ export const http = axios.create({
   timeout: 1000000,
 });
 
-async function getAuthHeaders(): Promise<unknown> {
+export async function getAuthHeaders(): Promise<{ Authorization: string; CurrentIdentity: string }> {
   const token = await nonPermanentStorage.get('access_token');
   const prefix = await nonPermanentStorage.get('token_type');
   const currentIdentity = await nonPermanentStorage.get('identity');
-
-  if (!token || !prefix) return;
-
   return {
     Authorization: `${prefix} ${token}`,
-    'Current-Identity': currentIdentity,
+    CurrentIdentity: currentIdentity || '',
   };
+  //   if (!token || !prefix) return;
+  //   return {
+  //     Authorization: `${prefix} ${token}`,
+  //     'Current-Identity': currentIdentity,
+  //   };
 }
 
 export async function post(uri: string, payload: unknown, config?: AxiosRequestConfig<unknown>) {
-  const authHeaders = await getAuthHeaders();
-  config = config || {};
-
-  if (authHeaders) config.headers = { ...config.headers, ...authHeaders };
-
+  //   const authHeaders = await getAuthHeaders();
+  //   config = config || {};
+  //   if (authHeaders) config.headers = { ...config.headers, ...authHeaders };
   return http.post(uri, payload, config);
 }
 
 export async function get(uri: string, config?: AxiosRequestConfig<unknown>) {
-  const authHeaders = await getAuthHeaders();
-  config = config || {};
-  if (authHeaders) config.headers = { ...config.headers, ...authHeaders };
-
+  //   const authHeaders = await getAuthHeaders();
+  //   config = config || {};
+  //   if (authHeaders) config.headers = { ...config.headers, ...authHeaders };
   return http.get(uri, config);
 }
 
@@ -68,8 +67,11 @@ export function handleError(params?: ErrorHandlerParams) {
 }
 
 http.interceptors.request.use(
-  function (config) {
+  async function (config) {
     store.dispatch(showSpinner());
+    const { Authorization, CurrentIdentity } = await getAuthHeaders();
+    config.headers.set('Authorization', Authorization);
+    config.headers.set('Current-Identity', CurrentIdentity);
     // Do something before request is sent
     return config;
   },

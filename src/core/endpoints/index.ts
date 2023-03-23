@@ -20,7 +20,7 @@ export const endpoint = {
         get(`auth/otp/confirm?email=${payload.email}&code=${payload.otp}`).then(getDataProp),
     },
     projects: {
-      project_id: (id: string) => get(`projects/${id}`).then(getDataProp) as Promise<GetProject>,
+      project_id: (id: string) => get(`projects/${id}`).then(getDataProp),
       '{project_id}/offers': (payload: offerPayload) =>
         get(`projects/${payload.id}/offers?filter.status=${payload.status}&page=${payload.page}`).then(
           getDataProp
