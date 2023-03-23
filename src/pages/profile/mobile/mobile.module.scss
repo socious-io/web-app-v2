@@ -79,3 +79,15 @@
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
+.name {
+  font-size: var(--font-size-l);
+  font-weight: 600;
+}
+
+.username {
+  height: 27px;
+  line-height: 1.75rem;
+  font-size: 1.125rem;
+  color: #2f4786;
+}

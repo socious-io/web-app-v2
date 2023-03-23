@@ -63,6 +63,21 @@ export const Mobile = (): JSX.Element => {
     </div>
   );
 
+  const bioJSX = (
+    <Divider>
+      <div className={css.bio}>{data.bio}</div>
+    </Divider>
+  );
+
+  const userFullNameJSX = (
+    <div className={css.name}>
+      {data?.first_name} {data?.last_name}
+    </div>
+  );
+
+  const orgNameJSX = <div className={css.name}>{data?.name}</div>;
+  const usernameJSX = <div className={css.username}>@{data?.username}</div>;
+
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -87,13 +102,17 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div>
         <Divider>
+          {printWhen(orgNameJSX, !!data?.name)}
+          {printWhen(userFullNameJSX, !!data?.first_name || !!data?.last_name)}
+          {printWhen(usernameJSX, !!data?.username)}
+        </Divider>
+        <Divider>
           <div className={css.achievements}>
             <Link onClick={() => navigate({ to: '/achievements' })}>Impact points: {data.impact_points}</Link>
           </div>
         </Divider>
-        <Divider>
-          <div className={css.bio}>{data.bio}</div>
-        </Divider>
+
+        {printWhen(bioJSX, !!data.bio)}
         <Divider title="Social Causes">
           <CategoriesClickable list={socialCauses} />
         </Divider>
