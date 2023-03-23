@@ -5,10 +5,6 @@ import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
 import { when } from 'src/core/utils';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 
-export async function getJobDetail(id: string): Promise<Job> {
-  return get(`projects/${id}`).then(({ data }) => data);
-}
-
 export function getCategories(job: Job): Array<JSX.Element | string> {
   const list: Array<JSX.Element | string> = [];
   const location = () => (
