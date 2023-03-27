@@ -1,5 +1,5 @@
 import { useMatch } from '@tanstack/react-location';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import { Accordion } from '../../../components/atoms/accordion/accordion';
 import { Button } from '../../../components/atoms/button/button';
@@ -21,7 +21,7 @@ import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const { offer } = useMatch().ownData as Resolver;
-  const { project: { payment_type } } = offer;
+  const { project: { payment_type }, recipient: { meta: { wallet_address } } } = offer;
   const [status, setStatus] = useState<StatusKeys>(offer.status);
   const [account, setAccount] = useState("");
 
@@ -30,6 +30,14 @@ export const Mobile = (): JSX.Element => {
     setAccount(accounts[0]);
     web3.eth.defaultAccount = accounts[0];
   });
+
+  useEffect(() => {
+    if (account && (!wallet_address || String(wallet_address) !== account)) {
+      endpoint.post.user["{user_id}/update_wallet"]({
+        wallet_address: account,
+      });
+    }
+  }, [account]);
 
   async function connectWallet() {
     await window.ethereum.enable();
