@@ -1,11 +1,11 @@
 import css from './mobile.module.scss';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { QuestionsRes } from '../../../../core/types';
 import { Textarea } from '../../../../components/atoms/textarea/textarea';
 import { ProfileView } from '../../../../components/molecules/profile-view/profile-view';
 import { Job } from '../../../../components/organisms/job-list/job-list.types';
-import { resumeInitialState, createRadioQuestion, createTextQuestion, submit, applyApplication } from '../apply.services';
+import { resumeInitialState, createTextQuestion, submit, applyApplication, generatePayload } from '../apply.services';
 import { Resume } from '../apply.types';
 import { Divider } from '../../../../components/templates/divider/divider';
 import { Input } from '../../../../components/atoms/input/input';
@@ -14,20 +14,21 @@ import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
 import { Header } from '../../../../components/atoms/header/header';
 import { printWhen } from '../../../../core/utils';
 import { useForm } from '../../../../core/form';
-import { formModel } from '../apply.form';
-import { getFormValues } from '../../../../core/form/customValidators/formValues';
+import { generateFormModel } from '../apply.form';
 import { dialog } from '../../../../core/dialog/dialog';
 import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
+import { FormModel } from 'src/core/form/useForm/useForm.types';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
-  const form = useForm(formModel);
   const [resume, setResume] = useState<Resume>(resumeInitialState);
   const { jobDetail, screeningQuestions } = useMatch().ownData as {
     jobDetail: Job;
-    screeningQuestions: { questions: QuestionsRes[] };
+    screeningQuestions: { questions: QuestionsRes['questions'] };
   };
   const questions = screeningQuestions.questions;
+  const formModel: FormModel = useMemo(() => generateFormModel(questions), []);
+  const form = useForm(formModel);
 
   function onResumeLoad(e: ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
@@ -47,11 +48,12 @@ export const Mobile = (): JSX.Element => {
   }
 
   function onSubmit() {
-    const payload = getFormValues(form);
+    const generatedPayload = generatePayload(form);
+    console.log('generatedPayload: ', generatedPayload);
     if (resume.file) {
-      submit(jobDetail.id, resume.file, payload).then(navigateToJobDetail);
+      submit(jobDetail.id, resume.file, generatedPayload).then(navigateToJobDetail);
     } else {
-      applyApplication(jobDetail.id, payload).then(navigateToJobDetail);
+      applyApplication(jobDetail.id, generatedPayload).then(navigateToJobDetail);
     }
   }
 
@@ -63,7 +65,8 @@ export const Mobile = (): JSX.Element => {
             const isMultipleChoice = item.options;
             return (
               <div key={item.id} className={css.questions}>
-                {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1)}
+                {/* {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1, form)} */}
+                {isMultipleChoice ? <></> : createTextQuestion(item, i + 1, form)}
               </div>
             );
           })}

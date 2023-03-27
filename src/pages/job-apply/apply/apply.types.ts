@@ -5,7 +5,6 @@ export type ApplyApplicationPayload = {
   cv_link: string;
   cv_name: string;
   share_contact_info: boolean;
-  answers: string[];
-  // upload id prop
+  answers: { id: string; answer: string }[];
   attachment?: string;
 };
