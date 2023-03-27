@@ -1,4 +1,5 @@
 import css from './offer.module.scss';
+import { useEffect, useMemo, useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Header } from '../../../components/atoms/header/header';
 import { Resolver } from './offer.types';
@@ -8,26 +9,31 @@ import { Button } from '../../../components/atoms/button/button';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { PROJECT_PAYMENT_TYPE } from '../../../constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_PAYMENT_SCHEME } from '../../../constants/PROJECT_PAYMENT_SCHEME';
-import { useState } from 'react';
+import { PROJECT_PAYMENT_MODE } from 'src/constants/PROJECT_PAYMENT_MODE';
 import { formModel } from './offer.services';
 import { offer } from '../job-offer-reject.services';
 import { OfferPayload } from '../../../core/types';
 import { useForm } from '../../../core/form';
+import { printWhen } from 'src/core/utils';
 
 export const Offer = (): JSX.Element => {
   const navigate = useNavigate();
   const { applicantDetail } = useMatch().ownData as Resolver;
   const { project } = applicantDetail;
   const [paymentType, setPaymentType] = useState(project.payment_type);
-  const [paymentMode, setPaymentMode] = useState(project.payment_scheme);
-  const form = useForm(formModel);
-  const formIsInvalid = !form.isValid || !paymentType || !paymentMode;
+  const [paymentScheme, setPaymentScheme] = useState(project.payment_scheme);
+  const [paymentMode, setPaymentMode] = useState("CRYPTO");
+  const isPaidType = project.payment_type === 'PAID';
+  const memoizedFormState = useMemo(() => formModel(isPaidType), []);
+  const form = useForm(memoizedFormState);
+  const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
 
   function onSubmit() {
     const payload: OfferPayload = {
-      assignment_total: 1,
-      offer_message: form.controls.message.value,
-      total_hours: form.controls.estimatedTotalHours.value,
+      payment_mode: paymentMode,
+      assignment_total: isPaidType ? form.controls.assignmentTotal.value as number : 1,
+      offer_message: form.controls.message.value as string,
+      total_hours: form.controls.estimatedTotalHours.value as string,
     };
     offer(applicantDetail.id, payload).then(() => {
       navigate({ to: '../..' });
@@ -48,8 +54,8 @@ export const Offer = (): JSX.Element => {
         />
         <RadioGroup
           name="PaymentScheme"
-          value={paymentMode}
-          onChange={() => setPaymentMode(project.payment_scheme)}
+          value={paymentScheme}
+          onChange={() => setPaymentScheme(project.payment_scheme)}
           label="Payment scheme"
           list={PROJECT_PAYMENT_SCHEME}
         />
@@ -60,6 +66,25 @@ export const Offer = (): JSX.Element => {
           label="Estimated total hours"
           placeholder="hrs"
         />
+
+        {/* later add fiat  */}
+        <RadioGroup
+          name="PaymentMode"
+          value={paymentMode}
+          onChange={() => setPaymentMode("CRYPTO")}
+          label="Payment mode"
+          list={PROJECT_PAYMENT_MODE}
+        />
+
+        {printWhen(
+          <Input
+            register={form}
+            name="assignmentTotal"
+            label="Assignment total (USDC)"
+            placeholder="amount"
+          />, isPaidType)
+        }
+
         <Textarea
           register={form}
           name="message"
