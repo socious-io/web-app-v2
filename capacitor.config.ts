@@ -7,6 +7,7 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   server: {
     hostname: 'socious.io',
+    androidScheme: 'https',
   },
   plugins: {
     CapacitorCookies: {
