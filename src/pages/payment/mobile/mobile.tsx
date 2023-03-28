@@ -207,7 +207,7 @@ export const Mobile = (): JSX.Element => {
           <Button
             color="white"
             className={`${css["footer__btn"]} ${css["footer__btn--cancel"]}`}
-            onClick={() => console.log("cancel")}
+            onClick={() => history.back()}
           >
             Cancel
           </Button>
