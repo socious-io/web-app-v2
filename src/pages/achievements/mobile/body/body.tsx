@@ -5,59 +5,6 @@ import { BodyProps } from './body.types';
 import { ImpactCategoryList } from '../../../../components/organisms/impact-category-list/impact-category-list';
 import { JobHistoryList } from '../../../../components/organisms/job-history-list/job-history-list';
 
-const list = [
-  {
-    jobTitle: 'job title',
-    date: '02/20/2022',
-    total: '555',
-    percent: '+35',
-    amount: '500',
-    organizationName: 'Organization',
-    dataStart: 'Mar 1',
-    dataEnd: 'Mar 10',
-  },
-  {
-    jobTitle: 'job title',
-    date: '02/20/2022',
-    total: '555',
-    percent: '+35',
-    amount: '500',
-    organizationName: 'Organization',
-    dataStart: 'Mar 1',
-    dataEnd: 'Mar 10',
-  },
-  {
-    jobTitle: 'job title',
-    date: '02/20/2022',
-    total: '555',
-    percent: '+35',
-    amount: '500',
-    organizationName: 'Organization',
-    dataStart: 'Mar 1',
-    dataEnd: 'Mar 10',
-  },
-  {
-    jobTitle: 'job title',
-    date: '02/20/2022',
-    total: '555',
-    percent: '+35',
-    amount: '500',
-    organizationName: 'Organization',
-    dataStart: 'Mar 1',
-    dataEnd: 'Mar 10',
-  },
-  {
-    jobTitle: 'job title',
-    date: '02/20/2022',
-    total: '555',
-    percent: '+35',
-    amount: '500',
-    organizationName: 'Organization',
-    dataStart: 'Mar 1',
-    dataEnd: 'Mar 10',
-  },
-];
-
 export const Body = (props: BodyProps): JSX.Element => {
   const tabs: Tab[] = [
     {

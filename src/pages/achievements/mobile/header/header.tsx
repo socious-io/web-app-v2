@@ -22,11 +22,11 @@ export const Header = (props: HeaderProps): JSX.Element => (
       marginTop="3.5rem"
     />
 
+    <div className={css.impactPointDescLink}>Claim impact points as verifiable credentials to receive rewards</div>
     <div className={css.buttonContainer}>
-      <Button color="white" width="9.35rem">
-        Check rewards
+      <Button onClick={props.onClaimNow} color="white" width="9.35rem">
+        Claim now
       </Button>
     </div>
-    <div className={css.impactPointDescLink}>What are impact points?</div>
   </div>
 );
