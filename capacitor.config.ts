@@ -1,8 +1,9 @@
+import { Capacitor } from '@capacitor/core';
 import { CapacitorConfig } from '@capacitor/cli';
 
-// hostname: 'capacitor',
-// hostname: 'android',
-// androidScheme: 'native',
+function defineHostname() {
+  return Capacitor.getPlatform() === 'ios' ? 'socious.io' : 'capacitor.native';
+}
 
 const config: CapacitorConfig = {
   appId: 'jp.socious.network',
@@ -10,13 +11,9 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   bundledWebRuntime: false,
   server: {
-    hostname: 'capacitor.native',
+    hostname: defineHostname(),
     androidScheme: 'https',
   },
-  //   server: {
-  //     hostname: 'capacitor',
-  //     // androidScheme: 'native',
-  //   },
   plugins: {
     CapacitorCookies: {
       enabled: true,
@@ -25,4 +22,3 @@ const config: CapacitorConfig = {
 };
 
 export default config;
-// ALLOWED_ORIGINS=socious.io,capacitor://socious.io,https://capacitor,native://socious.io,capacitor://localhost,capacitor.native,webapp2.socious.io
