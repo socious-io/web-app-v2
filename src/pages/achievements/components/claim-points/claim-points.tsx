@@ -34,10 +34,12 @@ export const ClaimPoints = (): JSX.Element => {
         Go through the ProofSpace app's onboarding process which will create a decentralized ID on Atala Prism.
       </p>
       <div className={css.downloads}>
-        {/* https://play.google.com/store/apps/details?id=io.zaka.app&pli=1 */}
-        <img src="/icons/download-appstore.svg" />
-        {/* https://apps.apple.com/us/app/proofspace/id1512258409 */}
-        <img src="/icons/download-googleplay.svg" />
+        <a href="https://play.google.com/store/apps/details?id=io.zaka.app&pli=1" target="_blank">
+          <img width={180} src="/images/download-googleplay.png" />
+        </a>
+        <a href="https://apps.apple.com/us/app/proofspace/id1512258409" target="_blank">
+          <img width={180} src="/images/download-appstore.svg" />
+        </a>
       </div>
       <p className={css.paragraph}>1. Choose “Socious” as a service</p>
       <p className={css.paragraph}>2. Click on the QR reader Icon and scan the QR code below </p>

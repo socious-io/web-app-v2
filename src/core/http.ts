@@ -6,8 +6,8 @@ import translate from '../translations';
 import { nonPermanentStorage } from './storage/non-permanent';
 
 export const http = axios.create({
-  baseURL: 'https://dev.socious.io/api/v2',
-  //   baseURL: 'https://socious.io/api/v2',
+//   baseURL: 'https://dev.socious.io/api/v2',
+    baseURL: 'https://socious.io/api/v2',
   withCredentials: true,
   timeout: 1000000,
 });
