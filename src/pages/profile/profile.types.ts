@@ -42,6 +42,7 @@ export type ProfileReq = {
   shortname: string;
   old_id: number;
   status: string;
+  skills?: string[];
   search_tsv: string;
   other_party_id: string;
   other_party_title: string;

@@ -5,7 +5,7 @@ import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Divider } from '../../../components/templates/divider/divider';
 import { ProfileReq } from '../profile.types';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
-import { socialCausesToCategory } from '../../../core/adaptors';
+import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
 import { Link } from '../../../components/atoms/link/link';
 import { showActions } from '../profile.services';
@@ -16,6 +16,7 @@ import { RootState } from 'src/store/store';
 export const Mobile = (): JSX.Element => {
   const data = useMatch().ownData as ProfileReq;
   const socialCauses = socialCausesToCategory(data.social_causes);
+  const skills = skillsToCategory(data.skills);
   const navigate = useNavigate();
   const avatarImage = data.avatar?.url ? data.avatar?.url : data.image?.url;
 
@@ -75,6 +76,24 @@ export const Mobile = (): JSX.Element => {
     </div>
   );
 
+  const missionJSX = (
+    <Divider title="Mission">
+      <div className={css.mission}>{data.mission}</div>
+    </Divider>
+  );
+
+  const cultureJSX = (
+    <Divider title="Culture">
+      <div className={css.culture}>{data.culture}</div>
+    </Divider>
+  );
+
+  const skillsJSX = (
+    <Divider title="Skills">
+      <CategoriesClickable list={skills} />
+    </Divider>
+  );
+
   const orgNameJSX = <div className={css.name}>{data?.name}</div>;
   const usernameJSX = <div className={css.username}>@{data?.username}</div>;
 
@@ -122,18 +141,9 @@ export const Mobile = (): JSX.Element => {
           {printWhen(websiteLinkJSX, !!data.website)}
           {printWhen(cityLinkJSX, !!data.city)}
         </Divider>
-        {printWhen(
-          <Divider title="Mission">
-            <div className={css.mission}>{data.mission}</div>
-          </Divider>,
-          !!data.mission
-        )}
-        {printWhen(
-          <Divider title="Culture">
-            <div className={css.culture}>{data.culture}</div>
-          </Divider>,
-          !!data.culture
-        )}
+        {printWhen(missionJSX, !!data.mission)}
+        {printWhen(cultureJSX, !!data.culture)}
+        {printWhen(skillsJSX, data.skills && data.skills.length > 0)}
       </div>
     </div>
   );
