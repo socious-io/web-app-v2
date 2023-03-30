@@ -1,4 +1,5 @@
 import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
+import { RouteMatch, DefaultGenerics } from '@tanstack/react-location';
 import { dialog } from '../../core/dialog/dialog';
 import { endpoint } from '../../core/endpoints';
 import { get } from '../../core/http';
@@ -31,3 +32,13 @@ export const showActions = async (id: string) => {
       break;
   }
 };
+
+export async function profilePageLoader({ params }: RouteMatch<DefaultGenerics>) {
+  const userType = params.userType;
+  if (userType === 'users') {
+    const profile = await getUserDetail(params.id);
+    return { profile };
+  }
+  const profile = await getOrganizationDetail(params.id);
+  return { profile };
+}

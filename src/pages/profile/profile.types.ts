@@ -1,3 +1,6 @@
+import { DefaultGenerics, RouteMatch, PartialGenerics } from '@tanstack/react-location';
+import { UserType } from 'src/core/types';
+
 export type ProfileReq = {
   id: string;
   name: string;

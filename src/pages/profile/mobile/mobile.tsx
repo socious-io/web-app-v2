@@ -12,9 +12,10 @@ import { showActions } from '../profile.services';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
+import { Button } from 'src/components/atoms/button/button';
 
 export const Mobile = (): JSX.Element => {
-  const data = useMatch().ownData as ProfileReq;
+  const data = useMatch().data.profile as ProfileReq;
   const socialCauses = socialCausesToCategory(data.social_causes);
   const skills = skillsToCategory(data.skills);
   const navigate = useNavigate();
@@ -94,6 +95,12 @@ export const Mobile = (): JSX.Element => {
     </Divider>
   );
 
+  const editButtonJSX = (
+    <Button onClick={() => navigate({ to: '../edit' })} color="white" width="6.5rem">
+      Edit
+    </Button>
+  );
+
   const orgNameJSX = <div className={css.name}>{data?.name}</div>;
   const usernameJSX = <div className={css.username}>@{data?.username}</div>;
 
@@ -111,6 +118,7 @@ export const Mobile = (): JSX.Element => {
         <div className={css.menu}>
           <div className={css.btnContainer}>
             {/* <Button width="6.5rem">Connect</Button> */}
+            {printWhen(editButtonJSX, profileBelongToCurrentUser)}
             {printWhen(<ThreeDotsButton onClick={() => showActions(data.id)} />, !profileBelongToCurrentUser)}
           </div>
           <div className={css.userConnections}>
