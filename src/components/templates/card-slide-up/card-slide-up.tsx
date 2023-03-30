@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEventHandler, SyntheticEvent, useEffect, useState } from 'react';
+import { CSSProperties, SyntheticEvent, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useScrollLock } from 'src/hooks/use-scroll-lock';
 import css from './card-slide-up.module.scss';
@@ -14,10 +14,7 @@ export const CardSlideUp = (props: CardSlideProps): JSX.Element => {
   }, [props.open]);
 
   function onClose(e: SyntheticEvent) {
-    // setState(false);
-    // setTimeout(() => {
     props.onClose();
-    // }, 500);
   }
 
   function onContentClick(e: SyntheticEvent) {

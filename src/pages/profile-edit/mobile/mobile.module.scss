@@ -1,0 +1,17 @@
+.formContainer {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.phoneContainer {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 0.5rem;
+}
+
+.label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}

@@ -13,8 +13,7 @@ import { getFollowings } from '../../pages/chat/new-chat/new-chat.services';
 import { getActiveJobs, getDraftJobs } from '../../pages/job-create/my-jobs/my-jobs.services';
 import { getFeedList } from '../../pages/feed/mobile/mobile.service';
 import { getComments, getPostDetail } from '../../pages/feed/post-detail/mobile/mobile.service';
-import { getOrganizationDetail, getUserDetail } from '../../pages/profile/profile.services';
-import { UserType } from '../types';
+import { profilePageLoader } from '../../pages/profile/profile.services';
 import { getJobCategories } from '../../pages/job-create/info/info.services';
 import { search } from '../../pages/search/search.services';
 import { getNotificationList } from '../../pages/notifications/mobile/mobile.service';
@@ -97,14 +96,17 @@ export const routes: Route[] = [
       { path: 'change-password', element: <ChangePassword /> },
       {
         path: 'profile/:userType/:id',
-        loader: ({ params }) => {
-          const userType = params.userType as UserType;
-          if (userType === 'users') {
-            return getUserDetail(params.id);
-          }
-          return getOrganizationDetail(params.id);
-        },
-        element: () => import('../../pages/profile/profile').then((m) => <m.Profile />),
+        loader: profilePageLoader,
+        children: [
+          {
+            path: 'view',
+            element: () => import('../../pages/profile/profile').then((m) => <m.Profile />),
+          },
+          {
+            path: 'edit',
+            element: () => import('../../pages/profile-edit/profile-edit').then((m) => <m.ProfileEdit />),
+          },
+        ],
       },
       {
         path: 'payment/:id',
@@ -215,7 +217,9 @@ export const routes: Route[] = [
               return { applicantDetail, screeningQuestions };
             },
             element: () =>
-              import('../../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => <m.ApplicantDetail />),
+              import('../../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => (
+                <m.ApplicantDetail />
+              )),
           },
           {
             loader: (params) => jobOfferRejectLoader(params),
