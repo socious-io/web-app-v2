@@ -34,7 +34,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
             <div className={css.body}>
               <div className={css.jobTitle}>{job.title}</div>
               <Categories marginBottom="1rem" list={getList(job)} />
-              <div>{convertMDToJSX(job.description, { length: 200 })}</div>
+              <div className={css.description}>{convertMDToJSX(job.description, { length: 200 })}</div>
               <CategoriesClickable marginBottom="1rem" list={socialCausesToCategory(job.causes_tags)} />
             </div>
             <div className={css.footer}>{toRelativeTime(job.updated_at)}</div>
