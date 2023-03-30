@@ -3,7 +3,7 @@
   display: grid;
   border: 1px solid var(--color-gray-04);
   border-radius: 0.5rem;
-  grid-template-columns: 1fr 44px;
+  grid-template-columns: minmax(2rem, 1fr) 2.75rem;
 }
 
 .label {

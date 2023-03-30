@@ -25,7 +25,9 @@ export const Dropdown = (props: DropdownProps): JSX.Element => {
 
   function onSearch(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
-    const newFilteredList = props.list.filter((option) => option.label.toLowerCase().includes(value.toLocaleLowerCase()));
+    const newFilteredList = props.list.filter((option) =>
+      option.label.toLowerCase().includes(value.toLocaleLowerCase())
+    );
     setFilteredList(newFilteredList);
   }
 
