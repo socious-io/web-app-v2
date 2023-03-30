@@ -1,11 +1,17 @@
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { Button } from '../../../../components/atoms/button/button';
 import { ImpactBarLevel } from '../../../../components/atoms/impact-bar-level/impact-bar-level';
 import css from './header.module.scss';
 import { HeaderProps } from './header.types';
 
+function onBack() {
+  hapticsImpactLight();
+  history.back();
+}
+
 export const Header = (props: HeaderProps): JSX.Element => (
   <div className={css.container}>
-    <img onClick={() => history.back()} className={css.chevron} src="/icons/chevron-left.svg" />
+    <img onClick={onBack} className={css.chevron} src="/icons/chevron-left.svg" />
     <div className={css.impactPointsContainer}>
       <div className={css.impactPoints}>{Math.ceil(props.point)}</div>
       <div className={css.impactPointsLabel}>Impact Points</div>
