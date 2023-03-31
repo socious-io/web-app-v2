@@ -33,11 +33,11 @@ export type ProfileReq = {
     url: string;
     created_at: string;
   };
-  cover_image: {
+  cover_image?: {
     id: string;
     identity_id: string;
     filename: string;
-    url: string;
+    url?: string;
     created_at: string;
   };
   mobile_country_code: string;
