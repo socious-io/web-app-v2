@@ -30,7 +30,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile>
-      <Header title="Edit" />
+      <Header title="Edit" right={{ label: 'Save', onClick: () => {} }} />
       <div>
         <div>
           <div className={css.header}>
