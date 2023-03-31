@@ -45,8 +45,15 @@ export function generateFormModel(profile: ProfileReq): FormModel {
   };
 }
 
-export function updateCityList(countryCode: string, setCities: Dispatch<SetStateAction<DropdownItem[]>>) {
-  getCityList(countryCode)
-    .then(({ items }) => citiesToCategories(items))
-    .then(setCities);
+export function cityDispatcher(setCities: Dispatch<SetStateAction<DropdownItem[]>>) {
+  return (countryCode: string) => {
+    getCityList(countryCode)
+      .then(({ items }) => citiesToCategories(items))
+      .then(setCities);
+  };
+}
+
+export function getProfileImage(data: ProfileReq): string {
+  const img = data.avatar?.url ? data.avatar?.url : data.image?.url;
+  return img || '';
 }

@@ -1,6 +1,13 @@
-import { DropdownItem } from './dropdown.types';
+import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
+import { DropdownProps } from './dropdown.types';
 
-export function setInitialValue(list: DropdownItem[], value?: string | number): string {
-  const obj = list.find((item) => item.value === value);
-  return obj ? obj.label : '';
+export function getInitialValue(props: DropdownProps): string {
+  if (props.register && props.name) {
+    return props.register.controls[props.name].value as string;
+  }
+  return '';
+}
+
+export function hasInitialValue(props: DropdownProps) {
+  return props.register && props.name && props.register.controls[props.name].value;
 }
