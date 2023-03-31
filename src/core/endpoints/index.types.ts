@@ -26,3 +26,37 @@ export type Offer = {
     };
   };
 };
+
+type PostUserUpdatePayload = {
+  bio: string;
+  social_causes: string[];
+  country: string;
+  city: string;
+  geoname_id: number;
+  address: string;
+  mobile_country_code: string;
+  phone: string;
+  cover_image: string;
+  mission: string;
+  avatar: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+  skills: string[];
+};
+
+export interface Endpoints {
+  get: {};
+  post: {
+    auth: {};
+    user: {
+      '{user_id}/report': unknown;
+      '{user_id}/update_wallet': unknown;
+      'update/profile': (payload: PostUserUpdatePayload) => Promise<unknown>;
+    };
+    offers: {};
+    missions: {};
+    posts: {};
+    payments: {};
+  };
+}
