@@ -3,6 +3,7 @@ import { StatusTag } from '../../atoms/status-tag/status-tag';
 import { ProfileView } from '../profile-view/profile-view';
 import css from './applicant-list-pay.module.scss';
 import { Applicant, ApplicantListPayProps } from './applicant-list-pay.types';
+import Dapp from 'src/dapp';
 
 const statuses = {
   CONFIRMED: {
@@ -54,6 +55,8 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
           </div> */}
         </div>
         <div className={css.applicantFooter}>
+          {/* FIXME: POSTION and DESIGN*/}
+          <Dapp.Connect/>
           {printWhen(confirmBtn(applicant.id), props.confirmable)}
           <div className={css.footerItem}>
             <img src="/icons/message-blue.svg" />

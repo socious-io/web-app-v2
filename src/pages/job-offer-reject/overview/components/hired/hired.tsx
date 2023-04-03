@@ -6,13 +6,17 @@ import { ApplicantListPay } from '../../../../../components/molecules/applicant-
 import { endpoint } from '../../../../../core/endpoints';
 import { dialog } from '../../../../../core/dialog/dialog';
 import { ConfirmResult } from '@capacitor/dialog';
+import Dapp from 'src/dapp';
 
 export const Hired = (props: HiredProps): JSX.Element => {
   const { hiredList, endHiredList } = props;
 
-  function onUserConfirm(id: string) {
+  const {web3} = Dapp.useWeb3();
+
+  async function onUserConfirm(id: string) {
     return (confirmed: ConfirmResult) => {
       if (confirmed.value) {
+        Dapp.withdrawnEscrow(web3, );
         endpoint.post.missions['{mission_id}/confirm'](id).then(() => history.back());
       }
     };
