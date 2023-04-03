@@ -359,6 +359,7 @@ export type OfferPayload = {
   assignment_total: number;
   offer_message: string;
   total_hours: string;
+  payment_mode: string;
   crypto_currency_address: string;
 };
 
