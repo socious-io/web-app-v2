@@ -4,7 +4,7 @@ import { dappConfig } from './dapp.config';
 import Web3 from 'web3';
 
 export const allowance = async (web3: Web3, token: string, amount: number) => {
-  // we may configure this fee ratio later
+  // TODO: we may configure this fee ratio later
   const fee = amount * 0.03;
   const allowanceAmount = amount + fee;
 
@@ -20,6 +20,23 @@ export const allowance = async (web3: Web3, token: string, amount: number) => {
   if (!approved) throw new Error('Allowance not approved for escorw');
 };
 
+export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
+  // TODO: get this from contributor info
+  const verifiedCon = false;
+  const chainId = await web3.eth.getChainId();
+  const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
+  const escrowContract = new web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
+
+  const result = await escrowContract.methods
+    .withdrawn(
+      escrowId,
+      verifiedCon
+    )
+    .send({ from: web3.eth.defaultAccount });
+    
+  return result.transactionHash;
+}
+
 export const escrow = async (params: EscrowParams) => {
   const chainId = await params.web3.eth.getChainId();
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
@@ -29,6 +46,7 @@ export const escrow = async (params: EscrowParams) => {
   // First need allowance to verify that transaction is possible for smart contract
   await allowance(params.web3, token, params.escrowAmount);
 
+  // TODO: get this from organization info
   const verifiedORG = false;
 
   const escrowContract = new params.web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);

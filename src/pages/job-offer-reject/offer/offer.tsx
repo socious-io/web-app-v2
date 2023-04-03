@@ -13,6 +13,7 @@ import { formModel } from './offer.services';
 import { offer } from '../job-offer-reject.services';
 import { OfferPayload } from '../../../core/types';
 import { useForm } from '../../../core/form';
+import Dapp from 'src/dapp';
 
 export const Offer = (): JSX.Element => {
   const navigate = useNavigate();
@@ -23,11 +24,14 @@ export const Offer = (): JSX.Element => {
   const form = useForm(formModel);
   const formIsInvalid = !form.isValid || !paymentType || !paymentMode;
 
-  function onSubmit() {
+
+  async function onSubmit() {
+
+
     const payload: OfferPayload = {
       assignment_total: 1,
       offer_message: form.controls.message.value,
-      total_hours: form.controls.estimatedTotalHours.value,
+      total_hours: form.controls.estimatedTotalHours.value,      
     };
     offer(applicantDetail.id, payload).then(() => {
       navigate({ to: '../..' });
