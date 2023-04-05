@@ -1,0 +1,34 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  background: var(--color-off-white-01);
+  padding: 1rem;
+}
+
+.item {
+  height: 1.5rem;
+  padding: 0 9px;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  font-family: 'Work Sans';
+  border-radius: 2rem;
+  color: #fff;
+  background-color: var(--color-secondary-02);
+}
+
+.label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.slideUpContainer {
+  padding: 1.5rem;
+}
+
+.placeholder {
+  font-size: var(--font-size-m);
+  color: var(--color-gray-02);
+}

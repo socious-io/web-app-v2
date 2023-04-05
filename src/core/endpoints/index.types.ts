@@ -45,6 +45,14 @@ type PostUserUpdatePayload = {
   skills: string[];
 };
 
+export type PostMediaUploadResp = {
+  id: string;
+  identity_id: string;
+  filename: string;
+  url: string;
+  created_at: string;
+};
+
 export interface Endpoints {
   get: {};
   post: {
@@ -53,6 +61,9 @@ export interface Endpoints {
       '{user_id}/report': unknown;
       '{user_id}/update_wallet': unknown;
       'update/profile': (payload: PostUserUpdatePayload) => Promise<unknown>;
+    };
+    media: {
+      upload: (formData: FormData) => Promise<PostMediaUploadResp>;
     };
     offers: {};
     missions: {};

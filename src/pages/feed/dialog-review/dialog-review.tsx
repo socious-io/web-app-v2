@@ -15,7 +15,6 @@ import { DialogReviewProps } from './dialog-review.types';
 
 export const DialogReview = (props: DialogReviewProps) => {
   const [openDialog, setOpenDialog] = useState(false);
-  const navigate = useNavigate();
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;

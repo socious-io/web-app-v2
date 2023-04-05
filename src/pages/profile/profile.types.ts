@@ -7,7 +7,7 @@ export type ProfileReq = {
   first_name: string;
   last_name: string;
   username: string;
-  avatar?: { url: string };
+  avatar?: { url: string; id: string };
   bio: string;
   description: string;
   email: string;
