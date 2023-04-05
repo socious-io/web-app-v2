@@ -11,20 +11,20 @@ import Dapp from 'src/dapp';
 export const Hired = (props: HiredProps): JSX.Element => {
   const { hiredList, endHiredList } = props;
 
-  const {web3} = Dapp.useWeb3();
+  const { web3 } = Dapp.useWeb3();
 
-  async function onUserConfirm(id: string) {
-    return (confirmed: ConfirmResult) => {
+  function onUserConfirm(id: string, escrowId?: string) {
+    return async (confirmed: ConfirmResult) => {
+      if (web3 && escrowId) await Dapp.withdrawnEscrow(web3, escrowId);
       if (confirmed.value) {
-        Dapp.withdrawnEscrow(web3, );
         endpoint.post.missions['{mission_id}/confirm'](id).then(() => history.back());
       }
     };
   }
 
-  function openConfirmDialog(id: string) {
+  function openConfirmDialog(id: string, escrowId?: string) {
     const options = { title: 'Confirm', message: 'Are you sure?', okButtonTitle: 'Confirm' };
-    dialog.confirm(options).then(onUserConfirm(id));
+    dialog.confirm(options).then(onUserConfirm(id, escrowId));
   }
 
   return (

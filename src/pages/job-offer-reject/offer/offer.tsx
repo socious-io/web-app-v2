@@ -15,6 +15,7 @@ import { offer } from '../job-offer-reject.services';
 import { OfferPayload } from '../../../core/types';
 import { useForm } from '../../../core/form';
 import { printWhen } from 'src/core/utils';
+import Dapp from 'src/dapp';
 
 export const Offer = (): JSX.Element => {
   const navigate = useNavigate();
@@ -22,18 +23,29 @@ export const Offer = (): JSX.Element => {
   const { project } = applicantDetail;
   const [paymentType, setPaymentType] = useState(project.payment_type);
   const [paymentScheme, setPaymentScheme] = useState(project.payment_scheme);
-  const [paymentMode, setPaymentMode] = useState("CRYPTO");
+  const [paymentMode, setPaymentMode] = useState('CRYPTO');
   const isPaidType = project.payment_type === 'PAID';
   const memoizedFormState = useMemo(() => formModel(isPaidType), []);
   const form = useForm(memoizedFormState);
   const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
 
-  function onSubmit() {
+  const { web3 } = Dapp.useWeb3();
+
+  async function onSubmit() {
+    let token: string | undefined = undefined;
+    if (paymentMode === 'CRYPTO' && web3) {
+      const chainId = await web3.eth.getChainId();
+      const selectedNetwork = Dapp.NETWORKS.filter((n) => n.chain.id === chainId)[0];
+      // FIXME: let use select token from options
+      token = selectedNetwork.tokens[0].address;
+    }
+
     const payload: OfferPayload = {
       payment_mode: paymentMode,
-      assignment_total: isPaidType ? form.controls.assignmentTotal.value as number : 1,
+      assignment_total: isPaidType ? (form.controls.assignmentTotal.value as number) : 1,
       offer_message: form.controls.message.value as string,
       total_hours: form.controls.estimatedTotalHours.value as string,
+      crypto_currency_address: token,
     };
     offer(applicantDetail.id, payload).then(() => {
       navigate({ to: '../..' });
@@ -60,37 +72,23 @@ export const Offer = (): JSX.Element => {
           list={PROJECT_PAYMENT_SCHEME}
         />
 
-        <Input
-          register={form}
-          name="estimatedTotalHours"
-          label="Estimated total hours"
-          placeholder="hrs"
-        />
+        <Input register={form} name="estimatedTotalHours" label="Estimated total hours" placeholder="hrs" />
 
         {/* later add fiat  */}
         <RadioGroup
           name="PaymentMode"
           value={paymentMode}
-          onChange={() => setPaymentMode("CRYPTO")}
+          onChange={() => setPaymentMode('CRYPTO')}
           label="Payment mode"
           list={PROJECT_PAYMENT_MODE}
         />
 
         {printWhen(
-          <Input
-            register={form}
-            name="assignmentTotal"
-            label="Assignment total (USDC)"
-            placeholder="amount"
-          />, isPaidType)
-        }
+          <Input register={form} name="assignmentTotal" label="Assignment total (USDC)" placeholder="amount" />,
+          isPaidType
+        )}
 
-        <Textarea
-          register={form}
-          name="message"
-          label="Message"
-          placeholder="Write message"
-        />
+        <Textarea register={form} name="message" label="Message" placeholder="Write message" />
       </div>
       <div className={css.btnContainer}>
         <Button onClick={onSubmit} disabled={formIsInvalid}>

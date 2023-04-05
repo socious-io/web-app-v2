@@ -21,8 +21,8 @@ const statuses = {
 };
 
 export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
-  const confirmBtn = (id: string) => (
-    <div onClick={() => props.onConfirm?.(id)} className={css.footerItem}>
+  const confirmBtn = (id: string, escrowId?: string) => (
+    <div onClick={() => props.onConfirm?.(id, escrowId)} className={css.footerItem}>
       <img src="/icons/user-accept-blue.svg" />
       <div className={css.footerLabel}>Confirm</div>
     </div>
@@ -56,8 +56,8 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
         </div>
         <div className={css.applicantFooter}>
           {/* FIXME: POSTION and DESIGN*/}
-          <Dapp.Connect/>
-          {printWhen(confirmBtn(applicant.id), props.confirmable)}
+          <Dapp.Connect />
+          {printWhen(confirmBtn(applicant.id, applicant.payment?.meta[0]), props.confirmable)}
           <div className={css.footerItem}>
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>
