@@ -14,9 +14,7 @@ export const ClaimPoints = (): JSX.Element => {
   });
 
   useEffect(() => {
-    generateQRCode(identityId, qrCodeRef.current as HTMLDivElement)
-      .then((resp) => console.log('resp: ', resp))
-      .catch((e) => console.log('error: ', e));
+    generateQRCode(identityId, qrCodeRef.current as HTMLDivElement).catch((e) => console.log('error: ', e));
   }, []);
 
   const appStoreJSX = (
@@ -51,10 +49,10 @@ export const ClaimPoints = (): JSX.Element => {
         {printWhen(playStoreJSX, Capacitor.getPlatform() === 'android')}
         {printWhen(appStoreJSX, Capacitor.getPlatform() === 'ios')}
       </div>
-      <p className={css.paragraph}>1. Choose “Socious” as a service</p>
+      <p className={css.paragraph}>2. Choose “Socious” as a service</p>
       {/* <p className={css.paragraph}>2. Click on the QR reader Icon and scan the QR code below </p> */}
       <p className={css.paragraph}>
-        2. Congratulations! Your impact points are now recorded on Cardano blockchain as verifiable credentials!{' '}
+        3. Congratulations! Your impact points are now recorded on Cardano blockchain as verifiable credentials!{' '}
       </p>
       <div className={css.proofspaceButton} ref={qrCodeRef} />
     </div>

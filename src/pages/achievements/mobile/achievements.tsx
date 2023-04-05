@@ -5,8 +5,8 @@ import { TwoThird } from '../../../components/templates/two-third/two-third';
 import { Loader } from '../achievements.types';
 import { ClaimPoints } from '../components/claim-points/claim-points';
 import { evaluateTier } from './achievements.service';
-import { Body as ImpactCategoryList } from './body/body';
-import { Header } from './header/header';
+import { Body as ImpactCategoryList } from '../components/body/body';
+import { Header } from '../components/header/header';
 
 export const Mobile = (): JSX.Element => {
   const { badges } = useMatch().ownData as Loader;
@@ -15,12 +15,11 @@ export const Mobile = (): JSX.Element => {
   const tier = evaluateTier(points);
   const [slideUpOpen, setSlideUpOpen] = useState(false);
 
+  const bottom = <ImpactCategoryList activeList={activeList} />;
+
   return (
     <>
-      <TwoThird
-        top={<Header onClaimNow={() => setSlideUpOpen(true)} tier={tier} point={points} />}
-        bottom={<ImpactCategoryList activeList={activeList} />}
-      />
+      <TwoThird top={<Header onClaimNow={() => setSlideUpOpen(true)} tier={tier} point={points} />} bottom={bottom} />
       <CardSlideUp onClose={() => setSlideUpOpen(false)} open={slideUpOpen}>
         <ClaimPoints />
       </CardSlideUp>
