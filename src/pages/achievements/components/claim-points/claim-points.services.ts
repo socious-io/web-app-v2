@@ -6,7 +6,7 @@ const config: Config = {
   interactionId: '1',
   instanceId: '6374a508515f5a539afd400c',
   button: {
-    text: 'Go to proofspace',
+    text: 'Go to proofSpace app',
     style: `
     color: var(--color-primary-01);
     height: 2.75rem;

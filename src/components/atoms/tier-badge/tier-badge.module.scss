@@ -1,0 +1,32 @@
+.badge {
+  background: radial-gradient(
+      ellipse farthest-corner at right bottom,
+      #fedb37 0%,
+      #fdb931 8%,
+      #9f7928 30%,
+      #8a6e2f 40%,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at left top,
+      #ffffff 0%,
+      #ffffac 8%,
+      #d1b464 25%,
+      #e5a81e 62.5%,
+      #5d4a1f 100%
+    );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 1rem;
+  font-weight: 600;
+  font-size: 2.5rem;
+}
+
+.label {
+  margin-top: 0.5rem;
+  font-weight: 600;
+  text-align: center;
+  font-size: var(--font-size-s);
+}
