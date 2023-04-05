@@ -15,11 +15,12 @@ export const Mobile = (): JSX.Element => {
   const tier = evaluateTier(points);
   const [slideUpOpen, setSlideUpOpen] = useState(false);
 
-  const bottom = <ImpactCategoryList activeList={activeList} />;
+  const header = <Header onClaimNow={() => setSlideUpOpen(true)} tier={tier} point={points} />;
+  const bottom = <ImpactCategoryList activeList={activeList} tier={tier} />;
 
   return (
     <>
-      <TwoThird top={<Header onClaimNow={() => setSlideUpOpen(true)} tier={tier} point={points} />} bottom={bottom} />
+      <TwoThird top={header} bottom={bottom} />
       <CardSlideUp onClose={() => setSlideUpOpen(false)} open={slideUpOpen}>
         <ClaimPoints />
       </CardSlideUp>

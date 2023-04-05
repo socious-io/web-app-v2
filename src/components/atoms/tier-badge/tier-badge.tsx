@@ -15,9 +15,27 @@ export const TierBadge = (props: TierBadgeProps): JSX.Element => {
     }
   }
 
+  function setValueFontSize(size: string) {
+    switch (size) {
+      case '3.625rem':
+        return '1.75rem';
+      case '6rem':
+        return '3.5rem';
+      default:
+        return 'var(--font-size-s)';
+    }
+  }
+
+  function badgeBgColor() {
+    return props.disabled ? '#adadad' : '';
+  }
+
   return (
     <div className={css.container} style={{ width: size }}>
-      <div style={{ width: size, height: size }} className={css.badge}>
+      <div
+        style={{ width: size, height: size, fontSize: setValueFontSize(size), backgroundColor: badgeBgColor() }}
+        className={css.badge}
+      >
         {props.value}
       </div>
       <div style={{ fontSize: setLabelFontSize(size) }} className={css.label}>
