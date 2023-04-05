@@ -63,5 +63,9 @@ export const endpoint: Endpoints = {
     payments: {
       '{offer_id/confirm}': (id: string, body: any) => post(`/payments/offers/${id}`, body).then(getDataProp),
     },
+    media: {
+      upload: (formData) =>
+        post('/media/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(getDataProp),
+    },
   },
 };
