@@ -10,11 +10,16 @@ export type Applicant = {
   paymentMode: string;
   totalHour: number;
   totalMission: string;
+  payment?: {
+    meta: {
+      0: string;
+    };
+  };
 };
 
 export type ApplicantListPayProps = {
   list: Applicant[];
-  onConfirm?: (id: string) => void;
+  onConfirm?: (id: string, escorwId?: string) => void;
   confirmable?: boolean;
   //   onOfferClick?: (id: string) => void;
   //   onRejectClick?: (id: string) => void;

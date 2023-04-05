@@ -23,7 +23,7 @@ export type ResendVerifyCode = {
   email: string;
 };
 
-export type  OtpConfirmReq = {
+export type OtpConfirmReq = {
   email: string;
   otp: string;
 };
@@ -263,6 +263,11 @@ export type MissionsResp = Pagination<
       total_hours: number;
       assignment_total: number;
     };
+    payment?: {
+      meta: {
+        0: string;
+      };
+    };
     assignee: {
       meta: {
         id: string;
@@ -360,7 +365,7 @@ export type OfferPayload = {
   offer_message: string;
   total_hours: string;
   payment_mode: string;
-  crypto_currency_address: string;
+  crypto_currency_address?: string;
 };
 
 export type CreatePostPayload = {
