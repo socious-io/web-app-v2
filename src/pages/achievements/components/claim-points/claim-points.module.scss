@@ -20,7 +20,12 @@
 }
 
 .paragraph {
-  padding-bottom: 1rem;
+  padding-bottom: 0.75rem;
   line-height: 150%;
   font-size: var(--font-size-s2);
+}
+
+.proofspaceButton {
+  display: flex;
+  justify-content: center;
 }

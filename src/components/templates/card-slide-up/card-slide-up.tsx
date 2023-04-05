@@ -14,10 +14,7 @@ export const CardSlideUp = (props: CardSlideProps): JSX.Element => {
   }, [props.open]);
 
   function onClose(e: SyntheticEvent) {
-    // setState(false);
-    // setTimeout(() => {
     props.onClose();
-    // }, 500);
   }
 
   function onContentClick(e: SyntheticEvent) {
