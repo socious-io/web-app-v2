@@ -1,20 +1,30 @@
 .header {
-  height: 16rem;
-  border: 1px solid #000;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--border-gray-01);
+  padding-bottom: 1rem;
 }
 
 .featureOnProfile {
   height: 3rem;
-  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .tierBadgeContainer {
   display: flex;
   justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .body {
-  height: 23rem;
-  border: 1px solid #000;
-  background: green;
+  padding-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.badgeList {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem 0;
+  justify-items: center;
 }

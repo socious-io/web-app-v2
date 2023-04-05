@@ -15,10 +15,10 @@ export const Body = (props: BodyProps): JSX.Element => {
   const tier = evaluateTier(points);
 
   const achievements = (
-    <div>
-      <Tier currentTier={tier.current} />
+    <>
+      <Tier currentTier={tier.current} tier={props.tier} />
       <ImpactCategoryList paddingTop="2rem" activeList={props.activeList} />
-    </div>
+    </>
   );
 
   const tabs: Tab[] = [
