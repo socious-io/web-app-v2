@@ -6,7 +6,17 @@ const config: Config = {
   interactionId: '1',
   instanceId: '6374a508515f5a539afd400c',
   button: {
-    text: 'Redirect to proofspace',
+    text: 'Go to proofspace',
+    style: `
+    color: var(--color-primary-01);
+    height: 2.75rem;
+    text-align: center;
+    font-weight: 600;
+    background-color: var(--color-white);
+    border-radius: 50px;
+    padding: 0 1rem;
+    border: 1px solid var(--color-gray-04);
+    `,
   },
   qr: {
     style: 'display: flex; justify-content: center;',
