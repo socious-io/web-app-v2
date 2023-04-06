@@ -350,6 +350,7 @@ export type Offer = {
     address: string;
     abi: AbiItem[];
   };
+  payment_mode: 'FIAT' | 'CRYPTO';
 };
 
 export type GetOffer = Pagination<Offer[]>;

@@ -9,7 +9,7 @@ import { ConfirmResult } from '@capacitor/dialog';
 import Dapp from 'src/dapp';
 
 export const Hired = (props: HiredProps): JSX.Element => {
-  const { hiredList, endHiredList } = props;
+  const { hiredList, endHiredList, payment_type } = props;
 
   const { web3 } = Dapp.useWeb3();
 
@@ -34,6 +34,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
           confirmable
           onConfirm={openConfirmDialog}
           list={missionToApplicantListPayAdaptor(hiredList.items)}
+          payment_type={payment_type}
         />
       </Accordion>
       <Accordion id="end-hired" title={`End-Hired (${endHiredList.total_count})`}>
