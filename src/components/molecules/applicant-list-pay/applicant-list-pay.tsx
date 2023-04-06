@@ -57,7 +57,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
         <div className={css.applicantFooter}>
           {/* FIXME: POSTION and DESIGN*/}
           <Dapp.Connect />
-          {printWhen(confirmBtn(applicant.id, applicant.payment?.meta[0]), props.confirmable)}
+          {printWhen(confirmBtn(applicant.id, applicant.payment?.meta?.id), props.confirmable)}
           <div className={css.footerItem}>
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>

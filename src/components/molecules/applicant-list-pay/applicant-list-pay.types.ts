@@ -12,7 +12,7 @@ export type Applicant = {
   totalMission: string;
   payment?: {
     meta: {
-      0: string;
+      id?: string;
     };
   };
 };
