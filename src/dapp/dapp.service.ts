@@ -20,6 +20,17 @@ export const allowance = async (web3: Web3, token: string, amount: number) => {
   if (!approved) throw new Error('Allowance not approved for escorw');
 };
 
+
+export const balance = async (web3: Web3, token: string) => {
+  
+  const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
+
+  const result = await erc20Contract.methods.balanceOf(web3.eth.defaultAccount)
+
+  return web3.utils.fromWei(result);
+};
+
+
 export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
   // TODO: get this from contributor info
   const verifiedCon = false;
