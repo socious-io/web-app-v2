@@ -12,36 +12,33 @@ import { confirmPayment } from './mobile.service';
 import Dapp from 'src/dapp';
 import { endpoint } from 'src/core/endpoints';
 import { getMonthName } from 'src/core/time';
-//FIXME: create a general Resolver types to use in every page
 import { Resolver } from 'src/pages/offer-received/offer-received.types';
 import css from './mobile.module.scss';
 import { useAccount } from 'wagmi';
 
 export const Mobile = (): JSX.Element => {
+  const { web3 } = Dapp.useWeb3();
+  const { address: account, isConnected } = useAccount();
+  const [process, setProcess] = useState(false);
   const { offer } = useMatch().ownData as Resolver;
   const offerId = offer.id;
   const {
     job_category: { name: job_name },
     created_at,
     recipient: {
-      meta: { name: applicant_name, avatar, city, country },
+      meta: { name: applicant_name, avatar, city, country, wallet_address: contributor },
       type,
     },
-    project: { payment_scheme },
+    project: { payment_scheme, payment_type },
     total_hours,
     assignment_total,
     project_id,
+    payment_mode,
   } = offer;
-  //FIXME: if no contribute not allow to continue flow
-  const contributor = offer.recipient.meta.wallet_address;
   const commision = assignment_total * 0.03;
   const total_price = commision + assignment_total;
   const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
-
-  const amount = assignment_total.toString();
-  const { web3 } = Dapp.useWeb3();
-  const [process, setProcess] = useState(false);
-  const { address: account, isConnected } = useAccount();
+  const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
 
   async function proceedPayment() {
     // FIXME: please handle this errors in a proper way
@@ -49,7 +46,7 @@ export const Mobile = (): JSX.Element => {
     if (!contributor) throw new Error('Contributor wallet is not connected');
 
     setProcess(true);
-    const escrowAmount = parseInt(amount);
+    const escrowAmount = parseInt(assignment_total.toString());
 
     // put escrow on smart contract
     const result = await Dapp.escrow({
@@ -99,25 +96,16 @@ export const Mobile = (): JSX.Element => {
               total_price={total_price}
             />
           </div>
-          {
-            /* FIXME POSITION DESIGN PLEASE */
-            <Dapp.Connect />
-          }
           <PaymentMethods
-            payement_methods={[
-              {
-                button: {
-                  color: 'white',
-                  disabled: true,
-                  children: (
-                    <>
-                      <img src="/icons/debit.svg" width={18} height={18} />
-                      Add Credit Card
-                    </>
-                  ),
-                },
-              },
-            ]}
+            crypto_method={isPaidCrypto && <Dapp.Connect />}
+            fiat_method={
+              <Button color="white" disabled={true}>
+                <>
+                  <img src="/icons/debit.svg" width={18} height={18} />
+                  Add Credit Card
+                </>
+              </Button>
+            }
           />
         </div>
         <Sticky>
@@ -132,7 +120,7 @@ export const Mobile = (): JSX.Element => {
           <Button
             color="white"
             className={`${css['footer__btn']} ${css['footer__btn--cancel']}`}
-            onClick={() => console.log('cancel')}
+            onClick={() => history.back()}
           >
             Cancel
           </Button>

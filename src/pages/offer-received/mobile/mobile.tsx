@@ -1,6 +1,5 @@
 import { useMatch } from '@tanstack/react-location';
 import { useState, useEffect } from 'react';
-import Web3 from 'web3';
 import { useAccount } from 'wagmi';
 import Dapp from 'src/dapp';
 import { Accordion } from '../../../components/atoms/accordion/accordion';
@@ -10,6 +9,7 @@ import { Typography } from '../../../components/atoms/typography/typography';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
 import { Divider } from '../../../components/templates/divider/divider';
 import { TopFixedMobile } from '../../../components/templates/top-fixed-mobile/top-fixed-mobile';
+import { PaymentMethods } from 'src/components/templates/payment-methods';
 import { StatusKeys } from '../../../constants/APPLICANT_STATUS';
 import { translatePaymentTerms } from '../../../constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from '../../../constants/PROJECT_PAYMENT_TYPE';
@@ -24,14 +24,19 @@ export const Mobile = (): JSX.Element => {
   const { offer } = useMatch().ownData as Resolver;
   const {
     project: { payment_type },
+    payment_mode,
+    recipient: {
+      meta: { wallet_address },
+    },
   } = offer;
+  const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
+  const { address: account, isConnected } = useAccount();
   const [status, setStatus] = useState<StatusKeys>(offer.status);
 
-  const { address: account, isConnected } = useAccount();
-
+  console.log(isPaidCrypto);
 
   useEffect(() => {
-    if (isConnected && account) {
+    if (isConnected && account && (!wallet_address || String(wallet_address) !== account)) {
       endpoint.post.user['{user_id}/update_wallet']({
         wallet_address: account,
       });
@@ -171,9 +176,11 @@ export const Mobile = (): JSX.Element => {
             <Typography>{offer.organization.bio}</Typography>
           </div>
         </Accordion>
-        {payment_type === 'PAID' && (
-          /* FIXME POSITION DESIGN PLEASE */
-          <Dapp.Connect />
+        {printWhen(
+          <div className={css.wallet}>
+            <PaymentMethods crypto_method={<Dapp.Connect />} />
+          </div>,
+          isPaidCrypto
         )}
         {printWhen(buttonsJSX, status === 'PENDING')}
       </div>
