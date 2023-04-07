@@ -10,9 +10,8 @@ export function printWhen(content: unknown, conditions: boolean | undefined | nu
 
 export const debounce = (func: Function, delay: number) => {
   let debounceTimer: NodeJS.Timeout;
-  return function () {
+  return function (...args) {
     const context = this;
-    const args = arguments;
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => func.apply(context, args), delay);
   };

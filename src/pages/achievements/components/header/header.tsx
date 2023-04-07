@@ -23,7 +23,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
 
   const checkRewardBtnJSX = (
     <div className={css.buttonContainer}>
-      <Button onClick={props.onClaimNow} color="white" width="9.35rem">
+      <Button onClick={props.onCheckRewards} color="white" width="9.35rem">
         Check rewards
       </Button>
     </div>
