@@ -1,6 +1,13 @@
 import { get, post } from '../../core/http';
 import { isoToStandard } from '../../core/time';
-import { ApplicantResp, MissionsResp, OfferPayload, Pagination, QuestionsRes, UserApplicantResp } from '../../core/types';
+import {
+  ApplicantResp,
+  MissionsResp,
+  OfferPayload,
+  Pagination,
+  QuestionsRes,
+  UserApplicantResp,
+} from '../../core/types';
 import { Applicant } from '../../components/molecules/applicant-list/applicant-list.types';
 import { Applicant as ApplicantHire } from '../../components/molecules/applicant-list-pay/applicant-list-pay.types';
 import { Job } from '../../components/organisms/job-list/job-list.types';
@@ -21,8 +28,18 @@ export async function jobOfferRejectLoader({ params }: { params: { id: string } 
     endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'HIRED' }),
     endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'CLOSED,CANCELED,WITHDRAWN' }),
   ];
-  const [jobOverview, screeningQuestions, reviewList, declinedList, hiredList, endHiredList, sent, approved, hired, closed] =
-    await Promise.all(requests);
+  const [
+    jobOverview,
+    screeningQuestions,
+    reviewList,
+    declinedList,
+    hiredList,
+    endHiredList,
+    sent,
+    approved,
+    hired,
+    closed,
+  ] = await Promise.all(requests);
   return {
     jobOverview,
     screeningQuestions,
@@ -42,11 +59,15 @@ export async function getJobOverview(id: string): Promise<Job> {
 }
 
 export async function getToReviewList(payload: { id: string; page: number }): Promise<Pagination<UserApplicantResp[]>> {
-  return get(`projects/${payload.id}/applicants?limit=100&status=PENDING&page=${payload.page}`).then(({ data }) => data);
+  return get(`projects/${payload.id}/applicants?limit=100&status=PENDING&page=${payload.page}`).then(
+    ({ data }) => data
+  );
 }
 
 export async function getDeclinedList(payload: { id: string; page: number }): Promise<Pagination<UserApplicantResp[]>> {
-  return get(`projects/${payload.id}/applicants?limit=100&status=REJECTED&page=${payload.page}`).then(({ data }) => data);
+  return get(`projects/${payload.id}/applicants?limit=100&status=REJECTED&page=${payload.page}`).then(
+    ({ data }) => data
+  );
 }
 
 export async function getHiredList(payload: { id: string; page: number }): Promise<MissionsResp> {
@@ -126,6 +147,7 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
       paymentType: translatePaymentType(item.project.payment_type),
       totalHour: item.offer.total_hours,
       totalMission: `${item.offer.assignment_total} USD`,
+      payment: item.payment,
     };
   });
 }

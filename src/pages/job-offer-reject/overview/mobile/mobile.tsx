@@ -31,7 +31,7 @@ export const Mobile = (): JSX.Element => {
     },
     {
       name: 'Hired',
-      content: <Hired hiredList={resolver.hiredList} endHiredList={resolver.endHiredList} />,
+      content: <Hired hiredList={resolver.hiredList} endHiredList={resolver.endHiredList} payment_type={payment_type} />,
     },
   ];
 

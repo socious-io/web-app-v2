@@ -6,21 +6,25 @@ import { ApplicantListPay } from '../../../../../components/molecules/applicant-
 import { endpoint } from '../../../../../core/endpoints';
 import { dialog } from '../../../../../core/dialog/dialog';
 import { ConfirmResult } from '@capacitor/dialog';
+import Dapp from 'src/dapp';
 
 export const Hired = (props: HiredProps): JSX.Element => {
-  const { hiredList, endHiredList } = props;
+  const { hiredList, endHiredList, payment_type } = props;
 
-  function onUserConfirm(id: string) {
-    return (confirmed: ConfirmResult) => {
+  const { web3 } = Dapp.useWeb3();
+
+  function onUserConfirm(id: string, escrowId?: string) {
+    return async (confirmed: ConfirmResult) => {
+      if (web3 && escrowId) await Dapp.withdrawnEscrow(web3, escrowId);
       if (confirmed.value) {
         endpoint.post.missions['{mission_id}/confirm'](id).then(() => history.back());
       }
     };
   }
 
-  function openConfirmDialog(id: string) {
+  function openConfirmDialog(id: string, escrowId?: string) {
     const options = { title: 'Confirm', message: 'Are you sure?', okButtonTitle: 'Confirm' };
-    dialog.confirm(options).then(onUserConfirm(id));
+    dialog.confirm(options).then(onUserConfirm(id, escrowId));
   }
 
   return (
@@ -30,6 +34,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
           confirmable
           onConfirm={openConfirmDialog}
           list={missionToApplicantListPayAdaptor(hiredList.items)}
+          payment_type={payment_type}
         />
       </Accordion>
       <Accordion id="end-hired" title={`End-Hired (${endHiredList.total_count})`}>

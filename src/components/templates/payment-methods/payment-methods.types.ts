@@ -1,6 +1,7 @@
 import { ButtonProps } from "src/components/atoms/button/button.types";
 
 export interface PaymentMethodsProps {
-  payement_methods: { button: ButtonProps; connected_address?: string, wallet_icon?: string }[];
+  crypto_method: React.ReactNode;
+  fiat_method?: React.ReactNode;
   containerClassName?: string;
 }
