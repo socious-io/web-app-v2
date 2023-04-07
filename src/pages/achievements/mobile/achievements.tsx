@@ -15,6 +15,7 @@ export const Mobile = (): JSX.Element => {
   const tier = evaluateTier(points);
   const [slideUpOpen, setSlideUpOpen] = useState(false);
 
+
   const header = <Header onClaimNow={() => setSlideUpOpen(true)} tier={tier} point={points} />;
   const bottom = <ImpactCategoryList activeList={activeList} tier={tier} />;
 

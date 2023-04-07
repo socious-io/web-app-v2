@@ -215,7 +215,9 @@ export const routes: Route[] = [
               return { applicantDetail, screeningQuestions };
             },
             element: () =>
-              import('../../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => <m.ApplicantDetail />),
+              import('../../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => (
+                <m.ApplicantDetail />
+              )),
           },
           {
             loader: (params) => jobOfferRejectLoader(params),

@@ -9,9 +9,9 @@ export const TierSlide = (props: TierSlideProps): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.featureOnProfile}>
+        {/* <div className={css.featureOnProfile}>
           <Checkbox label="feature on profile" id="bookmark" />
-        </div>
+        </div> */}
         <div className={css.tierBadgeContainer}>
           <TierBadge size="6rem" value={props.tier.current} />
         </div>

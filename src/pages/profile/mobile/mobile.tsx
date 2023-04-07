@@ -108,7 +108,9 @@ export const Mobile = (): JSX.Element => {
         </Divider>
         <Divider>
           <div className={css.achievements}>
-            <Link onClick={() => navigate({ to: '/achievements' })}>Impact points: {data.impact_points}</Link>
+            <Link onClick={() => navigate({ to: `/achievements?proofspace_connect_id=${data.proofspace_connect_id}` })}>
+              Impact points: {data.impact_points}
+            </Link>
           </div>
         </Divider>
 
