@@ -23,14 +23,13 @@ export const Offer = (): JSX.Element => {
   const navigate = useNavigate();
   const { web3 } = Dapp.useWeb3();
   const { applicantDetail } = useMatch().ownData as Resolver;
-  const { project } = applicantDetail;
-  const [paymentType, setPaymentType] = useState(project.payment_type);
-  const [paymentScheme, setPaymentScheme] = useState(project.payment_scheme);
+  const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
+  const [paymentScheme, setPaymentScheme] = useState(applicantDetail?.project?.payment_scheme || 'FIXED');
   const [paymentMode, setPaymentMode] = useState('CRYPTO');
   const [openModal, setOpenModal] = useState(false);
   const [tokens, setTokens] = useState<Item[]>([]);
   const [selectedToken, setSelectedToken] = useState<{ address: string; symbol?: string }>();
-  const isPaidType = project.payment_type === 'PAID';
+  const isPaidType = applicantDetail.project?.payment_type === 'PAID';
   const isPaidCrypto = isPaidType && paymentMode === 'CRYPTO';
   const isPaidFiat = isPaidType && paymentMode === 'FIAT';
   const memoizedFormState = useMemo(() => formModel(isPaidType), []);
@@ -76,14 +75,14 @@ export const Offer = (): JSX.Element => {
         <RadioGroup
           name="paymentType"
           value={paymentType}
-          onChange={() => setPaymentType(project.payment_type)}
+          onChange={console.log}
           label="Payment type"
           list={PROJECT_PAYMENT_TYPE}
         />
         <RadioGroup
           name="PaymentScheme"
           value={paymentScheme}
-          onChange={() => setPaymentScheme(project.payment_scheme)}
+          onChange={console.log}
           label="Payment scheme"
           list={PROJECT_PAYMENT_SCHEME}
         />
@@ -91,8 +90,8 @@ export const Offer = (): JSX.Element => {
         {printWhen(
           <RadioGroup
             name="PaymentMode"
-            value={paymentMode}
-            onChange={() => setPaymentMode('CRYPTO')}
+            value="CRYPTO"
+            onChange={console.log}
             label="Payment mode"
             list={PROJECT_PAYMENT_MODE}
           />,
