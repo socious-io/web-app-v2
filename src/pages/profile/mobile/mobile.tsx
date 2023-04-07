@@ -7,40 +7,51 @@ import { ProfileReq } from '../profile.types';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
-import { Link } from '../../../components/atoms/link/link';
-import { showActions } from '../profile.services';
+import { badgesList, showActions } from '../profile.services';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
+import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { Link } from 'src/components/atoms/link/link';
 
 export const Mobile = (): JSX.Element => {
-  const data = useMatch().ownData as ProfileReq;
-  const socialCauses = socialCausesToCategory(data.social_causes);
+  const { user, badges } = useMatch().ownData as { user: ProfileReq; badges: { badges: unknown[] } };
+
+  const socialCauses = socialCausesToCategory(user.social_causes);
   const navigate = useNavigate();
-  const avatarImage = data.avatar?.url ? data.avatar?.url : data.image?.url;
+  const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;
 
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
-  const profileBelongToCurrentUser = currentIdentity?.id === data.id;
+  const profileBelongToCurrentUser = currentIdentity?.id === user.id;
 
   function onClose() {
+    hapticsImpactLight();
     navigate({ to: '/jobs' });
+  }
+
+  function onAchievementClick() {
+    hapticsImpactLight();
+    console.log('user: ', user);
+    const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
+    navigate({ to: `/achievements?proofspace_connect_id=${connectId}` });
   }
 
   const cityLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/pin-green.svg" />
-      <div className={css.contactData}>{data.city}</div>
+      <div className={css.contactData}>{user.city}</div>
     </div>
   );
 
   const contactLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/phone-green.svg" />
-      <a href={`tel:${data.mobile_country_code}${data.phone}`} className={css.contactData}>
-        {data.mobile_country_code} {data.phone}
+      <a href={`tel:${user.mobile_country_code}${user.phone}`} className={css.contactData}>
+        {user.mobile_country_code} {user.phone}
       </a>
     </div>
   );
@@ -48,8 +59,8 @@ export const Mobile = (): JSX.Element => {
   const emailLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/email-green.svg" />
-      <a href={`mailto:${data.email}`} className={css.contactData}>
-        {data.email}
+      <a href={`mailto:${user.email}`} className={css.contactData}>
+        {user.email}
       </a>
     </div>
   );
@@ -57,26 +68,26 @@ export const Mobile = (): JSX.Element => {
   const websiteLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/email-green.svg" />
-      <a href={`mailto:${data.email}`} className={css.contactData}>
-        {data.email}
+      <a href={`mailto:${user.email}`} className={css.contactData}>
+        {user.email}
       </a>
     </div>
   );
 
   const bioJSX = (
     <Divider>
-      <div className={css.bio}>{data.bio}</div>
+      <div className={css.bio}>{user.bio}</div>
     </Divider>
   );
 
   const userFullNameJSX = (
     <div className={css.name}>
-      {data?.first_name} {data?.last_name}
+      {user?.first_name} {user?.last_name}
     </div>
   );
 
-  const orgNameJSX = <div className={css.name}>{data?.name}</div>;
-  const usernameJSX = <div className={css.username}>@{data?.username}</div>;
+  const orgNameJSX = <div className={css.name}>{user?.name}</div>;
+  const usernameJSX = <div className={css.username}>@{user?.username}</div>;
 
   return (
     <div className={css.container}>
@@ -84,7 +95,7 @@ export const Mobile = (): JSX.Element => {
         <div onClick={onClose} className={css.close}>
           <img src="/icons/close-black.svg" />
         </div>
-        <div style={{ backgroundImage: `url(${data.cover_image?.url})` }} className={css.cover}>
+        <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
           <div className={css.avatarContainer}>
             <Avatar img={avatarImage} size="8rem" type="users" />
           </div>
@@ -92,49 +103,52 @@ export const Mobile = (): JSX.Element => {
         <div className={css.menu}>
           <div className={css.btnContainer}>
             {/* <Button width="6.5rem">Connect</Button> */}
-            {printWhen(<ThreeDotsButton onClick={() => showActions(data.id)} />, !profileBelongToCurrentUser)}
+            {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
           </div>
           <div className={css.userConnections}>
-            <div>{data.followings} connections</div>
-            <div>{data.followers} Followers</div>
+            <div>{user.followings} connections</div>
+            <div>{user.followers} Followers</div>
           </div>
         </div>
       </div>
       <div>
         <Divider>
-          {printWhen(orgNameJSX, !!data?.name)}
-          {printWhen(userFullNameJSX, !!data?.first_name || !!data?.last_name)}
-          {printWhen(usernameJSX, !!data?.username)}
+          {printWhen(orgNameJSX, !!user?.name)}
+          {printWhen(userFullNameJSX, !!user?.first_name || !!user?.last_name)}
+          {printWhen(usernameJSX, !!user?.username)}
         </Divider>
         <Divider>
-          <div className={css.achievements}>
-            <Link onClick={() => navigate({ to: `/achievements?proofspace_connect_id=${data.proofspace_connect_id}` })}>
-              Impact points: {data.impact_points}
-            </Link>
+          <div className={css.achievements} onClick={onAchievementClick}>
+            <div className={css.badges}>
+              {badgesList(badges.badges).map((item) => {
+                return <ImpactBadge key={item.color} size="2.75rem" {...item} />;
+              })}
+            </div>
+            <div className={css.achievementsLink}>Achievements</div>
           </div>
         </Divider>
 
-        {printWhen(bioJSX, !!data.bio)}
+        {printWhen(bioJSX, !!user.bio)}
         <Divider title="Social Causes">
           <CategoriesClickable list={socialCauses} />
         </Divider>
         <Divider title="Contact">
-          {printWhen(contactLinkJSX, !!data.mobile_country_code)}
-          {printWhen(emailLinkJSX, !!data.email)}
-          {printWhen(websiteLinkJSX, !!data.website)}
-          {printWhen(cityLinkJSX, !!data.city)}
+          {printWhen(contactLinkJSX, !!user.mobile_country_code)}
+          {printWhen(emailLinkJSX, !!user.email)}
+          {printWhen(websiteLinkJSX, !!user.website)}
+          {printWhen(cityLinkJSX, !!user.city)}
         </Divider>
         {printWhen(
           <Divider title="Mission">
-            <div className={css.mission}>{data.mission}</div>
+            <div className={css.mission}>{user.mission}</div>
           </Divider>,
-          !!data.mission
+          !!user.mission
         )}
         {printWhen(
           <Divider title="Culture">
-            <div className={css.culture}>{data.culture}</div>
+            <div className={css.culture}>{user.culture}</div>
           </Divider>,
-          !!data.culture
+          !!user.culture
         )}
       </div>
     </div>

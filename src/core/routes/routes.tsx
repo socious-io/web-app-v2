@@ -13,8 +13,6 @@ import { getFollowings } from '../../pages/chat/new-chat/new-chat.services';
 import { getActiveJobs, getDraftJobs } from '../../pages/job-create/my-jobs/my-jobs.services';
 import { getFeedList } from '../../pages/feed/mobile/mobile.service';
 import { getComments, getPostDetail } from '../../pages/feed/post-detail/mobile/mobile.service';
-import { getOrganizationDetail, getUserDetail } from '../../pages/profile/profile.services';
-import { UserType } from '../types';
 import { getJobCategories } from '../../pages/job-create/info/info.services';
 import { search } from '../../pages/search/search.services';
 import { getNotificationList } from '../../pages/notifications/mobile/mobile.service';
@@ -27,11 +25,12 @@ import {
   getPendingApplicants,
 } from '../../pages/job-apply/my-jobs/my-jobs.services';
 import { getApplicantDetail, jobOfferRejectLoader } from '../../pages/job-offer-reject/job-offer-reject.services';
-import { getBadges, getImpactPoints } from '../../pages/achievements/achievements.services';
 import { receivedOfferLoader } from '../../pages/offer-received/offer-received.services';
 import { endpoint } from '../endpoints';
-import { jobsLoader } from 'src/pages/jobs/jobs.loader';
+import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 import { Intro } from '../../pages/intro/intro';
+import { ProfilePageLoader } from 'src/pages/profile/profile.loader';
+import { AchievementsPageLoader } from 'src/pages/achievements/achievements.loader';
 
 export const routes: Route[] = [
   {
@@ -74,7 +73,7 @@ export const routes: Route[] = [
   },
   {
     path: '',
-    loader: jobsLoader,
+    loader: jobsPageLoader,
     errorElement: <Intro />,
     children: [
       {
@@ -97,13 +96,7 @@ export const routes: Route[] = [
       { path: 'change-password', element: <ChangePassword /> },
       {
         path: 'profile/:userType/:id',
-        loader: ({ params }) => {
-          const userType = params.userType as UserType;
-          if (userType === 'users') {
-            return getUserDetail(params.id);
-          }
-          return getOrganizationDetail(params.id);
-        },
+        loader: ProfilePageLoader,
         element: () => import('../../pages/profile/profile').then((m) => <m.Profile />),
       },
       {
@@ -113,11 +106,7 @@ export const routes: Route[] = [
       },
       {
         path: '/achievements',
-        loader: async () => {
-          const requests = [getBadges(), getImpactPoints()];
-          const [badges, impactPoints] = await Promise.all(requests);
-          return { badges, impactPoints };
-        },
+        loader: AchievementsPageLoader,
         element: () => import('../../pages/achievements/achievements').then((m) => <m.Achievements />),
       },
       {

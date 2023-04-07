@@ -2,6 +2,8 @@ import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { dialog } from '../../core/dialog/dialog';
 import { endpoint } from '../../core/endpoints';
 import { get } from '../../core/http';
+import { BADGES } from 'src/constants/constants';
+import { ImpactBadgeProps } from 'src/components/atoms/impact-badge/impact-badge.types';
 
 export async function getUserDetail(username: string) {
   return get(`/user/by-username/${username}/profile`).then(({ data }) => data);
@@ -31,3 +33,18 @@ export const showActions = async (id: string) => {
       break;
   }
 };
+
+export function badgesList(badges: unknown[]): ImpactBadgeProps[] {
+  const filter = ([key, value], i: number) => {
+    return badges.some((item) => item.social_cause_category === key && i <= 4);
+  };
+
+  return Object.entries(BADGES)
+    .filter(filter)
+    .map(([, value]) => {
+      return {
+        iconUrl: `/sdg/${value.value}.svg`,
+        color: value.color,
+      };
+    });
+}
