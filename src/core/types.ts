@@ -238,9 +238,9 @@ export type ApplicantResp = {
     name: string;
     avatar: string;
   };
-  project: {
+  project?: {
     payment_scheme: string;
-    payment_type: string;
+    payment_type?: string;
   };
 };
 
