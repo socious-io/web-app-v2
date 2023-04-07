@@ -7,6 +7,8 @@ import { ClaimPoints } from '../components/claim-points/claim-points';
 import { evaluateTier } from './achievements.service';
 import { Body as ImpactCategoryList } from '../components/body/body';
 import { Header } from '../components/header/header';
+import { Reward } from '../components/reward/reward';
+import { getTierRowBasedOnCurrentTier } from '../achievements.services';
 
 export const Mobile = (): JSX.Element => {
   const { badges } = useMatch().ownData as Loader;
@@ -33,8 +35,7 @@ export const Mobile = (): JSX.Element => {
         <ClaimPoints />
       </CardSlideUp>
       <CardSlideUp onClose={() => setShowCheckRewardsSlide(false)} open={showCheckRewardsSlide}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum non, nisi veniam, enim illo culpa soluta
-        recusandae eum illum consectetur nobis perspiciatis provident in, ipsam iusto? Vel dolores nesciunt praesentium?
+        <Reward tier={getTierRowBasedOnCurrentTier(tier.current)} />
       </CardSlideUp>
     </>
   );
