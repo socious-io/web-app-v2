@@ -3,15 +3,28 @@ import { Button } from '../../../../components/atoms/button/button';
 import { ImpactBarLevel } from '../../../../components/atoms/impact-bar-level/impact-bar-level';
 import css from './header.module.scss';
 import { HeaderProps } from './header.types';
+import { useMatch } from '@tanstack/react-location';
 
 export const Header = (props: HeaderProps): JSX.Element => {
+  const connectId = useMatch().search.proofspace_connect_id;
   const claimPointsSentenceJSX = (
     <div className={css.impactPointDescLink}>Claim impact points as verifiable credentials to receive rewards</div>
   );
+
+  const whatIsImpactPointsJSX = <div className={css.impactPointDescLink}>What is impact points?</div>;
+
   const claimNowBtnJSX = (
     <div className={css.buttonContainer}>
       <Button onClick={props.onClaimNow} color="white" width="9.35rem">
         Claim now
+      </Button>
+    </div>
+  );
+
+  const checkRewardBtnJSX = (
+    <div className={css.buttonContainer}>
+      <Button onClick={props.onClaimNow} color="white" width="9.35rem">
+        Check rewards
       </Button>
     </div>
   );
@@ -28,15 +41,17 @@ export const Header = (props: HeaderProps): JSX.Element => {
         start={props.tier.prevPoint}
         end={props.tier.nextPoint}
         current={props.tier.currentPoint}
-        currentLevel={`Level ${props.tier.current}`}
-        prevLevel={`Level ${props.tier.prev}`}
-        nextLevel={`Level ${props.tier.next}`}
+        currentLevel={`Tier ${props.tier.current}`}
+        prevLevel={`Tier ${props.tier.prev}`}
+        nextLevel={`Tier ${props.tier.next}`}
         minWidth="14.4rem"
         marginTop="3.5rem"
       />
 
-      {printWhen(claimPointsSentenceJSX, true)}
-      {printWhen(claimNowBtnJSX, true)}
+      {printWhen(claimPointsSentenceJSX, connectId === null)}
+      {printWhen(claimNowBtnJSX, connectId === null)}
+      {printWhen(checkRewardBtnJSX, connectId !== null)}
+      {printWhen(whatIsImpactPointsJSX, connectId !== null)}
     </div>
   );
 };

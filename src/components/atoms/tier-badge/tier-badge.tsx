@@ -1,8 +1,9 @@
+import { printWhen } from 'src/core/utils';
 import css from './tier-badge.module.scss';
 import { TierBadgeProps } from './tier-badge.types';
 
 export const TierBadge = (props: TierBadgeProps): JSX.Element => {
-  const { size = '3.625rem' } = props;
+  const { size = '3.625rem', withLabel = true } = props;
 
   function setLabelFontSize(size: string) {
     switch (size) {
@@ -30,6 +31,12 @@ export const TierBadge = (props: TierBadgeProps): JSX.Element => {
     return props.disabled ? '#adadad' : '';
   }
 
+  const labelJSX = (
+    <div style={{ fontSize: setLabelFontSize(size) }} className={css.label}>
+      Tier {props.value}
+    </div>
+  );
+
   return (
     <div className={css.container} style={{ width: size }}>
       <div
@@ -38,9 +45,7 @@ export const TierBadge = (props: TierBadgeProps): JSX.Element => {
       >
         {props.value}
       </div>
-      <div style={{ fontSize: setLabelFontSize(size) }} className={css.label}>
-        Tier {props.value}
-      </div>
+      {printWhen(labelJSX, withLabel)}
     </div>
   );
 };
