@@ -1,4 +1,4 @@
-import { Config, WebLinker, qrTest } from 'ssi-auth-lib';
+import { Config, WebLinker } from 'ssi-auth-lib';
 
 const config: Config = {
   size: 260,
