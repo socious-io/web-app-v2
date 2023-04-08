@@ -10,7 +10,7 @@ export const Offered = (props: OfferedProps): JSX.Element => {
   const navigate = useNavigate();
 
   async function onHire(offerId: string) {
-    if (props.payment_type === "PAID") {
+    if (props.payment_type === "PAID" && !props.approved.items[0]?.escrow) {
       navigate({ to: `/payment/${offerId}` });
     } else {
       endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
