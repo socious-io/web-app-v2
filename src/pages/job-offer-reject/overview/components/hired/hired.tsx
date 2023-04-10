@@ -1,7 +1,9 @@
+import { useMatch } from '@tanstack/react-location';
 import css from './hired.module.scss';
 import { Accordion } from '../../../../../components/atoms/accordion/accordion';
 import { missionToApplicantListPayAdaptor } from '../../../job-offer-reject.services';
 import { HiredProps } from './hired.types';
+import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
 import { ApplicantListPay } from '../../../../../components/molecules/applicant-list-pay/applicant-list-pay';
 import { endpoint } from '../../../../../core/endpoints';
 import { dialog } from '../../../../../core/dialog/dialog';
@@ -9,9 +11,14 @@ import { ConfirmResult } from '@capacitor/dialog';
 import Dapp from 'src/dapp';
 
 export const Hired = (props: HiredProps): JSX.Element => {
-  const { hiredList, endHiredList, payment_type } = props;
-
+  const { hiredList, endHiredList } = props;
   const { web3 } = Dapp.useWeb3();
+  const resolver = useMatch().ownData as Loader;
+  const {
+    offerOverview: { payment_mode },
+    jobOverview: { payment_type },
+  } = resolver;
+  const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
 
   function onUserConfirm(id: string, escrowId?: string) {
     return async (confirmed: ConfirmResult) => {
@@ -34,7 +41,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
           confirmable
           onConfirm={openConfirmDialog}
           list={missionToApplicantListPayAdaptor(hiredList.items)}
-          payment_type={payment_type}
+          isPaidCrypto={isPaidCrypto}
         />
       </Accordion>
       <Accordion id="end-hired" title={`End-Hired (${endHiredList.total_count})`}>

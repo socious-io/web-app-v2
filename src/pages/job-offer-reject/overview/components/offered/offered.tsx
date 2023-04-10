@@ -1,16 +1,21 @@
-import { useNavigate } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Accordion } from '../../../../../components/atoms/accordion/accordion';
 import { ApplicantListHire } from '../../../../../components/molecules/applicant-list-hire/applicant-list-hire';
 import { endpoint } from '../../../../../core/endpoints';
 import css from './offered.module.scss';
 import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
+import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
 
 export const Offered = (props: OfferedProps): JSX.Element => {
   const navigate = useNavigate();
+  const resolver = useMatch().ownData as Loader;
+  const {
+    jobOverview: { payment_type },
+  } = resolver;
 
   async function onHire(offerId: string) {
-    if (props.payment_type === "PAID" && !props.approved.items[0]?.escrow) {
+    if (payment_type === "PAID" && !props.approved.items[0]?.escrow) {
       navigate({ to: `/payment/${offerId}` });
     } else {
       endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
@@ -39,7 +44,7 @@ export const Offered = (props: OfferedProps): JSX.Element => {
           onHireClick={onHire}
           onRejectClick={onReject}
           hireable
-          required_payment={props.payment_type  === 'PAID' && !props.approved.items[0]?.escrow}
+          required_payment={payment_type  === 'PAID' && !props.approved.items[0]?.escrow}
           list={jobToApplicantListAdaptor(props.approved.items)}
         />
       </Accordion>
