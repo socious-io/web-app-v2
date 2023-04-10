@@ -59,7 +59,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             <div className={css.footerItem}>
               <Dapp.Connect />
             </div>,
-            props?.payment_type === 'PAID'
+            props.isPaidCrypto
           )}
           {printWhen(confirmBtn(applicant.id, applicant.payment?.meta?.id), props.confirmable)}
           <div className={css.footerItem}>
