@@ -11,10 +11,7 @@ import { Offered } from '../components/offered/offered';
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const resolver = useMatch().ownData as Loader;
-  const {
-    jobOverview: { payment_type },
-  } = resolver;
-
+  
   const tabs = [
     {
       name: 'Overview',
@@ -27,11 +24,13 @@ export const Mobile = (): JSX.Element => {
     },
     {
       name: 'Offered',
-      content: <Offered sent={resolver.sent} approved={resolver.approved} hired={resolver.hired} closed={resolver.closed} payment_type={payment_type} />,
+      content: (
+        <Offered sent={resolver.sent} approved={resolver.approved} hired={resolver.hired} closed={resolver.closed} />
+      ),
     },
     {
       name: 'Hired',
-      content: <Hired hiredList={resolver.hiredList} endHiredList={resolver.endHiredList} payment_type={payment_type} />,
+      content: <Hired hiredList={resolver.hiredList} endHiredList={resolver.endHiredList} />,
     },
   ];
 
