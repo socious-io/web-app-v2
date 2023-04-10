@@ -33,8 +33,6 @@ export const Mobile = (): JSX.Element => {
   const { address: account, isConnected } = useAccount();
   const [status, setStatus] = useState<StatusKeys>(offer.status);
 
-  console.log(isPaidCrypto);
-
   useEffect(() => {
     if (isConnected && account && (!wallet_address || String(wallet_address) !== account)) {
       endpoint.post.user['{user_id}/update_wallet']({
@@ -99,9 +97,7 @@ export const Mobile = (): JSX.Element => {
 
   const buttonsJSX = (
     <div className={css.btnContainer}>
-      <Button onClick={onAccept(offer.id)} disabled={!account && payment_type === 'PAID'}>
-        Accept offer
-      </Button>
+      <Button onClick={onAccept(offer.id)} disabled={!account && isPaidCrypto}>Accept offer</Button>
       <Button onClick={onDeclined(offer.id)} color="white">
         Decline
       </Button>
