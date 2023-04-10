@@ -3,6 +3,7 @@ import { isoToStandard } from '../../core/time';
 import {
   ApplicantResp,
   MissionsResp,
+  Offer,
   OfferPayload,
   Pagination,
   QuestionsRes,
@@ -17,6 +18,7 @@ import { translatePaymentType } from '../../constants/PROJECT_PAYMENT_TYPE';
 
 export async function jobOfferRejectLoader({ params }: { params: { id: string } }) {
   const requests = [
+    getOfferOverview(params.id),
     getJobOverview(params.id),
     getScreeningQuestions(params.id),
     getToReviewList({ id: params.id, page: 1 }),
@@ -29,6 +31,7 @@ export async function jobOfferRejectLoader({ params }: { params: { id: string } 
     endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'CLOSED,CANCELED,WITHDRAWN' }),
   ];
   const [
+    offerOverview,
     jobOverview,
     screeningQuestions,
     reviewList,
@@ -41,6 +44,7 @@ export async function jobOfferRejectLoader({ params }: { params: { id: string } 
     closed,
   ] = await Promise.all(requests);
   return {
+    offerOverview,
     jobOverview,
     screeningQuestions,
     reviewList,
@@ -52,6 +56,10 @@ export async function jobOfferRejectLoader({ params }: { params: { id: string } 
     hired,
     closed,
   };
+}
+
+export async function getOfferOverview(id: string): Promise<Offer> {
+  return get(`projects/${id}/offers`).then(({ data }) => data?.items[0]);
 }
 
 export async function getJobOverview(id: string): Promise<Job> {
