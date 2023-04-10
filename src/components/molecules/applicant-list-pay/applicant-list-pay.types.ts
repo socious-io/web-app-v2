@@ -25,5 +25,5 @@ export type ApplicantListPayProps = {
   //   onRejectClick?: (id: string) => void;
   //   onMessageClick?: (id: string) => void;
   onApplicantClick?: (applicantId: string) => void;
-  payment_type?: string;
+  isPaidCrypto?: boolean;
 };
