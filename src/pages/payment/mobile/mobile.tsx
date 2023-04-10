@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
+import { useAccount } from 'wagmi';
+import Dapp from 'src/dapp';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Button } from 'src/components/atoms/button/button';
 import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
@@ -10,19 +12,18 @@ import { Sticky } from 'src/components/atoms/sticky';
 import { confirmPayment } from './mobile.service';
 import store from 'src/store/store';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
-import Dapp from 'src/dapp';
+import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
+import { getCreditCardInfo } from '../payment.service';
 import { getMonthName } from 'src/core/time';
 import { Resolver } from 'src/pages/offer-received/offer-received.types';
 import css from './mobile.module.scss';
-import { useAccount } from 'wagmi';
-import { dialog } from 'src/core/dialog/dialog';
 
 export const Mobile = (): JSX.Element => {
   const { web3 } = Dapp.useWeb3();
+  const navigate = useNavigate();
   const { address: account, isConnected } = useAccount();
-  const [process, setProcess] = useState(false);
-  const { offer } = useMatch().ownData as Resolver;
+  const { offer, cardInfo } = useMatch().ownData as Resolver;
   const offerId = offer.id;
   const {
     job_category: { name: job_name },
@@ -40,9 +41,13 @@ export const Mobile = (): JSX.Element => {
   const commision = assignment_total * 0.03;
   const total_price = commision + assignment_total;
   const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
-  const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
+  const isPaidType = payment_type === 'PAID';
+  const isPaidCrypto = isPaidType && payment_mode === 'CRYPTO';
+  const [process, setProcess] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
+  const [cards, setCards] = useState(cardInfo);
 
-  async function proceedPayment() {
+  async function proceedCryptoPayment() {
     // FIXME: please handle this errors in a proper way
     if (!web3) throw new Error('Not allow web3 is not connected');
     if (!contributor) throw new Error('Contributor wallet is not connected');
@@ -80,6 +85,31 @@ export const Mobile = (): JSX.Element => {
     store.dispatch(hideSpinner());
   }
 
+  async function proceedFiatPayment() {
+    setProcess(true);
+    try {
+      await confirmPayment(offerId, {
+        service: 'STRIPE',
+        source: selectedCard,
+      });
+      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
+    } catch (e) {
+      alert(JSON.stringify(e));
+    }
+    setProcess(false);
+  }
+
+  async function removeCard(id: string) {
+    setSelectedCard('');
+    endpoint.post.payments['{card_id}/remove'](id);
+    try {
+      const result = await getCreditCardInfo();
+      setCards(result);
+    } catch (e) {
+      alert(JSON.stringify(e));
+    }
+  }
+
   return (
     <TopFixedMobile>
       <Header title="Escrow payment" onBack={() => history.back()} />
@@ -111,21 +141,26 @@ export const Mobile = (): JSX.Element => {
           <PaymentMethods
             crypto_method={isPaidCrypto && <Dapp.Connect />}
             fiat_method={
-              <Button color="white" disabled={true}>
+              <Button color="white" disabled={isPaidCrypto} onClick={() => navigate({ to: 'add-card' })}>
                 <>
                   <img src="/icons/debit.svg" width={18} height={18} />
                   Add Credit Card
                 </>
               </Button>
             }
+            added_cards={cards?.items}
+            selectedCard={selectedCard}
+            onSelectCard={(id) => setSelectedCard(id)}
+            onEditCard={(id) => navigate({ to: `edit-card/${id}` })}
+            onRemoveCard={removeCard}
           />
         </div>
         <Sticky>
           <Button
             color="blue"
-            disabled={process || !isConnected || !account}
+            disabled={process || (isPaidCrypto ? !isConnected || !account : !selectedCard)}
             className={css['footer__btn']}
-            onClick={() => proceedPayment()}
+            onClick={() => (isPaidCrypto ? proceedCryptoPayment() : proceedFiatPayment())}
           >
             Proceed with payment
           </Button>
