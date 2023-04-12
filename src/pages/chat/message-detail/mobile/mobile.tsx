@@ -1,6 +1,6 @@
 import css from './mobile.module.scss';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../../../core/types';
 import { RootState } from '../../../../store/store';
@@ -9,6 +9,7 @@ import { ChatList } from '../../../../components/organisms/chat-list/chat-list';
 import { chatListAdaptor, getParticipantDetail, onPostMessage } from '../message-detail.services';
 import { MessageLoader } from '../message-detail.types';
 import { Header } from './header/header';
+import { socket } from 'src/core/socket';
 
 export const Mobile = (): JSX.Element => {
   const [sendingValue, setSendingValue] = useState('');
@@ -29,6 +30,20 @@ export const Mobile = (): JSX.Element => {
       .then((resp) => setList([...list, resp]))
       .then(() => setSendingValue(''));
   }
+
+  socket?.on('chat', (data) => {
+    const receiver = list.filter((l) => l.type == 'receiver')[0];
+    setList([
+      ...list,
+      {
+        id: data.id,
+        identityType: receiver.identityType,
+        img: receiver?.img,
+        text: data.text,
+        type: 'receiver',
+      },
+    ]);
+  });
 
   return (
     <div className={css.container}>

@@ -41,6 +41,7 @@
     "react-hook-form": "^7.43.1",
     "react-infinite-scroller": "^1.2.6",
     "react-redux": "^8.0.5",
+    "socket.io-client": "^4.6.1",
     "ssi-auth-lib": "^0.0.6",
     "vite-tsconfig-paths": "^4.0.5",
     "wagmi": "^0.12.8",
