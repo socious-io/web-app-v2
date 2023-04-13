@@ -2,7 +2,6 @@ import { isTouchDevice } from '../../core/device-type-detector';
 import { Desktop } from './desktop/desktop';
 import { Mobile } from './mobile/mobile';
 
-export const ProfileEdit = (): JSX.Element => {
+export const ProfileOrganization = (): JSX.Element => {
   return isTouchDevice() ? <Mobile /> : <Desktop />;
 };
-

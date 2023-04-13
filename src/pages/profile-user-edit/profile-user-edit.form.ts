@@ -1,6 +1,6 @@
 import { required } from 'src/core/form';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
-import { ProfileReq } from '../profile/profile.types';
+import { ProfileReq } from '../profile-user/profile-user.types';
 
 export function generateFormModel(profile: ProfileReq): FormModel {
   return {

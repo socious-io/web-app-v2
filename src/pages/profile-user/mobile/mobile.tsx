@@ -3,11 +3,11 @@ import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { ThreeDotsButton } from '../../../components/atoms/three-dots-button/three-dots-button';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Divider } from '../../../components/templates/divider/divider';
-import { ProfileReq } from '../profile.types';
+import { ProfileReq } from '../profile-user.types';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
 import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
-import { badgesList, showActions } from '../profile.services';
+import { badgesList, showActions } from '../profile-user.services';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
@@ -17,10 +17,6 @@ import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 export const Mobile = (): JSX.Element => {
   const { user, badges } = useMatch().data as { user: ProfileReq; badges: { badges: unknown[] } };
-//   const loader = useMatch().data as { user: ProfileReq; badges: { badges: unknown[] } };
-//   console.log('loader: ', loader);
-  
-
   const socialCauses = socialCausesToCategory(user.social_causes);
   const navigate = useNavigate();
   const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;
@@ -39,7 +35,6 @@ export const Mobile = (): JSX.Element => {
 
   function onAchievementClick() {
     hapticsImpactLight();
-    console.log('user: ', user);
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
     navigate({ to: `/achievements?proofspace_connect_id=${connectId}` });
   }
@@ -114,8 +109,6 @@ export const Mobile = (): JSX.Element => {
     </Button>
   );
 
-  //   const orgNameJSX = <div className={css.name}>{data?.name}</div>;
-  //   const usernameJSX = <div className={css.username}>@{data?.username}</div>;
   const orgNameJSX = <div className={css.name}>{user?.name}</div>;
   const usernameJSX = <div className={css.username}>@{user?.username}</div>;
 
@@ -134,7 +127,6 @@ export const Mobile = (): JSX.Element => {
           <div className={css.btnContainer}>
             {/* <Button width="6.5rem">Connect</Button> */}
             {printWhen(editButtonJSX, profileBelongToCurrentUser)}
-            {/* {printWhen(<ThreeDotsButton onClick={() => showActions(data.id)} />, !profileBelongToCurrentUser)} */}
             {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
           </div>
           <div className={css.userConnections}>

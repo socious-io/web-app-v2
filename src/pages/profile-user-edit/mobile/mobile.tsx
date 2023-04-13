@@ -4,8 +4,8 @@ import { Header } from '../../../components/atoms/header-v2/header';
 import { Input } from '../../../components/atoms/input/input';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { useForm } from 'src/core/form';
-import { ProfileReq } from 'src/pages/profile/profile.types';
-import { cityDispatcher, showActionSheet, uploadImage } from '../profile-edit.services';
+import { ProfileReq } from 'src/pages/profile-user/profile.types';
+import { cityDispatcher, showActionSheet, uploadImage } from '../profile-user-edit.services';
 import css from './mobile.module.scss';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
@@ -17,7 +17,7 @@ import { endpoint } from 'src/core/endpoints';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { Category } from 'src/components/molecules/category/category';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { generateFormModel } from '../profile-edit.form';
+import { generateFormModel } from '../profile-user-edit.form';
 
 export const Mobile = (): JSX.Element => {
   const user = useMatch().data.user as ProfileReq;
