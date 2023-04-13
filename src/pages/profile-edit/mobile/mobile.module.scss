@@ -32,7 +32,11 @@
 
 .coverImage {
   width: 100%;
+  height: 100%;
   position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #84848439;
   right: 0;
   top: 0;
 }
@@ -74,4 +78,11 @@
 
 .profileImage {
   width: 100%;
+  height: 100%;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #84848439;
+  right: 0;
+  top: 0;
 }

@@ -23,7 +23,7 @@ export type ResendVerifyCode = {
   email: string;
 };
 
-export type  OtpConfirmReq = {
+export type OtpConfirmReq = {
   email: string;
   otp: string;
 };
@@ -238,9 +238,9 @@ export type ApplicantResp = {
     name: string;
     avatar: string;
   };
-  project: {
+  project?: {
     payment_scheme: string;
-    payment_type: string;
+    payment_type?: string;
   };
 };
 
@@ -262,6 +262,11 @@ export type MissionsResp = Pagination<
     offer: {
       total_hours: number;
       assignment_total: number;
+    };
+    payment?: {
+      meta: {
+        0: string;
+      };
     };
     assignee: {
       meta: {
@@ -345,6 +350,7 @@ export type Offer = {
     address: string;
     abi: AbiItem[];
   };
+  payment_mode: 'FIAT' | 'CRYPTO';
 };
 
 export type GetOffer = Pagination<Offer[]>;
@@ -359,6 +365,8 @@ export type OfferPayload = {
   assignment_total: number;
   offer_message: string;
   total_hours: string;
+  payment_mode: string;
+  crypto_currency_address?: string;
 };
 
 export type CreatePostPayload = {

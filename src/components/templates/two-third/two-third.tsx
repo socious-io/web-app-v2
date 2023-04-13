@@ -1,5 +1,5 @@
 import css from './two-third.module.scss';
-import {TwoThirdProps} from './two-third.types';
+import { TwoThirdProps } from './two-third.types';
 
 export const TwoThird = (props: TwoThirdProps): JSX.Element => {
   return (

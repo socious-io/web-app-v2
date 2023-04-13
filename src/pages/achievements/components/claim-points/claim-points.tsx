@@ -3,6 +3,8 @@ import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { generateQRCode } from './claim-points.services';
+import { printWhen } from 'src/core/utils';
+import { Capacitor } from '@capacitor/core';
 
 export const ClaimPoints = (): JSX.Element => {
   const qrCodeRef = useRef<HTMLDivElement>(null);
@@ -12,10 +14,20 @@ export const ClaimPoints = (): JSX.Element => {
   });
 
   useEffect(() => {
-    generateQRCode(identityId, qrCodeRef.current as HTMLDivElement)
-      .then((resp) => console.log('resp: ', resp))
-      .catch((e) => console.log('error: ', e));
+    generateQRCode(identityId, qrCodeRef.current as HTMLDivElement).catch((e) => console.log('error: ', e));
   }, []);
+
+  const appStoreJSX = (
+    <a href="https://apps.apple.com/us/app/proofspace/id1512258409" target="_blank">
+      <img width={170} src="/images/download-appstore.svg" />
+    </a>
+  );
+
+  const playStoreJSX = (
+    <a href="https://play.google.com/store/apps/details?id=io.zaka.app&pli=1" target="_blank">
+      <img width={170} src="/images/download-googleplay.png" />
+    </a>
+  );
 
   return (
     <div className={css.container}>
@@ -34,19 +46,15 @@ export const ClaimPoints = (): JSX.Element => {
         Go through the ProofSpace app's onboarding process which will create a decentralized ID on Atala Prism.
       </p>
       <div className={css.downloads}>
-        <a href="https://play.google.com/store/apps/details?id=io.zaka.app&pli=1" target="_blank">
-          <img width={180} src="/images/download-googleplay.png" />
-        </a>
-        <a href="https://apps.apple.com/us/app/proofspace/id1512258409" target="_blank">
-          <img width={180} src="/images/download-appstore.svg" />
-        </a>
+        {printWhen(playStoreJSX, Capacitor.getPlatform() === 'android')}
+        {printWhen(appStoreJSX, Capacitor.getPlatform() === 'ios')}
       </div>
-      <p className={css.paragraph}>1. Choose “Socious” as a service</p>
-      <p className={css.paragraph}>2. Click on the QR reader Icon and scan the QR code below </p>
+      <p className={css.paragraph}>2. Choose “Socious” as a service</p>
+      {/* <p className={css.paragraph}>2. Click on the QR reader Icon and scan the QR code below </p> */}
       <p className={css.paragraph}>
         3. Congratulations! Your impact points are now recorded on Cardano blockchain as verifiable credentials!{' '}
       </p>
-      <div ref={qrCodeRef} />
+      <div className={css.proofspaceButton} ref={qrCodeRef} />
     </div>
   );
 };

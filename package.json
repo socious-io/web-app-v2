@@ -29,6 +29,8 @@
     "@mui/material": "^5.11.6",
     "@reduxjs/toolkit": "^1.9.1",
     "@tanstack/react-location": "^3.7.4",
+    "@web3modal/ethereum": "^2.2.2",
+    "@web3modal/react": "^2.2.2",
     "axios": "^1.2.3",
     "iso-country-currency": "^0.6.0",
     "js-cookie": "^3.0.1",
@@ -42,6 +44,7 @@
     "react-redux": "^8.0.5",
     "ssi-auth-lib": "^0.0.6",
     "vite-tsconfig-paths": "^4.0.5",
+    "wagmi": "^0.12.8",
     "web3": "^1.8.2"
   },
   "devDependencies": {

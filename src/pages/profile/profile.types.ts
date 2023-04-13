@@ -17,6 +17,7 @@ export type ProfileReq = {
   address: string;
   website: string;
   created_at: string;
+  proofspace_connect_id: null | string;
   updated_at: string;
   social_causes: string[];
   followers: number;

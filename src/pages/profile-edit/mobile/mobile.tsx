@@ -1,17 +1,11 @@
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useEffect, useMemo, useState } from 'react';
 import { Header } from '../../../components/atoms/header-v2/header';
 import { Input } from '../../../components/atoms/input/input';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { useForm } from 'src/core/form';
 import { ProfileReq } from 'src/pages/profile/profile.types';
-import {
-  cityDispatcher,
-  generateFormModel,
-  getProfileImage,
-  showActionSheet,
-  uploadImage,
-} from '../profile-edit.services';
+import { cityDispatcher, showActionSheet, uploadImage } from '../profile-edit.services';
 import css from './mobile.module.scss';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
@@ -23,17 +17,20 @@ import { endpoint } from 'src/core/endpoints';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { Category } from 'src/components/molecules/category/category';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { generateFormModel } from '../profile-edit.form';
 
 export const Mobile = (): JSX.Element => {
-  const data = useMatch().data.profile as ProfileReq;
-  const formModel = useMemo(() => generateFormModel(data), []);
+  const user = useMatch().data.user as ProfileReq;
+  const formModel = useMemo(() => generateFormModel(user), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
   const updateCityList = cityDispatcher(setCities);
-  const [coverImage, setCoverImage] = useState(data?.cover_image?.url);
+  const [coverImage, setCoverImage] = useState(user?.cover_image?.url);
+  const [avatarImage, setAvatarImage] = useState(user?.avatar?.url);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    updateCityList(data.country);
+    updateCityList(user.country);
   }, []);
 
   function onCountryUpdate(option: DropdownItem) {
@@ -54,10 +51,25 @@ export const Mobile = (): JSX.Element => {
     }
   }
 
+  async function onAvatarEdit() {
+    const actionResp = await showActionSheet();
+    switch (actionResp) {
+      case 'upload':
+        const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
+        const resp = await uploadImage(webPath);
+        form.controls.avatar.setValue(resp.id);
+        setAvatarImage(resp.url);
+        break;
+      case 'remove':
+        break;
+    }
+  }
+
   function onSave() {
     const payload = getFormValues(form);
-    console.log('payload: ', payload);
-    // endpoint.post.user['update/profile'](payload);
+    endpoint.post.user['update/profile'](payload).then(() => {
+      navigate({ to: '/jobs' });
+    });
   }
 
   return (
@@ -66,15 +78,15 @@ export const Mobile = (): JSX.Element => {
       <div>
         <div>
           <div className={css.header}>
-            <img className={css.coverImage} src={coverImage} />
+            <div className={css.coverImage} style={{ backgroundImage: `url(${coverImage})` }} />
             <div className={css.photoIcon} onClick={onCoverEdit}>
               <img src="/icons/photos-white.svg" />
             </div>
             <div className={css.profileImgContainer}>
-              <div className={css.photoIcon}>
+              <div className={css.photoIcon} onClick={onAvatarEdit}>
                 <img src="/icons/photos-white.svg" />
               </div>
-              <img className={css.profileImage} src={getProfileImage(data)} />
+              <div className={css.profileImage} style={{ backgroundImage: `url(${avatarImage})` }} />
             </div>
           </div>
         </div>
