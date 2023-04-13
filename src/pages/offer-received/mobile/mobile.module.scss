@@ -1,0 +1,87 @@
+.body {
+  display: flex;
+  min-height: 100%;
+  overflow: scroll;
+  flex-direction: column;
+}
+
+.acceptedMessageBox {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  background-color: #ebb957;
+  .congratulationsText {
+    line-height: 20px;
+    font-size: var(--font-size-s2);
+  }
+  .congratulationsText:first-child {
+    font-weight: 600;
+    padding-bottom: 4px;
+  }
+
+  .companyName {
+    font-weight: 600;
+  }
+}
+
+.congratulations {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  background-color: var(--color-success-01);
+  .congratulationsText {
+    color: #fff;
+    line-height: 20px;
+    font-size: var(--font-size-s2);
+  }
+  .congratulationsText:first-child {
+    font-weight: 600;
+    padding-bottom: 4px;
+  }
+}
+
+.missionDetailContainer {
+  padding: 1rem;
+}
+
+.missionDetailMessage {
+  margin-bottom: 1rem;
+}
+
+.detailItemContainer {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  .detailItemLabel {
+    color: var(--color-primary-01);
+    margin-bottom: 0.5rem;
+  }
+}
+
+.jobInfoContainer {
+  padding: 1rem;
+}
+
+.jobTitle {
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+.btnContainer {
+  border-top: 1px solid var(--border-gray-01);
+  padding: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+  flex-direction: column;
+}
+
+.aboutCompany {
+  padding: 1rem;
+}
+
+.wallet {
+  display: flex;
+  justify-content: center;
+  margin: 24px 16px;
+}

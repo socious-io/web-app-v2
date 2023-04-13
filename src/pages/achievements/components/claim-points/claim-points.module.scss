@@ -1,0 +1,31 @@
+.container {
+  padding: 1.5rem;
+}
+
+.titles {
+  font-weight: 600;
+  font-size: var(--font-size-l);
+  padding-bottom: 1rem;
+}
+
+.box {
+  background-color: var(--color-off-white-01);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.downloads {
+  margin: 1rem 0;
+}
+
+.paragraph {
+  padding-bottom: 0.75rem;
+  line-height: 150%;
+  font-size: var(--font-size-s2);
+}
+
+.proofspaceButton {
+  display: flex;
+  justify-content: center;
+}

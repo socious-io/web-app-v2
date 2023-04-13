@@ -1,6 +1,32 @@
-import { JobItems, PostItems } from '../design-system/pages/search/search.types';
+import { AbiItem } from 'web3-utils';
+import { JobItems, PostItems } from '../pages/search/search.types';
 
 export type UserType = 'users' | 'organizations';
+
+export type LoginReq = {
+  email: string;
+  password: string;
+};
+
+export type LoginResp = {
+  error?: string;
+  access_token: string;
+  refresh_token: string;
+  token_type: 'Bearer';
+};
+
+export type RefreshReq = {
+  refresh_token: string;
+};
+
+export type ResendVerifyCode = {
+  email: string;
+};
+
+export type OtpConfirmReq = {
+  email: string;
+  otp: string;
+};
 
 export type UserIdentityMeta = {
   address: string;
@@ -31,6 +57,7 @@ export type IdentityReq = {
     name: string;
     shortname: string;
     status: string;
+    username: string;
   };
 };
 
@@ -203,13 +230,17 @@ export type UserApplicantResp = {
 export type ApplicantResp = {
   id: string;
   project_id: string;
-  answers: string[];
+  answers: { answer: string }[];
   cover_letter: string;
   created_at: string;
   share_contact_info: string;
   user: {
     name: string;
     avatar: string;
+  };
+  project?: {
+    payment_scheme: string;
+    payment_type?: string;
   };
 };
 
@@ -219,9 +250,23 @@ export type MissionsResp = Pagination<
       cover_letter: string;
     };
     id: string;
+    offer_id: string;
     created_at: string;
     project: {
       title: string;
+      payment_scheme: string;
+      payment_type: string;
+    };
+    job_category: { name: string };
+    status: 'CLOSED' | 'COMPLETE';
+    offer: {
+      total_hours: number;
+      assignment_total: number;
+    };
+    payment?: {
+      meta: {
+        0: string;
+      };
     };
     assignee: {
       meta: {
@@ -256,27 +301,92 @@ export type DeclinedApplicantListResp = Pagination<
   }[]
 >;
 
-export type AwaitingReviewApplicantListResp = Pagination<
-  {
-    id: string;
-    created_at: string;
-    project: {
-      description: string;
-      title: string;
+export type Offer = {
+  applicant: {
+    cover_letter: string;
+  };
+  job_category: {
+    name: string;
+  };
+  recipient: {
+    meta: {
+      name: string;
+      avatar: string | null;
+      wallet_address: string | null;
+      city: string;
+      country: string;
     };
-    offerer: {
-      meta: {
-        image: string;
-        name: string;
-      };
+    type: 'users' | 'organizations';
+  };
+  organization: {
+    name: string;
+    bio: string;
+  };
+  id: string;
+  created_at: string;
+  offer_message: string;
+  assignment_total: number;
+  due_date: string;
+  status: 'HIRED' | 'CLOSED';
+  project: {
+    description: string;
+    title: string;
+    payment_type: string;
+    payment_scheme: string;
+    remote_preference: string;
+  };
+  offerer: {
+    type: UserType;
+    meta: {
+      image: string;
+      name: string;
+      city: string;
+      country: string;
     };
-  }[]
->;
+  };
+  total_hours: number;
+  project_id: string;
+  escrow: {
+    address: string;
+    abi: AbiItem[];
+  };
+  payment_mode: 'FIAT' | 'CRYPTO';
+};
+
+export type GetOffer = Pagination<Offer[]>;
 
 export type BadgesResp = {
   count: number;
   social_cause_category: string;
   total_points: number;
 }[];
+
+export type OfferPayload = {
+  assignment_total: number;
+  offer_message: string;
+  total_hours: string;
+  payment_mode: string;
+  crypto_currency_address?: string;
+};
+
+export type CreatePostPayload = {
+  title: string;
+  description: string;
+  remote_preference: string;
+  country: string;
+  project_type: string;
+  project_length: string;
+  payment_type: string;
+  causes_tags: string[];
+  skills: string[];
+  status: string;
+  experience_level: number;
+  job_category_id: string;
+  payment_scheme: string;
+  city: string;
+  payment_currency: string;
+};
+
+export type Error = { error: string };
 
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;

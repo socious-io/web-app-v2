@@ -1,17 +1,17 @@
 import { Provider } from 'react-redux';
-import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
-import { routes } from './core/routes';
+import { Outlet, Router } from '@tanstack/react-location';
+import { routes } from './core/routes/routes';
 import store from './store/store';
-import { Menu } from './design-system/pages/menu/menu';
-
-const location = new ReactLocation();
+import { Spinner } from './components/atoms/spinner/spinner';
+import { Sidebar } from './pages/sidebar/sidebar';
+import { location } from './core/routes/config.routes';
 
 function App() {
   return (
     <Provider store={store}>
-
       <Router location={location} routes={routes}>
-        <Menu />
+        <Spinner />
+        <Sidebar />
         <Outlet />
       </Router>
     </Provider>
