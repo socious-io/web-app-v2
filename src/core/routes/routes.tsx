@@ -29,8 +29,10 @@ import { receivedOfferLoader } from '../../pages/offer-received/offer-received.s
 import { endpoint } from '../endpoints';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 import { Intro } from '../../pages/intro/intro';
-import { profileUserPageLoader } from 'src/pages/profile/profile.loader';
+import { profileUserPageLoader } from 'src/pages/profile-user/profile-user.loader';
 import { AchievementsPageLoader } from 'src/pages/achievements/achievements.loader';
+import { ProfileOrganization } from '../../pages/profile-organization/profile-organization';
+import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 
 export const routes: Route[] = [
   {
@@ -100,30 +102,29 @@ export const routes: Route[] = [
         children: [
           {
             path: 'view',
-            element: () => import('../../pages/profile/profile').then((m) => <m.Profile />),
+            element: () => import('../../pages/profile-user/profile-user').then((m) => <m.ProfileUser />),
           },
           {
             path: 'edit',
-            element: () => import('../../pages/profile-edit/profile-edit').then((m) => <m.ProfileEdit />),
+            element: () => import('../../pages/profile-user-edit/profile-user-edit').then((m) => <m.ProfileUserEdit />),
           },
         ],
-        // element: () => import('../../pages/profile/profile').then((m) => <m.Profile />),
       },
-      //   {
-      //     path: 'profile/:userType/:id',
-      //     loader: profilePageLoader,
-      //     children: [
-      //       {
-      //         path: 'view',
-      //         element: () => import('../../pages/profile/profile').then((m) => <m.Profile />),
-      //       },
-      //       {
-      //         path: 'edit',
-      //         element: () => import('../../pages/profile-edit/profile-edit').then((m) => <m.ProfileEdit />),
-      //       },
-      //     ],
-      //     element: () => import('../../pages/profile/profile').then((m) => <m.Profile />),
-      //   },
+      {
+        path: 'profile/organizations/:id',
+        loader: profileOrganizationPageLoader,
+        children: [
+          {
+            path: 'view',
+            element: () =>
+              import('../../pages/profile-organization/profile-organization').then((m) => <m.ProfileOrganization />),
+          },
+          //   {
+          //     path: 'edit',
+          //     element: () => import('../../pages/profile-user-edit/profile-user-edit').then((m) => <m.ProfileUserEdit />),
+          //   },
+        ],
+      },
       {
         path: 'payment/:id',
         loader: ({ params }) => receivedOfferLoader(params),
