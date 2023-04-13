@@ -1,0 +1,43 @@
+.applicantContainer {
+  padding: 1rem 1rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border-gray-01);
+
+  .detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .applyDate {
+    color: var(--color-gray-01);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+  }
+
+  .applicantFooter {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .footerItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    border-right: 1px solid var(--border-gray-01);
+  }
+
+  .footerItem:last-child {
+    border-right: 0;
+  }
+
+  .footerLabel {
+    color: var(--color-gray-01);
+    font-size: var(--font-size-s);
+  }
+}

@@ -1,0 +1,28 @@
+//FIXME: create a general color system for variables in abstracts/_variables
+$color-gray-light-0: #e4e6ed;
+
+.container {
+  padding: 24px 16px;
+
+  &__spacer {
+    margin: 16px 0;
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  border-top: 1px solid $color-gray-light-0;
+
+  &__btn {
+    max-width: unset;
+    width: 100%;
+
+    &--cancel {
+      border: none;
+      margin-top: 8px;
+    }
+  }
+}

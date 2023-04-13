@@ -1,0 +1,9 @@
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 7rem 1fr;
+}
+
+.body {
+  overflow-y: scroll;
+}

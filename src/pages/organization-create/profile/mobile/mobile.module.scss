@@ -1,0 +1,87 @@
+.container {
+  height: var(--window-height);
+  margin-top: var(--safe-area);
+  display: grid;
+  grid-template-rows: 3rem 6.75rem 1fr 8rem;
+}
+
+.questionContainer {
+  border-bottom: 1px solid var(--border-gray-01);
+}
+
+.header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-gray-01);
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+
+  .chevron {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .stepsContainer {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.questionContainer {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 1.5rem;
+  color: var(--color-black-01);
+
+  .question {
+    font-size: 1.25rem;
+    font-family: 'Hahmlet';
+    font-weight: 600;
+  }
+
+  .limitStatement {
+    color: var(--color-gray-01);
+  }
+}
+
+.main {
+  border-bottom: 1px solid var(--border-gray-01);
+  overflow: scroll;
+}
+
+.formContainer {
+  display: grid;
+  gap: 1rem;
+}
+
+.bottom {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 1rem 0 1rem;
+}
+
+.phoneNumber {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1rem;
+}
+.phoneNumberLabel {
+  font-weight: 700;
+  padding-bottom: 0.5rem;
+  .labelOptional {
+    color: var(--color-gray-02);
+    font-weight: 400;
+    font-size: var(--font-size-s);
+  }
+}
+
+.agreement {
+  margin-top: 2rem;
+  display: flex;
+  align-items: flex-start;
+}

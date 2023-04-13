@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { ContactList } from '../design-system/organisms/contact-list/contact-list';
-import { ContactListProps } from '../design-system/organisms/contact-list/contact-list.types';
+import { ContactList } from '../components/organisms/contact-list/contact-list';
+import { ContactListProps } from '../components/organisms/contact-list/contact-list.types';
 
 export default {
   title: 'ORGANISM/ContactList',

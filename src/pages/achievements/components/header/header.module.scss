@@ -1,0 +1,46 @@
+.container {
+  height: 29rem;
+  max-height: 29rem;
+  background: linear-gradient(166.7deg, #00ba88 23.58%, #2f4786 89.68%);
+  color: #ffffff;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4.5rem;
+}
+
+.chevron {
+  position: absolute;
+  left: 1.5rem;
+  top: 4.5rem;
+  filter: invert(1);
+}
+
+.impactPointsContainer {
+  text-align: center;
+}
+
+.impactPoints {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.impactPointsLabel {
+  font-size: 1.25rem;
+  color: #ffffff;
+}
+
+.impactPointDescLink {
+  font-weight: 400;
+  text-align: center;
+  margin: 1rem 0;
+  color: #fff;
+}

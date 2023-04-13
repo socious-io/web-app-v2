@@ -1,0 +1,22 @@
+.container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  justify-items: center;
+  align-items: end;
+  border-bottom: 1px solid var(--border-gray-01);
+}
+
+.back,
+.title {
+  height: 3.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.back {
+  width: 3.25rem;
+}

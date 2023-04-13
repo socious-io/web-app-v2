@@ -1,5 +1,5 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {ImpactCategoryList} from '../../src/design-system/organisms/impact-category-list/impact-category-list';
+import {ImpactCategoryList} from '../components/organisms/impact-category-list/impact-category-list';
 
 export default {
   title: 'ORGANISM/ImpactCategoryList',

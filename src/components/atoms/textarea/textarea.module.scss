@@ -1,0 +1,26 @@
+.outline {
+  display: grid;
+  grid-template-rows: minmax(1.5rem, auto) auto;
+  gap: 4px;
+
+  .label {
+    font-weight: 600;
+  }
+
+  .textbox {
+    border: 1px solid var(--color-gray-04);
+    font-size: var(--font-size-m);
+    background: #fff;
+    transition: border-color 100ms 0s;
+    border-radius: 8px;
+    padding: 0.75rem;
+
+    &::placeholder {
+      color: var(--color-gray-03);
+    }
+  }
+}
+
+.noLabel {
+  grid-template-rows: auto;
+}
