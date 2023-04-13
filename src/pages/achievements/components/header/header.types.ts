@@ -1,6 +1,7 @@
 export type HeaderProps = {
   point: number;
   onClaimNow: () => void;
+  onCheckRewards: () => void;
   tier: {
     prev: number;
     current: number;

@@ -3,6 +3,7 @@ import { StatusTag } from '../../atoms/status-tag/status-tag';
 import { ProfileView } from '../profile-view/profile-view';
 import css from './applicant-list-pay.module.scss';
 import { Applicant, ApplicantListPayProps } from './applicant-list-pay.types';
+import Dapp from 'src/dapp';
 
 const statuses = {
   CONFIRMED: {
@@ -20,8 +21,8 @@ const statuses = {
 };
 
 export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
-  const confirmBtn = (id: string) => (
-    <div onClick={() => props.onConfirm?.(id)} className={css.footerItem}>
+  const confirmBtn = (id: string, escrowId?: string) => (
+    <div onClick={() => props.onConfirm?.(id, escrowId)} className={css.footerItem}>
       <img src="/icons/user-accept-blue.svg" />
       <div className={css.footerLabel}>Confirm</div>
     </div>
@@ -54,7 +55,13 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
           </div> */}
         </div>
         <div className={css.applicantFooter}>
-          {printWhen(confirmBtn(applicant.id), props.confirmable)}
+          {printWhen(
+            <div className={css.footerItem}>
+              <Dapp.Connect />
+            </div>,
+            props?.payment_type === 'PAID'
+          )}
+          {printWhen(confirmBtn(applicant.id, applicant.payment?.meta?.id), props.confirmable)}
           <div className={css.footerItem}>
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>

@@ -1,5 +1,6 @@
 :root {
-  --color-primary-01: rgba(47, 71, 134, 1);
+//   --color-primary-01: rgba(47, 71, 134, 1);
+  --color-primary-01: #004A46;
   --color-secondary-02: rgba(47, 134, 71, 1);
   --color-secondary-light: #d2ebc0;
 
@@ -15,7 +16,7 @@
   --color-gray-04: rgba(228, 230, 237, 1);
   --border-gray-01: #f0f1f5;
 
-  --font-size-s: 0.75rem;
+  --font-size-s: 0.75rem; // 12px
   --font-size-s2: 0.875rem; // 14px
   --font-size-m: 1rem; // 16px
   --font-size-l: 1.5rem; // 24px
