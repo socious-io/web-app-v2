@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Hahmlet&family=Work+Sans');
-@import url(https://fonts.googleapis.com/css?family=Hahmlet:700|Work+Sans:bold);
+// @import url('https://fonts.googleapis.com/css2?family=Hahmlet&family=Work+Sans');
+// @import url(https://fonts.googleapis.com/css?family=Hahmlet:700|Work+Sans:bold);
 @import './components/primitives';
 @import './components/reset';
 
@@ -8,4 +8,16 @@ pwa-action-sheet {
   right: 0;
   bottom: 0;
   width: 100vw;
+}
+
+@font-face {
+  font-family: Work Sans;
+  src: url('/fonts/Inter-Medium.woff2');
+}
+
+@font-face {
+  font-family: Work Sans;
+  font-weight: 600;
+  font-weight: bold;
+  src: url('/fonts/Inter-Black.woff2');
 }
