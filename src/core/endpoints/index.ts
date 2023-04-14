@@ -60,6 +60,9 @@ export const endpoint: Endpoints = {
       '{post_id}/report': (id: string, payload: { blocked: boolean; comment: string }) =>
         post(`posts/${id}/report`, payload).then(getDataProp),
     },
+    organizations: {
+      'orgs/update/{org_id}': (id, payload) => post(`/orgs/update/${id}`, payload).then(getDataProp),
+    },
     payments: {
       '{offer_id/confirm}': (id: string, body: any) => post(`/payments/offers/${id}`, body).then(getDataProp),
     },

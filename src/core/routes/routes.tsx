@@ -119,10 +119,10 @@ export const routes: Route[] = [
             element: () =>
               import('../../pages/profile-organization/profile-organization').then((m) => <m.ProfileOrganization />),
           },
-          //   {
-          //     path: 'edit',
-          //     element: () => import('../../pages/profile-user-edit/profile-user-edit').then((m) => <m.ProfileUserEdit />),
-          //   },
+          {
+            path: 'edit',
+            element: () => import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => <m.ProfileOrganizationEdit/>),
+          },
         ],
       },
       {
