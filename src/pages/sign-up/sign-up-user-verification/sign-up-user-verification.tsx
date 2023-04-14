@@ -20,7 +20,6 @@ export const SignUpUserVerification = (): JSX.Element => {
   }
 
   async function successOTP(resp: LoginResp) {
-    console.log('resp:', resp)
     await setAuthCookies(resp);
     navigate({ to: '../complete' });
   }

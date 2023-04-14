@@ -22,8 +22,6 @@ import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
 
 export const Mobile = (): JSX.Element => {
   const organization = useMatch().data.user as ProfileReq;
-  console.log('org: ', organization);
-
   const formModel = useMemo(() => generateFormModel(organization), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
