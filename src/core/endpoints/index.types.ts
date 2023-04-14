@@ -45,6 +45,25 @@ type PostUserUpdatePayload = {
   skills: string[];
 };
 
+type PostOrganizationUpdatePayload = {
+  bio: string;
+  social_causes: string[];
+  country: string;
+  city: string;
+  geoname_id: number;
+  address: string;
+  mobile_country_code: string;
+  phone: string;
+  cover_image: string;
+  mission: string;
+  name: string;
+  type: string;
+  email: string;
+  culture: string;
+  website: string;
+  image: string;
+};
+
 export type PostMediaUploadResp = {
   id: string;
   identity_id: string;
@@ -68,6 +87,9 @@ export interface Endpoints {
     offers: {};
     missions: {};
     posts: {};
+    organizations: {
+      'orgs/update/{org_id}': (id: string, payload: PostOrganizationUpdatePayload) => Promise<unknown>;
+    };
     payments: {};
   };
 }

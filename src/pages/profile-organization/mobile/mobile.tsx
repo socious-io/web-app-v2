@@ -19,7 +19,6 @@ export const Mobile = (): JSX.Element => {
   const { user, badges } = useMatch().data as { user: ProfileReq; badges: { badges: unknown[] } };
   const socialCauses = socialCausesToCategory(user.social_causes);
   const navigate = useNavigate();
-  const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;
   const skills = skillsToCategory(user.skills);
 
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
@@ -120,7 +119,7 @@ export const Mobile = (): JSX.Element => {
         </div>
         <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
           <div className={css.avatarContainer}>
-            <Avatar img={avatarImage} size="8rem" type="users" />
+            <Avatar img={user.image?.url} size="8rem" type="users" />
           </div>
         </div>
         <div className={css.menu}>

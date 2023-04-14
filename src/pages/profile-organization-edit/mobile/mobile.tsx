@@ -4,7 +4,7 @@ import { Header } from '../../../components/atoms/header-v2/header';
 import { Input } from '../../../components/atoms/input/input';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { useForm } from 'src/core/form';
-import { cityDispatcher, showActionSheet, uploadImage } from '../profile-user-edit.services';
+import { cityDispatcher, showActionSheet, uploadImage } from '../profile-organization-edit.services';
 import css from './mobile.module.scss';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
@@ -16,21 +16,24 @@ import { endpoint } from 'src/core/endpoints';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { Category } from 'src/components/molecules/category/category';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { generateFormModel } from '../profile-user-edit.form';
+import { generateFormModel } from '../profile-organization-edit.form';
 import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
+import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
 
 export const Mobile = (): JSX.Element => {
-  const user = useMatch().data.user as ProfileReq;
-  const formModel = useMemo(() => generateFormModel(user), []);
+  const organization = useMatch().data.user as ProfileReq;
+  console.log('org: ', organization);
+
+  const formModel = useMemo(() => generateFormModel(organization), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
   const updateCityList = cityDispatcher(setCities);
-  const [coverImage, setCoverImage] = useState(user?.cover_image?.url);
-  const [avatarImage, setAvatarImage] = useState(user?.avatar?.url);
+  const [coverImage, setCoverImage] = useState(organization?.cover_image?.url);
+  const [avatarImage, setAvatarImage] = useState(organization?.image?.url);
   const navigate = useNavigate();
 
   useEffect(() => {
-    updateCityList(user.country);
+    updateCityList(organization.country);
   }, []);
 
   function onCountryUpdate(option: DropdownItem) {
@@ -67,7 +70,8 @@ export const Mobile = (): JSX.Element => {
 
   function onSave() {
     const payload = getFormValues(form);
-    endpoint.post.user['update/profile'](payload).then(() => {
+    console.log('payload: ', payload);
+    endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload).then(() => {
       navigate({ to: '/jobs' });
     });
   }
@@ -91,11 +95,9 @@ export const Mobile = (): JSX.Element => {
           </div>
         </div>
         <div className={css.formContainer}>
-          <Input register={form} label="First name" name="first_name" placeholder="first name" />
-          <Input register={form} label="Last name" name="last_name" placeholder="last name" />
-          <Input register={form} label="Username" name="username" placeholder="username" />
-          <Textarea register={form} label="Bio" name="bio" placeholder="biography" />
-          <Textarea register={form} label="Mission" name="mission" placeholder="mission" />
+          {/* <Dropdown label='Organization type' list={ORGANIZATION_TYPE} /> */}
+          <Input label="Name" register={form} name="name" placeholder="name" />
+          <Textarea label="bio" register={form} name="bio" placeholder="bio" />
           <Category
             register={form}
             name="social_causes"
@@ -103,14 +105,7 @@ export const Mobile = (): JSX.Element => {
             list={socialCausesToCategoryAdaptor()}
             placeholder="Social causes"
           />
-          <Category
-            register={form}
-            name="skills"
-            label="Skills"
-            list={skillsToCategoryAdaptor()}
-            placeholder="skills"
-          />
-          <Textarea register={form} label="Address" name="address" placeholder="address" />
+          <Input label="Email" register={form} name="email" placeholder="email" />
           <Dropdown
             register={form}
             label="Country"
@@ -127,6 +122,7 @@ export const Mobile = (): JSX.Element => {
             placeholder="city"
             onValueChange={(option) => form.controls.geoname_id.setValue(option.id)}
           />
+          <Input label="Address" register={form} name="address" placeholder="address" />
           <div>
             <div className={css.label}>Phone</div>
             <div className={css.phoneContainer}>
@@ -134,6 +130,9 @@ export const Mobile = (): JSX.Element => {
               <Input register={form} name="phone" placeholder="phone" />
             </div>
           </div>
+          <Input label="Website" register={form} name="website" placeholder="http://website.com" />
+          <Textarea label="Mission" register={form} name="mission" placeholder="mission" />
+          <Textarea label="Culture" register={form} name="culture" placeholder="culture" />
         </div>
       </div>
     </TopFixedMobile>
