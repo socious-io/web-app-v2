@@ -50,7 +50,6 @@ export function generatePayload(form) {
     },
     { answers: [] }
   );
-  console.log('f: ', formatted);
   return formatted;
 }
 
