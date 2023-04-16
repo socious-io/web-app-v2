@@ -33,6 +33,7 @@ import { profileUserPageLoader } from 'src/pages/profile-user/profile-user.loade
 import { AchievementsPageLoader } from 'src/pages/achievements/achievements.loader';
 import { ProfileOrganization } from '../../pages/profile-organization/profile-organization';
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
+import { getSettingsItems } from 'src/pages/notifications/settings/settings.service';
 
 export const routes: Route[] = [
   {
@@ -366,8 +367,17 @@ export const routes: Route[] = [
           },
           {
             path: 'notifications',
-            element: () => import('../../pages/notifications/notifications').then((m) => <m.Notifications />),
-            loader: () => getNotificationList({ page: 1 }),
+            children: [
+              {
+                path: '/settings',
+                element: () => import('src/pages/notifications/settings/settings').then((m) => <m.Settings />),
+                loader: () => getSettingsItems(),
+              },
+              {
+                element: () => import('../../pages/notifications/notifications').then((m) => <m.Notifications />),
+                loader: () => getNotificationList({ page: 1 }),
+              },
+            ],
           },
 
           {

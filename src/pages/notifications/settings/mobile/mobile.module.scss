@@ -1,0 +1,46 @@
+.container {
+  margin-bottom: 76px;
+}
+
+.turnedOffMessageBox {
+  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background-color: #df3030;
+}
+
+.turnedOffMessage {
+  color: white;
+}
+
+.notifications {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 16px;
+}
+
+.notification,
+.notification_all {
+  display: flex;
+  justify-content: space-between;
+}
+
+.notification_all,
+.btn {
+  padding: 16px;
+  display: flex;
+  background-color: white;
+}
+
+.notification_all {
+  border-bottom: 1px solid var(--color-gray-04);
+}
+
+.btn {
+  justify-content: center;
+  position: fixed;
+  bottom: 82px;
+  width: 100%;
+}
