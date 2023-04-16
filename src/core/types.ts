@@ -387,6 +387,17 @@ export type CreatePostPayload = {
   payment_currency: string;
 };
 
+export type SettingsRes = {
+  type: string;
+  in_app: boolean;
+  email: boolean;
+  push: boolean;
+};
+
+export type NotificationSettingsRes = {
+  settings: SettingsRes[];
+};
+
 export type Error = { error: string };
 
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
