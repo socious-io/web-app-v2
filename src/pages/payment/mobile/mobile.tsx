@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMatch } from '@tanstack/react-location';
-import Web3 from 'web3';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Button } from 'src/components/atoms/button/button';
 import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
@@ -9,12 +8,15 @@ import { PaymentMethods } from 'src/components/templates/payment-methods';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { Sticky } from 'src/components/atoms/sticky';
 import { confirmPayment } from './mobile.service';
+import store from 'src/store/store';
+import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
 import Dapp from 'src/dapp';
 import { endpoint } from 'src/core/endpoints';
 import { getMonthName } from 'src/core/time';
 import { Resolver } from 'src/pages/offer-received/offer-received.types';
 import css from './mobile.module.scss';
 import { useAccount } from 'wagmi';
+import { dialog } from 'src/core/dialog/dialog';
 
 export const Mobile = (): JSX.Element => {
   const { web3 } = Dapp.useWeb3();
@@ -46,26 +48,36 @@ export const Mobile = (): JSX.Element => {
     if (!contributor) throw new Error('Contributor wallet is not connected');
 
     setProcess(true);
+    store.dispatch(showSpinner());
     const escrowAmount = parseInt(assignment_total.toString());
 
-    // put escrow on smart contract
-    const result = await Dapp.escrow({
-      web3,
-      escrowAmount,
-      contributor,
-      projectId: project_id,
-    });
+    try {
+      // put escrow on smart contract
+      const result = await Dapp.escrow({
+        web3,
+        escrowAmount,
+        contributor,
+        projectId: project_id,
+      });
 
-    // this is paramater need to sync with backend to make Hire available
-    await confirmPayment(offerId, {
-      service: 'CRYPTO',
-      source: account,
-      txHash: result.txHash,
-      meta: result,
-    });
+      // this is paramater need to sync with backend to make Hire available
+      await confirmPayment(offerId, {
+        service: 'CRYPTO',
+        source: account,
+        txHash: result.txHash,
+        meta: result,
+      });
+    } catch (err: any) {
+      dialog.alert({
+        message: err?.response?.data.error || err?.message,
+        title: 'Failed',
+      });
+    }
 
     endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
+
     setProcess(false);
+    store.dispatch(hideSpinner());
   }
 
   return (
