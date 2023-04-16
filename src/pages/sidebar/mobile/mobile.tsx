@@ -64,9 +64,9 @@ export const Mobile = () => {
   function navigateToProfile() {
     hapticsImpactLight();
     if (identity.type === 'users') {
-      navigate({ to: `/profile/users/${identity.meta.username}` });
+      navigate({ to: `/profile/users/${identity.meta.username}/view` });
     } else {
-      navigate({ to: `/profile/organizations/${identity.meta.shortname}` });
+      navigate({ to: `/profile/organizations/${identity.meta.shortname}/view` });
     }
     closeSidebar();
   }

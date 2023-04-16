@@ -1,7 +1,7 @@
 import { LoginReq, OtpConfirmReq, RefreshReq, ResendVerifyCode } from './../types';
 import { get, post } from '../http';
 import { Pagination } from '../types';
-import { Offer, GetProject } from './index.types';
+import { Offer, Endpoints } from './index.types';
 
 type offerPayload = {
   id: string;
@@ -13,7 +13,7 @@ function getDataProp<T = unknown>(resp: { data: T }) {
   return resp.data;
 }
 
-export const endpoint = {
+export const endpoint: Endpoints = {
   get: {
     auth: {
       'otp/confirm': (payload: OtpConfirmReq) =>
@@ -40,8 +40,10 @@ export const endpoint = {
       'resend-verify-code': (payload: ResendVerifyCode) => post('/auth/resend-verify-code', payload).then(getDataProp),
     },
     user: {
-      '{user_id}/report': (id: string, payload: { blocked: boolean; comment: string }) => post(`user/${id}/report`, payload),
+      '{user_id}/report': (id: string, payload: { blocked: boolean; comment: string }) =>
+        post(`user/${id}/report`, payload),
       '{user_id}/update_wallet': (payload: { wallet_address: string }) => post(`user/update/wallet`, payload),
+      'update/profile': (payload) => post('user/update/profile', payload),
     },
     offers: {
       '{offer_id}/approve': (id: string) => post(`offers/${id}/approve`, {}).then(getDataProp),
@@ -58,8 +60,15 @@ export const endpoint = {
       '{post_id}/report': (id: string, payload: { blocked: boolean; comment: string }) =>
         post(`posts/${id}/report`, payload).then(getDataProp),
     },
+    organizations: {
+      'orgs/update/{org_id}': (id, payload) => post(`/orgs/update/${id}`, payload).then(getDataProp),
+    },
     payments: {
       '{offer_id/confirm}': (id: string, body: any) => post(`/payments/offers/${id}`, body).then(getDataProp),
+    },
+    media: {
+      upload: (formData) =>
+        post('/media/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(getDataProp),
     },
   },
 };
