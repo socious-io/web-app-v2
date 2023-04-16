@@ -49,7 +49,6 @@ export const Mobile = (): JSX.Element => {
 
   function onSubmit() {
     const generatedPayload = generatePayload(form);
-    console.log('generatedPayload: ', generatedPayload);
     if (resume.file) {
       submit(jobDetail.id, resume.file, generatedPayload).then(navigateToJobDetail);
     } else {

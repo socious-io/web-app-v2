@@ -41,9 +41,9 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
 
   function redirectToProfile(feed: Feed) {
     if (feed.identity_type === 'users') {
-      navigate({ to: `/profile/users/${feed.identity_meta.username}` });
+      navigate({ to: `/profile/users/${feed.identity_meta.username}/view` });
     } else {
-      navigate({ to: `/profile/organizations/${feed.identity_meta.shortname}` });
+      navigate({ to: `/profile/organizations/${feed.identity_meta.shortname}/view` });
     }
   }
 

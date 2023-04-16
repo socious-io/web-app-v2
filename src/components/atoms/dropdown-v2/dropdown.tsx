@@ -2,6 +2,8 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { printWhen } from '../../../core/utils';
 import css from './dropdown.module.scss';
 import { DropdownItem, DropdownProps } from './dropdown.types';
+import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
+import { getInitialValue, hasInitialValue } from './dropdown.services';
 
 const submenuHeightREM = 2.75;
 
@@ -15,7 +17,12 @@ export const Dropdown = (props: DropdownProps): JSX.Element => {
   useEffect(() => {
     const obj = props.list.find((item) => item.value === props.value);
     if (obj) {
+      /** @why "!" is safe here as ref is available in first render */
       ref!.current!.value = obj.label;
+    }
+    if (hasInitialValue(props)) {
+      /** @why "!" is safe here as ref is available in first render */
+      ref!.current!.value = getInitialValue(props);
     }
   }, []);
 
@@ -25,7 +32,9 @@ export const Dropdown = (props: DropdownProps): JSX.Element => {
 
   function onSearch(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
-    const newFilteredList = props.list.filter((option) => option.label.toLowerCase().includes(value.toLocaleLowerCase()));
+    const newFilteredList = props.list.filter((option) =>
+      option.label.toLowerCase().includes(value.toLocaleLowerCase())
+    );
     setFilteredList(newFilteredList);
   }
 

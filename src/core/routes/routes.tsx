@@ -29,8 +29,10 @@ import { receivedOfferLoader } from '../../pages/offer-received/offer-received.s
 import { endpoint } from '../endpoints';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 import { Intro } from '../../pages/intro/intro';
-import { ProfilePageLoader } from 'src/pages/profile/profile.loader';
+import { profileUserPageLoader } from 'src/pages/profile-user/profile-user.loader';
 import { AchievementsPageLoader } from 'src/pages/achievements/achievements.loader';
+import { ProfileOrganization } from '../../pages/profile-organization/profile-organization';
+import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 
 export const routes: Route[] = [
   {
@@ -95,9 +97,33 @@ export const routes: Route[] = [
       },
       { path: 'change-password', element: <ChangePassword /> },
       {
-        path: 'profile/:userType/:id',
-        loader: ProfilePageLoader,
-        element: () => import('../../pages/profile/profile').then((m) => <m.Profile />),
+        path: 'profile/users/:id',
+        loader: profileUserPageLoader,
+        children: [
+          {
+            path: 'view',
+            element: () => import('../../pages/profile-user/profile-user').then((m) => <m.ProfileUser />),
+          },
+          {
+            path: 'edit',
+            element: () => import('../../pages/profile-user-edit/profile-user-edit').then((m) => <m.ProfileUserEdit />),
+          },
+        ],
+      },
+      {
+        path: 'profile/organizations/:id',
+        loader: profileOrganizationPageLoader,
+        children: [
+          {
+            path: 'view',
+            element: () =>
+              import('../../pages/profile-organization/profile-organization').then((m) => <m.ProfileOrganization />),
+          },
+          {
+            path: 'edit',
+            element: () => import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => <m.ProfileOrganizationEdit/>),
+          },
+        ],
       },
       {
         path: 'payment/:id',

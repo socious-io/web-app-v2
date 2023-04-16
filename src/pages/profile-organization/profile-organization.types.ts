@@ -1,10 +1,13 @@
+import { DefaultGenerics, RouteMatch, PartialGenerics } from '@tanstack/react-location';
+import { UserType } from 'src/core/types';
+
 export type ProfileReq = {
   id: string;
   name: string;
   first_name: string;
   last_name: string;
   username: string;
-  avatar?: { url: string };
+  avatar?: { url: string; id: string };
   bio: string;
   description: string;
   email: string;
@@ -31,11 +34,11 @@ export type ProfileReq = {
     url: string;
     created_at: string;
   };
-  cover_image: {
+  cover_image?: {
     id: string;
     identity_id: string;
     filename: string;
-    url: string;
+    url?: string;
     created_at: string;
   };
   mobile_country_code: string;
@@ -43,6 +46,7 @@ export type ProfileReq = {
   shortname: string;
   old_id: number;
   status: string;
+  skills?: string[];
   search_tsv: string;
   other_party_id: string;
   other_party_title: string;
