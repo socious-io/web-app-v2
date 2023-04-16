@@ -1,5 +1,5 @@
 import { DappConfig } from './dapp.types';
-import { polygon, sepolia , Chain } from 'wagmi/chains';
+import { polygon, polygonMumbai , Chain } from 'wagmi/chains';
 
 export const milkomeda: Chain = {
   id: 2002,
@@ -67,13 +67,13 @@ export const dappConfig: DappConfig = {
       ],
     },
     {
-      chain: sepolia,
-      escrow: '0x6A3953b39C00e030Fd9034c6b3B51b8EB5A40A5C',
+      chain: polygonMumbai,
+      escrow: '0x709aD79c1e06E703e6fb9e3DE83C274E5bcFb486',
       tokens: [
         {
           name: 'USDC',
           symbol: 'USDC',
-          address: '0x06666b1DbFb62613515cEAE861CAd3d8A9d88451',
+          address: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
         },
       ]
     }
