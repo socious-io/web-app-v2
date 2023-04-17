@@ -57,7 +57,7 @@ export const dappConfig: DappConfig = {
   testnet: [
     {
       chain: milkomedaTestnet,
-      escrow: '0xD408768487Af17fe9cdfb7b708ec735c7D76ed1a',
+      escrow: '0xF35a012313Be8c7c3c48e86466fe3b8cd809a7b0',
       tokens: [
         {
           name: 'USDC',
@@ -68,7 +68,7 @@ export const dappConfig: DappConfig = {
     },
     {
       chain: polygonMumbai,
-      escrow: '0x709aD79c1e06E703e6fb9e3DE83C274E5bcFb486',
+      escrow: '0x383fdB2917B1bB02841116811f94159D9263D53d',
       tokens: [
         {
           name: 'USDC',
