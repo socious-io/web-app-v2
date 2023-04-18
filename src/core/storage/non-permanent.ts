@@ -8,7 +8,7 @@ async function set(payload: SetOptions): Promise<void> {
   if (isNative) {
     await Preferences.set(payload);
   } else {
-    Cookies.set(payload.key, payload.value);
+    Cookies.set(payload.key, payload.value, {sameSite: 'Strict', secure: true});
   }
 }
 
