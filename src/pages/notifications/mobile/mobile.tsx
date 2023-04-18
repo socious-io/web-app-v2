@@ -1,4 +1,5 @@
 import css from './mobile.module.scss';
+import { useNavigate } from '@tanstack/react-location';
 import { NotificationMobileProps } from './mobile.types';
 import { NotificationList } from '../../../components/organisms/notification-list/notification-list';
 import { useState } from 'react';
@@ -9,16 +10,17 @@ import { RootState } from '../../../store/store';
 import { IdentityReq } from '../../../core/types';
 
 export const Mobile = ({ list }: NotificationMobileProps): JSX.Element => {
+  const navigate = useNavigate();
   const [notificationList, setNotificationList] = useState(list.items);
   const [page, setPage] = useState(1);
   const totalCount = list.total_count;
 
   const onShowSeeMore = (length: number): boolean => {
     if (length < totalCount) {
-      return true
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -38,10 +40,14 @@ export const Mobile = ({ list }: NotificationMobileProps): JSX.Element => {
       <div className={css.header}>
         <Avatar size="2.25rem" type={identity.type} img={avatarImg} />
         <span className={css.title}>Notifications</span>
-        <img style={{ visibility: 'hidden' }} src="/icons/settings-black.svg" />
+        <img src="/icons/settings-black.svg" onClick={() => navigate({ to: 'settings' })} />
       </div>
       <div className={css.main}>
-        <NotificationList onMorePageClick={onMorePageClick} list={notificationList} showSeeMore={onShowSeeMore(notificationList.length)} />
+        <NotificationList
+          onMorePageClick={onMorePageClick}
+          list={notificationList}
+          showSeeMore={onShowSeeMore(notificationList.length)}
+        />
       </div>
     </div>
   );
