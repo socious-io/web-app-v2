@@ -31,7 +31,6 @@ import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 import { Intro } from '../../pages/intro/intro';
 import { profileUserPageLoader } from 'src/pages/profile-user/profile-user.loader';
 import { AchievementsPageLoader } from 'src/pages/achievements/achievements.loader';
-import { ProfileOrganization } from '../../pages/profile-organization/profile-organization';
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { getSettingsItems } from 'src/pages/notifications/settings/settings.service';
 
@@ -42,7 +41,7 @@ export const routes: Route[] = [
   },
   {
     path: 'sign-in',
-    element: () => import('../../pages/sign-in/sign-in').then((m) => <m.SignIn />),
+    element: () => import('../../pages/sign-in/sign-in-container').then((m) => <m.SignIn/>),
   },
   {
     path: 'sign-up',
