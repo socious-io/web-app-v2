@@ -25,11 +25,12 @@ export const Offer = (): JSX.Element => {
   const { applicantDetail } = useMatch().ownData as Resolver;
   const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
   const [paymentScheme, setPaymentScheme] = useState(applicantDetail?.project?.payment_scheme || 'FIXED');
-  const [paymentMode, setPaymentMode] = useState('CRYPTO');
+  const isPaidType = applicantDetail.project?.payment_type === 'PAID';
+  const defaultPaymentMode = isPaidType ? 'CRYPTO' : 'FIAT';
+  const [paymentMode, setPaymentMode] = useState(defaultPaymentMode);
   const [openModal, setOpenModal] = useState(false);
   const [tokens, setTokens] = useState<Item[]>([]);
   const [selectedToken, setSelectedToken] = useState<{ address: string; symbol?: string }>();
-  const isPaidType = applicantDetail.project?.payment_type === 'PAID';
   const isPaidCrypto = isPaidType && paymentMode === 'CRYPTO';
   const isPaidFiat = isPaidType && paymentMode === 'FIAT';
   const memoizedFormState = useMemo(() => formModel(isPaidType), []);
@@ -90,7 +91,7 @@ export const Offer = (): JSX.Element => {
         {printWhen(
           <RadioGroup
             name="PaymentMode"
-            value="CRYPTO"
+            value={paymentMode}
             onChange={console.log}
             label="Payment mode"
             list={PROJECT_PAYMENT_MODE}

@@ -551,3 +551,120 @@ export const OfferStatus = {
 export const OAuthProviders = {
   STRIPE: 'STRIPE',
 };
+
+export const NotificationSettings = [
+  {
+    type: 'FOLLOWED',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'COMMENT_LIKE',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'POST_LIKE',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'CHAT',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'SHARE_POST',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'SHARE_PROJECT',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'COMMENT',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'APPLICATION',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'OFFER',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'REJECT',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'APPROVED',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'HIRED',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'PROJECT_COMPLETE',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'ASSIGNEE_CANCELED',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'ASSIGNER_CANCELED',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'ASSIGNER_CONFIRMED',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'CONNECT',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'ACCEPT_CONNECT',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+  {
+    type: 'MEMBERED',
+    in_app: true,
+    email: true,
+    push: true,
+  },
+];
