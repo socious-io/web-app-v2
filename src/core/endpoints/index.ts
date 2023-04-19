@@ -70,5 +70,8 @@ export const endpoint: Endpoints = {
       upload: (formData) =>
         post('/media/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(getDataProp),
     },
+    notifications: {
+      settings_confirm: (body) => post('notifications/settings', body).then(getDataProp),
+    },
   },
 };

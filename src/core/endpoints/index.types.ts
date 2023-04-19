@@ -1,3 +1,5 @@
+import { NotificationSettingsRes } from '../types';
+
 export type GetProject = (id: string) => {
   applicants: number;
   applied: boolean;
@@ -91,5 +93,8 @@ export interface Endpoints {
       'orgs/update/{org_id}': (id: string, payload: PostOrganizationUpdatePayload) => Promise<unknown>;
     };
     payments: {};
+    notifications: {
+      settings_confirm: (formData: NotificationSettingsRes) => Promise<NotificationSettingsRes>;
+    };
   };
 }
