@@ -15,8 +15,19 @@
   font-weight: 600;
   font-family: 'Work Sans';
   caret-color: transparent;
+  cursor: pointer;
 }
 
 .box:focus {
   border: 2px solid #9d9d9d;
+}
+
+.box::-webkit-outer-spin-button,
+.box::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.box[type='number'] {
+  -moz-appearance: textfield;
 }
