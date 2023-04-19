@@ -74,15 +74,41 @@ export type PostMediaUploadResp = {
   created_at: string;
 };
 
+export type GetOtpConfirmPayload = {
+  email: string;
+  otp: string;
+};
+
+export type GetOtpConfirmResp = {
+  error?: string;
+  access_token: string;
+  refresh_token: string;
+  token_type: 'Bearer';
+};
+
+export type PostResendVerifyCodePayload = {
+  email: string;
+};
+
 export interface Endpoints {
-  get: {};
+  get: {
+    auth: {
+      'otp/confirm': (payload: GetOtpConfirmPayload) => Promise<GetOtpConfirmResp>;
+    };
+    projects: unknown;
+    offers: unknown;
+    missions: unknown;
+  };
   post: {
-    auth: {};
+    auth: {
+      login: unknown;
+      refresh: unknown;
+      'resend-verify-code': (payload: PostResendVerifyCodePayload) => Promise<unknown>;
+    };
     user: {
       '{user_id}/report': unknown;
       '{user_id}/update_wallet': unknown;
-      'update/profile': (payload: PostUserUpdatePayload) => Promise<unknown>;
-    };
+      'update/profile': (payload: PostUserUpdatePayload) => Promise<unknown>; };
     media: {
       upload: (formData: FormData) => Promise<PostMediaUploadResp>;
     };
