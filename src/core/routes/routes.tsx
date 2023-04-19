@@ -41,7 +41,7 @@ export const routes: Route[] = [
   },
   {
     path: 'sign-in',
-    element: () => import('../../pages/sign-in/sign-in-container').then((m) => <m.SignIn/>),
+    element: () => import('../../pages/sign-in/sign-in-container').then((m) => <m.SignInContainer />),
   },
   {
     path: 'sign-up',
@@ -121,7 +121,10 @@ export const routes: Route[] = [
           },
           {
             path: 'edit',
-            element: () => import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => <m.ProfileOrganizationEdit/>),
+            element: () =>
+              import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => (
+                <m.ProfileOrganizationEdit />
+              )),
           },
         ],
       },
