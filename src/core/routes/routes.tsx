@@ -55,7 +55,13 @@ export const routes: Route[] = [
                 <m.SignUpUserEmailContainer />
               )),
           },
-          { path: '/verification', element: <SignUpUserVerification /> },
+          {
+            path: '/verification',
+            element: () =>
+              import('../../pages/sign-up/sign-up-user-verification/sign-up-user-verification.container').then((m) => (
+                <m.SignUpUserVerificationContainer />
+              )),
+          },
           { path: '/complete', element: <SignUpUserComplete /> },
         ],
       },
