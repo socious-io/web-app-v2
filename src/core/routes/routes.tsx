@@ -3,7 +3,6 @@ import { ChangePassword } from '../../pages/change-password/change-password';
 import { getChatsSummery } from '../../pages/chat/contact-list/contact-list.services';
 import { getJobList } from '../../pages/jobs/jobs-cursor/jobs-cursor.services';
 import { SignUpUserComplete } from '../../pages/sign-up/sign-up-user-complete/sign-up-user-complete';
-import { SignUpUserEmail } from '../../pages/sign-up/sign-up-user-email/sign-up-user-email';
 import { SignUpUserVerification } from '../../pages/sign-up/sign-up-user-verification/sign-up-user-verification';
 import { MenuCursor as RootCursorLayout } from '../../components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../../components/templates/menu-touch/menu-touch';
@@ -49,7 +48,13 @@ export const routes: Route[] = [
       {
         path: '/user',
         children: [
-          { path: '/email', element: <SignUpUserEmail /> },
+          {
+            path: '/email',
+            element: () =>
+              import('../../pages/sign-up/sign-up-user-email/sign-up-user-email.container').then((m) => (
+                <m.SignUpUserEmailContainer />
+              )),
+          },
           { path: '/verification', element: <SignUpUserVerification /> },
           { path: '/complete', element: <SignUpUserComplete /> },
         ],
