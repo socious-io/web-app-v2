@@ -16,8 +16,7 @@ function getDataProp<T = unknown>(resp: { data: T }) {
 export const endpoint: Endpoints = {
   get: {
     auth: {
-      'otp/confirm': (payload: OtpConfirmReq) =>
-        get(`auth/otp/confirm?email=${payload.email}&code=${payload.otp}`).then(getDataProp),
+      'otp/confirm': (payload) => get(`auth/otp/confirm?email=${payload.email}&code=${payload.otp}`).then(getDataProp),
     },
     projects: {
       project_id: (id: string) => get(`projects/${id}`).then(getDataProp),
