@@ -27,6 +27,13 @@ export async function post(uri: string, payload: unknown, config?: AxiosRequestC
 }
 
 export async function get(uri: string, config?: AxiosRequestConfig<unknown>) {
+  if (!config) config = {};
+
+  config.params = {
+    t: new Date().getTime(),
+    ...config?.params,
+  };
+
   return http.get(uri, config);
 }
 
