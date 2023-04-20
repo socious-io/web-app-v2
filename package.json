@@ -11,7 +11,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "open:android": "npm run build && npx cap sync android && npx cap open android",
-    "open:ios": "npm run build && npx cap sync ios && npx cap open ios"
+    "open:ios": "npm run build && npx cap sync ios && npx cap open ios",
+    "build:icons": "npx @capacitor/assets generate --iconBackgroundColor '#183E3B' --splashBackgroundColor '#183E3B'"
   },
   "dependencies": {
     "@capacitor/action-sheet": "^4.1.0",
