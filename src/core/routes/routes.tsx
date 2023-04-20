@@ -2,7 +2,6 @@ import { Navigate, Route } from '@tanstack/react-location';
 import { ChangePassword } from '../../pages/change-password/change-password';
 import { getChatsSummery } from '../../pages/chat/contact-list/contact-list.services';
 import { getJobList } from '../../pages/jobs/jobs-cursor/jobs-cursor.services';
-import { SignUpUserComplete } from '../../pages/sign-up/sign-up-user-complete/sign-up-user-complete';
 import { MenuCursor as RootCursorLayout } from '../../components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../../components/templates/menu-touch/menu-touch';
 import { isTouchDevice } from '../device-type-detector';
@@ -61,7 +60,13 @@ export const routes: Route[] = [
                 <m.SignUpUserVerificationContainer />
               )),
           },
-          { path: '/complete', element: <SignUpUserComplete /> },
+          {
+            path: '/complete',
+            element: () =>
+              import('../../pages/sign-up/sign-up-user-complete/sign-up-user-complete.container').then((m) => (
+                <m.SignUpUserCompleteContainer />
+              )),
+          },
         ],
       },
     ],
