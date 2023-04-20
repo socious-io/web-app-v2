@@ -1,5 +1,5 @@
 export function isTouchDevice(): boolean {
-  return window.orientation > -1;
+  return window.innerWidth < 400;
   //   return true;
   //   return window.matchMedia('(pointer: coarse)').matches;
 }
