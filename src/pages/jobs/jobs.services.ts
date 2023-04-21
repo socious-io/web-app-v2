@@ -1,5 +1,5 @@
-import { get } from '../../../core/http';
-import { Menu } from '../../../components/molecules/card-menu/card-menu.types';
+import { Menu } from 'src/components/molecules/card-menu/card-menu.types';
+import { get } from 'src/core/http';
 
 export const NetworkMenuList: Menu[] = [
   { label: 'Connections', icon: '/icons/network.svg' },

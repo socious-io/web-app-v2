@@ -1,7 +1,6 @@
 import { Navigate, Route } from '@tanstack/react-location';
 import { ChangePassword } from '../../pages/change-password/change-password';
 import { getChatsSummery } from '../../pages/chat/contact-list/contact-list.services';
-import { getJobList } from '../../pages/jobs/jobs-cursor/jobs-cursor.services';
 import { MenuCursor as RootCursorLayout } from '../../components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../../components/templates/menu-touch/menu-touch';
 import { isTouchDevice } from '../device-type-detector';
@@ -30,6 +29,7 @@ import { profileUserPageLoader } from 'src/pages/profile-user/profile-user.loade
 import { AchievementsPageLoader } from 'src/pages/achievements/achievements.loader';
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { getSettingsItems } from 'src/pages/notifications/settings/settings.service';
+import { getJobList } from 'src/pages/jobs/jobs.services';
 
 export const routes: Route[] = [
   {
@@ -377,10 +377,8 @@ export const routes: Route[] = [
           },
           {
             path: '/jobs',
-            element: () => import('../../pages/jobs/jobs').then((m) => <m.Jobs />),
-            loader: () => {
-              return getJobList({ page: 1 });
-            },
+            element: () => import('../../pages/jobs/jobs.container').then((m) => <m.JobsContainer />),
+            loader: () => getJobList({ page: 1 }),
           },
           {
             path: 'notifications',

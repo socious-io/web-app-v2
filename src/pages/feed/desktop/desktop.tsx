@@ -4,7 +4,7 @@ import { CardMenu } from '../../../components/molecules/card-menu/card-menu';
 import { FeedItemProps } from '../../../components/molecules/feed-item/feed-item.types';
 import { FeedList } from '../../../components/organisms/feed-list/feed-list';
 import { TwoColumnCursor } from '../../../components/templates/two-column-cursor/two-column-cursor';
-import { JobsMenuList, NetworkMenuList } from '../../jobs/jobs-cursor/jobs-cursor.services';
+import { JobsMenuList, NetworkMenuList } from '../../jobs/~jobs-cursor/jobs-cursor.services';
 import css from './desktop.module.scss';
 
 const feedList: FeedItemProps[] = [
