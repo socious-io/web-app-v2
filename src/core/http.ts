@@ -8,6 +8,7 @@ import { config } from 'src/config';
 
 export const http = axios.create({
   baseURL: config.baseURL,
+  //   baseURL: 'https://socious.io/api/v2',
   withCredentials: true,
   timeout: 1000000,
 });
