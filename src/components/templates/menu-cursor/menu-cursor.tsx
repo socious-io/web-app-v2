@@ -19,7 +19,7 @@ export const MenuCursor = (): JSX.Element => {
               </li>
             ))}
           </ul>
-          <Avatar size='2rem' type='user' />
+          <Avatar size="2rem" type="users" />
         </div>
       </div>
       <div className={css.body}>

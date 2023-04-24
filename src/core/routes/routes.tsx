@@ -373,7 +373,7 @@ export const routes: Route[] = [
           {
             path: '/jobs/:id',
             loader: ({ params }) => endpoint.get.projects.project_id(params.id),
-            element: () => import('../../pages/job-detail/job-detail').then((m) => <m.JobDetail />),
+            element: () => import('../../pages/job-detail/job-detail.container').then((m) => <m.JobDetailContainer />),
           },
           {
             path: '/jobs',
