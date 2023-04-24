@@ -171,7 +171,7 @@ export const routes: Route[] = [
               const { offer } = offerReq;
               return { offer, cardInfo };
             },
-            element: () => import('../../pages/payment/payment').then((m) => <m.Payment />),
+            element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
           },
         ],
       },
