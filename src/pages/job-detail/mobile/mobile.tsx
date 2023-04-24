@@ -1,38 +1,25 @@
-import css from './job-detail.module.scss';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { Button } from '../../components/atoms/button/button';
-import { CategoriesClickable } from '../../components/atoms/categories-clickable/categories-clickable';
-import { Categories } from '../../components/atoms/categories/categories';
-import { ProfileView } from '../../components/molecules/profile-view/profile-view';
-import { getCategories } from './job-detail.services';
-import { Divider } from '../../components/templates/divider/divider';
-import { skillsToCategory, socialCausesToCategory } from '../../core/adaptors';
-import { Job } from '../../components/organisms/job-list/job-list.types';
-import { printWhen } from '../../core/utils';
-import { useSelector } from 'react-redux';
-import { IdentityReq } from '../../core/types';
-import { RootState } from '../../store/store';
+import css from './mobile.module.scss';
+import { Button } from '../../../components/atoms/button/button';
+import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
+import { Categories } from '../../../components/atoms/categories/categories';
+import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
+import { getCategories } from '../job-detail.services';
+import { Divider } from '../../../components/templates/divider/divider';
+import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors';
+import { printWhen } from '../../../core/utils';
 import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { useJobDetailShared } from '../job-detail.shared';
 
-export const JobDetail = (): JSX.Element => {
-  const navigate = useNavigate();
-  const { data: job } = useMatch() as unknown as { data: Job };
+export const Mobile = (): JSX.Element => {
+  const { job, identity, onApply } = useJobDetailShared();
 
   const buttonJSX = (
     <Button disabled={job.applied} onClick={onApply}>
       Apply now
     </Button>
   );
-
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
-  });
-
-  function onApply() {
-    navigate({ to: './apply' });
-  }
 
   const applicationSubmittedJSX = (
     <div className={css.appSubmitted}>
