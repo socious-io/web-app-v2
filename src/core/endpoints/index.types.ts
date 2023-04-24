@@ -108,12 +108,13 @@ export interface Endpoints {
     user: {
       '{user_id}/report': unknown;
       '{user_id}/update_wallet': unknown;
-      'update/profile': (payload: PostUserUpdatePayload) => Promise<unknown>; };
+      'update/profile': (payload: PostUserUpdatePayload) => Promise<unknown>;
+    };
     media: {
       upload: (formData: FormData) => Promise<PostMediaUploadResp>;
     };
     offers: {
-      '{offer_id}/hire': (id: string) => Promise<any>;
+      '{offer_id}/hire': (id: string) => Promise<unknown>;
     };
     missions: {};
     posts: {};
@@ -121,11 +122,11 @@ export interface Endpoints {
       'orgs/update/{org_id}': (id: string, payload: PostOrganizationUpdatePayload) => Promise<unknown>;
     };
     payments: {
-      '{offer_id/confirm}': (id: string, body: any) => Promise<any>;
-      'add-card': (body: any) => Promise<any>;
-      '{card_id}/update': (id: string, body: any) => Promise<any>;
-      '{card_id}/remove': (id: string) => Promise<any>;
-      '{mission_id}/payout': (id: string) => Promise<any>;
+      '{offer_id/confirm}': (id: string, body: any) => Promise<unknown>;
+      'add-card': (body: any) => Promise<unknown>;
+      '{card_id}/update': (id: string, body: any) => Promise<unknown>;
+      '{card_id}/remove': (id: string) => Promise<unknown>;
+      '{mission_id}/payout': (id: string) => Promise<unknown>;
     };
     notifications: {
       settings_confirm: (formData: NotificationSettingsRes) => Promise<NotificationSettingsRes>;
