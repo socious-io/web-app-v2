@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   background-color: var(--color-off-white-01);
+  min-height: calc(100vh - var(--desktop-nav-height));
 }
 
 .boundaries {
