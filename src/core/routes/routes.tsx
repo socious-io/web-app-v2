@@ -421,7 +421,7 @@ export const routes: Route[] = [
             children: [
               {
                 path: '/settings',
-                element: () => import('src/pages/notifications/settings/settings').then((m) => <m.Settings />),
+                element: () => import('src/pages/notifications/settings/settings.container').then((m) => <m.Settings />),
                 loader: () => getSettingsItems(),
               },
               {
