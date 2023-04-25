@@ -4,12 +4,5 @@ import { Desktop } from './desktop/desktop';
 import { Mobile } from './mobile/mobile';
 
 export const Notifications = (): JSX.Element => {
-  const data = useMatch().ownData;
-
-
-  return isTouchDevice() ? (
-    <Mobile list={data} />
-  ) : (
-    <Desktop />
-  );
+  return isTouchDevice() ? <Mobile /> : <Desktop />;
 };

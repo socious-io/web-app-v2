@@ -1,19 +1,30 @@
 import { useNavigate } from '@tanstack/react-location';
-import { Card } from '../../../components/atoms/card/card';
-import { TwoColumnCursor } from '../../../components/templates/two-column-cursor/two-column-cursor';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { Card } from 'src/components/atoms/card/card';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { NotificationList } from 'src/components/organisms/notification-list/notification-list';
+import { useNotificationsShared } from '../notifications.shared';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
+  const { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore } = useNotificationsShared();
+
   return (
     <TwoColumnCursor>
-      <Card className={css.settings}>
-        Notifications
-        <img src="/icons/settings-black.svg" onClick={() => navigate({ to: 'settings' })} />
+      <Card className={css.rightContainer}>
+        <div className={css.avatar}>
+          <Avatar size="2.25rem" type={identity.type} img={avatarImg} />
+          Notifications
+        </div>
+        <img src="/icons/settings-black.svg" className={css.icon} onClick={() => navigate({ to: 'settings' })} />
       </Card>
       <Card>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet possimus magnam libero porro, aliquid doloremque
-        velit sapiente aperiam maiores autem maxime. Rem, corporis veritatis. Id nobis at qui provident veniam.
+        <NotificationList
+          onMorePageClick={onMorePageClick}
+          list={notificationList}
+          showSeeMore={onShowSeeMore(notificationList.length)}
+        />
       </Card>
     </TwoColumnCursor>
   );
