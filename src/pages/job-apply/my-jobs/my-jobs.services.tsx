@@ -1,9 +1,10 @@
-import { toRelativeTime } from '../../../core/relative-time';
-import { GetOffer, Pagination, UserApplicantResp, DeclinedApplicantListResp, MissionsResp } from '../../../core/types';
-import { get } from '../../../core/http';
-import { JobCardProps } from '../../../components/molecules/job-card/job-card.types';
-import { APPLICANT_STATUS, setApplicantStatusLabel } from '../../../constants/APPLICANT_STATUS';
 import { CSSProperties } from 'react';
+import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
+import { Menu } from 'src/components/molecules/card-menu/card-menu.types';
+import { get } from 'src/core/http';
+import { toRelativeTime } from 'src/core/relative-time';
+import { GetOffer, Pagination, UserApplicantResp, DeclinedApplicantListResp, MissionsResp } from 'src/core/types';
+import { APPLICANT_STATUS, setApplicantStatusLabel } from 'src/constants/APPLICANT_STATUS';
 
 export async function getEndedList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
   return get(`/user/missions?status=COMPLETE,CONFIRMED&page=${payload.page}`)
@@ -167,3 +168,13 @@ function pendingItemToJobCard(applicant: UserApplicantResp): JobCardProps {
 function pendingListToJobCardList(applicants: UserApplicantResp[]): JobCardProps[] {
   return applicants.map(pendingItemToJobCard);
 }
+
+export const NetworkMenuList: Menu[] = [
+  { label: 'Connections', icon: '/icons/network.svg' },
+  { label: 'Followers', icon: '/icons/followers.svg' },
+];
+
+export const JobsMenuList: Menu[] = [
+  { label: 'Applied', icon: '/icons/my-applications.svg' },
+  { label: 'Hired', icon: '/icons/hired-jobs.svg' },
+];
