@@ -6,7 +6,7 @@
 
 .tabs {
   overflow: hidden;
-//   border-top: 1px solid var(--border-gray-01);
+  //   border-top: 1px solid var(--border-gray-01);
 }
 
 .tab {
@@ -28,6 +28,10 @@
     &::after {
       content: url('/icons/arrow-down-black.svg');
       transition: all 0.35s;
+    }
+
+    &_noBorder {
+      border-bottom: none;
     }
   }
 
