@@ -5,10 +5,12 @@ import store from './store/store';
 import { Spinner } from './components/atoms/spinner/spinner';
 import { Sidebar } from './pages/sidebar/sidebar';
 import { location } from './core/routes/config.routes';
+import { DeepLinks } from './core/deepLinks';
 
 function App() {
   return (
     <Provider store={store}>
+      <DeepLinks />
       <Router location={location} routes={routes}>
         <Spinner />
         <Sidebar />
