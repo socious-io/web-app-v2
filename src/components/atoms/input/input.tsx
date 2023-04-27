@@ -43,7 +43,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
         <input
           style={{ borderColor: outline ? 'var(--color-primary-01)' : '' }}
           id={props.label}
-          className={css.textbox}
+          className={`${css.textbox} ${props.inputClassName}`}
           role="textbox"
           {...rest}
           {...props?.register?.bind(props.name)}
@@ -57,7 +57,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
     <div style={{ gridTemplateRows: '2.5rem' }} className={`${setClassName(variant)} ${props.className}`}>
       <input
         id={props.label}
-        className={css.textbox}
+        className={`${css.textbox} ${props.inputClassName}`}
         role="textbox"
         {...rest}
         {...props?.register?.bind(props.name)}
