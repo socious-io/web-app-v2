@@ -31,6 +31,7 @@ import { profileOrganizationPageLoader } from 'src/pages/profile-organization/pr
 import { getSettingsItems } from 'src/pages/notifications/settings/settings.service';
 import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
+import { getMissionsList, getSrtipeProfile, getStripeLink } from 'src/pages/wallet/wallet.service';
 
 export const routes: Route[] = [
   {
@@ -328,6 +329,15 @@ export const routes: Route[] = [
         element: () => import('../../pages/search/search').then((m) => <m.Search />),
         loader: (p) => {
           return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 });
+        },
+      },
+      {
+        path: 'wallet',
+        element: () => import('../../pages/wallet/wallet').then((m) => <m.Wallet />),
+        loader: async () => {
+          const requests = [getMissionsList({ page: 1 }), getSrtipeProfile()];
+          const [missionsList, stripeProfile] = await Promise.all(requests);
+          return { missionsList, stripeProfile };
         },
       },
       {
