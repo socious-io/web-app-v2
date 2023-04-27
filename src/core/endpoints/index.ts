@@ -67,6 +67,7 @@ export const endpoint: Endpoints = {
       'add-card': (body: any) => post('/payments/cards', body).then(getDataProp),
       '{card_id}/update': (id: string, body: any) => post(`/payments/cards/update/${id}`, body).then(getDataProp),
       '{card_id}/remove': (id: string) => post(`/payments/cards/remove/${id}`, {}).then(getDataProp),
+      '{mission_id}/payout': (id: string) => post(`payments/missions/${id}/payout`, {}).then(getDataProp),
     },
     media: {
       upload: (formData) =>
