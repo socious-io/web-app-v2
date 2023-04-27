@@ -10,8 +10,8 @@ import { DeepLinks } from './core/deepLinks';
 function App() {
   return (
     <Provider store={store}>
-      <DeepLinks />
       <Router location={location} routes={routes}>
+        <DeepLinks />
         <Spinner />
         <Sidebar />
         <Outlet />
