@@ -6,6 +6,7 @@ export interface InputProps extends ReactHTMLInputElement {
   name?: string;
   variant?: 'outline';
   className?: string;
+  inputClassName?: string;
   errors?: string[];
   validations?: Record<string, any>;
   optional?: boolean;
