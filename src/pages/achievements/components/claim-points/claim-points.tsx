@@ -29,6 +29,14 @@ export const ClaimPoints = (): JSX.Element => {
     </a>
   );
 
+  const goToProofspaceJSX = (
+    <div className={css.proofspaceButton}>
+      <a className={css.proofspaceLink} href={`zakaio://platform.proofspace.id/native/execute/${identityId}`}>
+        Go to proofSpace app
+      </a>
+    </div>
+  );
+
   return (
     <div className={css.container}>
       <div className={css.titles}>Claim your impact points</div>
@@ -50,11 +58,11 @@ export const ClaimPoints = (): JSX.Element => {
         {printWhen(appStoreJSX, Capacitor.getPlatform() === 'ios')}
       </div>
       <p className={css.paragraph}>2. Choose “Socious” as a service</p>
-      {/* <p className={css.paragraph}>2. Click on the QR reader Icon and scan the QR code below </p> */}
       <p className={css.paragraph}>
         3. Congratulations! Your impact points are now recorded on Cardano blockchain as verifiable credentials!{' '}
       </p>
-      <div className={css.proofspaceButton} ref={qrCodeRef} />
+      {printWhen(<div className={css.proofspaceButton} ref={qrCodeRef} />, !Capacitor.isNativePlatform())}
+      {printWhen(goToProofspaceJSX, Capacitor.isNativePlatform())}
     </div>
   );
 };
