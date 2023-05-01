@@ -19,10 +19,9 @@ import css from './mobile.module.scss';
 export const Mobile: React.FC = () => {
   const {
     missionsList: { items, page, total_count },
-    stripeProfile: {
-      external_accounts: { data },
-    },
+    stripeProfile,
   } = useMatch().data as Resolver;
+  const { data } = stripeProfile?.external_accounts || {};
   const form = useForm(formModel);
   const formIsValid = form.isValid;
   const [generatedItems, setGeneratedItems] = useState(items);
@@ -61,7 +60,7 @@ export const Mobile: React.FC = () => {
 
   return (
     <TopFixedMobile>
-      <Header title="Wallet" onBack={() => history.back()} />
+      <Header title="Wallet" />
       <div className={css.container}>
         {generatedItems?.map((item) =>
           printWhen(
@@ -100,11 +99,7 @@ export const Mobile: React.FC = () => {
           />,
           !data?.length
         )}
-        <BankAccounts
-          accounts={data}
-          isDisabled={!formIsValid}
-          onClickAddAccount={() => (window.location.href = stripeLink)}
-        />
+        <BankAccounts accounts={data} isDisabled={!formIsValid || data?.length === 1} bankAccountLink={stripeLink} />
       </div>
     </TopFixedMobile>
   );
