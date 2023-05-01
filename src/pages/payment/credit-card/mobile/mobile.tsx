@@ -6,7 +6,7 @@ import { Header } from 'src/components/atoms/header-v2/header';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { Input } from 'src/components/atoms/input/input';
-import { Sticky } from 'src/components/atoms/sticky';
+import { Sticky } from 'src/components/templates/sticky';
 import { formModel } from './mobile.service';
 import { endpoint } from 'src/core/endpoints';
 import { CardInfoResp, CardItems } from 'src/core/types';
