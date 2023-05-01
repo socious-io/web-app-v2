@@ -1,0 +1,21 @@
+.container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .header {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .btn {
+        margin: auto;
+    }
+}

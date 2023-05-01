@@ -1,0 +1,29 @@
+.container {
+  .header {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .balance {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &__img {
+      border-radius: 50%;
+    }
+  }
+
+  .total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 0;
+    align-self: flex-start;
+  }
+
+  .button {
+    width: 100%;
+    margin: auto;
+  }
+}

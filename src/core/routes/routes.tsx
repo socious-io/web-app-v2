@@ -30,6 +30,8 @@ import { AchievementsPageLoader } from 'src/pages/achievements/achievements.load
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { getSettingsItems } from 'src/pages/notifications/settings/settings.service';
 import { getJobList } from 'src/pages/jobs/jobs.services';
+import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
+import { getMissionsList, getSrtipeProfile, getStripeLink } from 'src/pages/wallet/wallet.service';
 
 export const routes: Route[] = [
   {
@@ -145,8 +147,33 @@ export const routes: Route[] = [
       },
       {
         path: 'payment/:id',
-        loader: ({ params }) => receivedOfferLoader(params),
-        element: () => import('../../pages/payment/payment').then((m) => <m.Payment />),
+        children: [
+          {
+            path: '/add-card',
+            loader: async () => {
+              const [cardInfo] = await Promise.all([getCreditCardInfo()]);
+              return cardInfo;
+            },
+            element: () => import('../../pages/payment/credit-card/credit-card').then((m) => <m.CreditCard />),
+          },
+          {
+            path: '/edit-card/:id',
+            loader: async ({ params }) => {
+              const [cardInfo] = await Promise.all([getCreditCardInfoById(params.id)]);
+              return cardInfo;
+            },
+            element: () => import('../../pages/payment/credit-card/credit-card').then((m) => <m.CreditCard />),
+          },
+          {
+            loader: async ({ params }) => {
+              const requests = [receivedOfferLoader(params), getCreditCardInfo()];
+              const [offerReq, cardInfo] = await Promise.all(requests);
+              const { offer } = offerReq;
+              return { offer, cardInfo };
+            },
+            element: () => import('../../pages/payment/payment').then((m) => <m.Payment />),
+          },
+        ],
       },
       {
         path: '/achievements',
@@ -302,6 +329,15 @@ export const routes: Route[] = [
         element: () => import('../../pages/search/search').then((m) => <m.Search />),
         loader: (p) => {
           return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 });
+        },
+      },
+      {
+        path: 'wallet',
+        element: () => import('../../pages/wallet/wallet').then((m) => <m.Wallet />),
+        loader: async () => {
+          const requests = [getMissionsList({ page: 1 }), getSrtipeProfile()];
+          const [missionsList, stripeProfile] = await Promise.all(requests);
+          return { missionsList, stripeProfile };
         },
       },
       {
