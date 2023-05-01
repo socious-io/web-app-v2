@@ -18,4 +18,11 @@
     .btn {
         margin: auto;
     }
+
+    .link {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: var(--color-primary-01);
+    }
 }
