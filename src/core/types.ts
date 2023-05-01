@@ -267,6 +267,7 @@ export type MissionsResp = Pagination<
       meta: {
         0: string;
       };
+      service: 'STRIPE' | 'CRYPTO';
     };
     assignee: {
       meta: {
@@ -281,6 +282,10 @@ export type MissionsResp = Pagination<
         image: string;
         name: string;
       };
+    };
+    escrow: {
+      amount: number;
+      mission_id: string;
     };
   }[]
 >;
@@ -396,6 +401,39 @@ export type SettingsRes = {
 
 export type NotificationSettingsRes = {
   settings: SettingsRes[];
+};
+
+export type CardItems = {
+  id: string;
+  identity_id: string;
+  holder_name: string;
+  numbers: string;
+  exp_month: number;
+  exp_year: number;
+  cvc: string;
+  brand: null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CardInfoResp = Pagination<CardItems[]>;
+
+export type StripeLinkResp = {
+  link: {
+    created: number;
+    expires_at: number;
+    object: string;
+    url: string;
+  };
+};
+
+export type StripeProfileResp = {
+  external_accounts: {
+    data: {
+      account: string;
+      bank_name: string;
+    }[];
+  };
 };
 
 export type Error = { error: string };

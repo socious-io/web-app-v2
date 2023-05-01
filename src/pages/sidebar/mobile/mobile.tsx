@@ -156,6 +156,16 @@ export const Mobile = () => {
     </div>
   );
 
+  const paymentJSX = (
+    <div className={css.items}>
+      <div className={css.title}>Billing & Payments</div>
+      <div className={css.row} onClick={() => navigateToRoute('wallet')}>
+        <img src="/icons/wallet.svg" />
+        <span>Wallet</span>
+      </div>
+    </div>
+  );
+
   return (
     <div className={css.container}>
       <div style={bgStyles(isVisible)} className={css.bg} onClick={closeSidebar} />
@@ -197,6 +207,7 @@ export const Mobile = () => {
           {printWhen(createdLinkJSX, identity?.type === 'organizations')}
         </div>
         {printWhen(switchToJSX, accountList.length > 1)}
+        {printWhen(paymentJSX, identity?.type === 'users')}
         <div className={css.items}>
           <div className={css.title}>Settings</div>
           <div className={css.row} onClick={() => navigateToRoute('privacy-policy')}>

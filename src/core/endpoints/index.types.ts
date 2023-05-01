@@ -112,13 +112,21 @@ export interface Endpoints {
     media: {
       upload: (formData: FormData) => Promise<PostMediaUploadResp>;
     };
-    offers: {};
+    offers: {
+      '{offer_id}/hire': (id: string) => Promise<any>;
+    };
     missions: {};
     posts: {};
     organizations: {
       'orgs/update/{org_id}': (id: string, payload: PostOrganizationUpdatePayload) => Promise<unknown>;
     };
-    payments: {};
+    payments: {
+      '{offer_id/confirm}': (id: string, body: any) => Promise<any>;
+      'add-card': (body: any) => Promise<any>;
+      '{card_id}/update': (id: string, body: any) => Promise<any>;
+      '{card_id}/remove': (id: string) => Promise<any>;
+      '{mission_id}/payout': (id: string) => Promise<any>;
+    };
     notifications: {
       settings_confirm: (formData: NotificationSettingsRes) => Promise<NotificationSettingsRes>;
     };

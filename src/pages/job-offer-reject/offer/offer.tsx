@@ -61,7 +61,7 @@ export const Offer = (): JSX.Element => {
       assignment_total: isPaidType ? (form.controls.assignmentTotal.value as number) : 1,
       offer_message: form.controls.message.value as string,
       total_hours: form.controls.estimatedTotalHours.value as string,
-      crypto_currency_address: selectedToken?.address || tokens[0]?.value,
+      crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
     offer(applicantDetail.id, payload).then(() => {
       navigate({ to: '../..' });
@@ -92,7 +92,7 @@ export const Offer = (): JSX.Element => {
           <RadioGroup
             name="PaymentMode"
             value={paymentMode}
-            onChange={console.log}
+            onChange={(value) => setPaymentMode(value)}
             label="Payment mode"
             list={PROJECT_PAYMENT_MODE}
           />,

@@ -2,6 +2,7 @@ import { MissionsResp, Offer, Pagination, QuestionsRes, UserApplicantResp } from
 import { Job } from '../../components/organisms/job-list/job-list.types';
 
 export type Loader = {
+  offerOverview: Offer;
   jobOverview: Job;
   screeningQuestions: { questions: QuestionsRes[] };
   reviewList: Pagination<UserApplicantResp[]>;
