@@ -50,7 +50,18 @@ export const Desktop: React.FC = () => {
       </div>
       <div className={css.container}>
         <PaymentMethods
-          crypto_method={isPaidCrypto && <Dapp.Connect />}
+           crypto_method={
+            isPaidCrypto ? (
+              <Dapp.Connect />
+            ) : (
+              <Button color="white" disabled={!isPaidCrypto} >
+                <>
+                  <img src="/icons/crypto/walletconnect.svg" width={18} height={18} />
+                  Connect Wallet
+                </>
+              </Button>
+            )
+          }
           fiat_method={
             <Button color="white" disabled={true}>
               <>

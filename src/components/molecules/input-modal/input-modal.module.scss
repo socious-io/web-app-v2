@@ -1,6 +1,7 @@
 $color-gray-light-1: #808289;
 
 .container {
+  max-width: 100%;
   display: flex;
   align-items: center;
   border: 1px solid var(--color-gray-04);
@@ -15,19 +16,15 @@ $color-gray-light-1: #808289;
   }
 
   .input {
-    padding: 0 0.5rem;
-    flex: 2;
-
-    &::placeholder {
-      color: var(--color-gray-02);
-    }
+    border: none;
   }
 }
 
 .selected {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  min-width: 30%;
+  gap: 0.5rem;
   padding: 0 12px;
   height: 100%;
   border-left: 1px solid var(--color-gray-04);
@@ -81,7 +78,6 @@ $color-gray-light-1: #808289;
     font-weight: 600;
   }
 }
-
 
 .not_found {
   font-size: 16px;

@@ -17,11 +17,11 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
 }) => {
   return (
     <Card className={`${css['connect']} ${containerClassName}`}>
-      <div>{crypto_method}</div>
+      <div className={css['connect__crypto']}>{crypto_method}</div>
       {fiat_method}
       {printWhen(
         <div className={css['connect__cards']}>
-          {added_cards.map((card, index) => (
+          {added_cards.map((card) => (
             <div className={css['connect__card']} key={card.id}>
               <SelectCard
                 name={card.holder_name}
