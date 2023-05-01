@@ -36,7 +36,7 @@ export const InputModal: React.FC<InputModalProps> = ({
 
   return (
     <div className={css.container}>
-      <Input className={css.input} {...(rest as InputProps)} ref={null} />
+      <Input inputClassName={css.input} {...(rest as InputProps)} ref={null} />
       <div className={css.selected} onClick={onOpen}>
         <img src={`/icons/crypto/${selectedItem}.svg`} width={24} height={24} />
         {selectedItem}

@@ -65,7 +65,18 @@ export const Mobile: React.FC = () => {
             />
           </div>
           <PaymentMethods
-            crypto_method={isPaidCrypto && <Dapp.Connect />}
+            crypto_method={
+              isPaidCrypto ? (
+                <Dapp.Connect />
+              ) : (
+                <Button color="white" disabled={!isPaidCrypto} >
+                  <>
+                    <img src="/icons/crypto/walletconnect.svg" width={18} height={18} />
+                    Connect Wallet
+                  </>
+                </Button>
+              )
+            }
             fiat_method={
               <Button color="white" disabled={isPaidCrypto} onClick={() => navigate({ to: 'add-card' })}>
                 <>
@@ -74,7 +85,7 @@ export const Mobile: React.FC = () => {
                 </>
               </Button>
             }
-            added_cards={cards?.items}
+            added_cards={!isPaidCrypto ? cards?.items : []}
             selectedCard={selectedCard}
             onSelectCard={onSelectCard}
             onEditCard={(id) => navigate({ to: `edit-card/${id}` })}
