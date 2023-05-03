@@ -5,6 +5,7 @@ import { RootState } from 'src/store/store';
 import { generateQRCode } from './claim-points.services';
 import { printWhen } from 'src/core/utils';
 import { Capacitor } from '@capacitor/core';
+import { encode } from 'js-base64';
 
 export const ClaimPoints = (): JSX.Element => {
   const qrCodeRef = useRef<HTMLDivElement>(null);
@@ -12,6 +13,25 @@ export const ClaimPoints = (): JSX.Element => {
   const identityId = useSelector<RootState, string>((state) => {
     return state.identity.entities.find((identity) => identity.current)!.id;
   });
+
+  const json = {
+    id: '6374a508515f5a539afd400c',
+    actionId: '1',
+    serviceDid: '8DXffTYfukQsk3NZZP3ypS',
+    preparedCredentials: [
+      {
+        credentialId: '8DXffTYfukQsk3NZZP3ypS:3:CL:266:tag',
+        attributes: [
+          { name: 'Socious User ID', value: identityId },
+          //   { name: 'Credential Issue Date', value: '1682976032885' },
+          { name: 'Credential Issue Date', value: Date.now().toString() },
+        ],
+      },
+    ],
+  };
+
+  const objJsonB64 = encode(JSON.stringify(json));
+  const deepLinkUrl = 'zakaio://platform.proofspace.id/native/execute/' + objJsonB64;
 
   useEffect(() => {
     generateQRCode(identityId, qrCodeRef.current as HTMLDivElement).catch((e) => console.log('error: ', e));
@@ -31,7 +51,7 @@ export const ClaimPoints = (): JSX.Element => {
 
   const goToProofspaceJSX = (
     <div className={css.proofspaceButton}>
-      <a className={css.proofspaceLink} href={`zakaio://platform.proofspace.id/native/execute/${identityId}`}>
+      <a className={css.proofspaceLink} target="_blank" href={deepLinkUrl}>
         Go to proofSpace app
       </a>
     </div>
