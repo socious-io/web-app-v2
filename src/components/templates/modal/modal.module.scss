@@ -1,0 +1,21 @@
+.container {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(164, 164, 164, 0.888);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.content {
+  background: white;
+  margin: 1rem;
+  border-radius: 1rem;
+  cursor: initial;
+}
