@@ -35,6 +35,7 @@
     "@web3modal/react": "^2.2.2",
     "axios": "^1.2.3",
     "iso-country-currency": "^0.6.0",
+    "js-base64": "^3.7.5",
     "js-cookie": "^3.0.1",
     "markdown-to-jsx": "^7.1.9",
     "moment": "^2.29.4",

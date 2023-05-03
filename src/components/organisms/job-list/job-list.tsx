@@ -12,7 +12,6 @@ import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
 
 export const JobList = (props: JobListProps): JSX.Element => {
   const { data, onMorePageClick, ...rest } = props;
-
   const navigate = useNavigate();
 
   function goToJobDetail(id: string) {
