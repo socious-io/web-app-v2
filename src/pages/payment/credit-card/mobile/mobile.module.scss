@@ -61,3 +61,15 @@ $color-gray-light-0: #e4e6ed;
     }
   }
 }
+
+.errorsContainer {
+  margin-top: 4px;
+  transition: height 300ms 0s;
+}
+
+.errorItem {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-s);
+  color: var(--color-error-01);
+}
