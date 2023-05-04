@@ -286,6 +286,9 @@ export type MissionsResp = Pagination<
     escrow: {
       amount: number;
       mission_id: string;
+      release_id: string;
+      released_at: string;
+      created_at: string;
     };
   }[]
 >;
