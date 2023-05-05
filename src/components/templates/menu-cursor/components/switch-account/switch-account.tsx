@@ -3,8 +3,7 @@ import { RootState } from 'src/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { AccountsModel } from 'src/pages/sidebar/mobile/mobile.types';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
+import { logout, setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
 import { getIdentities } from 'src/core/api';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { useNavigate } from '@tanstack/react-location';
@@ -49,6 +48,11 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     }, 180);
   }, []);
 
+  function logOut() {
+    logout().then(() => navigate({ to: '/sign-in' }));
+    props.onClose();
+  }
+
   useEffect(() => {
     props.open ? openMenu() : closeMenu();
     return () => clearTimeout(timer);
@@ -56,7 +60,6 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
 
   const switchAccount = async (id: string) => {
     setPendingAccId(id);
-    hapticsImpactLight();
     await setIdentityHeader(id);
     getIdentities()
       .then((resp) => dispatch(setIdentityList(resp)))
@@ -116,7 +119,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
       </Divider>
       <Divider>
         <div className={css.settingsMenuContainer}>
-          <div className={css.menuItem}>
+          <div onClick={logOut} className={css.menuItem}>
             <span>Log out</span>
           </div>
         </div>
