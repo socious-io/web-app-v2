@@ -5,5 +5,6 @@ export interface ProfileViewProps extends CSSProperties {
   img?: string;
   size?: string;
   name: string;
+  theme?: 'dark' | 'light';
   location?: JSX.Element | string;
 }

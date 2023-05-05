@@ -3,8 +3,9 @@ export type MobileProps = {
 };
 
 export type AccountsModel = {
-  image: string;
+  image?: string;
   name: string;
   type: 'users' | 'organizations';
   id: string;
+  current: boolean;
 };
