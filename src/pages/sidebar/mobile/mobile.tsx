@@ -38,6 +38,7 @@ export const Mobile = () => {
         image: item.meta.image,
         type: item.type,
         id: item.id,
+        current: item.current,
       };
     });
   });
