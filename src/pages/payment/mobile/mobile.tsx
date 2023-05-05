@@ -8,7 +8,7 @@ import { JobDescrioptionCard } from 'src/components/templates/job-description-ca
 import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
 import { PaymentMethods } from 'src/components/templates/payment-methods';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { Sticky } from 'src/components/atoms/sticky';
+import { Sticky } from 'src/components/templates/sticky';
 import { confirmPayment } from './mobile.service';
 import store from 'src/store/store';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
@@ -93,8 +93,11 @@ export const Mobile = (): JSX.Element => {
         source: selectedCard,
       });
       endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
-    } catch (e) {
-      alert(JSON.stringify(e));
+    } catch (err: any) {
+      dialog.alert({
+        message: err?.response?.data.error || err?.message,
+        title: 'Failed',
+      });
     }
     setProcess(false);
   }
@@ -105,8 +108,11 @@ export const Mobile = (): JSX.Element => {
     try {
       const result = await getCreditCardInfo();
       setCards(result);
-    } catch (e) {
-      alert(JSON.stringify(e));
+    } catch (err: any) {
+      dialog.alert({
+        message: err?.response?.data.error || err?.message,
+        title: 'Failed',
+      });
     }
   }
 

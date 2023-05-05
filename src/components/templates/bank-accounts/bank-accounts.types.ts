@@ -1,5 +1,5 @@
 export interface BankAccountsProps {
   accounts: { bank_name: string; account: string }[];
-  onClickAddAccount: () => void;
+  bankAccountLink: string;
   isDisabled: boolean;
 }
