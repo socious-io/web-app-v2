@@ -1,9 +1,18 @@
 import { Outlet } from '@tanstack/react-location';
 import { Avatar } from '../../atoms/avatar/avatar';
 import css from './menu-cursor.module.scss';
-import { menuList } from './menu-cursor.services';
+import { getAvatar, menuList } from './menu-cursor.services';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
+import { IdentityReq } from 'src/core/types';
 
 export const MenuCursor = (): JSX.Element => {
+  const identity = useSelector<RootState, IdentityReq>((state) => {
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  });
+
+  console.log('identity: ', identity);
+
   return (
     <div className={css.container}>
       <div className={css.menu}>
@@ -19,7 +28,7 @@ export const MenuCursor = (): JSX.Element => {
               </li>
             ))}
           </ul>
-          <Avatar size="2rem" type="users" />
+          <Avatar size="2rem" type={identity.type} img={getAvatar(identity)} />
         </div>
       </div>
       <div className={css.body}>
