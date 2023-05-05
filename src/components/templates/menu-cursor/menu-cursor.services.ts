@@ -1,3 +1,5 @@
+import { IdentityReq } from 'src/core/types';
+
 export const menuList = [
   {
     label: 'Jobs',
@@ -20,3 +22,7 @@ export const menuList = [
     icon: '/icons/notifications.svg',
   },
 ];
+
+export function getAvatar(identity: IdentityReq) {
+  return identity.type === 'organizations' ? identity.meta.image : identity.meta.avatar;
+}
