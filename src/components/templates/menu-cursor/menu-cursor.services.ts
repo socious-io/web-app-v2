@@ -23,6 +23,21 @@ export const menuList = [
   },
 ];
 
+export const settingsList = [
+  {
+    label: 'Privacy policy',
+    icon: '',
+  },
+  {
+    label: 'Terms & conditions',
+    icon: '',
+  },
+  {
+    label: 'Change password',
+    icon: '',
+  },
+];
+
 export function getAvatar(identity: IdentityReq) {
   return identity.type === 'organizations' ? identity.meta.image : identity.meta.avatar;
 }

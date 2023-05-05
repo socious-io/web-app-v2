@@ -5,13 +5,14 @@ import { getAvatar, menuList } from './menu-cursor.services';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
+import { SwitchAccount } from './components/switch-account/switch-account';
+import { useState } from 'react';
 
 export const MenuCursor = (): JSX.Element => {
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-
-  console.log('identity: ', identity);
+  const [accListVisibility, setAccListVisibility] = useState(false);
 
   return (
     <div className={css.container}>
@@ -28,7 +29,20 @@ export const MenuCursor = (): JSX.Element => {
               </li>
             ))}
           </ul>
-          <Avatar size="2rem" type={identity.type} img={getAvatar(identity)} />
+          <div className={css.avatar}>
+            <Avatar
+              onClick={() => {
+                console.log('avatar click');
+                setAccListVisibility(!accListVisibility);
+              }}
+              size="2rem"
+              type={identity.type}
+              img={getAvatar(identity)}
+            />
+            <div className={css.switchAccountMenu}>
+              <SwitchAccount open={accListVisibility} onClose={() => setAccListVisibility(false)} />
+            </div>
+          </div>
         </div>
       </div>
       <div className={css.body}>
