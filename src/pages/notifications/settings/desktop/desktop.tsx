@@ -1,41 +1,46 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
-import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { Header } from 'src/components/atoms/header-v2/header';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { BackLink } from 'src/components/molecules/back-link';
+import { Card } from 'src/components/atoms/card/card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Toggle } from 'src/components/atoms/toggle';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { printWhen } from 'src/core/utils';
 import { useSettingsShared } from '../settings.shared';
-import css from './mobile.module.scss';
+import css from './desktop.module.scss';
 
-export const Mobile: React.FC = () => {
+export const Desktop: React.FC = () => {
   const navigate = useNavigate();
   const { settings, payload, onChange, onConfirm, onAllowNotifications, allowedNotifications } = useSettingsShared();
   const [closeAlert, setCloseAlert] = useState(false);
 
   const turnedOffMessageBoxJSX = (
-    <div className={css.turnedOffMessageBox}>
-      <img src="/icons/info.svg" height={18} width={18} />
-      <div className={css.turnedOffMessage}>
-        We recommend you turn on all notifications to stay up to date with the latest activity on Socious.
+    <div className={css.header}>
+      <div className={css.turnedOffMessageBox}>
+        <div className={css.turnOffInfo}>
+          <img src="/icons/info.svg" height={18} width={18} />
+          <div className={css.turnedOffMessage}>
+            We recommend you turn on all notifications to stay up to date with the latest activity on Socious.
+          </div>
+        </div>
+        <img src="/icons/close-white.svg" height={16} width={16} onClick={() => setCloseAlert(true)} />
       </div>
-      <img src="/icons/close-white.svg" height={16} width={16} onClick={() => setCloseAlert(true)} />
     </div>
   );
 
   return (
-    <TopFixedMobile>
-      <Header title="Notification settings" onBack={() => navigate({ to: '/notifications' })} />
-      <>
-        {printWhen(turnedOffMessageBoxJSX, !allowedNotifications && !closeAlert)}
-        <div className={css.notification_all}>
-          Allow notifications
-          <Toggle name="all" checked={allowedNotifications} onChange={onAllowNotifications} />
-        </div>
-        {printWhen(
-          <>
-            <div className={css.container}>
+    <>
+      {printWhen(turnedOffMessageBoxJSX, !allowedNotifications && !closeAlert)}
+      <TwoColumnCursor>
+        <BackLink title="Notifications" onBack={() => navigate({ to: '/notifications' })} />
+        <Card>
+          <div className={`${css.notification_all} ${!allowedNotifications && css['notification_all--noBorder']}`}>
+            Allow notifications
+            <Toggle name="all" checked={allowedNotifications} onChange={onAllowNotifications} />
+          </div>
+          {printWhen(
+            <>
               {settings
                 .sort((a, b) => a.type.localeCompare(b.type))
                 .map((setting) => (
@@ -72,16 +77,14 @@ export const Mobile: React.FC = () => {
                     </div>
                   </Accordion>
                 ))}
-            </div>
-            <div className={css.btn}>
-              <Button color="blue" onClick={() => onConfirm(payload)}>
+              <Button color="blue" onClick={() => onConfirm(payload)} className={css.btn}>
                 Save settings
               </Button>
-            </div>
-          </>,
-          !!settings.length && allowedNotifications
-        )}
-      </>
-    </TopFixedMobile>
+            </>,
+            !!settings.length && allowedNotifications
+          )}
+        </Card>
+      </TwoColumnCursor>
+    </>
   );
 };

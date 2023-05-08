@@ -1,13 +1,26 @@
-.container {
-  margin-bottom: 76px;
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-off-white-01);
+  padding: 2.5rem 2.5rem 0 2.5rem;
 }
 
 .turnedOffMessageBox {
-  padding: 12px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+  width: 100%;
+  max-width: 960px;
+  padding: 12px;
   background-color: #df3030;
+  border-radius: 16px;
+}
+
+.turnOffInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
 }
 
 .turnedOffMessage {
@@ -28,20 +41,20 @@
   justify-content: space-between;
 }
 
-.notification_all,
-.btn {
+.notification_all {
   padding: 16px;
   display: flex;
   background-color: white;
-}
-
-.notification_all {
   border-bottom: 1px solid var(--color-gray-04);
+
+  &--noBorder {
+    border-bottom: none;
+    padding: 0;
+  }
 }
 
 .btn {
-  justify-content: center;
-  position: fixed;
-  bottom: 82px;
   width: 100%;
+  max-width: unset;
+  margin-top: 16px;
 }

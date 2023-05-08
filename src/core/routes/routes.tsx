@@ -11,7 +11,7 @@ import { getFeedList } from '../../pages/feed/mobile/mobile.service';
 import { getComments, getPostDetail } from '../../pages/feed/post-detail/mobile/mobile.service';
 import { getJobCategories } from '../../pages/job-create/info/info.services';
 import { search } from '../../pages/search/search.services';
-import { getNotificationList } from '../../pages/notifications/mobile/mobile.service';
+import { getNotificationList } from '../../pages/notifications/notifications.service';
 import { getScreeningQuestions } from '../../pages/job-apply/apply/apply.services';
 import {
   getAwaitingReviewList,
@@ -171,7 +171,7 @@ export const routes: Route[] = [
               const { offer } = offerReq;
               return { offer, cardInfo };
             },
-            element: () => import('../../pages/payment/payment').then((m) => <m.Payment />),
+            element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
           },
         ],
       },
@@ -421,11 +421,11 @@ export const routes: Route[] = [
             children: [
               {
                 path: '/settings',
-                element: () => import('src/pages/notifications/settings/settings').then((m) => <m.Settings />),
+                element: () => import('src/pages/notifications/settings/settings.container').then((m) => <m.Settings />),
                 loader: () => getSettingsItems(),
               },
               {
-                element: () => import('../../pages/notifications/notifications').then((m) => <m.Notifications />),
+                element: () => import('../../pages/notifications/notifications.container').then((m) => <m.Notifications />),
                 loader: () => getNotificationList({ page: 1 }),
               },
             ],

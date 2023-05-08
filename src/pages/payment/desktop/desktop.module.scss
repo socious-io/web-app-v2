@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .btn {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.right {
+  position: sticky;
+  top: 2.5rem;
+}
