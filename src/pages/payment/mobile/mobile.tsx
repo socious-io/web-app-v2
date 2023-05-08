@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { useAccount } from 'wagmi';
+import { useNavigate } from '@tanstack/react-location';
 import Dapp from 'src/dapp';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Button } from 'src/components/atoms/button/button';
@@ -9,112 +7,26 @@ import { PaymentSummaryCard } from 'src/components/templates/payment-summary-car
 import { PaymentMethods } from 'src/components/templates/payment-methods';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { Sticky } from 'src/components/templates/sticky';
-import { confirmPayment } from './mobile.service';
-import store from 'src/store/store';
-import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
-import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
-import { getCreditCardInfo } from '../payment.service';
-import { getMonthName } from 'src/core/time';
-import { Resolver } from 'src/pages/offer-received/offer-received.types';
+import { usePaymentShared } from '../payment.shared';
 import css from './mobile.module.scss';
 
-export const Mobile = (): JSX.Element => {
-  const { web3 } = Dapp.useWeb3();
+export const Mobile: React.FC = () => {
   const navigate = useNavigate();
-  const { address: account, isConnected } = useAccount();
-  const { offer, cardInfo } = useMatch().ownData as Resolver;
-  const offerId = offer.id;
   const {
-    job_category: { name: job_name },
-    created_at,
-    recipient: {
-      meta: { name: applicant_name, avatar, city, country, wallet_address: contributor },
-      type,
-    },
-    project: { payment_scheme, payment_type },
-    total_hours,
-    assignment_total,
-    project_id,
-    payment_mode,
-  } = offer;
-  const commision = assignment_total * 0.03;
-  const total_price = commision + assignment_total;
-  const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
-  const isPaidType = payment_type === 'PAID';
-  const isPaidCrypto = isPaidType && payment_mode === 'CRYPTO';
-  const [process, setProcess] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
-  const [cards, setCards] = useState(cardInfo);
-
-  async function proceedCryptoPayment() {
-    // FIXME: please handle this errors in a proper way
-    if (!web3) throw new Error('Not allow web3 is not connected');
-    if (!contributor) throw new Error('Contributor wallet is not connected');
-
-    setProcess(true);
-    store.dispatch(showSpinner());
-    const escrowAmount = parseInt(assignment_total.toString());
-
-    try {
-      // put escrow on smart contract
-      const result = await Dapp.escrow({
-        web3,
-        escrowAmount,
-        contributor,
-        projectId: project_id,
-      });
-
-      // this is paramater need to sync with backend to make Hire available
-      await confirmPayment(offerId, {
-        service: 'CRYPTO',
-        source: account,
-        txHash: result.txHash,
-        meta: result,
-      });
-    } catch (err: any) {
-      dialog.alert({
-        message: err?.response?.data.error || err?.message,
-        title: 'Failed',
-      });
-    }
-
-    endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
-
-    setProcess(false);
-    store.dispatch(hideSpinner());
-  }
-
-  async function proceedFiatPayment() {
-    setProcess(true);
-    try {
-      await confirmPayment(offerId, {
-        service: 'STRIPE',
-        source: selectedCard,
-      });
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
-    } catch (err: any) {
-      dialog.alert({
-        message: err?.response?.data.error || err?.message,
-        title: 'Failed',
-      });
-    }
-    setProcess(false);
-  }
-
-  async function removeCard(id: string) {
-    setSelectedCard('');
-    endpoint.post.payments['{card_id}/remove'](id);
-    try {
-      const result = await getCreditCardInfo();
-      setCards(result);
-    } catch (err: any) {
-      dialog.alert({
-        message: err?.response?.data.error || err?.message,
-        title: 'Failed',
-      });
-    }
-  }
+    offer,
+    commision,
+    total_price,
+    start_date,
+    isPaidCrypto,
+    cards,
+    selectedCard,
+    onSelectCard,
+    onRemoveCard,
+    onClickProceedPayment,
+    isDisabledProceedPayment,
+  } = usePaymentShared();
+  const { job_category, recipient, project, total_hours, assignment_total } = offer || {};
+  const { avatar, city, country, name: applicant_name } = recipient?.meta || {};
 
   return (
     <TopFixedMobile>
@@ -122,15 +34,15 @@ export const Mobile = (): JSX.Element => {
       <>
         <div className={css['container']}>
           <JobDescrioptionCard
-            job_title={job_name}
+            job_title={job_category?.name || ''}
             start_date={start_date}
             end_date="Present"
             info_list={[
-              { icon: 'suitcase', name: payment_scheme },
+              { icon: 'suitcase', name: project?.payment_scheme || '' },
               { icon: 'hourglass', name: `${total_hours} hrs` },
             ]}
-            img={avatar as string}
-            type={type}
+            img={(avatar as string) || ''}
+            type={recipient?.type || 'users'}
             name={applicant_name}
             location={`${city}, ${country}`}
           />
@@ -145,7 +57,18 @@ export const Mobile = (): JSX.Element => {
             />
           </div>
           <PaymentMethods
-            crypto_method={isPaidCrypto && <Dapp.Connect />}
+            crypto_method={
+              isPaidCrypto ? (
+                <Dapp.Connect />
+              ) : (
+                <Button color="white" disabled={!isPaidCrypto}>
+                  <>
+                    <img src="/icons/crypto/walletconnect.svg" width={18} height={18} />
+                    Connect Wallet
+                  </>
+                </Button>
+              )
+            }
             fiat_method={
               <Button color="white" disabled={isPaidCrypto} onClick={() => navigate({ to: 'add-card' })}>
                 <>
@@ -154,19 +77,19 @@ export const Mobile = (): JSX.Element => {
                 </>
               </Button>
             }
-            added_cards={cards?.items}
+            added_cards={!isPaidCrypto ? cards?.items : []}
             selectedCard={selectedCard}
-            onSelectCard={(id) => setSelectedCard(id)}
+            onSelectCard={onSelectCard}
             onEditCard={(id) => navigate({ to: `edit-card/${id}` })}
-            onRemoveCard={removeCard}
+            onRemoveCard={onRemoveCard}
           />
         </div>
         <Sticky>
           <Button
             color="blue"
-            disabled={process || (isPaidCrypto ? !isConnected || !account : !selectedCard)}
+            disabled={isDisabledProceedPayment}
             className={css['footer__btn']}
-            onClick={() => (isPaidCrypto ? proceedCryptoPayment() : proceedFiatPayment())}
+            onClick={onClickProceedPayment}
           >
             Proceed with payment
           </Button>
