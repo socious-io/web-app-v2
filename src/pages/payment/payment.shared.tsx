@@ -17,21 +17,20 @@ export const usePaymentShared = () => {
   const [process, setProcess] = useState(false);
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
   const [cards, setCards] = useState(cardInfo);
-  const offerId = offer.id;
+  const offerId = offer?.id;
   const {
     created_at,
-    recipient: {
-      meta: { wallet_address: contributor },
-    },
+    recipient,
     assignment_total,
     project_id,
-    project: { payment_type },
+    project,
     payment_mode,
-  } = offer;
+  } = offer || {};
+  const { wallet_address: contributor } = recipient?.meta || {};
   const commision = assignment_total * 0.03;
   const total_price = commision + assignment_total;
   const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
-  const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
+  const isPaidCrypto = project?.payment_type === 'PAID' && payment_mode === 'CRYPTO';
   const isDisabledProceedPayment = process || (isPaidCrypto ? !isConnected || !account : !selectedCard);
 
   function onSelectCard(id: string) {
