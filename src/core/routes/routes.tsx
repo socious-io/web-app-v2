@@ -11,7 +11,7 @@ import { getFeedList } from '../../pages/feed/mobile/mobile.service';
 import { getComments, getPostDetail } from '../../pages/feed/post-detail/mobile/mobile.service';
 import { getJobCategories } from '../../pages/job-create/info/info.services';
 import { search } from '../../pages/search/search.services';
-import { getNotificationList } from '../../pages/notifications/mobile/mobile.service';
+import { getNotificationList } from '../../pages/notifications/notifications.service';
 import { getScreeningQuestions } from '../../pages/job-apply/apply/apply.services';
 import {
   getAwaitingReviewList,
@@ -425,7 +425,7 @@ export const routes: Route[] = [
                 loader: () => getSettingsItems(),
               },
               {
-                element: () => import('../../pages/notifications/notifications').then((m) => <m.Notifications />),
+                element: () => import('../../pages/notifications/notifications.container').then((m) => <m.Notifications />),
                 loader: () => getNotificationList({ page: 1 }),
               },
             ],
