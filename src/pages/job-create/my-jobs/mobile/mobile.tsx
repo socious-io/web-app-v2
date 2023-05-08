@@ -1,54 +1,25 @@
+import { useNavigate } from '@tanstack/react-location';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { Header } from 'src/components/atoms/header/header';
+import { Tabs } from 'src/components/atoms/tabs/tabs';
+import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
+import { Fab } from 'src/components/atoms/fab/fab';
+import { useMyJobShared } from '../my-job.shared';
 import css from './mobile.module.scss';
-import { Accordion } from '../../../../components/atoms/accordion/accordion';
-import { Header } from '../../../../components/atoms/header/header';
-import { Tabs } from '../../../../components/atoms/tabs/tabs';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { useState } from 'react';
-import { getActiveJobs, getDraftJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
-import { MyJobsResolver } from '../my-jobs.types';
-import { JobCardList } from '../../../../components/organisms/job-card-list/job-card-list';
-import { Fab } from '../../../../components/atoms/fab/fab';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
-  const resolver = useMatch();
-  const { activeJobs, draftJobs } = resolver.ownData as MyJobsResolver;
-  const onGoingTitle = `On-Going (${activeJobs.total_count})`;
-  const draftTitle = `Drafts (${draftJobs.total_count})`;
-  const adoptedJobList = jobListToJobCardListAdaptor(activeJobs.items);
-  const adoptedDraftList = jobListToJobCardListAdaptor(draftJobs.items);
-  const [activeJobList, setActiveJobList] = useState({ ...activeJobs, items: adoptedJobList });
-  const [draftJobList, setDraftJobList] = useState({ ...draftJobs, items: adoptedDraftList });
-
-  async function updateActiveJobList() {
-    const identityId = resolver.params.id;
-    const payload = { identityId, page: activeJobList.page + 1 };
-    getActiveJobs(payload)
-      .then(({ items }) => ({
-        items: [...activeJobList.items, ...jobListToJobCardListAdaptor(items)],
-        page: payload.page,
-        limit: activeJobs.limit,
-        total_count: activeJobs.total_count,
-      }))
-      .then(setActiveJobList);
-  }
-
-  async function updateDraftJobList() {
-    const identityId = resolver.params.id;
-    const payload = { identityId, page: draftJobList.page + 1 };
-    getDraftJobs(payload)
-      .then(({ items }) => ({
-        items: [...draftJobList.items, ...jobListToJobCardListAdaptor(items)],
-        page: payload.page,
-        limit: draftJobs.limit,
-        total_count: draftJobs.total_count,
-      }))
-      .then(setDraftJobList);
-  }
-
-  function navigateToOverview(id?: string) {
-    navigate({ to: `../${id}/overview` });
-  }
+  const {
+    onGoingTitle,
+    activeJobList,
+    navigateToOverview,
+    activeJobs,
+    updateActiveJobList,
+    draftTitle,
+    draftJobList,
+    draftJobs,
+    updateDraftJobList,
+  } = useMyJobShared();
 
   const tabs = [
     {
