@@ -14,3 +14,5 @@ export type Loader = {
   onGoingApplicants: OnGoingResp;
   endedApplicants: EndedResp
 };
+
+export type MyJobs = 'Applied' | 'Hired';

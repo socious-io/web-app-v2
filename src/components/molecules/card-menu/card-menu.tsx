@@ -4,7 +4,7 @@ import css from './card-menu.module.scss';
 import { CardMenuProps } from './card-menu.types';
 
 export const CardMenu = (props: CardMenuProps): JSX.Element => {
-  const { title, list } = props;
+  const { title, list, onClick } = props;
 
   return (
     <div className={css.container}>
@@ -12,7 +12,7 @@ export const CardMenu = (props: CardMenuProps): JSX.Element => {
         <div className={css.title}>{title}</div>
         <div className={css.list}>
           {list.map((item) => (
-            <div key={item.label} className={css.menuItem}>
+            <div key={item.label} className={css.menuItem} onClick={() => onClick?.(item.label)}>
               <div className={css.icon}>
                 <img src={item.icon} />
               </div>
