@@ -25,16 +25,8 @@ export const Mobile: React.FC = () => {
     onClickProceedPayment,
     isDisabledProceedPayment,
   } = usePaymentShared();
-  const {
-    job_category: { name: job_name },
-    recipient: {
-      meta: { name: applicant_name, avatar, city, country },
-      type,
-    },
-    project: { payment_scheme },
-    total_hours,
-    assignment_total,
-  } = offer || {};
+  const { job_category, recipient, project, total_hours, assignment_total } = offer || {};
+  const { avatar, city, country, name: applicant_name } = recipient?.meta || {};
 
   return (
     <TopFixedMobile>
@@ -42,15 +34,15 @@ export const Mobile: React.FC = () => {
       <>
         <div className={css['container']}>
           <JobDescrioptionCard
-            job_title={job_name}
+            job_title={job_category?.name || ''}
             start_date={start_date}
             end_date="Present"
             info_list={[
-              { icon: 'suitcase', name: payment_scheme },
+              { icon: 'suitcase', name: project?.payment_scheme || '' },
               { icon: 'hourglass', name: `${total_hours} hrs` },
             ]}
-            img={avatar as string}
-            type={type}
+            img={(avatar as string) || ''}
+            type={recipient?.type || 'users'}
             name={applicant_name}
             location={`${city}, ${country}`}
           />
@@ -69,7 +61,7 @@ export const Mobile: React.FC = () => {
               isPaidCrypto ? (
                 <Dapp.Connect />
               ) : (
-                <Button color="white" disabled={!isPaidCrypto} >
+                <Button color="white" disabled={!isPaidCrypto}>
                   <>
                     <img src="/icons/crypto/walletconnect.svg" width={18} height={18} />
                     Connect Wallet
