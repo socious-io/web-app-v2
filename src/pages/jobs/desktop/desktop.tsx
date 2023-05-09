@@ -8,7 +8,7 @@ import { JobsMenuList, NetworkMenuList } from '../jobs.services';
 import { useJobsShared } from '../jobs.shared';
 
 export const Desktop = (): JSX.Element => {
-  const { onMorePage, jobList, avatarImg, name } = useJobsShared();
+  const { onMorePage, jobList, avatarImg, name, navigateToProfile } = useJobsShared();
 
   return (
     <TwoColumnCursor>
@@ -18,7 +18,9 @@ export const Desktop = (): JSX.Element => {
             <Avatar img={avatarImg} type="users" />
             <div>
               <div className={css.username}>{name}</div>
-              <div className={css.profileLink}>View my profile</div>
+              <div onClick={navigateToProfile} className={css.profileLink}>
+                View my profile
+              </div>
             </div>
           </div>
           <div className={css.profileFooter}>
