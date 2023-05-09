@@ -32,7 +32,6 @@ export const ClaimPoints = (): JSX.Element => {
 
   const objJsonB64 = encode(JSON.stringify(json));
   const deepLinkUrl = 'zakaio://platform.proofspace.id/native/execute/' + objJsonB64;
-  console.log('deepLinkUrl: ', deepLinkUrl);
 
   useEffect(() => {
     generateQRCode(identityId, qrCodeRef.current as HTMLDivElement).catch((e) => console.log('error: ', e));
@@ -51,11 +50,9 @@ export const ClaimPoints = (): JSX.Element => {
   );
 
   const goToProofspaceJSX = (
-    <div className={css.proofspaceButton}>
-      <a className={css.proofspaceLink} target="_blank" href={deepLinkUrl}>
-        Go to proofSpace app
-      </a>
-    </div>
+    <button className={css.proofspaceButton} onClick={() => window.open(deepLinkUrl, '_blank')}>
+      <div className={css.proofspaceLink}>Go to proofSpace app</div>
+    </button>
   );
 
   return (
