@@ -8,7 +8,9 @@ import { config } from 'src/config';
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
 
-export const NETWORKS: Network[] = config.env === 'production' ? dappConfig.mainet : dappConfig.testnet;
+// export const NETWORKS: Network[] = config.env === 'production' ? dappConfig.mainet : dappConfig.testnet;
+// FIXME: enviremental switch deployed to mainet
+export const NETWORKS: Network[] = dappConfig.testnet;
 
 const chains: Chain[] = NETWORKS.map((n) => n.chain);
 
