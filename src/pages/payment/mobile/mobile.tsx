@@ -10,18 +10,18 @@ import { Sticky } from 'src/components/templates/sticky';
 import { usePaymentShared } from '../payment.shared';
 import css from './mobile.module.scss';
 
-export const Mobile: React.FC = () => {
+export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const {
     offer,
     commision,
     total_price,
     start_date,
-    isPaidCrypto,
     cards,
     selectedCard,
     onSelectCard,
     onRemoveCard,
+    isPaidCrypto,
     onClickProceedPayment,
     isDisabledProceedPayment,
   } = usePaymentShared();
@@ -70,7 +70,7 @@ export const Mobile: React.FC = () => {
               )
             }
             fiat_method={
-              <Button color="white" disabled={isPaidCrypto} onClick={() => navigate({ to: 'add-card' })}>
+              <Button color="white" disabled={isPaidCrypto || cards?.items?.length >= 3} onClick={() => navigate({ to: 'add-card' })}>
                 <>
                   <img src="/icons/debit.svg" width={18} height={18} />
                   Add Credit Card
