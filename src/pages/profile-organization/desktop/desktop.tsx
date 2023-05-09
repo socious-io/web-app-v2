@@ -15,18 +15,11 @@ import { Button } from 'src/components/atoms/button/button';
 import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
 import { badgesList, showActions } from '../profile-organization.services';
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
+import { useProfileOrganizationShared } from '../profile-organization.shared';
 
 export const Desktop = (): JSX.Element => {
-  const { user, badges } = useMatch().data as { user: ProfileReq; badges: { badges: unknown[] } };
-  const socialCauses = socialCausesToCategory(user.social_causes);
-  const navigate = useNavigate();
-  const skills = skillsToCategory(user.skills);
-
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
-  });
-
-  const profileBelongToCurrentUser = currentIdentity?.id === user.id;
+  const { user, skills, navigateToEdit, profileBelongToCurrentUser, onAchievementClick, socialCauses, badges } =
+    useProfileOrganizationShared();
 
   const bioJSX = (
     <Divider>
@@ -59,7 +52,7 @@ export const Desktop = (): JSX.Element => {
   );
 
   const editButtonJSX = (
-    <Button onClick={() => navigate({ to: '../edit' })} color="white" width="6.5rem">
+    <Button onClick={navigateToEdit} color="white" width="6.5rem">
       Edit
     </Button>
   );
@@ -100,15 +93,6 @@ export const Desktop = (): JSX.Element => {
       <div className={css.contactData}>{user.city}</div>
     </div>
   );
-
-  function onClose() {
-    navigate({ to: '/jobs' });
-  }
-
-  function onAchievementClick() {
-    const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate({ to: `/achievements?proofspace_connect_id=${connectId}` });
-  }
 
   return (
     <TwoColumnCursor>
