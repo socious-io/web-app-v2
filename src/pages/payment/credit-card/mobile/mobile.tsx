@@ -1,6 +1,4 @@
-import { useMemo } from 'react';
 import { useMatch } from '@tanstack/react-location';
-import { useForm } from 'src/core/form';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Button } from 'src/components/atoms/button/button';
@@ -8,19 +6,14 @@ import { Card } from 'src/components/atoms/card/card';
 import { Input } from 'src/components/atoms/input/input';
 import { Sticky } from 'src/components/templates/sticky';
 import { printWhen } from 'src/core/utils';
-import { formModel } from './mobile.service';
 import { endpoint } from 'src/core/endpoints';
 import { CardInfoResp, CardItems } from 'src/core/types';
+import { useCreditCardShared } from '../credit-card.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
   const cardInfo = (useMatch().ownData as unknown) || {};
-  const memoizedFormState = useMemo(() => formModel(cardInfo as CardItems), []);
-  const form = useForm(memoizedFormState);
-  const formIsInvalid = !form.isValid;
-  const controlErrors = { ...form.controls.year?.errors, ...form.controls.month?.errors } || {};
-  const isDirty = form.controls.year.isDirty || form.controls.month.isDirty;
-  const errors = Object.values(controlErrors) as string[];
+  const { form, formIsInvalid, isDirtyYearOrMonth: isDirty, errors } = useCreditCardShared();
 
   const errorsJSX = (
     <div style={{ height: '`${errors.length}rem`' }} className={css.errorsContainer}>
