@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { getJobList } from './jobs.services';
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 import { useSelector } from 'react-redux';
 
 export const useJobsShared = () => {
   const { data } = useMatch();
+  const navigate = useNavigate();
   const [jobList, setJobList] = useState(data.items);
   const [page, setPage] = useState(1);
 
@@ -17,6 +18,14 @@ export const useJobsShared = () => {
     });
   }
 
+  function navigateToProfile() {
+    if (identity.type === 'users') {
+      navigate({ to: `/profile/users/${identity.meta.username}/view` });
+    } else {
+      navigate({ to: `/profile/organizations/${identity.meta.shortname}/view` });
+    }
+  }
+
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
@@ -24,5 +33,5 @@ export const useJobsShared = () => {
   const name = identity.meta.name;
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
-  return { onMorePage, jobList, avatarImg, identity, name };
+  return { onMorePage, jobList, avatarImg, identity, name, navigateToProfile };
 };

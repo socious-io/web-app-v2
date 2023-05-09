@@ -31,7 +31,7 @@ import { profileOrganizationPageLoader } from 'src/pages/profile-organization/pr
 import { getSettingsItems } from 'src/pages/notifications/settings/settings.service';
 import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
-import { getMissionsList, getSrtipeProfile, getStripeLink } from 'src/pages/wallet/wallet.service';
+import { getMissionsList, getSrtipeProfile } from 'src/pages/wallet/wallet.service';
 
 export const routes: Route[] = [
   {
@@ -124,24 +124,6 @@ export const routes: Route[] = [
           {
             path: 'edit',
             element: () => import('../../pages/profile-user-edit/profile-user-edit').then((m) => <m.ProfileUserEdit />),
-          },
-        ],
-      },
-      {
-        path: 'profile/organizations/:id',
-        loader: profileOrganizationPageLoader,
-        children: [
-          {
-            path: 'view',
-            element: () =>
-              import('../../pages/profile-organization/profile-organization').then((m) => <m.ProfileOrganization />),
-          },
-          {
-            path: 'edit',
-            element: () =>
-              import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => (
-                <m.ProfileOrganizationEdit />
-              )),
           },
         ],
       },
@@ -417,15 +399,37 @@ export const routes: Route[] = [
             loader: () => getJobList({ page: 1 }),
           },
           {
+            path: 'profile/organizations/:id',
+            loader: profileOrganizationPageLoader,
+            children: [
+              {
+                path: 'view',
+                element: () =>
+                  import('../../pages/profile-organization/profile-organization.container').then((m) => (
+                    <m.ProfileOrganizationContainer />
+                  )),
+              },
+              {
+                path: 'edit',
+                element: () =>
+                  import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => (
+                    <m.ProfileOrganizationEdit />
+                  )),
+              },
+            ],
+          },
+          {
             path: 'notifications',
             children: [
               {
                 path: '/settings',
-                element: () => import('src/pages/notifications/settings/settings.container').then((m) => <m.Settings />),
+                element: () =>
+                  import('src/pages/notifications/settings/settings.container').then((m) => <m.Settings />),
                 loader: () => getSettingsItems(),
               },
               {
-                element: () => import('../../pages/notifications/notifications.container').then((m) => <m.Notifications />),
+                element: () =>
+                  import('../../pages/notifications/notifications.container').then((m) => <m.Notifications />),
                 loader: () => getNotificationList({ page: 1 }),
               },
             ],
