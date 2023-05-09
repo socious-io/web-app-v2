@@ -208,7 +208,7 @@ export const Mobile = () => {
           {printWhen(createdLinkJSX, identity?.type === 'organizations')}
         </div>
         {printWhen(switchToJSX, accountList.length > 1)}
-        {/* {printWhen(paymentJSX, identity?.type === 'users')} */}
+        {printWhen(paymentJSX, identity?.type === 'users')}
         <div className={css.items}>
           <div className={css.title}>Settings</div>
           <div className={css.row} onClick={() => navigateToRoute('privacy-policy')}>
