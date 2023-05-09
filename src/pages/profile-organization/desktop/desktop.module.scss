@@ -1,3 +1,18 @@
+.sidebar {
+  display: grid;
+  gap: 1rem;
+  position: sticky;
+  top: 2.5rem;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 .header {
   display: grid;
   position: relative;
@@ -48,7 +63,7 @@
 .achievements {
   border-radius: 10px;
   min-height: 4rem;
-  background-color: #f2f2f2;
+  background-color: var(--color-off-white-01);
   padding: 1rem;
   display: flex;
   align-items: center;
