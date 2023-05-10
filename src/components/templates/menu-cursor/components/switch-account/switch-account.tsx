@@ -80,23 +80,16 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     <div style={containerStyles} className={css.container}>
       <Divider padding={0}>
         <div className={css.accountList}>
-          {accountList
-            .filter((_, i) => i < 3)
-            .map((item) => (
-              <div
-                onClick={() => switchAccount(item.id)}
-                key={item.id}
-                style={{ backgroundColor: accountBgColor(item.id, item.current) }}
-                className={css.accountItem}
-              >
-                <ProfileView
-                  type={item.type}
-                  name={item.name}
-                  img={item.image}
-                  theme={item.current ? 'dark' : 'light'}
-                />
-              </div>
-            ))}
+          {accountList.map((item) => (
+            <div
+              onClick={() => switchAccount(item.id)}
+              key={item.id}
+              style={{ backgroundColor: accountBgColor(item.id, item.current) }}
+              className={css.accountItem}
+            >
+              <ProfileView type={item.type} name={item.name} img={item.image} theme={item.current ? 'dark' : 'light'} />
+            </div>
+          ))}
         </div>
       </Divider>
       <Divider title="Jobs">
