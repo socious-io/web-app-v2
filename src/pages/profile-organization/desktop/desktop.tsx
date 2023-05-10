@@ -4,12 +4,6 @@ import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { printWhen } from 'src/core/utils';
 import { Divider } from 'src/components/templates/divider/divider';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { IdentityReq } from 'src/core/types';
-import { ProfileReq } from '../profile-organization.types';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
 import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
@@ -116,7 +110,7 @@ export const Desktop = (): JSX.Element => {
               <div className={css.btnContainer}>
                 {/* <Button width="6.5rem">Connect</Button> */}
                 {/* {printWhen(editButtonJSX, profileBelongToCurrentUser)} */}
-                {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
+                {/* {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)} */}
               </div>
               <div className={css.userConnections}>
                 <div>{user.followings} connections</div>

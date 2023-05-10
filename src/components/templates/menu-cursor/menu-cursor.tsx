@@ -32,7 +32,6 @@ export const MenuCursor = (): JSX.Element => {
           <div className={css.avatar}>
             <Avatar
               onClick={() => {
-                console.log('avatar click');
                 setAccListVisibility(!accListVisibility);
               }}
               size="2rem"
