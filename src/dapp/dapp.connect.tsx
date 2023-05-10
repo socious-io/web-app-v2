@@ -33,7 +33,6 @@ export const useWeb3 = () => {
 
   useEffect(() => {
     async function init() {
-
       if (!isConnected || !connector || !account) {
         setWeb3(null);
         setProvider(null);
@@ -42,12 +41,12 @@ export const useWeb3 = () => {
 
       const provider = await connector.getProvider();
       const web3Instance = new Web3(provider);
-      
+
       if (!web3Instance) throw Error('Provider is not valid');
 
       web3Instance.defaultAccount = account;
       web3Instance.eth.defaultAccount = account;
-      
+
       setWeb3(web3Instance);
       setProvider(provider);
     }
@@ -57,7 +56,6 @@ export const useWeb3 = () => {
 
   return { web3, provider };
 };
-
 
 export const Connect: React.FC = () => {
   return (
