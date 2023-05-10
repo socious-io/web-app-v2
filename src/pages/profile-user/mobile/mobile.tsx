@@ -1,43 +1,26 @@
 import css from './mobile.module.scss';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { ThreeDotsButton } from '../../../components/atoms/three-dots-button/three-dots-button';
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Divider } from '../../../components/templates/divider/divider';
-import { ProfileReq } from '../profile-user.types';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
-import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
 import { badgesList, showActions } from '../profile-user.services';
-import { useSelector } from 'react-redux';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
 import { Button } from 'src/components/atoms/button/button';
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { useProfileUserShared } from '../profile-user.shared';
 
 export const Mobile = (): JSX.Element => {
-  const { user, badges } = useMatch().data as { user: ProfileReq; badges: { badges: unknown[] } };
-  const socialCauses = socialCausesToCategory(user.social_causes);
-  const navigate = useNavigate();
-  const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;
-  const skills = skillsToCategory(user.skills);
-
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
-  });
-
-  const profileBelongToCurrentUser = currentIdentity?.id === user.id;
-
-  function onClose() {
-    hapticsImpactLight();
-    navigate({ to: '/jobs' });
-  }
-
-  function onAchievementClick() {
-    hapticsImpactLight();
-    const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate({ to: `/achievements?proofspace_connect_id=${connectId}` });
-  }
+  const {
+    user,
+    badges,
+    socialCauses,
+    avatarImage,
+    skills,
+    navigateToEdit,
+    profileBelongToCurrentUser,
+    onClose,
+    onAchievementClick,
+  } = useProfileUserShared();
 
   const cityLinkJSX = (
     <div className={css.contactItem}>
@@ -104,7 +87,7 @@ export const Mobile = (): JSX.Element => {
   );
 
   const editButtonJSX = (
-    <Button onClick={() => navigate({ to: '../edit' })} color="white" width="6.5rem">
+    <Button onClick={navigateToEdit} color="white" width="6.5rem">
       Edit
     </Button>
   );

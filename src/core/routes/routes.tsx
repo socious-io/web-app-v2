@@ -114,20 +114,6 @@ export const routes: Route[] = [
       },
       { path: 'change-password', element: <ChangePassword /> },
       {
-        path: 'profile/users/:id',
-        loader: profileUserPageLoader,
-        children: [
-          {
-            path: 'view',
-            element: () => import('../../pages/profile-user/profile-user').then((m) => <m.ProfileUser />),
-          },
-          {
-            path: 'edit',
-            element: () => import('../../pages/profile-user-edit/profile-user-edit').then((m) => <m.ProfileUserEdit />),
-          },
-        ],
-      },
-      {
         path: 'payment/:id',
         children: [
           {
@@ -397,6 +383,22 @@ export const routes: Route[] = [
             path: '/jobs',
             element: () => import('../../pages/jobs/jobs.container').then((m) => <m.JobsContainer />),
             loader: () => getJobList({ page: 1 }),
+          },
+          {
+            path: 'profile/users/:id',
+            loader: profileUserPageLoader,
+            children: [
+              {
+                path: 'view',
+                element: () =>
+                  import('../../pages/profile-user/profile-user.container').then((m) => <m.ProfileUserContainer />),
+              },
+              {
+                path: 'edit',
+                element: () =>
+                  import('../../pages/profile-user-edit/profile-user-edit').then((m) => <m.ProfileUserEdit />),
+              },
+            ],
           },
           {
             path: 'profile/organizations/:id',
