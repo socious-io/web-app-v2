@@ -80,7 +80,7 @@ export const Mobile: React.FC = () => {
             added_cards={!isPaidCrypto ? cards?.items : []}
             selectedCard={selectedCard}
             onSelectCard={onSelectCard}
-            onEditCard={(id) => navigate({ to: `edit-card/${id}` })}
+            // onEditCard={(id) => navigate({ to: `edit-card/${id}` })}
             onRemoveCard={onRemoveCard}
           />
         </div>
