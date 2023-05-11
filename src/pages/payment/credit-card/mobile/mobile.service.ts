@@ -1,6 +1,6 @@
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { number } from 'src/core/form/customValidators/customValidators';
-import { pattern, required } from 'src/core/form';
+import { max, min, minLength, required } from 'src/core/form';
 import { CardItems } from 'src/core/types';
 
 export const formModel = (intialValues: CardItems): FormModel => {
@@ -15,19 +15,23 @@ export const formModel = (intialValues: CardItems): FormModel => {
     },
     cardNumber: {
       initialValue: numbers ? '**** ' + numbers : '',
-      validators: [required()],
+      validators: [required(), number(), minLength(8, 'Card number must has minimum 8 characters')],
     },
     year: {
       initialValue: exp_year_format,
-      validators: [required(), number()],
+      validators: [required(), number(), min(23, 'The expiration year is not valid')],
     },
     month: {
       initialValue: exp_month_format,
-      validators: [required(), number()],
+      validators: [
+        required(),
+        number(),
+        max(12, 'The expiration month is not valid'),
+      ],
     },
     cvc: {
       initialValue: cvc || '',
-      validators: [required(), number()],
+      validators: [required(), number(), minLength(3, 'CVC must has minimum 3 characters')],
     },
   };
 };
