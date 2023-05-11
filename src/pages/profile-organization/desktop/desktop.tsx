@@ -6,14 +6,17 @@ import { printWhen } from 'src/core/utils';
 import { Divider } from 'src/components/templates/divider/divider';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
-import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
-import { badgesList, showActions } from '../profile-organization.services';
+import { badgesList } from '../profile-organization.services';
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
 import { useProfileOrganizationShared } from '../profile-organization.shared';
+import { useState } from 'react';
+import { EditOrganization } from './edit/edit';
 
 export const Desktop = (): JSX.Element => {
   const { user, skills, navigateToEdit, profileBelongToCurrentUser, onAchievementClick, socialCauses, badges } =
     useProfileOrganizationShared();
+
+  const [editOpen, setEditOpen] = useState(false);
 
   const bioJSX = (
     <Divider>
@@ -46,7 +49,7 @@ export const Desktop = (): JSX.Element => {
   );
 
   const editButtonJSX = (
-    <Button onClick={navigateToEdit} color="white" width="6.5rem">
+    <Button onClick={() => setEditOpen(true)} color="white" width="6.5rem">
       Edit
     </Button>
   );
@@ -109,7 +112,7 @@ export const Desktop = (): JSX.Element => {
             <div className={css.menu}>
               <div className={css.btnContainer}>
                 {/* <Button width="6.5rem">Connect</Button> */}
-                {/* {printWhen(editButtonJSX, profileBelongToCurrentUser)} */}
+                {printWhen(editButtonJSX, profileBelongToCurrentUser)}
                 {/* {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)} */}
               </div>
               <div className={css.userConnections}>
@@ -162,6 +165,7 @@ export const Desktop = (): JSX.Element => {
             )}
           </div>
         </div>
+        <EditOrganization width="31rem" height="75vh" open={editOpen} onClose={() => setEditOpen(false)} />
       </Card>
     </TwoColumnCursor>
   );
