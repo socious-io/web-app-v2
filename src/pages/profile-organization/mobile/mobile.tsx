@@ -108,7 +108,7 @@ export const Mobile = (): JSX.Element => {
         <div className={css.menu}>
           <div className={css.btnContainer}>
             {/* <Button width="6.5rem">Connect</Button> */}
-            {/* {printWhen(editButtonJSX, profileBelongToCurrentUser)} */}
+            {printWhen(editButtonJSX, profileBelongToCurrentUser)}
             {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
           </div>
           <div className={css.userConnections}>
