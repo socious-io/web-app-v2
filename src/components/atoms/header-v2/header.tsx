@@ -1,7 +1,6 @@
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import css from './header.module.scss';
 import { HeaderProps, HeaderLabel } from './header.types';
-import { printWhen } from 'src/core/utils';
 
 export const Header = (props: HeaderProps): JSX.Element => {
   function onBack() {
