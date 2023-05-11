@@ -19,6 +19,7 @@
 
 .back {
   width: 3.25rem;
+  cursor: pointer;
 }
 
 .headerLabel {
@@ -29,4 +30,5 @@
   padding: 0 1rem;
   font-size: var(--font-size-m);
   color: rgba(47, 71, 134, 1);
+  cursor: pointer;
 }

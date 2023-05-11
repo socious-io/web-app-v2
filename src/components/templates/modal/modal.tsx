@@ -10,13 +10,17 @@ const transitionDuration = 180;
 export const Modal = (props: ModalProps): JSX.Element => {
   const { lockScroll, unlockScroll } = useScrollLock();
   props.open ? lockScroll() : unlockScroll();
+
+  const initialStyle: CSSProperties = {
+    width: props.width,
+    height: props.height,
+  };
+
   const [containerStyle, setContainerStyle] = useState<CSSProperties>({
     transition: `all ${transitionDuration}ms 0ms`,
   });
 
   useEffect(() => {
-    console.log(props.open);
-
     let timer: NodeJS.Timeout;
     if (props.open) {
       setContainerStyle((style) => ({ ...style, opacity: 1, visibility: 'visible' }));
@@ -33,7 +37,7 @@ export const Modal = (props: ModalProps): JSX.Element => {
 
   const jsx = (
     <div id="modal-box" onClick={props.onClose} className={css.container} style={containerStyle}>
-      <div onClick={(e) => e.stopPropagation()} className={css.content}>
+      <div style={initialStyle} onClick={(e) => e.stopPropagation()} className={css.content}>
         {props.children}
       </div>
     </div>

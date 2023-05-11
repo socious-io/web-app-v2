@@ -1,27 +1,22 @@
 import css from './desktop.module.scss';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
-import { ThreeDotsButton } from '../../../components/atoms/three-dots-button/three-dots-button';
 import { Divider } from '../../../components/templates/divider/divider';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
 import { printWhen } from '../../../core/utils';
-import { badgesList, showActions } from '../profile-user.services';
+import { badgesList } from '../profile-user.services';
 import { Button } from 'src/components/atoms/button/button';
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
 import { useProfileUserShared } from '../profile-user.shared';
+import { Edit } from './edit/edit';
+import { useState } from 'react';
 
 export const Desktop = (): JSX.Element => {
-  const {
-    user,
-    badges,
-    socialCauses,
-    avatarImage,
-    skills,
-    navigateToEdit,
-    profileBelongToCurrentUser,
-    onAchievementClick,
-  } = useProfileUserShared();
+  const { user, badges, socialCauses, avatarImage, skills, profileBelongToCurrentUser, onAchievementClick } =
+    useProfileUserShared();
+
+  const [editOpen, setEditOpen] = useState(false);
 
   const cityLinkJSX = (
     <div className={css.contactItem}>
@@ -88,7 +83,7 @@ export const Desktop = (): JSX.Element => {
   );
 
   const editButtonJSX = (
-    <Button onClick={navigateToEdit} color="white" width="6.5rem">
+    <Button onClick={() => setEditOpen(true)} color="white" width="6.5rem">
       Edit
     </Button>
   );
@@ -117,8 +112,7 @@ export const Desktop = (): JSX.Element => {
           <div className={css.menu}>
             <div className={css.btnContainer}>
               {/* <Button width="6.5rem">Connect</Button> */}
-              {/* {printWhen(editButtonJSX, profileBelongToCurrentUser)} */}
-              {/* {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)} */}
+              {printWhen(editButtonJSX, profileBelongToCurrentUser)}
             </div>
             <div className={css.userConnections}>
               <div>{user.followings} connections</div>
@@ -169,6 +163,7 @@ export const Desktop = (): JSX.Element => {
             !!user.culture
           )}
         </div>
+        <Edit width="31rem" height="75vh" open={editOpen} onClose={() => setEditOpen(false)} />
       </Card>
     </TwoColumnCursor>
   );

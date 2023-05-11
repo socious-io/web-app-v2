@@ -396,7 +396,9 @@ export const routes: Route[] = [
               {
                 path: 'edit',
                 element: () =>
-                  import('../../pages/profile-user-edit/profile-user-edit').then((m) => <m.ProfileUserEdit />),
+                  import('../../pages/profile-user-edit/profile-user-edit.container').then((m) => (
+                    <m.ProfileUserEditContainer />
+                  )),
               },
             ],
           },
