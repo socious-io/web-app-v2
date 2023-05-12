@@ -14,6 +14,8 @@ export const Modal = (props: ModalProps): JSX.Element => {
   const initialStyle: CSSProperties = {
     width: props.width,
     height: props.height,
+    maxHeight: props.maxHeight,
+    maxWidth: props.maxWidth
   };
 
   const [containerStyle, setContainerStyle] = useState<CSSProperties>({

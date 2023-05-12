@@ -144,9 +144,9 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/achievements',
+        path: '/achievements/m',
         loader: AchievementsPageLoader,
-        element: () => import('../../pages/achievements/achievements').then((m) => <m.Achievements />),
+        element: () => import('../../pages/achievements/mobile/achievements').then((m) => <m.Mobile />),
       },
       {
         path: 'organization',
@@ -316,7 +316,6 @@ export const routes: Route[] = [
         path: 'terms-conditions',
         element: () => import('../../pages/terms-conditions/terms-conditions').then((m) => <m.TermsConditions />),
       },
-
       {
         path: '/jobs/:id/apply',
         loader: async ({ params }) => {
@@ -383,6 +382,11 @@ export const routes: Route[] = [
             path: '/jobs',
             element: () => import('../../pages/jobs/jobs.container').then((m) => <m.JobsContainer />),
             loader: () => getJobList({ page: 1 }),
+          },
+          {
+            path: '/achievements/d',
+            loader: AchievementsPageLoader,
+            element: () => import('../../pages/achievements/desktop/desktop').then((m) => <m.Desktop />),
           },
           {
             path: 'profile/users/:id',

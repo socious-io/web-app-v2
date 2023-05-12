@@ -13,7 +13,7 @@ import { Edit } from './edit/edit';
 import { useState } from 'react';
 
 export const Desktop = (): JSX.Element => {
-  const { user, badges, socialCauses, avatarImage, skills, profileBelongToCurrentUser, onAchievementClick } =
+  const { user, badges, socialCauses, avatarImage, skills, profileBelongToCurrentUser, gotToDesktopAchievement } =
     useProfileUserShared();
 
   const [editOpen, setEditOpen] = useState(false);
@@ -127,7 +127,7 @@ export const Desktop = (): JSX.Element => {
             {printWhen(usernameJSX, !!user?.username)}
           </Divider>
           <Divider>
-            <div className={css.achievements} onClick={onAchievementClick}>
+            <div className={css.achievements} onClick={gotToDesktopAchievement}>
               <div className={css.badges}>
                 {badgesList(badges.badges).map((item) => {
                   return <ImpactBadge key={item.color} size="2.75rem" {...item} />;

@@ -24,10 +24,15 @@ export const useProfileUserShared = () => {
     navigate({ to: '/jobs' });
   }
 
-  function onAchievementClick() {
+  function gotToDesktopAchievement() {
+    const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
+    navigate({ to: `/achievements/d?proofspace_connect_id=${connectId}` });
+  }
+
+  function gotToMobileAchievement() {
     hapticsImpactLight();
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate({ to: `/achievements?proofspace_connect_id=${connectId}` });
+    navigate({ to: `/achievements/m?proofspace_connect_id=${connectId}` });
   }
 
   function navigateToEdit() {
@@ -43,7 +48,8 @@ export const useProfileUserShared = () => {
     currentIdentity,
     profileBelongToCurrentUser,
     onClose,
-    onAchievementClick,
-    navigateToEdit
+    gotToDesktopAchievement,
+    gotToMobileAchievement,
+    navigateToEdit,
   };
 };
