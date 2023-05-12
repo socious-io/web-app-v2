@@ -19,7 +19,7 @@ export const Mobile = (): JSX.Element => {
     navigateToEdit,
     profileBelongToCurrentUser,
     onClose,
-    onAchievementClick,
+    gotToMobileAchievement,
   } = useProfileUserShared();
 
   const cityLinkJSX = (
@@ -125,7 +125,7 @@ export const Mobile = (): JSX.Element => {
           {printWhen(usernameJSX, !!user?.username)}
         </Divider>
         <Divider>
-          <div className={css.achievements} onClick={onAchievementClick}>
+          <div className={css.achievements} onClick={gotToMobileAchievement}>
             <div className={css.badges}>
               {badgesList(badges.badges).map((item) => {
                 return <ImpactBadge key={item.color} size="2.75rem" {...item} />;

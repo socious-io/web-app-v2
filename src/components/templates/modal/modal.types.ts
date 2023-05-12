@@ -3,5 +3,7 @@ export type ModalProps = {
   open: boolean;
   width?: string;
   height?: string;
+  maxHeight?: string;
+  maxWidth?: string;
   onClose: () => void;
 };

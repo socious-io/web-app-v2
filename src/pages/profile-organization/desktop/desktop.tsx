@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { EditOrganization } from './edit/edit';
 
 export const Desktop = (): JSX.Element => {
-  const { user, skills, navigateToEdit, profileBelongToCurrentUser, onAchievementClick, socialCauses, badges } =
+  const { user, skills, profileBelongToCurrentUser, onAchievementClick, socialCauses, badges } =
     useProfileOrganizationShared();
 
   const [editOpen, setEditOpen] = useState(false);
