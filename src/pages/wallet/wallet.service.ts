@@ -4,7 +4,9 @@ import { get } from 'src/core/http';
 import { MissionsResp } from 'src/core/types';
 
 export async function getMissionsList(payload: { page?: number }): Promise<MissionsResp> {
-  return get(`/user/missions?filter.status=CONFIRMED&page=${payload.page}`).then(({ data }) => data);
+  return get('/user/missions', {
+    params: { 'filter.o.payment_mode': 'FIAT', 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' },
+  }).then(({ data }) => data);
 }
 
 export async function getStripeLink(value: string): Promise<any> {

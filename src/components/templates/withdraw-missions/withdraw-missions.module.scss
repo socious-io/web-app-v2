@@ -8,13 +8,14 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-weight: 600;
 
     &__img {
       border-radius: 50%;
     }
   }
 
-  .total {
+  .rowItem {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -22,8 +23,18 @@
     align-self: flex-start;
   }
 
+  .title {
+    font-weight: 600;
+  }
+
   .button {
     width: 100%;
     margin: auto;
+  }
+
+  .errorText {
+    font-size: var(--font-size-s);
+    color: var(--color-error-01);
+    margin-bottom: 12px;
   }
 }

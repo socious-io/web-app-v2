@@ -6,28 +6,44 @@ import css from './withdraw-missions.module.scss';
 
 export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
   mission_name,
-  amount,
+  escrow,
   onClickWithdraw,
-  fee,
+  fee = 0,
   unit = 'USD',
   disbaledWithdraw = false,
+  disableText = '',
 }) => {
   return (
     <Card className={css.container}>
       <div className={css.header}>{mission_name}</div>
-      <div className={css.total}>
+      <div className={css.rowItem}>
         <div className={css.balance}>
           <img src={`/icons/fiat/${unit}.svg`} className={css.balance__img} />
           {unit}
         </div>
-        $ {amount.toLocaleString()}
+        $ {escrow?.amount.toLocaleString()}
       </div>
       {printWhen(
-        <div className={css.total}>
-          <div>Fee </div>$ {fee?.toLocaleString()}
+        <div className={css.rowItem}>
+          <span className={css.title}>Fee </span>$ {(escrow?.amount * fee)?.toLocaleString()}
         </div>,
         !!fee
       )}
+      {printWhen(
+        <>
+          <span className={css.title}>Transaction date</span>
+          <div className={css.rowItem}>{new Date(escrow?.released_at).toLocaleString()}</div>
+        </>,
+        escrow?.released_at != null
+      )}
+      {printWhen(
+        <>
+          <span className={css.title}>Transaction id</span>
+          <div className={css.rowItem}>{escrow?.release_id}</div>
+        </>,
+        escrow?.release_id != null
+      )}
+      {printWhen(<div className={css.errorText}>{disableText}</div>, !!disableText)}
       <Button color="blue" disabled={disbaledWithdraw} onClick={onClickWithdraw} className={css.button}>
         Withdraw funds
       </Button>
