@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../../core/types';
 import { RootState } from '../../../store/store';
 
-export const DialogCreate = ({ onClose }: DialogCreateProps) => {
+export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [state, setState] = useState({
@@ -98,10 +98,11 @@ export const DialogCreate = ({ onClose }: DialogCreateProps) => {
       <Dialog fullScreen open={openDialog}>
         <DialogReview
           onClose={handleClose}
-          imgFile={selectedFile}
+          imgFile={selectedFile || ''}
           imgUrl={state.imgUrl}
           text={state.text}
           soucialValue={state.social}
+          setFeedList={setFeedList}
         />
       </Dialog>
     </div>
