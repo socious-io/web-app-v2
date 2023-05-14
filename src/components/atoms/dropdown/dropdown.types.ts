@@ -10,6 +10,7 @@ export type DropdownProps = {
   name?: string;
   label?: string;
   placeholder: string;
+  containerClassName?: string;
 };
 
 export type Items = {
