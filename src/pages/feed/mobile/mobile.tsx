@@ -1,70 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Dialog } from '@mui/material';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Card } from '../../../components/atoms/card/card';
 import { FeedList } from '../../../components/organisms/feed-list/feed-list';
 import { DialogCreate } from '../dialog-create/dialog-create';
-import css from './mobile.module.scss';
-import { FeedsMobileProps } from './mobile.types';
-import { getFeedList, like, unlike } from './mobile.service';
-import { Search } from '../../../components/atoms/search/search';
-import { useDispatch, useSelector } from 'react-redux';
-import { IdentityReq } from '../../../core/types';
-import { RootState } from '../../../store/store';
-import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
-import { endpoint } from '../../../core/endpoints';
-import { dialog } from '../../../core/dialog/dialog';
-import { visibility } from '../../../store/reducers/menu.reducer';
-import { Feed } from '../../../components/organisms/feed-list/feed-list.types';
+import { Search } from 'src/components/atoms/search/search';
+import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
+import { visibility } from 'src/store/reducers/menu.reducer';
 import { useNavigate } from '@tanstack/react-location';
+import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
+import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { useFeedShared } from '../feed.shared';
+import css from './mobile.module.scss';
 
-const showActions = async (feed: Feed) => {
-  const name = feed.identity_meta.name;
-  const result = await ActionSheet.showActions({
-    title: 'What do you want to do?',
-    options: [
-      { title: `Block ${name}` },
-      { title: `Report ${name}` },
-      { title: 'Cancel', style: ActionSheetButtonStyle.Cancel },
-    ],
-  });
-
-  switch (result.index) {
-    case 0:
-      endpoint.post.posts['{post_id}/report'](feed.id, { blocked: true, comment: 'comment' }).then(() => {
-        dialog.alert({ title: 'Blocked', message: 'You successfully blocked the feed' });
-      });
-      break;
-    case 1:
-      endpoint.post.posts['{post_id}/report'](feed.id, { blocked: false, comment: 'comment' }).then(() => {
-        dialog.alert({ title: 'Report', message: 'You successfully Reported the feed' });
-      });
-      break;
-  }
-};
-
-export const Mobile = ({ list }: FeedsMobileProps) => {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [feedList, setFeedList] = useState(list.items);
-  const [page, setPage] = useState(1);
-  const totalCount = list.total_count;
-  const dispatch = useDispatch();
+export const Mobile = () => {
   const navigate = useNavigate();
-
-  function onMorePage() {
-    getFeedList({ page: page + 1 }).then((resp) => {
-      setPage((v) => v + 1);
-      setFeedList((list) => [...list, ...resp.items]);
-    });
-  }
-
-  function openSidebar() {
-    dispatch(visibility(true));
-  }
-
-  const onShowSeeMore = (length: number): boolean => {
-    return length < totalCount;
-  };
+  const dispatch = useDispatch();
+  const {
+    feedList,
+    setFeedList,
+    handleClickOpen,
+    openDialog,
+    handleClose,
+    onLike,
+    onRemoveLike,
+    onMorePage,
+    onShowSeeMore,
+    onMoreClick,
+  } = useFeedShared();
 
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -72,39 +36,29 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
 
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
-  const handleClickOpen = () => {
-    setOpenDialog(true);
-  };
-
-  const handleClose = () => {
-    setOpenDialog(false);
-  };
-
-  const onLike = (id: string) => {
-    const clone = [...feedList];
-    const ref = clone.find((item) => item.id === id);
-    ref.liked = true;
-    ref.likes = ref.likes + 1;
-    setFeedList(clone);
-    like(id).then(() => {});
-  };
-
-  const onRemoveLike = (id: string) => {
-    const clone = [...feedList];
-    const ref = clone.find((item) => item.id === id);
-    ref.liked = false;
-    ref.likes = ref.likes - 1;
-    setFeedList(clone);
-
-    unlike(id).then(() => {});
-  };
-
   const onSearchEnter = (value: string) => {
     navigate({ to: `/search?q=${value}` });
   };
 
+  function openSidebar() {
+    dispatch(visibility(true));
+  }
+
   const navigateToChat = () => {
     // navigate({ to: './chats' });
+  };
+
+  const showActions = async (feed: Feed) => {
+    const name = feed.identity_meta.name;
+    const result = await ActionSheet.showActions({
+      title: 'What do you want to do?',
+      options: [
+        { title: `Block ${name}` },
+        { title: `Report ${name}` },
+        { title: 'Cancel', style: ActionSheetButtonStyle.Cancel },
+      ],
+    });
+    onMoreClick(result.index, feed);
   };
 
   return (
@@ -133,17 +87,15 @@ export const Mobile = ({ list }: FeedsMobileProps) => {
         </Card>
       </div>
       <FeedList
-        onMoreClick={(feed) => {
-          showActions(feed);
-        }}
         data={feedList}
+        onMoreClick={(feed) => showActions(feed)}
         onLike={onLike}
         onRemoveLike={onRemoveLike}
         onMorePageClick={onMorePage}
         showSeeMore={onShowSeeMore(feedList.length)}
       />
       <Dialog fullScreen open={openDialog}>
-        <DialogCreate onClose={handleClose} />
+        <DialogCreate onClose={handleClose} setFeedList={setFeedList} />
       </Dialog>
     </div>
   );
