@@ -44,7 +44,7 @@ export const DialogReview = (props: DialogReviewProps) => {
     };
     submitPost(payload).then(() => {
       getFeedList({ page: 1 }).then((resp) => {
-        // props.setFeedList(resp.items);
+        props.setFeedList(resp.items);
         handleClose();
       });
     });
@@ -88,7 +88,7 @@ export const DialogReview = (props: DialogReviewProps) => {
         </div>
       </div>
       <Dialog fullScreen open={openDialog}>
-        <DialogCreate onClose={handleClose} />
+        <DialogCreate onClose={handleClose} setFeedList={props.setFeedList} />
       </Dialog>
     </div>
   );
