@@ -33,7 +33,7 @@ export const Offer = (): JSX.Element => {
   const [selectedToken, setSelectedToken] = useState<{ address: string; symbol?: string }>();
   const isPaidCrypto = isPaidType && paymentMode === 'CRYPTO';
   const isPaidFiat = isPaidType && paymentMode === 'FIAT';
-  const memoizedFormState = useMemo(() => formModel(isPaidType, isPaidFiat), []);
+  const memoizedFormState = useMemo(() => formModel(isPaidType, isPaidFiat), [paymentMode]);
   const form = useForm(memoizedFormState);
   const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
 
