@@ -8,7 +8,7 @@ import { getMessagesById, getParticipantsById } from '../../pages/chat/message-d
 import { getFollowings } from '../../pages/chat/new-chat/new-chat.services';
 import { getActiveJobs, getDraftJobs } from '../../pages/job-create/my-jobs/my-jobs.services';
 import { getFeedList } from '../../pages/feed/mobile/mobile.service';
-import { getComments, getPostDetail } from '../../pages/feed/post-detail/mobile/mobile.service';
+import { getComments, getPostDetail } from '../../pages/feed/post-detail/post-detail.service';
 import { getJobCategories } from '../../pages/job-create/info/info.services';
 import { search } from '../../pages/search/search.services';
 import { getNotificationList } from '../../pages/notifications/notifications.service';
@@ -290,7 +290,7 @@ export const routes: Route[] = [
           const [post, comments] = await Promise.all(requests);
           return { post, comments };
         },
-        element: () => import('../../pages/feed/post-detail/post-detail').then((m) => <m.PostDetail />),
+        element: () => import('../../pages/feed/post-detail/post-detail.container').then((m) => <m.PostDetail />),
       },
       {
         path: 'search',
@@ -445,7 +445,7 @@ export const routes: Route[] = [
 
           {
             path: 'feeds',
-            element: () => import('../../pages/feed/feed').then((m) => <m.Feed />),
+            element: () => import('../../pages/feed/feed.container').then((m) => <m.Feed />),
             loader: () => getFeedList({ page: 1 }),
           },
           {
