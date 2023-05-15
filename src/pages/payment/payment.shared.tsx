@@ -9,6 +9,7 @@ import { confirmPayment, getCreditCardInfo } from './payment.service';
 import { dialog } from 'src/core/dialog/dialog';
 import { getMonthName } from 'src/core/time';
 import { Resolver } from './payment.types';
+import { CardInfoResp } from 'src/core/types';
 
 export const usePaymentShared = () => {
   const { web3 } = Dapp.useWeb3();
@@ -18,14 +19,7 @@ export const usePaymentShared = () => {
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
   const [cards, setCards] = useState(cardInfo);
   const offerId = offer?.id;
-  const {
-    created_at,
-    recipient,
-    assignment_total,
-    project_id,
-    project,
-    payment_mode,
-  } = offer || {};
+  const { created_at, recipient, assignment_total, project_id, project, payment_mode } = offer || {};
   const { wallet_address: contributor } = recipient?.meta || {};
   const commision = assignment_total * 0.03;
   const total_price = commision + assignment_total;
@@ -37,18 +31,16 @@ export const usePaymentShared = () => {
     setSelectedCard(id);
   }
 
+  function setCardsList(list: CardInfoResp) {
+    setCards(list);
+  }
+
   async function onRemoveCard(id: string) {
     setSelectedCard('');
-    endpoint.post.payments['{card_id}/remove'](id);
-    try {
+    endpoint.post.payments['{card_id}/remove'](id).then(async () => {
       const result = await getCreditCardInfo();
       setCards(result);
-    } catch (err: any) {
-      dialog.alert({
-        message: err?.response?.data.error || err?.message,
-        title: 'Failed',
-      });
-    }
+    });
   }
 
   async function proceedCryptoPayment() {
@@ -113,6 +105,7 @@ export const usePaymentShared = () => {
     start_date,
     isPaidCrypto,
     cards,
+    setCardsList,
     selectedCard,
     onSelectCard,
     onRemoveCard,

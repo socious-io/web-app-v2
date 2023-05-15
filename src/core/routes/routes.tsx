@@ -122,7 +122,7 @@ export const routes: Route[] = [
               const [cardInfo] = await Promise.all([getCreditCardInfo()]);
               return cardInfo;
             },
-            element: () => import('../../pages/payment/credit-card/credit-card').then((m) => <m.CreditCard />),
+            element: () => import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
           },
           {
             path: '/edit-card/:id',
@@ -130,7 +130,7 @@ export const routes: Route[] = [
               const [cardInfo] = await Promise.all([getCreditCardInfoById(params.id)]);
               return cardInfo;
             },
-            element: () => import('../../pages/payment/credit-card/credit-card').then((m) => <m.CreditCard />),
+            element: () => import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
           },
           {
             loader: async ({ params }) => {
@@ -301,7 +301,7 @@ export const routes: Route[] = [
       },
       {
         path: 'wallet',
-        element: () => import('../../pages/wallet/wallet').then((m) => <m.Wallet />),
+        element: () => import('../../pages/wallet/wallet.container').then((m) => <m.Wallet />),
         loader: async () => {
           const requests = [getMissionsList({ page: 1 }), getSrtipeProfile()];
           const [missionsList, stripeProfile] = await Promise.all(requests);

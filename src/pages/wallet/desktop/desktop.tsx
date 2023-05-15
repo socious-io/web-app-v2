@@ -1,16 +1,19 @@
-import { Header } from 'src/components/atoms/header-v2/header';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
 import { Link } from 'src/components/atoms/link/link';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { BankAccounts } from 'src/components/templates/bank-accounts';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { Card } from 'src/components/atoms/card/card';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { printWhen } from 'src/core/utils';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { NetworkMenuList } from '../wallet.service';
 import { useWalletShared } from '../wallet.shared';
-import css from './mobile.module.scss';
+import css from './desktop.module.scss';
 
-export const Mobile: React.FC = () => {
+export const Desktop: React.FC = () => {
   const {
     form,
     externalAccounts,
@@ -29,9 +32,30 @@ export const Mobile: React.FC = () => {
   } = useWalletShared();
 
   return (
-    <TopFixedMobile>
-      <Header title="Wallet" />
-      <div className={css.container}>
+    <TwoColumnCursor>
+      <div className={css.leftContainer}>
+        <ProfileCard />
+        <CardMenu title="Network" list={NetworkMenuList} />
+        <Card className={!externalAccounts?.length ? css.accounts : css.noCard}>
+          {printWhen(
+            <Dropdown
+              register={form}
+              name="country"
+              label="Country"
+              placeholder="country"
+              list={COUNTRIES}
+              onValueChange={(selected) => onSelectCountry(selected.value as string)}
+            />,
+            !externalAccounts?.length
+          )}
+          <BankAccounts
+            accounts={externalAccounts}
+            isDisabled={!formIsValid || externalAccounts?.length === 1}
+            bankAccountLink={stripeLink}
+          />
+        </Card>
+      </div>
+      <div className={css.rightContainer}>
         {generatedItems?.map((item) => (
           <WithdrawMissions
             key={item.id}
@@ -63,23 +87,7 @@ export const Mobile: React.FC = () => {
           </div>,
           totalMissions < total_count
         )}
-        {printWhen(
-          <Dropdown
-            register={form}
-            name="country"
-            label="Country"
-            placeholder="country"
-            list={COUNTRIES}
-            onValueChange={(selected) => onSelectCountry(selected.value as string)}
-          />,
-          !externalAccounts?.length
-        )}
-        <BankAccounts
-          accounts={externalAccounts}
-          isDisabled={!formIsValid || externalAccounts?.length === 1}
-          bankAccountLink={stripeLink}
-        />
       </div>
-    </TopFixedMobile>
+    </TwoColumnCursor>
   );
 };
