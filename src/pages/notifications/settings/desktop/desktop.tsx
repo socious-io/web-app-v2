@@ -7,12 +7,20 @@ import { Toggle } from 'src/components/atoms/toggle';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { printWhen } from 'src/core/utils';
+import translate from 'src/translations';
 import { useSettingsShared } from '../settings.shared';
 import css from './desktop.module.scss';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
-  const { settings, payload, onChange, onConfirm, onAllowNotifications, allowedNotifications } = useSettingsShared();
+  const {
+    generateSettings: settings,
+    payload,
+    onChange,
+    onConfirm,
+    onAllowNotifications,
+    allowedNotifications,
+  } = useSettingsShared();
   const [closeAlert, setCloseAlert] = useState(false);
 
   const turnedOffMessageBoxJSX = (
@@ -44,7 +52,7 @@ export const Desktop: React.FC = () => {
               {settings
                 .sort((a, b) => a.type.localeCompare(b.type))
                 .map((setting) => (
-                  <Accordion key={setting.type} id={setting.type} title={setting.type.toLocaleLowerCase()}>
+                  <Accordion key={setting.type} id={setting.type} title={translate(setting.type)}>
                     <div className={css.notifications}>
                       <div className={css.notification}>
                         App
