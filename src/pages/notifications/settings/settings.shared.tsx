@@ -7,7 +7,11 @@ import { NotificationSettingsRes } from 'src/core/types';
 
 export const useSettingsShared = () => {
   const { settings } = useMatch().data as NotificationSettingsRes;
-  const settingsList = settings.length ? settings : NotificationSettings;
+  const mapRequestToStatic = NotificationSettings.map((notif) => ({
+    ...notif,
+    ...settings?.find((setting) => setting.type === notif.type),
+  }));
+  const settingsList = settings?.length ? mapRequestToStatic : NotificationSettings;
   const [generateSettings, setGenerateSettings] = useState(settingsList);
   const [payload, setPayload] = useState<Payload>({});
   const notAllow = generateSettings.every((setting) => !setting.in_app && !setting.email && !setting.push);
@@ -30,7 +34,7 @@ export const useSettingsShared = () => {
         };
       });
     const keys = new Set(payloadRes.map((d) => d.type));
-    const merged = [...payloadRes, ...generateSettings.filter((setting) => !keys.has(setting.type))];
+    const merged = [...generateSettings.filter((setting) => !keys.has(setting.type)), ...payloadRes];
     endpoint.post.notifications['settings_confirm']({ settings: merged });
   }
 
@@ -47,7 +51,7 @@ export const useSettingsShared = () => {
   }
 
   return {
-    settings,
+    generateSettings,
     payload,
     onChange,
     onConfirm,
