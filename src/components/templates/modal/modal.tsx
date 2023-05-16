@@ -15,11 +15,12 @@ export const Modal = (props: ModalProps): JSX.Element => {
     width: props.width,
     height: props.height,
     maxHeight: props.maxHeight,
-    maxWidth: props.maxWidth
+    maxWidth: props.maxWidth,
   };
 
   const [containerStyle, setContainerStyle] = useState<CSSProperties>({
     transition: `all ${transitionDuration}ms 0ms`,
+    zIndex: props.zIndex,
   });
 
   useEffect(() => {
