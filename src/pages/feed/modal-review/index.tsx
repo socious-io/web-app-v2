@@ -62,22 +62,24 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
             <img src="/icons/close-black.svg" />
           </div>
         </div>
-        <div className={css.social}>
-          <div className={css.avatar}>
-            <Avatar img={avatarImg} type={identity.type} />
-            {identity.meta.name}
+        <div className={css.main}>
+          <div className={css.social}>
+            <div className={css.avatar}>
+              <Avatar img={avatarImg} type={identity.type} />
+              {identity.meta.name}
+            </div>
+            <CategoriesClickable list={obj} />
           </div>
-          <CategoriesClickable list={obj} />
+          <div className={css.text}>{text}</div>
+          {printWhen(
+            <div className={css.image}>
+              <Card>
+                <img src={imgUrl} />
+              </Card>
+            </div>,
+            !!imgUrl
+          )}
         </div>
-        <div className={css.text}>{text}</div>
-        {printWhen(
-          <div className={css.image}>
-            <Card>
-              <img src={imgUrl} />
-            </Card>
-          </div>,
-          !!imgUrl
-        )}
         <div className={css.footer}>
           <div className={css.button}>
             <Button onClick={onSubmit} color="blue">

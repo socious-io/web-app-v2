@@ -15,11 +15,8 @@ import css from './modal-create.module.scss';
 export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeedList }) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
-  const [state, setState] = useState({
-    social: '',
-    text: '',
-    imgUrl: '',
-  });
+  const intialValue = { social: '', text: '', imgUrl: '' };
+  const [state, setState] = useState(intialValue);
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -56,6 +53,13 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
     setState({ ...state, imgUrl: objectUrl });
   }, [selectedFile]);
 
+  useEffect(() => {
+    if (open) {
+      setState(intialValue);
+      setSelectedFile(undefined);
+    }
+  }, [open]);
+
   return (
     <>
       <Modal open={open} onClose={onClose}>
@@ -81,16 +85,15 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
               rows="15"
               variant="outline"
               placeholder="I feel like ..."
+              value={state.text}
               onChange={onChangeTextHandler}
               className={css.textbox}
             />
           </div>
 
           <div className={css.image}>
-            <div>
-              <img src="icons/image.svg" />
-              <input type="file" onChange={imagUpload} />
-            </div>
+            <img src="icons/image.svg" />
+            <input type="file" onChange={imagUpload} />
           </div>
           <div className={css.button}>
             <Button

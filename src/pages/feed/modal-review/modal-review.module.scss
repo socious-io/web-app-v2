@@ -23,6 +23,20 @@ $color-gray-dark: #2d2d2d;
   gap: 0.5rem;
 }
 
+.main {
+  max-height: 650px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray-03);
+    border-radius: 12px;
+  }
+}
+
 .social {
   display: flex;
   flex-direction: column;
