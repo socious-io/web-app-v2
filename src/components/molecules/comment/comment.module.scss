@@ -15,7 +15,7 @@
 }
 
 .wrapper {
-    margin-left: calc(100vw - 95%);
+    margin-left: 10%;
 }
 
 .messageBox {
@@ -25,6 +25,7 @@
 .like {
     display: flex;
     gap: 0.5rem;
+    cursor: pointer;
 }
 
 .seeMore {

@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import css from './dropdown.module.scss';
 import { DropdownProps } from './dropdown.types';
 import { Items } from './items/items';
+import { printWhen } from 'src/core/utils';
 
 const initialState = { isListOpen: false, headerTitle: '' };
 
 export const Dropdown = (props: DropdownProps) => {
-  const { list, onGetValue, selectedValue, label, placeholder } = props;
+  const { list, onGetValue, selectedValue, label, placeholder, containerClassName } = props;
 
   const [state, setState] = useState(initialState);
   const [filterList, setFilterList] = useState(list);
@@ -41,8 +42,8 @@ export const Dropdown = (props: DropdownProps) => {
   };
 
   return (
-    <div className={css.container}>
-      <div className={css.label}>{label}</div>
+    <div className={`${css.container} ${containerClassName}`}>
+      {printWhen(<div className={css.label}>{label}</div>, !!label)}
       <div className={css.wrapper}>
         <div className={css.header}>
           <div className={css.title}>
