@@ -117,7 +117,9 @@ export interface Endpoints {
       '{offer_id}/hire': (id: string) => Promise<unknown>;
     };
     missions: {};
-    posts: {};
+    posts: {
+      '{post_id}/report': (id: string, payload: { blocked: boolean; comment: string }) => Promise<unknown>;
+    };
     organizations: {
       'orgs/update/{org_id}': (id: string, payload: PostOrganizationUpdatePayload) => Promise<unknown>;
     };

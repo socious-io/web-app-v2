@@ -16,7 +16,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   }
 
   return (
-    <div className={css.container}>
+    <div className={`${css.container} ${props.className}`}>
       {/* <Avatar size="2rem" img={props.img} type="users" /> */}
       <Input
         value={props.value}
