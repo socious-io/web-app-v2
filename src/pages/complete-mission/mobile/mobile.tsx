@@ -1,24 +1,19 @@
-import { useMatch } from '@tanstack/react-location';
-import { useState } from 'react';
-import { Accordion } from '../../../components/atoms/accordion/accordion';
-import { Button } from '../../../components/atoms/button/button';
-import { Header } from '../../../components/atoms/header-v2/header';
-import { Typography } from '../../../components/atoms/typography/typography';
-import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
-import { Divider } from '../../../components/templates/divider/divider';
-import { TopFixedMobile } from '../../../components/templates/top-fixed-mobile/top-fixed-mobile';
-import { translatePaymentTerms } from '../../../constants/PROJECT_PAYMENT_SCHEME';
-import { translatePaymentType } from '../../../constants/PROJECT_PAYMENT_TYPE';
-import { translateRemotePreferences } from '../../../constants/PROJECT_REMOTE_PREFERENCE';
-import { endpoint } from '../../../core/endpoints';
-import { printWhen } from '../../../core/utils';
-import { Loader } from '../complete-mission.types';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { Button } from 'src/components/atoms/button/button';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Typography } from 'src/components/atoms/typography/typography';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { Divider } from 'src/components/templates/divider/divider';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
+import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { printWhen } from 'src/core/utils';
+import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const resolver = useMatch().ownData;
-  const { offer, mission } = resolver as Loader;
-  const [status, setStatus] = useState(offer.status);
+  const { offer, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -38,8 +33,8 @@ export const Mobile = (): JSX.Element => {
       <div>
         <div className={css.congratulationsText}>You marked this job as completed.</div>
         <div className={css.congratulationsText}>
-          You will get your payment once <span className={css.companyName}>{offer.offerer.meta.name}</span> confirms your
-          job.
+          You will get your payment once <span className={css.companyName}>{offer.offerer.meta.name}</span> confirms
+          your job.
         </div>
       </div>
     </div>
@@ -56,15 +51,6 @@ export const Mobile = (): JSX.Element => {
       </div>
     </div>
   );
-
-  function onCompleteMission() {
-    endpoint.post.missions['{mission_id}/complete'](mission.id).then(() => setStatus('CLOSED'));
-  }
-
-  function onStopMission() {
-    // TODO: ask @jeyem the current status string
-    endpoint.post.missions['{mission_id}/cancel'](mission.id).then(() => setStatus('KICK_OUT'));
-  }
 
   const buttonsJSX = (
     <div className={css.btnContainer}>
