@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import css from './mobile.module.scss';
 import { Button } from '../../../components/atoms/button/button';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
@@ -14,8 +13,11 @@ import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fi
 import { useJobDetailShared } from '../job-detail.shared';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
-  const { job, identity, onApply } = useJobDetailShared();
+  const { navigate, job, identity } = useJobDetailShared();
+
+  function onApply() {
+    navigate({ to: './apply' });
+  }
 
   const buttonJSX = (
     <Button disabled={job.applied} onClick={onApply}>

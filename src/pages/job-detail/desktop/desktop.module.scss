@@ -57,3 +57,19 @@
   cursor: pointer;
   font-weight: bold;
 }
+
+.jobTitle {
+  margin: 1rem 0;
+  font-weight: 600;
+  font-size: var(--font-size-m);
+  color: var(--color-black-01);
+}
+
+.appSubmitted {
+  height: 2.8rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding-left: 1rem;
+  font-weight: 700;
+}
