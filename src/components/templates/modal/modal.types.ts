@@ -7,4 +7,5 @@ export type ModalProps = {
   maxHeight?: string;
   maxWidth?: string;
   onClose: () => void;
+  className?: string;
 };
