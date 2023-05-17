@@ -1,17 +1,18 @@
+import { WebModal } from 'src/components/templates/web-modal';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { resumeInitialState, createTextQuestion } from '../apply.services';
 import { Divider } from 'src/components/templates/divider/divider';
 import { Input } from 'src/components/atoms/input/input';
 import { Button } from 'src/components/atoms/button/button';
 import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
-import { Header } from 'src/components/atoms/header/header';
+import { ModalProps } from 'src/components/templates/modal/modal.types';
 import { printWhen } from 'src/core/utils';
 import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
+import { createTextQuestion, resumeInitialState } from '../apply.services';
 import { useApplyShared } from '../apply.shared';
-import css from './mobile.module.scss';
+import css from './apply-modal.module.scss';
 
-export const Mobile = (): JSX.Element => {
+export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClose }) => {
   const { questions, resume, setResume, onResumeLoad, jobDetail, form, onSubmit } = useApplyShared();
 
   const renderQuestions = () => {
@@ -54,8 +55,12 @@ export const Mobile = (): JSX.Element => {
   );
 
   return (
-    <div className={css.container}>
-      <Header onBack={() => history.back()} height="var(--safe-area)" title="Apply" />
+    <WebModal
+      header="Apply"
+      open={open}
+      onClose={onClose}
+      buttons={[{ children: ' Submit application', disabled: !form.isValid, onClick: onSubmit }]}
+    >
       <div className={css.main}>
         <Divider>
           <ProfileView
@@ -86,12 +91,7 @@ export const Mobile = (): JSX.Element => {
             <Checkbox label="" id="" defaultChecked={false} />
           </div>
         </Divider>
-        <div className={css.btnContainer}>
-          <Button disabled={!form.isValid} onClick={onSubmit}>
-            Submit application
-          </Button>
-        </div>
       </div>
-    </div>
+    </WebModal>
   );
 };
