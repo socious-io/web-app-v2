@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-location';
 import css from './mobile.module.scss';
 import { Button } from '../../../components/atoms/button/button';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
@@ -13,6 +14,7 @@ import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fi
 import { useJobDetailShared } from '../job-detail.shared';
 
 export const Mobile = (): JSX.Element => {
+  const navigate = useNavigate();
   const { job, identity, onApply } = useJobDetailShared();
 
   const buttonJSX = (
@@ -42,7 +44,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile containsMenu>
-      <Header title={job.job_category?.name || 'Job detail'} />
+      <Header title={job.job_category?.name || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
       <div>
         {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
         <Divider>
