@@ -1,17 +1,17 @@
-import css from './mobile.module.scss';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { Tabs } from '../../../../components/atoms/tabs/tabs';
-import { Loader } from '../../job-offer-reject.types';
-import { Overview } from '../components/overview/overview';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { Applicants } from '../components/applicants/applicants';
 import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { Header } from 'src/components/atoms/header-v2/header';
+import { Overview } from '../components/overview/overview';
+import { Loader } from '../../job-offer-reject.types';
+import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
   const resolver = useMatch().ownData as Loader;
+  const navigate = useNavigate();
 
   const tabs = [
     {
@@ -21,7 +21,13 @@ export const Mobile = (): JSX.Element => {
     },
     {
       name: 'Applicants',
-      content: <Applicants toReviewList={resolver.reviewList} declinedList={resolver.declinedList} />,
+      content: (
+        <Applicants
+          toReviewList={resolver.reviewList}
+          declinedList={resolver.declinedList}
+          onOfferClick={(id) => navigate({ to: `./${id}/offer` })}
+        />
+      ),
     },
     {
       name: 'Offered',
