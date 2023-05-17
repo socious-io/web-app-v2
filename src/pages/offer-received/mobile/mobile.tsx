@@ -65,7 +65,7 @@ export const Mobile = (): JSX.Element => {
       <img src="/icons/mail-inbox-envelope-favorite-white.svg" />
       <div>
         <div className={css.congratulationsText}>Congratulations, you received an offer.</div>
-        <div className={css.congratulationsText}>Accept the offer to start working on this mission.</div>
+        <div className={css.congratulationsText}>Accept the offer to start working on this job.</div>
       </div>
     </div>
   );
@@ -77,7 +77,7 @@ export const Mobile = (): JSX.Element => {
         <div className={css.congratulationsText}>You accepted this offer.</div>
         <div className={css.congratulationsText}>
           We are just waiting for the final confirmation from{' '}
-          <span className={css.companyName}>{offer.offerer.meta.name}</span> to start the mission.
+          <span className={css.companyName}>{offer.offerer.meta.name}</span> to start the job.
         </div>
       </div>
     </div>
@@ -111,7 +111,7 @@ export const Mobile = (): JSX.Element => {
         {printWhen(offeredMessageBoxJSX, status === 'PENDING')}
         {printWhen(acceptedMessageBoxJSX, status === 'APPROVED')}
         {printWhen(withdrawnMessageBoxJSX, status === 'WITHRAWN')}
-        <Accordion title="Mission details" id="mission-details">
+        <Accordion title="Job details" id="mission-details">
           <div className={css.missionDetailContainer}>
             <div className={css.missionDetailMessage}>{offer.offer_message}</div>
             <div className={css.detailItemContainer}>
@@ -128,7 +128,7 @@ export const Mobile = (): JSX.Element => {
                 <div className={css.detailItemValue}>{translateRemotePreferences(offer.project.remote_preference)}</div>
               </div>
               <div className={css.detailItem}>
-                <div className={css.detailItemLabel}>Mission total</div>
+                <div className={css.detailItemLabel}>Job total</div>
                 <div className={css.detailItemValue}>{offer.assignment_total}</div>
               </div>
               <div className={css.detailItem}>
