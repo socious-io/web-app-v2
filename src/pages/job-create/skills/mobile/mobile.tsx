@@ -1,29 +1,16 @@
-import css from './mobile.module.scss';
 import { useNavigate } from '@tanstack/react-location';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { skillsToCategoryAdaptor } from '../../../../core/adaptors';
-import { RootState } from '../../../../store/store';
-import { Button } from '../../../../components/atoms/button/button';
-import { CategoriesClickable } from '../../../../components/atoms/categories-clickable/categories-clickable';
-import { Search } from '../../../../components/atoms/search/search';
-import { setPostSkills } from '../../../../store/reducers/createPostWizard.reducer';
+import { useDispatch } from 'react-redux';
+import { Button } from 'src/components/atoms/button/button';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Search } from 'src/components/atoms/search/search';
+import { setPostSkills } from 'src/store/reducers/createPostWizard.reducer';
+import { useSkillsShared } from '../skills.shared';
+import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const [socialCauses, setSocialCauses] = useState(skillsToCategoryAdaptor());
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const selectedSkills = useSelector<RootState, string[]>((state) => {
-    return state.createPostWizard.skills;
-  });
-
-  function onSearch(v: string) {
-    const filteredValue = skillsToCategoryAdaptor().filter((item) => item.label.toLowerCase().includes(v));
-    setSocialCauses(filteredValue);
-  }
-
-  const isValid = selectedSkills.length > 0 && selectedSkills.length <= 10;
+  const { onSearch, socialCauses, selectedSkills, isValid } = useSkillsShared();
 
   return (
     <div className={css.container}>
@@ -38,7 +25,12 @@ export const Mobile = (): JSX.Element => {
         <div className={css.limitStatement}>Skills used in this job</div>
       </div>
       <div className={css.search}>
-        <Search backgroundColor="var(--color-off-white-01)" width="100%" placeholder="Search" onValueChange={onSearch} />
+        <Search
+          backgroundColor="var(--color-off-white-01)"
+          width="100%"
+          placeholder="Search"
+          onValueChange={onSearch}
+        />
       </div>
       <div className={css.main}>
         <div className={css.categoryTitle}>Popular</div>

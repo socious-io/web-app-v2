@@ -1,58 +1,38 @@
-import css from './mobile.module.scss';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { CategoriesResp } from '../../../../core/types';
-import { Input } from '../../../../components/atoms/input/input';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import { Divider } from '../../../../components/templates/divider/divider';
-import { Dropdown } from '../../../../components/atoms/dropdown-v2/dropdown';
-import { RadioGroup } from '../../../../components/molecules/radio-group/radio-group';
-import { createPost, getCityList, updateForm } from '../info.services';
-import { Button } from '../../../../components/atoms/button/button';
-import { COUNTRIES } from '../../../../constants/COUNTRIES';
-import { citiesToCategories, jobCategoriesToDropdown } from '../../../../core/adaptors';
-import { PROJECT_REMOTE_PREFERENCES_V2 } from '../../../../constants/PROJECT_REMOTE_PREFERENCE';
-import { PROJECT_PAYMENT_TYPE } from '../../../../constants/PROJECT_PAYMENT_TYPE';
-import { PROJECT_TYPE_V2 } from '../../../../constants/PROJECT_TYPES';
-import { PROJECT_LENGTH_V2 } from '../../../../constants/PROJECT_LENGTH';
-import { PROJECT_PAYMENT_SCHEME } from '../../../../constants/PROJECT_PAYMENT_SCHEME';
-import { EXPERIENCE_LEVEL_V2 } from '../../../../constants/EXPERIENCE_LEVEL';
-import { useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import store, { RootState } from '../../../../store/store';
+import { useDispatch } from 'react-redux';
+import store from 'src/store/store';
+import { Input } from 'src/components/atoms/input/input';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Divider } from 'src/components/templates/divider/divider';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { Button } from 'src/components/atoms/button/button';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
+import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
+import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
+import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
+import { jobCategoriesToDropdown } from 'src/core/adaptors';
 import {
   CreatePostWizard,
   resetCreatePostWizard,
   setPostPaymentScheme,
   setPostPaymentType,
-} from '../../../../store/reducers/createPostWizard.reducer';
-import { useForm } from '../../../../core/form';
-import { formModel } from '../info.form';
-import { DropdownItem } from '../../../../components/atoms/dropdown-v2/dropdown.types';
-import { dialog } from '../../../../core/dialog/dialog';
+} from 'src/store/reducers/createPostWizard.reducer';
+import { dialog } from 'src/core/dialog/dialog';
+import { CategoriesResp } from 'src/core/types';
+import { createPost } from '../info.services';
+import { useInfoShared } from '../info.shared';
+import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const updateField = updateForm(dispatch);
-  const [cities, setCities] = useState<DropdownItem[]>([]);
+  const navigate = useNavigate();
+  const { formState, form, updateCityList, cities } = useInfoShared();
   const resolvedJobCategories = useMatch().ownData.categories as CategoriesResp['categories'];
   const categories = jobCategoriesToDropdown(resolvedJobCategories);
-  const formState = useSelector<RootState, CreatePostWizard>((state) => state.createPostWizard);
-  const memoizedFormState = useMemo(() => formModel(formState), []);
-  const form = useForm(memoizedFormState);
-
-  Object.keys(formModel(formState)).forEach((prop) => {
-    const p = prop as keyof ReturnType<typeof formModel>;
-    form.controls[prop].subscribe((v) => {
-      updateField(p, v);
-    });
-  });
-
-  function updateCityList(countryCode: string) {
-    getCityList(countryCode)
-      .then(({ items }) => citiesToCategories(items))
-      .then(setCities);
-  }
 
   function submit(payload: CreatePostWizard) {
     createPost(payload).then((resp) => {
