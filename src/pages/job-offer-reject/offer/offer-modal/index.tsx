@@ -1,59 +1,39 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { Header } from '../../../components/atoms/header/header';
-import { Resolver } from './offer.types';
-import { Input } from '../../../components/atoms/input/input';
-import { Textarea } from '../../../components/atoms/textarea/textarea';
-import { Button } from '../../../components/atoms/button/button';
+import Dapp from 'src/dapp';
+import { WebModal } from 'src/components/templates/web-modal';
+import { Input } from 'src/components/atoms/input/input';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { InputModal } from 'src/components/molecules/input-modal';
 import { Item } from 'src/components/molecules/input-modal/input-modal.types';
-import { PROJECT_PAYMENT_TYPE } from '../../../constants/PROJECT_PAYMENT_TYPE';
-import { PROJECT_PAYMENT_SCHEME } from '../../../constants/PROJECT_PAYMENT_SCHEME';
+import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { PROJECT_PAYMENT_MODE } from 'src/constants/PROJECT_PAYMENT_MODE';
-import { formModel } from './offer.services';
-import { offer } from '../job-offer-reject.services';
-import { OfferPayload } from '../../../core/types';
-import { useForm } from '../../../core/form';
+import { useForm } from 'src/core/form';
 import { printWhen } from 'src/core/utils';
-import Dapp from 'src/dapp';
-import css from './offer.module.scss';
+import { OfferModalProps } from './offer-modal.types';
+import { OfferPayload } from 'src/core/types';
+import { formModel } from '../offer.services';
+import { offer } from '../../job-offer-reject.services';
+import { useOfferShared } from '../offer.shared';
+import css from './offer-modal.module.scss';
 
-export const Offer = (): JSX.Element => {
-  const navigate = useNavigate();
-  const { web3 } = Dapp.useWeb3();
-  const { applicantDetail } = useMatch().ownData as Resolver;
+export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicantDetail, onDone }) => {
   const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
   const [paymentScheme, setPaymentScheme] = useState(applicantDetail?.project?.payment_scheme || 'FIXED');
-  const isPaidType = applicantDetail.project?.payment_type === 'PAID';
+  const isPaidType = applicantDetail?.project?.payment_type === 'PAID';
   const defaultPaymentMode = isPaidType ? 'CRYPTO' : 'FIAT';
   const [paymentMode, setPaymentMode] = useState(defaultPaymentMode);
-  const [openModal, setOpenModal] = useState(false);
-  const [tokens, setTokens] = useState<Item[]>([]);
-  const [selectedToken, setSelectedToken] = useState<{ address: string; symbol?: string }>();
   const isPaidCrypto = isPaidType && paymentMode === 'CRYPTO';
   const isPaidFiat = isPaidType && paymentMode === 'FIAT';
   const memoizedFormState = useMemo(() => formModel(isPaidType, isPaidFiat), [paymentMode]);
   const form = useForm(memoizedFormState);
   const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
+  const { tokens, openModal, setOpenModal, selectedToken, setSelectedToken, web3 } = useOfferShared();
 
   useEffect(() => {
-    const getTokens = async () => {
-      if (web3) {
-        const chainId = await web3.eth.getChainId();
-        const selectedNetwork = Dapp.NETWORKS.filter((n) => n.chain.id === chainId)[0];
-        const mapTokens = selectedNetwork.tokens.map((token) => {
-          return {
-            value: token.address,
-            title: token.name,
-            subtitle: token.symbol,
-          };
-        });
-        setTokens(mapTokens);
-      }
-    };
-    getTokens();
-  }, [web3]);
+    setPaymentMode(defaultPaymentMode);
+  }, [isPaidType]);
 
   async function onSubmit() {
     const payload: OfferPayload = {
@@ -64,14 +44,18 @@ export const Offer = (): JSX.Element => {
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
     offer(applicantDetail.id, payload).then(() => {
-      navigate({ to: '../..' });
+      onClose();
+      onDone();
     });
   }
 
   return (
-    <div className={css.container}>
-      <Header onBack={() => navigate({ to: '..' })} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
-      <div className={css.sentTo}>An offer will be sent to {applicantDetail.user.name}.</div>
+    <WebModal
+      header={`An offer will be sent to ${applicantDetail?.user?.name || ''}.`}
+      open={open}
+      onClose={onClose}
+      buttons={[{ children: 'Send offer', disabled: formIsInvalid, onClick: onSubmit }]}
+    >
       <div className={css.form}>
         <RadioGroup
           name="paymentType"
@@ -123,11 +107,6 @@ export const Offer = (): JSX.Element => {
         )}
         <Textarea register={form} name="message" label="Message" placeholder="Write message" />
       </div>
-      <div className={css.btnContainer}>
-        <Button onClick={onSubmit} disabled={formIsInvalid}>
-          Send offer
-        </Button>
-      </div>
-    </div>
+    </WebModal>
   );
 };
