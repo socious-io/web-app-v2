@@ -1,64 +1,21 @@
-import { useMatch } from '@tanstack/react-location';
-import { useState, useEffect } from 'react';
-import { useAccount } from 'wagmi';
 import Dapp from 'src/dapp';
-import { Accordion } from '../../../components/atoms/accordion/accordion';
-import { Button } from '../../../components/atoms/button/button';
-import { Header } from '../../../components/atoms/header-v2/header';
-import { Typography } from '../../../components/atoms/typography/typography';
-import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
-import { Divider } from '../../../components/templates/divider/divider';
-import { TopFixedMobile } from '../../../components/templates/top-fixed-mobile/top-fixed-mobile';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { Button } from 'src/components/atoms/button/button';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Typography } from 'src/components/atoms/typography/typography';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { Divider } from 'src/components/templates/divider/divider';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { PaymentMethods } from 'src/components/templates/payment-methods';
-import { StatusKeys } from '../../../constants/APPLICANT_STATUS';
-import { translatePaymentTerms } from '../../../constants/PROJECT_PAYMENT_SCHEME';
-import { translatePaymentType } from '../../../constants/PROJECT_PAYMENT_TYPE';
-import { translateRemotePreferences } from '../../../constants/PROJECT_REMOTE_PREFERENCE';
-import { dialog } from '../../../core/dialog/dialog';
-import { endpoint } from '../../../core/endpoints';
-import { printWhen } from '../../../core/utils';
-import { Resolver } from '../offer-received.types';
+import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
+import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { printWhen } from 'src/core/utils';
+import { useOfferReceivedShared } from '../offer-received.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const { offer } = useMatch().ownData as Resolver;
-  const {
-    project: { payment_type },
-    payment_mode,
-    recipient: {
-      meta: { wallet_address },
-    },
-  } = offer;
-  const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
-  const { address: account, isConnected } = useAccount();
-  const [status, setStatus] = useState<StatusKeys>(offer.status);
-
-  useEffect(() => {
-    if (isConnected && account && (!wallet_address || String(wallet_address) !== account)) {
-      endpoint.post.user['{user_id}/update_wallet']({
-        wallet_address: account,
-      });
-    }
-  }, [isConnected, account]);
-
-  function onAccept(id: string) {
-    return () =>
-      endpoint.post.offers['{offer_id}/approve'](id).then(() => {
-        dialog.alert({ title: 'Offer accepted', message: 'You have successfully accepted the offer' }).then(() => {
-          setStatus('APPROVED');
-        });
-      });
-  }
-
-  function onDeclined(id: string) {
-    return () => {
-      endpoint.post.offers['{offer_id}/withdrawn'](id).then(() => {
-        dialog.alert({ title: 'Offer declined', message: 'You have successfully declined the offer' }).then(() => {
-          setStatus('WITHRAWN');
-        });
-      });
-    };
-  }
+  const { offer, status, account, isPaidCrypto, onAccept, onDeclined } = useOfferReceivedShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -97,7 +54,9 @@ export const Mobile = (): JSX.Element => {
 
   const buttonsJSX = (
     <div className={css.btnContainer}>
-      <Button onClick={onAccept(offer.id)} disabled={!account && isPaidCrypto}>Accept offer</Button>
+      <Button onClick={onAccept(offer.id)} disabled={!account && isPaidCrypto}>
+        Accept offer
+      </Button>
       <Button onClick={onDeclined(offer.id)} color="white">
         Decline
       </Button>
