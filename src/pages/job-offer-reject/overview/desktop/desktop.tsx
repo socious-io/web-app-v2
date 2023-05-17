@@ -10,14 +10,16 @@ import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
 import { Loader } from '../../job-offer-reject.types';
 import { ApplicantResp } from 'src/core/types';
-import { getApplicantDetail } from '../../job-offer-reject.services';
+import { getApplicantDetail, jobOfferRejectLoader } from '../../job-offer-reject.services';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const resolver = useMatch().ownData as Loader;
+  const { id } = useMatch().params || {};
   const [selectedTab, setSelectedTab] = useState('Overview');
   const [openOfferModal, setOpenOfferModal] = useState(false);
   const [applicantDetail, setApplicantDetail] = useState<ApplicantResp>();
+  const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
 
   async function onOfferClick(id: string) {
     const result = await getApplicantDetail(id);
@@ -27,18 +29,29 @@ export const Desktop = (): JSX.Element => {
     }
   }
 
+  async function updateApplicantList() {
+    const result = await jobOfferRejectLoader({ params: { id } });
+    setUpdatedApplicantList(result);
+    setSelectedTab('Overview');
+  }
+
   const tabs = [
     {
       name: 'Overview',
-      content: <Overview questions={resolver.screeningQuestions.questions} data={resolver.jobOverview} />,
+      content: (
+        <Overview
+          questions={updatedApplicantList.screeningQuestions.questions}
+          data={updatedApplicantList.jobOverview}
+        />
+      ),
       default: true,
     },
     {
       name: 'Applicants',
       content: (
         <Applicants
-          toReviewList={resolver.reviewList}
-          declinedList={resolver.declinedList}
+          toReviewList={updatedApplicantList.reviewList}
+          declinedList={updatedApplicantList.declinedList}
           onOfferClick={(id) => onOfferClick(id)}
         />
       ),
@@ -46,12 +59,17 @@ export const Desktop = (): JSX.Element => {
     {
       name: 'Offered',
       content: (
-        <Offered sent={resolver.sent} approved={resolver.approved} hired={resolver.hired} closed={resolver.closed} />
+        <Offered
+          sent={updatedApplicantList.sent}
+          approved={updatedApplicantList.approved}
+          hired={updatedApplicantList.hired}
+          closed={updatedApplicantList.closed}
+        />
       ),
     },
     {
       name: 'Hired',
-      content: <Hired hiredList={resolver.hiredList} endHiredList={resolver.endHiredList} />,
+      content: <Hired hiredList={updatedApplicantList.hiredList} endHiredList={updatedApplicantList.endHiredList} />,
     },
   ];
   const renderedTab = tabs.find((tab) => tab.name === selectedTab)?.content;
@@ -82,6 +100,7 @@ export const Desktop = (): JSX.Element => {
         open={openOfferModal}
         onClose={() => setOpenOfferModal(false)}
         applicantDetail={applicantDetail as ApplicantResp}
+        onDone={updateApplicantList}
       />
     </>
   );
