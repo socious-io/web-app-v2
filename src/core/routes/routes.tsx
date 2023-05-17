@@ -239,7 +239,7 @@ export const routes: Route[] = [
               const [applicantDetail] = await Promise.all(requests);
               return { applicantDetail };
             },
-            element: () => import('../../pages/job-offer-reject/offer/offer').then((m) => <m.Offer />),
+            element: () => import('../../pages/job-offer-reject/offer/offer.container').then((m) => <m.Offer />),
           },
           {
             path: '/:applicantId',
@@ -255,7 +255,7 @@ export const routes: Route[] = [
           },
           {
             loader: (params) => jobOfferRejectLoader(params),
-            element: () => import('../../pages/job-offer-reject/job-offer-reject').then((m) => <m.JobOfferReject />),
+            element: () => import('../../pages/job-offer-reject/job-offer-reject.container').then((m) => <m.JobOfferReject />),
           },
         ],
       },
@@ -265,27 +265,29 @@ export const routes: Route[] = [
           const requests = [
             getActiveJobs({ identityId: params.id, page: 1 }),
             getDraftJobs({ identityId: params.id, page: 1 }),
+            getJobCategories(),
           ];
-          const [activeJobs, draftJobs] = await Promise.all(requests);
-          return { activeJobs, draftJobs };
+          const [activeJobs, draftJobs, jobCategories] = await Promise.all(requests);
+          return { activeJobs, draftJobs, jobCategories };
         },
-        element: () => import('../../pages/job-create/my-jobs/my-jobs').then((m) => <m.MyJobs />),
+        element: () => import('../../pages/job-create/my-jobs/my-jobs.container').then((m) => <m.MyJobs />),
       },
       {
         path: '/jobs/create',
         children: [
           {
             path: 'social-causes',
-            element: () => import('../../pages/job-create/social-causes/social-causes').then((m) => <m.SocialCauses />),
+            element: () =>
+              import('../../pages/job-create/social-causes/social-causes.container').then((m) => <m.SocialCauses />),
           },
           {
             path: 'skills',
-            element: () => import('../../pages/job-create/skills/skills').then((m) => <m.Skills />),
+            element: () => import('../../pages/job-create/skills/skills.container').then((m) => <m.Skills />),
           },
           {
             path: 'info',
             loader: () => getJobCategories(),
-            element: () => import('../../pages/job-create/info/info').then((m) => <m.Info />),
+            element: () => import('../../pages/job-create/info/info.container').then((m) => <m.Info />),
           },
         ],
       },
@@ -329,12 +331,12 @@ export const routes: Route[] = [
           const [jobDetail, screeningQuestions] = await Promise.all(requests);
           return { jobDetail, screeningQuestions };
         },
-        element: () => import('../../pages/job-apply/apply/apply').then((m) => <m.JobApply />),
+        element: () => import('../../pages/job-apply/apply/apply.container').then((m) => <m.JobApply />),
       },
       {
         path: '/jobs/received-offer/:id',
         loader: ({ params }) => receivedOfferLoader(params),
-        element: () => import('../../pages/offer-received/offer-received').then((m) => <m.OfferReceived />),
+        element: () => import('../../pages/offer-received/offer-received.container').then((m) => <m.OfferReceived />),
       },
       {
         path: '/jobs/applied/complete-mission/:id',
@@ -343,7 +345,7 @@ export const routes: Route[] = [
           const offer = await endpoint.get.offers.offer_id(mission.offer_id);
           return { mission, offer };
         },
-        element: () => import('../../pages/complete-mission/complete-mission').then((m) => <m.CompleteMission />),
+        element: () => import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
       },
       {
         path: '/jobs/applied',
@@ -381,7 +383,11 @@ export const routes: Route[] = [
         children: [
           {
             path: '/jobs/:id',
-            loader: ({ params }) => endpoint.get.projects.project_id(params.id),
+            loader: async ({ params }) => {
+              const requests = [endpoint.get.projects.project_id(params.id), getScreeningQuestions(params.id)];
+              const [jobDetail, screeningQuestions] = await Promise.all(requests);
+              return { jobDetail, screeningQuestions };
+            },
             element: () => import('../../pages/job-detail/job-detail.container').then((m) => <m.JobDetailContainer />),
           },
           {
