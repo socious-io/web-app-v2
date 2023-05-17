@@ -21,7 +21,8 @@ export const usePaymentShared = () => {
   const offerId = offer?.id;
   const { created_at, recipient, assignment_total, project_id, project, payment_mode } = offer || {};
   const { wallet_address: contributor } = recipient?.meta || {};
-  const commision = assignment_total * 0.03;
+  const commisionFee = offer.offerer.meta.verified_impact ? 0.02 : 0.03;
+  const commision = assignment_total * commisionFee;
   const total_price = commision + assignment_total;
   const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
   const isPaidCrypto = project?.payment_type === 'PAID' && payment_mode === 'CRYPTO';
