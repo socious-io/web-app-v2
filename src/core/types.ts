@@ -346,6 +346,7 @@ export type Offer = {
   offerer: {
     type: UserType;
     meta: {
+      verified_impact?: boolean;
       image: string;
       name: string;
       city: string;
