@@ -1,7 +1,7 @@
 import { FormGroup } from '../../../core/form/useForm/useForm.types';
 
 export type DropdownItem = {
-  id: string | number;
+  id?: string | number;
   label: string;
   value: string | number;
   helperText?: string;
