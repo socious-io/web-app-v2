@@ -6,7 +6,6 @@
 
 .tabs {
   overflow: hidden;
-  //   border-top: 1px solid var(--border-gray-01);
 }
 
 .tab {
@@ -58,7 +57,6 @@
 
   ~ .tabContent {
     max-height: 100vh;
-    // padding: 1em;
     border-bottom: 1px solid var(--border-gray-01);
   }
 }
