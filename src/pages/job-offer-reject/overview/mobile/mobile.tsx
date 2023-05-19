@@ -11,7 +11,7 @@ import { Offered } from '../components/offered/offered';
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const resolver = useMatch().ownData as Loader;
-  
+
   const tabs = [
     {
       name: 'Overview',
