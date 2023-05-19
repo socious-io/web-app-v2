@@ -42,7 +42,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
   }
 
   return (
-    <header className={css.container}>
+    <header style={{ borderBottom: props.removeBorder ? 0 : undefined }} className={css.container}>
       <div onClick={onBack} className={css.back}>
         <img src="/icons/chevron-left.svg" />
       </div>
