@@ -11,6 +11,10 @@
   justify-content: space-evenly;
   border-bottom: 1px solid #c3c8d9;
   color: var(--color-primary-01);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
 }
 .tabItem {
   flex: 1 1 100%;
