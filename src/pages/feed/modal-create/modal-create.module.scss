@@ -23,17 +23,31 @@ $color-gray-dark: #2d2d2d;
   gap: 0.75rem;
   padding: 16px;
   border-bottom: 1px solid var(--color-gray-04);
+
+  .dropdown {
+    flex: 1;
+  }
 }
 
-.dropdown {
-  flex: 1;
-}
+.text {
+  max-height: 650px;
+  overflow-y: auto;
 
-.textbox {
-  padding: 16px;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
 
-  &::placeholder {
-    color: var(--color-gray-03);
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray-03);
+    border-radius: 12px;
+  }
+
+  .textbox {
+    padding: 16px;
+
+    &::placeholder {
+      color: var(--color-gray-03);
+    }
   }
 }
 

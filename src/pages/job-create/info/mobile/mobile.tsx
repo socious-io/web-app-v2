@@ -107,7 +107,14 @@ export const Mobile = (): JSX.Element => {
                   form.controls.city.setValue('');
                 }}
               />
-              <Dropdown register={form} label="City" placeholder="city" name="city" value={formState.city} list={cities} />
+              <Dropdown
+                register={form}
+                label="City"
+                placeholder="city"
+                name="city"
+                value={formState.city}
+                list={cities}
+              />
               <Dropdown
                 register={form}
                 value={formState.remote_preference}
@@ -139,14 +146,17 @@ export const Mobile = (): JSX.Element => {
               <RadioGroup
                 name="paymentType"
                 value={formState.payment_type}
-                onChange={(value) => dispatch(setPostPaymentType(value))}
+                onChange={(value) => {
+                  dispatch(setPostPaymentType(value));
+                  value === 'PAID' && dispatch(setPostPaymentScheme('FIXED'));
+                }}
                 label="Payment type"
                 list={PROJECT_PAYMENT_TYPE}
               />
               <RadioGroup
                 name="PaymentScheme"
-                value={formState.payment_scheme}
-                onChange={(value) => dispatch(setPostPaymentScheme(value))}
+                value={formState.payment_type === 'PAID' ? 'FIXED' : formState.payment_scheme}
+                onChange={(value) => formState.payment_type === 'VOLUNTEER' && dispatch(setPostPaymentScheme(value))}
                 label="Payment terms"
                 list={PROJECT_PAYMENT_SCHEME}
               />

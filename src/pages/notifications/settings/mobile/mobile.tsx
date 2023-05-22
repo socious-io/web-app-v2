@@ -6,12 +6,20 @@ import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fi
 import { Toggle } from 'src/components/atoms/toggle';
 import { Button } from 'src/components/atoms/button/button';
 import { printWhen } from 'src/core/utils';
+import translate from 'src/translations';
 import { useSettingsShared } from '../settings.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
   const navigate = useNavigate();
-  const { settings, payload, onChange, onConfirm, onAllowNotifications, allowedNotifications } = useSettingsShared();
+  const {
+    generateSettings: settings,
+    payload,
+    onChange,
+    onConfirm,
+    onAllowNotifications,
+    allowedNotifications,
+  } = useSettingsShared();
   const [closeAlert, setCloseAlert] = useState(false);
 
   const turnedOffMessageBoxJSX = (
@@ -39,7 +47,7 @@ export const Mobile: React.FC = () => {
               {settings
                 .sort((a, b) => a.type.localeCompare(b.type))
                 .map((setting) => (
-                  <Accordion key={setting.type} id={setting.type} title={setting.type.toLocaleLowerCase()}>
+                  <Accordion key={setting.type} id={setting.type} title={translate(setting.type)}>
                     <div className={css.notifications}>
                       <div className={css.notification}>
                         App
