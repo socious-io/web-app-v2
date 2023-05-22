@@ -1,0 +1,26 @@
+.form {
+  //   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 450px;
+}
+
+.bottom {
+  padding: 1rem 1rem 0 1rem;
+  border-top: 1px solid #e4e6ed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.passNotMatch {
+  color: var(--color-error-01);
+  font-size: var(--font-size-s);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
