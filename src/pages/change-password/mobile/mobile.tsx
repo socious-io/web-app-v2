@@ -1,17 +1,17 @@
-import css from './change-password.module.scss';
-import { Button } from '../../components/atoms/button/button';
-import { Header } from '../../components/atoms/header/header';
-import { Input } from '../../components/atoms/input/input';
-import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
-import { useChangePasswordShared } from './change-password.shared';
+import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
+import css from './mobile.module.scss';
+import { Input } from 'src/components/atoms/input/input';
+import { Button } from 'src/components/atoms/button/button';
+import { useChangePasswordShared } from '../change-password.shared';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { printWhen } from 'src/core/utils';
 
-export const ChangePassword = (): JSX.Element => {
-  const { form, navigateToJobs, onSubmit, formIsValid } = useChangePasswordShared();
+export const Mobile = (): JSX.Element => {
+  const { form, onSubmit, formIsValid, notMatchingPasswords } = useChangePasswordShared();
   return (
     <BottomStatic>
       <div className={css.top}>
-        <Header onBack={navigateToJobs} height="auto" title="Change Password" />
-        <div className={css.header}></div>
+        <Header title="Change Password" />
         <form className={css.form}>
           <Input
             autoComplete="password"
@@ -37,6 +37,7 @@ export const ChangePassword = (): JSX.Element => {
             type="password"
             placeholder="Confirm new password"
           />
+          {printWhen(<p className={css.passNotMatch}>- Passwords do not match</p>, notMatchingPasswords)}
         </form>
       </div>
       <div>

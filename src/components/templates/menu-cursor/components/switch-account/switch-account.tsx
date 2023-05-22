@@ -9,8 +9,8 @@ import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { useNavigate } from '@tanstack/react-location';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { Divider } from 'src/components/templates/divider/divider';
-import { settingsList } from '../../menu-cursor.services';
 import { SwitchAccountProps } from './switch-account.types';
+import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
 
 let timer: NodeJS.Timeout;
 
@@ -18,6 +18,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [pendingAccId, setPendingAccId] = useState('');
+  const [changePassOpen, setChangePassOpen] = useState(false);
   const [containerStyles, setContainerStyle] = useState<CSSProperties>({});
   const accountList = useSelector<RootState, AccountsModel[]>((state) => {
     return state.identity.entities.map((item) => ({
@@ -101,13 +102,15 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
       </Divider>
       <Divider title="Settings">
         <div className={css.settingsMenuContainer}>
-          {settingsList.map((item) => {
-            return (
-              <div key={item.label} className={css.menuItem}>
-                <span>{item.label}</span>
-              </div>
-            );
-          })}
+          <div
+            className={css.menuItem}
+            onClick={() => {
+              closeMenu();
+              setChangePassOpen(true);
+            }}
+          >
+            <span>Change password</span>
+          </div>
         </div>
       </Divider>
       <Divider>
@@ -117,6 +120,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
           </div>
         </div>
       </Divider>
+      <ChangePasswordModal open={changePassOpen} onClose={() => setChangePassOpen(false)} />
     </div>
   );
 };

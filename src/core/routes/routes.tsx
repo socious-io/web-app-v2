@@ -112,7 +112,11 @@ export const routes: Route[] = [
           },
         ],
       },
-      { path: 'change-password', element: <ChangePassword /> },
+      {
+        path: 'change-password',
+        element: () =>
+          import('../../pages/change-password/change-password.container').then((m) => <m.ChangePasswordContainer />),
+      },
       {
         path: 'payment/:id',
         children: [
@@ -122,7 +126,8 @@ export const routes: Route[] = [
               const [cardInfo] = await Promise.all([getCreditCardInfo()]);
               return cardInfo;
             },
-            element: () => import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
+            element: () =>
+              import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
           },
           {
             path: '/edit-card/:id',
@@ -130,7 +135,8 @@ export const routes: Route[] = [
               const [cardInfo] = await Promise.all([getCreditCardInfoById(params.id)]);
               return cardInfo;
             },
-            element: () => import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
+            element: () =>
+              import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
           },
           {
             loader: async ({ params }) => {
