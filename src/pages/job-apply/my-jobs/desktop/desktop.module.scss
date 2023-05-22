@@ -21,7 +21,7 @@
 .listContainer {
   padding: 1rem;
   max-height: 25rem;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: var(--color-off-white-01);
 
   &::-webkit-scrollbar {
