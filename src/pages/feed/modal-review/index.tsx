@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
+import { WebModal } from 'src/components/templates/web-modal';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { Button } from 'src/components/atoms/button/button';
-import { Modal } from 'src/components/templates/modal/modal';
 import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { RootState } from 'src/store/store';
@@ -19,6 +18,7 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
   text,
   soucialValue,
   setFeedList,
+  onDone,
 }) => {
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -41,6 +41,7 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
       getFeedList({ page: 1 }).then((resp) => {
         setFeedList(resp.items);
         onClose();
+        onDone();
       });
     });
   }
@@ -53,41 +54,31 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
   ];
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <div className={css.container}>
-        <div className={css.header}>
-          <span></span>
-          Review Post
-          <div onClick={onClose}>
-            <img src="/icons/close-black.svg" />
+    <WebModal
+      open={open}
+      onClose={onClose}
+      header="Review Post"
+      footerClassName={css.footer}
+      buttons={[{ children: 'Post', color: 'blue', onClick: onSubmit, className: css.btn }]}
+    >
+      <div className={css.main}>
+        <div className={css.social}>
+          <div className={css.avatar}>
+            <Avatar img={avatarImg} type={identity.type} />
+            {identity.meta.name}
           </div>
+          <CategoriesClickable list={obj} />
         </div>
-        <div className={css.main}>
-          <div className={css.social}>
-            <div className={css.avatar}>
-              <Avatar img={avatarImg} type={identity.type} />
-              {identity.meta.name}
-            </div>
-            <CategoriesClickable list={obj} />
-          </div>
-          <div className={css.text}>{text}</div>
-          {printWhen(
-            <div className={css.image}>
-              <Card>
-                <img src={imgUrl} />
-              </Card>
-            </div>,
-            !!imgUrl
-          )}
-        </div>
-        <div className={css.footer}>
-          <div className={css.button}>
-            <Button onClick={onSubmit} color="blue">
-              Post
-            </Button>
-          </div>
-        </div>
+        <div className={`${css.text} ${!!imgUrl && css.text__border}`}>{text}</div>
+        {printWhen(
+          <div className={css.image}>
+            <Card>
+              <img src={imgUrl} />
+            </Card>
+          </div>,
+          !!imgUrl
+        )}
       </div>
-    </Modal>
+    </WebModal>
   );
 };
