@@ -42,15 +42,13 @@ export const Mobile: React.FC = () => {
 
   return (
     <TopFixedMobile>
-      <Header title="Add a credit card" onBack={() => history.back()} />
+      <Header title="Add a credit card" />
       <>
         <div className={css.container}>
           <Card className={css.card}>
             <form className={css.divider__container}>
               <Input register={form} name="cardholderName" label="Cardholder’s name" placeholder="Name" />
-
               <Input register={form} name="cardNumber" label="Card number" inputMode="numeric" maxLength={16} />
-
               <div className={css.card__details}>
                 <div className={css.detail}>
                   <div className={css.detail__label}>Expiry Date</div>
