@@ -6,3 +6,8 @@ export type JobDetailProps = {};
 export type Loader = MakeGenerics<{
   LoaderData: Job;
 }>;
+
+export type Resolver = {
+  jobDetail: Job;
+  screeningQuestions?: any;
+};

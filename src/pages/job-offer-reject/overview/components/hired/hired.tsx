@@ -14,11 +14,8 @@ export const Hired = (props: HiredProps): JSX.Element => {
   const { hiredList, endHiredList } = props;
   const { web3 } = Dapp.useWeb3();
   const resolver = useMatch().ownData as Loader;
-  const {
-    offerOverview: { payment_mode },
-    jobOverview: { payment_type },
-  } = resolver;
-  const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
+  const { offerOverview, jobOverview } = resolver || {};
+  const isPaidCrypto = jobOverview?.payment_type === 'PAID' && offerOverview?.payment_mode === 'CRYPTO';
 
   function onUserConfirm(id: string, escrowId?: string) {
     return async (confirmed: ConfirmResult) => {

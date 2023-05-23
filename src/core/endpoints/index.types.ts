@@ -118,17 +118,23 @@ export interface Endpoints {
       'resend-verify-code': (payload: PostResendVerifyCodePayload) => Promise<unknown>;
     };
     user: {
-      '{user_id}/report': unknown;
-      '{user_id}/update_wallet': unknown;
+      '{user_id}/report': (id: string, payload: { blocked: boolean; comment: string }) => Promise<unknown>;
+      '{user_id}/update_wallet': (payload: { wallet_address: string }) => Promise<unknown>;
       'update/profile': (payload: PostUserUpdatePayload) => Promise<unknown>;
     };
     media: {
       upload: (formData: FormData) => Promise<PostMediaUploadResp>;
     };
     offers: {
+      '{offer_id}/approve': (id: string) => Promise<unknown>;
       '{offer_id}/hire': (id: string) => Promise<unknown>;
+      '{offer_id}/withdrawn': (id: string) => Promise<unknown>;
     };
-    missions: {};
+    missions: {
+      '{mission_id}/complete': (id: string) => Promise<unknown>;
+      '{mission_id}/cancel': (id: string) => Promise<unknown>;
+      '{mission_id}/confirm': (id: string) => Promise<unknown>;
+    };
     posts: {
       '{post_id}/report': (id: string, payload: { blocked: boolean; comment: string }) => Promise<unknown>;
     };

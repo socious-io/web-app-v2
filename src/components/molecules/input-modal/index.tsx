@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Input } from 'src/components/atoms/input/input';
-import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
+import { Modal } from 'src/components/templates/modal/modal';
 import { InputProps } from 'src/components/atoms/input/input.types';
 import { debounce } from 'src/core/utils';
 import css from './input-modal.module.scss';
@@ -41,34 +41,42 @@ export const InputModal: React.FC<InputModalProps> = ({
         <img src={`/icons/crypto/${selectedItem}.svg`} width={24} height={24} />
         {selectedItem}
       </div>
-      <CardSlideUp open={open} onClose={onClose}>
+      <Modal open={open} onClose={onClose} className={css.content}>
         <div className={css.modal}>
-          <div className={css.modal__header}>{modalHeader}</div>
+          <div className={css.modal__header}>
+            <span></span>
+            {modalHeader}
+            <div onClick={onClose}>
+              <img src="/icons/close-black.svg" />
+            </div>
+          </div>
           <div className={css.modal__search}>
             <Input onChange={(e) => search(e.target.value)} placeholder="Search token name or paste address" />
           </div>
           {!!generatedItems.length ? (
-            generatedItems?.map((item) => (
-              <div
-                key={item.value}
-                className={css.item}
-                onClick={() => onSelectItem?.({ value: item.value, title: item.title, subtitle: item.subtitle })}
-              >
-                <div className={css['item--left']}>
-                  <img src={`/icons/crypto/${item.subtitle}.svg`} width={36} height={36} />
-                  <div className={css.item__header}>
-                    <span className={css.item__label}>{item.title}</span>
-                    <span>{item.subtitle}</span>
+            <div className={css.items}>
+              {generatedItems?.map((item) => (
+                <div
+                  key={item.value}
+                  className={css.item}
+                  onClick={() => onSelectItem?.({ value: item.value, title: item.title, subtitle: item.subtitle })}
+                >
+                  <div className={css['item--left']}>
+                    <img src={`/icons/crypto/${item.subtitle}.svg`} width={36} height={36} />
+                    <div className={css.item__header}>
+                      <span className={css.item__label}>{item.title}</span>
+                      <span>{item.subtitle}</span>
+                    </div>
                   </div>
+                  <div className={css['item--right']}>{item?.amount?.toLocaleString()}</div>
                 </div>
-                <div className={css['item--right']}>{item?.amount?.toLocaleString()}</div>
-              </div>
-            ))
+              ))}
+            </div>
           ) : (
             <div className={css.not_found}>Not found!</div>
           )}
         </div>
-      </CardSlideUp>
+      </Modal>
     </div>
   );
 };

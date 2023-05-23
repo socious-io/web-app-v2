@@ -1,8 +1,8 @@
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
+import { Resolver } from './job-detail.types';
 
 function getUserData(identity: IdentityReq) {
   if (identity.type === 'users') {
@@ -20,17 +20,13 @@ function getUserData(identity: IdentityReq) {
 
 export const useJobDetailShared = () => {
   const navigate = useNavigate();
-  const { data: job } = useMatch() as unknown as { data: Job };
+  const { jobDetail: job } = useMatch().data as Resolver;
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
-  function onApply() {
-    navigate({ to: './apply' });
-  }
-
   const userIdentity = getUserData(identity);
 
-  return { navigate, job, userIdentity, identity, onApply };
+  return { navigate, job, userIdentity, identity };
 };

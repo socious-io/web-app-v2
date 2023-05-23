@@ -1,60 +1,18 @@
-import css from './mobile.module.scss';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { ChangeEvent, useMemo, useState } from 'react';
-import { QuestionsRes } from '../../../../core/types';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import { ProfileView } from '../../../../components/molecules/profile-view/profile-view';
-import { Job } from '../../../../components/organisms/job-list/job-list.types';
-import { resumeInitialState, createTextQuestion, submit, applyApplication, generatePayload } from '../apply.services';
-import { Resume } from '../apply.types';
-import { Divider } from '../../../../components/templates/divider/divider';
-import { Input } from '../../../../components/atoms/input/input';
-import { Button } from '../../../../components/atoms/button/button';
-import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
-import { Header } from '../../../../components/atoms/header/header';
-import { printWhen } from '../../../../core/utils';
-import { useForm } from '../../../../core/form';
-import { generateFormModel } from '../apply.form';
-import { dialog } from '../../../../core/dialog/dialog';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { resumeInitialState, createTextQuestion } from '../apply.services';
+import { Divider } from 'src/components/templates/divider/divider';
+import { Input } from 'src/components/atoms/input/input';
+import { Button } from 'src/components/atoms/button/button';
+import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
+import { Header } from 'src/components/atoms/header/header';
+import { printWhen } from 'src/core/utils';
 import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
-import { FormModel } from 'src/core/form/useForm/useForm.types';
+import { useApplyShared } from '../apply.shared';
+import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
-  const [resume, setResume] = useState<Resume>(resumeInitialState);
-  const { jobDetail, screeningQuestions } = useMatch().ownData as {
-    jobDetail: Job;
-    screeningQuestions: { questions: QuestionsRes['questions'] };
-  };
-  const questions = screeningQuestions.questions;
-  const formModel: FormModel = useMemo(() => generateFormModel(questions), []);
-  const form = useForm(formModel);
-
-  function onResumeLoad(e: ChangeEvent<HTMLInputElement>) {
-    const files = e.target.files;
-    const fileSizeMB = files![0].size / 1048576;
-    if (files && fileSizeMB > 10) {
-      dialog.alert({ title: 'Error', message: 'File cannot be over 10MB' });
-      return;
-    }
-    if (!files || files.length === 0) {
-      return;
-    }
-    setResume({ name: files[0].name, file: files[0] });
-  }
-
-  function navigateToJobDetail() {
-    navigate({ to: '..' });
-  }
-
-  function onSubmit() {
-    const generatedPayload = generatePayload(form);
-    if (resume.file) {
-      submit(jobDetail.id, resume.file, generatedPayload).then(navigateToJobDetail);
-    } else {
-      applyApplication(jobDetail.id, generatedPayload).then(navigateToJobDetail);
-    }
-  }
+  const { questions, resume, setResume, onResumeLoad, jobDetail, form, onSubmit } = useApplyShared();
 
   const renderQuestions = () => {
     return (
