@@ -1,5 +1,4 @@
 import { Navigate, Route } from '@tanstack/react-location';
-import { ChangePassword } from '../../pages/change-password/change-password';
 import { getChatsSummery } from '../../pages/chat/contact-list/contact-list.services';
 import { MenuCursor as RootCursorLayout } from '../../components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../../components/templates/menu-touch/menu-touch';
@@ -24,7 +23,6 @@ import { getApplicantDetail, jobOfferRejectLoader } from '../../pages/job-offer-
 import { receivedOfferLoader } from '../../pages/offer-received/offer-received.services';
 import { endpoint } from '../endpoints';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
-import { Intro } from '../../pages/intro/intro';
 import { profileUserPageLoader } from 'src/pages/profile-user/profile-user.loader';
 import { AchievementsPageLoader } from 'src/pages/achievements/achievements.loader';
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
@@ -33,7 +31,7 @@ import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { getMissionsList, getSrtipeProfile } from 'src/pages/wallet/wallet.service';
 
-export const routes: Route[] = [
+export const children: Route[] = [
   {
     path: 'intro',
     element: () => import('../../pages/intro/intro').then((m) => <m.Intro />),
@@ -91,9 +89,9 @@ export const routes: Route[] = [
     ],
   },
   {
-    path: '',
     loader: jobsPageLoader,
-    errorElement: <Intro />,
+    pendingElement: 'loading...',
+    pendingMs: 0,
     children: [
       {
         path: 'delete-profile',
@@ -460,5 +458,11 @@ export const routes: Route[] = [
         ],
       },
     ],
+  },
+];
+
+export const routes: Route[] = [
+  {
+    children: children,
   },
 ];

@@ -1,13 +1,6 @@
-import { LoginReq, OtpConfirmReq, RefreshReq, ResendVerifyCode } from './../types';
+import { LoginReq, RefreshReq, ResendVerifyCode } from './../types';
 import { get, post } from '../http';
-import { Pagination } from '../types';
 import { Offer, Endpoints } from './index.types';
-
-type offerPayload = {
-  id: string;
-  status: 'PENDING' | 'APPROVED' | 'HIRED' | 'CLOSED,CANCELED,WITHDRAWN';
-  page: number;
-};
 
 function getDataProp<T = unknown>(resp: { data: T }) {
   return resp.data;
@@ -20,10 +13,8 @@ export const endpoint: Endpoints = {
     },
     projects: {
       project_id: (id: string) => get(`projects/${id}`).then(getDataProp),
-      '{project_id}/offers': (payload: offerPayload) =>
-        get(`projects/${payload.id}/offers?filter.status=${payload.status}&page=${payload.page}`).then(
-          getDataProp
-        ) as Promise<Pagination<Offer[]>>,
+      '{project_id}/offers': (payload) =>
+        get(`projects/${payload.id}/offers?filter.status=${payload.status}&page=${payload.page}`).then(getDataProp),
     },
     offers: {
       offer_id: (id: string) => get(`offers/${id}`).then(getDataProp) as Promise<Offer>,

@@ -6,7 +6,7 @@ import { Button } from '../../components/atoms/button/button';
 import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
-import { Toast } from '@capacitor/toast';
+
 export const Intro = (): JSX.Element => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
