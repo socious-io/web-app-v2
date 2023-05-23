@@ -8,9 +8,11 @@ export function socialCausesToCategoryAdaptor() {
 }
 
 export function socialCausesToDropdownAdaptor() {
-  return Object.entries(SOCIAL_CAUSES).map(([, value]) => {
-    return { title: value.label, value: value.value };
-  });
+  return Object.entries(SOCIAL_CAUSES)
+    .map(([, value]) => {
+      return { title: value.label, value: value.value };
+    })
+    .sort((a, b) => a.title.localeCompare(b.title));
 }
 
 export function skillsToCategoryAdaptor() {
