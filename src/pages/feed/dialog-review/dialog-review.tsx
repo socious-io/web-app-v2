@@ -1,5 +1,4 @@
 import { Dialog } from '@mui/material';
-import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../../core/types';
@@ -8,6 +7,7 @@ import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Button } from '../../../components/atoms/button/button';
 import { Card } from '../../../components/atoms/card/card';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
+import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { DialogCreate } from '../dialog-create/dialog-create';
 import { getFeedList, submitPost, uploadImage } from '../mobile/mobile.service';
 import css from './dialog-review.module.scss';
@@ -73,7 +73,9 @@ export const DialogReview = (props: DialogReviewProps) => {
           <Avatar img={avatarImg} type={identity.type} />
           <CategoriesClickable list={obj} />
         </div>
-        <div className={css.text}>{props.text}</div>
+        <div className={css.text}>
+          <TextClickableURLs text={props.text} />
+        </div>
         <div className={css.image}>
           <Card>
             <img src={props.imgUrl} />
