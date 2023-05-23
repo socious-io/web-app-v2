@@ -47,6 +47,7 @@ export const useMyJobShared = () => {
   return {
     onGoingTitle,
     activeJobList,
+    setActiveJobList,
     navigateToOverview,
     activeJobs,
     updateActiveJobList,

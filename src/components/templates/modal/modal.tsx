@@ -40,7 +40,7 @@ export const Modal = (props: ModalProps): JSX.Element => {
 
   const jsx = (
     <div id="modal-box" onClick={props.onClose} className={css.container} style={containerStyle}>
-      <div style={initialStyle} onClick={(e) => e.stopPropagation()} className={css.content}>
+      <div style={initialStyle} onClick={(e) => e.stopPropagation()} className={`${css.content} ${props.className}`}>
         {props.children}
       </div>
     </div>

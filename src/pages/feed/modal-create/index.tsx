@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Modal } from 'src/components/templates/modal/modal';
+import { WebModal } from 'src/components/templates/web-modal';
 import { Dropdown } from 'src/components/atoms/dropdown/dropdown';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Button } from 'src/components/atoms/button/button';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
@@ -53,23 +52,27 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
     setState({ ...state, imgUrl: objectUrl });
   }, [selectedFile]);
 
-  useEffect(() => {
-    if (open) {
-      setState(intialValue);
-      setSelectedFile(undefined);
-    }
-  }, [open]);
-
   return (
     <>
-      <Modal open={open} onClose={onClose}>
-        <div className={css.container}>
-          <div className={css.header}>
-            <span></span>
-            Create post
-            <img src="/icons/close-black.svg" onClick={onClose} />
-          </div>
-
+      <WebModal
+        open={open}
+        onClose={onClose}
+        header="Create post"
+        footerClassName={css.footer}
+        buttons={[
+          {
+            children: 'Next',
+            color: 'blue',
+            className: css.btn,
+            disabled: !isDisable(),
+            onClick: () => {
+              onClose();
+              setOpenReviewModal(true);
+            },
+          },
+        ]}
+      >
+        <>
           <div className={css.social}>
             <Avatar img={avatarImg} type={identity.type} />
             <Dropdown
@@ -95,20 +98,8 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
             <img src="icons/image.svg" />
             <input type="file" onChange={imagUpload} />
           </div>
-          <div className={css.button}>
-            <Button
-              color="blue"
-              onClick={() => {
-                onClose();
-                setOpenReviewModal(true);
-              }}
-              disabled={!isDisable()}
-            >
-              Next
-            </Button>
-          </div>
-        </div>
-      </Modal>
+        </>
+      </WebModal>
       <ModalReview
         open={openReviewModal}
         onClose={() => setOpenReviewModal(false)}
@@ -117,6 +108,10 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
         imgFile={selectedFile || ''}
         imgUrl={state.imgUrl}
         setFeedList={setFeedList}
+        onDone={() => {
+          setState(intialValue);
+          setSelectedFile(undefined);
+        }}
       />
     </>
   );
