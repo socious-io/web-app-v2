@@ -1,4 +1,4 @@
-import { NotificationSettingsRes } from '../types';
+import { NotificationSettingsRes, Pagination } from '../types';
 
 export type GetProject = (id: string) => {
   applicants: number;
@@ -86,8 +86,20 @@ export type GetOtpConfirmResp = {
   token_type: 'Bearer';
 };
 
+export type PostRefreshResp = {
+  access_token: string;
+  refresh_token: string;
+  token_type: 'Bearer';
+};
+
 export type PostResendVerifyCodePayload = {
   email: string;
+};
+
+type getOfferPayload = {
+  id: string;
+  status: 'PENDING' | 'APPROVED' | 'HIRED' | 'CLOSED,CANCELED,WITHDRAWN';
+  page: number;
 };
 
 export interface Endpoints {
@@ -95,14 +107,14 @@ export interface Endpoints {
     auth: {
       'otp/confirm': (payload: GetOtpConfirmPayload) => Promise<GetOtpConfirmResp>;
     };
-    projects: unknown;
+    projects: (payload: getOfferPayload) => Promise<Pagination<Offer[]>>;
     offers: unknown;
     missions: unknown;
   };
   post: {
     auth: {
       login: unknown;
-      refresh: unknown;
+      refresh: (payload: { refresh_token: string }) => Promise<PostRefreshResp>;
       'resend-verify-code': (payload: PostResendVerifyCodePayload) => Promise<unknown>;
     };
     user: {
