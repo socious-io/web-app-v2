@@ -69,6 +69,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
           actionList={actionList(item.id, item.likes, item.liked)}
           date={item.created_at}
           categories={socialCausesToCategory(item.causes_tags)}
+          lineLimit="none"
         />
       ))}
       {showSeeMore && (
