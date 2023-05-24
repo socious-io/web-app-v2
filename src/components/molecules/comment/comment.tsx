@@ -1,9 +1,9 @@
+import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { toRelativeTime } from '../../../core/relative-time';
 import { Avatar } from '../../atoms/avatar/avatar';
 import { ChatBox } from '../../atoms/chat-box/chat-box';
-import { Items } from '../../atoms/dropdown/items/items';
-import css from './comment.module.scss';
 import { CommentProps } from './comment.types';
+import css from './comment.module.scss';
 
 export const Comment = (props: CommentProps) => {
   const onHeartClick = (data: CommentProps['list'][0]) => {
@@ -37,7 +37,9 @@ export const Comment = (props: CommentProps) => {
 
           <div className={css.wrapper}>
             <div className={css.messageBox}>
-              <ChatBox type="sender">{item.content}</ChatBox>
+              <ChatBox type="sender">
+                <ExpandableText text={item.content} expectedLength={100} />
+              </ChatBox>
             </div>
 
             <div className={css.like} onClick={() => onHeartClick(item)}>

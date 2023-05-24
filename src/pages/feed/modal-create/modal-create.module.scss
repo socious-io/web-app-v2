@@ -13,6 +13,7 @@
 .text {
   max-height: 650px;
   overflow-y: auto;
+  word-break: break-word;
 
   &::-webkit-scrollbar {
     width: 4px;

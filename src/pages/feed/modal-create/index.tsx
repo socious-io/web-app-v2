@@ -80,6 +80,7 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
               placeholder="Social Cause"
               list={socialCausesToDropdownAdaptor()}
               onGetValue={getSocialValue}
+              selectedValue={state.social}
             />
           </div>
 

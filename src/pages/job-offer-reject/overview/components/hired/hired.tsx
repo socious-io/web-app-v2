@@ -35,7 +35,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
     <div className={css.container}>
       <Accordion id="hired" title={`Hired (${hiredList.total_count})`}>
         <ApplicantListPay
-          confirmable
+          confirmable={offerOverview?.status === 'CLOSED'}
           onConfirm={openConfirmDialog}
           list={missionToApplicantListPayAdaptor(hiredList.items)}
           isPaidCrypto={isPaidCrypto}
