@@ -28,7 +28,7 @@ async function set(payload: SetOptions): Promise<void> {
   }
 }
 
-async function get(key: string) {
+async function get(key: string): Promise<string | null | undefined> {
   if (isNative) {
     return Preferences.get({ key }).then(({ value }) => value);
   } else {

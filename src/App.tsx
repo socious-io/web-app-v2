@@ -9,18 +9,31 @@ import { DeepLinks } from './core/deepLinks';
 import { nonPermanentStorage } from './core/storage/non-permanent';
 import { endpoint } from './core/endpoints';
 import { setAuthCookies } from './pages/sign-in/sign-in.services';
+import { PostRefreshResp } from './core/endpoints/index.types';
 
-async function onInit() {
-  const refresh_token = await nonPermanentStorage.get('refresh_token');
+async function fetchNewAuth(
+  refresh_token: Awaited<ReturnType<typeof nonPermanentStorage.get>>
+): Promise<PostRefreshResp | void> {
   if (refresh_token) {
     const newAuth = await endpoint.post.auth.refresh({ refresh_token });
-    await setAuthCookies(newAuth);
-    return true;
+    return newAuth;
   }
-  return true;
 }
 
-onInit();
+async function storeNewAuth(newAuth: Awaited<ReturnType<typeof fetchNewAuth>>) {
+  if (newAuth !== undefined) {
+    await setAuthCookies(newAuth);
+  }
+}
+
+function refreshToken() {
+  nonPermanentStorage.get('refresh_token').then(fetchNewAuth).then(storeNewAuth);
+}
+
+refreshToken();
+
+setInterval(refreshToken, 1000 * 60 * 15);
+
 function App() {
   return (
     <Provider store={store}>
