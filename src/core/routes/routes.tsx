@@ -90,8 +90,8 @@ export const children: Route[] = [
   },
   {
     loader: jobsPageLoader,
-    pendingElement: 'loading...',
-    pendingMs: 0,
+    // pendingElement: 'loading...',
+    // pendingMs: 0,
     children: [
       {
         path: 'delete-profile',
@@ -253,7 +253,8 @@ export const children: Route[] = [
           },
           {
             loader: (params) => jobOfferRejectLoader(params),
-            element: () => import('../../pages/job-offer-reject/job-offer-reject.container').then((m) => <m.JobOfferReject />),
+            element: () =>
+              import('../../pages/job-offer-reject/job-offer-reject.container').then((m) => <m.JobOfferReject />),
           },
         ],
       },
@@ -343,7 +344,8 @@ export const children: Route[] = [
           const offer = await endpoint.get.offers.offer_id(mission.offer_id);
           return { mission, offer };
         },
-        element: () => import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
+        element: () =>
+          import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
       },
       {
         path: '/jobs/applied',
