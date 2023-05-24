@@ -26,6 +26,7 @@
 
   .text,
   .image {
+    word-break: break-word;
     padding: 16px;
     &__border {
       border-bottom: 1px solid var(--color-gray-04);

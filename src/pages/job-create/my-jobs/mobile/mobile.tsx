@@ -51,7 +51,7 @@ export const Mobile = (): JSX.Element => {
       default: true,
     },
     {
-      name: 'archived',
+      name: 'Archived',
       content: <></>,
     },
   ];

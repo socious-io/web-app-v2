@@ -3,12 +3,14 @@ import { ActionList } from '../../atoms/action-list/action-list';
 import { Avatar } from '../../atoms/avatar/avatar';
 import { Card } from '../../atoms/card/card';
 import { CategoriesClickable } from '../../atoms/categories-clickable/categories-clickable';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Typography } from '../../atoms/typography/typography';
-import css from './feed-item.module.scss';
 import { FeedItemProps } from './feed-item.types';
+import css from './feed-item.module.scss';
 
 export const FeedItem = (props: FeedItemProps): JSX.Element => {
   const { id, type, actionList, date, lineLimit = 3, img, name, categories, imgAvatar } = props;
+
   return (
     <Card>
       <div className={css.header}>
@@ -27,7 +29,7 @@ export const FeedItem = (props: FeedItemProps): JSX.Element => {
       <CategoriesClickable list={props.categories} />
       <div className={css.text}>
         <Typography type="body" lineLimit={lineLimit} size="s2">
-          {props.text}
+          <ExpandableText text={props.text} />
         </Typography>
       </div>
       <div>
