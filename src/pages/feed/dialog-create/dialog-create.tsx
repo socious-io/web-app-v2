@@ -77,7 +77,12 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
       </div>
       <div className={css.social}>
         <Avatar img={avatarImg} type={identity.type} />
-        <Dropdown placeholder="Social Cause" list={socialCausesToDropdownAdaptor()} onGetValue={getSocialValue} />
+        <Dropdown
+          placeholder="Social Cause"
+          list={socialCausesToDropdownAdaptor()}
+          onGetValue={getSocialValue}
+          selectedValue={state.social}
+        />
       </div>
       <div className={css.text}>
         <Textarea rows="15" variant="outline" onChange={onChangeTextHandler} placeholder="I feel like ..." />

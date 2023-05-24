@@ -25,7 +25,8 @@ export const Dropdown = (props: DropdownProps) => {
 
   useEffect(() => {
     setFilterList(list);
-    setState({ isListOpen: false, headerTitle: '' });
+    const selectedTitle = list.find((item) => item.value === selectedValue)?.title;
+    setState({ isListOpen: false, headerTitle: selectedTitle || '' });
   }, [list]);
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export const Dropdown = (props: DropdownProps) => {
           <div className={css.list}>
             {filterList.map((item) => (
               <div className={css.listItem} key={item.value}>
-                <Items title={item.title} value={item.value} onClick={onClickItems} />
+                <Items title={item.title} value={item.value} onClick={() => onClickItems(item.title, item.value)} />
               </div>
             ))}
           </div>
