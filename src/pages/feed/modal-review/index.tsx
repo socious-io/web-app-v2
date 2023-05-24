@@ -3,6 +3,7 @@ import { WebModal } from 'src/components/templates/web-modal';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { RootState } from 'src/store/store';
 import { printWhen } from 'src/core/utils';
 import { getFeedList, submitPost, uploadImage } from '../mobile/mobile.service';
@@ -69,7 +70,9 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
           </div>
           <CategoriesClickable list={obj} />
         </div>
-        <div className={`${css.text} ${!!imgUrl && css.text__border}`}>{text}</div>
+        <div className={`${css.text} ${!!imgUrl && css.text__border}`}>
+          <TextClickableURLs text={text} />
+        </div>
         {printWhen(
           <div className={css.image}>
             <Card>
