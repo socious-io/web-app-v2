@@ -11,6 +11,7 @@ import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { Divider } from 'src/components/templates/divider/divider';
 import { SwitchAccountProps } from './switch-account.types';
 import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 
 let timer: NodeJS.Timeout;
 
@@ -52,6 +53,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   function logOut() {
     logout().then(() => navigate({ to: '/sign-in' }));
     props.onClose();
+    nonPermanentStorage.clear();
   }
 
   useEffect(() => {
