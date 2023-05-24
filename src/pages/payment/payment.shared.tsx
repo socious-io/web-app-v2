@@ -60,6 +60,7 @@ export const usePaymentShared = () => {
         escrowAmount,
         contributor,
         projectId: project_id,
+        verifiedOrg: offer.offerer.meta.verified_impact || false,
       });
 
       // this is paramater need to sync with backend to make Hire available
