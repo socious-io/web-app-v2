@@ -8,6 +8,7 @@ import { endpoint } from 'src/core/endpoints';
 import { handleError } from '../../../core/http';
 import { dialog } from '../../../core/dialog/dialog';
 import translate from '../../../translations';
+
 export const Otp = () => {
   const navigate = useNavigate();
   const queryParam = useMatch().search;
@@ -15,10 +16,9 @@ export const Otp = () => {
   const [otpValue, setOtpValue] = useState('');
 
   function submit() {
-    // endpoint.auth.confirmOTP(email, otpValue)
-    endpoint.post.auth['resend-verify-code']({ email })
+    endpoint.get.auth['otp/confirm']({ email, otp: otpValue })
       .then((resp) => {
-        if (resp === 200) {
+        if (resp.access_token && resp.access_token?.length > 0) {
           navigate({ to: '../password' });
         }
       })
