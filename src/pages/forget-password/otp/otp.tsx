@@ -8,6 +8,7 @@ import { endpoint } from 'src/core/endpoints';
 import { handleError } from '../../../core/http';
 import { dialog } from '../../../core/dialog/dialog';
 import translate from '../../../translations';
+import { setAuthCookies } from 'src/pages/sign-in/sign-in.services';
 
 export const Otp = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export const Otp = () => {
     endpoint.get.auth['otp/confirm']({ email, otp: otpValue })
       .then((resp) => {
         if (resp.access_token && resp.access_token?.length > 0) {
+          setAuthCookies(resp);
           navigate({ to: '../password' });
         }
       })
