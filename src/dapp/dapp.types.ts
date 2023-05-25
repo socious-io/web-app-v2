@@ -30,4 +30,5 @@ export interface EscrowParams {
   contributor: string;
   projectId: string;
   token?: string;
+  verifiedOrg: boolean;
 }
