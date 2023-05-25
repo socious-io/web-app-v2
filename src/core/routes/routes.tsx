@@ -31,7 +31,7 @@ import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { getMissionsList, getSrtipeProfile } from 'src/pages/wallet/wallet.service';
 
-export const children: Route[] = [
+export const routes: Route[] = [
   {
     path: 'intro',
     element: () => import('../../pages/intro/intro').then((m) => <m.Intro />),
@@ -466,11 +466,5 @@ export const children: Route[] = [
         ],
       },
     ],
-  },
-];
-
-export const routes: Route[] = [
-  {
-    children: children,
   },
 ];
