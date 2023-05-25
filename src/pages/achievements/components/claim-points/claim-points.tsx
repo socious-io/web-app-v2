@@ -51,10 +51,12 @@ export const ClaimPoints = (): JSX.Element => {
   );
 
   const goToProofspaceJSX = (
-    <button className={css.proofspaceButton} onClick={() => window.open(deepLinkUrl, '_blank')}>
+    <a className={css.proofspaceButton} href={deepLinkUrl} target="_blank">
       <div className={css.proofspaceLink}>Go to proofSpace app</div>
-    </button>
+    </a>
   );
+
+  console.log({ deepLinkUrl });
 
   return (
     <div className={css.container}>
