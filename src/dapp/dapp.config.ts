@@ -1,5 +1,5 @@
 import { DappConfig } from './dapp.types';
-import { polygon, polygonMumbai , Chain } from 'wagmi/chains';
+import { polygon, polygonMumbai, Chain } from 'wagmi/chains';
 
 export const milkomeda: Chain = {
   id: 2002,
@@ -57,7 +57,7 @@ export const dappConfig: DappConfig = {
   testnet: [
     {
       chain: milkomedaTestnet,
-      escrow: '0xF35a012313Be8c7c3c48e86466fe3b8cd809a7b0',
+      escrow: '0x8372c3F32F1f38BcAb65947a36F5b3E867a117Da',
       tokens: [
         {
           name: 'USDC',
@@ -68,15 +68,15 @@ export const dappConfig: DappConfig = {
     },
     {
       chain: polygonMumbai,
-      escrow: '0x383fdB2917B1bB02841116811f94159D9263D53d',
+      escrow: '0xF2B4BCc3F1687288a8c0c06Ee720350CA09dfb23',
       tokens: [
         {
           name: 'USDC',
           symbol: 'USDC',
           address: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
         },
-      ]
-    }
+      ],
+    },
   ],
   mainet: [
     {
