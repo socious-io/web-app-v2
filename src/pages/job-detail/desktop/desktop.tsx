@@ -16,7 +16,7 @@ import { useJobDetailShared } from '../job-detail.shared';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
-  const { navigate, userIdentity, identity, job } = useJobDetailShared();
+  const { navigate, userIdentity, identity, job, location } = useJobDetailShared();
   const [openApplyModal, setOpenApplyModal] = useState(false);
 
   function onApply() {
@@ -82,7 +82,7 @@ export const Desktop = (): JSX.Element => {
             <div className={css.firstRow}>
               <ProfileView
                 name={job.identity_meta.name}
-                location={job.identity_meta.city}
+                location={location}
                 img={job.identity_meta.image}
                 type={job.identity_type}
               />
