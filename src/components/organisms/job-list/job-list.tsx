@@ -9,6 +9,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { toRelativeTime } from '../../../core/relative-time';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 
 export const JobList = (props: JobListProps): JSX.Element => {
   const { data, onMorePageClick, ...rest } = props;
@@ -17,6 +18,17 @@ export const JobList = (props: JobListProps): JSX.Element => {
   function goToJobDetail(id: string) {
     return () => navigate({ to: `/jobs/${id}` });
   }
+
+  function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
+    if (shortname && COUNTRIES_DICT[shortname]) {
+      return COUNTRIES_DICT[shortname];
+    } else {
+      return shortname;
+    }
+  }
+
+  const location = (job: JobListProps['data'][0]) =>
+    `${job.city}, ${getCountryName(job.country as keyof typeof COUNTRIES_DICT | undefined)}`;
 
   return (
     <div style={rest} className={css.container}>
@@ -27,7 +39,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
               <Avatar marginRight="0.5rem" type="organizations" img={job.identity_meta.image} />
               <div className={css.orgNameAndLocation}>
                 <div>{job.identity_meta?.name}</div>
-                <div className={css.orgLocation}>{job.city}</div>
+                <div className={css.orgLocation}>{location(job)}</div>
               </div>
             </div>
             <div className={css.body}>
