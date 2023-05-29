@@ -1,6 +1,7 @@
 .container {
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .detail {
@@ -20,8 +21,8 @@
 }
 
 .location {
-  width: 10rem;
-  max-width: auto;
+  // width: 10rem;
+  max-width: fit-content;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

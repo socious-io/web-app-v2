@@ -13,7 +13,7 @@ import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fi
 import { useJobDetailShared } from '../job-detail.shared';
 
 export const Mobile = (): JSX.Element => {
-  const { navigate, job, identity } = useJobDetailShared();
+  const { navigate, job, identity, location } = useJobDetailShared();
 
   function onApply() {
     navigate({ to: './apply' });
@@ -52,7 +52,7 @@ export const Mobile = (): JSX.Element => {
         <Divider>
           <ProfileView
             name={job.identity_meta.name}
-            location={job.identity_meta.city}
+            location={location}
             img={job.identity_meta.image}
             type={job.identity_type}
           />
