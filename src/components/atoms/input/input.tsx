@@ -4,11 +4,22 @@ import css from './input.module.scss';
 import { InputProps } from './input.types';
 
 export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
-  const { optional = false, variant = 'outline', ...rest } = props;
+  const { optional = false, variant = 'outline', type, ...rest } = props;
   const [outline, setOutline] = useState(false);
   const controlErrors = props?.register?.controls[props.name]?.errors || [];
   const isDirty = props.register?.controls[props.name].isDirty;
   const errors = Object.values(controlErrors) as string[];
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const eyeJSX = (
+    <div
+      style={{ opacity: passwordVisible ? '0.3' : '1' }}
+      className={css.eye}
+      onClick={() => setPasswordVisible(!passwordVisible)}
+    >
+      <img src="/icons/eye-black.svg" />
+    </div>
+  );
 
   const errorsJSX = (
     <div style={{ height: `${errors.length}rem` }} className={css.errorsContainer}>
@@ -22,6 +33,14 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
 
   function setClassName(v: InputProps['variant']) {
     return v ? css.outline : css.default;
+  }
+
+  function setType(type: InputProps['type']) {
+    if (type === 'password' && passwordVisible) {
+      return 'text';
+    } else {
+      return type;
+    }
   }
 
   if (props.label) {
@@ -40,14 +59,20 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
             props.label
           )}
         </label>
-        <input
-          style={{ borderColor: outline ? 'var(--color-primary-01)' : '' }}
-          id={props.label}
+        <div
           className={`${css.textbox} ${props.inputClassName}`}
-          role="textbox"
-          {...rest}
-          {...props?.register?.bind(props.name)}
-        ></input>
+          style={{ borderColor: outline ? 'var(--color-primary-01)' : '' }}
+        >
+          <input
+            className={css.input}
+            id={props.label}
+            role="textbox"
+            type={setType(props.type)}
+            {...rest}
+            {...props?.register?.bind(props.name)}
+          />
+          {printWhen(eyeJSX, props.type === 'password')}
+        </div>
         {printWhen(errorsJSX, isDirty)}
       </div>
     );

@@ -1,26 +1,25 @@
 import css from './intro.module.scss';
-import { Steps } from '../../components/atoms/steps/steps';
+import { Steps } from '../../components/atoms/steps-v2/steps';
 import { list } from './intro.constants';
 import { Typography } from '../../components/atoms/typography/typography';
 import { Button } from '../../components/atoms/button/button';
 import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
 
 export const Intro = (): JSX.Element => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const item = list[step - 1];
 
   return (
     <BottomStatic backgroundColor="var(--color-off-white-01)">
       <div className={css.sliderContainer}>
         <Typography textAlign="center" size="xl" type="heading">
-          {item.title}
+          {list[step - 1].title}
         </Typography>
-        <img src={item.img} />
+        <img src={list[step - 1].img} />
         <Typography fontSize={18} color="var(--color-gray-01)" textAlign="center">
-          {item.description}
+          {list[step - 1].description}
         </Typography>
         <Steps autoPlay length={list.length} current={step} onStepClick={setStep} />
       </div>
