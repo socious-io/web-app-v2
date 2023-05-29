@@ -8,7 +8,7 @@ export const Confirm = () => {
   const email = queryParam.email;
 
   const joinNow = () => {
-    navigate({ to: '../../intro' });
+    navigate({ to: '/sign-up/user/email' });
   };
 
   return (
