@@ -8,6 +8,7 @@ import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { generateFormModel } from './apply.form';
 import { useForm } from 'src/core/form';
 import { dialog } from 'src/core/dialog/dialog';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 
 export const useApplyShared = () => {
   const navigate = useNavigate();
@@ -19,6 +20,18 @@ export const useApplyShared = () => {
   const questions = screeningQuestions.questions;
   const formModel: FormModel = useMemo(() => generateFormModel(questions), []);
   const form = useForm(formModel);
+
+  function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
+    if (shortname && COUNTRIES_DICT[shortname]) {
+      return COUNTRIES_DICT[shortname];
+    } else {
+      return shortname;
+    }
+  }
+
+  const location = `${jobDetail.identity_meta.city}, ${getCountryName(
+    jobDetail.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined
+  )}`;
 
   function onResumeLoad(e: ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
@@ -46,5 +59,5 @@ export const useApplyShared = () => {
     }
   }
 
-  return { questions, resume, setResume, onResumeLoad, jobDetail, form, onSubmit };
+  return { questions, resume, setResume, onResumeLoad, jobDetail, form, onSubmit, location };
 };

@@ -12,7 +12,7 @@ import { useApplyShared } from '../apply.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const { questions, resume, setResume, onResumeLoad, jobDetail, form, onSubmit } = useApplyShared();
+  const { questions, resume, setResume, onResumeLoad, jobDetail, form, location, onSubmit } = useApplyShared();
 
   const renderQuestions = () => {
     return (
@@ -62,7 +62,7 @@ export const Mobile = (): JSX.Element => {
             img={jobDetail.identity_meta?.image}
             type={jobDetail.identity_type}
             name={jobDetail.identity_meta.name}
-            location={`${jobDetail.identity_meta.city}, ${jobDetail.identity_meta.country}`}
+            location={location}
           />
           <div className={css.jobTitle}>{jobDetail.title}</div>
           <div>{convertMDToJSX(jobDetail.description, { length: 200 })}</div>
