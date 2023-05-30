@@ -11,6 +11,7 @@ import { socialCausesToDropdownAdaptor } from '../../../core/adaptors';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../../core/types';
 import { RootState } from '../../../store/store';
+import { dialog } from 'src/core/dialog/dialog';
 
 export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -51,6 +52,10 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
 
   const imagUpload = (e: any) => {
     if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    } else if (e.target.files[0].size > 1_048_576) {
+      dialog.alert({ message: 'Image should be less than 1 MB' });
       setSelectedFile(undefined);
       return;
     }
