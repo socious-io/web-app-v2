@@ -5,6 +5,7 @@ import { Resolver } from './offer-received.types';
 import { StatusKeys } from 'src/constants/APPLICANT_STATUS';
 import { endpoint } from 'src/core/endpoints';
 import { dialog } from 'src/core/dialog/dialog';
+import { findTokenRate } from './offer-received.services';
 
 export const useOfferReceivedShared = () => {
   const { offer } = useMatch().ownData as Resolver;
@@ -14,6 +15,7 @@ export const useOfferReceivedShared = () => {
   const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
   const { address: account, isConnected } = useAccount();
   const [status, setStatus] = useState<StatusKeys>(offer?.status as StatusKeys);
+  const [tokenRate, setTokenRate] = useState(1);
 
   useEffect(() => {
     if (isConnected && account && (!wallet_address || String(wallet_address) !== account)) {
@@ -22,6 +24,14 @@ export const useOfferReceivedShared = () => {
       });
     }
   }, [isConnected, account]);
+
+  useEffect(() => {
+    const getTokenRate = async () => {
+      const { rate } = await findTokenRate(offer.crypto_currency_address);
+      setTokenRate(rate);
+    };
+    getTokenRate();
+  }, []);
 
   function onAccept(id: string) {
     return () =>
@@ -42,5 +52,9 @@ export const useOfferReceivedShared = () => {
     };
   }
 
-  return { offer, status, account, isPaidCrypto, onAccept, onDeclined };
+  function equivalentUSD() {
+    return Math.round((offer.assignment_total / tokenRate) * 100) / 100;
+  }
+
+  return { offer, status, account, isPaidCrypto, onAccept, onDeclined, equivalentUSD };
 };

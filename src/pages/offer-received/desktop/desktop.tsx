@@ -18,7 +18,7 @@ import { useOfferReceivedShared } from '../offer-received.shared';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
-  const { offer, status, account, isPaidCrypto, onAccept, onDeclined } = useOfferReceivedShared();
+  const { offer, status, account, isPaidCrypto, onAccept, onDeclined, equivalentUSD } = useOfferReceivedShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -80,7 +80,7 @@ export const Desktop = (): JSX.Element => {
         </div>
         <Card className={css.rightContainer}>
           <div>
-            <Accordion title="Mission details" id="mission-details">
+            <Accordion title="Job details" id="mission-details">
               <div className={css.missionDetailContainer}>
                 <div className={css.missionDetailMessage}>{offer.offer_message}</div>
                 <div className={css.detailItemContainer}>
@@ -99,8 +99,14 @@ export const Desktop = (): JSX.Element => {
                     </div>
                   </div>
                   <div className={css.detailItem}>
-                    <div className={css.detailItemLabel}>Mission total</div>
-                    <div className={css.detailItemValue}>{offer.assignment_total}</div>
+                    <div className={css.detailItemLabel}>Job total</div>
+                    <div className={css.detailItemValue}>
+                      {offer.assignment_total}
+                      {printWhen(
+                        <span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>,
+                        isPaidCrypto
+                      )}
+                    </div>
                   </div>
                   <div className={css.detailItem}>
                     <div className={css.detailItemLabel}>Due date</div>
