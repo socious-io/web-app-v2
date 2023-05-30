@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { EditOrganization } from './edit/edit';
 
 export const Desktop = (): JSX.Element => {
-  const { user, skills, profileBelongToCurrentUser, onAchievementClick, socialCauses, badges } =
+  const { user, address, skills, profileBelongToCurrentUser, onAchievementClick, socialCauses, badges } =
     useProfileOrganizationShared();
 
   const [editOpen, setEditOpen] = useState(false);
@@ -87,7 +87,7 @@ export const Desktop = (): JSX.Element => {
   const cityLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/pin-green.svg" />
-      <div className={css.contactData}>{user.city}</div>
+      <div className={css.contactData}>{address}</div>
     </div>
   );
 
@@ -151,18 +151,6 @@ export const Desktop = (): JSX.Element => {
             {printWhen(missionJSX, !!user.mission)}
             {printWhen(cultureJSX, !!user.culture)}
             {printWhen(skillsJSX, user.skills && user.skills.length > 0)}
-            {printWhen(
-              <Divider title="Mission">
-                <div className={css.mission}>{user.mission}</div>
-              </Divider>,
-              !!user.mission
-            )}
-            {printWhen(
-              <Divider title="Culture">
-                <div className={css.culture}>{user.culture}</div>
-              </Divider>,
-              !!user.culture
-            )}
           </div>
         </div>
         <EditOrganization width="31rem" height="75vh" open={editOpen} onClose={() => setEditOpen(false)} />
