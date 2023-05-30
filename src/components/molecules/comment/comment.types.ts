@@ -1,4 +1,4 @@
-import { CommentModel } from '../../../pages/feed/post-detail/mobile/mobile.types';
+import { CommentModel } from 'src/pages/feed/post-detail/post-detail.types';
 
 export type CommentProps = {
   onLike: (postId: string, id: string) => void;
