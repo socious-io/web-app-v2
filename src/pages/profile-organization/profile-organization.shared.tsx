@@ -5,6 +5,7 @@ import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 
 export const useProfileOrganizationShared = () => {
   const navigate = useNavigate();
@@ -16,6 +17,15 @@ export const useProfileOrganizationShared = () => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
+  function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
+    if (shortname && COUNTRIES_DICT[shortname]) {
+      return COUNTRIES_DICT[shortname];
+    } else {
+      return shortname;
+    }
+  }
+
+  const address = `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
   const profileBelongToCurrentUser = currentIdentity?.id === user.id;
 
   function onClose() {
@@ -36,6 +46,7 @@ export const useProfileOrganizationShared = () => {
   return {
     onClose,
     user,
+    address,
     badges,
     socialCauses,
     skills,
