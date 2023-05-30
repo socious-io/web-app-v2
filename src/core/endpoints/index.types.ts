@@ -110,6 +110,10 @@ export interface Endpoints {
     projects: (payload: getOfferPayload) => Promise<Pagination<Offer[]>>;
     offers: unknown;
     missions: unknown;
+    follows: {
+      followings: () => Promise<unknown>;
+      followers: () => Promise<unknown>;
+    };
   };
   post: {
     auth: {
@@ -147,6 +151,10 @@ export interface Endpoints {
       '{card_id}/update': (id: string, body: any) => Promise<unknown>;
       '{card_id}/remove': (id: string) => Promise<unknown>;
       '{mission_id}/payout': (id: string) => Promise<unknown>;
+    };
+    follows: {
+      '{identity_id}': (id: string) => Promise<unknown>;
+      '{identity_id}/unfollow': (id: string) => Promise<unknown>;
     };
     notifications: {
       settings_confirm: (formData: NotificationSettingsRes) => Promise<NotificationSettingsRes>;

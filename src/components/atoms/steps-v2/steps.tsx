@@ -1,13 +1,11 @@
-import { useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import css from './steps.module.scss';
 import { StepsProps } from './steps.types';
 
 export const Steps = (props: StepsProps): JSX.Element => {
   const { length, current, autoPlay, onStepClick, clickable = true, ...rest } = props;
   const steps: number[] = Array.from(Array(length).keys());
-  //   const [step, setStep] = useState(current);
 
-  console.log({ current });
   useEffect(() => {
     if (autoPlay) {
       setInterval(() => {

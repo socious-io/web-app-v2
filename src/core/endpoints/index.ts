@@ -22,6 +22,10 @@ export const endpoint: Endpoints = {
     missions: {
       mission_id: (id: string) => get(`missions/${id}`).then(getDataProp),
     },
+    follows: {
+      followings: () => get('follows/followings').then(getDataProp),
+      followers: () => get('follows/followers').then(getDataProp),
+    },
   },
   post: {
     auth: {
@@ -59,6 +63,10 @@ export const endpoint: Endpoints = {
       '{card_id}/update': (id: string, body: any) => post(`/payments/cards/update/${id}`, body).then(getDataProp),
       '{card_id}/remove': (id: string) => post(`/payments/cards/remove/${id}`, {}).then(getDataProp),
       '{mission_id}/payout': (id: string) => post(`payments/missions/${id}/payout`, {}).then(getDataProp),
+    },
+    follows: {
+      '{identity_id}': (id: string) => post(`/follows/${id}`, {}).then(getDataProp),
+      '{identity_id}/unfollow': (id: string) => post(`/follows/${id}/unfollow`, {}).then(getDataProp),
     },
     media: {
       upload: (formData) =>

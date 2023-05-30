@@ -13,15 +13,23 @@ import { Edit } from './edit/edit';
 import { useState } from 'react';
 
 export const Desktop = (): JSX.Element => {
-  const { user, badges, socialCauses, avatarImage, skills, profileBelongToCurrentUser, gotToDesktopAchievement } =
-    useProfileUserShared();
+  const {
+    user,
+    address,
+    badges,
+    socialCauses,
+    avatarImage,
+    skills,
+    profileBelongToCurrentUser,
+    gotToDesktopAchievement,
+  } = useProfileUserShared();
 
   const [editOpen, setEditOpen] = useState(false);
 
   const cityLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/pin-green.svg" />
-      <div className={css.contactData}>{user.city}</div>
+      <div className={css.contactData}>{address}</div>
     </div>
   );
 
@@ -150,12 +158,6 @@ export const Desktop = (): JSX.Element => {
           {printWhen(missionJSX, !!user.mission)}
           {printWhen(cultureJSX, !!user.culture)}
           {printWhen(skillsJSX, user.skills && user.skills.length > 0)}
-          {printWhen(
-            <Divider title="Mission">
-              <div className={css.mission}>{user.mission}</div>
-            </Divider>,
-            !!user.mission
-          )}
           {printWhen(
             <Divider title="Culture">
               <div className={css.culture}>{user.culture}</div>
