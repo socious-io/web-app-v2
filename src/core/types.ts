@@ -281,6 +281,7 @@ export type MissionsResp = Pagination<
       meta: {
         image: string;
         name: string;
+        verified_impact: boolean;
       };
     };
     escrow: {
@@ -360,6 +361,7 @@ export type Offer = {
     abi: AbiItem[];
   };
   payment_mode: 'FIAT' | 'CRYPTO';
+  crypto_currency_address: string;
 };
 
 export type GetOffer = Pagination<Offer[]>;
