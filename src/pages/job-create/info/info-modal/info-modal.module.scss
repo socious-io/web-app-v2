@@ -22,15 +22,6 @@
   overflow: auto;
   padding: 0.75rem 0;
   max-height: 380px;
-
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-gray-03);
-    border-radius: 12px;
-  }
 }
 
 .success {

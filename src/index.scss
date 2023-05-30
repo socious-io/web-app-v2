@@ -12,7 +12,7 @@ pwa-action-sheet {
 
 @font-face {
   font-family: Work Sans;
-//   src: url('/fonts/Inter-Medium.woff2');
+  //   src: url('/fonts/Inter-Medium.woff2');
   src: url('/fonts/Inter-Regular.woff2');
 }
 
@@ -20,4 +20,16 @@ pwa-action-sheet {
   font-family: Work Sans;
   font-weight: 600;
   src: url('/fonts/Inter-SemiBold.woff2');
+}
+
+html,
+body {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray-03);
+    border-radius: 12px;
+  }
 }

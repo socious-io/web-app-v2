@@ -57,15 +57,6 @@ $color-gray-light-1: #808289;
 .items {
   max-height: 300px;
   overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-gray-03);
-    border-radius: 12px;
-  }
 }
 
 .item {
