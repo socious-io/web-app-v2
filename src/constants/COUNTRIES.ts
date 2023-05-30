@@ -9,8 +9,6 @@ export const COUNTRIES: DropdownItem[] = getAllISOCodes().map((country) => {
   };
 });
 
-console.log({ COUNTRIES });
-
 export const COUNTRIES_DICT = {
   AD: 'Andorra',
   AE: 'United Arab Emirates',

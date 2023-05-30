@@ -4,12 +4,13 @@ import { list } from './intro.constants';
 import { Typography } from '../../components/atoms/typography/typography';
 import { Button } from '../../components/atoms/button/button';
 import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
 
 export const Intro = (): JSX.Element => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  
 
   return (
     <BottomStatic backgroundColor="var(--color-off-white-01)">

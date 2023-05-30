@@ -12,6 +12,7 @@ import { useProfileUserShared } from '../profile-user.shared';
 export const Mobile = (): JSX.Element => {
   const {
     user,
+    address,
     badges,
     socialCauses,
     avatarImage,
@@ -25,7 +26,7 @@ export const Mobile = (): JSX.Element => {
   const cityLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/pin-green.svg" />
-      <div className={css.contactData}>{user.city}</div>
+      <div className={css.contactData}>{address}</div>
     </div>
   );
 
@@ -92,6 +93,8 @@ export const Mobile = (): JSX.Element => {
     </Button>
   );
 
+  const connectButtonJSX = <Button width="6.5rem">Connect</Button>;
+
   const orgNameJSX = <div className={css.name}>{user?.name}</div>;
   const usernameJSX = <div className={css.username}>@{user?.username}</div>;
 
@@ -108,7 +111,7 @@ export const Mobile = (): JSX.Element => {
         </div>
         <div className={css.menu}>
           <div className={css.btnContainer}>
-            {/* <Button width="6.5rem">Connect</Button> */}
+            {/* {printWhen(connectButtonJSX, !profileBelongToCurrentUser)} */}
             {printWhen(editButtonJSX, profileBelongToCurrentUser)}
             {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
           </div>
@@ -148,12 +151,6 @@ export const Mobile = (): JSX.Element => {
         {printWhen(missionJSX, !!user.mission)}
         {printWhen(cultureJSX, !!user.culture)}
         {printWhen(skillsJSX, user.skills && user.skills.length > 0)}
-        {printWhen(
-          <Divider title="Mission">
-            <div className={css.mission}>{user.mission}</div>
-          </Divider>,
-          !!user.mission
-        )}
         {printWhen(
           <Divider title="Culture">
             <div className={css.culture}>{user.culture}</div>

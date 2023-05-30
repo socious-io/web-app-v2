@@ -5,6 +5,9 @@ import { RootState } from 'src/store/store';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { ProfileReq } from './profile-user.types';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { useState } from 'react';
+import { endpoint } from 'src/core/endpoints';
 
 export const useProfileUserShared = () => {
   const { user, badges } = useMatch().data as { user: ProfileReq; badges: { badges: unknown[] } };
@@ -12,6 +15,17 @@ export const useProfileUserShared = () => {
   const navigate = useNavigate();
   const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;
   const skills = skillsToCategory(user.skills);
+  const [following, setFollowing] = useState<boolean>();
+
+  function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
+    if (shortname && COUNTRIES_DICT[shortname]) {
+      return COUNTRIES_DICT[shortname];
+    } else {
+      return shortname;
+    }
+  }
+
+  const address = `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
 
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -22,6 +36,14 @@ export const useProfileUserShared = () => {
   function onClose() {
     hapticsImpactLight();
     navigate({ to: '/jobs' });
+  }
+
+  async function follow(id: string) {
+    return endpoint.post.follows['{identity_id}'](id).then(() => setFollowing(true));
+  }
+
+  async function unfollow(id: string) {
+    return endpoint.post.follows['{identity_id}/unfollow'](id).then(() => setFollowing(false));
   }
 
   function gotToDesktopAchievement() {
@@ -41,6 +63,7 @@ export const useProfileUserShared = () => {
 
   return {
     user,
+    address,
     badges,
     socialCauses,
     avatarImage,
@@ -51,5 +74,7 @@ export const useProfileUserShared = () => {
     gotToDesktopAchievement,
     gotToMobileAchievement,
     navigateToEdit,
+    follow,
+    unfollow,
   };
 };
