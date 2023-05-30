@@ -79,7 +79,7 @@ export const Mobile = () => {
       <div className={css.create}>
         <Card>
           <div className={css.createWrapper}>
-            <Avatar size="3rem" type="users" />
+            <Avatar size="3rem" type="users" img={avatarImg} />
             <div onClick={handleClickOpen} className={css.createButton}>
               Create a post
             </div>

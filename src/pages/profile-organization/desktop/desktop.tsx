@@ -54,6 +54,15 @@ export const Desktop = (): JSX.Element => {
     </Button>
   );
 
+  const websiteLinkJSX = (
+    <div className={css.contactItem}>
+      <img height={22} src="/icons/world-green.svg" />
+      <a href={user.website} className={css.contactData}>
+        {user.website}
+      </a>
+    </div>
+  );
+
   const orgNameJSX = <div className={css.name}>{user?.name}</div>;
   const usernameJSX = <div className={css.username}>@{user?.username}</div>;
 
@@ -67,15 +76,6 @@ export const Desktop = (): JSX.Element => {
   );
 
   const emailLinkJSX = (
-    <div className={css.contactItem}>
-      <img height={22} src="/icons/email-green.svg" />
-      <a href={`mailto:${user.email}`} className={css.contactData}>
-        {user.email}
-      </a>
-    </div>
-  );
-
-  const websiteLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/email-green.svg" />
       <a href={`mailto:${user.email}`} className={css.contactData}>

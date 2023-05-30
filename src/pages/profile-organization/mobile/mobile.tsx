@@ -49,9 +49,9 @@ export const Mobile = (): JSX.Element => {
 
   const websiteLinkJSX = (
     <div className={css.contactItem}>
-      <img height={22} src="/icons/email-green.svg" />
-      <a href={`mailto:${user.email}`} className={css.contactData}>
-        {user.email}
+      <img height={22} src="/icons/world-green.svg" />
+      <a href={user.website} className={css.contactData}>
+        {user.website}
       </a>
     </div>
   );

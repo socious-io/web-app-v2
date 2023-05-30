@@ -11,6 +11,9 @@ import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { JobsMenuList, NetworkMenuList } from '../feed.service';
 import { useFeedShared } from '../feed.shared';
 import css from './desktop.module.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
+import { IdentityReq } from 'src/core/types';
 
 export const Desktop = () => {
   const {
@@ -28,6 +31,12 @@ export const Desktop = () => {
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
   const [feed, setFeed] = useState<Feed>();
+
+  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
+
+  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   const showActions = async (feed: Feed) => {
     const name = feed.identity_meta.name;
@@ -57,7 +66,7 @@ export const Desktop = () => {
         <div className={css.create}>
           <Card>
             <div className={css.createWrapper}>
-              <Avatar size="3rem" type="users" />
+              <Avatar size="3rem" type="users" img={avatarImg} />
               <div onClick={handleClickOpen} className={css.createButton}>
                 Create a post
               </div>
