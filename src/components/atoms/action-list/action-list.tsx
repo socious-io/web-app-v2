@@ -18,7 +18,7 @@ export const ActionList = ({ list }: ActionListProps) => {
           )}
 
           <span className={css.label}>
-            {item.like} {item.label}
+            {item?.like && item.like <= 0 ? 0 : item.like} {item.label}
           </span>
         </div>
       ))}
