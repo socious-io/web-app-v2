@@ -8,7 +8,6 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
   text,
   expectedLength = 200,
   clickableUrls = true,
-  className,
 }) => {
   const [maintext, setMainText] = useState(text);
   const expect = text.slice(0, expectedLength);
@@ -26,11 +25,11 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
   }, [text]);
 
   return (
-    <div className={css['expect']}>
+    <div className={css.expect}>
       {clickableUrls ? <TextClickableURLs text={maintext} /> : maintext}
       {printWhen(<>... </>, maintext.length < text.length)}
       {printWhen(
-        <span className={css['expect__seeMore']} onClick={toggleExpect}>
+        <span className={css.expect__seeMore} onClick={toggleExpect}>
           See more
         </span>,
         shouldViewMore
