@@ -30,12 +30,11 @@ export const balance = async (web3: Web3, token: string) => {
 
 export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
   // TODO: get this from contributor info
-  const verifiedCon = false;
   const chainId = await web3.eth.getChainId();
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
   const escrowContract = new web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
 
-  const result = await escrowContract.methods.withdrawn(escrowId, verifiedCon).send({ from: web3.eth.defaultAccount });
+  const result = await escrowContract.methods.withdrawn(escrowId).send({ from: web3.eth.defaultAccount });
 
   return result.transactionHash;
 };
