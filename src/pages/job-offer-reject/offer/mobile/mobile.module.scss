@@ -19,6 +19,19 @@
   padding: 1rem;
 }
 
+.tokens {
+  display: flex;
+  flex-direction: column;
+
+  &__rate {
+    margin-top: 0.5rem;
+    align-self: flex-end;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-02);
+  }
+}
+
 .btnContainer {
   border-top: 1px solid var(--border-gray-01);
   padding: 1rem;
