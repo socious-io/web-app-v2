@@ -30,15 +30,6 @@
   overflow-y: scroll;
   max-height: 380px;
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-gray-03);
-    border-radius: 12px;
-  }
-
   .categoryTitle {
     font-weight: 600;
     padding-bottom: 1.5rem;

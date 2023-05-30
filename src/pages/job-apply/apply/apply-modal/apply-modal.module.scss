@@ -1,15 +1,6 @@
 .main {
   overflow-y: scroll;
   max-height: 570px;
-
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-gray-03);
-    border-radius: 12px;
-  }
 }
 
 .jobTitle {
