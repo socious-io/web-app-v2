@@ -13,7 +13,7 @@ import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fi
 import { useJobDetailShared } from '../job-detail.shared';
 
 export const Mobile = (): JSX.Element => {
-  const { navigate, job, identity, location } = useJobDetailShared();
+  const { navigate, job, identity, location, screeningQuestions } = useJobDetailShared();
 
   function onApply() {
     navigate({ to: './apply' });
@@ -44,6 +44,16 @@ export const Mobile = (): JSX.Element => {
     </Divider>
   );
 
+  const screeningQuestionsJSX = (
+    <Divider title="Screening question">
+      <ul className={css.questions}>
+        {screeningQuestions.map((q) => {
+          return <li className={css.questionItem}>{q.question}</li>;
+        })}
+      </ul>
+    </Divider>
+  );
+
   return (
     <TopFixedMobile containsMenu>
       <Header title={job.job_category?.name || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
@@ -63,6 +73,7 @@ export const Mobile = (): JSX.Element => {
         {printWhen(socialCausesJSX, !!job.causes_tags)}
         <Divider title="Job description">{convertMDToJSX(job.description, { length: null })}</Divider>
         {printWhen(skillsJSX, !!job.skills)}
+        {printWhen(screeningQuestionsJSX, screeningQuestions.length > 0)}
       </div>
     </TopFixedMobile>
   );
