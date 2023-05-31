@@ -5,7 +5,8 @@ export const TextClickableURLs: React.FC<TextClickableUrlsProps> = ({ text }) =>
   const detectURLs = (text: string) => {
     const includesProtocols = /^(?:(?:https?|fttps?):\/\/)/g;
     const urlRegex = /^(?:(?:https?|fttps?):\/\/)?(?:www\.)?[a-zA-Z0-9]+\.[a-zA-Z]{2,}(?:\/[\w-]+)*\/?$/g;
-    const words = text.split(' ');
+    const newLinesBreak = /[\n\r\s\t]+/g;
+    const words = text.split(newLinesBreak);
 
     return words.map((word, index) => {
       if (urlRegex.test(word)) {

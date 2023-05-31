@@ -1,4 +1,4 @@
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import css from './hired.module.scss';
 import { Accordion } from '../../../../../components/atoms/accordion/accordion';
 import { missionToApplicantListPayAdaptor } from '../../../job-offer-reject.services';
@@ -11,7 +11,8 @@ import { ConfirmResult } from '@capacitor/dialog';
 import Dapp from 'src/dapp';
 
 export const Hired = (props: HiredProps): JSX.Element => {
-  const { hiredList, endHiredList } = props;
+  const navigate = useNavigate();
+  const { hiredList, endHiredList, onDone } = props;
   const { web3 } = Dapp.useWeb3();
   const resolver = useMatch().ownData as Loader;
   const { offerOverview, jobOverview } = resolver || {};
@@ -21,7 +22,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
     return async (confirmed: ConfirmResult) => {
       if (web3 && escrowId) await Dapp.withdrawnEscrow(web3, escrowId);
       if (confirmed.value) {
-        endpoint.post.missions['{mission_id}/confirm'](id).then(() => history.back());
+        endpoint.post.missions['{mission_id}/confirm'](id).then(onDone);
       }
     };
   }
