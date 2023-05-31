@@ -8,11 +8,6 @@ import { getCountryByShortname } from 'src/constants/COUNTRIES';
 import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
 
 export function getCategories(job: Job): Array<JSX.Element | string> {
-  console.log({ job });
-
-  const t = translateExperienceLevel(job.experience_level);
-  console.log({ t });
-
   const list: Array<JSX.Element | string> = [];
 
   const location = () => (
