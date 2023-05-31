@@ -260,3 +260,11 @@ export const COUNTRIES_DICT = {
   ZM: 'Zambia',
   ZW: 'Zimbabwe',
 };
+
+export function getCountryByShortname(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
+  if (shortname && COUNTRIES_DICT[shortname]) {
+    return COUNTRIES_DICT[shortname];
+  } else {
+    return shortname;
+  }
+}
