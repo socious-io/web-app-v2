@@ -1,5 +1,6 @@
 import { MakeGenerics } from '@tanstack/react-location';
 import { Job } from '../../components/organisms/job-list/job-list.types';
+import { QuestionsRes } from 'src/core/types';
 
 export type JobDetailProps = {};
 
@@ -9,5 +10,5 @@ export type Loader = MakeGenerics<{
 
 export type Resolver = {
   jobDetail: Job;
-  screeningQuestions?: any;
+  screeningQuestions: QuestionsRes;
 };

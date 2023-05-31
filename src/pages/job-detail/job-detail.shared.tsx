@@ -21,7 +21,7 @@ function getUserData(identity: IdentityReq) {
 
 export const useJobDetailShared = () => {
   const navigate = useNavigate();
-  const { jobDetail: job } = useMatch().data as Resolver;
+  const { jobDetail: job, screeningQuestions } = useMatch().data as Resolver;
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
@@ -41,5 +41,5 @@ export const useJobDetailShared = () => {
 
   const userIdentity = getUserData(identity);
 
-  return { navigate, job, userIdentity, identity, location };
+  return { navigate, job, userIdentity, identity, location, screeningQuestions: screeningQuestions.questions };
 };
