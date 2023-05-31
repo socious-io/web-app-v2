@@ -81,7 +81,7 @@ export const dappConfig: DappConfig = {
   mainet: [
     {
       chain: milkomeda,
-      escrow: 'MUST BE FIXED WITH DEPLOYED ESCROW ADDRESS ON MILKOMEDA',
+      escrow: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
       tokens: [
         {
           name: 'USD Coin',
@@ -93,11 +93,26 @@ export const dappConfig: DappConfig = {
           symbol: 'USDT',
           address: '0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844',
         },
+        {
+          name: 'Dai',
+          symbol: 'DAI',
+          address: '0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C',
+        },
+        {
+          name: 'Djed',
+          symbol: 'SC',
+          address: '0xbfB54440448e6b702fa2A1d7033cd5fB0d9C5A27',
+        },
+        {
+          name: 'Wrapped ADA',
+          symbol: 'WADA',
+          address: '0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9',
+        },
       ],
     },
     {
       chain: polygon,
-      escrow: 'MUST BE FIXED WITH DEPLOYED ESCROW ADDRESS ON POLYGON',
+      escrow: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
       tokens: [
         {
           name: 'USD Coin',
@@ -108,6 +123,11 @@ export const dappConfig: DappConfig = {
           name: 'Tether',
           symbol: 'USDT',
           address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+        },
+        {
+          name: 'Dai',
+          symbol: 'DAI',
+          address: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
         },
       ],
     },
