@@ -15,15 +15,6 @@
   overflow-y: auto;
   word-break: break-word;
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-gray-03);
-    border-radius: 12px;
-  }
-
   .textbox {
     padding: 16px;
 

@@ -69,7 +69,13 @@ export const Desktop = (): JSX.Element => {
     },
     {
       name: 'Hired',
-      content: <Hired hiredList={updatedApplicantList.hiredList} endHiredList={updatedApplicantList.endHiredList} />,
+      content: (
+        <Hired
+          hiredList={updatedApplicantList.hiredList}
+          endHiredList={updatedApplicantList.endHiredList}
+          onDone={updateApplicantList}
+        />
+      ),
     },
   ];
   const renderedTab = tabs.find((tab) => tab.name === selectedTab)?.content;

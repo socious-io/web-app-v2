@@ -19,6 +19,7 @@ import { useOfferShared } from '../offer.shared';
 import css from './offer-modal.module.scss';
 
 export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicantDetail, onDone }) => {
+  const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '' });
   const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
   const [paymentScheme, setPaymentScheme] = useState(applicantDetail?.project?.payment_scheme || 'FIXED');
   const isPaidType = applicantDetail?.project?.payment_type === 'PAID';
@@ -26,10 +27,10 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
   const [paymentMode, setPaymentMode] = useState(defaultPaymentMode);
   const isPaidCrypto = isPaidType && paymentMode === 'CRYPTO';
   const isPaidFiat = isPaidType && paymentMode === 'FIAT';
-  const memoizedFormState = useMemo(() => formModel(isPaidType, isPaidFiat), [paymentMode]);
+  const memoizedFormState = useMemo(() => formModel(isPaidType, isPaidFiat, initialForm), [paymentMode]);
   const form = useForm(memoizedFormState);
   const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
-  const { tokens, openModal, setOpenModal, selectedToken, setSelectedToken, web3 } = useOfferShared();
+  const { tokens, openModal, setOpenModal, selectedToken, onSelectTokens, equivalentUSD, web3 } = useOfferShared();
 
   useEffect(() => {
     setPaymentMode(defaultPaymentMode);
@@ -39,8 +40,8 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
     const payload: OfferPayload = {
       payment_mode: paymentMode,
       assignment_total: isPaidType ? (form.controls.assignmentTotal.value as number) : 1,
-      offer_message: form.controls.message.value as string,
-      total_hours: form.controls.estimatedTotalHours.value as string,
+      offer_message: form.controls.message.value as string || initialForm.message,
+      total_hours: form.controls.estimatedTotalHours.value as string || initialForm.estimatedTotalHours,
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
     offer(applicantDetail.id, payload).then(() => {
@@ -71,7 +72,13 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
           label="Payment scheme"
           list={PROJECT_PAYMENT_SCHEME}
         />
-        <Input register={form} name="estimatedTotalHours" label="Estimated total hours" placeholder="hrs" />
+        <Input
+          register={form}
+          name="estimatedTotalHours"
+          label="Estimated total hours"
+          placeholder="hrs"
+          onKeyUp={(e) => setInitialForm({ ...initialForm, estimatedTotalHours: e.currentTarget.value })}
+        />
         {printWhen(
           <RadioGroup
             name="PaymentMode"
@@ -84,28 +91,36 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
         )}
         {printWhen(<Dapp.Connect />, isPaidCrypto)}
         {printWhen(
-          <InputModal
-            name="assignmentTotal"
-            register={form}
-            placeholder="amount"
-            modalHeader="Select a token"
-            items={tokens as Item[]}
-            open={openModal}
-            onOpen={() => setOpenModal(true)}
-            onClose={() => setOpenModal(false)}
-            selectedItem={(selectedToken?.symbol || tokens[0]?.subtitle) as string}
-            onSelectItem={({ value, subtitle }) => {
-              setSelectedToken({ address: value, symbol: subtitle });
-              setOpenModal(false);
-            }}
-          />,
+          <div className={css.tokens}>
+            <InputModal
+              name="assignmentTotal"
+              register={form}
+              placeholder="amount"
+              modalHeader="Select a token"
+              items={tokens as Item[]}
+              open={openModal}
+              onOpen={() => setOpenModal(true)}
+              onClose={() => setOpenModal(false)}
+              selectedItem={(selectedToken?.symbol || tokens[0]?.subtitle) as string}
+              onSelectItem={onSelectTokens}
+            />
+            <div className={css.tokens__rate}>
+              USD equivalent: <span>{equivalentUSD(form.controls.assignmentTotal.value)}</span>
+            </div>
+          </div>,
           isPaidCrypto && !!web3
         )}
         {printWhen(
           <Input register={form} name="assignmentTotal" label="Assignment total (USD)" placeholder="amount" />,
           isPaidFiat
         )}
-        <Textarea register={form} name="message" label="Message" placeholder="Write message" />
+        <Textarea
+          register={form}
+          name="message"
+          label="Message"
+          placeholder="Write message"
+          onKeyUp={(e) => setInitialForm({ ...initialForm, message: e.currentTarget.value })}
+        />
       </div>
     </WebModal>
   );

@@ -1,16 +1,26 @@
+import { get } from 'src/core/http';
 import { min, pattern, required } from '../../../core/form';
 import { noEmptyString, number } from '../../../core/form/customValidators/customValidators';
 import { FormModel } from '../../../core/form/useForm/useForm.types';
 
-export const formModel = (isPaid: boolean, isFiat: boolean): FormModel => {
+type InitialFormType = {
+  estimatedTotalHours: string;
+  message: string;
+};
+
+export const formModel = (isPaid: boolean, isFiat: boolean, initialForm: InitialFormType): FormModel => {
   const patternNumber = pattern('patternName', /^[+-]?\d+(\.\d+)?$/, 'value should be a number');
   const assignTotalPaid = isFiat
     ? [required(), min(22, 'Amount for fiat mode should not be less than 22$'), patternNumber]
     : [required(), patternNumber];
-  const assignTotalValidators = isPaid ? assignTotalPaid : [patternNumber];
+  const assignTotalValidators = isPaid ? assignTotalPaid : [];
   return {
     assignmentTotal: { initialValue: '', validators: assignTotalValidators },
-    estimatedTotalHours: { initialValue: '', validators: [required(), patternNumber] },
-    message: { initialValue: '', validators: [noEmptyString()] },
+    estimatedTotalHours: { initialValue: initialForm.estimatedTotalHours || '', validators: [required(), patternNumber] },
+    message: { initialValue: initialForm.message || '', validators: [noEmptyString()] },
   };
 };
+
+export async function findTokenRate(id: string) {
+  return get(`/payments/crypto/rate?token=${id}`).then(({ data }) => data);
+}

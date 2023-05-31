@@ -5,13 +5,17 @@
   padding: 1rem;
   max-height: 625px;
   overflow-y: auto;
+}
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
+.tokens {
+  display: flex;
+  flex-direction: column;
 
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-gray-03);
-    border-radius: 12px;
+  &__rate {
+    margin-top: 0.5rem;
+    align-self: flex-end;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-02);
   }
 }

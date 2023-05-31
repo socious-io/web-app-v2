@@ -37,7 +37,7 @@ export const Mobile: React.FC = () => {
             key={item.id}
             mission_name={item.project?.title}
             escrow={item.escrow}
-            fee={0.1}
+            fee={item.assigner.meta.verified_impact ? 0.05 : 0.1}
             disableText={
               item.escrow.release_id == null && isDisablePayout(item.escrow) ? 'You can payout after e few days' : ''
             }

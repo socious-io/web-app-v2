@@ -15,7 +15,7 @@ import { useOfferReceivedShared } from '../offer-received.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const { offer, status, account, isPaidCrypto, onAccept, onDeclined } = useOfferReceivedShared();
+  const { offer, status, account, isPaidCrypto, onAccept, onDeclined, equivalentUSD } = useOfferReceivedShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -88,7 +88,10 @@ export const Mobile = (): JSX.Element => {
               </div>
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Job total</div>
-                <div className={css.detailItemValue}>{offer.assignment_total}</div>
+                <div className={css.detailItemValue}>
+                  {offer.assignment_total}
+                  {printWhen(<span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>, isPaidCrypto)}
+                </div>
               </div>
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Due date</div>

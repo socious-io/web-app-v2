@@ -1,20 +1,19 @@
-import { skillsToCategory, socialCausesToCategory } from '../../../../../core/adaptors';
-import { translateProjectLength } from '../../../../../constants/PROJECT_LENGTH';
-import { translatePaymentType } from '../../../../../constants/PROJECT_PAYMENT_TYPE';
-import { translateProjectType } from '../../../../../constants/PROJECT_TYPES';
-import { CategoriesClickable } from '../../../../../components/atoms/categories-clickable/categories-clickable';
-import { Divider } from '../../../../../components/templates/divider/divider';
-import css from './overview.module.scss';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
+import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translateProjectType } from 'src/constants/PROJECT_TYPES';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
+import { Divider } from 'src/components/templates/divider/divider';
 import { OverviewProps } from './overview.types';
-import { printWhen } from '../../../../../core/utils';
+import { printWhen } from 'src/core/utils';
+import css from './overview.module.scss';
 
 export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
   const paymentRange = (
     <div className={css.group}>
       <div className={css.groupTitle}>Payment range</div>
-      <div
-        className={css.value}
-      >{`$${data.payment_range_lower} ~ $${data.payment_range_higher}`}</div>
+      <div className={css.value}>{`$${data.payment_range_lower} ~ $${data.payment_range_higher}`}</div>
     </div>
   );
 
@@ -52,7 +51,7 @@ export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
             {printWhen(paymentRange, data.payment_range_higher)}
             <div className={css.group}>
               <div className={css.groupTitle}>Experience level</div>
-              <div className={css.value}>{data.experience_level}</div>
+              <div className={css.value}>{translateExperienceLevel(data.experience_level)}</div>
             </div>
           </>
         </div>

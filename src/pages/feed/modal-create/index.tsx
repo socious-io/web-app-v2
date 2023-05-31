@@ -6,6 +6,7 @@ import { Dropdown } from 'src/components/atoms/dropdown/dropdown';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
+import { dialog } from 'src/core/dialog/dialog';
 import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
 import { ModalCreateProps } from './modal-create.types';
 import { ModalReview } from '../modal-review';
@@ -37,6 +38,10 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
 
   const imagUpload = (e: any) => {
     if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    } else if (e.target.files[0].size > 1_048_576) {
+      dialog.alert({ message: 'Image should be less than 1 MB' });
       setSelectedFile(undefined);
       return;
     }
