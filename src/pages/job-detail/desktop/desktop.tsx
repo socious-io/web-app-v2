@@ -16,7 +16,7 @@ import { useJobDetailShared } from '../job-detail.shared';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
-  const { navigate, userIdentity, identity, job, location } = useJobDetailShared();
+  const { navigate, userIdentity, identity, job, location, screeningQuestions } = useJobDetailShared();
   const [openApplyModal, setOpenApplyModal] = useState(false);
 
   function onApply() {
@@ -45,6 +45,16 @@ export const Desktop = (): JSX.Element => {
   const socialCausesJSX = (
     <Divider title="Social cause">
       <CategoriesClickable list={socialCausesToCategory(job.causes_tags)} />
+    </Divider>
+  );
+
+  const screeningQuestionsJSX = (
+    <Divider title="Screening question">
+      <ul className={css.questions}>
+        {screeningQuestions.map((q) => {
+          return <li className={css.questionItem}>{q.question}</li>;
+        })}
+      </ul>
     </Divider>
   );
 
@@ -94,6 +104,7 @@ export const Desktop = (): JSX.Element => {
           {printWhen(socialCausesJSX, !!job.causes_tags)}
           <Divider title="Job description">{convertMDToJSX(job.description, { length: null })}</Divider>
           {printWhen(skillsJSX, !!job.skills)}
+          {printWhen(screeningQuestionsJSX, screeningQuestions.length > 0)}
         </Card>
       </TwoColumnCursor>
       <ApplyModal open={openApplyModal} onClose={() => setOpenApplyModal(false)} />
