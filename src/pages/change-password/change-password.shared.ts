@@ -16,6 +16,17 @@ export const useChangePasswordShared = () => {
     }
   }
 
+  async function onSubmitDesktop(cb: () => void) {
+    const formValues = getFormValues(form);
+    const payload = {
+      current_password: formValues.current_password,
+      password: formValues.password,
+    };
+    return changePassword(payload)
+      .then(cb)
+      .catch((err) => onSubmitError(err.response.data));
+  }
+
   function onSubmit() {
     const formValues = getFormValues(form);
     const payload = {
@@ -33,5 +44,5 @@ export const useChangePasswordShared = () => {
   const notMatchingPasswords = form.controls.password.value !== form.controls.confirm_new_password.value;
   const formIsValid = form.isValid && !notMatchingPasswords;
 
-  return { form, onSubmitError, onSubmit, formIsValid, notMatchingPasswords };
+  return { form, onSubmitError, onSubmit, formIsValid, notMatchingPasswords, onSubmitDesktop };
 };

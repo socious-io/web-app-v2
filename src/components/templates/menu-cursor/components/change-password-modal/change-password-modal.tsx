@@ -6,9 +6,16 @@ import { Modal } from 'src/components/templates/modal/modal';
 import { printWhen } from 'src/core/utils';
 import { useChangePasswordShared } from 'src/pages/change-password/change-password.shared';
 import { ChangePasswordModalProps } from './change-password-types';
+import { dialog } from 'src/core/dialog/dialog';
 
 export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Element => {
-  const { form, notMatchingPasswords, onSubmit, formIsValid } = useChangePasswordShared();
+  const { form, notMatchingPasswords, formIsValid, onSubmitDesktop } = useChangePasswordShared();
+
+  function onChangePasswordSubmit() {
+    const cb = () =>
+      dialog.alert({ title: 'Successful', message: 'Password has been successfully changed' }).then(props.onClose);
+    onSubmitDesktop(cb);
+  }
 
   return (
     <Modal zIndex={3} height="38rem" width="28.75rem" open={props.open} onClose={props.onClose}>
@@ -44,7 +51,7 @@ export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Elemen
           {printWhen(<p className={css.passNotMatch}>- Passwords do not match</p>, notMatchingPasswords)}
         </form>
         <div className={css.bottom}>
-          <Button disabled={!formIsValid} onClick={onSubmit()} color="blue">
+          <Button disabled={!formIsValid} onClick={onChangePasswordSubmit} color="blue">
             Change your password
           </Button>
         </div>

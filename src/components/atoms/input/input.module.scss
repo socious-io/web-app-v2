@@ -7,11 +7,11 @@
     width: 100%;
     border-bottom: 2px solid #e4e6ed;
     font-size: var(--font-size-m);
-
-    &::placeholder {
-      color: var(--color-gray-02);
-    }
   }
+}
+
+.input::placeholder {
+  color: var(--color-gray-02);
 }
 
 .outline {
