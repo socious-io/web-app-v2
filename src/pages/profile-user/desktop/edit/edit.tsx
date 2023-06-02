@@ -17,6 +17,7 @@ import { Input } from 'src/components/atoms/input/input';
 import { EditProps } from './edit.types';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { endpoint } from 'src/core/endpoints';
+import { removedEmptyProps } from 'src/core/utils';
 import { Popover } from 'src/components/atoms/popover/popover';
 import { PopoverProps } from 'src/components/atoms/popover/popover.types';
 
@@ -42,7 +43,7 @@ export const Edit = (props: EditProps): JSX.Element => {
   ];
 
   function onSave() {
-    const payload = getFormValues(form);
+    const payload = removedEmptyProps(getFormValues(form));
     endpoint.post.user['update/profile'](payload).then(() => {
       props.onClose();
     });

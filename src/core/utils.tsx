@@ -16,3 +16,11 @@ export const debounce = (func: Function, delay: number) => {
     debounceTimer = setTimeout(() => func.apply(context, args), delay);
   };
 };
+
+export const removedEmptyProps = (obj: Record<string | number, unknown>) =>
+  Object.entries(obj).reduce((prev, [key, value]) => {
+    if (value) {
+      Object.assign(prev, { [key]: value });
+    }
+    return prev;
+  }, {});
