@@ -15,6 +15,7 @@ import { useState } from 'react';
 export const Desktop = (): JSX.Element => {
   const {
     user,
+    updateUser,
     address,
     badges,
     socialCauses,
@@ -165,7 +166,7 @@ export const Desktop = (): JSX.Element => {
             !!user.culture
           )}
         </div>
-        <Edit width="31rem" height="75vh" open={editOpen} onClose={() => setEditOpen(false)} />
+        <Edit updateUser={updateUser} width="31rem" height="75vh" open={editOpen} onClose={() => setEditOpen(false)} />
       </Card>
     </TwoColumnCursor>
   );

@@ -102,6 +102,38 @@ type getOfferPayload = {
   page: number;
 };
 
+export type PostUpdateProfileResp = {
+  username: string;
+  first_name: string;
+  last_name: string;
+  city: string;
+  country: string;
+  geoname_id: number;
+  mission: string;
+  bio: string;
+  impact_points: number;
+  skills: string[];
+  followers: number;
+  followings: number;
+  created_at: string;
+  social_causes: string[];
+  avatar: {
+    id: string;
+    identity_id: string;
+    filename: string;
+    url: string;
+    created_at: string;
+  };
+  cover_image: {
+    id: string;
+    identity_id: string;
+    filename: string;
+    url: string;
+    created_at: string;
+  };
+  reported: boolean;
+};
+
 export interface Endpoints {
   get: {
     auth: {
@@ -124,7 +156,7 @@ export interface Endpoints {
     user: {
       '{user_id}/report': (id: string, payload: { blocked: boolean; comment: string }) => Promise<unknown>;
       '{user_id}/update_wallet': (payload: { wallet_address: string }) => Promise<unknown>;
-      'update/profile': (payload: PostUserUpdatePayload) => Promise<unknown>;
+      'update/profile': (payload: PostUserUpdatePayload) => Promise<PostUpdateProfileResp>;
     };
     media: {
       upload: (formData: FormData) => Promise<PostMediaUploadResp>;

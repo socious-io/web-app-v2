@@ -30,7 +30,8 @@ export const Edit = (props: EditProps): JSX.Element => {
   const avatarAnchor = useRef<null | HTMLDivElement>(null);
   const coverLetterAnchor = useRef<null | HTMLDivElement>(null);
 
-  const { onCoverEdit, onAvatarEdit, onCountryUpdate, coverImage, avatarImage, cities } = useProfileUserEditShared();
+  const { onCoverEdit, onAvatarEdit, onCountryUpdate, coverImage, avatarImage, cities, updateIdentityList } =
+    useProfileUserEditShared();
 
   const coverLetterMenu: PopoverProps['menuList'] = [
     { id: 1, label: 'Upload image', cb: onCoverEdit.desktop('upload') },
@@ -44,7 +45,8 @@ export const Edit = (props: EditProps): JSX.Element => {
 
   function onSave() {
     const payload = removedEmptyProps(getFormValues(form));
-    endpoint.post.user['update/profile'](payload).then(() => {
+    endpoint.post.user['update/profile'](payload).then((resp) => {
+      props.updateUser(resp);
       props.onClose();
     });
   }
