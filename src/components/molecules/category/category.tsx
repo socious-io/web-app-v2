@@ -7,8 +7,6 @@ import { CategoriesClickable } from 'src/components/atoms/categories-clickable/c
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { Modal } from 'src/components/templates/modal/modal';
 import { Search } from 'src/components/atoms/search/search';
-import Menu from '@mui/material/Menu';
-import { MenuItem } from '@mui/material';
 
 function translate(selected: string | number, list: CategoryProps['list']): string {
   const translation = list.find((item) => item.value === selected);

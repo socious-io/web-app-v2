@@ -8,9 +8,11 @@ import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { useState } from 'react';
 import { endpoint } from 'src/core/endpoints';
+import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 
 export const useProfileUserShared = () => {
-  const { user, badges } = useMatch().data as { user: ProfileReq; badges: { badges: unknown[] } };
+  const resolver = useMatch().data as { user: ProfileReq; badges: { badges: unknown[] } };
+  const [user, setUser] = useState<ProfileReq>(resolver.user);
   const socialCauses = socialCausesToCategory(user.social_causes);
   const navigate = useNavigate();
   const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;
@@ -23,6 +25,23 @@ export const useProfileUserShared = () => {
     } else {
       return shortname;
     }
+  }
+
+  function updateUser(params: PostUpdateProfileResp) {
+    setUser((prev) => ({
+      ...prev,
+      avatar: params.avatar,
+      first_name: params.first_name,
+      last_name: params.last_name,
+      username: params.username,
+      bio: params.bio,
+      social_causes: params.social_causes,
+      city: params.city,
+      country: params.country,
+      cover_image: params.cover_image,
+      mission: params.mission,
+      skills: params.skills,
+    }));
   }
 
   const address = `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
@@ -63,8 +82,9 @@ export const useProfileUserShared = () => {
 
   return {
     user,
+    updateUser,
     address,
-    badges,
+    badges: resolver.badges,
     socialCauses,
     avatarImage,
     skills,

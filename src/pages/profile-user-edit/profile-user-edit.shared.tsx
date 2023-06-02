@@ -8,6 +8,9 @@ import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { endpoint } from 'src/core/endpoints';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { generateFormModel } from './profile-user-edit.form';
+import { useDispatch } from 'react-redux';
+import { getIdentities } from 'src/core/api';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 export const useProfileUserEditShared = () => {
   const user = useMatch().data.user as ProfileReq;
@@ -18,6 +21,7 @@ export const useProfileUserEditShared = () => {
   const [coverImage, setCoverImage] = useState(user?.cover_image?.url);
   const [avatarImage, setAvatarImage] = useState(user?.avatar?.url);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   async function runCoverEditActions(type: 'upload' | 'remove' | undefined) {
     switch (type) {
@@ -55,6 +59,10 @@ export const useProfileUserEditShared = () => {
     },
   };
 
+  async function updateIdentityList() {
+    return getIdentities().then((resp) => dispatch(setIdentityList(resp)));
+  }
+
   const onAvatarEdit = {
     mobile: async () => {
       const actionResp = await showActionSheet();
@@ -85,5 +93,6 @@ export const useProfileUserEditShared = () => {
     avatarImage,
     cities,
     updateCityList,
+    updateIdentityList,
   };
 };
