@@ -62,6 +62,16 @@ export const minLength = (minValue: number, message?: string): Validator => {
     };
 };
 
+
+export const maxArrayLength = (options: {length: number, msg: string}): Validator => ({
+    name: 'arrayLength',
+    message: options.msg,
+    validateWith: (value: ControlPrimitiveValue) => {
+        console.log({value});
+        return (value as Array<unknown>).length <= options.length
+    },
+});
+
 export const required = (message?: string): Validator => {
     return {
         name: 'required',

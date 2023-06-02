@@ -49,7 +49,6 @@ export const useProfileOrganizationEditShared = () => {
 
   function onSave() {
     const payload = getFormValues(form);
-    console.log('payload: ', payload);
     endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload).then(() => {
       navigate({ to: '/jobs' });
     });

@@ -19,9 +19,8 @@ export const useProfileUserEditShared = () => {
   const [avatarImage, setAvatarImage] = useState(user?.avatar?.url);
   const navigate = useNavigate();
 
-  async function onCoverEdit() {
-    const actionResp = await showActionSheet();
-    switch (actionResp) {
+  async function runCoverEditActions(type: 'upload' | 'remove' | undefined) {
+    switch (type) {
       case 'upload':
         const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
         const resp = await uploadImage(webPath);
@@ -33,9 +32,8 @@ export const useProfileUserEditShared = () => {
     }
   }
 
-  async function onAvatarEdit() {
-    const actionResp = await showActionSheet();
-    switch (actionResp) {
+  async function runAvatarEditActions(type: 'upload' | 'remove' | undefined) {
+    switch (type) {
       case 'upload':
         const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
         const resp = await uploadImage(webPath);
@@ -46,6 +44,26 @@ export const useProfileUserEditShared = () => {
         break;
     }
   }
+
+  const onCoverEdit = {
+    mobile: async () => {
+      const actionResp = await showActionSheet();
+      runCoverEditActions(actionResp);
+    },
+    desktop: (type: 'upload' | 'remove' | undefined) => () => {
+      runCoverEditActions(type);
+    },
+  };
+
+  const onAvatarEdit = {
+    mobile: async () => {
+      const actionResp = await showActionSheet();
+      runAvatarEditActions(actionResp);
+    },
+    desktop: (type: 'upload' | 'remove' | undefined) => () => {
+      runAvatarEditActions(type);
+    },
+  };
 
   function onCountryUpdate(option: DropdownItem) {
     updateCityList(option.value as string);

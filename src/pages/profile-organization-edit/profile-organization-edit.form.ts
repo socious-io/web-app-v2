@@ -3,6 +3,7 @@ import { required } from 'src/core/form';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { ProfileReq } from '../profile-user/profile-user.types';
 import { email } from 'src/core/form/customValidators/customValidators';
+import { maxArrayLength } from 'src/core/form/useForm/validations';
 
 export function generateFormModel(organization: ProfileReq): FormModel {
   return {
@@ -11,7 +12,10 @@ export function generateFormModel(organization: ProfileReq): FormModel {
     image: { initialValue: organization.image.id },
     name: { initialValue: organization.name, validators: [required()] },
     bio: { initialValue: organization.bio, validators: [required()] },
-    social_causes: { initialValue: organization.social_causes, validators: [required()] },
+    social_causes: {
+      initialValue: organization.social_causes,
+      validators: [required(), maxArrayLength({ length: 5, msg: 'You must choose 5 or less social causes' })],
+    },
     email: { initialValue: organization.email, validators: [required(), email()] },
     country: { initialValue: organization.country },
     city: { initialValue: organization.city },

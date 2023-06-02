@@ -9,7 +9,7 @@ import { Category } from 'src/components/molecules/category/category';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
 import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
 import { useMatch } from '@tanstack/react-location';
-import { useMemo } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useForm } from 'src/core/form/useForm/useForm';
 import { useProfileUserEditShared } from 'src/pages/profile-user-edit/profile-user-edit.shared';
 import { generateFormModel } from 'src/pages/profile-user-edit/profile-user-edit.form';
@@ -17,13 +17,29 @@ import { Input } from 'src/components/atoms/input/input';
 import { EditProps } from './edit.types';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { endpoint } from 'src/core/endpoints';
+import { Popover } from 'src/components/atoms/popover/popover';
+import { PopoverProps } from 'src/components/atoms/popover/popover.types';
 
 export const Edit = (props: EditProps): JSX.Element => {
   const user = useMatch().data.user as ProfileReq;
   const formModel = useMemo(() => generateFormModel(user), []);
   const form = useForm(formModel);
+  const [coverLetterMenuOpen, setCoverLetterMenu] = useState(false);
+  const [avatarMenuOpen, setAvatarMenu] = useState(false);
+  const avatarAnchor = useRef<null | HTMLDivElement>(null);
+  const coverLetterAnchor = useRef<null | HTMLDivElement>(null);
 
   const { onCoverEdit, onAvatarEdit, onCountryUpdate, coverImage, avatarImage, cities } = useProfileUserEditShared();
+
+  const coverLetterMenu: PopoverProps['menuList'] = [
+    { id: 1, label: 'Upload image', cb: onCoverEdit.desktop('upload') },
+    { id: 2, label: 'Remove image', cb: onCoverEdit.desktop('remove') },
+  ];
+
+  const avatarMenu: PopoverProps['menuList'] = [
+    { id: 1, label: 'Upload image', cb: onAvatarEdit.desktop('upload') },
+    { id: 2, label: 'Remove image', cb: onAvatarEdit.desktop('remove') },
+  ];
 
   function onSave() {
     const payload = getFormValues(form);
@@ -42,12 +58,28 @@ export const Edit = (props: EditProps): JSX.Element => {
           <div>
             <div className={css.header}>
               <div className={css.coverImage} style={{ backgroundImage: `url(${coverImage})` }} />
-              <div className={css.photoIcon} onClick={onCoverEdit}>
+              <div
+                ref={coverLetterAnchor}
+                className={css.photoIcon}
+                onClick={() => setCoverLetterMenu((prev) => !prev)}
+              >
                 <img src="/icons/photos-white.svg" />
+                <Popover
+                  anchor={coverLetterAnchor.current}
+                  open={coverLetterMenuOpen}
+                  onClose={() => setCoverLetterMenu(false)}
+                  menuList={coverLetterMenu}
+                />
               </div>
               <div className={css.profileImgContainer}>
-                <div className={css.photoIcon} onClick={onAvatarEdit}>
+                <div ref={avatarAnchor} className={css.photoIcon} onClick={() => setAvatarMenu((prev) => !prev)}>
                   <img src="/icons/photos-white.svg" />
+                  <Popover
+                    anchor={avatarAnchor.current}
+                    open={avatarMenuOpen}
+                    onClose={() => setAvatarMenu(false)}
+                    menuList={avatarMenu}
+                  />
                 </div>
                 <div className={css.profileImage} style={{ backgroundImage: `url(${avatarImage})` }} />
               </div>
