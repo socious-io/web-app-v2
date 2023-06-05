@@ -149,8 +149,8 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
                   />
                   <RadioGroup
                     name="PaymentScheme"
-                    value={formState.payment_scheme}
-                    onChange={(value) => dispatch(setPostPaymentScheme(value))}
+                    value="FIXED"
+                    onChange={() => dispatch(setPostPaymentScheme('FIXED'))}
                     label="Payment terms"
                     list={PROJECT_PAYMENT_SCHEME}
                   />
