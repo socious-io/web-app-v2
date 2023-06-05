@@ -29,7 +29,7 @@ import { createPost } from '../info.services';
 import { useInfoShared } from '../info.shared';
 import css from './info-modal.module.scss';
 
-export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone }) => {
+export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onBack }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { formState, form, updateCityList, cities } = useInfoShared();
@@ -58,6 +58,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone }) =
         header="Create job"
         open={open}
         onClose={onClose}
+        onBack={onBack}
         buttons={[
           {
             children: 'Continue',
