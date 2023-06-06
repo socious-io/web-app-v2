@@ -11,6 +11,10 @@ export const useJobsShared = () => {
   const [jobList, setJobList] = useState(data.items);
   const [page, setPage] = useState(1);
 
+  const identity = useSelector<RootState, IdentityReq>((state) => {
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  });
+
   function onMorePage() {
     getJobList({ page: page + 1 }).then((resp) => {
       setPage((v) => v + 1);
@@ -26,12 +30,24 @@ export const useJobsShared = () => {
     }
   }
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
-  });
+  const jobsMenuListUser = [
+    {
+      label: 'My applications',
+      icon: '/icons/my-applications.svg',
+      link: () => navigate({ to: `/jobs/applied/${identity.id}` }),
+    },
+  ];
+
+  const jobsMenuListOrg = [
+    {
+      label: 'Created',
+      icon: '/icons/folder-black.svg',
+      link: () => navigate({ to: `/jobs/created/${identity.id}` }),
+    },
+  ];
 
   const name = identity.meta.name;
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
-  return { onMorePage, jobList, avatarImg, identity, name, navigateToProfile };
+  return { onMorePage, jobList, avatarImg, identity, name, navigateToProfile, jobsMenuListUser, jobsMenuListOrg };
 };
