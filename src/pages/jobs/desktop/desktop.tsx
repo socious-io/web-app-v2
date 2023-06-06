@@ -4,11 +4,13 @@ import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { JobList } from 'src/components/organisms/job-list/job-list';
-import { JobsMenuList, NetworkMenuList } from '../jobs.services';
+import { NetworkMenuList } from '../jobs.services';
 import { useJobsShared } from '../jobs.shared';
+import { printWhen } from 'src/core/utils';
 
 export const Desktop = (): JSX.Element => {
-  const { onMorePage, jobList, avatarImg, name, navigateToProfile } = useJobsShared();
+  const { onMorePage, jobList, avatarImg, name, navigateToProfile, jobsMenuListUser, jobsMenuListOrg, identity } =
+    useJobsShared();
 
   return (
     <TwoColumnCursor>
@@ -29,7 +31,8 @@ export const Desktop = (): JSX.Element => {
           </div>
         </Card>
         <CardMenu title="Network" list={NetworkMenuList} />
-        <CardMenu title="Jobs" list={JobsMenuList} />
+        {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity.type === 'users')}
+        {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity.type === 'organizations')}
       </div>
       <>
         <div className={css.banner}>
