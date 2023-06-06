@@ -41,7 +41,7 @@ export const MenuCursor = (): JSX.Element => {
               img={getAvatar(identity)}
             />
             <div className={css.switchAccountMenu}>
-              <SwitchAccount open={accListVisibility} onClose={() => setAccListVisibility(false)} />
+              <SwitchAccount identity={identity} open={accListVisibility} onClose={() => setAccListVisibility(false)} />
             </div>
           </div>
         </div>
