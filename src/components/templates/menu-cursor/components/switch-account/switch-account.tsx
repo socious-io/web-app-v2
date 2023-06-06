@@ -12,6 +12,7 @@ import { Divider } from 'src/components/templates/divider/divider';
 import { SwitchAccountProps } from './switch-account.types';
 import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { printWhen } from 'src/core/utils';
 
 let timer: NodeJS.Timeout;
 
@@ -79,6 +80,16 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     }
   }
 
+  const createdJobDividerJSX = (
+    <Divider title="Jobs">
+      <div className={css.settingsMenuContainer}>
+        <div onClick={() => navigate({ to: `/jobs/created/${props.identity.id}` })} className={css.menuItem}>
+          <span>Created</span>
+        </div>
+      </div>
+    </Divider>
+  );
+
   return (
     <div style={containerStyles} className={css.container}>
       <Divider padding={0}>
@@ -95,13 +106,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
           ))}
         </div>
       </Divider>
-      <Divider title="Jobs">
-        <div className={css.settingsMenuContainer}>
-          <div className={css.menuItem}>
-            <span>Created</span>
-          </div>
-        </div>
-      </Divider>
+      {printWhen(createdJobDividerJSX, props.identity.type === 'organizations')}
       <Divider title="Settings">
         <div className={css.settingsMenuContainer}>
           <div
