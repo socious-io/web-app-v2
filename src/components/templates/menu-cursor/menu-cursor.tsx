@@ -1,4 +1,4 @@
-import { Outlet } from '@tanstack/react-location';
+import { Link, Outlet } from '@tanstack/react-location';
 import { Avatar } from '../../atoms/avatar/avatar';
 import css from './menu-cursor.module.scss';
 import { getAvatar, menuList } from './menu-cursor.services';
@@ -7,8 +7,10 @@ import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
 import { SwitchAccount } from './components/switch-account/switch-account';
 import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-location';
 
 export const MenuCursor = (): JSX.Element => {
+  const navigate = useNavigate();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
@@ -23,7 +25,7 @@ export const MenuCursor = (): JSX.Element => {
           </div>
           <ul className={css.navContainer}>
             {menuList.map((item) => (
-              <li key={item.label} className={css.navItem}>
+              <li key={item.label} className={css.navItem} onClick={() => navigate({ to: item.link })}>
                 <img className={css.navIcon} height={24} src={item.icon} />
                 <div className={css.navLabel}>{item.label}</div>
               </li>

@@ -1,6 +1,7 @@
 import { required } from 'src/core/form';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { ProfileReq } from '../profile-user/profile-user.types';
+import { maxLengthArray } from 'src/core/form/useForm/validations';
 
 export function generateFormModel(profile: ProfileReq): FormModel {
   return {
@@ -17,7 +18,7 @@ export function generateFormModel(profile: ProfileReq): FormModel {
     phone: { initialValue: profile.phone },
     cover_image: { initialValue: profile?.cover_image?.id },
     avatar: { initialValue: profile?.avatar?.id },
-    social_causes: { initialValue: profile.social_causes, validators: [required()] },
+    social_causes: { initialValue: profile.social_causes, validators: [required(), maxLengthArray(2)] },
     skills: { initialValue: profile.skills, validators: [required()] },
   };
 }

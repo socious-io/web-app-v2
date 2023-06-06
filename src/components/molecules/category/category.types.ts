@@ -1,4 +1,4 @@
-import { FormGroup } from "src/core/form/useForm/useForm.types";
+import { FormGroup } from 'src/core/form/useForm/useForm.types';
 
 export type CategoryItem = { label: string; value: string | number };
 
@@ -9,4 +9,6 @@ export type CategoryProps = {
   label?: string;
   onValueChange?: (option: CategoryItem) => void;
   placeholder: string;
+  maxLength?: number;
+  minLength?: number;
 };

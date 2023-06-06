@@ -1,25 +1,31 @@
+import { Link } from '@tanstack/react-location';
 import { IdentityReq } from 'src/core/types';
 
-export const menuList = [
+type Menu = { label: string; icon: string; link: string };
+export const menuList: Menu[] = [
   {
     label: 'Jobs',
     icon: '/icons/jobs.svg',
+    link: '/jobs',
   },
-  {
-    label: 'Network',
-    icon: '/icons/network-gray.svg',
-  },
+  //   {
+  //     label: 'Network',
+  //     icon: '/icons/network-gray.svg',
+  //   },
   {
     label: 'Feeds',
     icon: '/icons/feeds.svg',
+    link: '/feeds',
   },
-  {
-    label: 'Chat',
-    icon: '/icons/chat.svg',
-  },
+//   {
+//     label: 'Chat',
+//     icon: '/icons/chat.svg',
+//     link: '/chats/contacts',
+//   },
   {
     label: 'Notifications',
     icon: '/icons/notifications.svg',
+    link: '/notifications',
   },
 ];
 

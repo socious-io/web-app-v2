@@ -30,8 +30,7 @@ export const Edit = (props: EditProps): JSX.Element => {
   const avatarAnchor = useRef<null | HTMLDivElement>(null);
   const coverLetterAnchor = useRef<null | HTMLDivElement>(null);
 
-  const { onCoverEdit, onAvatarEdit, onCountryUpdate, coverImage, avatarImage, cities, updateIdentityList } =
-    useProfileUserEditShared();
+  const { onCoverEdit, onAvatarEdit, onCountryUpdate, coverImage, avatarImage, cities } = useProfileUserEditShared();
 
   const coverLetterMenu: PopoverProps['menuList'] = [
     { id: 1, label: 'Upload image', cb: onCoverEdit.desktop('upload') },
@@ -98,6 +97,7 @@ export const Edit = (props: EditProps): JSX.Element => {
               register={form}
               name="social_causes"
               label="Social causes"
+              maxLength={5}
               list={socialCausesToCategoryAdaptor()}
               placeholder="Social causes"
             />
