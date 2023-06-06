@@ -17,6 +17,21 @@ export const min = (minValue: number, message?: string): Validator => {
     };
 };
 
+export const maxLengthArray = (maxValue: number, message?: string): Validator => {
+    return {
+        name: 'maxLengthArray',
+        validateWith: (value: ControlPrimitiveValue) => {
+            if (Array.isArray(value)) {
+                return value.length <= 10;
+            } else {
+            console.error(`input value is of type ${typeof value} instead of Array`);
+            return false;
+        }
+        },
+        message: message || `value length must be equal or less than ${maxValue}`,
+    };
+};
+
 export const max = (maxValue: number, message?: string): Validator => {
     return {
         name: 'max',

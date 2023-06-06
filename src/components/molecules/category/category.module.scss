@@ -19,8 +19,12 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   border-radius: 0.5rem;
-  background: var(--color-off-white-01);
+  background: #efefef;
   padding: 1rem;
+  cursor: pointer;
+  &:hover {
+    background: #e6e6e6;
+  }
 }
 
 .item {
