@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
@@ -6,6 +7,7 @@ import { JobCardList } from 'src/components/organisms/job-card-list/job-card-lis
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { printWhen } from 'src/core/utils';
+import { MyJobs } from '../my-jobs.types';
 import { useMyJobShared } from '../my-jobs.shared';
 import css from './desktop.module.scss';
 
@@ -22,10 +24,18 @@ export const Desktop: React.FC = () => {
     updateOnGoingList,
     endedList,
     updateEndedList,
-    JobsMenuList,
-    NetworkMenuList,
-    myJobsMode,
   } = useMyJobShared();
+  const [myJobsMode, setMyJobsMode] = useState<MyJobs>('Applied');
+
+  const NetworkMenuList = [
+    { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
+    { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+  ];
+
+  const JobsMenuList = [
+    { label: 'Applied', icon: '/icons/my-applications.svg', link: () => setMyJobsMode('Applied') },
+    { label: 'Hired', icon: '/icons/hired-jobs.svg', link: () => setMyJobsMode('Hired') },
+  ];
 
   const myJobsAppliedJSX = (
     <Card className={css.webCard}>

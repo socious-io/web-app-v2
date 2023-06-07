@@ -8,7 +8,6 @@ import {
   getOnGoingList,
   getPendingApplicants,
 } from './my-jobs.services';
-import { Menu } from 'src/components/molecules/card-menu/card-menu.types';
 
 export const useMyJobShared = () => {
   const resolver = useMatch();
@@ -19,17 +18,6 @@ export const useMyJobShared = () => {
   const [declinedList, setDeclinedList] = useState<AwaitingResp>(declinedApplicants);
   const [onGoingList, setOnGoingList] = useState<OnGoingResp>(onGoingApplicants);
   const [endedList, setEndedList] = useState<OnGoingResp>(endedApplicants);
-  const [myJobsMode, setMyJobsMode] = useState<MyJobs>('Applied');
-
-  const NetworkMenuList: Menu[] = [
-    { label: 'Connections', icon: '/icons/network.svg' },
-    { label: 'Followers', icon: '/icons/followers.svg' },
-  ];
-
-  const JobsMenuList: Menu[] = [
-    { label: 'Applied', icon: '/icons/my-applications.svg', link: () => setMyJobsMode('Applied') },
-    { label: 'Hired', icon: '/icons/hired-jobs.svg', link: () => setMyJobsMode('Hired') },
-  ];
 
   async function updatePendingList(page: number) {
     const update = (resp: PendingResp) =>
@@ -71,8 +59,5 @@ export const useMyJobShared = () => {
     updateOnGoingList,
     endedList,
     updateEndedList,
-    JobsMenuList,
-    NetworkMenuList,
-    myJobsMode,
   };
 };

@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { getJobList } from './jobs.services';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+import { useMatch } from '@tanstack/react-location';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 import { useSelector } from 'react-redux';
 
 export const useJobsShared = () => {
   const { data } = useMatch();
-  const navigate = useNavigate();
   const [jobList, setJobList] = useState(data.items);
   const [page, setPage] = useState(1);
 
@@ -22,32 +21,5 @@ export const useJobsShared = () => {
     });
   }
 
-  function navigateToProfile() {
-    if (identity.type === 'users') {
-      navigate({ to: `/profile/users/${identity.meta.username}/view` });
-    } else {
-      navigate({ to: `/profile/organizations/${identity.meta.shortname}/view` });
-    }
-  }
-
-  const jobsMenuListUser = [
-    {
-      label: 'My applications',
-      icon: '/icons/my-applications.svg',
-      link: () => navigate({ to: `/d/jobs/applied/${identity.id}` }),
-    },
-  ];
-
-  const jobsMenuListOrg = [
-    {
-      label: 'Created',
-      icon: '/icons/folder-black.svg',
-      link: () => navigate({ to: `/d/jobs/created/${identity.id}` }),
-    },
-  ];
-
-  const name = identity.meta.name;
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
-
-  return { onMorePage, jobList, avatarImg, identity, name, navigateToProfile, jobsMenuListUser, jobsMenuListOrg };
+  return { onMorePage, jobList, identity };
 };

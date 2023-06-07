@@ -110,6 +110,7 @@ export const Mobile = (): JSX.Element => {
               img={offer.offerer.meta.image}
               type={offer.offerer.type}
               name={offer.offerer.meta.name}
+              username={offer.offerer.meta.shortname}
               location={`${offer.offerer.meta.city}, ${offer.offerer.meta.country}`}
             />
             <div className={css.jobTitle}>{offer.project.title}</div>

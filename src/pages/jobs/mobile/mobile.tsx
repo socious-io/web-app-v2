@@ -1,17 +1,18 @@
-import css from './mobile.module.scss';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { useJobsShared } from '../jobs.shared';
-import { JobList } from 'src/components/organisms/job-list/job-list';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { useDispatch } from 'react-redux';
-import { visibility } from 'src/store/reducers/menu.reducer';
 import { useNavigate } from '@tanstack/react-location';
-import { Search } from '../../../components/atoms/search/search';
+import { useDispatch } from 'react-redux';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { JobList } from 'src/components/organisms/job-list/job-list';
+import { Search } from 'src/components/atoms/search/search';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { visibility } from 'src/store/reducers/menu.reducer';
+import { useJobsShared } from '../jobs.shared';
+import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const { onMorePage, jobList, avatarImg, identity } = useJobsShared();
+  const { onMorePage, jobList, identity } = useJobsShared();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   function openSidebar() {
     hapticsImpactLight();

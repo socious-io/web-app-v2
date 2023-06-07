@@ -24,13 +24,3 @@ function jobToJobCardAdaptor(job: GetJobs): JobCardProps {
 export function jobListToJobCardListAdaptor(jobs: GetJobs[]): JobCardProps[] {
   return jobs.map((job) => jobToJobCardAdaptor(job));
 }
-
-export const NetworkMenuList: Menu[] = [
-  { label: 'Team', icon: '/icons/team.svg' },
-  { label: 'Followers', icon: '/icons/followers.svg' },
-];
-
-export const JobsMenuList: Menu[] = [
-  { label: 'Created', icon: '/icons/folder-black.svg' },
-  { label: 'Archived', icon: '/icons/archived.svg' },
-];
