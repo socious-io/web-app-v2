@@ -1,30 +1,7 @@
 import { required } from 'src/core/form';
-import { ControlPrimitiveValue, FormModel, Validator } from 'src/core/form/useForm/useForm.types';
+import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { ProfileReq } from '../profile-user/profile-user.types';
-
-export const maxArrayLength = (max: number): Validator => ({
-  name: 'maxArrayLength',
-  message: 'array length incorrect',
-  validateWith: (value: ControlPrimitiveValue) => {
-    console.log('vlidatewith: ', value);
-    if ((value as string[]).length > max) {
-      return false;
-    } else {
-      return true;
-    }
-  },
-});
-
-const arrayRequired = () => {
-  return {
-    name: 'arrReq',
-    message: 'array should be less than 5',
-    validateWith: (value) => {
-      console.log('validating...');
-      return value.length < 5;
-    },
-  };
-};
+import { minArrayLength, maxArrayLength } from 'src/core/form/customValidators/customValidators';
 
 export function generateFormModel(profile: ProfileReq): FormModel {
   return {
@@ -41,7 +18,19 @@ export function generateFormModel(profile: ProfileReq): FormModel {
     phone: { initialValue: profile.phone },
     cover_image: { initialValue: profile?.cover_image?.id },
     avatar: { initialValue: profile?.avatar?.id },
-    social_causes: { initialValue: profile.social_causes, validators: [arrayRequired()] },
-    skills: { initialValue: profile.skills, validators: [required()] },
+    social_causes: {
+      initialValue: profile.social_causes,
+      validators: [
+        minArrayLength({ message: 'You have to choose at least one social cause', minValue: 1 }),
+        maxArrayLength({ message: 'You should not choose more than 5 items', maxValue: 5 }),
+      ],
+    },
+    skills: {
+      initialValue: profile.skills,
+      validators: [
+        minArrayLength({ message: 'You have to choose at least one skill', minValue: 1 }),
+        maxArrayLength({ message: 'You should not choose more than 10 items', maxValue: 10 }),
+      ],
+    },
   };
 }

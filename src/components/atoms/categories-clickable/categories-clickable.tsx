@@ -2,9 +2,24 @@ import { useState } from 'react';
 import css from './categories-clickable.module.scss';
 import { CategoriesClickableProps } from './categories-clickable.types';
 
-export const CategoriesClickable = (
-  props: CategoriesClickableProps
-): JSX.Element => {
+function hasReachedLimit(list: string[], min?: number, max?: number): boolean {
+  const minmaxDefined = min !== undefined && max !== undefined;
+  const minDefined = min !== undefined && max === undefined;
+  const maxDefined = max !== undefined && max === undefined;
+
+  if (minmaxDefined) {
+    return list.length <= max && list.length >= min;
+  }
+  if (minDefined) {
+    return list.length >= min;
+  }
+  if (maxDefined) {
+    return list.length <= max;
+  }
+  return false;
+}
+
+export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Element => {
   const { list, clickable = false, selected = [], onChange, ...rest } = props;
   const [selectedList, setSelectedList] = useState<string[]>(selected);
 
@@ -12,10 +27,9 @@ export const CategoriesClickable = (
     if (!clickable) {
       return;
     }
+
     const exist = selectedList.includes(value);
-    const newList = exist
-      ? selectedList.filter((item) => item !== value)
-      : [...selectedList, value];
+    const newList = exist ? selectedList.filter((item) => item !== value) : [...selectedList, value];
     return () => {
       setSelectedList(newList);
       onChange?.(newList);

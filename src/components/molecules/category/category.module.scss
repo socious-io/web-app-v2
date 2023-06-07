@@ -70,3 +70,10 @@
   font-size: var(--font-size-m);
   color: var(--color-gray-02);
 }
+
+.errorItem {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-s);
+  color: var(--color-error-01);
+}

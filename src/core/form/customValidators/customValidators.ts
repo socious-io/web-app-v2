@@ -33,3 +33,19 @@ export const website = (): Validator => ({
         return /^(ftp|http|https):\/\/[^ "]+$/.test(value as string);
     },
 });
+
+export const minArrayLength = (option: {message: string; minValue: number}): Validator => ({
+    name: 'minArrayLength',
+    message: option.message,
+    validateWith: (value: ControlPrimitiveValue) => {
+        return (value as Array<unknown>).length >= option.minValue;
+    },
+});
+
+export const maxArrayLength = (option: {message: string; maxValue: number}): Validator => ({
+    name: 'maxArrayLength',
+    message: option.message,
+    validateWith: (value: ControlPrimitiveValue) => {
+        return (value as Array<unknown>).length <= option.maxValue;
+    },
+});
