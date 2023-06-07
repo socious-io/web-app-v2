@@ -14,6 +14,8 @@ import css from './desktop.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
+import { useNavigate } from '@tanstack/react-location';
 
 export const Desktop = () => {
   const {
@@ -31,9 +33,10 @@ export const Desktop = () => {
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
   const [feed, setFeed] = useState<Feed>();
+  const navigate = useNavigate();
 
-  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const identity = useSelector<RootState, IdentityReq>((state) => {
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
@@ -51,12 +54,30 @@ export const Desktop = () => {
     setOpenMoreBox(false);
   };
 
+  const jobsMenuListUser = [
+    {
+      label: 'My applications',
+      icon: '/icons/my-applications.svg',
+      link: () => navigate({ to: `/jobs/applied/${identity.id}` }),
+    },
+  ];
+
+  const jobsMenuListOrg = [
+    {
+      label: 'Created',
+      icon: '/icons/folder-black.svg',
+      link: () => navigate({ to: `/jobs/created/${identity.id}` }),
+    },
+  ];
+
   return (
     <TwoColumnCursor>
       <div className={css.sidebar}>
         <ProfileCard />
         <CardMenu title="Network" list={NetworkMenuList} />
-        <CardMenu title="Jobs" list={JobsMenuList} />
+        {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity.type === 'users')}
+        {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity.type === 'organizations')}
+        {/* <CardMenu title="Jobs" list={JobsMenuList} /> */}
       </div>
       <>
         <div className={css.banner}>
