@@ -98,6 +98,7 @@ export const Desktop: React.FC = () => {
         open={openSocialCausesModal}
         onClose={() => setOpenSocialCausesModal(false)}
         onDone={onCreateJob}
+        onOpen={() => setOpenSocialCausesModal(true)}
       />
     </>
   );

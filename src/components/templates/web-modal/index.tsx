@@ -10,6 +10,7 @@ export const WebModal: React.FC<WebModalProps> = ({
   children,
   header,
   buttons = [],
+  onBack,
   className = '',
   headerClassName = '',
   footerClassName = '',
@@ -18,7 +19,9 @@ export const WebModal: React.FC<WebModalProps> = ({
     <Modal open={open} onClose={onClose}>
       <div className={`${css.container} ${className}`}>
         <div className={`${css.header} ${headerClassName}`}>
-          <span></span>
+          <div onClick={onBack} className={css.icon}>
+            {printWhen(<img src="/icons/chevron-left.svg" />, !!onBack)}
+          </div>
           {header}
           <div onClick={onClose} className={css.icon}>
             <img src="/icons/close-black.svg" />
