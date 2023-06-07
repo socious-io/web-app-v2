@@ -19,19 +19,19 @@ export const useProfileOrganizationEditShared = () => {
   const [avatarImage, setAvatarImage] = useState(organization?.image?.url);
   const navigate = useNavigate();
 
-  async function onCoverEdit() {
-    const actionResp = await showActionSheet();
-    switch (actionResp) {
-      case 'upload':
-        const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
-        const resp = await uploadImage(webPath);
-        form.controls.cover_image.setValue(resp.id);
-        setCoverImage(resp.url);
-        break;
-      case 'remove':
-        break;
-    }
-  }
+//   async function onCoverEdit() {
+//     const actionResp = await showActionSheet();
+//     switch (actionResp) {
+//       case 'upload':
+//         const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
+//         const resp = await uploadImage(webPath);
+//         form.controls.cover_image.setValue(resp.id);
+//         setCoverImage(resp.url);
+//         break;
+//       case 'remove':
+//         break;
+//     }
+//   }
 
   async function onAvatarEdit() {
     const actionResp = await showActionSheet();
@@ -46,6 +46,30 @@ export const useProfileOrganizationEditShared = () => {
         break;
     }
   }
+
+  async function runCoverEditActions(type: 'upload' | 'remove' | undefined) {
+    switch (type) {
+      case 'upload':
+        const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
+        const resp = await uploadImage(webPath);
+        form.controls.cover_image.setValue(resp.id);
+        setCoverImage(resp.url);
+        break;
+      case 'remove':
+        break;
+    }
+  }
+
+  const onCoverEdit = {
+    mobile: async () => {
+      const actionResp = await showActionSheet();
+      runCoverEditActions(actionResp);
+    },
+    desktop: (type: 'upload' | 'remove' | undefined) => () => {
+      runCoverEditActions(type);
+    },
+  };
+
 
   function onSave() {
     const payload = getFormValues(form);
