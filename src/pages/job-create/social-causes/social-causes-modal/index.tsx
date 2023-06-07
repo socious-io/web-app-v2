@@ -9,7 +9,7 @@ import { SocialCausesModalProps } from './social-causes-modal.types';
 import { useSocialCausesShared } from '../social-causes.shared';
 import css from './social-causes-modal.module.scss';
 
-export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onClose, onDone }) => {
+export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onClose, onDone, onOpen }) => {
   const dispatch = useDispatch();
   const { onSearch, socialCauses, selectedSocialCauses, isValid } = useSocialCausesShared();
   const [openSkillsModal, setOpenSkillsModal] = useState(false);
@@ -55,7 +55,16 @@ export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onCl
           </div>
         </>
       </WebModal>
-      <SkillsModal open={openSkillsModal} onClose={() => setOpenSkillsModal(false)} onDone={onDone} />
+      <SkillsModal
+        open={openSkillsModal}
+        onClose={() => setOpenSkillsModal(false)}
+        onDone={onDone}
+        onBack={() => {
+          setOpenSkillsModal(false);
+          onOpen();
+        }}
+        onOpen={() => setOpenSkillsModal(true)}
+      />
     </>
   );
 };

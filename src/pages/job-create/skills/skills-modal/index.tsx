@@ -9,7 +9,7 @@ import { InfoModal } from 'src/pages/job-create/info/info-modal';
 import { useSkillsShared } from '../skills.shared';
 import css from './skills-modal.module.scss';
 
-export const SkillsModal: React.FC<SkillsModalProps> = ({ open, onClose, onDone }) => {
+export const SkillsModal: React.FC<SkillsModalProps> = ({ open, onClose, onDone, onBack, onOpen }) => {
   const dispatch = useDispatch();
   const { onSearch, socialCauses, selectedSkills, isValid } = useSkillsShared();
   const [openInfoModal, setOpenInfoModal] = useState(false);
@@ -20,6 +20,7 @@ export const SkillsModal: React.FC<SkillsModalProps> = ({ open, onClose, onDone 
         header="Create job"
         open={open}
         onClose={onClose}
+        onBack={onBack}
         buttons={[
           {
             children: 'Continue',
@@ -55,7 +56,15 @@ export const SkillsModal: React.FC<SkillsModalProps> = ({ open, onClose, onDone 
           </div>
         </>
       </WebModal>
-      <InfoModal open={openInfoModal} onClose={() => setOpenInfoModal(false)} onDone={onDone} />
+      <InfoModal
+        open={openInfoModal}
+        onClose={() => setOpenInfoModal(false)}
+        onDone={onDone}
+        onBack={() => {
+          setOpenInfoModal(false);
+          onOpen();
+        }}
+      />
     </>
   );
 };

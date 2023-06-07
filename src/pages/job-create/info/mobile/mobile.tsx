@@ -126,17 +126,14 @@ export const Mobile = (): JSX.Element => {
               <RadioGroup
                 name="paymentType"
                 value={formState.payment_type}
-                onChange={(value) => {
-                  dispatch(setPostPaymentType(value));
-                  value === 'PAID' && dispatch(setPostPaymentScheme('FIXED'));
-                }}
+                onChange={(value) => dispatch(setPostPaymentType(value))}
                 label="Payment type"
                 list={PROJECT_PAYMENT_TYPE}
               />
               <RadioGroup
                 name="PaymentScheme"
-                value={formState.payment_type === 'PAID' ? 'FIXED' : formState.payment_scheme}
-                onChange={(value) => formState.payment_type === 'VOLUNTEER' && dispatch(setPostPaymentScheme(value))}
+                value="FIXED"
+                onChange={() => dispatch(setPostPaymentScheme('FIXED'))}
                 label="Payment terms"
                 list={PROJECT_PAYMENT_SCHEME}
               />

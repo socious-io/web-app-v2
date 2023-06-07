@@ -22,9 +22,9 @@ export const Desktop = (): JSX.Element => {
     <div className={css.congratulations}>
       <img src="/icons/tick-white-simple.svg" />
       <div>
-        <div className={css.congratulationsText}>Your mission has been confirmed.</div>
+        <div className={css.congratulationsText}>Your job has been confirmed.</div>
         <div className={css.congratulationsText}>
-          Once you have finished your work please click on “complete mission” button.
+          Once you have finished your work please click on “complete job” button.
         </div>
       </div>
     </div>
@@ -58,10 +58,10 @@ export const Desktop = (): JSX.Element => {
   const buttonsJSX = (
     <div className={css.btnContainer}>
       <Button onClick={onCompleteMission} className={css.btn}>
-        Complete mission
+        Complete job
       </Button>
       <Button onClick={onStopMission} color="white" className={css.btn}>
-        Stop mission
+        Stop job
       </Button>
     </div>
   );
@@ -80,7 +80,7 @@ export const Desktop = (): JSX.Element => {
         </div>
         <Card className={css.rightContainer}>
           <div>
-            <Accordion title="Mission details" id="mission-details">
+            <Accordion title="Job details" id="mission-details">
               <div className={css.missionDetailContainer}>
                 <div className={css.missionDetailMessage}>{offer.offer_message}</div>
                 <div className={css.detailItemContainer}>
@@ -99,7 +99,7 @@ export const Desktop = (): JSX.Element => {
                     </div>
                   </div>
                   <div className={css.detailItem}>
-                    <div className={css.detailItemLabel}>Mission total</div>
+                    <div className={css.detailItemLabel}>Job total</div>
                     <div className={css.detailItemValue}>{offer.assignment_total}</div>
                   </div>
                   <div className={css.detailItem}>
