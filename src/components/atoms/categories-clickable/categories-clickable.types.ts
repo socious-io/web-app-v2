@@ -5,4 +5,6 @@ export interface CategoriesClickableProps extends CSSProperties {
   selected?: Array<string | number>;
   onChange?: (newList: string[]) => void;
   clickable?: boolean;
+  min?: number;
+  max?: number;
 }
