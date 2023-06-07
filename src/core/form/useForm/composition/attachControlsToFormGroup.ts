@@ -53,6 +53,8 @@ export const attachControlsToFormGroup =
                     this.value = v;
                     this.isDirty = true;
                     formGroup.isDirty = true;
+                    this.errors= generateControlErrorsProp(v, validators),
+                    this.isValid= generateControlIsValidProp(initialValue, validators),
                     this._subscribeCallbacks.forEach((cb) => cb(this.value));
                     rerender();
                 },
