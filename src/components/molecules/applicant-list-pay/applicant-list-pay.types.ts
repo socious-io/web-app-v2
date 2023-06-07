@@ -3,6 +3,7 @@ export type Applicant = {
   name: string;
   image: string;
   category: string;
+  username?: string;
   profileLink?: string;
   hireDate: string;
   status: 'CLOSED' | 'COMPLETE' | 'CONFIRMED';

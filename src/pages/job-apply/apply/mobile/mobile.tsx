@@ -62,6 +62,7 @@ export const Mobile = (): JSX.Element => {
             img={jobDetail.identity_meta?.image}
             type={jobDetail.identity_type}
             name={jobDetail.identity_meta.name}
+            username={jobDetail.identity_meta.shortname}
             location={location}
           />
           <div className={css.jobTitle}>{jobDetail.title}</div>

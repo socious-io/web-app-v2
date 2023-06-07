@@ -1,6 +1,6 @@
+import { useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
-import { Link } from 'src/components/atoms/link/link';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { BankAccounts } from 'src/components/templates/bank-accounts';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
@@ -9,11 +9,11 @@ import { ProfileCard } from 'src/components/templates/profile-card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { printWhen } from 'src/core/utils';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { NetworkMenuList } from '../wallet.service';
 import { useWalletShared } from '../wallet.shared';
 import css from './desktop.module.scss';
 
 export const Desktop: React.FC = () => {
+  const navigate = useNavigate();
   const {
     form,
     externalAccounts,
@@ -30,6 +30,11 @@ export const Desktop: React.FC = () => {
     onSelectCountry,
     isDisablePayout,
   } = useWalletShared();
+
+  const NetworkMenuList = [
+    { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
+    { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+  ];
 
   return (
     <TwoColumnCursor>
