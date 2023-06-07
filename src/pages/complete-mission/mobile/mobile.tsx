@@ -34,7 +34,7 @@ export const Mobile = (): JSX.Element => {
         <div className={css.congratulationsText}>You marked this job as completed.</div>
         <div className={css.congratulationsText}>
           You will get your payment once <span className={css.companyName}>{offer.offerer.meta.name}</span> confirms
-          your job.
+          your assignment.
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.acceptedMessageBox}>
       <img src="/icons/mail-inbox-envelope-check-black.svg" />
       <div>
-        <div className={css.congratulationsText}>You marked this assignment as stopped.</div>
+        <div className={css.congratulationsText}>You marked this job as stopped.</div>
         {/* <div className={css.congratulationsText}>
             You have already withdrawn the offer from <span className={css.companyName}>{offer.offerer.meta.name}</span>.
           </div> */}

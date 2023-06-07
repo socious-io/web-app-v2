@@ -7,17 +7,34 @@ import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { Category } from 'src/components/molecules/category/category';
 import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Input } from 'src/components/atoms/input/input';
 import { EditProps } from './edit.types';
 import { useProfileOrganizationEditShared } from 'src/pages/profile-organization-edit/profile-organization-edit.shared';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { endpoint } from 'src/core/endpoints';
+import { Popover } from 'src/components/atoms/popover/popover';
+import { PopoverProps } from 'src/components/atoms/popover/popover.types';
 
 export const EditOrganization = (props: EditProps): JSX.Element => {
   const { onAvatarEdit, onCoverEdit, avatarImage, coverImage, updateCityList, form, cities, organization } =
     useProfileOrganizationEditShared();
+
+  const coverLetterMenu: PopoverProps['menuList'] = [
+    { id: 1, label: 'Upload image', cb: onCoverEdit.desktop('upload') },
+    { id: 2, label: 'Remove image', cb: onCoverEdit.desktop('remove') },
+  ];
+
+  //   const avatarMenu: PopoverProps['menuList'] = [
+  //     { id: 1, label: 'Upload image', cb: onAvatarEdit.desktop('upload') },
+  //     { id: 2, label: 'Remove image', cb: onAvatarEdit.desktop('remove') },
+  //   ];
+
+  const [coverLetterMenuOpen, setCoverLetterMenu] = useState(false);
+  const [avatarMenuOpen, setAvatarMenu] = useState(false);
+  const avatarAnchor = useRef<null | HTMLDivElement>(null);
+  const coverLetterAnchor = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     updateCityList(organization.country);
@@ -44,12 +61,22 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
           <div>
             <div className={css.header}>
               <div className={css.coverImage} style={{ backgroundImage: `url(${coverImage})` }} />
-              <div className={css.photoIcon} onClick={onCoverEdit}>
+              <div
+                ref={coverLetterAnchor}
+                className={css.photoIcon}
+                onClick={() => setCoverLetterMenu((prev) => !prev)}
+              >
                 <img src="/icons/photos-white.svg" />
               </div>
               <div className={css.profileImgContainer}>
                 <div className={css.photoIcon} onClick={onAvatarEdit}>
                   <img src="/icons/photos-white.svg" />
+                  <Popover
+                    anchor={coverLetterAnchor.current}
+                    open={coverLetterMenuOpen}
+                    onClose={() => setCoverLetterMenu(false)}
+                    menuList={coverLetterMenu}
+                  />
                 </div>
                 <div className={css.profileImage} style={{ backgroundImage: `url(${avatarImage})` }} />
               </div>
