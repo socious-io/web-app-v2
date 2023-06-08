@@ -8,7 +8,7 @@ export function generateFormModel(organization: ProfileReq): FormModel {
   return {
     type: { initialValue: organization.type },
     cover_image: { initialValue: organization.cover_image?.id },
-    image: { initialValue: organization.image.id },
+    image: { initialValue: organization?.image?.id },
     name: { initialValue: organization.name, validators: [required()] },
     bio: { initialValue: organization.bio, validators: [required()] },
     social_causes: {

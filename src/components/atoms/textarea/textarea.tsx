@@ -13,7 +13,7 @@ export const Textarea = (props: TextareaProps): JSX.Element => {
 
   const limitBox = (
     <div className={css.limitBox}>
-      <span>{props?.register?.controls[props.name].value.length}</span> / <span>{props.limit}</span>
+      <span>{props?.register?.controls[props.name]?.value?.length}</span> / <span>{props.limit}</span>
     </div>
   );
 
