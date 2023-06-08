@@ -168,13 +168,3 @@ function pendingItemToJobCard(applicant: UserApplicantResp): JobCardProps {
 function pendingListToJobCardList(applicants: UserApplicantResp[]): JobCardProps[] {
   return applicants.map(pendingItemToJobCard);
 }
-
-export const NetworkMenuList: Menu[] = [
-  { label: 'Connections', icon: '/icons/network.svg' },
-  { label: 'Followers', icon: '/icons/followers.svg' },
-];
-
-export const JobsMenuList: Menu[] = [
-  { label: 'Applied', icon: '/icons/my-applications.svg' },
-  { label: 'Hired', icon: '/icons/hired-jobs.svg' },
-];

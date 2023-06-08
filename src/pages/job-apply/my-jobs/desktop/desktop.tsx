@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
@@ -7,8 +6,6 @@ import { JobCardList } from 'src/components/organisms/job-card-list/job-card-lis
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { printWhen } from 'src/core/utils';
-import { MyJobs } from '../my-jobs.types';
-import { JobsMenuList, NetworkMenuList } from '../my-jobs.services';
 import { useMyJobShared } from '../my-jobs.shared';
 import css from './desktop.module.scss';
 
@@ -25,8 +22,10 @@ export const Desktop: React.FC = () => {
     updateOnGoingList,
     endedList,
     updateEndedList,
+    JobsMenuList,
+    NetworkMenuList,
+    myJobsMode,
   } = useMyJobShared();
-  const [myJobsMode, setMyJobsMode] = useState<MyJobs>('Applied');
 
   const myJobsAppliedJSX = (
     <Card className={css.webCard}>
@@ -79,7 +78,7 @@ export const Desktop: React.FC = () => {
           <div className={css.listContainer}>
             <JobCardList
               list={onGoingList.items}
-              onItemClick={(id) => navigate({ to: `../complete-mission/${id}` })}
+              onItemClick={(id) => navigate({ to: `/jobs/applied/complete-mission/${id}` })}
               totalCount={onGoingList.total_count}
               onSeeMoreClick={updateOnGoingList}
             />
@@ -108,7 +107,7 @@ export const Desktop: React.FC = () => {
       <div className={css.leftContainer}>
         <ProfileCard />
         <CardMenu title="Network" list={NetworkMenuList} />
-        <CardMenu title="My Jobs" list={JobsMenuList} onClick={(label) => setMyJobsMode(label as MyJobs)} />
+        <CardMenu title="My Jobs" list={JobsMenuList} />
       </div>
       <div className={css.rightContainer}>
         <Card className={css.created}>{myJobsMode}</Card>
