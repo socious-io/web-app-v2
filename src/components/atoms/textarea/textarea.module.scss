@@ -24,3 +24,13 @@
 .noLabel {
   grid-template-rows: auto;
 }
+
+.limitBox {
+  font-size: 12px;
+  padding-left: 0.5rem;
+  color: var(--color-gray-02);
+
+  span {
+    color: var(--color-gray-02);
+  }
+}
