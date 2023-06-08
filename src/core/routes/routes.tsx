@@ -348,7 +348,7 @@ export const routes: Route[] = [
           import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
       },
       {
-        path: '/jobs/applied',
+        path: 'm/jobs/applied',
         loader: async () => {
           const requests = [
             getPendingApplicants({ page: 1 }),
@@ -381,6 +381,33 @@ export const routes: Route[] = [
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
+          {
+            path: '/d/jobs/applied',
+            loader: async () => {
+              const requests = [
+                getPendingApplicants({ page: 1 }),
+                getAwaitingReviewList({ page: 1 }),
+                getDeclinedApplicants({ page: 1 }),
+                getOnGoingList({ page: 1 }),
+                getEndedList({ page: 1 }),
+              ];
+              const [pendingApplicants, awaitingApplicants, declinedApplicants, onGoingApplicants, endedApplicants] =
+                await Promise.all(requests);
+              return {
+                pendingApplicants,
+                awaitingApplicants,
+                declinedApplicants,
+                onGoingApplicants,
+                endedApplicants,
+              };
+            },
+            children: [
+              {
+                path: ':id',
+                element: () => import('../../pages/job-apply/my-jobs/my-jobs').then((m) => <m.MyJobs />),
+              },
+            ],
+          },
           {
             path: '/jobs/:id',
             loader: async ({ params }) => {
