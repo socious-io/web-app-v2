@@ -2,7 +2,10 @@ import { ChangeEventHandler, FocusEventHandler } from 'react';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import { FormGroup } from '../../../core/form/useForm/useForm.types';
 
-type ReactHTMLTextareaElement = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>;
+type ReactHTMLTextareaElement = React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLTextAreaElement>,
+  HTMLTextAreaElement
+>;
 
 export interface TextareaProps<T = unknown> extends ReactHTMLTextareaElement {
   label?: string;
@@ -14,5 +17,6 @@ export interface TextareaProps<T = unknown> extends ReactHTMLTextareaElement {
   name?: string;
   optional?: boolean;
   errors?: string[];
+  limit?: number;
   onValueChange?: (value: string) => void;
 }

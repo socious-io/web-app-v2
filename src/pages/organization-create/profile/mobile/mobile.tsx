@@ -59,12 +59,17 @@ export const Mobile = (): JSX.Element => {
         <Divider title="Basic info" divider="space">
           <div className={css.formContainer}>
             <Input register={form} name="organizationName" label="Organization name" placeholder="Organization name" />
-            <Textarea register={form} name="bio" label="Bio" placeholder="Your organization's bio" />
+            <Textarea limit={160} register={form} name="bio" label="Bio" placeholder="Your organization's bio" />
           </div>
         </Divider>
         <Divider title="Contact" divider="space">
           <div className={css.formContainer}>
-            <Input register={form} name="organizationEmail" label="Organization email" placeholder="Organization email" />
+            <Input
+              register={form}
+              name="organizationEmail"
+              label="Organization email"
+              placeholder="Organization email"
+            />
             <Dropdown
               label="Country"
               placeholder="country"
@@ -74,7 +79,6 @@ export const Mobile = (): JSX.Element => {
               register={form}
               onValueChange={(option) => {
                 updateCityList(option.value as string);
-                // form.controls.city.setValue('');
               }}
             />
             <Dropdown
@@ -86,17 +90,6 @@ export const Mobile = (): JSX.Element => {
               onValueChange={(options) => updateField('geoname_id', options.id)}
               list={cities}
             />
-            {/* <Dropdown
-              selectedValue={formState.city}
-              label="City"
-              placeholder="City"
-              list={cities}
-              onValueChange={(value) => {
-                const cityName = cities.find((city) => city.value === value)!.title;
-                updateField('geoname_id', value);
-                updateField('city', cityName);
-              }}
-            /> */}
             <Input register={form} name="address" optional label="Address" placeholder="Address" />
             <div>
               <div className={css.phoneNumberLabel}>
@@ -122,7 +115,10 @@ export const Mobile = (): JSX.Element => {
         </Divider>
       </div>
       <div className={css.bottom}>
-        <Button disabled={formIsInvalid(form.isValid, formState, agreement)} onClick={() => navigate({ to: '../mission' })}>
+        <Button
+          disabled={formIsInvalid(form.isValid, formState, agreement)}
+          onClick={() => navigate({ to: '../mission' })}
+        >
           Continue
         </Button>
       </div>

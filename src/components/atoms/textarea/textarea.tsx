@@ -1,14 +1,21 @@
 import { useState } from 'react';
 import css from './textarea.module.scss';
 import { TextareaProps } from './textarea.types';
+import { printWhen } from 'src/core/utils';
 
 export const Textarea = (props: TextareaProps): JSX.Element => {
   const [outline, setOutline] = useState(false);
-  const { optional = false, register, errors = [], variant = 'outline', ...rest } = props;
+  const { optional = false, register, errors = [], variant = 'outline', limit, ...rest } = props;
 
   function setClassName(v: TextareaProps['variant']) {
     return v ? css.outline : css.default;
   }
+
+  const limitBox = (
+    <div className={css.limitBox}>
+      <span>{props?.register?.controls[props.name].value.length}</span> / <span>{props.limit}</span>
+    </div>
+  );
 
   if (!props.label) {
     return (
@@ -24,8 +31,10 @@ export const Textarea = (props: TextareaProps): JSX.Element => {
           role="textbox"
           onChange={(e) => props.onValueChange?.(e.target.value)}
           {...rest}
+          maxLength={props.limit}
           {...props?.register?.bind(props?.name)}
         />
+        {printWhen(limitBox, !!props.limit)}
       </div>
     );
   }
@@ -42,8 +51,10 @@ export const Textarea = (props: TextareaProps): JSX.Element => {
         role="textbox"
         onChange={(e) => props.onValueChange?.(e.target.value)}
         {...rest}
+        maxLength={props.limit}
         {...props?.register?.bind(props.name)}
       />
+      {printWhen(limitBox, !!props.limit)}
     </div>
   );
 };
