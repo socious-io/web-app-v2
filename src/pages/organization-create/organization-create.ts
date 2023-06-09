@@ -26,7 +26,7 @@ export function wizardFormToPayloadAdaptor(wizardForm: CreateOrgWizard): AddOrga
     city: wizardForm.city,
     geoname_id: wizardForm.geoname_id,
   };
-  Object.keys(optionalProps).forEach(([key, value]) => {
+  Object.entries(optionalProps).forEach(([key, value]) => {
     if (wizardForm[value]) {
       Object.assign(obj, { [key]: wizardForm[value] });
     }
