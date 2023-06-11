@@ -1,4 +1,4 @@
-import { NotificationSettingsRes, Pagination } from '../types';
+import { ConnectStatus, ConnectionItem, NotificationSettingsRes, Pagination } from '../types';
 
 export type GetProject = (id: string) => {
   applicants: number;
@@ -145,6 +145,14 @@ export interface Endpoints {
     follows: {
       followings: () => Promise<unknown>;
       followers: () => Promise<unknown>;
+    };
+    connections: {
+      filtered_connections: (payload: {
+        page?: number;
+        status?: ConnectStatus;
+        requester_id?: string;
+        requested_id?: string;
+      }) => Promise<Pagination<ConnectionItem[]>>;
     };
   };
   post: {
