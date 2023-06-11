@@ -1,8 +1,7 @@
 import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
-import { RouteMatch, DefaultGenerics } from '@tanstack/react-location';
-import { dialog } from '../../core/dialog/dialog';
-import { endpoint } from '../../core/endpoints';
-import { get } from '../../core/http';
+import { dialog } from 'src/core/dialog/dialog';
+import { endpoint } from 'src/core/endpoints';
+import { get, post } from 'src/core/http';
 import { BADGES } from 'src/constants/constants';
 import { ImpactBadgeProps } from 'src/components/atoms/impact-badge/impact-badge.types';
 
@@ -12,6 +11,16 @@ export async function getUserDetail(username: string) {
 
 export async function getOrganizationDetail(shortname: string) {
   return get(`/orgs/by-shortname/${shortname}`).then(({ data }) => data);
+}
+
+export function getConnectStatus(requester_id: string, requested_id: string) {
+  return endpoint.get.connections['filtered_connections']({ requested_id, requester_id });
+}
+
+export function sendRequestConnection(id: string, text: string) {
+  return post(`/connections/${id}`, {
+    text,
+  }).then(({ data }) => data);
 }
 
 export const showActions = async (id: string) => {
