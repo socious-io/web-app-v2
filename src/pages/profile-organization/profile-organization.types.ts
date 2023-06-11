@@ -1,5 +1,4 @@
-import { DefaultGenerics, RouteMatch, PartialGenerics } from '@tanstack/react-location';
-import { UserType } from 'src/core/types';
+import { ConnectionItem, Pagination } from 'src/core/types';
 
 export type ProfileReq = {
   id: string;
@@ -52,4 +51,9 @@ export type ProfileReq = {
   other_party_title: string;
   other_party_url: string;
   geoname_id: string;
+};
+
+export type Resolver = {
+  user: ProfileReq;
+  badges: { badges: unknown[] };
 };

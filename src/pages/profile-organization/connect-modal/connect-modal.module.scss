@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px;
+  gap: 1rem;
+
+  .header {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .buttons {
+    flex-direction: column;
+  }
+}
