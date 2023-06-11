@@ -1,23 +1,39 @@
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from 'src/core/types';
+import { ConnectStatus, IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { ProfileReq } from './profile-user.types';
+import { ProfileReq, Resolver } from './profile-user.types';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
+import { getConnectStatus, sendRequestConnection } from './profile-user.services';
 
 export const useProfileUserShared = () => {
-  const resolver = useMatch().data as { user: ProfileReq; badges: { badges: unknown[] } };
+  const navigate = useNavigate();
+  const resolver = useMatch().data as Resolver;
   const [user, setUser] = useState<ProfileReq>(resolver.user);
   const socialCauses = socialCausesToCategory(user.social_causes);
-  const navigate = useNavigate();
   const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;
   const skills = skillsToCategory(user.skills);
+  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
+  const address = `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
+  const profileBelongToCurrentUser = currentIdentity?.id === user.id;
   const [following, setFollowing] = useState<boolean>();
+  const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
+  const [message, setMessage] = useState('please connect to me');
+
+  useEffect(() => {
+    const getConnectionsStatus = async () => {
+      const res = await getConnectStatus(currentIdentity?.id as string, user.id);
+      setConnectStatus(res?.items[0].status);
+    };
+    getConnectionsStatus();
+  }, []);
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
@@ -43,14 +59,6 @@ export const useProfileUserShared = () => {
       skills: params.skills,
     }));
   }
-
-  const address = `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
-
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
-  });
-
-  const profileBelongToCurrentUser = currentIdentity?.id === user.id;
 
   function onClose() {
     hapticsImpactLight();
@@ -80,6 +88,15 @@ export const useProfileUserShared = () => {
     navigate({ to: '../edit' });
   }
 
+  async function onConnect(id: string) {
+    const result = await sendRequestConnection(id, message);
+    setConnectStatus(result?.status);
+  }
+
+  function onMessage(value: string) {
+    setMessage(value || 'please connect to me');
+  }
+
   return {
     user,
     updateUser,
@@ -96,5 +113,8 @@ export const useProfileUserShared = () => {
     navigateToEdit,
     follow,
     unfollow,
+    onConnect,
+    connectStatus,
+    onMessage,
   };
 };
