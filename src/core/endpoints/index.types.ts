@@ -188,6 +188,10 @@ export interface Endpoints {
       '{identity_id}': (id: string) => Promise<unknown>;
       '{identity_id}/unfollow': (id: string) => Promise<unknown>;
     };
+    connections: {
+      '{connect_id}/accept': (id: string) => Promise<unknown>;
+      '{connect_id}/block': (id: string) => Promise<unknown>;
+    };
     notifications: {
       settings_confirm: (formData: NotificationSettingsRes) => Promise<NotificationSettingsRes>;
     };

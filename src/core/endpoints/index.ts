@@ -68,6 +68,10 @@ export const endpoint: Endpoints = {
       '{identity_id}': (id: string) => post(`/follows/${id}`, {}).then(getDataProp),
       '{identity_id}/unfollow': (id: string) => post(`/follows/${id}/unfollow`, {}).then(getDataProp),
     },
+    connections: {
+      '{connect_id}/accept': (id: string) => post(`/connections/${id}/accept`, {}).then(getDataProp),
+      '{connect_id}/block': (id: string) => post(`/connections/${id}/block`, {}).then(getDataProp),
+    },
     media: {
       upload: (formData) =>
         post('/media/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(getDataProp),
