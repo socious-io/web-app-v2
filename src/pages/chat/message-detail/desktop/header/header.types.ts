@@ -1,7 +1,6 @@
 export interface HeaderProps {
-  onBack?: () => void;
-  type: 'users' | 'organizations';
   name: string;
+  type: 'users' | 'organizations';
   username?: string;
   img?: string;
   lastOnline?: string;
