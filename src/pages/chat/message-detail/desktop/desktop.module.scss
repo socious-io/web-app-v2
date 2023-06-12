@@ -1,0 +1,64 @@
+.leftContainer {
+  .card {
+    padding: 1rem 0;
+    position: relative;
+
+    &__header {
+      padding: 1rem;
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+      border-bottom: 1px solid var(--border-gray-01);
+    }
+
+    &__fab {
+      position: absolute;
+    }
+  }
+}
+
+.rightContainer {
+  padding: 0;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .main {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-gray-03);
+      border-radius: 12px;
+    }
+  }
+
+  .sendBoxContainer {
+    border-top: 1px solid var(--border-gray-01);
+    padding: 1rem;
+  }
+
+  .emptyBoxContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    .text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--color-primary-01);
+    }
+  }
+}

@@ -18,3 +18,21 @@
 .sendBoxContainer {
   padding: 0.5rem 1rem 0 1rem;
 }
+
+.emptyBoxContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-primary-01);
+  }
+}
