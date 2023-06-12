@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-location';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
 import { Divider } from 'src/components/templates/divider/divider';
@@ -12,6 +13,7 @@ import { useProfileOrganizationShared } from '../profile-organization.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
+  const navigate = useNavigate();
   const {
     user,
     onClose,
@@ -24,6 +26,7 @@ export const Mobile = (): JSX.Element => {
     badges,
     onConnect,
     connectStatus,
+    showMessageIcon,
     onMessage,
   } = useProfileOrganizationShared();
   const [openConnectModal, setOpenConnectModal] = useState(false);
@@ -112,6 +115,19 @@ export const Mobile = (): JSX.Element => {
     </Button>
   );
 
+  const messageJSX = (
+    <div
+      className={css.message}
+      onClick={() =>
+        navigate({
+          to: `/chats/new/${user?.id}`,
+        })
+      }
+    >
+      <img src="/icons/message-blue.svg" />
+    </div>
+  );
+
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -125,6 +141,7 @@ export const Mobile = (): JSX.Element => {
         </div>
         <div className={css.menu}>
           <div className={css.btnContainer}>
+            {printWhen(messageJSX, !profileBelongToCurrentUser && showMessageIcon())}
             {printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}
             {printWhen(editButtonJSX, profileBelongToCurrentUser)}
             {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}

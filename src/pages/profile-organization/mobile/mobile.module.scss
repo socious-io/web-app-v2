@@ -105,3 +105,14 @@
   font-size: 1.125rem;
   color: #2f4786;
 }
+
+.message {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid #e4e6ed;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
