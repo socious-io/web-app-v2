@@ -1,7 +1,6 @@
-import { isTouchDevice } from '../../../core/device-type-detector';
-import { Desktop } from './desktop/desktop';
-import { Mobile } from './mobile/mobile';
+import { Navigate, useMatch } from '@tanstack/react-location';
 
 export const NewChat = (): JSX.Element => {
-  return isTouchDevice() ? <Mobile /> : <Desktop />;
+  const chatId = useMatch().ownData;
+  return <Navigate replace to={`../../contacts/${chatId}`} />;
 };
