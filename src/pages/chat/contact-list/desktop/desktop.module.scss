@@ -1,0 +1,41 @@
+.leftContainer {
+  .card {
+    padding: 1rem 0;
+    position: relative;
+
+    &__header {
+      padding: 1rem;
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+      border-bottom: 1px solid var(--color-gray-04);
+    }
+
+    &__fab {
+      position: absolute;
+    }
+  }
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-gray-02);
+  font-size: 24px;
+  font-weight: 600;
+
+  &__subheader {
+    font-size: 16px;
+    font-weight: normal;
+    color: var(--color-gray-02);
+  }
+}
+
+.rightContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
