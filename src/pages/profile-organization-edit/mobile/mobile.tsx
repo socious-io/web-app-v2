@@ -31,7 +31,7 @@ export const Mobile = (): JSX.Element => {
         <div>
           <div className={css.header}>
             <div className={css.coverImage} style={{ backgroundImage: `url(${coverImage})` }} />
-            <div className={css.photoIcon} onClick={onCoverEdit}>
+            <div className={css.photoIcon} onClick={onCoverEdit.mobile}>
               <img src="/icons/photos-white.svg" />
             </div>
             <div className={css.profileImgContainer}>
