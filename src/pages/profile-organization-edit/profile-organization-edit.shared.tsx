@@ -8,6 +8,9 @@ import { ProfileReq } from '../profile-user/profile-user.types';
 import { Camera } from '@capacitor/camera';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { endpoint } from 'src/core/endpoints';
+import { getIdentities } from 'src/core/api';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { useDispatch } from 'react-redux';
 
 export const useProfileOrganizationEditShared = () => {
   const organization = useMatch().data.user as ProfileReq;
@@ -18,20 +21,7 @@ export const useProfileOrganizationEditShared = () => {
   const [coverImage, setCoverImage] = useState(organization?.cover_image?.url);
   const [avatarImage, setAvatarImage] = useState(organization?.image?.url);
   const navigate = useNavigate();
-
-//   async function onCoverEdit() {
-//     const actionResp = await showActionSheet();
-//     switch (actionResp) {
-//       case 'upload':
-//         const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
-//         const resp = await uploadImage(webPath);
-//         form.controls.cover_image.setValue(resp.id);
-//         setCoverImage(resp.url);
-//         break;
-//       case 'remove':
-//         break;
-//     }
-//   }
+  const dispatch = useDispatch();
 
   async function onAvatarEdit() {
     const actionResp = await showActionSheet();
@@ -39,7 +29,8 @@ export const useProfileOrganizationEditShared = () => {
       case 'upload':
         const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
         const resp = await uploadImage(webPath);
-        form.controls.avatar.setValue(resp.id);
+        console.log(form.controls);
+        form.controls.image.setValue(resp.id);
         setAvatarImage(resp.url);
         break;
       case 'remove':
@@ -70,12 +61,19 @@ export const useProfileOrganizationEditShared = () => {
     },
   };
 
+  async function updateIdentityList() {
+    return getIdentities().then((resp) => dispatch(setIdentityList(resp)));
+  }
 
-  function onSave() {
-    const payload = getFormValues(form);
-    endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload).then(() => {
+  async function onSave() {
+    try {
+      const payload = getFormValues(form);
+      await endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload);
+      await updateIdentityList();
       navigate({ to: '/jobs' });
-    });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return {
