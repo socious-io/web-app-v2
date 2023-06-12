@@ -90,11 +90,15 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     </Divider>
   );
 
+  function filterCurrentIdentity(acc: AccountsModel) {
+    return !acc.current;
+  }
+
   return (
     <div style={containerStyles} className={css.container}>
       <Divider padding={0}>
         <div className={css.accountList}>
-          {accountList.map((item) => (
+          {accountList.filter(filterCurrentIdentity).map((item) => (
             <div
               onClick={() => switchAccount(item.id)}
               key={item.id}

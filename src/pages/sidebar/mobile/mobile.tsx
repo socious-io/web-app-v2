@@ -137,10 +137,14 @@ export const Mobile = () => {
     </div>
   );
 
+  function filterCurrentIdentity(acc: AccountsModel) {
+    return !acc.current;
+  }
+
   const switchToJSX = (
     <div className={css.items}>
       <div className={css.title}>Switch To</div>
-      {accountList.map((item) => {
+      {accountList.filter(filterCurrentIdentity).map((item) => {
         return (
           <div
             onClick={() => {
@@ -201,10 +205,6 @@ export const Mobile = () => {
         <div className={css.items}>
           <div className={css.title}>Jobs</div>
           {printWhen(myApplicationsJSX, identity?.type === 'users')}
-          {/* <div className={css.row}>
-            <img src="/icons/folder-black.svg" />
-            <span>Hired jobs</span>
-          </div> */}
           {printWhen(createdLinkJSX, identity?.type === 'organizations')}
         </div>
         {printWhen(switchToJSX, accountList.length > 1)}
