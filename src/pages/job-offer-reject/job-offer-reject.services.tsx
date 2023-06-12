@@ -115,6 +115,7 @@ export function applicantToApplicantListAdaptor(applicant: UserApplicantResp[]):
       applyDate: isoToStandard(item.created_at),
       coverLetter: item.cover_letter,
       status: item.status,
+      user_id: item.user.id,
     };
   });
 }
@@ -156,6 +157,7 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
       totalHour: item.offer.total_hours,
       totalMission: `${item.offer.assignment_total} USD`,
       payment: item.payment,
+      user_id: item.assignee.meta.id,
     };
   });
 }

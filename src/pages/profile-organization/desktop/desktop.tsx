@@ -27,6 +27,7 @@ export const Desktop = (): JSX.Element => {
     badges,
     onConnect,
     connectStatus,
+    showMessageIcon,
     onMessage,
   } = useProfileOrganizationShared();
   const [editOpen, setEditOpen] = useState(false);
@@ -116,6 +117,19 @@ export const Desktop = (): JSX.Element => {
     </Button>
   );
 
+  const messageJSX = (
+    <div
+      className={css.message}
+      onClick={() =>
+        navigate({
+          to: `/chats/new/${user?.id}`,
+        })
+      }
+    >
+      <img src="/icons/message-blue.svg" />
+    </div>
+  );
+
   return (
     <>
       <TwoColumnCursor>
@@ -132,6 +146,7 @@ export const Desktop = (): JSX.Element => {
               </div>
               <div className={css.menu}>
                 <div className={css.btnContainer}>
+                  {printWhen(messageJSX, !profileBelongToCurrentUser && showMessageIcon())}
                   {printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}
                   {printWhen(editButtonJSX, profileBelongToCurrentUser)}
                   {/* {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)} */}
