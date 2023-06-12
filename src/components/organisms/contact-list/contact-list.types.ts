@@ -6,6 +6,6 @@ export interface ContactListProps extends CSSProperties {
   height: string;
   message?: { title: string; body?: string };
   onContactClick: (item: ContactItem) => void;
-  onScroll: (page: number) => void;
+  onScroll?: (page: number) => void;
   onSearch: (v: string) => void;
 }
