@@ -91,6 +91,7 @@ export type IdentityMeta = {
   address: string;
   avatar: string;
   image?: string;
+  shortname?: string;
   city: string;
   country: string;
   email: string;
@@ -325,6 +326,7 @@ export type Offer = {
       city: string;
       country: string;
       username: string;
+      id: string;
     };
     type: 'users' | 'organizations';
   };
