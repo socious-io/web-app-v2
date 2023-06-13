@@ -89,3 +89,10 @@
   justify-content: center;
   margin: 24px 16px;
 }
+
+.uploadedResume {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}

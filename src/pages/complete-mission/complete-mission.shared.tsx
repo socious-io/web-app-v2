@@ -5,7 +5,7 @@ import { endpoint } from 'src/core/endpoints';
 
 export const useCompleteMissionShared = () => {
   const resolver = useMatch().ownData;
-  const { offer, mission } = (resolver as Loader) || {};
+  const { offer, mission, media } = (resolver as Loader) || {};
   const [status, setStatus] = useState(offer.status);
 
   function onCompleteMission() {
@@ -17,5 +17,5 @@ export const useCompleteMissionShared = () => {
     endpoint.post.missions['{mission_id}/cancel'](mission.id).then(() => setStatus('KICK_OUT'));
   }
 
-  return { offer, status, onCompleteMission, onStopMission };
+  return { offer, media, status, onCompleteMission, onStopMission };
 };

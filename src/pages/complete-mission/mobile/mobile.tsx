@@ -13,7 +13,7 @@ import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const { offer, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
+  const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -117,6 +117,17 @@ export const Mobile = (): JSX.Element => {
             <Divider title="Cover Letter">
               <Typography>{offer.applicant.cover_letter}</Typography>
             </Divider>
+            {printWhen(
+              <Divider title="Resume">
+                <div className={css.uploadedResume}>
+                  <img src="/icons/attachment-black.svg" />
+                  <a href={media.url} target="_blank">
+                    {media.filename}
+                  </a>
+                </div>
+              </Divider>,
+              !!media.url
+            )}
             {/* <Divider title="Contact Info">
           <Typography>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam inventore quod ipsa veniam enim vitae

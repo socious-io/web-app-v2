@@ -243,6 +243,10 @@ export type ApplicantResp = {
     payment_scheme: string;
     payment_type?: string;
   };
+  attachment: {
+    filename: string;
+    url: string;
+  };
 };
 
 export type MissionsResp = Pagination<

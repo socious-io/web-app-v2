@@ -19,7 +19,7 @@ import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
-  const { offer, status, account, isPaidCrypto, onAccept, onDeclined, equivalentUSD } = useOfferReceivedShared();
+  const { offer, media, status, account, isPaidCrypto, onAccept, onDeclined, equivalentUSD } = useOfferReceivedShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -143,6 +143,17 @@ export const Desktop = (): JSX.Element => {
                 <Divider title="Cover Letter">
                   <Typography>{offer.applicant.cover_letter}</Typography>
                 </Divider>
+                {printWhen(
+                  <Divider title="Resume">
+                    <div className={css.uploadedResume}>
+                      <img src="/icons/attachment-black.svg" />
+                      <a href={media.url} target="_blank">
+                        {media.filename}
+                      </a>
+                    </div>
+                  </Divider>,
+                  !!media.url
+                )}
               </div>
             </Accordion>
             <Accordion title={`About ${offer.organization.name}`} id="about-company">
