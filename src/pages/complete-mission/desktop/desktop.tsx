@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
@@ -11,11 +12,11 @@ import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERE
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { printWhen } from 'src/core/utils';
-import { NetworkMenuList } from '../complete-mission.service';
 import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
+  const navigate = useNavigate();
   const { offer, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
 
   const offeredMessageBoxJSX = (
@@ -65,6 +66,11 @@ export const Desktop = (): JSX.Element => {
       </Button>
     </div>
   );
+
+  const NetworkMenuList = [
+    { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
+    { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+  ];
 
   return (
     <>
@@ -119,6 +125,7 @@ export const Desktop = (): JSX.Element => {
                   img={offer.offerer.meta.image}
                   type={offer.offerer.type}
                   name={offer.offerer.meta.name}
+                  username={offer.offerer.meta.shortname}
                   location={`${offer.offerer.meta.city}, ${offer.offerer.meta.country}`}
                 />
                 <div className={css.jobTitle}>{offer.project.title}</div>

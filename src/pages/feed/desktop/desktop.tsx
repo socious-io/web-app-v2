@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-location';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
@@ -8,16 +9,15 @@ import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-
 import { Modal } from 'src/components/templates/modal/modal';
 import { ModalCreate } from '../modal-create';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
-import { JobsMenuList, NetworkMenuList } from '../feed.service';
 import { useFeedShared } from '../feed.shared';
-import css from './desktop.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
-import { useNavigate } from '@tanstack/react-location';
+import css from './desktop.module.scss';
 
 export const Desktop = () => {
+  const navigate = useNavigate();
   const {
     feedList,
     setFeedList,
@@ -33,7 +33,6 @@ export const Desktop = () => {
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
   const [feed, setFeed] = useState<Feed>();
-  const navigate = useNavigate();
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -53,6 +52,11 @@ export const Desktop = () => {
     onMoreClick(index, feed as Feed);
     setOpenMoreBox(false);
   };
+
+  const NetworkMenuList = [
+    { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
+    { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+  ];
 
   const jobsMenuListUser = [
     {
@@ -77,7 +81,6 @@ export const Desktop = () => {
         <CardMenu title="Network" list={NetworkMenuList} />
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity.type === 'users')}
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity.type === 'organizations')}
-        {/* <CardMenu title="Jobs" list={JobsMenuList} /> */}
       </div>
       <>
         <div className={css.banner}>

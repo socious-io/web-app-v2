@@ -1,35 +1,43 @@
+import { useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import css from './desktop.module.scss';
-import { Card } from 'src/components/atoms/card/card';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { ProfileCard } from 'src/components/templates/profile-card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { JobList } from 'src/components/organisms/job-list/job-list';
-import { NetworkMenuList } from '../jobs.services';
-import { useJobsShared } from '../jobs.shared';
 import { printWhen } from 'src/core/utils';
+import { useJobsShared } from '../jobs.shared';
+import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
-  const { onMorePage, jobList, avatarImg, name, navigateToProfile, jobsMenuListUser, jobsMenuListOrg, identity } =
-    useJobsShared();
+  const navigate = useNavigate();
+  const { onMorePage, jobList, identity } = useJobsShared();
+
+  const NetworkMenuList = [
+    { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
+    { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+  ];
+
+  //FIXME: Changes in applied and created jobs' routes
+
+  const jobsMenuListUser = [
+    {
+      label: 'My applications',
+      icon: '/icons/my-applications.svg',
+      link: () => navigate({ to: `/jobs/applied/${identity.id}` }),
+    },
+  ];
+
+  const jobsMenuListOrg = [
+    {
+      label: 'Created',
+      icon: '/icons/folder-black.svg',
+      link: () => navigate({ to: `/jobs/created/${identity.id}` }),
+    },
+  ];
 
   return (
     <TwoColumnCursor>
       <div className={css.sidebar}>
-        <Card>
-          <div className={css.profileHeader}>
-            <Avatar img={avatarImg} type="users" />
-            <div>
-              <div className={css.username}>{name}</div>
-              <div onClick={navigateToProfile} className={css.profileLink}>
-                View my profile
-              </div>
-            </div>
-          </div>
-          <div className={css.profileFooter}>
-            <div className={css.connections}>Connections</div>
-            <div className={css.followers}>Followers</div>
-          </div>
-        </Card>
+        <ProfileCard />
         <CardMenu title="Network" list={NetworkMenuList} />
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity.type === 'users')}
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity.type === 'organizations')}

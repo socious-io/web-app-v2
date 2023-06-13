@@ -10,8 +10,3 @@ export async function receivedOfferLoader(params: { id: string }) {
 export async function findTokenRate(id: string) {
   return get(`/payments/crypto/rate?token=${id}`).then(({ data }) => data);
 }
-
-export const NetworkMenuList: Menu[] = [
-  { label: 'Connections', icon: '/icons/network.svg' },
-  { label: 'Followers', icon: '/icons/followers.svg' },
-];

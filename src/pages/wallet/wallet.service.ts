@@ -24,8 +24,3 @@ export const formModel: FormModel = {
     validators: [required()],
   },
 };
-
-export const NetworkMenuList: Menu[] = [
-  { label: 'Connections', icon: '/icons/network.svg' },
-  { label: 'Followers', icon: '/icons/followers.svg' },
-];
