@@ -47,7 +47,7 @@ export const Desktop: React.FC = () => {
           <div className={css.listContainer}>
             <JobCardList
               list={awaitingList.items}
-              onItemClick={(id) => navigate({ to: `/jobs/received-offer/${id}` })}
+              onItemClick={(id) => navigate({ to: `/jobs/received-offer/${id}/d` })}
               totalCount={awaitingList.total_count}
               onSeeMoreClick={updateAwaitingList}
             />

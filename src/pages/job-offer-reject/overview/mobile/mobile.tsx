@@ -68,11 +68,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile>
-      <Header
-        removeBorder
-        onBack={() => navigate({ to: `/jobs/created/${updatedApplicantList.jobOverview.identity_id}` })}
-        title={updatedApplicantList.jobOverview.title}
-      />
+      <Header removeBorder title={updatedApplicantList.jobOverview.title} />
       <div className={css.tabContainer}>
         <Tabs tabs={tabs} />
       </div>

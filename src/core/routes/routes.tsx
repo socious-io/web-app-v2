@@ -228,7 +228,7 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/jobs/created/:id/overview',
+        path: 'm/jobs/created/:id/overview',
         children: [
           {
             path: '/:applicantId/offer',
@@ -259,7 +259,7 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/jobs/created/:id',
+        path: '/m/jobs/created/:id',
         loader: async ({ params }) => {
           const requests = [
             getActiveJobs({ identityId: params.id, page: 1 }),
@@ -333,7 +333,7 @@ export const routes: Route[] = [
         element: () => import('../../pages/job-apply/apply/apply.container').then((m) => <m.JobApply />),
       },
       {
-        path: '/jobs/received-offer/:id',
+        path: '/jobs/received-offer/:id/m',
         loader: ({ params }) => receivedOfferLoader(params),
         element: () => import('../../pages/offer-received/offer-received.container').then((m) => <m.OfferReceived />),
       },
@@ -381,6 +381,56 @@ export const routes: Route[] = [
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
+          {
+            path: 'd/jobs/created/:id/overview',
+            children: [
+              {
+                path: '/:applicantId/offer',
+                loader: async ({ params }) => {
+                  const requests = [getApplicantDetail(params.applicantId)];
+                  const [applicantDetail] = await Promise.all(requests);
+                  return { applicantDetail };
+                },
+                element: () => import('../../pages/job-offer-reject/offer/offer.container').then((m) => <m.Offer />),
+              },
+              {
+                path: '/:applicantId',
+                loader: async ({ params }) => {
+                  const requests = [getScreeningQuestions(params.id), getApplicantDetail(params.applicantId)];
+                  const [screeningQuestions, applicantDetail] = await Promise.all(requests);
+                  return { applicantDetail, screeningQuestions };
+                },
+                element: () =>
+                  import('../../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => (
+                    <m.ApplicantDetail />
+                  )),
+              },
+              {
+                loader: (params) => jobOfferRejectLoader(params),
+                element: () =>
+                  import('../../pages/job-offer-reject/job-offer-reject.container').then((m) => <m.JobOfferReject />),
+              },
+            ],
+          },
+          {
+            path: '/d/jobs/created/:id',
+            loader: async ({ params }) => {
+              const requests = [
+                getActiveJobs({ identityId: params.id, page: 1 }),
+                getDraftJobs({ identityId: params.id, page: 1 }),
+                getJobCategories(),
+              ];
+              const [activeJobs, draftJobs, jobCategories] = await Promise.all(requests);
+              return { activeJobs, draftJobs, jobCategories };
+            },
+            element: () => import('../../pages/job-create/my-jobs/my-jobs.container').then((m) => <m.MyJobs />),
+          },
+          {
+            path: '/jobs/received-offer/:id/d',
+            loader: ({ params }) => receivedOfferLoader(params),
+            element: () =>
+              import('../../pages/offer-received/offer-received.container').then((m) => <m.OfferReceived />),
+          },
           {
             path: '/d/jobs/applied',
             loader: async () => {

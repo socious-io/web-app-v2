@@ -107,7 +107,7 @@ export const Mobile = () => {
 
   function navigateToCreatedJobs() {
     hapticsImpactLight();
-    navigate({ to: `/jobs/created/${identity.id}` });
+    navigate({ to: `/m/jobs/created/${identity.id}` });
     closeSidebar();
   }
 

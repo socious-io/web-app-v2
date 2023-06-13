@@ -42,7 +42,7 @@ export const useJobsShared = () => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate({ to: `/jobs/created/${identity.id}` }),
+      link: () => navigate({ to: `/d/jobs/created/${identity.id}` }),
     },
   ];
 
