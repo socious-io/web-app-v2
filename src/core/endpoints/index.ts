@@ -26,6 +26,14 @@ export const endpoint: Endpoints = {
       followings: () => get('follows/followings').then(getDataProp),
       followers: () => get('follows/followers').then(getDataProp),
     },
+    connections: {
+      filtered_connections: (payload) =>
+        get(
+          `/connections?page=${payload.page}&filter.status=${payload?.status || ''}&filter.requester_id=${
+            payload?.requester_id || ''
+          }&filter.requested_id=${payload?.requested_id || ''}`
+        ).then(getDataProp),
+    },
   },
   post: {
     auth: {
