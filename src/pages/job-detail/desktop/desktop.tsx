@@ -8,8 +8,8 @@ import { CategoriesClickable } from 'src/components/atoms/categories-clickable/c
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Categories } from 'src/components/atoms/categories/categories';
 import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
 import { printWhen } from 'src/core/utils';
 import { getCategories } from '../job-detail.services';
 import { useJobDetailShared } from '../job-detail.shared';
@@ -103,7 +103,9 @@ export const Desktop = (): JSX.Element => {
             </div>
           </Divider>
           {printWhen(socialCausesJSX, !!job.causes_tags)}
-          <Divider title="Job description">{convertMDToJSX(job.description, { length: null })}</Divider>
+          <Divider title="Job description">
+            <ExpandableText text={job.description} />
+          </Divider>
           {printWhen(skillsJSX, !!job.skills)}
           {printWhen(screeningQuestionsJSX, screeningQuestions.length > 0)}
         </Card>
