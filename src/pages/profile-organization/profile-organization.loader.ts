@@ -2,7 +2,7 @@ import { getOrganizationDetail } from './profile-organization.services';
 import { getBadges } from '../achievements/achievements.services';
 
 export async function profileOrganizationPageLoader({ params }) {
-  const user = await getOrganizationDetail(params.id);
-  const badges = await getBadges();
+  const requests = [getOrganizationDetail(params.id), getBadges()];
+  const [user, badges] = await Promise.all(requests);
   return { user, badges };
 }

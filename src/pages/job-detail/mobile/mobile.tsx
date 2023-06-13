@@ -62,6 +62,7 @@ export const Mobile = (): JSX.Element => {
         <Divider>
           <ProfileView
             name={job.identity_meta.name}
+            username={job.identity_meta.shortname}
             location={location}
             img={job.identity_meta.image}
             type={job.identity_type}

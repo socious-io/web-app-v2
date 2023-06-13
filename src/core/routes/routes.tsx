@@ -538,6 +538,25 @@ export const routes: Route[] = [
             loader: () => getFeedList({ page: 1 }),
           },
           {
+            path: 'network',
+            children: [
+              {
+                path: '/connections',
+                element: () =>
+                  import('src/pages/network/connections/connections.container').then((m) => <m.Connections />),
+              },
+              {
+                path: '/followings',
+                element: () =>
+                  import('src/pages/network/followings/followings.container').then((m) => <m.Followings />),
+                loader: () => getFollowings({ page: 1, name: '' }),
+              },
+              {
+                element: () => import('src/pages/network/network.container').then((m) => <m.Network />),
+              },
+            ],
+          },
+          {
             element: <Navigate to="/jobs" />,
           },
         ],

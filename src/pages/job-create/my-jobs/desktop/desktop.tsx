@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
 import { Button } from 'src/components/atoms/button/button';
@@ -9,13 +9,14 @@ import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { SocialCausesModal } from 'src/pages/job-create/social-causes/social-causes-modal';
 import { printWhen } from 'src/core/utils';
-import { NetworkMenuList, JobsMenuList, getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
+import { getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
 import { useMyJobShared } from '../my-job.shared';
 import { MyJobs } from '../my-jobs.types';
 import css from './desktop.module.scss';
 
 export const Desktop: React.FC = () => {
   const resolver = useMatch();
+  const navigate = useNavigate();
   const {
     onGoingTitle,
     activeJobList,
@@ -31,6 +32,16 @@ export const Desktop: React.FC = () => {
   const [myJobsMode, setMyJobsMode] = useState<MyJobs>('Created');
   const [openSocialCausesModal, setOpenSocialCausesModal] = useState(false);
   const [onGoingTitleUpdate, setOnGoingTitleUpdate] = useState(onGoingTitle);
+
+  const NetworkMenuList = [
+    { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
+    { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+  ];
+
+  const JobsMenuList = [
+    { label: 'Created', icon: '/icons/folder-black.svg', link: () => setMyJobsMode('Created') },
+    { label: 'Archived', icon: '/icons/archived.svg', link: () => setMyJobsMode('Archived') },
+  ];
 
   async function onCreateJob() {
     const identityId = resolver.params.id;
@@ -85,8 +96,8 @@ export const Desktop: React.FC = () => {
       <TwoColumnCursor>
         <div className={css.leftContainer}>
           <ProfileCard />
-          <CardMenu title="My organization" list={NetworkMenuList} />
-          <CardMenu title="My Jobs" list={JobsMenuList} onClick={(label) => setMyJobsMode(label as MyJobs)} />
+          <CardMenu title="Network" list={NetworkMenuList} />
+          <CardMenu title="My Jobs" list={JobsMenuList} />
         </div>
         <div className={css.rightContainer}>
           <Card className={css.created}>{myJobsMode}</Card>

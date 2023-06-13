@@ -26,6 +26,14 @@ export const endpoint: Endpoints = {
       followings: () => get('follows/followings').then(getDataProp),
       followers: () => get('follows/followers').then(getDataProp),
     },
+    connections: {
+      filtered_connections: (payload) =>
+        get(
+          `/connections?page=${payload.page}&filter.status=${payload?.status || ''}&filter.requester_id=${
+            payload?.requester_id || ''
+          }&filter.requested_id=${payload?.requested_id || ''}`
+        ).then(getDataProp),
+    },
   },
   post: {
     auth: {
@@ -67,6 +75,10 @@ export const endpoint: Endpoints = {
     follows: {
       '{identity_id}': (id: string) => post(`/follows/${id}`, {}).then(getDataProp),
       '{identity_id}/unfollow': (id: string) => post(`/follows/${id}/unfollow`, {}).then(getDataProp),
+    },
+    connections: {
+      '{connect_id}/accept': (id: string) => post(`/connections/${id}/accept`, {}).then(getDataProp),
+      '{connect_id}/block': (id: string) => post(`/connections/${id}/block`, {}).then(getDataProp),
     },
     media: {
       upload: (formData) =>

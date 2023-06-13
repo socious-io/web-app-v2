@@ -324,6 +324,7 @@ export type Offer = {
       wallet_address: string | null;
       city: string;
       country: string;
+      username: string;
     };
     type: 'users' | 'organizations';
   };
@@ -352,6 +353,7 @@ export type Offer = {
       name: string;
       city: string;
       country: string;
+      shortname: string;
     };
   };
   total_hours: number;
@@ -440,6 +442,31 @@ export type StripeProfileResp = {
       bank_name: string;
     }[];
   };
+};
+
+export type ConnectStatus = 'ACTIVE' | 'PENDING' | 'CONNECTED' | 'BLOCKED';
+
+export type ConnectionItem = {
+  requested: {
+    type: UserType;
+    meta: {
+      id: string;
+      avatar: string;
+      name: string;
+    };
+  };
+  requester: {
+    type: UserType;
+    meta: {
+      id: string;
+      avatar: string;
+      name: string;
+    };
+  };
+  status: ConnectStatus;
+  text: string;
+  created_at: string;
+  id: string;
 };
 
 export type Error = { error: string };
