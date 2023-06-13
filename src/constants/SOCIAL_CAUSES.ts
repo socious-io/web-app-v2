@@ -1,6 +1,6 @@
 export const SOCIAL_CAUSES = {
   SOCIAL: {
-    label: 'Social',
+    label: 'Social Issues (General)',
     value: 'SOCIAL',
   },
   POVERTY: {
@@ -20,11 +20,11 @@ export const SOCIAL_CAUSES = {
     value: 'HEALTH',
   },
   SUBSTANCE_ABUSE: {
-    label: 'Substance abuse',
+    label: 'Substance Abuse',
     value: 'SUBSTANCE_ABUSE',
   },
   MENTAL: {
-    label: 'Mental',
+    label: 'Mental Health',
     value: 'MENTAL',
   },
   BULLYING: {
@@ -40,31 +40,31 @@ export const SOCIAL_CAUSES = {
     value: 'EDUCATION',
   },
   GENDER_EQUALITY: {
-    label: 'Gender equality',
+    label: 'Gender Equality',
     value: 'GENDER_EQUALITY',
   },
   GENDER_BASED_VIOLENCE: {
-    label: 'Gender based violence',
+    label: 'Gender-Based Violence',
     value: 'GENDER_BASED_VIOLENCE',
   },
   SEXUAL_VIOLENCE: {
-    label: 'Sexual violence',
+    label: 'Sexual Violence',
     value: 'SEXUAL_VIOLENCE',
   },
   DOMESTIC_VIOLENCE: {
-    label: 'Domestic violence',
+    label: 'Domestic Violence',
     value: 'DOMESTIC_VIOLENCE',
   },
   WATER_SANITATION: {
-    label: 'Water sanitation',
+    label: 'Water and Sanitation',
     value: 'WATER_SANITATION',
   },
   SUSTAINABLE_ENERGY: {
-    label: 'Sustainable energy',
+    label: 'Sustainable Energy',
     value: 'SUSTAINABLE_ENERGY',
   },
   DECENT_WORK: {
-    label: 'Decent work',
+    label: 'Decent Work',
     value: 'DECENT_WORK',
   },
   INEQUALITY: {
@@ -80,11 +80,11 @@ export const SOCIAL_CAUSES = {
     value: 'MULTICULTURALISM',
   },
   DIVERSITY_INCLUSION: {
-    label: 'Diversity inclusion',
+    label: 'Diversity and Inclusion',
     value: 'DIVERSITY_INCLUSION',
   },
   INDIGENOUS_PEOPLES: {
-    label: 'Indigenous peoples',
+    label: 'Indigenous Peoples',
     value: 'INDIGENOUS_PEOPLES',
   },
   DISABILITY: {
@@ -92,7 +92,7 @@ export const SOCIAL_CAUSES = {
     value: 'DISABILITY',
   },
   LGBTQI: {
-    label: 'Lgbtqi',
+    label: 'LGBTQI+',
     value: 'LGBTQI',
   },
   REFUGEE: {
@@ -108,11 +108,11 @@ export const SOCIAL_CAUSES = {
     value: 'ORPHANS',
   },
   CHILD_PROTECTION: {
-    label: 'Child protection',
+    label: 'Child Protection',
     value: 'CHILD_PROTECTION',
   },
   COMMUNITY_DEVELOPMENT: {
-    label: 'Community development',
+    label: 'Community Development',
     value: 'COMMUNITY_DEVELOPMENT',
   },
   DEPOPULATION: {
@@ -124,7 +124,7 @@ export const SOCIAL_CAUSES = {
     value: 'OVERPOPULATION',
   },
   HUMAN_RIGHTS: {
-    label: 'Human rights',
+    label: 'Human Rights',
     value: 'HUMAN_RIGHTS',
   },
   SUSTAINABILITY: {
@@ -132,27 +132,27 @@ export const SOCIAL_CAUSES = {
     value: 'SUSTAINABILITY',
   },
   RESPONSIBLE_CONSUMPTION: {
-    label: 'Responsible consumption',
+    label: 'Responsible Consumption',
     value: 'RESPONSIBLE_CONSUMPTION',
   },
   CLIMATE_CHANGE: {
-    label: 'Climate change',
+    label: 'Climate Change',
     value: 'CLIMATE_CHANGE',
   },
   NATURAL_DISASTERS: {
-    label: 'Natural disasters',
+    label: 'Natural Disasters',
     value: 'NATURAL_DISASTERS',
   },
   BIODIVERSITY: {
-    label: 'Biodiversity',
+    label: 'Biodiversity (Life on Land)',
     value: 'BIODIVERSITY',
   },
   ANIMAL_RIGHTS: {
-    label: 'Animal rights',
+    label: 'Animal Rights',
     value: 'ANIMAL_RIGHTS',
   },
   ARMED_CONFLICT: {
-    label: 'Armed conflict',
+    label: 'Armed Conflict',
     value: 'ARMED_CONFLICT',
   },
   PEACEBUILDING: {
@@ -164,7 +164,7 @@ export const SOCIAL_CAUSES = {
     value: 'DEMOCRACY',
   },
   CIVIC_ENGAGEMENT: {
-    label: 'Civic engagement',
+    label: 'Civic Engagement',
     value: 'CIVIC_ENGAGEMENT',
   },
   JUSTICE: {
@@ -176,7 +176,7 @@ export const SOCIAL_CAUSES = {
     value: 'GOVERNANCE',
   },
   CRIME_PREVENTION: {
-    label: 'Crime prevention',
+    label: 'Crime Prevention',
     value: 'CRIME_PREVENTION',
   },
   CORRUPTION: {
@@ -188,7 +188,7 @@ export const SOCIAL_CAUSES = {
     value: 'OTHER',
   },
   RURAL_DEVELOPMENT: {
-    label: 'Rural development',
+    label: 'Rural Development',
     value: 'RURAL_DEVELOPMENT',
   },
   VEGANISM: {
@@ -196,7 +196,7 @@ export const SOCIAL_CAUSES = {
     value: 'VEGANISM',
   },
   BLACK_LIVES_MATTER: {
-    label: 'Black lives matter',
+    label: 'Black Lives Matter',
     value: 'BLACK_LIVES_MATTER',
   },
   ISLAMOPHOBIA: {
@@ -204,7 +204,7 @@ export const SOCIAL_CAUSES = {
     value: 'ISLAMOPHOBIA',
   },
   ANTI_SEMITISM: {
-    label: 'Anti semitism',
+    label: 'Anti-Semitism',
     value: 'ANTI_SEMITISM',
   },
   ABORTION: {
@@ -220,15 +220,15 @@ export const SOCIAL_CAUSES = {
     value: 'NEURODIVERSITY',
   },
   SUSTAINABLE_COMMUNITIES: {
-    label: 'Sustainable communities',
+    label: 'Sustainable Communities',
     value: 'SUSTAINABLE_COMMUNITIES',
   },
   BIODIVERSITY_LIFE_BELOW_WATER: {
-    label: 'Biodiversity life below water',
+    label: 'Biodiversity (Life Below Water)',
     value: 'BIODIVERSITY_LIFE_BELOW_WATER',
   },
   PEACE_JUSTICE: {
-    label: 'Peace justice',
+    label: 'Peace & Justice',
     value: 'PEACE_JUSTICE',
   },
   COLLABORATION_FOR_IMPACT: {
