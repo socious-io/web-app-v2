@@ -40,7 +40,7 @@ export const Mobile = (): JSX.Element => {
             <div className={css.listContainer}>
               <JobCardList
                 list={awaitingList.items}
-                onItemClick={(id) => navigate({ to: `/jobs/received-offer/${id}` })}
+                onItemClick={(id) => navigate({ to: `/jobs/received-offer/${id}/m` })}
                 totalCount={awaitingList.total_count}
                 onSeeMoreClick={updateAwaitingList}
               />
