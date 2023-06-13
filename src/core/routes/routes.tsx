@@ -358,15 +358,26 @@ export const routes: Route[] = [
       },
       {
         path: '/jobs/received-offer/:id/m',
-        loader: ({ params }) => receivedOfferLoader(params),
+        loader: async ({ params }) => {
+          let media = { url: '' };
+          const { offer } = await receivedOfferLoader(params);
+          if (offer.applicant?.attachment) {
+            media = await endpoint.get.media['media_id'](offer.applicant.attachment);
+          }
+          return { offer, media };
+        },
         element: () => import('../../pages/offer-received/offer-received.container').then((m) => <m.OfferReceived />),
       },
       {
         path: '/jobs/applied/complete-mission/:id',
         loader: async ({ params }) => {
+          let media = { url: '' };
           const mission = await endpoint.get.missions.mission_id(params.id);
           const offer = await endpoint.get.offers.offer_id(mission.offer_id);
-          return { mission, offer };
+          if (offer.applicant?.attachment) {
+            media = await endpoint.get.media['media_id'](offer.applicant.attachment);
+          }
+          return { mission, offer, media };
         },
         element: () =>
           import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
@@ -451,7 +462,14 @@ export const routes: Route[] = [
           },
           {
             path: '/jobs/received-offer/:id/d',
-            loader: ({ params }) => receivedOfferLoader(params),
+            loader: async ({ params }) => {
+              let media = { url: '' };
+              const { offer } = await receivedOfferLoader(params);
+              if (offer.applicant?.attachment) {
+                media = await endpoint.get.media['media_id'](offer.applicant.attachment);
+              }
+              return { offer, media };
+            },
             element: () =>
               import('../../pages/offer-received/offer-received.container').then((m) => <m.OfferReceived />),
           },

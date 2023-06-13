@@ -17,7 +17,7 @@ import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
-  const { offer, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
+  const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -137,6 +137,17 @@ export const Desktop = (): JSX.Element => {
                 <Divider title="Cover Letter">
                   <Typography>{offer.applicant.cover_letter}</Typography>
                 </Divider>
+                {printWhen(
+                  <Divider title="Resume">
+                    <div className={css.uploadedResume}>
+                      <img src="/icons/attachment-black.svg" />
+                      <a href={media.url} target="_blank">
+                        {media.filename}
+                      </a>
+                    </div>
+                  </Divider>,
+                  !!media.url
+                )}
                 {/* <Divider title="Contact Info">
           <Typography>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam inventore quod ipsa veniam enim vitae

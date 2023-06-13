@@ -16,6 +16,9 @@ export const endpoint: Endpoints = {
       '{project_id}/offers': (payload) =>
         get(`projects/${payload.id}/offers?filter.status=${payload.status}&page=${payload.page}`).then(getDataProp),
     },
+    media: {
+      media_id: (id: string) => get(`/media/${id}`).then(getDataProp),
+    },
     offers: {
       offer_id: (id: string) => get(`offers/${id}`).then(getDataProp) as Promise<Offer>,
     },
