@@ -10,7 +10,9 @@ export const useSkillsShared = () => {
   });
 
   function onSearch(v: string) {
-    const filteredValue = skillsToCategoryAdaptor().filter((item) => item.label.toLowerCase().includes(v));
+    const filteredValue = skillsToCategoryAdaptor().filter((item) =>
+      item.label.toLowerCase().includes(v.toLowerCase())
+    );
     setSocialCauses(filteredValue);
   }
 
