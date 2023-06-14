@@ -44,6 +44,8 @@ export const Mobile = (): JSX.Element => {
     </Divider>
   );
 
+  const jobCategoryJSX = <Divider title="Job Category">{job.job_category?.name || ''}</Divider>;
+
   const screeningQuestionsJSX = (
     <Divider title="Screening question">
       <ul className={css.questions}>
@@ -56,7 +58,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile containsMenu>
-      <Header title={job.job_category?.name || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
+      <Header title={job.title || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
       <div>
         {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
         <Divider>
@@ -72,6 +74,7 @@ export const Mobile = (): JSX.Element => {
           {printWhen(buttonJSX, identity.type === 'users')}
         </Divider>
         {printWhen(socialCausesJSX, !!job.causes_tags)}
+        {printWhen(jobCategoryJSX, !!job.job_category?.name)}
         <Divider title="Job description">
           <ExpandableText text={job.description} />
         </Divider>

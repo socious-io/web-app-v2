@@ -48,6 +48,8 @@ export const Desktop = (): JSX.Element => {
     </Divider>
   );
 
+  const jobCategoryJSX = <Divider title="Job Category">{job.job_category?.name || ''}</Divider>;
+
   const screeningQuestionsJSX = (
     <Divider title="Screening question">
       <ul className={css.questions}>
@@ -103,6 +105,7 @@ export const Desktop = (): JSX.Element => {
             </div>
           </Divider>
           {printWhen(socialCausesJSX, !!job.causes_tags)}
+          {printWhen(jobCategoryJSX, !!job.job_category?.name)}
           <Divider title="Job description">
             <ExpandableText text={job.description} />
           </Divider>
