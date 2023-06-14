@@ -26,6 +26,10 @@ export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
           <div>{data.title}</div>
         </div>
         <div className={css.group}>
+          <div className={css.groupTitle}>Job Category</div>
+          <div>{data.job_category?.name}</div>
+        </div>
+        <div className={css.group}>
           <div className={css.groupTitle}>Job description</div>
           <div className={css.value}>
             <ExpandableText text={data.description} />
