@@ -77,15 +77,15 @@ export const routes: Route[] = [
     children: [
       {
         path: '/email',
-        element: () => import('../../pages/forget-password/email/email').then((m) => <m.Email />),
+        element: () => import('../../pages/forget-password/email/email.container').then((m) => <m.Email />),
       },
       {
         path: '/otp',
-        element: () => import('../../pages/forget-password/otp/otp').then((m) => <m.Otp />),
+        element: () => import('../../pages/forget-password/otp/otp.container').then((m) => <m.Otp />),
       },
       {
         path: '/password',
-        element: () => import('../../pages/forget-password/password/password').then((m) => <m.Password />),
+        element: () => import('../../pages/forget-password/password/password.container').then((m) => <m.Password />),
       },
     ],
   },
