@@ -54,8 +54,9 @@ export const attachControlsToFormGroup =
                     this.isDirty = true;
                     formGroup.isDirty = true;
                     this.errors= generateControlErrorsProp(v, validators),
-                    this.isValid= generateControlIsValidProp(initialValue, validators),
+                    this.isValid= generateControlIsValidProp(v, validators),
                     this._subscribeCallbacks.forEach((cb) => cb(this.value));
+                    baseFormGroup.isValid = generateFormGroupIsValidProp(baseFormGroup.controls)
                     rerender();
                 },
                 reset() {
