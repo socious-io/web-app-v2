@@ -7,7 +7,7 @@ import { getCategories } from '../job-detail.services';
 import { Divider } from '../../../components/templates/divider/divider';
 import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
-import { Header } from 'src/components/atoms/header-v2/header';
+import { Header } from 'src/components/atoms/header/header';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { useJobDetailShared } from '../job-detail.shared';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
