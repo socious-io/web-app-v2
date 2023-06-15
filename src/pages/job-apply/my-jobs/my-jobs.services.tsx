@@ -1,6 +1,5 @@
 import { CSSProperties } from 'react';
 import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
-import { Menu } from 'src/components/molecules/card-menu/card-menu.types';
 import { get } from 'src/core/http';
 import { toRelativeTime } from 'src/core/relative-time';
 import { GetOffer, Pagination, UserApplicantResp, DeclinedApplicantListResp, MissionsResp } from 'src/core/types';

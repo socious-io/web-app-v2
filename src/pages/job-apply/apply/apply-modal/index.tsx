@@ -67,6 +67,7 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
             img={jobDetail.identity_meta?.image}
             type={jobDetail.identity_type}
             name={jobDetail.identity_meta.name}
+            username={jobDetail.identity_meta.shortname}
             location={`${jobDetail.identity_meta.city}, ${jobDetail.identity_meta.country}`}
           />
           <div className={css.jobTitle}>{jobDetail.title}</div>

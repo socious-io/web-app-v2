@@ -23,7 +23,12 @@ export const ApplicantList = (props: ApplicantListProps): JSX.Element => {
   const applicantJSX = (applicant: Applicant) => {
     return (
       <div key={applicant.id} className={css.applicantContainer}>
-        <ProfileView name={applicant.name} img={applicant.image} type="users" />
+        <ProfileView
+          name={applicant.name}
+          username={applicant?.username}
+          img={applicant.image}
+          type="users"
+        />
         <div className={css.applyDate}>{applicant.applyDate}</div>
         <ChatBox onClick={() => props.onApplicantClick?.(applicant.id)} type="receiver">
           <Typography lineLimit={3}>{applicant.coverLetter}</Typography>

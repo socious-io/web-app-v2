@@ -2,6 +2,7 @@ export type Applicant = {
   id: string;
   name: string;
   image: string;
+  username?: string;
   profileLink?: string;
   applyDate: string;
   coverLetter: string;

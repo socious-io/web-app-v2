@@ -92,6 +92,7 @@ export const Desktop = (): JSX.Element => {
             <div className={css.firstRow}>
               <ProfileView
                 name={job.identity_meta.name}
+                username={job.identity_meta.shortname}
                 location={location}
                 img={job.identity_meta.image}
                 type={job.identity_type}

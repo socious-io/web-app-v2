@@ -12,6 +12,11 @@ export const menuList: Menu[] = [
     route: '/feeds',
   },
   {
+    label: 'Network',
+    icon: '/icons/menu/network',
+    route: '/network',
+  },
+  {
     label: 'Chat',
     icon: '/icons/menu/chat',
     route: '/chats/contacts',
