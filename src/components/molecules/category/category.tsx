@@ -25,8 +25,8 @@ export const Category = (props: CategoryProps): JSX.Element => {
   );
 
   function onChange(list: string[]) {
-    setSelected(list);
     props.register.controls[props.name].setValue(list);
+    setSelected(list);
   }
 
   function onSearch(value: string) {
@@ -61,7 +61,6 @@ export const Category = (props: CategoryProps): JSX.Element => {
   );
 
   const controlErrors = props?.register?.controls[props.name]?.errors || [];
-  const isDirty = props.register?.controls[props.name].isDirty;
   const errors = Object.values(controlErrors) as string[];
 
   const errorsJSX = (
