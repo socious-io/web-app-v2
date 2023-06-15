@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
@@ -6,9 +7,18 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import css from './profile-card.module.scss';
 
 export const ProfileCard: React.FC = () => {
+  const navigate = useNavigate();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
+
+  function navigateToProfile() {
+    if (identity.type === 'users') {
+      navigate({ to: `/profile/users/${identity.meta.username}/view` });
+    } else {
+      navigate({ to: `/profile/organizations/${identity.meta.shortname}/view` });
+    }
+  }
 
   return (
     <Card>
@@ -16,7 +26,9 @@ export const ProfileCard: React.FC = () => {
         <Avatar img={identity.meta.image} type={identity.type} />
         <div>
           <div className={css.username}>{identity.meta.name}</div>
-          <div className={css.profileLink}>View my profile</div>
+          <div onClick={navigateToProfile} className={css.profileLink}>
+            View my profile
+          </div>
         </div>
       </div>
       <div className={css.profileFooter}>

@@ -26,7 +26,7 @@ export const Mobile = (): JSX.Element => {
     isDisabledProceedPayment,
   } = usePaymentShared();
   const { job_category, recipient, project, total_hours, assignment_total } = offer || {};
-  const { avatar, city, country, name: applicant_name } = recipient?.meta || {};
+  const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
 
   return (
     <TopFixedMobile>
@@ -44,6 +44,7 @@ export const Mobile = (): JSX.Element => {
             img={(avatar as string) || ''}
             type={recipient?.type || 'users'}
             name={applicant_name}
+            username={applicant_username}
             location={`${city}, ${country}`}
           />
           <div className={css['container__spacer']}>
@@ -70,7 +71,11 @@ export const Mobile = (): JSX.Element => {
               )
             }
             fiat_method={
-              <Button color="white" disabled={isPaidCrypto || cards?.items?.length >= 3} onClick={() => navigate({ to: 'add-card' })}>
+              <Button
+                color="white"
+                disabled={isPaidCrypto || cards?.items?.length >= 3}
+                onClick={() => navigate({ to: 'add-card' })}
+              >
                 <>
                   <img src="/icons/debit.svg" width={18} height={18} />
                   Add Credit Card

@@ -1,0 +1,90 @@
+.tabContainer {
+  overflow-y: scroll;
+}
+
+.manage {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &__title {
+    color: var(--color-primary-01);
+  }
+
+  &__item {
+    font-weight: 600;
+    cursor: pointer;
+
+    &_active {
+      color: var(--color-primary-01);
+    }
+  }
+}
+
+.connections {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background-color: white;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-gray-01);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 14px;
+  }
+
+  &__date {
+    font-size: 14px;
+    color: var(--color-gray-02);
+  }
+
+  &__avatar,
+  &__icons {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 16px;
+  }
+}
+
+.noConnections {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-02);
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 50%;
+}
+
+.seeMore {
+  text-align: center;
+  font-weight: 600;
+  font-size: var(--font-size-s2);
+  color: var(--color-primary-01);
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.moreBox {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+
+  .moreOption {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+}

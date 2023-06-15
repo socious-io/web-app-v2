@@ -26,7 +26,7 @@ export const Desktop: React.FC = () => {
     isDisabledProceedPayment,
   } = usePaymentShared();
   const { job_category, recipient, project, total_hours, assignment_total } = offer || {};
-  const { avatar, city, country, name: applicant_name } = recipient?.meta || {};
+  const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
 
   return (
@@ -45,6 +45,7 @@ export const Desktop: React.FC = () => {
             img={(avatar as string) || ''}
             type={recipient?.type || 'users'}
             name={applicant_name}
+            username={applicant_username}
             location={`${city}, ${country}`}
           />
           <PaymentSummaryCard

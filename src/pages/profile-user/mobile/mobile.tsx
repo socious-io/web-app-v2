@@ -1,13 +1,15 @@
-import css from './mobile.module.scss';
-import { Avatar } from '../../../components/atoms/avatar/avatar';
-import { ThreeDotsButton } from '../../../components/atoms/three-dots-button/three-dots-button';
-import { Divider } from '../../../components/templates/divider/divider';
-import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
-import { printWhen } from '../../../core/utils';
-import { badgesList, showActions } from '../profile-user.services';
+import { useState } from 'react';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
+import { Divider } from 'src/components/templates/divider/divider';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
+import { ConnectModal } from 'src/pages/profile-organization/connect-modal';
+import { badgesList, showActions } from '../profile-user.services';
+import { printWhen } from 'src/core/utils';
 import { useProfileUserShared } from '../profile-user.shared';
+import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const {
@@ -21,7 +23,11 @@ export const Mobile = (): JSX.Element => {
     profileBelongToCurrentUser,
     onClose,
     gotToMobileAchievement,
+    onConnect,
+    connectStatus,
+    onMessage,
   } = useProfileUserShared();
+  const [openConnectModal, setOpenConnectModal] = useState(false);
 
   const cityLinkJSX = (
     <div className={css.contactItem}>
@@ -93,10 +99,19 @@ export const Mobile = (): JSX.Element => {
     </Button>
   );
 
-  const connectButtonJSX = <Button width="6.5rem">Connect</Button>;
-
   const orgNameJSX = <div className={css.name}>{user?.name}</div>;
   const usernameJSX = <div className={css.username}>@{user?.username}</div>;
+
+  const connectJSX = (
+    <Button
+      width="8.5rem"
+      onClick={() => setOpenConnectModal(true)}
+      disabled={connectStatus === 'PENDING'}
+      color={connectStatus === 'PENDING' ? 'white' : 'blue'}
+    >
+      {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
+    </Button>
+  );
 
   return (
     <div className={css.container}>
@@ -111,7 +126,7 @@ export const Mobile = (): JSX.Element => {
         </div>
         <div className={css.menu}>
           <div className={css.btnContainer}>
-            {/* {printWhen(connectButtonJSX, !profileBelongToCurrentUser)} */}
+            {printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}
             {printWhen(editButtonJSX, profileBelongToCurrentUser)}
             {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
           </div>
@@ -158,6 +173,15 @@ export const Mobile = (): JSX.Element => {
           !!user.culture
         )}
       </div>
+      <ConnectModal
+        open={openConnectModal}
+        onClose={() => setOpenConnectModal(false)}
+        onSend={() => {
+          onConnect(user.id);
+          setOpenConnectModal(false);
+        }}
+        onMessage={onMessage}
+      />
     </div>
   );
 };

@@ -1,18 +1,22 @@
-import css from './desktop.module.scss';
-import { Avatar } from '../../../components/atoms/avatar/avatar';
-import { Divider } from '../../../components/templates/divider/divider';
-import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
-import { printWhen } from '../../../core/utils';
-import { badgesList } from '../profile-user.services';
+import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-location';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Divider } from 'src/components/templates/divider/divider';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
-import { useProfileUserShared } from '../profile-user.shared';
+import { ConnectModal } from 'src/pages/profile-organization/connect-modal';
+import { BackLink } from 'src/components/molecules/back-link';
 import { Edit } from './edit/edit';
-import { useState } from 'react';
+import { printWhen } from 'src/core/utils';
+import { badgesList } from '../profile-user.services';
+import { useProfileUserShared } from '../profile-user.shared';
+import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
+  const navigate = useNavigate();
   const {
     user,
     updateUser,
@@ -23,9 +27,13 @@ export const Desktop = (): JSX.Element => {
     skills,
     profileBelongToCurrentUser,
     gotToDesktopAchievement,
+    onConnect,
+    connectStatus,
+    onMessage,
   } = useProfileUserShared();
 
   const [editOpen, setEditOpen] = useState(false);
+  const [openConnectModal, setOpenConnectModal] = useState(false);
 
   const cityLinkJSX = (
     <div className={css.contactItem}>
@@ -100,74 +108,97 @@ export const Desktop = (): JSX.Element => {
   const orgNameJSX = <div className={css.name}>{user?.name}</div>;
   const usernameJSX = <div className={css.username}>@{user?.username}</div>;
 
+  const connectJSX = (
+    <Button
+      width="8.5rem"
+      onClick={() => setOpenConnectModal(true)}
+      disabled={connectStatus === 'PENDING'}
+      color={connectStatus === 'PENDING' ? 'white' : 'blue'}
+    >
+      {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
+    </Button>
+  );
+
   return (
-    <TwoColumnCursor>
-      <div className={css.sidebar}>
-        <Card cursor="pointer" onClick={() => history.back()}>
-          <div className={css.back}>
-            <img src="/icons/chevron-left.svg" />
-            <div>Jobs</div>
-          </div>
-        </Card>
-      </div>
-
-      <Card className={css.card} padding={0}>
-        <div className={css.header}>
-          <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
-            <div className={css.avatarContainer}>
-              <Avatar img={avatarImage} size="8rem" type="users" />
-            </div>
-          </div>
-          <div className={css.menu}>
-            <div className={css.btnContainer}>
-              {/* <Button width="6.5rem">Connect</Button> */}
-              {printWhen(editButtonJSX, profileBelongToCurrentUser)}
-            </div>
-            <div className={css.userConnections}>
-              <div>{user.followings} connections</div>
-              <div>{user.followers} Followers</div>
-            </div>
-          </div>
+    <>
+      <TwoColumnCursor>
+        <div className={css.sidebar}>
+          <BackLink title="jobs" onBack={() => navigate({ to: '/jobs' })} />
         </div>
-        <div>
-          <Divider>
-            {printWhen(orgNameJSX, !!user?.name)}
-            {printWhen(userFullNameJSX, !!user?.first_name || !!user?.last_name)}
-            {printWhen(usernameJSX, !!user?.username)}
-          </Divider>
-          <Divider>
-            <div className={css.achievements} onClick={gotToDesktopAchievement}>
-              <div className={css.badges}>
-                {badgesList(badges.badges).map((item) => {
-                  return <ImpactBadge key={item.color} size="2.75rem" {...item} />;
-                })}
+
+        <Card className={css.card} padding={0}>
+          <div className={css.header}>
+            <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
+              <div className={css.avatarContainer}>
+                <Avatar img={avatarImage} size="8rem" type="users" />
               </div>
-              <div className={css.achievementsLink}>Achievements</div>
             </div>
-          </Divider>
+            <div className={css.menu}>
+              <div className={css.btnContainer}>
+                {printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}
+                {printWhen(editButtonJSX, profileBelongToCurrentUser)}
+              </div>
+              <div className={css.userConnections}>
+                <div>{user.followings} connections</div>
+                <div>{user.followers} Followers</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <Divider>
+              {printWhen(orgNameJSX, !!user?.name)}
+              {printWhen(userFullNameJSX, !!user?.first_name || !!user?.last_name)}
+              {printWhen(usernameJSX, !!user?.username)}
+            </Divider>
+            <Divider>
+              <div className={css.achievements} onClick={gotToDesktopAchievement}>
+                <div className={css.badges}>
+                  {badgesList(badges.badges).map((item) => {
+                    return <ImpactBadge key={item.color} size="2.75rem" {...item} />;
+                  })}
+                </div>
+                <div className={css.achievementsLink}>Achievements</div>
+              </div>
+            </Divider>
 
-          {printWhen(bioJSX, !!user.bio)}
-          <Divider title="Social Causes">
-            <CategoriesClickable list={socialCauses} />
-          </Divider>
-          <Divider title="Contact">
-            {printWhen(contactLinkJSX, !!user.mobile_country_code)}
-            {printWhen(emailLinkJSX, !!user.email)}
-            {printWhen(websiteLinkJSX, !!user.website)}
-            {printWhen(cityLinkJSX, !!user.city)}
-          </Divider>
-          {printWhen(missionJSX, !!user.mission)}
-          {printWhen(cultureJSX, !!user.culture)}
-          {printWhen(skillsJSX, user.skills && user.skills.length > 0)}
-          {printWhen(
-            <Divider title="Culture">
-              <div className={css.culture}>{user.culture}</div>
-            </Divider>,
-            !!user.culture
-          )}
-        </div>
-        <Edit updateUser={updateUser} width="31rem" height="75vh" open={editOpen} onClose={() => setEditOpen(false)} />
-      </Card>
-    </TwoColumnCursor>
+            {printWhen(bioJSX, !!user.bio)}
+            <Divider title="Social Causes">
+              <CategoriesClickable list={socialCauses} />
+            </Divider>
+            <Divider title="Contact">
+              {printWhen(contactLinkJSX, !!user.mobile_country_code)}
+              {printWhen(emailLinkJSX, !!user.email)}
+              {printWhen(websiteLinkJSX, !!user.website)}
+              {printWhen(cityLinkJSX, !!user.city)}
+            </Divider>
+            {printWhen(missionJSX, !!user.mission)}
+            {printWhen(cultureJSX, !!user.culture)}
+            {printWhen(skillsJSX, user.skills && user.skills.length > 0)}
+            {printWhen(
+              <Divider title="Culture">
+                <div className={css.culture}>{user.culture}</div>
+              </Divider>,
+              !!user.culture
+            )}
+          </div>
+          <Edit
+            updateUser={updateUser}
+            width="31rem"
+            height="75vh"
+            open={editOpen}
+            onClose={() => setEditOpen(false)}
+          />
+        </Card>
+      </TwoColumnCursor>
+      <ConnectModal
+        open={openConnectModal}
+        onClose={() => setOpenConnectModal(false)}
+        onSend={() => {
+          onConnect(user.id);
+          setOpenConnectModal(false);
+        }}
+        onMessage={onMessage}
+      />
+    </>
   );
 };
