@@ -1,6 +1,6 @@
 import { useMatch } from '@tanstack/react-location';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { Header } from 'src/components/atoms/header-v2/header';
+import { Header } from 'src/components/atoms/header/header';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { Input } from 'src/components/atoms/input/input';
@@ -42,7 +42,7 @@ export const Mobile: React.FC = () => {
 
   return (
     <TopFixedMobile>
-      <Header title="Add a credit card" />
+      <Header title="Add a credit card" onBack={() => history.back()} />
       <>
         <div className={css.container}>
           <Card className={css.card}>

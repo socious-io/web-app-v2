@@ -1,7 +1,6 @@
-import { Header } from 'src/components/atoms/header-v2/header';
+import { Header } from 'src/components/atoms/header/header';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
-import { Link } from 'src/components/atoms/link/link';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { BankAccounts } from 'src/components/templates/bank-accounts';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
@@ -30,7 +29,7 @@ export const Mobile: React.FC = () => {
 
   return (
     <TopFixedMobile>
-      <Header title="Wallet" />
+      <Header title="Wallet" onBack={() => history.back()} />
       <div className={css.container}>
         {generatedItems?.map((item) => (
           <WithdrawMissions
