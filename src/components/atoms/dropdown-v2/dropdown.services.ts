@@ -7,7 +7,3 @@ export function getInitialValue(props: DropdownProps): string {
   }
   return '';
 }
-
-export function hasInitialValue(props: DropdownProps) {
-  return props.register && props.name && props.register.controls[props.name].value;
-}

@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { printWhen } from '../../../core/utils';
 import css from './dropdown.module.scss';
 import { DropdownItem, DropdownProps } from './dropdown.types';
-import { getInitialValue, hasInitialValue } from './dropdown.services';
+import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
 
 const submenuHeightREM = 2.75;
 
@@ -13,16 +13,28 @@ export const Dropdown = (props: DropdownProps): JSX.Element => {
   const [filteredList, setFilteredList] = useState(props.list);
   const [visibility, setSubMenuVisibility] = useState(false);
 
+  function getInitialValue(): ControlPrimitiveValue {
+    if (props.name && props.register) {
+      return props.register?.controls[props.name].value;
+    } else if (props.value) {
+      return props.value;
+    } else {
+      return '';
+    }
+  }
+
   useEffect(() => {
-    const obj = props.list.find((item) => item.value === props.value);
+    const initialValue = getInitialValue();
+    const obj = props.list.find((item) => item.value === initialValue);
+
     if (obj) {
       /** @why "!" is safe here as ref is available in first render */
       ref!.current!.value = obj.label;
     }
-    if (hasInitialValue(props)) {
-      /** @why "!" is safe here as ref is available in first render */
-      ref!.current!.value = getInitialValue(props);
-    }
+    // if (hasInitialValue(props)) {
+    /** @why "!" is safe here as ref is available in first render */
+    //   ref!.current!.value = getInitialValue(props);
+    // }
   }, []);
 
   useEffect(() => {

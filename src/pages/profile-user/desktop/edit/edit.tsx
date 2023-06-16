@@ -34,8 +34,8 @@ export const Edit = (props: EditProps): JSX.Element => {
   const { onCoverEdit, onAvatarEdit, onCountryUpdate, coverImage, avatarImage, cities } = useProfileUserEditShared();
 
   const coverLetterMenu: PopoverProps['menuList'] = [
-    { id: 1, label: 'Upload image', cb: onCoverEdit.desktop('upload') },
-    { id: 2, label: 'Remove image', cb: onCoverEdit.desktop('remove') },
+    { id: 1, label: 'Upload image', cb: () => onCoverEdit.desktop('upload') },
+    { id: 2, label: 'Remove image', cb: () => onCoverEdit.desktop('remove') },
   ];
 
   const avatarMenu: PopoverProps['menuList'] = [
@@ -45,18 +45,16 @@ export const Edit = (props: EditProps): JSX.Element => {
 
   function onSave() {
     if (form.isValid) {
-      const payload = removedEmptyProps(getFormValues(form));
-      endpoint.post.user['update/profile'](payload).then((resp) => {
-        props.updateUser(resp);
-        props.onClose();
-      });
+      form.controls.cover_image.setValue('blaaaaaaaaa');
+      //   const payload = removedEmptyProps(getFormValues(form));
+      //   const payload = getFormValues(form);
+      console.log('1: form on save ', form);
+      //   endpoint.post.user['update/profile'](payload).then((resp) => {
+      //     props.updateUser(resp);
+      //     props.onClose();
+      //   });
     } else {
       dialog.alert({ message: 'form is invalid' });
-      Object.entries(form.controls).forEach(([key, value]) => {
-        if (value.isValid === false) {
-          console.log(key, value);
-        }
-      });
     }
   }
 

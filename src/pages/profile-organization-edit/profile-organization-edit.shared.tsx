@@ -23,13 +23,11 @@ export const useProfileOrganizationEditShared = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  async function onAvatarEdit() {
-    const actionResp = await showActionSheet();
-    switch (actionResp) {
+  async function runAvatarEditActions(type: 'upload' | 'remove' | undefined) {
+    switch (type) {
       case 'upload':
         const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
         const resp = await uploadImage(webPath);
-        console.log(form.controls);
         form.controls.image.setValue(resp.id);
         setAvatarImage(resp.url);
         break;
@@ -37,6 +35,16 @@ export const useProfileOrganizationEditShared = () => {
         break;
     }
   }
+
+  const onAvatarEdit = {
+    mobile: async () => {
+      const actionResp = await showActionSheet();
+      runAvatarEditActions(actionResp);
+    },
+    desktop: (type: 'upload' | 'remove' | undefined) => () => {
+      runAvatarEditActions(type);
+    },
+  };
 
   async function runCoverEditActions(type: 'upload' | 'remove' | undefined) {
     switch (type) {

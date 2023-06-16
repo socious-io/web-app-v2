@@ -16,6 +16,8 @@ import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { endpoint } from 'src/core/endpoints';
 import { Popover } from 'src/components/atoms/popover/popover';
 import { PopoverProps } from 'src/components/atoms/popover/popover.types';
+import { removedEmptyProps } from 'src/core/utils';
+import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
 
 export const EditOrganization = (props: EditProps): JSX.Element => {
   const { onAvatarEdit, onCoverEdit, avatarImage, coverImage, updateCityList, form, cities, organization } =
@@ -26,10 +28,10 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
     { id: 2, label: 'Remove image', cb: onCoverEdit.desktop('remove') },
   ];
 
-  //   const avatarMenu: PopoverProps['menuList'] = [
-  //     { id: 1, label: 'Upload image', cb: onAvatarEdit.desktop('upload') },
-  //     { id: 2, label: 'Remove image', cb: onAvatarEdit.desktop('remove') },
-  //   ];
+  const avatarMenu: PopoverProps['menuList'] = [
+    { id: 1, label: 'Upload image', cb: onAvatarEdit.desktop('upload') },
+    { id: 2, label: 'Remove image', cb: onAvatarEdit.desktop('remove') },
+  ];
 
   const [coverLetterMenuOpen, setCoverLetterMenu] = useState(false);
   const [avatarMenuOpen, setAvatarMenu] = useState(false);
@@ -45,7 +47,7 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
   }
 
   function onSave() {
-    const payload = getFormValues(form);
+    const payload = removedEmptyProps(getFormValues(form));
     endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload).then(() => {
       props.onClose();
     });
@@ -67,15 +69,21 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
                 onClick={() => setCoverLetterMenu((prev) => !prev)}
               >
                 <img src="/icons/photos-white.svg" />
+                <Popover
+                  anchor={coverLetterAnchor.current}
+                  open={coverLetterMenuOpen}
+                  onClose={() => setCoverLetterMenu(false)}
+                  menuList={coverLetterMenu}
+                />
               </div>
               <div className={css.profileImgContainer}>
-                <div className={css.photoIcon} onClick={onAvatarEdit}>
+                <div ref={avatarAnchor} className={css.photoIcon} onClick={() => setAvatarMenu((prev) => !prev)}>
                   <img src="/icons/photos-white.svg" />
                   <Popover
-                    anchor={coverLetterAnchor.current}
-                    open={coverLetterMenuOpen}
-                    onClose={() => setCoverLetterMenu(false)}
-                    menuList={coverLetterMenu}
+                    anchor={avatarAnchor.current}
+                    open={avatarMenuOpen}
+                    onClose={() => setAvatarMenu(false)}
+                    menuList={avatarMenu}
                   />
                 </div>
                 <div className={css.profileImage} style={{ backgroundImage: `url(${avatarImage})` }} />
@@ -83,7 +91,7 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
             </div>
           </div>
           <div className={css.formContainer}>
-            {/* <Dropdown label='Organization type' list={ORGANIZATION_TYPE} /> */}
+            <Dropdown name="type" register={form} label="Organization type" list={ORGANIZATION_TYPE} />
             <Input label="Name" register={form} name="name" placeholder="name" />
             <Textarea label="bio" register={form} name="bio" placeholder="bio" />
             <Category

@@ -11,6 +11,7 @@ import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { Category } from 'src/components/molecules/category/category';
 import { useProfileOrganizationEditShared } from '../profile-organization-edit.shared';
 import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
 
 export const Mobile = (): JSX.Element => {
   const { onSave, onAvatarEdit, onCoverEdit, avatarImage, coverImage, updateCityList, form, cities, organization } =
@@ -35,7 +36,7 @@ export const Mobile = (): JSX.Element => {
               <img src="/icons/photos-white.svg" />
             </div>
             <div className={css.profileImgContainer}>
-              <div className={css.photoIcon} onClick={onAvatarEdit}>
+              <div className={css.photoIcon} onClick={onAvatarEdit.mobile}>
                 <img src="/icons/photos-white.svg" />
               </div>
               <div className={css.profileImage} style={{ backgroundImage: `url(${avatarImage})` }} />
@@ -43,7 +44,7 @@ export const Mobile = (): JSX.Element => {
           </div>
         </div>
         <div className={css.formContainer}>
-          {/* <Dropdown label='Organization type' list={ORGANIZATION_TYPE} /> */}
+          <Dropdown name="type" register={form} label="Organization type" list={ORGANIZATION_TYPE} />
           <Input label="Name" register={form} name="name" placeholder="name" />
           <Textarea label="bio" register={form} name="bio" placeholder="bio" />
           <Category

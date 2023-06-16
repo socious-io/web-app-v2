@@ -11,6 +11,7 @@ import { generateFormModel } from './profile-user-edit.form';
 import { useDispatch } from 'react-redux';
 import { getIdentities } from 'src/core/api';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { dialog } from 'src/core/dialog/dialog';
 
 export const useProfileUserEditShared = () => {
   const user = useMatch().data.user as ProfileReq;
@@ -29,6 +30,9 @@ export const useProfileUserEditShared = () => {
         const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
         const resp = await uploadImage(webPath);
         form.controls.cover_image.setValue(resp.id);
+        form.controls.address.setValue(resp.id);
+        console.log('1: ', resp.id);
+        console.log('1: form on upload ', form);
         setCoverImage(resp.url);
         break;
       case 'remove':
@@ -54,8 +58,21 @@ export const useProfileUserEditShared = () => {
       const actionResp = await showActionSheet();
       runCoverEditActions(actionResp);
     },
-    desktop: (type: 'upload' | 'remove' | undefined) => () => {
-      runCoverEditActions(type);
+    desktop: async (type: 'upload' | 'remove' | undefined) => {
+      //   runCoverEditActions(type);
+      switch (type) {
+        case 'upload':
+          const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
+          const resp = await uploadImage(webPath);
+          form.controls.cover_image.setValue(resp.id);
+          form.controls.address.setValue('address');
+          console.log('1: ', resp.id);
+          console.log('1: form on upload ', form);
+          setCoverImage(resp.url);
+          break;
+        case 'remove':
+          break;
+      }
     },
   };
 
@@ -78,10 +95,14 @@ export const useProfileUserEditShared = () => {
   }
 
   function onSave() {
-    const payload = getFormValues(form);
-    endpoint.post.user['update/profile'](payload).then(() => {
-      navigate({ to: '/jobs' });
-    });
+    if (form.isValid) {
+      const payload = getFormValues(form);
+      endpoint.post.user['update/profile'](payload).then(() => {
+        navigate({ to: '/jobs' });
+      });
+    } else {
+      dialog.alert({ message: 'form is invalid' });
+    }
   }
 
   return {

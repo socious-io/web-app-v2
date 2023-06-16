@@ -1,4 +1,4 @@
-import { website } from './../../core/form/customValidators/customValidators';
+import { maxArrayLength, minArrayLength, website } from './../../core/form/customValidators/customValidators';
 import { required } from 'src/core/form';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { ProfileReq } from '../profile-user/profile-user.types';
@@ -13,7 +13,10 @@ export function generateFormModel(organization: ProfileReq): FormModel {
     bio: { initialValue: organization.bio, validators: [required()] },
     social_causes: {
       initialValue: organization.social_causes,
-      validators: [required()],
+      validators: [
+        minArrayLength({ message: 'You have to choose at least one social cause', minValue: 1 }),
+        maxArrayLength({ message: 'You should not choose more than 5 items', maxValue: 5 }),
+      ],
     },
     email: { initialValue: organization.email, validators: [required(), email()] },
     country: { initialValue: organization.country },
