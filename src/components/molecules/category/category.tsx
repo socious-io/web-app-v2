@@ -60,7 +60,7 @@ export const Category = (props: CategoryProps): JSX.Element => {
     </CardSlideUp>
   );
 
-  const controlErrors = props?.register?.controls[props.name]?.errors || [];
+  const controlErrors = props.register.controls[props.name]?.errors || [];
   const errors = Object.values(controlErrors) as string[];
 
   const errorsJSX = (

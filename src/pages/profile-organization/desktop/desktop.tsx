@@ -120,7 +120,7 @@ export const Desktop = (): JSX.Element => {
     <>
       <TwoColumnCursor>
         <div className={css.sidebar}>
-         <BackLink title="Jobs" onBack={() => navigate({to: '/jobs'})} />
+          <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
         </div>
         <Card className={css.card} padding={0}>
           <div className={css.container}>

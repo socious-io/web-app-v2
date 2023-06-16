@@ -30,7 +30,7 @@ export const useProfileUserShared = () => {
   useEffect(() => {
     const getConnectionsStatus = async () => {
       const res = await getConnectStatus(currentIdentity?.id as string, user.id);
-      setConnectStatus(res?.items[0].status);
+      setConnectStatus(res?.items[0]?.status);
     };
     getConnectionsStatus();
   }, []);
