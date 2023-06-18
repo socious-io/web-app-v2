@@ -14,5 +14,6 @@ export function formModel(formState: CreateOrgWizard): FormModel {
     website: { initialValue: formState.website },
     country: { initialValue: formState.country, validators: [required()] },
     city: { initialValue: formState.city, validators: [required()] },
+    agreement: { initialValue: formState.agreement, validators: [required()]},
   };
 }
