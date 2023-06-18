@@ -157,6 +157,7 @@ export interface Endpoints {
         requester_id?: string;
         requested_id?: string;
       }) => Promise<Pagination<ConnectionItem[]>>;
+      connection_status: (id: string) => Promise<{ connect: ConnectionItem }>;
     };
   };
   post: {

@@ -7,20 +7,34 @@ import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
 import { printWhen } from 'src/core/utils';
-import {
-  connectionListAdaptor,
-  moreOptions,
-  receivedRequestsAdaptor,
-  sentRequestsAdaptor,
-} from '../connections.service';
+import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
 import { useConnectionsShared } from '../connections.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
   const navigate = useNavigate();
-  const { currentId, connectionList, sentRequestsList, receivedRequestsList, acceptRequest, onMoreClick, loadMore } =
-    useConnectionsShared();
-  const [selectedId, setSelectedId] = useState({ connect_id: '', identity_id: '', open: false });
+  const {
+    currentId,
+    connectionList,
+    sentRequestsList,
+    receivedRequestsList,
+    acceptRequest,
+    onMoreClick,
+    loadMore,
+    onProfileClick,
+  } = useConnectionsShared();
+  const [selectedItem, setSelectedItem] = useState({ connect_id: '', identity_id: '', following: true, open: false });
+
+  const moreOptions = [
+    {
+      icon: selectedItem.following ? 'close-circle' : 'add',
+      label: selectedItem.following ? 'Unfollow' : 'Follow',
+    },
+    {
+      icon: 'block',
+      label: 'Block user account',
+    },
+  ];
 
   const connectionListJSX = connectionList?.total_count ? (
     <>
@@ -30,14 +44,27 @@ export const Mobile: React.FC = () => {
           .map((list) => (
             <div key={list.id} className={css.connections__item}>
               <div className={css.connections__avatar}>
-                <Avatar img={list.avatar} type={list.type} />
+                <Avatar
+                  img={list.avatar}
+                  type={list.type}
+                  onClick={() => list?.username && onProfileClick(list.type, list.username)}
+                />
                 {list.name}
               </div>
               <div className={css.connections__icons}>
                 {/* <div>
               <img src="/icons/trash-bin.svg" />
             </div> */}
-                <div onClick={() => setSelectedId({ connect_id: list.connect_id, identity_id: list.id, open: true })}>
+                <div
+                  onClick={() =>
+                    setSelectedItem({
+                      connect_id: list.connect_id,
+                      identity_id: list.id,
+                      following: list.following,
+                      open: true,
+                    })
+                  }
+                >
                   <img src="/icons/three-dots-blue.svg" />
                 </div>
               </div>
@@ -63,7 +90,11 @@ export const Mobile: React.FC = () => {
           .map((list) => (
             <div key={list.id} className={css.connections__item}>
               <div className={css.connections__avatar}>
-                <Avatar img={list.avatar} type={list.type} />
+                <Avatar
+                  img={list.avatar}
+                  type={list.type}
+                  onClick={() => list?.username && onProfileClick(list.type, list.username)}
+                />
                 {list.name}
               </div>
               <div className={css.connections__icons}>
@@ -92,7 +123,11 @@ export const Mobile: React.FC = () => {
             <div key={list.id} className={css.connections__item}>
               <div className={css.connections__info}>
                 <div className={css.connections__avatar}>
-                  <Avatar img={list.avatar} type={list.type} />
+                  <Avatar
+                    img={list.avatar}
+                    type={list.type}
+                    onClick={() => list?.username && onProfileClick(list.type, list.username)}
+                  />
                   {list.name}
                   <span className={css.connections__date}>{list.date}</span>
                 </div>
@@ -150,15 +185,15 @@ export const Mobile: React.FC = () => {
       <div className={css.tabContainer}>
         <Tabs tabs={tabs} />
       </div>
-      <CardSlideUp open={selectedId.open} onClose={() => setSelectedId({ ...selectedId, open: false })}>
+      <CardSlideUp open={selectedItem.open} onClose={() => setSelectedItem({ ...selectedItem, open: false })}>
         <div className={css.moreBox}>
           {moreOptions?.map((option, index) => (
             <div
               key={option.label}
               className={css.moreOption}
               onClick={() => {
-                onMoreClick(index, selectedId.connect_id, selectedId.identity_id);
-                setSelectedId({ ...selectedId, open: false });
+                onMoreClick(index, selectedItem.connect_id, selectedItem.identity_id, selectedItem.following);
+                setSelectedItem({ ...selectedItem, open: false });
               }}
             >
               <img src={`/icons/${option.icon}.svg`} />

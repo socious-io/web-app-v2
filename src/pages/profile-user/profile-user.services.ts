@@ -13,8 +13,8 @@ export async function getOrganizationDetail(shortname: string) {
   return get(`/orgs/by-shortname/${shortname}`).then(({ data }) => data);
 }
 
-export function getConnectStatus(requester_id: string, requested_id: string) {
-  return endpoint.get.connections['filtered_connections']({ requested_id, requester_id });
+export function getConnectStatus(identity_id: string) {
+  return endpoint.get.connections['connection_status'](identity_id);
 }
 
 export function sendRequestConnection(id: string, text: string) {

@@ -7,21 +7,35 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Modal } from 'src/components/templates/modal/modal';
 import { printWhen } from 'src/core/utils';
-import {
-  connectionListAdaptor,
-  moreOptions,
-  receivedRequestsAdaptor,
-  sentRequestsAdaptor,
-} from '../connections.service';
+import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
 import { useConnectionsShared } from '../connections.shared';
 import css from './desktop.module.scss';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
-  const { currentId, connectionList, sentRequestsList, receivedRequestsList, acceptRequest, onMoreClick, loadMore } =
-    useConnectionsShared();
+  const {
+    currentId,
+    connectionList,
+    sentRequestsList,
+    receivedRequestsList,
+    acceptRequest,
+    onMoreClick,
+    loadMore,
+    onProfileClick,
+  } = useConnectionsShared();
   const [tabs, setTabs] = useState('');
-  const [selectedId, setSelectedId] = useState({ connect_id: '', identity_id: '', open: false });
+  const [selectedItem, setSelectedItem] = useState({ connect_id: '', identity_id: '', following: false, open: false });
+
+  const moreOptions = [
+    {
+      icon: selectedItem.following ? 'close-circle' : 'add',
+      label: selectedItem.following ? 'Unfollow' : 'Follow',
+    },
+    {
+      icon: 'block',
+      label: 'Block user account',
+    },
+  ];
 
   const connectionListJSX = (
     <>
@@ -31,14 +45,27 @@ export const Desktop: React.FC = () => {
           .map((list) => (
             <div key={list.id} className={css.connections__item}>
               <div className={css.connections__avatar}>
-                <Avatar img={list.avatar} type={list.type} />
+                <Avatar
+                  img={list.avatar}
+                  type={list.type}
+                  onClick={() => list?.username && onProfileClick(list.type, list.username)}
+                />
                 {list.name}
               </div>
               <div className={css.connections__icons}>
                 {/* <div>
               <img src="/icons/trash-bin.svg" />
             </div> */}
-                <div onClick={() => setSelectedId({ connect_id: list.connect_id, identity_id: list.id, open: true })}>
+                <div
+                  onClick={() =>
+                    setSelectedItem({
+                      connect_id: list.connect_id,
+                      identity_id: list.id,
+                      following: list.following,
+                      open: true,
+                    })
+                  }
+                >
                   <img src="/icons/three-dots-blue.svg" />
                 </div>
               </div>
@@ -62,7 +89,11 @@ export const Desktop: React.FC = () => {
           .map((list) => (
             <div key={list.id} className={css.connections__item}>
               <div className={css.connections__avatar}>
-                <Avatar img={list.avatar} type={list.type} />
+                <Avatar
+                  img={list.avatar}
+                  type={list.type}
+                  onClick={() => list?.username && onProfileClick(list.type, list.username)}
+                />
                 {list.name}
               </div>
               <div className={css.connections__icons}>
@@ -91,7 +122,11 @@ export const Desktop: React.FC = () => {
             <div key={list.id} className={css.connections__item}>
               <div className={css.connections__info}>
                 <div className={css.connections__avatar}>
-                  <Avatar img={list.avatar} type={list.type} />
+                  <Avatar
+                    img={list.avatar}
+                    type={list.type}
+                    onClick={() => list?.username && onProfileClick(list.type, list.username)}
+                  />
                   {list.name}
                   <span className={css.connections__date}>{list.date}</span>
                 </div>
@@ -168,15 +203,15 @@ export const Desktop: React.FC = () => {
           {setRenderTabs()}
         </div>
       </TwoColumnCursor>
-      <Modal open={selectedId.open} onClose={() => setSelectedId({ ...selectedId, open: false })}>
+      <Modal open={selectedItem.open} onClose={() => setSelectedItem({ ...selectedItem, open: false })}>
         <div className={css.moreBox}>
           {moreOptions?.map((option, index) => (
             <div
               key={option.label}
               className={css.moreOption}
               onClick={() => {
-                onMoreClick(index, selectedId.connect_id, selectedId.identity_id);
-                setSelectedId({ ...selectedId, open: false });
+                onMoreClick(index, selectedItem.connect_id, selectedItem.identity_id, selectedItem.following);
+                setSelectedItem({ ...selectedItem, open: false });
               }}
             >
               <img src={`/icons/${option.icon}.svg`} />
