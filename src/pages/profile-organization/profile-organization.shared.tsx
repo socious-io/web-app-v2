@@ -26,8 +26,8 @@ export const useProfileOrganizationShared = () => {
 
   useEffect(() => {
     const getConnectionsStatus = async () => {
-      const res = await getConnectStatus(currentIdentity?.id as string, user.id);
-      setConnectStatus(res?.items[0]?.status);
+      const res = await getConnectStatus(user.id);
+      setConnectStatus(res?.connect?.status);
     };
     getConnectionsStatus();
   }, []);

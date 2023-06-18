@@ -36,6 +36,7 @@ export const endpoint: Endpoints = {
             payload?.requester_id || ''
           }&filter.requested_id=${payload?.requested_id || ''}`
         ).then(getDataProp),
+      connection_status: (id) => get(`/connections/related/${id}`).then(getDataProp),
     },
   },
   post: {

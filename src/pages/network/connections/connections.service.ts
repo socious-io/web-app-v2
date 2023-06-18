@@ -16,16 +16,20 @@ export function connectionListAdaptor(list: ConnectionItem, currentId: string | 
     ? {
         connect_id: list?.id,
         name: list?.requested.meta.name,
-        avatar: list?.requested.meta.avatar,
+        avatar: list?.requested.meta.avatar || list?.requested.meta?.image,
         id: list?.requested.meta.id,
         type: list?.requested.type,
+        username: list?.requested.meta.username || list?.requested.meta?.shortname,
+        following: list?.following,
       }
     : {
         connect_id: list?.id,
         name: list?.requester.meta.name,
-        avatar: list?.requester.meta.avatar,
+        avatar: list?.requester.meta.avatar || list?.requester.meta?.image,
         id: list?.requester.meta.id,
         type: list.requester.type,
+        username: list?.requester.meta.username || list?.requester.meta?.shortname,
+        following: list?.following,
       };
 }
 
@@ -33,9 +37,10 @@ export function sentRequestsAdaptor(list: ConnectionItem) {
   return {
     connect_id: list?.id,
     name: list?.requested.meta.name,
-    avatar: list?.requested.meta.avatar,
+    avatar: list?.requested.meta.avatar || list?.requested.meta?.image,
     id: list?.requested.meta.id,
     type: list?.requested.type,
+    username: list?.requested.meta.username || list?.requested.meta?.shortname,
   };
 }
 
@@ -43,21 +48,11 @@ export function receivedRequestsAdaptor(list: ConnectionItem) {
   return {
     connect_id: list?.id,
     name: list?.requester.meta.name,
-    avatar: list?.requester.meta.avatar,
+    avatar: list?.requester.meta.avatar || list?.requester.meta?.image,
     id: list?.requester.meta.id,
     type: list.requester.type,
     date: toRelativeTime(list?.created_at),
     text: list?.text,
+    username: list?.requester.meta.username || list?.requester.meta?.shortname,
   };
 }
-
-export const moreOptions = [
-  {
-    icon: 'close-circle',
-    label: 'Unfollow',
-  },
-  {
-    icon: 'block',
-    label: 'Block user account',
-  },
-];
