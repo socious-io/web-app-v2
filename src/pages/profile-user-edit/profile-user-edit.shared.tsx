@@ -12,8 +12,10 @@ import { useDispatch } from 'react-redux';
 import { getIdentities } from 'src/core/api';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { dialog } from 'src/core/dialog/dialog';
+import { removedEmptyProps } from 'src/core/utils';
+import { EditProps } from '../profile-user/desktop/edit/edit.types';
 
-export const useProfileUserEditShared = () => {
+export const useProfileUserEditShared = (props?: EditProps) => {
   const user = useMatch().data.user as ProfileReq;
   const formModel = useMemo(() => generateFormModel(user), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
@@ -30,12 +32,11 @@ export const useProfileUserEditShared = () => {
         const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
         const resp = await uploadImage(webPath);
         form.controls.cover_image.setValue(resp.id);
-        form.controls.address.setValue(resp.id);
-        console.log('1: ', resp.id);
-        console.log('1: form on upload ', form);
         setCoverImage(resp.url);
         break;
       case 'remove':
+        form.controls.cover_image.setValue('');
+        setCoverImage(undefined);
         break;
     }
   }
@@ -49,6 +50,8 @@ export const useProfileUserEditShared = () => {
         setAvatarImage(resp.url);
         break;
       case 'remove':
+        form.controls.avatar.setValue(undefined);
+        setAvatarImage(undefined);
         break;
     }
   }
@@ -59,18 +62,18 @@ export const useProfileUserEditShared = () => {
       runCoverEditActions(actionResp);
     },
     desktop: async (type: 'upload' | 'remove' | undefined) => {
-      //   runCoverEditActions(type);
       switch (type) {
         case 'upload':
           const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
           const resp = await uploadImage(webPath);
           form.controls.cover_image.setValue(resp.id);
-          form.controls.address.setValue('address');
-          console.log('1: ', resp.id);
-          console.log('1: form on upload ', form);
           setCoverImage(resp.url);
           break;
         case 'remove':
+          form.controls.cover_image.setValue(undefined);
+          console.log('form: ', form);
+          console.log('here', form.controls.cover_image);
+          setCoverImage(undefined);
           break;
       }
     },
@@ -96,11 +99,28 @@ export const useProfileUserEditShared = () => {
 
   function onSave() {
     if (form.isValid) {
-      const payload = getFormValues(form);
-      endpoint.post.user['update/profile'](payload).then(() => {
+      const rawPayload = getFormValues(form);
+      const payload = removedEmptyProps(rawPayload);
+      endpoint.post.user['update/profile'](payload).then(async () => {
+        await updateIdentityList();
         navigate({ to: '/jobs' });
       });
     } else {
+      dialog.alert({ message: 'form is invalid' });
+    }
+  }
+
+  function onSaveDesktop() {
+    if (form.isValid) {
+      const rawPayload = getFormValues(form);
+      const payload = removedEmptyProps(rawPayload);
+      endpoint.post.user['update/profile'](payload).then((resp) => {
+        updateIdentityList();
+        props?.updateUser(resp);
+        props?.onClose();
+      });
+    } else {
+      console.log('form invalid');
       dialog.alert({ message: 'form is invalid' });
     }
   }
@@ -115,5 +135,7 @@ export const useProfileUserEditShared = () => {
     cities,
     updateCityList,
     updateIdentityList,
+    onSaveDesktop,
+    form,
   };
 };
