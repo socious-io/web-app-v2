@@ -23,15 +23,13 @@ import { PopoverProps } from 'src/components/atoms/popover/popover.types';
 import { dialog } from 'src/core/dialog/dialog';
 
 export const Edit = (props: EditProps): JSX.Element => {
-  const user = useMatch().data.user as ProfileReq;
-  const formModel = useMemo(() => generateFormModel(user), []);
-  const form = useForm(formModel);
   const [coverLetterMenuOpen, setCoverLetterMenu] = useState(false);
   const [avatarMenuOpen, setAvatarMenu] = useState(false);
   const avatarAnchor = useRef<null | HTMLDivElement>(null);
   const coverLetterAnchor = useRef<null | HTMLDivElement>(null);
 
-  const { onCoverEdit, onAvatarEdit, onCountryUpdate, coverImage, avatarImage, cities } = useProfileUserEditShared();
+  const { onCoverEdit, onAvatarEdit, onCountryUpdate, coverImage, avatarImage, cities, form, onSaveDesktop } =
+    useProfileUserEditShared(props);
 
   const coverLetterMenu: PopoverProps['menuList'] = [
     { id: 1, label: 'Upload image', cb: () => onCoverEdit.desktop('upload') },
@@ -43,26 +41,11 @@ export const Edit = (props: EditProps): JSX.Element => {
     { id: 2, label: 'Remove image', cb: onAvatarEdit.desktop('remove') },
   ];
 
-  function onSave() {
-    if (form.isValid) {
-      form.controls.cover_image.setValue('blaaaaaaaaa');
-      //   const payload = removedEmptyProps(getFormValues(form));
-      //   const payload = getFormValues(form);
-      console.log('1: form on save ', form);
-      //   endpoint.post.user['update/profile'](payload).then((resp) => {
-      //     props.updateUser(resp);
-      //     props.onClose();
-      //   });
-    } else {
-      dialog.alert({ message: 'form is invalid' });
-    }
-  }
-
   return (
     <Modal height={props.height} width={props.width} open={props.open} onClose={props.onClose}>
       <div className={css.container}>
         <div className={css.mainHeader}>
-          <Header onBack={props.onClose} title="Edit" right={{ label: 'Save', onClick: onSave }} />
+          <Header onBack={props.onClose} title="Edit" right={{ label: 'Save', onClick: onSaveDesktop }} />
         </div>
         <div>
           <div>
