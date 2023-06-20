@@ -1,5 +1,118 @@
+import { useState } from 'react';
+import { useMatch, useNavigate } from '@tanstack/react-location';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { Card } from 'src/components/atoms/card/card';
+import { ContactList } from 'src/components/organisms/contact-list/contact-list';
+import { Fab } from 'src/components/atoms/fab/fab';
+import { ChatList } from 'src/components/organisms/chat-list/chat-list';
+import { SendBox } from 'src/components/molecules/send-box/send-box';
+import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Header } from './header';
+import { CreateChatModal } from '../../contact-list/create-chat-modal';
+import { MessageLoader } from '../message-detail.types';
+import {
+  chatEntityToContactListAdaptor,
+  convertFollowingsToContactList,
+  getChatsSummery,
+  getFollowings,
+} from '../../contact-list/contact-list.services';
+import { createChats, postFind } from '../../new-chat/new-chat.services';
+import { useMessageDetailShared } from '../message-detail.shared';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
-  return <div className={css.container}>desktop</div>;
+  const navigate = useNavigate();
+  const resolver = useMatch<MessageLoader>();
+  const { summery, followings } = resolver.data || {};
+  const { participantDetail, list, sendingValue, setSendingValue, onSend, onContactClick } = useMessageDetailShared();
+  const initialState = chatEntityToContactListAdaptor(summery?.items);
+  const initialList = convertFollowingsToContactList(followings?.items);
+  const [chats, setChats] = useState<ContactItem[]>(initialState);
+  const [state, setState] = useState({ page: 1, filter: '' });
+  const [userList, setUserList] = useState(initialList);
+  const [openCreateChatModal, setOpenCreateChatModal] = useState(false);
+
+  function onSearch(value: string) {
+    const payload = { page: 1, filter: value };
+    getChatsSummery(payload).then((resp) => {
+      setChats(chatEntityToContactListAdaptor(resp.items));
+      setState(payload);
+    });
+  }
+
+  function onCreateSearch(value: string) {
+    const payload = { page: 1, name: value };
+    getFollowings(payload)
+      .then(({ items }) => convertFollowingsToContactList(items))
+      .then(setUserList);
+  }
+
+  function onScroll(page: number) {
+    const payload = { ...state, page: state.page + 1 };
+    getChatsSummery(payload).then((resp) => {
+      const newList = chatEntityToContactListAdaptor(resp.items);
+      setChats([...chats, ...newList]);
+      setState(payload);
+    });
+  }
+
+  async function onCreateChat(id: string) {
+    let createdChats = { id: '' };
+    const chatId = await postFind({ participants: [id] });
+    if (!chatId?.items?.length) {
+      createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [id] });
+    }
+    setOpenCreateChatModal(false);
+    navigate({ to: `../${chatId.items[0].id || createdChats.id}` });
+  }
+
+  const emptyBoxJSX = (
+    <div className={css.emptyBoxContainer}>
+      <Avatar type={participantDetail.type} img={participantDetail.avatar || participantDetail?.image} size="8rem" />
+      <div className={css.text}>
+        Start charting with
+        <span>{participantDetail.name}</span>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      <TwoColumnCursor>
+        <div className={css.leftContainer}>
+          <Card className={css.card}>
+            <div className={css.card__header}>Chats</div>
+            <ContactList
+              height="calc(var(--window-height) - 2.5rem)"
+              onScroll={onScroll}
+              onContactClick={onContactClick}
+              list={chats}
+              onSearch={onSearch}
+            />
+            <Fab onClick={() => setOpenCreateChatModal(true)} className={css.card__fab} />
+          </Card>
+        </div>
+        <Card className={css.rightContainer}>
+          <Header
+            type={participantDetail.type}
+            name={participantDetail.name}
+            img={participantDetail.avatar || participantDetail?.image}
+            username={participantDetail.username || participantDetail?.shortname}
+          />
+          <div className={css.main}>{list.length ? <ChatList list={list} /> : emptyBoxJSX}</div>
+          <div className={css.sendBoxContainer}>
+            <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={onSend} />
+          </div>
+        </Card>
+      </TwoColumnCursor>
+      <CreateChatModal
+        open={openCreateChatModal}
+        onClose={() => setOpenCreateChatModal(false)}
+        userList={userList}
+        onSearch={onCreateSearch}
+        onCreateChat={onCreateChat}
+      />
+    </>
+  );
 };

@@ -6,6 +6,7 @@ export type Applicant = {
   profileLink?: string;
   applyDate: string;
   coverLetter: string;
+  user_id: string;
 };
 
 export type ApplicantListProps = {

@@ -8,20 +8,21 @@ export const menuList: Menu[] = [
     icon: '/icons/jobs.svg',
     link: '/jobs',
   },
-  //   {
-  //     label: 'Network',
-  //     icon: '/icons/network-gray.svg',
-  //   },
+  {
+    label: 'Network',
+    icon: '/icons/network-gray.svg',
+    link: '/network',
+  },
   {
     label: 'Feeds',
     icon: '/icons/feeds.svg',
     link: '/feeds',
   },
-//   {
-//     label: 'Chat',
-//     icon: '/icons/chat.svg',
-//     link: '/chats/contacts',
-//   },
+  {
+    label: 'Chat',
+    icon: '/icons/chat.svg',
+    link: '/chats/contacts',
+  },
   {
     label: 'Notifications',
     icon: '/icons/notifications.svg',

@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-gray-01);
+  padding: 1rem;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}

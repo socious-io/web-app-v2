@@ -93,6 +93,17 @@ export const useProfileUserShared = () => {
     setConnectStatus(result?.status);
   }
 
+  function showMessageIcon() {
+    if (currentIdentity?.type === 'organizations') {
+      return true;
+    } else {
+      if (connectStatus === 'CONNECTED') {
+        return true;
+      }
+      return false;
+    }
+  }
+
   function onMessage(value: string) {
     setMessage(value || 'please connect to me');
   }
@@ -115,6 +126,7 @@ export const useProfileUserShared = () => {
     unfollow,
     onConnect,
     connectStatus,
+    showMessageIcon,
     onMessage,
   };
 };

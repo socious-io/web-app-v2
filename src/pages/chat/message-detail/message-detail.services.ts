@@ -4,16 +4,14 @@ import {
   ParticipantsReq,
   PostMessagePayload,
   PostMessageResp,
+  UserType,
 } from '../../../core/types';
 import { get, post } from '../../../core/http';
 import { MessagesReq } from '../../../core/types';
 import { Message } from '../../../components/atoms/message/message.types';
-import { OnPostMessageParams } from './message-detail.types';
+import { OnPostMessageParams, ParticipantDetail } from './message-detail.types';
 
-export async function getMessagesById(payload: {
-  id: string;
-  page: number;
-}): Promise<Pagination<MessagesReq>> {
+export async function getMessagesById(payload: { id: string; page: number }): Promise<Pagination<MessagesReq[]>> {
   return get(`chats/${payload.id}/messages?page=${payload.page}`).then(({ data }) => data);
 }
 
@@ -21,7 +19,7 @@ export async function postMessage(payload: PostMessagePayload): Promise<PostMess
   return post(`chats/${payload.id}/messages`, { text: payload.text }).then(({ data }) => data);
 }
 
-export async function getParticipantsById(id: string): Promise<MessagesReq> {
+export async function getParticipantsById(id: string): Promise<Pagination<ParticipantsReq[]>> {
   return get(`chats/${id}/participants`).then(({ data }) => data);
 }
 
@@ -56,20 +54,16 @@ function getImage(myId: string, msgId: string, participants: ParticipantsReq[]):
   }
 }
 
-function getIdentityType(
-  msgId: string,
-  participants: ParticipantsReq[]
-): 'organizations' | 'users' {
-  return participants.find((p) => p.identity_id === msgId)?.identity_type as
-    | 'organizations'
-    | 'users';
+function getIdentityType(msgId: string, participants: ParticipantsReq[]): 'organizations' | 'users' {
+  return participants.find((p) => p.identity_id === msgId)?.identity_type as 'organizations' | 'users';
 }
 
-export function getParticipantDetail(
-  id: string,
-  participants: ParticipantsReq[] = []
-): IdentityMeta {
-  return participants.find((p) => p.identity_id !== id)?.identity_meta as IdentityMeta;
+export function getParticipantDetail(id: string, participants: ParticipantsReq[] = []): ParticipantDetail {
+  const type = participants.find((p) => p.identity_id !== id)?.identity_type as UserType;
+  return {
+    ...(participants.find((p) => p.identity_id !== id)?.identity_meta as IdentityMeta),
+    type,
+  };
 }
 
 export function chatListAdaptor(

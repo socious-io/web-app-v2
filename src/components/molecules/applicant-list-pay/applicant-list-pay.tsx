@@ -68,7 +68,10 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             props.isPaidCrypto
           )}
           {printWhen(confirmBtn(applicant.id, applicant.payment?.meta?.id), props.confirmable)}
-          <div className={css.footerItem}>
+          <div
+            className={css.footerItem}
+            onClick={() => props.onMessageClick?.(applicant.user_id)}
+          >
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>
           </div>

@@ -1,4 +1,4 @@
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import css from './hired.module.scss';
 import { Accordion } from '../../../../../components/atoms/accordion/accordion';
 import { missionToApplicantListPayAdaptor } from '../../../job-offer-reject.services';
@@ -11,6 +11,7 @@ import { ConfirmResult } from '@capacitor/dialog';
 import Dapp from 'src/dapp';
 
 export const Hired = (props: HiredProps): JSX.Element => {
+  const navigate = useNavigate();
   const { hiredList, endHiredList, onDone } = props;
   const { web3 } = Dapp.useWeb3();
   const resolver = useMatch().ownData as Loader;
@@ -31,6 +32,10 @@ export const Hired = (props: HiredProps): JSX.Element => {
     dialog.confirm(options).then(onUserConfirm(id, escrowId));
   }
 
+  function onMessageClick(id: string) {
+    navigate({ to: `/chats/new/${id}` });
+  }
+
   return (
     <div className={css.container}>
       <Accordion id="hired" title={`Hired (${hiredList.total_count})`}>
@@ -39,10 +44,11 @@ export const Hired = (props: HiredProps): JSX.Element => {
           onConfirm={openConfirmDialog}
           list={missionToApplicantListPayAdaptor(hiredList.items)}
           isPaidCrypto={isPaidCrypto}
+          onMessageClick={onMessageClick}
         />
       </Accordion>
       <Accordion id="end-hired" title={`End-Hired (${endHiredList.total_count})`}>
-        <ApplicantListPay list={missionToApplicantListPayAdaptor(endHiredList.items)} />
+        <ApplicantListPay list={missionToApplicantListPayAdaptor(endHiredList.items)} onMessageClick={onMessageClick} />
       </Accordion>
     </div>
   );

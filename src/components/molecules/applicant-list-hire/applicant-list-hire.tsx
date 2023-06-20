@@ -24,12 +24,7 @@ export const ApplicantListHire = (props: ApplicantListProps): JSX.Element => {
   const applicantJSX = (applicant: Applicant) => {
     return (
       <div key={applicant.id} className={css.applicantContainer}>
-        <ProfileView
-          name={applicant.name}
-          username={applicant?.username}
-          img={applicant.image}
-          type="users"
-        />
+        <ProfileView name={applicant.name} username={applicant?.username} img={applicant.image} type="users" />
         <div className={css.detail}>
           <div className={css.applyDate}>{applicant.applyDate}</div>
           {props.required_payment && <StatusTag color="red" label="Payment required" />}
@@ -41,7 +36,7 @@ export const ApplicantListHire = (props: ApplicantListProps): JSX.Element => {
           <>
             {printWhen(hireBtn(applicant.id), props.hireable)}
             {printWhen(rejectBtn(applicant.id), props.hireable)}
-            <div className={css.footerItem}>
+            <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
               <img src="/icons/message-blue.svg" />
               <div className={css.footerLabel}>Message</div>
             </div>

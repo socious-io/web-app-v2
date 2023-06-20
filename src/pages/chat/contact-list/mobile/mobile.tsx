@@ -1,44 +1,30 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from '../../../../core/types';
-import { RootState } from '../../../../store/store';
-import { Avatar } from '../../../../components/atoms/avatar/avatar';
-import { Fab } from '../../../../components/atoms/fab/fab';
-import { Header } from '../../../../components/atoms/header/header';
-import { ContactItem } from '../../../../components/molecules/contact-item/contact-item.types';
-import { ContactList } from '../../../../components/organisms/contact-list/contact-list';
-import { HeaderStaticMobile } from '../../../../components/templates/header-static-mobile/header-static-mobile';
-import { chatEntityToContactListAdaptor, getChatsSummery } from '../contact-list.services';
+import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Fab } from 'src/components/atoms/fab/fab';
+import { Header } from 'src/components/atoms/header/header';
+import { CreateChatModal } from '../create-chat-modal';
+import { ContactList } from 'src/components/organisms/contact-list/contact-list';
+import { HeaderStaticMobile } from 'src/components/templates/header-static-mobile/header-static-mobile';
+import { useContactListShared } from '../contact-list.shared';
 
 export const Mobile = (): JSX.Element => {
-  const resolver = useMatch();
-  const initialState = chatEntityToContactListAdaptor(resolver.ownData.items);
-  const [chats, setChats] = useState<ContactItem[]>(initialState);
-  const [state, setState] = useState({ page: 1, filter: '' });
-
+  const navigate = useNavigate();
+  const {
+    chats,
+    onScroll,
+    onSearch,
+    openCreateChatModal,
+    setOpenCreateChatModal,
+    onCreateSearch,
+    userList,
+    onCreateChat,
+  } = useContactListShared();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-
-  const navigate = useNavigate();
-
-  function onSearch(value: string) {
-    const payload = { page: 1, filter: value };
-    getChatsSummery(payload).then((resp) => {
-      setChats(chatEntityToContactListAdaptor(resp.items));
-      setState(payload);
-    });
-  }
-
-  function onScroll(page: number) {
-    const payload = { ...state, page: state.page + 1 };
-    getChatsSummery(payload).then((resp) => {
-      const newList = chatEntityToContactListAdaptor(resp.items);
-      setChats([...chats, ...newList]);
-      setState(payload);
-    });
-  }
 
   return (
     <>
@@ -58,7 +44,14 @@ export const Mobile = (): JSX.Element => {
           onSearch={onSearch}
         />
       </HeaderStaticMobile>
-      <Fab onClick={() => navigate({ to: '/chats/new' })} />
+      <Fab onClick={() => setOpenCreateChatModal(true)} />
+      <CreateChatModal
+        open={openCreateChatModal}
+        onClose={() => setOpenCreateChatModal(false)}
+        userList={userList}
+        onSearch={onCreateSearch}
+        onCreateChat={onCreateChat}
+      />
     </>
   );
 };
