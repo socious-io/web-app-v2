@@ -1,10 +1,21 @@
 import { MakeGenerics } from '@tanstack/react-location';
-import { IdentityReq, MessagesReq, Pagination, ParticipantsReq } from '../../../core/types';
+import {
+  FollowingsReq,
+  IdentityMeta,
+  IdentityReq,
+  MessagesReq,
+  Pagination,
+  ParticipantsReq,
+  SummaryReq,
+  UserType,
+} from '../../../core/types';
 
 export type MessageLoader = MakeGenerics<{
   LoaderData: {
     messages: Pagination<MessagesReq[]>;
     participants: Pagination<ParticipantsReq[]>;
+    summery: Pagination<SummaryReq[]>;
+    followings: Pagination<FollowingsReq[]>;
   };
 }>;
 
@@ -13,3 +24,7 @@ export type OnPostMessageParams = {
   identity: IdentityReq;
   text: string;
 };
+
+export interface ParticipantDetail extends IdentityMeta {
+  type: UserType;
+}

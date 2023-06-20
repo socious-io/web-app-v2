@@ -1,10 +1,10 @@
 import { Navigate, Route } from '@tanstack/react-location';
-import { getChatsSummery } from '../../pages/chat/contact-list/contact-list.services';
+import { getChatsSummery, getFollowings } from '../../pages/chat/contact-list/contact-list.services';
 import { MenuCursor as RootCursorLayout } from '../../components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../../components/templates/menu-touch/menu-touch';
 import { isTouchDevice } from '../device-type-detector';
 import { getMessagesById, getParticipantsById } from '../../pages/chat/message-detail/message-detail.services';
-import { getFollowings } from '../../pages/chat/new-chat/new-chat.services';
+import { createChats } from '../../pages/chat/new-chat/new-chat.services';
 import { getActiveJobs, getDraftJobs } from '../../pages/job-create/my-jobs/my-jobs.services';
 import { getFeedList } from '../../pages/feed/mobile/mobile.service';
 import { getComments, getPostDetail } from '../../pages/feed/post-detail/post-detail.service';
@@ -30,6 +30,7 @@ import { getSettingsItems } from 'src/pages/notifications/settings/settings.serv
 import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { getMissionsList, getSrtipeProfile } from 'src/pages/wallet/wallet.service';
+import { postFind } from '../../pages/chat/new-chat/new-chat.services';
 
 export const routes: Route[] = [
   {
@@ -204,26 +205,49 @@ export const routes: Route[] = [
         path: '/chats',
         children: [
           {
-            path: 'new',
-            loader: () => getFollowings({ page: 1, name: '' }),
+            path: 'new/:id',
+            loader: async ({ params }) => {
+              let createdChats = { id: '' };
+              const chatId = await postFind({ participants: [params.id] });
+              if (!chatId?.items?.length) {
+                createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [params.id] });
+              }
+              return chatId.items[0].id || createdChats.id;
+            },
             element: () => import('../../pages/chat/new-chat/new-chat').then((m) => <m.NewChat />),
           },
           {
             path: 'contacts/:id',
             loader: async ({ params }) => {
-              const requests = [getMessagesById({ id: params.id, page: 1 }), getParticipantsById(params.id)];
-              const [messages, participants] = await Promise.all(requests);
+              const requests = [
+                getMessagesById({ id: params.id, page: 1 }),
+                getParticipantsById(params.id),
+                getChatsSummery({ page: 1, filter: '' }),
+                getFollowings({ page: 1, name: '' }),
+              ];
+              const [messages, participants, summery, followings] = await Promise.all(requests);
               return {
                 messages,
                 participants,
+                summery,
+                followings,
               };
             },
-            element: () => import('../../pages/chat/message-detail/message-detail').then((m) => <m.MessageDetail />),
+            element: () =>
+              import('../../pages/chat/message-detail/message-detail.container').then((m) => <m.MessageDetail />),
           },
           {
             path: 'contacts',
-            loader: () => getChatsSummery({ page: 1, filter: '' }),
-            element: () => import('../../pages/chat/contact-list/contact-list').then((m) => <m.ContactList />),
+            loader: async () => {
+              const requests = [getChatsSummery({ page: 1, filter: '' }), getFollowings({ page: 1, name: '' })];
+              const [summery, followings] = await Promise.all(requests);
+              return {
+                summery,
+                followings,
+              };
+            },
+            element: () =>
+              import('../../pages/chat/contact-list/contact-list.container').then((m) => <m.ContactList />),
           },
         ],
       },
