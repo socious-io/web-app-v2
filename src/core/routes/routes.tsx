@@ -30,7 +30,6 @@ import { getSettingsItems } from 'src/pages/notifications/settings/settings.serv
 import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { getMissionsList, getSrtipeProfile } from 'src/pages/wallet/wallet.service';
-import { postFind } from '../../pages/chat/new-chat/new-chat.services';
 
 export const routes: Route[] = [
   {
@@ -207,12 +206,8 @@ export const routes: Route[] = [
           {
             path: 'new/:id',
             loader: async ({ params }) => {
-              let createdChats = { id: '' };
-              const chatId = await postFind({ participants: [params.id] });
-              if (!chatId?.items?.length) {
-                createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [params.id] });
-              }
-              return chatId.items[0].id || createdChats.id;
+              const createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [params.id] });
+              return createdChats?.id;
             },
             element: () => import('../../pages/chat/new-chat/new-chat').then((m) => <m.NewChat />),
           },
