@@ -18,10 +18,20 @@ import { Popover } from 'src/components/atoms/popover/popover';
 import { PopoverProps } from 'src/components/atoms/popover/popover.types';
 import { removedEmptyProps } from 'src/core/utils';
 import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
+import { dialog } from 'src/core/dialog/dialog';
 
 export const EditOrganization = (props: EditProps): JSX.Element => {
-  const { onAvatarEdit, onCoverEdit, avatarImage, coverImage, updateCityList, form, cities, organization } =
-    useProfileOrganizationEditShared();
+  const {
+    onAvatarEdit,
+    onCoverEdit,
+    avatarImage,
+    coverImage,
+    updateCityList,
+    form,
+    cities,
+    organization,
+    updateIdentityList,
+  } = useProfileOrganizationEditShared();
 
   const coverLetterMenu: PopoverProps['menuList'] = [
     { id: 1, label: 'Upload image', cb: onCoverEdit.desktop('upload') },
@@ -46,18 +56,24 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
     updateCityList(option.value as string);
   }
 
-  function onSave() {
-    const payload = removedEmptyProps(getFormValues(form));
-    endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload).then(() => {
-      props.onClose();
-    });
+  function onSaveDesktop() {
+    if (form.isValid) {
+      const payload = removedEmptyProps(getFormValues(form));
+      endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload).then(async (resp) => {
+        await updateIdentityList();
+        // props?.updateOrganization(resp);
+        props.onClose();
+      });
+    } else {
+      dialog.alert({ message: 'form is invalid' });
+    }
   }
 
   return (
     <Modal height={props.height} width={props.width} open={props.open} onClose={props.onClose}>
       <>
         <div className={css.mainHeader}>
-          <Header onBack={props.onClose} title="Edit" right={{ label: 'Save', onClick: onSave }} />
+          <Header onBack={props.onClose} title="Edit" right={{ label: 'Save', onClick: onSaveDesktop }} />
         </div>
         <div>
           <div>

@@ -6,8 +6,9 @@ import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
-import { Resolver } from './profile-organization.types';
+import { ProfileReq, Resolver } from './profile-organization.types';
 import { getConnectStatus, sendRequestConnection } from './profile-organization.services';
+import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 
 export const useProfileOrganizationShared = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export const useProfileOrganizationShared = () => {
   const profileBelongToCurrentUser = currentIdentity?.id === user.id;
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [message, setMessage] = useState('please connect to me');
+  const [organization, setOrganization] = useState<ProfileReq>(user);
 
   useEffect(() => {
     const getConnectionsStatus = async () => {
@@ -73,6 +75,32 @@ export const useProfileOrganizationShared = () => {
     setMessage(value || 'please connect to me');
   }
 
+  function updateOrganization(params: PostUpdateProfileResp) {
+    setOrganization((prev) => ({
+      ...prev,
+      bio: params.bio,
+      city: params.city,
+      country: params.country,
+      culture: params.culture,
+      social_causes: params.social_causes,
+      email: params.email,
+      mission: params.mission,
+      type: params.type,
+      cover_image: params.cover_image,
+      image: params.image,
+
+      //   first_name: params.first_name,
+      //   last_name: params.last_name,
+      //   username: params.username,
+      //   bio: params.bio,
+      //   social_causes: params.social_causes,
+      //   city: params.city,
+      //   country: params.country,
+      //   cover_image: params.cover_image,
+      //   mission: params.mission,
+      //   skills: params.skills,
+    }));
+  }
   return {
     onClose,
     user,
@@ -87,5 +115,6 @@ export const useProfileOrganizationShared = () => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    updateOrganization,
   };
 };

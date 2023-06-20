@@ -29,6 +29,7 @@ export const Desktop = (): JSX.Element => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    updateOrganization,
   } = useProfileOrganizationShared();
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
@@ -189,7 +190,13 @@ export const Desktop = (): JSX.Element => {
               {printWhen(skillsJSX, user.skills && user.skills.length > 0)}
             </div>
           </div>
-          <EditOrganization width="31rem" height="75vh" open={editOpen} onClose={() => setEditOpen(false)} />
+          <EditOrganization
+            updateOrganization={updateOrganization}
+            width="31rem"
+            height="75vh"
+            open={editOpen}
+            onClose={() => setEditOpen(false)}
+          />
         </Card>
       </TwoColumnCursor>
       <ConnectModal

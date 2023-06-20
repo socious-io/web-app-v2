@@ -114,13 +114,12 @@ export const useProfileUserEditShared = (props?: EditProps) => {
     if (form.isValid) {
       const rawPayload = getFormValues(form);
       const payload = removedEmptyProps(rawPayload);
-      endpoint.post.user['update/profile'](payload).then((resp) => {
-        updateIdentityList();
+      endpoint.post.user['update/profile'](payload).then(async (resp) => {
+        await updateIdentityList();
         props?.updateUser(resp);
         props?.onClose();
       });
     } else {
-      console.log('form invalid');
       dialog.alert({ message: 'form is invalid' });
     }
   }

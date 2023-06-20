@@ -11,6 +11,7 @@ import { endpoint } from 'src/core/endpoints';
 import { getIdentities } from 'src/core/api';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { useDispatch } from 'react-redux';
+import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 
 export const useProfileOrganizationEditShared = () => {
   const organization = useMatch().data.user as ProfileReq;
@@ -32,6 +33,8 @@ export const useProfileOrganizationEditShared = () => {
         setAvatarImage(resp.url);
         break;
       case 'remove':
+        form.controls.image.setValue(undefined);
+        setAvatarImage(undefined);
         break;
     }
   }
@@ -55,6 +58,8 @@ export const useProfileOrganizationEditShared = () => {
         setCoverImage(resp.url);
         break;
       case 'remove':
+        form.controls.cover_image.setValue(undefined);
+        setCoverImage(undefined);
         break;
     }
   }
@@ -94,5 +99,6 @@ export const useProfileOrganizationEditShared = () => {
     form,
     cities,
     organization,
+    updateIdentityList,
   };
 };
