@@ -17,7 +17,7 @@ import {
   getChatsSummery,
   getFollowings,
 } from '../../contact-list/contact-list.services';
-import { createChats, postFind } from '../../new-chat/new-chat.services';
+import { createChats } from '../../new-chat/new-chat.services';
 import { useMessageDetailShared } from '../message-detail.shared';
 import css from './desktop.module.scss';
 
@@ -25,7 +25,8 @@ export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
   const resolver = useMatch<MessageLoader>();
   const { summery, followings } = resolver.data || {};
-  const { participantDetail, list, sendingValue, setSendingValue, onSend, onContactClick } = useMessageDetailShared();
+  const { participantDetail, list, sendingValue, setSendingValue, onSend, onContactClick, updateMessages } =
+    useMessageDetailShared();
   const initialState = chatEntityToContactListAdaptor(summery?.items);
   const initialList = convertFollowingsToContactList(followings?.items);
   const [chats, setChats] = useState<ContactItem[]>(initialState);
@@ -58,20 +59,17 @@ export const Desktop = (): JSX.Element => {
   }
 
   async function onCreateChat(id: string) {
-    let createdChats = { id: '' };
-    const chatId = await postFind({ participants: [id] });
-    if (!chatId?.items?.length) {
-      createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [id] });
-    }
+    const createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [id] });
     setOpenCreateChatModal(false);
-    navigate({ to: `../${chatId.items[0].id || createdChats.id}` });
+    navigate({ to: `../${createdChats?.id}` });
+    updateMessages(id);
   }
 
   const emptyBoxJSX = (
     <div className={css.emptyBoxContainer}>
       <Avatar type={participantDetail.type} img={participantDetail.avatar || participantDetail?.image} size="8rem" />
       <div className={css.text}>
-        Start charting with
+        Start chatting with
         <span>{participantDetail.name}</span>
       </div>
     </div>

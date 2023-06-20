@@ -15,7 +15,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.emptyBoxContainer}>
       <Avatar type={participantDetail.type} img={participantDetail.avatar || participantDetail?.image} size="8rem" />
       <div className={css.text}>
-        Start charting with
+        Start chatting with
         <span>{participantDetail.name}</span>
       </div>
     </div>
