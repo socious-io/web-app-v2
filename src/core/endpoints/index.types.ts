@@ -1,4 +1,5 @@
-import { ConnectStatus, ConnectionItem, NotificationSettingsRes, Pagination } from '../types';
+import { LoginPayload } from 'src/pages/sign-in/sign-in.types';
+import { ConnectStatus, ConnectionItem, LoginResp, NotificationSettingsRes, Pagination } from '../types';
 
 export type GetProject = (id: string) => {
   applicants: number;
@@ -157,7 +158,7 @@ export interface Endpoints {
   };
   post: {
     auth: {
-      login: unknown;
+      login: (payload: LoginPayload) => Promise<LoginResp>;
       refresh: (payload: { refresh_token: string }) => Promise<PostRefreshResp>;
       'resend-verify-code': (payload: PostResendVerifyCodePayload) => Promise<unknown>;
     };
