@@ -69,9 +69,7 @@ export const Mobile = (): JSX.Element => {
   return (
     <TopFixedMobile>
       <Header removeBorder title={updatedApplicantList.jobOverview.title} />
-      <div className={css.tabContainer}>
-        <Tabs tabs={tabs} />
-      </div>
+      <Tabs tabs={tabs} />
     </TopFixedMobile>
   );
 };
