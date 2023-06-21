@@ -10,6 +10,43 @@ import { handleError } from 'src/core/http';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { LoginPayload } from './sign-in.types';
 import { useForm } from 'src/core/form';
+import {
+  addNotificationReceivedListener,
+  getDeliveredNotifications,
+  getToken,
+  requestPermissions,
+} from '../../core/pushNotification';
+import { Capacitor } from '@capacitor/core';
+
+const addListeners = () => {
+  addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
+  getDeliveredNotifications().then((r) => console.log('getDeliveredNotifications', r));
+};
+
+const getFCMToken = async (response: Awaited<ReturnType<typeof requestPermissions>>): Promise<string> => {
+  if (response !== 'granted') {
+    console.log('User did not grant permission to use push notification');
+    throw Error;
+  }
+
+  return getToken().catch((e: Error) => {
+    console.log('error accrued during retrieving token', e);
+    return '';
+  });
+};
+
+const saveToken = async (token: string) => {
+  console.log('FCMToken: ', token);
+  if (!token) {
+    return;
+  }
+};
+
+function registerPushNotifications() {
+  if (Capacitor.isNativePlatform()) {
+    requestPermissions().then(getFCMToken).then(saveToken).then(addListeners);
+  }
+}
 
 export const useSignInShared = () => {
   const navigate = useNavigate();
@@ -20,6 +57,7 @@ export const useSignInShared = () => {
     const resp = await getIdentities();
     store.dispatch(setIdentityList(resp));
     navigate({ to: '/jobs', replace: true });
+    return loginResp;
   }
 
   async function onLogin() {
@@ -27,6 +65,7 @@ export const useSignInShared = () => {
     endpoint.post.auth
       .login(formValues)
       .then(onLoginSucceed)
+      .then(registerPushNotifications)
       .catch(handleError({ title: 'Login Failed' }));
   }
 
