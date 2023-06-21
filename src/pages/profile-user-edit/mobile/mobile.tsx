@@ -17,10 +17,8 @@ import { useProfileUserEditShared } from '../profile-user-edit.shared';
 
 export const Mobile = (): JSX.Element => {
   const user = useMatch().data.user as ProfileReq;
-  const formModel = useMemo(() => generateFormModel(user), []);
-  const form = useForm(formModel);
 
-  const { onCoverEdit, onAvatarEdit, onSave, onCountryUpdate, updateCityList, coverImage, avatarImage, cities } =
+  const { onCoverEdit, onAvatarEdit, onSave, onCountryUpdate, updateCityList, coverImage, avatarImage, cities, form } =
     useProfileUserEditShared();
 
   useEffect(() => {
