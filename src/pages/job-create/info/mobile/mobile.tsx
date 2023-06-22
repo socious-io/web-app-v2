@@ -126,14 +126,17 @@ export const Mobile = (): JSX.Element => {
               <RadioGroup
                 name="paymentType"
                 value={formState.payment_type}
-                onChange={(value) => dispatch(setPostPaymentType(value))}
+                onChange={(value) => {
+                  dispatch(setPostPaymentType(value));
+                  dispatch(setPostPaymentScheme('FIXED'));
+                }}
                 label="Payment type"
                 list={PROJECT_PAYMENT_TYPE}
               />
               <RadioGroup
                 name="PaymentScheme"
                 value="FIXED"
-                onChange={() => dispatch(setPostPaymentScheme('FIXED'))}
+                onChange={console.log}
                 label="Payment terms"
                 list={PROJECT_PAYMENT_SCHEME}
               />
@@ -152,7 +155,7 @@ export const Mobile = (): JSX.Element => {
             </div>
           </Divider>
           <div className={css.btnContainer}>
-            <Button disabled={!form.isValid} onClick={() => submit(formState)}>
+            <Button disabled={!form.isValid || !formState.payment_type} onClick={() => submit(formState)}>
               Continue
             </Button>
           </div>
