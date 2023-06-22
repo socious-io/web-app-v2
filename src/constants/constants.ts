@@ -84,43 +84,43 @@ export const SDG = {
 
 type Badges = { value: string; label: string; color: string };
 export const BADGES: Record<string, Badges> = {
-  HEALTH: { value: 'HEALTH', label: 'Health', color: '#459C49' },
-  LIFE: { value: 'LIFE', label: 'Life', color: '#56C02B' },
+  NO_POVERTY: { value: 'NO_POVERTY', label: 'No Poverty', color: 'black' },
+  ZERO_HUNGER: { value: 'ZERO_HUNGER', label: 'Zero Hunger', color: 'black' },
+  HEALTH: { value: 'HEALTH', label: 'Good Health and Well-Being', color: '#459C49' },
+  EDUCATION_QUALITY: { value: 'EDUCATION_QUALITY', label: 'Education Quality', color: 'black' },
+  GENDER_EQUALITY: { value: 'GENDER_EQUALITY', label: 'Gender Equality', color: '#EA3F2A' },
+  CLEAN_WATER_SANITATION: {
+    value: 'CLEAN_WATER_SANITATION',
+    label: 'Clean Water & Sanitation',
+    color: '#26BDE2',
+  },
+  ENERGY: { value: 'ENERGY', label: 'Affordable and Clean Energy', color: 'black' },
+  ECONOMIC_GROWTH: { value: 'ECONOMIC_GROWTH', label: 'Decent Work and Economic Growth', color: 'black' },
+  INDUSTRY_INNOVATION_INFRASTRUCTURE: {
+    value: 'INDUSTRY_INNOVATION_INFRASTRUCTURE',
+    label: 'Industry, Innovation & Infrastructure',
+    color: 'black',
+  },
   REDUCED_INEQUALITIES: {
     value: 'REDUCED_INEQUALITIES',
     label: 'Reduced Inequalities',
     color: '#DD1367',
   },
-  PEACE_JUSTICE: { value: 'PEACE_JUSTICE', label: 'Peace Justice', color: '#56C02B' },
   SUSTAINABLE_CITIES_COMMUNITIES: {
     value: 'SUSTAINABLE_CITIES_COMMUNITIES',
     label: 'Sustainable Cities & Communities',
     color: '#FD9D24',
-  },
-  INDUSTRY_INNOVATION_INFRASTRUCTURE: {
-    value: 'INDUSTRY_INNOVATION_INFRASTRUCTURE',
-    label: 'Industry, Innovation & Infrastructure',
-    color: 'black',
   },
   RESPONSIBLE_CONSUMPTION_PRODUCTION: {
     value: 'RESPONSIBLE_CONSUMPTION_PRODUCTION',
     label: 'Responsible Consumption & Production',
     color: '#BF8B2E',
   },
-  GENDER_EQUALITY: { value: 'GENDER_EQUALITY', label: 'Gender Equality', color: '#EA3F2A' },
   CLIMATE_ACTION: { value: 'CLIMATE_ACTION', label: 'Climate Action', color: '#3F7E44' },
-  NO_POVERTY: { value: 'NO_POVERTY', label: 'No Poverty', color: 'black' },
   LIFE_BELOW_WATER: { value: 'LIFE_BELOW_WATER', label: 'Life Below Water', color: '#0A97D9' },
-  GOALS_PARTNERSHIPS: { value: 'GOALS_PARTNERSHIPS', label: 'Goals Partnerships', color: 'black' },
-  ZERO_HUNGER: { value: 'ZERO_HUNGER', label: 'Zero Hunger', color: 'black' },
-  EDUCATION_QUALITY: { value: 'EDUCATION_QUALITY', label: 'Education Quality', color: 'black' },
-  CLEAN_WATER_SANITATION: {
-    value: 'CLEAN_WATER_SANITATION',
-    label: 'Clean Water & Sanitation',
-    color: '#26BDE2',
-  },
-  ENERGY: { value: 'ENERGY', label: 'Energy', color: 'black' },
-  ECONOMIC_GROWTH: { value: 'ECONOMIC_GROWTH', label: 'Economic Growth', color: 'black' },
+  LIFE: { value: 'LIFE', label: 'Life on Land', color: '#56C02B' },
+  PEACE_JUSTICE: { value: 'PEACE_JUSTICE', label: 'Peace & Justice Strong Institutions', color: '#56C02B' },
+  GOALS_PARTNERSHIPS: { value: 'GOALS_PARTNERSHIPS', label: 'Partnerships for the Goals', color: 'black' },
   //   OTHER: { value: 'OTHER', label: 'Other', color: 'black' },
 };
 

@@ -27,7 +27,6 @@ export const Mobile = (): JSX.Element => {
   const updateField = updateForm(dispatch);
   const form = useForm(memoizedFormState);
   const [cities, setCities] = useState<DropdownItem[]>([]);
-  const [agreement, setAgreement] = useState(false);
 
   Object.keys(formModel(formState)).forEach((prop) => {
     const p = prop as keyof ReturnType<typeof formModel>;
@@ -103,11 +102,12 @@ export const Mobile = (): JSX.Element => {
             <Input register={form} name="website" optional label="Website" placeholder="Website" />
             <div className={css.agreement}>
               <Checkbox
+                name="agreement"
+                register={form}
                 label="I verify that I am an authorized representative of this organization and have the right to act on its behalf
                 in the creation and management of this page."
                 id="agreement"
-                onChange={setAgreement}
-                checked={agreement}
+                checked={formState.agreement}
               />
               <span></span>
             </div>
@@ -115,10 +115,7 @@ export const Mobile = (): JSX.Element => {
         </Divider>
       </div>
       <div className={css.bottom}>
-        <Button
-          disabled={formIsInvalid(form.isValid, formState, agreement)}
-          onClick={() => navigate({ to: '../mission' })}
-        >
+        <Button disabled={formIsInvalid(form.isValid, formState)} onClick={() => navigate({ to: '../mission' })}>
           Continue
         </Button>
       </div>

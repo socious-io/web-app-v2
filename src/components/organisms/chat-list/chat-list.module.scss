@@ -1,3 +1,9 @@
 .item {
   margin-bottom: 0.5rem;
+
+  &__time {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 14px;
+  }
 }

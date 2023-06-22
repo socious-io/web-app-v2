@@ -1,6 +1,6 @@
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
-import { Header } from 'src/components/atoms/header-v2/header';
+import { Header } from 'src/components/atoms/header/header';
 import { Typography } from 'src/components/atoms/typography/typography';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
@@ -13,7 +13,7 @@ import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const { offer, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
+  const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -117,6 +117,17 @@ export const Mobile = (): JSX.Element => {
             <Divider title="Cover Letter">
               <Typography>{offer.applicant.cover_letter}</Typography>
             </Divider>
+            {printWhen(
+              <Divider title="Resume">
+                <div className={css.uploadedResume}>
+                  <img src="/icons/attachment-black.svg" />
+                  <a href={media.url} target="_blank">
+                    {media.filename}
+                  </a>
+                </div>
+              </Divider>,
+              !!media.url
+            )}
             {/* <Divider title="Contact Info">
           <Typography>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam inventore quod ipsa veniam enim vitae

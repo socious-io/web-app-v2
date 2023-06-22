@@ -15,6 +15,7 @@ export type CreateOrgWizard = {
   website?: string;
   mission?: string;
   culture?: string;
+  agreement?: boolean;
   //   description: string;
 };
 
@@ -82,6 +83,9 @@ export const createOrgWizardSlice = createSlice({
     setWebsite: (state, action) => {
       state.website = action.payload;
     },
+    setAgreement: (state, action) => {
+      state.agreement = action.payload;
+    },
     resetCreateOrgWizard: () => {
       return initialState;
     },
@@ -103,5 +107,6 @@ export const {
   setPhoneNumber,
   setWebsite,
   setGeonameId,
+  setAgreement,
   resetCreateOrgWizard,
 } = createOrgWizardSlice.actions;

@@ -36,7 +36,11 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
   const uploadedResume = (
     <div className={css.uploadedResume}>
       <img src="/icons/attachment-black.svg" />
-      <div>{resume.name}</div>
+      {resume?.file && (
+        <a href={URL.createObjectURL(resume.file)} target="_blank">
+          {resume.name}
+        </a>
+      )}
       <div onClick={() => setResume(resumeInitialState)} className={css.trashIcon}>
         <img src="/icons/trash-bin.svg" />
       </div>

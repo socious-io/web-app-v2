@@ -141,6 +141,9 @@ export interface Endpoints {
       'otp/confirm': (payload: GetOtpConfirmPayload) => Promise<GetOtpConfirmResp>;
     };
     projects: (payload: getOfferPayload) => Promise<Pagination<Offer[]>>;
+    media: {
+      media_id: (id: string) => Promise<PostMediaUploadResp>;
+    };
     offers: unknown;
     missions: unknown;
     follows: {
@@ -154,6 +157,7 @@ export interface Endpoints {
         requester_id?: string;
         requested_id?: string;
       }) => Promise<Pagination<ConnectionItem[]>>;
+      connection_status: (id: string) => Promise<{ connect: ConnectionItem }>;
     };
   };
   post: {

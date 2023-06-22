@@ -42,7 +42,6 @@ export const Desktop: React.FC = () => {
       </div>
       <div className={css.rightContainer}>
         <div className={css.banner}>
-          <div className={css.banner__overlay} />
           <div className={css.title}>People</div>
           <div className={css.tagline}>Connect with skilled professionals</div>
         </div>

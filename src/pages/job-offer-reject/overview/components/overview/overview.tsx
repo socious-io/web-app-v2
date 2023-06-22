@@ -4,6 +4,7 @@ import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateProjectType } from 'src/constants/PROJECT_TYPES';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Divider } from 'src/components/templates/divider/divider';
 import { OverviewProps } from './overview.types';
 import { printWhen } from 'src/core/utils';
@@ -25,8 +26,14 @@ export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
           <div>{data.title}</div>
         </div>
         <div className={css.group}>
+          <div className={css.groupTitle}>Job Category</div>
+          <div>{data.job_category?.name}</div>
+        </div>
+        <div className={css.group}>
           <div className={css.groupTitle}>Job description</div>
-          <div className={css.value}>{data.description}</div>
+          <div className={css.value}>
+            <ExpandableText text={data.description} />
+          </div>
         </div>
         <div className={css.group}>
           <div className={css.groupTitle}>Location</div>

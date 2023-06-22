@@ -1,3 +1,4 @@
+import { toRelativeTime } from 'src/core/relative-time';
 import { Message } from '../../atoms/message/message';
 import css from './chat-list.module.scss';
 import { ChatListProps } from './chat-list.types';
@@ -22,13 +23,8 @@ export const ChatList = (props: ChatListProps): JSX.Element => {
         {list.map((msg) => {
           return (
             <div key={msg.id} className={css.item}>
-              <Message
-                identityType={msg.identityType}
-                id={msg.id}
-                img={msg.img}
-                type={msg.type}
-                text={msg.text}
-              />
+              <div className={css.item__time}>{toRelativeTime(msg.time || new Date().toString())}</div>
+              <Message identityType={msg.identityType} id={msg.id} img={msg.img} type={msg.type} text={msg.text} />
             </div>
           );
         })}

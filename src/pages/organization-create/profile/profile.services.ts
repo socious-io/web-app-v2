@@ -13,6 +13,7 @@ import {
   setOrganizationName,
   setPhoneNumber,
   setWebsite,
+  setAgreement,
 } from '../../../store/reducers/createOrgWizard.reducer';
 import { DropdownItem } from '../../../components/atoms/dropdown/dropdown.types';
 import { getCityList } from '../../job-create/info/info.services';
@@ -25,8 +26,8 @@ export function updateCityList(dispatcher: Dispatch<SetStateAction<DropdownItem[
   };
 }
 
-export function formIsInvalid(isValid: boolean, formValues: CreateOrgWizard, agreement: boolean): boolean {
-  return isValid === false || formValues.geoname_id === 0 || agreement === false;
+export function formIsInvalid(isValid: boolean, formValues: CreateOrgWizard): boolean {
+  return isValid === false || formValues.geoname_id === 0;
 }
 
 export function updateForm(dispatch: Dispatch<AnyAction>) {
@@ -61,6 +62,9 @@ export function updateForm(dispatch: Dispatch<AnyAction>) {
         break;
       case 'website':
         dispatch(setWebsite(value));
+        break;
+      case 'agreement':
+        dispatch(setAgreement(value));
         break;
     }
   };
