@@ -20,7 +20,7 @@ function jobToJobCardAdaptor(job: GetJobs): JobCardProps {
   return {
     id: job.id,
     title: job.title,
-    body: `${job.applicants} applicant`,
+    body: `${job.applicants} applicant, ${job.missions} hired`,
     date: isoToStandard(job.updated_at),
   };
 }
