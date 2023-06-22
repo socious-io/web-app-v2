@@ -12,9 +12,21 @@
   background-size: cover;
   background-position: 30%;
   background-color: var(--color-gray-04);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(0deg, transparent, 50%, rgba(black, 0.35));
+  }
 }
 
 .menu {
+  position: relative;
   margin-bottom: 1.625rem;
   display: grid;
   grid-template-columns: 2rem 1fr 2rem;
@@ -24,6 +36,7 @@
 }
 
 .title {
+  position: relative;
   font-size: var(--font-size-xl);
   color: #ffffff;
   font-weight: 600;
@@ -31,6 +44,7 @@
 }
 
 .tagline {
+  position: relative;
   color: #d4d2d0;
   font-size: var(--font-size-m);
 }

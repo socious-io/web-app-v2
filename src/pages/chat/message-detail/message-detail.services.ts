@@ -79,6 +79,7 @@ export function chatListAdaptor(
       text: msg.text,
       identityType: getIdentityType(msg.id, participants),
       img: getImage(myId, msg.identity_id, participants),
+      time: msg.updated_at,
     };
   });
   return list.reverse();

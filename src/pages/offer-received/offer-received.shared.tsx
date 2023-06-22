@@ -8,7 +8,7 @@ import { dialog } from 'src/core/dialog/dialog';
 import { findTokenRate } from './offer-received.services';
 
 export const useOfferReceivedShared = () => {
-  const { offer } = useMatch().ownData as Resolver;
+  const { offer, media } = useMatch().ownData as Resolver;
   const { project, payment_mode, recipient } = offer;
   const { payment_type } = project || {};
   const { wallet_address } = recipient?.meta || {};
@@ -56,5 +56,5 @@ export const useOfferReceivedShared = () => {
     return Math.round((offer.assignment_total / tokenRate) * 100) / 100;
   }
 
-  return { offer, status, account, isPaidCrypto, onAccept, onDeclined, equivalentUSD };
+  return { offer, media, status, account, isPaidCrypto, onAccept, onDeclined, equivalentUSD };
 };

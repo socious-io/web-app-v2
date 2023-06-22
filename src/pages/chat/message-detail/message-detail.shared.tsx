@@ -34,13 +34,17 @@ export const useMessageDetailShared = () => {
       .then(() => setSendingValue(''));
   }
 
-  async function onContactClick(contact: ContactItem) {
-    navigate({ to: `../${contact.id}` });
+  async function updateMessages(id: string) {
     setList([]);
-    const messages = await getMessagesById({ id: contact.id, page: 1 });
+    const messages = await getMessagesById({ id, page: 1 });
     const participants = await getParticipantsById(id);
     const chatList = chatListAdaptor(identity.id, messages!.items, participants!.items);
     setList(chatList);
+  }
+
+  async function onContactClick(contact: ContactItem) {
+    navigate({ to: `../${contact.id}` });
+    updateMessages(contact.id);
   }
 
   socket?.on('chat', (data) => {
@@ -53,9 +57,10 @@ export const useMessageDetailShared = () => {
         img: receiver?.img,
         text: data.text,
         type: 'receiver',
+        time: receiver.time,
       },
     ]);
   });
 
-  return { participantDetail, list, sendingValue, setSendingValue, onSend, onContactClick };
+  return { participantDetail, list, sendingValue, setSendingValue, onSend, onContactClick, updateMessages };
 };

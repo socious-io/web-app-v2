@@ -11,7 +11,9 @@ export const useSocialCausesShared = () => {
   });
 
   function onSearch(v: string) {
-    const filteredValue = socialCausesToCategoryAdaptor().filter((item) => item.label.toLowerCase().includes(v));
+    const filteredValue = socialCausesToCategoryAdaptor().filter((item) =>
+      item.label.toLowerCase().includes(v.toLowerCase())
+    );
     setSocialCauses(filteredValue);
   }
 

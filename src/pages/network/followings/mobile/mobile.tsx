@@ -10,7 +10,7 @@ import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
   const navigate = useNavigate();
-  const { followings, followingStatus, onUnfollow, onFollow, loadMore } = useFollowingsShared();
+  const { followings, followStatusUser, onUnfollow, onFollow, loadMore, onProfileClick } = useFollowingsShared();
   const [selectedUser, setSelectedUser] = useState({ name: '', id: '' });
 
   const followingsListJSX = (
@@ -19,20 +19,27 @@ export const Mobile: React.FC = () => {
         {followings?.items.map((list) => (
           <div key={list.id} className={css.followings__item}>
             <div className={css.followings__avatar}>
-              <Avatar img={list.identity_meta.image} type={list.identity_type} />
+              <Avatar
+                img={list.identity_meta.image}
+                type={list.identity_type}
+                onClick={() => {
+                  const profileUsername = list.identity_meta.username || list.identity_meta?.shortname;
+                  profileUsername && onProfileClick(list.identity_type, profileUsername);
+                }}
+              />
               {list.identity_meta.name}
             </div>
             <Button
               size="s"
               width="6.5rem"
-              color={followingStatus === 'FOLLOW' ? 'blue' : 'white'}
+              color={followStatusUser(list.identity_id) ? 'blue' : 'white'}
               onClick={() =>
-                followingStatus === 'FOLLOW'
+                followStatusUser(list.identity_id)
                   ? setSelectedUser({ name: list.identity_meta.name, id: list.identity_id })
                   : onFollow(list.identity_id)
               }
             >
-              {followingStatus === 'FOLLOW' ? 'Following' : 'Follow'}
+              {followStatusUser(list.identity_id) ? 'Following' : 'Follow'}
             </Button>
           </div>
         ))}

@@ -46,13 +46,9 @@ export const useContactListShared = () => {
   }
 
   async function onCreateChat(id: string) {
-    let createdChats = { id: '' };
-    const chatId = await postFind({ participants: [id] });
-    if (!chatId?.items?.length) {
-      createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [id] });
-    }
+    const createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [id] });
     setOpenCreateChatModal(false);
-    navigate({ to: `${chatId.items[0].id || createdChats.id}` });
+    navigate({ to: `${createdChats?.id}` });
   }
 
   return {

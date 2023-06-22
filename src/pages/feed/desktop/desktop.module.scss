@@ -8,18 +8,28 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   padding-left: 2.5rem;
   border-radius: 30px;
   background-image: url('/images/feed-page-header.png');
   background-size: cover;
   background-position: 30%;
   background-color: var(--color-gray-04);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(0deg, transparent, 50%, rgba(black, 0.35));
+  }
 }
 
 .title {
+  position: relative;
   font-size: var(--font-size-xl);
   color: #ffffff;
   font-weight: 600;
@@ -27,6 +37,7 @@
 }
 
 .tagline {
+  position: relative;
   color: #d4d2d0;
   font-size: var(--font-size-m);
 }

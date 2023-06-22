@@ -7,10 +7,10 @@ import { getCategories } from '../job-detail.services';
 import { Divider } from '../../../components/templates/divider/divider';
 import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
-import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
-import { Header } from 'src/components/atoms/header-v2/header';
+import { Header } from 'src/components/atoms/header/header';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { useJobDetailShared } from '../job-detail.shared';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
 
 export const Mobile = (): JSX.Element => {
   const { navigate, job, identity, location, screeningQuestions } = useJobDetailShared();
@@ -44,6 +44,8 @@ export const Mobile = (): JSX.Element => {
     </Divider>
   );
 
+  const jobCategoryJSX = <Divider title="Job Category">{job.job_category?.name || ''}</Divider>;
+
   const screeningQuestionsJSX = (
     <Divider title="Screening question">
       <ul className={css.questions}>
@@ -56,7 +58,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile containsMenu>
-      <Header title={job.job_category?.name || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
+      <Header title={job.title || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
       <div>
         {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
         <Divider>
@@ -72,7 +74,10 @@ export const Mobile = (): JSX.Element => {
           {printWhen(buttonJSX, identity.type === 'users')}
         </Divider>
         {printWhen(socialCausesJSX, !!job.causes_tags)}
-        <Divider title="Job description">{convertMDToJSX(job.description, { length: null })}</Divider>
+        {printWhen(jobCategoryJSX, !!job.job_category?.name)}
+        <Divider title="Job description">
+          <ExpandableText text={job.description} />
+        </Divider>
         {printWhen(skillsJSX, !!job.skills)}
         {printWhen(screeningQuestionsJSX, screeningQuestions.length > 0)}
       </div>

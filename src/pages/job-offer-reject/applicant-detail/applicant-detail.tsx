@@ -38,6 +38,17 @@ export const ApplicantDetail = (): JSX.Element => {
     </Accordion>
   );
 
+  const uploadedResumeAccordion = (
+    <Accordion id="resume" title="Resume">
+      <div className={css.uploadedResume}>
+        <img src="/icons/attachment-black.svg" />
+        <a href={applicantDetail.attachment.url} target="_blank">
+          {applicantDetail.attachment.filename}
+        </a>
+      </div>
+    </Accordion>
+  );
+
   return (
     <div className={css.container}>
       <Header onBack={navigateToOverview} paddingTop={'var(--safe-area)'} title={applicantDetail.user.name} />
@@ -45,6 +56,7 @@ export const ApplicantDetail = (): JSX.Element => {
         <Accordion id="cover-letter" title="Cover letter">
           <div className={css.accordionContainer}>{applicantDetail.cover_letter}</div>
         </Accordion>
+        {printWhen(uploadedResumeAccordion, !!applicantDetail?.attachment?.url)}
         {printWhen(screeningQuestionAccordion, screeningQuestions.questions.length > 0)}
         {/* <Accordion id="screening-questions" title="Screening questions">
           <div className={css.accordionContainer}>

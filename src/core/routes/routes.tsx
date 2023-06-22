@@ -30,7 +30,6 @@ import { getSettingsItems } from 'src/pages/notifications/settings/settings.serv
 import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { getMissionsList, getSrtipeProfile } from 'src/pages/wallet/wallet.service';
-import { postFind } from '../../pages/chat/new-chat/new-chat.services';
 
 export const routes: Route[] = [
   {
@@ -77,15 +76,15 @@ export const routes: Route[] = [
     children: [
       {
         path: '/email',
-        element: () => import('../../pages/forget-password/email/email').then((m) => <m.Email />),
+        element: () => import('../../pages/forget-password/email/email.container').then((m) => <m.Email />),
       },
       {
         path: '/otp',
-        element: () => import('../../pages/forget-password/otp/otp').then((m) => <m.Otp />),
+        element: () => import('../../pages/forget-password/otp/otp.container').then((m) => <m.Otp />),
       },
       {
         path: '/password',
-        element: () => import('../../pages/forget-password/password/password').then((m) => <m.Password />),
+        element: () => import('../../pages/forget-password/password/password.container').then((m) => <m.Password />),
       },
     ],
   },
@@ -207,12 +206,8 @@ export const routes: Route[] = [
           {
             path: 'new/:id',
             loader: async ({ params }) => {
-              let createdChats = { id: '' };
-              const chatId = await postFind({ participants: [params.id] });
-              if (!chatId?.items?.length) {
-                createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [params.id] });
-              }
-              return chatId.items[0].id || createdChats.id;
+              const createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [params.id] });
+              return createdChats?.id;
             },
             element: () => import('../../pages/chat/new-chat/new-chat').then((m) => <m.NewChat />),
           },
@@ -358,15 +353,26 @@ export const routes: Route[] = [
       },
       {
         path: '/jobs/received-offer/:id/m',
-        loader: ({ params }) => receivedOfferLoader(params),
+        loader: async ({ params }) => {
+          let media = { url: '' };
+          const { offer } = await receivedOfferLoader(params);
+          if (offer.applicant?.attachment) {
+            media = await endpoint.get.media['media_id'](offer.applicant.attachment);
+          }
+          return { offer, media };
+        },
         element: () => import('../../pages/offer-received/offer-received.container').then((m) => <m.OfferReceived />),
       },
       {
         path: '/jobs/applied/complete-mission/:id',
         loader: async ({ params }) => {
+          let media = { url: '' };
           const mission = await endpoint.get.missions.mission_id(params.id);
           const offer = await endpoint.get.offers.offer_id(mission.offer_id);
-          return { mission, offer };
+          if (offer.applicant?.attachment) {
+            media = await endpoint.get.media['media_id'](offer.applicant.attachment);
+          }
+          return { mission, offer, media };
         },
         element: () =>
           import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
@@ -451,7 +457,14 @@ export const routes: Route[] = [
           },
           {
             path: '/jobs/received-offer/:id/d',
-            loader: ({ params }) => receivedOfferLoader(params),
+            loader: async ({ params }) => {
+              let media = { url: '' };
+              const { offer } = await receivedOfferLoader(params);
+              if (offer.applicant?.attachment) {
+                media = await endpoint.get.media['media_id'](offer.applicant.attachment);
+              }
+              return { offer, media };
+            },
             element: () =>
               import('../../pages/offer-received/offer-received.container').then((m) => <m.OfferReceived />),
           },

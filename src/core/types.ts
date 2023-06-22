@@ -99,6 +99,7 @@ export type IdentityMeta = {
   name: string;
   status: string;
   username: string;
+  shortname?: string;
 };
 
 export type ParticipantsReq = {
@@ -242,6 +243,10 @@ export type ApplicantResp = {
   project?: {
     payment_scheme: string;
     payment_type?: string;
+  };
+  attachment: {
+    filename: string;
+    url: string;
   };
 };
 
@@ -451,24 +456,18 @@ export type ConnectStatus = 'ACTIVE' | 'PENDING' | 'CONNECTED' | 'BLOCKED';
 export type ConnectionItem = {
   requested: {
     type: UserType;
-    meta: {
-      id: string;
-      avatar: string;
-      name: string;
-    };
+    meta: IdentityMeta;
   };
   requester: {
     type: UserType;
-    meta: {
-      id: string;
-      avatar: string;
-      name: string;
-    };
+    meta: IdentityMeta;
   };
   status: ConnectStatus;
   text: string;
   created_at: string;
   id: string;
+  following: boolean;
+  follower: boolean;
 };
 
 export type Error = { error: string };
