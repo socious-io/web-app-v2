@@ -62,7 +62,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
         buttons={[
           {
             children: 'Continue',
-            disabled: !form.isValid,
+            disabled: !form.isValid || !formState.payment_type,
             onClick: () => submit(formState),
           },
         ]}
@@ -143,14 +143,17 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
                   <RadioGroup
                     name="paymentType"
                     value={formState.payment_type}
-                    onChange={(value) => dispatch(setPostPaymentType(value))}
+                    onChange={(value) => {
+                      dispatch(setPostPaymentType(value));
+                      dispatch(setPostPaymentScheme('FIXED'));
+                    }}
                     label="Payment type"
                     list={PROJECT_PAYMENT_TYPE}
                   />
                   <RadioGroup
                     name="PaymentScheme"
                     value="FIXED"
-                    onChange={() => dispatch(setPostPaymentScheme('FIXED'))}
+                    onChange={console.log}
                     label="Payment terms"
                     list={PROJECT_PAYMENT_SCHEME}
                   />
