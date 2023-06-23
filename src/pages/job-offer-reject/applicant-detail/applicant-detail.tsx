@@ -51,25 +51,13 @@ export const ApplicantDetail = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Header onBack={navigateToOverview} paddingTop={'var(--safe-area)'} title={applicantDetail.user.name} />
+      <Header paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
       <div className={css.main}>
         <Accordion id="cover-letter" title="Cover letter">
           <div className={css.accordionContainer}>{applicantDetail.cover_letter}</div>
         </Accordion>
         {printWhen(uploadedResumeAccordion, !!applicantDetail?.attachment?.url)}
         {printWhen(screeningQuestionAccordion, screeningQuestions.questions.length > 0)}
-        {/* <Accordion id="screening-questions" title="Screening questions">
-          <div className={css.accordionContainer}>
-            {screeningQuestions.questions.map((item, i) => {
-              return (
-                <div key={item.id}>
-                  <div className={css.question}>{item.question}</div>
-                  <div className={css.answer}>{applicantDetail.answers[i]?.answer || 'Not answered'} </div>
-                </div>
-              );
-            })}
-          </div>
-        </Accordion> */}
       </div>
       <div className={css.btnContainer}>
         <Button onClick={onOffer}>Offer</Button>
