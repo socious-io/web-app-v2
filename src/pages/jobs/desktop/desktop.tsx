@@ -22,7 +22,7 @@ export const Desktop = (): JSX.Element => {
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate({ to: `/jobs/applied/${identity.id}` }),
+      link: () => navigate({ to: `/d/jobs/applied/${identity.id}` }),
     },
   ];
 
@@ -30,7 +30,7 @@ export const Desktop = (): JSX.Element => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate({ to: `/jobs/created/${identity.id}` }),
+      link: () => navigate({ to: `/d/jobs/created/${identity.id}` }),
     },
   ];
 
