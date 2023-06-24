@@ -13,6 +13,7 @@ import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { useDispatch } from 'react-redux';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 import { dialog } from 'src/core/dialog/dialog';
+import { removedEmptyProps } from 'src/core/utils';
 
 export const useProfileOrganizationEditShared = () => {
   const organization = useMatch().data.user as ProfileReq;
@@ -82,7 +83,8 @@ export const useProfileOrganizationEditShared = () => {
   async function onSave() {
     if (form.isValid) {
       try {
-        const payload = getFormValues(form);
+        const rawPayload = getFormValues(form);
+        const payload = removedEmptyProps(rawPayload);
         await endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload);
         await updateIdentityList();
         navigate({ to: '/jobs' });

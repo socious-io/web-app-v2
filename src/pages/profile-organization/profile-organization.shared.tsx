@@ -92,6 +92,8 @@ export const useProfileOrganizationShared = () => {
         type: params.type,
         cover_image: params.cover_image,
         image: params.image,
+        phone: params.phone,
+        mobile_country_code: params.mobile_country_code,
       };
     });
   }
