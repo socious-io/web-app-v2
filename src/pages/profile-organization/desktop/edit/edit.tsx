@@ -61,7 +61,7 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
       const payload = removedEmptyProps(getFormValues(form));
       endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload).then(async (resp) => {
         await updateIdentityList();
-        // props?.updateOrganization(resp);
+        props?.updateOrganization(resp);
         props.onClose();
       });
     } else {

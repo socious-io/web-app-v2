@@ -12,21 +12,23 @@ import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 
 export const useProfileOrganizationShared = () => {
   const navigate = useNavigate();
-  const { user, badges } = useMatch().data as Resolver;
-  const socialCauses = socialCausesToCategory(user.social_causes);
-  const skills = skillsToCategory(user.skills);
+  const resolver = useMatch().data as Resolver;
+  const [organization, setOrganization] = useState<ProfileReq>(resolver.user);
+  const socialCauses = socialCausesToCategory(resolver.user.social_causes);
+  const skills = skillsToCategory(resolver.user.skills);
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
-  const address = `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
-  const profileBelongToCurrentUser = currentIdentity?.id === user.id;
+  const address = `${organization.city}, ${getCountryName(
+    organization.country as keyof typeof COUNTRIES_DICT | undefined
+  )}`;
+  const profileBelongToCurrentUser = currentIdentity?.id === organization.id;
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [message, setMessage] = useState('please connect to me');
-  const [organization, setOrganization] = useState<ProfileReq>(user);
 
   useEffect(() => {
     const getConnectionsStatus = async () => {
-      const res = await getConnectStatus(user.id);
+      const res = await getConnectStatus(organization.id);
       setConnectStatus(res?.connect?.status);
     };
     getConnectionsStatus();
@@ -47,7 +49,7 @@ export const useProfileOrganizationShared = () => {
 
   function onAchievementClick() {
     hapticsImpactLight();
-    const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
+    const connectId = organization.proofspace_connect_id ? organization.proofspace_connect_id : null;
     navigate({ to: `/achievements?proofspace_connect_id=${connectId}` });
   }
 
@@ -76,36 +78,28 @@ export const useProfileOrganizationShared = () => {
   }
 
   function updateOrganization(params: PostUpdateProfileResp) {
-    setOrganization((prev) => ({
-      ...prev,
-      bio: params.bio,
-      city: params.city,
-      country: params.country,
-      culture: params.culture,
-      social_causes: params.social_causes,
-      email: params.email,
-      mission: params.mission,
-      type: params.type,
-      cover_image: params.cover_image,
-      image: params.image,
-
-      //   first_name: params.first_name,
-      //   last_name: params.last_name,
-      //   username: params.username,
-      //   bio: params.bio,
-      //   social_causes: params.social_causes,
-      //   city: params.city,
-      //   country: params.country,
-      //   cover_image: params.cover_image,
-      //   mission: params.mission,
-      //   skills: params.skills,
-    }));
+    console.log({ params });
+    setOrganization((prev) => {
+      return {
+        ...prev,
+        bio: params.bio,
+        city: params.city,
+        country: params.country,
+        culture: params.culture,
+        social_causes: params.social_causes,
+        email: params.email,
+        mission: params.mission,
+        type: params.type,
+        cover_image: params.cover_image,
+        image: params.image,
+      };
+    });
   }
   return {
     onClose,
-    user,
+    organization,
     address,
-    badges,
+    badges: resolver.badges,
     socialCauses,
     skills,
     onAchievementClick,
