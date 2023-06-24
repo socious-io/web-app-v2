@@ -12,6 +12,7 @@ import { getIdentities } from 'src/core/api';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { useDispatch } from 'react-redux';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
+import { dialog } from 'src/core/dialog/dialog';
 
 export const useProfileOrganizationEditShared = () => {
   const organization = useMatch().data.user as ProfileReq;
@@ -79,13 +80,17 @@ export const useProfileOrganizationEditShared = () => {
   }
 
   async function onSave() {
-    try {
-      const payload = getFormValues(form);
-      await endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload);
-      await updateIdentityList();
-      navigate({ to: '/jobs' });
-    } catch (err) {
-      console.error(err);
+    if (form.isValid) {
+      try {
+        const payload = getFormValues(form);
+        await endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload);
+        await updateIdentityList();
+        navigate({ to: '/jobs' });
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      dialog.alert({ message: 'form is invalid' });
     }
   }
 

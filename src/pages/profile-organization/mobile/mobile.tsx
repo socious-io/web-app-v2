@@ -15,7 +15,7 @@ import css from './mobile.module.scss';
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const {
-    user,
+    organization,
     onClose,
     address,
     skills,
@@ -41,8 +41,8 @@ export const Mobile = (): JSX.Element => {
   const contactLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/phone-green.svg" />
-      <a href={`tel:${user.mobile_country_code}${user.phone}`} className={css.contactData}>
-        {user.mobile_country_code} {user.phone}
+      <a href={`tel:${organization.mobile_country_code}${organization.phone}`} className={css.contactData}>
+        {organization.mobile_country_code} {organization.phone}
       </a>
     </div>
   );
@@ -50,8 +50,8 @@ export const Mobile = (): JSX.Element => {
   const emailLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/email-green.svg" />
-      <a href={`mailto:${user.email}`} className={css.contactData}>
-        {user.email}
+      <a href={`mailto:${organization.email}`} className={css.contactData}>
+        {organization.email}
       </a>
     </div>
   );
@@ -59,33 +59,33 @@ export const Mobile = (): JSX.Element => {
   const websiteLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/world-green.svg" />
-      <a href={user.website} className={css.contactData}>
-        {user.website}
+      <a href={organization.website} className={css.contactData}>
+        {organization.website}
       </a>
     </div>
   );
 
   const bioJSX = (
     <Divider>
-      <div className={css.bio}>{user.bio}</div>
+      <div className={css.bio}>{organization.bio}</div>
     </Divider>
   );
 
   const userFullNameJSX = (
     <div className={css.name}>
-      {user?.first_name} {user?.last_name}
+      {organization?.first_name} {organization?.last_name}
     </div>
   );
 
   const missionJSX = (
     <Divider title="Mission">
-      <div className={css.mission}>{user.mission}</div>
+      <div className={css.mission}>{organization.mission}</div>
     </Divider>
   );
 
   const cultureJSX = (
     <Divider title="Culture">
-      <div className={css.culture}>{user.culture}</div>
+      <div className={css.culture}>{organization.culture}</div>
     </Divider>
   );
 
@@ -101,8 +101,8 @@ export const Mobile = (): JSX.Element => {
     </Button>
   );
 
-  const orgNameJSX = <div className={css.name}>{user?.name}</div>;
-  const usernameJSX = <div className={css.username}>@{user?.username}</div>;
+  const orgNameJSX = <div className={css.name}>{organization?.name}</div>;
+  const usernameJSX = <div className={css.username}>@{organization?.username}</div>;
 
   const connectJSX = (
     <Button
@@ -120,7 +120,7 @@ export const Mobile = (): JSX.Element => {
       className={css.message}
       onClick={() =>
         navigate({
-          to: `/chats/new/${user?.id}`,
+          to: `/chats/new/${organization?.id}`,
         })
       }
     >
@@ -134,9 +134,9 @@ export const Mobile = (): JSX.Element => {
         <div onClick={onClose} className={css.close}>
           <img src="/icons/close-black.svg" />
         </div>
-        <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
+        <div style={{ backgroundImage: `url(${organization.cover_image?.url})` }} className={css.cover}>
           <div className={css.avatarContainer}>
-            <Avatar img={user.image?.url} size="8rem" type="users" />
+            <Avatar img={organization.image?.url} size="8rem" type="users" />
           </div>
         </div>
         <div className={css.menu}>
@@ -144,19 +144,19 @@ export const Mobile = (): JSX.Element => {
             {printWhen(messageJSX, !profileBelongToCurrentUser && showMessageIcon())}
             {printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}
             {printWhen(editButtonJSX, profileBelongToCurrentUser)}
-            {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
+            {printWhen(<ThreeDotsButton onClick={() => showActions(organization.id)} />, !profileBelongToCurrentUser)}
           </div>
           <div className={css.userConnections}>
-            <div>{user.followings} connections</div>
-            <div>{user.followers} Followers</div>
+            <div>{organization.followings} connections</div>
+            <div>{organization.followers} Followers</div>
           </div>
         </div>
       </div>
       <div>
         <Divider>
-          {printWhen(orgNameJSX, !!user?.name)}
-          {printWhen(userFullNameJSX, !!user?.first_name || !!user?.last_name)}
-          {printWhen(usernameJSX, !!user?.username)}
+          {printWhen(orgNameJSX, !!organization?.name)}
+          {printWhen(userFullNameJSX, !!organization?.first_name || !!organization?.last_name)}
+          {printWhen(usernameJSX, !!organization?.username)}
         </Divider>
         <Divider>
           <div className={css.achievements} onClick={onAchievementClick}>
@@ -169,25 +169,25 @@ export const Mobile = (): JSX.Element => {
           </div>
         </Divider>
 
-        {printWhen(bioJSX, !!user.bio)}
+        {printWhen(bioJSX, !!organization.bio)}
         <Divider title="Social Causes">
           <CategoriesClickable list={socialCauses} />
         </Divider>
         <Divider title="Contact">
-          {printWhen(contactLinkJSX, !!user.mobile_country_code)}
-          {printWhen(emailLinkJSX, !!user.email)}
-          {printWhen(websiteLinkJSX, !!user.website)}
-          {printWhen(cityLinkJSX, !!user.city)}
+          {printWhen(contactLinkJSX, !!organization.mobile_country_code)}
+          {printWhen(emailLinkJSX, !!organization.email)}
+          {printWhen(websiteLinkJSX, !!organization.website)}
+          {printWhen(cityLinkJSX, !!organization.city)}
         </Divider>
-        {printWhen(missionJSX, !!user.mission)}
-        {printWhen(cultureJSX, !!user.culture)}
-        {printWhen(skillsJSX, user.skills && user.skills.length > 0)}
+        {printWhen(missionJSX, !!organization.mission)}
+        {printWhen(cultureJSX, !!organization.culture)}
+        {printWhen(skillsJSX, organization.skills && organization.skills.length > 0)}
       </div>
       <ConnectModal
         open={openConnectModal}
         onClose={() => setOpenConnectModal(false)}
         onSend={() => {
-          onConnect(user.id);
+          onConnect(organization.id);
           setOpenConnectModal(false);
         }}
         onMessage={onMessage}
