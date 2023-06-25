@@ -56,6 +56,12 @@ export const Mobile = (): JSX.Element => {
     </Divider>
   );
 
+  const aboutOrgJSX = (
+    <Divider title="About the organization">
+      <ExpandableText text={job.identity_meta.mission} />
+    </Divider>
+  );
+
   return (
     <TopFixedMobile containsMenu>
       <Header title={job.title || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
@@ -80,6 +86,7 @@ export const Mobile = (): JSX.Element => {
         </Divider>
         {printWhen(skillsJSX, !!job.skills)}
         {printWhen(screeningQuestionsJSX, screeningQuestions.length > 0)}
+        {printWhen(aboutOrgJSX, !!job.identity_meta?.mission)}
       </div>
     </TopFixedMobile>
   );

@@ -60,6 +60,12 @@ export const Desktop = (): JSX.Element => {
     </Divider>
   );
 
+  const aboutOrgJSX = (
+    <Divider title="About the organization">
+      <ExpandableText text={job.identity_meta.mission} />
+    </Divider>
+  );
+
   function navigateToJobs() {
     navigate({ to: '/jobs' });
   }
@@ -111,6 +117,7 @@ export const Desktop = (): JSX.Element => {
           </Divider>
           {printWhen(skillsJSX, !!job.skills)}
           {printWhen(screeningQuestionsJSX, screeningQuestions.length > 0)}
+          {printWhen(aboutOrgJSX, !!job.identity_meta?.mission)}
         </Card>
       </TwoColumnCursor>
       <ApplyModal open={openApplyModal} onClose={() => setOpenApplyModal(false)} />
