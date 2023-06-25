@@ -16,6 +16,7 @@ export const useSettingsShared = () => {
   const [payload, setPayload] = useState<Payload>({});
   const notAllow = generateSettings.every((setting) => !setting.in_app && !setting.email && !setting.push);
   const [allChecked, setAllChekced] = useState(!notAllow);
+  const settingsGuide = 'https://www.notion.so/socious/Notification-Settings-32a002269adc44d4984955bd77626cb6';
 
   function onChange(checked: boolean, type: string, key: string) {
     setPayload({ ...payload, [type]: { ...payload[type], [key]: checked } });
@@ -57,5 +58,6 @@ export const useSettingsShared = () => {
     onConfirm,
     onAllowNotifications,
     allowedNotifications: allChecked,
+    settingsGuide,
   };
 };

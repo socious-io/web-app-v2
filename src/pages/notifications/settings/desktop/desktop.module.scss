@@ -34,11 +34,28 @@
   padding: 16px;
 }
 
+.notification__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .notification,
 .notification_all {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.notification {
+  &__subtitle {
+    color: var(--color-gray-01);
+  }
+
+  &__link {
+    color: var(--color-primary-01);
+    font-weight: 500;
+  }
 }
 
 .notification_all {
