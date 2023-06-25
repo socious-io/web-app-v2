@@ -90,7 +90,6 @@ export const useConnectionsShared = () => {
         setConnectionList({
           ...connectionList,
           ...listReq,
-          total_count: connectionList.total_count + listReq.total_count,
           items: [...connectionList.items, ...listReq.items],
         });
       },
@@ -104,7 +103,6 @@ export const useConnectionsShared = () => {
         setSentRequestsList({
           ...sentRequestsList,
           ...listReq,
-          total_count: sentRequestsList.total_count + listReq.total_count,
           items: [...sentRequestsList.items, ...listReq.items],
         });
       },
@@ -118,7 +116,6 @@ export const useConnectionsShared = () => {
         setReceivedRequestsList({
           ...receivedRequestsList,
           ...listReq,
-          total_count: receivedRequestsList.total_count + listReq.total_count,
           items: [...receivedRequestsList.items, ...listReq.items],
         });
       },
