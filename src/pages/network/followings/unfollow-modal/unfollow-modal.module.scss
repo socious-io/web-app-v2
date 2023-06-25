@@ -1,5 +1,5 @@
 .container {
-  min-width: 325px;
+  width: 325px;
   padding: 1.5rem;
   font-size: 20px;
   font-weight: 600;
@@ -17,6 +17,7 @@
     margin-top: 0.75rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
   }
 }
