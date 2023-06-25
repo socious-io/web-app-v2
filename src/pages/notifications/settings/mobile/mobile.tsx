@@ -19,6 +19,7 @@ export const Mobile: React.FC = () => {
     onConfirm,
     onAllowNotifications,
     allowedNotifications,
+    settingsGuide,
   } = useSettingsShared();
   const [closeAlert, setCloseAlert] = useState(false);
 
@@ -59,15 +60,23 @@ export const Mobile: React.FC = () => {
                           onChange={(checked) => onChange(checked, setting.type, 'in_app')}
                         />
                       </div>
-                      <div className={css.notification}>
-                        Email
-                        <Toggle
-                          name="email"
-                          checked={
-                            payload[setting.type]?.email != undefined ? payload[setting.type].email : setting.email
-                          }
-                          onChange={(checked) => onChange(checked, setting.type, 'email')}
-                        />
+                      <div className={css.notification__col}>
+                        <div className={css.notification}>
+                          Email
+                          <Toggle
+                            name="email"
+                            checked={
+                              payload[setting.type]?.email != undefined ? payload[setting.type].email : setting.email
+                            }
+                            onChange={(checked) => onChange(checked, setting.type, 'email')}
+                          />
+                        </div>
+                        <span className={css.notification__subtitle}>
+                          To manage your email notification settings, please{' '}
+                          <a href={settingsGuide} className={css.notification__link} target="_blank">
+                            click here
+                          </a>
+                        </span>
                       </div>
                       <div className={css.notification}>
                         Push
