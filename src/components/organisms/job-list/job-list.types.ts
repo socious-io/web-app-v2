@@ -51,6 +51,7 @@ export type Job = {
     address: null;
     country: string;
     shortname: string;
+    mission: string;
   };
   job_category: {
     id: '4b7b8490-cde2-43e6-be2f-730c5ec0e163';
