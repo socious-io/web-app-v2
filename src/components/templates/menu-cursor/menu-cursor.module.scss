@@ -52,7 +52,10 @@
 }
 
 .logo {
-  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 1rem;
   img {
     padding: 0;
   }
