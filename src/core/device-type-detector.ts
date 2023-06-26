@@ -1,3 +1,5 @@
+import { isMobile } from 'react-device-detect';
+
 export function isTouchDevice(): boolean {
-  return window.innerWidth < 750;
+  return isMobile;
 }
