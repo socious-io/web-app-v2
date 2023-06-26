@@ -52,7 +52,7 @@ export const Desktop = (): JSX.Element => {
         <Applicants
           toReviewList={updatedApplicantList.reviewList}
           declinedList={updatedApplicantList.declinedList}
-          onOfferClick={(id) => onOfferClick(id)}
+          onOfferClick={onOfferClick}
         />
       ),
     },

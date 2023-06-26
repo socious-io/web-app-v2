@@ -42,8 +42,8 @@ export const ApplicantDetail = (): JSX.Element => {
     <Accordion id="resume" title="Resume">
       <div className={css.uploadedResume}>
         <img src="/icons/attachment-black.svg" />
-        <a href={applicantDetail.attachment.url} target="_blank">
-          {applicantDetail.attachment.filename}
+        <a href={applicantDetail?.attachment?.url} target="_blank">
+          {applicantDetail?.attachment?.filename}
         </a>
       </div>
     </Accordion>
