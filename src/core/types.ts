@@ -244,7 +244,7 @@ export type ApplicantResp = {
     payment_scheme: string;
     payment_type?: string;
   };
-  attachment: {
+  attachment?: {
     filename: string;
     url: string;
   };
