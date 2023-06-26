@@ -5,9 +5,9 @@ import { Divider } from 'src/components/templates/divider/divider';
 import { Input } from 'src/components/atoms/input/input';
 import { Button } from 'src/components/atoms/button/button';
 import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { ModalProps } from 'src/components/templates/modal/modal.types';
 import { printWhen } from 'src/core/utils';
-import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
 import { createTextQuestion, resumeInitialState } from '../apply.services';
 import { useApplyShared } from '../apply.shared';
 import css from './apply-modal.module.scss';
@@ -75,7 +75,7 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
             location={`${jobDetail.identity_meta.city}, ${jobDetail.identity_meta.country}`}
           />
           <div className={css.jobTitle}>{jobDetail.title}</div>
-          <div>{convertMDToJSX(jobDetail.description, { length: 200 })}</div>
+          <ExpandableText text={jobDetail.description} isMarkdown />
         </Divider>
         <Divider divider="line" title="Cover letter">
           <Textarea register={form} name="cover_letter" placeholder="write a message..." label="Message" />

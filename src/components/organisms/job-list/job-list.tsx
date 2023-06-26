@@ -8,8 +8,8 @@ import { Avatar } from '../../atoms/avatar/avatar';
 import { useNavigate } from '@tanstack/react-location';
 import { toRelativeTime } from '../../../core/relative-time';
 import { socialCausesToCategory } from '../../../core/adaptors';
-import { convertMDToJSX } from 'src/core/convert-md-to-jsx';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
 
 export const JobList = (props: JobListProps): JSX.Element => {
   const { data, onMorePageClick, ...rest } = props;
@@ -45,7 +45,9 @@ export const JobList = (props: JobListProps): JSX.Element => {
             <div className={css.body}>
               <div className={css.jobTitle}>{job.title}</div>
               <Categories marginBottom="1rem" list={getList(job)} />
-              <div className={css.description}>{convertMDToJSX(job.description, { length: 200 })}</div>
+              <div className={css.description}>
+                <ExpandableText text={job.description} isMarkdown />
+              </div>
               <CategoriesClickable marginBottom="1rem" list={socialCausesToCategory(job.causes_tags)} />
             </div>
             <div className={css.footer}>{toRelativeTime(job.updated_at)}</div>

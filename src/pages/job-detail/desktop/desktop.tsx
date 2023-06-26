@@ -113,7 +113,7 @@ export const Desktop = (): JSX.Element => {
           {printWhen(socialCausesJSX, !!job.causes_tags)}
           {printWhen(jobCategoryJSX, !!job.job_category?.name)}
           <Divider title="Job description">
-            <ExpandableText text={job.description} />
+            <ExpandableText text={job.description} isMarkdown />
           </Divider>
           {printWhen(skillsJSX, !!job.skills)}
           {printWhen(screeningQuestionsJSX, screeningQuestions.length > 0)}
