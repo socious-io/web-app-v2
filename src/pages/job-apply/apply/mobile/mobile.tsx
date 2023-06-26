@@ -81,7 +81,7 @@ export const Mobile = (): JSX.Element => {
         <Divider divider="line" title="Link">
           <div className={css.linkContainer}>
             <Input register={form} name="cv_name" optional placeholder="Link name" label="Link name" />
-            <Input register={form} name="cv_link" optional placeholder="domain.com" label="Link URL" />
+            <Input register={form} name="cv_link" optional placeholder="Enter a URL" label="Link URL" />
           </div>
         </Divider>
         {printWhen(renderQuestions(), !!questions.length)}
