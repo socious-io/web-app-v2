@@ -3,6 +3,7 @@ import { Pagination, GetJobs, CategoriesResp } from '../../../core/types';
 export type MyJobsResolver = {
   activeJobs: Pagination<GetJobs[]>;
   draftJobs: Pagination<GetJobs[]>;
+  archivedJobs: Pagination<GetJobs[]>;
   jobCategories?: CategoriesResp['categories'];
 };
 

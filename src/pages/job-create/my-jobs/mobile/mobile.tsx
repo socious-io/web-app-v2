@@ -19,6 +19,10 @@ export const Mobile = (): JSX.Element => {
     draftJobList,
     draftJobs,
     updateDraftJobList,
+    archivedTitle,
+    archivedJobs,
+    archivedJobList,
+    updateArchivedJobList,
   } = useMyJobShared();
 
   const tabs = [
@@ -52,7 +56,18 @@ export const Mobile = (): JSX.Element => {
     },
     {
       name: 'Archived',
-      content: <></>,
+      content: (
+        <Accordion id="archived" title={archivedTitle}>
+          <div className={css.listContainer}>
+            <JobCardList
+              list={archivedJobList.items}
+              onItemClick={navigateToOverview}
+              showMore={archivedJobList.items.length < archivedJobs.total_count}
+              onSeeMoreClick={updateArchivedJobList}
+            />
+          </div>
+        </Accordion>
+      ),
     },
   ];
 

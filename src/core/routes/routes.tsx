@@ -5,7 +5,7 @@ import { MenuTouch as RootTouchLayout } from '../../components/templates/menu-to
 import { isTouchDevice } from '../device-type-detector';
 import { getMessagesById, getParticipantsById } from '../../pages/chat/message-detail/message-detail.services';
 import { createChats } from '../../pages/chat/new-chat/new-chat.services';
-import { getActiveJobs, getDraftJobs } from '../../pages/job-create/my-jobs/my-jobs.services';
+import { getActiveJobs, getArchivedJobs, getDraftJobs } from '../../pages/job-create/my-jobs/my-jobs.services';
 import { getFeedList } from '../../pages/feed/mobile/mobile.service';
 import { getComments, getPostDetail } from '../../pages/feed/post-detail/post-detail.service';
 import { getJobCategories } from '../../pages/job-create/info/info.services';
@@ -283,10 +283,11 @@ export const routes: Route[] = [
           const requests = [
             getActiveJobs({ identityId: params.id, page: 1 }),
             getDraftJobs({ identityId: params.id, page: 1 }),
+            getArchivedJobs({ identityId: params.id, page: 1 }),
             getJobCategories(),
           ];
-          const [activeJobs, draftJobs, jobCategories] = await Promise.all(requests);
-          return { activeJobs, draftJobs, jobCategories };
+          const [activeJobs, draftJobs, archivedJobs, jobCategories] = await Promise.all(requests);
+          return { activeJobs, draftJobs, archivedJobs, jobCategories };
         },
         element: () => import('../../pages/job-create/my-jobs/my-jobs.container').then((m) => <m.MyJobs />),
       },
@@ -448,10 +449,11 @@ export const routes: Route[] = [
               const requests = [
                 getActiveJobs({ identityId: params.id, page: 1 }),
                 getDraftJobs({ identityId: params.id, page: 1 }),
+                getArchivedJobs({ identityId: params.id, page: 1 }),
                 getJobCategories(),
               ];
-              const [activeJobs, draftJobs, jobCategories] = await Promise.all(requests);
-              return { activeJobs, draftJobs, jobCategories };
+              const [activeJobs, draftJobs, archivedJobs, jobCategories] = await Promise.all(requests);
+              return { activeJobs, draftJobs, archivedJobs, jobCategories };
             },
             element: () => import('../../pages/job-create/my-jobs/my-jobs.container').then((m) => <m.MyJobs />),
           },
