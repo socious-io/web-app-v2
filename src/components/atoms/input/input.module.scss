@@ -10,10 +10,6 @@
   }
 }
 
-.input::placeholder {
-  color: var(--color-gray-02);
-}
-
 .outline {
   display: grid;
   grid-template-rows: 1.5rem 2.75rem;
@@ -33,15 +29,19 @@
     border-radius: 8px;
     position: relative;
 
-    .input {
-      text-indent: 0.75rem;
-      width: 100%;
-      height: 100%;
-    }
-
     &::placeholder {
       color: var(--color-gray-03);
     }
+  }
+}
+
+.input {
+  text-indent: 0.75rem;
+  width: 100%;
+  height: 100%;
+
+  &::placeholder {
+    color: var(--color-gray-02);
   }
 }
 
