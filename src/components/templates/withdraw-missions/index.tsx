@@ -1,6 +1,7 @@
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { printWhen } from 'src/core/utils';
+import { getFlooredFixed } from 'src/core/numbers';
 import { WithdrawMissionsProps } from './withdraw-missions.types';
 import css from './withdraw-missions.module.scss';
 
@@ -21,11 +22,11 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
           <img src={`/icons/fiat/${unit}.svg`} className={css.balance__img} />
           {unit}
         </div>
-        $ {escrow?.amount.toLocaleString()}
+        $ {getFlooredFixed(escrow?.amount, 1)}
       </div>
       {printWhen(
         <div className={css.rowItem}>
-          <span className={css.title}>Fee </span>$ {(escrow?.amount * fee)?.toLocaleString()}
+          <span className={css.title}>Fee </span>$ {getFlooredFixed(escrow?.amount * fee, 1)}
         </div>,
         !!fee
       )}
