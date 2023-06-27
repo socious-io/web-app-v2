@@ -14,6 +14,7 @@ export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const {
     offer,
+    assignment_total,
     commision,
     total_price,
     start_date,
@@ -25,7 +26,7 @@ export const Mobile = (): JSX.Element => {
     onClickProceedPayment,
     isDisabledProceedPayment,
   } = usePaymentShared();
-  const { job_category, recipient, project, total_hours, assignment_total } = offer || {};
+  const { job_category, recipient, project, total_hours } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
 
   return (

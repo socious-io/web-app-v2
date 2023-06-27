@@ -10,6 +10,7 @@ import { dialog } from 'src/core/dialog/dialog';
 import { getMonthName } from 'src/core/time';
 import { Resolver } from './payment.types';
 import { CardInfoResp } from 'src/core/types';
+import { getFlooredFixed } from 'src/core/numbers';
 
 export const usePaymentShared = () => {
   const { web3 } = Dapp.useWeb3();
@@ -19,11 +20,14 @@ export const usePaymentShared = () => {
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
   const [cards, setCards] = useState(cardInfo);
   const offerId = offer?.id;
-  const { created_at, recipient, assignment_total, project_id, project, payment_mode } = offer || {};
+  const { created_at, recipient, assignment_total: assignment, project_id, project, payment_mode } = offer || {};
   const { wallet_address: contributor } = recipient?.meta || {};
+  const isPaidFiat = project?.payment_type === 'PAID' && payment_mode === 'FIAT';
+  const assignment_total = getFlooredFixed(assignment, 1);
   const commisionFee = offer.offerer.meta.verified_impact ? 0.02 : 0.03;
-  const commision = assignment_total * commisionFee;
-  const total_price = commision + assignment_total;
+  const fee = assignment_total * commisionFee;
+  const commision = getFlooredFixed(isPaidFiat ? fee + (3.4 % +0.5) : fee, 1);
+  const total_price = getFlooredFixed(commision + assignment_total, 1);
   const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
   const isPaidCrypto = project?.payment_type === 'PAID' && payment_mode === 'CRYPTO';
   const isDisabledProceedPayment = process || (isPaidCrypto ? !isConnected || !account : !selectedCard);
@@ -102,6 +106,7 @@ export const usePaymentShared = () => {
 
   return {
     offer,
+    assignment_total,
     commision,
     total_price,
     start_date,
