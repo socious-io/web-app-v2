@@ -153,10 +153,6 @@ export const Desktop = (): JSX.Element => {
                 {printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}
                 {printWhen(editButtonJSX, profileBelongToCurrentUser)}
               </div>
-              <div className={css.userConnections}>
-                <div>{user.followings} connections</div>
-                <div>{user.followers} Followers</div>
-              </div>
             </div>
           </div>
           <div>
@@ -177,6 +173,12 @@ export const Desktop = (): JSX.Element => {
             </Divider>
 
             {printWhen(bioJSX, !!user.bio)}
+            <Divider>
+              <div className={css.userConnections}>
+                <div>{user.followings} connections</div>
+                <div>{user.followers} Followers</div>
+              </div>
+            </Divider>
             <Divider title="Social Causes">
               <CategoriesClickable list={socialCauses} />
             </Divider>
