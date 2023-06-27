@@ -1,7 +1,9 @@
 export type RadioGroupProps = {
-  label: string;
   name: string;
   value: string;
-  list: { label: string; value: string }[];
+  list: { label: string; value: string; icon?: React.ReactNode }[];
   onChange: (value: string) => void;
+  label?: string;
+  containerClassName?: string;
+  className?: string;
 };

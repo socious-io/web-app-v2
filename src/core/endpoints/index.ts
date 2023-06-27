@@ -61,6 +61,8 @@ export const endpoint: Endpoints = {
       '{mission_id}/complete': (id: string) => post(`missions/${id}/complete`, {}).then(getDataProp),
       '{mission_id}/cancel': (id: string) => post(`missions/${id}/cancel`, {}).then(getDataProp),
       '{mission_id}/confirm': (id: string) => post(`missions/${id}/confirm`, {}).then(getDataProp),
+      '{mission_id}/feedback': (id: string, payload) => post(`missions/${id}/feedback`, payload).then(getDataProp),
+      '{mission_id}/contest': (id: string, payload) => post(`missions/${id}/contest`, payload).then(getDataProp),
     },
     posts: {
       '{post_id}/report': (id: string, payload: { blocked: boolean; comment: string }) =>

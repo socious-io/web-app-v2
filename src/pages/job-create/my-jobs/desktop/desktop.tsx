@@ -28,6 +28,10 @@ export const Desktop: React.FC = () => {
     draftJobList,
     draftJobs,
     updateDraftJobList,
+    archivedTitle,
+    archivedJobs,
+    archivedJobList,
+    updateArchivedJobList,
   } = useMyJobShared();
   const [myJobsMode, setMyJobsMode] = useState<MyJobs>('Created');
   const [openSocialCausesModal, setOpenSocialCausesModal] = useState(false);
@@ -89,7 +93,23 @@ export const Desktop: React.FC = () => {
     </>
   );
 
-  const myJobsArchivedJSX = <></>;
+  const myJobsArchivedJSX = (
+    <Card className={css.webCard}>
+      <Accordion id="archived" title={archivedTitle}>
+        {printWhen(
+          <div className={css.listContainer}>
+            <JobCardList
+              list={archivedJobList.items}
+              onItemClick={navigateToOverview}
+              showMore={archivedJobList.items.length < archivedJobs.total_count}
+              onSeeMoreClick={updateArchivedJobList}
+            />
+          </div>,
+          !!archivedJobList.items.length
+        )}
+      </Accordion>
+    </Card>
+  );
 
   return (
     <>

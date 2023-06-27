@@ -23,6 +23,7 @@ export type ApplicantListPayProps = {
   list: Applicant[];
   onConfirm?: (id: string, escorwId?: string) => void;
   confirmable?: boolean;
+  onFeedback?: (id: string, status: string) => void;
   //   onOfferClick?: (id: string) => void;
   //   onRejectClick?: (id: string) => void;
   onMessageClick?: (id: string) => void;

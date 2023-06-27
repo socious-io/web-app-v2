@@ -12,6 +12,10 @@ export async function getDraftJobs(payload: { identityId: string; page: number }
   return get(`/projects?identity_id=${payload.identityId}&status=DRAFT&page=${payload.page}`).then(({ data }) => data);
 }
 
+export async function getArchivedJobs(payload: { identityId: string; page: number }): Promise<Pagination<GetJobs[]>> {
+  return get(`/projects?identity_id=${payload.identityId}&status=EXPIRE&page=${payload.page}`).then(({ data }) => data);
+}
+
 function jobToJobCardAdaptor(job: GetJobs): JobCardProps {
   return {
     id: job.id,
