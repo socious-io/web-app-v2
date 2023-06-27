@@ -28,6 +28,13 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
     </div>
   );
 
+  const feedbackBtn = (id: string, status: string) => (
+    <div onClick={() => props.onFeedback?.(id, status)} className={css.footerItem}>
+      <img src="/icons/user-accept-blue.svg" />
+      <div className={css.footerLabel}>Give feedback</div>
+    </div>
+  );
+
   const applicantJSX = (applicant: Applicant) => {
     return (
       <div key={applicant.id} className={css.applicantContainer}>
@@ -68,10 +75,8 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             props.isPaidCrypto
           )}
           {printWhen(confirmBtn(applicant.id, applicant.payment?.meta?.id), props.confirmable)}
-          <div
-            className={css.footerItem}
-            onClick={() => props.onMessageClick?.(applicant.user_id)}
-          >
+          {printWhen(feedbackBtn(applicant.id, applicant.status), !!props?.onFeedback)}
+          <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>
           </div>
