@@ -13,6 +13,7 @@ import css from './desktop.module.scss';
 export const Desktop: React.FC = () => {
   const {
     offer,
+    assignment_total,
     commision,
     total_price,
     start_date,
@@ -25,7 +26,7 @@ export const Desktop: React.FC = () => {
     onClickProceedPayment,
     isDisabledProceedPayment,
   } = usePaymentShared();
-  const { job_category, recipient, project, total_hours, assignment_total } = offer || {};
+  const { job_category, recipient, project, total_hours } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
 

@@ -8,18 +8,17 @@ export const useFollowingsShared = () => {
   const navigate = useNavigate();
   const resolver = (useMatch().ownData as Pagination<FollowingsReq[]>) || {};
   const [followings, setFollowings] = useState(resolver);
-  const [followingStatus, setFollowingStatus] = useState<{ id: string; status: 'FOLLOW' | 'UNFOLLOW' }>({
-    id: '',
-    status: 'FOLLOW',
-  });
+  const [followingStatus, setFollowingStatus] = useState<{ [x: string]: 'FOLLOW' | 'UNFOLLOW' }>({});
   const [currentPage, setCurrectPage] = useState(1);
 
   function onUnfollow(id: string) {
-    endpoint.post.follows['{identity_id}/unfollow'](id).then(() => setFollowingStatus({ id, status: 'UNFOLLOW' }));
+    endpoint.post.follows['{identity_id}/unfollow'](id).then(() =>
+      setFollowingStatus({ ...followingStatus, [id]: 'UNFOLLOW' })
+    );
   }
 
   function onFollow(id: string) {
-    endpoint.post.follows['{identity_id}'](id).then(() => setFollowingStatus({ id, status: 'FOLLOW' }));
+    endpoint.post.follows['{identity_id}'](id).then(() => setFollowingStatus({ ...followingStatus, [id]: 'FOLLOW' }));
   }
 
   async function loadMore() {
@@ -28,15 +27,15 @@ export const useFollowingsShared = () => {
     setFollowings({
       ...followings,
       ...followingsReq,
-      total_count: followings.total_count + followingsReq.total_count,
       items: [...followings.items, ...followingsReq.items],
     });
   }
 
   function followStatusUser(id: string) {
-    if (followingStatus.id === id || !followingStatus.id) {
-      return followingStatus.status === 'FOLLOW';
+    if (!Object.keys(followingStatus).length) {
+      return true;
     }
+    return followingStatus[id] !== 'UNFOLLOW';
   }
 
   function onProfileClick(type: UserType, username: string) {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { BackLink } from 'src/components/molecules/back-link';
 import { Card } from 'src/components/atoms/card/card';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Divider } from 'src/components/templates/divider/divider';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
@@ -16,7 +16,7 @@ import { useJobDetailShared } from '../job-detail.shared';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
-  const { navigate, userIdentity, identity, job, location, screeningQuestions } = useJobDetailShared();
+  const { navigate, identity, job, location, screeningQuestions } = useJobDetailShared();
   const [openApplyModal, setOpenApplyModal] = useState(false);
 
   function onApply() {
@@ -60,6 +60,12 @@ export const Desktop = (): JSX.Element => {
     </Divider>
   );
 
+  const aboutOrgJSX = (
+    <Divider title="About the organization">
+      <ExpandableText text={job.identity_meta.mission} />
+    </Divider>
+  );
+
   function navigateToJobs() {
     navigate({ to: '/jobs' });
   }
@@ -68,25 +74,7 @@ export const Desktop = (): JSX.Element => {
     <>
       <TwoColumnCursor>
         <div className={css.sidebar}>
-          <Card cursor="pointer" onClick={navigateToJobs}>
-            <div className={css.back}>
-              <img src="/icons/chevron-left.svg" />
-              <div>Jobs</div>
-            </div>
-          </Card>
-          <Card>
-            <div className={css.profileHeader}>
-              <Avatar img={userIdentity.avatar} type="users" />
-              <div>
-                <div className={css.username}>{userIdentity.name}</div>
-                <div className={css.profileLink}>View my profile</div>
-              </div>
-            </div>
-            <div className={css.profileFooter}>
-              <div className={css.connections}>Connections</div>
-              <div className={css.followers}>Followers</div>
-            </div>
-          </Card>
+          <BackLink title="Jobs" onBack={navigateToJobs} />
         </div>
         <Card className={css.card} padding={0}>
           {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
@@ -107,10 +95,11 @@ export const Desktop = (): JSX.Element => {
           {printWhen(socialCausesJSX, !!job.causes_tags)}
           {printWhen(jobCategoryJSX, !!job.job_category?.name)}
           <Divider title="Job description">
-            <ExpandableText text={job.description} />
+            <ExpandableText text={job.description} isMarkdown />
           </Divider>
           {printWhen(skillsJSX, !!job.skills)}
           {printWhen(screeningQuestionsJSX, screeningQuestions.length > 0)}
+          {printWhen(aboutOrgJSX, !!job.identity_meta?.mission)}
         </Card>
       </TwoColumnCursor>
       <ApplyModal open={openApplyModal} onClose={() => setOpenApplyModal(false)} />

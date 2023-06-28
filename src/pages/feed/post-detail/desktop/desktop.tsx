@@ -56,7 +56,7 @@ export const Desktop = () => {
             key={postObj.id}
             type={postObj.identity_type}
             img={postObj.media != null && postObj.media.length > 0 ? postObj.media[0]?.url : ''}
-            imgAvatar={postObj.identity_meta.avatar}
+            imgAvatar={postObj.identity_meta.avatar || postObj.identity_meta?.image}
             text={postObj.content}
             name={postObj.identity_meta.name}
             actionList={actionList(postObj.likes, postObj.liked)}
@@ -70,14 +70,14 @@ export const Desktop = () => {
             <SendBox className={css.input} onValueChange={changeMessageHandler} onSend={sendMessage} value={message} />
           </Card>
           <div className={css.messages}>
-          <Comment
-            list={commentList}
-            onLike={onCommentLike}
-            onLikeRemove={onCommentLikeRemove}
-            onMorePageClick={onMorePage}
-            showSeeMore={onShowSeeMore(commentList.length)}
-          />
-        </div> 
+            <Comment
+              list={commentList}
+              onLike={onCommentLike}
+              onLikeRemove={onCommentLikeRemove}
+              onMorePageClick={onMorePage}
+              showSeeMore={onShowSeeMore(commentList.length)}
+            />
+          </div>
         </div>
       </TwoColumnCursor>
       <Modal open={openMoreBox} onClose={() => setOpenMoreBox(false)}>

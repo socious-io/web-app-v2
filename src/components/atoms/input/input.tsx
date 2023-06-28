@@ -82,7 +82,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
     <div style={{ gridTemplateRows: '2.5rem' }} className={`${setClassName(variant)} ${props.className}`}>
       <input
         id={props.label}
-        className={`${css.textbox} ${props.inputClassName}`}
+        className={`${css.textbox} ${css.input} ${props.inputClassName}`}
         role="textbox"
         {...rest}
         {...props?.register?.bind(props.name)}

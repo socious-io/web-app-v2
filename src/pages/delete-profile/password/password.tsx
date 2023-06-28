@@ -34,7 +34,7 @@ export const Password = () => {
           });
         }
       })
-      .catch(handleError());
+      .catch(handleError({message: 'Not matched password'}));
   };
 
   const cancel = () => {

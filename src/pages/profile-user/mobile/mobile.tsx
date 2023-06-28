@@ -147,10 +147,6 @@ export const Mobile = (): JSX.Element => {
             {printWhen(editButtonJSX, profileBelongToCurrentUser)}
             {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
           </div>
-          <div className={css.userConnections}>
-            <div>{user.followings} connections</div>
-            <div>{user.followers} Followers</div>
-          </div>
         </div>
       </div>
       <div>
@@ -171,6 +167,12 @@ export const Mobile = (): JSX.Element => {
         </Divider>
 
         {printWhen(bioJSX, !!user.bio)}
+        <Divider>
+          <div className={css.userConnections}>
+            <div>{user.followings} connections</div>
+            <div>{user.followers} Followers</div>
+          </div>
+        </Divider>
         <Divider title="Social Causes">
           <CategoriesClickable list={socialCauses} />
         </Divider>

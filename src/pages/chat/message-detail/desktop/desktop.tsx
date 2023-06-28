@@ -34,6 +34,13 @@ export const Desktop = (): JSX.Element => {
   const [userList, setUserList] = useState(initialList);
   const [openCreateChatModal, setOpenCreateChatModal] = useState(false);
 
+  function updateChatList() {
+    const payload = { page: 1, filter: '' };
+    getChatsSummery(payload).then((resp) => {
+      setChats(chatEntityToContactListAdaptor(resp.items));
+    });
+  }
+
   function onSearch(value: string) {
     const payload = { page: 1, filter: value };
     getChatsSummery(payload).then((resp) => {
@@ -63,6 +70,7 @@ export const Desktop = (): JSX.Element => {
     setOpenCreateChatModal(false);
     navigate({ to: `../${createdChats?.id}` });
     updateMessages(id);
+    updateChatList();
   }
 
   const emptyBoxJSX = (
@@ -84,7 +92,10 @@ export const Desktop = (): JSX.Element => {
             <ContactList
               height="calc(var(--window-height) - 2.5rem)"
               onScroll={onScroll}
-              onContactClick={onContactClick}
+              onContactClick={(contact) => {
+                onContactClick(contact);
+                updateChatList();
+              }}
               list={chats}
               onSearch={onSearch}
             />
