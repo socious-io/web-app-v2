@@ -47,12 +47,6 @@ export const useProfileOrganizationShared = () => {
     navigate({ to: '/jobs' });
   }
 
-  function onAchievementClick() {
-    hapticsImpactLight();
-    const connectId = organization.proofspace_connect_id ? organization.proofspace_connect_id : null;
-    navigate({ to: `/achievements?proofspace_connect_id=${connectId}` });
-  }
-
   function navigateToEdit() {
     navigate({ to: '../edit' });
   }
@@ -101,10 +95,8 @@ export const useProfileOrganizationShared = () => {
     onClose,
     organization,
     address,
-    badges: resolver.badges,
     socialCauses,
     skills,
-    onAchievementClick,
     profileBelongToCurrentUser,
     navigateToEdit,
     onConnect,
