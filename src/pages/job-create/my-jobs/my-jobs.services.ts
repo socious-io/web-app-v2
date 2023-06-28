@@ -17,10 +17,11 @@ export async function getArchivedJobs(payload: { identityId: string; page: numbe
 }
 
 function jobToJobCardAdaptor(job: GetJobs): JobCardProps {
+  const applicantText = job.applicants > 1 ? 'applicants' : 'applicant';
   return {
     id: job.id,
     title: job.title,
-    body: `${job.applicants} applicant, ${job.missions} hired`,
+    body: `${job.applicants} ${applicantText}, ${job.missions} hired`,
     date: isoToStandard(job.updated_at),
   };
 }
