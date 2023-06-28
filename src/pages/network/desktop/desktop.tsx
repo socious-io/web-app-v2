@@ -20,7 +20,7 @@ export const Desktop: React.FC = () => {
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate({ to: `/jobs/applied/${identity.id}` }),
+      link: () => navigate({ to: `/d/jobs/applied/${identity.id}` }),
     },
   ];
 
