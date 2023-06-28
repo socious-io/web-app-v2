@@ -5,20 +5,6 @@ import { RootState } from 'src/store/store';
 import { Resolver } from './job-detail.types';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 
-function getUserData(identity: IdentityReq) {
-  if (identity.type === 'users') {
-    return {
-      name: identity.meta.name,
-      avatar: identity.meta.avatar,
-    };
-  } else {
-    return {
-      name: identity.meta.name,
-      avatar: identity.meta.image,
-    };
-  }
-}
-
 export const useJobDetailShared = () => {
   const navigate = useNavigate();
   const { jobDetail: job, screeningQuestions } = useMatch().data as Resolver;
@@ -39,7 +25,5 @@ export const useJobDetailShared = () => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
-  const userIdentity = getUserData(identity);
-
-  return { navigate, job, userIdentity, identity, location, screeningQuestions: screeningQuestions.questions };
+  return { navigate, job, identity, location, screeningQuestions: screeningQuestions.questions };
 };

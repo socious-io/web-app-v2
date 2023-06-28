@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { printWhen } from 'src/core/utils';
 import { TextClickableURLs } from '../text-clickable-urls';
 import { ExpandableTextProps } from './expandable-text.types';
+import { convertMarkdownToJSX } from 'src/core/convert-md-to-jsx';
 import css from './expandable-text.module.scss';
 
 export const ExpandableText: React.FC<ExpandableTextProps> = ({
   text,
   expectedLength = 200,
   clickableUrls = true,
+  isMarkdown = false,
 }) => {
   const [maintext, setMainText] = useState(text);
   const expect = text.slice(0, expectedLength);
@@ -24,9 +26,18 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
     setMainText(expect);
   }, [text]);
 
+  const renderText = () => {
+    if (clickableUrls && !isMarkdown) {
+      return <TextClickableURLs text={maintext} />;
+    } else if (isMarkdown) {
+      return convertMarkdownToJSX(maintext);
+    }
+    return maintext;
+  };
+
   return (
     <div className={css.expect}>
-      {clickableUrls ? <TextClickableURLs text={maintext} /> : maintext}
+      {renderText()}
       {printWhen(<>... </>, maintext.length < text.length)}
       {printWhen(
         <span className={css.expect__seeMore} onClick={toggleExpect}>

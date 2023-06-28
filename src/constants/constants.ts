@@ -87,7 +87,7 @@ export const BADGES: Record<string, Badges> = {
   NO_POVERTY: { value: 'NO_POVERTY', label: 'No Poverty', color: 'black' },
   ZERO_HUNGER: { value: 'ZERO_HUNGER', label: 'Zero Hunger', color: 'black' },
   HEALTH: { value: 'HEALTH', label: 'Good Health and Well-Being', color: '#459C49' },
-  EDUCATION_QUALITY: { value: 'EDUCATION_QUALITY', label: 'Education Quality', color: 'black' },
+  EDUCATION_QUALITY: { value: 'EDUCATION_QUALITY', label: 'Quality Education', color: 'black' },
   GENDER_EQUALITY: { value: 'GENDER_EQUALITY', label: 'Gender Equality', color: '#EA3F2A' },
   CLEAN_WATER_SANITATION: {
     value: 'CLEAN_WATER_SANITATION',

@@ -321,6 +321,7 @@
   "PROJECT.EXPIRE": "Expire",
   "PROJECT.ACTIVE": "Active",
   "ERROR.AUTH.NOT_MATCHED": "username or password not matched",
+  "ERROR.AUTH.NOT_MATCHED_PASSWORD": "password not matched",
   "ERROR.AUTH.DUPLICATE_KEY": "email is already exists",
   "ERROR.FORGET_PASSWORD.NOT_MATCHED": "user not found",
   "OTP_SENT_SUCCESS": "OTP has been successfully sent to your email",

@@ -13,6 +13,7 @@ import { SwitchAccountProps } from './switch-account.types';
 import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { printWhen } from 'src/core/utils';
+import { Button } from 'src/components/atoms/button/button';
 
 let timer: NodeJS.Timeout;
 
@@ -80,11 +81,28 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     }
   }
 
+  const navigateToRoute = (route: string) => {
+    navigate({ to: route });
+    closeMenu();
+  };
+
   const createdJobDividerJSX = (
     <Divider title="Jobs">
       <div className={css.settingsMenuContainer}>
-        <div onClick={() => navigate({ to: `/jobs/created/${props.identity.id}` })} className={css.menuItem}>
+        <div onClick={() => navigateToRoute(`/d/jobs/created/${props.identity.id}`)} className={css.menuItem}>
+          <img src="/icons/folder-black.svg" />
           <span>Created</span>
+        </div>
+      </div>
+    </Divider>
+  );
+
+  const myApplicationsJSX = (
+    <Divider title="Jobs">
+      <div className={css.settingsMenuContainer}>
+        <div onClick={() => navigateToRoute(`/d/jobs/applied/${props.identity.id}`)} className={css.menuItem}>
+          <img src="/icons/document-black.svg" />
+          <span>My applications</span>
         </div>
       </div>
     </Divider>
@@ -98,6 +116,14 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     <div style={containerStyles} className={css.container}>
       <Divider padding={0}>
         <div className={css.accountList}>
+          <Button
+            onClick={() => navigateToRoute('/organization/create/intro')}
+            color="white"
+            width="160px"
+            className={css.accountList__btn}
+          >
+            Add organization
+          </Button>
           {accountList.filter(filterCurrentIdentity).map((item) => (
             <div
               onClick={() => switchAccount(item.id)}
@@ -110,9 +136,18 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
           ))}
         </div>
       </Divider>
+      {printWhen(myApplicationsJSX, props.identity.type === 'users')}
       {printWhen(createdJobDividerJSX, props.identity.type === 'organizations')}
       <Divider title="Settings">
         <div className={css.settingsMenuContainer}>
+          <div className={css.menuItem} onClick={() => navigateToRoute('/privacy-policy')}>
+            <img src="/icons/document-one-black.svg" />
+            <span>Privacy policy</span>
+          </div>
+          <div className={css.menuItem} onClick={() => navigateToRoute('/terms-conditions')}>
+            <img src="/icons/document-one-black.svg" />
+            <span>Terms & conditions</span>
+          </div>
           <div
             className={css.menuItem}
             onClick={() => {
@@ -120,13 +155,19 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
               setChangePassOpen(true);
             }}
           >
+            <img src="/icons/key-black.svg" width={22} height={22} />
             <span>Change password</span>
+          </div>
+          <div className={css.menuItem} onClick={() => navigateToRoute('/delete-profile/delete')}>
+            <img src="/icons/delete-account-black.svg" />
+            <span>Delete Account</span>
           </div>
         </div>
       </Divider>
       <Divider>
         <div className={css.settingsMenuContainer}>
           <div onClick={logOut} className={css.menuItem}>
+            <img src="/icons/logout-red.svg" height={22} />
             <span>Log out</span>
           </div>
         </div>
