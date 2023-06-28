@@ -9,6 +9,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
   open,
   onClose,
   buttons,
+  talent_name,
   selectedRate,
   onChangeTextHandler,
   onRate,
@@ -30,7 +31,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
         </div>
         <div className={css.main}>
           <span className={css.title}>Feedback</span>
-          <span className={css.subtitle}>Share your experience working with Socious Inc. for this job.</span>
+          <span className={css.subtitle}>Share your experience working with {talent_name} for this job.</span>
           <Textarea placeholder="Your feedback" onChange={(e) => onChangeTextHandler(e.target.value)} />
           <div className={css.rate}>
             <span className={css.title}>Your satisfaction</span>
