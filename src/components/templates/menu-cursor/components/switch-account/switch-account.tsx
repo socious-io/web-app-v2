@@ -108,6 +108,17 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     </Divider>
   );
 
+  const paymentJSX = (
+    <Divider title="Billing & Payments">
+      <div className={css.settingsMenuContainer}>
+        <div onClick={() => navigateToRoute('/wallet')} className={css.menuItem}>
+          <img src="/icons/wallet.svg" />
+          <span>Wallet</span>
+        </div>
+      </div>
+    </Divider>
+  );
+
   function filterCurrentIdentity(acc: AccountsModel) {
     return !acc.current;
   }
@@ -138,6 +149,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
       </Divider>
       {printWhen(myApplicationsJSX, props.identity.type === 'users')}
       {printWhen(createdJobDividerJSX, props.identity.type === 'organizations')}
+      {printWhen(paymentJSX, props.identity.type === 'users')}
       <Divider title="Settings">
         <div className={css.settingsMenuContainer}>
           <div className={css.menuItem} onClick={() => navigateToRoute('/privacy-policy')}>
