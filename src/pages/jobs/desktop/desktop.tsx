@@ -16,8 +16,6 @@ export const Desktop = (): JSX.Element => {
     { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
   ];
 
-  //FIXME: Changes in applied and created jobs' routes
-
   const jobsMenuListUser = [
     {
       label: 'My applications',

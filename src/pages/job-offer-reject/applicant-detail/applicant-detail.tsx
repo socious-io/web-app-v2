@@ -12,7 +12,7 @@ export const ApplicantDetail = (): JSX.Element => {
   const navigate = useNavigate();
 
   function navigateToOverview() {
-    navigate({ to: `/jobs/created/${applicantDetail.project_id}/overview` });
+    navigate({ to: '..' });
   }
 
   function onOffer() {
