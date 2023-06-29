@@ -99,7 +99,6 @@ export type IdentityMeta = {
   name: string;
   status: string;
   username: string;
-  shortname?: string;
 };
 
 export type ParticipantsReq = {
