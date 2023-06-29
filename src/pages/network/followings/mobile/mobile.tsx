@@ -20,7 +20,7 @@ export const Mobile: React.FC = () => {
           <div key={list.id} className={css.followings__item}>
             <div className={css.followings__avatar}>
               <Avatar
-                img={list.identity_meta.image}
+                img={list.identity_meta.avatar || list.identity_meta?.image}
                 type={list.identity_type}
                 onClick={() => {
                   const profileUsername = list.identity_meta.username || list.identity_meta?.shortname;
@@ -55,7 +55,7 @@ export const Mobile: React.FC = () => {
 
   return (
     <div>
-      <Header onBack={() => navigate({ to: '/network' })} paddingTop={'var(--safe-area)'} title="Manage connections" />
+      <Header onBack={() => navigate({ to: '/network' })} paddingTop={'var(--safe-area)'} title="Following" />
       {followings?.total_count ? followingsListJSX : <div className={css.noFollowing}>No Following</div>}
       <UnfollowModal
         open={!!selectedUser.id}
