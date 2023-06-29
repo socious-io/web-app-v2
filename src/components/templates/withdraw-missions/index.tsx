@@ -8,8 +8,10 @@ import css from './withdraw-missions.module.scss';
 export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
   mission_name,
   escrow,
+  amount,
+  total,
+  fee,
   onClickWithdraw,
-  fee = 0,
   unit = 'USD',
   disbaledWithdraw = false,
   disableText = '',
@@ -22,14 +24,14 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
           <img src={`/icons/fiat/${unit}.svg`} className={css.balance__img} />
           {unit}
         </div>
-        $ {getFlooredFixed(escrow?.amount, 1)}
+        $ {getFlooredFixed(amount, 1)}
       </div>
-      {printWhen(
-        <div className={css.rowItem}>
-          <span className={css.title}>Fee </span>$ {getFlooredFixed(escrow?.amount * fee, 1)}
-        </div>,
-        !!fee
-      )}
+      <div className={css.rowItem}>
+        <span className={css.title}>Fee </span>$ {getFlooredFixed(fee, 1)}
+      </div>
+      <div className={css.rowItem}>
+        <span className={css.title}>total </span>$ {getFlooredFixed(total, 1)}
+      </div>
       {printWhen(
         <>
           <span className={css.title}>Transaction date</span>

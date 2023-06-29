@@ -298,6 +298,9 @@ export type MissionsResp = Pagination<
       released_at: string;
       created_at: string;
     };
+    amount: number;
+    total: number;
+    fee: number;
   }[]
 >;
 
@@ -372,6 +375,9 @@ export type Offer = {
   };
   payment_mode: 'FIAT' | 'CRYPTO';
   crypto_currency_address: string;
+  amount: number;
+  total: number;
+  fee: number;
 };
 
 export type GetOffer = Pagination<Offer[]>;

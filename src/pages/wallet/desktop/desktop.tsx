@@ -66,7 +66,9 @@ export const Desktop: React.FC = () => {
             key={item.id}
             mission_name={item.project?.title}
             escrow={item.escrow}
-            fee={item.assigner.meta.verified_impact ? 0.05 : 0.1}
+            amount={item.amount}
+            total={item.total}
+            fee={item.fee}
             disableText={
               item.escrow.release_id == null && isDisablePayout(item.escrow) ? 'You can payout after e few days' : ''
             }
