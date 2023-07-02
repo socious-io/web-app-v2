@@ -3,5 +3,6 @@ export type SendBoxProps = {
   onSend?: () => void;
   value?: string;
   img?: string;
+  disabled?: boolean;
   className?: string;
 };
