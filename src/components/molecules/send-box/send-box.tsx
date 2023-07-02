@@ -24,6 +24,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         style={{ background: '--var(--color-off-white-01)' }}
         placeholder="Write a message"
         variant="outline"
+        disabled={props.disabled}
       />
       <div style={setStyle()} onClick={props.onSend} className={css.sendIcon}>
         <img src="/icons/send-blue.svg" />
