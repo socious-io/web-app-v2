@@ -4,6 +4,7 @@ import { PayloadModel } from './desktop/search.types';
 import { useMatch, useNavigate, useLocation } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
 import { Pagination } from 'src/core/types';
+import { like, unlike } from '../feed/mobile/mobile.service';
 
 export const useSearchShared = () => {
   const resolver = useMatch();
@@ -12,6 +13,13 @@ export const useSearchShared = () => {
   const [result, setResult] = useState<number>(data.total_count);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (location.current.href.includes('search')) {
+      const query = location.current.search as PayloadModel;
+      updateList(query);
+    }
+  }, [location.current.href]);
 
   const updateList = (newState: PayloadModel) => {
     search(newState).then((resp) => {
@@ -27,9 +35,15 @@ export const useSearchShared = () => {
     });
   };
 
+  function findLabelByValue(value: string | unknown, defaultName: string): string {
+    const label = menu.find((item) => item.value === value)?.label;
+    return label ? label : defaultName;
+  }
+
   const menu: DropdownBtnItem[] = [
     { id: 1, label: 'Jobs', value: 'projects' },
     { id: 2, label: 'People', value: 'users' },
+    { id: 3, label: 'Posts', value: 'posts' },
   ];
 
   function onTypeChange(menu: DropdownBtnItem) {
@@ -41,10 +55,35 @@ export const useSearchShared = () => {
     });
   }
 
-  useEffect(() => {
-    const query = location.current.search as PayloadModel;
-    updateList(query);
-  }, [location.current.href]);
+  const onPostLike = (id: string) => {
+    const clone = [...list];
+    const ref = clone.find((item) => item.id === id) as Feed;
+    ref.liked = true;
+    ref.likes = ref.likes + 1;
+    setList(clone);
+    like(id).then(() => {});
+  };
 
-  return { updateList, onMorePageClick, menu, onTypeChange, location, list, result, data };
+  const onPostRemoveLike = (id: string) => {
+    const clone = [...list];
+    const ref = clone.find((item) => item.id === id) as Feed;
+    ref.liked = false;
+    ref.likes = ref.likes - 1;
+    setList(clone);
+    unlike(id).then(() => {});
+  };
+
+  return {
+    updateList,
+    onMorePageClick,
+    menu,
+    onTypeChange,
+    location,
+    list,
+    result,
+    data,
+    findLabelByValue,
+    onPostLike,
+    onPostRemoveLike,
+  };
 };
