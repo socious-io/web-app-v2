@@ -311,28 +311,10 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/feeds/:id',
-        loader: async ({ params }) => {
-          const requests = [getPostDetail(params.id), getComments(params.id, 1)];
-          const [post, comments] = await Promise.all(requests);
-          return { post, comments };
-        },
-        element: () => import('../../pages/feed/post-detail/post-detail.container').then((m) => <m.PostDetail />),
-      },
-      {
         path: 'search',
         element: () => import('../../pages/search/search').then((m) => <m.Search />),
         loader: (p) => {
           return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 });
-        },
-      },
-      {
-        path: 'wallet',
-        element: () => import('../../pages/wallet/wallet.container').then((m) => <m.Wallet />),
-        loader: async () => {
-          const requests = [getMissionsList({ page: 1 }), getSrtipeProfile()];
-          const [missionsList, stripeProfile] = await Promise.all(requests);
-          return { missionsList, stripeProfile };
         },
       },
       {
@@ -570,7 +552,15 @@ export const routes: Route[] = [
               },
             ],
           },
-
+          {
+            path: '/feeds/:id',
+            loader: async ({ params }) => {
+              const requests = [getPostDetail(params.id), getComments(params.id, 1)];
+              const [post, comments] = await Promise.all(requests);
+              return { post, comments };
+            },
+            element: () => import('../../pages/feed/post-detail/post-detail.container').then((m) => <m.PostDetail />),
+          },
           {
             path: 'feeds',
             element: () => import('../../pages/feed/feed.container').then((m) => <m.Feed />),
@@ -594,6 +584,15 @@ export const routes: Route[] = [
                 element: () => import('src/pages/network/network.container').then((m) => <m.Network />),
               },
             ],
+          },
+          {
+            path: 'wallet',
+            element: () => import('../../pages/wallet/wallet.container').then((m) => <m.Wallet />),
+            loader: async () => {
+              const requests = [getMissionsList({ page: 1 }), getSrtipeProfile()];
+              const [missionsList, stripeProfile] = await Promise.all(requests);
+              return { missionsList, stripeProfile };
+            },
           },
           {
             element: <Navigate to="/jobs" />,

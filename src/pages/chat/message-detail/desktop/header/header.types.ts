@@ -4,4 +4,5 @@ export interface HeaderProps {
   username?: string;
   img?: string;
   lastOnline?: string;
+  loading?: boolean;
 }

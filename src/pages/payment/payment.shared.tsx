@@ -20,14 +20,17 @@ export const usePaymentShared = () => {
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
   const [cards, setCards] = useState(cardInfo);
   const offerId = offer?.id;
-  const { created_at, recipient, assignment_total: assignment, project_id, project, payment_mode } = offer || {};
+  const {
+    created_at,
+    recipient,
+    amount: assignment_total,
+    total: total_price,
+    fee: commision,
+    project_id,
+    project,
+    payment_mode,
+  } = offer || {};
   const { wallet_address: contributor } = recipient?.meta || {};
-  const isPaidFiat = project?.payment_type === 'PAID' && payment_mode === 'FIAT';
-  const assignment_total = getFlooredFixed(assignment, 1);
-  const commisionFee = offer.offerer.meta.verified_impact ? 0.02 : 0.03;
-  const fee = assignment_total * commisionFee;
-  const commision = getFlooredFixed(isPaidFiat ? fee + (3.4 % +0.5) : fee, 1);
-  const total_price = getFlooredFixed(commision + assignment_total, 1);
   const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
   const isPaidCrypto = project?.payment_type === 'PAID' && payment_mode === 'CRYPTO';
   const isDisabledProceedPayment = process || (isPaidCrypto ? !isConnected || !account : !selectedCard);
@@ -106,9 +109,9 @@ export const usePaymentShared = () => {
 
   return {
     offer,
-    assignment_total,
-    commision,
-    total_price,
+    assignment_total: getFlooredFixed(assignment_total, 1),
+    commision: getFlooredFixed(commision, 1),
+    total_price: getFlooredFixed(total_price, 1),
     start_date,
     isPaidCrypto,
     cards,

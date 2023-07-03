@@ -26,6 +26,7 @@ export const useMessageDetailShared = () => {
   const chatList = chatListAdaptor(identity.id, messages!.items, participants!.items);
   const participantDetail = getParticipantDetail(identity.id, participants!.items);
   const [list, setList] = useState(chatList);
+  const [loadingChat, setLoadingChat] = useState(false);
 
   function onSend() {
     const params = { id, identity, text: sendingValue };
@@ -36,10 +37,12 @@ export const useMessageDetailShared = () => {
 
   async function updateMessages(id: string) {
     setList([]);
+    setLoadingChat(true);
     const messages = await getMessagesById({ id, page: 1 });
     const participants = await getParticipantsById(id);
     const chatList = chatListAdaptor(identity.id, messages!.items, participants!.items);
     setList(chatList);
+    setLoadingChat(false);
   }
 
   async function onContactClick(contact: ContactItem) {
@@ -62,5 +65,14 @@ export const useMessageDetailShared = () => {
     ]);
   });
 
-  return { participantDetail, list, sendingValue, setSendingValue, onSend, onContactClick, updateMessages };
+  return {
+    participantDetail,
+    list,
+    sendingValue,
+    setSendingValue,
+    onSend,
+    onContactClick,
+    updateMessages,
+    loadingChat,
+  };
 };

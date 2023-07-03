@@ -160,7 +160,7 @@ export const Mobile: React.FC = () => {
       default: true,
     },
     {
-      name: 'Created',
+      name: 'Requests',
       content: (
         <>
           <Accordion id="received" title={`Requests received (${receivedRequestsList?.total_count})`}>

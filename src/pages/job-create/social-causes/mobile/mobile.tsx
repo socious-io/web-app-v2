@@ -19,7 +19,7 @@ export const Mobile = (): JSX.Element => {
   });
 
   function onBack() {
-    navigate({ to: `/jobs/created/${identity.meta.id}` });
+    navigate({ to: `/m/jobs/created/${identity.meta.id}` });
     dispatch(resetCreatePostWizard());
   }
 

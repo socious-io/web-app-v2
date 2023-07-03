@@ -175,7 +175,7 @@ export const Desktop = (): JSX.Element => {
             {printWhen(bioJSX, !!user.bio)}
             <Divider>
               <div className={css.userConnections}>
-                <div>{user.followings} connections</div>
+                <div>{user.followings} Connections</div>
                 <div>{user.followers} Followers</div>
               </div>
             </Divider>
