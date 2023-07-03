@@ -14,7 +14,7 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
   const navigate = useNavigate();
 
   function goToUserProfile(id: string) {
-    return () => navigate({ to: `/jobs/${id}` });
+    return () => navigate({ to: `/profile/users/${id}/view` });
   }
 
   return (

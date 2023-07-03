@@ -8,7 +8,7 @@ export default function BasicPopover() {}
 
 export const DropdownBtn = (props: DropdownBtnProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(props.value);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
