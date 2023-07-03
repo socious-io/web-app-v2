@@ -10,3 +10,34 @@
   font-weight: 600;
   font-size: 1.25rem;
 }
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: var(--font-size-s2);
+}
+
+.loader {
+  position: relative;
+  animation: placeholderSkeleton 1s infinite linear;
+  animation-fill-mode: forwards;
+  background: #f6f7f8;
+  background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #dcdcdf 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  width: 2.375rem;
+  height: 2.375rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-gray-04);
+}
+
+@keyframes placeholderSkeleton {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}

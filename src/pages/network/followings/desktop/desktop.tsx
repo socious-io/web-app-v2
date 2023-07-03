@@ -22,7 +22,7 @@ export const Desktop: React.FC = () => {
           <div key={list.id} className={css.followings__item}>
             <div className={css.followings__avatar}>
               <Avatar
-                img={list.identity_meta.image}
+                img={list.identity_meta.avatar || list.identity_meta?.image}
                 type={list.identity_type}
                 onClick={() => {
                   const profileUsername = list.identity_meta.username || list.identity_meta?.shortname;

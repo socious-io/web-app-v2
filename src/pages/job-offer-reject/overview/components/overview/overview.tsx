@@ -32,7 +32,7 @@ export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
         <div className={css.group}>
           <div className={css.groupTitle}>Job description</div>
           <div className={css.value}>
-            <ExpandableText text={data.description} />
+            <ExpandableText text={data.description} isMarkdown />
           </div>
         </div>
         <div className={css.group}>

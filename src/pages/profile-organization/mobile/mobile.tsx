@@ -5,10 +5,9 @@ import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-do
 import { Divider } from 'src/components/templates/divider/divider';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
-import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
 import { ConnectModal } from '../connect-modal';
 import { printWhen } from 'src/core/utils';
-import { badgesList, showActions } from '../profile-organization.services';
+import { showActions } from '../profile-organization.services';
 import { useProfileOrganizationShared } from '../profile-organization.shared';
 import css from './mobile.module.scss';
 
@@ -21,9 +20,7 @@ export const Mobile = (): JSX.Element => {
     skills,
     navigateToEdit,
     profileBelongToCurrentUser,
-    onAchievementClick,
     socialCauses,
-    badges,
     onConnect,
     connectStatus,
     showMessageIcon,
@@ -154,21 +151,10 @@ export const Mobile = (): JSX.Element => {
           {printWhen(userFullNameJSX, !!organization?.first_name || !!organization?.last_name)}
           {printWhen(usernameJSX, !!organization?.username)}
         </Divider>
-        <Divider>
-          <div className={css.achievements} onClick={onAchievementClick}>
-            <div className={css.badges}>
-              {badgesList(badges.badges).map((item) => {
-                return <ImpactBadge key={item.color} size="2.75rem" {...item} />;
-              })}
-            </div>
-            <div className={css.achievementsLink}>Achievements</div>
-          </div>
-        </Divider>
-
         {printWhen(bioJSX, !!organization.bio)}
         <Divider>
           <div className={css.userConnections}>
-            <div>{organization.followings} connections</div>
+            <div>{organization.followings} Connections</div>
             <div>{organization.followers} Followers</div>
           </div>
         </Divider>

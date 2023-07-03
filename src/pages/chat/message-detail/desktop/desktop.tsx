@@ -25,8 +25,16 @@ export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
   const resolver = useMatch<MessageLoader>();
   const { summery, followings } = resolver.data || {};
-  const { participantDetail, list, sendingValue, setSendingValue, onSend, onContactClick, updateMessages } =
-    useMessageDetailShared();
+  const {
+    participantDetail,
+    list,
+    sendingValue,
+    setSendingValue,
+    onSend,
+    onContactClick,
+    updateMessages,
+    loadingChat,
+  } = useMessageDetailShared();
   const initialState = chatEntityToContactListAdaptor(summery?.items);
   const initialList = convertFollowingsToContactList(followings?.items);
   const [chats, setChats] = useState<ContactItem[]>(initialState);
@@ -69,7 +77,7 @@ export const Desktop = (): JSX.Element => {
     const createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [id] });
     setOpenCreateChatModal(false);
     navigate({ to: `../${createdChats?.id}` });
-    updateMessages(id);
+    updateMessages(createdChats?.id);
     updateChatList();
   }
 
@@ -108,10 +116,17 @@ export const Desktop = (): JSX.Element => {
             name={participantDetail.name}
             img={participantDetail.avatar || participantDetail?.image}
             username={participantDetail.username || participantDetail?.shortname}
+            loading={loadingChat}
           />
-          <div className={css.main}>{list.length ? <ChatList list={list} /> : emptyBoxJSX}</div>
+          {loadingChat ? (
+            <div className={css.main__loading}>
+              <span className={css.loader} />
+            </div>
+          ) : (
+            <div className={css.main}>{list.length ? <ChatList list={list} /> : emptyBoxJSX}</div>
+          )}
           <div className={css.sendBoxContainer}>
-            <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={onSend} />
+            <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={onSend} disabled={loadingChat} />
           </div>
         </Card>
       </TwoColumnCursor>

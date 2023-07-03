@@ -26,6 +26,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
   });
   const [feedbackText, setFeedbackText] = useState('');
   const [satisfactory, setSatisfactory] = useState<Rate>('satisfactory');
+  const selectedFeedbackName = endHiredList.items?.find((list) => list.id === selectedIdFeedback.id)?.assignee?.meta;
 
   function onUserConfirm(id: string, escrowId?: string) {
     return async (confirmed: ConfirmResult) => {
@@ -79,6 +80,9 @@ export const Hired = (props: HiredProps): JSX.Element => {
         open={!!selectedIdFeedback.id}
         onClose={() => setSelectedIdFeedback({ ...selectedIdFeedback, id: '' })}
         buttons={[{ children: 'Submit', disabled: !feedbackText, onClick: onSubmitFeedback }]}
+        talent_name={
+          (selectedFeedbackName?.name || selectedFeedbackName?.username) as string
+        }
         onChangeTextHandler={setFeedbackText}
         onRate={(value) => setSatisfactory(value as Rate)}
         selectedRate={satisfactory}

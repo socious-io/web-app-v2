@@ -37,7 +37,7 @@ export const Mobile = (): JSX.Element => {
   function submit(payload: CreatePostWizard) {
     createPost(payload).then((resp) => {
       dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-        navigate({ to: `/jobs/created/${resp.identity_id}` });
+        navigate({ to: `/m/jobs/created/${resp.identity_id}` });
         store.dispatch(resetCreatePostWizard());
       });
     });
