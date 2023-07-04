@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000 --host 0.0.0.0 --mode development",
-    "build": "vite build --mode production",
+    "build:prod": "vite build --mode production",
+    "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "test": "jest --watch",
     "storybook": "start-storybook -p 6006",
@@ -44,6 +45,7 @@
     "moment": "^2.29.4",
     "ramda": "^0.28.0",
     "react": "^18.2.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.1",
     "react-infinite-scroller": "^1.2.6",
