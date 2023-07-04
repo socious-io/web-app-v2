@@ -4,6 +4,8 @@ import { get, post } from '../../../core/http';
 import { CategoriesResp, Cities, CreatePostPayload, Pagination } from '../../../core/types';
 import {
   CreatePostWizard,
+  setMaxRange,
+  setMinRange,
   setPostCity,
   setPostCountry,
   setPostDescriptionTitle,
@@ -56,6 +58,12 @@ export function updateForm(dispatch: Dispatch<AnyAction>) {
         break;
       case 'experience_level':
         dispatch(setPostExperienceLevel(value));
+        break;
+      case 'payment_range_lower':
+        dispatch(setMinRange(value));
+        break;
+      case 'payment_range_higher':
+        dispatch(setMaxRange(value));
         break;
     }
   };

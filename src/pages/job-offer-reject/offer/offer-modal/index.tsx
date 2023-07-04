@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Dapp from 'src/dapp';
 import { WebModal } from 'src/components/templates/web-modal';
 import { Input } from 'src/components/atoms/input/input';
@@ -32,16 +32,12 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
   const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
   const { tokens, openModal, setOpenModal, selectedToken, onSelectTokens, equivalentUSD, web3 } = useOfferShared();
 
-  useEffect(() => {
-    setPaymentMode(defaultPaymentMode);
-  }, [isPaidType]);
-
   async function onSubmit() {
     const payload: OfferPayload = {
       payment_mode: paymentMode,
       assignment_total: isPaidType ? (form.controls.assignmentTotal.value as number) : 1,
-      offer_message: form.controls.message.value as string || initialForm.message,
-      total_hours: form.controls.estimatedTotalHours.value as string || initialForm.estimatedTotalHours,
+      offer_message: (form.controls.message.value as string) || initialForm.message,
+      total_hours: (form.controls.estimatedTotalHours.value as string) || initialForm.estimatedTotalHours,
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
     offer(applicantDetail.id, payload).then(() => {
