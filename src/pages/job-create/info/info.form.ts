@@ -1,4 +1,4 @@
-import { required } from '../../../core/form';
+import { max, min, pattern, required } from '../../../core/form';
 import { noEmptyString } from '../../../core/form/customValidators/customValidators';
 import { FormModel } from '../../../core/form/useForm/useForm.types';
 import { CreatePostWizard } from '../../../store/reducers/createPostWizard.reducer';
@@ -40,6 +40,22 @@ export function formModel(formState: CreatePostWizard): FormModel {
     experience_level: {
       initialValue: formState.experience_level,
       validators: [required()],
+    },
+    payment_range_lower: {
+      initialValue: formState.payment_range_lower,
+      validators: [
+        required(),
+        pattern('patternName', /^[+-]?\d+(\.\d+)?$/, 'value should be a number'),
+        max(Number(formState.payment_range_higher), 'value should lower than maximum'),
+      ],
+    },
+    payment_range_higher: {
+      initialValue: formState.payment_range_higher,
+      validators: [
+        required(),
+        pattern('patternName', /^[+-]?\d+(\.\d+)?$/, 'value should be a number'),
+        min(Number(formState.payment_range_lower), 'value should higher than minimum'),
+      ],
     },
   };
 }
