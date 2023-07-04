@@ -4,10 +4,11 @@ import { hideSpinner, showSpinner } from '../store/reducers/spinner.reducer';
 import store from '../store/store';
 import translate from '../translations';
 import { nonPermanentStorage } from './storage/non-permanent';
-import { config } from 'src/config';
+// import { config } from 'src/config';
 
 export const http = axios.create({
-  baseURL: config.baseURL,
+  //   baseURL: config.baseURL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
   timeout: 1000000,
 });
