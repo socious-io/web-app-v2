@@ -50,20 +50,41 @@
 }
 
 .paymentRange {
-  .paymentRangeTitle {
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .label {
     font-weight: 600;
   }
-  .paymentRangeInputs {
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    input {
-      padding: 0;
-      margin: 0;
-      max-width: 95%;
-    }
+
+  .info {
+    color: var(--color-gray-01);
   }
+}
+
+.errorsContainer {
+  margin-top: 4px;
+  transition: height 300ms 0s;
+}
+
+.errorItem {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-s);
+  color: var(--color-error-01);
 }
 
 .priceNotifying {

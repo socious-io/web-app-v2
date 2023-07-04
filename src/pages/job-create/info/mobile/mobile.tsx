@@ -22,6 +22,7 @@ import {
   setPostPaymentType,
 } from 'src/store/reducers/createPostWizard.reducer';
 import { dialog } from 'src/core/dialog/dialog';
+import { printWhen } from 'src/core/utils';
 import { CategoriesResp } from 'src/core/types';
 import { createPost } from '../info.services';
 import { useInfoShared } from '../info.shared';
@@ -30,7 +31,7 @@ import css from './mobile.module.scss';
 export const Mobile = (): JSX.Element => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { formState, form, updateCityList, cities } = useInfoShared();
+  const { formState, form, updateCityList, cities, errors, isDirtyMinOrMax, rangeLabel } = useInfoShared();
   const resolvedJobCategories = useMatch().ownData.categories as CategoriesResp['categories'];
   const categories = jobCategoriesToDropdown(resolvedJobCategories);
 
@@ -42,6 +43,16 @@ export const Mobile = (): JSX.Element => {
       });
     });
   }
+
+  const errorsJSX = (
+    <div style={{ height: '`${errors.length}rem`' }} className={css.errorsContainer}>
+      {errors.map((error, i) => (
+        <div className={css.errorItem} key={i}>
+          <>- {error}</>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div className={css.container}>
@@ -135,11 +146,39 @@ export const Mobile = (): JSX.Element => {
               />
               <RadioGroup
                 name="PaymentScheme"
-                value="FIXED"
+                value={formState.payment_scheme}
                 onChange={console.log}
                 label="Payment terms"
                 list={PROJECT_PAYMENT_SCHEME}
               />
+              <div className={css.paymentRange}>
+                <span className={css.label}>{rangeLabel}</span>
+                <div className={css.inputs}>
+                  <div className={css.input}>
+                    Minimum
+                    <Input
+                      placeholder="Min"
+                      register={form}
+                      name="payment_range_lower"
+                      value={formState.payment_range_lower}
+                    />
+                  </div>
+                  <div className={css.input}>
+                    Maximum
+                    <Input
+                      placeholder="Max"
+                      register={form}
+                      name="payment_range_higher"
+                      value={formState.payment_range_higher}
+                    />
+                  </div>
+                </div>
+                {printWhen(errorsJSX, isDirtyMinOrMax)}
+                {printWhen(
+                  <span className={css.info}>Prices will be shown in USD ($)</span>,
+                  formState.payment_type === 'PAID'
+                )}
+              </div>
             </div>
           </Divider>
           <Divider title="Experience & skills" divider="space">

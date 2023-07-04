@@ -16,6 +16,8 @@ export type CreatePostWizard = {
   payment_scheme: string;
   city: string;
   payment_currency: string;
+  payment_range_lower: string;
+  payment_range_higher: string;
 };
 
 const initialState: CreatePostWizard = {
@@ -25,15 +27,17 @@ const initialState: CreatePostWizard = {
   country: '',
   project_type: '',
   project_length: '',
-  payment_type: '',
+  payment_type: 'PAID',
   causes_tags: [],
   skills: [],
   status: 'ACTIVE',
   experience_level: 0,
   job_category_id: '',
-  payment_scheme: '',
+  payment_scheme: 'FIXED',
   city: '',
   payment_currency: 'USD',
+  payment_range_lower: '',
+  payment_range_higher: '',
 };
 
 export const createPostWizardSlice = createSlice({
@@ -85,6 +89,12 @@ export const createPostWizardSlice = createSlice({
     setPostPaymentCurrency: (state, action) => {
       state.payment_currency = action.payload;
     },
+    setMinRange: (state, action) => {
+      state.payment_range_lower = action.payload;
+    },
+    setMaxRange: (state, action) => {
+      state.payment_range_higher = action.payload;
+    },
     resetCreatePostWizard: () => {
       return initialState;
     },
@@ -107,5 +117,7 @@ export const {
   setPostPaymentScheme,
   setPostCity,
   setPostPaymentCurrency,
+  setMinRange,
+  setMaxRange,
   resetCreatePostWizard,
 } = createPostWizardSlice.actions;

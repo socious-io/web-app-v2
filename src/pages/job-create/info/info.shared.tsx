@@ -15,6 +15,18 @@ export const useInfoShared = () => {
   const formState = useSelector<RootState, CreatePostWizard>((state) => state.createPostWizard);
   const memoizedFormState = useMemo(() => formModel(formState), []);
   const form = useForm(memoizedFormState);
+  const controlErrors =
+    { ...form.controls.payment_range_lower?.errors, ...form.controls.payment_range_higher?.errors } || {};
+  const isDirtyMinOrMax = form.controls.payment_range_lower.isDirty || form.controls.payment_range_higher.isDirty;
+  const errors = Object.values(controlErrors) as string[];
+  const label = `${formState.payment_type}-${formState.payment_scheme}`;
+
+  const rangeLabel: Record<string, string> = {
+    'PAID-FIXED': 'Payment range',
+    'PAID-HOURLY': 'Hourly rate',
+    'VOLUNTEER-FIXED': 'Total commitment',
+    'VOLUNTEER-HOURLY': 'Weekly hours',
+  };
 
   Object.keys(formModel(formState)).forEach((prop) => {
     const p = prop as keyof ReturnType<typeof formModel>;
@@ -29,5 +41,13 @@ export const useInfoShared = () => {
       .then(setCities);
   }
 
-  return { formState, form, updateCityList, cities };
+  return {
+    formState,
+    form,
+    updateCityList,
+    cities,
+    errors,
+    isDirtyMinOrMax,
+    rangeLabel: rangeLabel[label],
+  };
 };
