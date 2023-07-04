@@ -6,7 +6,7 @@ import translate from '../translations';
 import { nonPermanentStorage } from './storage/non-permanent';
 
 export const http = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL_2,
   withCredentials: true,
   timeout: 1000000,
 });
