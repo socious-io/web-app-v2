@@ -6,7 +6,10 @@ frontend:
         - npm ci
     build:
       commands:
-        - npm run build
+        # - npm run build
+        #   commands:
+        - if [ "${AWS_BRANCH}" = "production" ]; then "npm run build:prod"; fi
+        - if [ "${AWS_BRANCH}" = "main" ]; then echo "npm run build:dev"; fi
   artifacts:
     # IMPORTANT - Please verify your build output directory
     baseDirectory: dist
