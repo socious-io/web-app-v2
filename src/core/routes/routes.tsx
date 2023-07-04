@@ -9,7 +9,6 @@ import { getActiveJobs, getArchivedJobs, getDraftJobs } from '../../pages/job-cr
 import { getFeedList } from '../../pages/feed/mobile/mobile.service';
 import { getComments, getPostDetail } from '../../pages/feed/post-detail/post-detail.service';
 import { getJobCategories } from '../../pages/job-create/info/info.services';
-import { search } from '../../pages/search/search.services';
 import { getNotificationList } from '../../pages/notifications/notifications.service';
 import { getScreeningQuestions } from '../../pages/job-apply/apply/apply.services';
 import {
@@ -30,6 +29,7 @@ import { getSettingsItems } from 'src/pages/notifications/settings/settings.serv
 import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { getMissionsList, getSrtipeProfile } from 'src/pages/wallet/wallet.service';
+import { search } from 'src/pages/search/desktop/search.services';
 
 export const routes: Route[] = [
   {
@@ -312,10 +312,8 @@ export const routes: Route[] = [
       },
       {
         path: 'search',
-        element: () => import('../../pages/search/search').then((m) => <m.Search />),
-        loader: (p) => {
-          return search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 });
-        },
+        element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),
+        loader: (p) => search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 }),
       },
       {
         path: 'privacy-policy',
@@ -394,6 +392,17 @@ export const routes: Route[] = [
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
+          {
+            path: '/d/search',
+            element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),
+            loader: (p) =>
+              search({
+                filter: {},
+                q: p.search.q as string,
+                type: p.search.type,
+                page: 1,
+              }),
+          },
           {
             path: 'd/jobs/created/:id/overview',
             children: [

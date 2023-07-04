@@ -35,6 +35,7 @@ export function Button(props: ButtonProps): JSX.Element {
 
   return (
     <button
+      ref={props.ref}
       type={type}
       onClick={onClick}
       disabled={disabled}
