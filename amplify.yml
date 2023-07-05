@@ -6,7 +6,7 @@ frontend:
         - npm ci
     build:
       commands:
-        - if [ "${AWS_BRANCH}" = "production" ]; then npx vite build --mode production; fi
+        - if [ "${AWS_BRANCH}" = "prod" ]; then npx vite build --mode production; fi
         - if [ "${AWS_BRANCH}" = "main" ]; then npx vite build --mode development; fi
   artifacts:
     baseDirectory: dist
