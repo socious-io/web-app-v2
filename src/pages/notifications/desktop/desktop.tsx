@@ -24,6 +24,7 @@ export const Desktop = (): JSX.Element => {
           onMorePageClick={onMorePageClick}
           list={notificationList}
           showSeeMore={onShowSeeMore(notificationList.length)}
+          route="d"
         />
       </Card>
     </TwoColumnCursor>
