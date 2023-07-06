@@ -5,6 +5,8 @@ import { PeopleList } from '../components/people-list/people-list';
 import { printWhen } from 'src/core/utils';
 import { useSearchShared } from '../search.shared';
 import { FeedList } from 'src/components/organisms/feed-list/feed-list';
+import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
+import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
 
 export const Search = () => {
   const {
@@ -17,16 +19,12 @@ export const Search = () => {
     findLabelByValue,
     onPostLike,
     onPostRemoveLike,
+    onSocialCausesChange,
+    onSkillsChange,
   } = useSearchShared();
 
   const feedListJSX = (
-    <FeedList
-      data={list}
-    //   onMoreClick={onMorePageClick}
-      onLike={onPostLike}
-      onRemoveLike={onPostRemoveLike}
-      onMorePageClick={onMorePageClick}
-    />
+    <FeedList data={list} onLike={onPostLike} onRemoveLike={onPostRemoveLike} onMorePageClick={onMorePageClick} />
   );
 
   return (
@@ -39,6 +37,8 @@ export const Search = () => {
             menus={menu}
             value={findLabelByValue(location.current.search.type, 'Type')}
           />
+          <SocialCausesFilter onSubmit={onSocialCausesChange} />
+          <SkillsFilter onSubmit={onSkillsChange} />
         </div>
       </div>
       <div className={css.main}>

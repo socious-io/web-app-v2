@@ -36,6 +36,7 @@ export const DropdownBtn = (props: DropdownBtnProps): JSX.Element => {
     <div>
       <button style={value ? activeStyles : {}} className={css.btn} onClick={handleClick}>
         {value ? value : props.placeholder}
+        <img className={css.chevronDown} src="/icons/arrow-down-white.svg" />
       </button>
       <Popover
         id={id}
