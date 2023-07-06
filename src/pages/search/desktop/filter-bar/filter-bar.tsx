@@ -13,14 +13,6 @@ export const FilterBar = (props: FilterBarTypes): JSX.Element => {
   return (
     <div className={css.container}>
       <div ref={typeBtnAnchor}>TYPE</div>
-      {/* <Popover
-        anchor={typeBtnAnchor.current}
-        open={true}
-        onClose={function (): void {
-          throw new Error('Function not implemented.');
-        }}
-        menuList={menu}
-      ></Popover> */}
     </div>
   );
 };

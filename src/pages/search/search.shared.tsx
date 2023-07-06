@@ -55,6 +55,20 @@ export const useSearchShared = () => {
     });
   }
 
+  function onSkillsChange(skills: string[]) {
+    navigate({
+      to: `/d/search`,
+      search: (p) => ({ ...p, page: 1, filter: { ...p.filter, skills } }),
+    });
+  }
+
+  function onSocialCausesChange(causes_tags: string[]) {
+    navigate({
+      to: `/d/search`,
+      search: (p) => ({ ...p, page: 1, filter: { ...p.filter, causes_tags } }),
+    });
+  }
+
   const onPostLike = (id: string) => {
     const clone = [...list];
     const ref = clone.find((item) => item.id === id) as Feed;
@@ -85,5 +99,7 @@ export const useSearchShared = () => {
     findLabelByValue,
     onPostLike,
     onPostRemoveLike,
+    onSocialCausesChange,
+    onSkillsChange,
   };
 };
