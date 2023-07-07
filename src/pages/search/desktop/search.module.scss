@@ -18,11 +18,17 @@
 }
 
 .results {
-  padding-bottom: 1rem;
+  //   padding-bottom: 1rem;
+  height: 4rem;
   color: var(--color-gray-02);
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d8d8d8;
 }
 
-.main {
+.listContainer {
   padding: 1rem;
   background: #f3f3f3;
   overflow-y: scroll;
@@ -30,7 +36,11 @@
   justify-content: center;
 }
 
-.mainContent {
+.listContainerContent {
   width: 100%;
   max-width: 800px;
+}
+
+.item {
+  border: 1px solid #000;
 }
