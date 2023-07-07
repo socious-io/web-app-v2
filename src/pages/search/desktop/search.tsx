@@ -7,6 +7,7 @@ import { useSearchShared } from '../search.shared';
 import { FeedList } from 'src/components/organisms/feed-list/feed-list';
 import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
 import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
+import { useState } from 'react';
 
 export const Search = () => {
   const {
@@ -41,9 +42,10 @@ export const Search = () => {
           <SkillsFilter onSubmit={onSkillsChange} />
         </div>
       </div>
-      <div className={css.main}>
-        <div className={css.mainContent}>
-          <div className={css.results}>{result} Results</div>
+      <div></div>
+      <div className={css.results}>{result} Results</div>
+      <div className={css.listContainer}>
+        <div className={css.listContainerContent}>
           {printWhen(
             <PeopleList data={list} onMorePageClick={onMorePageClick} />,
             location.current.search.type === 'users'
@@ -53,6 +55,11 @@ export const Search = () => {
             location.current.search.type === 'projects'
           )}
           {printWhen(feedListJSX, location.current.search.type === 'posts')}
+        </div>
+        <div className={css.item}>
+          asdf Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore illum minus temporibus nostrum laborum
+          quod dignissimos commodi. Ipsa molestiae architecto nihil, porro sint accusantium, ducimus temporibus
+          consequuntur rem nesciunt qui.
         </div>
       </div>
     </div>

@@ -43,7 +43,7 @@ export const useSearchShared = () => {
   const menu: DropdownBtnItem[] = [
     { id: 1, label: 'Jobs', value: 'projects' },
     { id: 2, label: 'People', value: 'users' },
-    { id: 3, label: 'Posts', value: 'posts' },
+    // { id: 3, label: 'Posts', value: 'posts' },
   ];
 
   function onTypeChange(menu: DropdownBtnItem) {
