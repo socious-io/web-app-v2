@@ -20,6 +20,7 @@ export const Mobile: React.FC = () => {
           onMorePageClick={onMorePageClick}
           list={notificationList}
           showSeeMore={onShowSeeMore(notificationList.length)}
+          route="m"
         />
       </div>
     </div>
