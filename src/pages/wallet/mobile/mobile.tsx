@@ -39,6 +39,7 @@ export const Mobile: React.FC = () => {
             amount={item.amount}
             total={item.total}
             fee={item.fee}
+            service={item?.payment?.service}
             disableText={
               item.escrow.release_id == null && isDisablePayout(item.escrow) ? 'You can payout after e few days' : ''
             }

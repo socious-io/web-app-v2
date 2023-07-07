@@ -11,14 +11,19 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
   amount,
   total,
   fee,
+  service,
   onClickWithdraw,
   unit = 'USD',
   disbaledWithdraw = false,
   disableText = '',
 }) => {
+  const isStripe = service === 'STRIPE';
+
   return (
     <Card className={css.container}>
-      <div className={css.header}>{mission_name}</div>
+      <div className={css.header}>
+        {mission_name} ({isStripe ? 'FIAT' : 'CRYPTO'})
+      </div>
       <div className={css.rowItem}>
         <div className={css.balance}>
           <img src={`/icons/fiat/${unit}.svg`} className={css.balance__img} />
@@ -46,10 +51,13 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
         </>,
         escrow?.release_id != null
       )}
-      {printWhen(<div className={css.errorText}>{disableText}</div>, !!disableText)}
-      <Button color="blue" disabled={disbaledWithdraw} onClick={onClickWithdraw} className={css.button}>
-        Withdraw funds
-      </Button>
+      {printWhen(<div className={css.errorText}>{disableText}</div>, !!disableText && isStripe)}
+      {printWhen(
+        <Button color="blue" disabled={disbaledWithdraw} onClick={onClickWithdraw} className={css.button}>
+          Withdraw funds
+        </Button>,
+        isStripe
+      )}
     </Card>
   );
 };
