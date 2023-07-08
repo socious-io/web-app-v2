@@ -4,7 +4,6 @@ import { Card } from 'src/components/atoms/card/card';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
 import { printWhen } from 'src/core/utils';
-import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
@@ -12,6 +11,7 @@ import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { getCategories } from '../../job-detail.services';
 import { JobDetailCardProps } from './job-detail-card.types';
 import { useState } from 'react';
+import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
 
 export function JobDetailCard(props: JobDetailCardProps) {
   const [openApplyModal, setOpenApplyModal] = useState(false);
@@ -65,7 +65,7 @@ export function JobDetailCard(props: JobDetailCardProps) {
 
   return (
     <Card className={css.card} padding={0}>
-      <ApplyModal open={openApplyModal} onClose={() => setOpenApplyModal(false)} />
+      <ApplyModal data={props} open={openApplyModal} onClose={() => setOpenApplyModal(false)} />
       {printWhen(applicationSubmittedJSX, props.job.applied && props.userType === 'users')}
       <Divider>
         <div className={css.firstRow}>

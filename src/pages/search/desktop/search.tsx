@@ -4,14 +4,11 @@ import { JobList } from 'src/components/organisms/job-list/job-list';
 import { PeopleList } from '../components/people-list/people-list';
 import { printWhen } from 'src/core/utils';
 import { useSearchShared } from '../search.shared';
-import { FeedList } from 'src/components/organisms/feed-list/feed-list';
 import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
 import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
-import { useEffect, useState } from 'react';
-import { JobDetailCard } from 'src/pages/job-detail/components/job-detail-card/job-detail-card';
 import { PayloadModel } from './search.types';
-import { useLocation, useNavigate, useRouter } from '@tanstack/react-location';
-import { http } from 'src/core/http';
+import { useLocation, useNavigate } from '@tanstack/react-location';
+import { DetailOutlet } from './detail-outlet/detail-outlet';
 
 export const Search = () => {
   const {
@@ -22,19 +19,13 @@ export const Search = () => {
     list,
     result,
     findLabelByValue,
-    // onPostLike,
-    // onPostRemoveLike,
     onSocialCausesChange,
     onSkillsChange,
   } = useSearchShared();
 
   const navigate = useNavigate();
   const { current } = useLocation();
-  const { search: params } = current;
-
-  //   const feedListJSX = (
-  //     <FeedList data={list} onLike={onPostLike} onRemoveLike={onPostRemoveLike} onMorePageClick={onMorePageClick} />
-  //   );
+  const { search: params } = current as unknown as { search: { id: string; type: PayloadModel['type'] } };
 
   function onListItemClick(type: PayloadModel['type']) {
     return (id: string) => {
@@ -45,10 +36,6 @@ export const Search = () => {
       }
     };
   }
-
-  useEffect(() => {
-    console.log(current.search);
-  }, [params.id]);
 
   return (
     <div className={css.container}>
@@ -64,7 +51,6 @@ export const Search = () => {
           <SkillsFilter onSubmit={onSkillsChange} />
         </div>
       </div>
-      <div></div>
       <div className={css.results}>{result} Results</div>
       <div className={css.listContainer}>
         <div className={css.listContainerContent}>
@@ -76,10 +62,9 @@ export const Search = () => {
             <JobList onClick={onListItemClick('projects')} data={list} onMorePageClick={onMorePageClick} />,
             location.current.search.type === 'projects'
           )}
-          {/* {printWhen(feedListJSX, location.current.search.type === 'posts')} */}
         </div>
-        <div className={css.item}>
-          {/* <JobDetailCard job={job} screeningQuestions={screeningQuestions} location={location} userType={identity.type} /> */}
+        <div className={css.item} style={{ minWidth: params.id ? '20rem' : 0 }}>
+          <DetailOutlet type={params.type} id={params.id} />
         </div>
       </div>
     </div>

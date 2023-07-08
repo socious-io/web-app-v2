@@ -46,14 +46,7 @@ export const Desktop = (): JSX.Element => {
           <div className={css.tagline}>Find jobs that make a social impact</div>
         </div>
         <div className={css.list}>
-          <JobList
-            onClick={(id) => {
-              console.log({ id });
-              goToJobDetail(id);
-            }}
-            onMorePageClick={onMorePage}
-            data={jobList}
-          />
+          <JobList onClick={goToJobDetail} onMorePageClick={onMorePage} data={jobList} />
         </div>
       </>
     </TwoColumnCursor>

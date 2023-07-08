@@ -3,21 +3,33 @@ import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Resume } from './apply.types';
 import { applyApplication, generatePayload, resumeInitialState, submit } from './apply.services';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
-import { QuestionsRes } from 'src/core/types';
+import { QuestionsRes, UserType } from 'src/core/types';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { generateFormModel } from './apply.form';
 import { useForm } from 'src/core/form';
 import { dialog } from 'src/core/dialog/dialog';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 
-export const useApplyShared = () => {
+type useApplySharedProps = {
+  job: Job;
+  screeningQuestions: QuestionsRes['questions'];
+  location: string;
+  userType: UserType;
+};
+
+export const useApplyShared = (data?: useApplySharedProps) => {
   const navigate = useNavigate();
   const [resume, setResume] = useState<Resume>(resumeInitialState);
-  const { jobDetail, screeningQuestions } = useMatch().ownData as {
-    jobDetail: Job;
-    screeningQuestions: { questions: QuestionsRes['questions'] };
-  };
-  const questions = screeningQuestions.questions;
+  //   const { jobDetail, screeningQuestions } = useMatch().ownData as {
+  //     jobDetail: Job;
+  //     screeningQuestions: QuestionsRes['questions'];
+  //   };
+
+  const resolver = useMatch().ownData;
+
+  const jobDetail = (data?.job || resolver.jobDetail) as Job;
+  const questions = (data?.screeningQuestions || resolver.screeningQuestions) as QuestionsRes['questions'];
+
   const formModel: FormModel = useMemo(() => generateFormModel(questions), []);
   const form = useForm(formModel);
 
