@@ -3,6 +3,7 @@ import { CSSProperties } from 'react';
 export interface JobListProps extends CSSProperties {
   data: Job[];
   onMorePageClick: () => void;
+  onClick: (id: string) => void;
 }
 
 export type Job = {

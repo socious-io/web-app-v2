@@ -9,7 +9,7 @@ import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
-  const { onMorePage, jobList, identity } = useJobsShared();
+  const { onMorePage, jobList, identity, goToJobDetail } = useJobsShared();
 
   const NetworkMenuList = [
     { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
@@ -46,7 +46,14 @@ export const Desktop = (): JSX.Element => {
           <div className={css.tagline}>Find jobs that make a social impact</div>
         </div>
         <div className={css.list}>
-          <JobList onMorePageClick={onMorePage} data={jobList} />
+          <JobList
+            onClick={(id) => {
+              console.log({ id });
+              goToJobDetail(id);
+            }}
+            onMorePageClick={onMorePage}
+            data={jobList}
+          />
         </div>
       </>
     </TwoColumnCursor>

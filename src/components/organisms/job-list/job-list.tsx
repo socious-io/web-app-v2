@@ -13,11 +13,6 @@ import { ExpandableText } from 'src/components/atoms/expandable-text';
 
 export const JobList = (props: JobListProps): JSX.Element => {
   const { data, onMorePageClick, ...rest } = props;
-  const navigate = useNavigate();
-
-  function goToJobDetail(id: string) {
-    return () => navigate({ to: `/jobs/${id}` });
-  }
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
@@ -34,7 +29,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
     <div style={rest} className={css.container}>
       {data.map((job) => {
         return (
-          <Card key={job.id} cursor="pointer" onClick={goToJobDetail(job.id)}>
+          <Card key={job.id} cursor="pointer" onClick={() => props.onClick(job.id)}>
             <div className={css.header}>
               <Avatar marginRight="0.5rem" type="organizations" img={job.identity_meta.image} />
               <div className={css.orgNameAndLocation}>
