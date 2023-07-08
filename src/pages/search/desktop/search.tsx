@@ -7,7 +7,11 @@ import { useSearchShared } from '../search.shared';
 import { FeedList } from 'src/components/organisms/feed-list/feed-list';
 import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
 import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { JobDetailCard } from 'src/pages/job-detail/components/job-detail-card/job-detail-card';
+import { PayloadModel } from './search.types';
+import { useLocation, useNavigate, useRouter } from '@tanstack/react-location';
+import { http } from 'src/core/http';
 
 export const Search = () => {
   const {
@@ -18,15 +22,33 @@ export const Search = () => {
     list,
     result,
     findLabelByValue,
-    onPostLike,
-    onPostRemoveLike,
+    // onPostLike,
+    // onPostRemoveLike,
     onSocialCausesChange,
     onSkillsChange,
   } = useSearchShared();
 
-  const feedListJSX = (
-    <FeedList data={list} onLike={onPostLike} onRemoveLike={onPostRemoveLike} onMorePageClick={onMorePageClick} />
-  );
+  const navigate = useNavigate();
+  const { current } = useLocation();
+  const { search: params } = current;
+
+  //   const feedListJSX = (
+  //     <FeedList data={list} onLike={onPostLike} onRemoveLike={onPostRemoveLike} onMorePageClick={onMorePageClick} />
+  //   );
+
+  function onListItemClick(type: PayloadModel['type']) {
+    return (id: string) => {
+      switch (type) {
+        case 'projects':
+          navigate({ search: (p) => ({ ...p, id }) });
+          break;
+      }
+    };
+  }
+
+  useEffect(() => {
+    console.log(current.search);
+  }, [params.id]);
 
   return (
     <div className={css.container}>
@@ -51,15 +73,13 @@ export const Search = () => {
             location.current.search.type === 'users'
           )}
           {printWhen(
-            <JobList data={list} onMorePageClick={onMorePageClick} />,
+            <JobList onClick={onListItemClick('projects')} data={list} onMorePageClick={onMorePageClick} />,
             location.current.search.type === 'projects'
           )}
-          {printWhen(feedListJSX, location.current.search.type === 'posts')}
+          {/* {printWhen(feedListJSX, location.current.search.type === 'posts')} */}
         </div>
         <div className={css.item}>
-          asdf Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore illum minus temporibus nostrum laborum
-          quod dignissimos commodi. Ipsa molestiae architecto nihil, porro sint accusantium, ducimus temporibus
-          consequuntur rem nesciunt qui.
+          {/* <JobDetailCard job={job} screeningQuestions={screeningQuestions} location={location} userType={identity.type} /> */}
         </div>
       </div>
     </div>
