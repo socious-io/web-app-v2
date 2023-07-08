@@ -12,8 +12,8 @@ import { createTextQuestion, resumeInitialState } from '../apply.services';
 import { useApplyShared } from '../apply.shared';
 import css from './apply-modal.module.scss';
 
-export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClose }) => {
-  const { questions, resume, setResume, onResumeLoad, jobDetail, form, onSubmit } = useApplyShared();
+export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClose, data }) => {
+  const { questions, resume, setResume, onResumeLoad, jobDetail, form, onSubmit } = useApplyShared(data);
 
   const renderQuestions = () => {
     return (

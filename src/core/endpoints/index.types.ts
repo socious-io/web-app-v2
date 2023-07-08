@@ -1,5 +1,6 @@
 import { LoginPayload } from 'src/pages/sign-in/sign-in.types';
 import { ConnectStatus, ConnectionItem, LoginResp, NotificationSettingsRes, Pagination } from '../types';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
 
 export type GetProject = (id: string) => {
   applicants: number;
@@ -140,7 +141,10 @@ export interface Endpoints {
     auth: {
       'otp/confirm': (payload: GetOtpConfirmPayload) => Promise<GetOtpConfirmResp>;
     };
-    projects: (payload: getOfferPayload) => Promise<Pagination<Offer[]>>;
+    // projects: (payload: getOfferPayload) => Promise<Pagination<Offer[]>>;
+    projects: {
+      project_id: (id: string) => Promise<Job>;
+    };
     media: {
       media_id: (id: string) => Promise<PostMediaUploadResp>;
     };
