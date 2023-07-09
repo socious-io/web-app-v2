@@ -3,6 +3,7 @@ export interface NotificationListProps {
     list: Notifications[];
     onMorePageClick: () => void;
     showSeeMore: boolean;
+    route: 'd' | 'm';
 }
 
 export type Notifications = {
@@ -16,6 +17,7 @@ export type DataObj = {
     identity: IdentityObj;
     type: string;
     parentId: string;
+    refId: string;
 }
 
 export type BodyObj = {
@@ -32,4 +34,6 @@ export type MetaObj = {
     avatar?: string;
     image?: string;
     name: string;
+    shortname: string;
+    username: string;
 }
