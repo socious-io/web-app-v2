@@ -11,7 +11,7 @@ import { IdentityReq } from 'src/core/types';
 
 export function DetailOutlet(props: DetailOutletProps): JSX.Element {
   const [loading, setLoading] = useState(false);
-  const [content, setContent] = useState(<>LOADING...</>);
+  const [content, setContent] = useState<null | JSX.Element>(null);
 
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -32,12 +32,16 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
 
   useMemo(() => {
     async function getTemplate() {
+      if (!props.id) {
+        setContent(null);
+        return;
+      }
       switch (props.type) {
         case 'projects':
           setLoading(true);
           const job = await endpoint.get.projects.project_id(props.id);
           const { questions } = await getScreeningQuestions(props.id);
-          const jsx = (
+          const jobDetailCardJSX = (
             <JobDetailCard
               job={job}
               screeningQuestions={questions}
@@ -45,8 +49,15 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
               userType={currentIdentity.type}
             />
           );
+          setContent(jobDetailCardJSX);
+          setLoading(false);
+          break;
+        case 'users':
+          setLoading(true);
+          const jsx = <>USERS</>;
           setContent(jsx);
           setLoading(false);
+          break;
       }
     }
     getTemplate();
@@ -54,6 +65,7 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
 
   const style: CSSProperties = {
     opacity: loading ? '0.5' : '1',
+    width: content ? '20rem' : '0',
   };
 
   return <div style={style}>{content}</div>;

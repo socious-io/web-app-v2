@@ -1,3 +1,6 @@
-import { PayloadModel } from "../search.types";
+import { PayloadModel } from '../search.types';
 
-export type DetailOutletProps = { type: PayloadModel['type']; id: string };
+export type DetailOutletProps = {
+  id: string;
+  type: PayloadModel['type'];
+};
