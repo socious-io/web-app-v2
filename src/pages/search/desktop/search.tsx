@@ -31,11 +31,17 @@ export const Search = () => {
     return (id: string) => {
       switch (type) {
         case 'projects':
-          navigate({ search: (p) => ({ ...p, id }) });
+          navigate({ search: (p) => ({ ...p, type: 'projects', id }) });
+          break;
+        case 'users':
+          navigate({ search: (p) => ({ ...p, type: 'users', id }) });
           break;
       }
     };
   }
+
+  const paramTypeIsProjects = location.current.search.type === 'projects';
+  const paramTypeIsUsers = location.current.search.type === 'users';
 
   return (
     <div className={css.container}>
@@ -55,15 +61,16 @@ export const Search = () => {
       <div className={css.listContainer}>
         <div className={css.listContainerContent}>
           {printWhen(
-            <PeopleList data={list} onMorePageClick={onMorePageClick} />,
-            location.current.search.type === 'users'
+            <PeopleList onClick={onListItemClick('users')} data={list} onMorePageClick={onMorePageClick} />,
+            paramTypeIsUsers
           )}
           {printWhen(
             <JobList onClick={onListItemClick('projects')} data={list} onMorePageClick={onMorePageClick} />,
-            location.current.search.type === 'projects'
+            paramTypeIsProjects
           )}
         </div>
-        <div className={css.item} style={{ minWidth: params.id ? '20rem' : 0 }}>
+        {/* <div className={css.item} style={{ minWidth: params.id ? '20rem' : 0 }}> */}
+        <div className={css.item}>
           <DetailOutlet type={params.type} id={params.id} />
         </div>
       </div>

@@ -49,24 +49,15 @@ export const useSearchShared = () => {
   function onTypeChange(menu: DropdownBtnItem) {
     setList([]);
     setResult(0);
-    navigate({
-      to: `/d/search`,
-      search: (p) => ({ ...p, page: 1, type: menu.value }),
-    });
+    navigate({ search: (p) => ({ ...p, page: 1, type: menu.value, id: null }) });
   }
 
   function onSkillsChange(skills: string[]) {
-    navigate({
-      to: `/d/search`,
-      search: (p) => ({ ...p, page: 1, filter: { ...p.filter, skills } }),
-    });
+    navigate({ search: (p) => ({ ...p, page: 1, filter: { ...p.filter, skills } }) });
   }
 
   function onSocialCausesChange(causes_tags: string[]) {
-    navigate({
-      to: `/d/search`,
-      search: (p) => ({ ...p, page: 1, filter: { ...p.filter, causes_tags } }),
-    });
+    navigate({ search: (p) => ({ ...p, page: 1, filter: { ...p.filter, causes_tags } }) });
   }
 
   const onPostLike = (id: string) => {

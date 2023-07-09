@@ -3,6 +3,7 @@ import { CSSProperties } from 'react';
 export interface PeopleListProps extends CSSProperties {
   data: People[];
   onMorePageClick: () => void;
+  onClick: (id: string) => void;
 }
 
 export type People = {
