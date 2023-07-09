@@ -2,11 +2,10 @@ import { required } from 'src/core/form';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { get } from 'src/core/http';
 import { MissionsResp } from 'src/core/types';
-import { Menu } from 'src/components/molecules/card-menu/card-menu.types';
 
 export async function getMissionsList(payload: { page?: number }): Promise<MissionsResp> {
   return get('/user/missions', {
-    params: { 'filter.o.payment_mode': 'FIAT', 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' },
+    params: { 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' },
   }).then(({ data }) => data);
 }
 
