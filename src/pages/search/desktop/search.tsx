@@ -61,7 +61,11 @@ export const Search = () => {
       <div className={css.listContainer}>
         <div className={css.listContainerContent}>
           {printWhen(
-            <PeopleList onClick={onListItemClick('users')} data={list} onMorePageClick={onMorePageClick} />,
+            <PeopleList
+              onClick={(people) => onListItemClick('users')(people.username)}
+              data={list}
+              onMorePageClick={onMorePageClick}
+            />,
             paramTypeIsUsers
           )}
           {printWhen(

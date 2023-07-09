@@ -8,6 +8,8 @@ import { Job } from 'src/components/organisms/job-list/job-list.types';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
+import { UserProfileCard } from '../../components/user-profile-card/user-profile-card';
+import { getUserDetail } from 'src/pages/profile-user/profile-user.services';
 
 export function DetailOutlet(props: DetailOutletProps): JSX.Element {
   const [loading, setLoading] = useState(false);
@@ -54,7 +56,8 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
           break;
         case 'users':
           setLoading(true);
-          const jsx = <>USERS</>;
+          const user = await getUserDetail(props.id);
+          const jsx = <UserProfileCard user={user} />;
           setContent(jsx);
           setLoading(false);
           break;
