@@ -15,7 +15,7 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
     <div style={rest} className={css.container}>
       {data.map((user) => {
         return (
-          <Card key={user.id} cursor="pointer" onClick={() => props.onClick(user.id)}>
+          <Card key={user.id} cursor="pointer" onClick={() => props.onClick(user)}>
             <div className={css.header}>
               <Avatar marginRight="0.5rem" type="users" img={user.avatar || ''} />
               <div className={css.orgNameAndLocation}>
