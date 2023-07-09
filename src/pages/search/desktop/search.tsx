@@ -47,6 +47,7 @@ export const Search = () => {
     <div className={css.container}>
       <div className={css.filterBar}>
         <div className={css.filterBarContent}>
+          <div className={css.results}>{result} Results</div>
           <DropdownBtn
             onValueChange={onTypeChange}
             placeholder="Type"
@@ -57,11 +58,11 @@ export const Search = () => {
           <SkillsFilter onSubmit={onSkillsChange} />
         </div>
       </div>
-      <div className={css.results}>{result} Results</div>
       <div className={css.listContainer}>
         <div className={css.listContainerContent}>
           {printWhen(
             <PeopleList
+              showMorePage={result > list.length}
               onClick={(people) => onListItemClick('users')(people.username)}
               data={list}
               onMorePageClick={onMorePageClick}
@@ -69,11 +70,15 @@ export const Search = () => {
             paramTypeIsUsers
           )}
           {printWhen(
-            <JobList onClick={onListItemClick('projects')} data={list} onMorePageClick={onMorePageClick} />,
+            <JobList
+              showMorePage={result > list.length}
+              onClick={onListItemClick('projects')}
+              data={list}
+              onMorePageClick={onMorePageClick}
+            />,
             paramTypeIsProjects
           )}
         </div>
-        {/* <div className={css.item} style={{ minWidth: params.id ? '20rem' : 0 }}> */}
         <div className={css.item}>
           <DetailOutlet type={params.type} id={params.id} />
         </div>

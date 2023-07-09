@@ -10,9 +10,10 @@ import { toRelativeTime } from '../../../core/relative-time';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { printWhen } from 'src/core/utils';
 
 export const JobList = (props: JobListProps): JSX.Element => {
-  const { data, onMorePageClick, ...rest } = props;
+  const { data, showMorePage, onMorePageClick, ...rest } = props;
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
@@ -24,6 +25,12 @@ export const JobList = (props: JobListProps): JSX.Element => {
 
   const location = (job: JobListProps['data'][0]) =>
     `${job.city}, ${getCountryName(job.country as keyof typeof COUNTRIES_DICT | undefined)}`;
+
+  const seeMoreJSX = (
+    <div className={css.seeMore} onClick={() => onMorePageClick()}>
+      See more
+    </div>
+  );
 
   return (
     <div style={rest} className={css.container}>
@@ -49,9 +56,8 @@ export const JobList = (props: JobListProps): JSX.Element => {
           </Card>
         );
       })}
-      <div className={css.seeMore} onClick={() => onMorePageClick()}>
-        See more
-      </div>
+
+      {printWhen(seeMoreJSX, showMorePage)}
     </div>
   );
 };

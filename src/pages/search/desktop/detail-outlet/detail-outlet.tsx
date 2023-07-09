@@ -68,7 +68,8 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
 
   const style: CSSProperties = {
     opacity: loading ? '0.5' : '1',
-    width: content ? '20rem' : '0',
+    width: content ? '40rem' : '0',
+    transition: 'all 200ms 0ms',
   };
 
   return <div style={style}>{content}</div>;

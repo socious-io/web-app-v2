@@ -1,3 +1,9 @@
+.container {
+  height: calc(100vh - var(--desktop-nav-height));
+  overflow-y: scroll;
+  background-color: #f3f3f3;
+}
+
 .filterBar {
   height: 3.5rem;
   padding: 0 1rem;
@@ -18,20 +24,16 @@
 }
 
 .results {
-  height: 4rem;
   color: var(--color-gray-02);
   background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #d8d8d8;
 }
 
 .listContainer {
   padding: 1rem;
   gap: 1rem;
-  background: #f3f3f3;
-  overflow-y: scroll;
   display: flex;
   justify-content: center;
 }
@@ -42,6 +44,8 @@
 }
 
 .item {
+  height: 400px;
+  position: sticky;
+  top: 4.5rem;
   max-width: 40rem;
-  //   min-width: 20rem;
 }
