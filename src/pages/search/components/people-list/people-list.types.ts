@@ -4,6 +4,7 @@ export interface PeopleListProps extends CSSProperties {
   data: People[];
   onMorePageClick: () => void;
   onClick: (people: People) => void;
+  showMorePage: boolean;
 }
 
 export type People = {

@@ -7,9 +7,16 @@ import { CategoriesClickable } from 'src/components/atoms/categories-clickable/c
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { toRelativeTime } from 'src/core/relative-time';
 import { getList } from './people-list.services';
+import { printWhen } from 'src/core/utils';
 
 export const PeopleList = (props: PeopleListProps): JSX.Element => {
-  const { data, onMorePageClick, ...rest } = props;
+  const { data, onMorePageClick, showMorePage, ...rest } = props;
+
+  const seeMoreJSX = (
+    <div className={css.seeMore} onClick={() => onMorePageClick()}>
+      See more
+    </div>
+  );
 
   return (
     <div style={rest} className={css.container}>
@@ -32,9 +39,8 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
           </Card>
         );
       })}
-      <div className={css.seeMore} onClick={() => onMorePageClick()}>
-        See more
-      </div>
+
+      {printWhen(seeMoreJSX, showMorePage)}
     </div>
   );
 };
