@@ -1,5 +1,5 @@
 import css from './people-list.module.scss';
-import { PeopleListProps } from './people-list.types';
+import { People, PeopleListProps } from './people-list.types';
 import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Categories } from 'src/components/atoms/categories/categories';
@@ -8,6 +8,7 @@ import { socialCausesToCategory } from 'src/core/adaptors';
 import { toRelativeTime } from 'src/core/relative-time';
 import { getList } from './people-list.services';
 import { printWhen } from 'src/core/utils';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 
 export const PeopleList = (props: PeopleListProps): JSX.Element => {
   const { data, onMorePageClick, showMorePage, ...rest } = props;
@@ -18,6 +19,17 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
     </div>
   );
 
+  function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
+    if (shortname && COUNTRIES_DICT[shortname]) {
+      return COUNTRIES_DICT[shortname];
+    } else {
+      return shortname;
+    }
+  }
+
+  const location = (user: People) =>
+    `${user.city}, ${getCountryName(user.country.toUpperCase() as keyof typeof COUNTRIES_DICT | undefined)}`;
+
   return (
     <div style={rest} className={css.container}>
       {data.map((user) => {
@@ -27,7 +39,7 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
               <Avatar marginRight="0.5rem" type="users" img={user?.avatar?.url} />
               <div className={css.orgNameAndLocation}>
                 <div>{`${user.first_name} ${user.last_name}`} </div>
-                <div className={css.orgLocation}>{user.address}</div>
+                <div className={css.orgLocation}>{location(user)}</div>
               </div>
             </div>
             <div className={css.body}>
