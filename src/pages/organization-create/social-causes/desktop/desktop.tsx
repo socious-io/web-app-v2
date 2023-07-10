@@ -14,7 +14,7 @@ export const Desktop = (): JSX.Element => {
   const [list, setList] = useState(SOCIAL_CAUSES);
 
   function onSearch(value: string) {
-    const filtered = SOCIAL_CAUSES.filter((item) => item.label.toLowerCase().includes(value));
+    const filtered = SOCIAL_CAUSES.filter((item) => item.label.toLowerCase().includes(value.toLowerCase()));
     setList(filtered);
   }
 
