@@ -56,8 +56,8 @@ export const useSearchShared = () => {
     navigate({ search: (p) => ({ ...p, page: 1, filter: { ...p.filter, skills } }) });
   }
 
-  function onSocialCausesChange(causes_tags: string[]) {
-    navigate({ search: (p) => ({ ...p, page: 1, filter: { ...p.filter, causes_tags } }) });
+  function onSocialCausesChange(social_causes: string[]) {
+    navigate({ search: (p) => ({ ...p, page: 1, filter: { ...p.filter, social_causes } }) });
   }
 
   const onPostLike = (id: string) => {
