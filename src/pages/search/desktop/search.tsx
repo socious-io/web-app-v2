@@ -43,6 +43,24 @@ export const Search = () => {
   const paramTypeIsProjects = location.current.search.type === 'projects';
   const paramTypeIsUsers = location.current.search.type === 'users';
 
+  const peopleListJSX = (
+    <PeopleList
+      showMorePage={result > list.length}
+      onClick={(people) => onListItemClick('users')(people.username)}
+      data={list}
+      onMorePageClick={onMorePageClick}
+    />
+  );
+
+  const jobListJSX = (
+    <JobList
+      showMorePage={result > list.length}
+      onClick={onListItemClick('projects')}
+      data={list}
+      onMorePageClick={onMorePageClick}
+    />
+  );
+
   return (
     <div className={css.container}>
       <div className={css.filterBar}>
@@ -60,24 +78,8 @@ export const Search = () => {
       </div>
       <div className={css.listContainer}>
         <div className={css.listContainerContent}>
-          {printWhen(
-            <PeopleList
-              showMorePage={result > list.length}
-              onClick={(people) => onListItemClick('users')(people.username)}
-              data={list}
-              onMorePageClick={onMorePageClick}
-            />,
-            paramTypeIsUsers
-          )}
-          {printWhen(
-            <JobList
-              showMorePage={result > list.length}
-              onClick={onListItemClick('projects')}
-              data={list}
-              onMorePageClick={onMorePageClick}
-            />,
-            paramTypeIsProjects
-          )}
+          {printWhen(peopleListJSX, paramTypeIsUsers)}
+          {printWhen(jobListJSX, paramTypeIsProjects)}
         </div>
         <div className={css.item}>
           <DetailOutlet type={params.type} id={params.id} />
