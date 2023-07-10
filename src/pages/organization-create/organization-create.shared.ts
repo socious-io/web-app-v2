@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   CreateOrgWizard,
   resetCreateOrgWizard,
+  setMission,
   setOrgType,
   setSocialCauses,
 } from 'src/store/reducers/createOrgWizard.reducer';
@@ -42,6 +43,15 @@ export const useOrganizationCreateShared = () => {
     navigate({ to: '../mission' });
   }
 
+  function navigateToCulture() {
+    navigate({ to: '../culture' });
+  }
+
+  function onMissionSkip() {
+    dispatch(setMission(''));
+    navigateToCulture();
+  }
+
   function updateOrgType(value: string) {
     dispatch(setOrgType(value));
   }
@@ -50,12 +60,20 @@ export const useOrganizationCreateShared = () => {
     dispatch(setSocialCauses(value));
   }
 
+  function updateMission(value) {
+    dispatch(setMission(value));
+  }
+
   const type = useSelector<RootState, string>((state) => {
     return state.createOrgWizard.type;
   });
 
   const socialCauses = useSelector<RootState, string[]>((state) => {
     return state.createOrgWizard.socialCauses;
+  });
+
+  const missionValue = useSelector<RootState, string | undefined>((state) => {
+    return state.createOrgWizard.mission;
   });
 
   const formState = useSelector<RootState, CreateOrgWizard>((state) => state.createOrgWizard);
@@ -79,6 +97,10 @@ export const useOrganizationCreateShared = () => {
     navigateToProfile,
     profileForm,
     updateField,
+    missionValue,
     navigateToMission,
+    navigateToCulture,
+    onMissionSkip,
+    updateMission,
   };
 };
