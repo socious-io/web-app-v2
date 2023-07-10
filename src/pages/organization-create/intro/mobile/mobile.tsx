@@ -1,23 +1,15 @@
-import { useNavigate } from '@tanstack/react-location';
-import { useDispatch } from 'react-redux';
-import { resetCreateOrgWizard } from '../../../../store/reducers/createOrgWizard.reducer';
 import { Button } from '../../../../components/atoms/button/button';
 import { LIST_ITEM } from '../intro.services';
 import css from './mobile.module.scss';
+import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  function onBack() {
-    navigate({ to: '/jobs' });
-    dispatch(resetCreateOrgWizard());
-  }
+  const { navigateToJobs, navigateToType } = useOrganizationCreateShared();
 
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.back} onClick={onBack}>
+        <div className={css.back} onClick={navigateToJobs}>
           <img src="/icons/chevron-left-white.svg" />
         </div>
         <div className={css.title}>Add your organization</div>
@@ -36,10 +28,12 @@ export const Mobile = (): JSX.Element => {
             </div>
           ))}
         </div>
-        <div className={css.note}>* You can post jobs when your company has been successfully verified by our team.</div>
+        <div className={css.note}>
+          * You can post jobs when your company has been successfully verified by our team.
+        </div>
       </div>
       <div className={css.bottom}>
-        <Button onClick={() => navigate({ to: '../type' })}>Continue</Button>
+        <Button onClick={navigateToType}>Continue</Button>
       </div>
     </div>
   );

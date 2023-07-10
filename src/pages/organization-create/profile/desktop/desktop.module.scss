@@ -62,8 +62,35 @@
 
 .main {
   padding: 1.5rem 1rem;
-  border-bottom: 1px solid var(--color-gray-03);
-  overflow-y: scroll;
+  border-bottom: 1px solid var(--border-gray-01);
+  overflow: scroll;
+}
+
+.phoneNumber {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1rem;
+}
+
+.phoneNumberLabel {
+  font-weight: 700;
+  padding-bottom: 0.5rem;
+  .labelOptional {
+    color: var(--color-gray-02);
+    font-weight: 400;
+    font-size: var(--font-size-s);
+  }
+}
+
+.formContainer {
+  display: grid;
+  gap: 1rem;
+}
+
+.agreement {
+  margin-top: 2rem;
+  display: flex;
+  align-items: flex-start;
 }
 
 .bottom {

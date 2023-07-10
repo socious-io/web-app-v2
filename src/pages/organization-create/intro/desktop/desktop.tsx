@@ -1,22 +1,23 @@
 import { Button } from '../../../../components/atoms/button/button';
 import { Card } from '../../../../components/atoms/card/card';
+import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { LIST_ITEM } from '../intro.services';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
+  const { navigateToJobs, navigateToType } = useOrganizationCreateShared();
+
   return (
     <div className={css.container}>
       <Card padding={0} className={css.card}>
         <div className={css.header}>
-          <div className={css.back} onClick={console.log}>
+          <div className={css.back} onClick={navigateToJobs}>
             <img src="/icons/chevron-left-white.svg" />
           </div>
           <div className={css.title}>Add your organization</div>
         </div>
         <div className={css.main}>
-          <div className={css.statement}>
-            Find talented professionals to help your social cause:
-          </div>
+          <div className={css.statement}>Find talented professionals to help your social cause:</div>
           <div className={css.list}>
             {LIST_ITEM.map((item) => (
               <div key={item.icon} className={css.listItem}>
@@ -34,7 +35,7 @@ export const Desktop = (): JSX.Element => {
           </div>
         </div>
         <div className={css.bottom}>
-          <Button>Continue</Button>
+          <Button onClick={navigateToType}>Continue</Button>
         </div>
       </Card>
     </div>
