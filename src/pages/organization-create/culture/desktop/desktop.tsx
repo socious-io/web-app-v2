@@ -28,7 +28,7 @@ export const Desktop = (): JSX.Element => {
         </div>
         <div className={css.question}>Tell us about your organization's culture.</div>
         <div className={css.main}>
-          <Textarea placeholder="Your organization's culture" />
+          <Textarea name="culture" register={form} placeholder="Your organization's culture" />
         </div>
         <div className={css.bottom}>
           <Button disabled={!cultureValue} onClick={submitForm}>

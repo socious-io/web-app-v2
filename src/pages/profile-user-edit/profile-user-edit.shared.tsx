@@ -71,8 +71,6 @@ export const useProfileUserEditShared = (props?: EditProps) => {
           break;
         case 'remove':
           form.controls.cover_image.setValue(undefined);
-          console.log('form: ', form);
-          console.log('here', form.controls.cover_image);
           setCoverImage(undefined);
           break;
       }

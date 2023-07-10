@@ -43,7 +43,6 @@ export const useOrganizationCreateShared = () => {
   }
 
   function navigateToType() {
-    console.log('navigateToType');
     navigate({ to: '../type' });
   }
 
@@ -70,6 +69,11 @@ export const useOrganizationCreateShared = () => {
   function navigateToSuccess() {
     navigate({ to: '../succeed' });
   }
+
+  function navigateToVerified() {
+    navigate({ to: '../verified' });
+  }
+
 
   function onMissionSkip() {
     dispatch(setMission(''));
@@ -113,6 +117,10 @@ export const useOrganizationCreateShared = () => {
     return state.createOrgWizard?.culture || '';
   });
 
+  const organizationName = useSelector<RootState, string>((state) => {
+    return state.createOrgWizard.organizationName;
+  });
+
   const formState = useSelector<RootState, CreateOrgWizard>((state) => state.createOrgWizard);
 
   const memoizedFormState = useMemo(() => formModel(formState), []);
@@ -144,5 +152,7 @@ export const useOrganizationCreateShared = () => {
     onCultureSkip,
     updateCulture,
     submitForm,
+    navigateToVerified,
+    organizationName
   };
 };

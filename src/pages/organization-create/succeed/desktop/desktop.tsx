@@ -1,8 +1,11 @@
 import { Button } from '../../../../components/atoms/button/button';
 import { Card } from '../../../../components/atoms/card/card';
+import { useOrganizationCreateShared } from '../../organization-create.shared';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
+  const { navigateToVerified, organizationName } = useOrganizationCreateShared();
+
   return (
     <div className={css.container}>
       <Card className={css.card} padding="6rem 0 0 0">
@@ -11,10 +14,10 @@ export const Desktop = (): JSX.Element => {
         </div>
         <div className={css.statement}>
           <div className={css.primary}>Organization created</div>
-          <div className={css.secondary}>You have successfully created a page for Green Peace!</div>
+          <div className={css.secondary}>You have successfully created a page for {organizationName}!</div>
         </div>
         <div className={css.bottom}>
-          <Button>Continue</Button>
+          <Button onClick={navigateToVerified}>Continue</Button>
         </div>
       </Card>
     </div>

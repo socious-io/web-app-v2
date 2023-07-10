@@ -1,15 +1,9 @@
-import { useNavigate } from '@tanstack/react-location';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../store/store';
 import { Button } from '../../../../components/atoms/button/button';
 import css from './mobile.module.scss';
+import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
-
-  const organizationName = useSelector<RootState, string>((state) => {
-    return state.createOrgWizard.organizationName;
-  });
+  const { navigateToVerified, organizationName } = useOrganizationCreateShared();
 
   return (
     <div className={css.container}>
@@ -21,7 +15,7 @@ export const Mobile = (): JSX.Element => {
         <div className={css.secondary}>You have successfully created a page for {organizationName}!</div>
       </div>
       <div className={css.bottom}>
-        <Button onClick={() => navigate({ to: '../verified' })}>Continue</Button>
+        <Button onClick={navigateToVerified}>Continue</Button>
       </div>
     </div>
   );
