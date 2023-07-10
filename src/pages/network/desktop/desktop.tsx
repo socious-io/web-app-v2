@@ -12,8 +12,13 @@ export const Desktop: React.FC = () => {
   const { navigateNetwork, identity } = useNetworkShared();
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/network.svg', link: () => navigateNetwork('connections') },
-    { label: 'Followings', icon: '/icons/followers.svg', link: () => navigateNetwork('followings') },
+    { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
+    { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+  ];
+
+  const NetworkMenuListOrg = [
+    ...NetworkMenuList,
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
   ];
 
   const jobsMenuListUser = [
@@ -36,7 +41,7 @@ export const Desktop: React.FC = () => {
     <TwoColumnCursor>
       <div className={css.leftContainer}>
         <ProfileCard />
-        <CardMenu title="Network" list={NetworkMenuList} />
+        <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity.type === 'users')}
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity.type === 'organizations')}
       </div>

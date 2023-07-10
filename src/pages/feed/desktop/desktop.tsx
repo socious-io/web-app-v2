@@ -58,6 +58,11 @@ export const Desktop = () => {
     { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
   ];
 
+  const NetworkMenuListOrg = [
+    ...NetworkMenuList,
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+  ];
+
   const jobsMenuListUser = [
     {
       label: 'My applications',
@@ -78,7 +83,7 @@ export const Desktop = () => {
     <TwoColumnCursor>
       <div className={css.sidebar}>
         <ProfileCard />
-        <CardMenu title="Network" list={NetworkMenuList} />
+        <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity.type === 'users')}
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity.type === 'organizations')}
       </div>
