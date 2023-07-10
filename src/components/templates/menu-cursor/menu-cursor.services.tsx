@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-location';
 import { IdentityReq } from 'src/core/types';
 
-type Menu = { label: string; icon: string; link: string };
+export type Menu = { label: string; icon: string; link: string };
 export const menuList: Menu[] = [
   {
     label: 'Jobs',
