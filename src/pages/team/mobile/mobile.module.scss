@@ -1,0 +1,73 @@
+.member {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-gray-01);
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__name {
+    font-weight: 600;
+  }
+
+  &__role {
+    color: var(--color-gray-02);
+  }
+
+  &__more {
+    cursor: pointer;
+  }
+}
+
+.noMember {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: var(--color-gray-02);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.seeMore {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: var(--font-size-s2);
+  color: var(--color-primary-01);
+  cursor: pointer;
+}
+
+.moreBox {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+
+  .moreOption {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+}
+
+.icon {
+  height: 3.25rem;
+  width: 3.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

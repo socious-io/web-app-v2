@@ -604,6 +604,18 @@ export const routes: Route[] = [
             },
           },
           {
+            path: 'team/:id',
+            element: () => import('src/pages/team/team.container').then((m) => <m.Team />),
+            loader: async ({ params }) => {
+              const requests = [
+                endpoint.get.members['org_id'](params.id, { page: 1 }),
+                endpoint.get.follows['followings']({ page: 1, name: '', type: 'users' }),
+              ];
+              const [members, followings] = await Promise.all(requests);
+              return { members, followings };
+            },
+          },
+          {
             element: <Navigate to="/jobs" />,
           },
         ],
