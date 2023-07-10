@@ -36,16 +36,18 @@
   gap: 1rem;
   display: flex;
   justify-content: center;
+  min-width: 60rem;
+  height: calc(100vh - var(--desktop-nav-height) - 3.5rem);
 }
 
 .listContainerContent {
   width: 100%;
   max-width: 800px;
+  overflow-y: scroll;
 }
 
 .item {
-  height: 400px;
-  position: sticky;
-  top: 4.5rem;
-  max-width: 40rem;
+  height: 100%;
+  min-width: max-content;
+  overflow-y: scroll;
 }
