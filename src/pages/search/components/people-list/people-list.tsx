@@ -28,7 +28,7 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
   }
 
   const location = (user: People) =>
-    `${user.city}, ${getCountryName(user.country.toUpperCase() as keyof typeof COUNTRIES_DICT | undefined)}`;
+    `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
 
   return (
     <div style={rest} className={css.container}>
