@@ -11,10 +11,30 @@ import { printWhen } from 'src/core/utils';
 import css from './overview.module.scss';
 
 export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
+  const label = `${data.payment_type}-${data.payment_scheme}`;
+  const rangeLabel: Record<string, { label: string; value: string }> = {
+    'PAID-FIXED': {
+      label: 'Payment range',
+      value: `$${data.payment_range_lower} ~ $${data.payment_range_higher}`,
+    },
+    'PAID-HOURLY': {
+      label: 'Payment range',
+      value: `$${data.payment_range_lower} ~ $${data.payment_range_higher} / hr`,
+    },
+    'VOLUNTEER-FIXED': {
+      label: 'Commitment',
+      value: `${data.payment_range_lower} ~ ${data.payment_range_higher} hrs`,
+    },
+    'VOLUNTEER-HOURLY': {
+      label: 'Weekly hours',
+      value: `${data.payment_range_lower} ~ ${data.payment_range_higher} hrs / week`,
+    },
+  };
+
   const paymentRange = (
     <div className={css.group}>
-      <div className={css.groupTitle}>Payment range</div>
-      <div className={css.value}>{`$${data.payment_range_lower} ~ $${data.payment_range_higher}`}</div>
+      <div className={css.groupTitle}>{rangeLabel[label].label}</div>
+      <div className={css.value}>{rangeLabel[label].value}</div>
     </div>
   );
 

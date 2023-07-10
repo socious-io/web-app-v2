@@ -8,6 +8,7 @@ import { OfferModal } from '../../offer/offer-modal';
 import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
+import { printWhen } from 'src/core/utils';
 import { Loader } from '../../job-offer-reject.types';
 import { ApplicantResp } from 'src/core/types';
 import { getApplicantDetail, jobOfferRejectLoader } from '../../job-offer-reject.services';
@@ -102,12 +103,15 @@ export const Desktop = (): JSX.Element => {
           <Card>{renderedTab}</Card>
         </div>
       </TwoColumnCursor>
-      <OfferModal
-        open={openOfferModal}
-        onClose={() => setOpenOfferModal(false)}
-        applicantDetail={applicantDetail as ApplicantResp}
-        onDone={updateApplicantList}
-      />
+      {printWhen(
+        <OfferModal
+          open={openOfferModal}
+          onClose={() => setOpenOfferModal(false)}
+          applicantDetail={applicantDetail as ApplicantResp}
+          onDone={updateApplicantList}
+        />,
+        applicantDetail !== undefined
+      )}
     </>
   );
 };
