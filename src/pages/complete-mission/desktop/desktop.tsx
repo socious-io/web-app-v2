@@ -1,4 +1,6 @@
 import { useNavigate } from '@tanstack/react-location';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
@@ -11,12 +13,16 @@ import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
+  const identity = useSelector<RootState, IdentityReq>((state) => {
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  });
   const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
 
   const offeredMessageBoxJSX = (
@@ -72,6 +78,11 @@ export const Desktop = (): JSX.Element => {
     { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
   ];
 
+  const NetworkMenuListOrg = [
+    ...NetworkMenuList,
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+  ];
+
   return (
     <>
       <div className={css.status}>
@@ -82,7 +93,7 @@ export const Desktop = (): JSX.Element => {
       <TwoColumnCursor>
         <div className={css.leftContainer}>
           <ProfileCard />
-          <CardMenu title="Network" list={NetworkMenuList} />
+          <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         </div>
         <Card className={css.rightContainer}>
           <div>

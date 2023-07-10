@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
@@ -7,12 +9,16 @@ import { JobCardList } from 'src/components/organisms/job-card-list/job-card-lis
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { printWhen } from 'src/core/utils';
+import { IdentityReq } from 'src/core/types';
 import { MyJobs } from '../my-jobs.types';
 import { useMyJobShared } from '../my-jobs.shared';
 import css from './desktop.module.scss';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
+  const identity = useSelector<RootState, IdentityReq>((state) => {
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  });
   const {
     pendingList,
     updatePendingList,
@@ -30,6 +36,11 @@ export const Desktop: React.FC = () => {
   const NetworkMenuList = [
     { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
     { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+  ];
+
+  const NetworkMenuListOrg = [
+    ...NetworkMenuList,
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
   ];
 
   const JobsMenuList = [
@@ -116,7 +127,7 @@ export const Desktop: React.FC = () => {
     <TwoColumnCursor>
       <div className={css.leftContainer}>
         <ProfileCard />
-        <CardMenu title="Network" list={NetworkMenuList} />
+        <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         <CardMenu title="My Jobs" list={JobsMenuList} />
       </div>
       <div className={css.rightContainer}>
