@@ -1,7 +1,7 @@
 import css from './menu-cursor.module.scss';
-import { Outlet } from '@tanstack/react-location';
+import { Outlet, useLocation } from '@tanstack/react-location';
 import { Avatar } from '../../atoms/avatar/avatar';
-import { getAvatar, menuList } from './menu-cursor.services';
+import { Menu, getAvatar, menuList } from './menu-cursor.services';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
@@ -13,10 +13,12 @@ import { PayloadModel } from 'src/pages/search/desktop/search.types';
 
 export const MenuCursor = (): JSX.Element => {
   const navigate = useNavigate();
+  const route = useLocation();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
   const [accListVisibility, setAccListVisibility] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   function navigateToSearch(q: string) {
     navigate({
@@ -29,6 +31,14 @@ export const MenuCursor = (): JSX.Element => {
     });
   }
 
+  function onMenuItemClick(menu: Menu) {
+    console.log(route.current.pathname, menu.link);
+    if (route.current.pathname !== menu.link) {
+      setSearchValue('');
+    }
+    navigate({ to: menu.link });
+  }
+
   return (
     <div className={css.container}>
       <div className={css.menu}>
@@ -36,10 +46,16 @@ export const MenuCursor = (): JSX.Element => {
           <div className={css.logo}>
             <img style={{ minWidth: 32 }} height={32} src="/icons/logo-white.svg" />
           </div>
-          <Search onEnter={navigateToSearch} marginRight="auto" placeholder="Search" />
+          <Search
+            onEnter={navigateToSearch}
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            marginRight="auto"
+            placeholder="Search"
+          />
           <ul className={css.navContainer}>
             {menuList.map((item) => (
-              <li key={item.label} className={css.navItem} onClick={() => navigate({ to: item.link })}>
+              <li key={item.label} className={css.navItem} onClick={() => onMenuItemClick(item)}>
                 <img className={css.navIcon} height={24} src={item.icon} />
                 <div className={css.navLabel}>{item.label}</div>
               </li>

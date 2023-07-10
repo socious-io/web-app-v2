@@ -8,5 +8,5 @@ export interface CardMenuProps extends CSSProperties {
 export type Menu = {
   label: string;
   icon: string;
-  link?: () => void;
+  link: () => void;
 };
