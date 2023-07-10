@@ -1,39 +1,26 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSocialCauses } from '../../../../store/reducers/createOrgWizard.reducer';
-import { RootState } from '../../../../store/store';
 import { Button } from '../../../../components/atoms/button/button';
 import { CategoriesClickable } from '../../../../components/atoms/categories-clickable/categories-clickable';
 import { Search } from '../../../../components/atoms/search/search';
 import { Steps } from '../../../../components/atoms/steps/steps';
 import { SOCIAL_CAUSES } from '../social-causes.services';
 import css from './mobile.module.scss';
+import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {
+  const { socialCauses, updateSocialCauses, isSocialCausesValid, navigateToProfile, navigateToType } =
+    useOrganizationCreateShared();
   const [list, setList] = useState(SOCIAL_CAUSES);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const socialCauses = useSelector<RootState, string[]>((state) => {
-    return state.createOrgWizard.socialCauses;
-  });
 
   function onSearch(value: string) {
     const filtered = SOCIAL_CAUSES.filter((item) => item.label.toLowerCase().includes(value));
     setList(filtered);
   }
 
-  const isValid = socialCauses.length > 0 && socialCauses.length <= 5;
-
-  function onChange(value: string[]) {
-    dispatch(setSocialCauses(value));
-  }
-
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: '../type' })}>
+        <div className={css.chevron} onClick={navigateToType}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.stepsContainer}>
@@ -49,11 +36,11 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.main}>
         <div className={css.categoryTitle}>Popular</div>
-        <CategoriesClickable clickable onChange={onChange} list={list} selected={socialCauses} />
+        <CategoriesClickable clickable onChange={updateSocialCauses} list={list} selected={socialCauses} />
       </div>
 
       <div className={css.bottom}>
-        <Button disabled={!isValid} onClick={() => navigate({ to: '../profile' })}>
+        <Button disabled={!isSocialCausesValid} onClick={navigateToProfile}>
           Continue
         </Button>
       </div>

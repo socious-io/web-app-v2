@@ -1,25 +1,17 @@
-import { useNavigate } from '@tanstack/react-location';
-import { useDispatch, useSelector } from 'react-redux';
 import { ORGANIZATION_TYPE } from '../../../../constants/ORGANIZATION_TYPE';
-import { setOrgType } from '../../../../store/reducers/createOrgWizard.reducer';
-import { RootState } from '../../../../store/store';
 import { Button } from '../../../../components/atoms/button/button';
 import { Steps } from '../../../../components/atoms/steps/steps';
 import { TypeSelector } from '../../../../components/atoms/type-selector/type-selector';
 import css from './mobile.module.scss';
+import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const type = useSelector<RootState, string>((state) => {
-    return state.createOrgWizard.type;
-  });
+  const { type, updateOrgType, navigateToSocialCauses, navigateToIntro } = useOrganizationCreateShared();
 
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: '../intro' })}>
+        <div className={css.chevron} onClick={navigateToIntro}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.stepsContainer}>
@@ -28,15 +20,10 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.question}>What type of organization?</div>
       <div className={css.main}>
-        <TypeSelector
-          value={type}
-          padding="2rem 1rem"
-          onChange={(value) => dispatch(setOrgType(value))}
-          list={ORGANIZATION_TYPE}
-        />
+        <TypeSelector value={type} padding="2rem 1rem" onChange={updateOrgType} list={ORGANIZATION_TYPE} />
       </div>
       <div className={css.bottom}>
-        <Button disabled={!type} onClick={() => navigate({ to: '../social-causes' })}>
+        <Button disabled={!type} onClick={navigateToSocialCauses}>
           Continue
         </Button>
       </div>
