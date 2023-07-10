@@ -1,19 +1,11 @@
-import { useNavigate } from '@tanstack/react-location';
-import { useDispatch } from 'react-redux';
 import { Button } from '../../../../components/atoms/button/button';
-import { resetCreateOrgWizard } from '../../../../store/reducers/createOrgWizard.reducer';
 import { getProcess } from '../verified.services';
 import css from './mobile.module.scss';
+import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {
   const processes = getProcess('verify@socious.io');
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  function onContinue() {
-    dispatch(resetCreateOrgWizard());
-    navigate({ to: '/jobs' });
-  }
+  const { navigateToJobs } = useOrganizationCreateShared();
 
   return (
     <div className={css.container}>
@@ -22,7 +14,9 @@ export const Mobile = (): JSX.Element => {
           <img src="/icons/verified.svg" />
         </div>
         <div className={css.title}>Get verified</div>
-        <div className={css.statement}>Get your organization page verified to create jobs and hire users on Socious</div>
+        <div className={css.statement}>
+          Get your organization page verified to create jobs and hire users on Socious
+        </div>
       </div>
       <div className={css.main}>
         <div className={css.title}>How to get verified?</div>
@@ -44,7 +38,7 @@ export const Mobile = (): JSX.Element => {
         </div>
       </div>
       <div className={css.bottom}>
-        <Button onClick={onContinue}>Continue</Button>
+        <Button onClick={navigateToJobs}>Continue</Button>
       </div>
     </div>
   );

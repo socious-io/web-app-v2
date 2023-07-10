@@ -1,10 +1,12 @@
 import { Button } from '../../../../components/atoms/button/button';
 import { Card } from '../../../../components/atoms/card/card';
+import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { getProcess } from '../verified.services';
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const processes = getProcess('verify@socious.com');
+  const { navigateToJobs } = useOrganizationCreateShared();
 
   return (
     <div className={css.container}>
@@ -41,7 +43,8 @@ export const Desktop = (): JSX.Element => {
           </div>
         </div>
         <div className={css.bottom}>
-          <Button>Continue</Button>
+        <Button onClick={navigateToJobs}>Continue</Button>
+
         </div>
       </Card>
     </div>

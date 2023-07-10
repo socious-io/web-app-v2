@@ -3,7 +3,7 @@ import { Button } from '../../../../components/atoms/button/button';
 import { Card } from '../../../../components/atoms/card/card';
 import { Steps } from '../../../../components/atoms/steps/steps';
 import { TypeSelector } from '../../../../components/atoms/type-selector/type-selector';
-import { ORGANIZATION_TYPE } from '../type.services';
+import { ORGANIZATION_TYPE } from '../../../../constants/ORGANIZATION_TYPE';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Desktop = (): JSX.Element => {
