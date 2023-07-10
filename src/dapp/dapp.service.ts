@@ -3,10 +3,16 @@ import { EscrowParams } from './dapp.types';
 import { dappConfig } from './dapp.config';
 import Web3 from 'web3';
 
+const makeAmount = async (web3: Web3, token: string, amount: number): Promise<string> => {
+  const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
+  const decimals = await erc20Contract.methods.decimals().call();
+  return web3.utils.toBN(amount).mul(web3.utils.toBN(Math.pow(10, decimals))).toString();
+}
+
 export const allowance = async (web3: Web3, token: string, amount: number, verifiedOrg: boolean) => {
   // TODO: we may configure this fee ratio later
   const fee = verifiedOrg ? 0.02 : 0.03;
-  const allowanceAmount = amount + amount * fee;
+  const allowanceAmount = await makeAmount(web3, token, amount + amount * fee);
 
   const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
 
@@ -14,7 +20,7 @@ export const allowance = async (web3: Web3, token: string, amount: number, verif
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
 
   const approved = await erc20Contract.methods
-    .approve(selectedNetwork.escrow, web3.utils.toWei(allowanceAmount.toString()))
+    .approve(selectedNetwork.escrow, allowanceAmount)
     .send({ from: web3.eth.defaultAccount });
 
   if (!approved) throw new Error('Allowance not approved for escorw');
@@ -22,7 +28,6 @@ export const allowance = async (web3: Web3, token: string, amount: number, verif
 
 export const balance = async (web3: Web3, token: string) => {
   const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
-
   const result = await erc20Contract.methods.balanceOf(web3.eth.defaultAccount);
 
   return web3.utils.fromWei(result);
@@ -54,7 +59,7 @@ export const escrow = async (params: EscrowParams) => {
     .newEscrow(
       params.contributor,
       params.projectId,
-      params.web3.utils.toWei(params.escrowAmount.toString()),
+      await makeAmount(params.web3, token, params.escrowAmount),
       params.verifiedOrg,
       token
     )

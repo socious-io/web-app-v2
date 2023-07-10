@@ -3,6 +3,7 @@ import Web3 from 'web3';
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum';
 import { Web3Modal, Web3Button } from '@web3modal/react';
 import { configureChains, createClient, WagmiConfig, useAccount } from 'wagmi';
+import { switchNetwork } from '@wagmi/core'
 import { Chain } from 'wagmi/chains';
 import { config } from 'src/config';
 import { dappConfig } from './dapp.config';
@@ -38,6 +39,7 @@ export const useWeb3 = () => {
       }
 
       const provider = await connector.getProvider();
+      await switchNetwork({chainId: chains[0].id});
       const web3Instance = new Web3(provider);
 
       if (!web3Instance) throw Error('Provider is not valid');
