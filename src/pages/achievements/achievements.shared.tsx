@@ -14,7 +14,6 @@ export const useAchievementsShared = () => {
   const activeList = badges.badges.map((badge) => badge.social_cause_category);
   const points = badges.badges.reduce((prev, curr) => prev + curr.total_points, 0);
   const tier = evaluateTier(points);
-  console.log({ tier });
   const [showClaimPointsSlide, setShowClaimPointsSlide] = useState(false);
   const [showCheckRewardsSlide, setShowCheckRewardsSlide] = useState(false);
 

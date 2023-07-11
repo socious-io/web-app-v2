@@ -4,6 +4,7 @@ export type ImpactCategoryItemProps = {
   color: string;
   iconUrl: string;
   label: string;
+  onClick: () => void;
 };
 
 type Item = {

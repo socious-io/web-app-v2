@@ -82,45 +82,137 @@ export const SDG = {
   OTHER: 'OTHER',
 };
 
-type Badges = { value: string; label: string; color: string };
+export type Badges = { value: string; label: string; color: string; description: string };
 export const BADGES: Record<string, Badges> = {
-  NO_POVERTY: { value: 'NO_POVERTY', label: 'No Poverty', color: 'black' },
-  ZERO_HUNGER: { value: 'ZERO_HUNGER', label: 'Zero Hunger', color: 'black' },
-  HEALTH: { value: 'HEALTH', label: 'Good Health and Well-Being', color: '#459C49' },
-  EDUCATION_QUALITY: { value: 'EDUCATION_QUALITY', label: 'Quality Education', color: 'black' },
-  GENDER_EQUALITY: { value: 'GENDER_EQUALITY', label: 'Gender Equality', color: '#EA3F2A' },
+  NO_POVERTY: {
+    value: 'NO_POVERTY',
+    label: 'No Poverty',
+    color: 'black',
+    description: `
+    Eradicating poverty in all its forms remains one of the greatest challenges facing humanity. While the number of people living in extreme poverty dropped by more than half between 1990 and 2015, too many are still struggling for the most basic human needs.
+    As of 2015, about 736 million people still lived on less than US$1.90 a day; many lack food, clean drinking water and sanitation. Rapid growth in countries such as China and India has lifted millions out of poverty, but progress has been uneven. Women are more likely to be poor than men because they have less paid work, education, and own less property.
+    Progress has also been limited in other regions, such as South Asia and sub-Saharan Africa, which account for 80 percent of those living in extreme poverty. New threats brought on by climate change, conflict and food insecurity, mean even more work is needed to bring people out of poverty.
+    The SDGs are a bold commitment to finish what we started, and end poverty in all forms and dimensions by 2030. This involves targeting the most vulnerable, increasing basic resources and services, and supporting communities affected by conflict and climate-related disasters.
+    `,
+  },
+  ZERO_HUNGER: {
+    value: 'ZERO_HUNGER',
+    label: 'Zero Hunger',
+    color: 'black',
+    description: `The number of undernourished people has dropped by almost half in the past two decades because of rapid economic growth and increased agricultural productivity. Many developing countries that used to suffer from famine and hunger can now meet their nutritional needs. Central and East Asia, Latin America and the Caribbean have all made huge progress in eradicating extreme hunger.
+Unfortunately, extreme hunger and malnutrition remain a huge barrier to development in many countries. There are 821 million people estimated to be chronically undernourished as of 2017, often as a direct consequence of environmental degradation, drought and biodiversity loss. Over 90 million children under five are dangerously underweight. Undernourishment and severe food insecurity appear to be increasing in almost all regions of Africa, as well as in South America.
+The SDGs aim to end all forms of hunger and malnutrition by 2030, making sure all people–especially children–have sufficient and nutritious food all year. This involves promoting sustainable agricultural, supporting small-scale farmers and equal access to land, technology and markets. It also requires international cooperation to ensure investment in infrastructure and technology to improve agricultural productivity.`,
+  },
+  HEALTH: {
+    value: 'HEALTH',
+    label: 'Good Health and Well-Being',
+    color: '#459C49',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
+  },
+  EDUCATION_QUALITY: {
+    value: 'EDUCATION_QUALITY',
+    label: 'Quality Education',
+    color: 'black',
+    description: `
+    Since 2000, there has been enormous progress in achieving the target of universal primary education. The total enrollment rate in developing regions reached 91 percent in 2015, and the worldwide number of children out of school has dropped by almost half. There has also been a dramatic increase in literacy rates, and many more girls are in school than ever before. These are all remarkable successes.
+
+Progress has also been tough in some developing regions due to high levels of poverty, armed conflicts and other emergencies. In Western Asia and North Africa, ongoing armed conflict has seen an increase in the number of children out of school. This is a worrying trend. While Sub-Saharan Africa made the greatest progress in primary school enrollment among all developing regions – from 52 percent in 1990, up to 78 percent in 2012 – large disparities still remain. Children from the poorest households are up to four times more likely to be out of school than those of the richest households. Disparities between rural and urban areas also remain high.
+
+Achieving inclusive and quality education for all reaffirms the belief that education is one of the most powerful and proven vehicles for sustainable development. This goal ensures that all girls and boys complete free primary and secondary schooling by 2030. It also aims to provide equal access to affordable vocational training, to eliminate gender and wealth disparities, and achieve universal access to a quality higher education.
+    `,
+  },
+  GENDER_EQUALITY: {
+    value: 'GENDER_EQUALITY',
+    label: 'Gender Equality',
+    color: '#EA3F2A',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
+  },
   CLEAN_WATER_SANITATION: {
     value: 'CLEAN_WATER_SANITATION',
     label: 'Clean Water & Sanitation',
     color: '#26BDE2',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
   },
-  ENERGY: { value: 'ENERGY', label: 'Affordable and Clean Energy', color: 'black' },
-  ECONOMIC_GROWTH: { value: 'ECONOMIC_GROWTH', label: 'Decent Work and Economic Growth', color: 'black' },
+  ENERGY: {
+    value: 'ENERGY',
+    label: 'Affordable and Clean Energy',
+    color: 'black',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
+  },
+  ECONOMIC_GROWTH: {
+    value: 'ECONOMIC_GROWTH',
+    label: 'Decent Work and Economic Growth',
+    color: 'black',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
+  },
   INDUSTRY_INNOVATION_INFRASTRUCTURE: {
     value: 'INDUSTRY_INNOVATION_INFRASTRUCTURE',
     label: 'Industry, Innovation & Infrastructure',
     color: 'black',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
   },
   REDUCED_INEQUALITIES: {
     value: 'REDUCED_INEQUALITIES',
     label: 'Reduced Inequalities',
     color: '#DD1367',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
   },
   SUSTAINABLE_CITIES_COMMUNITIES: {
     value: 'SUSTAINABLE_CITIES_COMMUNITIES',
     label: 'Sustainable Cities & Communities',
     color: '#FD9D24',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
   },
   RESPONSIBLE_CONSUMPTION_PRODUCTION: {
     value: 'RESPONSIBLE_CONSUMPTION_PRODUCTION',
     label: 'Responsible Consumption & Production',
     color: '#BF8B2E',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
   },
-  CLIMATE_ACTION: { value: 'CLIMATE_ACTION', label: 'Climate Action', color: '#3F7E44' },
-  LIFE_BELOW_WATER: { value: 'LIFE_BELOW_WATER', label: 'Life Below Water', color: '#0A97D9' },
-  LIFE: { value: 'LIFE', label: 'Life on Land', color: '#56C02B' },
-  PEACE_JUSTICE: { value: 'PEACE_JUSTICE', label: 'Peace & Justice Strong Institutions', color: '#56C02B' },
-  GOALS_PARTNERSHIPS: { value: 'GOALS_PARTNERSHIPS', label: 'Partnerships for the Goals', color: 'black' },
+  CLIMATE_ACTION: {
+    value: 'CLIMATE_ACTION',
+    label: 'Climate Action',
+    color: '#3F7E44',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
+  },
+  LIFE_BELOW_WATER: {
+    value: 'LIFE_BELOW_WATER',
+    label: 'Life Below Water',
+    color: '#0A97D9',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
+  },
+  LIFE: {
+    value: 'LIFE',
+    label: 'Life on Land',
+    color: '#56C02B',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
+  },
+  PEACE_JUSTICE: {
+    value: 'PEACE_JUSTICE',
+    label: 'Peace & Justice Strong Institutions',
+    color: '#56C02B',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
+  },
+  GOALS_PARTNERSHIPS: {
+    value: 'GOALS_PARTNERSHIPS',
+    label: 'Partnerships for the Goals',
+    color: 'black',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisLorem ipsum dolor sit amet, consectetur adipiscing elit. Euismod vitae ultrices interdum sed elit vitae. Lobortis integer odio facilisi ...',
+  },
   //   OTHER: { value: 'OTHER', label: 'Other', color: 'black' },
 };
 
