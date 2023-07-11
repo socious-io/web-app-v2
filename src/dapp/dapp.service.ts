@@ -6,14 +6,13 @@ import Web3 from 'web3';
 const makeAmount = async (web3: Web3, token: string, amount: number): Promise<string> => {
   const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
   const decimals = await erc20Contract.methods.decimals().call();
-  return web3.utils.toBN(amount).mul(web3.utils.toBN(Math.pow(10, decimals))).toString();
+  return web3.utils.toBN(amount*100).mul(web3.utils.toBN(Math.pow(10, decimals-2))).toString();
 }
 
 export const allowance = async (web3: Web3, token: string, amount: number, verifiedOrg: boolean) => {
   // TODO: we may configure this fee ratio later
   const fee = verifiedOrg ? 0.02 : 0.03;
   const allowanceAmount = await makeAmount(web3, token, amount + amount * fee);
-
   const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
 
   const chainId = await web3.eth.getChainId();
@@ -49,7 +48,6 @@ export const escrow = async (params: EscrowParams) => {
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
   let token = params.token;
   if (!token) token = selectedNetwork.tokens[0].address;
-
   // First need allowance to verify that transaction is possible for smart contract
   await allowance(params.web3, token, params.escrowAmount, params.verifiedOrg);
 
