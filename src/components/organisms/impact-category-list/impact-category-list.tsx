@@ -2,6 +2,7 @@ import css from './impact-category-list.module.scss';
 import { ImpactCategoryItem } from '../../molecules/impact-category-item/impact-category-item';
 import { ImpactCategoryListProps } from './impact-category-list.types';
 import { BADGES } from '../../../constants/constants';
+import { LevelBadge } from 'src/components/atoms/level-badge/level-badge';
 
 export const ImpactCategoryList = (props: ImpactCategoryListProps): JSX.Element => {
   const { activeList, ...rest } = props;
@@ -16,12 +17,7 @@ export const ImpactCategoryList = (props: ImpactCategoryListProps): JSX.Element 
         const b = badge[1];
         return (
           <div key={b.value} style={{ opacity: isActive(b.value) ? '1' : '0.5' }}>
-            <ImpactCategoryItem
-              iconUrl={`/sdg/${b.value}.svg`}
-              key={b.value}
-              color={b.color}
-              label={b.label}
-            />
+            <ImpactCategoryItem iconUrl={`/sdg/${b.value}.svg`} key={b.value} color={b.color} label={b.label} />
           </div>
         );
       })}

@@ -4,3 +4,14 @@
   gap: 2rem 0;
   justify-items: center;
 }
+
+.tier {
+  height: 40px;
+  padding-top: 0.25rem;
+  font-size: var(--font-size-s);
+  text-align: center;
+
+  .levelLabel {
+    padding-top: 2px;
+  }
+}
