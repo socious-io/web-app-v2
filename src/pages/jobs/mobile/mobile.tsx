@@ -20,7 +20,7 @@ export const Mobile = (): JSX.Element => {
   }
 
   function onEnter(value: string) {
-    navigate({ to: `/search?q=${value}` });
+    navigate({ to: `/m/search?q=${value}&type=projects&page=1` });
   }
 
   return (
@@ -36,7 +36,12 @@ export const Mobile = (): JSX.Element => {
           <div className={css.tagline}>Find jobs that make a social impact</div>
         </div>
       </div>
-      <JobList onMorePageClick={onMorePage} padding="1rem" data={jobList} />
+      <JobList
+        onClick={(id) => navigate({ to: `./${id}` })}
+        onMorePageClick={onMorePage}
+        padding="1rem"
+        data={jobList}
+      />
     </div>
   );
 };
