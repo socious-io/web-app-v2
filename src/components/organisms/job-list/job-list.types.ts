@@ -15,8 +15,8 @@ export type Job = {
   project_type: 'FULL_TIME';
   project_length: 'LESS_THAN_A_MONTH';
   payment_currency: null;
-  payment_range_lower: null;
-  payment_range_higher: null;
+  payment_range_lower: string;
+  payment_range_higher: string;
   experience_level: 2;
   created_at: '2022-12-29T11:04:38.091Z';
   updated_at: '2022-12-29T11:04:38.091Z';
