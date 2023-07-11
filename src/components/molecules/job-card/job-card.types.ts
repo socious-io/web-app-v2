@@ -4,5 +4,6 @@ export type JobCardProps = {
   body: string;
   date: string;
   img?: string
+  type?: string;
   bottomRight?: React.ReactNode;
 };
