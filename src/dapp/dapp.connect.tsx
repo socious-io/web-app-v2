@@ -39,7 +39,6 @@ export const useWeb3 = () => {
       }
 
       const provider = await connector.getProvider();
-      await switchNetwork({chainId: chains[0].id});
       const web3Instance = new Web3(provider);
 
       if (!web3Instance) throw Error('Provider is not valid');
@@ -49,6 +48,7 @@ export const useWeb3 = () => {
 
       setWeb3(web3Instance);
       setProvider(provider);
+      await switchNetwork({chainId: chains[0].id});
     }
 
     init();
