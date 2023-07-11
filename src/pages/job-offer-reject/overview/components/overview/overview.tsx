@@ -1,6 +1,8 @@
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
+import { translatePaymentRange } from 'src/constants/PAYMENT_RANGE';
 import { translateProjectType } from 'src/constants/PROJECT_TYPES';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
@@ -11,30 +13,28 @@ import { printWhen } from 'src/core/utils';
 import css from './overview.module.scss';
 
 export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
-  const label = `${data.payment_type}-${data.payment_scheme}`;
-  const rangeLabel: Record<string, { label: string; value: string }> = {
-    'PAID-FIXED': {
-      label: 'Payment range',
-      value: `$${data.payment_range_lower} ~ $${data.payment_range_higher}`,
-    },
-    'PAID-HOURLY': {
-      label: 'Payment range',
-      value: `$${data.payment_range_lower} ~ $${data.payment_range_higher} / hr`,
-    },
-    'VOLUNTEER-FIXED': {
-      label: 'Commitment',
-      value: `${data.payment_range_lower} ~ ${data.payment_range_higher} hrs`,
-    },
-    'VOLUNTEER-HOURLY': {
-      label: 'Weekly hours',
-      value: `${data.payment_range_lower} ~ ${data.payment_range_higher} hrs / week`,
-    },
-  };
-
   const paymentRange = (
     <div className={css.group}>
-      <div className={css.groupTitle}>{rangeLabel[label].label}</div>
-      <div className={css.value}>{rangeLabel[label].value}</div>
+      <div className={css.groupTitle}>
+        {
+          translatePaymentRange(
+            data.payment_range_lower,
+            data.payment_range_higher,
+            data.payment_type,
+            data.payment_scheme
+          ).label
+        }
+      </div>
+      <div className={css.value}>
+        {
+          translatePaymentRange(
+            data.payment_range_lower,
+            data.payment_range_higher,
+            data.payment_type,
+            data.payment_scheme
+          ).value
+        }
+      </div>
     </div>
   );
 
@@ -72,10 +72,12 @@ export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
               <div className={css.value}>{translateProjectLength(data.project_length)}</div>
             </div>
             <div className={css.group}>
-              <div className={css.groupTitle}>Payment type</div>
-              <div className={css.value}>{translatePaymentType(data.payment_type)}</div>
+              <div className={css.groupTitle}>Payment type / terms</div>
+              <div className={css.value}>
+                {translatePaymentType(data.payment_type)} - {translatePaymentTerms(data.payment_scheme)}
+              </div>
             </div>
-            {printWhen(paymentRange, data.payment_range_higher)}
+            {printWhen(paymentRange, !!data.payment_range_lower && !!data.payment_range_higher)}
             <div className={css.group}>
               <div className={css.groupTitle}>Experience level</div>
               <div className={css.value}>{translateExperienceLevel(data.experience_level)}</div>
