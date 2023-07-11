@@ -4,7 +4,7 @@ import { PayloadModel } from './desktop/search.types';
 import { useMatch, useNavigate, useLocation } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
 import { Pagination } from 'src/core/types';
-import { like, unlike } from '../feed/mobile/mobile.service';
+import { removeEmptyArrays } from 'src/core/utils';
 
 export const useSearchShared = () => {
   const resolver = useMatch();
@@ -43,40 +43,21 @@ export const useSearchShared = () => {
   const menu: DropdownBtnItem[] = [
     { id: 1, label: 'Jobs', value: 'projects' },
     { id: 2, label: 'People', value: 'users' },
-    // { id: 3, label: 'Posts', value: 'posts' },
   ];
 
   function onTypeChange(menu: DropdownBtnItem) {
     setList([]);
     setResult(0);
-    navigate({ search: (p) => ({ ...p, page: 1, type: menu.value, id: null }) });
+    navigate({ search: (p) => ({ ...p, page: 1, type: menu.value, id: null, filter: removeEmptyArrays(p.filter) }) });
   }
 
   function onSkillsChange(skills: string[]) {
-    navigate({ search: (p) => ({ ...p, page: 1, filter: { ...p.filter, skills } }) });
+    navigate({ search: (p) => ({ ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, skills }) }) });
   }
 
   function onSocialCausesChange(social_causes: string[]) {
-    navigate({ search: (p) => ({ ...p, page: 1, filter: { ...p.filter, social_causes } }) });
+    navigate({ search: (p) => ({ ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, social_causes }) }) });
   }
-
-  const onPostLike = (id: string) => {
-    const clone = [...list];
-    const ref = clone.find((item) => item.id === id) as Feed;
-    ref.liked = true;
-    ref.likes = ref.likes + 1;
-    setList(clone);
-    like(id).then(() => {});
-  };
-
-  const onPostRemoveLike = (id: string) => {
-    const clone = [...list];
-    const ref = clone.find((item) => item.id === id) as Feed;
-    ref.liked = false;
-    ref.likes = ref.likes - 1;
-    setList(clone);
-    unlike(id).then(() => {});
-  };
 
   return {
     updateList,
@@ -88,8 +69,6 @@ export const useSearchShared = () => {
     result,
     data,
     findLabelByValue,
-    onPostLike,
-    onPostRemoveLike,
     onSocialCausesChange,
     onSkillsChange,
   };

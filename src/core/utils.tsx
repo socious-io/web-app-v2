@@ -24,3 +24,17 @@ export const removedEmptyProps = (obj: Record<string | number, unknown>) =>
     }
     return prev;
   }, {});
+
+export const removeEmptyArrays = (obj: null | undefined | Record<string | number, unknown>) => {
+  if (!obj) {
+    return;
+  }
+
+  return Object.entries(obj).reduce((prev, [key, value]) => {
+    if (Array.isArray(value) && value.length === 0) {
+    } else {
+      Object.assign(prev, { [key]: value });
+    }
+    return prev;
+  }, {});
+};
