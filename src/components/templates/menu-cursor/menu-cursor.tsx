@@ -32,7 +32,6 @@ export const MenuCursor = (): JSX.Element => {
   }
 
   function onMenuItemClick(menu: Menu) {
-    console.log(route.current.pathname, menu.link);
     if (route.current.pathname !== menu.link) {
       setSearchValue('');
     }
