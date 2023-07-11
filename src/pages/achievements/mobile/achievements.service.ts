@@ -1,8 +1,8 @@
 import { TIERS } from '../../../constants/TIERS_TABLE';
 
 export function evaluateTier(points: number) {
-  //   const currentTier = TIERS.find(({ min, max }) => min < points && max > points);
-  const currentTier = TIERS[0];
+  const currentTier = TIERS.find(({ min, max }) => min < points && max > points);
+
   if (currentTier !== undefined) {
     return {
       prev: currentTier.tier === 1 ? 1 : currentTier.tier - 1,
