@@ -11,7 +11,9 @@ export const PaymentDetail: React.FC<PaymentDetailProps> = ({
         <div className={css["container"]} key={item.title}>
           {item.title}
           <span>
-            {unit}
+          {unit}
+          </span>
+          <span>            
             {item.price.toLocaleString()}
           </span>
         </div>

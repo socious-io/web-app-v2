@@ -18,10 +18,10 @@ export const PaymentSummaryCard: React.FC<PaymentSummaryCardProps> = ({
       </div>
       <div className={css["payment__total"]}>
         Total
-        <span>
-          {unit}
+        <span>{unit}</span>
+        <span>          
           {total_price.toLocaleString()}
-        </span>
+        </span>        
       </div>
     </Card>
   );
