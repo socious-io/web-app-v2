@@ -88,10 +88,10 @@ export const Mobile = (): JSX.Element => {
                 <div className={css.detailItemLabel}>Job total</div>
                 <div className={css.detailItemValue}>{offer.assignment_total}</div>
               </div>
-              <div className={css.detailItem}>
+              {/* <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Due date</div>
                 <div className={css.detailItemValue}>{offer.due_date || 'Unspecified'}</div>
-              </div>
+              </div> */}
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Estimate total hours</div>
                 <div className={css.detailItemValue}>{offer.total_hours} hrs</div>

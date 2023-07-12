@@ -1,8 +1,9 @@
 import { get } from 'src/core/http';
 import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
-import { Menu } from 'src/components/molecules/card-menu/card-menu.types';
 import { GetJobs, Pagination } from 'src/core/types';
 import { isoToStandard } from 'src/core/time';
+import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 
 export async function getActiveJobs(payload: { identityId: string; page: number }): Promise<Pagination<GetJobs[]>> {
   return get(`/projects?identity_id=${payload.identityId}&status=ACTIVE&page=${payload.page}`).then(({ data }) => data);
@@ -23,6 +24,7 @@ function jobToJobCardAdaptor(job: GetJobs): JobCardProps {
     title: job.title,
     body: `${job.applicants} ${applicantText}, ${job.missions} hired`,
     date: isoToStandard(job.updated_at),
+    type: `${translatePaymentType(job.payment_type)} - ${translatePaymentTerms(job.payment_scheme)}`,
   };
 }
 
