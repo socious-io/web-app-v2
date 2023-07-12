@@ -26,7 +26,10 @@ export const endpoint: Endpoints = {
       mission_id: (id: string) => get(`missions/${id}`).then(getDataProp),
     },
     follows: {
-      followings: () => get('follows/followings').then(getDataProp),
+      followings: (payload) =>
+        get(
+          `follows/followings?page=${payload?.page || ''}&name=${payload?.name || ''}&type=${payload?.type || ''}`
+        ).then(getDataProp),
       followers: () => get('follows/followers').then(getDataProp),
     },
     connections: {
@@ -37,6 +40,9 @@ export const endpoint: Endpoints = {
           }&filter.requested_id=${payload?.requested_id || ''}`
         ).then(getDataProp),
       connection_status: (id) => get(`/connections/related/${id}`).then(getDataProp),
+    },
+    members: {
+      org_id: (id, payload) => get(`/orgs/${id}/members?page=${payload.page}`).then(getDataProp),
     },
   },
   post: {
@@ -92,6 +98,12 @@ export const endpoint: Endpoints = {
     },
     notifications: {
       settings_confirm: (body) => post('notifications/settings', body).then(getDataProp),
+    },
+    members: {
+      '{org_id}/add/{user_id}': (org_id, user_id) =>
+        post(`/orgs/${org_id}/members/${user_id}`, {}).then(getDataProp),
+      '{org_id}/remove/{user_id}': (org_id, user_id) =>
+        post(`/orgs/remove/${org_id}/members/${user_id}`, {}).then(getDataProp),
     },
   },
 };

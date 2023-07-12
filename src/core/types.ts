@@ -476,6 +476,15 @@ export type ConnectionItem = {
   follower: boolean;
 };
 
+export type MemberIdentity = {
+  avatar: { url: string };
+  email: string;
+  id: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+};
+
 export type Error = { error: string };
 
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;

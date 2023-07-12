@@ -105,6 +105,12 @@ export const Mobile = () => {
     };
   }
 
+  function navigateToTeam() {
+    hapticsImpactLight();
+    navigate({ to: `/team/${identity.id}` });
+    closeSidebar();
+  }
+
   function navigateToCreatedJobs() {
     hapticsImpactLight();
     navigate({ to: `/m/jobs/created/${identity.id}` });
@@ -122,6 +128,13 @@ export const Mobile = () => {
     navigate({ to: `/m/jobs/applied/${identity.id}` });
     closeSidebar();
   }
+
+  const teamOrgJSX = (
+    <div onClick={navigateToTeam} className={css.row}>
+      <img src="/icons/team.svg" />
+      <span>Team</span>
+    </div>
+  );
 
   const createdLinkJSX = (
     <div onClick={navigateToCreatedJobs} className={css.row}>
@@ -202,6 +215,13 @@ export const Mobile = () => {
             <span>11 Followers</span> */}
           </div>
         </div>
+        {printWhen(
+          <div className={css.items}>
+            <div className={css.title}>Organization</div>
+            {teamOrgJSX}
+          </div>,
+          identity?.type === 'organizations'
+        )}
         <div className={css.items}>
           <div className={css.title}>Jobs</div>
           {printWhen(myApplicationsJSX, identity?.type === 'users')}

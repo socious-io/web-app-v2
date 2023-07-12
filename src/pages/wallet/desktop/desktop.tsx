@@ -1,4 +1,6 @@
 import { useNavigate } from '@tanstack/react-location';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
 import { AlertModal } from 'src/components/organisms/alert-modal';
@@ -9,11 +11,15 @@ import { ProfileCard } from 'src/components/templates/profile-card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { printWhen } from 'src/core/utils';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { IdentityReq } from 'src/core/types';
 import { useWalletShared } from '../wallet.shared';
 import css from './desktop.module.scss';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
+  const identity = useSelector<RootState, IdentityReq>((state) => {
+    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  });
   const {
     form,
     externalAccounts,
@@ -36,11 +42,16 @@ export const Desktop: React.FC = () => {
     { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
   ];
 
+  const NetworkMenuListOrg = [
+    ...NetworkMenuList,
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+  ];
+
   return (
     <TwoColumnCursor>
       <div className={css.leftContainer}>
         <ProfileCard />
-        <CardMenu title="Network" list={NetworkMenuList} />
+        <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         <Card className={!externalAccounts?.length ? css.accounts : css.noCard}>
           {printWhen(
             <Dropdown
