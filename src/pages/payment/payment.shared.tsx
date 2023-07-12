@@ -111,9 +111,9 @@ export const usePaymentShared = () => {
 
   return {
     offer,
-    assignment_total: getFlooredFixed(assignment_total, 1),
-    commision: getFlooredFixed(commision, 1),
-    total_price: getFlooredFixed(total_price, 1),
+    assignment_total: getFlooredFixed(assignment_total, 2),
+    commision: getFlooredFixed(commision, 2),
+    total_price: getFlooredFixed(total_price, 2),
     start_date,
     isPaidCrypto,
     cards,
