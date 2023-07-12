@@ -29,13 +29,13 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
           <img src={`/icons/fiat/${unit}.svg`} className={css.balance__img} />
           {unit}
         </div>
-        $ {getFlooredFixed(amount, 1)}
+        $ {getFlooredFixed(amount, 2)}
       </div>
       <div className={css.rowItem}>
-        <span className={css.title}>Fee </span>$ {getFlooredFixed(fee, 1)}
+        <span className={css.title}>Fee </span>$ {getFlooredFixed(fee, 2)}
       </div>
       <div className={css.rowItem}>
-        <span className={css.title}>total </span>$ {getFlooredFixed(total, 1)}
+        <span className={css.title}>total </span>$ {getFlooredFixed(total, 2)}
       </div>
       {printWhen(
         <>
