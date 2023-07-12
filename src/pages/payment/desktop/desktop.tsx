@@ -29,6 +29,13 @@ export const Desktop: React.FC = () => {
   const { job_category, recipient, project, total_hours } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
+  let unit = '$';
+  if (offer.crypto_currency_address) {
+    Dapp.NETWORKS.map(n => {
+      const token = n.tokens.filter(t => offer.crypto_currency_address === t.address)[0];
+      if (token) unit = token.symbol
+    })
+  }
 
   return (
     <>
@@ -51,6 +58,7 @@ export const Desktop: React.FC = () => {
           />
           <PaymentSummaryCard
             title="Payment summary"
+            unit={unit}
             list={[
               { title: 'Total assignement', price: assignment_total },
               { title: ' Socious commision', price: commision },

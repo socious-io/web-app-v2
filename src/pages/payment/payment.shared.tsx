@@ -26,6 +26,7 @@ export const usePaymentShared = () => {
     amount: assignment_total,
     total: total_price,
     fee: commision,
+    crypto_currency_address: token,
     project_id,
     project,
     payment_mode,
@@ -66,6 +67,7 @@ export const usePaymentShared = () => {
         web3,
         escrowAmount,
         contributor,
+        token, 
         projectId: project_id,
         verifiedOrg: offer.offerer.meta.verified_impact || false,
       });

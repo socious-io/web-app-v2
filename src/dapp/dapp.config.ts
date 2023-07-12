@@ -2,7 +2,7 @@ import { DappConfig } from './dapp.types';
 import { polygon, polygonMumbai, Chain } from 'wagmi/chains';
 
 export const milkomeda: Chain = {
-  id: 2002,
+  id: 2001,
   name: 'Milkomeda',
   network: 'Milkomeda',
   nativeCurrency: {
