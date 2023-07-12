@@ -1,5 +1,7 @@
 .container {
-  padding-top: 2rem;
+  display: grid;
+  grid-template-rows: 13rem 1fr;
+  height: 70vh;
 }
 
 .header {
@@ -35,4 +37,11 @@
   padding-top: 2rem;
   margin-bottom: 1rem;
   padding: 1rem;
+}
+
+.body {
+  white-space: pre-line;
+  line-break: anywhere;
+  line-height: 1.5rem;
+  overflow-y: scroll;
 }

@@ -18,7 +18,9 @@ export const BadgeDetailSlide = ({ id = 'NO_POVERTY' }: BadgeDetailSlideProps): 
         <ImpactBadge size="6rem" color={b.color} iconUrl={`/sdg/${b.value}.svg`} />
         <div className={css.label}>{b.label}</div>
       </div>
-      <div className={css.body}>{b.description}</div>
+      <div className={css.body}>
+        <span>{b.description}</span>
+      </div>
     </div>
   );
 };
