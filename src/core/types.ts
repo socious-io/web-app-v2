@@ -157,6 +157,8 @@ export type GetJobs = {
   status: 'ACTIVE' | 'DRAFT';
   updated_at: string;
   missions: number;
+  payment_scheme: string;
+  payment_type: string;
 };
 
 export type CategoriesResp = {

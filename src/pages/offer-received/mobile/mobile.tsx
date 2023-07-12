@@ -93,10 +93,10 @@ export const Mobile = (): JSX.Element => {
                   {printWhen(<span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>, isPaidCrypto)}
                 </div>
               </div>
-              <div className={css.detailItem}>
+              {/* <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Due date</div>
                 <div className={css.detailItemValue}>{offer.due_date || 'Unspecified'}</div>
-              </div>
+              </div> */}
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Estimate total hours</div>
                 <div className={css.detailItemValue}>{offer.total_hours} hrs</div>

@@ -3,11 +3,10 @@ import { Card } from '../../atoms/card/card';
 import { JobListProps } from './job-list.types';
 import { Categories } from '../../atoms/categories/categories';
 import { CategoriesClickable } from '../../atoms/categories-clickable/categories-clickable';
-import { getList } from './job-list.services';
+import { getCategories } from './job-list.services';
 import { Avatar } from '../../atoms/avatar/avatar';
-import { useNavigate } from '@tanstack/react-location';
-import { toRelativeTime } from '../../../core/relative-time';
-import { socialCausesToCategory } from '../../../core/adaptors';
+import { toRelativeTime } from 'src/core/relative-time';
+import { socialCausesToCategory } from 'src/core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { printWhen } from 'src/core/utils';
@@ -46,7 +45,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
             </div>
             <div className={css.body}>
               <div className={css.jobTitle}>{job.title}</div>
-              <Categories marginBottom="1rem" list={getList(job)} />
+              <Categories marginBottom="1rem" list={getCategories(job)} />
               <div className={css.description}>
                 <ExpandableText text={job.description} isMarkdown />
               </div>
