@@ -40,7 +40,7 @@ export const useOfferShared = () => {
   }
 
   function equivalentUSD(amount: ControlPrimitiveValue) {
-    return Math.round((Number(amount) / tokenRate) * 100) / 100;
+    return Math.round((Number(amount) * tokenRate) * 100) / 100;
   }
 
   return {
