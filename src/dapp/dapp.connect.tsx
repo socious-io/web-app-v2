@@ -48,7 +48,9 @@ export const useWeb3 = () => {
 
       setWeb3(web3Instance);
       setProvider(provider);
-      await switchNetwork({chainId: chains[0].id});
+      const chainId = await web3Instance.eth.getChainId();
+      const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
+      if (!selectedNetwork) await switchNetwork({chainId: chains[0].id});
     }
 
     init();
