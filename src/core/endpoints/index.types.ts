@@ -1,6 +1,15 @@
 import { LoginPayload } from 'src/pages/sign-in/sign-in.types';
-import { ConnectStatus, ConnectionItem, LoginResp, NotificationSettingsRes, Pagination } from '../types';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
+import {
+  ConnectStatus,
+  ConnectionItem,
+  FollowingsReq,
+  LoginResp,
+  MemberIdentity,
+  NotificationSettingsRes,
+  Pagination,
+  UserType,
+} from '../types';
 
 export type GetProject = (id: string) => {
   applicants: number;
@@ -151,7 +160,7 @@ export interface Endpoints {
     offers: unknown;
     missions: unknown;
     follows: {
-      followings: () => Promise<unknown>;
+      followings: (payload?: { page?: number; name: string; type?: UserType }) => Promise<Pagination<FollowingsReq[]>>;
       followers: () => Promise<unknown>;
     };
     connections: {
@@ -162,6 +171,9 @@ export interface Endpoints {
         requested_id?: string;
       }) => Promise<Pagination<ConnectionItem[]>>;
       connection_status: (id: string) => Promise<{ connect: ConnectionItem }>;
+    };
+    members: {
+      org_id: (id: string, payload: { page: number }) => Promise<Pagination<MemberIdentity[]>>;
     };
   };
   post: {
@@ -213,6 +225,10 @@ export interface Endpoints {
     };
     notifications: {
       settings_confirm: (formData: NotificationSettingsRes) => Promise<NotificationSettingsRes>;
+    };
+    members: {
+      '{org_id}/add/{user_id}': (org_id: string, user_id: string) => Promise<unknown>;
+      '{org_id}/remove/{user_id}': (org_id: string, user_id: string) => Promise<unknown>;
     };
   };
 }
