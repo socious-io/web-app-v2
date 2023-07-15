@@ -25,7 +25,7 @@ export const Desktop = (): JSX.Element => {
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-  const { offer, media, status, account, isPaidCrypto, onAccept, onDeclined, equivalentUSD } = useOfferReceivedShared();
+  const { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD } = useOfferReceivedShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -118,7 +118,7 @@ export const Desktop = (): JSX.Element => {
                   <div className={css.detailItem}>
                     <div className={css.detailItemLabel}>Job total</div>
                     <div className={css.detailItemValue}>
-                      {offer.assignment_total}
+                      {offer.assignment_total} <span>{unit}</span>
                       {printWhen(
                         <span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>,
                         isPaidCrypto
