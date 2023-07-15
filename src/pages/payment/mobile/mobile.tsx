@@ -15,6 +15,7 @@ export const Mobile = (): JSX.Element => {
   const {
     offer,
     assignment_total,
+    unit,
     commision,
     total_price,
     start_date,
@@ -28,6 +29,7 @@ export const Mobile = (): JSX.Element => {
   } = usePaymentShared();
   const { job_category, recipient, project, total_hours } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
+
 
   return (
     <TopFixedMobile>
@@ -51,6 +53,7 @@ export const Mobile = (): JSX.Element => {
           <div className={css['container__spacer']}>
             <PaymentSummaryCard
               title="Payment summary"
+              unit={unit}
               list={[
                 { title: 'Total assignement', price: assignment_total },
                 { title: ' Socious commision', price: commision },

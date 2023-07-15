@@ -109,8 +109,18 @@ export const usePaymentShared = () => {
     setProcess(false);
   }
 
+
+  let unit = '$';
+  if (offer.crypto_currency_address) {
+    Dapp.NETWORKS.map(n => {
+      const token = n.tokens.filter(t => offer.crypto_currency_address === t.address)[0];
+      if (token) unit = token.symbol
+    })
+  }
+
   return {
     offer,
+    unit,
     assignment_total: getFlooredFixed(assignment_total, 2),
     commision: getFlooredFixed(commision, 2),
     total_price: getFlooredFixed(total_price, 2),

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Dapp from 'src/dapp';
 import { useMatch } from '@tanstack/react-location';
 import { useAccount } from 'wagmi';
 import { Resolver } from './offer-received.types';
@@ -16,6 +17,14 @@ export const useOfferReceivedShared = () => {
   const { address: account, isConnected } = useAccount();
   const [status, setStatus] = useState<StatusKeys>(offer?.status as StatusKeys);
   const [tokenRate, setTokenRate] = useState(1);
+
+  let unit = "$";
+  if (offer.crypto_currency_address) {
+    Dapp.NETWORKS.map(n => {
+      const token = n.tokens.filter(t => offer.crypto_currency_address === t.address)[0];
+      if (token) unit = token.symbol;
+    });
+  }
 
   useEffect(() => {
     if (isConnected && account && (!wallet_address || String(wallet_address) !== account)) {
@@ -53,8 +62,8 @@ export const useOfferReceivedShared = () => {
   }
 
   function equivalentUSD() {
-    return Math.round((offer.assignment_total / tokenRate) * 100) / 100;
+    return Math.round((offer.assignment_total * tokenRate) * 100) / 100;
   }
 
-  return { offer, media, status, account, isPaidCrypto, onAccept, onDeclined, equivalentUSD };
+  return { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD };
 };
