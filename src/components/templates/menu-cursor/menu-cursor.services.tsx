@@ -1,32 +1,37 @@
-import { Link } from '@tanstack/react-location';
 import { IdentityReq } from 'src/core/types';
 
-export type Menu = { label: string; icon: string; link: string };
+export type Menu = { label: string; icon: string; link: string; public: boolean };
+
 export const menuList: Menu[] = [
   {
     label: 'Jobs',
     icon: '/icons/jobs.svg',
     link: '/jobs',
-  },
-  {
-    label: 'Network',
-    icon: '/icons/network-gray.svg',
-    link: '/network',
+    public: true,
   },
   {
     label: 'Feeds',
     icon: '/icons/feeds.svg',
     link: '/feeds',
+    public: true,
+  },
+  {
+    label: 'Network',
+    icon: '/icons/network-gray.svg',
+    link: '/network',
+    public: false,
   },
   {
     label: 'Chat',
     icon: '/icons/chat.svg',
     link: '/chats/contacts',
+    public: false,
   },
   {
     label: 'Notifications',
     icon: '/icons/notifications.svg',
     link: '/notifications',
+    public: false,
   },
 ];
 
