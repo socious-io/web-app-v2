@@ -45,6 +45,6 @@ export const settingsList = [
   },
 ];
 
-export function getAvatar(identity: IdentityReq) {
-  return identity.type === 'organizations' ? identity.meta.image : identity.meta.avatar;
+export function getAvatar(identity?: IdentityReq) {
+  return identity?.type === 'organizations' ? identity.meta.image : identity?.meta.avatar;
 }

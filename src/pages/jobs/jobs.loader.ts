@@ -8,7 +8,7 @@ export async function jobsPageLoader() {
     store.dispatch(setIdentityList(resp));
     return resp;
   } catch {
-    window.location.replace('/intro');
+    // window.location.replace('/intro');
     return {};
   }
 }

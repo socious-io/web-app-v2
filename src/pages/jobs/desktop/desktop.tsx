@@ -38,12 +38,12 @@ export const Desktop = (): JSX.Element => {
   ];
 
   return (
-    <TwoColumnCursor>
+    <TwoColumnCursor visibleSidebar={!!identity}>
       <div className={css.sidebar}>
         <ProfileCard />
-        <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
-        {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity.type === 'users')}
-        {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity.type === 'organizations')}
+        <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
+        {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity?.type === 'users')}
+        {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity?.type === 'organizations')}
       </div>
       <>
         <div className={css.banner}>

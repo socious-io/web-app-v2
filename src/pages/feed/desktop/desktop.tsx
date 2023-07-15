@@ -34,7 +34,7 @@ export const Desktop = () => {
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
   const [feed, setFeed] = useState<Feed>();
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
+  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
