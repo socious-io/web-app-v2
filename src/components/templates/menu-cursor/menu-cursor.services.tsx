@@ -1,35 +1,94 @@
 import { IdentityReq } from 'src/core/types';
 
-export type Menu = { label: string; icon: string; link: string; public: boolean };
+export type Menu = {
+  label: string;
+  icons: {
+    nonActive: {
+      mobile: string;
+      desktop: string;
+    };
+    active: {
+      mobile: string;
+      desktop: string;
+    };
+  };
+  link: string;
+  public: boolean;
+};
 
 export const menuList: Menu[] = [
   {
     label: 'Jobs',
-    icon: '/icons/jobs.svg',
+    icons: {
+      nonActive: {
+        mobile: '/icons/menu/jobs.svg',
+        desktop: '/icons/jobs.svg',
+      },
+      active: {
+        mobile: '/icons/menu/jobs-active.svg',
+        desktop: '/icons/jobs-active.svg',
+      },
+    },
     link: '/jobs',
     public: true,
   },
   {
     label: 'Feeds',
-    icon: '/icons/feeds.svg',
+    icons: {
+      nonActive: {
+        mobile: '/icons/menu/feeds.svg',
+        desktop: '/icons/feeds.svg',
+      },
+      active: {
+        mobile: '/icons/menu/feeds-active.svg',
+        desktop: '/icons/feeds-active.svg',
+      },
+    },
     link: '/feeds',
     public: true,
   },
   {
     label: 'Network',
-    icon: '/icons/network-gray.svg',
+    icons: {
+      nonActive: {
+        mobile: '/icons/menu/network-gray.svg',
+        desktop: '/icons/network-gray.svg',
+      },
+      active: {
+        mobile: '/icons/menu/network-gray-active.svg',
+        desktop: '/icons/network-gray-active.svg',
+      },
+    },
     link: '/network',
     public: false,
   },
   {
     label: 'Chat',
-    icon: '/icons/chat.svg',
+    icons: {
+      nonActive: {
+        mobile: '/icons/menu/chat.svg',
+        desktop: '/icons/chat.svg',
+      },
+      active: {
+        mobile: '/icons/menu/chat-active.svg',
+        desktop: '/icons/chat-active.svg',
+      },
+    },
     link: '/chats/contacts',
     public: false,
   },
   {
     label: 'Notifications',
-    icon: '/icons/notifications.svg',
+    icons: {
+      nonActive: {
+        mobile: '/icons/menu/notifications.svg',
+        desktop: '/icons/notifications.svg',
+      },
+      active: {
+        mobile: '/icons/menu/notifications-active.svg',
+        desktop: '/icons/notifications-active.svg',
+      },
+    },
     link: '/notifications',
     public: false,
   },

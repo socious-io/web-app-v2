@@ -64,7 +64,7 @@ export const MenuCursor = (): JSX.Element => {
           <ul className={css.navContainer}>
             {menuList.filter(filterIfNotLoggedIn).map((item) => (
               <li key={item.label} className={css.navItem} onClick={() => onMenuItemClick(item)}>
-                <img className={css.navIcon} height={24} src={item.icon} />
+                <img className={css.navIcon} height={24} src={item.icons.nonActive.desktop} />
                 <div className={css.navLabel}>{item.label}</div>
               </li>
             ))}
