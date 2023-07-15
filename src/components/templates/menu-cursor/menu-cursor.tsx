@@ -14,9 +14,11 @@ import { PayloadModel } from 'src/pages/search/desktop/search.types';
 export const MenuCursor = (): JSX.Element => {
   const navigate = useNavigate();
   const route = useLocation();
-  const identity = useSelector<RootState, IdentityReq>((state) => {
+  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+    console.log('identity', state);
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
+
   const [accListVisibility, setAccListVisibility] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
@@ -66,11 +68,11 @@ export const MenuCursor = (): JSX.Element => {
                 setAccListVisibility(!accListVisibility);
               }}
               size="2rem"
-              type={identity.type}
-              img={getAvatar(identity)}
+              type={currentIdentity?.type || 'users'}
+              img={getAvatar(currentIdentity)}
             />
             <div className={css.switchAccountMenu}>
-              <SwitchAccount identity={identity} open={accListVisibility} onClose={() => setAccListVisibility(false)} />
+              <SwitchAccount identity={currentIdentity} open={accListVisibility} onClose={() => setAccListVisibility(false)} />
             </div>
           </div>
         </div>

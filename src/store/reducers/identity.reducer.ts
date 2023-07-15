@@ -5,7 +5,7 @@ export const identitySlice = createSlice({
   name: 'identity',
   initialState: {
     entities: [],
-    currentIdentity: {},
+    // currentIdentity: {},
   } as { entities: IdentityReq[] },
   reducers: {
     setIdentityList: (state, action) => {

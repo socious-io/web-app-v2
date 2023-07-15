@@ -147,9 +147,9 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
           ))}
         </div>
       </Divider>
-      {printWhen(myApplicationsJSX, props.identity.type === 'users')}
-      {printWhen(createdJobDividerJSX, props.identity.type === 'organizations')}
-      {printWhen(paymentJSX, props.identity.type === 'users')}
+      {printWhen(myApplicationsJSX, props.identity && props.identity.type === 'users')}
+      {printWhen(createdJobDividerJSX, props.identity && props.identity.type === 'organizations')}
+      {printWhen(paymentJSX, props.identity && props.identity.type === 'users')}
       <Divider title="Settings">
         <div className={css.settingsMenuContainer}>
           <div className={css.menuItem} onClick={() => navigateToRoute('/privacy-policy')}>
