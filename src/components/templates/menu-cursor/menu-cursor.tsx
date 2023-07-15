@@ -15,8 +15,7 @@ export const MenuCursor = (): JSX.Element => {
   const navigate = useNavigate();
   const route = useLocation();
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    console.log('identity', state);
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+    return state.identity.entities.find((identity) => identity.current);
   });
 
   const [accListVisibility, setAccListVisibility] = useState(false);
@@ -40,6 +39,14 @@ export const MenuCursor = (): JSX.Element => {
     navigate({ to: menu.link });
   }
 
+  function filterIfNotLoggedIn(item: Menu) {
+    const userIsLoggedIn = !!currentIdentity;
+
+    if (userIsLoggedIn || item.public) {
+      return item;
+    }
+  }
+
   return (
     <div className={css.container}>
       <div className={css.menu}>
@@ -55,7 +62,7 @@ export const MenuCursor = (): JSX.Element => {
             placeholder="Search"
           />
           <ul className={css.navContainer}>
-            {menuList.map((item) => (
+            {menuList.filter(filterIfNotLoggedIn).map((item) => (
               <li key={item.label} className={css.navItem} onClick={() => onMenuItemClick(item)}>
                 <img className={css.navIcon} height={24} src={item.icon} />
                 <div className={css.navLabel}>{item.label}</div>
@@ -72,7 +79,11 @@ export const MenuCursor = (): JSX.Element => {
               img={getAvatar(currentIdentity)}
             />
             <div className={css.switchAccountMenu}>
-              <SwitchAccount identity={currentIdentity} open={accListVisibility} onClose={() => setAccListVisibility(false)} />
+              <SwitchAccount
+                identity={currentIdentity}
+                open={accListVisibility}
+                onClose={() => setAccListVisibility(false)}
+              />
             </div>
           </div>
         </div>

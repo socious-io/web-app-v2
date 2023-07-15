@@ -48,7 +48,7 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
               job={job}
               screeningQuestions={questions}
               location={location(job)}
-              userType={currentIdentity.type}
+              userType={currentIdentity?.type || 'users'}
             />
           );
           setContent(jobDetailCardJSX);
