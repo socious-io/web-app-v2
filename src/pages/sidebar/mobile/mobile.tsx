@@ -15,10 +15,12 @@ import { AccountsModel } from './mobile.types';
 import { printWhen } from '../../../core/utils';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Mobile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -184,37 +186,41 @@ export const Mobile = () => {
     </div>
   );
 
+  const headerJSX = (
+    <div className={css.header}>
+      <div className={css.organization}>
+        <Button onClick={navigateToCreateOrg} color="white" width="160px">
+          Add organization
+        </Button>
+        <div className={css.dotIcon}>
+          <img src="/icons/three-dots-blue.svg" alt="" />
+        </div>
+      </div>
+      <div className={css.info}>
+        <ProfileView
+          name={identity?.meta?.name}
+          location={
+            <div className={css.profileLink} onClick={navigateToProfile}>
+              View my profile
+            </div>
+          }
+          size="3rem"
+          type={avatarType}
+          img={avatarImg}
+        />
+      </div>
+      <div className={css.connections}>
+        {/* <span>4 Connections</span>
+            <span>11 Followers</span> */}
+      </div>
+    </div>
+  );
+
   return (
     <div className={css.container}>
       <div style={bgStyles(isVisible)} className={css.bg} onClick={closeSidebar} />
       <div style={sidebarStyles(isVisible)} className={css.sidebar}>
-        <div className={css.header}>
-          <div className={css.organization}>
-            <Button onClick={navigateToCreateOrg} color="white" width="160px">
-              Add organization
-            </Button>
-            <div className={css.dotIcon}>
-              <img src="/icons/three-dots-blue.svg" alt="" />
-            </div>
-          </div>
-          <div className={css.info}>
-            <ProfileView
-              name={identity?.meta?.name}
-              location={
-                <div className={css.profileLink} onClick={navigateToProfile}>
-                  View my profile
-                </div>
-              }
-              size="3rem"
-              type={avatarType}
-              img={avatarImg}
-            />
-          </div>
-          <div className={css.connections}>
-            {/* <span>4 Connections</span>
-            <span>11 Followers</span> */}
-          </div>
-        </div>
+        {printWhen(headerJSX, isLoggedIn)}
         {printWhen(
           <div className={css.items}>
             <div className={css.title}>Organization</div>
@@ -223,7 +229,7 @@ export const Mobile = () => {
           identity?.type === 'organizations'
         )}
         <div className={css.items}>
-          <div className={css.title}>Jobs</div>
+          {printWhen(<div className={css.title}>Jobs</div>, isLoggedIn)}
           {printWhen(myApplicationsJSX, identity?.type === 'users')}
           {printWhen(createdLinkJSX, identity?.type === 'organizations')}
         </div>
@@ -239,21 +245,39 @@ export const Mobile = () => {
             <img src="/icons/document-one-black.svg" />
             <span>Terms & conditions</span>
           </div>
-          <div className={css.row} onClick={() => navigateToRoute('change-password')}>
-            <img src="/icons/key-black.svg" width={22} height={22} />
-            <span>Change password</span>
-          </div>
-          <div className={css.row} onClick={() => navigateToRoute('delete-profile/delete')}>
-            <img src="/icons/delete-account-black.svg" />
-            <span>Delete Account</span>
-          </div>
+          {printWhen(
+            <div className={css.row} onClick={() => navigateToRoute('change-password')}>
+              <img src="/icons/key-black.svg" width={22} height={22} />
+              <span>Change password</span>
+            </div>,
+            isLoggedIn
+          )}
+          {printWhen(
+            <div className={css.row} onClick={() => navigateToRoute('delete-profile/delete')}>
+              <img src="/icons/delete-account-black.svg" />
+              <span>Delete Account</span>
+            </div>,
+            isLoggedIn
+          )}
         </div>
-        <div className={css.items}>
-          <div className={css.row} onClick={() => navigateToSignIn()}>
-            <img src="/icons/logout-red.svg" height={22} className={css.redIcon} />
-            <span>Log out</span>
-          </div>
-        </div>
+        {printWhen(
+          <div className={css.items}>
+            <div className={css.row} onClick={() => navigateToSignIn()}>
+              <img src="/icons/logout-red.svg" height={22} className={css.redIcon} />
+              <span>Log out</span>
+            </div>
+          </div>,
+          isLoggedIn
+        )}
+        {printWhen(
+          <div className={css.items}>
+            <div className={css.row} onClick={() => navigateToSignIn()}>
+              <img src="/icons/logout-red.svg" height={22} className={css.redIcon} />
+              <span>Log in</span>
+            </div>
+          </div>,
+          !isLoggedIn
+        )}
       </div>
     </div>
   );

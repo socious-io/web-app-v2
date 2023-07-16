@@ -12,6 +12,7 @@ import { getCategories } from '../../job-detail.services';
 import { JobDetailCardProps } from './job-detail-card.types';
 import { useState } from 'react';
 import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
+import { AuthGuard } from 'src/core/auth-guard/auth-guard';
 
 export function JobDetailCard(props: JobDetailCardProps) {
   const [openApplyModal, setOpenApplyModal] = useState(false);
@@ -78,7 +79,9 @@ export function JobDetailCard(props: JobDetailCardProps) {
           />
           <div className={css.jobTitle}>{props.job.title}</div>
           <Categories marginBottom="1rem" list={getCategories(props.job)} />
-          <div className={css.btnContainer}>{printWhen(buttonJSX, props.userType === 'users')}</div>
+          <AuthGuard>
+            <div className={css.btnContainer}>{printWhen(buttonJSX, props.userType === 'users')}</div>
+          </AuthGuard>
         </div>
       </Divider>
       {printWhen(socialCausesJSX, !!props.job.causes_tags)}

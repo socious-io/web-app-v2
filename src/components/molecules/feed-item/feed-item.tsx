@@ -7,21 +7,30 @@ import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Typography } from '../../atoms/typography/typography';
 import { FeedItemProps } from './feed-item.types';
 import css from './feed-item.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const FeedItem = (props: FeedItemProps): JSX.Element => {
-  const { id, type, actionList, date, lineLimit = 3, img, name, categories, imgAvatar } = props;
+  const { type, actionList, date, lineLimit = 3, img, name, imgAvatar } = props;
+  const { showIfLoggedIn } = useAuth();
+
+  const threeDotMenu = (
+    <div className={css.icon} onClick={props.onMoreClick}>
+      <img src="/icons/three-dots-blue.svg" />
+    </div>
+  );
 
   return (
     <Card>
       <div className={css.header}>
         <div className={css.info}>
-          <Avatar onClick={props.onAvatarClick} type={type} size="2rem" img={imgAvatar} />
+          <Avatar onClick={console.log} type={type} size="2rem" img={imgAvatar} />
           <span>{name}</span>
           <span className={css.date}>{toRelativeTime(date)}</span>
         </div>
-        <div className={css.icon} onClick={props.onMoreClick}>
+        {showIfLoggedIn(threeDotMenu)}
+        {/* <div className={css.icon} onClick={props.onMoreClick}>
           <img src="/icons/three-dots-blue.svg" />
-        </div>
+        </div> */}
       </div>
       <div className={css.img}>
         <img src={img} />
@@ -32,9 +41,7 @@ export const FeedItem = (props: FeedItemProps): JSX.Element => {
           <ExpandableText text={props.text} />
         </Typography>
       </div>
-      <div>
-        <ActionList list={actionList} />
-      </div>
+      <div>{showIfLoggedIn(<ActionList list={actionList} />)}</div>
     </Card>
   );
 };

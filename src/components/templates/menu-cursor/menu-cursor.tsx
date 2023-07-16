@@ -14,9 +14,10 @@ import { PayloadModel } from 'src/pages/search/desktop/search.types';
 export const MenuCursor = (): JSX.Element => {
   const navigate = useNavigate();
   const route = useLocation();
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
+
   const [accListVisibility, setAccListVisibility] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
@@ -38,6 +39,14 @@ export const MenuCursor = (): JSX.Element => {
     navigate({ to: menu.link });
   }
 
+  function filterIfNotLoggedIn(item: Menu) {
+    const userIsLoggedIn = !!currentIdentity;
+
+    if (userIsLoggedIn || item.public) {
+      return item;
+    }
+  }
+
   return (
     <div className={css.container}>
       <div className={css.menu}>
@@ -53,9 +62,9 @@ export const MenuCursor = (): JSX.Element => {
             placeholder="Search"
           />
           <ul className={css.navContainer}>
-            {menuList.map((item) => (
+            {menuList.filter(filterIfNotLoggedIn).map((item) => (
               <li key={item.label} className={css.navItem} onClick={() => onMenuItemClick(item)}>
-                <img className={css.navIcon} height={24} src={item.icon} />
+                <img className={css.navIcon} height={24} src={item.icons.nonActive.desktop} />
                 <div className={css.navLabel}>{item.label}</div>
               </li>
             ))}
@@ -66,11 +75,15 @@ export const MenuCursor = (): JSX.Element => {
                 setAccListVisibility(!accListVisibility);
               }}
               size="2rem"
-              type={identity.type}
-              img={getAvatar(identity)}
+              type={currentIdentity?.type || 'users'}
+              img={getAvatar(currentIdentity)}
             />
             <div className={css.switchAccountMenu}>
-              <SwitchAccount identity={identity} open={accListVisibility} onClose={() => setAccListVisibility(false)} />
+              <SwitchAccount
+                identity={currentIdentity}
+                open={accListVisibility}
+                onClose={() => setAccListVisibility(false)}
+              />
             </div>
           </div>
         </div>

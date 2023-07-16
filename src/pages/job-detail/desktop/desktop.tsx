@@ -13,11 +13,16 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={!!identity}>
         <div className={css.sidebar}>
           <BackLink title="Jobs" onBack={navigateToJobs} />
         </div>
-        <JobDetailCard job={job} screeningQuestions={screeningQuestions} location={location} userType={identity.type} />
+        <JobDetailCard
+          job={job}
+          screeningQuestions={screeningQuestions}
+          location={location}
+          userType={identity?.type || 'users'}
+        />
       </TwoColumnCursor>
     </>
   );
