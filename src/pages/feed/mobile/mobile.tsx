@@ -13,6 +13,7 @@ import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { useFeedShared } from '../feed.shared';
 import css from './mobile.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Mobile = () => {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ export const Mobile = () => {
     onShowSeeMore,
     onMoreClick,
   } = useFeedShared();
+
+  const { showIfLoggedIn } = useAuth();
 
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -61,6 +64,19 @@ export const Mobile = () => {
     onMoreClick(result.index, feed);
   };
 
+  const createPostJSX = (
+    <div className={css.create}>
+      <Card>
+        <div className={css.createWrapper}>
+          <Avatar size="3rem" type="users" img={avatarImg} />
+          <div onClick={handleClickOpen} className={css.createButton}>
+            Create a post
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -76,16 +92,7 @@ export const Mobile = () => {
           <div className={css.tagline}>See What is happening in your network</div>
         </div>
       </div>
-      <div className={css.create}>
-        <Card>
-          <div className={css.createWrapper}>
-            <Avatar size="3rem" type="users" img={avatarImg} />
-            <div onClick={handleClickOpen} className={css.createButton}>
-              Create a post
-            </div>
-          </div>
-        </Card>
-      </div>
+      {showIfLoggedIn(createPostJSX)}
       <FeedList
         data={feedList}
         onMoreClick={(feed) => showActions(feed)}
