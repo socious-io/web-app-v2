@@ -71,7 +71,7 @@ export const Mobile = (): JSX.Element => {
     <TopFixedMobile containsMenu>
       <Header title={job.title || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
       <div>
-        {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
+        {printWhen(applicationSubmittedJSX, job.applied && identity?.type === 'users')}
         <Divider>
           <ProfileView
             name={job.identity_meta.name}
