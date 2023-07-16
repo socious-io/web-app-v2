@@ -6,6 +6,8 @@ export const useAuth = () => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
+  const isLoggedIn = !!currentIdentity;
+
   function showIfLoggedIn(jsx: React.ReactNode) {
     if (currentIdentity) {
       return jsx;
@@ -14,5 +16,5 @@ export const useAuth = () => {
     }
   }
 
-  return { showIfLoggedIn };
+  return { showIfLoggedIn, isLoggedIn };
 };

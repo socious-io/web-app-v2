@@ -77,7 +77,7 @@ export const Mobile = (): JSX.Element => {
           />
           <div className={css.jobTitle}>{job.title}</div>
           <Categories marginBottom="1rem" list={getCategories(job)} />
-          {printWhen(buttonJSX, identity.type === 'users')}
+          {printWhen(buttonJSX, identity?.type === 'users')}
         </Divider>
         {printWhen(socialCausesJSX, !!job.causes_tags)}
         {printWhen(jobCategoryJSX, !!job.job_category?.name)}

@@ -18,7 +18,7 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
   const intialValue = { social: '', text: '', imgUrl: '' };
   const [state, setState] = useState(intialValue);
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
+  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
@@ -79,7 +79,7 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
       >
         <>
           <div className={css.social}>
-            <Avatar img={avatarImg} type={identity.type} />
+            <Avatar img={avatarImg} type={identity?.type || 'users'} />
             <Dropdown
               containerClassName={css.dropdown}
               placeholder="Social Cause"
