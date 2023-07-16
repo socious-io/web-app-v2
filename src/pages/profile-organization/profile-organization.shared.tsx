@@ -77,6 +77,7 @@ export const useProfileOrganizationShared = () => {
       return {
         ...prev,
         bio: params.bio,
+        name: params.name,
         city: params.city,
         country: params.country,
         culture: params.culture,
