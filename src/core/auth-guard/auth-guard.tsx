@@ -27,7 +27,7 @@ export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
 
   return (
     <>
-      <Modal width="25rem" maxWidth="70vw" open={modalVisibility} onClose={() => setModalVisibility(false)}>
+      <Modal width="25rem" maxWidth="80vw" open={modalVisibility} onClose={() => setModalVisibility(false)}>
         <div className={css.modal}>
           <div className={css.title}>Sign in to Socious</div>
           <div className={css.subTitle}>To continue, please sign in or register</div>
