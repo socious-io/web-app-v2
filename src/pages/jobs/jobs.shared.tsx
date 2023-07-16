@@ -11,7 +11,7 @@ export const useJobsShared = () => {
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
+  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 

@@ -11,18 +11,23 @@ import { Header } from 'src/components/atoms/header/header';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { useJobDetailShared } from '../job-detail.shared';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { AuthGuard } from 'src/core/auth-guard/auth-guard';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Mobile = (): JSX.Element => {
   const { navigate, job, identity, location, screeningQuestions } = useJobDetailShared();
+  const { isLoggedIn } = useAuth();
 
   function onApply() {
     navigate({ to: './apply' });
   }
 
   const buttonJSX = (
-    <Button disabled={job.applied} onClick={onApply}>
-      Apply now
-    </Button>
+    <AuthGuard>
+      <Button disabled={job.applied} onClick={onApply}>
+        Apply now
+      </Button>
+    </AuthGuard>
   );
 
   const applicationSubmittedJSX = (
@@ -66,7 +71,7 @@ export const Mobile = (): JSX.Element => {
     <TopFixedMobile containsMenu>
       <Header title={job.title || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
       <div>
-        {printWhen(applicationSubmittedJSX, job.applied && identity.type === 'users')}
+        {printWhen(applicationSubmittedJSX, job.applied && identity?.type === 'users')}
         <Divider>
           <ProfileView
             name={job.identity_meta.name}
@@ -77,7 +82,7 @@ export const Mobile = (): JSX.Element => {
           />
           <div className={css.jobTitle}>{job.title}</div>
           <Categories marginBottom="1rem" list={getCategories(job)} />
-          {printWhen(buttonJSX, identity.type === 'users')}
+          {printWhen(buttonJSX, identity?.type === 'users' || isLoggedIn)}
         </Divider>
         {printWhen(socialCausesJSX, !!job.causes_tags)}
         {printWhen(jobCategoryJSX, !!job.job_category?.name)}

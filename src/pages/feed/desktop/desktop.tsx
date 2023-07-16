@@ -15,6 +15,7 @@ import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = () => {
   const navigate = useNavigate();
@@ -34,9 +35,11 @@ export const Desktop = () => {
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
   const [feed, setFeed] = useState<Feed>();
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
+  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
+
+  const { showIfLoggedIn } = useAuth();
 
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
@@ -79,29 +82,31 @@ export const Desktop = () => {
     },
   ];
 
+  const createPostJSX = (
+    <Card>
+      <div className={css.createWrapper}>
+        <Avatar size="3rem" type="users" img={avatarImg} />
+        <div onClick={handleClickOpen} className={css.createButton}>
+          Create a post
+        </div>
+      </div>
+    </Card>
+  );
+
   return (
     <TwoColumnCursor>
       <div className={css.sidebar}>
         <ProfileCard />
-        <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
-        {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity.type === 'users')}
-        {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity.type === 'organizations')}
+        <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
+        {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity?.type === 'users')}
+        {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity?.type === 'organizations')}
       </div>
       <>
         <div className={css.banner}>
           <div className={css.title}>Your Feed</div>
           <div className={css.tagline}>See what is happening in your network</div>
         </div>
-        <div className={css.create}>
-          <Card>
-            <div className={css.createWrapper}>
-              <Avatar size="3rem" type="users" img={avatarImg} />
-              <div onClick={handleClickOpen} className={css.createButton}>
-                Create a post
-              </div>
-            </div>
-          </Card>
-        </div>
+        <div className={css.create}>{showIfLoggedIn(createPostJSX)}</div>
         <div className={css.list}>
           <FeedList
             data={feedList}

@@ -21,8 +21,8 @@ export const useJobDetailShared = () => {
     job.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined
   )}`;
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
   return { navigate, job, identity, location, screeningQuestions: screeningQuestions.questions };

@@ -27,7 +27,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.menu}>
-          <Avatar onClick={openSidebar} img={avatarImg} size="2.25rem" type={identity.type} />
+          <Avatar onClick={openSidebar} img={avatarImg} size="2.25rem" type={identity?.type || 'users'} />
           <Search placeholder="Search Jobs" onValueChange={console.log} onEnter={onEnter} />
           <img className={css.logo} src="icons/logo-white.svg" />
         </div>

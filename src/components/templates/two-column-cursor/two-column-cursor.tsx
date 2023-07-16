@@ -1,14 +1,22 @@
+import { printWhen } from 'src/core/utils';
 import css from './two-column-cursor.module.scss';
 import { TwoColumnCursorProps } from './two-column-cursor.types';
+import { CSSProperties } from 'react';
 
 export const TwoColumnCursor = (props: TwoColumnCursorProps): JSX.Element => {
   const { children } = props;
 
+  const mainStyle: CSSProperties = {
+    maxWidth: props.visibleSidebar ? '38.5rem' : undefined,
+  };
+
   return (
     <div className={css.container}>
       <div className={css.boundaries}>
-        <div className={css.sidebar}>{children[0]}</div>
-        <div className={css.main}>{children[1]}</div>
+        {printWhen(<div className={css.sidebar}>{children[0]}</div>, props.visibleSidebar)}
+        <div style={mainStyle} className={css.main}>
+          {children[1]}
+        </div>
       </div>
     </div>
   );

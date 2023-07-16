@@ -21,7 +21,7 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
   setFeedList,
   onDone,
 }) => {
-  const identity = useSelector<RootState, IdentityReq>((state) => {
+  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
@@ -65,8 +65,8 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
       <div className={css.main}>
         <div className={css.social}>
           <div className={css.avatar}>
-            <Avatar img={avatarImg} type={identity.type} />
-            {identity.meta.name}
+            <Avatar img={avatarImg} type={identity?.type || 'users'} />
+            {identity?.meta.name}
           </div>
           <CategoriesClickable list={obj} />
         </div>

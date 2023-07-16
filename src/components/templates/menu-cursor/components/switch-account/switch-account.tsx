@@ -14,6 +14,7 @@ import { ChangePasswordModal } from '../change-password-modal/change-password-mo
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { printWhen } from 'src/core/utils';
 import { Button } from 'src/components/atoms/button/button';
+import { useAuth } from 'src/hooks/use-auth';
 
 let timer: NodeJS.Timeout;
 
@@ -23,6 +24,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const [pendingAccId, setPendingAccId] = useState('');
   const [changePassOpen, setChangePassOpen] = useState(false);
   const [containerStyles, setContainerStyle] = useState<CSSProperties>({});
+  const { isLoggedIn } = useAuth();
   const accountList = useSelector<RootState, AccountsModel[]>((state) => {
     return state.identity.entities.map((item) => ({
       name: item.meta.name,
@@ -56,6 +58,11 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     logout().then(() => navigate({ to: '/sign-in' }));
     props.onClose();
     nonPermanentStorage.clear();
+  }
+
+  function login() {
+    navigate({ to: '/sign-in' });
+    props.onClose();
   }
 
   useEffect(() => {
@@ -119,37 +126,41 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     </Divider>
   );
 
+  const headerJSX = (
+    <Divider padding={0}>
+      <div className={css.accountList}>
+        <Button
+          onClick={() => navigateToRoute('/organization/create/intro')}
+          color="white"
+          width="160px"
+          className={css.accountList__btn}
+        >
+          Add organization
+        </Button>
+        {accountList.filter(filterCurrentIdentity).map((item) => (
+          <div
+            onClick={() => switchAccount(item.id)}
+            key={item.id}
+            style={{ backgroundColor: accountBgColor(item.id, item.current) }}
+            className={css.accountItem}
+          >
+            <ProfileView type={item.type} name={item.name} img={item.image} theme={item.current ? 'dark' : 'light'} />
+          </div>
+        ))}
+      </div>
+    </Divider>
+  );
+
   function filterCurrentIdentity(acc: AccountsModel) {
     return !acc.current;
   }
 
   return (
     <div style={containerStyles} className={css.container}>
-      <Divider padding={0}>
-        <div className={css.accountList}>
-          <Button
-            onClick={() => navigateToRoute('/organization/create/intro')}
-            color="white"
-            width="160px"
-            className={css.accountList__btn}
-          >
-            Add organization
-          </Button>
-          {accountList.filter(filterCurrentIdentity).map((item) => (
-            <div
-              onClick={() => switchAccount(item.id)}
-              key={item.id}
-              style={{ backgroundColor: accountBgColor(item.id, item.current) }}
-              className={css.accountItem}
-            >
-              <ProfileView type={item.type} name={item.name} img={item.image} theme={item.current ? 'dark' : 'light'} />
-            </div>
-          ))}
-        </div>
-      </Divider>
-      {printWhen(myApplicationsJSX, props.identity.type === 'users')}
-      {printWhen(createdJobDividerJSX, props.identity.type === 'organizations')}
-      {printWhen(paymentJSX, props.identity.type === 'users')}
+      {printWhen(headerJSX, isLoggedIn)}
+      {printWhen(myApplicationsJSX, props.identity && props.identity.type === 'users')}
+      {printWhen(createdJobDividerJSX, props.identity && props.identity.type === 'organizations')}
+      {printWhen(paymentJSX, props.identity && props.identity.type === 'users')}
       <Divider title="Settings">
         <div className={css.settingsMenuContainer}>
           <div className={css.menuItem} onClick={() => navigateToRoute('/privacy-policy')}>
@@ -160,30 +171,50 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
             <img src="/icons/document-one-black.svg" />
             <span>Terms & conditions</span>
           </div>
-          <div
-            className={css.menuItem}
-            onClick={() => {
-              closeMenu();
-              setChangePassOpen(true);
-            }}
-          >
-            <img src="/icons/key-black.svg" width={22} height={22} />
-            <span>Change password</span>
-          </div>
-          <div className={css.menuItem} onClick={() => navigateToRoute('/delete-profile/delete')}>
-            <img src="/icons/delete-account-black.svg" />
-            <span>Delete Account</span>
-          </div>
+          {printWhen(
+            <div
+              className={css.menuItem}
+              onClick={() => {
+                closeMenu();
+                setChangePassOpen(true);
+              }}
+            >
+              <img src="/icons/key-black.svg" width={22} height={22} />
+              <span>Change password</span>
+            </div>,
+            isLoggedIn
+          )}
+          {printWhen(
+            <div className={css.menuItem} onClick={() => navigateToRoute('/delete-profile/delete')}>
+              <img src="/icons/delete-account-black.svg" />
+              <span>Delete Account</span>
+            </div>,
+            isLoggedIn
+          )}
         </div>
       </Divider>
-      <Divider>
-        <div className={css.settingsMenuContainer}>
-          <div onClick={logOut} className={css.menuItem}>
-            <img src="/icons/logout-red.svg" height={22} />
-            <span>Log out</span>
+      {printWhen(
+        <Divider>
+          <div className={css.settingsMenuContainer}>
+            <div onClick={logOut} className={css.menuItem}>
+              <img src="/icons/logout-red.svg" height={22} />
+              <span>Log out</span>
+            </div>
           </div>
-        </div>
-      </Divider>
+        </Divider>,
+        isLoggedIn
+      )}
+      {printWhen(
+        <Divider>
+          <div className={css.settingsMenuContainer}>
+            <div onClick={login} className={css.menuItem}>
+              <img src="/icons/logout-red.svg" height={22} />
+              <span>Sign in</span>
+            </div>
+          </div>
+        </Divider>,
+        !isLoggedIn
+      )}
       <ChangePasswordModal open={changePassOpen} onClose={() => setChangePassOpen(false)} />
     </div>
   );
