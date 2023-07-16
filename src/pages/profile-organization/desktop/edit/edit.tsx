@@ -70,7 +70,7 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
   }
 
   return (
-    <Modal height={props.height} width={props.width} open={props.open} onClose={props.onClose}>
+    <Modal height={props.height} width={props.width} open={props.open} onClose={props.onClose} zIndex={1}>
       <>
         <div className={css.mainHeader}>
           <Header onBack={props.onClose} title="Edit" right={{ label: 'Save', onClick: onSaveDesktop }} />
