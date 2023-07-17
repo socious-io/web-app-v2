@@ -64,6 +64,7 @@ export const SkillsModal: React.FC<SkillsModalProps> = ({ open, onClose, onDone,
           setOpenInfoModal(false);
           onOpen();
         }}
+        onOpen={() => setOpenInfoModal(true)}
       />
     </>
   );

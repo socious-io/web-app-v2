@@ -15,15 +15,10 @@ import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
-import {
-  CreatePostWizard,
-  resetCreatePostWizard,
-  setPostPaymentScheme,
-  setPostPaymentType,
-} from 'src/store/reducers/createPostWizard.reducer';
-import { dialog } from 'src/core/dialog/dialog';
+import { resetCreatePostWizard, setPostPaymentScheme, setPostPaymentType } from 'src/store/reducers/createPostWizard.reducer';
+import { setQuestionProjectIds } from 'src/store/reducers/createQuestionWizard.reducer';
 import { printWhen } from 'src/core/utils';
-import { CategoriesResp } from 'src/core/types';
+import { CategoriesResp, CreatePostPayload } from 'src/core/types';
 import { createPost } from '../info.services';
 import { useInfoShared } from '../info.shared';
 import css from './mobile.module.scss';
@@ -35,12 +30,12 @@ export const Mobile = (): JSX.Element => {
   const resolvedJobCategories = useMatch().ownData.categories as CategoriesResp['categories'];
   const categories = jobCategoriesToDropdown(resolvedJobCategories);
 
-  function submit(payload: CreatePostWizard) {
+  function createJob(payload: CreatePostPayload) {
     createPost(payload).then((resp) => {
-      dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-        navigate({ to: `/m/jobs/created/${resp.identity_id}` });
-        store.dispatch(resetCreatePostWizard());
-      });
+      dispatch(setQuestionProjectIds({ project_id: resp.id, identity_id: resp.identity_id }));
+      store.dispatch(resetCreatePostWizard());
+      navigate({ to: '../screener-questions' });
+      form.reset();
     });
   }
 
@@ -197,7 +192,7 @@ export const Mobile = (): JSX.Element => {
             </div>
           </Divider>
           <div className={css.btnContainer}>
-            <Button disabled={!form.isValid || !formState.payment_type} onClick={() => submit(formState)}>
+            <Button disabled={!form.isValid || !formState.payment_type} onClick={() => createJob(formState)}>
               Continue
             </Button>
           </div>

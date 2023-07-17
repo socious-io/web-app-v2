@@ -1,7 +1,13 @@
 import { ChangeEvent, useMemo, useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { Resume } from './apply.types';
-import { applyApplication, generatePayload, resumeInitialState, submit } from './apply.services';
+import { Resolver, Resume } from './apply.types';
+import {
+  applyApplication,
+  convertOptionsToRadioGroup,
+  generatePayload,
+  resumeInitialState,
+  submit,
+} from './apply.services';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
 import { QuestionsRes, UserType } from 'src/core/types';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
@@ -9,6 +15,8 @@ import { generateFormModel } from './apply.form';
 import { useForm } from 'src/core/form';
 import { dialog } from 'src/core/dialog/dialog';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 
 type useApplySharedProps = {
   job: Job;
@@ -20,18 +28,12 @@ type useApplySharedProps = {
 export const useApplyShared = (data?: useApplySharedProps) => {
   const navigate = useNavigate();
   const [resume, setResume] = useState<Resume>(resumeInitialState);
-  //   const { jobDetail, screeningQuestions } = useMatch().ownData as {
-  //     jobDetail: Job;
-  //     screeningQuestions: QuestionsRes['questions'];
-  //   };
-
-  const resolver = useMatch().ownData;
-
+  const resolver = useMatch().ownData as Resolver;
   const jobDetail = (data?.job || resolver.jobDetail) as Job;
-  const questions = (data?.screeningQuestions || resolver.screeningQuestions) as QuestionsRes['questions'];
-
+  const questions = (data?.screeningQuestions || resolver.screeningQuestions.questions) as QuestionsRes['questions'];
   const formModel: FormModel = useMemo(() => generateFormModel(questions), []);
   const form = useForm(formModel);
+  const [answersRadio, setAnswersRadio] = useState<{ [x: string]: string }>({});
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
@@ -71,5 +73,46 @@ export const useApplyShared = (data?: useApplySharedProps) => {
     }
   }
 
-  return { questions, resume, setResume, onResumeLoad, jobDetail, form, onSubmit, location };
+  function createTextQuestion(question: QuestionsRes['questions'][0], i: number): JSX.Element {
+    return (
+      <div>
+        <Textarea
+          register={form}
+          name={question.id}
+          optional={!question.required}
+          placeholder="Your answer..."
+          label={`${i}. ${question.question}`}
+        />
+      </div>
+    );
+  }
+
+  
+  function createRadioQuestion(question: QuestionsRes['questions'][0], i: number): JSX.Element {
+    return (
+      <RadioGroup
+        label={`${i}. ${question.question}`}
+        list={convertOptionsToRadioGroup(question.options)}
+        value={answersRadio[`${question.id}`]}
+        name={question.id}
+        onChange={(value) => {
+          setAnswersRadio({ ...answersRadio, [question.id]: value });
+          form.controls[question.id].setValue(value);
+        }}
+      />
+    );
+  }
+
+  return {
+    questions,
+    resume,
+    setResume,
+    onResumeLoad,
+    jobDetail,
+    form,
+    onSubmit,
+    location,
+    createTextQuestion,
+    createRadioQuestion,
+  };
 };

@@ -23,5 +23,7 @@
 }
 
 .questions {
-  padding-bottom: 0.5rem;
+  & + .questions {
+    margin-top: 1rem;
+  }
 }

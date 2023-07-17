@@ -63,3 +63,9 @@
   padding-left: 1rem;
   font-weight: 700;
 }
+
+.questionItem {
+  & + .questionItem {
+    margin-top: 1rem;
+  }
+}

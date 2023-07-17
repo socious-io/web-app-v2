@@ -8,12 +8,22 @@ import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { ModalProps } from 'src/components/templates/modal/modal.types';
 import { printWhen } from 'src/core/utils';
-import { createTextQuestion, resumeInitialState } from '../apply.services';
+import { resumeInitialState } from '../apply.services';
 import { useApplyShared } from '../apply.shared';
 import css from './apply-modal.module.scss';
 
 export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClose, data }) => {
-  const { questions, resume, setResume, onResumeLoad, jobDetail, form, onSubmit } = useApplyShared(data);
+  const {
+    questions,
+    resume,
+    setResume,
+    onResumeLoad,
+    jobDetail,
+    form,
+    onSubmit,
+    createTextQuestion,
+    createRadioQuestion,
+  } = useApplyShared(data);
 
   const renderQuestions = () => {
     return (
@@ -23,8 +33,7 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
             const isMultipleChoice = item.options;
             return (
               <div key={item.id} className={css.questions}>
-                {/* {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1, form)} */}
-                {isMultipleChoice ? <></> : createTextQuestion(item, i + 1, form)}
+                {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1)}
               </div>
             );
           })}
