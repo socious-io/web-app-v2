@@ -5,6 +5,7 @@ import { WebModal } from 'src/components/templates/web-modal';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
+import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { CreatedModalProps } from './created-modal.types';
 import { useCreatedShared } from '../created.shared';
 import css from './created-modal.module.scss';
@@ -21,6 +22,7 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBac
 
   function done() {
     store.dispatch(resetCreatedQuestion());
+    store.dispatch(resetCreatePostWizard());
     setOpenAlertModal(false);
     onDone();
     navigate({ to: '/jobs' });
@@ -43,6 +45,7 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBac
           <div className={css.main}>
             {questions.map((question) => (
               <Accordion
+                key={question.id}
                 title={question.id}
                 id={question.id}
                 inputClassName={css.accordion}
@@ -55,7 +58,11 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBac
                   {question.question}
                 </div>
                 <div className={css.edit}>
-                  <img src="/icons/trash-bin.svg" onClick={() => onRemoveCreatedQuestion(question)} />
+                  <img
+                    className={css.edit__icon}
+                    src="/icons/trash-bin.svg"
+                    onClick={() => onRemoveCreatedQuestion(question)}
+                  />
                 </div>
               </Accordion>
             ))}

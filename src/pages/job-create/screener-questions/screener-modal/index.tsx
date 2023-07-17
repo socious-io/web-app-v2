@@ -8,6 +8,7 @@ import { Input } from 'src/components/atoms/input/input';
 import { CreatedModal } from '../created/created-modal';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import {
+  resetCreatedQuestion,
   resetQuestions,
   setAddChoices,
   setAddQuestion,
@@ -17,6 +18,7 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
+import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { printWhen } from 'src/core/utils';
 import { ButtonProps } from 'src/components/atoms/button/button.types';
 import { ScreenerModalProps } from './screener-modal.types';
@@ -36,6 +38,8 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onB
   }
 
   function done() {
+    store.dispatch(resetCreatedQuestion());
+    store.dispatch(resetCreatePostWizard());
     setOpenAlertModal(false);
     onDone();
     navigate({ to: '/jobs' });
@@ -57,9 +61,9 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onB
     createQuestion(payloadQuestion, formState.question_project_id.project_id).then((resp) => {
       dispatch(setQuestionProjectIds({ ...formState.question_project_id, question_id: resp.id }));
       store.dispatch(resetQuestions());
+      form.reset();
       onClose();
       setOpenCreatedModal(true);
-      form.reset();
     });
   }
 
@@ -75,13 +79,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onB
         list={QUESTION_TYPE}
         label="Question type"
       />
-      <Textarea
-        register={form}
-        label="Question"
-        placeholder="Question"
-        name="question"
-        defaultValue={formState.question}
-      />
+      <Textarea register={form} label="Question" placeholder="Question" name="question" value={formState.question} />
       <div className={css.questions__required}>
         Require this question to be answered
         <Toggle

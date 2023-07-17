@@ -1,6 +1,5 @@
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
-import store from 'src/store/store';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Divider } from 'src/components/templates/divider/divider';
@@ -15,7 +14,7 @@ import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
-import { resetCreatePostWizard, setPostPaymentScheme, setPostPaymentType } from 'src/store/reducers/createPostWizard.reducer';
+import { setPostPaymentScheme, setPostPaymentType } from 'src/store/reducers/createPostWizard.reducer';
 import { setQuestionProjectIds } from 'src/store/reducers/createQuestionWizard.reducer';
 import { printWhen } from 'src/core/utils';
 import { CategoriesResp, CreatePostPayload } from 'src/core/types';
@@ -33,9 +32,7 @@ export const Mobile = (): JSX.Element => {
   function createJob(payload: CreatePostPayload) {
     createPost(payload).then((resp) => {
       dispatch(setQuestionProjectIds({ project_id: resp.id, identity_id: resp.identity_id }));
-      store.dispatch(resetCreatePostWizard());
       navigate({ to: '../screener-questions' });
-      form.reset();
     });
   }
 
