@@ -1,3 +1,6 @@
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { QuestionsRes } from 'src/core/types';
+
 export type Resume = { name: string; file: File | null };
 
 export type ApplyApplicationPayload = {
@@ -7,4 +10,9 @@ export type ApplyApplicationPayload = {
   share_contact_info: boolean;
   answers: { id: string; answer: string }[];
   attachment?: string;
+};
+
+export type Resolver = {
+  screeningQuestions: QuestionsRes;
+  jobDetail: Job;
 };

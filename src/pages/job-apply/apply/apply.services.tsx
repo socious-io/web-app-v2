@@ -1,10 +1,8 @@
-import { get, post } from '../../../core/http';
-import { QuestionsRes } from '../../../core/types';
-import { Textarea } from '../../../components/atoms/textarea/textarea';
+import { get, post } from 'src/core/http';
+import { QuestionsRes } from 'src/core/types';
 import { ApplyApplicationPayload, Resume } from './apply.types';
-import { FormGroup } from 'src/core/form/useForm/useForm.types';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { remove } from 'ramda';
+import { RadioGroupProps } from 'src/components/molecules/radio-group/radio-group.types';
 
 export async function getScreeningQuestions(id: string): Promise<QuestionsRes> {
   return get(`projects/${id}/questions`).then(({ data }) => data);
@@ -14,11 +12,11 @@ export async function applyApplication(id: string, payload: ApplyApplicationPayl
   return post(`/projects/${id}/applicants`, payload);
 }
 
-// const convertOptionsToRadioGroup = (options: QuestionsRes['options']): RadioGroupProps['list'] => {
-//   return (options as string[]).map((option) => {
-//     return { label: option, value: option };
-//   });
-// };
+export const convertOptionsToRadioGroup = (options: null | string[]): RadioGroupProps['list'] => {
+  return (options as string[]).map((option) => {
+    return { label: option, value: option };
+  });
+};
 
 async function uploadResume(file: File): Promise<{ id: string }> {
   const formData = new FormData();
@@ -59,36 +57,6 @@ export async function submit(id: string, file: File, payload: ApplyApplicationPa
   clonePayload.attachment = uploadedResume.id;
   return applyApplication(id, clonePayload);
 }
-
-export function createTextQuestion(
-  question: QuestionsRes['questions'][0],
-  i: number,
-  form: Required<FormGroup>
-): JSX.Element {
-  return (
-    <div>
-      <Textarea
-        register={form}
-        name={question.id}
-        optional={!question.required}
-        placeholder="Your answer..."
-        label={`${i}. ${question.question}`}
-      />
-    </div>
-  );
-}
-
-// export function createRadioQuestion(question: QuestionsRes['questions'][0], i: number): JSX.Element {
-//   return (
-//     <RadioGroup
-//       label={`${i}. ${question.question}`}
-//       list={convertOptionsToRadioGroup(question.options)}
-//       value=""
-//       name="radio"
-//       onChange={console.log}
-//     />
-//   );
-// }
 
 export const resumeInitialState: Resume = {
   name: '',

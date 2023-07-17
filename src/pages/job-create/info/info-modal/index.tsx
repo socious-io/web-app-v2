@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+import { useMatch } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
 import store from 'src/store/store';
 import { WebModal } from 'src/components/templates/web-modal';
-import { AlertModal } from 'src/components/organisms/alert-modal';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Divider } from 'src/components/templates/divider/divider';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { ScreenerModal } from '../../screener-questions/screener-modal';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
@@ -18,39 +18,33 @@ import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
 import {
-  CreatePostWizard,
   resetCreatePostWizard,
   setPostPaymentScheme,
   setPostPaymentType,
 } from 'src/store/reducers/createPostWizard.reducer';
+import { setQuestionProjectIds } from 'src/store/reducers/createQuestionWizard.reducer';
 import { printWhen } from 'src/core/utils';
 import { InfoModalProps } from './info-modal.types';
-import { CategoriesResp } from 'src/core/types';
+import { CategoriesResp, CreatePostPayload } from 'src/core/types';
 import { createPost } from '../info.services';
 import { useInfoShared } from '../info.shared';
 import css from './info-modal.module.scss';
 
-export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onBack }) => {
+export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onBack, onOpen }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
   const { categories } = (useMatch().ownData.jobCategories as CategoriesResp) || {};
   const categoriesList = jobCategoriesToDropdown(categories);
-  const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [openScreenerModal, setOpenScreenerModal] = useState(false);
 
-  function submit(payload: CreatePostWizard) {
-    createPost(payload).then(() => {
+  function createJob(payload: CreatePostPayload) {
+    createPost(payload).then((resp) => {
+      dispatch(setQuestionProjectIds({ project_id: resp.id, identity_id: resp.identity_id }));
+      store.dispatch(resetCreatePostWizard());
       onClose();
-      setOpenAlertModal(true);
+      setOpenScreenerModal(true);
+      form.reset();
     });
-  }
-
-  function done() {
-    store.dispatch(resetCreatePostWizard());
-    form.reset();
-    setOpenAlertModal(false);
-    onDone();
-    navigate({ to: '/jobs' });
   }
 
   const errorsJSX = (
@@ -74,7 +68,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
           {
             children: 'Continue',
             disabled: !form.isValid || !formState.payment_type,
-            onClick: () => submit(formState),
+            onClick: () => createJob(formState),
           },
         ]}
       >
@@ -217,16 +211,15 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
           </div>
         </>
       </WebModal>
-      <AlertModal
-        open={openAlertModal}
-        onClose={() => {
-          setOpenAlertModal(false);
-          done();
+      <ScreenerModal
+        open={openScreenerModal}
+        onClose={() => setOpenScreenerModal(false)}
+        onBack={() => {
+          setOpenScreenerModal(false);
+          onOpen();
         }}
-        title="Job created"
-        subtitle="Your job is posted and now visible for users to apply."
-        buttons={[{ children: 'Back to jobs', onClick: done }]}
-        contentClassName={css.success}
+        onDone={onDone}
+        onOpen={() => setOpenScreenerModal(true)}
       />
     </>
   );

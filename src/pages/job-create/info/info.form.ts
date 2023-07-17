@@ -1,7 +1,7 @@
-import { max, min, pattern, required } from '../../../core/form';
-import { noEmptyString } from '../../../core/form/customValidators/customValidators';
-import { FormModel } from '../../../core/form/useForm/useForm.types';
-import { CreatePostWizard } from '../../../store/reducers/createPostWizard.reducer';
+import { max, min, pattern, required } from 'src/core/form';
+import { noEmptyString } from 'src/core/form/customValidators/customValidators';
+import { FormModel } from 'src/core/form/useForm/useForm.types';
+import { CreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 
 export function formModel(formState: CreatePostWizard): FormModel {
   return {
