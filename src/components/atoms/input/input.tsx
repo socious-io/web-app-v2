@@ -87,6 +87,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
         {...rest}
         {...props?.register?.bind(props.name)}
       ></input>
+      {printWhen(errorsJSX, isDirty)}
     </div>
   );
 });

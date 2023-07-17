@@ -1,6 +1,6 @@
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { resumeInitialState, createTextQuestion } from '../apply.services';
+import { resumeInitialState } from '../apply.services';
 import { Divider } from 'src/components/templates/divider/divider';
 import { Input } from 'src/components/atoms/input/input';
 import { Button } from 'src/components/atoms/button/button';
@@ -12,7 +12,18 @@ import { useApplyShared } from '../apply.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const { questions, resume, setResume, onResumeLoad, jobDetail, form, location, onSubmit } = useApplyShared();
+  const {
+    questions,
+    resume,
+    setResume,
+    onResumeLoad,
+    jobDetail,
+    form,
+    location,
+    onSubmit,
+    createTextQuestion,
+    createRadioQuestion,
+  } = useApplyShared();
 
   const renderQuestions = () => {
     return (
@@ -22,8 +33,7 @@ export const Mobile = (): JSX.Element => {
             const isMultipleChoice = item.options;
             return (
               <div key={item.id} className={css.questions}>
-                {/* {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1, form)} */}
-                {isMultipleChoice ? <></> : createTextQuestion(item, i + 1, form)}
+                {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1)}
               </div>
             );
           })}

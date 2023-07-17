@@ -3,4 +3,6 @@ export type AccordionProps = {
   title: string;
   id: string;
   no_border?: boolean;
+  inputClassName?: string;
+  contentClassName?: string;
 };

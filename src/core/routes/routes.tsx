@@ -308,6 +308,20 @@ export const routes: Route[] = [
             loader: () => getJobCategories(),
             element: () => import('../../pages/job-create/info/info.container').then((m) => <m.Info />),
           },
+          {
+            path: 'screener-questions/created/:id',
+            element: () =>
+              import('src/pages/job-create/screener-questions/created/created.container').then((m) => (
+                <m.Created />
+              )),
+          },
+          {
+            path: 'screener-questions',
+            element: () =>
+              import('src/pages/job-create/screener-questions/screener-questions.container').then((m) => (
+                <m.ScreenerQuestions />
+              )),
+          },
         ],
       },
       {

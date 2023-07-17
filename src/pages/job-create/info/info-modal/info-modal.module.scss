@@ -24,25 +24,6 @@
   max-height: 380px;
 }
 
-.success {
-  border: none;
-  padding: 2rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--color-primary-01);
-  height: 380px;
-
-  &__text {
-    font-size: 16px;
-    font-weight: normal;
-  }
-}
-
 .dividerContainer {
   display: flex;
   flex-direction: column;

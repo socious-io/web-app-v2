@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { chatSlice } from './reducers/chat.reducer';
 import { createOrgWizardSlice } from './reducers/createOrgWizard.reducer';
 import { createPostWizardSlice } from './reducers/createPostWizard.reducer';
+import { createQuestionWizardSlice } from './reducers/createQuestionWizard.reducer';
 import { identitySlice } from './reducers/identity.reducer';
 import { menuSlice } from './reducers/menu.reducer';
 
@@ -13,6 +14,7 @@ const store = configureStore({
     menu: menuSlice.reducer,
     createOrgWizard: createOrgWizardSlice.reducer,
     createPostWizard: createPostWizardSlice.reducer,
+    createQuestionWizard: createQuestionWizardSlice.reducer,
     spinner: spinnerSlice.reducer,
   },
 });

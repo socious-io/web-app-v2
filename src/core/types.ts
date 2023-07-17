@@ -415,6 +415,12 @@ export type CreatePostPayload = {
   payment_currency: string;
 };
 
+export type CreateQuestionPayload = {
+  question: string;
+  required: boolean;
+  options?: string[];
+};
+
 export type SettingsRes = {
   type: string;
   in_app: boolean;
