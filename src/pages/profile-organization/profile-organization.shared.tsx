@@ -88,6 +88,7 @@ export const useProfileOrganizationShared = () => {
         cover_image: params.cover_image,
         image: params.image,
         phone: params.phone,
+        website: params.website,
         mobile_country_code: params.mobile_country_code,
       };
     });
