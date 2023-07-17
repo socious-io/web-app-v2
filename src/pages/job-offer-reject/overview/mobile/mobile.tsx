@@ -8,7 +8,7 @@ import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
 import { Loader } from '../../job-offer-reject.types';
-import { jobOfferRejectLoader } from '../../job-offer-reject.services';
+import { jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
@@ -20,6 +20,11 @@ export const Mobile = (): JSX.Element => {
   async function updateApplicantList() {
     const result = await jobOfferRejectLoader({ params: { id } });
     setUpdatedApplicantList(result);
+  }
+
+  async function onRejectClick(id: string) {
+    await rejectApplicant(id);
+    updateApplicantList();
   }
 
   const tabs = [
@@ -40,6 +45,7 @@ export const Mobile = (): JSX.Element => {
           toReviewList={updatedApplicantList.reviewList}
           declinedList={updatedApplicantList.declinedList}
           onOfferClick={(id) => navigate({ to: `./${id}/offer` })}
+          onRejectClick={onRejectClick}
         />
       ),
     },
