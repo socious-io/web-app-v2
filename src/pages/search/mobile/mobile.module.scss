@@ -19,6 +19,16 @@
   border-bottom: 1px solid var(--border-gray-01);
 }
 
+.searchContainer {
+  position: relative;
+  .results {
+    position: absolute;
+    right: 13px;
+    bottom: 10px;
+    opacity: 0.5;
+  }
+}
+
 .back {
   height: 2.25rem;
   display: flex;
@@ -46,7 +56,6 @@
 
 .results {
   color: var(--color-gray-02);
-  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
