@@ -9,7 +9,7 @@ import { SocialCausesFilterProps } from './social-causes-filter.types';
 
 export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element => {
   const [list, setList] = useState(socialCausesToCategoryAdaptor());
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState(props.value || []);
   const [modalOpen, setModalOpen] = useState(false);
 
   function onSearch(value: string) {
