@@ -72,7 +72,7 @@ export const Search = () => {
             menus={menu}
             value={findLabelByValue(location.current.search.type, 'Type')}
           />
-          <SocialCausesFilter onSubmit={onSocialCausesChange} />
+          <SocialCausesFilter value={[]} onSubmit={onSocialCausesChange} />
           <SkillsFilter onSubmit={onSkillsChange} />
         </div>
       </div>
