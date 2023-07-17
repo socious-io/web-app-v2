@@ -22,7 +22,7 @@ export const Desktop = (): JSX.Element => {
   const [openOfferModal, setOpenOfferModal] = useState(false);
   const [applicantDetail, setApplicantDetail] = useState<ApplicantResp>();
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
-  const {isLoggedIn} = useAuth();
+  const { isLoggedIn } = useAuth();
 
   async function onOfferClick(id: string) {
     const result = await getApplicantDetail(id);

@@ -145,6 +145,24 @@ export type PostUpdateProfileResp = {
   reported: boolean;
 };
 
+export type UserImpactPointsResp = {
+  id: string;
+  job_category: {
+    name: string;
+  };
+  mission: {
+    created_at: string;
+  };
+  created_at: string;
+  total_points: number;
+  organization: {
+    image: string;
+    name: string;
+  };
+};
+
+export type ImpactPointResp = Pagination<UserImpactPointsResp>;
+
 export interface Endpoints {
   get: {
     auth: {
@@ -174,6 +192,9 @@ export interface Endpoints {
     };
     members: {
       org_id: (id: string, payload: { page: number }) => Promise<Pagination<MemberIdentity[]>>;
+    };
+    users: {
+      'user/impact-points': () => Promise<ImpactPointResp>;
     };
   };
   post: {

@@ -128,7 +128,7 @@ export type FollowingsReq = {
 };
 
 export type Pagination<T> = {
-  items: T;
+  items: T[];
   limit: number;
   page: number;
   total_count: number;
