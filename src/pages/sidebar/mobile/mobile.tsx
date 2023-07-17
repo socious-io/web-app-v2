@@ -113,6 +113,18 @@ export const Mobile = () => {
     closeSidebar();
   }
 
+  function navigateToConnections() {
+    hapticsImpactLight();
+    navigate({ to: '/network/connections' });
+    closeSidebar();
+  }
+
+  function navigateToFollowing() {
+    hapticsImpactLight();
+    navigate({ to: '/network/followings' });
+    closeSidebar();
+  }
+
   function navigateToCreatedJobs() {
     hapticsImpactLight();
     navigate({ to: `/m/jobs/created/${identity.id}` });
@@ -131,11 +143,34 @@ export const Mobile = () => {
     closeSidebar();
   }
 
-  const teamOrgJSX = (
-    <div onClick={navigateToTeam} className={css.row}>
-      <img src="/icons/team.svg" />
-      <span>Team</span>
-    </div>
+  const networkOrgJSX = (
+    <>
+      <div onClick={navigateToConnections} className={css.row}>
+        <img src="/icons/connection.svg" />
+        <span>Connections</span>
+      </div>
+      <div onClick={navigateToFollowing} className={css.row}>
+        <img src="/icons/followers.svg" />
+        <span>Followings</span>
+      </div>
+      <div onClick={navigateToTeam} className={css.row}>
+        <img src="/icons/team.svg" />
+        <span>Team</span>
+      </div>
+    </>
+  );
+
+  const networkUserJSX = (
+    <>
+      <div onClick={navigateToConnections} className={css.row}>
+        <img src="/icons/connection.svg" />
+        <span>Connections</span>
+      </div>
+      <div onClick={navigateToFollowing} className={css.row}>
+        <img src="/icons/followers.svg" />
+        <span>Followings</span>
+      </div>
+    </>
   );
 
   const createdLinkJSX = (
@@ -224,9 +259,16 @@ export const Mobile = () => {
         {printWhen(
           <div className={css.items}>
             <div className={css.title}>Organization</div>
-            {teamOrgJSX}
+            {networkOrgJSX}
           </div>,
-          identity?.type === 'organizations'
+          identity?.type === 'organizations' && isLoggedIn
+        )}
+        {printWhen(
+          <div className={css.items}>
+            <div className={css.title}>Network</div>
+            {networkUserJSX}
+          </div>,
+          identity?.type === 'users' && isLoggedIn
         )}
         <div className={css.items}>
           {printWhen(<div className={css.title}>Jobs</div>, isLoggedIn)}
