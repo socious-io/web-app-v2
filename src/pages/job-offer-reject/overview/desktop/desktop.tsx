@@ -13,6 +13,7 @@ import { Loader } from '../../job-offer-reject.types';
 import { ApplicantResp } from 'src/core/types';
 import { getApplicantDetail, jobOfferRejectLoader } from '../../job-offer-reject.services';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
   const resolver = useMatch().ownData as Loader;
@@ -21,6 +22,7 @@ export const Desktop = (): JSX.Element => {
   const [openOfferModal, setOpenOfferModal] = useState(false);
   const [applicantDetail, setApplicantDetail] = useState<ApplicantResp>();
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
+  const {isLoggedIn} = useAuth();
 
   async function onOfferClick(id: string) {
     const result = await getApplicantDetail(id);
@@ -83,7 +85,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <ProfileCard />
           <Card className={css.tabs}>
