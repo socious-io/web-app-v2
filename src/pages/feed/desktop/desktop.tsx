@@ -34,6 +34,7 @@ export const Desktop = () => {
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
   const [feed, setFeed] = useState<Feed>();
+  const { isLoggedIn } = useAuth();
 
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -94,7 +95,7 @@ export const Desktop = () => {
   );
 
   return (
-    <TwoColumnCursor>
+    <TwoColumnCursor visibleSidebar={isLoggedIn}>
       <div className={css.sidebar}>
         <ProfileCard />
         <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
