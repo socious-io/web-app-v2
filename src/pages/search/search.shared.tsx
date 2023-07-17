@@ -48,7 +48,8 @@ export const useSearchShared = () => {
   function onTypeChange(menu: DropdownBtnItem) {
     setList([]);
     setResult(0);
-    navigate({ search: (p) => ({ ...p, page: 1, type: menu.value, id: null, filter: removeEmptyArrays(p.filter) }) });
+    // navigate({ search: (p) => ({ ...p, page: 1, type: menu.value, id: null, filter: removeEmptyArrays(p.filter) }) });
+    navigate({ search: (p) => ({ page: 1, type: menu.value }) });
   }
 
   function onSkillsChange(skills: string[]) {
@@ -56,7 +57,22 @@ export const useSearchShared = () => {
   }
 
   function onSocialCausesChange(social_causes: string[]) {
-    navigate({ search: (p) => ({ ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, social_causes }) }) });
+    navigate({
+      search: (p) => {
+        const projectCauses = { causes_tags: social_causes };
+        const usersCauses = { social_causes: social_causes };
+
+        function causesFilter() {
+          if (p.type === 'projects') {
+            return projectCauses;
+          } else {
+            return usersCauses;
+          }
+        }
+
+        return { ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, ...causesFilter() }) };
+      },
+    });
   }
 
   return {
