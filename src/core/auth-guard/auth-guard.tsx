@@ -4,12 +4,14 @@ import { AuthGuardProps } from './auth-guard.types';
 import { Modal } from 'src/components/templates/modal/modal';
 import { Button } from 'src/components/atoms/button/button';
 import css from './auth-guard.module.scss';
-import { useNavigate } from '@tanstack/react-location';
+import { useLocation, useNavigate } from '@tanstack/react-location';
+import { nonPermanentStorage } from '../storage/non-permanent';
 
 export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   const { isLoggedIn } = useAuth();
   const [modalVisibility, setModalVisibility] = useState(false);
   const navigate = useNavigate();
+  const route = useLocation();
 
   function onClick() {
     if (!isLoggedIn) {
@@ -17,11 +19,18 @@ export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
     }
   }
 
-  function navigateToLogin() {
+  function saveCurrentRoute(): Promise<void> {
+    const path = route.current.href;
+    return nonPermanentStorage.set({ key: 'savedLocation', value: path });
+  }
+
+  async function navigateToLogin() {
+    await saveCurrentRoute();
     navigate({ to: '/sign-in' });
   }
 
-  function navigateToSignup() {
+  async function navigateToSignup() {
+    await saveCurrentRoute();
     navigate({ to: '/sign-up/user/email' });
   }
 

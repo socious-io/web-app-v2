@@ -17,6 +17,7 @@ import {
   requestPermissions,
 } from '../../core/pushNotification';
 import { Capacitor } from '@capacitor/core';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 
 const addListeners = () => {
   addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
@@ -55,8 +56,9 @@ export const useSignInShared = () => {
   async function onLoginSucceed(loginResp: LoginResp) {
     await setAuthCookies(loginResp);
     const resp = await getIdentities();
+    const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(resp));
-    navigate({ to: '/jobs', replace: true });
+    navigate({ to: path ? path : '/jobs', replace: true });
     return loginResp;
   }
 
