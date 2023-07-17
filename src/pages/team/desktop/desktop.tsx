@@ -27,7 +27,7 @@ export const Desktop: React.FC = () => {
 
   const NetworkMenuList = [
     { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
   ];
 
   const NetworkMenuListOrg = [
