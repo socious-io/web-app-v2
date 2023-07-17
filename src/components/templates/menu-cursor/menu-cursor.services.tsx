@@ -47,21 +47,21 @@ export const menuList: Menu[] = [
     link: '/feeds',
     public: true,
   },
-  {
-    label: 'Network',
-    icons: {
-      nonActive: {
-        mobile: '/icons/menu/network-gray.svg',
-        desktop: '/icons/network-gray.svg',
-      },
-      active: {
-        mobile: '/icons/menu/network-gray-active.svg',
-        desktop: '/icons/network-gray-active.svg',
-      },
-    },
-    link: '/network',
-    public: false,
-  },
+  // {
+  //   label: 'Network',
+  //   icons: {
+  //     nonActive: {
+  //       mobile: '/icons/menu/network-gray.svg',
+  //       desktop: '/icons/network-gray.svg',
+  //     },
+  //     active: {
+  //       mobile: '/icons/menu/network-gray-active.svg',
+  //       desktop: '/icons/network-gray-active.svg',
+  //     },
+  //   },
+  //   link: '/network',
+  //   public: false,
+  // },
   {
     label: 'Chat',
     icons: {
