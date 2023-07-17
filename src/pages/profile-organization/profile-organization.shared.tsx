@@ -72,7 +72,6 @@ export const useProfileOrganizationShared = () => {
   }
 
   function updateOrganization(params: PostUpdateProfileResp) {
-    console.log({ params });
     setOrganization((prev) => {
       return {
         ...prev,

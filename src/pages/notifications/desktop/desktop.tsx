@@ -5,13 +5,15 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { NotificationList } from 'src/components/organisms/notification-list/notification-list';
 import { useNotificationsShared } from '../notifications.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
   const { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore } = useNotificationsShared();
+  const { isLoggedIn } = useAuth();
 
   return (
-    <TwoColumnCursor>
+    <TwoColumnCursor visibleSidebar={isLoggedIn}>
       <Card className={css.rightContainer}>
         <div className={css.avatar}>
           <Avatar size="2.25rem" type={identity.type} img={avatarImg} />

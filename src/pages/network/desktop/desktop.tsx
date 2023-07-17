@@ -6,10 +6,12 @@ import { ProfileCard } from 'src/components/templates/profile-card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { printWhen } from 'src/core/utils';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
   const { navigateNetwork, identity } = useNetworkShared();
+  const { isLoggedIn } = useAuth();
 
   const NetworkMenuList = [
     { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
@@ -38,7 +40,7 @@ export const Desktop: React.FC = () => {
   ];
 
   return (
-    <TwoColumnCursor>
+    <TwoColumnCursor visibleSidebar={isLoggedIn}>
       <div className={css.leftContainer}>
         <ProfileCard />
         <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
