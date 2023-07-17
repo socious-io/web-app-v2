@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useMatch } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
-import store from 'src/store/store';
 import { WebModal } from 'src/components/templates/web-modal';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
@@ -17,11 +16,7 @@ import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
-import {
-  resetCreatePostWizard,
-  setPostPaymentScheme,
-  setPostPaymentType,
-} from 'src/store/reducers/createPostWizard.reducer';
+import { setPostPaymentScheme, setPostPaymentType } from 'src/store/reducers/createPostWizard.reducer';
 import { setQuestionProjectIds } from 'src/store/reducers/createQuestionWizard.reducer';
 import { printWhen } from 'src/core/utils';
 import { InfoModalProps } from './info-modal.types';
@@ -40,10 +35,8 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
   function createJob(payload: CreatePostPayload) {
     createPost(payload).then((resp) => {
       dispatch(setQuestionProjectIds({ project_id: resp.id, identity_id: resp.identity_id }));
-      store.dispatch(resetCreatePostWizard());
       onClose();
       setOpenScreenerModal(true);
-      form.reset();
     });
   }
 

@@ -12,9 +12,9 @@ export async function applyApplication(id: string, payload: ApplyApplicationPayl
   return post(`/projects/${id}/applicants`, payload);
 }
 
-export const convertOptionsToRadioGroup = (options: null | string[]): RadioGroupProps['list'] => {
+export const convertOptionsToRadioGroup = (options: null | string[], id: string): RadioGroupProps['list'] => {
   return (options as string[]).map((option) => {
-    return { label: option, value: option };
+    return { label: option, value: `${id}-${option}` };
   });
 };
 
