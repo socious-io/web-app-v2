@@ -5,6 +5,8 @@ import { useMatch, useNavigate, useLocation } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
 import { Pagination } from 'src/core/types';
 import { removeEmptyArrays } from 'src/core/utils';
+import { deviceDetect } from 'react-device-detect';
+import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const useSearchShared = () => {
   const resolver = useMatch();
@@ -30,7 +32,7 @@ export const useSearchShared = () => {
 
   const onMorePageClick = () => {
     navigate({
-      to: `/d/search`,
+      to: isTouchDevice() ? '/m/search' : `/d/search`,
       search: (p) => ({ ...p, page: p.page++ }),
     });
   };

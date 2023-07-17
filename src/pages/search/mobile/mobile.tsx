@@ -76,7 +76,7 @@ export const Mobile = (): JSX.Element => {
           <div onClick={() => history.back()} className={css.back}>
             <img src="/icons/chevron-left.svg" />
           </div>
-          <Search placeholder="Search" onEnter={navigateToSearch} />
+          <Search placeholder="Search" onEnter={navigateToSearch} defaultValue={location.current?.search?.q} />
         </div>
         <div className={css.filterBar}>
           <div className={css.filterBar}>
