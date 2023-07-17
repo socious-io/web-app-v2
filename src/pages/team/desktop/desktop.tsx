@@ -26,7 +26,7 @@ export const Desktop: React.FC = () => {
   } = useTeamShared();
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/network.svg', link: () => navigate({ to: '/network/connections' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
     { label: 'Followings', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
   ];
 
