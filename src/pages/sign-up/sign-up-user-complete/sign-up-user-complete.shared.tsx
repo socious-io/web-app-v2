@@ -7,6 +7,7 @@ import { updateProfile } from './sign-up-user.complete.services';
 import { useDispatch } from 'react-redux';
 import { setIdentityList } from '../../../store/reducers/identity.reducer';
 import { useNavigate } from '@tanstack/react-location';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 
 export const useSignUpUserCompleteShared = () => {
   const navigate = useNavigate();
@@ -28,9 +29,11 @@ export const useSignUpUserCompleteShared = () => {
 
   async function onSubmit() {
     const password = form.controls.password.value as string;
+    const path = await nonPermanentStorage.get('savedLocation');
+
     changePasswordDirect(password)
       .then(setProfileName)
-      .then(() => navigate({ to: '/jobs' }))
+      .then(() => navigate({ to: path ? path : '/jobs' }))
       .catch(handleError());
   }
 
