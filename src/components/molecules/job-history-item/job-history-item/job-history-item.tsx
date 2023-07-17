@@ -1,28 +1,22 @@
+import { Avatar } from 'src/components/atoms/avatar/avatar';
 import css from './job-history-item.module.scss';
-import {JobHistoryItemProps as Props} from './job-history-item.types';
-// import OrganizationIcon from '/asset/icons/Base.svg';
+import { JobHistoryItemProps as Props } from './job-history-item.types';
 
-export const JobHistoryItem = (props: Props): JSX.Element => {
+export const JobHistoryItem = ({ data }: Props): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.left}>
-        <div className={css.typeName}>Donation</div>
+        <div className={css.typeName}>{data.jobTitle}</div>
         <div className={css.organizationContainer}>
-          {/* <img
-            className={css.organizationImage}
-            width={32}
-            height={32}
-            src={OrganizationIcon}
-            alt="organization image"
-          /> */}
-          <div className={css.organizationName}>Organization</div>
+          <Avatar img={data.avatarUrl} type="organizations" />
+          <div className={css.organizationName}>{data.organizationName}</div>
         </div>
-        <div className={css.duration}>Mar 1 - Mar 10</div>
+        <div className={css.duration}>{data.dataStart} - {data.dataEnd}</div>
       </div>
       <div className={css.right}>
-        <div className={css.date}>02/20/2022</div>
-        <div className={css.percent}>+35</div>
-        <div className={css.total}>Total IS: 555</div>
+        <div className={css.date}>{data.date}</div>
+        <div className={css.percent}>NA</div>
+        <div className={css.total}>Total IS: {data.total}</div>
       </div>
     </div>
   );

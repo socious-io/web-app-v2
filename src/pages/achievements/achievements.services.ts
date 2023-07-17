@@ -7,7 +7,7 @@ export async function getBadges(): Promise<BadgesResp> {
 }
 
 export async function getImpactPoints() {
-  return get('/user/impact-points').then(({ data }) => data);
+  return get('/user/impact-points?limit=100').then(({ data }) => data);
 }
 
 export function getTierRowBasedOnCurrentTier(currentTier: number): Tiers | undefined {

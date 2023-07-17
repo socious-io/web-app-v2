@@ -14,6 +14,7 @@ import { printWhen } from 'src/core/utils';
 import { badgesList } from '../profile-user.services';
 import { useProfileUserShared } from '../profile-user.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export const Desktop = (): JSX.Element => {
     showMessageIcon,
     onMessage,
   } = useProfileUserShared();
-
+  const { isLoggedIn } = useAuth();
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
 
@@ -135,7 +136,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.sidebar}>
           <BackLink title="jobs" onBack={() => navigate({ to: '/jobs' })} />
         </div>

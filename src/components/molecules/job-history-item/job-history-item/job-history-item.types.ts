@@ -8,5 +8,6 @@ export type JobHistoryItemProps = {
     organizationName: string;
     dataStart: string;
     dataEnd: string;
+    avatarUrl?: string;
   };
 };
