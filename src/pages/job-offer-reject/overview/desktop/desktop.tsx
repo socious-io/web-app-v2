@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { Card } from 'src/components/atoms/card/card';
@@ -16,9 +16,12 @@ import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
+  const navigate = useNavigate();
   const resolver = useMatch().ownData as Loader;
   const { id } = useMatch().params || {};
-  const [selectedTab, setSelectedTab] = useState('Overview');
+  const tab = useMatch()?.search?.tab as string;
+  const defaultTab = tab || 'Overview';
+  const [selectedTab, setSelectedTab] = useState(defaultTab);
   const [openOfferModal, setOpenOfferModal] = useState(false);
   const [applicantDetail, setApplicantDetail] = useState<ApplicantResp>();
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
@@ -100,7 +103,10 @@ export const Desktop = (): JSX.Element => {
             {tabs.map((tab) => (
               <div
                 key={tab.name}
-                onClick={() => setSelectedTab(tab.name)}
+                onClick={() => {
+                  setSelectedTab(tab.name);
+                  navigate({ to: '.', search: { tab: tab.name } });
+                }}
                 className={selectedTab === tab.name ? css.selected : css.item}
               >
                 {tab.name}

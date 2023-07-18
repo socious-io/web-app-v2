@@ -110,9 +110,9 @@ export const Mobile: React.FC = () => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: `/jobs/create/info` })}>
+        {/* <div className={css.chevron} onClick={() => navigate({ to: `/jobs/create/info` })}>
           <img height={24} src="/icons/chevron-left.svg" />
-        </div>
+        </div> */}
         <div className={css.headerTitle}>Create job</div>
       </div>
       <div className={css.screener}>
