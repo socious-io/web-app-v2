@@ -54,7 +54,29 @@ export const useSearchShared = () => {
   function onTypeChange(menu: DropdownBtnItem) {
     setList([]);
     setResult(0);
-    navigate({ search: (p) => ({ page: 1, type: menu.value }), replace: true });
+
+    navigate({
+      search: (p) => {
+        const userParam = {
+          page: 1,
+          type: 'users',
+          filter: removeEmptyArrays({
+            skills: p?.filter?.skills || [],
+            social_causes: p?.filter?.causes_tags || [],
+          }),
+        };
+        const jobsParam = {
+          page: 1,
+          type: 'projects',
+          filter: removeEmptyArrays({
+            skills: p?.filter?.skills || [],
+            causes_tags: p?.filter?.social_causes || [],
+          }),
+        };
+        return menu.value === 'users' ? userParam : jobsParam;
+      },
+      replace: true,
+    });
   }
 
   function onSkillsChange(skills: string[]) {
