@@ -19,13 +19,16 @@ import { printWhen } from 'src/core/utils';
 import { IdentityReq } from 'src/core/types';
 import { useOfferReceivedShared } from '../offer-received.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-  const { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD } = useOfferReceivedShared();
+  const { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD } =
+    useOfferReceivedShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -90,7 +93,7 @@ export const Desktop = (): JSX.Element => {
         {printWhen(acceptedMessageBoxJSX, status === 'APPROVED')}
         {printWhen(withdrawnMessageBoxJSX, status === 'WITHRAWN')}
       </div>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <ProfileCard />
           <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />

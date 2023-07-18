@@ -13,9 +13,11 @@ import { IdentityReq } from 'src/core/types';
 import { MyJobs } from '../my-jobs.types';
 import { useMyJobShared } from '../my-jobs.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
@@ -124,7 +126,7 @@ export const Desktop: React.FC = () => {
   );
 
   return (
-    <TwoColumnCursor>
+    <TwoColumnCursor visibleSidebar={isLoggedIn}>
       <div className={css.leftContainer}>
         <ProfileCard />
         <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
