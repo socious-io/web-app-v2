@@ -11,6 +11,7 @@ import { badgesList, showActions } from '../profile-user.services';
 import { printWhen } from 'src/core/utils';
 import { useProfileUserShared } from '../profile-user.shared';
 import css from './mobile.module.scss';
+import { AuthGuard } from 'src/core/auth-guard/auth-guard';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -143,9 +144,11 @@ export const Mobile = (): JSX.Element => {
         <div className={css.menu}>
           <div className={css.btnContainer}>
             {printWhen(messageJSX, !profileBelongToCurrentUser && showMessageIcon())}
-            {printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}
+            <AuthGuard>{printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}</AuthGuard>
             {printWhen(editButtonJSX, profileBelongToCurrentUser)}
-            {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
+            <AuthGuard>
+              {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)}
+            </AuthGuard>
           </div>
         </div>
       </div>

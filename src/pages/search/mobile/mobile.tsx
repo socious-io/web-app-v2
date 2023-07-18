@@ -2,7 +2,7 @@ import css from './mobile.module.scss';
 import { Search } from 'src/components/atoms/search/search';
 import { useSearchShared } from '../search.shared';
 import { DropdownBtn } from 'src/components/atoms/dropdown-btn/dropdown-btn';
-import { useLocation, useNavigate } from '@tanstack/react-location';
+import { useNavigate } from '@tanstack/react-location';
 import { PayloadModel } from '../desktop/search.types';
 import { SocialCausesFilter } from '../desktop/filter-bar/social-causes-filter/social-causes-filter';
 import { SkillsFilter } from '../desktop/filter-bar/skills-filter/skills-filter';

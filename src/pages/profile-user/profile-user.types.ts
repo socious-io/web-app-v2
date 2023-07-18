@@ -53,5 +53,5 @@ export type ProfileReq = {
 
 export type Resolver = {
   user: ProfileReq;
-  badges: { badges: unknown[] };
+  badges?: { badges: unknown[] };
 };
