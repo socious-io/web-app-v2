@@ -311,9 +311,7 @@ export const routes: Route[] = [
           {
             path: 'screener-questions/created/:id',
             element: () =>
-              import('src/pages/job-create/screener-questions/created/created.container').then((m) => (
-                <m.Created />
-              )),
+              import('src/pages/job-create/screener-questions/created/created.container').then((m) => <m.Created />),
           },
           {
             path: 'screener-questions',

@@ -5,7 +5,6 @@ import { useMatch, useNavigate, useLocation } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
 import { Pagination } from 'src/core/types';
 import { removeEmptyArrays } from 'src/core/utils';
-import { deviceDetect } from 'react-device-detect';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const useSearchShared = () => {
@@ -50,12 +49,11 @@ export const useSearchShared = () => {
   function onTypeChange(menu: DropdownBtnItem) {
     setList([]);
     setResult(0);
-    // navigate({ search: (p) => ({ ...p, page: 1, type: menu.value, id: null, filter: removeEmptyArrays(p.filter) }) });
-    navigate({ search: (p) => ({ page: 1, type: menu.value }) });
+    navigate({ search: (p) => ({ page: 1, type: menu.value }), replace: true });
   }
 
   function onSkillsChange(skills: string[]) {
-    navigate({ search: (p) => ({ ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, skills }) }) });
+    navigate({ search: (p) => ({ ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, skills }) }), replace: true });
   }
 
   function onSocialCausesChange(social_causes: string[]) {
@@ -74,6 +72,7 @@ export const useSearchShared = () => {
 
         return { ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, ...causesFilter() }) };
       },
+      replace: true,
     });
   }
 
