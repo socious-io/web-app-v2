@@ -13,7 +13,7 @@ export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
             {printWhen(radio.icon, !!radio.icon)}
             <Radio
               name={props.name}
-              onChange={() => props.onChange(radio.value)}
+              onChange={() => props.onChange(radio.value, radio.label)}
               label={radio.label}
               value={radio.value}
               id={radio.value}

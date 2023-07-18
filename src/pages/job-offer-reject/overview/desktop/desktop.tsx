@@ -11,7 +11,7 @@ import { Overview } from '../components/overview/overview';
 import { printWhen } from 'src/core/utils';
 import { Loader } from '../../job-offer-reject.types';
 import { ApplicantResp } from 'src/core/types';
-import { getApplicantDetail, jobOfferRejectLoader } from '../../job-offer-reject.services';
+import { getApplicantDetail, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
@@ -35,7 +35,11 @@ export const Desktop = (): JSX.Element => {
   async function updateApplicantList() {
     const result = await jobOfferRejectLoader({ params: { id } });
     setUpdatedApplicantList(result);
-    setSelectedTab('Overview');
+  }
+
+  async function onRejectClick(id: string) {
+    await rejectApplicant(id);
+    updateApplicantList();
   }
 
   const tabs = [
@@ -56,6 +60,7 @@ export const Desktop = (): JSX.Element => {
           toReviewList={updatedApplicantList.reviewList}
           declinedList={updatedApplicantList.declinedList}
           onOfferClick={onOfferClick}
+          onRejectClick={onRejectClick}
         />
       ),
     },
@@ -76,7 +81,10 @@ export const Desktop = (): JSX.Element => {
         <Hired
           hiredList={updatedApplicantList.hiredList}
           endHiredList={updatedApplicantList.endHiredList}
-          onDone={updateApplicantList}
+          onDone={() => {
+            updateApplicantList();
+            setSelectedTab('Overview');
+          }}
         />
       ),
     },

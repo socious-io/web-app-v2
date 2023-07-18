@@ -87,17 +87,16 @@ export const useApplyShared = (data?: useApplySharedProps) => {
     );
   }
 
-  
   function createRadioQuestion(question: QuestionsRes['questions'][0], i: number): JSX.Element {
     return (
       <RadioGroup
         label={`${i}. ${question.question}`}
-        list={convertOptionsToRadioGroup(question.options)}
-        value={answersRadio[`${question.id}`]}
+        list={convertOptionsToRadioGroup(question.options, question.id)}
+        value={answersRadio[`question-${i}`]}
         name={question.id}
-        onChange={(value) => {
-          setAnswersRadio({ ...answersRadio, [question.id]: value });
-          form.controls[question.id].setValue(value);
+        onChange={(value, label) => {
+          setAnswersRadio({ ...answersRadio, [`question-${i}`]: value });
+          form.controls[question.id].setValue(label);
         }}
       />
     );

@@ -59,6 +59,10 @@
     justify-content: flex-end;
     gap: 1rem;
     margin: 0 1rem 1rem;
+
+    &__icon {
+      cursor: pointer;
+    }
   }
 }
 

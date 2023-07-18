@@ -5,17 +5,11 @@ import { applicantToApplicantListAdaptor, rejectApplicant } from '../../../job-o
 import { ApplicantsProps } from './applicants.types';
 
 export const Applicants = (props: ApplicantsProps): JSX.Element => {
-  const { toReviewList, declinedList, onOfferClick } = props;
+  const { toReviewList, declinedList, onOfferClick, onRejectClick } = props;
   const navigate = useNavigate();
 
   function onApplicantClick(applicantId: string) {
     navigate({ to: `./${applicantId}` });
-  }
-
-  function onRejectClick(id: string) {
-    rejectApplicant(id).then(() => {
-      navigate({ to: '/jobs' });
-    });
   }
 
   function onMessageClick(id: string) {
