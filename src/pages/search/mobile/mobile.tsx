@@ -46,8 +46,9 @@ export const Mobile = (): JSX.Element => {
       search: (p: PayloadModel) => {
         const type = p.type ?? 'projects';
         const page = p.page ?? 1;
-        return { type, q, page };
+        return { ...p, type, q, page };
       },
+      replace: true,
     });
   }
 

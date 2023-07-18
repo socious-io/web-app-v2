@@ -4,12 +4,12 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.scss';
 
-console.log('version: 6.1.16')
+console.log('version: 6.1.18');
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  //   <React.StrictMode>
+  <App />
+  //   </React.StrictMode>
 );
 
 defineCustomElements(window);

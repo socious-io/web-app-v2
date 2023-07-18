@@ -1,7 +1,7 @@
 import { DropdownBtnItem } from 'src/components/atoms/dropdown-btn/dropdown-btn.types';
 import { search } from './desktop/search.services';
 import { PayloadModel } from './desktop/search.types';
-import { useMatch, useNavigate, useLocation } from '@tanstack/react-location';
+import { useMatch, useNavigate, useLocation, useRouter } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
 import { Pagination } from 'src/core/types';
 import { removeEmptyArrays } from 'src/core/utils';
@@ -16,16 +16,20 @@ export const useSearchShared = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.current.href.includes('search')) {
-      const query = location.current.search as PayloadModel;
-      updateList(query);
-    }
-  }, [location.current.href]);
+    location.listeners.push(() => {
+      const query = location.current.search as unknown as PayloadModel;
+      updateList(query, { reset: query.page === 1 });
+    });
+    return () => {
+      location.listeners.pop();
+    };
+  }, []);
 
-  const updateList = (newState: PayloadModel) => {
+  const updateList = (newState: PayloadModel, option?: { reset: boolean }) => {
     search(newState).then((resp) => {
       setResult(resp.total_count);
-      setList(resp.items);
+      option?.reset && setList([]);
+      setList((prev) => [...prev, ...resp.items]);
     });
   };
 
@@ -33,6 +37,7 @@ export const useSearchShared = () => {
     navigate({
       to: isTouchDevice() ? '/m/search' : `/d/search`,
       search: (p) => ({ ...p, page: p.page++ }),
+      replace: true,
     });
   };
 
@@ -53,7 +58,10 @@ export const useSearchShared = () => {
   }
 
   function onSkillsChange(skills: string[]) {
-    navigate({ search: (p) => ({ ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, skills }) }), replace: true });
+    navigate({
+      search: (p) => ({ ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, skills }) }),
+      replace: true,
+    });
   }
 
   function onSocialCausesChange(social_causes: string[]) {
@@ -77,7 +85,6 @@ export const useSearchShared = () => {
   }
 
   return {
-    updateList,
     onMorePageClick,
     menu,
     onTypeChange,
