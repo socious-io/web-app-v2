@@ -27,7 +27,7 @@ import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';
 import { useScreenerQuestionsShared } from '../screener-questions.shared';
 import css from './screener-modal.module.scss';
 
-export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onBack, onDone, onOpen }) => {
+export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onDone, onOpen }) => {
   const { navigate, dispatch, formState, form, question } = useScreenerQuestionsShared();
   const [openCreatedModal, setOpenCreatedModal] = useState(false);
   const [openAlertModal, setOpenAlertModal] = useState(false);
@@ -148,7 +148,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onB
 
   return (
     <>
-      <WebModal header="Create job" open={open} onClose={onClose} onBack={onBack} buttons={buttons}>
+      <WebModal header="Create job" open={open} onClose={onClose} buttons={buttons}>
         <>
           <div className={css.screener}>
             Screener questions

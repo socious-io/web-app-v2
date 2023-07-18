@@ -19,6 +19,7 @@ export const Mobile = (): JSX.Element => {
     updateOnGoingList,
     endedList,
     updateEndedList,
+    defaultTab,
   } = useMyJobShared();
 
   const tabs = [
@@ -58,7 +59,7 @@ export const Mobile = (): JSX.Element => {
           </Accordion>
         </>
       ),
-      default: true,
+      default: defaultTab === 'Applied',
     },
     {
       name: 'Hired',
@@ -86,6 +87,7 @@ export const Mobile = (): JSX.Element => {
           </Accordion>
         </>
       ),
+      default: defaultTab === 'Hired',
     },
   ];
 
@@ -93,7 +95,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.container}>
       <Header onBack={() => navigate({ to: '/jobs' })} border="0" paddingTop={'var(--safe-area)'} title="My Jobs" />
       <div className={css.tabContainer}>
-        <Tabs tabs={tabs} />
+        <Tabs tabs={tabs} onClick={(name) => navigate({ to: '.', search: { tab: name } })} />
       </div>
     </div>
   );
