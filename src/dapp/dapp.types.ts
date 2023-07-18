@@ -26,6 +26,7 @@ export interface DappConfig {
 
 export interface EscrowParams {
   web3: Web3;
+  totalAmount: number;
   escrowAmount: number;
   contributor: string;
   projectId: string;
