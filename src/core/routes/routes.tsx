@@ -236,10 +236,7 @@ export const routes: Route[] = [
             loader: async () => {
               const requests = [getChatsSummery({ page: 1, filter: '' }), getFollowings({ page: 1, name: '' })];
               const [summery, followings] = await Promise.all(requests);
-              return {
-                summery,
-                followings,
-              };
+              return { summery, followings };
             },
             element: () =>
               import('../../pages/chat/contact-list/contact-list.container').then((m) => <m.ContactList />),
@@ -404,6 +401,49 @@ export const routes: Route[] = [
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
+          {
+            path: 'd/chats',
+            children: [
+              {
+                path: 'new/:id',
+                loader: async ({ params }) => {
+                  const createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [params.id] });
+                  return createdChats?.id;
+                },
+                element: () => import('../../pages/chat/new-chat/new-chat').then((m) => <m.NewChat />),
+              },
+              {
+                path: 'contacts/:id',
+                loader: async ({ params }) => {
+                  const requests = [
+                    getMessagesById({ id: params.id, page: 1 }),
+                    getParticipantsById(params.id),
+                    getChatsSummery({ page: 1, filter: '' }),
+                    getFollowings({ page: 1, name: '' }),
+                  ];
+                  const [messages, participants, summery, followings] = await Promise.all(requests);
+                  return {
+                    messages,
+                    participants,
+                    summery,
+                    followings,
+                  };
+                },
+                element: () =>
+                  import('../../pages/chat/message-detail/message-detail.container').then((m) => <m.MessageDetail />),
+              },
+              {
+                path: 'contacts',
+                loader: async () => {
+                  const requests = [getChatsSummery({ page: 1, filter: '' }), getFollowings({ page: 1, name: '' })];
+                  const [summery, followings] = await Promise.all(requests);
+                  return { summery, followings };
+                },
+                element: () =>
+                  import('../../pages/chat/contact-list/contact-list.container').then((m) => <m.ContactList />),
+              },
+            ],
+          },
           {
             path: '/d/search',
             element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),

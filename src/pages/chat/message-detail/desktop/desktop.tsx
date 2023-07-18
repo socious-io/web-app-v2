@@ -20,10 +20,12 @@ import {
 import { createChats } from '../../new-chat/new-chat.services';
 import { useMessageDetailShared } from '../message-detail.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
   const resolver = useMatch<MessageLoader>();
+  const { isLoggedIn } = useAuth();
   const { summery, followings } = resolver.data || {};
   const {
     participantDetail,
@@ -93,7 +95,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <Card className={css.card}>
             <div className={css.card__header}>Chats</div>

@@ -74,7 +74,7 @@ export const menuList: Menu[] = [
         desktop: '/icons/chat-active.svg',
       },
     },
-    link: '/chats/contacts',
+    link: '/d/chats/contacts',
     public: false,
   },
   {
