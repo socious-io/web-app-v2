@@ -14,7 +14,6 @@ import { getConnectStatus, sendRequestConnection } from './profile-user.services
 export const useProfileUserShared = () => {
   const navigate = useNavigate();
   const resolver = useMatch().data as Resolver;
-  console.log('resolver: 1', useMatch());
   const [user, setUser] = useState<ProfileReq>(resolver.user);
   const socialCauses = socialCausesToCategory(user.social_causes);
   const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;

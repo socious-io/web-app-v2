@@ -6,9 +6,11 @@ import { Card } from 'src/components/atoms/card/card';
 import { CreateChatModal } from '../create-chat-modal';
 import { useContactListShared } from '../contact-list.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
   const {
     chats,
     onScroll,
@@ -22,7 +24,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <Card className={css.card}>
             <div className={css.card__header}>Chats</div>
