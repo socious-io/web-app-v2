@@ -11,6 +11,8 @@ import {
 
 export const useMyJobShared = () => {
   const resolver = useMatch();
+  const tab = useMatch()?.search?.tab as MyJobs;
+  const defaultTab = tab || 'Applied';
   const { pendingApplicants, awaitingApplicants, declinedApplicants, onGoingApplicants, endedApplicants } =
     resolver.data as Loader;
   const [pendingList, setPendingList] = useState<PendingResp>(pendingApplicants);
@@ -59,5 +61,6 @@ export const useMyJobShared = () => {
     updateOnGoingList,
     endedList,
     updateEndedList,
+    defaultTab,
   };
 };

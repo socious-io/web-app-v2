@@ -12,9 +12,11 @@ import { jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.se
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
+  const navigate = useNavigate();
   const resolver = useMatch().ownData as Loader;
   const { id } = useMatch().params || {};
-  const navigate = useNavigate();
+  const tab = useMatch()?.search?.tab as string;
+  const defaultTab = tab || 'Overview';
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
 
   async function updateApplicantList() {
@@ -36,7 +38,7 @@ export const Mobile = (): JSX.Element => {
           data={updatedApplicantList.jobOverview}
         />
       ),
-      default: true,
+      default: defaultTab === 'Overview',
     },
     {
       name: 'Applicants',
@@ -48,6 +50,7 @@ export const Mobile = (): JSX.Element => {
           onRejectClick={onRejectClick}
         />
       ),
+      default: defaultTab === 'Applicants',
     },
     {
       name: 'Offered',
@@ -59,6 +62,7 @@ export const Mobile = (): JSX.Element => {
           closed={updatedApplicantList.closed}
         />
       ),
+      default: defaultTab === 'Offered',
     },
     {
       name: 'Hired',
@@ -69,13 +73,14 @@ export const Mobile = (): JSX.Element => {
           onDone={updateApplicantList}
         />
       ),
+      default: defaultTab === 'Hired',
     },
   ];
 
   return (
     <TopFixedMobile>
       <Header removeBorder title={updatedApplicantList.jobOverview.title} />
-      <Tabs tabs={tabs} />
+      <Tabs tabs={tabs} onClick={(name) => navigate({ to: '.', search: { tab: name } })} />
     </TopFixedMobile>
   );
 };
