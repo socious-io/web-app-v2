@@ -5,6 +5,7 @@ import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Toggle } from 'src/components/atoms/toggle';
 import { Input } from 'src/components/atoms/input/input';
 import {
+  resetCreatedQuestion,
   resetQuestions,
   setAddChoices,
   setAddQuestion,
@@ -14,8 +15,8 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { dialog } from 'src/core/dialog/dialog';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
+import { dialog } from 'src/core/dialog/dialog';
 import { printWhen } from 'src/core/utils';
 import { CreateQuestionPayload } from 'src/core/types';
 import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';
@@ -28,6 +29,7 @@ export const Mobile: React.FC = () => {
   function submitSkip() {
     dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
       navigate({ to: `/m/jobs/created/${formState.question_project_id.identity_id}` });
+      store.dispatch(resetCreatedQuestion());
       store.dispatch(resetCreatePostWizard());
     });
   }
@@ -48,8 +50,8 @@ export const Mobile: React.FC = () => {
     createQuestion(payloadQuestion, formState.question_project_id.project_id).then((resp) => {
       dispatch(setQuestionProjectIds({ ...formState.question_project_id, question_id: resp.id }));
       store.dispatch(resetQuestions());
-      navigate({ to: `created/${formState.question_project_id.identity_id}` });
       form.reset();
+      navigate({ to: `created/${formState.question_project_id.identity_id}` });
     });
   }
 
@@ -65,13 +67,7 @@ export const Mobile: React.FC = () => {
         list={QUESTION_TYPE}
         label="Question type"
       />
-      <Textarea
-        register={form}
-        label="Question"
-        placeholder="Question"
-        name="question"
-        defaultValue={formState.question}
-      />
+      <Textarea register={form} label="Question" placeholder="Question" name="question" value={formState.question} />
       <div className={css.questions__required}>
         Require this question to be answered
         <Toggle

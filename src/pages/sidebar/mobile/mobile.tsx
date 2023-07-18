@@ -151,7 +151,7 @@ export const Mobile = () => {
       </div>
       <div onClick={navigateToFollowing} className={css.row}>
         <img src="/icons/followers.svg" />
-        <span>Followings</span>
+        <span>Following</span>
       </div>
       <div onClick={navigateToTeam} className={css.row}>
         <img src="/icons/team.svg" />
@@ -168,7 +168,7 @@ export const Mobile = () => {
       </div>
       <div onClick={navigateToFollowing} className={css.row}>
         <img src="/icons/followers.svg" />
-        <span>Followings</span>
+        <span>Following</span>
       </div>
     </>
   );

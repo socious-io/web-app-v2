@@ -3,6 +3,7 @@ import store from 'src/store/store';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
+import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { dialog } from 'src/core/dialog/dialog';
 import { useCreatedShared } from '../created.shared';
 import css from './mobile.module.scss';
@@ -16,6 +17,7 @@ export const Mobile: React.FC = () => {
     dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
       navigate({ to: `/m/jobs/created/${resolver.params.id}` });
       store.dispatch(resetCreatedQuestion());
+      store.dispatch(resetCreatePostWizard());
     });
   }
 
@@ -34,6 +36,7 @@ export const Mobile: React.FC = () => {
       <div className={css.main}>
         {questions.map((question) => (
           <Accordion
+            key={question.id}
             title={question.id}
             id={question.id}
             inputClassName={css.accordion}

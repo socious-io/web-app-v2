@@ -51,7 +51,7 @@ export const MenuCursor = (): JSX.Element => {
     <div className={css.container}>
       <div className={css.menu}>
         <div className={css.menuItems}>
-          <div className={css.logo}>
+          <div className={css.logo} onClick={() => navigate({ to: '/jobs' })}>
             <img style={{ minWidth: 32 }} height={32} src="/icons/logo-white.svg" />
           </div>
           <Search
