@@ -32,8 +32,9 @@ export const Desktop: React.FC = () => {
     updateOnGoingList,
     endedList,
     updateEndedList,
+    defaultTab,
   } = useMyJobShared();
-  const [myJobsMode, setMyJobsMode] = useState<MyJobs>('Applied');
+  const [myJobsMode, setMyJobsMode] = useState<MyJobs>(defaultTab);
 
   const NetworkMenuList = [
     { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
@@ -46,8 +47,22 @@ export const Desktop: React.FC = () => {
   ];
 
   const JobsMenuList = [
-    { label: 'Applied', icon: '/icons/my-applications.svg', link: () => setMyJobsMode('Applied') },
-    { label: 'Hired', icon: '/icons/hired-jobs.svg', link: () => setMyJobsMode('Hired') },
+    {
+      label: 'Applied',
+      icon: '/icons/my-applications.svg',
+      link: () => {
+        setMyJobsMode('Applied');
+        navigate({ to: '.', search: { tab: 'Applied' } });
+      },
+    },
+    {
+      label: 'Hired',
+      icon: '/icons/hired-jobs.svg',
+      link: () => {
+        setMyJobsMode('Hired');
+        navigate({ to: '.', search: { tab: 'Hired' } });
+      },
+    },
   ];
 
   const myJobsAppliedJSX = (
