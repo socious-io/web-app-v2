@@ -7,17 +7,17 @@
   .header {
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--border-gray-01);
-    display: grid;
-    grid-template-columns: 44px 1fr 44px;
-    align-items: center;
+    // display: grid;
+    // grid-template-columns: 44px 1fr 44px;
+    // align-items: center;
 
-    .chevron {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      cursor: pointer;
-    }
+    // .chevron {
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   height: 100%;
+    //   cursor: pointer;
+    // }
 
     .headerTitle {
       display: flex;
