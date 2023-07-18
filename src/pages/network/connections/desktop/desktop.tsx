@@ -10,6 +10,7 @@ import { printWhen } from 'src/core/utils';
 import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
 import { useConnectionsShared } from '../connections.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export const Desktop: React.FC = () => {
   } = useConnectionsShared();
   const [tabs, setTabs] = useState('');
   const [selectedItem, setSelectedItem] = useState({ connect_id: '', identity_id: '', following: false, open: false });
+  const { isLoggedIn } = useAuth();
 
   const moreOptions = [
     {
@@ -177,7 +179,7 @@ export const Desktop: React.FC = () => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <BackLink title="Back to people" onBack={() => navigate({ to: '/network' })} />
           <Card className={css.manage}>

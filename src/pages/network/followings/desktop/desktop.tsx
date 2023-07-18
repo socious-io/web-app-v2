@@ -9,11 +9,13 @@ import { UnfollowModal } from '../unfollow-modal';
 import { printWhen } from 'src/core/utils';
 import { useFollowingsShared } from '../followings.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
   const { followings, followStatusUser, onUnfollow, onFollow, loadMore, onProfileClick } = useFollowingsShared();
   const [selectedUser, setSelectedUser] = useState({ name: '', id: '' });
+  const { isLoggedIn } = useAuth();
 
   const followingsListJSX = (
     <>
@@ -57,7 +59,7 @@ export const Desktop: React.FC = () => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <BackLink title="Back to people" onBack={() => navigate({ to: '/network' })} />
         </div>
