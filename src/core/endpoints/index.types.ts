@@ -155,9 +155,12 @@ export type UserImpactPointsResp = {
   };
   created_at: string;
   total_points: number;
+
   organization: {
-    image: string;
-    name: string;
+    meta: {
+      image: string;
+      name: string;
+    };
   };
 };
 

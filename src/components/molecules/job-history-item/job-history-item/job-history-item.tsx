@@ -11,12 +11,14 @@ export const JobHistoryItem = ({ data }: Props): JSX.Element => {
           <Avatar img={data.avatarUrl} type="organizations" />
           <div className={css.organizationName}>{data.organizationName}</div>
         </div>
-        <div className={css.duration}>{data.dataStart} - {data.dataEnd}</div>
+        <div className={css.duration}>
+          {data.dataStart} - {data.dataEnd}
+        </div>
       </div>
       <div className={css.right}>
         <div className={css.date}>{data.date}</div>
-        <div className={css.percent}>NA</div>
-        <div className={css.total}>Total IS: {data.total}</div>
+        <div className={css.percent}>{data.total}</div>
+        {/* <div className={css.total}>Total IS: {data.total}</div> */}
       </div>
     </div>
   );
