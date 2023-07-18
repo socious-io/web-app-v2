@@ -58,7 +58,11 @@ export function JobDetailCard(props: JobDetailCardProps) {
     <Divider title="Screening question">
       <ul className={css.questions}>
         {props.screeningQuestions.map((q) => {
-          return <li className={css.questionItem}>{q.question}</li>;
+          return (
+            <li key={q.id} className={css.questionItem}>
+              {q.question}
+            </li>
+          );
         })}
       </ul>
     </Divider>

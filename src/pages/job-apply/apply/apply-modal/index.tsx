@@ -33,7 +33,7 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
             const isMultipleChoice = item.options;
             return (
               <div key={item.id} className={css.questions}>
-                {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1)}
+                {/* {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1)} */}
               </div>
             );
           })}
