@@ -7,7 +7,7 @@ import { logout, setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
 import { getIdentities } from 'src/core/api';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { useNavigate } from '@tanstack/react-location';
-import { CSSProperties, useCallback, useEffect, useState } from 'react';
+import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 import { Divider } from 'src/components/templates/divider/divider';
 import { SwitchAccountProps } from './switch-account.types';
 import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
@@ -69,6 +69,22 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     props.open ? openMenu() : closeMenu();
     return () => clearTimeout(timer);
   }, [props.open]);
+
+  const ref = useRef();
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        props.onClose();
+      }
+    }
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref]);
 
   const switchAccount = async (id: string) => {
     setPendingAccId(id);
@@ -156,7 +172,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   }
 
   return (
-    <div style={containerStyles} className={css.container}>
+    <div ref={ref} style={containerStyles} className={css.container}>
       {printWhen(headerJSX, isLoggedIn)}
       {printWhen(myApplicationsJSX, props.identity && props.identity.type === 'users')}
       {printWhen(createdJobDividerJSX, props.identity && props.identity.type === 'organizations')}
