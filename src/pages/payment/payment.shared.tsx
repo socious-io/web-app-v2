@@ -11,6 +11,7 @@ import { getMonthName } from 'src/core/time';
 import { Resolver } from './payment.types';
 import { CardInfoResp } from 'src/core/types';
 import { getFlooredFixed } from 'src/core/numbers';
+import { number } from 'src/core/form/customValidators/customValidators';
 
 export const usePaymentShared = () => {
   const { web3 } = Dapp.useWeb3();
@@ -59,13 +60,14 @@ export const usePaymentShared = () => {
 
     setProcess(true);
     store.dispatch(showSpinner());
-    const escrowAmount = parseInt(assignment_total.toString());
+    // const escrowAmount = parseInt(assignment_total.toString());
 
     try {
       // put escrow on smart contract
       const result = await Dapp.escrow({
         web3,
-        escrowAmount,
+        totalAmount: total_price,
+        escrowAmount: assignment_total,
         contributor,
         token, 
         projectId: project_id,
