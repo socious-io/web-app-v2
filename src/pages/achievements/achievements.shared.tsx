@@ -33,14 +33,13 @@ export const useAchievementsShared = () => {
     impactPointHistory: Awaited<ReturnType<Endpoints['get']['users']['user/impact-points']>>
   ): JobHistoryItemProps[] {
     return impactPointHistory.items.map((item) => ({
-      jobTitle: item.job_category.name,
+      jobTitle: item.project.title,
       date: isoToStandard(item.created_at),
       total: item.total_points,
-      organizationName: item.organization.name,
-      percent: '0',
+      organizationName: item.organization.meta.name,
       dataStart: isoToStandard(item.mission.created_at),
       dataEnd: isoToStandard(item.created_at),
-      avatarUrl: item.organization.image,
+      avatarUrl: item.organization.meta.image,
     }));
   }
 
@@ -58,7 +57,7 @@ export const useAchievementsShared = () => {
     {
       name: 'History',
       content: (
-        <div style={{padding: '2rem 0rem'}}>
+        <div style={{ padding: '2rem 0rem' }}>
           <JobHistoryList data={adoptUserBadgeToJobHistoryComp(impactPointHistory)} />
         </div>
       ),
