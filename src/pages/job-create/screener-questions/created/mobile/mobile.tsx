@@ -63,7 +63,7 @@ export const Mobile: React.FC = () => {
       </div>
       <div className={css.btnContainer}>
         <Button color="white" onClick={submit}>
-          Skip
+          Continue
         </Button>
       </div>
     </div>

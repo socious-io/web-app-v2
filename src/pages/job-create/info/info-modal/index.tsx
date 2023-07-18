@@ -207,10 +207,6 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
       <ScreenerModal
         open={openScreenerModal}
         onClose={() => setOpenScreenerModal(false)}
-        onBack={() => {
-          setOpenScreenerModal(false);
-          onOpen();
-        }}
         onDone={onDone}
         onOpen={() => setOpenScreenerModal(true)}
       />

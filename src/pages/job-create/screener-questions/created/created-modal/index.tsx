@@ -35,7 +35,7 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBac
         open={open}
         onClose={onClose}
         onBack={onBack}
-        buttons={[{ children: 'Skip', color: 'white', onClick: submit }]}
+        buttons={[{ children: 'Continue', color: 'white', onClick: submit }]}
       >
         <>
           <div className={css.screener}>
