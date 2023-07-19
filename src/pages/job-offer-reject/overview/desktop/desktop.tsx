@@ -57,7 +57,7 @@ export const Desktop = (): JSX.Element => {
       default: true,
     },
     {
-      name: 'Applicants',
+      name: `Applicants (${resolver.jobOverview.applicants})`,
       content: (
         <Applicants
           toReviewList={updatedApplicantList.reviewList}
@@ -68,7 +68,7 @@ export const Desktop = (): JSX.Element => {
       ),
     },
     {
-      name: 'Offered',
+      name: `Offered (${resolver.jobOverview.missions})`,
       content: (
         <Offered
           sent={updatedApplicantList.sent}

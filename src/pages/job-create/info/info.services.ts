@@ -23,7 +23,7 @@ export async function getJobCategories(): Promise<CategoriesResp> {
 }
 
 export async function getCityList(countryCode: string): Promise<Pagination<Cities[]>> {
-  return get(`/geo/locations/country/${countryCode}?limit=30100`).then(({ data }) => data);
+  return get(`/geo/locations/country/${countryCode}?limit=301000`).then(({ data }) => data);
 }
 
 export async function createPost(payload: CreatePostPayload) {

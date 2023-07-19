@@ -9,6 +9,7 @@ export interface JobListProps extends CSSProperties {
 
 export type Job = {
   id: string;
+  missions: number;
   applied: boolean;
   identity_id: string;
   description: string;
