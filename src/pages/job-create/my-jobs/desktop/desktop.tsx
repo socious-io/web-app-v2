@@ -13,10 +13,13 @@ import { getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services'
 import { useMyJobShared } from '../my-job.shared';
 import { MyJobs } from '../my-jobs.types';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
+import { BackLink } from 'src/components/molecules/back-link';
 
 export const Desktop: React.FC = () => {
   const resolver = useMatch();
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
   const {
     onGoingTitle,
     activeJobList,
@@ -113,8 +116,9 @@ export const Desktop: React.FC = () => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
+          <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
           <ProfileCard />
           <CardMenu title="Network" list={NetworkMenuList} />
           <CardMenu title="My Jobs" list={JobsMenuList} />

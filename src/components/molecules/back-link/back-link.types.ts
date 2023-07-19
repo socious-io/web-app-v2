@@ -1,4 +1,4 @@
 export interface BackLinkProps {
   title: string;
-  onBack: () => void;
+  onBack?: () => void;
 }
