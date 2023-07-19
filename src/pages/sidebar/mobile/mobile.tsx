@@ -38,6 +38,7 @@ export const Mobile = () => {
       return {
         name: item.meta.name,
         image: item.meta.image,
+        avatar: item?.meta?.avatar,
         type: item.type,
         id: item.id,
         current: item.current,
@@ -203,7 +204,7 @@ export const Mobile = () => {
             key={item.id}
             className={css.row}
           >
-            <Avatar size="2rem" type={item.type} img={item.image} />
+            <Avatar size="2rem" type={item.type} img={item.type === 'organizations' ? item.image : item.avatar} />
             <span>{item.name}</span>
           </div>
         );

@@ -29,6 +29,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     return state.identity.entities.map((item) => ({
       name: item.meta.name,
       image: item.meta.image,
+      avatar: item?.meta?.avatar,
       type: item.type,
       id: item.id,
       current: item.current,
@@ -153,16 +154,23 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
         >
           Add organization
         </Button>
-        {accountList.filter(filterCurrentIdentity).map((item) => (
-          <div
-            onClick={() => switchAccount(item.id)}
-            key={item.id}
-            style={{ backgroundColor: accountBgColor(item.id, item.current) }}
-            className={css.accountItem}
-          >
-            <ProfileView type={item.type} name={item.name} img={item.image} theme={item.current ? 'dark' : 'light'} />
-          </div>
-        ))}
+        {accountList.filter(filterCurrentIdentity).map((item) => {
+          return (
+            <div
+              onClick={() => switchAccount(item.id)}
+              key={item.id}
+              style={{ backgroundColor: accountBgColor(item.id, item.current) }}
+              className={css.accountItem}
+            >
+              <ProfileView
+                type={item.type}
+                name={item.name}
+                img={item.type === 'organizations' ? item.image : item?.avatar}
+                theme={item.current ? 'dark' : 'light'}
+              />
+            </div>
+          );
+        })}
       </div>
     </Divider>
   );
