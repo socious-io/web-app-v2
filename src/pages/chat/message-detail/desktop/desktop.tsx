@@ -94,13 +94,13 @@ export const Desktop = (): JSX.Element => {
   );
 
   return (
-    <>
-      <TwoColumnCursor visibleSidebar={isLoggedIn}>
+    <div className={css.container}>
+      <TwoColumnCursor visibleSidebar={isLoggedIn} height="100%">
         <div className={css.leftContainer}>
           <Card className={css.card}>
             <div className={css.card__header}>Chats</div>
             <ContactList
-              height="calc(var(--window-height) - 2.5rem)"
+              height="calc(var(--window-height) - 6.2rem)"
               onScroll={onScroll}
               onContactClick={(contact) => {
                 onContactClick(contact);
@@ -139,6 +139,6 @@ export const Desktop = (): JSX.Element => {
         onSearch={onCreateSearch}
         onCreateChat={onCreateChat}
       />
-    </>
+    </div>
   );
 };

@@ -1,7 +1,9 @@
 .leftContainer {
+  height: 100%;
+  overflow-y: scroll;
+  position: relative;
   .card {
     padding: 1rem 0;
-    position: relative;
 
     &__header {
       padding: 1rem;
@@ -13,6 +15,8 @@
 
     &__fab {
       position: absolute;
+      right: 1rem;
+      bottom: 1rem;
     }
   }
 }

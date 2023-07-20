@@ -6,6 +6,7 @@ import css from './offered.module.scss';
 import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
 import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
+import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const Offered = (props: OfferedProps): JSX.Element => {
   const navigate = useNavigate();
@@ -27,7 +28,11 @@ export const Offered = (props: OfferedProps): JSX.Element => {
   }
 
   function onMessageClick(id: string) {
-    navigate({ to: `/chats/new/${id}` });
+    if (isTouchDevice()) {
+      navigate({ to: `/chats/new/${id}` });
+    } else {
+      navigate({ to: `/d/chats/new/${id}` });
+    }
   }
 
   return (

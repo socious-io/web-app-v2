@@ -23,7 +23,7 @@ export const ContactList = (props: ContactListProps): JSX.Element => {
       <div style={{ height: props.height, overflow: 'auto' }}>
         <InfiniteScroll
           initialLoad={false}
-          threshold={400}
+          threshold={800}
           useWindow={false}
           pageStart={1}
           loadMore={props.onScroll}

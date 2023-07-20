@@ -10,7 +10,9 @@ export const ContactItem = (props: ContactItemProps): JSX.Element => {
       <ProfileView img={props.img} location={props.text} name={props.name} type={props.type} />
       <div className={css.right}>
         <div className={css.time}>{props.date2}</div>
-        <Badge visibility={+props.badge ? 'visible' : 'hidden'} value={props.badge} />
+        <div className={css.badge}>
+          <Badge visibility={+props.badge ? 'visible' : 'hidden'} value={props.badge} />
+        </div>
       </div>
     </div>
   );
