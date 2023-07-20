@@ -20,10 +20,19 @@ export const ProfileCard: React.FC = () => {
     }
   }
 
+  function getAvatarUrl(identity: IdentityReq) {
+   if(identity.type === 'organizations') {
+    return identity.meta.image
+   } else {
+    return identity.meta.avatar
+   }
+
+  }
+
   return (
     <Card>
       <div className={css.profileHeader}>
-        <Avatar img={identity.meta.image} type={identity.type} />
+        <Avatar img={getAvatarUrl(identity)} type={identity.type} />
         <div>
           <div className={css.username}>{identity.meta.name}</div>
           <div onClick={navigateToProfile} className={css.profileLink}>
