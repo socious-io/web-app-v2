@@ -32,6 +32,7 @@ export const useAchievementsShared = () => {
   function adoptUserBadgeToJobHistoryComp(
     impactPointHistory: Awaited<ReturnType<Endpoints['get']['users']['user/impact-points']>>
   ): JobHistoryItemProps[] {
+    console.log('impactPointHistory: ', impactPointHistory);
     return impactPointHistory.items.map((item) => {
       return {
         jobTitle: item?.project?.title,
