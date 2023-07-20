@@ -32,15 +32,17 @@ export const useAchievementsShared = () => {
   function adoptUserBadgeToJobHistoryComp(
     impactPointHistory: Awaited<ReturnType<Endpoints['get']['users']['user/impact-points']>>
   ): JobHistoryItemProps[] {
-    return impactPointHistory.items.map((item) => ({
-      jobTitle: item.project.title,
-      date: isoToStandard(item.created_at),
-      total: item.total_points,
-      organizationName: item.organization.meta.name,
-      dataStart: isoToStandard(item.mission.created_at),
-      dataEnd: isoToStandard(item.created_at),
-      avatarUrl: item.organization.meta.image,
-    }));
+    return impactPointHistory.items.map((item) => {
+      return {
+        jobTitle: item?.project?.title,
+        date: isoToStandard(item.created_at),
+        total: item.total_points,
+        organizationName: item.organization.meta.name,
+        dataStart: isoToStandard(item.mission.created_at),
+        dataEnd: isoToStandard(item.created_at),
+        avatarUrl: item.organization.meta.image,
+      };
+    });
   }
 
   const tabs: Tab[] = [
