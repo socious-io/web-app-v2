@@ -35,7 +35,7 @@ export const Category = (props: CategoryProps): JSX.Element => {
   }
 
   const modal = (
-    <Modal zIndex={2} width="25rem" height="33rem" open={open} onClose={() => setOpen(false)}>
+    <Modal zIndex={4} width="25rem" height="33rem" open={open} onClose={() => setOpen(false)}>
       <div className={css.modalContainer}>
         <div className={css.modalHeader}>
           <Search onValueChange={onSearch} placeholder="Search" />
