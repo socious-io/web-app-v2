@@ -61,7 +61,7 @@ export const Desktop: React.FC = () => {
     <>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
-          <BackLink title="Back to people" onBack={() => navigate({ to: '/network' })} />
+          <BackLink title="Back" />
         </div>
         <div className={css.rightContainer}>
           <Card className={css.header}>Following</Card>
