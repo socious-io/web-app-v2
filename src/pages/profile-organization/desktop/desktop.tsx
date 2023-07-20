@@ -12,6 +12,7 @@ import { ConnectModal } from '../connect-modal';
 import { printWhen } from 'src/core/utils';
 import { useProfileOrganizationShared } from '../profile-organization.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export const Desktop = (): JSX.Element => {
   } = useProfileOrganizationShared();
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
+  const { isLoggedIn } = useAuth();
 
   const bioJSX = (
     <Divider>
@@ -129,7 +131,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.sidebar}>
           <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
         </div>
