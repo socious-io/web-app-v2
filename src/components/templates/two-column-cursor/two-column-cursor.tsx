@@ -4,14 +4,14 @@ import { TwoColumnCursorProps } from './two-column-cursor.types';
 import { CSSProperties } from 'react';
 
 export const TwoColumnCursor = (props: TwoColumnCursorProps): JSX.Element => {
-  const { children } = props;
+  const { children, ...rest } = props;
 
   const mainStyle: CSSProperties = {
     maxWidth: props.visibleSidebar ? '38.5rem' : undefined,
   };
 
   return (
-    <div className={css.container}>
+    <div className={css.container} style={rest}>
       <div className={css.boundaries}>
         {printWhen(<div className={css.sidebar}>{children[0]}</div>, props.visibleSidebar)}
         <div style={mainStyle} className={css.main}>
