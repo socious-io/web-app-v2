@@ -19,14 +19,14 @@ export function generateFormModel(profile: ProfileReq): FormModel {
     cover_image: { initialValue: profile?.cover_image?.id },
     avatar: { initialValue: profile?.avatar?.id },
     social_causes: {
-      initialValue: profile.social_causes,
+      initialValue: profile.social_causes || [],
       validators: [
         minArrayLength({ message: 'You have to choose at least one social cause', minValue: 1 }),
         maxArrayLength({ message: 'You should not choose more than 5 items', maxValue: 5 }),
       ],
     },
     skills: {
-      initialValue: profile.skills,
+      initialValue: profile.skills || [],
       validators: [
         minArrayLength({ message: 'You have to choose at least one skill', minValue: 1 }),
         maxArrayLength({ message: 'You should not choose more than 10 items', maxValue: 10 }),

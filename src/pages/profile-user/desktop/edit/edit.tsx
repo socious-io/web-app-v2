@@ -7,20 +7,12 @@ import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { Category } from 'src/components/molecules/category/category';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
-import { useMatch } from '@tanstack/react-location';
-import { useMemo, useRef, useState } from 'react';
-import { useForm } from 'src/core/form/useForm/useForm';
+import { useRef, useState } from 'react';
 import { useProfileUserEditShared } from 'src/pages/profile-user-edit/profile-user-edit.shared';
-import { generateFormModel } from 'src/pages/profile-user-edit/profile-user-edit.form';
 import { Input } from 'src/components/atoms/input/input';
 import { EditProps } from './edit.types';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { endpoint } from 'src/core/endpoints';
-import { removedEmptyProps } from 'src/core/utils';
 import { Popover } from 'src/components/atoms/popover/popover';
 import { PopoverProps } from 'src/components/atoms/popover/popover.types';
-import { dialog } from 'src/core/dialog/dialog';
 
 export const Edit = (props: EditProps): JSX.Element => {
   const [coverLetterMenuOpen, setCoverLetterMenu] = useState(false);
