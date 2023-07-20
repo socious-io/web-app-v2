@@ -68,7 +68,7 @@ export const Desktop = (): JSX.Element => {
       ),
     },
     {
-      name: `Offered (${resolver.jobOverview.missions})`,
+      name: `Offered`,
       content: (
         <Offered
           sent={updatedApplicantList.sent}
@@ -79,7 +79,7 @@ export const Desktop = (): JSX.Element => {
       ),
     },
     {
-      name: 'Hired',
+      name: `Hired (${resolver.jobOverview.missions})`,
       content: (
         <Hired
           hiredList={updatedApplicantList.hiredList}
