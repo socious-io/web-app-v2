@@ -181,7 +181,7 @@ export const Desktop: React.FC = () => {
     <>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
-          <BackLink title="Back to people" onBack={() => navigate({ to: '/network' })} />
+          <BackLink title="Back" />
           <Card className={css.manage}>
             <span className={css.manage__title} onClick={() => setTabs('')}>
               Manage

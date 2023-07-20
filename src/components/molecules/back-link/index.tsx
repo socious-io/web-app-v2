@@ -12,7 +12,7 @@ export const BackLink = (props: BackLinkProps): JSX.Element => {
   }
 
   return (
-    <Card className={css.container} onClick={props.onBack}>
+    <Card className={css.container} onClick={onClick}>
       <img src="/icons/chevron-left.svg" width={16} height={16} />
       <span className={css.title}>{props.title}</span>
     </Card>
