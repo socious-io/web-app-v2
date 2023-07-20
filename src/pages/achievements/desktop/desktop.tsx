@@ -7,6 +7,7 @@ import { Reward } from '../components/reward/reward';
 import { getTierRowBasedOnCurrentTier } from '../achievements.services';
 import { Modal } from 'src/components/templates/modal/modal';
 import { ClaimPoints } from '../components/claim-points/claim-points';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
   const {
@@ -18,9 +19,10 @@ export const Desktop = (): JSX.Element => {
     header,
     bottom,
   } = useAchievementsShared();
+  const { isLoggedIn } = useAuth();
 
   return (
-    <TwoColumnCursor>
+    <TwoColumnCursor visibleSidebar={isLoggedIn}>
       <div className={css.sidebar}>
         <DesktopBackBox label="Return to my profile" />
       </div>
