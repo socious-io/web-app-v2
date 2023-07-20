@@ -11,10 +11,7 @@ export async function getFollowings(payload: { page?: number; name: string }): P
 }
 
 export async function getChatsSummery(payload: { page?: number; filter: string }): Promise<SummaryReq> {
-  return get(`chats/summary?filter=${payload.filter}&page=${payload?.page || ''}`).then(({ data }) => {
-    // store.dispatch(setChatList(data));
-    return data;
-  });
+  return get(`chats/summary?limit=100&filter=${payload.filter}&page=${payload?.page || ''}`).then(({ data }) => data);
 }
 
 export function chatEntityToContactListAdaptor(chatEntity: RootState['chat']['entities']): ContactItem[] {
