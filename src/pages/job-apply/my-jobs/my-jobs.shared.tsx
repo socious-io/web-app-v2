@@ -1,4 +1,4 @@
-import { useMatch } from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { AwaitingResp, DeclinedResp, EndedResp, Loader, MyJobs, OnGoingResp, PendingResp } from './my-jobs.types';
 import { useState } from 'react';
 import {
@@ -8,10 +8,12 @@ import {
   getOnGoingList,
   getPendingApplicants,
 } from './my-jobs.services';
+import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
 
 export const useMyJobShared = () => {
   const resolver = useMatch();
   const tab = useMatch()?.search?.tab as MyJobs;
+  const navigate = useNavigate();
   const defaultTab = tab || 'Applied';
   const { pendingApplicants, awaitingApplicants, declinedApplicants, onGoingApplicants, endedApplicants } =
     resolver.data as Loader;
@@ -50,6 +52,10 @@ export const useMyJobShared = () => {
     getEndedList({ page }).then(update);
   }
 
+  function navigateToJobDetail(job: JobCardProps) {
+    navigate({ to: `/jobs/${job.id}` });
+  }
+
   return {
     pendingList,
     updatePendingList,
@@ -62,5 +68,6 @@ export const useMyJobShared = () => {
     endedList,
     updateEndedList,
     defaultTab,
+    navigateToJobDetail,
   };
 };

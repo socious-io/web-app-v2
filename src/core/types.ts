@@ -228,6 +228,7 @@ export type UserApplicantResp = {
   };
   project: {
     title: string;
+    id: string;
   };
 };
 
@@ -311,6 +312,7 @@ export type DeclinedApplicantListResp = Pagination<
     created_at: string;
     project: {
       title: string;
+      id: string;
     };
     organization: {
       meta: {
