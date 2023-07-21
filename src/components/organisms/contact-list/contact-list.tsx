@@ -32,6 +32,7 @@ export const ContactList = (props: ContactListProps): JSX.Element => {
           {list.map((contactData, i) => {
             return (
               <ContactItem
+                width={props.profileViewWidth}
                 onContactClick={onContactClick}
                 // TODO: find a unique value for key
                 key={i}

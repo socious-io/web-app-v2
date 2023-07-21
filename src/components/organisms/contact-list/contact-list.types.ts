@@ -8,4 +8,5 @@ export interface ContactListProps extends CSSProperties {
   onContactClick: (item: ContactItem) => void;
   onScroll?: (page: number) => void;
   onSearch: (v: string) => void;
+  profileViewWidth?: CSSProperties['width'];
 }
