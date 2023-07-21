@@ -108,6 +108,7 @@ export const Desktop = (): JSX.Element => {
               }}
               list={chats}
               onSearch={onSearch}
+              profileViewWidth={175}
             />
             <Fab onClick={() => setOpenCreateChatModal(true)} className={css.card__fab} />
           </Card>

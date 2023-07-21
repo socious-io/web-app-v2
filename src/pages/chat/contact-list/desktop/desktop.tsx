@@ -34,6 +34,7 @@ export const Desktop = (): JSX.Element => {
               onContactClick={(contact) => navigate({ to: contact.id })}
               list={chats}
               onSearch={onSearch}
+              profileViewWidth={175}
             />
             <Fab onClick={() => setOpenCreateChatModal(true)} className={css.card__fab} />
           </Card>

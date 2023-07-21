@@ -30,7 +30,7 @@ export const CreateChatModal: React.FC<CreateChatModalProps> = ({
             <div className={css.list}>
               {userList?.length ? (
                 userList.map((list) => (
-                  <div className={css.list__user} onClick={() => onCreateChat(list.id)}>
+                  <div key={list.id} className={css.list__user} onClick={() => onCreateChat(list.id)}>
                     <ProfileView {...list} />
                   </div>
                 ))
