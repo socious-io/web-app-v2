@@ -33,6 +33,7 @@ export const Desktop: React.FC = () => {
     endedList,
     updateEndedList,
     defaultTab,
+    navigateToJobDetail,
   } = useMyJobShared();
   const [myJobsMode, setMyJobsMode] = useState<MyJobs>(defaultTab);
 
@@ -52,7 +53,7 @@ export const Desktop: React.FC = () => {
       icon: '/icons/my-applications.svg',
       link: () => {
         setMyJobsMode('Applied');
-        navigate({ to: '.', search: { tab: 'Applied' } });
+        navigate({ to: '.', search: { tab: 'Applied' }, replace: true });
       },
     },
     {
@@ -60,7 +61,7 @@ export const Desktop: React.FC = () => {
       icon: '/icons/hired-jobs.svg',
       link: () => {
         setMyJobsMode('Hired');
-        navigate({ to: '.', search: { tab: 'Hired' } });
+        navigate({ to: '.', search: { tab: 'Hired' }, replace: true });
       },
     },
   ];
@@ -72,7 +73,7 @@ export const Desktop: React.FC = () => {
           <div className={css.listContainer}>
             <JobCardList
               list={pendingList.items}
-              onItemClick={console.log}
+              onClick={navigateToJobDetail}
               totalCount={pendingList.total_count}
               onSeeMoreClick={updatePendingList}
             />
@@ -98,7 +99,7 @@ export const Desktop: React.FC = () => {
           <div className={css.listContainer}>
             <JobCardList
               list={declinedList.items}
-              onItemClick={console.log}
+              onClick={navigateToJobDetail}
               totalCount={declinedList.total_count}
               onSeeMoreClick={updateDeclinedList}
             />

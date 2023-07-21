@@ -78,9 +78,9 @@ function onGoingListToJobCardList(applicants: MissionsResp['items']): JobCardPro
   return applicants.map(onGoingItemToJobCardAdaptor);
 }
 
-function declinedItemToJobCardAdaptor(applicant: DeclinedApplicantListResp['items'][0]): JobCardProps {
+function declinedItemToJobCardAdaptor(applicant: DeclinedApplicantListResp['items'][0][0]): JobCardProps {
   return {
-    id: applicant.id,
+    id: applicant.project.id,
     title: applicant.project.title,
     body: applicant.organization.meta.name,
     img: applicant.organization.meta.image,
@@ -88,7 +88,7 @@ function declinedItemToJobCardAdaptor(applicant: DeclinedApplicantListResp['item
   };
 }
 
-function declinedListToJobCardList(applicants: DeclinedApplicantListResp['items']): JobCardProps[] {
+function declinedListToJobCardList(applicants: DeclinedApplicantListResp['items'][0]): JobCardProps[] {
   return applicants.map(declinedItemToJobCardAdaptor);
 }
 
@@ -156,7 +156,7 @@ function awaitingListToJobCardList(applicants: GetOffer['items']): JobCardProps[
 
 function pendingItemToJobCard(applicant: UserApplicantResp): JobCardProps {
   return {
-    id: applicant.id,
+    id: applicant.project.id,
     title: applicant.project.title,
     body: applicant.organization.meta.name,
     img: applicant.organization.meta.image,

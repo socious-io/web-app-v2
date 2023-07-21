@@ -5,17 +5,13 @@ import { useJobDetailShared } from '../job-detail.shared';
 import { JobDetailCard } from '../components/job-detail-card/job-detail-card';
 
 export const Desktop = (): JSX.Element => {
-  const { navigate, identity, job, location, screeningQuestions } = useJobDetailShared();
-
-  function navigateToJobs() {
-    navigate({ to: '/jobs' });
-  }
+  const { identity, job, location, screeningQuestions } = useJobDetailShared();
 
   return (
     <>
       <TwoColumnCursor visibleSidebar={!!identity}>
         <div className={css.sidebar}>
-          <BackLink title="Jobs" onBack={navigateToJobs} />
+          <BackLink title="Jobs"/>
         </div>
         <JobDetailCard
           job={job}
