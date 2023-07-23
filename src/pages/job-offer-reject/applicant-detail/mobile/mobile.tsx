@@ -40,7 +40,7 @@ export const Mobile: React.FC = () => {
 
   return (
     <div className={css.container}>
-      <Header paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
+      <Header paddingTop="var(--safe-area)" title={applicantDetail.user.name} onBack={() => history.back()} />
       <div className={css.main}>
         <Accordion id="cover-letter" title="Cover letter">
           <div className={css.accordionContainer}>{applicantDetail.cover_letter}</div>

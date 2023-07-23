@@ -7,7 +7,6 @@ import { Input } from 'src/components/atoms/input/input';
 import {
   resetCreatedQuestion,
   resetQuestions,
-  setAddChoices,
   setAddQuestion,
   setChoices,
   setCreatedQuestions,
@@ -24,7 +23,8 @@ import { useScreenerQuestionsShared } from '../screener-questions.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
-  const { navigate, dispatch, formState, form, question } = useScreenerQuestionsShared();
+  const { navigate, dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
+    useScreenerQuestionsShared();
 
   function submitSkip() {
     dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
@@ -62,7 +62,7 @@ export const Mobile: React.FC = () => {
         value={formState.question_type}
         onChange={(value) => {
           dispatch(setQuestionType(value));
-          dispatch(setAddChoices(0));
+          onReset();
         }}
         list={QUESTION_TYPE}
         label="Question type"
@@ -81,24 +81,23 @@ export const Mobile: React.FC = () => {
 
   const multipleChoiceJSX = (
     <>
-      <div className={css.addQuestions} onClick={() => dispatch(setAddChoices(formState.add_choices + 1))}>
+      <div className={css.addQuestions} onClick={onAddChoice}>
         <img src="/icons/add-circle.svg" />
         Add choice
       </div>
       {printWhen(<div className={css.error}>Minimum of 2 choices required.</div>, formState.add_choices === 1)}
+      {printWhen(<div className={css.error}>Maximum of 5 choices required.</div>, formState.add_choices > 5)}
       {printWhen(
         <div className={css.choices}>
-          {Array.from({ length: formState.add_choices }).map((_, index) => (
-            <div key={index} className={css.choice}>
+          {Object.keys(formState.choices).map((key, index) => (
+            <div key={key} className={css.choice}>
               <Input
                 placeholder={`Choice ${index + 1}`}
                 register={form}
-                name={`choice-${index + 1}`}
-                onKeyUp={(e) =>
-                  dispatch(setChoices({ ...formState.choices, [`choice-${index + 1}`]: e.currentTarget.value }))
-                }
+                name={key}
+                onKeyUp={(e) => dispatch(setChoices({ ...formState.choices, [key]: e.currentTarget.value }))}
               />
-              <img src="/icons/trash-bin.svg" onClick={() => dispatch(setAddChoices(formState.add_choices - 1))} />
+              <img src="/icons/trash-bin.svg" onClick={() => onRemoveChoice(key)} />
             </div>
           ))}
         </div>,
@@ -139,13 +138,7 @@ export const Mobile: React.FC = () => {
         )}
         {printWhen(
           <>
-            <Button
-              color="blue"
-              disabled={
-                formState.question_type === 'MULTIPLE' ? !form.isValid || formState.add_choices <= 1 : !form.isValid
-              }
-              onClick={submitWithQuestions}
-            >
+            <Button color="blue" disabled={isDisabledAddQuestion} onClick={submitWithQuestions}>
               Add
             </Button>
             <Button color="white" onClick={submitSkip}>
