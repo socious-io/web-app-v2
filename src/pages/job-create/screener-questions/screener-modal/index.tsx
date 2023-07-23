@@ -10,7 +10,6 @@ import { AlertModal } from 'src/components/organisms/alert-modal';
 import {
   resetCreatedQuestion,
   resetQuestions,
-  setAddChoices,
   setAddQuestion,
   setChoices,
   setCreatedQuestions,
@@ -28,7 +27,8 @@ import { useScreenerQuestionsShared } from '../screener-questions.shared';
 import css from './screener-modal.module.scss';
 
 export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onDone, onOpen }) => {
-  const { navigate, dispatch, formState, form, question } = useScreenerQuestionsShared();
+  const { navigate, dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
+    useScreenerQuestionsShared();
   const [openCreatedModal, setOpenCreatedModal] = useState(false);
   const [openAlertModal, setOpenAlertModal] = useState(false);
 
@@ -74,7 +74,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
         value={formState.question_type}
         onChange={(value) => {
           dispatch(setQuestionType(value));
-          dispatch(setAddChoices(0));
+          onReset();
         }}
         list={QUESTION_TYPE}
         label="Question type"
@@ -93,28 +93,23 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
 
   const multipleChoiceJSX = (
     <>
-      <div className={css.addQuestions} onClick={() => dispatch(setAddChoices(formState.add_choices + 1))}>
+      <div className={css.addQuestions} onClick={onAddChoice}>
         <img src="/icons/add-circle.svg" />
         Add choice
       </div>
       {printWhen(<div className={css.error}>Minimum of 2 choices required.</div>, formState.add_choices === 1)}
+      {printWhen(<div className={css.error}>Maximum of 5 choices required.</div>, formState.add_choices > 5)}
       {printWhen(
         <div className={css.choices}>
-          {Array.from({ length: formState.add_choices }).map((_, index) => (
-            <div key={index} className={css.choice}>
+          {Object.keys(formState.choices).map((key, index) => (
+            <div key={key} className={css.choice}>
               <Input
                 placeholder={`Choice ${index + 1}`}
                 register={form}
-                name={`choice-${index + 1}`}
-                onKeyUp={(e) =>
-                  dispatch(setChoices({ ...formState.choices, [`choice-${index + 1}`]: e.currentTarget.value }))
-                }
+                name={key}
+                onKeyUp={(e) => dispatch(setChoices({ ...formState.choices, [key]: e.currentTarget.value }))}
               />
-              <img
-                src="/icons/trash-bin.svg"
-                className={css.icon}
-                onClick={() => dispatch(setAddChoices(formState.add_choices - 1))}
-              />
+              <img src="/icons/trash-bin.svg" className={css.icon} onClick={() => onRemoveChoice(key)} />
             </div>
           ))}
         </div>,
@@ -135,8 +130,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
         {
           children: 'Add',
           color: 'blue',
-          disabled:
-            formState.question_type === 'MULTIPLE' ? !form.isValid || formState.add_choices <= 1 : !form.isValid,
+          disabled: isDisabledAddQuestion,
           onClick: submitWithQuestions,
         },
         {
