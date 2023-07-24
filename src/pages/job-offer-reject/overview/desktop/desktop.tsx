@@ -48,6 +48,7 @@ export const Desktop = (): JSX.Element => {
   const tabs = [
     {
       name: 'Overview',
+      label: 'Overview',
       content: (
         <Overview
           questions={updatedApplicantList.screeningQuestions.questions}
@@ -57,7 +58,8 @@ export const Desktop = (): JSX.Element => {
       default: true,
     },
     {
-      name: `Applicants (${resolver.jobOverview.applicants})`,
+      name: 'Applicants',
+      label: `Applicants (${resolver.jobOverview.applicants})`,
       content: (
         <Applicants
           toReviewList={updatedApplicantList.reviewList}
@@ -68,7 +70,8 @@ export const Desktop = (): JSX.Element => {
       ),
     },
     {
-      name: `Offered`,
+      name: 'Offered',
+      label: 'Offered',
       content: (
         <Offered
           sent={updatedApplicantList.sent}
@@ -79,7 +82,8 @@ export const Desktop = (): JSX.Element => {
       ),
     },
     {
-      name: `Hired (${resolver.jobOverview.missions})`,
+      name: 'Hired',
+      label: `Hired (${resolver.jobOverview.missions})`,
       content: (
         <Hired
           hiredList={updatedApplicantList.hiredList}
@@ -93,6 +97,7 @@ export const Desktop = (): JSX.Element => {
     },
   ];
   const renderedTab = tabs.find((tab) => tab.name === selectedTab)?.content;
+  const selectedTabName = tabs.find((tab) => tab.name === selectedTab)?.label;
 
   return (
     <>
@@ -109,13 +114,13 @@ export const Desktop = (): JSX.Element => {
                 }}
                 className={selectedTab === tab.name ? css.selected : css.item}
               >
-                {tab.name}
+                {tab.label}
               </div>
             ))}
           </Card>
         </div>
         <div className={css.rightContainer}>
-          <Card className={css.selectedTab}>{selectedTab}</Card>
+          <Card className={css.selectedTab}>{selectedTabName}</Card>
           <Card>{renderedTab}</Card>
         </div>
       </TwoColumnCursor>
