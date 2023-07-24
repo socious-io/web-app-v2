@@ -351,7 +351,7 @@ export type Offer = {
   offer_message: string;
   assignment_total: number;
   due_date: string;
-  status: 'HIRED' | 'CLOSED';
+  status: 'HIRED' | 'CLOSED' | 'APPROVED' | 'HIRED';
   project: {
     description: string;
     title: string;

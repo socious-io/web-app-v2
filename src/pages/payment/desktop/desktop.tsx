@@ -7,9 +7,10 @@ import { PaymentMethods } from 'src/components/templates/payment-methods';
 import { Button } from 'src/components/atoms/button/button';
 import { BackLink } from 'src/components/molecules/back-link';
 import { AddCardModal } from '../credit-card/add-card-modal';
+import { printWhen } from 'src/core/utils';
+import { useAuth } from 'src/hooks/use-auth';
 import { usePaymentShared } from '../payment.shared';
 import css from './desktop.module.scss';
-import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
   const {
@@ -27,14 +28,40 @@ export const Desktop: React.FC = () => {
     isPaidCrypto,
     onClickProceedPayment,
     isDisabledProceedPayment,
+    status,
   } = usePaymentShared();
   const { job_category, recipient, project, total_hours } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const { isLoggedIn } = useAuth();
 
+  const offeredMessageBoxJSX = (
+    <div className={css.offeredMessageBoxJSX}>
+      <img src="/icons/info.svg" />
+      <div>
+        <div className={css.congratulationsText}>Payment required</div>
+        <div className={css.congratulationsText}>
+          {applicant_name} has accepted your offer. Proceed to payment to start this mission.
+        </div>
+      </div>
+    </div>
+  );
+
+  const acceptedMessageBoxJSX = (
+    <div className={css.acceptedMessageBox}>
+      <img src="/icons/tick-white-simple.svg" />
+      <div>
+        <div className={css.congratulationsText}>Payment was done successfully</div>
+      </div>
+    </div>
+  );
+
   return (
     <>
+      <div className={css.status}>
+        {printWhen(offeredMessageBoxJSX, status === 'APPROVED')}
+        {printWhen(acceptedMessageBoxJSX, status === 'HIRED')}
+      </div>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={`${css.container} ${css.right}`}>
           <BackLink title="Return" onBack={() => history.back()} />
@@ -51,6 +78,8 @@ export const Desktop: React.FC = () => {
             name={applicant_name}
             username={applicant_username}
             location={`${city}, ${country}`}
+            total_mission={assignment_total}
+            unit={unit}
           />
           <PaymentSummaryCard
             title="Payment summary"
