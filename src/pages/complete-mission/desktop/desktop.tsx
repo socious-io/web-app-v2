@@ -17,6 +17,7 @@ import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export const Desktop = (): JSX.Element => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
   const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
+  const { isLoggedIn } = useAuth();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -90,7 +92,7 @@ export const Desktop = (): JSX.Element => {
         {printWhen(acceptedMessageBoxJSX, status === 'CLOSED')}
         {printWhen(stoppedMessageBoxJSX, status === 'KICK_OUT')}
       </div>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <ProfileCard />
           <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />

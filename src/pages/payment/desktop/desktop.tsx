@@ -9,6 +9,7 @@ import { BackLink } from 'src/components/molecules/back-link';
 import { AddCardModal } from '../credit-card/add-card-modal';
 import { usePaymentShared } from '../payment.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
   const {
@@ -30,10 +31,11 @@ export const Desktop: React.FC = () => {
   const { job_category, recipient, project, total_hours } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
+  const { isLoggedIn } = useAuth();
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={`${css.container} ${css.right}`}>
           <BackLink title="Return" onBack={() => history.back()} />
           <JobDescrioptionCard

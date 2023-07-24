@@ -10,6 +10,7 @@ import { printWhen } from 'src/core/utils';
 import translate from 'src/translations';
 import { useSettingsShared } from '../settings.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export const Desktop: React.FC = () => {
     settingsGuide,
   } = useSettingsShared();
   const [closeAlert, setCloseAlert] = useState(false);
+  const { isLoggedIn } = useAuth();
 
   const turnedOffMessageBoxJSX = (
     <div className={css.header}>
@@ -41,7 +43,7 @@ export const Desktop: React.FC = () => {
   return (
     <>
       {printWhen(turnedOffMessageBoxJSX, !allowedNotifications && !closeAlert)}
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <BackLink title="Notifications" onBack={() => navigate({ to: '/notifications' })} />
         <Card>
           <div className={`${css.notification_all} ${!allowedNotifications && css['notification_all--noBorder']}`}>

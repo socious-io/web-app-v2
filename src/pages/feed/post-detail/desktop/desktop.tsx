@@ -11,6 +11,7 @@ import { socialCausesToCategory } from 'src/core/adaptors';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { usePostDetailShared } from '../post-detail.shared';
 import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = () => {
   const {
@@ -31,6 +32,7 @@ export const Desktop = () => {
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
   const [feed, setFeed] = useState<Feed>();
+  const { isLoggedIn } = useAuth();
 
   const showActions = async (feed: Feed) => {
     const name = feed.identity_meta.name;
@@ -47,7 +49,7 @@ export const Desktop = () => {
 
   return (
     <>
-      <TwoColumnCursor>
+      <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div>
           <ProfileCard />
         </div>
