@@ -11,7 +11,6 @@ import { getMonthName } from 'src/core/time';
 import { Resolver } from './payment.types';
 import { CardInfoResp } from 'src/core/types';
 import { getFlooredFixed } from 'src/core/numbers';
-import { number } from 'src/core/form/customValidators/customValidators';
 
 export const usePaymentShared = () => {
   const { web3 } = Dapp.useWeb3();
@@ -20,6 +19,7 @@ export const usePaymentShared = () => {
   const [process, setProcess] = useState(false);
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
   const [cards, setCards] = useState(cardInfo);
+  const [status, setStatus] = useState(offer.status);
   const offerId = offer?.id;
   const {
     created_at,
@@ -35,7 +35,9 @@ export const usePaymentShared = () => {
   const { wallet_address: contributor } = recipient?.meta || {};
   const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
   const isPaidCrypto = project?.payment_type === 'PAID' && payment_mode === 'CRYPTO';
-  const isDisabledProceedPayment = process || (isPaidCrypto ? !isConnected || !account : !selectedCard);
+  const isDisabledProceedPayment =
+    process || (isPaidCrypto ? !isConnected || !account : !selectedCard) || status === 'HIRED';
+  let unit = 'USDC';
 
   function onSelectCard(id: string) {
     setSelectedCard(id);
@@ -69,7 +71,7 @@ export const usePaymentShared = () => {
         totalAmount: total_price,
         escrowAmount: assignment_total,
         contributor,
-        token, 
+        token,
         projectId: project_id,
         verifiedOrg: offer.offerer.meta.verified_impact || false,
       });
@@ -88,7 +90,7 @@ export const usePaymentShared = () => {
       });
     }
 
-    endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
+    endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
 
     setProcess(false);
     store.dispatch(hideSpinner());
@@ -101,7 +103,7 @@ export const usePaymentShared = () => {
         service: 'STRIPE',
         source: selectedCard,
       });
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
+      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
     } catch (err: any) {
       dialog.alert({
         message: err?.response?.data.error || err?.message,
@@ -111,13 +113,11 @@ export const usePaymentShared = () => {
     setProcess(false);
   }
 
-
-  let unit = '$';
   if (offer.crypto_currency_address) {
-    Dapp.NETWORKS.map(n => {
-      const token = n.tokens.filter(t => offer.crypto_currency_address === t.address)[0];
-      if (token) unit = token.symbol
-    })
+    Dapp.NETWORKS.map((n) => {
+      const token = n.tokens.filter((t) => offer.crypto_currency_address === t.address)[0];
+      if (token) unit = token.symbol;
+    });
   }
 
   return {
@@ -135,5 +135,6 @@ export const usePaymentShared = () => {
     onRemoveCard,
     onClickProceedPayment: isPaidCrypto ? proceedCryptoPayment : proceedFiatPayment,
     isDisabledProceedPayment,
+    status,
   };
 };

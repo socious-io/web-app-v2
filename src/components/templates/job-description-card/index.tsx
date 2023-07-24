@@ -14,6 +14,8 @@ export const JobDescrioptionCard: React.FC<JobDescriptionCardProps> = ({
   username,
   location,
   info_list,
+  total_mission,
+  unit = 'USDC',
   containerClassName = '',
 }) => {
   const createList = info_list.map((info) => (
@@ -34,6 +36,13 @@ export const JobDescrioptionCard: React.FC<JobDescriptionCardProps> = ({
       </div>
       <div className={css['job__footer']}>
         <Categories list={createList} />
+        <div className={css['job__total']}>
+          Total mission
+          <div className={css['job__price']}>
+            <span>{total_mission.toLocaleString()}</span>
+            {unit}
+          </div>
+        </div>
       </div>
     </Card>
   );

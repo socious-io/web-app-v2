@@ -5,5 +5,7 @@ export interface JobDescriptionCardProps extends ProfileViewProps {
   start_date: string;
   end_date: string;
   info_list: { icon: string; name: string | number }[];
+  total_mission: number;
+  unit?: string;
   containerClassName?: string;
 }

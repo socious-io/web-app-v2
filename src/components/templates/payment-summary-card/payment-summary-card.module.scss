@@ -21,4 +21,10 @@ $color-gray-light-0: #e4e6ed;
     font-size: 20px;
     margin-top: 16px;
   }
+
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 }
