@@ -117,7 +117,7 @@ export const Desktop: React.FC = () => {
           <div className={css.listContainer}>
             <JobCardList
               list={onGoingList.items}
-              onItemClick={(id) => navigate({ to: `/jobs/applied/complete-mission/${id}` })}
+              onItemClick={(id) => navigate({ to: `/d/jobs/applied/complete-mission/${id}` })}
               totalCount={onGoingList.total_count}
               onSeeMoreClick={updateOnGoingList}
             />
@@ -130,7 +130,7 @@ export const Desktop: React.FC = () => {
           <div className={css.listContainer}>
             <JobCardList
               list={endedList.items}
-              onItemClick={console.log}
+              onClick={navigateToJobDetail}
               totalCount={endedList.total_count}
               onSeeMoreClick={updateEndedList}
             />
