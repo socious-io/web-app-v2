@@ -3,15 +3,15 @@ import { CreateQuestionWizard } from 'src/store/reducers/createQuestionWizard.re
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 
 export function formModel(formState: CreateQuestionWizard): FormModel {
-  const choicesValidation = Array.from({ length: formState.add_choices }).map((_, index) => {
+  const choicesValidation = Object.keys(formState.choices).map((key) => {
     return {
-      [`choice-${index + 1}`]: {
-        initialValue: formState?.choices[`choice-${index + 1}`] || '',
+      [key]: {
+        initialValue: formState?.choices[key] || '',
         validators: [noEmptyString()],
       },
     };
   });
-  
+
   const formModelObjects = {
     question: {
       initialValue: formState.question,
