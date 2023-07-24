@@ -17,7 +17,11 @@ export const Offered = (props: OfferedProps): JSX.Element => {
 
   async function onHire(offerId: string) {
     if (payment_type === 'PAID' && !props.approved.items[0]?.escrow) {
-      navigate({ to: `/payment/${offerId}` });
+      if (isTouchDevice()) {
+        navigate({ to: `/payment/${offerId}` });
+      } else {
+        navigate({ to: `/d/payment/${offerId}` });
+      }
     } else {
       endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
     }

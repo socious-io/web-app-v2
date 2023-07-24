@@ -402,6 +402,79 @@ export const routes: Route[] = [
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
           {
+            path: '/d/payment/:id',
+            children: [
+              {
+                path: '/add-card',
+                loader: async () => {
+                  const [cardInfo] = await Promise.all([getCreditCardInfo()]);
+                  return cardInfo;
+                },
+                element: () =>
+                  import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
+              },
+              {
+                path: '/edit-card/:id',
+                loader: async ({ params }) => {
+                  const [cardInfo] = await Promise.all([getCreditCardInfoById(params.id)]);
+                  return cardInfo;
+                },
+                element: () =>
+                  import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
+              },
+              {
+                loader: async ({ params }) => {
+                  const requests = [receivedOfferLoader(params), getCreditCardInfo()];
+                  const [offerReq, cardInfo] = await Promise.all(requests);
+                  const { offer } = offerReq;
+                  return { offer, cardInfo };
+                },
+                element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
+              },
+            ],
+          },
+          {
+            path: '/d/jobs/applied/complete-mission/:id',
+            loader: async ({ params }) => {
+              let media = { url: '' };
+              const mission = await endpoint.get.missions.mission_id(params.id);
+              const offer = await endpoint.get.offers.offer_id(mission.offer_id);
+              if (offer.applicant?.attachment) {
+                media = await endpoint.get.media['media_id'](offer.applicant.attachment);
+              }
+              return { mission, offer, media };
+            },
+            element: () =>
+              import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
+          },
+          {
+            path: '/d/jobs/applied',
+            loader: async () => {
+              const requests = [
+                getPendingApplicants({ page: 1 }),
+                getAwaitingReviewList({ page: 1 }),
+                getDeclinedApplicants({ page: 1 }),
+                getOnGoingList({ page: 1 }),
+                getEndedList({ page: 1 }),
+              ];
+              const [pendingApplicants, awaitingApplicants, declinedApplicants, onGoingApplicants, endedApplicants] =
+                await Promise.all(requests);
+              return {
+                pendingApplicants,
+                awaitingApplicants,
+                declinedApplicants,
+                onGoingApplicants,
+                endedApplicants,
+              };
+            },
+            children: [
+              {
+                path: ':id',
+                element: () => import('../../pages/job-apply/my-jobs/my-jobs').then((m) => <m.MyJobs />),
+              },
+            ],
+          },
+          {
             path: 'd/chats',
             children: [
               {
@@ -512,33 +585,6 @@ export const routes: Route[] = [
             },
             element: () =>
               import('../../pages/offer-received/offer-received.container').then((m) => <m.OfferReceived />),
-          },
-          {
-            path: '/d/jobs/applied',
-            loader: async () => {
-              const requests = [
-                getPendingApplicants({ page: 1 }),
-                getAwaitingReviewList({ page: 1 }),
-                getDeclinedApplicants({ page: 1 }),
-                getOnGoingList({ page: 1 }),
-                getEndedList({ page: 1 }),
-              ];
-              const [pendingApplicants, awaitingApplicants, declinedApplicants, onGoingApplicants, endedApplicants] =
-                await Promise.all(requests);
-              return {
-                pendingApplicants,
-                awaitingApplicants,
-                declinedApplicants,
-                onGoingApplicants,
-                endedApplicants,
-              };
-            },
-            children: [
-              {
-                path: ':id',
-                element: () => import('../../pages/job-apply/my-jobs/my-jobs').then((m) => <m.MyJobs />),
-              },
-            ],
           },
           {
             path: '/jobs/:id',

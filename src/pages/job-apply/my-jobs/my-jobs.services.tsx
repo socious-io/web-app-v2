@@ -52,7 +52,7 @@ export async function getAwaitingReviewList(payload: { page: number }): Promise<
 
 function endedItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCardProps {
   return {
-    id: applicant.id,
+    id: applicant.project.id,
     title: applicant.project.title,
     body: applicant.assigner.meta.name,
     img: applicant.assigner.meta.image,
