@@ -19,7 +19,7 @@ export const NotificationList = ({ list, onMorePageClick, showSeeMore, route }: 
       FOLLOWED: `/profile/${notifIdentity}/${username}/view`,
       COMMENT_LIKE: `/feeds/${id}`,
       POST_LIKE: `/feeds/${id}`,
-      CHAT: `/chats/contacts/${id}`,
+      CHAT: `/${route}/chats/contacts/${id}`,
       SHARE_POST: '',
       SHARE_PROJECT: '',
       COMMENT: `/feeds/${id}`,
@@ -34,7 +34,7 @@ export const NotificationList = ({ list, onMorePageClick, showSeeMore, route }: 
       ASSIGNER_CONFIRMED: isOrg ? '' : `/${route}/jobs/applied/${id}?tab=Hired`,
       CONNECT: `/profile/${notifIdentity}/${username}/view`,
       ACCEPT_CONNECT: `/profile/${notifIdentity}/${username}/view`,
-      MEMBERED: '', // FIXME: later for memeber feature
+      MEMBERED: '', // FIXME: later for member feature
     };
   };
 
