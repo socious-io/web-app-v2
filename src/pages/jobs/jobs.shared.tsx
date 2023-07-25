@@ -26,5 +26,7 @@ export const useJobsShared = () => {
     navigate({ to: `/jobs/${id}` });
   }
 
-  return { onMorePage, jobList, identity, goToJobDetail };
+  const showMorePageBtn = jobList.length < data.total_count;
+
+  return { onMorePage, jobList, identity, goToJobDetail, showMorePageBtn };
 };

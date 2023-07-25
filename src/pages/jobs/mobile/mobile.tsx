@@ -9,7 +9,7 @@ import { useJobsShared } from '../jobs.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const { onMorePage, jobList, identity, goToJobDetail } = useJobsShared();
+  const { onMorePage, jobList, identity, goToJobDetail, showMorePageBtn } = useJobsShared();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
@@ -36,7 +36,13 @@ export const Mobile = (): JSX.Element => {
           <div className={css.tagline}>Find jobs that make a social impact</div>
         </div>
       </div>
-      <JobList onClick={goToJobDetail} onMorePageClick={onMorePage} padding="1rem" data={jobList} />
+      <JobList
+        showMorePage={showMorePageBtn}
+        onClick={goToJobDetail}
+        onMorePageClick={onMorePage}
+        padding="1rem"
+        data={jobList}
+      />
     </div>
   );
 };
