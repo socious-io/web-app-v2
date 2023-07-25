@@ -240,6 +240,9 @@ export type ApplicantResp = {
   created_at: string;
   share_contact_info: string;
   user: {
+    first_name: string;
+    last_name: string;
+    bio?: string;
     name: string;
     avatar: string;
   };
