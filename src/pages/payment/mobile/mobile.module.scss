@@ -26,3 +26,32 @@ $color-gray-light-0: #e4e6ed;
     }
   }
 }
+
+@mixin MessageBoxJSX {
+  width: 100%;
+  padding: 12px;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.offeredMessageBoxJSX {
+  @include MessageBoxJSX();
+  align-items: flex-start;
+  background-color: #df3030;
+}
+
+.acceptedMessageBox {
+  @include MessageBoxJSX();
+  align-items: center;
+  background-color: var(--color-success-01);
+}
+
+.congratulationsText {
+  color: #fff;
+  font-size: var(--font-size-s2);
+}
+
+.congratulationsText:first-child {
+  font-weight: 600;
+  padding-bottom: 4px;
+}

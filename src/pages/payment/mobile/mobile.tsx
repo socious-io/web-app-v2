@@ -7,6 +7,7 @@ import { PaymentSummaryCard } from 'src/components/templates/payment-summary-car
 import { PaymentMethods } from 'src/components/templates/payment-methods';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { Sticky } from 'src/components/templates/sticky';
+import { printWhen } from 'src/core/utils';
 import { usePaymentShared } from '../payment.shared';
 import css from './mobile.module.scss';
 
@@ -26,15 +27,38 @@ export const Mobile = (): JSX.Element => {
     isPaidCrypto,
     onClickProceedPayment,
     isDisabledProceedPayment,
+    status,
   } = usePaymentShared();
   const { job_category, recipient, project, total_hours } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
 
+  const offeredMessageBoxJSX = (
+    <div className={css.offeredMessageBoxJSX}>
+      <img src="/icons/info.svg" />
+      <div>
+        <div className={css.congratulationsText}>Payment required</div>
+        <div className={css.congratulationsText}>
+          {applicant_name} has accepted your offer. Proceed to payment to start this mission.
+        </div>
+      </div>
+    </div>
+  );
+
+  const acceptedMessageBoxJSX = (
+    <div className={css.acceptedMessageBox}>
+      <img src="/icons/tick-white-simple.svg" />
+      <div>
+        <div className={css.congratulationsText}>Payment was done successfully</div>
+      </div>
+    </div>
+  );
 
   return (
     <TopFixedMobile>
       <Header title="Escrow payment" onBack={() => history.back()} />
       <>
+        {printWhen(offeredMessageBoxJSX, status === 'APPROVED')}
+        {printWhen(acceptedMessageBoxJSX, status === 'HIRED')}
         <div className={css['container']}>
           <JobDescrioptionCard
             job_title={job_category?.name || ''}
@@ -49,6 +73,8 @@ export const Mobile = (): JSX.Element => {
             name={applicant_name}
             username={applicant_username}
             location={`${city}, ${country}`}
+            total_mission={assignment_total}
+            unit={unit}
           />
           <div className={css['container__spacer']}>
             <PaymentSummaryCard
