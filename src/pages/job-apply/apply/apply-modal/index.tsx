@@ -67,11 +67,16 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
     </>
   );
 
+  function onModalClose() {
+    onClose();
+    form.reset();
+  }
+
   return (
     <WebModal
       header="Apply"
       open={open}
-      onClose={onClose}
+      onClose={onModalClose}
       buttons={[{ children: ' Submit application', disabled: !form.isValid, onClick: onSubmit }]}
     >
       <div className={css.main}>
