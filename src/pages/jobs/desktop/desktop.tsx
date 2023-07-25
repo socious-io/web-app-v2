@@ -10,7 +10,6 @@ import css from './desktop.module.scss';
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
   const { onMorePage, jobList, identity, goToJobDetail, showMorePageBtn } = useJobsShared();
-  console.log({ jobList });
 
   const NetworkMenuList = [
     { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },

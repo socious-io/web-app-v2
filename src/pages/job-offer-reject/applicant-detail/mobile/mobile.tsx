@@ -1,11 +1,12 @@
+import css from './mobile.module.scss';
 import { Header } from 'src/components/atoms/header/header';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { printWhen } from 'src/core/utils';
 import { useApplicantDetailShared } from '../applicant-detail.shared';
-import css from './mobile.module.scss';
+import { ApplicantInfo } from '../components/applicant-info';
 
-export const Mobile: React.FC = () => {
+export const Mobile = (): JSX.Element => {
   const { navigate, screeningQuestions, applicantDetail, onReject } = useApplicantDetailShared();
 
   function onOffer() {
@@ -38,10 +39,20 @@ export const Mobile: React.FC = () => {
     </Accordion>
   );
 
+  console.log({ applicantDetail });
+
   return (
     <div className={css.container}>
       <Header paddingTop="var(--safe-area)" title={applicantDetail.user.name} onBack={() => history.back()} />
       <div className={css.main}>
+        <Accordion id="info" title="Applicant info">
+          <ApplicantInfo
+            name={`${applicantDetail.user.first_name} ${applicantDetail.user.last_name}`}
+            jobTitle={'job title'}
+            bio={applicantDetail.user?.bio}
+            avatar={applicantDetail.user?.avatar?.url}
+          />
+        </Accordion>
         <Accordion id="cover-letter" title="Cover letter">
           <div className={css.accordionContainer}>{applicantDetail.cover_letter}</div>
         </Accordion>

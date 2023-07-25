@@ -27,7 +27,7 @@ export const ProfileView = (props: ProfileViewProps): JSX.Element => {
   }
 
   return (
-    <div className={css.container} style={{ width: props.width }}>
+    <div className={css.container} style={{ width: props.width }} onClick={console.log}>
       <Avatar size={size} img={img} type={type} onClick={() => username && navigateToProfile()} />
       <div className={css.detail}>
         <div style={{ color: theme === 'dark' ? '#fff' : '' }} className={css.name}>
