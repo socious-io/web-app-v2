@@ -24,6 +24,21 @@ $color-gray-dark: #2d2d2d;
     margin-top: 16px;
   }
 
+  &__total {
+    border-top: 1px solid var(--border-gray-01);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+  }
+
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   &__info {
     color: $color-gray-light-1;
     font-size: 14px;

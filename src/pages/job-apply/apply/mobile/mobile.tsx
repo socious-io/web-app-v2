@@ -30,7 +30,7 @@ export const Mobile = (): JSX.Element => {
       <div className={css.questionsContainer}>
         <Divider divider="line" title="Screening questions">
           {questions.map((item, i) => {
-            const isMultipleChoice = item.options;
+            const isMultipleChoice = item.options?.length;
             return (
               <div key={item.id} className={css.questions}>
                 {isMultipleChoice ? createRadioQuestion(item, i + 1) : createTextQuestion(item, i + 1)}
