@@ -10,9 +10,20 @@ import { socialCausesToCategory } from 'src/core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { printWhen } from 'src/core/utils';
+import { useEffect } from 'react';
+import { getJobStructuresData } from 'src/pages/jobs/jobs.jobStructuredData';
 
 export const JobList = (props: JobListProps): JSX.Element => {
   const { data, showMorePage, onMorePageClick, ...rest } = props;
+
+useEffect(() => {
+data.forEach(job => {
+  const script = document.createElement('script');
+  script.setAttribute('type', 'application/ld+json');
+  script.textContent = getJobStructuresData(job);
+  document.head.appendChild(script);
+});
+}, []);
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
@@ -30,7 +41,6 @@ export const JobList = (props: JobListProps): JSX.Element => {
       See more
     </div>
   );
-
   return (
     <div style={rest} className={css.container}>
       {data.map((job) => {
