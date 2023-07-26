@@ -17,13 +17,17 @@ export const JobList = (props: JobListProps): JSX.Element => {
   const { data, showMorePage, onMorePageClick, ...rest } = props;
 
 useEffect(() => {
-data.forEach(job => {
+const scripts=data.map(job=>{
   const script = document.createElement('script');
   script.setAttribute('type', 'application/ld+json');
   script.textContent = getJobStructuresData(job);
   document.head.appendChild(script);
-});
-}, []);
+  return script
+})
+return () => {
+  scripts.forEach(script=>document.head.removeChild(script))
+}
+}, [data]);
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
