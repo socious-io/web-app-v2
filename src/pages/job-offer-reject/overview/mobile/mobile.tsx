@@ -80,7 +80,7 @@ export const Mobile = (): JSX.Element => {
   return (
     <TopFixedMobile>
       <Header removeBorder title={updatedApplicantList.jobOverview.title} />
-      <Tabs tabs={tabs} onClick={(name) => navigate({ to: '.', search: { tab: name } })} />
+      <Tabs tabs={tabs} onClick={(name) => navigate({ to: '.', search: { tab: name }, replace: true })} />
     </TopFixedMobile>
   );
 };
