@@ -6,6 +6,7 @@ import { createPostWizardSlice } from './reducers/createPostWizard.reducer';
 import { createQuestionWizardSlice } from './reducers/createQuestionWizard.reducer';
 import { identitySlice } from './reducers/identity.reducer';
 import { menuSlice } from './reducers/menu.reducer';
+import { modalsSlice } from './reducers/modal.reducer';
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,14 @@ const store = configureStore({
     createPostWizard: createPostWizardSlice.reducer,
     createQuestionWizard: createQuestionWizardSlice.reducer,
     spinner: spinnerSlice.reducer,
+    modal: modalsSlice.reducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['modals/openModal'],
+      },
+    });
   },
 });
 
