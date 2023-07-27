@@ -14,8 +14,8 @@ export const useAlert = () => {
   const dialog = {
     confirm: async (options: ConfirmOptions, onConfirm: () => void) => {
       if (isTouchDevice()) {
-        return Dialog.confirm(options).then((resp) => {
-          if (resp) {
+        return Dialog.confirm(options).then(({ value }) => {
+          if (value) {
             onConfirm();
           }
         });

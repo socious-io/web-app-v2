@@ -14,6 +14,7 @@ import { ConfirmResult } from '@capacitor/dialog';
 import Dapp from 'src/dapp';
 import { FeedbackModal } from '../feedback-modal';
 import { Rate } from '../feedback-modal/feedback-modal.types';
+import { useAlert } from 'src/hooks/use-alert';
 
 export const Hired = (props: HiredProps): JSX.Element => {
   const navigate = useNavigate();
@@ -29,35 +30,37 @@ export const Hired = (props: HiredProps): JSX.Element => {
   });
   const [feedbackText, setFeedbackText] = useState('');
   const [satisfactory, setSatisfactory] = useState<Rate>('satisfactory');
+  const alert = useAlert();
   const selectedFeedbackName = endHiredList.items?.find((list) => list.id === selectedIdFeedback.id)?.assignee?.meta;
 
-  function onUserConfirm(id: string, escrowId?: string) {
-    return async (confirmed: ConfirmResult) => {
-      store.dispatch(showSpinner());
-      setProcess(true);
-      if (web3 && escrowId) {
-        try {
-          await Dapp.withdrawnEscrow(web3, escrowId);
-        } catch (err: any) {
-          dialog.confirm({
-            title: 'Unhandled Erorr',
-            message: `Please call support team seems like withrawn escrow got error : ${err.message}`,
-            okButtonTitle: 'OK'
-          });
-        }
+  async function onUserConfirm(id: string, escrowId?: string) {
+    store.dispatch(showSpinner());
+    setProcess(true);
+    if (web3 && escrowId) {
+      try {
+        await Dapp.withdrawnEscrow(web3, escrowId);
+      } catch (err: any) {
+        dialog.confirm({
+          title: 'Unhandled Error',
+          message: `Please call support team seems like withdrawn escrow got error : ${err.message}`,
+          okButtonTitle: 'OK',
+        });
       }
-      if (confirmed.value) {
-        endpoint.post.missions['{mission_id}/confirm'](id).then(onDone);
-      }
-      store.dispatch(hideSpinner());
-      setProcess(false);
-    };
+    }
+    endpoint.post.missions['{mission_id}/confirm'](id).then(onDone);
+    store.dispatch(hideSpinner());
+    setProcess(false);
+    // };
   }
 
   function openConfirmDialog(id: string, escrowId?: string) {
     if (process) return;
-    const options = { title: 'Confirm', message: 'Are you sure?', okButtonTitle: 'Confirm' };
-    dialog.confirm(options).then(onUserConfirm(id, escrowId));
+    console.log({ resolver });
+    console.log({ id });
+    const name = resolver.hiredList.items.find((user) => user.id === id)?.assignee?.meta?.name;
+    const message = `By confirming its completion, the job will end, and ${name} will receive their payment.`;
+    const options = { title: 'Confirm completion', message, okButtonTitle: 'Confirm' };
+    alert.confirm(options, () => onUserConfirm(id, escrowId));
   }
 
   function onMessageClick(id: string) {
@@ -98,9 +101,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
         open={!!selectedIdFeedback.id}
         onClose={() => setSelectedIdFeedback({ ...selectedIdFeedback, id: '' })}
         buttons={[{ children: 'Submit', disabled: !feedbackText, onClick: onSubmitFeedback }]}
-        talent_name={
-          (selectedFeedbackName?.name || selectedFeedbackName?.username) as string
-        }
+        talent_name={(selectedFeedbackName?.name || selectedFeedbackName?.username) as string}
         onChangeTextHandler={setFeedbackText}
         onRate={(value) => setSatisfactory(value as Rate)}
         selectedRate={satisfactory}

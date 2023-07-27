@@ -17,7 +17,7 @@ export const useCompleteMissionShared = () => {
 
     const options = {
       title: 'Mark as completed',
-      message: `Once ${resolver?.offer?.organization?.name} confirms the mission completion, you will receive your payment.`,
+      message: `Once ${resolver?.offer?.organization?.name} confirms the job completion, you will receive your payment.`,
       okButtonTitle: 'Confirm',
     };
     alert.confirm(options, onConfirm);
