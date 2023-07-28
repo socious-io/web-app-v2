@@ -10,7 +10,6 @@ import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
 import { ApplicantListPay } from '../../../../../components/molecules/applicant-list-pay/applicant-list-pay';
 import { endpoint } from '../../../../../core/endpoints';
 import { dialog } from '../../../../../core/dialog/dialog';
-import { ConfirmResult } from '@capacitor/dialog';
 import Dapp from 'src/dapp';
 import { FeedbackModal } from '../feedback-modal';
 import { Rate } from '../feedback-modal/feedback-modal.types';
@@ -50,13 +49,10 @@ export const Hired = (props: HiredProps): JSX.Element => {
     endpoint.post.missions['{mission_id}/confirm'](id).then(onDone);
     store.dispatch(hideSpinner());
     setProcess(false);
-    // };
   }
 
   function openConfirmDialog(id: string, escrowId?: string) {
     if (process) return;
-    console.log({ resolver });
-    console.log({ id });
     const name = resolver.hiredList.items.find((user) => user.id === id)?.assignee?.meta?.name;
     const message = `By confirming its completion, the job will end, and ${name} will receive their payment.`;
     const options = { title: 'Confirm completion', message, okButtonTitle: 'Confirm' };
