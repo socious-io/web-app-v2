@@ -12,16 +12,16 @@ export const milkomeda: Chain = {
   },
   rpcUrls: {
     default: {
-      http: ['https://rpc-mainnet-algorand-rollup.a1.milkomeda.com'],
+      http: ['https://rpc-mainnet-cardano-evm.c1.milkomeda.com/'],
     },
     public: {
-      http: ['https://rpc-mainnet-algorand-rollup.a1.milkomeda.com'],
+      http: ['https://rpc-mainnet-cardano-evm.c1.milkomeda.com/'],
     },
   },
   blockExplorers: {
     default: {
       name: 'Explorer',
-      url: 'https://explorer-mainnet-algorand-rollup.a1.milkomeda.com',
+      url: 'https://explorer-mainnet-cardano-evm.c1.milkomeda.com/',
     },
   },
 };
