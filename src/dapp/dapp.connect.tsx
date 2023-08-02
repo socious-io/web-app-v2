@@ -70,7 +70,13 @@ export const Connect: React.FC = () => {
         <Web3Button />
       </WagmiConfig>
 
-      <Web3Modal projectId={dappConfig.walletConnetProjectId} ethereumClient={ethereumClient} />
+      <Web3Modal
+        walletImages={{
+          flint: '/icons/crypto/Flint.svg',
+        }}
+        projectId={dappConfig.walletConnetProjectId}
+        ethereumClient={ethereumClient}
+      />
     </>
   );
 };
