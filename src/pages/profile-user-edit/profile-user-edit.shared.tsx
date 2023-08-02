@@ -29,10 +29,14 @@ export const useProfileUserEditShared = (props?: EditProps) => {
   async function runCoverEditActions(type: 'upload' | 'remove' | undefined) {
     switch (type) {
       case 'upload':
-        const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
-        const resp = await uploadImage(webPath);
-        form.controls.cover_image.setValue(resp.id);
-        setCoverImage(resp.url);
+        try {
+          const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
+          const resp = await uploadImage(webPath);
+          form.controls.cover_image.setValue(resp.id);
+          setCoverImage(resp.url);
+        } catch (error) {
+          console.log('runCoverEditActions: ', error);
+        }
         break;
       case 'remove':
         form.controls.cover_image.setValue('');
@@ -58,8 +62,12 @@ export const useProfileUserEditShared = (props?: EditProps) => {
 
   const onCoverEdit = {
     mobile: async () => {
-      const actionResp = await showActionSheet();
-      runCoverEditActions(actionResp);
+      try {
+        const actionResp = await showActionSheet();
+        runCoverEditActions(actionResp);
+      } catch (error) {
+        console.log('onCoverEdit: ', error);
+      }
     },
     desktop: async (type: 'upload' | 'remove' | undefined) => {
       switch (type) {
