@@ -16,7 +16,6 @@ export default class extends Connector {
 
   async connect(config?: { chainId?: number }): Promise<Required<ConnectorData<any>>> {
     const provider = await this.getProvider();
-
     const accounts = await provider.enable();
     const chainId = config?.chainId || this.chains[0].id;
     if (chainId) await this.switchChain(chainId);
