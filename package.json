@@ -28,7 +28,7 @@
     "@capacitor/toast": "^4.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@ionic/pwa-elements": "^3.1.1",
+    "@ionic/pwa-elements": "^3.2.2",
     "@mui/material": "^5.11.6",
     "@reduxjs/toolkit": "^1.9.1",
     "@tanstack/react-location": "^3.7.4",
