@@ -90,8 +90,6 @@ export const routes: Route[] = [
   },
   {
     loader: jobsPageLoader,
-    // pendingElement: 'loading...',
-    // pendingMs: 0,
     children: [
       {
         path: 'delete-profile',
@@ -714,7 +712,7 @@ export const routes: Route[] = [
             },
           },
           {
-            element: <Navigate to="/jobs" />,
+            element: <Navigate to="/intro" />,
           },
         ],
       },
