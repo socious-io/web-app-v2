@@ -6,6 +6,8 @@ import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 console.log('version: 6.1.33');
 
+
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <App />
