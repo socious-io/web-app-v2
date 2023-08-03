@@ -15,7 +15,7 @@ const makeAmount = async (web3: Web3, token: string, amount: number): Promise<st
   return units;
 
   // return web3.utils.toBN(amount*100).mul(web3.utils.toBN(Math.pow(10, decimals-2))).toString();
-}
+};
 
 export const allowance = async (web3: Web3, token: string, amount: number) => {
   // TODO: we may configure this fee ratio later
