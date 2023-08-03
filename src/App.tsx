@@ -12,6 +12,9 @@ import { setAuthCookies } from './pages/sign-in/sign-in.services';
 import { PostRefreshResp } from './core/endpoints/index.types';
 import { closeModal } from './store/reducers/modal.reducer';
 import { Modal } from './components/templates/modal/modal';
+import { useEffect } from 'react';
+import { getIdentities } from './core/api';
+import { setIdentityList } from './store/reducers/identity.reducer';
 
 async function fetchNewAuth(
   refresh_token: Awaited<ReturnType<typeof nonPermanentStorage.get>>
