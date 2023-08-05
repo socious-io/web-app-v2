@@ -74,7 +74,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             </div>,
             props.isPaidCrypto
           )}
-          {printWhen(confirmBtn(applicant.id, applicant.payment?.meta?.id), props.confirmable)}
+          {printWhen(confirmBtn(applicant.id, applicant.payment?.meta?.id), props.confirmable || applicant.status === 'COMPLETE')}
           {printWhen(feedbackBtn(applicant.id, applicant.status), !!props?.onFeedback)}
           <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
             <img src="/icons/message-blue.svg" />
