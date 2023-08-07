@@ -64,13 +64,14 @@ export const Hired = (props: HiredProps): JSX.Element => {
   }
 
   function onSubmitFeedback() {
+    setSelectedIdFeedback(false);
     if (satisfactory === 'satisfactory') {
       endpoint.post.missions['{mission_id}/feedback'](selectedIdFeedback.id, { content: feedbackText }).then(() =>
-        history.back()
+        setSelectedIdFeedback(false)
       );
     } else {
       endpoint.post.missions['{mission_id}/contest'](selectedIdFeedback.id, { content: feedbackText }).then(() =>
-        history.back()
+        setSelectedIdFeedback(false)
       );
     }
   }
