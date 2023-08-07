@@ -11,6 +11,7 @@ export interface Token {
 export interface Network {
   chain: Chain;
   escrow: string;
+  logic?: string;
   tokens: Token[];
 }
 
