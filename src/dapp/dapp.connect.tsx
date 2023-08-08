@@ -9,6 +9,7 @@ import { config } from 'src/config';
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
 import FlintWallet from './wallets/flint';
+import TronWallet from './wallets/tronlink';
 
 export const NETWORKS: Network[] = config.dappENV === 'mainet' ? dappConfig.mainet : dappConfig.testnet;
 
@@ -18,7 +19,7 @@ const projectId = dappConfig.walletConnetProjectId;
 
 const chainConf = configureChains(chains, [w3mProvider({ projectId })]);
 
-const connectors = [...w3mConnectors({ projectId, version: 2, chains }), new FlintWallet({ chains, options: {} })];
+const connectors = [...w3mConnectors({ projectId, version: 2, chains }), new FlintWallet({ chains, options: {} }), new TronWallet({ chains, options: {} })];
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -42,12 +43,13 @@ export const useWeb3 = () => {
       }
 
       const provider = await connector.getProvider();
+      console.log(provider, '-------------------@@')
       const web3Instance = new Web3(provider);
 
       if (!web3Instance) throw Error('Provider is not valid');
 
       web3Instance.defaultAccount = account;
-      web3Instance.eth.defaultAccount = account;
+      // web3Instance.eth.defaultAccount = account;
 
       setWeb3(web3Instance);
       setProvider(provider);
