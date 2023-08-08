@@ -4,9 +4,6 @@ import { Connector, Address, ConnectorData } from 'wagmi';
 
 
 class TronLinkProvider {
-  constructor(tronWeb: any) {
-    this.tronWeb = tronWeb;
-  }
 
   sendAsync(payload, callback) {
     // Translate the payload.method from web3/ETH format to Tron format if needed
