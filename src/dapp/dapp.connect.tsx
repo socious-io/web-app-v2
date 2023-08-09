@@ -49,7 +49,6 @@ export const useWeb3 = () => {
       if (!web3Instance) throw Error('Provider is not valid');
 
       web3Instance.defaultAccount = account;
-      // web3Instance.eth.defaultAccount = account;
 
       setWeb3(web3Instance);
       setProvider(provider);

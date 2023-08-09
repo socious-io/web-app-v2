@@ -52,6 +52,59 @@ export const milkomedaTestnet: Chain = {
   testnet: true,
 };
 
+
+export const tron: Chain = {
+  id: 0x2b6653dc,
+  name: 'TRON',
+  network: 'TRON',
+  nativeCurrency: {
+    name: 'TRX',
+    symbol: 'TRX',
+    decimals: 6,
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://api.trongrid.io'],
+    },
+    public: {
+      http: ['https://api.trongrid.io'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Explorer',
+      url: 'https://tronscan.org/',
+    },
+  }
+};
+
+export const tronShasta: Chain = {
+  id: 0x94a9059e,
+  name: 'TRON Testnet',
+  network: 'TRON Shasta',
+  nativeCurrency: {
+    name: 'TRX',
+    symbol: 'TRX',
+    decimals: 6,
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://api.shasta.trongrid.io'],
+    },
+    public: {
+      http: ['https://api.shasta.trongrid.io'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Explorer',
+      url: 'https://shasta.tronscan.org/#',
+    },
+  },
+  testnet: true
+};
+
+
 export const dappConfig: DappConfig = {
   walletConnetProjectId: '40ce0f320baccb067909071c983ca357',
   testnet: [
@@ -75,6 +128,17 @@ export const dappConfig: DappConfig = {
           name: 'USDC',
           symbol: 'USDC',
           address: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
+        },
+      ],
+    },
+    {
+      chain: tronShasta,
+      escrow: 'ChangeMe',
+      tokens: [
+        {
+          name: 'USDC',
+          symbol: 'USDC',
+          address: 'ChangeMe',
         },
       ],
     },
@@ -130,6 +194,22 @@ export const dappConfig: DappConfig = {
           symbol: 'DAI',
           address: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
         },
+      ],
+    },
+    {
+      chain: tron,
+      escrow: 'ChangeMe',
+      tokens: [
+        {
+          name: 'USD Coin',
+          symbol: 'USDC',
+          address: 'ChangeMe',
+        },
+        {
+          name: 'Tether',
+          symbol: 'USDT',
+          address: 'ChangeMe',
+        }
       ],
     },
   ],

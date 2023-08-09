@@ -27,14 +27,14 @@ export const allowance = async (web3: Web3, token: string, amount: number) => {
 
   const approved = await erc20Contract.methods
     .approve(selectedNetwork.escrow, allowanceAmount)
-    .send({ from: web3.eth.defaultAccount });
+    .send({ from: web3.defaultAccount });
 
   if (!approved) throw new Error('Allowance not approved for escorw');
 };
 
 export const balance = async (web3: Web3, token: string) => {
   const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
-  const result = await erc20Contract.methods.balanceOf(web3.eth.defaultAccount);
+  const result = await erc20Contract.methods.balanceOf(web3.defaultAccount);
 
   return web3.utils.fromWei(result);
 };
@@ -45,7 +45,7 @@ export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
   const escrowContract = new web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
 
-  const result = await escrowContract.methods.withdrawn(escrowId).send({ from: web3.eth.defaultAccount });
+  const result = await escrowContract.methods.withdrawn(escrowId).send({ from: web3.defaultAccount });
 
   return result.transactionHash;
 };
@@ -68,7 +68,7 @@ export const escrow = async (params: EscrowParams) => {
       params.verifiedOrg,
       token
     )
-    .send({ from: params.web3.eth.defaultAccount });
+    .send({ from: params.web3.defaultAccount });
 
   // Need to share <txHash> to backend on Payment API to verify and create Escrow on BE side too
   const txHash = result.transactionHash;

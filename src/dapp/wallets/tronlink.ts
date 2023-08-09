@@ -1,20 +1,35 @@
+import {
+  JsonRpcPayload,
+  JsonRpcResponse
+} from 'web3-core-helpers';
+import TronWeb from 'tronweb';
 import { Chain } from 'wagmi/chains';
 import { Connector, Address, ConnectorData } from 'wagmi';
 
 
 
 class TronLinkProvider {
+  public tronWeb: typeof TronWeb;
 
-  sendAsync(payload, callback) {
-    // Translate the payload.method from web3/ETH format to Tron format if needed
-
-    // Send the request to TronLink
-    this.tronWeb.trx[payload.method](...payload.params)
-      .then(result => callback(null, {result}))
-      .catch(error => callback(error));
+  constructor(tronWeb: typeof TronWeb) {
+      this.tronWeb = tronWeb;
   }
 
-  // You might also need other functions like 'send' depending on your Web3.js version
+  sendAsync(payload: JsonRpcPayload, callback: (error: Error | null, result?: JsonRpcResponse) => void): void {
+      // Translate the payload.method from web3/ETH format to Tron format if needed
+      // For simplicity, we're using trx as an example here; you'd need more logic for full compatibility
+
+      const method = this.tronWeb.trx[payload.method as keyof typeof this.tronWeb.trx];
+
+      if (!method) {
+          callback(new Error(`No method matched for ${payload.method}`));
+          return;
+      }
+
+      method(...payload.params)
+          .then((result: any) => callback(null, {id: payload.id, jsonrpc: payload.jsonrpc, result}))
+          .catch((error: Error) => callback(error));
+  }
 }
 
 
@@ -49,7 +64,7 @@ export default class extends Connector {
         id: chainId,
         unsupported: false,
       },
-      account: provider.defaultAddress.hex,
+      account: provider.tronWeb.defaultAddress.hex,
     };
   }
 
@@ -64,9 +79,9 @@ export default class extends Connector {
 
   async getAccount(): Promise<Address> {
     const provider = await this.getProvider();
-    const accounts = provider.enable();
-    return accounts[0];
+    return  provider.tronWeb.defaultAddress.hex;
   }
+  
   async getChainId(): Promise<number> {
     const { chain } = await this.connect();
     return chain.id;
@@ -82,7 +97,7 @@ export default class extends Connector {
           tronWeb = window.tronLink.tronWeb;
         }
     }
-    return tronWeb;
+    return new TronLinkProvider(tronWeb);
   }
 
   async disconnect() {}

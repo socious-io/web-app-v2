@@ -92,6 +92,7 @@
     "jest-environment-jsdom": "^29.3.1",
     "prettier": "^2.8.7",
     "sass": "^1.57.1",
+    "tronweb-typings": "^1.0.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3",
