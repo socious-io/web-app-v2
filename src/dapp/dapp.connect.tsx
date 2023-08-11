@@ -3,7 +3,6 @@ import Web3 from 'web3';
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum';
 import { Web3Modal, Web3Button } from '@web3modal/react';
 import { configureChains, createClient, WagmiConfig, useAccount, Connector, Address, ConnectorData } from 'wagmi';
-import EventEmitter from 'eventemitter3';
 import { switchNetwork } from '@wagmi/core';
 import { Chain } from 'wagmi/chains';
 import { config } from 'src/config';
