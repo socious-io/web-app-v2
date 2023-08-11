@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+		<!--	created with www.mysitemapgenerator.com	-->
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+	<loc>https://app.socious.io/</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.2</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/.</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/jobs</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/feeds</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/d/chats/contacts</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/notifications</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/sign-in</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/d/search</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/intro</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/sign-up</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/user</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/email</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/verification</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/complete</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/forget-password</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/otp</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/password</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/delete-profile</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/delete</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/confirm</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/change-password</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/add-card</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/achievements/m</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/organization</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/create</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/type</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/social-causes</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/profile</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/mission</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/culture</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/social-impact</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/succeed</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/verified</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/chats</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/contacts</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/jobs/create</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/skills</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/info</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/screener-questions</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/m/search</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/privacy-policy</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/terms-conditions</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/m/jobs/applied</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/d/jobs/applied</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/d/chats</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/achievements/d</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/view</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/edit</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/settings</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/network</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/connections</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/followings</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/wallet</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/organization/create/intro</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/network/connections</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/network/followings</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://app.socious.io/achievements</loc>
+	<lastmod>2023-08-11T11:38:35+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+</urlset>
