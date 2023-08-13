@@ -50,7 +50,13 @@ export default class extends Connector {
   }
 
   async getProvider() {
-    return window?.evmproviders?.flint;
+    const provider = window?.evmproviders?.flint;
+    if (!provider?.isFlint) {
+      window.open(`https://flint-wallet.app.link/browse?dappUrl=${window.global.location.href}`, '_blank');
+      throw new Error('Flint provider could not be found');
+    }
+    await provider.request({ method: "eth_requestAccounts" });
+    return provider
   }
 
   async disconnect() {}
