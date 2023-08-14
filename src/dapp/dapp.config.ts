@@ -91,6 +91,11 @@ export const dappConfig: DappConfig = {
           address: '0xB44a9B6905aF7c801311e8F4E76932ee959c663C',
         },
         {
+          name: 'USD Coin',
+          symbol: 'mUSDC',
+          address: '0x063139a927FE02B3a6A5E0d5B48c8BeDFA7de954',
+        },
+        {
           name: 'Tether',
           symbol: 'USDT',
           address: '0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844',
