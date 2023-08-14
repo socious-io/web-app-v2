@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 import store from 'src/store/store';
 import { WebModal } from 'src/components/templates/web-modal';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
@@ -6,11 +6,11 @@ import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Toggle } from 'src/components/atoms/toggle';
 import { Input } from 'src/components/atoms/input/input';
 import { CreatedModal } from '../created/created-modal';
-import { AlertModal } from 'src/components/organisms/alert-modal';
 import {
   resetCreatedQuestion,
   resetQuestions,
   setAddQuestion,
+  setQuestions,
   setChoices,
   setCreatedQuestions,
   setQuestionProjectIds,
@@ -25,22 +25,24 @@ import { CreateQuestionPayload } from 'src/core/types';
 import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';
 import { useScreenerQuestionsShared } from '../screener-questions.shared';
 import css from './screener-modal.module.scss';
+import { ReviewModal } from '../../final-review/review-modal';
 
 export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onDone, onOpen }) => {
   const { navigate, dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
     useScreenerQuestionsShared();
   const [openCreatedModal, setOpenCreatedModal] = useState(false);
-  const [openAlertModal, setOpenAlertModal] = useState(false);
-
+  const [openReviewModal, setOpenReviewModal] = useState(false);
+  const [inEdit, setInEdit] = useState(false);
+  
   function submitSkip() {
     onClose();
-    setOpenAlertModal(true);
+    setOpenReviewModal(true);
   }
 
   function done() {
     store.dispatch(resetCreatedQuestion());
     store.dispatch(resetCreatePostWizard());
-    setOpenAlertModal(false);
+    setOpenReviewModal(false);
     onDone();
     navigate({ to: '/jobs' });
   }
@@ -57,7 +59,14 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
             question: question.question,
             required: question.required,
           };
-    dispatch(setCreatedQuestions([...formState.created_questions, question]));
+          if(inEdit){
+            const newQuestions = formState.created_questions.filter(item=>item.id === question.id);
+            dispatch(setCreatedQuestions([...newQuestions,question]));
+            
+          }else{
+            dispatch(setCreatedQuestions([...formState.created_questions, question]));
+          }
+          // TODO check with Ehsan if need to update question call updateQuestion instead of createQuestion
     createQuestion(payloadQuestion, formState.question_project_id.project_id).then((resp) => {
       dispatch(setQuestionProjectIds({ ...formState.question_project_id, question_id: resp.id }));
       store.dispatch(resetQuestions());
@@ -168,18 +177,31 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
           setOpenCreatedModal(false);
           onOpen();
         }}
+        onEdit={(selectedQuestion)=>{
+          setInEdit(true);
+          dispatch(setQuestions(selectedQuestion.question))
+          dispatch(setQuestionType(selectedQuestion.type))
+          dispatch(setRequiredQuestion(selectedQuestion.required))
+          dispatch(setChoices(selectedQuestion.options))
+          setOpenCreatedModal(false);
+          onOpen();
+        }}
         onDone={onDone}
       />
-      <AlertModal
-        open={openAlertModal}
-        onClose={() => {
-          setOpenAlertModal(false);
-          done();
+      <ReviewModal
+        open={openReviewModal}
+        onClose={()=>{
+          setOpenReviewModal(false);
+          // done();
         }}
-        title="Job created"
-        subtitle="Your job is posted and now visible for users to apply."
-        buttons={[{ children: 'Back to jobs', onClick: done }]}
-        contentClassName={css.success}
+        onBack={() => {
+          setOpenReviewModal(false);
+          // onOpen();
+        }}
+        onOpen={()=>{
+          console.log("open modal")
+        }}
+        onDone={onDone}
       />
     </>
   );

@@ -58,7 +58,7 @@
     align-items: center;
     justify-content: flex-end;
     gap: 1rem;
-    margin: 0 1rem 1rem;
+    margin: 0 0.5rem 0.5rem;
 
     &__icon {
       cursor: pointer;
@@ -83,4 +83,9 @@
     font-size: 16px;
     font-weight: normal;
   }
+}
+.operation{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

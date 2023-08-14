@@ -319,6 +319,14 @@ export const routes: Route[] = [
                 <m.ScreenerQuestions />
               )),
           },
+          {
+            path: 'final-review',
+            loader: () => getJobCategories(),
+            element: () =>
+              import('src/pages/job-create/final-review/review.container').then((m) => (
+                <m.FinalReview />
+              )),
+          },
         ],
       },
       {

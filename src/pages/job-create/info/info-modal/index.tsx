@@ -143,7 +143,6 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
                     value={formState.payment_type}
                     onChange={(value) => {
                       dispatch(setPostPaymentType(value));
-                      dispatch(setPostPaymentScheme('FIXED'));
                     }}
                     label="Payment type"
                     list={PROJECT_PAYMENT_TYPE}
@@ -151,7 +150,9 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
                   <RadioGroup
                     name="PaymentScheme"
                     value={formState.payment_scheme}
-                    onChange={console.log}
+                    onChange={(value) => {
+                      dispatch(setPostPaymentScheme(value));
+                    }}
                     label="Payment terms"
                     list={PROJECT_PAYMENT_SCHEME}
                   />

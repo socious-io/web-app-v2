@@ -3,27 +3,26 @@ import { useNavigate } from '@tanstack/react-location';
 import store from 'src/store/store';
 import { WebModal } from 'src/components/templates/web-modal';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { AlertModal } from 'src/components/organisms/alert-modal';
 import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { CreatedModalProps } from './created-modal.types';
 import { useCreatedShared } from '../created.shared';
 import css from './created-modal.module.scss';
+import { ReviewModal } from 'src/pages/job-create/final-review/review-modal';
 
-export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBack, onDone }) => {
+export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose,onEdit, onBack, onDone }) => {
   const navigate = useNavigate();
   const { questions, onRemoveCreatedQuestion } = useCreatedShared();
-  const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
 
   function submit() {
     onClose();
-    setOpenAlertModal(true);
+    setOpenReviewModal(true);
   }
 
   function done() {
     store.dispatch(resetCreatedQuestion());
     store.dispatch(resetCreatePostWizard());
-    setOpenAlertModal(false);
     onDone();
     navigate({ to: '/jobs' });
   }
@@ -57,12 +56,21 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBac
                   </span>
                   {question.question}
                 </div>
+                <div className={css.operation}>
                 <div className={css.edit}>
                   <img
                     className={css.edit__icon}
                     src="/icons/trash-bin.svg"
                     onClick={() => onRemoveCreatedQuestion(question)}
                   />
+                </div>
+                <div className={css.edit}>
+                  <img
+                    className={css.edit__icon}
+                    src="/icons/edit.svg"
+                    onClick={() => onEdit(question)}
+                  />
+                </div>
                 </div>
               </Accordion>
             ))}
@@ -73,16 +81,20 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBac
           </div>
         </>
       </WebModal>
-      <AlertModal
-        open={openAlertModal}
-        onClose={() => {
-          setOpenAlertModal(false);
-          done();
+      <ReviewModal
+        open={openReviewModal}
+        onClose={()=>{
+          setOpenReviewModal(false);
+          // done();
         }}
-        title="Job created"
-        subtitle="Your job is posted and now visible for users to apply."
-        buttons={[{ children: 'Back to jobs', onClick: done }]}
-        contentClassName={css.success}
+        onBack={() => {
+          setOpenReviewModal(false);
+          // onOpen();
+        }}
+        onOpen={()=>{
+          console.log("open modal")
+        }}
+        onDone={onDone}
       />
     </>
   );

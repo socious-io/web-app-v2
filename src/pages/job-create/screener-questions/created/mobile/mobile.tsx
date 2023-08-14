@@ -14,11 +14,11 @@ export const Mobile: React.FC = () => {
   const { questions, onRemoveCreatedQuestion } = useCreatedShared();
 
   function submit() {
-    dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-      navigate({ to: `/m/jobs/created/${resolver.params.id}` });
+    // dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
+      navigate({ to: '../final-review' });
       store.dispatch(resetCreatedQuestion());
       store.dispatch(resetCreatePostWizard());
-    });
+    // });
   }
 
   return (

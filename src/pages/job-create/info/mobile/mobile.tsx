@@ -131,7 +131,6 @@ export const Mobile = (): JSX.Element => {
                 value={formState.payment_type}
                 onChange={(value) => {
                   dispatch(setPostPaymentType(value));
-                  dispatch(setPostPaymentScheme('FIXED'));
                 }}
                 label="Payment type"
                 list={PROJECT_PAYMENT_TYPE}
@@ -139,7 +138,9 @@ export const Mobile = (): JSX.Element => {
               <RadioGroup
                 name="PaymentScheme"
                 value={formState.payment_scheme}
-                onChange={console.log}
+                onChange={(value) => {
+                  dispatch(setPostPaymentScheme(value));
+                }}
                 label="Payment terms"
                 list={PROJECT_PAYMENT_SCHEME}
               />
