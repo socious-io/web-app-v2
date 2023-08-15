@@ -11,6 +11,7 @@ import { printWhen } from 'src/core/utils';
 import { resumeInitialState } from '../apply.services';
 import { useApplyShared } from '../apply.shared';
 import css from './apply-modal.module.scss';
+import {useState} from "react";
 
 export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClose, data }) => {
   const {
@@ -23,8 +24,13 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
     onSubmit,
     createTextQuestion,
     createRadioQuestion,
+    getFormValues
   } = useApplyShared(data);
-
+  const [showReview,setShowReview] = useState(false)
+  const onReview = ()=>{
+    setShowReview(true);
+    onClose()
+  }
   const renderQuestions = () => {
     return (
       <div className={css.questionsContainer}>
@@ -71,46 +77,82 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
     onClose();
     form.reset();
   }
+  function onReviewModalClose() {
+    setShowReview(false);
+    form.reset();
+  }
 
   return (
-    <WebModal
-      header="Apply"
-      open={open}
-      onClose={onModalClose}
-      buttons={[{ children: ' Submit application', disabled: !form.isValid, onClick: onSubmit }]}
-    >
-      <div className={css.main}>
-        <Divider>
-          <ProfileView
-            img={jobDetail.identity_meta?.image}
-            type={jobDetail.identity_type}
-            name={jobDetail.identity_meta.name}
-            username={jobDetail.identity_meta.shortname}
-            location={`${jobDetail.identity_meta.city}, ${jobDetail.identity_meta.country}`}
-          />
-          <div className={css.jobTitle}>{jobDetail.title}</div>
-          <ExpandableText text={jobDetail.description} isMarkdown />
-        </Divider>
-        <Divider divider="line" title="Cover letter">
-          <Textarea register={form} name="cover_letter" placeholder="write a message..." label="Message" />
-        </Divider>
-        <Divider divider="line" title="Resume">
-          {resume.name ? uploadedResume : uploadResumeBtn}
-        </Divider>
-        <Divider divider="line" title="Link">
-          <div className={css.linkContainer}>
-            <Input register={form} name="cv_name" optional placeholder="Link name" label="Link name" />
-            <Input register={form} name="cv_link" optional placeholder="Enter a URL" label="Link URL" />
-          </div>
-        </Divider>
-        {printWhen(renderQuestions(), !!questions.length)}
-        <Divider divider="line" title="Contact info">
-          <div className={css.contactContainer}>
-            <div>Share contact information with Organization?</div>
-            <Checkbox label="" id="" defaultChecked={false} />
-          </div>
-        </Divider>
-      </div>
-    </WebModal>
+      <>
+      <WebModal
+        header="Apply"
+        open={open}
+        onClose={onModalClose}
+        buttons={[{ children: 'Review application', disabled: !form.isValid, onClick: onReview }]}
+      >
+        <div className={css.main}>
+          <Divider>
+            <ProfileView
+              img={jobDetail.identity_meta?.image}
+              type={jobDetail.identity_type}
+              name={jobDetail.identity_meta.name}
+              username={jobDetail.identity_meta.shortname}
+              location={`${jobDetail.identity_meta.city}, ${jobDetail.identity_meta.country}`}
+            />
+            <div className={css.jobTitle}>{jobDetail.title}</div>
+            <ExpandableText text={jobDetail.description} isMarkdown />
+          </Divider>
+          <Divider divider="line" title="Cover letter">
+            <Textarea register={form} name="cover_letter" placeholder="write a message..." label="Message" />
+          </Divider>
+          <Divider divider="line" title="Resume">
+            {resume.name ? uploadedResume : uploadResumeBtn}
+          </Divider>
+          <Divider divider="line" title="Link">
+            <div className={css.linkContainer}>
+              <Input register={form} name="cv_name" optional placeholder="Link name" label="Link name" />
+              <Input register={form} name="cv_link" optional placeholder="Enter a URL" label="Link URL" />
+            </div>
+          </Divider>
+          {printWhen(renderQuestions(), !!questions.length)}
+          <Divider divider="line" title="Contact info">
+            <div className={css.contactContainer}>
+              <div>Share contact information with Organization?</div>
+              <Checkbox label="" id="" defaultChecked={false} />
+            </div>
+          </Divider>
+        </div>
+      </WebModal>
+      <WebModal
+        header="Review Application"
+        open={showReview}
+        onClose={onReviewModalClose}
+        buttons={[{ children: 'Submit application', onClick: onSubmit }]}
+      >
+        <div className={css.main}>
+          <Divider>
+            <ProfileView
+              img={jobDetail.identity_meta?.image}
+              type={jobDetail.identity_type}
+              name={jobDetail.identity_meta.name}
+              username={jobDetail.identity_meta.shortname}
+              location={`${jobDetail.identity_meta.city}, ${jobDetail.identity_meta.country}`}
+            />
+            <div className={css.jobTitle}>{jobDetail.title}</div>
+            <ExpandableText text={jobDetail.description} isMarkdown />
+          </Divider>
+          <Divider divider="line" title="Cover letter">
+            {getFormValues().cover_letter ? <ExpandableText text={getFormValues().cover_letter} isMarkdown />: <></>}
+          </Divider>
+          {printWhen(renderQuestions(), !!questions.length)}
+          <Divider divider="line" title="Contact info">
+            <div className={css.contactContainer}>
+              Your contact information (email, phone & address) will be shared with Organization.
+            </div>
+          </Divider>
+        </div>
+      </WebModal>
+      </>
+
   );
 };
