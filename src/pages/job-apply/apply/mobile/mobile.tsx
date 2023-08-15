@@ -10,8 +10,11 @@ import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { printWhen } from 'src/core/utils';
 import { useApplyShared } from '../apply.shared';
 import css from './mobile.module.scss';
+import {useState} from "react";
 
 export const Mobile = (): JSX.Element => {
+  const [showReview,setShowReview] = useState(false)
+  const [showConfirmation,setShowConfirmation] = useState(false)
   const {
     questions,
     resume,
@@ -23,8 +26,17 @@ export const Mobile = (): JSX.Element => {
     onSubmit,
     createTextQuestion,
     createRadioQuestion,
+    getFormValues,
+    navigateToJobDetail
   } = useApplyShared();
-
+  const onReview = () => {
+    setShowReview(true);
+  }
+  const submit = () => {
+    onSubmit().then(
+        ()=>{setShowConfirmation(true)}
+    )
+  }
   const renderQuestions = () => {
     return (
       <div className={css.questionsContainer}>
@@ -66,47 +78,101 @@ export const Mobile = (): JSX.Element => {
       </Button>
     </>
   );
-
-  return (
-    <div className={css.container}>
-      <Header onBack={() => history.back()} height="var(--safe-area)" title="Apply" />
-      <div className={css.main}>
-        <Divider>
-          <ProfileView
-            img={jobDetail.identity_meta?.image}
-            type={jobDetail.identity_type}
-            name={jobDetail.identity_meta.name}
-            username={jobDetail.identity_meta.shortname}
-            location={location}
-          />
-          <div className={css.jobTitle}>{jobDetail.title}</div>
-          <ExpandableText text={jobDetail.description} isMarkdown />
-        </Divider>
-        <Divider divider="line" title="Cover letter">
-          <Textarea register={form} name="cover_letter" placeholder="write a message..." label="Message" />
-        </Divider>
-        <Divider divider="line" title="Resume">
-          {resume.name ? uploadedResume : uploadResumeBtn}
-        </Divider>
-        <Divider divider="line" title="Link">
-          <div className={css.linkContainer}>
-            <Input register={form} name="cv_name" optional placeholder="Link name" label="Link name" />
-            <Input register={form} name="cv_link" optional placeholder="Enter a URL" label="Link URL" />
-          </div>
-        </Divider>
-        {printWhen(renderQuestions(), !!questions.length)}
-        <Divider divider="line" title="Contact info">
-          <div className={css.contactContainer}>
-            <div>Share contact information with Organization?</div>
-            <Checkbox label="" id="" defaultChecked={false} />
-          </div>
-        </Divider>
+  const confirmationJSX = () => (
+      <div className={css.confirmContainer}>
+        <div className={css.confirmMain}>
+          <div className={css.title}>Application sent!</div>
+          <p className={css.message}>
+            <span className={css.companyName}>{jobDetail.identity_meta.name}</span> has received your
+            application to review. Wait for them to respond to you.
+          </p>
+        </div>
         <div className={css.btnContainer}>
-          <Button disabled={!form.isValid} onClick={onSubmit}>
-            Submit application
+          <Button onClick={navigateToJobDetail}>
+            Back to jobs
           </Button>
         </div>
       </div>
-    </div>
-  );
+  )
+  const reviewJSX = () => (
+      <div className={css.container}>
+        <Header onBack={() => setShowReview(false)} height="var(--safe-area)" title="Review Application" />
+        <div className={css.main}>
+          <Divider>
+            <ProfileView
+                img={jobDetail.identity_meta?.image}
+                type={jobDetail.identity_type}
+                name={jobDetail.identity_meta.name}
+                username={jobDetail.identity_meta.shortname}
+                location={location}
+            />
+            <div className={css.jobTitle}>{jobDetail.title}</div>
+            <ExpandableText text={jobDetail.description} isMarkdown />
+          </Divider>
+          <Divider divider="line" title="Cover letter">
+            {getFormValues().cover_letter ? <ExpandableText text={getFormValues().cover_letter} isMarkdown />: <></>}
+          </Divider>
+          {printWhen(renderQuestions(), !!questions.length)}
+          <Divider divider="line" title="Contact info">
+            <div className={css.contactContainer}>
+              Your contact information (email, phone & address) will be shared with Organization.
+            </div>
+          </Divider>
+          <div className={css.btnContainer}>
+            <Button onClick={submit}>
+              Submit application
+            </Button>
+          </div>
+        </div>
+      </div>
+  )
+  const applyJSX = () => (
+      <div className={css.container}>
+        <Header onBack={() => history.back()} height="var(--safe-area)" title="Apply" />
+        <div className={css.main}>
+          <Divider>
+            <ProfileView
+                img={jobDetail.identity_meta?.image}
+                type={jobDetail.identity_type}
+                name={jobDetail.identity_meta.name}
+                username={jobDetail.identity_meta.shortname}
+                location={location}
+            />
+            <div className={css.jobTitle}>{jobDetail.title}</div>
+            <ExpandableText text={jobDetail.description} isMarkdown />
+          </Divider>
+          <Divider divider="line" title="Cover letter">
+            <Textarea register={form} name="cover_letter" placeholder="write a message..." label="Message" />
+          </Divider>
+          <Divider divider="line" title="Resume">
+            {resume.name ? uploadedResume : uploadResumeBtn}
+          </Divider>
+          <Divider divider="line" title="Link">
+            <div className={css.linkContainer}>
+              <Input register={form} name="cv_name" optional placeholder="Link name" label="Link name" />
+              <Input register={form} name="cv_link" optional placeholder="Enter a URL" label="Link URL" />
+            </div>
+          </Divider>
+          {printWhen(renderQuestions(), !!questions.length)}
+          <Divider divider="line" title="Contact info">
+            <div className={css.contactContainer}>
+              <div>Share contact information with Organization?</div>
+              <Checkbox label="" id="" defaultChecked={false} />
+            </div>
+          </Divider>
+          <div className={css.btnContainer}>
+            <Button disabled={!form.isValid} onClick={onReview}>
+              Review application
+            </Button>
+          </div>
+        </div>
+      </div>
+  )
+  return (
+      <>
+        {printWhen(confirmationJSX(),showConfirmation)}
+        {printWhen(reviewJSX(),showReview)}
+        {printWhen(applyJSX(),!showReview)}
+      </>
+  )
 };

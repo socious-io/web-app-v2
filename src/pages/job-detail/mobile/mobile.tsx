@@ -21,12 +21,20 @@ export const Mobile = (): JSX.Element => {
   function onApply() {
     navigate({ to: './apply' });
   }
+  function onSaveJob() {
+      console.log("save job")
+  }
 
   const buttonJSX = (
     <AuthGuard>
-      <Button disabled={job.applied} onClick={onApply}>
-        Apply now
-      </Button>
+        <div className={css.btnContainer}>
+          <Button disabled={job.applied} onClick={onApply}>
+            Apply now
+          </Button>
+          <Button color="white" onClick={onSaveJob}>
+            Save job
+          </Button>
+        </div>
     </AuthGuard>
   );
 

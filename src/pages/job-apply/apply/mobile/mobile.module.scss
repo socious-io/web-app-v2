@@ -64,3 +64,28 @@
     align-items: center;
   }
 }
+.title {
+  color: var(--color-primary-01);
+  font-family: 'Hahmlet';
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--font-size-l);
+}
+
+.message {
+  line-height: 150%;
+}
+.confirmMain{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  gap: 0.5rem;
+}
+.confirmContainer{
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 8rem;
+}

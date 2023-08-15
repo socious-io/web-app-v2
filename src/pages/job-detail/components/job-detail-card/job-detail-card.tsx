@@ -20,11 +20,20 @@ export function JobDetailCard(props: JobDetailCardProps) {
   function onApply() {
     setOpenApplyModal(true);
   }
+  function onSaveJob() {
+   console.log("save job")
+  }
 
   const buttonJSX = (
-    <Button disabled={props.job.applied} onClick={onApply}>
-      Apply now
-    </Button>
+      <>
+        <Button disabled={props.job.applied} onClick={onApply}>
+          Apply now
+        </Button>
+        <Button color="white" onClick={onSaveJob}>
+          Save job
+        </Button>
+      </>
+
   );
 
   const applicationSubmittedJSX = (
@@ -69,7 +78,7 @@ export function JobDetailCard(props: JobDetailCardProps) {
   );
 
   return (
-    <Card className={css.card} padding={0}>
+    <Card padding={0}>
       <ApplyModal data={props} open={openApplyModal} onClose={() => setOpenApplyModal(false)} />
       {printWhen(applicationSubmittedJSX, props.job.applied && props.userType === 'users')}
       <Divider>
@@ -88,6 +97,7 @@ export function JobDetailCard(props: JobDetailCardProps) {
           </AuthGuard>
         </div>
       </Divider>
+        <div className={css.card}>
       {printWhen(socialCausesJSX, !!props.job.causes_tags)}
       {printWhen(jobCategoryJSX, !!props.job.job_category?.name)}
       <Divider title="Job description">
@@ -96,6 +106,7 @@ export function JobDetailCard(props: JobDetailCardProps) {
       {printWhen(skillsJSX, !!props.job.skills)}
       {printWhen(screeningQuestionsJSX, props.screeningQuestions.length > 0)}
       {printWhen(aboutOrgJSX, !!props.job.identity_meta?.mission)}
+        </div>
     </Card>
   );
 }

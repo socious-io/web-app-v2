@@ -42,7 +42,6 @@ export const useApplyShared = (data?: useApplySharedProps) => {
       return shortname;
     }
   }
-
   const location = `${jobDetail.identity_meta.city}, ${getCountryName(
     jobDetail.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined
   )}`;
@@ -67,12 +66,14 @@ export const useApplyShared = (data?: useApplySharedProps) => {
   function onSubmit() {
     const generatedPayload = generatePayload(form);
     if (resume.file) {
-      submit(jobDetail.id, resume.file, generatedPayload).then(navigateToJobDetail);
+      return submit(jobDetail.id, resume.file, generatedPayload);
     } else {
-      applyApplication(jobDetail.id, generatedPayload).then(navigateToJobDetail);
+      return applyApplication(jobDetail.id, generatedPayload);
     }
   }
-
+  function getFormValues():any{
+    return generatePayload(form)
+  }
   function createTextQuestion(question: QuestionsRes['questions'][0], i: number): JSX.Element {
     return (
       <div>
@@ -113,5 +114,7 @@ export const useApplyShared = (data?: useApplySharedProps) => {
     location,
     createTextQuestion,
     createRadioQuestion,
+    getFormValues,
+    navigateToJobDetail
   };
 };
