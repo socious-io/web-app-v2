@@ -400,6 +400,8 @@ export type OfferPayload = {
   total_hours: string;
   payment_mode: string;
   crypto_currency_address?: string;
+  job?: string;
+  weeklyLimit?: string;
 };
 
 export type CreatePostPayload = {

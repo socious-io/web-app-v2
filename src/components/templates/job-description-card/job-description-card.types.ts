@@ -8,4 +8,5 @@ export interface JobDescriptionCardProps extends ProfileViewProps {
   total_mission: number;
   unit?: string;
   containerClassName?: string;
+  payment_scheme?: string;
 }

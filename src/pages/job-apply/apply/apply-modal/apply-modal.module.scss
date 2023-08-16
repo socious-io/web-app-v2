@@ -56,3 +56,25 @@
     cursor: pointer;
   }
 }
+.title {
+  color: var(--color-primary-01);
+  font-family: 'Hahmlet';
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--font-size-l);
+  padding: 1rem 0;
+}
+
+.message {
+  line-height: 150%;
+}
+.companyName{
+  font-weight: bolder;
+}
+.confirmationMain{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}

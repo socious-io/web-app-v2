@@ -10,6 +10,7 @@ import { Sticky } from 'src/components/templates/sticky';
 import { printWhen } from 'src/core/utils';
 import { usePaymentShared } from '../payment.shared';
 import css from './mobile.module.scss';
+import {HourlySubmissionsCard} from "../../../components/templates/hourly-submissions-card";
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -75,7 +76,9 @@ export const Mobile = (): JSX.Element => {
             location={`${city}, ${country}`}
             total_mission={assignment_total}
             unit={unit}
+            payment_scheme={project?.payment_scheme}
           />
+            {printWhen(<HourlySubmissionsCard title="Hourly Submissions" start_date={start_date} end_date="Present" submissions={[]}/>,project.payment_scheme === "HOURLY")}
           <div className={css['container__spacer']}>
             <PaymentSummaryCard
               title="Payment summary"

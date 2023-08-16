@@ -23,7 +23,7 @@ import css from './mobile.module.scss';
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const { applicantDetail } = (useMatch().ownData as Resolver) || {};
-  const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '' });
+  const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '',weeklyLimit:'',job:'' });
   const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
   const [paymentScheme, setPaymentScheme] = useState(applicantDetail?.project?.payment_scheme || 'FIXED');
   const isPaidType = applicantDetail?.project?.payment_type === 'PAID';
@@ -52,7 +52,7 @@ export const Mobile = (): JSX.Element => {
   return (
     <div className={css.container}>
       <Header onBack={() => navigate({ to: '..' })} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
-      <div className={css.sentTo}>An offer will be sent to {applicantDetail.user.name}.</div>
+      <div className={css.sentTo}>An offer will be sent to {applicantDetail?.user?.first_name || ''}.</div>
       <div className={css.form}>
         <RadioGroup
           name="paymentType"
@@ -117,6 +117,20 @@ export const Mobile = (): JSX.Element => {
           placeholder="Write message"
           onKeyUp={(e) => setInitialForm({ ...initialForm, message: e.currentTarget.value })}
         />
+        {printWhen(
+            <Input register={form} name="weeklyLimit" label="Weekly limit" placeholder="15 hrs/week" />,
+            paymentScheme === 'HOURLY'
+        )}
+        {printWhen(
+            <Textarea
+                register={form}
+                name="job"
+                label="Job"
+                placeholder="Write job"
+                onKeyUp={(e) => setInitialForm({ ...initialForm, job: e.currentTarget.value })}
+            />,
+            paymentScheme === 'HOURLY'
+        )}
       </div>
       <div className={css.btnContainer}>
         <Button onClick={onSubmit} disabled={formIsInvalid}>

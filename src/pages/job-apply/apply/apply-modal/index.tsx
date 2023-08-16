@@ -24,12 +24,22 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
     onSubmit,
     createTextQuestion,
     createRadioQuestion,
-    getFormValues
+    getFormValues,
+    navigateToJobDetail
   } = useApplyShared(data);
   const [showReview,setShowReview] = useState(false)
+  const [showConfirmation,setShowConfirmation] = useState(false)
   const onReview = ()=>{
     setShowReview(true);
     onClose()
+  }
+  const submit = () => {
+    onSubmit().then(
+        ()=>{
+          setShowReview(false)
+          setShowConfirmation(true);
+        }
+    )
   }
   const renderQuestions = () => {
     return (
@@ -81,6 +91,10 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
     setShowReview(false);
     form.reset();
   }
+  function onConfirmModalClose() {
+    setShowConfirmation(false);
+    form.reset();
+  }
 
   return (
       <>
@@ -127,7 +141,7 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
         header="Review Application"
         open={showReview}
         onClose={onReviewModalClose}
-        buttons={[{ children: 'Submit application', onClick: onSubmit }]}
+        buttons={[{ children: 'Submit application', onClick: submit }]}
       >
         <div className={css.main}>
           <Divider>
@@ -151,6 +165,20 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
             </div>
           </Divider>
         </div>
+      </WebModal>
+      <WebModal
+        header="Confirmation"
+        open={showConfirmation}
+        onClose={onConfirmModalClose}
+        buttons={[{ children: 'Back to jobs', onClick: navigateToJobDetail }]}
+      >
+          <div className={css.confirmationMain}>
+            <div className={css.title}>Application sent!</div>
+            <p className={css.message}>
+              <span className={css.companyName}>{jobDetail.identity_meta.name}</span> has received your
+              application to review. Wait for them to respond to you.
+            </p>
+          </div>
       </WebModal>
       </>
 

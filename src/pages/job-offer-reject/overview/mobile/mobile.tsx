@@ -46,7 +46,7 @@ export const Mobile = (): JSX.Element => {
         <Applicants
           toReviewList={updatedApplicantList.reviewList}
           declinedList={updatedApplicantList.declinedList}
-          onOfferClick={(id) => navigate({ to: `./${id}/offer` })}
+          onOfferClick={(id) => navigate({ to: `./${id}` })}
           onRejectClick={onRejectClick}
         />
       ),

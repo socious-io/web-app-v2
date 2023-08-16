@@ -6,6 +6,8 @@ import { FormModel } from '../../../core/form/useForm/useForm.types';
 type InitialFormType = {
   estimatedTotalHours: string;
   message: string;
+  weeklyLimit:string
+  job:string
 };
 
 export const formModel = (isPaid: boolean, isFiat: boolean, initialForm: InitialFormType): FormModel => {
@@ -18,6 +20,8 @@ export const formModel = (isPaid: boolean, isFiat: boolean, initialForm: Initial
     assignmentTotal: { initialValue: '', validators: assignTotalValidators },
     estimatedTotalHours: { initialValue: initialForm.estimatedTotalHours || '', validators: [required(), patternNumber] },
     message: { initialValue: initialForm.message || '', validators: [noEmptyString()] },
+    weeklyLimit: { initialValue: '' },
+    job: { initialValue: '' },
   };
 };
 
