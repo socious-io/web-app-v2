@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 .DS_Store
 .env
+
+cypress/videos/
+cypress/screenshots/
+cypress.env.json
