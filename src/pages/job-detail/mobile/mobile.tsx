@@ -1,25 +1,42 @@
-import css from './mobile.module.scss';
-import { Button } from '../../../components/atoms/button/button';
-import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
-import { Categories } from '../../../components/atoms/categories/categories';
-import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
-import { getCategories } from '../job-detail.services';
-import { Divider } from '../../../components/templates/divider/divider';
-import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors';
-import { printWhen } from '../../../core/utils';
-import { Header } from 'src/components/atoms/header/header';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { useJobDetailShared } from '../job-detail.shared';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
-import { AuthGuard } from 'src/core/auth-guard/auth-guard';
-import { useAuth } from 'src/hooks/use-auth';
+import css from './mobile.module.scss'
+import { Button } from '../../../components/atoms/button/button'
+import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable'
+import { Categories } from '../../../components/atoms/categories/categories'
+import { ProfileView } from '../../../components/molecules/profile-view/profile-view'
+import { getCategories } from '../job-detail.services'
+import { Divider } from '../../../components/templates/divider/divider'
+import {
+  skillsToCategory,
+  socialCausesToCategory
+} from '../../../core/adaptors'
+import { printWhen } from '../../../core/utils'
+import { Header } from 'src/components/atoms/header/header'
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile'
+import { useJobDetailShared } from '../job-detail.shared'
+import { ExpandableText } from 'src/components/atoms/expandable-text'
+import { AuthGuard } from 'src/core/auth-guard/auth-guard'
+import { useAuth } from 'src/hooks/use-auth'
+import { useEffect } from 'react'
+import { getJobStructuresData } from '../job-details.jobStructuredData'
 
 export const Mobile = (): JSX.Element => {
-  const { navigate, job, identity, location, screeningQuestions } = useJobDetailShared();
-  const { isLoggedIn } = useAuth();
+  const { navigate, job, identity, location, screeningQuestions } =
+    useJobDetailShared()
+  const { isLoggedIn } = useAuth()
+
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.setAttribute('type', 'application/ld+json')
+    script.textContent = getJobStructuresData(job)
+    document.head.appendChild(script)
+
+    return () => {
+      document.head.removeChild(script)
+    }
+  }, [])
 
   function onApply() {
-    navigate({ to: './apply' });
+    navigate({ to: './apply' })
   }
 
   const buttonJSX = (
@@ -28,50 +45,58 @@ export const Mobile = (): JSX.Element => {
         Apply now
       </Button>
     </AuthGuard>
-  );
+  )
 
   const applicationSubmittedJSX = (
     <div className={css.appSubmitted}>
       <img src="/icons/document-check-black.svg" />
       <div>Application submitted</div>
     </div>
-  );
+  )
 
   const skillsJSX = (
     <Divider title="Skills">
       <CategoriesClickable list={skillsToCategory(job.skills)} />
     </Divider>
-  );
+  )
 
   const socialCausesJSX = (
     <Divider title="Social cause">
       <CategoriesClickable list={socialCausesToCategory(job.causes_tags)} />
     </Divider>
-  );
+  )
 
-  const jobCategoryJSX = <Divider title="Job Category">{job.job_category?.name || ''}</Divider>;
+  const jobCategoryJSX = (
+    <Divider title="Job Category">{job.job_category?.name || ''}</Divider>
+  )
 
   const screeningQuestionsJSX = (
     <Divider title="Screening question">
       <ul className={css.questions}>
         {screeningQuestions.map((q) => {
-          return <li className={css.questionItem}>{q.question}</li>;
+          return <li className={css.questionItem}>{q.question}</li>
         })}
       </ul>
     </Divider>
-  );
+  )
 
   const aboutOrgJSX = (
     <Divider title="About the organization">
       <ExpandableText text={job.identity_meta.mission} />
     </Divider>
-  );
+  )
 
   return (
     <TopFixedMobile containsMenu>
-      <Header title={job.title || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
+      <Header
+        title={job.title || 'Job detail'}
+        onBack={() => navigate({ to: '/jobs' })}
+      />
       <div>
-        {printWhen(applicationSubmittedJSX, job.applied && identity?.type === 'users')}
+        {printWhen(
+          applicationSubmittedJSX,
+          job.applied && identity?.type === 'users'
+        )}
         <Divider>
           <ProfileView
             name={job.identity_meta.name}
@@ -94,5 +119,5 @@ export const Mobile = (): JSX.Element => {
         {printWhen(aboutOrgJSX, !!job.identity_meta?.mission)}
       </div>
     </TopFixedMobile>
-  );
-};
+  )
+}
