@@ -5,6 +5,8 @@ export const APPLICANT_STATUS = {
   WITHRAWN: 'WITHDRAWN',
   APPROVED: 'APPROVED',
   HIRED: 'HIRED',
+  CONFIRMED: 'CONFIRMED',
+  COMPLETED: 'COMPLETED',
 };
 
 export const APPLICANT_STATUS_DICT = {
@@ -13,6 +15,8 @@ export const APPLICANT_STATUS_DICT = {
   REJECTED: 'REJECTED',
   WITHRAWN: 'WITHDRAWN',
   APPROVED: 'Waiting confirmation',
+  CONFIRMED: 'Job confirmed',
+  COMPLETED: 'Job completed',
   HIRED: 'HIRED',
 };
 

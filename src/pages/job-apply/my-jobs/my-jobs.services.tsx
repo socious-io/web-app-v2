@@ -57,6 +57,7 @@ function endedItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCard
     body: applicant.assigner.meta.name,
     img: applicant.assigner.meta.image,
     date: `Applied ${toRelativeTime(applicant.created_at)}`,
+    bottomRight: setStatusJSX("COMPLETED"),
   };
 }
 
@@ -71,6 +72,7 @@ function onGoingItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCa
     body: applicant.assigner.meta.name,
     img: applicant.assigner.meta.image,
     date: `Applied ${toRelativeTime(applicant.created_at)}`,
+    bottomRight: setStatusJSX("CONFIRMED"),
   };
 }
 
@@ -117,6 +119,28 @@ function setStatusJSX(status: keyof typeof APPLICANT_STATUS) {
     alignItems: 'center',
     fontSize: 'var(--font-size-s)',
   };
+  const confirmedStyles: CSSProperties = {
+    padding: '10px',
+    height: '1.5rem',
+    backgroundColor: 'var(--color-success-01)',
+    borderRadius: '25px',
+    display: 'flex',
+    color: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 'var(--font-size-s)',
+  };
+  const completedStyles: CSSProperties = {
+    padding: '10px',
+    height: '1.5rem',
+    backgroundColor: 'var(--color-gray-04)',
+    borderRadius: '25px',
+    display: 'flex',
+    color: '#333',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 'var(--font-size-s)',
+  };
 
   const defaultStyle: CSSProperties = {
     padding: '10px',
@@ -134,6 +158,10 @@ function setStatusJSX(status: keyof typeof APPLICANT_STATUS) {
       return <div style={pendingStyles}>{label}</div>;
     case 'APPROVED':
       return <div style={approvedStyles}>{label}</div>;
+    case 'CONFIRMED':
+      return <div style={confirmedStyles}>{label}</div>;
+    case 'COMPLETED':
+      return <div style={completedStyles}>{label}</div>;
     default:
       return <div style={defaultStyle}>{label}</div>;
   }
