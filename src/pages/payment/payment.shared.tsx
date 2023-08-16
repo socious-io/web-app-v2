@@ -63,7 +63,6 @@ export const usePaymentShared = () => {
     setProcess(true);
     store.dispatch(showSpinner());
     // const escrowAmount = parseInt(assignment_total.toString());
-
     try {
       // put escrow on smart contract
       const result = await Dapp.escrow({
@@ -83,14 +82,15 @@ export const usePaymentShared = () => {
         txHash: result.txHash,
         meta: result,
       });
+
+      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
+
     } catch (err: any) {
       dialog.alert({
         message: err?.response?.data.error || err?.message,
         title: 'Failed',
       });
     }
-
-    endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
 
     setProcess(false);
     store.dispatch(hideSpinner());

@@ -12,16 +12,16 @@ export const milkomeda: Chain = {
   },
   rpcUrls: {
     default: {
-      http: ['https://rpc-mainnet-algorand-rollup.a1.milkomeda.com'],
+      http: ['https://rpc-mainnet-cardano-evm.c1.milkomeda.com/'],
     },
     public: {
-      http: ['https://rpc-mainnet-algorand-rollup.a1.milkomeda.com'],
+      http: ['https://rpc-mainnet-cardano-evm.c1.milkomeda.com/'],
     },
   },
   blockExplorers: {
     default: {
       name: 'Explorer',
-      url: 'https://explorer-mainnet-algorand-rollup.a1.milkomeda.com',
+      url: 'https://explorer-mainnet-cardano-evm.c1.milkomeda.com/',
     },
   },
 };
@@ -57,7 +57,8 @@ export const dappConfig: DappConfig = {
   testnet: [
     {
       chain: milkomedaTestnet,
-      escrow: '0xa1a6fC85718a9e3C1486CC51F70A8CfD843E55D4',
+      escrow: '0xe8ac987C84d3D7A087c33Ff8B841301a1A1616Df',
+      logic: '0xcAEbEF2ba539fAd27440671033eE383dfEB44061',
       tokens: [
         {
           name: 'USDC',
@@ -81,12 +82,18 @@ export const dappConfig: DappConfig = {
   mainet: [
     {
       chain: milkomeda,
-      escrow: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
+      logic: '0x71F80cbF7de3894c4014284F3D241A825f2B0dF3',
+      escrow: '0xF2B4BCc3F1687288a8c0c06Ee720350CA09dfb23',
       tokens: [
         {
           name: 'USD Coin',
           symbol: 'USDC',
           address: '0xB44a9B6905aF7c801311e8F4E76932ee959c663C',
+        },
+        {
+          name: 'USD Coin',
+          symbol: 'mUSDC',
+          address: '0x063139a927FE02B3a6A5E0d5B48c8BeDFA7de954',
         },
         {
           name: 'Tether',

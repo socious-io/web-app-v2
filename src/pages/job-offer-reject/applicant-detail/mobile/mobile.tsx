@@ -39,8 +39,6 @@ export const Mobile = (): JSX.Element => {
     </Accordion>
   );
 
-  console.log({ applicantDetail });
-
   return (
     <div className={css.container}>
       <Header paddingTop="var(--safe-area)" title={applicantDetail.user.name} onBack={() => history.back()} />

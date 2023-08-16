@@ -2,4 +2,5 @@
 
 interface Window {
   ethereum: any;
+  evmproviders: any;
 }

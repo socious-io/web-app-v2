@@ -30,6 +30,10 @@ import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { getMissionsList, getSrtipeProfile } from 'src/pages/wallet/wallet.service';
 import { search } from 'src/pages/search/desktop/search.services';
+import store from 'src/store/store';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { getIdentities } from '../api';
+import { useEffect, useState } from 'react';
 
 export const routes: Route[] = [
   {
@@ -90,8 +94,6 @@ export const routes: Route[] = [
   },
   {
     loader: jobsPageLoader,
-    // pendingElement: 'loading...',
-    // pendingMs: 0,
     children: [
       {
         path: 'delete-profile',
@@ -480,7 +482,11 @@ export const routes: Route[] = [
               {
                 path: 'new/:id',
                 loader: async ({ params }) => {
-                  const createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [params.id] });
+                  const createdChats = await createChats({
+                    name: 'nameless',
+                    type: 'CHAT',
+                    participants: [params.id],
+                  });
                   return createdChats?.id;
                 },
                 element: () => import('../../pages/chat/new-chat/new-chat').then((m) => <m.NewChat />),
@@ -714,10 +720,20 @@ export const routes: Route[] = [
             },
           },
           {
-            element: <Navigate to="/jobs" />,
+            element: <DefaultRoute />,
           },
         ],
       },
     ],
   },
 ];
+
+function DefaultRoute(): JSX.Element {
+  const state = store.getState().identity.entities;
+
+  if (state.length) {
+    return <Navigate to="/jobs" />;
+  } else {
+    return <Navigate to="/intro" />;
+  }
+}

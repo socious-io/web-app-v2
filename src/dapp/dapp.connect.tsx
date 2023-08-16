@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Web3 from 'web3';
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum';
 import { Web3Modal, Web3Button } from '@web3modal/react';
-import { configureChains, createClient, WagmiConfig, useAccount } from 'wagmi';
-import { switchNetwork } from '@wagmi/core'
+import { configureChains, createClient, WagmiConfig, useAccount, Connector, Address, ConnectorData } from 'wagmi';
+import { switchNetwork } from '@wagmi/core';
 import { Chain } from 'wagmi/chains';
 import { config } from 'src/config';
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
+import FlintWallet from './wallets/flint';
 
 export const NETWORKS: Network[] = config.dappENV === 'mainet' ? dappConfig.mainet : dappConfig.testnet;
 
@@ -17,9 +18,11 @@ const projectId = dappConfig.walletConnetProjectId;
 
 const chainConf = configureChains(chains, [w3mProvider({ projectId })]);
 
+const connectors = [...w3mConnectors({ projectId, version: 2, chains }), new FlintWallet({ chains, options: {} })];
+
 const wagmiClient = createClient({
   autoConnect: true,
-  connectors: w3mConnectors({ projectId, version: 1, chains }),
+  connectors,
   provider: chainConf.provider,
 });
 
@@ -50,7 +53,7 @@ export const useWeb3 = () => {
       setProvider(provider);
       const chainId = await web3Instance.eth.getChainId();
       const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
-      if (!selectedNetwork) await switchNetwork({chainId: chains[0].id});
+      if (!selectedNetwork) await switchNetwork({ chainId: chains[0].id });
     }
 
     init();
@@ -66,7 +69,13 @@ export const Connect: React.FC = () => {
         <Web3Button />
       </WagmiConfig>
 
-      <Web3Modal projectId={dappConfig.walletConnetProjectId} ethereumClient={ethereumClient} />
+      <Web3Modal
+        walletImages={{
+          flint: '/icons/crypto/Flint.svg',
+        }}
+        projectId={dappConfig.walletConnetProjectId}
+        ethereumClient={ethereumClient}
+      />
     </>
   );
 };
