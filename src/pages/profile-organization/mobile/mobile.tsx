@@ -133,7 +133,7 @@ export const Mobile = (): JSX.Element => {
         </div>
         <div style={{ backgroundImage: `url(${organization.cover_image?.url})` }} className={css.cover}>
           <div className={css.avatarContainer}>
-            <Avatar img={organization.image?.url} size="8rem" type="users" />
+            <Avatar img={organization.image?.url} size="8rem" type="organizations" />
           </div>
         </div>
         <div className={css.menu}>

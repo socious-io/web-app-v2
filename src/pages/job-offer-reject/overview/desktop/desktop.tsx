@@ -110,7 +110,7 @@ export const Desktop = (): JSX.Element => {
                 key={tab.name}
                 onClick={() => {
                   setSelectedTab(tab.name);
-                  navigate({ to: '.', search: { tab: tab.name } });
+                  navigate({ to: '.', search: { tab: tab.name }, replace: true });
                 }}
                 className={selectedTab === tab.name ? css.selected : css.item}
               >
