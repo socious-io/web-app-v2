@@ -86,29 +86,25 @@
   gap: 0.5rem;
   cursor: pointer;
 }
-.hours{
-  margin: 1rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .status{
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+.agreement{
+  background-color: var(--color-off-white-01);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 16px;
+  .title{
+    color: var(--color-primary-01);
   }
-  .text{
-    line-height: 18px;
+  .subtitle{
+    color: var(--color-gray-01);
   }
-  .icon{
-    width: 18px;
-    height: 18px;
+  .submissions{
+    margin-top: 1rem;
   }
 }
-.view_more{
-  color: var(--color-primary-01);
-  text-decoration: underline green;
-  cursor: pointer;
-}
-.btn{
+.card{
   margin-top: 1rem;
+  .input{
+    padding-top: 0.7rem;
+    text-align: center;
+  }
 }

@@ -114,3 +114,35 @@
   gap: 0.5rem;
   cursor: pointer;
 }
+.hours{
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .hours_status{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .text{
+    line-height: 18px;
+  }
+  .icon{
+    width: 18px;
+    height: 18px;
+  }
+}
+.view_more{
+  color: var(--color-primary-01);
+  text-decoration: underline green;
+  cursor: pointer;
+}
+.hours_btn{
+  width: 100%;
+  margin-top: 1rem;
+  .btn_full{
+    width: 100%;
+    max-width: initial;
+  }
+}
+

@@ -458,6 +458,19 @@ export const routes: Route[] = [
               import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
           },
           {
+            path: "/d/jobs/applied/submitted-hours/:id",
+            loader: async ({ params }) => {
+              let media = { url: '' };
+              const mission = await endpoint.get.missions.mission_id(params.id);
+              const offer = await endpoint.get.offers.offer_id(mission.offer_id);
+              if (offer.applicant?.attachment) {
+                media = await endpoint.get.media['media_id'](offer.applicant.attachment);
+              }
+              return { mission, offer, media };
+            },
+            element: ()=> import('../../pages/submit-hours/submit-hours.container').then((m)=><m.SubmitHours/>)
+          },
+          {
             path: '/d/jobs/applied',
             loader: async () => {
               const requests = [

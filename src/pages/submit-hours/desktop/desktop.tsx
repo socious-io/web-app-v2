@@ -15,19 +15,16 @@ import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
-import { useCompleteMissionShared } from '../complete-mission.shared';
+import { useSubmittedHoursShared } from '../submit-hours.shared';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
-import {useState} from "react";
-import {SubmittedHoursModal} from "../../submit-hours/submitted-hours-modal";
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
-  const [openSubmitHoursModal,setOpenSubmitHoursModal] = useState(false)
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-  const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
+  const { offer, media, status, onCompleteMission, onStopMission } = useSubmittedHoursShared();
   const { isLoggedIn } = useAuth();
 
   const offeredMessageBoxJSX = (
@@ -77,12 +74,9 @@ export const Desktop = (): JSX.Element => {
       </Button>
     </div>
   );
-  const onSubmitHours = () => {
-    setOpenSubmitHoursModal(true);
-  }
   const hourlyButtonsJSX = (
     <div className={css.btnContainer}>
-      <Button onClick={onSubmitHours} className={css.btn}>
+      <Button onClick={onCompleteMission} className={css.btn}>
         Submit Hours
       </Button>
       <Button onClick={onStopMission} color="white" className={css.btn}>
@@ -100,51 +94,7 @@ export const Desktop = (): JSX.Element => {
     ...NetworkMenuList,
     { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
   ];
-  const submit_hours:Array<any> = [
-    {
-      time:"Jan 8 - Jan 15",
-      hours:10,
-      confirmed:false
-    },
-    {
-      time:"Jan 1 - Jan 7",
-      hours:15,
-      confirmed:true
-    }
-  ]
-  const SubmitHoursJSX = () =>(
-      <div className={css.missionDetailContainer}>
-        {
-          submit_hours.map(item=>(
-              <div className={css.hours} key={item.time}>
-                <div>{item.time}</div>
-                <div className={css.hours_status}>
-                  <div className={css.text}>{item.hours} hours</div>
-                  <div>{item.confirmed ?
-                      <img className={css.icon} src="/icons/confirmed-submit.svg" alt="submitted"/>
-                      :
-                      <img className={css.icon} src="/icons/waiting-submit.svg" alt="waiting"/>
 
-                  }</div>
-                </div>
-              </div>
-          ))
-        }
-        <div className={css.view_more}>
-          view more
-        </div>
-        <div className={css.hours_btn}>
-          <Button className={css.btn_full} onClick={onSubmitHours}>Submit Hours</Button>
-        </div>
-      </div>
-  )
-  const hoursSubmission = () => (
-      <Accordion title="Hours submission" id="hours-submission">
-        <div className={css.missionDetailContainer}>
-          {printWhen(SubmitHoursJSX(),submit_hours.length>0)}
-        </div>
-      </Accordion>
-  )
   return (
     <>
       <div className={css.status}>
@@ -159,7 +109,6 @@ export const Desktop = (): JSX.Element => {
         </div>
         <Card className={css.rightContainer}>
           <div>
-            {printWhen(hoursSubmission(),offer.project.payment_scheme === 'HOURLY')}
             <Accordion title="Job details" id="mission-details">
               <div className={css.missionDetailContainer}>
                 <div className={css.missionDetailMessage}>{offer.offer_message}</div>
@@ -240,7 +189,6 @@ export const Desktop = (): JSX.Element => {
           {printWhen(hourlyButtonsJSX, status === 'HIRED' && offer.project.payment_scheme === "HOURLY")}
         </Card>
       </TwoColumnCursor>
-      <SubmittedHoursModal onClose={()=>setOpenSubmitHoursModal(false)} open={openSubmitHoursModal} onSend={console.log}/>
     </>
   );
 };
