@@ -109,6 +109,9 @@ export const Mobile = (): JSX.Element => {
       <>
           {showApprove ?
               <div className={css.approveMain}>
+                  <div className={css.title}>
+                      Approve hours
+                  </div>
                   <div className={css.description}>
                       By confirm the hours submission, {applicantDetail.user.first_name} will receive the below payment.
                   </div>

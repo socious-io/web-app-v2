@@ -77,6 +77,13 @@
   cursor: pointer;
 }
 .approveMain{
+  margin-top: var(--safe-area);
+  .title{
+    font-weight: 600;
+    font-size: large;
+    text-align: center;
+    padding-bottom: 1rem;
+  }
   .description{
     padding: 0.7rem 2rem;
     text-align: center;
