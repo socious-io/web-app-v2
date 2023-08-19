@@ -146,7 +146,7 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
   }
   return mission.map((item) => {
     return {
-      id: item.id,
+      id: item.applicant.id,
       name: item.assignee.meta.name,
       image: item.assignee.meta.avatar,
       hireDate: isoToStandard(item.created_at),

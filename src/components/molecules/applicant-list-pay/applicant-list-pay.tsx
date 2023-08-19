@@ -40,6 +40,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
       <div key={applicant.id} className={css.applicantContainer}>
         <ProfileView
           name={applicant.name}
+          id={applicant.id}
           username={applicant?.username}
           location={applicant.category}
           img={applicant.image}

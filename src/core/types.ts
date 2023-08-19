@@ -238,6 +238,7 @@ export type ApplicantResp = {
   answers: { answer: string }[];
   cover_letter: string;
   created_at: string;
+  status: string;
   share_contact_info: string;
   user: {
     first_name: string;

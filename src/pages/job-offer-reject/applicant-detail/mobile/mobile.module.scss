@@ -10,6 +10,46 @@
 
 .accordionContainer {
   padding: 1rem;
+  .current_submission{
+    background-color: var(--color-off-white-01);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 16px;
+    text-align: center;
+    .time{
+      color: black;
+      font-weight: bold;
+    }
+    .hours{
+      margin-top: 0.5rem;
+      color: var(--color-gray-01);
+      font-size: 1.5rem;
+    }
+  }
+  .btn_submission{
+    margin-top: 1rem;
+    display: flex;
+    gap: 10px;
+  }
+  .previous_submission{
+    margin-top: 1rem;
+    .title{
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--color-gray-03);
+      font-weight: 600;
+    }
+    .submission{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      .time{
+      }
+      .hours{
+        color: var(--color-gray-01);
+      }
+    }
+  }
 }
 
 .question {
@@ -35,4 +75,45 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+}
+.approveMain{
+  .description{
+    padding: 0.7rem 2rem;
+    text-align: center;
+
+  }
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  .card{
+    display: flex;
+    flex-direction: column;
+    .title{
+      text-align: center;
+      font-weight: 600;
+      font-size: large;
+      padding: 0.5rem 0;
+    }
+    .summery{
+      padding: 1rem 0;
+      border-bottom:1px solid var(--color-gray-03);
+      .summery_item{
+        display: flex;
+        justify-content: space-between;
+        margin: 0.6rem 0;
+        .total_week{
+          font-size: large;
+        }
+      }
+    }
+  }
+  .total{
+    padding: 1rem 0;
+    .total_item{
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+      font-size: large;
+    }
+  }
 }

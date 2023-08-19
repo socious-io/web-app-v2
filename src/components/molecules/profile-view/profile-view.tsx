@@ -5,7 +5,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { CSSProperties } from 'react';
 
 export const ProfileView = (props: ProfileViewProps): JSX.Element => {
-  const { type, img, name, username, size = '3rem', location, theme = 'light' } = props;
+  const { id,type, img, name, username, size = '3rem', location, theme = 'light' } = props;
   const navigate = useNavigate();
 
   function navigateToProfile() {
@@ -27,7 +27,7 @@ export const ProfileView = (props: ProfileViewProps): JSX.Element => {
   }
 
   return (
-    <div className={css.container} style={{ width: props.width }} onClick={console.log}>
+    <div className={css.container} style={{ width: props.width }} onClick={()=>navigate({to:`./${id}`})}>
       <Avatar size={size} img={img} type={type} onClick={() => username && navigateToProfile()} />
       <div className={css.detail}>
         <div style={{ color: theme === 'dark' ? '#fff' : '' }} className={css.name}>

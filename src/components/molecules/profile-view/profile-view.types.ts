@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react';
 
 export interface ProfileViewProps extends CSSProperties {
+  id?: string;
   type: 'organizations' | 'users';
   img?: string;
   width?: string;
