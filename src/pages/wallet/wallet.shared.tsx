@@ -58,11 +58,12 @@ export const useWalletShared = () => {
   }
 
   function isDisablePayout(escrow: { created_at: string; release_id: string }) {
-    const currentDate = Number(new Date());
+    /* const currentDate = Number(new Date());
     const createdDate = Number(new Date(escrow?.created_at));
     const diffTime = Math.abs(currentDate - createdDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays < 10;
+    return diffDays < 10; */
+    return false;
   }
 
   return {
