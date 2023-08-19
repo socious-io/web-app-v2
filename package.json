@@ -11,7 +11,9 @@
     "build-storybook": "build-storybook",
     "open:android": "vite build --mode production && npx cap sync android && npx cap open android",
     "open:ios": "vite build --mode production && npx cap sync ios && npx cap open ios",
-    "build:icons": "npx @capacitor/assets generate --iconBackgroundColor '#183E3B' --splashBackgroundColor '#183E3B'"
+    "build:icons": "npx @capacitor/assets generate --iconBackgroundColor '#183E3B' --splashBackgroundColor '#183E3B'",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@capacitor-firebase/messaging": "^1.4.0",
@@ -83,7 +85,7 @@
     "@typescript-eslint/parser": "^5.56.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "babel-loader": "^8.3.0",
-    "cypress": "^12.3.0",
+    "cypress": "^12.17.3",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",

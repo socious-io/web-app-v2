@@ -20,11 +20,11 @@ function removeCookiesFromAllPaths() {
   );
 }
 
-async function set(payload: SetOptions): Promise<void> {
+async function set(payload: SetOptions,expires?:number): Promise<void> {
   if (isNative) {
     await Preferences.set(payload);
   } else {
-    Cookies.set(payload.key, payload.value, { sameSite: 'Strict', secure: true });
+    Cookies.set(payload.key, payload.value, { sameSite: 'Strict', secure: true ,...(expires && { expires }),});
   }
 }
 
