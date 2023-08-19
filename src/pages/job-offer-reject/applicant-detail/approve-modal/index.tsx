@@ -6,10 +6,10 @@ import {Card} from "../../../../components/atoms/card/card";
 
 export const ApproveModal: React.FC<OfferModalProps> = ({ open, onClose, applicantDetail, onDone }) => {
 
-  const {  unit } = useApplicantDetailShared();
+  const {  unit,submitHours } = useApplicantDetailShared();
 
   async function onSubmit() {
-
+    submitHours()
   }
   function onCancel(){
 

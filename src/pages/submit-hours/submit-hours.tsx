@@ -2,7 +2,8 @@ import {required} from "../../core/form";
 import {FormModel} from "../../core/form/useForm/useForm.types";
 
 export const formModel: FormModel = {
-    submit_hours: {
+    // TODO add start and end date
+    total_hours: {
         initialValue: '',
         validators: [required()],
     },

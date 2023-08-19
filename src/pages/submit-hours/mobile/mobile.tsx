@@ -15,47 +15,14 @@ import {Card} from "../../../components/atoms/card/card";
 import {Input} from "../../../components/atoms/input/input";
 
 export const Mobile = (): JSX.Element => {
-  const { offer, media, status, onCompleteMission, onStopMission,onCancel,form } = useSubmittedHoursShared();
-
-  const offeredMessageBoxJSX = (
-    <div className={css.congratulations}>
-      <img src="/icons/tick-white-simple.svg" />
-      <div>
-        <div className={css.congratulationsText}>Your job has been confirmed.</div>
-        <div className={css.congratulationsText}>
-          Once you have finished your work please click on “complete job” button.
-        </div>
-      </div>
-    </div>
-  );
-
-  const acceptedMessageBoxJSX = (
-    <div className={css.acceptedMessageBox}>
-      <img src="/icons/mail-inbox-envelope-check-black.svg" />
-      <div>
-        <div className={css.congratulationsText}>You marked this job as completed.</div>
-        <div className={css.congratulationsText}>
-          You will get your payment once <span className={css.companyName}>{offer.offerer.meta.name}</span> confirms
-          your assignment.
-        </div>
-      </div>
-    </div>
-  );
-
-  const stoppedMessageBoxJSX = (
-    <div className={css.acceptedMessageBox}>
-      <img src="/icons/mail-inbox-envelope-check-black.svg" />
-      <div>
-        <div className={css.congratulationsText}>You marked this job as stopped.</div>
-        {/* <div className={css.congratulationsText}>
-            You have already withdrawn the offer from <span className={css.companyName}>{offer.offerer.meta.name}</span>.
-          </div> */}
-      </div>
-    </div>
-  );
+  const { offer, media, status, onCompleteMission,onSubmitHours, onStopMission,onCancel,form } = useSubmittedHoursShared();
+  function onSubmit(){
+      onSubmitHours()
+      history.back();
+  }
   const hourlyButtonsJSX = (
     <div className={css.btnContainer}>
-      <Button onClick={onCompleteMission}>Submit Hours</Button>
+      <Button onClick={onSubmit}>Submit Hours</Button>
       <Button onClick={onCancel} color="white">
         Cancel
       </Button>
@@ -81,7 +48,7 @@ export const Mobile = (): JSX.Element => {
             </div>
           </Card>
           <Card className={css.card}>
-            <Input className={css.input} register={form} name="submit_hours" placeholder="10:00" label="Input hours" />
+            <Input className={css.input} register={form} name="total_hours" placeholder="10:00" label="Input hours" />
           </Card>
         </div>
           {printWhen(hourlyButtonsJSX,true)}

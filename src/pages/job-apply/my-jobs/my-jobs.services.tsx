@@ -72,6 +72,7 @@ function onGoingItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCa
     body: applicant.assigner.meta.name,
     img: applicant.assigner.meta.image,
     date: `Applied ${toRelativeTime(applicant.created_at)}`,
+    // TODO change this base on status 'Submit hours' && 'Awaiting approval'
     bottomRight: setStatusJSX("CONFIRMED"),
   };
 }

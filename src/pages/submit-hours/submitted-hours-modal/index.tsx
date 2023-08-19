@@ -1,28 +1,24 @@
-import { Modal } from 'src/components/templates/modal/modal';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Button } from 'src/components/atoms/button/button';
+
 import { SubmittedHoursModalTypes } from './submitted-hours-modal.types';
 import css from './submitted-hours-modal.module.scss';
 import {Card} from "../../../components/atoms/card/card";
 import {ProfileView} from "../../../components/molecules/profile-view/profile-view";
 import {Input} from "../../../components/atoms/input/input";
-import {printWhen} from "../../../core/utils";
 import {WebModal} from "../../../components/templates/web-modal";
-import {Divider} from "../../../components/templates/divider/divider";
-import {ExpandableText} from "../../../components/atoms/expandable-text";
-import {Checkbox} from "../../../components/atoms/checkbox/checkbox";
-import {useApplyShared} from "../../job-apply/apply/apply.shared";
 import {useSubmittedHoursShared} from "../submit-hours.shared";
 
 export const SubmittedHoursModal: React.FC<SubmittedHoursModalTypes> = ({ open, onClose, onSend, onMessage }) => {
   const {
-    offer, media, status, onCompleteMission, onStopMission,form,onCancel
+    offer, media, status, onCompleteMission,onSubmitHours, onStopMission,form,onCancel
   } = useSubmittedHoursShared();
   function onModalClose() {
     onClose();
     form.reset();
   }
-
+  function onSubmit(){
+      onSubmitHours()
+      onModalClose()
+  }
   return (
       <>
         <WebModal
@@ -31,7 +27,7 @@ export const SubmittedHoursModal: React.FC<SubmittedHoursModalTypes> = ({ open, 
             onClose={onModalClose}
             buttons={
             [
-                { children: 'Submit hours', disabled: !form.isValid, onClick: ()=>onsubmit },
+                { children: 'Submit hours', disabled: !form.isValid, onClick: ()=>onSubmit() },
                 { children: 'Cancel',color:'white', onClick: onModalClose }
             ]
         }
@@ -53,7 +49,7 @@ export const SubmittedHoursModal: React.FC<SubmittedHoursModalTypes> = ({ open, 
                 </div>
               </Card>
               <Card className={css.card}>
-                <Input className={css.input} register={form} name="submit_hours" placeholder="10:00" label="Input hours" />
+                <Input className={css.input} register={form} name="total_hours" placeholder="10:00" label="Input hours" />
               </Card>
             </div>
           </div>

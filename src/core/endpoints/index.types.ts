@@ -225,6 +225,7 @@ export interface Endpoints {
       '{mission_id}/confirm': (id: string) => Promise<unknown>;
       '{mission_id}/feedback': (id: string, payload: { content: string }) => Promise<unknown>;
       '{mission_id}/contest': (id: string, payload: { content: string }) => Promise<unknown>;
+      '{mission_id}/submitworks': (id: string, payload: { content: string }) => Promise<unknown>;
     };
     posts: {
       '{post_id}/report': (id: string, payload: { blocked: boolean; comment: string }) => Promise<unknown>;

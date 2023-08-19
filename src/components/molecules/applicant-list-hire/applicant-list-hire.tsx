@@ -24,7 +24,7 @@ export const ApplicantListHire = (props: ApplicantListProps): JSX.Element => {
   const applicantJSX = (applicant: Applicant) => {
     return (
       <div key={applicant.id} className={css.applicantContainer}>
-        <ProfileView id={applicant.id} name={applicant.name} username={applicant?.username} img={applicant.image} type="users" />
+        <ProfileView  name={applicant.name} username={applicant?.username} img={applicant.image} type="users" />
         <div className={css.detail}>
           <div className={css.applyDate}>{applicant.applyDate}</div>
           {props.required_payment && <StatusTag color="red" label="Payment required" />}

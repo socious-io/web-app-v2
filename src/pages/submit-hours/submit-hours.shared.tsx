@@ -5,6 +5,8 @@ import { endpoint } from 'src/core/endpoints';
 import { useAlert } from 'src/hooks/use-alert';
 import {useForm} from "../../core/form";
 import {formModel} from "./submit-hours";
+import {generatePayload} from "../job-apply/apply/apply.services";
+import {getFormValues} from "../../core/form/customValidators/formValues";
 
 export const useSubmittedHoursShared = () => {
   const resolver = useMatch().ownData;
@@ -25,6 +27,13 @@ export const useSubmittedHoursShared = () => {
     };
     alert.confirm(options, onConfirm);
   }
+  function onSubmitHours(){
+    const values:any = getFormValues(form);
+    values.start_at ="2021-10-14T13:32:30.211Z"
+    values.end_at ="2021-10-15T13:32:30.211Z"
+    endpoint.post.missions['{mission_id}/submitworks'](mission.id,values).then(() => {
+    });
+  }
 
   function onStopMission() {
     // TODO: ask @jeyem the current status string
@@ -34,5 +43,5 @@ export const useSubmittedHoursShared = () => {
     history.back()
   }
 
-  return { offer, media, status, onCompleteMission, onStopMission,form,onCancel };
+  return { offer, media, status, onCompleteMission, onStopMission,form,onCancel,onSubmitHours };
 };

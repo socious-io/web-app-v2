@@ -25,9 +25,13 @@ export const ProfileView = (props: ProfileViewProps): JSX.Element => {
     }
     return {};
   }
-
+  function onApplicantClick(){
+    if(id){
+      navigate({to:`./${id}`})
+    }
+  }
   return (
-    <div className={css.container} style={{ width: props.width }} onClick={()=>navigate({to:`./${id}`})}>
+    <div className={css.container} style={{ width: props.width }} onClick={onApplicantClick}>
       <Avatar size={size} img={img} type={type} onClick={() => username && navigateToProfile()} />
       <div className={css.detail}>
         <div style={{ color: theme === 'dark' ? '#fff' : '' }} className={css.name}>

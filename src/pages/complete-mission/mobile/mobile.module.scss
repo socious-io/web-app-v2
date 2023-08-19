@@ -39,6 +39,21 @@
     padding-bottom: 4px;
   }
 }
+.submitHours {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  background-color: var(--color-warning-01);
+  .congratulationsText {
+    color: #333;
+    line-height: 20px;
+    font-size: var(--font-size-s2);
+  }
+  .congratulationsText:first-child {
+    font-weight: 600;
+    padding-bottom: 4px;
+  }
+}
 
 .missionDetailContainer {
   padding: 1rem;

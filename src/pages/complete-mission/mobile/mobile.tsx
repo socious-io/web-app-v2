@@ -26,6 +26,18 @@ export const Mobile = (): JSX.Element => {
       </div>
     </div>
   );
+  const submitHoursMessageBoxJSX = (
+    <div className={css.submitHours}>
+      <img src="/icons/clock.svg" />
+      <div>
+        <div className={css.congratulationsText}>Submit your hours.</div>
+        <div className={css.congratulationsText}>
+          {/*  TODO check the time of week to show*/}
+          Please submit your hours for the week Jan 8 - Jan 15
+        </div>
+      </div>
+    </div>
+  );
 
   const acceptedMessageBoxJSX = (
     <div className={css.acceptedMessageBox}>
@@ -68,6 +80,7 @@ export const Mobile = (): JSX.Element => {
       </Button>
     </div>
   );
+  // TODO get submit hours from API
   const submit_hours:Array<any> = [
     {
       time:"Jan 8 - Jan 15",
@@ -118,6 +131,8 @@ export const Mobile = (): JSX.Element => {
       <Header title={`${offer.job_category.name}`} onBack={() => history.back()} />
       <div className={css.body}>
         {printWhen(offeredMessageBoxJSX, status === 'HIRED')}
+        {/*  TODO show warning submit hours*/}
+        {/*{printWhen(submitHoursMessageBoxJSX, status === '')}*/}
         {printWhen(acceptedMessageBoxJSX, status === 'CLOSED')}
         {printWhen(stoppedMessageBoxJSX, status === 'KICK_OUT')}
         {printWhen(hoursSubmission(),offer.project.payment_scheme === 'HOURLY')}
