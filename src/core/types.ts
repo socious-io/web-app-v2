@@ -1,5 +1,5 @@
 import { AbiItem } from 'web3-utils';
-import { JobItems, PostItems } from '../pages/search/search.types';
+import { JobItems, PostItems } from '../pages/search/desktop/search.types';
 
 export type UserType = 'users' | 'organizations';
 
@@ -304,6 +304,17 @@ export type MissionsResp = Pagination<
       released_at: string;
       created_at: string;
     };
+    submitted_works:
+        [
+            {
+              id:string,
+              created_at:string,
+              start_at:string,
+              end_at:string,
+              status:string,
+              total_hours:number,
+            }
+    ];
     amount: number;
     total: number;
     fee: number;

@@ -4,12 +4,12 @@ import { useApplicantDetailShared } from '../applicant-detail.shared';
 import css from './approve-modal.module.scss';
 import {Card} from "../../../../components/atoms/card/card";
 
-export const ApproveModal: React.FC<OfferModalProps> = ({ open, onClose, applicantDetail, onDone }) => {
+export const ApproveModal: React.FC<OfferModalProps> = ({ open, onClose, applicantDetail,missionDetail, onDone }) => {
 
   const {  unit,submitHours } = useApplicantDetailShared();
 
   async function onSubmit() {
-    submitHours()
+    submitHours(missionDetail.mission_id,missionDetail.work_id)
   }
   function onCancel(){
 
