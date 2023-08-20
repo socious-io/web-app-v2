@@ -18,7 +18,11 @@ import {
   getOnGoingList,
   getPendingApplicants,
 } from '../../pages/job-apply/my-jobs/my-jobs.services';
-import { getApplicantDetail, jobOfferRejectLoader } from '../../pages/job-offer-reject/job-offer-reject.services';
+import {
+  getApplicantDetail,
+  getHiredList,
+  jobOfferRejectLoader
+} from '../../pages/job-offer-reject/job-offer-reject.services';
 import { receivedOfferLoader } from '../../pages/offer-received/offer-received.services';
 import { endpoint } from '../endpoints';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
@@ -570,9 +574,9 @@ export const routes: Route[] = [
               {
                 path: '/:applicantId',
                 loader: async ({ params }) => {
-                  const requests = [getScreeningQuestions(params.id), getApplicantDetail(params.applicantId)];
-                  const [screeningQuestions, applicantDetail] = await Promise.all(requests);
-                  return { applicantDetail, screeningQuestions };
+                  const requests = [getScreeningQuestions(params.id), getApplicantDetail(params.applicantId),getHiredList({ id: params.id, page: 1 })];
+                  const [screeningQuestions, applicantDetail,missions] = await Promise.all(requests);
+                  return { applicantDetail, screeningQuestions,missions };
                 },
                 element: () =>
                   import('../../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => (

@@ -13,20 +13,24 @@ import { jobOfferRejectLoader } from '../../job-offer-reject.services';
 import { useApplicantDetailShared } from '../applicant-detail.shared';
 import css from './desktop.module.scss';
 import {ApproveModal} from "../approve-modal";
+import {isoToStandard} from "../../../../core/time";
 
 export const Desktop: React.FC = () => {
   const { isLoggedIn } = useAuth();
   const { id } = useMatch().params || {};
-  const { navigate, screeningQuestions, applicantDetail, onReject } = useApplicantDetailShared();
+  const { navigate, screeningQuestions, applicantDetail, onReject,missions } = useApplicantDetailShared();
   const [openOfferModal, setOpenOfferModal] = useState(false);
   const [showApproveModal,setShowApproveModal] = useState(false)
+  const [missionDetail,setMissionDetail] = useState({mission_id:'',work_id:''})
   async function updateApplicantList() {
     await jobOfferRejectLoader({ params: { id } });
     setOpenOfferModal(false);
     navigate({ to: '..' });
   }
-  function onApprove() {
-    setShowApproveModal(true);
+  function onApprove(mission_id:string,work_id:string) {
+      setMissionDetail({mission_id,work_id})
+      setShowApproveModal(true);
+
   }
   const screeningQuestionAccordion = (
     <Accordion id="screening-questions" title="Screening questions">
@@ -67,26 +71,51 @@ export const Desktop: React.FC = () => {
           <div className={css.title_submisson}>
             {applicantDetail.user.first_name} has submitted new hours. Please approve or contest.
           </div>
-          <div className={css.current_submission}>
-            <div className={css.time}>{currentSubmission.time}</div>
-            <div className={css.hours}>{currentSubmission.hours} hours</div>
-          </div>
-          <div className={css.btn_submission}>
-            <Button onClick={onApprove}>Approve</Button>
-            <Button onClick={onReject(applicantDetail.id)} color="white">
-              Contest
-            </Button>
-          </div>
+
+          {missions.items.map((mission:any)=>(
+              <>
+                {mission.submitted_works.map((submit_work:any)=>(
+                    <div>
+                      {printWhen(
+                          <>
+                            <div className={css.current_submission}>
+                              <div className={css.time}>{isoToStandard(submit_work.start_at)} - {isoToStandard(submit_work.end_at)}</div>
+                              <div className={css.hours}>{submit_work.total_hours} hours</div>
+                            </div>
+                            <div className={css.btn_submission}>
+                              <Button onClick={()=>onApprove(mission.id,submit_work.id)}>Approve</Button>
+                              <Button onClick={onReject(applicantDetail.id)} color="white">
+                                Contest
+                              </Button>
+                            </div>
+                          </>,
+                        submit_work.status === "PENDING"
+                      )}
+                    </div>
+                ))}
+              </>
+          ))}
+
           <div className={css.previous_submission}>
             <div className={css.title}>Previous Submissions</div>
-            {
-              previousSubmission.map(item=>(
-                  <div className={css.submission}>
-                    <span className={css.time}>{item.time}</span>
-                    <span className={css.hours}>{item.hours} hours</span>
-                  </div>
-              ))
-            }
+              {
+                missions.items.map((mission:any)=>(
+                    <>
+                      {mission.submitted_works.map((submit_work:any)=>(
+                          <div>
+                            {printWhen(
+                                <>
+                                  <div className={css.submission}>
+                                    <span className={css.time}>{isoToStandard(submit_work.start_at)} - {isoToStandard(submit_work.end_at)}</span>
+                                    <span className={css.hours}>{submit_work.total_hours} hours</span>
+                                  </div>
+                                </>,
+                                submit_work.status === "APPROVED"
+                            )}
+                          </div>
+                      ))}
+                    </>
+                ))}
           </div>
         </div>
       </Accordion>
@@ -133,7 +162,7 @@ export const Desktop: React.FC = () => {
         />,
         applicantDetail !== undefined
       )}
-      <ApproveModal applicantDetail={applicantDetail} onDone={console.log} open={showApproveModal} onClose={()=>setShowApproveModal(false)}/>
+      <ApproveModal missionDetail={missionDetail} applicantDetail={applicantDetail} onDone={console.log} open={showApproveModal} onClose={()=>setShowApproveModal(false)}/>
     </>
   );
 };
