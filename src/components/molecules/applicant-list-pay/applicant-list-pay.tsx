@@ -55,12 +55,27 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
         <div className={css.box}>
           <div className={css.header}>
             <div className={css.typeItem}>
-              <img src="/icons/time.svg" />
+              <img src="/icons/suitcase.svg" />
               {applicant.paymentType} - {applicant.paymentMode}
             </div>
             <div className={css.typeItem}>
-              <img src="/icons/suitcase.svg" />
-              {applicant.totalHour} hrs
+              <img src="/icons/time.svg" />
+                {
+                    printWhen(
+                        <>
+                            { applicant.totalHour} hrs
+                        </>,
+                        applicant.paymentMode === 'FIXED'
+                    )
+                }
+                {
+                    printWhen(
+                        <>
+                            { applicant.weeklyLimit} hrs / week
+                        </>,
+                        applicant.paymentMode === 'HOURLY'
+                    )
+                }
             </div>
           </div>
           {/* <div className={css.totalMission}>

@@ -10,6 +10,7 @@ export type Applicant = {
   paymentType: string;
   paymentMode: string;
   totalHour: number;
+  weeklyLimit: number;
   totalMission: string;
   user_id: string;
   payment?: {
