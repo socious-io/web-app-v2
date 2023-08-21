@@ -8,20 +8,27 @@ type InitialFormType = {
   message: string;
   weeklyLimit:string
   job:string
+  paid_hourly_rate:string
 };
 
-export const formModel = (isPaid: boolean, isFiat: boolean, initialForm: InitialFormType): FormModel => {
+export const formModel = (isHourly:boolean,isPaid: boolean, isFiat: boolean, initialForm: InitialFormType): FormModel => {
   const patternNumber = pattern('patternName', /^[+-]?\d+(\.\d+)?$/, 'value should be a number');
   const assignTotalPaid = isFiat
     ? [required(), min(22, 'Amount for fiat mode should not be less than 22$'), patternNumber]
     : [required(), patternNumber];
-  const assignTotalValidators = isPaid ? assignTotalPaid : [];
+  const assignTotalValidators = isPaid && !isHourly ? assignTotalPaid : [];
+  const estimatedTotalHoursValidators =  !isHourly ? [required(), patternNumber] : [];
+  const messageValidators =  !isHourly ? [noEmptyString()] : [];
+  const weeklyLimitValidators =  isHourly ? [required()] : [];
+  const jobValidators =  isHourly ? [required()] : [];
+  const paid_hourly_rateValidators =  isHourly ? [required()] : [];
   return {
     assignmentTotal: { initialValue: '', validators: assignTotalValidators },
-    estimatedTotalHours: { initialValue: initialForm.estimatedTotalHours || '', validators: [required(), patternNumber] },
-    message: { initialValue: initialForm.message || '', validators: [noEmptyString()] },
-    weeklyLimit: { initialValue: '' },
-    job: { initialValue: '' },
+    estimatedTotalHours: { initialValue: initialForm.estimatedTotalHours || '', validators: estimatedTotalHoursValidators },
+    message: { initialValue: initialForm.message || '', validators:messageValidators  },
+    weeklyLimit: { initialValue: '',validators:weeklyLimitValidators },
+    job: { initialValue: '',validators:jobValidators },
+    paid_hourly_rate: { initialValue: '',validators:paid_hourly_rateValidators },
   };
 };
 
