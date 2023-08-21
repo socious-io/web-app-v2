@@ -26,7 +26,6 @@ export const Dropdown = (props: DropdownProps): JSX.Element => {
   useEffect(() => {
     const initialValue = getInitialValue();
     const obj = props.list.find((item) => item.value === initialValue);
-
     if (obj) {
       /** @why "!" is safe here as ref is available in first render */
       ref!.current!.value = obj.label;

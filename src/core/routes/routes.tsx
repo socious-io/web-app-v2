@@ -18,7 +18,11 @@ import {
   getOnGoingList,
   getPendingApplicants,
 } from '../../pages/job-apply/my-jobs/my-jobs.services';
-import { getApplicantDetail, jobOfferRejectLoader } from '../../pages/job-offer-reject/job-offer-reject.services';
+import {
+  getApplicantDetail,
+  getJobOverview,
+  jobOfferRejectLoader,
+} from '../../pages/job-offer-reject/job-offer-reject.services';
 import { receivedOfferLoader } from '../../pages/offer-received/offer-received.services';
 import { endpoint } from '../endpoints';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
@@ -34,6 +38,7 @@ import store from 'src/store/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getIdentities } from '../api';
 import { useEffect, useState } from 'react';
+import { getJob } from 'src/pages/job-edit/info/info.services';
 
 export const routes: Route[] = [
   {
@@ -318,6 +323,39 @@ export const routes: Route[] = [
               import('src/pages/job-create/screener-questions/screener-questions.container').then((m) => (
                 <m.ScreenerQuestions />
               )),
+          },
+        ],
+      },
+      {
+        path: '/jobs/edit',
+        children: [
+          {
+            path: 'info/:id',
+            loader: async ({ params }) => {
+              const requests = [getJobCategories(), getJobOverview(params.id)];
+              const [jobCategories, overview] = await Promise.all(requests);
+              return { jobCategories, overview };
+            },
+            element: () => import('../../pages/job-edit/info/info.container').then((m) => <m.Info />),
+          },
+          {
+            path: 'skills/:id',
+            loader: async ({ params }) => {
+              const requests = [getJobOverview(params.id)];
+              const [overview] = await Promise.all(requests);
+              return { overview };
+            },
+            element: () => import('../../pages/job-edit/skills/skills.container').then((m) => <m.Skills />),
+          },
+          {
+            path: 'social-causes/:id',
+            loader: async ({ params }) => {
+              const requests = [getJobOverview(params.id)];
+              const [overview] = await Promise.all(requests);
+              return { overview };
+            },
+            element: () =>
+              import('../../pages/job-edit/social-causes/social-causes.container').then((m) => <m.SocialCauses />),
           },
         ],
       },
