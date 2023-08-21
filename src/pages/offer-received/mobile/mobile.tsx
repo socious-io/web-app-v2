@@ -97,10 +97,24 @@ export const Mobile = (): JSX.Element => {
                 <div className={css.detailItemLabel}>Due date</div>
                 <div className={css.detailItemValue}>{offer.due_date || 'Unspecified'}</div>
               </div> */}
-              <div className={css.detailItem}>
-                <div className={css.detailItemLabel}>Estimate total hours</div>
-                <div className={css.detailItemValue}>{offer.total_hours} hrs</div>
-              </div>
+              {
+                printWhen(
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Estimate total hours</div>
+                      <div className={css.detailItemValue}>{offer.total_hours} hrs</div>
+                    </div>,
+                    offer.project.payment_scheme === "FIXED"
+                )
+              }
+              {
+                printWhen(
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Estimate total hours</div>
+                      <div className={css.detailItemValue}>{offer.weekly_limit} hrs / week</div>
+                    </div>,
+                    offer.project.payment_scheme === "HOURLY"
+                )
+              }
             </div>
           </div>
         </Accordion>

@@ -386,6 +386,7 @@ export type Offer = {
     };
   };
   total_hours: number;
+  weekly_limit: number;
   project_id: string;
   escrow: {
     address: string;

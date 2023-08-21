@@ -155,6 +155,7 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
       paymentMode: translatePaymentTerms(item.project.payment_scheme),
       paymentType: translatePaymentType(item.project.payment_type),
       totalHour: item.offer.total_hours,
+      weeklyLimit: item.offer.weekly_limit,
       totalMission: `${item.offer.assignment_total} USD`,
       payment: item.payment,
       user_id: item.assignee.meta.id,

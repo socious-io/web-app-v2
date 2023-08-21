@@ -31,7 +31,7 @@ export const Desktop: React.FC = () => {
     isDisabledProceedPayment,
     status,
   } = usePaymentShared();
-  const { job_category, recipient, project, total_hours } = offer || {};
+  const { job_category, recipient, project, total_hours,weekly_limit } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const { isLoggedIn } = useAuth();
@@ -73,7 +73,7 @@ export const Desktop: React.FC = () => {
             payment_scheme={project.payment_scheme}
             info_list={[
               { icon: 'suitcase', name: `${project?.payment_scheme}` || '' },
-              { icon: 'hourglass', name: `${total_hours} hrs / week` },
+              { icon: 'hourglass', name: project.payment_scheme === 'FIXED'? `${total_hours} hrs`:`${weekly_limit} hrs / week` },
             ]}
             img={(avatar as string) || ''}
             type={recipient?.type || 'users'}
