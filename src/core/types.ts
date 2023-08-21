@@ -409,11 +409,11 @@ export type BadgesResp = {
 export type OfferPayload = {
   assignment_total: number;
   offer_message: string;
-  total_hours: string;
+  total_hours?: string;
   payment_mode: string;
   crypto_currency_address?: string;
-  job?: string;
-  weeklyLimit?: string;
+  weekly_limit?: string;
+  paid_hourly_rate?: number;
 };
 
 export type CreatePostPayload = {
