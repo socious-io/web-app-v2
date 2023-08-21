@@ -65,7 +65,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
                         <>
                             { applicant.totalHour} hrs
                         </>,
-                        applicant.paymentMode === 'FIXED'
+                        applicant.paymentMode === 'Fixed'
                     )
                 }
                 {
@@ -73,7 +73,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
                         <>
                             { applicant.weeklyLimit} hrs / week
                         </>,
-                        applicant.paymentMode === 'HOURLY'
+                        applicant.paymentMode === 'Hourly'
                     )
                 }
             </div>
