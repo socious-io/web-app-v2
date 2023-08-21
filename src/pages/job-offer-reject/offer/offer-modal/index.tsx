@@ -19,7 +19,7 @@ import { useOfferShared } from '../offer.shared';
 import css from './offer-modal.module.scss';
 
 export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicantDetail, onDone }) => {
-  const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '',weeklyLimit:'',job:'',paid_hourly_rate:'' });
+  const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '',weekly_limit:'' });
   const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
   const [paymentScheme, setPaymentScheme] = useState(applicantDetail?.project?.payment_scheme || 'FIXED');
   const isPaidType = applicantDetail?.project?.payment_type === 'PAID';
@@ -38,11 +38,12 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
       payment_mode: paymentMode,
       assignment_total: isPaidType ? (form.controls.assignmentTotal.value as number) : 1,
       offer_message: (form.controls.message.value as string) || initialForm.message,
-      // weeklyLimit: (form.controls.message.value as string) || initialForm.weeklyLimit,
-      // job: (form.controls.message.value as string) || initialForm.job,
-      total_hours: (form.controls.estimatedTotalHours.value as string) || initialForm.estimatedTotalHours,
+      weekly_limit: (form.controls.weekly_limit.value as string) || initialForm.weekly_limit,
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
+    if(!isHourly) {
+      payload.total_hours =  form.controls.estimatedTotalHours.value as string || initialForm.estimatedTotalHours;
+    }
     offer(applicantDetail.id, payload).then(() => {
       onClose();
       onDone();
@@ -70,18 +71,13 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
           label="Payment scheme"
           list={PROJECT_PAYMENT_SCHEME}
         />
-        {
-          printWhen(
-              <Input
-                  register={form}
-                  name="estimatedTotalHours"
-                  label="Estimated total hours"
-                  placeholder="hrs"
-                  onKeyUp={(e) => setInitialForm({ ...initialForm, estimatedTotalHours: e.currentTarget.value })}
-              />,
-              paymentScheme === 'FIXED'
-          )
-        }
+        <Input
+            register={form}
+            name="estimatedTotalHours"
+            label="Estimated total hours"
+            placeholder="hrs"
+            onKeyUp={(e) => setInitialForm({ ...initialForm, estimatedTotalHours: e.currentTarget.value })}
+        />
         {printWhen(
           <RadioGroup
             name="PaymentMode"
@@ -115,37 +111,19 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
         )}
         {printWhen(
           <Input register={form} name="assignmentTotal" label="Assignment total (USD)" placeholder="amount" />,
-          (isPaidFiat && paymentScheme === 'FIXED')
+          isPaidFiat
         )}
+        <Textarea
+            register={form}
+            name="message"
+            label="Message"
+            placeholder="Write message"
+            onKeyUp={(e) => setInitialForm({ ...initialForm, message: e.currentTarget.value })}
+        />
+
         {printWhen(
-          <Input register={form} name="paid_hourly_rate" label="Paid - Hourly rate (USD)" placeholder="30" />,
-          (paymentScheme === 'HOURLY')
-        )}
-        {
-          printWhen(
-              <Textarea
-                  register={form}
-                  name="message"
-                  label="Message"
-                  placeholder="Write message"
-                  onKeyUp={(e) => setInitialForm({ ...initialForm, message: e.currentTarget.value })}
-              />,
-              paymentScheme === 'FIXED'
-          )
-        }
-        {printWhen(
-            <Input register={form} name="weeklyLimit" label="Weekly limit" placeholder="15 hrs/week" />,
-            paymentScheme === 'HOURLY'
-        )}
-        {printWhen(
-            <Textarea
-                register={form}
-                name="job"
-                label="Job"
-                placeholder="Write job"
-                onKeyUp={(e) => setInitialForm({ ...initialForm, job: e.currentTarget.value })}
-            />,
-            paymentScheme === 'HOURLY'
+            <Input register={form} name="weekly_limit" label="Weekly limit" placeholder="15 hrs/week" />,
+            isHourly
         )}
       </div>
     </WebModal>
