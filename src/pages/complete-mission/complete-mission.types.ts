@@ -6,3 +6,8 @@ export type Loader = {
   mission: MissionsResp['items'][0];
   media: PostMediaUploadResp;
 };
+export type SubmitHour = {
+  time: string;
+  hours: number;
+  confirmed: boolean;
+};
