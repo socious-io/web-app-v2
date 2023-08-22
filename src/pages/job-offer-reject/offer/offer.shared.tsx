@@ -11,8 +11,8 @@ export const useOfferShared = () => {
   const [openModal, setOpenModal] = useState(false);
   const [tokens, setTokens] = useState<Item[]>([]);
   const [selectedToken, setSelectedToken] = useState<{ address: string; symbol?: string }>();
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [tokenRate, setTokenRate] = useState(1);
-
 
   useEffect(() => {
     const getTokens = async () => {
@@ -39,8 +39,13 @@ export const useOfferShared = () => {
     findTokenRate(value).then(({ rate }) => setTokenRate(rate));
   }
 
+  function onSelectCurrency({ value }: Item) {
+    setSelectedCurrency(value);
+    setOpenModal(false);
+  }
+
   function equivalentUSD(amount: ControlPrimitiveValue) {
-    return Math.round((Number(amount) * tokenRate) * 100) / 100;
+    return Math.round(Number(amount) * tokenRate * 100) / 100;
   }
 
   return {
@@ -48,7 +53,9 @@ export const useOfferShared = () => {
     openModal,
     setOpenModal,
     selectedToken,
+    selectedCurrency,
     onSelectTokens,
+    onSelectCurrency,
     equivalentUSD,
     web3,
   };
