@@ -5,7 +5,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { CSSProperties } from 'react';
 
 export const ProfileView = (props: ProfileViewProps): JSX.Element => {
-  const { id,type, img, name, username, size = '3rem', location, theme = 'light' } = props;
+  const { id, type, img, name, username, size = '3rem', location, theme = 'light' } = props;
   const navigate = useNavigate();
 
   function navigateToProfile() {
@@ -25,9 +25,9 @@ export const ProfileView = (props: ProfileViewProps): JSX.Element => {
     }
     return {};
   }
-  function onApplicantClick(){
-    if(id){
-      navigate({to:`./${id}`})
+  function onApplicantClick() {
+    if (id) {
+      navigate({ to: `./${id}` });
     }
   }
   return (

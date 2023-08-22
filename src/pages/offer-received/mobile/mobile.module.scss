@@ -9,7 +9,7 @@
   padding: 12px;
   display: grid;
   grid-template-columns: 44px 1fr;
-  background-color: #ebb957;
+  background-color: var(--color-yellow-01);
   .congratulationsText {
     line-height: 20px;
     font-size: var(--font-size-s2);

@@ -4,7 +4,6 @@ import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
-import { dialog } from 'src/core/dialog/dialog';
 import { useCreatedShared } from '../created.shared';
 import css from './mobile.module.scss';
 
@@ -14,11 +13,9 @@ export const Mobile: React.FC = () => {
   const { questions, onRemoveCreatedQuestion } = useCreatedShared();
 
   function submit() {
-    // dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-      navigate({ to: '../final-review' });
-      store.dispatch(resetCreatedQuestion());
-      store.dispatch(resetCreatePostWizard());
-    // });
+    navigate({ to: '../final-review' });
+    store.dispatch(resetCreatedQuestion());
+    store.dispatch(resetCreatePostWizard());
   }
 
   return (

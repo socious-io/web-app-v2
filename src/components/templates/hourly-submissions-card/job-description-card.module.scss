@@ -1,6 +1,4 @@
-$color-gray-light-1: #808289;
 
-$color-gray-dark: #2d2d2d;
 
 .job {
   display: flex;
@@ -9,7 +7,7 @@ $color-gray-dark: #2d2d2d;
   margin-top: 1rem;
 
   &__title {
-    color: $color-gray-dark;
+    color: var(--color-gray-dark);
     font-size: 16px;
     font-weight: 600;
   }
@@ -44,7 +42,7 @@ $color-gray-dark: #2d2d2d;
   }
 
   &__info {
-    color: $color-gray-light-1;
+    color: var(--color-gray-light-1);
     font-size: 14px;
     display: flex;
     align-items: center;
