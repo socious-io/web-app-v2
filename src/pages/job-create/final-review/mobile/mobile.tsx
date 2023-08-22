@@ -43,7 +43,7 @@ export const Mobile: React.FC = () => {
         <div className={css.reviewSection}>
           <div className={css.title}>Job info</div>
           <div className={css.edit}>
-            <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" onClick={() => console.log} />
+            <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" />
           </div>
         </div>
         <div className={css.info}>
@@ -97,7 +97,7 @@ export const Mobile: React.FC = () => {
         <div className={css.reviewSectionList}>
           <div className={css.title}>Social cause</div>
           <div className={css.edit}>
-            <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" onClick={() => console.log} />
+            <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" />
           </div>
         </div>
         <div className={css.list}>
@@ -108,7 +108,7 @@ export const Mobile: React.FC = () => {
         <div className={css.reviewSectionList}>
           <div className={css.title}>Skills</div>
           <div className={css.edit}>
-            <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" onClick={() => console.log} />
+            <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" />
           </div>
         </div>
         <div className={css.list}>
@@ -119,7 +119,7 @@ export const Mobile: React.FC = () => {
         <div className={css.reviewSectionList}>
           <div className={css.title}>Screening questions</div>
           <div className={css.edit}>
-            <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" onClick={() => console.log} />
+            <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" />
           </div>
         </div>
         <div className={css.list}>
