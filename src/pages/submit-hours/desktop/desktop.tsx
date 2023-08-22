@@ -57,9 +57,6 @@ export const Desktop = (): JSX.Element => {
       <img src="/icons/mail-inbox-envelope-check-black.svg" />
       <div>
         <div className={css.congratulationsText}>You marked this job as stopped.</div>
-        {/* <div className={css.congratulationsText}>
-            You have already withdrawn the offer from <span className={css.companyName}>{offer.offerer.meta.name}</span>.
-          </div> */}
       </div>
     </div>
   );
@@ -185,8 +182,8 @@ export const Desktop = (): JSX.Element => {
               </div>
             </Accordion>
           </div>
-          {printWhen(buttonsJSX, status === 'HIRED' && offer.project.payment_scheme !== "HOURLY")}
-          {printWhen(hourlyButtonsJSX, status === 'HIRED' && offer.project.payment_scheme === "HOURLY")}
+          {printWhen(buttonsJSX, status === 'HIRED' && offer.project.payment_scheme !== 'HOURLY')}
+          {printWhen(hourlyButtonsJSX, status === 'HIRED' && offer.project.payment_scheme === 'HOURLY')}
         </Card>
       </TwoColumnCursor>
     </>
