@@ -1,10 +1,10 @@
-import {required} from "../../core/form";
-import {FormModel} from "../../core/form/useForm/useForm.types";
+import { required } from '../../core/form';
+import { FormModel } from '../../core/form/useForm/useForm.types';
 
 export const formModel: FormModel = {
-    // TODO add start and end date
-    total_hours: {
-        initialValue: '',
-        validators: [required()],
-    },
+  // TODO add start and end date
+  total_hours: {
+    initialValue: '',
+    validators: [required()],
+  },
 };

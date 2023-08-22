@@ -61,7 +61,7 @@
 
   &__text {
     align-self: flex-start;
-    color: --var(color-gray-dark);
+    color: var(--color-gray-dark);
 
     & + .connect__text {
       margin-top: 16px;
