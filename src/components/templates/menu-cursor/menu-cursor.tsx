@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
 import { SwitchAccount } from './components/switch-account/switch-account';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
 import { Search } from 'src/components/atoms/search/search';
 import { PayloadModel } from 'src/pages/search/desktop/search.types';
@@ -18,8 +18,15 @@ export const MenuCursor = (): JSX.Element => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
-  const [accListVisibility, setAccListVisibility] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [accListVisibility, setAccListVisibility] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  useEffect(() => {
+    const searchStrParam = route.current?.search?.q as string;
+    if (searchStrParam) {
+      setSearchValue(searchStrParam);
+    }
+  }, []);
 
   function navigateToSearch(q: string) {
     navigate({
