@@ -26,7 +26,7 @@ export const Desktop: React.FC = () => {
           <Button onClick={submit} disabled={!(otpValue.length === 6)}>
             Verify
           </Button>
-          <Button font-weight="normal" border={0} color="white" onClick={onResendOtp}>
+          <Button weight="normal" removeBorder color="white" onClick={onResendOtp}>
             Resend code
           </Button>
         </div>

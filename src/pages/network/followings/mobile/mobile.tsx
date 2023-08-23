@@ -31,7 +31,7 @@ export const Mobile: React.FC = () => {
             </div>
             <Button
               size="s"
-              width="6.5rem"
+              className="w6-5"
               color={followStatusUser(list.identity_id) ? 'blue' : 'white'}
               onClick={() =>
                 followStatusUser(list.identity_id)

@@ -60,7 +60,7 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
     <>
       <div className={css.uploadYourResume}>Upload your resume</div>
       <div className={css.acceptedType}>DOC, DOCX, PDF (10MB)</div>
-      <Button position="relative" icon="/icons/attachment.svg" width="9.75rem" size="s" color="white">
+      <Button className="relative w9-75" icon="/icons/attachment.svg" size="s" color="white">
         <input onChange={onResumeLoad} type="file" className={css.fileInput} />
         Upload File
       </Button>

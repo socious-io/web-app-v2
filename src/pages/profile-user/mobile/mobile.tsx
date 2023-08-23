@@ -98,7 +98,7 @@ export const Mobile = (): JSX.Element => {
   );
 
   const editButtonJSX = (
-    <Button onClick={navigateToEdit} color="white" width="6.5rem">
+    <Button onClick={navigateToEdit} color="white" className="w6-5">
       Edit
     </Button>
   );
@@ -108,7 +108,7 @@ export const Mobile = (): JSX.Element => {
 
   const connectJSX = (
     <Button
-      width="8.5rem"
+      className="w8-5"
       onClick={() => setOpenConnectModal(true)}
       disabled={connectStatus === 'PENDING'}
       color={connectStatus === 'PENDING' ? 'white' : 'blue'}

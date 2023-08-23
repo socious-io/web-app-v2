@@ -225,7 +225,7 @@ export const Mobile = () => {
   const headerJSX = (
     <div className={css.header}>
       <div className={css.organization}>
-        <Button onClick={navigateToCreateOrg} color="white" width="160px">
+        <Button onClick={navigateToCreateOrg} color="white" className="w160px">
           Add organization
         </Button>
         <div className={css.dotIcon}>

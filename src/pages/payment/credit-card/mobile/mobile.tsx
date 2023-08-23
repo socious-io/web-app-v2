@@ -9,6 +9,7 @@ import { config } from 'src/config';
 import { endpoint } from 'src/core/endpoints';
 import { Offer } from 'src/core/types';
 import css from './mobile.module.scss';
+import clsx from 'clsx';
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { dialog } from 'src/core/dialog/dialog';
 
@@ -97,7 +98,7 @@ export const Mobile: React.FC = () => {
           </Button>
           <Button
             color="white"
-            className={`${css['footer__btn']} ${css['footer__btn--cancel']}`}
+            className={clsx(css['footer__btn'], css['footer__btn--cancel'])}
             onClick={() => history.back()}
           >
             Cancel

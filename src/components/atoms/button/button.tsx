@@ -4,7 +4,7 @@ import { hapticsImpactLight } from '../../../core/haptic/haptic';
 import clsx from 'clsx';
 
 export function Button(props: ButtonProps): JSX.Element {
-  const { color, disabled, size, type, icon, className, children, ...rest } = props;
+  const { color, disabled, size, type, icon, className, children, weight, removeBorder, ...rest } = props;
 
   function onClick() {
     hapticsImpactLight();
@@ -17,7 +17,14 @@ export function Button(props: ButtonProps): JSX.Element {
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={clsx(css.button, className, color && css[color], size && css[`size-${size}`])}
+      className={clsx(
+        css.button,
+        className,
+        color && css[color],
+        size && css[`size-${size}`],
+        weight && css[weight],
+        removeBorder && css.removeBorder
+      )}
       {...rest}
     >
       {icon && <img height={18} src={icon} alt={icon} />}
@@ -31,4 +38,5 @@ Button.defaultProps = {
   disabled: false,
   size: 'm',
   type: 'button',
+  weight: 'semi-bold',
 };

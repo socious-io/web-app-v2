@@ -1,0 +1,323 @@
+@import 'src/styles/mixins';
+
+body {
+  .relative {
+    position: relative;
+  }
+
+  .display-none {
+    display: none;
+  }
+
+  .invisible {
+    visibility: hidden;
+  }
+
+  .block {
+    display: block;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .inline {
+    display: inline;
+  }
+
+  .inline-block {
+    display: inline-block;
+  }
+
+  .inline-flex {
+    display: inline-flex;
+  }
+
+  .ws-nowrap {
+    white-space: nowrap;
+  }
+
+  .ws-preline {
+    white-space: pre-line;
+  }
+
+  .overflow-auto {
+    overflow: auto;
+  }
+
+  .break-all {
+    word-break: break-all;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .column {
+    flex-direction: column;
+  }
+
+  .row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  .wrap {
+    flex-wrap: wrap;
+  }
+
+  .nowrap {
+    flex-wrap: nowrap;
+  }
+
+  .wrap-reverse {
+    flex-wrap: wrap-reverse;
+  }
+
+  .flex-center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .justify-center {
+    justify-content: center;
+  }
+
+  .justify-between {
+    justify-content: space-between;
+  }
+
+  .justify-evenly {
+    justify-content: space-evenly;
+  }
+
+  .justify-around {
+    justify-content: space-around;
+  }
+
+  .justify-end {
+    justify-content: flex-end;
+  }
+
+  .justify-start {
+    justify-content: flex-start;
+  }
+
+  .align-start {
+    align-items: flex-start;
+  }
+
+  .align-center {
+    align-items: center;
+  }
+
+  .align-end {
+    align-items: flex-end;
+  }
+
+  .align-stretch {
+    align-items: stretch;
+  }
+
+  .flex-auto {
+    flex: 1 1 auto;
+  }
+
+  .flex1 {
+    flex: 1;
+  }
+
+  .shrink0 {
+    flex-shrink: 0;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .underline {
+    text-decoration-line: underline;
+  }
+
+  .link {
+    &:hover {
+      text-decoration-line: underline;
+    }
+  }
+
+  .scroll-grid {
+    @include hide-scrollbar();
+    overflow-x: auto;
+
+    .grid-block {
+      overflow: visible;
+    }
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+
+  .h-100 {
+    height: 100%;
+  }
+
+  .w-50 {
+    width: 50%;
+  }
+
+  .h-50 {
+    height: 50%;
+  }
+
+  .text-ellipsis {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  .min-width0 {
+    min-width: 0;
+  }
+
+  .lh-1 {
+    line-height: 1.5;
+  }
+}
+
+$spaceAmounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100);
+
+body {
+  @for $i from 0 through 200 {
+    $decimalValue: $i * 0.05;
+    $integerPart: floor($decimalValue);
+    $decimalPart: ($decimalValue - $integerPart) * 100;
+    $classText: #{$integerPart}-#{$decimalPart};
+
+    .w#{$classText} {
+      width: #{$decimalValue}rem;
+    }
+    .gap#{$classText} {
+      gap: #{$decimalValue}rem;
+    }
+    .m#{$classText} {
+      margin: #{$decimalValue}rem;
+    }
+    .mv#{$classText} {
+      margin-top: #{$decimalValue}rem;
+      margin-bottom: #{$decimalValue}rem;
+    }
+    .mh#{$classText} {
+      margin-left: #{$decimalValue}rem;
+      margin-right: #{$decimalValue}rem;
+    }
+    .mt#{$classText} {
+      margin-top: #{$decimalValue}rem;
+    }
+    .mb#{$classText} {
+      margin-bottom: #{$decimalValue}rem;
+    }
+    .ml#{$classText} {
+      margin-left: #{$decimalValue}rem;
+    }
+    .mr#{$classText} {
+      margin-right: #{$decimalValue}rem;
+    }
+    .p#{$classText} {
+      padding: #{$decimalValue}rem;
+    }
+    .pv#{$classText} {
+      padding-top: #{$decimalValue}rem;
+      padding-bottom: #{$decimalValue}rem;
+    }
+    .ph#{$classText} {
+      padding-left: #{$decimalValue}rem;
+      padding-right: #{$decimalValue}rem;
+    }
+    .pt#{$classText} {
+      padding-top: #{$decimalValue}rem;
+    }
+    .pb#{$classText} {
+      padding-bottom: #{$decimalValue}rem;
+    }
+    .pl#{$classText} {
+      padding-left: #{$decimalValue}rem;
+    }
+    .pr#{$classText} {
+      padding-right: #{$decimalValue}rem;
+    }
+  }
+
+  @for $i from 0 through 40 {
+    $space: $i * 5;
+
+    .w#{$space}px {
+      width: #{$space}px;
+    }
+
+    .gap#{$space}px {
+      gap: #{$space}px;
+    }
+    .m#{$space}px {
+      margin: #{$space}px;
+    }
+    .mv#{$space}px {
+      margin-top: #{$space}px;
+      margin-bottom: #{$space}px;
+    }
+    .mh#{$space}px {
+      margin-left: #{$space}px;
+      margin-right: #{$space}px;
+    }
+    .mt#{$space}px {
+      margin-top: #{$space}px;
+    }
+    .mb#{$space}px {
+      margin-bottom: #{$space}px;
+    }
+    .ml#{$space}px {
+      margin-left: #{$space}px;
+    }
+    .mr#{$space}px {
+      margin-right: #{$space}px;
+    }
+    .p#{$space}px {
+      padding: #{$space}px;
+    }
+    .pv#{$space}px {
+      padding-top: #{$space}px;
+      padding-bottom: #{$space}px;
+    }
+    .ph#{$space}px {
+      padding-left: #{$space}px;
+      padding-right: #{$space}px;
+    }
+    .pt#{$space}px {
+      padding-top: #{$space}px;
+    }
+    .pb#{$space}px {
+      padding-bottom: #{$space}px;
+    }
+    .pl#{$space}px {
+      padding-left: #{$space}px;
+    }
+    .pr#{$space}px {
+      padding-right: #{$space}px;
+    }
+  }
+}
+
+$sizes: (10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40);
+
+body {
+  @each $size in $sizes {
+    .fs#{$size} {
+      font-size: #{$size}px;
+      line-height: #{$size + 4}px;
+    }
+  }
+}

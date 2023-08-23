@@ -8,4 +8,6 @@ export type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'o
   size?: 's' | 'm' | 'l';
   icon?: string;
   type?: 'submit' | 'reset' | 'button' | undefined;
+  weight?: "normal" | "medium" | "bold" | "heavy";
+  removeBorder?: boolean;
 };
