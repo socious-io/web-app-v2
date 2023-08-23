@@ -13,27 +13,10 @@ export const Dropdown = (props: DropdownProps): JSX.Element => {
   const [filteredList, setFilteredList] = useState(props.list);
   const [visibility, setSubMenuVisibility] = useState(false);
 
-  function getInitialValue(): ControlPrimitiveValue {
-    if (props.name && props.register) {
-      return props.register?.controls[props.name].value;
-    } else if (props.value) {
-      return props.value;
-    } else {
-      return '';
-    }
-  }
-
   useEffect(() => {
-    const initialValue = getInitialValue();
-    const obj = props.list.find((item) => item.value === initialValue);
-    if (obj) {
-      /** @why "!" is safe here as ref is available in first render */
-      ref!.current!.value = obj.label;
+    if (props.defaultValue) {
+      ref!.current!.value = props.defaultValue;
     }
-    // if (hasInitialValue(props)) {
-    /** @why "!" is safe here as ref is available in first render */
-    //   ref!.current!.value = getInitialValue(props);
-    // }
   }, []);
 
   useEffect(() => {
