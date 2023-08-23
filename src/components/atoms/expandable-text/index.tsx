@@ -4,6 +4,7 @@ import { TextClickableURLs } from '../text-clickable-urls';
 import { ExpandableTextProps } from './expandable-text.types';
 import { convertMarkdownToJSX } from 'src/core/convert-md-to-jsx';
 import css from './expandable-text.module.scss';
+import { removeIncompleteOpeningTags } from 'src/core/remove-incomplete-tags';
 
 export const ExpandableText: React.FC<ExpandableTextProps> = ({
   text,
@@ -11,8 +12,9 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
   clickableUrls = true,
   isMarkdown = false,
 }) => {
-  const [maintext, setMainText] = useState(text);
-  const expect = text.slice(0, expectedLength);
+  const [mainText, setMainText] = useState(text);
+
+  const expect = removeIncompleteOpeningTags(text.slice(0, expectedLength));
   const viewMoreCondition = expect.length < text.length;
   const [shouldViewMore, setShouldViewMore] = useState(viewMoreCondition);
 
@@ -28,17 +30,17 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
 
   const renderText = () => {
     if (clickableUrls && !isMarkdown) {
-      return <TextClickableURLs text={maintext} />;
+      return <TextClickableURLs text={mainText} />;
     } else if (isMarkdown) {
-      return convertMarkdownToJSX(maintext);
+      return convertMarkdownToJSX(mainText);
     }
-    return maintext;
+    return mainText;
   };
 
   return (
     <div className={css.expect}>
       {renderText()}
-      {printWhen(<>... </>, maintext.length < text.length)}
+      {printWhen(<>... </>, mainText.length < text.length)}
       {printWhen(
         <span className={css.expect__seeMore} onClick={toggleExpect}>
           See more
