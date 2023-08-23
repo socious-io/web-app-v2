@@ -14,8 +14,8 @@ export const Typography = (props: TypographyProps): JSX.Element => {
   };
 
   const typeList: TypeList = {
-    heading: { fontFamily: 'Hahmlet', fontWeight: 600 },
-    body: { fontFamily: 'Work Sans' },
+    heading: { fontFamily: 'Inter', fontWeight: 600 },
+    body: { fontFamily: 'Inter' },
   };
 
   const styles: CSSProperties = {
