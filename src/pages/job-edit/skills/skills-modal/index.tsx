@@ -31,7 +31,6 @@ export const SkillsModal: React.FC<SkillsModalProps> = ({ open, onClose, onDone,
           {
             children: 'Save changes',
             disabled: !isValid,
-            color: 'primary',
             onClick: () => {
               editSkills();
               onClose();

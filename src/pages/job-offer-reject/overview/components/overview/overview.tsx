@@ -24,6 +24,7 @@ export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
   const [openSkillsModal, setOpenSkillsModal] = useState<boolean>(false);
   const [openSocialCausesModal, setOpenSocialCausesModal] = useState<boolean>(false);
   const [overviewData, setOverviewData] = useState(data);
+
   const paymentRange = (
     <div className={css.group}>
       <div className={css.groupTitle}>
@@ -132,20 +133,20 @@ export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
         jobOverview={overviewData}
         open={openInfoModal}
         onClose={() => setOpenInfoModal(false)}
-        onDone={(newJobOvervio) => setOverviewData({ ...overviewData, ...newJobOvervio })}
+        onDone={(newOverviewData) => setOverviewData({ ...overviewData, ...newOverviewData })}
       />
       <SkillsModal
         jobOverview={overviewData}
         open={openSkillsModal}
         onBack={() => console.log}
         onClose={() => setOpenSkillsModal(false)}
-        onDone={(newJobOvervio) => setOverviewData({ ...overviewData, ...newJobOvervio })}
+        onDone={(newOverviewData) => setOverviewData({ ...overviewData, ...newOverviewData })}
       />
       <SocialCausesModal
         jobOverview={overviewData}
         open={openSocialCausesModal}
         onClose={() => setOpenSocialCausesModal(false)}
-        onDone={(newJobOvervio) => setOverviewData({ ...overviewData, ...newJobOvervio })}
+        onDone={(newOverviewData) => setOverviewData({ ...overviewData, ...newOverviewData })}
       />
     </div>
   );

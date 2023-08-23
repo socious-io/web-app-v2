@@ -29,7 +29,6 @@ export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onCl
         }}
         buttons={[
           {
-            color: 'primary',
             children: 'Save changes',
             disabled: !isValid,
             onClick: () => {

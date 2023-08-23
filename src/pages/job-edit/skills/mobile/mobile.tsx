@@ -54,7 +54,7 @@ export const Mobile = (): JSX.Element => {
       </div>
 
       <div className={css.bottom}>
-        <Button disabled={!isValid} color="primary" onClick={editSkills}>
+        <Button disabled={!isValid} onClick={editSkills}>
           Save changes
         </Button>
         <Button color="white" onClick={onBack}>
