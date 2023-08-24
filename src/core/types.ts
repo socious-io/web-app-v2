@@ -354,6 +354,7 @@ export type Offer = {
   offer_message: string;
   assignment_total: number;
   due_date: string;
+  currency?: 'USD' | 'JPY';
   status: 'HIRED' | 'CLOSED' | 'APPROVED' | 'HIRED';
   project: {
     description: string;
@@ -400,6 +401,7 @@ export type OfferPayload = {
   total_hours: string;
   payment_mode: string;
   crypto_currency_address?: string;
+  currency?: string;
 };
 
 export type CreatePostPayload = {

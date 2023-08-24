@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import Dapp from 'src/dapp';
+import { StripeProfileResp } from 'src/core/types';
 import { useMatch } from '@tanstack/react-location';
 import { useAccount } from 'wagmi';
 import { Resolver } from './offer-received.types';
 import { StatusKeys } from 'src/constants/APPLICANT_STATUS';
 import { endpoint } from 'src/core/endpoints';
+import { useForm } from 'src/core/form';
 import { dialog } from 'src/core/dialog/dialog';
-import { findTokenRate } from './offer-received.services';
+import { findTokenRate, getStripeLink, getSrtipeProfile, formModel } from './offer-received.services';
 
 export const useOfferReceivedShared = () => {
   const { offer, media } = useMatch().ownData as Resolver;
@@ -18,10 +20,10 @@ export const useOfferReceivedShared = () => {
   const [status, setStatus] = useState<StatusKeys>(offer?.status as StatusKeys);
   const [tokenRate, setTokenRate] = useState(1);
 
-  let unit = "$";
+  let unit = offer.currency === 'JPY' ? '¥' : '$';
   if (offer.crypto_currency_address) {
-    Dapp.NETWORKS.map(n => {
-      const token = n.tokens.filter(t => offer.crypto_currency_address === t.address)[0];
+    Dapp.NETWORKS.map((n) => {
+      const token = n.tokens.filter((t) => offer.crypto_currency_address === t.address)[0];
       if (token) unit = token.symbol;
     });
   }
@@ -62,8 +64,44 @@ export const useOfferReceivedShared = () => {
   }
 
   function equivalentUSD() {
-    return Math.round((offer.assignment_total * tokenRate) * 100) / 100;
+    return Math.round(offer.assignment_total * tokenRate * 100) / 100;
   }
 
   return { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD };
+};
+
+export const useWalletShared = () => {
+  const { offer } = useMatch().ownData as Resolver;
+  const form = useForm(formModel);
+  const [stripeLink, setStripeLink] = useState('');
+  const [stripeProfile, setStripeProfile] = useState(null);
+
+  async function onSelectCountry(value: string) {
+    try {
+      const result = await getStripeLink(value, offer.currency === 'JPY');
+      const {
+        link: { url },
+      } = result;
+      setStripeLink(url);
+    } catch (err: any) {
+      dialog.alert({
+        message: err?.response?.data.error || err?.message,
+        title: 'Failed',
+      });
+    }
+  }
+
+  useEffect(() => {
+    getSrtipeProfile(offer.currency === 'JPY').then((r) => {
+      const { data } = r?.external_accounts || {};
+      setStripeProfile(data);
+    });
+  }, []);
+
+  return {
+    form,
+    stripeLink,
+    stripeProfile,
+    onSelectCountry,
+  };
 };
