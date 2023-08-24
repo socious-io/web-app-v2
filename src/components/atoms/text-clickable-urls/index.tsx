@@ -1,4 +1,4 @@
-import { TextClickableUrlsProps } from './text-clickable-urls';
+import { TextClickableUrlsProps } from './text-clickable-urls.types';
 import css from './text-clickable-urls.module.scss';
 
 export const TextClickableURLs: React.FC<TextClickableUrlsProps> = ({ text }) => {
