@@ -1,5 +1,18 @@
 {
   "singleQuote": true,
   "printWidth": 120,
-  "semi": true
+  "semi": true,
+  "importOrder": [
+    "^(?!(@|[./])).*",
+    "^@(types)(.*)$",
+    "^@(dapp|store|hooks)(.*)$",
+    "^@(atoms|molecules|organisms|templates|core|pages)(.*)$",
+    "^@(assets|constants)(.*)$",
+    "^@(styles)(.*)$",
+    "^@(translations)(.*)$",
+    "^[./]",
+    "^.*$",
+    ".scss$"
+  ],
+  "importOrderSeparation": true
 }
