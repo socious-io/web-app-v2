@@ -2,9 +2,10 @@ import { forwardRef, useState } from 'react';
 import { printWhen } from '../../../core/utils';
 import css from './input.module.scss';
 import { InputProps } from './input.types';
+import clsx from 'clsx';
 
 export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
-  const { optional = false, variant = 'outline', type, ...rest } = props;
+  const { optional = false, variant = 'outline', type, inputClassName, ...rest } = props;
   const [outline, setOutline] = useState(false);
   const controlErrors = props?.register?.controls[props.name]?.errors || [];
   const isDirty = props.register?.controls[props.name].isDirty;
@@ -17,7 +18,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
       className={css.eye}
       onClick={() => setPasswordVisible(!passwordVisible)}
     >
-      <img src="/icons/eye-black.svg" />
+      <img src="/icons/eye-black.svg" alt="eye" />
     </div>
   );
 
@@ -48,7 +49,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
       <div
         onFocus={() => setOutline(true)}
         onBlur={() => setOutline(false)}
-        className={`${setClassName(variant)} ${props.className}`}
+        className={clsx(setClassName(variant), props.className)}
       >
         <label className={css.label} htmlFor={props.label}>
           {optional ? (
@@ -59,10 +60,7 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
             props.label
           )}
         </label>
-        <div
-          className={`${css.textbox} ${props.inputClassName}`}
-          style={{ borderColor: outline ? 'var(--color-primary-01)' : '' }}
-        >
+        <div className={clsx(css.textbox, outline && css.borderInput, inputClassName)}>
           <input
             className={css.input}
             id={props.label}
@@ -79,10 +77,10 @@ export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
   }
 
   return (
-    <div style={{ gridTemplateRows: '2.5rem' }} className={`${setClassName(variant)} ${props.className}`}>
+    <div style={{ gridTemplateRows: '2.5rem' }} className={clsx(setClassName(variant), props.className)}>
       <input
         id={props.label}
-        className={`${css.textbox} ${css.input} ${props.inputClassName}`}
+        className={clsx(css.textbox, css.input, inputClassName)}
         role="textbox"
         {...rest}
         {...props?.register?.bind(props.name)}
