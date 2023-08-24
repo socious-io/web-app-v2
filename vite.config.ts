@@ -5,7 +5,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 const aliases = {
-  '@assets': './src/assets/*',
+  '@assets': './src/assets',
   '@atoms': './src/components/atoms',
   '@molecules': './src/components/molecules',
   '@organisms': './src/components/organisms',
