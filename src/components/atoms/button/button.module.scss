@@ -21,3 +21,26 @@
 .button:disabled {
   opacity: 0.5;
 }
+
+.blue {
+  background-color: var(--color-primary-01);
+  border: 0;
+  color: var(--color-white);
+}
+
+.red {
+  background-color: var(--color-error-01);
+  border: 0;
+  color: var(--color-white);
+}
+
+.primary {
+  background-color: var(--color-primary-blue);
+  border: 0;
+  color: var(--color-white);
+}
+
+,
+.size-s {
+  height: 2.25rem;
+}

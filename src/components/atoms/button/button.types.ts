@@ -1,12 +1,11 @@
-import { CSSProperties } from 'react';
-
-export interface ButtonProps extends CSSProperties {
+export type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & {
+  disabled?: boolean;
+  className?: string;
+  fullWidth?: boolean;
+  onClick?: () => void;
+  onClickCapture?: React.MouseEventHandler<any>;
   color?: 'blue' | 'red' | 'white' | 'primary';
   size?: 's' | 'm' | 'l';
   icon?: string;
   type?: 'submit' | 'reset' | 'button' | undefined;
-  children: React.ReactNode;
-  className?: string;
-  disabled?: boolean;
-  onClick?: () => void;
-}
+};

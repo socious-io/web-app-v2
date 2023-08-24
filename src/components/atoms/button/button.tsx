@@ -1,36 +1,10 @@
 import css from './button.module.scss';
 import { ButtonProps } from './button.types';
-import { CSSProperties } from 'react';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
-
-const colorStyle: Record<NonNullable<ButtonProps['color']>, CSSProperties> = {
-  blue: {
-    backgroundColor: 'var(--color-primary-01)',
-    border: 0,
-    color: 'var(--color-white)',
-  },
-  red: {
-    backgroundColor: 'var(--color-error-01)',
-    border: 0,
-    color: 'var(--color-white)',
-  },
-  primary: {
-    backgroundColor: 'var(--color-primary-blue)',
-    border: 0,
-    color: 'var(--color-white)',
-  },
-  white: {},
-};
-const sizeStyle: Record<NonNullable<ButtonProps['size']>, CSSProperties> = {
-  s: {
-    height: '2.25rem',
-  },
-  m: {},
-  l: {},
-};
+import clsx from 'clsx';
 
 export function Button(props: ButtonProps): JSX.Element {
-  const { color = 'blue', disabled = false, size = 'm', type = 'button', ...rest } = props;
+  const { color, disabled, size, type, icon, className, children, ...rest } = props;
 
   function onClick() {
     hapticsImpactLight();
@@ -43,11 +17,18 @@ export function Button(props: ButtonProps): JSX.Element {
       type={type}
       onClick={onClick}
       disabled={disabled}
-      style={{ ...colorStyle[color], ...sizeStyle[size], ...rest }}
-      className={`${css.button} ${props.className}`}
+      className={clsx(css.button, className, color && css[color], size && css[`size-${size}`])}
+      {...rest}
     >
-      {props.icon && <img height={18} src={props.icon} />}
-      {props.children}
+      {icon && <img height={18} src={icon} alt={icon} />}
+      {children}
     </button>
   );
 }
+
+Button.defaultProps = {
+  color: 'blue',
+  disabled: false,
+  size: 'm',
+  type: 'button',
+};
