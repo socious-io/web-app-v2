@@ -38,7 +38,6 @@ import store from 'src/store/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getIdentities } from '../api';
 import { useEffect, useState } from 'react';
-import { getJob } from 'src/pages/job-edit/info/info.services';
 
 export const routes: Route[] = [
   {
@@ -684,6 +683,11 @@ export const routes: Route[] = [
                   import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => (
                     <m.ProfileOrganizationEdit />
                   )),
+              },
+              {
+                path: 'jobs',
+                element: () =>
+                  import('../../pages/jobs-index/jobs-index.container').then((m) => <m.JobsIndexContainer />),
               },
             ],
           },
