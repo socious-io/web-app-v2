@@ -41,7 +41,9 @@ export const useProfileOrganizationShared = () => {
       return shortname;
     }
   }
-
+  function navigateJobs() {
+    navigate({ to: `/profile/organizations/${resolver.user.shortname}/jobs` });
+  }
   function onClose() {
     hapticsImpactLight();
     navigate({ to: '/jobs' });
@@ -105,5 +107,6 @@ export const useProfileOrganizationShared = () => {
     showMessageIcon,
     onMessage,
     updateOrganization,
+    navigateJobs,
   };
 };
