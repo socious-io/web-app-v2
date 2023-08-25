@@ -1,5 +1,5 @@
-import { Button } from 'src/components/atoms/button/button';
-import { Input } from 'src/components/atoms/input/input';
+import { Button } from '@atoms/button/button';
+import { Input } from '@atoms/input/input';
 import { useEmailShared } from '../email.shared';
 import css from './mobile.module.scss';
 

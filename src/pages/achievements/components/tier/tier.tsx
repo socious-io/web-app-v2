@@ -1,10 +1,10 @@
-import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
+import { CardSlideUp } from '@templates/card-slide-up/card-slide-up';
 import css from './tier.module.scss';
 import { TierProps } from './tier.types';
 import { useState } from 'react';
 import { TierSlide } from '../tier-slide/tier-slide';
-import { TierBadge } from 'src/components/atoms/tier-badge/tier-badge';
-import { Modal } from 'src/components/templates/modal/modal';
+import { TierBadge } from '@atoms/tier-badge/tier-badge';
+import { Modal } from '@templates/modal/modal';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const Tier = (props: TierProps): JSX.Element => {

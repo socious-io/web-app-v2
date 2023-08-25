@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
-import { Button } from 'src/components/atoms/button/button';
-import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import Card from '@atoms/card';
+import { Button } from '@atoms/button/button';
+import { Accordion } from '@atoms/accordion/accordion';
+import { JobCardList } from '@organisms/job-card-list/job-card-list';
+import { CardMenu } from '@molecules/card-menu/card-menu';
+import { ProfileCard } from '@templates/profile-card';
 import { SocialCausesModal } from 'src/pages/job-create/social-causes/social-causes-modal';
 import { printWhen } from 'src/core/utils';
 import { getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
@@ -14,7 +14,7 @@ import { useMyJobShared } from '../my-job.shared';
 import { MyJobs } from '../my-jobs.types';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
-import { BackLink } from 'src/components/molecules/back-link';
+import { BackLink } from '@molecules/back-link';
 
 export const Desktop: React.FC = () => {
   const resolver = useMatch();

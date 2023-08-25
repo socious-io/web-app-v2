@@ -1,8 +1,8 @@
 import css from './intro.module.scss';
-import { Steps } from '../../components/atoms/steps-v2/steps';
+import { Steps } from '@atoms/steps-v2/steps';
 import { list } from './intro.constants';
-import { Typography } from '../../components/atoms/typography/typography';
-import { Button } from '../../components/atoms/button/button';
+import { Typography } from '@atoms/typography/typography';
+import { Button } from '@atoms/button/button';
 import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';

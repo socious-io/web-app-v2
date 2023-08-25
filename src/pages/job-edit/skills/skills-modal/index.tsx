@@ -1,6 +1,6 @@
-import { WebModal } from 'src/components/templates/web-modal';
-import { Search } from 'src/components/atoms/search/search';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { WebModal } from '@templates/web-modal';
+import { Search } from '@atoms/search/search';
+import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
 import { SkillsModalProps } from './skills-modal.types';
 import { useSkillsShared } from '../skills.shared';
 import css from './skills-modal.module.scss';

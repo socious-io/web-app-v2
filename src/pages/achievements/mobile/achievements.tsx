@@ -1,5 +1,5 @@
-import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
-import { TwoThird } from '../../../components/templates/two-third/two-third';
+import { CardSlideUp } from '@templates/card-slide-up/card-slide-up';
+import { TwoThird } from '@templates/two-third/two-third';
 import { ClaimPoints } from '../components/claim-points/claim-points';
 import { Reward } from '../components/reward/reward';
 import { getTierRowBasedOnCurrentTier } from '../achievements.services';

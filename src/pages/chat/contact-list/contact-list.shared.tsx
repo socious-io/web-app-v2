@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
+import { ContactItem } from '@molecules/contact-item/contact-item.types';
 import { Resolver } from './contact-list.types';
 import {
   chatEntityToContactListAdaptor,

@@ -4,7 +4,7 @@ import { JobDetailCard } from 'src/pages/job-detail/components/job-detail-card/j
 import { getScreeningQuestions } from 'src/pages/job-offer-reject/job-offer-reject.services';
 import { DetailOutletProps } from './detail-outlet.types';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { Job } from '@organisms/job-list/job-list.types';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';

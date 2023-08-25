@@ -1,10 +1,10 @@
-import { Card } from 'src/components/atoms/card/card';
+import Card from '@atoms/card';
 import css from './user-profile-card.module.scss';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Avatar } from '@atoms/avatar/avatar';
 import { printWhen } from 'src/core/utils';
-import { Divider } from 'src/components/templates/divider/divider';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { Button } from 'src/components/atoms/button/button';
+import { Divider } from '@templates/divider/divider';
+import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
+import { Button } from '@atoms/button/button';
 import { UserProfileCardProps } from './user-profile-card.types';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
 import { useState } from 'react';
+import clsx from 'clsx';
 
 function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
   if (shortname && COUNTRIES_DICT[shortname]) {
@@ -126,7 +127,7 @@ export const UserProfileCard = (props: UserProfileCardProps): JSX.Element => {
   //     </div>
   //   );
   return (
-    <Card className={css.card} padding={0}>
+    <Card className={clsx(css.card, "p0")}>
       <div className={css.header}>
         <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
           <div className={css.avatarContainer}>

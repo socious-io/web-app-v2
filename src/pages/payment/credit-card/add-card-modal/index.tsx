@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Modal } from 'src/components/templates/modal/modal';
-import { Button } from 'src/components/atoms/button/button';
+import { Modal } from '@templates/modal/modal';
+import { Button } from '@atoms/button/button';
 import { config } from 'src/config';
 import { endpoint } from 'src/core/endpoints';
 import { AddCardModalProps } from './add-card-modal.types';

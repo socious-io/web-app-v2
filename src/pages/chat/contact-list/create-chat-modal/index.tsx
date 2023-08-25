@@ -1,6 +1,6 @@
-import { Search } from 'src/components/atoms/search/search';
-import { Modal } from 'src/components/templates/modal/modal';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { Search } from '@atoms/search/search';
+import { Modal } from '@templates/modal/modal';
+import { ProfileView } from '@molecules/profile-view/profile-view';
 import { CreateChatModalProps } from './create-chat-modal.types';
 import css from './create-chat-modal.module.scss';
 

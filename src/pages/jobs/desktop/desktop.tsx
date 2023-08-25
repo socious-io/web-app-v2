@@ -1,8 +1,8 @@
 import { useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { JobList } from 'src/components/organisms/job-list/job-list';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import { ProfileCard } from '@templates/profile-card';
+import { CardMenu } from '@molecules/card-menu/card-menu';
+import { JobList } from '@organisms/job-list/job-list';
 import { printWhen } from 'src/core/utils';
 import { useJobsShared } from '../jobs.shared';
 import css from './desktop.module.scss';

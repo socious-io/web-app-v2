@@ -1,5 +1,5 @@
 import css from './profile-view.module.scss';
-import { Avatar } from '../../atoms/avatar/avatar';
+import { Avatar } from '@atoms/avatar/avatar';
 import { ProfileViewProps } from './profile-view.types';
 import { useNavigate } from '@tanstack/react-location';
 import { CSSProperties } from 'react';

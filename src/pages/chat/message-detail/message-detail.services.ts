@@ -8,7 +8,7 @@ import {
 } from '../../../core/types';
 import { get, post } from '../../../core/http';
 import { MessagesReq } from '../../../core/types';
-import { Message } from '../../../components/atoms/message/message.types';
+import { Message } from '@atoms/message/message.types';
 import { OnPostMessageParams, ParticipantDetail } from './message-detail.types';
 
 export async function getMessagesById(payload: { id: string; page: number }): Promise<Pagination<MessagesReq[]>> {

@@ -1,4 +1,4 @@
-import { Badge } from '../../atoms/badge/badge';
+import { Badge } from '@atoms/badge/badge';
 import { ProfileView } from '../profile-view/profile-view';
 import css from './contact-item.module.scss';
 import { ContactItemProps } from './contact-item.types';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Input } from '../../components/atoms/input/input';
-import { Otp } from '../../components/atoms/otp/otp';
+import { Input } from '@atoms/input/input';
+import { Otp } from '@atoms/otp/otp';
 import css from './sign-up.module.scss';
 import { SignUpProps } from './sign-up.types';
 

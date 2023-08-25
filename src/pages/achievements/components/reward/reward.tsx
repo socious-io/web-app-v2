@@ -1,4 +1,4 @@
-import { Divider } from 'src/components/templates/divider/divider';
+import { Divider } from '@templates/divider/divider';
 import css from './reward.module.scss';
 import { RewardProps } from './reward.types';
 

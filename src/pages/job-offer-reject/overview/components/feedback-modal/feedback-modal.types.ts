@@ -1,5 +1,5 @@
-import { ButtonProps } from 'src/components/atoms/button/button.types';
-import { ModalProps } from 'src/components/templates/modal/modal.types';
+import { ButtonProps } from '@atoms/button/button.types';
+import { ModalProps } from '@templates/modal/modal.types';
 
 export type Rate = 'satisfactory' | 'unsatisfactory';
 

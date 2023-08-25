@@ -1,4 +1,4 @@
-import { ProfileView } from '../../../../../components/molecules/profile-view/profile-view';
+import { ProfileView } from '@molecules/profile-view/profile-view';
 import css from './header.module.scss';
 import { HeaderProps } from './header.types';
 

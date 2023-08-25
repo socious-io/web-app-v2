@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useMatch } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
-import { WebModal } from 'src/components/templates/web-modal';
-import { Input } from 'src/components/atoms/input/input';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { WebModal } from '@templates/web-modal';
+import { Input } from '@atoms/input/input';
+import { Textarea } from '@atoms/textarea/textarea';
+import { Divider } from '@templates/divider/divider';
+import { Dropdown } from '@atoms/dropdown-v2/dropdown';
+import { RadioGroup } from '@molecules/radio-group/radio-group';
 import { COUNTRIES, COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { PROJECT_REMOTE_PREFERENCES_V2, translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';

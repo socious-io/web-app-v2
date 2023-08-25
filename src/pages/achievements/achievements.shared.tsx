@@ -3,12 +3,12 @@ import { evaluateTier } from './mobile/achievements.service';
 import { useMatch } from '@tanstack/react-location';
 import { Loader } from './achievements.types';
 import { Header } from './components/header/header';
-import { ImpactCategoryList } from 'src/components/organisms/impact-category-list/impact-category-list';
-import { Tabs } from 'src/components/atoms/tabs/tabs';
-import { Tab } from 'src/components/atoms/tabs/tabs.types';
-import { JobHistoryList } from 'src/components/organisms/job-history-list/job-history-list';
+import { ImpactCategoryList } from '@organisms/impact-category-list/impact-category-list';
+import { Tabs } from '@atoms/tabs/tabs';
+import { Tab } from '@atoms/tabs/tabs.types';
+import { JobHistoryList } from '@organisms/job-history-list/job-history-list';
 import { Tier } from './components/tier/tier';
-import { JobHistoryItemProps } from 'src/components/molecules/job-history-item/job-history-item.types';
+import { JobHistoryItemProps } from '@molecules/job-history-item/job-history-item.types';
 import { Endpoints } from 'src/core/endpoints/index.types';
 import { isoToStandard } from 'src/core/time';
 

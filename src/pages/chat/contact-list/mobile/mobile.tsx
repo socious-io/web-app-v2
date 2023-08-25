@@ -2,12 +2,12 @@ import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Fab } from 'src/components/atoms/fab/fab';
-import { Header } from 'src/components/atoms/header/header';
+import { Avatar } from '@atoms/avatar/avatar';
+import { Fab } from '@atoms/fab/fab';
+import { Header } from '@atoms/header/header';
 import { CreateChatModal } from '../create-chat-modal';
-import { ContactList } from 'src/components/organisms/contact-list/contact-list';
-import { HeaderStaticMobile } from 'src/components/templates/header-static-mobile/header-static-mobile';
+import { ContactList } from '@organisms/contact-list/contact-list';
+import { HeaderStaticMobile } from '@templates/header-static-mobile/header-static-mobile';
 import { useContactListShared } from '../contact-list.shared';
 
 export const Mobile = (): JSX.Element => {

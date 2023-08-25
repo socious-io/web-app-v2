@@ -1,11 +1,11 @@
 import { useNavigate } from '@tanstack/react-location';
 import { socialCausesToCategory } from 'src/core/adaptors';
-import { Comment } from 'src/components/molecules/comment/comment';
-import { FeedItem } from 'src/components/molecules/feed-item/feed-item';
-import { SendBox } from 'src/components/molecules/send-box/send-box';
-import { Header } from 'src/components/atoms/header/header';
+import { Comment } from '@molecules/comment/comment';
+import { FeedItem } from '@molecules/feed-item/feed-item';
+import { SendBox } from '@molecules/send-box/send-box';
+import { Header } from '@atoms/header/header';
 import { usePostDetailShared } from '../post-detail.shared';
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { Feed } from '@organisms/feed-list/feed-list.types';
 import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import css from './mobile.module.scss';
 

@@ -1,4 +1,4 @@
-import { Card } from 'src/components/atoms/card/card';
+import Card from '@atoms/card';
 import { BackLinkProps } from './back-link.types';
 import css from './back-link.module.scss';
 

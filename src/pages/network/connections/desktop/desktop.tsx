@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
-import { Card } from 'src/components/atoms/card/card';
-import { BackLink } from 'src/components/molecules/back-link';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
-import { Modal } from 'src/components/templates/modal/modal';
+import Card from '@atoms/card';
+import { BackLink } from '@molecules/back-link';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import { Avatar } from '@atoms/avatar/avatar';
+import { ExpandableText } from '@atoms/expandable-text';
+import { Modal } from '@templates/modal/modal';
 import { printWhen } from 'src/core/utils';
 import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
 import { useConnectionsShared } from '../connections.shared';

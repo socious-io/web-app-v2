@@ -1,18 +1,18 @@
 import css from './mobile.module.scss';
 import { useState } from 'react';
 import { COUNTRIES } from '../../../../constants/COUNTRIES';
-import { Button } from '../../../../components/atoms/button/button';
-import { Input } from '../../../../components/atoms/input/input';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import { Divider } from '../../../../components/templates/divider/divider';
+import { Button } from '@atoms/button/button';
+import { Input } from '@atoms/input/input';
+import { Steps } from '@atoms/steps/steps';
+import { Textarea } from '@atoms/textarea/textarea';
+import { Divider } from '@templates/divider/divider';
 import { formIsInvalid } from '../profile.services';
 import { formModel } from '../profile.form';
-import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
-import { Dropdown } from '../../../../components/atoms/dropdown-v2/dropdown';
+import { Checkbox } from '@atoms/checkbox/checkbox';
+import { Dropdown } from '@atoms/dropdown-v2/dropdown';
 import { getCityList } from '../../../job-create/info/info.services';
 import { citiesToCategories } from '../../../../core/adaptors';
-import { DropdownItem } from '../../../../components/atoms/dropdown-v2/dropdown.types';
+import { DropdownItem } from '@atoms/dropdown-v2/dropdown.types';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {

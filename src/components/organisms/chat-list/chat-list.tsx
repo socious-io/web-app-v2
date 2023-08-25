@@ -1,5 +1,5 @@
 import { toRelativeTime } from 'src/core/relative-time';
-import { Message } from '../../atoms/message/message';
+import { Message } from '@atoms/message/message';
 import css from './chat-list.module.scss';
 import { ChatListProps } from './chat-list.types';
 import InfiniteScroll from 'react-infinite-scroller';

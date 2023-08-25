@@ -1,10 +1,10 @@
-import { Otp } from 'src/components/atoms/otp/otp';
-import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
+import { Otp } from '@atoms/otp/otp';
+import { BottomStatic } from '@templates/bottom-static/bottom-static';
 import { useSignUpUserVerificationShared } from '../sign-up-user-verification.shared';
 import css from './desktop.module.scss';
-import { Typography } from 'src/components/atoms/typography/typography';
-import { Button } from 'src/components/atoms/button/button';
-import { Link } from 'src/components/atoms/link/link';
+import { Typography } from '@atoms/typography/typography';
+import { Button } from '@atoms/button/button';
+import { Link } from '@atoms/link/link';
 
 
 export const Desktop = (): JSX.Element => {

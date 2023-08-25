@@ -1,11 +1,11 @@
 import { useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import Card from '@atoms/card';
+import { ProfileCard } from '@templates/profile-card';
+import { CardMenu } from '@molecules/card-menu/card-menu';
+import { Avatar } from '@atoms/avatar/avatar';
 import { AddMemberModal } from '../add-member-modal';
-import { SureModal } from 'src/components/templates/sure-modal';
+import { SureModal } from '@templates/sure-modal';
 import { printWhen } from 'src/core/utils';
 import { useTeamShared } from '../team.shared';
 import css from './desktop.module.scss';

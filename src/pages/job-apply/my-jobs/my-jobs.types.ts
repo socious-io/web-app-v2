@@ -1,5 +1,5 @@
 import { Pagination } from '../../../core/types';
-import { JobCardProps } from '../../../components/molecules/job-card/job-card.types';
+import { JobCardProps } from '@molecules/job-card/job-card.types';
 
 export type PendingResp = Pagination<JobCardProps[]>;
 export type AwaitingResp = Pagination<JobCardProps[]>;

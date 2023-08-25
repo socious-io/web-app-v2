@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { WebModal } from 'src/components/templates/web-modal';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { Card } from 'src/components/atoms/card/card';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
+import { WebModal } from '@templates/web-modal';
+import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
+import Card from '@atoms/card';
+import { Avatar } from '@atoms/avatar/avatar';
+import { TextClickableURLs } from '@atoms/text-clickable-urls';
 import { RootState } from 'src/store/store';
 import { printWhen } from 'src/core/utils';
 import { getFeedList, submitPost, uploadImage } from '../mobile/mobile.service';

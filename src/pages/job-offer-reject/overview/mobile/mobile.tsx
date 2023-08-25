@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { Header } from 'src/components/atoms/header-v2/header';
-import { Tabs } from 'src/components/atoms/tabs/tabs';
+import { TopFixedMobile } from '@templates/top-fixed-mobile/top-fixed-mobile';
+import { Header } from '@atoms/header-v2/header';
+import { Tabs } from '@atoms/tabs/tabs';
 import { Applicants } from '../components/applicants/applicants';
 import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';

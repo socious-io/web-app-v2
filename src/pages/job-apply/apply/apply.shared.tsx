@@ -8,15 +8,15 @@ import {
   resumeInitialState,
   submit,
 } from './apply.services';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { Job } from '@organisms/job-list/job-list.types';
 import { QuestionsRes, UserType } from 'src/core/types';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { generateFormModel } from './apply.form';
 import { useForm } from 'src/core/form';
 import { dialog } from 'src/core/dialog/dialog';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { Textarea } from '@atoms/textarea/textarea';
+import { RadioGroup } from '@molecules/radio-group/radio-group';
 
 type useApplySharedProps = {
   job: Job;

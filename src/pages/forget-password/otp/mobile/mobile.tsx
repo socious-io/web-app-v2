@@ -1,5 +1,5 @@
-import { Button } from 'src/components/atoms/button/button';
-import { Otp as OtpCom } from 'src/components/atoms/otp/otp';
+import { Button } from '@atoms/button/button';
+import { Otp as OtpCom } from '@atoms/otp/otp';
 import { useOtpShared } from '../otp.shared';
 import css from './mobile.module.scss';
 

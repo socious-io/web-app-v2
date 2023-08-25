@@ -1,8 +1,9 @@
-import { Button } from '../../../../components/atoms/button/button';
-import { Card } from '../../../../components/atoms/card/card';
+import { Button } from '@atoms/button/button';
+import Card from '@atoms/card';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { getProcess } from '../verified.services';
 import css from './desktop.module.scss';
+import clsx from 'clsx';
 
 export const Desktop = (): JSX.Element => {
   const processes = getProcess('verify@socious.com');
@@ -10,7 +11,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Card className={css.card} padding={0}>
+      <Card className={clsx(css.card, "p0")}>
         <div className={css.header}>
           <div className={css.icon}>
             <img src="/icons/verified.svg" />

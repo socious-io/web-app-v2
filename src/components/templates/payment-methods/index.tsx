@@ -1,9 +1,10 @@
-import { Card } from 'src/components/atoms/card/card';
-import { SelectCard } from 'src/components/molecules/select-card';
-import { Link } from 'src/components/atoms/link/link';
+import Card from '@atoms/card';
+import { SelectCard } from '@molecules/select-card';
+import { Link } from '@atoms/link/link';
 import { printWhen } from 'src/core/utils';
 import { PaymentMethodsProps } from './payment-methods.types';
 import css from './payment-methods.module.scss';
+import clsx from 'clsx';
 
 export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   crypto_method,
@@ -16,7 +17,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   containerClassName = '',
 }) => {
   return (
-    <Card className={`${css['connect']} ${containerClassName}`}>
+    <Card className={clsx(css.connect, containerClassName)}>
       <div className={css['connect__crypto']}>{crypto_method}</div>
       {fiat_method}
       {printWhen(

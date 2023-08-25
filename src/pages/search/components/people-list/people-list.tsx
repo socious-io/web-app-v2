@@ -1,9 +1,9 @@
 import css from './people-list.module.scss';
 import { People, PeopleListProps } from './people-list.types';
-import { Card } from 'src/components/atoms/card/card';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Categories } from 'src/components/atoms/categories/categories';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import Card from '@atoms/card';
+import { Avatar } from '@atoms/avatar/avatar';
+import { Categories } from '@atoms/categories/categories';
+import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { toRelativeTime } from 'src/core/relative-time';
 import { getList } from './people-list.services';
@@ -34,7 +34,7 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
     <div style={rest} className={css.container}>
       {data.map((user) => {
         return (
-          <Card key={user.id} cursor="pointer" onClick={() => props.onClick(user)}>
+          <Card key={user.id} className="cursor-pointer" onClick={() => props.onClick(user)}>
             <div className={css.header}>
               <Avatar marginRight="0.5rem" type="users" img={user?.avatar?.url} />
               <div className={css.orgNameAndLocation}>

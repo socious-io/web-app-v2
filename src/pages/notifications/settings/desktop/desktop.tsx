@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
-import { BackLink } from 'src/components/molecules/back-link';
-import { Card } from 'src/components/atoms/card/card';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Toggle } from 'src/components/atoms/toggle';
-import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { Button } from 'src/components/atoms/button/button';
+import { BackLink } from '@molecules/back-link';
+import Card from '@atoms/card';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import { Toggle } from '@atoms/toggle';
+import { Accordion } from '@atoms/accordion/accordion';
+import { Button } from '@atoms/button/button';
 import { printWhen } from 'src/core/utils';
 import translate from 'src/translations';
 import { useSettingsShared } from '../settings.shared';

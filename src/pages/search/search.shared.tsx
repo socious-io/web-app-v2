@@ -1,4 +1,4 @@
-import { DropdownBtnItem } from 'src/components/atoms/dropdown-btn/dropdown-btn.types';
+import { DropdownBtnItem } from '@atoms/dropdown-btn/dropdown-btn.types';
 import { search } from './desktop/search.services';
 import { PayloadModel } from './desktop/search.types';
 import { useMatch, useNavigate, useLocation, useRouter } from '@tanstack/react-location';

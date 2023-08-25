@@ -18,7 +18,7 @@ import {
 } from 'src/store/reducers/createPostWizard.reducer';
 import { CategoriesResp, Cities, CreatePostPayload, Pagination } from 'src/core/types';
 import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { Job } from '@organisms/job-list/job-list.types';
 
 export async function getJobCategories(): Promise<CategoriesResp> {
   return get('/projects/categories').then(({ data }) => data);

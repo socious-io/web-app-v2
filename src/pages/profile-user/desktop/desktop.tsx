@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Divider } from 'src/components/templates/divider/divider';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { Button } from 'src/components/atoms/button/button';
-import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
+import { Avatar } from '@atoms/avatar/avatar';
+import { Divider } from '@templates/divider/divider';
+import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
+import { Button } from '@atoms/button/button';
+import { ImpactBadge } from '@atoms/impact-badge/impact-badge';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import Card from '@atoms/card';
 import { ConnectModal } from 'src/pages/profile-organization/connect-modal';
-import { BackLink } from 'src/components/molecules/back-link';
+import { BackLink } from '@molecules/back-link';
 import { Edit } from './edit/edit';
 import { printWhen } from 'src/core/utils';
 import { badgesList } from '../profile-user.services';
 import { useProfileUserShared } from '../profile-user.shared';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+import clsx from 'clsx';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -141,7 +142,7 @@ export const Desktop = (): JSX.Element => {
           <BackLink title="jobs" onBack={() => navigate({ to: '/jobs' })} />
         </div>
 
-        <Card className={css.card} padding={0}>
+        <Card className={clsx(css.card, "p0")}>
           <div className={css.header}>
             <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
               <div className={css.avatarContainer}>

@@ -1,4 +1,4 @@
-import { Validator } from '../../../components/atoms/password-quality/password-quality.types';
+import { Validator } from '@atoms/password-quality/password-quality.types';
 import { post } from '../../../core/http';
 
 export function updateProfile(payload: { username: string; firstName: string; lastName: string }) {

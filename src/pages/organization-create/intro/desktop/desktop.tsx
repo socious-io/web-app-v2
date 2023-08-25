@@ -1,15 +1,16 @@
-import { Button } from '../../../../components/atoms/button/button';
-import { Card } from '../../../../components/atoms/card/card';
+import { Button } from '@atoms/button/button';
+import Card from '@atoms/card';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { LIST_ITEM } from '../intro.services';
 import css from './desktop.module.scss';
+import clsx from 'clsx';
 
 export const Desktop = (): JSX.Element => {
   const { navigateToJobs, navigateToType } = useOrganizationCreateShared();
 
   return (
     <div className={css.container}>
-      <Card padding={0} className={css.card}>
+      <Card className={clsx(css.card, "p0")}>
         <div className={css.header}>
           <div className={css.back} onClick={navigateToJobs}>
             <img src="/icons/chevron-left-white.svg" />

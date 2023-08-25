@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { useForm } from 'src/core/form';
 import { formModel } from './info.form';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { DropdownItem } from '@atoms/dropdown-v2/dropdown.types';
 import { getCityList, updateForm } from './info.services';
 import { citiesToCategories } from 'src/core/adaptors';
 import { CreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';

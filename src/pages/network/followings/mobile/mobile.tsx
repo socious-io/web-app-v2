@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
-import { Header } from 'src/components/atoms/header/header';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Button } from 'src/components/atoms/button/button';
+import { Header } from '@atoms/header/header';
+import { Avatar } from '@atoms/avatar/avatar';
+import { Button } from '@atoms/button/button';
 import { UnfollowModal } from '../unfollow-modal';
 import { printWhen } from 'src/core/utils';
 import { useFollowingsShared } from '../followings.shared';

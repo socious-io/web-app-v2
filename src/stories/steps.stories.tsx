@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Steps } from '../components/atoms/steps/steps';
+import { Steps } from '@atoms/steps/steps';
 
 export default {
   title: 'ATOM/Steps',

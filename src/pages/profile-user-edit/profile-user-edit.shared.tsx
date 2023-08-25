@@ -4,7 +4,7 @@ import { useForm } from 'src/core/form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-user-edit.services';
 import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
 import { Camera } from '@capacitor/camera';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { DropdownItem } from '@atoms/dropdown-v2/dropdown.types';
 import { endpoint } from 'src/core/endpoints';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { generateFormModel } from './profile-user-edit.form';

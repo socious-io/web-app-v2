@@ -1,9 +1,9 @@
 // @ts-nocheck
 import css from './level-item.module.scss';
-import {ImpactBar} from '../../atoms/impact-bar/impact-bar';
-import {Typography} from '../../atoms/typography/typography';
+import {ImpactBar} from '@atoms/impact-bar/impact-bar';
+import {Typography} from '@atoms/typography/typography';
 import {LevelsProps} from '../../../pages/levels/levels.types';
-import {LevelBadge} from '../../atoms/level-badge/level-badge';
+import {LevelBadge} from '@atoms/level-badge/level-badge';
 
 export const LevelItem = ({level}: LevelsProps): JSX.Element => {
   return (

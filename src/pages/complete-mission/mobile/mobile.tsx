@@ -1,10 +1,10 @@
-import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { Button } from 'src/components/atoms/button/button';
-import { Header } from 'src/components/atoms/header/header';
-import { Typography } from 'src/components/atoms/typography/typography';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { Divider } from 'src/components/templates/divider/divider';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { Accordion } from '@atoms/accordion/accordion';
+import { Button } from '@atoms/button/button';
+import { Header } from '@atoms/header/header';
+import { Typography } from '@atoms/typography/typography';
+import { ProfileView } from '@molecules/profile-view/profile-view';
+import { Divider } from '@templates/divider/divider';
+import { TopFixedMobile } from '@templates/top-fixed-mobile/top-fixed-mobile';
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';

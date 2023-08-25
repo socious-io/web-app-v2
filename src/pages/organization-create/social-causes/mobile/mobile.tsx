@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Button } from '../../../../components/atoms/button/button';
-import { CategoriesClickable } from '../../../../components/atoms/categories-clickable/categories-clickable';
-import { Search } from '../../../../components/atoms/search/search';
-import { Steps } from '../../../../components/atoms/steps/steps';
+import { Button } from '@atoms/button/button';
+import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
+import { Search } from '@atoms/search/search';
+import { Steps } from '@atoms/steps/steps';
 import { SOCIAL_CAUSES } from '../social-causes.services';
 import css from './mobile.module.scss';
 import { useOrganizationCreateShared } from '../../organization-create.shared';

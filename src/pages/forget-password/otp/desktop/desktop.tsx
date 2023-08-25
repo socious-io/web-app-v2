@@ -1,6 +1,6 @@
-import { Card } from 'src/components/atoms/card/card';
-import { Otp as OtpCom } from 'src/components/atoms/otp/otp';
-import { Button } from 'src/components/atoms/button/button';
+import Card from '@atoms/card';
+import { Otp as OtpCom } from '@atoms/otp/otp';
+import { Button } from '@atoms/button/button';
 import { useOtpShared } from '../otp.shared';
 import css from './desktop.module.scss';
 

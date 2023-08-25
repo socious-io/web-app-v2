@@ -1,6 +1,6 @@
-import { Modal } from 'src/components/templates/modal/modal';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Button } from 'src/components/atoms/button/button';
+import { Modal } from '@templates/modal/modal';
+import { Textarea } from '@atoms/textarea/textarea';
+import { Button } from '@atoms/button/button';
 import { ConnectModalProps } from './connect-modal.types';
 import css from './connect-modal.module.scss';
 

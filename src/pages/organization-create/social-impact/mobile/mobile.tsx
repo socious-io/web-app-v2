@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-location';
-import { Button } from '../../../../components/atoms/button/button';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
+import { Button } from '@atoms/button/button';
+import { Steps } from '@atoms/steps/steps';
+import { Textarea } from '@atoms/textarea/textarea';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {

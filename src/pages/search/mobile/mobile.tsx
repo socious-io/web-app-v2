@@ -1,14 +1,14 @@
 import css from './mobile.module.scss';
-import { Search } from 'src/components/atoms/search/search';
+import { Search } from '@atoms/search/search';
 import { useSearchShared } from '../search.shared';
-import { DropdownBtn } from 'src/components/atoms/dropdown-btn/dropdown-btn';
+import { DropdownBtn } from '@atoms/dropdown-btn/dropdown-btn';
 import { useNavigate } from '@tanstack/react-location';
 import { PayloadModel } from '../desktop/search.types';
 import { SocialCausesFilter } from '../desktop/filter-bar/social-causes-filter/social-causes-filter';
 import { SkillsFilter } from '../desktop/filter-bar/skills-filter/skills-filter';
 import { printWhen } from 'src/core/utils';
 import { PeopleList } from '../components/people-list/people-list';
-import { JobList } from 'src/components/organisms/job-list/job-list';
+import { JobList } from '@organisms/job-list/job-list';
 
 export const Mobile = (): JSX.Element => {
   const {

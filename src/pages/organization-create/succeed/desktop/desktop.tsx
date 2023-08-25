@@ -1,14 +1,15 @@
-import { Button } from '../../../../components/atoms/button/button';
-import { Card } from '../../../../components/atoms/card/card';
+import { Button } from '@atoms/button/button';
+import Card from '@atoms/card';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 import css from './desktop.module.scss';
+import clsx from 'clsx';
 
 export const Desktop = (): JSX.Element => {
   const { navigateToVerified, organizationName } = useOrganizationCreateShared();
 
   return (
     <div className={css.container}>
-      <Card className={css.card} padding="6rem 0 0 0">
+      <Card className={clsx(css.card, "pt6")}>
         <div className={css.imgContainer}>
           <div className={css.img}></div>
         </div>

@@ -1,9 +1,9 @@
 import { TIERS } from 'src/constants/TIERS_TABLE';
 import css from './tier-slide.module.scss';
 import { TierSlideProps } from './tier-slide.types';
-import { TierBadge } from 'src/components/atoms/tier-badge/tier-badge';
-import { ImpactBarSimple } from 'src/components/atoms/impact-bar-simple/impact-bar-simple';
-import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
+import { TierBadge } from '@atoms/tier-badge/tier-badge';
+import { ImpactBarSimple } from '@atoms/impact-bar-simple/impact-bar-simple';
+import { Checkbox } from '@atoms/checkbox/checkbox';
 
 export const TierSlide = (props: TierSlideProps): JSX.Element => {
   return (

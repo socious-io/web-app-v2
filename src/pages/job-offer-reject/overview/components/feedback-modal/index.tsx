@@ -1,7 +1,7 @@
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Modal } from 'src/components/templates/modal/modal';
-import { Button } from 'src/components/atoms/button/button';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { Textarea } from '@atoms/textarea/textarea';
+import { Modal } from '@templates/modal/modal';
+import { Button } from '@atoms/button/button';
+import { RadioGroup } from '@molecules/radio-group/radio-group';
 import { FeedbackModalProps } from './feedback-modal.types';
 import css from './feedback-modal.module.scss';
 

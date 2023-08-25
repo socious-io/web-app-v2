@@ -2,8 +2,8 @@ import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
-import { Card } from 'src/components/atoms/card/card';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
+import Card from '@atoms/card';
+import { Avatar } from '@atoms/avatar/avatar';
 import css from './profile-card.module.scss';
 
 export const ProfileCard: React.FC = () => {

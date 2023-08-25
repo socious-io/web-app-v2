@@ -1,5 +1,5 @@
-import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
-import { ModalProps } from 'src/components/templates/modal/modal.types';
+import { ContactItem } from '@molecules/contact-item/contact-item.types';
+import { ModalProps } from '@templates/modal/modal.types';
 
 export interface CreateChatModalProps extends Omit<ModalProps, 'children'> {
   userList: ContactItem[];

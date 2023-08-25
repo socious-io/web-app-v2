@@ -1,5 +1,5 @@
-import { Card } from 'src/components/atoms/card/card';
-import { Button } from 'src/components/atoms/button/button';
+import Card from '@atoms/card';
+import { Button } from '@atoms/button/button';
 import { printWhen } from 'src/core/utils';
 import { BankAccountsProps } from './bank-accounts.types';
 import css from './bank-accounts.module.scss';

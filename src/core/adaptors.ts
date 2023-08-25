@@ -1,6 +1,6 @@
-import { DropdownItem } from '../components/atoms/dropdown-v2/dropdown.types';
-import { SKILLS } from '../constants/SKILLS';
-import { SOCIAL_CAUSES } from '../constants/SOCIAL_CAUSES';
+import { DropdownItem } from '@atoms/dropdown-v2/dropdown.types';
+import { SKILLS } from '@constants/SKILLS';
+import { SOCIAL_CAUSES } from '@constants/SOCIAL_CAUSES';
 import { CategoriesResp, Cities } from './types';
 
 export function socialCausesToCategoryAdaptor() {

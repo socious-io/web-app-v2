@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Dapp from 'src/dapp';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
-import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
-import { PaymentMethods } from 'src/components/templates/payment-methods';
-import { Button } from 'src/components/atoms/button/button';
-import { BackLink } from 'src/components/molecules/back-link';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import { JobDescrioptionCard } from '@templates/job-description-card';
+import { PaymentSummaryCard } from '@templates/payment-summary-card';
+import { PaymentMethods } from '@templates/payment-methods';
+import { Button } from '@atoms/button/button';
+import { BackLink } from '@molecules/back-link';
 import { AddCardModal } from '../credit-card/add-card-modal';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';

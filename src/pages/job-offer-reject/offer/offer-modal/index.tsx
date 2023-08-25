@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
 import Dapp from 'src/dapp';
-import { WebModal } from 'src/components/templates/web-modal';
-import { Input } from 'src/components/atoms/input/input';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { InputModal } from 'src/components/molecules/input-modal';
-import { Item } from 'src/components/molecules/input-modal/input-modal.types';
+import { WebModal } from '@templates/web-modal';
+import { Input } from '@atoms/input/input';
+import { Textarea } from '@atoms/textarea/textarea';
+import { RadioGroup } from '@molecules/radio-group/radio-group';
+import { InputModal } from '@molecules/input-modal';
+import { Item } from '@molecules/input-modal/input-modal.types';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { PROJECT_PAYMENT_MODE } from 'src/constants/PROJECT_PAYMENT_MODE';

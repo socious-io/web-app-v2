@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Input } from '../components/atoms/input/input';
+import { Input } from '@atoms/input/input';
 
 export default {
   title: 'ATOM/Input',

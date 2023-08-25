@@ -1,4 +1,4 @@
-import { Button } from 'src/components/atoms/button/button';
+import { Button } from '@atoms/button/button';
 import { Modal } from '../modal/modal';
 import { SureModalProps } from './sure-modal.types';
 import css from './sure-modal.module.scss';

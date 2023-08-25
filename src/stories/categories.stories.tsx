@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Categories } from '../components/atoms/categories/categories';
+import { Categories } from '@atoms/categories/categories';
 
 export default {
   title: 'ATOM/Categories',

@@ -1,7 +1,7 @@
 import css from './impact-category-item.module.scss';
-import { ImpactBadge } from '../../atoms/impact-badge/impact-badge';
-import { ImpactBar } from '../../atoms/impact-bar/impact-bar';
-import { Typography } from '../../atoms/typography/typography';
+import { ImpactBadge } from '@atoms/impact-badge/impact-badge';
+import { ImpactBar } from '@atoms/impact-bar/impact-bar';
+import { Typography } from '@atoms/typography/typography';
 import { ImpactCategoryItemProps } from './impact-category-item.types';
 
 export const ImpactCategoryItem = (props: ImpactCategoryItemProps): JSX.Element => {

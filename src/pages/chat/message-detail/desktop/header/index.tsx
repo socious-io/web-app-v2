@@ -1,6 +1,6 @@
 import { HeaderProps } from './header.types';
 import css from './header.module.scss';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { ProfileView } from '@molecules/profile-view/profile-view';
 
 export const Header: React.FC<HeaderProps> = ({ name, type, username, img, lastOnline, loading = false }) => {
   return (

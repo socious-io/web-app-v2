@@ -1,9 +1,9 @@
-import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
+import { BottomStatic } from '@templates/bottom-static/bottom-static';
 import css from './mobile.module.scss';
-import { Input } from 'src/components/atoms/input/input';
-import { Button } from 'src/components/atoms/button/button';
+import { Input } from '@atoms/input/input';
+import { Button } from '@atoms/button/button';
 import { useChangePasswordShared } from '../change-password.shared';
-import { Header } from 'src/components/atoms/header-v2/header';
+import { Header } from '@atoms/header-v2/header';
 import { printWhen } from 'src/core/utils';
 
 export const Mobile = (): JSX.Element => {

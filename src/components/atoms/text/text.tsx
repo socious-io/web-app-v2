@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './text.module.scss';
 import { TextProps } from './text.types';
 
-const Text: React.FC<TextProps> = (props) => {
+const Text = (props: TextProps): JSX.Element | null => {
   const { variant, className, children, color, weight, size, align, style, ...rest } = props;
 
   const variantProps = {

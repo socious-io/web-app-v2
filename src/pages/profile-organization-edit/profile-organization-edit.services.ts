@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { DropdownItem } from '@atoms/dropdown-v2/dropdown.types';
 import { citiesToCategories } from 'src/core/adaptors';
 import { getCityList } from '../job-create/info/info.services';
 import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';

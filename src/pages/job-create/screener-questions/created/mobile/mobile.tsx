@@ -1,7 +1,7 @@
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import store from 'src/store/store';
-import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { Button } from 'src/components/atoms/button/button';
+import { Accordion } from '@atoms/accordion/accordion';
+import { Button } from '@atoms/button/button';
 import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { dialog } from 'src/core/dialog/dialog';

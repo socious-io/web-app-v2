@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-location';
-import { Button } from '../../../components/atoms/button/button';
+import { Button } from '@atoms/button/button';
 import css from './delete.module.scss';
 
 export const Delete = () => {

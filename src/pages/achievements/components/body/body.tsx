@@ -1,14 +1,14 @@
 import css from './body.module.scss';
-import { Tab } from '../../../../components/atoms/tabs/tabs.types';
-import { Tabs } from '../../../../components/atoms/tabs/tabs';
+import { Tab } from '@atoms/tabs/tabs.types';
+import { Tabs } from '@atoms/tabs/tabs';
 import { BodyProps } from './body.types';
-import { ImpactCategoryList } from '../../../../components/organisms/impact-category-list/impact-category-list';
-import { JobHistoryList } from '../../../../components/organisms/job-history-list/job-history-list';
+import { ImpactCategoryList } from '@organisms/impact-category-list/impact-category-list';
+import { JobHistoryList } from '@organisms/job-history-list/job-history-list';
 import { Tier } from '../tier/tier';
 import { useMatch } from '@tanstack/react-location';
 import { Loader } from '../../achievements.types';
 import { evaluateTier } from '../../mobile/achievements.service';
-import { JobHistoryListProps } from 'src/components/organisms/job-history-list/job-history-list.types';
+import { JobHistoryListProps } from '@organisms/job-history-list/job-history-list.types';
 
 const data = [
   {

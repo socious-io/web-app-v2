@@ -1,6 +1,6 @@
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Search } from 'src/components/atoms/search/search';
-import { Card } from 'src/components/atoms/card/card';
+import { Avatar } from '@atoms/avatar/avatar';
+import { Search } from '@atoms/search/search';
+import Card from '@atoms/card';
 import { useNetworkShared } from '../network.shared';
 import css from './mobile.module.scss';
 

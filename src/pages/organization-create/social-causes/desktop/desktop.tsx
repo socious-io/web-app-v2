@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Button } from '../../../../components/atoms/button/button';
-import { Card } from '../../../../components/atoms/card/card';
-import { CategoriesClickable } from '../../../../components/atoms/categories-clickable/categories-clickable';
-import { Search } from '../../../../components/atoms/search/search';
-import { Steps } from '../../../../components/atoms/steps/steps';
+import { Button } from '@atoms/button/button';
+import Card from '@atoms/card';
+import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
+import { Search } from '@atoms/search/search';
+import { Steps } from '@atoms/steps/steps';
 import css from './desktop.module.scss';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { SOCIAL_CAUSES } from '../social-causes.services';
+import clsx from 'clsx';
 
 export const Desktop = (): JSX.Element => {
   const { socialCauses, updateSocialCauses, isSocialCausesValid, navigateToProfile, navigateToType } =
@@ -20,7 +21,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Card padding="0" className={css.card}>
+      <Card className={clsx(css.card, "p0")}>
         <div className={css.header}>
           <div className={css.chevron} onClick={navigateToType}>
             <img height={24} src="/icons/chevron-left.svg" />

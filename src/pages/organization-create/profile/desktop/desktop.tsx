@@ -1,20 +1,21 @@
 import css from './desktop.module.scss';
-import { Input } from '../../../../components/atoms/input/input';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import { Divider } from '../../../../components/templates/divider/divider';
-import { Card } from '../../../../components/atoms/card/card';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Button } from '../../../../components/atoms/button/button';
+import { Input } from '@atoms/input/input';
+import { Textarea } from '@atoms/textarea/textarea';
+import { Divider } from '@templates/divider/divider';
+import Card from '@atoms/card';
+import { Steps } from '@atoms/steps/steps';
+import { Button } from '@atoms/button/button';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { useState } from 'react';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { DropdownItem } from '@atoms/dropdown-v2/dropdown.types';
 import { formModel } from '../profile.form';
 import { getCityList } from 'src/pages/job-create/info/info.services';
 import { citiesToCategories } from 'src/core/adaptors';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { Dropdown } from '@atoms/dropdown-v2/dropdown';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
+import { Checkbox } from '@atoms/checkbox/checkbox';
 import { formIsInvalid } from '../profile.services';
+import clsx from 'clsx';
 
 const sharedProps: Record<string, string> = {
   className: css.input,
@@ -39,7 +40,7 @@ export const Desktop = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Card padding="0" className={css.card}>
+      <Card className={clsx(css.card, "p0")}>
         <div className={css.header}>
           <div className={css.chevron} onClick={navigateToSocialCauses}>
             <img height={24} src="/icons/chevron-left.svg" />

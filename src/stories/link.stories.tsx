@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Link } from '../components/atoms/link/link';
+import { Link } from '@atoms/link/link';
 export default {
   title: 'ATOM/Link',
   component: Link,

@@ -1,6 +1,6 @@
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { Accordion } from '../../../../../components/atoms/accordion/accordion';
-import { ApplicantListHire } from '../../../../../components/molecules/applicant-list-hire/applicant-list-hire';
+import { Accordion } from '@atoms/accordion/accordion';
+import { ApplicantListHire } from '@molecules/applicant-list-hire/applicant-list-hire';
 import { endpoint } from '../../../../../core/endpoints';
 import css from './offered.module.scss';
 import { jobToApplicantListAdaptor } from './offered.services';

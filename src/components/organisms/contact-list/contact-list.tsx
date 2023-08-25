@@ -1,5 +1,5 @@
-import { Search } from '../../atoms/search/search';
-import { ContactItem } from '../../molecules/contact-item/contact-item';
+import { Search } from '@atoms/search/search';
+import { ContactItem } from '@molecules/contact-item/contact-item';
 import css from './contact-list.module.scss';
 import { ContactListProps } from './contact-list.types';
 import InfiniteScroll from 'react-infinite-scroller';

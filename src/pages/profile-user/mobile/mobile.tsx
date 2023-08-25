@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
-import { Divider } from 'src/components/templates/divider/divider';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { Button } from 'src/components/atoms/button/button';
-import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
+import { Avatar } from '@atoms/avatar/avatar';
+import { ThreeDotsButton } from '@atoms/three-dots-button/three-dots-button';
+import { Divider } from '@templates/divider/divider';
+import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
+import { Button } from '@atoms/button/button';
+import { ImpactBadge } from '@atoms/impact-badge/impact-badge';
 import { ConnectModal } from 'src/pages/profile-organization/connect-modal';
 import { badgesList, showActions } from '../profile-user.services';
 import { printWhen } from 'src/core/utils';

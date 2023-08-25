@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { Input } from '../../atoms/input/input';
+import { Input } from '@atoms/input/input';
 import css from './send-box.module.scss';
 import { SendBoxProps } from './send-box.types';
 

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { BackLink } from 'src/components/molecules/back-link';
-import { Card } from 'src/components/atoms/card/card';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Button } from 'src/components/atoms/button/button';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import { BackLink } from '@molecules/back-link';
+import Card from '@atoms/card';
+import { Avatar } from '@atoms/avatar/avatar';
+import { Button } from '@atoms/button/button';
 import { UnfollowModal } from '../unfollow-modal';
 import { printWhen } from 'src/core/utils';
 import { useFollowingsShared } from '../followings.shared';

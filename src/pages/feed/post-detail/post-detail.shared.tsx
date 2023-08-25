@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { like, unlike } from '../mobile/mobile.service';
 import { addComment, getComments, likeComment, removeCommentLike } from './post-detail.service';
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { Feed } from '@organisms/feed-list/feed-list.types';
 import { IdentityReq, Pagination } from 'src/core/types';
 import { CommentModel } from './post-detail.types';
 import { endpoint } from 'src/core/endpoints';

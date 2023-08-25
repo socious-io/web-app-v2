@@ -1,4 +1,4 @@
-import { InputProps } from "src/components/atoms/input/input.types";
+import { InputProps } from "@atoms/input/input.types";
 
 export interface Item {
   title: string;

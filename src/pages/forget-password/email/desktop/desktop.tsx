@@ -1,6 +1,6 @@
-import { Card } from 'src/components/atoms/card/card';
-import { Input } from 'src/components/atoms/input/input';
-import { Button } from 'src/components/atoms/button/button';
+import Card from '@atoms/card';
+import { Input } from '@atoms/input/input';
+import { Button } from '@atoms/button/button';
 import { useEmailShared } from '../email.shared';
 import css from './desktop.module.scss';
 

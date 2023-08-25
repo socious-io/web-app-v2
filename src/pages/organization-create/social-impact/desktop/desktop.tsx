@@ -1,16 +1,17 @@
 import { useNavigate } from '@tanstack/react-location';
-import { Button } from '../../../../components/atoms/button/button';
-import { Card } from '../../../../components/atoms/card/card';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
+import { Button } from '@atoms/button/button';
+import Card from '@atoms/card';
+import { Steps } from '@atoms/steps/steps';
+import { Textarea } from '@atoms/textarea/textarea';
 import css from './desktop.module.scss';
+import clsx from 'clsx';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
 
   return (
     <div className={css.container}>
-      <Card padding="0" className={css.card}>
+      <Card className={clsx(css.card, "p0")}>
         <div className={css.header}>
           <div className={css.chevron} onClick={() => navigate({ to: '../culture' })}>
             <img height={24} src="/icons/chevron-left.svg" />

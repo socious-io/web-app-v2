@@ -2,7 +2,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Outlet, Router } from '@tanstack/react-location';
 import { routes } from './core/routes/routes';
 import store, { RootState } from './store/store';
-import { Spinner } from './components/atoms/spinner/spinner';
+import { Spinner } from '@atoms/spinner/spinner';
 import { Sidebar } from './pages/sidebar/sidebar';
 import { location } from './core/routes/config.routes';
 import { DeepLinks } from './core/deepLinks';

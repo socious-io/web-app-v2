@@ -1,4 +1,4 @@
-import { Button } from 'src/components/atoms/button/button';
+import { Button } from '@atoms/button/button';
 import { Modal } from '../modal/modal';
 import { WebModalProps } from './web-modal.types';
 import { printWhen } from 'src/core/utils';

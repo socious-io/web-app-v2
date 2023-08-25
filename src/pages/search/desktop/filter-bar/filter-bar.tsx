@@ -1,6 +1,6 @@
 import css from './filter-bar.module.scss';
 import { FilterBarTypes } from './filter-bar.types';
-import { Popover } from 'src/components/atoms/popover/popover';
+import { Popover } from '@atoms/popover/popover';
 import { useRef } from 'react';
 
 export const FilterBar = (props: FilterBarTypes): JSX.Element => {

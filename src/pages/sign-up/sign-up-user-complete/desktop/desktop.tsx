@@ -1,9 +1,9 @@
 import css from './desktop.module.scss';
-import { Button } from '../../../../components/atoms/button/button';
-import { Link } from '../../../../components/atoms/link/link';
-import { Typography } from '../../../../components/atoms/typography/typography';
-import { BottomStatic } from '../../../../components/templates/bottom-static/bottom-static';
-import { Input } from '../../../../components/atoms/input/input';
+import { Button } from '@atoms/button/button';
+import { Link } from '@atoms/link/link';
+import { Typography } from '@atoms/typography/typography';
+import { BottomStatic } from '@templates/bottom-static/bottom-static';
+import { Input } from '@atoms/input/input';
 import { useSignUpUserCompleteShared } from '../sign-up-user-complete.shared';
 
 export const Desktop = (): JSX.Element => {

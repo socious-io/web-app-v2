@@ -1,6 +1,6 @@
 import css from './desktop.module.scss'
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor'
-import { BackLink } from 'src/components/molecules/back-link'
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor'
+import { BackLink } from '@molecules/back-link'
 import { useJobDetailShared } from '../job-detail.shared'
 import { JobDetailCard } from '../components/job-detail-card/job-detail-card'
 import { useEffect } from 'react'

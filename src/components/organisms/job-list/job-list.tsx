@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { Avatar } from '@atoms/avatar/avatar';
-import { Card } from '@atoms/card/card';
+import Card from '@atoms/card';
 import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
 import { Categories } from '@atoms/categories/categories';
 import { ExpandableText } from '@atoms/expandable-text';
@@ -52,7 +52,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
     <div style={rest} className={css.container}>
       {data.map((job) => {
         return (
-          <Card key={job.id} cursor="pointer" onClick={() => props.onClick(job.id)}>
+          <Card key={job.id} className="cursor-pointer" onClick={() => props.onClick(job.id)}>
             <div className={css.header}>
               <Avatar marginRight="0.5rem" type="organizations" img={job.identity_meta.image} />
               <div className={css.orgNameAndLocation}>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { WebModal } from 'src/components/templates/web-modal';
-import { Dropdown } from 'src/components/atoms/dropdown/dropdown';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Avatar } from '@atoms/avatar/avatar';
+import { WebModal } from '@templates/web-modal';
+import { Dropdown } from '@atoms/dropdown/dropdown';
+import { Textarea } from '@atoms/textarea/textarea';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 import { dialog } from 'src/core/dialog/dialog';

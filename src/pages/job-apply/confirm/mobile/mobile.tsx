@@ -1,5 +1,5 @@
 import { useMatch, useNavigate, useRouter } from '@tanstack/react-location';
-import { Button } from '../../../../components/atoms/button/button';
+import { Button } from '@atoms/button/button';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {

@@ -1,5 +1,5 @@
 import css from './radio-group.module.scss';
-import { Radio } from '../../atoms/radio/radio';
+import { Radio } from '@atoms/radio/radio';
 import { RadioGroupProps } from './radio-group.types';
 import { printWhen } from 'src/core/utils';
 

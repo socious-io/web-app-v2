@@ -1,4 +1,4 @@
-import { Button } from '../../../../components/atoms/button/button';
+import { Button } from '@atoms/button/button';
 import { LIST_ITEM } from '../intro.services';
 import css from './mobile.module.scss';
 import { useOrganizationCreateShared } from '../../organization-create.shared';

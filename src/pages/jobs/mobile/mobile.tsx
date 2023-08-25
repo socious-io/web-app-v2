@@ -1,8 +1,8 @@
 import { useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { JobList } from 'src/components/organisms/job-list/job-list';
-import { Search } from 'src/components/atoms/search/search';
+import { Avatar } from '@atoms/avatar/avatar';
+import { JobList } from '@organisms/job-list/job-list';
+import { Search } from '@atoms/search/search';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { visibility } from 'src/store/reducers/menu.reducer';
 import { useJobsShared } from '../jobs.shared';

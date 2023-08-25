@@ -1,8 +1,8 @@
-import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { Header } from 'src/components/atoms/header/header';
-import { Tabs } from 'src/components/atoms/tabs/tabs';
+import { Accordion } from '@atoms/accordion/accordion';
+import { Header } from '@atoms/header/header';
+import { Tabs } from '@atoms/tabs/tabs';
 import { useNavigate } from '@tanstack/react-location';
-import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
+import { JobCardList } from '@organisms/job-card-list/job-card-list';
 import { useMyJobShared } from '../my-jobs.shared';
 import css from './mobile.module.scss';
 

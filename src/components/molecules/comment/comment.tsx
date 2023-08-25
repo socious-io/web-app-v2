@@ -1,7 +1,7 @@
-import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { ExpandableText } from '@atoms/expandable-text';
 import { toRelativeTime } from '../../../core/relative-time';
-import { Avatar } from '../../atoms/avatar/avatar';
-import { ChatBox } from '../../atoms/chat-box/chat-box';
+import { Avatar } from '@atoms/avatar/avatar';
+import { ChatBox } from '@atoms/chat-box/chat-box';
 import { CommentProps } from './comment.types';
 import css from './comment.module.scss';
 

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import store from 'src/store/store';
-import { WebModal } from 'src/components/templates/web-modal';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Toggle } from 'src/components/atoms/toggle';
-import { Input } from 'src/components/atoms/input/input';
+import { WebModal } from '@templates/web-modal';
+import { RadioGroup } from '@molecules/radio-group/radio-group';
+import { Textarea } from '@atoms/textarea/textarea';
+import { Toggle } from '@atoms/toggle';
+import { Input } from '@atoms/input/input';
 import { CreatedModal } from '../created/created-modal';
-import { AlertModal } from 'src/components/organisms/alert-modal';
+import { AlertModal } from '@organisms/alert-modal';
 import {
   resetCreatedQuestion,
   resetQuestions,
@@ -19,7 +19,7 @@ import {
 } from 'src/store/reducers/createQuestionWizard.reducer';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { printWhen } from 'src/core/utils';
-import { ButtonProps } from 'src/components/atoms/button/button.types';
+import { ButtonProps } from '@atoms/button/button.types';
 import { ScreenerModalProps } from './screener-modal.types';
 import { CreateQuestionPayload } from 'src/core/types';
 import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';

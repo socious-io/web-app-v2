@@ -1,5 +1,5 @@
 import { get } from 'src/core/http';
-import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
+import { JobCardProps } from '@molecules/job-card/job-card.types';
 import { GetJobs, Pagination } from 'src/core/types';
 import { isoToStandard } from 'src/core/time';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';

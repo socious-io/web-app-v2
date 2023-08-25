@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { useForm } from 'src/core/form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-organization-edit.services';
 import { generateFormModel } from './profile-organization-edit.form';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { DropdownItem } from '@atoms/dropdown-v2/dropdown.types';
 import { ProfileReq } from '../profile-user/profile-user.types';
 import { Camera } from '@capacitor/camera';
 import { getFormValues } from 'src/core/form/customValidators/formValues';

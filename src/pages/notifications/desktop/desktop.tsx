@@ -1,8 +1,8 @@
 import { useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { NotificationList } from 'src/components/organisms/notification-list/notification-list';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import Card from '@atoms/card';
+import { Avatar } from '@atoms/avatar/avatar';
+import { NotificationList } from '@organisms/notification-list/notification-list';
 import { useNotificationsShared } from '../notifications.shared';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';

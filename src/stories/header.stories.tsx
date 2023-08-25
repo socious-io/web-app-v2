@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Header } from '../components/atoms/header/header';
+import { Header } from '@atoms/header/header';
 
 export default {
   title: 'ATOM/Header',

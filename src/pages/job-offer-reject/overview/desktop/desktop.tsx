@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { Card } from 'src/components/atoms/card/card';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import { ProfileCard } from '@templates/profile-card';
+import Card from '@atoms/card';
 import { Applicants } from '../components/applicants/applicants';
 import { OfferModal } from '../../offer/offer-modal';
 import { Hired } from '../components/hired/hired';

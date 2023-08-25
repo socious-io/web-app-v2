@@ -2,7 +2,7 @@ import { useMatch } from '@tanstack/react-location';
 import { Resolver } from './feed.types';
 import { useState } from 'react';
 import { getFeedList, like, unlike } from './mobile/mobile.service';
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { Feed } from '@organisms/feed-list/feed-list.types';
 import { endpoint } from 'src/core/endpoints';
 import { dialog } from 'src/core/dialog/dialog';
 

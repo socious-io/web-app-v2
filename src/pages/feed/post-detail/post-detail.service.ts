@@ -1,6 +1,6 @@
 import { get, post } from 'src/core/http';
 import { LikeResp, SearchReq } from 'src/core/types';
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { Feed } from '@organisms/feed-list/feed-list.types';
 
 export function likeComment(postId: string, commentId: string): Promise<LikeResp> {
   return post(`/posts/${postId}/comments/${commentId}/like`, {}).then(({ data }) => data);

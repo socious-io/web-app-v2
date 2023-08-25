@@ -1,5 +1,5 @@
-import { Button } from 'src/components/atoms/button/button';
-import { Modal } from 'src/components/templates/modal/modal';
+import { Button } from '@atoms/button/button';
+import { Modal } from '@templates/modal/modal';
 import { UnfollowModalProps } from './unfollow-modal.types';
 import css from './unfollow-modal.module.scss';
 

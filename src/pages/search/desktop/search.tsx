@@ -1,6 +1,6 @@
 import css from './search.module.scss';
-import { DropdownBtn } from 'src/components/atoms/dropdown-btn/dropdown-btn';
-import { JobList } from 'src/components/organisms/job-list/job-list';
+import { DropdownBtn } from '@atoms/dropdown-btn/dropdown-btn';
+import { JobList } from '@organisms/job-list/job-list';
 import { PeopleList } from '../components/people-list/people-list';
 import { printWhen } from 'src/core/utils';
 import { useSearchShared } from '../search.shared';

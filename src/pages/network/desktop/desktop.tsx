@@ -1,9 +1,9 @@
 import { useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
+import { TwoColumnCursor } from '@templates/two-column-cursor/two-column-cursor';
+import Card from '@atoms/card';
 import { useNetworkShared } from '../network.shared';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { ProfileCard } from '@templates/profile-card';
+import { CardMenu } from '@molecules/card-menu/card-menu';
 import { printWhen } from 'src/core/utils';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';

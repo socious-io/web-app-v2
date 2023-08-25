@@ -1,5 +1,5 @@
 import { toRelativeTime } from '../../../core/relative-time';
-import { Avatar } from '../../atoms/avatar/avatar';
+import { Avatar } from '@atoms/avatar/avatar';
 import css from './notification-item.module.scss';
 import { NotificationItemProps } from './notification-item.types';
 

@@ -1,6 +1,6 @@
-import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
-import { ModalProps } from 'src/components/templates/modal/modal.types';
-import { MemberIdentity } from 'src/core/types';
+import { ContactItem } from '@molecules/contact-item/contact-item.types';
+import { ModalProps } from '@templates/modal/modal.types';
+import { MemberIdentity } from '@core/types';
 
 export interface AddMemberModalProps extends Omit<ModalProps, 'children'> {
   memberList: ContactItem[];

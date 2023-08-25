@@ -8,7 +8,7 @@ import {
   getOnGoingList,
   getPendingApplicants,
 } from './my-jobs.services';
-import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
+import { JobCardProps } from '@molecules/job-card/job-card.types';
 
 export const useMyJobShared = () => {
   const resolver = useMatch();

@@ -1,10 +1,10 @@
 import { toRelativeTime } from '../../../core/relative-time';
-import { ActionList } from '../../atoms/action-list/action-list';
-import { Avatar } from '../../atoms/avatar/avatar';
-import { Card } from '../../atoms/card/card';
-import { CategoriesClickable } from '../../atoms/categories-clickable/categories-clickable';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
-import { Typography } from '../../atoms/typography/typography';
+import { ActionList } from '@atoms/action-list/action-list';
+import { Avatar } from '@atoms/avatar/avatar';
+import Card from '@atoms/card';
+import { CategoriesClickable } from '@atoms/categories-clickable/categories-clickable';
+import { ExpandableText } from '@atoms/expandable-text';
+import { Typography } from '@atoms/typography/typography';
 import { FeedItemProps } from './feed-item.types';
 import css from './feed-item.module.scss';
 import { useAuth } from 'src/hooks/use-auth';

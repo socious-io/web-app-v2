@@ -1,5 +1,5 @@
 import { printWhen } from '../../../core/utils';
-import { StatusTag } from '../../atoms/status-tag/status-tag';
+import { StatusTag } from '@atoms/status-tag/status-tag';
 import { ProfileView } from '../profile-view/profile-view';
 import css from './applicant-list-pay.module.scss';
 import { Applicant, ApplicantListPayProps } from './applicant-list-pay.types';

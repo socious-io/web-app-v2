@@ -1,9 +1,9 @@
 import store from 'src/store/store';
-import { Button } from 'src/components/atoms/button/button';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Toggle } from 'src/components/atoms/toggle';
-import { Input } from 'src/components/atoms/input/input';
+import { Button } from '@atoms/button/button';
+import { RadioGroup } from '@molecules/radio-group/radio-group';
+import { Textarea } from '@atoms/textarea/textarea';
+import { Toggle } from '@atoms/toggle';
+import { Input } from '@atoms/input/input';
 import {
   resetCreatedQuestion,
   resetQuestions,

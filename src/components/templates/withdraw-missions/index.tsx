@@ -1,5 +1,5 @@
-import { Button } from 'src/components/atoms/button/button';
-import { Card } from 'src/components/atoms/card/card';
+import { Button } from '@atoms/button/button';
+import Card from '@atoms/card';
 import { printWhen } from 'src/core/utils';
 import { getFlooredFixed } from 'src/core/numbers';
 import { WithdrawMissionsProps } from './withdraw-missions.types';

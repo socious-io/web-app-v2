@@ -1,5 +1,5 @@
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {ImpactBarLevel} from '../components/atoms/impact-bar-level/impact-bar-level';
+import {ImpactBarLevel} from '@atoms/impact-bar-level/impact-bar-level';
 
 export default {
   title: 'ATOM/ImpactBarLevel',

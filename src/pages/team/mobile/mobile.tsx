@@ -1,8 +1,8 @@
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { Header } from 'src/components/atoms/header-v2/header';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { TopFixedMobile } from '@templates/top-fixed-mobile/top-fixed-mobile';
+import { Header } from '@atoms/header-v2/header';
+import { Avatar } from '@atoms/avatar/avatar';
 import { AddMemberModal } from '../add-member-modal';
-import { SureModal } from 'src/components/templates/sure-modal';
+import { SureModal } from '@templates/sure-modal';
 import { printWhen } from 'src/core/utils';
 import { useTeamShared } from '../team.shared';
 import css from './mobile.module.scss';
