@@ -17,4 +17,5 @@ export type DropdownProps = {
   placeholder?: string;
   onValueChange?: (option: DropdownItem) => void;
   register?: Required<FormGroup>;
+  defaultValue?: string | number;
 };
