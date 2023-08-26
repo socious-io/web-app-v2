@@ -17,14 +17,17 @@ import { SocialCausesModal } from 'src/pages/job-edit/social-causes/social-cause
 import css from './overview.module.scss';
 import { useState } from 'react';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { SureModal } from 'src/components/templates/sure-modal';
+import { archiveJob } from 'src/pages/job-offer-reject/job-offer-reject.services';
+import { toRelativeTime } from 'src/core/relative-time';
 
-export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
+export const Overview = ({ data, questions, updateApplicantList }: OverviewProps): JSX.Element => {
   const navigate = useNavigate();
   const [openInfoModal, setOpenInfoModal] = useState<boolean>(false);
   const [openSkillsModal, setOpenSkillsModal] = useState<boolean>(false);
   const [openSocialCausesModal, setOpenSocialCausesModal] = useState<boolean>(false);
   const [overviewData, setOverviewData] = useState(data);
-
+  const [showArchiveConfirm, setShowArchiveConfirm] = useState(false);
   const paymentRange = (
     <div className={css.group}>
       <div className={css.groupTitle}>
@@ -49,9 +52,30 @@ export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
       </div>
     </div>
   );
-
   return (
     <div className={css.container}>
+      {printWhen(
+        <Divider>
+          <div className={css.header}>
+            <div />
+            <div>{overviewData.title}</div>
+            <img
+              onClick={() => setShowArchiveConfirm(true)}
+              className={css.archiveButton}
+              src="/icons/three-dots-blue.svg"
+              alt=""
+            />
+          </div>
+        </Divider>,
+        !isTouchDevice() && overviewData.status !== 'EXPIRE'
+      )}
+      {isTouchDevice() && data.status === 'EXPIRE' && (
+        <div className={css.mobileArchived}>
+          <img className={css.mobileArchivedImage} src="/icons/archived.svg" /> job was archived on
+          {` ${toRelativeTime(overviewData.expires_at)}`}
+        </div>
+      )}
+
       <Divider
         title="Job description"
         onEdit={() =>
@@ -147,6 +171,22 @@ export const Overview = ({ data, questions }: OverviewProps): JSX.Element => {
         open={openSocialCausesModal}
         onClose={() => setOpenSocialCausesModal(false)}
         onDone={(newOverviewData) => setOverviewData({ ...overviewData, ...newOverviewData })}
+      />
+      <SureModal
+        open={showArchiveConfirm}
+        onClose={() => setShowArchiveConfirm(false)}
+        onDone={() => {
+          archiveJob(overviewData.id).then((resp) => {
+            setShowArchiveConfirm(false);
+            updateApplicantList();
+          });
+        }}
+        modalTexts={{
+          title: 'close job',
+          body: 'Are you sure you want to close this job?It will be archived.',
+          confirmButton: 'close job',
+          cancleButton: 'Cancel',
+        }}
       />
     </div>
   );
