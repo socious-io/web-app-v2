@@ -8,8 +8,10 @@ import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
 import { Loader } from '../../job-offer-reject.types';
-import { jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
+import { archiveJob, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
 import css from './mobile.module.scss';
+import { SureModal } from 'src/components/templates/sure-modal';
+import { printWhen } from 'src/core/utils';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ export const Mobile = (): JSX.Element => {
   const tab = useMatch()?.search?.tab as string;
   const defaultTab = tab || 'Overview';
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
-
+  const [showArchiveConfirm, setShowArchiveConfirm] = useState(false);
   async function updateApplicantList() {
     const result = await jobOfferRejectLoader({ params: { id } });
     setUpdatedApplicantList(result);
@@ -78,9 +80,42 @@ export const Mobile = (): JSX.Element => {
   ];
 
   return (
-    <TopFixedMobile>
-      <Header removeBorder title={updatedApplicantList.jobOverview.title} />
-      <Tabs tabs={tabs} onClick={(name) => navigate({ to: '.', search: { tab: name }, replace: true })} />
-    </TopFixedMobile>
+    <>
+      <TopFixedMobile>
+        <Header
+          removeBorder
+          title={updatedApplicantList.jobOverview.title}
+          right={
+            resolver.jobOverview.status !== 'EXPIRE' ? (
+              <img
+                onClick={() => setShowArchiveConfirm(true)}
+                className={css.archiveButton}
+                src="/icons/three-dots-blue.svg"
+                alt=""
+              />
+            ) : (
+              <div />
+            )
+          }
+        />
+        <Tabs tabs={tabs} onClick={(name) => navigate({ to: '.', search: { tab: name }, replace: true })} />
+      </TopFixedMobile>
+      <SureModal
+        open={showArchiveConfirm}
+        onClose={() => setShowArchiveConfirm(false)}
+        onDone={() => {
+          archiveJob(id).then(() => {
+            setShowArchiveConfirm(false);
+            history.back();
+          });
+        }}
+        modalTexts={{
+          title: 'close job',
+          body: 'Are you sure you want to close this job?It will be archived.',
+          confirmButton: 'close job',
+          cancleButton: 'Cancel',
+        }}
+      />
+    </>
   );
 };
