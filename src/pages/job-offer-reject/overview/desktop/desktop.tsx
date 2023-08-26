@@ -38,7 +38,6 @@ export const Desktop = (): JSX.Element => {
   async function updateApplicantList() {
     const result = await jobOfferRejectLoader({ params: { id } });
     setUpdatedApplicantList(result);
-    console.log('result', result);
   }
 
   async function onRejectClick(id: string) {
