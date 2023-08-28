@@ -37,7 +37,8 @@ export const usePaymentShared = () => {
   const isPaidCrypto = project?.payment_type === 'PAID' && payment_mode === 'CRYPTO';
   const isDisabledProceedPayment =
     process || (isPaidCrypto ? !isConnected || !account : !selectedCard) || status === 'HIRED';
-  let unit = 'USDC';
+
+  let unit = offer.currency || 'USD';
 
   function onSelectCard(id: string) {
     setSelectedCard(id);
@@ -50,7 +51,7 @@ export const usePaymentShared = () => {
   async function onRemoveCard(id: string) {
     setSelectedCard('');
     endpoint.post.payments['{card_id}/remove'](id).then(async () => {
-      const result = await getCreditCardInfo();
+      const result = await getCreditCardInfo(offer.currency === 'JPY');
       setCards(result);
     });
   }
@@ -84,7 +85,6 @@ export const usePaymentShared = () => {
       });
 
       endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
-
     } catch (err: any) {
       dialog.alert({
         message: err?.response?.data.error || err?.message,
