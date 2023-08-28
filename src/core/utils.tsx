@@ -38,3 +38,12 @@ export const removeEmptyArrays = (obj: null | undefined | Record<string | number
     return prev;
   }, {});
 };
+
+export const removeValuesFromObject = (obj: any, valuesToRemove: Array<string | null | undefined | number>) => {
+  for (const key in obj) {
+    if (valuesToRemove.includes(obj[key])) {
+      delete obj[key];
+    }
+  }
+  return obj;
+};
