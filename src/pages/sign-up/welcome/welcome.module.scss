@@ -1,0 +1,65 @@
+.container {
+  background: var(--color-off-white-01);
+  min-height: var(--window-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 5rem 0;
+
+  @media screen and (max-width: 600px) {
+    padding: 0;
+  }
+}
+
+.card {
+  font-family: 'Hahmlet';
+  width: 33.75rem;
+  border: 0.1rem solid var(--color-gray-04);
+  background: var(--color-white);
+  border-radius: 1.2rem;
+  min-height: 45rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+
+  @media screen and (max-width: 600px) {
+    border-radius: 0;
+  }
+
+  &__header {
+    padding: 0 1.6rem;
+    margin-top: 2rem;
+    flex: 1;
+  }
+  &__back {
+    cursor: pointer;
+  }
+  &__content {
+    flex: 30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 4.5rem;
+    text-align: center;
+  }
+  &__title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 2.5rem 0 0.5rem;
+  }
+  &__sub-title {
+    font-size: 1rem;
+    color: var(--color-gray-01);
+  }
+  &__buttons {
+    border-top: 1px solid var(--color-gray-04);
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0 3rem;
+  }
+}

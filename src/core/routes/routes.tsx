@@ -76,6 +76,21 @@ export const routes: Route[] = [
                 <m.SignUpUserCompleteContainer />
               )),
           },
+          {
+            path: '/welcome',
+            element: () => import('../../pages/sign-up/welcome/welcome').then((m) => <m.Welcome />),
+          },
+          {
+            path: '/onboarding',
+            element: () =>
+              import('../../pages/sign-up/sign-up-user-onboarding/sign-up-user-complete.container').then((m) => (
+                <m.SignUpUserOnboarding />
+              )),
+          },
+          {
+            path: '/allow-notification',
+            element: () => import('../../pages/sign-up/AllowNotification').then((m) => <m.AllowNotification />),
+          },
         ],
       },
     ],
