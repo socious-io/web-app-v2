@@ -14,7 +14,7 @@ import { ApplicantResp } from 'src/core/types';
 import { getApplicantDetail, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
-import { toRelativeTime } from 'src/core/relative-time';
+import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -124,7 +124,7 @@ export const Desktop = (): JSX.Element => {
           {updatedApplicantList.jobOverview.status === 'EXPIRE' ? (
             <Card className={css.archivedBox}>
               <img className={css.archivedBoxImage} src="/icons/archived.svg" /> job was archived on
-              {` ${toRelativeTime(updatedApplicantList.jobOverview.expires_at)}`}
+              {` ${convertTimeToMonth(updatedApplicantList.jobOverview.expires_at)}`}
             </Card>
           ) : (
             <Card className={css.selectedTab}>{selectedTabName}</Card>

@@ -19,7 +19,7 @@ import { useState } from 'react';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { SureModal } from 'src/components/templates/sure-modal';
 import { archiveJob } from 'src/pages/job-offer-reject/job-offer-reject.services';
-import { toRelativeTime } from 'src/core/relative-time';
+import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
 
 export const Overview = ({ data, questions, updateApplicantList }: OverviewProps): JSX.Element => {
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
       {isTouchDevice() && data.status === 'EXPIRE' && (
         <div className={css.mobileArchived}>
           <img className={css.mobileArchivedImage} src="/icons/archived.svg" /> job was archived on
-          {` ${toRelativeTime(overviewData.expires_at)}`}
+          {` ${convertTimeToMonth(overviewData.expires_at)}`}
         </div>
       )}
 
@@ -182,9 +182,9 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
           });
         }}
         modalTexts={{
-          title: 'close job',
+          title: 'Close job',
           body: 'Are you sure you want to close this job?It will be archived.',
-          confirmButton: 'close job',
+          confirmButton: 'Close job',
           cancleButton: 'Cancel',
         }}
       />
