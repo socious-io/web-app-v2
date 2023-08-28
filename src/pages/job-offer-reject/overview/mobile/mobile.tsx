@@ -110,9 +110,9 @@ export const Mobile = (): JSX.Element => {
           });
         }}
         modalTexts={{
-          title: 'close job',
+          title: 'Close job',
           body: 'Are you sure you want to close this job?It will be archived.',
-          confirmButton: 'close job',
+          confirmButton: 'Close job',
           cancleButton: 'Cancel',
         }}
       />
