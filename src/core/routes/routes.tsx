@@ -127,9 +127,9 @@ export const routes: Route[] = [
         children: [
           {
             path: '/add-card',
-            loader: async () => {
-              const [cardInfo] = await Promise.all([getCreditCardInfo()]);
-              return cardInfo;
+            loader: async ({ params }) => {
+              const { offer } = await receivedOfferLoader(params)
+              return { offer };
             },
             element: () =>
               import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
@@ -145,9 +145,8 @@ export const routes: Route[] = [
           },
           {
             loader: async ({ params }) => {
-              const requests = [receivedOfferLoader(params), getCreditCardInfo()];
-              const [offerReq, cardInfo] = await Promise.all(requests);
-              const { offer } = offerReq;
+              const { offer } = await receivedOfferLoader(params)
+              const cardInfo = await getCreditCardInfo(offer.currency === 'JPY')
               return { offer, cardInfo };
             },
             element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
@@ -464,9 +463,8 @@ export const routes: Route[] = [
               },
               {
                 loader: async ({ params }) => {
-                  const requests = [receivedOfferLoader(params), getCreditCardInfo()];
-                  const [offerReq, cardInfo] = await Promise.all(requests);
-                  const { offer } = offerReq;
+                  const { offer } = await receivedOfferLoader(params)
+                  const cardInfo = await getCreditCardInfo(offer.currency === 'JPY')
                   return { offer, cardInfo };
                 },
                 element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),

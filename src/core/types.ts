@@ -441,15 +441,11 @@ export type NotificationSettingsRes = {
 
 export type CardItems = {
   id: string;
-  identity_id: string;
-  holder_name: string;
-  numbers: string;
-  exp_month: number;
-  exp_year: number;
-  cvc: string;
-  brand: null;
-  created_at: string;
-  updated_at: string;
+  meta: {
+    last4: string;
+    brand: string;
+  };
+  brand: string;
 };
 
 export type CardInfoResp = Pagination<CardItems[]>;
@@ -503,4 +499,3 @@ export type MemberIdentity = {
 export type Error = { error: string };
 
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
-
