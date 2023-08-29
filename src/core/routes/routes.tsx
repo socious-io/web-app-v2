@@ -128,7 +128,7 @@ export const routes: Route[] = [
           {
             path: '/add-card',
             loader: async ({ params }) => {
-              const { offer } = await receivedOfferLoader(params)
+              const { offer } = await receivedOfferLoader(params);
               return { offer };
             },
             element: () =>
@@ -145,8 +145,8 @@ export const routes: Route[] = [
           },
           {
             loader: async ({ params }) => {
-              const { offer } = await receivedOfferLoader(params)
-              const cardInfo = await getCreditCardInfo(offer.currency === 'JPY')
+              const { offer } = await receivedOfferLoader(params);
+              const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
               return { offer, cardInfo };
             },
             element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
@@ -463,8 +463,8 @@ export const routes: Route[] = [
               },
               {
                 loader: async ({ params }) => {
-                  const { offer } = await receivedOfferLoader(params)
-                  const cardInfo = await getCreditCardInfo(offer.currency === 'JPY')
+                  const { offer } = await receivedOfferLoader(params);
+                  const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
                   return { offer, cardInfo };
                 },
                 element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
@@ -738,9 +738,9 @@ export const routes: Route[] = [
             path: 'wallet',
             element: () => import('../../pages/wallet/wallet.container').then((m) => <m.Wallet />),
             loader: async () => {
-              const requests = [getMissionsList({ page: 1 }), getSrtipeProfile()];
-              const [missionsList, stripeProfile] = await Promise.all(requests);
-              return { missionsList, stripeProfile };
+              const requests = [getMissionsList({ page: 1 }), getSrtipeProfile(), getSrtipeProfile(true)];
+              const [missionsList, stripeProfile, jpStripeProfile] = await Promise.all(requests);
+              return { missionsList, stripeProfile, jpStripeProfile };
             },
           },
           {
