@@ -27,6 +27,7 @@ export const Desktop = (): JSX.Element => {
     showMessageIcon,
     onMessage,
     updateOrganization,
+    navigateJobs,
   } = useProfileOrganizationShared();
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
@@ -134,6 +135,9 @@ export const Desktop = (): JSX.Element => {
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.sidebar}>
           <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
+          <Card>
+            <div onClick={navigateJobs}>Job opportunities </div>
+          </Card>
         </div>
         <Card className={css.card} padding={0}>
           <div className={css.container}>
