@@ -33,7 +33,7 @@ export const useSignUpUserCompleteShared = () => {
 
     changePasswordDirect(password)
       .then(setProfileName)
-      .then(() => navigate({ to: path ? path : '/sign-up/user/onboarding' }))
+      .then(() => navigate({ to: path ? path : '/sign-up/user/welcome' }))
       .catch(handleError());
   }
 

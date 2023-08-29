@@ -37,10 +37,7 @@ const PhoneNumber: React.FC = () => {
         </div>
       </div>
       <div className={css['buttons']}>
-        <Button
-          disabled={!(state.phone !== '' && state.mobile_country_code !== '')}
-          onClick={() => updateSelectedStep(5)}
-        >
+        <Button disabled={!(state.phone && state.mobile_country_code)} onClick={() => updateSelectedStep(5)}>
           Continue
         </Button>
       </div>

@@ -2,8 +2,7 @@ import React, { useState, ReactNode, createContext } from 'react';
 import css from './steper.module.scss';
 
 interface Props {
-  components: ReactNode[];
-  onSkip: () => void;
+  components: { Component: ReactNode; skippable: boolean }[];
 }
 interface ContextValue {
   step: number;
@@ -15,7 +14,7 @@ export const StepsContext = createContext<ContextValue>({
   updateSelectedStep: () => {},
 });
 
-const Steper: React.FC<Props> = ({ components, onSkip }) => {
+const Steper: React.FC<Props> = ({ components }) => {
   const [step, setStep] = useState(0);
 
   const updateSelectedStep = (newStep: number) => {
@@ -55,11 +54,16 @@ const Steper: React.FC<Props> = ({ components, onSkip }) => {
               })}
             </ul>
           </div>
-          <div className={css['box__skip']} onClick={onSkip}>
-            Skip
-          </div>
+          {components[step].skippable ? (
+            <div className={css['box__skip']} onClick={() => setStep(step + 1)}>
+              Skip
+            </div>
+          ) : (
+            <div className={css['box__skip']} />
+          )}
         </div>
-        {components.map((Component, index) => {
+
+        {components.map(({ Component }, index) => {
           if (index === step) return <React.Fragment key={index}>{Component}</React.Fragment>;
         })}
       </div>

@@ -12,9 +12,10 @@ import { StepsContext } from '../steper';
 const Bio: React.FC = () => {
   const { state, updateUser } = useUser();
   const { updateSelectedStep } = useContext(StepsContext);
+  console.log(state);
 
   const setBio = (bio: string) => {
-    if (bio.length <= 160) updateUser({ bio });
+    if (bio.length <= 160) updateUser({ ...state, bio });
   };
   return (
     <div className={css['container']}>
@@ -25,10 +26,10 @@ const Bio: React.FC = () => {
       />
       <div className={css['form']}>
         <Textarea value={state.bio} onChange={(e) => setBio(e.target.value)} placeholder="Write biography" />
-        <div className={css['counter']}>{`${state.bio.length}/160`}</div>
+        <div className={css['counter']}>{`${state.bio === null ? 0 : state.bio.length}/160`}</div>
       </div>
       <div className={css['buttons']}>
-        <Button disabled={state.bio === ''} onClick={() => updateSelectedStep(6)}>
+        <Button disabled={!state.bio} onClick={() => updateSelectedStep(6)}>
           Continue
         </Button>
       </div>

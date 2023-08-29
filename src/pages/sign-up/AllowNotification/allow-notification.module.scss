@@ -1,13 +1,12 @@
 .container {
-  background: var(--color-off-white-01);
-  min-height: var(--window-height);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
   padding: 5rem 0;
   @media screen and (max-width: 600px) {
     padding: 0;
+    background-color: var(--color-primary-01);
   }
 }
 .card {
@@ -15,7 +14,6 @@
   font-family: 'Hahmlet';
   width: 33.75rem;
   border: 0.1rem solid var(--color-gray-04);
-  // background: var(--color-white);
   border-radius: 1.2rem;
   min-height: 45rem;
   position: relative;
@@ -26,6 +24,7 @@
 
   @media screen and (max-width: 600px) {
     border-radius: 0;
+    border: none;
   }
 
   &__header {
@@ -54,7 +53,7 @@
   }
   &__sub-title {
     font-size: 1rem;
-    color: var(--color-gray-03);;  
+    color: var(--color-gray-03);
     max-width: 325px;
     line-height: 24px;
   }
@@ -63,7 +62,7 @@
     flex-direction: column;
     align-items: center;
     // justify-content: center;
-    padding: 1rem 0 3rem;
+    padding: 1rem;
   }
   &__bell {
     padding: 8px;

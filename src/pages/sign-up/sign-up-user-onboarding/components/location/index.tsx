@@ -12,7 +12,6 @@ import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 
 const Location: React.FC = () => {
   const { updateSelectedStep } = useContext(StepsContext);
-  const [country, setCountry] = useState('');
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const { state, updateUser } = useUser();
   function updateCityList(countryCode: string) {
@@ -36,7 +35,7 @@ const Location: React.FC = () => {
             name="country"
             defaultValue={state.country}
             list={COUNTRIES}
-            value={country}
+            value={state.country}
             onValueChange={(option) => {
               updateUser({ ...state, country: option.value });
               updateCityList(option.value as string);
@@ -44,10 +43,20 @@ const Location: React.FC = () => {
           />
         </div>
 
-        <Dropdown defaultValue={state.city} label="City" placeholder="city" name="city" value="" list={cities} />
+        <Dropdown
+          defaultValue={state.city}
+          label="City"
+          placeholder="city"
+          name="city"
+          value={state.city}
+          list={cities}
+          onValueChange={(option) => {
+            updateUser({ ...state, city: option.value });
+          }}
+        />
       </div>
       <div className={css['buttons']}>
-        <Button disabled={!(state.city !== '' && state.country !== '')} onClick={() => updateSelectedStep(4)}>
+        <Button disabled={!(state.city && state.country)} onClick={() => updateSelectedStep(4)}>
           Continue
         </Button>
       </div>

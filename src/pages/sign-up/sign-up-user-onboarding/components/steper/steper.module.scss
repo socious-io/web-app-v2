@@ -5,7 +5,9 @@
   border-radius: 1.2rem;
   min-height: 45rem;
   position: relative;
-
+  @media screen and (max-width: 600px) {
+    height: 100vh;
+  }
   @media screen and (max-width: 600px) {
     border-radius: 0;
   }

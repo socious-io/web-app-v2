@@ -17,8 +17,15 @@ export const Desktop = (): JSX.Element => {
     <UserProvider>
       <div className={css['container']}>
         <Steper
-          onSkip={() => navigate({ to: '/jobs' })}
-          components={[<Name />, <SocialCauses />, <Skills />, <Location />, <PhoneNumber />, <Bio />, <AddPhoto />]}
+          components={[
+            { Component: <Name />, skippable: false },
+            { Component: <SocialCauses />, skippable: false },
+            { Component: <Skills />, skippable: false },
+            { Component: <Location />, skippable: false },
+            { Component: <PhoneNumber />, skippable: true },
+            { Component: <Bio />, skippable: true },
+            { Component: <AddPhoto />, skippable: false },
+          ]}
         />
       </div>
     </UserProvider>
