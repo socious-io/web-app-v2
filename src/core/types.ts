@@ -499,3 +499,6 @@ export type MemberIdentity = {
 export type Error = { error: string };
 
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
+
+export type FcmListResp = Array<{ meta: { os: 'ANDROID' | 'IOS' }; user_id: string; token: string }>;
+export type CreateFcmPayload = { meta: { os: 'ANDROID' | 'IOS' }; token: string };

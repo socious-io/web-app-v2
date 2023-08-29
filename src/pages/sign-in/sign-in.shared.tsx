@@ -1,12 +1,12 @@
 import { useNavigate } from '@tanstack/react-location';
 import { formModel } from './sign-in.form';
-import { setAuthCookies } from './sign-in.services';
+import { getFcmTokens, getUsersTokens, setAuthCookies, setFcmTokens } from './sign-in.services';
 import { LoginResp } from 'src/core/types';
 import { getIdentities } from 'src/core/api';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import store from 'src/store/store';
 import { endpoint } from 'src/core/endpoints';
-import { handleError } from 'src/core/http';
+import { get, handleError, post } from 'src/core/http';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { LoginPayload } from './sign-in.types';
 import { useForm } from 'src/core/form';
@@ -37,9 +37,19 @@ const getFCMToken = async (response: Awaited<ReturnType<typeof requestPermission
 };
 
 const saveToken = async (token: string) => {
-  console.log('FCMToken: ', token);
   if (!token) {
     return;
+  }
+  const getDeviceTokens = await getFcmTokens();
+  if (!getDeviceTokens.some((item) => item.token === token)) {
+    setFcmTokens({
+      token,
+      meta: {
+        os: Capacitor.getPlatform() === 'android' ? 'ANDROID' : 'IOS',
+      },
+    });
+    localStorage.setItem('fcm', token);
+   
   }
 };
 
