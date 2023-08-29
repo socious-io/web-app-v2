@@ -89,7 +89,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, onClose, setCa
 
         <div className={css.btn}>
           <Button color="blue" onClick={onSubmit}>
-            Addd
+            Add
           </Button>
         </div>
       </div>
