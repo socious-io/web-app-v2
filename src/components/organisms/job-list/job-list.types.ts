@@ -22,7 +22,7 @@ export type Job = {
   created_at: '2022-12-29T11:04:38.091Z';
   updated_at: '2022-12-29T11:04:38.091Z';
   deleted_at: null;
-  status: 'ACTIVE';
+  status: 'ACTIVE' | 'EXPIRE';
   payment_type: 'VOLUNTEER' | 'PAID';
   payment_scheme: 'HOURLY' | 'FIXED';
   title: string;
