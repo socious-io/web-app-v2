@@ -33,6 +33,7 @@
     "@ionic/pwa-elements": "^3.2.2",
     "@mui/material": "^5.11.6",
     "@reduxjs/toolkit": "^1.9.1",
+    "@stripe/stripe-js": "^2.1.0",
     "@tanstack/react-location": "^3.7.4",
     "@web3modal/ethereum": "^2.2.2",
     "@web3modal/react": "^2.2.2",
