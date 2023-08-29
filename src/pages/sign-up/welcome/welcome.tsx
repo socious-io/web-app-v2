@@ -20,7 +20,14 @@ export const Welcome: React.FC = () => {
               <img className={css.logo} src="/images/Logo-vertical.png" />
               <div className={css['card__title']}>Welcome to Socious</div>
               <div className={css['card__sub-title']}>
-                To continue, please agree to our terms of service and privacy policy
+                To continue, please agree to our{' '}
+                <a href="/terms-conditions" className={css['card__link']}>
+                  terms of service
+                </a>{' '}
+                and{' '}
+                <a href="/privacy-policy" className={css['card__link']}>
+                  privacy policy
+                </a>
               </div>
             </div>
             <div className={css['card__buttons']}>

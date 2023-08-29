@@ -9,6 +9,8 @@
 
   @media screen and (max-width: 600px) {
     padding: 0;
+    min-height: 100vh;
+
   }
 }
 
@@ -27,6 +29,8 @@
 
   @media screen and (max-width: 600px) {
     border-radius: 0;
+    min-height: 100vh;
+
   }
 
   &__header {
@@ -60,6 +64,9 @@
     border-top: 1px solid var(--color-gray-04);
     display: flex;
     justify-content: center;
-    padding: 1rem 0 3rem;
+    padding: 1rem;
+  }
+  &__link {
+    color: var(--color-primary-01);
   }
 }

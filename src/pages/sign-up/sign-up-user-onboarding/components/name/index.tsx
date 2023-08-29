@@ -12,11 +12,7 @@ const Name: React.FC = () => {
 
   return (
     <div className={css['container']}>
-      <StepHeader
-        className={css['header']}
-        title="Let's get to know you!"
-        subTitle="What should we call you "
-      />
+      <StepHeader className={css['header']} title="Let's get to know you!" subTitle="What should we call you " />
       <div className={css['form']}>
         <div className={css['filedsContainer']}>
           <Input
@@ -36,10 +32,7 @@ const Name: React.FC = () => {
         </div>
       </div>
       <div className={css['buttons']}>
-        <Button
-          disabled={!(state.first_name !== '' && state.last_name !== '')}
-          onClick={() => updateSelectedStep(1)}
-        >
+        <Button disabled={!(state.first_name && state.last_name)} onClick={() => updateSelectedStep(1)}>
           Continue
         </Button>
       </div>

@@ -13,25 +13,25 @@ import { removeValuesFromObject } from 'src/core/utils';
 const AddPhoto: React.FC = () => {
   const navigate = useNavigate();
   const { state, updateUser } = useUser();
-  const [image, setImage] = useState({ imageUrl: state.avatar, id: '' });
+  const [image, setImage] = useState({ imageUrl: state.avatar?.url, id: '' });
   const onUploadImage = async () => {
     const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
     const resp = await uploadImage(webPath);
-    updateUser({ ...state, avatar: resp.url });
+    updateUser({ ...state, avatar: resp });
     setImage({ imageUrl: resp.url, id: resp.id });
   };
-
   const removeImage = async () => {
     setImage({ imageUrl: '', id: '' });
-    updateUser({ ...state, avatar: '' });
+    updateUser({ ...state, avatar: null });
   };
   const updateProfile = () => {
+    const avatarImage = state.avatar ? { avatar: image.id } : {};
     post(
       '/user/update/profile',
       removeValuesFromObject(
         {
           ...state,
-          avatar: image.id,
+          ...avatarImage,
         },
         ['', null]
       )
@@ -45,19 +45,19 @@ const AddPhoto: React.FC = () => {
         <div className={css['title']}> Add a profile photo</div>
 
         <Avatar size="128px" type="users" img={image.imageUrl} />
-        {image.imageUrl === '' && (
+        {state.avatar === null && (
           <Button className={css['submit']} color="white" onClick={onUploadImage}>
             Add from album
           </Button>
         )}
-        {image.imageUrl !== '' && (
+        {state.avatar !== null && (
           <Button className={css['submit']} color="white" onClick={removeImage}>
             Remove photo
           </Button>
         )}
       </div>
       <div className={css['buttons']}>
-        <Button onClick={updateProfile}>Continue</Button>
+        <Button onClick={updateProfile}>Compelete your profile</Button>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { SOCIAL_CAUSES } from '../../../../organization-create/social-causes/soc
 import StepHeader from '../stepHeader';
 import { StepsContext } from '../steper';
 import { useUser } from '../../sign-up-user-onboarding.context';
+import { isValidArrayRange } from '../../sign-up-user-onboarding.service';
 
 const SocialCauses: React.FC = () => {
   const { updateSelectedStep } = useContext(StepsContext);
@@ -33,10 +34,15 @@ const SocialCauses: React.FC = () => {
       </div>
       <div className={css['tags']}>
         <div className={css['tags__title']}>Popular</div>
-        <CategoriesClickable clickable onChange={updateSocialCauses} list={list} selected={state.social_causes} />
+        <CategoriesClickable
+          clickable
+          onChange={updateSocialCauses}
+          list={list}
+          selected={state?.social_causes || []}
+        />
       </div>
       <div className={css['buttons']}>
-        <Button disabled={!state.social_causes.length} onClick={() => updateSelectedStep(2)}>
+        <Button disabled={!isValidArrayRange(state.social_causes, 0, 5)} onClick={() => updateSelectedStep(2)}>
           Continue
         </Button>
       </div>
