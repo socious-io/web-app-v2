@@ -1,0 +1,21 @@
+.container {
+  color: var(--color-off-white-01);
+}
+
+.cardscontainer {
+  padding: 16px;
+}
+
+.cards {
+  margin-top: 8px;
+}
+
+.seeMore {
+  text-align: center;
+  font-weight: 600;
+  font-size: var(--font-size-s2);
+  color: var(--color-primary-01);
+  cursor: pointer;
+  padding-bottom: 2rem;
+  padding-top: 1rem;
+}
