@@ -116,7 +116,12 @@ export const Desktop: React.FC = () => {
           onRemoveUser(openModal?.identity?.id as string);
           setOpenModal({ ...openModal, open: false });
         }}
-        body={`Do you want to remove "${openModal?.identity?.name}" from your member team?!`}
+        modalTexts={{
+          title: 'Are you sure?',
+          body: `Do you want to remove "${openModal?.identity?.name}" from your member team?!`,
+          confirmButton: ' Yes, I’m sure',
+          cancleButton: 'Cancel',
+        }}
       />
     </>
   );

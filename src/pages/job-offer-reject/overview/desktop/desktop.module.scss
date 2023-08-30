@@ -33,3 +33,16 @@
   flex-direction: column;
   gap: 1rem;
 }
+
+.archivedBox {
+  background-color:  var(--color-off-white-01);
+  display: flex;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.archivedBoxImage {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}

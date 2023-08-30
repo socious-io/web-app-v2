@@ -168,3 +168,7 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
     };
   });
 }
+
+export async function archiveJob(projectId: string) {
+  return post(`/projects/update/${projectId}/close`, {});
+}

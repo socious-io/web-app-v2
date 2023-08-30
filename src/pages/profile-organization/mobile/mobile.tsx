@@ -25,6 +25,7 @@ export const Mobile = (): JSX.Element => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    navigateJobs,
   } = useProfileOrganizationShared();
   const [openConnectModal, setOpenConnectModal] = useState(false);
 
@@ -79,7 +80,13 @@ export const Mobile = (): JSX.Element => {
       <div className={css.mission}>{organization.mission}</div>
     </Divider>
   );
-
+  const jobsJSX = (
+    <Divider title="Opportunities">
+      <div onClick={navigateJobs} className={css.mission}>
+        See Jobs
+      </div>
+    </Divider>
+  );
   const cultureJSX = (
     <Divider title="Culture">
       <div className={css.culture}>{organization.culture}</div>
@@ -170,6 +177,7 @@ export const Mobile = (): JSX.Element => {
         {printWhen(missionJSX, !!organization.mission)}
         {printWhen(cultureJSX, !!organization.culture)}
         {printWhen(skillsJSX, organization.skills && organization.skills.length > 0)}
+        {jobsJSX}
       </div>
       <ConnectModal
         open={openConnectModal}
