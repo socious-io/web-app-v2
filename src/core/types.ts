@@ -274,6 +274,7 @@ export type MissionsResp = Pagination<
     offer: {
       total_hours: number;
       assignment_total: number;
+      currency: string;
     };
     payment?: {
       meta: {
@@ -306,6 +307,8 @@ export type MissionsResp = Pagination<
     amount: number;
     total: number;
     fee: number;
+    payout: number;
+    app_fee: number;
   }[]
 >;
 

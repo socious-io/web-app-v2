@@ -14,8 +14,8 @@ export const useWalletShared = () => {
   } = useMatch().data as Resolver;
 
   let accounts = [];
-  if (stripeProfile?.external_accounts.data.length > 0) accounts.push(...stripeProfile?.external_accounts.data);
-  if (jpStripeProfile?.external_accounts.data.length > 0) accounts.push(...jpStripeProfile?.external_accounts.data);
+  if (stripeProfile?.external_accounts?.data.length > 0) accounts.push(...stripeProfile?.external_accounts.data);
+  if (jpStripeProfile?.external_accounts?.data.length > 0) accounts.push(...jpStripeProfile?.external_accounts.data);
 
   const { data } = { data: accounts } || {};
   const form = useForm(formModel);

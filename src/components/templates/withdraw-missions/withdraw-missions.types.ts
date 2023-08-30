@@ -6,7 +6,7 @@ export interface WithdrawMissionsProps {
   fee: number;
   onClickWithdraw: () => void;
   service?: 'STRIPE' | 'CRYPTO';
-  unit?: string;
+  currency?: string;
   disbaledWithdraw?: boolean;
   disableText?: string;
 }
