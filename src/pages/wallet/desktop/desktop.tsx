@@ -80,8 +80,9 @@ export const Desktop: React.FC = () => {
             mission_name={item.project?.title}
             escrow={item.escrow}
             amount={item.amount}
-            total={item.total}
-            fee={item.fee}
+            total={item.payout}
+            fee={item.app_fee}
+            currency={item.offer.currency}
             service={item?.payment?.service}
             disableText={
               item.escrow.release_id == null && isDisablePayout(item.escrow) ? 'You can payout after e few days' : ''
