@@ -1,8 +1,13 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from '@tanstack/react-location';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
-import { CreateQuestionWizard, setAddChoices, setChoices } from 'src/store/reducers/createQuestionWizard.reducer';
+import {
+  CreateQuestionWizard,
+  setAddChoices,
+  setChoices,
+  setDefaultQuestion,
+} from 'src/store/reducers/createQuestionWizard.reducer';
 import { useForm } from 'src/core/form';
 import { formModel } from './screener-questions.form';
 import { updateForm } from './screener-questions.service';
@@ -24,7 +29,6 @@ export const useScreenerQuestionsShared = () => {
     required: formState.required_question,
     options: Object.keys(formState.choices).map((key) => form.controls[key]?.value),
   };
-
   Object.keys(formModel(formState)).forEach((prop) => {
     const p = prop as keyof ReturnType<typeof formModel>;
     form.controls[prop].subscribe((v) => {

@@ -5,35 +5,22 @@ import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Toggle } from 'src/components/atoms/toggle';
 import { Input } from 'src/components/atoms/input/input';
 import {
-  resetCreatedQuestion,
   resetQuestions,
-  setAddQuestion,
   setChoices,
   setCreatedQuestions,
   setQuestionProjectIds,
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
-import { dialog } from 'src/core/dialog/dialog';
 import { printWhen } from 'src/core/utils';
 import { CreateQuestionPayload } from 'src/core/types';
-import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';
+import { QUESTION_TYPE, createQuestion, updateQuestion } from '../screener-questions.service';
 import { useScreenerQuestionsShared } from '../screener-questions.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
-  const { navigate, dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
+  const { dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
     useScreenerQuestionsShared();
-
-  function submitSkip() {
-    dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-      navigate({ to: `/m/jobs/created/${formState.question_project_id.identity_id}` });
-      store.dispatch(resetCreatedQuestion());
-      store.dispatch(resetCreatePostWizard());
-    });
-  }
-
   function submitWithQuestions() {
     const payloadQuestion: CreateQuestionPayload =
       formState.question_type === 'MULTIPLE'
@@ -51,10 +38,32 @@ export const Mobile: React.FC = () => {
       dispatch(setQuestionProjectIds({ ...formState.question_project_id, question_id: resp.id }));
       store.dispatch(resetQuestions());
       form.reset();
-      navigate({ to: `created/${formState.question_project_id.identity_id}` });
+      history.back();
     });
   }
+  function updateSelectedQuestion() {
+    const payloadQuestion: CreateQuestionPayload =
+      formState.question_type === 'MULTIPLE'
+        ? {
+            question: question.question,
+            required: question.required,
+            options: question.options as string[],
+          }
+        : {
+            question: question.question,
+            required: question.required,
+          };
 
+    updateQuestion(
+      payloadQuestion,
+      formState.question_project_id.project_id,
+      formState.question_project_id.question_id
+    ).then((resp) => {
+      store.dispatch(resetQuestions());
+      form.reset();
+      history.back();
+    });
+  }
   const addQuestionsJSX = (
     <div className={css.questions}>
       <RadioGroup
@@ -109,31 +118,31 @@ export const Mobile: React.FC = () => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        {/* <div className={css.chevron} onClick={() => navigate({ to: `/jobs/create/info` })}>
-          <img height={24} src="/icons/chevron-left.svg" />
-        </div> */}
-        <div className={css.headerTitle}>Create job</div>
+        <div className={css.headerTitle}>Edit questions</div>
       </div>
       <div className={css.screener}>
         Screener questions
         <span className={css.screener__subtitle}>Add up to 5 screener questions.</span>
       </div>
       <div className={css.main}>
-        {printWhen(
-          <div className={css.addQuestions} onClick={() => dispatch(setAddQuestion(true))}>
-            <img src="/icons/add-circle.svg" />
-            Add question
-          </div>,
-          !formState.add_question
-        )}
-        {printWhen(addQuestionsJSX, formState.add_question)}
+        {addQuestionsJSX}
         {printWhen(multipleChoiceJSX, formState.question_type === 'MULTIPLE')}
       </div>
       <div className={css.btnContainer}>
         {printWhen(
-          <Button color="white" onClick={submitSkip}>
-            Skip
-          </Button>,
+          <>
+            <Button onClick={updateSelectedQuestion}>Update</Button>
+            <Button
+              color="white"
+              onClick={() => {
+                store.dispatch(resetQuestions());
+                form.reset();
+                history.back();
+              }}
+            >
+              Cancel
+            </Button>
+          </>,
           !formState.add_question
         )}
         {printWhen(
@@ -141,7 +150,14 @@ export const Mobile: React.FC = () => {
             <Button color="blue" disabled={isDisabledAddQuestion} onClick={submitWithQuestions}>
               Add
             </Button>
-            <Button color="white" onClick={submitSkip}>
+            <Button
+              color="white"
+              onClick={() => {
+                store.dispatch(resetQuestions());
+                form.reset();
+                history.back();
+              }}
+            >
               Cancel
             </Button>
           </>,
