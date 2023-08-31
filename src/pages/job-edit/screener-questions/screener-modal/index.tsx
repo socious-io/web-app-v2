@@ -5,46 +5,50 @@ import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Toggle } from 'src/components/atoms/toggle';
 import { Input } from 'src/components/atoms/input/input';
-import { CreatedModal } from '../created/created-modal';
-import { AlertModal } from 'src/components/organisms/alert-modal';
 import {
-  resetCreatedQuestion,
   resetQuestions,
-  setAddQuestion,
   setChoices,
   setCreatedQuestions,
   setQuestionProjectIds,
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { printWhen } from 'src/core/utils';
 import { ButtonProps } from 'src/components/atoms/button/button.types';
 import { ScreenerModalProps } from './screener-modal.types';
 import { CreateQuestionPayload } from 'src/core/types';
-import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';
+import { QUESTION_TYPE, createQuestion, updateQuestion } from '../screener-questions.service';
 import { useScreenerQuestionsShared } from '../screener-questions.shared';
 import css from './screener-modal.module.scss';
 
-export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onDone, onOpen }) => {
-  const { navigate, dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
+export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onDone }) => {
+  const { dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
     useScreenerQuestionsShared();
-  const [openCreatedModal, setOpenCreatedModal] = useState(false);
-  const [openAlertModal, setOpenAlertModal] = useState(false);
 
-  function submitSkip() {
-    onClose();
-    setOpenAlertModal(true);
+  function updateSelectedQuestion() {
+    const payloadQuestion: CreateQuestionPayload =
+      formState.question_type === 'MULTIPLE'
+        ? {
+            question: question.question,
+            required: question.required,
+            options: question.options as string[],
+          }
+        : {
+            question: question.question,
+            required: question.required,
+          };
+
+    updateQuestion(
+      payloadQuestion,
+      formState.question_project_id.project_id,
+      formState.question_project_id.question_id
+    ).then((resp) => {
+      store.dispatch(resetQuestions());
+      form.reset();
+      onDone();
+      onClose();
+    });
   }
-
-  function done() {
-    store.dispatch(resetCreatedQuestion());
-    store.dispatch(resetCreatePostWizard());
-    setOpenAlertModal(false);
-    onDone();
-    navigate({ to: '/jobs' });
-  }
-
   function submitWithQuestions() {
     const payloadQuestion: CreateQuestionPayload =
       formState.question_type === 'MULTIPLE'
@@ -62,11 +66,10 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
       dispatch(setQuestionProjectIds({ ...formState.question_project_id, question_id: resp.id }));
       store.dispatch(resetQuestions());
       form.reset();
+      onDone();
       onClose();
-      setOpenCreatedModal(true);
     });
   }
-
   const addQuestionsJSX = (
     <div className={css.questions}>
       <RadioGroup
@@ -118,69 +121,41 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
     </>
   );
 
-  const buttons: ButtonProps[] = !formState.add_question
+  const buttons: ButtonProps[] = formState.add_question
     ? [
         {
-          children: 'Skip',
-          color: 'white',
-          onClick: submitSkip,
-        },
-      ]
-    : [
-        {
           children: 'Add',
-          color: 'blue',
-          disabled: isDisabledAddQuestion,
           onClick: submitWithQuestions,
+          disabled: isDisabledAddQuestion,
         },
         {
           children: 'Cancel',
           color: 'white',
-          onClick: submitSkip,
+          onClick: onClose,
+        },
+      ]
+    : [
+        {
+          children: 'Update',
+          onClick: updateSelectedQuestion,
+        },
+        {
+          children: 'Cancel',
+          color: 'white',
+          onClick: onClose,
         },
       ];
 
   return (
     <>
-      <WebModal header="Create job" open={open} onClose={onClose} buttons={buttons}>
+      <WebModal header="Edit screener question" open={open} onClose={onClose} buttons={buttons}>
         <>
-          <div className={css.screener}>
-            Screener questions
-            <span className={css.screener__subtitle}>Add up to 5 screener questions.</span>
-          </div>
           <div className={css.main}>
-            {printWhen(
-              <div className={css.addQuestions} onClick={() => dispatch(setAddQuestion(true))}>
-                <img src="/icons/add-circle.svg" />
-                Add question
-              </div>,
-              !formState.add_question
-            )}
-            {printWhen(addQuestionsJSX, formState.add_question)}
+            {printWhen(addQuestionsJSX, true)}
             {printWhen(multipleChoiceJSX, formState.question_type === 'MULTIPLE')}
           </div>
         </>
       </WebModal>
-      <CreatedModal
-        open={openCreatedModal}
-        onClose={() => setOpenCreatedModal(false)}
-        onBack={() => {
-          setOpenCreatedModal(false);
-          onOpen();
-        }}
-        onDone={onDone}
-      />
-      <AlertModal
-        open={openAlertModal}
-        onClose={() => {
-          setOpenAlertModal(false);
-          done();
-        }}
-        title="Job created"
-        subtitle="Your job is posted and now visible for users to apply."
-        buttons={[{ children: 'Back to jobs', onClick: done }]}
-        contentClassName={css.success}
-      />
     </>
   );
 };

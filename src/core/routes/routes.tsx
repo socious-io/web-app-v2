@@ -127,7 +127,7 @@ export const routes: Route[] = [
           {
             path: '/add-card',
             loader: async ({ params }) => {
-              const { offer } = await receivedOfferLoader(params)
+              const { offer } = await receivedOfferLoader(params);
               return { offer };
             },
             element: () =>
@@ -144,8 +144,8 @@ export const routes: Route[] = [
           },
           {
             loader: async ({ params }) => {
-              const { offer } = await receivedOfferLoader(params)
-              const cardInfo = await getCreditCardInfo(offer.currency === 'JPY')
+              const { offer } = await receivedOfferLoader(params);
+              const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
               return { offer, cardInfo };
             },
             element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
@@ -355,6 +355,22 @@ export const routes: Route[] = [
             element: () =>
               import('../../pages/job-edit/social-causes/social-causes.container').then((m) => <m.SocialCauses />),
           },
+          {
+            path: 'screener-questions/:id',
+            loader: async ({ params }) => {
+              const defaultQuestions = await getScreeningQuestions(params.id);
+              return { defaultQuestions };
+            },
+            element: () =>
+              import('src/pages/job-edit/screener-questions/created/created.container').then((m) => <m.Created />),
+          },
+          {
+            path: 'screener-questions/',
+            element: () =>
+              import('src/pages/job-edit/screener-questions/screener-questions.container').then((m) => (
+                <m.ScreenerQuestions />
+              )),
+          },
         ],
       },
       {
@@ -462,8 +478,8 @@ export const routes: Route[] = [
               },
               {
                 loader: async ({ params }) => {
-                  const { offer } = await receivedOfferLoader(params)
-                  const cardInfo = await getCreditCardInfo(offer.currency === 'JPY')
+                  const { offer } = await receivedOfferLoader(params);
+                  const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
                   return { offer, cardInfo };
                 },
                 element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),

@@ -2,24 +2,21 @@ import { useMatch, useNavigate } from '@tanstack/react-location';
 import store from 'src/store/store';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
-import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
-import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
-import { dialog } from 'src/core/dialog/dialog';
+import {
+  resetCreatedQuestion,
+  setAddQuestion,
+  setDefaultQuestion,
+  setQuestionProjectIds,
+} from 'src/store/reducers/createQuestionWizard.reducer';
 import { useCreatedShared } from '../created.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
   const navigate = useNavigate();
   const resolver = useMatch();
-  const { questions, onRemoveCreatedQuestion } = useCreatedShared();
 
-  function submit() {
-    dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-      navigate({ to: `/m/jobs/created/${resolver.params.id}` });
-      store.dispatch(resetCreatedQuestion());
-      store.dispatch(resetCreatePostWizard());
-    });
-  }
+  const defaultQuestions = useMatch().ownData.defaultQuestions?.questions;
+  const { questions, onRemoveCreatedQuestion } = useCreatedShared(defaultQuestions);
 
   return (
     <div className={css.container}>
@@ -27,14 +24,14 @@ export const Mobile: React.FC = () => {
         <div className={css.chevron} onClick={() => navigate({ to: `/jobs/create/screener-questions` })}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
-        <div className={css.headerTitle}>Create job</div>
+        <div className={css.headerTitle}>Edit job</div>
       </div>
       <div className={css.screener}>
         Screener questions
         <span className={css.screener__subtitle}>Add up to 5 screener questions.</span>
       </div>
       <div className={css.main}>
-        {questions.map((question) => (
+        {questions.map((question, index) => (
           <Accordion
             key={question.id}
             title={question.id}
@@ -47,14 +44,40 @@ export const Mobile: React.FC = () => {
               {question.question}
             </div>
             <div className={css.edit}>
-              <img src="/icons/trash-bin.svg" onClick={() => onRemoveCreatedQuestion(question)} />
+              <img
+                alt="remove-question"
+                className={css.edit__icon}
+                src="/icons/pen.svg"
+                onClick={() => {
+                  store.dispatch(setDefaultQuestion(defaultQuestions[index]));
+                  store.dispatch(
+                    setQuestionProjectIds({
+                      project_id: resolver.params.id,
+                      question_id: defaultQuestions[index].id,
+                    })
+                  );
+                  navigate({ to: `/jobs/edit/screener-questions` });
+                }}
+              />
+              <img
+                src="/icons/trash-bin.svg"
+                alt="remove"
+                onClick={() =>
+                  onRemoveCreatedQuestion({ projectId: resolver.params.id, questionId: defaultQuestions[index].id })
+                }
+              />
             </div>
           </Accordion>
         ))}
         <div
           className={css.addQuestions}
           onClick={() => {
-            navigate({ to: `/jobs/create/screener-questions` });
+            store.dispatch(setAddQuestion(true));
+            setQuestionProjectIds({
+              project_id: resolver.params.id,
+            });
+
+            navigate({ to: `/jobs/edit/screener-questions` });
           }}
         >
           <img src="/icons/add-circle.svg" />
@@ -62,9 +85,7 @@ export const Mobile: React.FC = () => {
         </div>
       </div>
       <div className={css.btnContainer}>
-        <Button color="white" onClick={submit}>
-          Continue
-        </Button>
+        <Button onClick={() => history.back()}>Done</Button>
       </div>
     </div>
   );

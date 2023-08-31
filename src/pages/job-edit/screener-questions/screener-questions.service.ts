@@ -20,8 +20,8 @@ export async function createPost(payload: CreatePostPayload) {
   return post('/projects', payload).then(({ data }) => data);
 }
 
-export async function createQuestion(payload: CreateQuestionPayload, project_id: string) {
-  return post(`/projects/${project_id}/questions`, payload).then(({ data }) => data);
+export async function updateQuestion(payload: CreateQuestionPayload, project_id: string, question_id: string) {
+  return post(`/projects/update/${project_id}/questions/${question_id}`, payload).then(({ data }) => data);
 }
 
 export function updateForm(dispatch: Dispatch<AnyAction>) {
@@ -34,3 +34,11 @@ export function updateForm(dispatch: Dispatch<AnyAction>) {
     field[fieldName]();
   };
 }
+export async function createQuestion(payload: CreateQuestionPayload, project_id: string) {
+  return post(`/projects/${project_id}/questions`, payload).then(({ data }) => data);
+}
+export const convertOptionsToChoices = (array) =>
+  array.reduce((obj, value, index) => {
+    obj[index + 1] = value;
+    return obj;
+  }, {});
