@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { skillsToCategoryAdaptor } from 'src/core/adaptors';
+import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
 import { RootState } from 'src/store/store';
 
 export const useSocialCausesShared = () => {
-  const [socialCauses, setSocialCauses] = useState(skillsToCategoryAdaptor);
+  const [socialCauses, setSocialCauses] = useState(socialCausesToCategoryAdaptor);
 
   const selectedSocialCauses = useSelector<RootState, string[]>((state) => {
     return state.createPostWizard.causes_tags;
   });
 
   function onSearch(v: string) {
-    const filteredValue = skillsToCategoryAdaptor().filter((item) =>
+    const filteredValue = socialCausesToCategoryAdaptor().filter((item) =>
       item.label.toLowerCase().includes(v.toLowerCase())
     );
     setSocialCauses(filteredValue);
