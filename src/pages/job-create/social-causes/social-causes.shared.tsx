@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
 import { RootState } from 'src/store/store';
 
 export const useSocialCausesShared = () => {
-  const [socialCauses, setSocialCauses] = useState(socialCausesToCategoryAdaptor());
+  const [socialCauses, setSocialCauses] = useState(socialCausesToDropdownAdaptor());
 
   const selectedSocialCauses = useSelector<RootState, string[]>((state) => {
     return state.createPostWizard.causes_tags;
   });
 
   function onSearch(v: string) {
-    const filteredValue = socialCausesToCategoryAdaptor().filter((item) =>
+    const filteredValue = socialCausesToDropdownAdaptor().filter((item) =>
       item.label.toLowerCase().includes(v.toLowerCase())
     );
     setSocialCauses(filteredValue);
   }
 
-  const isValid = selectedSocialCauses.length > 0 && selectedSocialCauses.length <= 1;
+  const isValid = selectedSocialCauses?.length > 0 && selectedSocialCauses?.length <= 1;
 
   return { onSearch, socialCauses, selectedSocialCauses, isValid };
 };
