@@ -13,12 +13,11 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
   fee,
   service,
   onClickWithdraw,
-  unit = 'USD',
+  currency = 'USD',
   disbaledWithdraw = false,
   disableText = '',
 }) => {
   const isStripe = service === 'STRIPE';
-
   return (
     <Card className={css.container}>
       <div className={css.header}>
@@ -26,16 +25,16 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
       </div>
       <div className={css.rowItem}>
         <div className={css.balance}>
-          <img src={`/icons/fiat/${unit}.svg`} className={css.balance__img} />
-          {unit}
+          <img src={`/icons/crypto/${currency}.svg`} className={css.balance__img} />
+          {currency}
         </div>
-        $ {getFlooredFixed(amount, 2)}
+        {getFlooredFixed(amount, 2)}
       </div>
       <div className={css.rowItem}>
-        <span className={css.title}>Fee </span>$ {getFlooredFixed(fee, 2)}
+        <span className={css.title}>Fee </span> {getFlooredFixed(fee, 2)}
       </div>
       <div className={css.rowItem}>
-        <span className={css.title}>total </span>$ {getFlooredFixed(total, 2)}
+        <span className={css.title}>total </span> {getFlooredFixed(total, 2)}
       </div>
       {printWhen(
         <>
