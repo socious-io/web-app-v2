@@ -1,0 +1,72 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 0;
+  @media screen and (max-width: 600px) {
+    padding: 0;
+    background-color: var(--color-primary-01);
+  }
+}
+.card {
+  background-color: var(--color-primary-01);
+  font-family: 'Hahmlet';
+  width: 33.75rem;
+  border: 0.1rem solid var(--color-gray-04);
+  border-radius: 1.2rem;
+  min-height: 45rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+
+  @media screen and (max-width: 600px) {
+    border-radius: 0;
+    border: none;
+  }
+
+  &__header {
+    padding: 0 1.6rem;
+    margin-top: 2rem;
+    flex: 1;
+  }
+  &__back {
+    cursor: pointer;
+  }
+  &__content {
+    flex: 30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 4.5rem;
+    text-align: center;
+  }
+  &__title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 2.5rem 0 0.5rem;
+    color: var(--color-white);
+  }
+  &__sub-title {
+    font-size: 1rem;
+    color: var(--color-gray-03);
+    max-width: 325px;
+    line-height: 24px;
+  }
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
+    padding: 1rem;
+  }
+  &__bell {
+    padding: 8px;
+    border-radius: 50%;
+    background-color: white;
+  }
+}
