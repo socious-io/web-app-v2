@@ -24,10 +24,10 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
           {added_cards.map((card) => (
             <div className={css['connect__card']} key={card.id}>
               <SelectCard
-                name={card.holder_name}
+                name={card.meta.brand}
                 id={card.id}
                 value={card.id}
-                text={`**** ${card.numbers}`}
+                text={`**** ${card.meta.last4}`}
                 checked={card.id === selectedCard}
                 imageProps={{ src: '/icons/debit.svg', width: 18, height: 18 }}
                 onChange={(value) => onSelectCard?.(value as string)}

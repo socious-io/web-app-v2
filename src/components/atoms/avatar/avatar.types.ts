@@ -5,4 +5,5 @@ export interface AvatarProps extends CSSProperties {
   type: 'organizations' | 'users';
   img?: string;
   onClick?: () => void;
+  customStyle?: string;
 }
