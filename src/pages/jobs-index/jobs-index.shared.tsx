@@ -10,7 +10,7 @@ export const useJobsIndexShared = () => {
   const [jobList, setJobList] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1 });
   const navigate = useNavigate();
-
+  const identities = useSelector<RootState, IdentityReq | undefined>((state) => state.identity.entities);
   useEffect(() => {
     getOrganizationJobs({ identityId: data.user.id, page: pagination.page }).then((resp) => {
       setJobList((list) => [...list, ...resp.items]);
@@ -31,5 +31,5 @@ export const useJobsIndexShared = () => {
 
   const showMorePageBtn = jobList.length < pagination.total;
 
-  return { jobList, goToJobDetail, data, showMorePageBtn, onMorePage };
+  return { jobList, identities, goToJobDetail, data, showMorePageBtn, onMorePage };
 };
