@@ -68,7 +68,7 @@ export const useSignInShared = () => {
     const resp = await getIdentities();
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(resp));
-    navigate({ to: path ? path : '/jobs', replace: true });
+    navigate({ to: path ? path : '/sign-up/user/welcome', replace: true });
     return loginResp;
   }
 
