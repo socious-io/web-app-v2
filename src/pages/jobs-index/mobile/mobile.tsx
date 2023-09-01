@@ -7,15 +7,16 @@ import { OrganizationIntroCard } from 'src/components/templates/organization-int
 import { printWhen } from 'src/core/utils';
 
 export const Mobile = () => {
-  const { identity, jobList, data, showMorePageBtn, onMorePage } = useJobsIndexShared();
-  console.log('identity', identity);
+  const { identities, jobList, data, showMorePageBtn, onMorePage } = useJobsIndexShared();
+  const hires = (missions: string) =>
+    identities?.some((identity) => identity?.id === data.user?.id) ? `, hires ${missions}` : '';
   return (
     <div className={css.container}>
       <div>
         <OrganizationIntroCard
           title={data.user.name}
           description={data.user.bio}
-          logo={data.user.image.url}
+          logo={data.user.image?.url}
           link={{ label: 'View my profile', url: '/jobs' }}
           impact={{ following: data.user.followings, followers: data.user.followers }}
         />
@@ -25,7 +26,7 @@ export const Mobile = () => {
           <JobIntroCard
             title={job.title}
             icon={'/icons/multiple-avatars.svg'}
-            description={`applicants ${job.applicants}, hires ${job.missions}`}
+            description={`applicants ${job.applicants} ${hires(job.missions)}`}
             footer={toRelativeTime(job.updated_at)}
             link={`/jobs/${job.id}`}
             customStyle={css.cards}
