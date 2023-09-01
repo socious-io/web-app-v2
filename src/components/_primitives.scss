@@ -30,3 +30,14 @@
   --color-primary-blue: #2f4786;
   --color-black-01: #020305;
 }
+
+@font-face {
+  font-family: Inter;
+  src: url('/fonts/Inter-Regular.woff2');
+}
+
+@font-face {
+  font-family: Inter;
+  font-weight: 600;
+  src: url('/fonts/Inter-SemiBold.woff2');
+}
