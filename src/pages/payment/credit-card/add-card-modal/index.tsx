@@ -1,39 +1,78 @@
+import { useState, useEffect } from 'react';
 import { Modal } from 'src/components/templates/modal/modal';
 import { Button } from 'src/components/atoms/button/button';
-import { Input } from 'src/components/atoms/input/input';
-import { printWhen } from 'src/core/utils';
+import { config } from 'src/config';
 import { endpoint } from 'src/core/endpoints';
 import { AddCardModalProps } from './add-card-modal.types';
 import { getCreditCardInfo } from '../../payment.service';
-import { useCreditCardShared } from '../credit-card.shared';
 import css from './add-card-modal.module.scss';
+import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
+import { dialog } from 'src/core/dialog/dialog';
 
-export const AddCardModal: React.FC<AddCardModalProps> = ({ open, onClose, setCardsList }) => {
-  const { form, formIsInvalid, isDirtyYearOrMonth: isDirty, errors } = useCreditCardShared();
+export const AddCardModal: React.FC<AddCardModalProps> = ({ open, onClose, setCardsList, currency }) => {
+  const [stripe, setStripe] = useState<Stripe | null>();
+  const [card, setCard] = useState<StripeCardElement | null>();
+  const is_jp = currency === 'JPY';
 
-  const errorsJSX = (
-    <div style={{ height: '`${errors.length}rem`' }} className={css.errorsContainer}>
-      {errors.map((error, i) => (
-        <div className={css.errorItem} key={i}>
-          <>- {error}</>
-        </div>
-      ))}
-    </div>
-  );
+  useEffect(() => {
+    loadStripe(is_jp ? config.jpStripePublicKey : config.stripePublicKey).then((s) => setStripe(s));
+  }, []);
 
-  function onSubmit() {
+  const style = {
+    base: {
+      color: '#32325D',
+      fontWeight: 500,
+      fontFamily: 'Source Code Pro, Consolas, Menlo, monospace',
+      fontSize: '16px',
+      fontSmoothing: 'antialiased',
+
+      '::placeholder': {
+        color: '#CFD7DF',
+      },
+      ':-webkit-autofill': {
+        color: '#e39f48',
+      },
+    },
+    invalid: {
+      color: '#E25950',
+
+      '::placeholder': {
+        color: '#FFCCA5',
+      },
+    },
+  };
+
+  useEffect(() => {
+    if (stripe) {
+      const elements = stripe.elements();
+      const c = elements.create('card', { style, hidePostalCode: true });
+      c?.mount('#card-element');
+      setCard(c);
+    }
+  }, [stripe]);
+
+  async function onSubmit() {
+    if (!card || !stripe) return;
+
+    const { token } = await stripe.createToken(card);
+    if (!token) return;
+
     const payload = {
-      holder_name: form.controls.cardholderName.value,
-      numbers: form.controls.cardNumber.value,
-      exp_month: form.controls.month.value,
-      exp_year: +('20' + form.controls.year.value),
-      cvc: form.controls.cvc.value,
+      token: token.id,
+      meta: token.card,
     };
-    endpoint.post.payments['add-card'](payload).then(async () => {
-      onClose();
-      const result = await getCreditCardInfo();
-      setCardsList(result);
-    });
+    try {
+      await endpoint.post.payments['add-card'](payload, is_jp);
+    } catch (err) {
+      dialog.alert({
+        title: 'add card error',
+        message: err.response.data.error,
+      });
+      return;
+    }
+    const cards = await getCreditCardInfo(is_jp);
+    setCardsList(cards);
+    onClose();
   }
 
   return (
@@ -46,42 +85,10 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, onClose, setCa
             <img src="/icons/close-black.svg" />
           </div>
         </div>
-        <form className={css.form}>
-          <Input register={form} name="cardholderName" label="Cardholder’s name" placeholder="Name" />
+        <div id="card-element"></div>
 
-          <Input register={form} name="cardNumber" label="Card number" inputMode="numeric" maxLength={16} />
-
-          <div className={css.card__details}>
-            <div className={css.detail}>
-              <div className={css.detail__label}>Expiry Date</div>
-              <div className={css.date}>
-                <Input
-                  register={form}
-                  name="month"
-                  placeholder="MM"
-                  maxLength={2}
-                  inputMode="numeric"
-                  inputClassName={css.date__input}
-                />
-                /
-                <Input
-                  register={form}
-                  name="year"
-                  placeholder="YY"
-                  maxLength={2}
-                  inputMode="numeric"
-                  inputClassName={css.date__input}
-                />
-              </div>
-              {printWhen(errorsJSX, isDirty)}
-            </div>
-            <div className={css.detail}>
-              <Input register={form} name="cvc" label="CVC" placeholder="***" type="password" />
-            </div>
-          </div>
-        </form>
         <div className={css.btn}>
-          <Button color="blue" disabled={formIsInvalid} onClick={onSubmit}>
+          <Button color="blue" onClick={onSubmit}>
             Add
           </Button>
         </div>

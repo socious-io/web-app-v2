@@ -274,6 +274,7 @@ export type MissionsResp = Pagination<
     offer: {
       total_hours: number;
       assignment_total: number;
+      currency: string;
     };
     payment?: {
       meta: {
@@ -306,6 +307,8 @@ export type MissionsResp = Pagination<
     amount: number;
     total: number;
     fee: number;
+    payout: number;
+    app_fee: number;
   }[]
 >;
 
@@ -441,15 +444,11 @@ export type NotificationSettingsRes = {
 
 export type CardItems = {
   id: string;
-  identity_id: string;
-  holder_name: string;
-  numbers: string;
-  exp_month: number;
-  exp_year: number;
-  cvc: string;
-  brand: null;
-  created_at: string;
-  updated_at: string;
+  meta: {
+    last4: string;
+    brand: string;
+  };
+  brand: string;
 };
 
 export type CardInfoResp = Pagination<CardItems[]>;
@@ -531,3 +530,5 @@ export type Profile = {
   username: string;
   wallet_address: null | string;
 };
+export type FcmListResp = Array<{ meta: { os: 'ANDROID' | 'IOS' }; user_id: string; token: string }>;
+export type CreateFcmPayload = { meta: { os: 'ANDROID' | 'IOS' }; token: string };

@@ -38,7 +38,6 @@ import store from 'src/store/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getIdentities } from '../api';
 import { useEffect, useState } from 'react';
-import { getJob } from 'src/pages/job-edit/info/info.services';
 
 export const routes: Route[] = [
   {
@@ -142,9 +141,9 @@ export const routes: Route[] = [
         children: [
           {
             path: '/add-card',
-            loader: async () => {
-              const [cardInfo] = await Promise.all([getCreditCardInfo()]);
-              return cardInfo;
+            loader: async ({ params }) => {
+              const { offer } = await receivedOfferLoader(params);
+              return { offer };
             },
             element: () =>
               import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
@@ -160,9 +159,8 @@ export const routes: Route[] = [
           },
           {
             loader: async ({ params }) => {
-              const requests = [receivedOfferLoader(params), getCreditCardInfo()];
-              const [offerReq, cardInfo] = await Promise.all(requests);
-              const { offer } = offerReq;
+              const { offer } = await receivedOfferLoader(params);
+              const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
               return { offer, cardInfo };
             },
             element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
@@ -479,9 +477,8 @@ export const routes: Route[] = [
               },
               {
                 loader: async ({ params }) => {
-                  const requests = [receivedOfferLoader(params), getCreditCardInfo()];
-                  const [offerReq, cardInfo] = await Promise.all(requests);
-                  const { offer } = offerReq;
+                  const { offer } = await receivedOfferLoader(params);
+                  const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
                   return { offer, cardInfo };
                 },
                 element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
@@ -700,6 +697,11 @@ export const routes: Route[] = [
                     <m.ProfileOrganizationEdit />
                   )),
               },
+              {
+                path: 'jobs',
+                element: () =>
+                  import('../../pages/jobs-index/jobs-index.container').then((m) => <m.JobsIndexContainer />),
+              },
             ],
           },
           {
@@ -755,9 +757,9 @@ export const routes: Route[] = [
             path: 'wallet',
             element: () => import('../../pages/wallet/wallet.container').then((m) => <m.Wallet />),
             loader: async () => {
-              const requests = [getMissionsList({ page: 1 }), getSrtipeProfile()];
-              const [missionsList, stripeProfile] = await Promise.all(requests);
-              return { missionsList, stripeProfile };
+              const requests = [getMissionsList({ page: 1 }), getSrtipeProfile(), getSrtipeProfile(true)];
+              const [missionsList, stripeProfile, jpStripeProfile] = await Promise.all(requests);
+              return { missionsList, stripeProfile, jpStripeProfile };
             },
           },
           {

@@ -132,6 +132,7 @@ export const Desktop: React.FC = () => {
         open={openAddCardModal}
         onClose={() => setOpenAddCardModal(false)}
         setCardsList={(list) => setCardsList(list)}
+        currency={offer.currency}
       />
     </>
   );
