@@ -7,7 +7,7 @@ import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
 import { ProfileReq, Resolver } from './profile-organization.types';
-import { getConnectStatus, sendRequestConnection } from './profile-organization.services';
+import { getConnectStatus, sendRequestConnection, hiringCall } from './profile-organization.services';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 
 export const useProfileOrganizationShared = () => {
@@ -25,6 +25,8 @@ export const useProfileOrganizationShared = () => {
   const profileBelongToCurrentUser = currentIdentity?.id === organization.id;
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [message, setMessage] = useState('please connect to me');
+
+  const [hiring, setHiring] = useState(organization.hiring);
 
   useEffect(() => {
     const getConnectionsStatus = async () => {
@@ -94,6 +96,13 @@ export const useProfileOrganizationShared = () => {
       };
     });
   }
+
+  async function onHiring() {
+    setHiring(!organization.hiring);
+    organization.hiring = await hiringCall();
+    setOrganization(organization);
+  }
+
   return {
     onClose,
     organization,
@@ -108,5 +117,7 @@ export const useProfileOrganizationShared = () => {
     onMessage,
     updateOrganization,
     navigateJobs,
+    hiring,
+    onHiring,
   };
 };

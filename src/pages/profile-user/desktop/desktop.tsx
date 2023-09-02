@@ -4,6 +4,7 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Divider } from 'src/components/templates/divider/divider';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
+import { Toggle } from 'src/components/atoms/toggle';
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
@@ -20,6 +21,7 @@ export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
   const {
     user,
+    setUser,
     updateUser,
     address,
     badges,
@@ -32,6 +34,10 @@ export const Desktop = (): JSX.Element => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    openToWork,
+    onOpenToWork,
+    openToVolunteer,
+    onOpenToVolunteer,
   } = useProfileUserShared();
   const { isLoggedIn } = useAuth();
   const [editOpen, setEditOpen] = useState(false);
@@ -107,6 +113,20 @@ export const Desktop = (): JSX.Element => {
     </Button>
   );
 
+  const openToWorkToggleJSX = (
+    <Divider>
+      <label>Open to Work</label>
+      <Toggle name="OpenToWork" checked={openToWork} onChange={onOpenToWork} />
+    </Divider>
+  );
+
+  const openToVolunteerToggleJSX = (
+    <Divider>
+      <label>Open to volunteer</label>
+      <Toggle name="OpenToVolunteer" checked={openToVolunteer} onChange={onOpenToVolunteer} />
+    </Divider>
+  );
+
   const orgNameJSX = <div className={css.name}>{user?.name}</div>;
   const usernameJSX = <div className={css.username}>@{user?.username}</div>;
 
@@ -161,6 +181,10 @@ export const Desktop = (): JSX.Element => {
               {printWhen(orgNameJSX, !!user?.name)}
               {printWhen(userFullNameJSX, !!user?.first_name || !!user?.last_name)}
               {printWhen(usernameJSX, !!user?.username)}
+              <div>
+                {printWhen(openToWorkToggleJSX, profileBelongToCurrentUser)}
+                {printWhen(openToVolunteerToggleJSX, profileBelongToCurrentUser)}
+              </div>
             </Divider>
             <Divider>
               <div className={css.achievements} onClick={gotToDesktopAchievement}>

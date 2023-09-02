@@ -9,7 +9,7 @@ import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { useEffect, useState } from 'react';
 import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
-import { getConnectStatus, sendRequestConnection } from './profile-user.services';
+import { getConnectStatus, sendRequestConnection, openToWorkCall, openToVolunteerCall } from './profile-user.services';
 
 export const useProfileUserShared = () => {
   const navigate = useNavigate();
@@ -26,6 +26,8 @@ export const useProfileUserShared = () => {
   const [following, setFollowing] = useState<boolean>();
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [message, setMessage] = useState('please connect to me');
+  const [openToWork, setOpenToWork] = useState(user.open_to_work);
+  const [openToVolunteer, setOpenToVolunteer] = useState(user.open_to_volunteer);
 
   useEffect(() => {
     const getConnectionsStatus = async () => {
@@ -58,6 +60,18 @@ export const useProfileUserShared = () => {
       mission: params.mission,
       skills: params.skills,
     }));
+  }
+
+  async function onOpenToWork() {
+    setOpenToWork(!user.open_to_work);
+    user.open_to_work = await openToWorkCall();
+    setUser(user);
+  }
+
+  async function onOpenToVolunteer() {
+    setOpenToVolunteer(!user.open_to_volunteer);
+    user.open_to_volunteer = await openToVolunteerCall();
+    setUser(user);
   }
 
   function onClose() {
@@ -110,6 +124,7 @@ export const useProfileUserShared = () => {
 
   return {
     user,
+    setUser,
     updateUser,
     address,
     badges: resolver.badges || { badges: [] },
@@ -118,6 +133,10 @@ export const useProfileUserShared = () => {
     skills,
     currentIdentity,
     profileBelongToCurrentUser,
+    openToWork,
+    onOpenToWork,
+    openToVolunteer,
+    onOpenToVolunteer,
     onClose,
     gotToDesktopAchievement,
     gotToMobileAchievement,
