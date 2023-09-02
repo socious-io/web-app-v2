@@ -10,12 +10,11 @@
   @media screen and (max-width: 600px) {
     padding: 0;
     min-height: 100vh;
-
   }
 }
 
 .card {
-  font-family: 'Hahmlet';
+  font-family: 'Inter';
   width: 33.75rem;
   border: 0.1rem solid var(--color-gray-04);
   background: var(--color-white);
@@ -30,7 +29,6 @@
   @media screen and (max-width: 600px) {
     border-radius: 0;
     min-height: 100vh;
-
   }
 
   &__header {

@@ -18,7 +18,7 @@
   overflow: hidden;
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     right: 0;
@@ -33,7 +33,7 @@
   font-size: var(--font-size-xl);
   color: #ffffff;
   font-weight: 600;
-  font-family: 'Hahmlet';
+  font-family: 'Inter';
 }
 
 .tagline {
