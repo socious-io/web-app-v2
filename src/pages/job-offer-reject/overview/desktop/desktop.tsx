@@ -15,6 +15,7 @@ import { getApplicantDetail, jobOfferRejectLoader, rejectApplicant } from '../..
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
+import { BackLink } from 'src/components/molecules/back-link';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -104,6 +105,7 @@ export const Desktop = (): JSX.Element => {
     <>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
+          <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
           <ProfileCard />
           <Card className={css.tabs}>
             {tabs.map((tab) => (
