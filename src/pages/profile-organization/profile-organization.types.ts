@@ -51,6 +51,7 @@ export type ProfileReq = {
   other_party_title: string;
   other_party_url: string;
   geoname_id: string;
+  hiring: boolean;
 };
 
 export type Resolver = {

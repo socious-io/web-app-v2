@@ -23,6 +23,11 @@ export function sendRequestConnection(id: string, text: string) {
   }).then(({ data }) => data);
 }
 
+export async function hiringCall() {
+  const { data } = await post('/orgs/hiring', {});
+  return data.hiring;
+}
+
 export const showActions = async (id: string) => {
   const result = await ActionSheet.showActions({
     title: 'What do you want to do?',
