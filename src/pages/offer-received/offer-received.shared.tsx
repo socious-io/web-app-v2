@@ -94,7 +94,7 @@ export const useWalletShared = () => {
   useEffect(() => {
     getSrtipeProfile(offer.currency === 'JPY').then((r) => {
       const { data } = r?.external_accounts || {};
-      setStripeProfile(data);
+      if (data?.length > 0) setStripeProfile(data);
     });
   }, []);
 
