@@ -3,6 +3,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
 import { Divider } from 'src/components/templates/divider/divider';
+import { Toggle } from 'src/components/atoms/toggle';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
@@ -30,6 +31,10 @@ export const Mobile = (): JSX.Element => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    openToWork,
+    onOpenToWork,
+    openToVolunteer,
+    onOpenToVolunteer,
   } = useProfileUserShared();
   const [openConnectModal, setOpenConnectModal] = useState(false);
 
@@ -101,6 +106,20 @@ export const Mobile = (): JSX.Element => {
     <Button onClick={navigateToEdit} color="white" width="6.5rem">
       Edit
     </Button>
+  );
+
+  const openToWorkToggleJSX = (
+    <Divider>
+      <label>Open to Work</label>
+      <Toggle name="OpenToWork" checked={openToWork} onChange={onOpenToWork} />
+    </Divider>
+  );
+
+  const openToVolunteerToggleJSX = (
+    <Divider>
+      <label>Open to volunteer</label>
+      <Toggle name="OpenToVolunteer" checked={openToVolunteer} onChange={onOpenToVolunteer} />
+    </Divider>
   );
 
   const orgNameJSX = <div className={css.name}>{user?.name}</div>;
@@ -184,6 +203,10 @@ export const Mobile = (): JSX.Element => {
           {printWhen(emailLinkJSX, !!user.email)}
           {printWhen(websiteLinkJSX, !!user.website)}
           {printWhen(cityLinkJSX, !!user.city)}
+          <div>
+            {printWhen(openToWorkToggleJSX, profileBelongToCurrentUser)}
+            {printWhen(openToVolunteerToggleJSX, profileBelongToCurrentUser)}
+          </div>
         </Divider>
         {printWhen(missionJSX, !!user.mission)}
         {printWhen(cultureJSX, !!user.culture)}
