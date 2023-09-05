@@ -165,6 +165,7 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
       payment: item.payment,
       user_id: item.assignee.meta.id,
       user_feedback: item?.user_feedback,
+      showFeedback: !item?.org_feedback?.content,
     };
   });
 }
