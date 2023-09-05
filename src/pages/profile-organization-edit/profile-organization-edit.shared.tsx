@@ -85,7 +85,10 @@ export const useProfileOrganizationEditShared = () => {
       try {
         const rawPayload = getFormValues(form);
         const payload = removedEmptyProps(rawPayload);
-        await endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload);
+        await endpoint.post.organizations['orgs/update/{org_id}'](organization.id, {
+          ...payload,
+          shortname: organization.shortname,
+        });
         await updateIdentityList();
         navigate({ to: '/jobs' });
       } catch (err) {
