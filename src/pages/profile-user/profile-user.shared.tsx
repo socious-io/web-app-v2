@@ -9,7 +9,7 @@ import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { useEffect, useState } from 'react';
 import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
-import { getConnectStatus, sendRequestConnection } from './profile-user.services';
+import { getConnectStatus, getUserMissions, sendRequestConnection } from './profile-user.services';
 
 export const useProfileUserShared = () => {
   const navigate = useNavigate();
@@ -26,11 +26,32 @@ export const useProfileUserShared = () => {
   const [following, setFollowing] = useState<boolean>();
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [message, setMessage] = useState('please connect to me');
+  const [missions, setMissons] = useState<
+    {
+      organizationName: string;
+      role: string;
+      dateFrom: string;
+      dateTo: string;
+      location: string;
+      organizationImage: string;
+    }[]
+  >([]);
 
   useEffect(() => {
     const getConnectionsStatus = async () => {
       const res = await getConnectStatus(user.id);
       setConnectStatus(res?.connect?.status);
+      const missionsRes = await getUserMissions(user.id);
+      setMissons(
+        missionsRes.items.map((mission) => ({
+          organizationName: mission.organization.name,
+          organizationImage: mission.organization.image,
+          role: mission.project.title,
+          dateFrom: new Date(mission.project.created_at).toLocaleDateString('en-US'),
+          dateTo: new Date(mission.project.updated_at).toLocaleDateString('en-US'),
+          location: COUNTRIES_DICT[mission.project.country as keyof typeof COUNTRIES_DICT],
+        }))
+      );
     };
     getConnectionsStatus();
   }, []);
@@ -128,5 +149,6 @@ export const useProfileUserShared = () => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    missions,
   };
 };
