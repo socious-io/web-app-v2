@@ -370,6 +370,22 @@ export const routes: Route[] = [
             element: () =>
               import('../../pages/job-edit/social-causes/social-causes.container').then((m) => <m.SocialCauses />),
           },
+          {
+            path: 'screener-questions/:id',
+            loader: async ({ params }) => {
+              const defaultQuestions = await getScreeningQuestions(params.id);
+              return { defaultQuestions };
+            },
+            element: () =>
+              import('src/pages/job-edit/screener-questions/created/created.container').then((m) => <m.Created />),
+          },
+          {
+            path: 'screener-questions/',
+            element: () =>
+              import('src/pages/job-edit/screener-questions/screener-questions.container').then((m) => (
+                <m.ScreenerQuestions />
+              )),
+          },
         ],
       },
       {

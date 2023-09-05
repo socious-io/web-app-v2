@@ -532,3 +532,13 @@ export type Profile = {
 };
 export type FcmListResp = Array<{ meta: { os: 'ANDROID' | 'IOS' }; user_id: string; token: string }>;
 export type CreateFcmPayload = { meta: { os: 'ANDROID' | 'IOS' }; token: string };
+export type Question = {
+  created_at: string;
+  id: string;
+  old_id: number;
+  options: null | string[];
+  project_id: string;
+  question: string;
+  required: boolean;
+  updated_at: string;
+};

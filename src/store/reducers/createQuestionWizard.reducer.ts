@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { convertOptionsToChoices } from 'src/pages/job-edit/screener-questions/screener-questions.service';
 
 export type CreatedQuestionsType = {
   id: string;
@@ -66,6 +67,20 @@ export const createQuestionWizardSlice = createSlice({
     setQuestionProjectIds: (state, action) => {
       state.question_project_id = action.payload;
     },
+    setDefaultQuestion: (state, action) => {
+      console.log('payload', action.payload);
+      const { question, options, required } = action.payload;
+      console.log('action payload', action.payload.required);
+      return {
+        ...state,
+        question_type: options ? 'MULTIPLE' : 'TEXT',
+        choices: options ? convertOptionsToChoices(options) : {},
+        add_choices: options ? options.length : 0,
+        question,
+        options,
+        required_question: required,
+      };
+    },
     resetQuestions: (state) => {
       return { ...state, ...initialQuestionsState } as CreateQuestionWizard;
     },
@@ -86,4 +101,5 @@ export const {
   setQuestionProjectIds,
   resetQuestions,
   resetCreatedQuestion,
+  setDefaultQuestion,
 } = createQuestionWizardSlice.actions;
