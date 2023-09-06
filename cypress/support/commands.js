@@ -11,12 +11,12 @@ Cypress.Commands.add('loginUsingApi', (email, password) => {
     }, {cacheAcrossSpecs:true})    
 })
 Cypress.Commands.add('loginUsingUI', (email, password) => {
-    cy.session(email, () => {
+    cy.session([email,password], () => {
         cy.visit(`${Cypress.env('app_url')}/sign-in`)
         cy.get('input[name=email]').type(email)
         cy.get('input[name=password]').type(password)
         cy.contains('button', 'Sign in').click()
-        cy.wait(6000);        
+        cy.wait(5000);        
         cy.location('pathname').should('eq','/jobs')
     })
 })

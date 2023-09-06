@@ -2,6 +2,8 @@ class CreateJobPage{
 
     elements = {    
         switchAccount: () => cy.get('._avatar_anzop_65'),
+        //logoutBtn: () => cy.get(':nth-child(4) > ._settingsMenuContainer_16na8_35 > ._menuItem_16na8_40 > span'),
+        logoutBtn: () => cy.contains('Log out'),
         OrgAccount: () => cy.get('._accountList_16na8_14 > :nth-child(2)'),
         createdLink: () => cy.get(':nth-child(3) > ._container_c9ywk_1 > :nth-child(2) > ._menuItem_459xl_7 > ._container_1ww5x_1'),
         createJobLink: () => cy.get('._rightContainer_xdc50_9 > ._button_16z98_1'),
@@ -43,9 +45,13 @@ class CreateJobPage{
     }  
     
     clickOnswitchAccountLink() {
-        cy.wait(500);
+        cy.wait(5000);
         this.elements.switchAccount().click();
-        cy.wait(500);
+        cy.wait(5000);
+    }
+    logout() {
+        this.elements.logoutBtn().click();
+        cy.wait(5000);
     }
     selectOrgAccount() {
         this.elements.OrgAccount().click();
@@ -108,19 +114,35 @@ class CreateJobPage{
     selectJobLength(JobLengthText) {
         this.elements.JobLengthText().type(JobLengthText);
         this.elements.selectedJobLength().click();
-    }     
-    selectPaymentPaid() {
+    }   
+    selectPaymentType(paymenttype){
+        if (paymenttype == 'paid'){
+            this.elements.PaidPaymentTyp().click();
+
+        }else if (paymenttype == 'volunteer'){
+            this.elements.VolunteerPaymentTyp().click();
+        }
+    }  
+   /*  selectPaymentPaid() {
         this.elements.PaidPaymentTyp().click();
     } 
     selectPaymentVolunteer() {
         this.elements.VolunteerPaymentTyp().click();
-    }   
-    selectPaySchemeFixed() {
+    }  */ 
+    selectPaymentScheme(paymentScheme) {
+        if (paymentScheme == 'fixed'){
+            this.elements.paymentSchemeFixed().click();
+
+        }else if (paymentScheme == 'hourly'){
+            this.elements.paymentSchemeHourly().click();
+        }
+    }
+    /* selectPaySchemeFixed() {
         this.elements.paymentSchemeFixed().click();
     }
     selectPaySchemeHourly() {
         this.elements.paymentSchemeHourly().click();
-    }     
+    }  */    
     selectExperienceLevel(ExperienceLevelText) {
         this.elements.ExperienceLvlTxt().type(ExperienceLevelText);
         this.elements.selectedExperienceLvl().click();

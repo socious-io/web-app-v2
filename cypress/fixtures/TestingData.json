@@ -1,11 +1,106 @@
 {
+  "posts": [
+    {
+      "text": "post 1: I am writing here for testing the create post 1",
+      "img": "postImg",
+      "social_causes": ["poverty"]
+    },
+    {
+      "text": "post 2: I am writing here for testing the create post 2",
+      "img": "no",
+      "social_causes": ["poverty"]
+    }
+  ],
+
+  "jobs": [
+    {
+      "title": "job 1:Remote, Full time, More than 6months, Volunteer & Fixed-payment Job, no experience",
+      "description": "Descrirption 1:Automated Test Job- Remote, Full time, More than 6months, Volunteer & Fixed-payment Job, no experience",
+      "category": "backend",
+      "country": "iran",
+      "city": "abadan",
+      "remote_preference": "remote",
+      "type": "full",
+      "length": "more than",
+      "payment_type": "volunteer",
+      "payment_terms": "fixed",
+      "min_commitment": "1",
+      "max_commitment": "2",
+      "experience_level": "no",
+      "skills": ["accounting"],
+      "social_causes": ["poverty"]
+    },
+    {
+      "title": "job 2:Onsite, Part time, 1-3 months, Volunteer & Hourly-payment Job, entry level",
+      "description": "Job Descrirption 2:Automated Test- Onsite, Part time, 1-3 months, Volunteer & Hourly-payment Job, entry level",
+      "category": "frontend",
+      "country": "iran",
+      "city": "abadan",
+      "remote_preference": "site",
+      "type": "part",
+      "length": "1",
+      "payment_type": "volunteer",
+      "payment_terms": "hourly",
+      "min_commitment": "100",
+      "max_commitment": "200",
+      "experience_level": "entry",
+      "skills": ["accounting"],
+      "social_causes": ["poverty"]
+    },
+    {
+      "title": "job 3:Onsite, Part time, 3-6 months, Paid & Fixed-payment Job, intermediate level",
+      "description": "Job Descrirption 3:Automated Test- Onsite, Part time, 3-6 months, Paid & Fixed-payment Job, intermediate level",
+      "category": "backend",
+      "country": "japan",
+      "city": "tokyo",
+      "remote_preference": "site",
+      "type": "part",
+      "length": "3-",
+      "payment_type": "paid",
+      "payment_terms": "fixed",
+      "min_commitment": "25",
+      "max_commitment": "30",
+      "experience_level": "inter",
+      "skills": ["accounting"],
+      "social_causes": ["poverty"]
+    },
+    {
+      "title": "job 4:Hybrid, On-Off, Less than a month, Paid & Hourly-payment Job, expert level",
+      "description": "Descrirption 4:Automated Test- Hybrid, On-Off, Less than a month, Paid & Hourly-payment Job, expert level",
+      "category": "backend",
+      "country": "iran",
+      "city": "abadan",
+      "remote_preference": "hybrid",
+      "type": "off",
+      "length": "less than a month",
+      "payment_type": "paid",
+      "payment_terms": "hourly",
+      "min_commitment": "200",
+      "max_commitment": "250",
+      "experience_level": "expert",
+      "skills": ["accounting"],
+      "social_causes": ["poverty"]
+    }
+  ],
+
+  "apply": [
+    {
+      "message": "application 1: I am writing here for apply for this position",
+      "cv": "attachCV"
+    },
+    {
+      "message": "application 2: I am writing here for apply for this position",
+      "cv": "no"    
+    }
+  ],
+
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5MWEyNzdlLWRmZmQtNDE1Yy1hNTQzLTc5ZTI4ZjJiMjU5MSIsInJlZnJlc2giOmZhbHNlLCJpYXQiOjE2OTIyODc5NTEsImV4cCI6MTY5MjQ2MDc1MX0.C6nJGe96yN-TxfeVg7ceEIS9V1jqukJcW4zIHbaKpP0",
   "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5MWEyNzdlLWRmZmQtNDE1Yy1hNTQzLTc5ZTI4ZjJiMjU5MSIsInJlZnJlc2giOnRydWUsImlhdCI6MTY5MjI4Nzk1MSwiZXhwIjoxNjk0ODc5OTUxfQ.uhiOGvd41rMQanuRojlO2J8976m3_2ibezEpmtt2AU8",
   "token_type": "Bearer",
-  
+
   "EmailForLogin": "testazintest4@gmail.com",
   "Email2ForLogin": "testazintest2@gmail.com",
-  "PasswordForLogin": "Socious1234",
+  "PasswordForLogin": "Azin123456",
   "InvalidPasswordForLogin": "ssocious1234",
   "InvalidEmailForLogin": "wrongtestazintest444@gmail.com",
   "InvalidFirstName": "First$$Name",
@@ -18,35 +113,7 @@
   "ValidPassword": "Socious1234",
   "ValidConfirmPassword": "Socious1234",
   "ExistingEmail": "testazintest4@gmail.com",
-  "RemotePreferenceTextRemote": "remote",
-  "RemotePreferenceTextOnsite": "site",
-  "RemotePreferenceTextHybrid": "hybrid",
-  "JobTypeTextFullTime": "full",
-  "JobTypeTextPartTime": "part",
-  "JobTypeTextOnOff": "on",
-  "JobLengthTextMorethan6": "more than",
-  "JobLengthText1To3": "1",
-  "JobLengthText3To6": "3-",
-  "JobLengthTextLessThanAMonth": "less than a month",
-  "PaymentTypeTextVolunteer": "volunteer",
-  "PaymentTypeTextPaid": "paid",
-  "PaymentSchemeTextFixed": "fixed",
-  "PaymentSchemeTextHourly": "hour",
-  "ExperienceLevelEntry": "entry",
-  "ExperienceLevelIntermediate": "inter",
-  "ExperienceLevelExpert": "expert",
-  "ExperienceLevelNone": "No experience",
-  "JobTitle1": "َAutomated Test Job Title1-Remote, Full time, More than 6months, Volunteer & Fixed-payment Job",
-  "JobTitle2": "َAutomated Test Job Title2-Onsite, Part time, 1-3 months, Volunteer & Hourly-payment Job",
-  "JobTitle3": "Automated Test Job Title3-Onsite, Part time, 3-6 months, Paid & Fixed-payment Job",
-  "JobTitle4": "Automated Test Job Title4-Hybrid, On-Off, Less than a month, Paid & Hourly-payment Job",
-  "JobDescription1": "Automated Test Job Descrirption1- Remote, Full time, More than 6months, Volunteer & Fixed-payment Job",
-  "JobDescription2": "Automated Test Job Descrirption2- Onsite, Part time, 1-3 months, Volunteer & Hourly-payment Job",
-  "JobDescription3": "Automated Test Job Descrirption3- Onsite, Part time, 3-6 months, Paid & Fixed-payment Job",
-  "JobDescription4": "Automated Test Job Descrirption4- Hybrid, On-Off, Less than a month, Paid & Hourly-payment Job",
-  "PostText": "I am writing here for testing the create post",
-  "PostTextImg": "I am writing here for testing the create post including image",
-  "JobCategory": "backend",
+
   "SocialCause": "POVERTY",
   "organizationName": "Automated Test-Organization Name",
   "organizationBio": "Automated Test-Organization Bio",
