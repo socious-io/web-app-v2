@@ -74,8 +74,10 @@ export const Desktop = (): JSX.Element => {
 
   const hiringJSX = (
     <Divider>
-      <label>Hiring</label>
-      <Toggle name="hiring" checked={hiring} onChange={onHiring} />
+      <div className={css.hireStatus}>
+        <label>Hiring status</label>
+        <Toggle name="hiring" checked={hiring} onChange={onHiring} />
+      </div>
     </Divider>
   );
 
@@ -154,7 +156,12 @@ export const Desktop = (): JSX.Element => {
             <div className={css.header}>
               <div style={{ backgroundImage: `url(${organization.cover_image?.url})` }} className={css.cover}>
                 <div className={css.avatarContainer}>
-                  <Avatar img={organization.image?.url} size="8rem" type="organizations" />
+                  <Avatar
+                    img={organization.image?.url}
+                    size="8rem"
+                    type="organizations"
+                    {...(hiring ? { badge: { color: '#DC31AC', image: '/icons/hire.svg' } } : {})}
+                  />
                 </div>
               </div>
               <div className={css.menu}>
@@ -171,7 +178,7 @@ export const Desktop = (): JSX.Element => {
                 {printWhen(orgNameJSX, !!organization?.name)}
                 {printWhen(userFullNameJSX, !!organization?.first_name || !!organization?.last_name)}
                 {printWhen(usernameJSX, !!organization?.username)}
-                <div>{printWhen(hiringJSX, profileBelongToCurrentUser)}</div>
+                {printWhen(hiringJSX, profileBelongToCurrentUser)}
               </Divider>
               {printWhen(bioJSX, !!organization.bio)}
               <Divider>
