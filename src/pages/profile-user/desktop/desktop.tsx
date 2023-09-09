@@ -34,6 +34,7 @@ export const Desktop = (): JSX.Element => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    missions,
     openToWork,
     onOpenToWork,
     openToVolunteer,
@@ -94,7 +95,29 @@ export const Desktop = (): JSX.Element => {
       <div className={css.mission}>{user.mission}</div>
     </Divider>
   );
-
+  const expriencesJSX = (
+    <Divider title="Expriences">
+      {missions.map((mission) => (
+        <div className={css.exprience}>
+          <div className={css.organizationImageContainer}>
+            <img
+              className={css.exprinceOrgImage}
+              alt="organization"
+              src={mission.organizationImage ? mission.organizationImage : '/icons/organization.svg'}
+            />
+          </div>
+          <div>
+            <div className={css.exprienceDetails}>
+              <div className={css.exprienceTitle}>{mission.organizationName}</div>
+              <div className={css.exprienceDetail}>{mission.role}</div>
+              <div className={css.exprienceDetail}>{`${mission.dateFrom} - ${mission.dateTo}`}</div>
+              <div className={css.exprienceDetail}>{mission.location}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </Divider>
+  );
   const cultureJSX = (
     <Divider title="Culture">
       <div className={css.culture}>{user.culture}</div>
@@ -204,6 +227,7 @@ export const Desktop = (): JSX.Element => {
                 <div>{user.followers} Followers</div>
               </div>
             </Divider>
+            {printWhen(expriencesJSX, missions.length > 0)}
             <Divider title="Social Causes">
               <CategoriesClickable list={socialCauses} />
             </Divider>
