@@ -1,0 +1,109 @@
+.container {
+  height: 100vh;
+  padding-top: var(--safe-area);
+  display: grid;
+  grid-template-rows: 3rem 5.3rem 1fr;
+
+  .header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-gray-01);
+    // display: grid;
+    // grid-template-columns: 44px 1fr 44px;
+    // align-items: center;
+
+    // .chevron {
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   height: 100%;
+    //   cursor: pointer;
+    // }
+
+    .headerTitle {
+      display: flex;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+  }
+
+  .screener {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-gray-01);
+
+    &__subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-gray-01);
+    }
+  }
+
+  .main {
+    overflow: auto;
+    background-color: var(--color-off-white-01);
+
+    .addQuestions {
+      margin: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      color: var(--color-primary-01);
+      font-weight: 600;
+      background-color: white;
+      border: 1px solid var(--border-gray-01);
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    .error {
+      margin: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      font-size: var(--font-size-s);
+      color: var(--color-error-01);
+    }
+
+    .questions {
+      padding: 1rem;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      border-bottom: 1px solid var(--border-gray-01);
+
+      &__required {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  .btnContainer {
+    border-top: 1px solid var(--border-gray-01);
+    height: 6.75rem;
+    padding: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+}

@@ -49,6 +49,8 @@ export type ProfileReq = {
   other_party_title: string;
   other_party_url: string;
   geoname_id: string;
+  open_to_work: boolean;
+  open_to_volunteer: boolean;
 };
 
 export type Resolver = {
