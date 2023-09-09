@@ -31,13 +31,13 @@ export const Mobile = (): JSX.Element => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    missions,
     openToWork,
     onOpenToWork,
     openToVolunteer,
     onOpenToVolunteer,
   } = useProfileUserShared();
   const [openConnectModal, setOpenConnectModal] = useState(false);
-
   const cityLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/pin-green.svg" />
@@ -62,7 +62,29 @@ export const Mobile = (): JSX.Element => {
       </a>
     </div>
   );
-
+  const expriencesJSX = (
+    <Divider title="Expriences">
+      {missions.map((mission) => (
+        <div className={css.exprience}>
+          <div className={css.organizationImageContainer}>
+            <img
+              className={css.exprinceOrgImage}
+              alt="organization"
+              src={mission.organizationImage ? mission.organizationImage : '/icons/organization.svg'}
+            />
+          </div>
+          <div>
+            <div className={css.exprienceDetails}>
+              <div className={css.exprienceTitle}>{mission.organizationName}</div>
+              <div className={css.exprienceDetail}>{mission.role}</div>
+              <div className={css.exprienceDetail}>{`${mission.dateFrom} - ${mission.dateTo}`}</div>
+              <div className={css.exprienceDetail}>{mission.location}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </Divider>
+  );
   const websiteLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/email-green.svg" />
@@ -195,6 +217,7 @@ export const Mobile = (): JSX.Element => {
             <div>{user.followers} Followers</div>
           </div>
         </Divider>
+        {printWhen(expriencesJSX, missions.length > 0)}
         <Divider title="Social Causes">
           <CategoriesClickable list={socialCauses} />
         </Divider>
