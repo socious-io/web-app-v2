@@ -132,15 +132,19 @@ export const Mobile = (): JSX.Element => {
 
   const openToWorkToggleJSX = (
     <Divider>
-      <label>Open to Work</label>
-      <Toggle name="OpenToWork" checked={openToWork} onChange={onOpenToWork} />
+      <div className={css.profileStatus}>
+        <label>Open to Work</label>
+        <Toggle name="OpenToWork" checked={openToWork} onChange={onOpenToWork} />
+      </div>
     </Divider>
   );
 
   const openToVolunteerToggleJSX = (
     <Divider>
-      <label>Open to volunteer</label>
-      <Toggle name="OpenToVolunteer" checked={openToVolunteer} onChange={onOpenToVolunteer} />
+      <div className={css.profileStatus}>
+        <label>Open to volunteer</label>
+        <Toggle name="OpenToVolunteer" checked={openToVolunteer} onChange={onOpenToVolunteer} />
+      </div>
     </Divider>
   );
 
@@ -179,7 +183,12 @@ export const Mobile = (): JSX.Element => {
         </div>
         <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
           <div className={css.avatarContainer}>
-            <Avatar img={avatarImage} size="8rem" type="users" />
+            <Avatar
+              img={avatarImage}
+              size="8rem"
+              type="users"
+              {...(openToWork || openToVolunteer ? { badge: { color: '#004a46', image: '/icons/available.svg' } } : {})}
+            />
           </div>
         </div>
         <div className={css.menu}>
@@ -199,6 +208,8 @@ export const Mobile = (): JSX.Element => {
           {printWhen(userFullNameJSX, !!user?.first_name || !!user?.last_name)}
           {printWhen(usernameJSX, !!user?.username)}
         </Divider>
+        {printWhen(openToWorkToggleJSX, profileBelongToCurrentUser)}
+        {printWhen(openToVolunteerToggleJSX, profileBelongToCurrentUser)}
         <Divider>
           <div className={css.achievements} onClick={gotToMobileAchievement}>
             <div className={css.badges}>
@@ -206,6 +217,7 @@ export const Mobile = (): JSX.Element => {
                 return <ImpactBadge key={item.color} size="2.75rem" {...item} />;
               })}
             </div>
+
             <div className={css.achievementsLink}>Achievements</div>
           </div>
         </Divider>
@@ -217,6 +229,7 @@ export const Mobile = (): JSX.Element => {
             <div>{user.followers} Followers</div>
           </div>
         </Divider>
+
         {printWhen(expriencesJSX, missions.length > 0)}
         <Divider title="Social Causes">
           <CategoriesClickable list={socialCauses} />

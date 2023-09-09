@@ -133,6 +133,11 @@
   cursor: pointer;
 }
 
+
+.profileStatus {
+  display: flex;
+  justify-content: space-between;
+}
 .exprience {
   display: flex;
   flex-direction: row;
