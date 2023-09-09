@@ -75,6 +75,21 @@ export const routes: Route[] = [
                 <m.SignUpUserCompleteContainer />
               )),
           },
+          {
+            path: '/welcome',
+            element: () => import('../../pages/sign-up/welcome/welcome').then((m) => <m.Welcome />),
+          },
+          {
+            path: '/onboarding',
+            element: () =>
+              import('../../pages/sign-up/sign-up-user-onboarding/sign-up-user-complete.container').then((m) => (
+                <m.SignUpUserOnboarding />
+              )),
+          },
+          {
+            path: '/allow-notification',
+            element: () => import('../../pages/sign-up/AllowNotification').then((m) => <m.AllowNotification />),
+          },
         ],
       },
     ],
@@ -354,6 +369,22 @@ export const routes: Route[] = [
             },
             element: () =>
               import('../../pages/job-edit/social-causes/social-causes.container').then((m) => <m.SocialCauses />),
+          },
+          {
+            path: 'screener-questions/:id',
+            loader: async ({ params }) => {
+              const defaultQuestions = await getScreeningQuestions(params.id);
+              return { defaultQuestions };
+            },
+            element: () =>
+              import('src/pages/job-edit/screener-questions/created/created.container').then((m) => <m.Created />),
+          },
+          {
+            path: 'screener-questions/',
+            element: () =>
+              import('src/pages/job-edit/screener-questions/screener-questions.container').then((m) => (
+                <m.ScreenerQuestions />
+              )),
           },
         ],
       },
