@@ -16,6 +16,7 @@ export const useOfferReceivedShared = () => {
   const { payment_type } = project || {};
   const { wallet_address } = recipient?.meta || {};
   const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
+  const isPaid = payment_type === 'PAID';
   const { address: account, isConnected } = useAccount();
   const [status, setStatus] = useState<StatusKeys>(offer?.status as StatusKeys);
   const [tokenRate, setTokenRate] = useState(1);
@@ -67,7 +68,7 @@ export const useOfferReceivedShared = () => {
     return Math.round(offer.assignment_total * tokenRate * 100) / 100;
   }
 
-  return { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD };
+  return { offer, media, status, account, isPaidCrypto, isPaid, unit, onAccept, onDeclined, equivalentUSD };
 };
 
 export const useWalletShared = () => {
