@@ -75,6 +75,7 @@ type PostOrganizationUpdatePayload = {
   culture: string;
   website: string;
   image: string;
+  shortname: string;
 };
 
 export type PostMediaUploadResp = {

@@ -1,0 +1,49 @@
+.box {
+  width: 33.75rem;
+  border: 0.1rem solid var(--color-gray-04);
+  background: var(--color-white);
+  border-radius: 1.2rem;
+  min-height: 45rem;
+  position: relative;
+  @media screen and (max-width: 600px) {
+    height: 100vh;
+  }
+  @media screen and (max-width: 600px) {
+    border-radius: 0;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3.2rem 1.6rem 1.6rem 1.6rem;
+  }
+  &__skip {
+    color: var(--color-primary-blue);
+    cursor: pointer;
+  }
+}
+.back {
+  cursor: pointer;
+
+  &--disabled {
+    cursor: default;
+  }
+}
+.nav {
+  display: flex;
+
+  &__item {
+    // @todo: create mixin for rem
+    width: calc(13.5rem / 16);
+    height: calc(13.5rem / 16);
+    border: 0.1rem solid var(--color-gray-03);
+    border-radius: 50%;
+    margin: 0 0.2rem;
+    // cursor: pointer;
+  }
+  &__active {
+    cursor: default;
+    background: var(--color-primary-01);
+  }
+}

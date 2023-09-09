@@ -23,6 +23,16 @@ export function sendRequestConnection(id: string, text: string) {
   }).then(({ data }) => data);
 }
 
+export async function openToWorkCall() {
+  const { data } = await post('/user/open-to-work', {});
+  return data.open_to_work;
+}
+
+export async function openToVolunteerCall() {
+  const { data } = await post('/user/open-to-volunteer', {});
+  return data.open_to_volunteer;
+}
+
 export const showActions = async (id: string) => {
   const result = await ActionSheet.showActions({
     title: 'What do you want to do?',
@@ -67,4 +77,9 @@ export function badgesList(badges: unknown[]): ImpactBadgeProps[] {
         color: value.color,
       };
     });
+}
+
+// it is expriences in design
+export function getUserMissions(id: string) {
+  return get(`/user/${id}/missions`).then(({ data }) => data);
 }

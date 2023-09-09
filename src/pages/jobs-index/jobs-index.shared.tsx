@@ -10,15 +10,12 @@ export const useJobsIndexShared = () => {
   const [jobList, setJobList] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1 });
   const navigate = useNavigate();
-  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
-  });
+  const identities = useSelector<RootState, IdentityReq | undefined>((state) => state.identity.entities);
   useEffect(() => {
-    if (identity)
-      getOrganizationJobs({ identityId: data.user.id, page: pagination.page }).then((resp) => {
-        setJobList((list) => [...list, ...resp.items]);
-        setPagination({ ...pagination, total: resp.total_count });
-      });
+    getOrganizationJobs({ identityId: data.user.id, page: pagination.page }).then((resp) => {
+      setJobList((list) => [...list, ...resp.items]);
+      setPagination({ ...pagination, total: resp.total_count });
+    });
   }, []);
 
   function onMorePage() {
@@ -34,5 +31,5 @@ export const useJobsIndexShared = () => {
 
   const showMorePageBtn = jobList.length < pagination.total;
 
-  return { jobList, identity, goToJobDetail, data, showMorePageBtn, onMorePage };
+  return { jobList, identities, goToJobDetail, data, showMorePageBtn, onMorePage };
 };
