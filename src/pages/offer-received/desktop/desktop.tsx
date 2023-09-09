@@ -30,7 +30,7 @@ export const Desktop = (): JSX.Element => {
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-  const { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD } =
+  const { offer, media, status, account, isPaidCrypto, isPaid, unit, onAccept, onDeclined, equivalentUSD } =
     useOfferReceivedShared();
 
   const { form, stripeProfile, stripeLink, onSelectCountry } = useWalletShared();
@@ -74,7 +74,7 @@ export const Desktop = (): JSX.Element => {
     <div className={css.btnContainer}>
       <Button
         onClick={onAccept(offer.id)}
-        disabled={(!account && isPaidCrypto) || (!stripeProfile && !isPaidCrypto)}
+        disabled={(!account && isPaidCrypto) || (!stripeProfile && !isPaidCrypto && isPaid)}
         className={css.btn}
       >
         Accept offer
@@ -204,7 +204,7 @@ export const Desktop = (): JSX.Element => {
           )}
           {printWhen(
             <BankAccounts accounts={stripeProfile} isDisabled={!stripeLink} bankAccountLink={stripeLink} />,
-            !isPaidCrypto
+            !isPaidCrypto && isPaid
           )}
           {printWhen(buttonsJSX, status === 'PENDING')}
         </Card>
