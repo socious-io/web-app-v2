@@ -14,11 +14,16 @@ import { useNavigate } from '@tanstack/react-location';
 import { InfoModal } from 'src/pages/job-edit/info/info-modal';
 import { SkillsModal } from 'src/pages/job-edit/skills/skills-modal';
 import { SocialCausesModal } from 'src/pages/job-edit/social-causes/social-causes-modal';
+import { CreatedModal } from 'src/pages/job-edit/screener-questions/created/created-modal';
 import css from './overview.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { SureModal } from 'src/components/templates/sure-modal';
-import { archiveJob } from 'src/pages/job-offer-reject/job-offer-reject.services';
+import {
+  archiveJob,
+  getJobOverview,
+  getScreeningQuestions,
+} from 'src/pages/job-offer-reject/job-offer-reject.services';
 import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
 
 export const Overview = ({ data, questions, updateApplicantList }: OverviewProps): JSX.Element => {
@@ -26,8 +31,17 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
   const [openInfoModal, setOpenInfoModal] = useState<boolean>(false);
   const [openSkillsModal, setOpenSkillsModal] = useState<boolean>(false);
   const [openSocialCausesModal, setOpenSocialCausesModal] = useState<boolean>(false);
+  const [openScreenerModal, setOpenScreenerModal] = useState<boolean>(false);
   const [overviewData, setOverviewData] = useState(data);
   const [showArchiveConfirm, setShowArchiveConfirm] = useState(false);
+  const [screeningQuestions, SetScreeningQuestions] = useState(questions);
+
+  const updateScreeningQuestions = async () => {
+    const updatedQuestion = await getScreeningQuestions(data.id);
+    SetScreeningQuestions(updatedQuestion.questions);
+    console.log(updatedQuestion.questions);
+  };
+
   const paymentRange = (
     <div className={css.group}>
       <div className={css.groupTitle}>
@@ -144,9 +158,16 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
       >
         <CategoriesClickable list={skillsToCategory(overviewData.skills)} />
       </Divider>
-      <Divider title="Screening questions">
+      <Divider
+        title="Screening questions"
+        onEdit={() =>
+          isTouchDevice()
+            ? navigate({ to: `/jobs/edit/screener-questions/${overviewData.id}` })
+            : setOpenScreenerModal(true)
+        }
+      >
         <div className={css.screeningQuestionBody}>
-          {questions.map((item, i) => (
+          {screeningQuestions.map((item, i) => (
             <p key={item.id} className={css.questions}>
               {i + 1}. {item.question}
             </p>
@@ -171,6 +192,16 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
         open={openSocialCausesModal}
         onClose={() => setOpenSocialCausesModal(false)}
         onDone={(newOverviewData) => setOverviewData({ ...overviewData, ...newOverviewData })}
+      />
+      <CreatedModal
+        projectIds={{ identityId: overviewData.identity_id, projectId: overviewData.id }}
+        userQuestions={screeningQuestions}
+        open={openScreenerModal}
+        onClose={() => {
+          setOpenScreenerModal(false);
+        }}
+        onBack={() => setOpenScreenerModal(true)}
+        onDone={updateScreeningQuestions}
       />
       <SureModal
         open={showArchiveConfirm}
