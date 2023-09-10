@@ -17,7 +17,7 @@ import { SureModal } from 'src/components/templates/sure-modal';
 
 export function JobDetailCard(props: JobDetailCardProps) {
   const [openApplyModal, setOpenApplyModal] = useState(false);
-  const [openExternalModal, setOpenExternalModal] = useState(true);
+  const [openExternalModal, setOpenExternalModal] = useState(false);
 
   function onApply() {
     if (props.job?.other_party_id) setOpenExternalModal(true);
@@ -109,7 +109,7 @@ export function JobDetailCard(props: JobDetailCardProps) {
         modalTexts={{
           title: 'Partner job board',
           body: 'Your application for the job will continue to another site.',
-          confirmButton: 'continue',
+          confirmButton: 'Continue',
           cancleButton: 'Cancel',
           titleColor: '#020305',
         }}

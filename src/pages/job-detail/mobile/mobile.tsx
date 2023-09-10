@@ -20,7 +20,7 @@ import { SureModal } from 'src/components/templates/sure-modal';
 export const Mobile = (): JSX.Element => {
   const { navigate, job, identity, location, screeningQuestions } = useJobDetailShared();
   const { isLoggedIn } = useAuth();
-  const [openExternalModal, setOpenExternalModal] = useState(true);
+  const [openExternalModal, setOpenExternalModal] = useState(false);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -118,7 +118,7 @@ export const Mobile = (): JSX.Element => {
           modalTexts={{
             title: 'Partner job board',
             body: 'Your application for the job will continue to another site.',
-            confirmButton: 'continue',
+            confirmButton: 'Continue',
             cancleButton: 'Cancel',
             titleColor: '#020305',
           }}
