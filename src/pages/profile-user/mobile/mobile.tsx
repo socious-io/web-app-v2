@@ -63,7 +63,7 @@ export const Mobile = (): JSX.Element => {
     </div>
   );
   const expriencesJSX = (
-    <Divider title="Expriences">
+    <Divider title="Experiences">
       {missions.map((mission) => (
         <div className={css.exprience}>
           <div className={css.organizationImageContainer}>
