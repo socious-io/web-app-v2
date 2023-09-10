@@ -45,6 +45,9 @@
   position: sticky;
   top: 0;
   background-color: var(--color-off-white-01);
+  width: 100%;
+  overflow: hidden;
+  scrollbar-width: none;
 }
 
 .filterBarContent {
@@ -52,6 +55,10 @@
   gap: 0.25rem;
   max-width: 800px;
   min-width: 100%;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  scrollbar-width: none;
 }
 
 .results {
@@ -64,4 +71,18 @@
 
 .listContainer {
   padding: 1rem;
+}
+
+.btn {
+  height: 2.25rem;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 50px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(231, 231, 231);
+  }
 }

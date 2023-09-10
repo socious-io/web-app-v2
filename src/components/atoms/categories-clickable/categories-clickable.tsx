@@ -32,6 +32,7 @@ export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Elemen
     const newList = exist ? selectedList.filter((item) => item !== value) : [...selectedList, value];
     return () => {
       setSelectedList(newList);
+      console.log('list', newList);
       onChange?.(newList);
     };
   }

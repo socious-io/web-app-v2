@@ -21,6 +21,8 @@ export const Mobile = (): JSX.Element => {
     findLabelByValue,
     onSocialCausesChange,
     onSkillsChange,
+    setOpenSkillsModal,
+    openSkillsModal,
   } = useSearchShared();
   const navigate = useNavigate();
 
@@ -69,6 +71,12 @@ export const Mobile = (): JSX.Element => {
       onMorePageClick={onMorePageClick}
     />
   );
+  const filterButtonJSX = (title, onClick, icon) => (
+    <div className={css.btn} onClick={onClick}>
+      <span>{title}</span>
+      <img className={css.chevronDown} src={icon} />
+    </div>
+  );
 
   return (
     <div className={css.container}>
@@ -91,8 +99,8 @@ export const Mobile = (): JSX.Element => {
                 menus={menu}
                 value={findLabelByValue(location.current.search.type, 'Type')}
               />
-              <SocialCausesFilter onSubmit={onSocialCausesChange} />
-              <SkillsFilter onSubmit={onSkillsChange} />
+              {/* <SocialCausesFilter onSubmit={onSocialCausesChange} /> */}
+              {filterButtonJSX('Skills', () => setOpenSkillsModal(true), '/icons/arrow-down-black.svg')}
             </div>
           </div>
         </div>
@@ -103,6 +111,7 @@ export const Mobile = (): JSX.Element => {
           {printWhen(jobListJSX, paramTypeIsProjects)}
         </div>
       </div>
+      <SkillsFilter onSubmit={onSkillsChange} open={openSkillsModal} onClose={() => setOpenSkillsModal(false)} />
     </div>
   );
 };

@@ -389,8 +389,8 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/m/search',
-        element: () => import('../../pages/search/mobile/mobile').then((m) => <m.Mobile />),
+        path: '/d/search',
+        element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),
         loader: (p) => search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 }),
       },
       {
