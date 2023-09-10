@@ -17,7 +17,7 @@ export const Welcome: React.FC = () => {
               </div>
             </div>
             <div className={css['card__content']}>
-              <img className={css.logo} src="/images/Logo-vertical.png" />
+              <img className={css.logo} src="/images/logo.webp" />
               <div className={css['card__title']}>Welcome to Socious</div>
               <div className={css['card__sub-title']}>
                 To continue, please agree to our{' '}
