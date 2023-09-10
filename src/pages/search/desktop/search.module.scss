@@ -1,9 +1,14 @@
 .container {
-  height: calc(100vh - var(--desktop-nav-height));
-  overflow-y: scroll;
+  @media screen and (min-width: 600px) {
+    height: calc(100vh - var(--desktop-nav-height));
+  }
+  // overflow-y: scroll;
   background-color: #f3f3f3;
 }
-
+.mobileHeaderContainer {
+  position: sticky;
+  top: 0;
+}
 .filterBar {
   height: 3.5rem;
   padding: 0 1rem;
@@ -11,9 +16,14 @@
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid var(--border-gray-01);
-  position: sticky;
-  top: 0;
   background-color: var(--color-off-white-01);
+  @media screen and (max-width: 600px) {
+    overflow: scroll;
+    ::-webkit-scrollbar {
+      width: 1px;
+    }
+    // scroll-padding: 0;
+  }
 }
 
 .filterBarContent {
@@ -24,6 +34,9 @@
 }
 
 .results {
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
   color: var(--color-gray-02);
   background-color: transparent;
   display: flex;
@@ -32,12 +45,14 @@
 }
 
 .listContainer {
+  @media screen and (min-width: 600px) {
+    min-width: 60rem;
+    height: calc(100vh - var(--desktop-nav-height) - 3.5rem);
+    gap: 1rem;
+    display: flex;
+    justify-content: center;
+  }
   padding: 1rem;
-  gap: 1rem;
-  display: flex;
-  justify-content: center;
-  min-width: 60rem;
-  height: calc(100vh - var(--desktop-nav-height) - 3.5rem);
 }
 
 .listContainerContent {
@@ -50,4 +65,65 @@
   height: 100%;
   min-width: max-content;
   overflow-y: scroll;
+}
+
+.btn {
+  height: 2.25rem;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 50px;
+  cursor: pointer;
+  white-space: nowrap;
+  &:hover {
+    background-color: rgb(231, 231, 231);
+  }
+}
+
+.searchBox {
+  padding: 0 1rem;
+  display: grid;
+  align-items: end;
+  padding-bottom: 1rem;
+  grid-template-columns: 44px 1fr;
+  height: 8rem;
+  border-bottom: 1px solid var(--border-gray-01);
+  @media screen and (min-width: 600px) {
+    display: none;
+  }
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
+.searchContainer {
+  position: relative;
+  .results {
+    position: absolute;
+    right: 2.5rem;
+    bottom: 10px;
+    opacity: 0.5;
+    color: var(--color-gray-02);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-s);
+  }
+}
+
+.back {
+  height: 2.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobileResults {
+  color: var(--color-gray-02);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-s);
 }
