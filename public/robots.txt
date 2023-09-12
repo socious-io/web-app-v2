@@ -1,3 +1,4 @@
 User-agent: *
+Disallow: /jobIndexing
 Allow: /
 Sitemap: https://app.socious.io/sitemap.xml
