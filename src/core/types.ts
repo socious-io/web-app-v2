@@ -388,6 +388,7 @@ export type Offer = {
   amount: number;
   total: number;
   fee: number;
+  stripe_fee: number;
 };
 
 export type GetOffer = Pagination<Offer[]>;
