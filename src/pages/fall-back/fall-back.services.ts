@@ -1,6 +1,8 @@
 import axios from 'axios';
+import { config } from 'src/config';
+
 export const logError = (error: Error, info: { componentStack: string }) => {
-  const webHookURL = import.meta.env.VITE_LOG_DISCORD_WEBHOOK;
+  const webHookURL = config.logDiscordWebHook;
   axios
     .post(webHookURL, {
       content: `Status: , Message: ${error} ${info.componentStack}`,
