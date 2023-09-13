@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { get } from 'src/core/http';
-import webClient from './client_secret_token.json';
+import { config } from 'src/config';
 
 export const getJobPageURIs = async () => {
-  const appURL = import.meta.env.VITE_APP_URL;
+  const appURL = config.appBaseURL
   let page = 1;
   let result: string[] = [];
 
@@ -14,6 +14,7 @@ export const getJobPageURIs = async () => {
     result = result.concat(test);
     page += 1;
   } while (result.length > 0 && page <= 3);
+  
   return result;
 };
 
@@ -28,8 +29,8 @@ export function oauthSignIn() {
 
   // Parameters to pass to OAuth 2.0 endpoint.
   var params = {
-    client_id: webClient.web.client_id,
-    redirect_uri: webClient.web.redirect_uris,
+    client_id:config.webTokenClientId,
+    redirect_uri: config.webTokenRedirectURL,
     response_type: 'token',
     scope: 'https://www.googleapis.com/auth/indexing',
     include_granted_scopes: 'true',
