@@ -7,4 +7,5 @@ export const config = {
   refreshExpire: import.meta.env.VITE_REFRESH_EXPIRE,
   stripePublicKey: import.meta.env.VITE_STRIPE_PUBLIC_KEY,
   jpStripePublicKey: import.meta.env.VITE_JP_STRIPE_PUBLIC_KEY,
+  logDiscordWebHook: import.meta.env.VITE_LOG_DISCORD_WEBHOOK,
 };
