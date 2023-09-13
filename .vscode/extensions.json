@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+      "hookyqr.beautify",
+      "dbaeumer.vscode-eslint",
+      "irongeek.vscode-env",
+      "ghmcadams.lintlens",
+      "christian-kohler.npm-intellisense",
+      "esbenp.prettier-vscode",
+      "redhat.vscode-yaml",
+      "wmaurer.change-case",
+      "mikestead.dotenv",
+      "eamodio.gitlens",
+      "cmstead.js-codeformer",
+      "mrmlnc.vscode-json5",
+      "andys8.jest-snippets"
+    ]
+}
