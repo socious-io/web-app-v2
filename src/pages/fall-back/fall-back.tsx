@@ -4,7 +4,6 @@ import { Typography } from 'src/components/atoms/typography/typography';
 import css from './fall-back.module.scss';
 
 const FallBack = (): JSX.Element => {
-  console.log('fallback page');
   return (
     <div className={css.container}>
       <div className={css.errorCode}>500</div>
