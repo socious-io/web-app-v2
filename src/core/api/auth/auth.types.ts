@@ -68,11 +68,11 @@ export type StripeProfileRes = {
   object: string;
   business_profile: {
     mcc: string;
-    name: null;
-    support_address: null;
-    support_email: null;
-    support_phone: null;
-    support_url: null;
+    name: string | null;
+    support_address: string | null;
+    support_email: string | null;
+    support_phone: string | null;
+    support_url: string | null;
     url: string;
   };
   capabilities: {
