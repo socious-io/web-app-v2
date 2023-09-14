@@ -12,9 +12,9 @@ import { ProfileCard } from 'src/components/templates/profile-card';
 import { Button } from 'src/components/atoms/button/button';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { PaymentMethods } from 'src/components/templates/payment-methods';
-import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translatePaymentMode } from 'src/constants/PROJECT_PAYMENT_MODE';
 import { printWhen } from 'src/core/utils';
 import { IdentityReq } from 'src/core/types';
 import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';
@@ -123,9 +123,7 @@ export const Desktop = (): JSX.Element => {
                   </div>
                   <div className={css.detailItem}>
                     <div className={css.detailItemLabel}>Payment mode</div>
-                    <div className={css.detailItemValue}>
-                      {translateRemotePreferences(offer.project.remote_preference)}
-                    </div>
+                    <div className={css.detailItemValue}>{translatePaymentMode(offer.payment_mode)}</div>
                   </div>
                   <div className={css.detailItem}>
                     <div className={css.detailItemLabel}>Job total</div>
@@ -142,18 +140,18 @@ export const Desktop = (): JSX.Element => {
                     <div className={css.detailItemValue}>{offer.due_date || 'Unspecified'}</div>
                   </div> */}
                   {printWhen(
-                      <div className={css.detailItem}>
-                        <div className={css.detailItemLabel}>Estimate total hours</div>
-                        <div className={css.detailItemValue}>{offer.total_hours} hrs</div>
-                      </div>,
-                      offer.project.payment_scheme === "FIXED"
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Estimate total hours</div>
+                      <div className={css.detailItemValue}>{offer.total_hours} hrs</div>
+                    </div>,
+                    offer.project.payment_scheme === 'FIXED'
                   )}
                   {printWhen(
-                      <div className={css.detailItem}>
-                        <div className={css.detailItemLabel}>Weekly limit</div>
-                        <div className={css.detailItemValue}>{offer.weekly_limit} hrs / week</div>
-                      </div>,
-                      offer.project.payment_scheme === "HOURLY"
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Weekly limit</div>
+                      <div className={css.detailItemValue}>{offer.weekly_limit} hrs / week</div>
+                    </div>,
+                    offer.project.payment_scheme === 'HOURLY'
                   )}
                 </div>
               </div>
