@@ -16,12 +16,12 @@ import {
 } from './auth.types';
 
 export async function login(payload: LoginReq): Promise<AuthRes> {
-  const { data } = await post('/auth/web/login', payload);
+  const { data } = await post('auth/login', payload);
   return data as AuthRes;
 }
 
 export async function refresh(payload: RefreshReq): Promise<AuthRes> {
-  const { data } = await post('/auth/web/login', payload);
+  const { data } = await post('auth/refresh', payload);
   return data as AuthRes;
 }
 
