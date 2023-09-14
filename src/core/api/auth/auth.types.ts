@@ -1,68 +1,68 @@
 // ----------------------- Requests -------------------------------
-export type LoginReq = {
+export interface LoginReq {
   email: string;
   password: string;
-};
+}
 
-export type RegisterReq = {
+export interface RegisterReq {
   email: string;
   password: string;
   first_name?: string;
   last_name?: string;
   username?: string;
-};
+}
 
-export type PreRegisterReq = {
+export interface PreRegisterReq {
   email?: string;
   username?: string;
-};
+}
 
-export type RefreshReq = {
+export interface RefreshReq {
   refresh_token: string;
-};
+}
 
-export type OtpReq = {
+export interface OtpReq {
   email: string;
-};
+}
 
-export type OtpConfirmReq = {
+export interface OtpConfirmReq {
   email: string;
   otp: string;
-};
+}
 
-export type AuthStripeReq = {
+export interface AuthStripeReq {
   country: string;
   redirect_url: string;
   is_jp?: boolean;
-};
+}
 
-export type SrtipeProfileReq = {
+export interface SrtipeProfileReq {
   is_jp?: boolean;
-};
+}
 
 // ----------------------- Responses -------------------------------
-export type AuthRes = {
+export interface AuthRes {
   error?: string;
   access_token: string;
   refresh_token: string;
   token_type: 'Bearer';
-};
+}
 
-export type PreRegisterRes = {
+export interface PreRegisterRes {
   email?: 'EXIST' | null;
   username?: 'EXIST' | null;
-};
+}
 
-export type StripeLinkRes = {
+export interface StripeLinkRes {
   link: {
     object: string;
     created: number;
     expires_at: number;
     url: string;
   };
-};
+}
 
-export type StripeProfileRes = {
+export interface StripeProfileRes {
   mui: string;
   id: string;
   object: string;
@@ -121,4 +121,4 @@ export type StripeProfileRes = {
   payouts_enabled: boolean;
   type: string;
   status: string;
-};
+}
