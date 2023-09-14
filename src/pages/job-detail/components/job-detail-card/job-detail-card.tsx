@@ -24,19 +24,18 @@ export function JobDetailCard(props: JobDetailCardProps) {
     else setOpenApplyModal(true);
   }
   function onSaveJob() {
-   console.log("save job")
+    console.log('save job');
   }
 
   const buttonJSX = (
-      <>
-        <Button disabled={props.job.applied} onClick={onApply}>
-          Apply now
-        </Button>
-        <Button color="white" onClick={onSaveJob}>
-          Save job
-        </Button>
-      </>
-
+    <>
+      <Button disabled={props.job.applied} onClick={onApply}>
+        Apply now
+      </Button>
+      <Button color="white" onClick={onSaveJob}>
+        Save job
+      </Button>
+    </>
   );
 
   const applicationSubmittedJSX = (
@@ -100,15 +99,16 @@ export function JobDetailCard(props: JobDetailCardProps) {
           </AuthGuard>
         </div>
       </Divider>
-        <div className={css.card}>
-      {printWhen(socialCausesJSX, !!props.job.causes_tags)}
-      {printWhen(jobCategoryJSX, !!props.job.job_category?.name)}
-      <Divider title="Job description">
-        <ExpandableText text={props.job.description} isMarkdown />
-      </Divider>
-      {printWhen(skillsJSX, !!props.job.skills)}
-      {printWhen(screeningQuestionsJSX, props.screeningQuestions.length > 0)}
-      {printWhen(aboutOrgJSX, !!props.job.identity_meta?.mission)}
+      <div className={css.card}>
+        {printWhen(socialCausesJSX, !!props.job.causes_tags)}
+        {printWhen(jobCategoryJSX, !!props.job.job_category?.name)}
+        <Divider title="Job description">
+          <ExpandableText text={props.job.description} isMarkdown />
+        </Divider>
+        {printWhen(skillsJSX, !!props.job.skills)}
+        {printWhen(screeningQuestionsJSX, props.screeningQuestions.length > 0)}
+        {printWhen(aboutOrgJSX, !!props.job.identity_meta?.mission)}
+      </div>
       <SureModal
         open={openExternalModal}
         onClose={() => setOpenExternalModal(false)}
