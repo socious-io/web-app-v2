@@ -13,12 +13,15 @@ import { JobDetailCardProps } from './job-detail-card.types';
 import { useState } from 'react';
 import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
 import { AuthGuard } from 'src/core/auth-guard/auth-guard';
+import { SureModal } from 'src/components/templates/sure-modal';
 
 export function JobDetailCard(props: JobDetailCardProps) {
   const [openApplyModal, setOpenApplyModal] = useState(false);
+  const [openExternalModal, setOpenExternalModal] = useState(false);
 
   function onApply() {
-    setOpenApplyModal(true);
+    if (props.job?.other_party_id) setOpenExternalModal(true);
+    else setOpenApplyModal(true);
   }
   function onSaveJob() {
    console.log("save job")
@@ -106,7 +109,21 @@ export function JobDetailCard(props: JobDetailCardProps) {
       {printWhen(skillsJSX, !!props.job.skills)}
       {printWhen(screeningQuestionsJSX, props.screeningQuestions.length > 0)}
       {printWhen(aboutOrgJSX, !!props.job.identity_meta?.mission)}
-        </div>
+      <SureModal
+        open={openExternalModal}
+        onClose={() => setOpenExternalModal(false)}
+        onDone={() => {
+          setOpenExternalModal(false);
+          props.job.other_party_url && window.open(props.job.other_party_url, '_blank');
+        }}
+        modalTexts={{
+          title: 'Partner job board',
+          body: 'Your application for the job will continue to another site.',
+          confirmButton: 'Continue',
+          cancleButton: 'Cancel',
+          titleColor: '#020305',
+        }}
+      />
     </Card>
   );
 }

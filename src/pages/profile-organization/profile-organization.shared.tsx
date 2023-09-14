@@ -7,7 +7,7 @@ import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
 import { ProfileReq, Resolver } from './profile-organization.types';
-import { getConnectStatus, sendRequestConnection } from './profile-organization.services';
+import { getConnectStatus, sendRequestConnection, hiringCall } from './profile-organization.services';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 
 export const useProfileOrganizationShared = () => {
@@ -26,6 +26,8 @@ export const useProfileOrganizationShared = () => {
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [message, setMessage] = useState('please connect to me');
 
+  const [hiring, setHiring] = useState(organization.hiring);
+
   useEffect(() => {
     const getConnectionsStatus = async () => {
       const res = await getConnectStatus(organization.id);
@@ -41,7 +43,9 @@ export const useProfileOrganizationShared = () => {
       return shortname;
     }
   }
-
+  function navigateJobs() {
+    navigate({ to: `/profile/organizations/${resolver.user.shortname}/jobs` });
+  }
   function onClose() {
     hapticsImpactLight();
     navigate({ to: '/jobs' });
@@ -92,6 +96,13 @@ export const useProfileOrganizationShared = () => {
       };
     });
   }
+
+  async function onHiring() {
+    setHiring(!organization.hiring);
+    organization.hiring = await hiringCall();
+    setOrganization(organization);
+  }
+
   return {
     onClose,
     organization,
@@ -105,5 +116,8 @@ export const useProfileOrganizationShared = () => {
     showMessageIcon,
     onMessage,
     updateOrganization,
+    navigateJobs,
+    hiring,
+    onHiring,
   };
 };

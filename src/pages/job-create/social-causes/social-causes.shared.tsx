@@ -4,7 +4,7 @@ import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
 import { RootState } from 'src/store/store';
 
 export const useSocialCausesShared = () => {
-  const [socialCauses, setSocialCauses] = useState(socialCausesToCategoryAdaptor());
+  const [socialCauses, setSocialCauses] = useState(socialCausesToCategoryAdaptor);
 
   const selectedSocialCauses = useSelector<RootState, string[]>((state) => {
     return state.createPostWizard.causes_tags;
@@ -17,7 +17,7 @@ export const useSocialCausesShared = () => {
     setSocialCauses(filteredValue);
   }
 
-  const isValid = selectedSocialCauses.length > 0 && selectedSocialCauses.length <= 1;
+  const isValid = selectedSocialCauses?.length > 0 && selectedSocialCauses?.length <= 1;
 
   return { onSearch, socialCauses, selectedSocialCauses, isValid };
 };

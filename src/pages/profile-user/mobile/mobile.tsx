@@ -3,6 +3,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
 import { Divider } from 'src/components/templates/divider/divider';
+import { Toggle } from 'src/components/atoms/toggle';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
@@ -30,9 +31,13 @@ export const Mobile = (): JSX.Element => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    missions,
+    openToWork,
+    onOpenToWork,
+    openToVolunteer,
+    onOpenToVolunteer,
   } = useProfileUserShared();
   const [openConnectModal, setOpenConnectModal] = useState(false);
-
   const cityLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/pin-green.svg" />
@@ -57,7 +62,29 @@ export const Mobile = (): JSX.Element => {
       </a>
     </div>
   );
-
+  const expriencesJSX = (
+    <Divider title="Experiences">
+      {missions.map((mission) => (
+        <div className={css.exprience}>
+          <div className={css.organizationImageContainer}>
+            <img
+              className={css.exprinceOrgImage}
+              alt="organization"
+              src={mission.organizationImage ? mission.organizationImage : '/icons/organization.svg'}
+            />
+          </div>
+          <div>
+            <div className={css.exprienceDetails}>
+              <div className={css.exprienceTitle}>{mission.organizationName}</div>
+              <div className={css.exprienceDetail}>{mission.role}</div>
+              <div className={css.exprienceDetail}>{`${mission.dateFrom} - ${mission.dateTo}`}</div>
+              <div className={css.exprienceDetail}>{mission.location}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </Divider>
+  );
   const websiteLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/email-green.svg" />
@@ -103,6 +130,24 @@ export const Mobile = (): JSX.Element => {
     </Button>
   );
 
+  const openToWorkToggleJSX = (
+    <Divider>
+      <div className={css.profileStatus}>
+        <label>Open to Work</label>
+        <Toggle name="OpenToWork" checked={openToWork} onChange={onOpenToWork} />
+      </div>
+    </Divider>
+  );
+
+  const openToVolunteerToggleJSX = (
+    <Divider>
+      <div className={css.profileStatus}>
+        <label>Open to volunteer</label>
+        <Toggle name="OpenToVolunteer" checked={openToVolunteer} onChange={onOpenToVolunteer} />
+      </div>
+    </Divider>
+  );
+
   const orgNameJSX = <div className={css.name}>{user?.name}</div>;
   const usernameJSX = <div className={css.username}>@{user?.username}</div>;
 
@@ -138,7 +183,12 @@ export const Mobile = (): JSX.Element => {
         </div>
         <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
           <div className={css.avatarContainer}>
-            <Avatar img={avatarImage} size="8rem" type="users" />
+            <Avatar
+              img={avatarImage}
+              size="8rem"
+              type="users"
+              {...(openToWork || openToVolunteer ? { badge: { color: '#004a46', image: '/icons/available.svg' } } : {})}
+            />
           </div>
         </div>
         <div className={css.menu}>
@@ -158,6 +208,8 @@ export const Mobile = (): JSX.Element => {
           {printWhen(userFullNameJSX, !!user?.first_name || !!user?.last_name)}
           {printWhen(usernameJSX, !!user?.username)}
         </Divider>
+        {printWhen(openToWorkToggleJSX, profileBelongToCurrentUser)}
+        {printWhen(openToVolunteerToggleJSX, profileBelongToCurrentUser)}
         <Divider>
           <div className={css.achievements} onClick={gotToMobileAchievement}>
             <div className={css.badges}>
@@ -165,6 +217,7 @@ export const Mobile = (): JSX.Element => {
                 return <ImpactBadge key={item.color} size="2.75rem" {...item} />;
               })}
             </div>
+
             <div className={css.achievementsLink}>Achievements</div>
           </div>
         </Divider>
@@ -176,6 +229,8 @@ export const Mobile = (): JSX.Element => {
             <div>{user.followers} Followers</div>
           </div>
         </Divider>
+
+        {printWhen(expriencesJSX, missions.length > 0)}
         <Divider title="Social Causes">
           <CategoriesClickable list={socialCauses} />
         </Divider>
@@ -184,6 +239,10 @@ export const Mobile = (): JSX.Element => {
           {printWhen(emailLinkJSX, !!user.email)}
           {printWhen(websiteLinkJSX, !!user.website)}
           {printWhen(cityLinkJSX, !!user.city)}
+          <div>
+            {printWhen(openToWorkToggleJSX, profileBelongToCurrentUser)}
+            {printWhen(openToVolunteerToggleJSX, profileBelongToCurrentUser)}
+          </div>
         </Divider>
         {printWhen(missionJSX, !!user.mission)}
         {printWhen(cultureJSX, !!user.culture)}

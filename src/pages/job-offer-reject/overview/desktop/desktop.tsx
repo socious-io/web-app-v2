@@ -14,6 +14,8 @@ import { ApplicantResp } from 'src/core/types';
 import { getApplicantDetail, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
+import { BackLink } from 'src/components/molecules/back-link';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -26,7 +28,6 @@ export const Desktop = (): JSX.Element => {
   const [applicantDetail, setApplicantDetail] = useState<ApplicantResp>();
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
   const { isLoggedIn } = useAuth();
-
   async function onOfferClick(id: string) {
     const result = await getApplicantDetail(id);
     if (Object.keys(result)?.length) {
@@ -53,6 +54,7 @@ export const Desktop = (): JSX.Element => {
         <Overview
           questions={updatedApplicantList.screeningQuestions.questions}
           data={updatedApplicantList.jobOverview}
+          updateApplicantList={updateApplicantList}
         />
       ),
       default: true,
@@ -103,6 +105,7 @@ export const Desktop = (): JSX.Element => {
     <>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
+          <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
           <ProfileCard />
           <Card className={css.tabs}>
             {tabs.map((tab) => (
@@ -120,7 +123,14 @@ export const Desktop = (): JSX.Element => {
           </Card>
         </div>
         <div className={css.rightContainer}>
-          <Card className={css.selectedTab}>{selectedTabName}</Card>
+          {updatedApplicantList.jobOverview.status === 'EXPIRE' ? (
+            <Card className={css.archivedBox}>
+              <img className={css.archivedBoxImage} src="/icons/archived.svg" /> job was archived on
+              {` ${convertTimeToMonth(updatedApplicantList.jobOverview.expires_at)}`}
+            </Card>
+          ) : (
+            <Card className={css.selectedTab}>{selectedTabName}</Card>
+          )}
           <Card>{renderedTab}</Card>
         </div>
       </TwoColumnCursor>

@@ -14,9 +14,13 @@ const colorStyle: Record<NonNullable<ButtonProps['color']>, CSSProperties> = {
     border: 0,
     color: 'var(--color-white)',
   },
+  primary: {
+    backgroundColor: 'var(--color-primary-blue)',
+    border: 0,
+    color: 'var(--color-white)',
+  },
   white: {},
 };
-
 const sizeStyle: Record<NonNullable<ButtonProps['size']>, CSSProperties> = {
   s: {
     height: '2.25rem',

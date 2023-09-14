@@ -1,3 +1,6 @@
+.container {
+  background-color: var(--color-white);
+}
 .header {
   display: grid;
   position: relative;
@@ -114,4 +117,39 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.profileStatus {
+  display: flex;
+  justify-content: space-between;
+}
+.exprience {
+  display: flex;
+  flex-direction: row;
+}
+.exprienceDetils {
+  display: flex;
+  flex-direction: column;
+}
+.organizationImageContainer {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border-gray-01);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+.exprinceOrgImage {
+  width: 30px;
+}
+.exprienceTitle {
+  font-size: 16px;
+  line-height: 24px;
+}
+.exprienceDetail {
+  color: var(--color-gray-dark-01);
+  font-size: 16px;
+  line-height: 24px;
 }

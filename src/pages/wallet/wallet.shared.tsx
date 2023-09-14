@@ -10,8 +10,14 @@ export const useWalletShared = () => {
   const {
     missionsList: { items, page, total_count },
     stripeProfile,
+    jpStripeProfile,
   } = useMatch().data as Resolver;
-  const { data } = stripeProfile?.external_accounts || {};
+
+  let accounts = [];
+  if (stripeProfile?.external_accounts?.data.length > 0) accounts.push(...stripeProfile?.external_accounts.data);
+  if (jpStripeProfile?.external_accounts?.data.length > 0) accounts.push(...jpStripeProfile?.external_accounts.data);
+
+  const { data } = { data: accounts } || {};
   const form = useForm(formModel);
   const formIsValid = form.isValid;
   const [generatedItems, setGeneratedItems] = useState(items);
@@ -58,12 +64,11 @@ export const useWalletShared = () => {
   }
 
   function isDisablePayout(escrow: { created_at: string; release_id: string }) {
-    /* const currentDate = Number(new Date());
+    const currentDate = Number(new Date());
     const createdDate = Number(new Date(escrow?.created_at));
     const diffTime = Math.abs(currentDate - createdDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays < 10; */
-    return false;
+    return diffDays < 5;
   }
 
   return {

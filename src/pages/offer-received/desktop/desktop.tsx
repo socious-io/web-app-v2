@@ -17,9 +17,12 @@ import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { printWhen } from 'src/core/utils';
 import { IdentityReq } from 'src/core/types';
-import { useOfferReceivedShared } from '../offer-received.shared';
+import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { BankAccounts } from 'src/components/templates/bank-accounts';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -27,8 +30,10 @@ export const Desktop = (): JSX.Element => {
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-  const { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD } =
+  const { offer, media, status, account, isPaidCrypto, isPaid, unit, onAccept, onDeclined, equivalentUSD } =
     useOfferReceivedShared();
+
+  const { form, stripeProfile, stripeLink, onSelectCountry } = useWalletShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -67,7 +72,11 @@ export const Desktop = (): JSX.Element => {
 
   const buttonsJSX = (
     <div className={css.btnContainer}>
-      <Button onClick={onAccept(offer.id)} disabled={!account && isPaidCrypto} className={css.btn}>
+      <Button
+        onClick={onAccept(offer.id)}
+        disabled={(!account && isPaidCrypto) || (!stripeProfile && !isPaidCrypto && isPaid)}
+        className={css.btn}
+      >
         Accept offer
       </Button>
       <Button onClick={onDeclined(offer.id)} color="white" className={css.btn}>
@@ -191,6 +200,21 @@ export const Desktop = (): JSX.Element => {
               <PaymentMethods crypto_method={<Dapp.Connect />} />
             </div>,
             isPaidCrypto
+          )}
+          {printWhen(
+            <Dropdown
+              register={form}
+              name="country"
+              label="Country"
+              placeholder="country"
+              list={COUNTRIES}
+              onValueChange={(selected) => onSelectCountry(selected.value as string)}
+            />,
+            !isPaidCrypto && !stripeProfile
+          )}
+          {printWhen(
+            <BankAccounts accounts={stripeProfile} isDisabled={!stripeLink} bankAccountLink={stripeLink} />,
+            !isPaidCrypto && isPaid
           )}
           {printWhen(buttonsJSX, status === 'PENDING')}
         </Card>

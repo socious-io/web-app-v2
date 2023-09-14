@@ -15,6 +15,7 @@ import { Job } from '../../components/organisms/job-list/job-list.types';
 import { endpoint } from '../../core/endpoints';
 import { translatePaymentTerms } from '../../constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from '../../constants/PROJECT_PAYMENT_TYPE';
+import { getJobCategories } from '../job-create/info/info.services';
 
 export async function jobOfferRejectLoader({ params }: { params: { id: string } }) {
   const requests = [
@@ -29,6 +30,7 @@ export async function jobOfferRejectLoader({ params }: { params: { id: string } 
     endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'APPROVED' }),
     endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'HIRED' }),
     endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'CLOSED,CANCELED,WITHDRAWN' }),
+    getJobCategories(),
   ];
   const [
     offerOverview,
@@ -42,6 +44,7 @@ export async function jobOfferRejectLoader({ params }: { params: { id: string } 
     approved,
     hired,
     closed,
+    jobCategories,
   ] = await Promise.all(requests);
   return {
     offerOverview,
@@ -55,6 +58,7 @@ export async function jobOfferRejectLoader({ params }: { params: { id: string } 
     approved,
     hired,
     closed,
+    jobCategories,
   };
 }
 
@@ -63,7 +67,9 @@ export async function getOfferOverview(id: string): Promise<Offer> {
 }
 
 export async function getJobOverview(id: string): Promise<Job> {
-  return get(`projects/${id}`).then(({ data }) => data);
+  return get(`projects/${id}`).then(({ data }) => {
+    return data;
+  });
 }
 
 export async function getToReviewList(payload: { id: string; page: number }): Promise<Pagination<UserApplicantResp[]>> {
@@ -162,4 +168,8 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
       user_feedback: item?.user_feedback,
     };
   });
+}
+
+export async function archiveJob(projectId: string) {
+  return post(`/projects/update/${projectId}/close`, {});
 }

@@ -52,6 +52,7 @@ export const useMessageDetailShared = () => {
 
   socket?.on('chat', (data) => {
     const receiver = list.filter((l) => l.type == 'receiver')[0];
+    if (!receiver || data.identity_id === identity.id) return;
     setList([
       ...list,
       {

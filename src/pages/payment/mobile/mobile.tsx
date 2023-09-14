@@ -18,7 +18,7 @@ export const Mobile = (): JSX.Element => {
     offer,
     assignment_total,
     unit,
-    commision,
+    checkList,
     total_price,
     start_date,
     cards,
@@ -80,15 +80,7 @@ export const Mobile = (): JSX.Element => {
           />
             {printWhen(<HourlySubmissionsCard title="Hourly Submissions" start_date={start_date} end_date="Present" submissions={[]}/>,project.payment_scheme === "HOURLY")}
           <div className={css['container__spacer']}>
-            <PaymentSummaryCard
-              title="Payment summary"
-              unit={unit}
-              list={[
-                { title: 'Total assignement', price: assignment_total },
-                { title: ' Socious commision', price: commision },
-              ]}
-              total_price={total_price}
-            />
+            <PaymentSummaryCard title="Payment summary" unit={unit} list={checkList} total_price={total_price} />
           </div>
           <PaymentMethods
             crypto_method={

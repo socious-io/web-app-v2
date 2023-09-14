@@ -21,6 +21,7 @@ import {
 import {
   getApplicantDetail,
   getHiredList,
+  getJobOverview,
   jobOfferRejectLoader
 } from '../../pages/job-offer-reject/job-offer-reject.services';
 import { receivedOfferLoader } from '../../pages/offer-received/offer-received.services';
@@ -75,6 +76,21 @@ export const routes: Route[] = [
                 <m.SignUpUserCompleteContainer />
               )),
           },
+          {
+            path: '/welcome',
+            element: () => import('../../pages/sign-up/welcome/welcome').then((m) => <m.Welcome />),
+          },
+          {
+            path: '/onboarding',
+            element: () =>
+              import('../../pages/sign-up/sign-up-user-onboarding/sign-up-user-complete.container').then((m) => (
+                <m.SignUpUserOnboarding />
+              )),
+          },
+          {
+            path: '/allow-notification',
+            element: () => import('../../pages/sign-up/AllowNotification').then((m) => <m.AllowNotification />),
+          },
         ],
       },
     ],
@@ -126,9 +142,9 @@ export const routes: Route[] = [
         children: [
           {
             path: '/add-card',
-            loader: async () => {
-              const [cardInfo] = await Promise.all([getCreditCardInfo()]);
-              return cardInfo;
+            loader: async ({ params }) => {
+              const { offer } = await receivedOfferLoader(params);
+              return { offer };
             },
             element: () =>
               import('../../pages/payment/credit-card/credit-card.container').then((m) => <m.CreditCard />),
@@ -144,9 +160,8 @@ export const routes: Route[] = [
           },
           {
             loader: async ({ params }) => {
-              const requests = [receivedOfferLoader(params), getCreditCardInfo()];
-              const [offerReq, cardInfo] = await Promise.all(requests);
-              const { offer } = offerReq;
+              const { offer } = await receivedOfferLoader(params);
+              const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
               return { offer, cardInfo };
             },
             element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
@@ -334,6 +349,55 @@ export const routes: Route[] = [
         ],
       },
       {
+        path: '/jobs/edit',
+        children: [
+          {
+            path: 'info/:id',
+            loader: async ({ params }) => {
+              const requests = [getJobCategories(), getJobOverview(params.id)];
+              const [jobCategories, overview] = await Promise.all(requests);
+              return { jobCategories, overview };
+            },
+            element: () => import('../../pages/job-edit/info/info.container').then((m) => <m.Info />),
+          },
+          {
+            path: 'skills/:id',
+            loader: async ({ params }) => {
+              const requests = [getJobOverview(params.id)];
+              const [overview] = await Promise.all(requests);
+              return { overview };
+            },
+            element: () => import('../../pages/job-edit/skills/skills.container').then((m) => <m.Skills />),
+          },
+          {
+            path: 'social-causes/:id',
+            loader: async ({ params }) => {
+              const requests = [getJobOverview(params.id)];
+              const [overview] = await Promise.all(requests);
+              return { overview };
+            },
+            element: () =>
+              import('../../pages/job-edit/social-causes/social-causes.container').then((m) => <m.SocialCauses />),
+          },
+          {
+            path: 'screener-questions/:id',
+            loader: async ({ params }) => {
+              const defaultQuestions = await getScreeningQuestions(params.id);
+              return { defaultQuestions };
+            },
+            element: () =>
+              import('src/pages/job-edit/screener-questions/created/created.container').then((m) => <m.Created />),
+          },
+          {
+            path: 'screener-questions/',
+            element: () =>
+              import('src/pages/job-edit/screener-questions/screener-questions.container').then((m) => (
+                <m.ScreenerQuestions />
+              )),
+          },
+        ],
+      },
+      {
         path: '/m/search',
         element: () => import('../../pages/search/mobile/mobile').then((m) => <m.Mobile />),
         loader: (p) => search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 }),
@@ -438,9 +502,8 @@ export const routes: Route[] = [
               },
               {
                 loader: async ({ params }) => {
-                  const requests = [receivedOfferLoader(params), getCreditCardInfo()];
-                  const [offerReq, cardInfo] = await Promise.all(requests);
-                  const { offer } = offerReq;
+                  const { offer } = await receivedOfferLoader(params);
+                  const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
                   return { offer, cardInfo };
                 },
                 element: () => import('../../pages/payment/payment.container').then((m) => <m.Payment />),
@@ -672,6 +735,11 @@ export const routes: Route[] = [
                     <m.ProfileOrganizationEdit />
                   )),
               },
+              {
+                path: 'jobs',
+                element: () =>
+                  import('../../pages/jobs-index/jobs-index.container').then((m) => <m.JobsIndexContainer />),
+              },
             ],
           },
           {
@@ -727,9 +795,9 @@ export const routes: Route[] = [
             path: 'wallet',
             element: () => import('../../pages/wallet/wallet.container').then((m) => <m.Wallet />),
             loader: async () => {
-              const requests = [getMissionsList({ page: 1 }), getSrtipeProfile()];
-              const [missionsList, stripeProfile] = await Promise.all(requests);
-              return { missionsList, stripeProfile };
+              const requests = [getMissionsList({ page: 1 }), getSrtipeProfile(), getSrtipeProfile(true)];
+              const [missionsList, stripeProfile, jpStripeProfile] = await Promise.all(requests);
+              return { missionsList, stripeProfile, jpStripeProfile };
             },
           },
           {

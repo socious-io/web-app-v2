@@ -10,7 +10,6 @@ import { useNavigate } from '@tanstack/react-location';
 export const Intro = (): JSX.Element => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  
 
   return (
     <BottomStatic backgroundColor="var(--color-off-white-01)">

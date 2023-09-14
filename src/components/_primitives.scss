@@ -13,9 +13,11 @@
   --color-gray-02: #a2a6b6;
   --color-gray-03: #bec0c7;
   --color-gray-04: rgba(228, 230, 237, 1);
-  --color-gray-light-1: #808289;
+  --color-gray-light-1: #808289; 
   --color-gray-dark: #2d2d2d;
   --color-yellow-01:#ebb957;
+  --color-gray-dark-01: #808289;
+
   --font-size-s: 0.75rem; // 12px
   --font-size-s2: 0.875rem; // 14px
   --font-size-m: 1rem; // 16px
@@ -29,4 +31,17 @@
 
   --border-gray-01: #e2e2e2;
   --desktop-nav-height: 4rem;
+  --color-primary-blue: #2f4786;
+  --color-black-01: #020305;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('/fonts/Inter-Regular.woff2');
+}
+
+@font-face {
+  font-family: Inter;
+  font-weight: 600;
+  src: url('/fonts/Inter-SemiBold.woff2');
 }

@@ -26,6 +26,7 @@ export const usePaymentShared = () => {
     recipient,
     amount: assignment_total,
     total: total_price,
+    stripe_fee,
     fee: commision,
     crypto_currency_address: token,
     project_id,
@@ -37,7 +38,8 @@ export const usePaymentShared = () => {
   const isPaidCrypto = project?.payment_type === 'PAID' && payment_mode === 'CRYPTO';
   const isDisabledProceedPayment =
     process || (isPaidCrypto ? !isConnected || !account : !selectedCard) || status === 'HIRED';
-  let unit = 'USDC';
+
+  let unit = offer.currency || 'USD';
 
   function onSelectCard(id: string) {
     setSelectedCard(id);
@@ -50,7 +52,7 @@ export const usePaymentShared = () => {
   async function onRemoveCard(id: string) {
     setSelectedCard('');
     endpoint.post.payments['{card_id}/remove'](id).then(async () => {
-      const result = await getCreditCardInfo();
+      const result = await getCreditCardInfo(offer.currency === 'JPY');
       setCards(result);
     });
   }
@@ -84,7 +86,6 @@ export const usePaymentShared = () => {
       });
 
       endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
-
     } catch (err: any) {
       dialog.alert({
         message: err?.response?.data.error || err?.message,
@@ -120,12 +121,21 @@ export const usePaymentShared = () => {
     });
   }
 
+  const checkList = [
+    { title: 'Total assignement', price: assignment_total },
+    { title: ' Socious commision', price: commision },
+  ];
+
+  if (stripe_fee > 0) checkList.push({ title: ' Stripe commision', price: stripe_fee });
+
   return {
     offer,
     unit,
     assignment_total: getFlooredFixed(assignment_total, 2),
     commision: getFlooredFixed(commision, 2),
     total_price: getFlooredFixed(total_price, 2),
+    stripe_fee: getFlooredFixed(stripe_fee, 2),
+    checkList,
     start_date,
     isPaidCrypto,
     cards,

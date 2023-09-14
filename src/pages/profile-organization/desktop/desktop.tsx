@@ -4,6 +4,7 @@ import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-
 import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Divider } from 'src/components/templates/divider/divider';
+import { Toggle } from 'src/components/atoms/toggle';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
 import { BackLink } from 'src/components/molecules/back-link';
@@ -27,6 +28,9 @@ export const Desktop = (): JSX.Element => {
     showMessageIcon,
     onMessage,
     updateOrganization,
+    navigateJobs,
+    hiring,
+    onHiring,
   } = useProfileOrganizationShared();
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
@@ -66,6 +70,15 @@ export const Desktop = (): JSX.Element => {
     <Button onClick={() => setEditOpen(true)} color="white" width="6.5rem">
       Edit
     </Button>
+  );
+
+  const hiringJSX = (
+    <Divider>
+      <div className={css.hireStatus}>
+        <label>Hiring status</label>
+        <Toggle name="hiring" checked={hiring} onChange={onHiring} />
+      </div>
+    </Divider>
   );
 
   const websiteLinkJSX = (
@@ -134,13 +147,21 @@ export const Desktop = (): JSX.Element => {
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.sidebar}>
           <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
+          <Card>
+            <div onClick={navigateJobs}>Job opportunities </div>
+          </Card>
         </div>
         <Card className={css.card} padding={0}>
           <div className={css.container}>
             <div className={css.header}>
               <div style={{ backgroundImage: `url(${organization.cover_image?.url})` }} className={css.cover}>
                 <div className={css.avatarContainer}>
-                  <Avatar img={organization.image?.url} size="8rem" type="organizations" />
+                  <Avatar
+                    img={organization.image?.url}
+                    size="8rem"
+                    type="organizations"
+                    {...(hiring ? { badge: { color: '#DC31AC', image: '/icons/hire.svg' } } : {})}
+                  />
                 </div>
               </div>
               <div className={css.menu}>
@@ -157,6 +178,7 @@ export const Desktop = (): JSX.Element => {
                 {printWhen(orgNameJSX, !!organization?.name)}
                 {printWhen(userFullNameJSX, !!organization?.first_name || !!organization?.last_name)}
                 {printWhen(usernameJSX, !!organization?.username)}
+                {printWhen(hiringJSX, profileBelongToCurrentUser)}
               </Divider>
               {printWhen(bioJSX, !!organization.bio)}
               <Divider>

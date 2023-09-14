@@ -75,6 +75,7 @@ type PostOrganizationUpdatePayload = {
   culture: string;
   website: string;
   image: string;
+  shortname: string;
 };
 
 export type PostMediaUploadResp = {
@@ -236,8 +237,8 @@ export interface Endpoints {
     };
     payments: {
       '{offer_id/confirm}': (id: string, body: any) => Promise<unknown>;
-      'add-card': (body: any) => Promise<unknown>;
-      '{card_id}/update': (id: string, body: any) => Promise<unknown>;
+      'add-card': (body: any, is_jp: boolean) => Promise<unknown>;
+      '{card_id}/update': (id: string, body: any, is_jp: boolean) => Promise<unknown>;
       '{card_id}/remove': (id: string) => Promise<unknown>;
       '{mission_id}/payout': (id: string) => Promise<unknown>;
     };

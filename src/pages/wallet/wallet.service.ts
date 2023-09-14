@@ -13,8 +13,8 @@ export async function getStripeLink(value: string): Promise<any> {
   return get(`/auth/stripe/connect-link?country=${value}`).then(({ data }) => data);
 }
 
-export async function getSrtipeProfile(): Promise<any> {
-  return get('/auth/stripe/profile').then(({ data }) => data);
+export async function getSrtipeProfile(is_jp?: boolean): Promise<any> {
+  return get('/auth/stripe/profile', { params: { is_jp } }).then(({ data }) => data);
 }
 
 export const formModel: FormModel = {

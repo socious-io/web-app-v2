@@ -3,7 +3,7 @@ import css from './avatar.module.scss';
 import { AvatarProps } from './avatar.types';
 
 export const Avatar = (props: AvatarProps): JSX.Element => {
-  const { size = '3rem', onClick, type = 'users', img, ...rest } = props;
+  const { badge, customStyle = '', size = '3rem', onClick, type = 'users', img, ...rest } = props;
 
   const images: Record<AvatarProps['type'], string> = {
     organizations: '/icons/organization.svg',
@@ -20,8 +20,13 @@ export const Avatar = (props: AvatarProps): JSX.Element => {
   };
 
   return (
-    <div onClick={props.onClick} style={style} className={css.container}>
+    <div onClick={props.onClick} style={style} className={`${css.container} ${customStyle}`}>
       {img && <img className={css.img} src={img} />}
+      {badge && (
+        <div className={css.badge} style={{ backgroundColor: badge.color }}>
+          <img className={css.img} src={badge.image} />
+        </div>
+      )}
     </div>
   );
 };

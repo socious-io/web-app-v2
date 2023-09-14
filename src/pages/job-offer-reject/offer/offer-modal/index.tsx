@@ -31,7 +31,17 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
   const memoizedFormState = useMemo(() => formModel(isHourly,isPaidType, isPaidFiat, initialForm), [paymentMode]);
   const form = useForm(memoizedFormState);
   const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
-  const { tokens, openModal, setOpenModal, selectedToken, onSelectTokens, equivalentUSD, web3 } = useOfferShared();
+  const {
+    tokens,
+    openModal,
+    setOpenModal,
+    selectedToken,
+    selectedCurrency,
+    onSelectTokens,
+    onSelectCurrency,
+    equivalentUSD,
+    web3,
+  } = useOfferShared();
 
   async function onSubmit() {
     const payload: OfferPayload = {
@@ -40,6 +50,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
       offer_message: (form.controls.message.value as string) || initialForm.message,
       weekly_limit: (form.controls.weekly_limit.value as string) || initialForm.weekly_limit,
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
+      currency: selectedCurrency,
     };
     if(!isHourly) {
       payload.total_hours =  form.controls.estimatedTotalHours.value as string || initialForm.estimatedTotalHours;
@@ -110,7 +121,23 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
           isPaidCrypto && !!web3
         )}
         {printWhen(
-          <Input register={form} name="assignmentTotal" label="Assignment total (USD)" placeholder="amount" />,
+          <InputModal
+            name="assignmentTotal"
+            register={form}
+            placeholder="amount"
+            modalHeader="Select a currency"
+            items={
+              [
+                { title: 'USD', value: 'USD', subtitle: 'USD' },
+                { title: 'JPY', value: 'JPY', subtitle: 'JPY' },
+              ] as Item[]
+            }
+            open={openModal}
+            onOpen={() => setOpenModal(true)}
+            onClose={() => setOpenModal(false)}
+            selectedItem={selectedCurrency}
+            onSelectItem={onSelectCurrency}
+          />,
           isPaidFiat
         )}
         <Textarea
