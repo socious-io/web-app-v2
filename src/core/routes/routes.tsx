@@ -668,6 +668,19 @@ export const routes: Route[] = [
             element: () => import('../../pages/job-detail/job-detail.container').then((m) => <m.JobDetailContainer />),
           },
           {
+            path: '/job-datails/:id',
+            loader: async ({ params }) => {
+              const requests = [endpoint.get.projects.project_id(params.id), getScreeningQuestions(params.id)];
+              const [jobDetail, screeningQuestions] = await Promise.all(requests);
+              return { jobDetail, screeningQuestions };
+            },
+            element: () => import('../../pages/job-detail/job-detail.container').then((m) => <m.JobDetailContainer />),
+          },
+          {
+            path: '/jobIndexing',
+            element: () => import('../../pages/job-indexing-google/job-indexing-google').then((m) => <m.default />),
+          },
+          {
             path: '/jobs',
             element: () => import('../../pages/jobs/jobs.container').then((m) => <m.JobsContainer />),
             loader: () => getJobList({ page: 1 }),

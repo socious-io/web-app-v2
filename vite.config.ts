@@ -8,5 +8,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: [`@ionic/pwa-elements/loader`],
   },
-  envDir: 'environments',
+  
 });
