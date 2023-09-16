@@ -26,6 +26,7 @@ export const usePaymentShared = () => {
     recipient,
     amount: assignment_total,
     total: total_price,
+    stripe_fee,
     fee: commision,
     crypto_currency_address: token,
     project_id,
@@ -120,12 +121,21 @@ export const usePaymentShared = () => {
     });
   }
 
+  const checkList = [
+    { title: 'Total assignement', price: assignment_total },
+    { title: ' Socious commision', price: commision },
+  ];
+
+  if (stripe_fee > 0) checkList.push({ title: ' Stripe commision', price: stripe_fee });
+
   return {
     offer,
     unit,
     assignment_total: getFlooredFixed(assignment_total, 2),
     commision: getFlooredFixed(commision, 2),
     total_price: getFlooredFixed(total_price, 2),
+    stripe_fee: getFlooredFixed(stripe_fee, 2),
+    checkList,
     start_date,
     isPaidCrypto,
     cards,
