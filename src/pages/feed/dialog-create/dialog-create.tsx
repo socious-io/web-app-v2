@@ -1,5 +1,5 @@
 import { DialogCreateProps } from './dialog-create.types';
-import css from './dialog-create.module.scss';
+// import css from './dialog-create.module.scss';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Dropdown } from '../../../components/atoms/dropdown/dropdown';
 import { Textarea } from '../../../components/atoms/textarea/textarea';
@@ -72,15 +72,15 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   }, [selectedFile]);
 
   return (
-    <div className={css.container}>
-      <div className={css.header}>
+    <div className="bg-white flex flex-col h-screen">
+      <div className="h-16 bg-white flex items-center justify-between p-5 border-solid border-4 border-border-gray-01 pt-safe-area">
         <span></span>
-        <span className={css.title}>Create Post</span>
+        <span className="font-semibold text-l">Create Post</span>
         <div onClick={onClose}>
           <img src="icons/close-black.svg" />
         </div>
       </div>
-      <div className={css.social}>
+      <div className="flex items-center gap-3 p-4 border-b-solid border-b-4 border-b--border-gray-01">
         <Avatar img={avatarImg} type={identity.type} />
         <Dropdown
           placeholder="Social Cause"
@@ -89,17 +89,17 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
           selectedValue={state.social}
         />
       </div>
-      <div className={css.text}>
+      <div className="p-4 min-h-[200px] break-words overflow-y-auto">
         <Textarea rows="15" variant="outline" onChange={onChangeTextHandler} placeholder="I feel like ..." />
       </div>
-      <div className={css.footer}>
-        <div className={css.image}>
+      <div className="bg-white mt-auto">
+        <div className="flex justify-end h-12 items-center p-5 bg-off-white-01 relative">
           <div>
             <img src="icons/image.svg" />
             <input type="file" onChange={imagUpload} />
           </div>
         </div>
-        <div className={css.button}>
+        <div className="flex justify-end bg-white py-10 px-4">
           <Button color="blue" onClick={handleClickOpen} disabled={!isDisable()}>
             Next
           </Button>

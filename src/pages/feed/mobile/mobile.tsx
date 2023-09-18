@@ -12,7 +12,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { useFeedShared } from '../feed.shared';
-import css from './mobile.module.scss';
+// import css from './mobile.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Mobile = () => {
@@ -65,11 +65,14 @@ export const Mobile = () => {
   };
 
   const createPostJSX = (
-    <div className={css.create}>
+    <div className="mt-6 mr-4 mb-2 ml-4">
       <Card>
-        <div className={css.createWrapper}>
+        <div className="flex items-center gap-4">
           <Avatar size="3rem" type="users" img={avatarImg} />
-          <div onClick={handleClickOpen} className={css.createButton}>
+          <div
+            onClick={handleClickOpen}
+            className="h-12 flex items-center w-full rounded-lg text-base bg-off-white-01 py-0 px-6 text-primary-01"
+          >
             Create a post
           </div>
         </div>
@@ -78,18 +81,34 @@ export const Mobile = () => {
   );
 
   return (
-    <div className={css.container}>
-      <div className={css.header}>
-        <div className={css.menu}>
+    <div>
+      <div
+        // className={css.header}
+        className="h-48 p-4 pt-16  relative bg-[30%] bg-cover bg-[url('/images/feed-page-header.png')] bg-gray-04 before:absolute before:top-0 before:right-0 before:bottom-0 before:left-0 before:bg-gradient-to-r before:from-transparent before:from-50% before:to-[rgba(black, 0.35)]"
+      >
+        <div
+          // className={css.menu}
+          className="relative mb-6 grid grid-cols-[2rem_1fr_2rem] grid-rows-[2.25rem] items-center gap-4"
+        >
           <Avatar onClick={openSidebar} size="2.25rem" type={identity?.type} img={avatarImg} />
           <Search placeholder="Search" onEnter={onSearchEnter} />
           <div onClick={navigateToChat}>
-            <img className={css.logo} src="icons/chat-white.svg" />
+            <img className="p-0 m-0 h-8" src="icons/chat-white.svg" />
           </div>
         </div>
         <div>
-          <div className={css.title}>Feed</div>
-          <div className={css.tagline}>See What is happening in your network</div>
+          <div
+            // className={css.title}
+            className="relative text-white font-semibold text-xl font-['Inter']"
+          >
+            Feed
+          </div>
+          <div
+            // className={css.tagline}
+            className="relative text-gray-400 text-base"
+          >
+            See What is happening in your network
+          </div>
         </div>
       </div>
       {showIfLoggedIn(createPostJSX)}

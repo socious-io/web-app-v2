@@ -10,7 +10,7 @@ import { CategoriesClickable } from '../../../components/atoms/categories-clicka
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { DialogCreate } from '../dialog-create/dialog-create';
 import { getFeedList, submitPost, uploadImage } from '../mobile/mobile.service';
-import css from './dialog-review.module.scss';
+// import css from './dialog-review.module.scss';
 import { DialogReviewProps } from './dialog-review.types';
 
 export const DialogReview = (props: DialogReviewProps) => {
@@ -58,32 +58,32 @@ export const DialogReview = (props: DialogReviewProps) => {
   ];
 
   return (
-    <div className={css.container}>
-      <div className={css.header}>
+    <div className="bg-white flex flex-col h-screen">
+      <div className="bg-white flex items-center justify-between p-5 pt-safe-area border-b-solid border-b-4 border-border-gray-01 fixed top-0 w-full">
         <div onClick={handleClickOpen}>
           <img src="/icons/chevron-left.svg" />
         </div>
-        <span className={css.title}>Review Post</span>
+        <span className="font-semibold text-xl">Review Post</span>
         <div onClick={props.onClose}>
           <img src="/icons/close-black.svg" />
         </div>
       </div>
-      <div className={css.main}>
-        <div className={css.social}>
+      <div className="pt-40">
+        <div className="flex flex-col gap-4 p-4">
           <Avatar img={avatarImg} type={identity.type} />
           <CategoriesClickable list={obj} />
         </div>
-        <div className={css.text}>
+        <div className="p-4 min-h-40 overflow-y-scroll break-words leading-normal border-b-solid border-b-4 border-b-border-gray-01">
           <TextClickableURLs text={props.text} />
         </div>
-        <div className={css.image}>
+        <div className="p-4">
           <Card>
-            <img src={props.imgUrl} />
+            <img className="w-full h-auto max-h-96" src={props.imgUrl} />
           </Card>
         </div>
       </div>
-      <div className={css.footer}>
-        <div className={css.button}>
+      <div className="mt-auto bg-aquamarine">
+        <div className="flex justify-end bg-white py-10 px-4">
           <Button onClick={onSubmit} color="blue">
             Post
           </Button>
