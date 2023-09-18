@@ -125,16 +125,19 @@ export const Desktop = (): JSX.Element => {
                     <div className={css.detailItemLabel}>Payment mode</div>
                     <div className={css.detailItemValue}>{translatePaymentMode(offer.payment_mode)}</div>
                   </div>
-                  <div className={css.detailItem}>
-                    <div className={css.detailItemLabel}>Job total</div>
-                    <div className={css.detailItemValue}>
-                      {offer.assignment_total} <span>{unit}</span>
-                      {printWhen(
-                        <span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>,
-                        isPaidCrypto
-                      )}
-                    </div>
-                  </div>
+                  {printWhen(
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Job total</div>
+                      <div className={css.detailItemValue}>
+                        {offer.assignment_total} <span>{unit}</span>
+                        {printWhen(
+                          <span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>,
+                          isPaidCrypto
+                        )}
+                      </div>
+                    </div>,
+                    offer.project.payment_scheme === 'FIXED'
+                  )}
                   {/* <div className={css.detailItem}>
                     <div className={css.detailItemLabel}>Due date</div>
                     <div className={css.detailItemValue}>{offer.due_date || 'Unspecified'}</div>
@@ -145,6 +148,15 @@ export const Desktop = (): JSX.Element => {
                       <div className={css.detailItemValue}>{offer.total_hours} hrs</div>
                     </div>,
                     offer.project.payment_scheme === 'FIXED'
+                  )}
+                  {printWhen(
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Paid - Hourly rate</div>
+                      <div className={css.detailItemValue}>
+                        {offer.assignment_total} {unit} / hour
+                      </div>
+                    </div>,
+                    offer.project.payment_scheme === 'HOURLY'
                   )}
                   {printWhen(
                     <div className={css.detailItem}>
