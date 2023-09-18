@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
-import css from './desktop.module.scss';
+// import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = () => {
@@ -85,9 +85,12 @@ export const Desktop = () => {
 
   const createPostJSX = (
     <Card>
-      <div className={css.createWrapper}>
+      <div className="flex items-center gap-4">
         <Avatar size="3rem" type="users" img={avatarImg} />
-        <div onClick={handleClickOpen} className={css.createButton}>
+        <div
+          onClick={handleClickOpen}
+          className="h-12 flex items-center w-full rounded-lg text-base cursor-pointer bg-off-white-01 px-0 py-6 text-primary-01"
+        >
           Create a post
         </div>
       </div>
@@ -96,19 +99,20 @@ export const Desktop = () => {
 
   return (
     <TwoColumnCursor visibleSidebar={isLoggedIn}>
-      <div className={css.sidebar}>
+      {/* <div className={css.sidebar}> */}
+      <div className="grid grid-cols-1 gap-4">
         <ProfileCard />
         <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListUser} />, identity?.type === 'users')}
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity?.type === 'organizations')}
       </div>
       <>
-        <div className={css.banner}>
-          <div className={css.title}>Your Feed</div>
-          <div className={css.tagline}>See what is happening in your network</div>
+        <div className="h-32 flex flex-col justify-center pl-10 rounded-[30px] bg-cover bg-gray-04 bg-[30%] bg-[url('/images/feed-page-header.png')] relative overflow-hidden">
+          <div className="relative text-white font-semibold text-xl font-['Inter'] ">Your Feed</div>
+          <div className="relative text-gray-400 text-base">See what is happening in your network</div>
         </div>
-        <div className={css.create}>{showIfLoggedIn(createPostJSX)}</div>
-        <div className={css.list}>
+        <div className="mt-6 mr-4 mb-2 ml-4">{showIfLoggedIn(createPostJSX)}</div>
+        <div className="px-0 py-4">
           <FeedList
             data={feedList}
             onMoreClick={(feed) => showActions(feed)}
@@ -118,10 +122,10 @@ export const Desktop = () => {
             showSeeMore={onShowSeeMore(feedList.length)}
           />
           <Modal open={openMoreBox} onClose={() => setOpenMoreBox(false)}>
-            <div className={css.moreBox}>
-              <div className={css.moreHeader}>What do you want to do?</div>
+            <div className="w-[288px] bg-white p-4 rounded-lg flex flex-col gap-8">
+              <div className="pb-2 text-gray-02">What do you want to do?</div>
               {moreOptions?.map((option, index) => (
-                <div key={option.title} className={css.moreOption} onClick={() => onClickMoreOption(index)}>
+                <div key={option.title} className="cursor-pointer" onClick={() => onClickMoreOption(index)}>
                   {option.title}
                 </div>
               ))}

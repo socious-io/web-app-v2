@@ -10,7 +10,7 @@ import { Comment } from 'src/components/molecules/comment/comment';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { usePostDetailShared } from '../post-detail.shared';
-import css from './desktop.module.scss';
+// import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = () => {
@@ -53,7 +53,8 @@ export const Desktop = () => {
         <div>
           <ProfileCard />
         </div>
-        <div className={css.main}>
+        {/* <div className={css.main}> */}
+        <div className="pt-0 pr-4 pb-4 pl-4;">
           <FeedItem
             key={postObj.id}
             type={postObj.identity_type}
@@ -67,11 +68,19 @@ export const Desktop = () => {
             categories={socialCausesToCategory(postObj.causes_tags)}
             onMoreClick={() => showActions(postObj)}
           />
-          <Card className={css.sendBox}>
+          {/* <Card className={css.sendBox}> */}
+          <Card className="flex items-center gap-3 my-4 mx-0">
             <Avatar size="2rem" img={identity.meta.image} type={identity.type} />
-            <SendBox className={css.input} onValueChange={changeMessageHandler} onSend={sendMessage} value={message} />
+            <SendBox
+              // className={css.input}
+              className="flex-1"
+              onValueChange={changeMessageHandler}
+              onSend={sendMessage}
+              value={message}
+            />
           </Card>
-          <div className={css.messages}>
+          {/* <div className={css.messages}> */}
+          <div className="w-full">
             <Comment
               list={commentList}
               onLike={onCommentLike}
@@ -83,8 +92,10 @@ export const Desktop = () => {
         </div>
       </TwoColumnCursor>
       <Modal open={openMoreBox} onClose={() => setOpenMoreBox(false)}>
-        <div className={css.moreBox}>
-          <div className={css.moreHeader}>What do you want to do?</div>
+        {/* <div className={css.moreBox}>
+          <div className={css.moreHeader}>What do you want to do?</div> */}
+        <div className="bg-white p-4 rounded-lg flex flex-col gap-8 w-[288px]">
+          <div className="pb-2 text-gray-02">What do you want to do?</div>
           {moreOptions?.map((option, index) => (
             <div key={option.title} className={css.moreOption} onClick={() => onClickMoreOption(index)}>
               {option.title}
