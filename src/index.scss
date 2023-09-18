@@ -3,6 +3,10 @@
 @import './components/primitives';
 @import './components/reset';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 pwa-action-sheet {
   position: fixed;
   right: 0;

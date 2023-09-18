@@ -6,7 +6,7 @@ export function getJobStructuresData(job: Job): string {
   const jobStructuredData = {
     '@context': 'https://schema.org/',
     '@type': 'JobPosting',
-    title: job.job_category?.name,
+    title: job.title,
     description: `<p>${job.description}</p>`,
     identifier: {
       '@type': 'PropertyValue',
