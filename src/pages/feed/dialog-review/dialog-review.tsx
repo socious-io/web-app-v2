@@ -9,9 +9,9 @@ import { Card } from '../../../components/atoms/card/card';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { DialogCreate } from '../dialog-create/dialog-create';
-import { getFeedList, submitPost, uploadImage } from '../mobile/mobile.service';
-// import css from './dialog-review.module.scss';
+import css from './dialog-review.module.scss';
 import { DialogReviewProps } from './dialog-review.types';
+import { getFeedList, submitPost, uploadImage } from '../refactored/feed.service';
 
 export const DialogReview = (props: DialogReviewProps) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -58,32 +58,32 @@ export const DialogReview = (props: DialogReviewProps) => {
   ];
 
   return (
-    <div className="bg-white flex flex-col h-screen">
-      <div className="bg-white flex items-center justify-between p-5 pt-safe-area border-b-solid border-b-4 border-border-gray-01 fixed top-0 w-full">
+    <div className={css.container}>
+      <div className={css.header}>
         <div onClick={handleClickOpen}>
           <img src="/icons/chevron-left.svg" />
         </div>
-        <span className="font-semibold text-xl">Review Post</span>
+        <span className={css.title}>Review Post</span>
         <div onClick={props.onClose}>
           <img src="/icons/close-black.svg" />
         </div>
       </div>
-      <div className="pt-40">
-        <div className="flex flex-col gap-4 p-4">
+      <div className={css.main}>
+        <div className={css.social}>
           <Avatar img={avatarImg} type={identity.type} />
           <CategoriesClickable list={obj} />
         </div>
-        <div className="p-4 min-h-40 overflow-y-scroll break-words leading-normal border-b-solid border-b-4 border-b-border-gray-01">
+        <div className={css.text}>
           <TextClickableURLs text={props.text} />
         </div>
-        <div className="p-4">
+        <div className={css.image}>
           <Card>
-            <img className="w-full h-auto max-h-96" src={props.imgUrl} />
+            <img src={props.imgUrl} />
           </Card>
         </div>
       </div>
-      <div className="mt-auto bg-aquamarine">
-        <div className="flex justify-end bg-white py-10 px-4">
+      <div className={css.footer}>
+        <div className={css.button}>
           <Button onClick={onSubmit} color="blue">
             Post
           </Button>
