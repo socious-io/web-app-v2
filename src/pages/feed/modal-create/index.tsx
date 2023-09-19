@@ -10,7 +10,7 @@ import { dialog } from 'src/core/dialog/dialog';
 import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
 import { ModalCreateProps } from './modal-create.types';
 import { ModalReview } from '../modal-review';
-// import css from './modal-create.module.scss';
+import css from './modal-create.module.scss';
 
 export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeedList }) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
@@ -63,14 +63,12 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
         open={open}
         onClose={onClose}
         header="Create post"
-        // footerClassName={css.footer}
-        footerClassName="justify-end"
+        footerClassName={css.footer}
         buttons={[
           {
             children: 'Next',
             color: 'blue',
-            // className: css.btn,
-            className: 'max-w-40',
+            className: css.btn,
             disabled: !isDisable(),
             onClick: () => {
               onClose();
@@ -80,12 +78,10 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
         ]}
       >
         <>
-          {/* <div className={css.social}> */}
-          <div className="flex items-center gap-3 p-4 border-b-solid border-b-4 border-b-border-gray-01">
+          <div className={css.social}>
             <Avatar img={avatarImg} type={identity?.type || 'users'} />
             <Dropdown
-              // containerClassName={css.dropdown}
-              containerClassName="flex flex-1"
+              containerClassName={css.dropdown}
               placeholder="Social Cause"
               list={socialCausesToDropdownAdaptor()}
               onGetValue={getSocialValue}
@@ -93,26 +89,20 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
             />
           </div>
 
-          <div className="overflow-y-auto max-h-[650px] break-word">
+          <div className={css.text}>
             <Textarea
               rows="15"
               variant="outline"
               placeholder="I feel like ..."
               value={state.text}
               onChange={onChangeTextHandler}
-              // className={css.textbox}
-              className="p-4 placeholder-gray-03"
+              className={css.textbox}
             />
           </div>
 
-          {/* <div className={css.image}> */}
-          <div className="flex justify-end items-center relative cursor-pointer py-2 px-4 bg-off-white-01">
+          <div className={css.image}>
             <img src="icons/image.svg" />
-            <input
-              type="file"
-              onChange={imagUpload}
-              className="absolute w-6 h-6 opacity-0 cursor-pointer top-2 right-4"
-            />
+            <input type="file" onChange={imagUpload} />
           </div>
         </>
       </WebModal>

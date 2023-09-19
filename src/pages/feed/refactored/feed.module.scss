@@ -1,6 +1,16 @@
-.sidebar {
-  display: grid;
-  gap: 1rem;
+.container {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-off-white-01);
+  min-height: calc(100vh - var(--desktop-nav-height));
+}
+
+.boundaries {
+  width: 61rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
 }
 
 .banner {
@@ -42,8 +52,17 @@
   font-size: var(--font-size-m);
 }
 
-.list {
-  padding: 1rem 0;
+.createButton {
+  background-color: var(--color-off-white-01);
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 0 1.5rem;
+  color: var(--color-primary-01);
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .moreBox {
@@ -63,55 +82,4 @@
   .moreOption {
     cursor: pointer;
   }
-}
-
-.profileHeader {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.username {
-  font-weight: 600;
-  padding-bottom: 0.2rem;
-}
-
-.profileLink {
-  cursor: pointer;
-  color: var(--color-primary-01);
-}
-
-.profileFooter {
-  height: 2rem;
-  display: flex;
-  gap: 1rem;
-  align-items: flex-end;
-}
-
-.followers,
-.connections {
-  color: var(--color-gray-02);
-}
-
-.create {
-  margin: 1.5rem 1rem 0.5rem 1rem;
-}
-
-.createWrapper {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.createButton {
-  background-color: var(--color-off-white-01);
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  border-radius: 0.5rem;
-  padding: 0 1.5rem;
-  color: var(--color-primary-01);
-  font-size: 1rem;
-  cursor: pointer;
 }

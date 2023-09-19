@@ -6,10 +6,10 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { RootState } from 'src/store/store';
 import { printWhen } from 'src/core/utils';
-import { getFeedList, submitPost, uploadImage } from '../mobile/mobile.service';
 import { IdentityReq } from 'src/core/types';
 import { ModalReviewProps } from './modal-review.types';
-// import css from './modal-review.module.scss';
+import css from './modal-review.module.scss';
+import { getFeedList, submitPost, uploadImage } from '../refactored/feed.service';
 
 export const ModalReview: React.FC<ModalReviewProps> = ({
   open,
@@ -59,36 +59,22 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
       open={open}
       onClose={onClose}
       header="Review Post"
-      // footerClassName={css.footer}
-      footerClassName="justify-end"
-      buttons={[
-        {
-          children: 'Post',
-          color: 'blue',
-          onClick: onSubmit,
-          //  className: css.btn
-          className: 'max-w-[10.18rem]',
-        },
-      ]}
+      footerClassName={css.footer}
+      buttons={[{ children: 'Post', color: 'blue', onClick: onSubmit, className: css.btn }]}
     >
-      {/* <div className={css.main}> */}
-      <div className="overflow-y-auto max-h-[650px]">
-        {/* <div className={css.social}> */}
-        <div className="flex flex-col gap-3 p-4">
-          {/* <div className={css.avatar}> */}
-          <div className="flex items-center gap-2">
+      <div className={css.main}>
+        <div className={css.social}>
+          <div className={css.avatar}>
             <Avatar img={avatarImg} type={identity?.type || 'users'} />
             {identity?.meta.name}
           </div>
           <CategoriesClickable list={obj} />
         </div>
-        {/* <div className={`${css.text} ${!!imgUrl && css.text__border}`}> */}
-        <div className={'p-4 break-word '.concat(!!imgUrl ? 'border-b-solid border-b-4 border-b-border-gray-01' : '')}>
+        <div className={`${css.text} ${!!imgUrl && css.text__border}`}>
           <TextClickableURLs text={text} />
         </div>
         {printWhen(
-          // <div className={css.image}>
-          <div className="p-4 break-word">
+          <div className={css.image}>
             <Card>
               <img src={imgUrl} />
             </Card>
