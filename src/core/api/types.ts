@@ -186,6 +186,8 @@ export type MissionStatus = 'ACTIVE' | 'COMPLETE' | 'CONFIRMED' | 'CANCELED' | '
 
 export type OfferStatus = 'PENDING' | 'WITHDRAWN' | 'APPROVED' | 'HIRED' | 'CLOSED' | 'CANCELED';
 
+export type ConnectStatus = 'PENDING' | 'CONNECTED' | 'BLOCKED';
+
 export type OAuthProviders = 'STRIPE';
 
 export type PaymentMode = 'ONLINE' | 'OFFLINE';

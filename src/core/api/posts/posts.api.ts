@@ -1,5 +1,5 @@
 import { post, get } from '../http';
-import { SuccessRes, PaginateReq, PaginateRes } from '../types';
+import { SuccessRes, PaginateReq } from '../types';
 import { CommentReq, CommentsRes, Post, PostReq, PostsRes, ReportReq } from './posts.types';
 
 export async function posts(params: PaginateReq): Promise<PostsRes> {
