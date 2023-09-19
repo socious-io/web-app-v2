@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios';
+import { config } from 'src/config';
 import { dialog } from './dialog/dialog';
 import { hideSpinner, showSpinner } from '../store/reducers/spinner.reducer';
 import store from '../store/store';
@@ -6,7 +7,7 @@ import translate from '../translations';
 import { nonPermanentStorage } from './storage/non-permanent';
 
 export const http = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL_2,
+  baseURL: config.baseURL,
   withCredentials: true,
   timeout: 1000000,
 });

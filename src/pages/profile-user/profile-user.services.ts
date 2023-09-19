@@ -78,3 +78,8 @@ export function badgesList(badges: unknown[]): ImpactBadgeProps[] {
       };
     });
 }
+
+// it is expriences in design
+export function getUserMissions(id: string) {
+  return get(`/user/${id}/missions`).then(({ data }) => data);
+}
