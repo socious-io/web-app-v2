@@ -9,11 +9,20 @@ import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { printWhen } from 'src/core/utils';
+import { formatDate } from 'src/core/utils';
 import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './mobile.module.scss';
+import { useState } from 'react';
 
 export const Mobile = (): JSX.Element => {
-  const { offer, media, status, onCompleteMission,onSubmitHours, onStopMission } = useCompleteMissionShared();
+  const { offer, media, status, mission, onCompleteMission, onSubmitHours, onStopMission } = useCompleteMissionShared();
+
+  const [displayedSubmissions, setDisplayedSubmissions] = useState(2);
+
+  const displayMore = () => {
+    const toDisplay = displayedSubmissions + 10;
+    setDisplayedSubmissions(toDisplay);
+  };
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -81,51 +90,53 @@ export const Mobile = (): JSX.Element => {
     </div>
   );
   // TODO get submit hours from API
-  const submit_hours:Array<any> = [
+  const submit_hours: Array<any> = [
     {
-      time:"Jan 8 - Jan 15",
-      hours:10,
-      confirmed:false
+      time: 'Jan 8 - Jan 15',
+      hours: 10,
+      confirmed: false,
     },
     {
-      time:"Jan 1 - Jan 7",
-      hours:15,
-      confirmed:true
-    }
-  ]
-  const SubmitHoursJSX = () =>(
-      <div className={css.missionDetailContainer}>
-      {
-        submit_hours.map(item=>(
-            <div className={css.hours} key={item.time}>
-              <div>{item.time}</div>
-              <div className={css.status}>
-                <div className={css.text}>{item.hours} hours</div>
-                <div>{item.confirmed ?
-                    <img className={css.icon} src="/icons/confirmed-submit.svg" alt="submitted"/>
-                :
-                    <img className={css.icon} src="/icons/waiting-submit.svg" alt="waiting"/>
-
-                }</div>
-              </div>
+      time: 'Jan 1 - Jan 7',
+      hours: 15,
+      confirmed: true,
+    },
+  ];
+  const SubmitHoursJSX = () => (
+    <div className={css.missionDetailContainer}>
+      {mission.submitted_works?.slice(0, displayedSubmissions).map((item) => (
+        <div className={css.hours} key={item.time}>
+          <div>
+            {formatDate(item.start_at)} - {formatDate(item.end_at)}
+          </div>
+          <div className={css.status}>
+            <div className={css.text}>{item.total_hours} hours</div>
+            <div>
+              {item.status === 'CONFIRMED' && (
+                <img className={css.icon} src="/icons/confirmed-submit.svg" alt="submitted" />
+              )}
+              {item.status === 'PENDING' && <img className={css.icon} src="/icons/waiting-submit.svg" alt="waiting" />}
             </div>
-        ))
-      }
-      <div className={css.view_more}>
-        view more
-      </div>
+          </div>
+        </div>
+      ))}
+      {printWhen(
+        <div className={css.view_more} onClick={displayMore}>
+          view more
+        </div>,
+        mission.submitted_works?.length > displayedSubmissions
+      )}
+      {printWhen(<div className={css.noSubmissions}>No submissions yet</div>, mission.submitted_works === null)}
       <div className={css.btn}>
         <Button onClick={onSubmitHours}>Submit Hours</Button>
       </div>
-      </div>
-  )
+    </div>
+  );
   const hoursSubmission = () => (
-      <Accordion title="Hours submission" id="hours-submission">
-        <div className={css.missionDetailContainer}>
-          {printWhen(SubmitHoursJSX(),submit_hours.length>0)}
-        </div>
-      </Accordion>
-  )
+    <Accordion title="Hours submission" id="hours-submission">
+      <div className={css.missionDetailContainer}>{printWhen(SubmitHoursJSX(), submit_hours.length > 0)}</div>
+    </Accordion>
+  );
   return (
     <TopFixedMobile>
       <Header title={`${offer.job_category.name}`} onBack={() => history.back()} />
@@ -135,7 +146,7 @@ export const Mobile = (): JSX.Element => {
         {/*{printWhen(submitHoursMessageBoxJSX, status === '')}*/}
         {printWhen(acceptedMessageBoxJSX, status === 'CLOSED')}
         {printWhen(stoppedMessageBoxJSX, status === 'KICK_OUT')}
-        {printWhen(hoursSubmission(),offer.project.payment_scheme === 'HOURLY')}
+        {printWhen(hoursSubmission(), offer.project.payment_scheme === 'HOURLY')}
         <Accordion title="Job details" id="mission-details">
           <div className={css.missionDetailContainer}>
             <div className={css.missionDetailMessage}>{offer.offer_message}</div>
@@ -209,8 +220,8 @@ export const Mobile = (): JSX.Element => {
             <Typography>{offer.organization.bio}</Typography>
           </div>
         </Accordion>
-        {printWhen(buttonsJSX, status === 'HIRED' && offer.project.payment_scheme !== "HOURLY")}
-        {printWhen(hourlyButtonsJSX, status === 'HIRED' && offer.project.payment_scheme === "HOURLY")}
+        {printWhen(buttonsJSX, status === 'HIRED' && offer.project.payment_scheme !== 'HOURLY')}
+        {printWhen(hourlyButtonsJSX, status === 'HIRED' && offer.project.payment_scheme === 'HOURLY')}
       </div>
     </TopFixedMobile>
   );

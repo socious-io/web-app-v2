@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {useMatch, useNavigate} from '@tanstack/react-location';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Loader } from './complete-mission.types';
 import { endpoint } from 'src/core/endpoints';
 import { useAlert } from 'src/hooks/use-alert';
@@ -23,7 +23,7 @@ export const useCompleteMissionShared = () => {
     };
     alert.confirm(options, onConfirm);
   }
-  function onSubmitHours(){
+  function onSubmitHours() {
     navigate({ to: `/d/jobs/applied/submitted-hours/${mission.id}` });
   }
 
@@ -32,5 +32,13 @@ export const useCompleteMissionShared = () => {
     endpoint.post.missions['{mission_id}/cancel'](mission.id).then(() => setStatus('KICK_OUT'));
   }
 
-  return { offer, media, status, onCompleteMission,onSubmitHours, onStopMission };
+  return {
+    offer,
+    media,
+    status,
+    mission,
+    onCompleteMission,
+    onSubmitHours,
+    onStopMission,
+  };
 };

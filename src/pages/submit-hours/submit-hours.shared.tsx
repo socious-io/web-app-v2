@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { Loader } from './submit-hours.types';
+import { Loader, Week } from './submit-hours.types';
 import { endpoint } from 'src/core/endpoints';
 import { useAlert } from 'src/hooks/use-alert';
 import { useForm } from 'src/core/form';
 import { formModel } from './submit-hours';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
+import moment from 'moment';
 
 export const useSubmittedHoursShared = () => {
   const resolver = useMatch().ownData;
   const { offer, mission, media } = (resolver as Loader) || {};
   const [status, setStatus] = useState(offer.status);
+  const [selectedWeek, setSelectedWeek] = useState({
+    start_at: moment().clone().weekday(1).toISOString(),
+    end_at: moment().clone().weekday(7).toISOString(),
+  });
   const alert = useAlert();
   const form = useForm(formModel);
   const navigate = useNavigate();
@@ -28,10 +33,36 @@ export const useSubmittedHoursShared = () => {
     alert.confirm(options, onConfirm);
   }
 
+  const formatDate = (d: string) => {
+    var date = new Date(d);
+    return date.toLocaleDateString('en-us', { month: 'short', day: 'numeric' });
+  };
+
+  function nextWeek() {
+    setSelectedWeek({
+      start_at: moment(selectedWeek.start_at).weekday(8).toISOString(),
+      end_at: moment(selectedWeek.end_at).weekday(7).toISOString(),
+    });
+  }
+
+  function isSelectedWeekCurrent() {
+    return moment(selectedWeek.start_at) <= moment() && moment() <= moment(selectedWeek.end_at);
+  }
+
+  function previousWeek() {
+    setSelectedWeek({
+      start_at: moment(selectedWeek.start_at).weekday(-6).toISOString(),
+      end_at: moment(selectedWeek.end_at).weekday(-7).toISOString(),
+    });
+  }
+
   function onSubmitHours() {
     const values: any = getFormValues(form);
-    values.start_at = '2021-10-14T13:32:30.211Z';
-    values.end_at = '2021-10-15T13:32:30.211Z';
+    const firstDayOfTheWeek = moment().clone().weekday(1).toISOString();
+    const lastDayOfTheWeek = moment().clone().weekday(7).toISOString();
+
+    values.start_at = selectedWeek.start_at; //firstDayOfTheWeek; //'2021-10-14T13:32:30.211Z';
+    values.end_at = selectedWeek.end_at; //lastDayOfTheWeek; //'2021-10-15T13:32:30.211Z';
     endpoint.post.missions['{mission_id}/submitworks'](mission.id, values).then(() => {});
   }
 
@@ -44,5 +75,20 @@ export const useSubmittedHoursShared = () => {
     history.back();
   }
 
-  return { offer, media, status, onCompleteMission, onStopMission, form, onCancel, onSubmitHours };
+  return {
+    offer,
+    media,
+    status,
+    onCompleteMission,
+    onStopMission,
+    form,
+    onCancel,
+    onSubmitHours,
+    selectedWeek,
+    mission,
+    nextWeek,
+    previousWeek,
+    formatDate,
+    isSelectedWeekCurrent,
+  };
 };

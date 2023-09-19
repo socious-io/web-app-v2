@@ -15,6 +15,7 @@ import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
+import { formatDate } from 'src/core/utils';
 import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
@@ -25,10 +26,12 @@ import { SubmitHour } from '../complete-mission.types';
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
   const [openSubmitHoursModal, setOpenSubmitHoursModal] = useState(false);
+  const [displayedSubmissions, setDisplayedSubmissions] = useState(2);
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-  const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
+  const { offer, media, status, mission, onCompleteMission, onStopMission } = useCompleteMissionShared();
+
   const { isLoggedIn } = useAuth();
 
   const offeredMessageBoxJSX = (
@@ -81,6 +84,12 @@ export const Desktop = (): JSX.Element => {
   const onSubmitHours = () => {
     setOpenSubmitHoursModal(true);
   };
+
+  const displayMore = () => {
+    const toDisplay = displayedSubmissions + 10;
+    setDisplayedSubmissions(toDisplay);
+  };
+
   const hourlyButtonsJSX = (
     <div className={css.btnContainer}>
       <Button onClick={onSubmitHours} className={css.btn}>
@@ -115,22 +124,29 @@ export const Desktop = (): JSX.Element => {
   ];
   const SubmitHoursJSX = () => (
     <div className={css.missionDetailContainer}>
-      {submitHours.map((item) => (
+      {mission.submitted_works?.slice(0, displayedSubmissions).map((item) => (
         <div className={css.hours} key={item.time}>
-          <div>{item.time}</div>
+          <div>
+            {formatDate(item.start_at)} - {formatDate(item.end_at)}
+          </div>
           <div className={css.hours_status}>
-            <div className={css.text}>{item.hours} hours</div>
+            <div className={css.text}>{item.total_hours} hours</div>
             <div>
-              {item.confirmed ? (
+              {item.status === 'CONFIRMED' && (
                 <img className={css.icon} src="/icons/confirmed-submit.svg" alt="submitted" />
-              ) : (
-                <img className={css.icon} src="/icons/waiting-submit.svg" alt="waiting" />
               )}
+              {item.status === 'PENDING' && <img className={css.icon} src="/icons/waiting-submit.svg" alt="waiting" />}
             </div>
           </div>
         </div>
       ))}
-      <div className={css.view_more}>view more</div>
+      {printWhen(
+        <div className={css.view_more} onClick={displayMore}>
+          view more
+        </div>,
+        mission.submitted_works?.length > displayedSubmissions
+      )}
+      {printWhen(<div className={css.noSubmissions}>No submissions yet</div>, mission.submitted_works === null)}
       <div className={css.hours_btn}>
         <Button className={css.btn_full} onClick={onSubmitHours}>
           Submit Hours

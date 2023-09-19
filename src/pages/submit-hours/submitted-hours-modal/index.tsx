@@ -5,10 +5,26 @@ import { ProfileView } from 'src/components/molecules/profile-view/profile-view'
 import { Input } from 'src/components/atoms/input/input';
 import { WebModal } from 'src/components/templates/web-modal';
 import { useSubmittedHoursShared } from '../submit-hours.shared';
+import { formatDate } from 'src/core/utils';
+import { printWhen } from 'src/core/utils';
+import moment from 'moment';
 
 export const SubmittedHoursModal: React.FC<SubmittedHoursModalTypes> = ({ open, onClose, onSend, onMessage }) => {
-  const { offer, media, status, onCompleteMission, onSubmitHours, onStopMission, form, onCancel } =
-    useSubmittedHoursShared();
+  const {
+    offer,
+    media,
+    status,
+    onCompleteMission,
+    onSubmitHours,
+    onStopMission,
+    mission,
+    form,
+    onCancel,
+    selectedWeek,
+    nextWeek,
+    previousWeek,
+    isSelectedWeekCurrent,
+  } = useSubmittedHoursShared();
 
   function onModalClose() {
     onClose();
@@ -33,6 +49,16 @@ export const SubmittedHoursModal: React.FC<SubmittedHoursModalTypes> = ({ open, 
       >
         <div className={css.body}>
           <div className={css.jobInfoContainer}>
+            <Card className={css.weekSelector}>
+              <img src="/icons/chevron-left.svg" onClick={previousWeek} />
+              {formatDate(selectedWeek.start_at)} - {formatDate(selectedWeek.end_at)},{' '}
+              {selectedWeek.end_at.substring(0, 4)}
+              <img
+                className={`${css.rightChevron} ${isSelectedWeekCurrent() ? css.currentWeek : css.rightChevron}`}
+                src="/icons/chevron-left.svg"
+                onClick={nextWeek}
+              />
+            </Card>
             <Card>
               <div className={css.jobTitle}>{offer.project.title}</div>
               <ProfileView
@@ -44,7 +70,9 @@ export const SubmittedHoursModal: React.FC<SubmittedHoursModalTypes> = ({ open, 
               />
               <div className={css.agreement}>
                 <span className={css.title}>Agreement : </span>
-                <span className={css.subtitle}>Max {offer.total_hours} hrs / week</span>
+                <span className={css.subtitle}>
+                  {mission.offer.weekly_limit} Max {offer.total_hours} hrs / week
+                </span>
               </div>
             </Card>
             <Card className={css.card}>

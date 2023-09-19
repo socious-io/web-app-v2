@@ -6,3 +6,8 @@ export type Loader = {
   mission: MissionsResp['items'][0];
   media: PostMediaUploadResp;
 };
+
+export type Week = {
+  start_at: string;
+  end_at: string;
+};

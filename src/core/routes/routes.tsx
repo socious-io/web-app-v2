@@ -22,7 +22,7 @@ import {
   getApplicantDetail,
   getHiredList,
   getJobOverview,
-  jobOfferRejectLoader
+  jobOfferRejectLoader,
 } from '../../pages/job-offer-reject/job-offer-reject.services';
 import { receivedOfferLoader } from '../../pages/offer-received/offer-received.services';
 import { endpoint } from '../endpoints';
@@ -341,10 +341,7 @@ export const routes: Route[] = [
           {
             path: 'final-review',
             loader: () => getJobCategories(),
-            element: () =>
-              import('src/pages/job-create/final-review/review.container').then((m) => (
-                <m.FinalReview />
-              )),
+            element: () => import('src/pages/job-create/final-review/review.container').then((m) => <m.FinalReview />),
           },
         ],
       },
@@ -525,7 +522,7 @@ export const routes: Route[] = [
               import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
           },
           {
-            path: "/d/jobs/applied/submitted-hours/:id",
+            path: '/d/jobs/applied/submitted-hours/:id',
             loader: async ({ params }) => {
               let media = { url: '' };
               const mission = await endpoint.get.missions.mission_id(params.id);
@@ -535,7 +532,7 @@ export const routes: Route[] = [
               }
               return { mission, offer, media };
             },
-            element: ()=> import('../../pages/submit-hours/submit-hours.container').then((m)=><m.SubmitHours/>)
+            element: () => import('../../pages/submit-hours/submit-hours.container').then((m) => <m.SubmitHours />),
           },
           {
             path: '/d/jobs/applied',
@@ -637,9 +634,13 @@ export const routes: Route[] = [
               {
                 path: '/:applicantId',
                 loader: async ({ params }) => {
-                  const requests = [getScreeningQuestions(params.id), getApplicantDetail(params.applicantId),getHiredList({ id: params.id, page: 1 })];
-                  const [screeningQuestions, applicantDetail,missions] = await Promise.all(requests);
-                  return { applicantDetail, screeningQuestions,missions };
+                  const requests = [
+                    getScreeningQuestions(params.id),
+                    getApplicantDetail(params.applicantId),
+                    getHiredList({ id: params.id, page: 1 }),
+                  ];
+                  const [screeningQuestions, applicantDetail, missions] = await Promise.all(requests);
+                  return { applicantDetail, screeningQuestions, missions };
                 },
                 element: () =>
                   import('../../pages/job-offer-reject/applicant-detail/applicant-detail').then((m) => (

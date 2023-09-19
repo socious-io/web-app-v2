@@ -5,6 +5,24 @@
   flex-direction: column;
 }
 
+.weekSelector {
+  background-color: var(--color-gray-04);
+  color: var(--color-gray-01);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  .rightChevron {
+    transform: rotate(180deg);
+  }
+  .currentWeek {
+    visibility: hidden;
+  }
+  img {
+    cursor: pointer;
+  }
+}
+
 .acceptedMessageBox {
   padding: 12px;
   display: grid;
@@ -86,24 +104,24 @@
   gap: 0.5rem;
   cursor: pointer;
 }
-.agreement{
-    background-color: var(--color-off-white-01);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-top: 16px;
-  .title{
+.agreement {
+  background-color: var(--color-off-white-01);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 16px;
+  .title {
     color: var(--color-primary-01);
   }
-  .subtitle{
+  .subtitle {
     color: var(--color-gray-01);
   }
-    .submissions{
-      margin-top: 1rem;
-    }
+  .submissions {
+    margin-top: 1rem;
+  }
 }
-.card{
+.card {
   margin-top: 1rem;
-  .input{
+  .input {
     padding-top: 0.7rem;
     text-align: center;
   }

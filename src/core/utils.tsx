@@ -47,3 +47,8 @@ export const removeValuesFromObject = (obj: any, valuesToRemove: Array<string | 
   }
   return obj;
 };
+
+export const formatDate = (d: string) => {
+  var date = new Date(d);
+  return date.toLocaleDateString('en-us', { month: 'short', day: 'numeric' });
+};

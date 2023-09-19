@@ -61,7 +61,7 @@
 }
 
 .missionDetailContainer {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .missionDetailMessage {
@@ -80,6 +80,11 @@
 
 .jobInfoContainer {
   padding: 1rem;
+}
+
+.noSubmissions {
+  text-align: center;
+  color: var(--color-gray-01);
 }
 
 .jobTitle {
@@ -114,35 +119,34 @@
   gap: 0.5rem;
   cursor: pointer;
 }
-.hours{
+.hours {
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .hours_status{
+  .hours_status {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
-  .text{
+  .text {
     line-height: 18px;
   }
-  .icon{
+  .icon {
     width: 18px;
     height: 18px;
   }
 }
-.view_more{
+.view_more {
   color: var(--color-primary-01);
   text-decoration: underline green;
   cursor: pointer;
 }
-.hours_btn{
+.hours_btn {
   width: 100%;
-  margin-top: 1rem;
-  .btn_full{
+  margin-top: 2rem;
+  .btn_full {
     width: 100%;
     max-width: initial;
   }
 }
-
