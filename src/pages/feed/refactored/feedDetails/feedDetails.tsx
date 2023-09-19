@@ -1,8 +1,7 @@
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FeedItem } from 'src/components/molecules/feed-item/feed-item';
 import { ProfileCard } from 'src/components/templates/profile-card';
-import { useAuth } from 'src/hooks/use-auth';
 import feedcss from '../feed.module.scss';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { IdentityReq, Pagination } from 'src/core/types';
@@ -12,15 +11,12 @@ import { RootState } from 'src/store/store';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { like, unlike } from '../feed.service';
 import { addComment, getComments, likeComment, removeCommentLike } from './post-detail.service';
-import { endpoint } from 'src/core/endpoints';
-import { dialog } from 'src/core/dialog/dialog';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { SendBox } from 'src/components/molecules/send-box/send-box';
 import { Comment } from 'src/components/molecules/comment/comment';
 import { Header } from 'src/components/atoms/header/header';
-import { isTouchDevice } from 'src/core/device-type-detector';
 
 const FeedDetails = () => {
   const { post, comments } = useMatch().ownData as {
