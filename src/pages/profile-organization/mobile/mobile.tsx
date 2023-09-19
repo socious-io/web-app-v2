@@ -10,6 +10,7 @@ import { printWhen } from 'src/core/utils';
 import { showActions } from '../profile-organization.services';
 import { useProfileOrganizationShared } from '../profile-organization.shared';
 import css from './mobile.module.scss';
+import { Toggle } from 'src/components/atoms/toggle';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ export const Mobile = (): JSX.Element => {
     showMessageIcon,
     onMessage,
     navigateJobs,
+    hiring,
+    onHiring,
   } = useProfileOrganizationShared();
   const [openConnectModal, setOpenConnectModal] = useState(false);
 
@@ -131,6 +134,14 @@ export const Mobile = (): JSX.Element => {
       <img src="/icons/message-blue.svg" />
     </div>
   );
+  const hiringJSX = (
+    <Divider>
+      <div className={css.hireStatus}>
+        <label>Hiring status</label>
+        <Toggle name="hiring" checked={hiring} onChange={onHiring} />
+      </div>
+    </Divider>
+  );
 
   return (
     <div className={css.container}>
@@ -140,7 +151,12 @@ export const Mobile = (): JSX.Element => {
         </div>
         <div style={{ backgroundImage: `url(${organization.cover_image?.url})` }} className={css.cover}>
           <div className={css.avatarContainer}>
-            <Avatar img={organization.image?.url} size="8rem" type="organizations" />
+            <Avatar
+              img={organization.image?.url}
+              size="8rem"
+              type="organizations"
+              {...(hiring ? { badge: { color: '#DC31AC', image: '/icons/hire.svg' } } : {})}
+            />
           </div>
         </div>
         <div className={css.menu}>
@@ -158,6 +174,7 @@ export const Mobile = (): JSX.Element => {
           {printWhen(userFullNameJSX, !!organization?.first_name || !!organization?.last_name)}
           {printWhen(usernameJSX, !!organization?.username)}
         </Divider>
+        {printWhen(hiringJSX, profileBelongToCurrentUser)}
         {printWhen(bioJSX, !!organization.bio)}
         <Divider>
           <div className={css.userConnections}>
@@ -176,7 +193,7 @@ export const Mobile = (): JSX.Element => {
         </Divider>
         {printWhen(missionJSX, !!organization.mission)}
         {printWhen(cultureJSX, !!organization.culture)}
-        {printWhen(skillsJSX, organization.skills && organization.skills.length > 0)}
+        {printWhen(skillsJSX, organization.skills && organization.skills?.length > 0)}
         {jobsJSX}
       </div>
       <ConnectModal
