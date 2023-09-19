@@ -16,46 +16,37 @@ import {
 } from './auth.types';
 
 export async function login(payload: LoginReq): Promise<AuthRes> {
-  const { data } = await post('auth/login', payload);
-  return data as AuthRes;
+  return (await post<AuthRes>('auth/login', payload)).data;
 }
 
 export async function refresh(payload: RefreshReq): Promise<AuthRes> {
-  const { data } = await post('auth/refresh', payload);
-  return data as AuthRes;
+  return (await post<AuthRes>('auth/refresh', payload)).data;
 }
 
 export async function preRegister(payload: PreRegisterReq): Promise<PreRegisterRes> {
-  const { data } = await post('auth/preregister', payload);
-  return data as PreRegisterRes;
+  return (await post<PreRegisterRes>('auth/preregister', payload)).data;
 }
 
 export async function register(payload: RegisterReq): Promise<SuccessRes> {
-  const { data } = await post('auth/register', payload);
-  return data as SuccessRes;
+  return (await post<SuccessRes>('auth/register', payload)).data;
 }
 
 export async function otp(payload: OtpReq): Promise<SuccessRes> {
-  const { data } = await post('auth/otp', payload);
-  return data as SuccessRes;
+  return (await post<SuccessRes>('auth/otp', payload)).data;
 }
 
 export async function resendVerifyCode(payload: OtpReq): Promise<SuccessRes> {
-  const { data } = await post('auth/resend-verify-code', payload);
-  return data as SuccessRes;
+  return (await post<SuccessRes>('auth/resend-verify-code', payload)).data;
 }
 
 export async function otpConfirm(payload: OtpConfirmReq): Promise<AuthRes> {
-  const { data } = await get('auth/otp/confirm', { params: payload });
-  return data as AuthRes;
+  return (await get<AuthRes>('auth/otp/confirm', { params: payload })).data;
 }
 
 export async function stripeLink(payload: AuthStripeReq): Promise<StripeLinkRes> {
-  const { data } = await get('auth/stripe/connect-link', { params: payload });
-  return data as StripeLinkRes;
+  return (await get<StripeLinkRes>('auth/stripe/connect-link', { params: payload })).data;
 }
 
 export async function stripeProfile(payload: SrtipeProfileReq): Promise<StripeProfileRes> {
-  const { data } = await get('auth/stripe/profile', { params: payload });
-  return data as StripeProfileRes;
+  return (await get<StripeProfileRes>('auth/stripe/profile', { params: payload })).data;
 }

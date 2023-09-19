@@ -14,92 +14,73 @@ import {
 } from './users.types';
 
 export async function profile(): Promise<User> {
-  const { data } = await get('user/profile');
-  return data as User;
+  return (await get<User>('user/profile')).data;
 }
 
 export async function otherProfile(id: string): Promise<User> {
-  const { data } = await get(`user/${id}/profile`);
-  return data as User;
+  return (await get<User>(`user/${id}/profile`)).data;
 }
 
 export async function otherProfileByUsername(username: string): Promise<User> {
-  const { data } = await get(`user/by-username/${username}/profile`);
-  return data as User;
+  return (await get<User>(`user/by-username/${username}/profile`)).data;
 }
 
 export async function report(identityId: string, payload: ReportReq): Promise<SuccessRes> {
-  const { data } = await post(`user/${identityId}/report`, payload);
-  return data as SuccessRes;
+  return (await post<SuccessRes>(`user/${identityId}/report`, payload)).data;
 }
 
 export async function recommend(): Promise<User[]> {
-  const { data } = await get('user/recommend');
-  return data as User[];
+  return (await get<User[]>('user/recommend')).data;
 }
 
 export async function updateProfile(payload: UpdateProfileReq): Promise<User> {
-  const { data } = await post('user/update/profile', payload);
-  return data as User;
+  return (await post<User>('user/update/profile', payload)).data;
 }
 
 export async function updateWallet(payload: UpdateWalletReq): Promise<User> {
-  const { data } = await post('user/update/wallet', payload);
-  return data as User;
+  return (await post<User>('user/update/wallet', payload)).data;
 }
 
-export async function openToWork(): Promise<Boolean> {
-  const { data } = await post('user/open-to-work', {});
-  return data.open_to_work as boolean;
+export async function openToWork(): Promise<boolean> {
+  return (await post<{ open_to_work: boolean }>('user/open-to-work', {})).data.open_to_work;
 }
 
-export async function openToVolunteer(): Promise<Boolean> {
-  const { data } = await post('user/open-to-volunteer', {});
-  return data.open_to_volunteer as boolean;
+export async function openToVolunteer(): Promise<boolean> {
+  return (await post<{ open_to_volunteer: boolean }>('user/open-to-volunteer', {})).data.open_to_volunteer;
 }
 
 export async function addLanguage(payload: LanguageReq): Promise<Language> {
-  const { data } = await post('user/languages', payload);
-  return data as Language;
+  return (await post<Language>('user/languages', payload)).data;
 }
 
 export async function updateLanguage(id: string, payload: LanguageReq): Promise<Language> {
-  const { data } = await post(`user/languages/update/${id}`, payload);
-  return data as Language;
+  return (await post<Language>(`user/languages/update/${id}`, payload)).data;
 }
 
 export async function removeLanguage(id: string): Promise<SuccessRes> {
-  const { data } = await post(`user/languages/remove/${id}`, {});
-  return data as SuccessRes;
+  return (await post<SuccessRes>(`user/languages/remove/${id}`, {})).data;
 }
 
 export async function addExperiences(payload: LanguageReq): Promise<Experience> {
-  const { data } = await post('user/experiences', payload);
-  return data as Experience;
+  return (await post<Experience>('user/experiences', payload)).data;
 }
 
 export async function updateExperiences(id: string, payload: LanguageReq): Promise<Experience> {
-  const { data } = await post(`user/experiences/update/${id}`, payload);
-  return data as Experience;
+  return (await post<Experience>(`user/experiences/update/${id}`, payload)).data;
 }
 
 export async function removeExperiences(id: string): Promise<SuccessRes> {
-  const { data } = await post(`user/experiences/remove/${id}`, {});
-  return data as SuccessRes;
+  return (await post<SuccessRes>(`user/experiences/remove/${id}`, {})).data;
 }
 
-export async function chagePassword(payload: ChangePasswordReq): Promise<SuccessRes> {
-  const { data } = await post(`user/change-password`, payload);
-  return data as SuccessRes;
+export async function changePassword(payload: ChangePasswordReq): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`user/change-password`, payload)).data;
 }
 
-// Note: Need to OTP first then API will alow to use this method
-export async function chagePasswordDirect(payload: ChangePasswordDirectReq): Promise<SuccessRes> {
-  const { data } = await post(`user/change-password-direct`, payload);
-  return data as SuccessRes;
+export async function changePasswordDirect(payload: ChangePasswordDirectReq): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`user/change-password-direct`, payload)).data;
 }
 
 export async function selfDelete(payload: DeleteUserReq): Promise<SuccessRes> {
-  const { data } = await post(`user/delete`, payload);
-  return data as SuccessRes;
+  return (await post<SuccessRes>(`user/delete`, payload)).data;
 }
