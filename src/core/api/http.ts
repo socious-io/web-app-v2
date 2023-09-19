@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosError } from 'axios';
+import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { config } from 'src/config';
 import { dialog } from 'src/core/dialog/dialog';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
@@ -22,11 +22,11 @@ export async function getAuthHeaders(): Promise<{ Authorization: string; Current
   };
 }
 
-export async function post(uri: string, payload: unknown, config?: AxiosRequestConfig<unknown>) {
-  return http.post(uri, payload, config);
+export async function post<T>(uri: string, payload: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  return axios.post<T>(uri, payload, config);
 }
 
-export async function get(uri: string, config?: AxiosRequestConfig<unknown>) {
+export async function get<T>(uri: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
   if (!config) config = {};
 
   config.params = {
@@ -34,7 +34,7 @@ export async function get(uri: string, config?: AxiosRequestConfig<unknown>) {
     ...config?.params,
   };
 
-  return http.get(uri, config);
+  return axios.get<T>(uri, config);
 }
 
 export type ErrorSection = 'AUTH' | 'FORGET_PASSWORD';
