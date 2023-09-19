@@ -58,11 +58,11 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile>
-      <Header title="Escrow payment" onBack={() => history.back()} />
+      <Header title={applicant_username} onBack={() => history.back()} />
       <>
         {printWhen(offeredMessageBoxJSX, status === 'APPROVED')}
         {printWhen(acceptedMessageBoxJSX, status === 'HIRED')}
-        <div className={css['container']}>
+        <div className={css.container}>
           <JobDescrioptionCard
             job_title={job_category?.name || ''}
             start_date={start_date}
@@ -96,15 +96,18 @@ export const Mobile = (): JSX.Element => {
             />,
             project.payment_scheme === 'HOURLY'
           )}
-          <div className={css['container__spacer']}>
-            <PaymentSummaryCard title="Payment summary" unit={unit} list={checkList} total_price={total_price} />
-          </div>
+          {printWhen(
+            <div className={css.container__spacer}>
+              <PaymentSummaryCard title="Payment summary" unit={unit} list={checkList} total_price={total_price} />
+            </div>,
+            project.payment_scheme === 'FIXED'
+          )}
           <TopUpSummaryCard
             title="Payment summary"
             unit={unit}
             weekly_limit={weekly_limit}
             isPaidCrypto={isPaidCrypto}
-            offer_rate={total_price}
+            offer_rate={assignment_total}
           />
           <PaymentMethods
             crypto_method={

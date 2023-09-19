@@ -101,7 +101,10 @@ export const Desktop: React.FC = () => {
             />,
             project.payment_scheme === 'HOURLY'
           )}
-          <PaymentSummaryCard title="Payment summary" unit={unit} list={checkList} total_price={total_price} />
+          {printWhen(
+            <PaymentSummaryCard title="Payment summary" unit={unit} list={checkList} total_price={total_price} />,
+            project.payment_scheme === 'FIXED'
+          )}
         </div>
         <div className={css.container}>
           <TopUpSummaryCard
@@ -109,7 +112,7 @@ export const Desktop: React.FC = () => {
             unit={unit}
             weekly_limit={weekly_limit}
             isPaidCrypto={isPaidCrypto}
-            offer_rate={total_price}
+            offer_rate={assignment_total}
           />
           <PaymentMethods
             crypto_method={
