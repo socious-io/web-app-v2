@@ -10,7 +10,7 @@ export const HourlySubmissionsCard: React.FC<HourlySubmissionsCardProps> = ({
   submissions,
 }) => {
   const createList = submissions.map((item: any) => (
-    <div className={css['job__info']} key={item.mission}>
+    <div className={css.job__info} key={item.mission}>
       {item.mission} : {item.hours}
     </div>
   ));
@@ -23,7 +23,7 @@ export const HourlySubmissionsCard: React.FC<HourlySubmissionsCardProps> = ({
         <div>
           {start_date} - {end_date}
         </div>
-        <div className={css.submissions}>
+        <div className={submissions.length ? css.submissions : css.nosubmissions}>
           {submissions.length ? <Categories list={createList} /> : 'No submissions yet'}
         </div>
       </div>

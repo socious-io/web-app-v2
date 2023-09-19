@@ -13,6 +13,10 @@
     margin: 24px 0;
   }
 
+  &__period {
+    font-size: var(--font-size-s2);
+  }
+
   &__footer {
     background-color: var(--color-off-white-01);
     border-radius: 8px;
@@ -22,11 +26,12 @@
 
   &__total {
     border-top: 1px solid var(--border-gray-01);
-    font-size: 14px;
+    font-size: var(--font-size-s);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem 0;
+    margin: 0 0.5rem;
   }
 
   &__price {
@@ -37,9 +42,16 @@
 
   &__info {
     color: var(--color-gray-light-1);
-    font-size: 14px;
+    font-size: var(--font-size-s);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+    // margin: 0 0.5rem;
+
+    .icon {
+      margin-left: 5px;
+      width: 1.2rem;
+      height: 1.2rem;
+    }
   }
 }

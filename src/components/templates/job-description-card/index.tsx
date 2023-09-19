@@ -22,7 +22,7 @@ export const JobDescrioptionCard: React.FC<JobDescriptionCardProps> = ({
 }) => {
   const createList = info_list.map((info) => (
     <div className={css.job__info} key={info.name}>
-      <img src={`/icons/${info.icon}.svg`} />
+      <img className={css.icon} src={`/icons/${info.icon}.svg`} />
       {info.name}
     </div>
   ));
@@ -50,7 +50,7 @@ export const JobDescrioptionCard: React.FC<JobDescriptionCardProps> = ({
       <div className={css.job__profile}>
         <ProfileView img={img} type={type} name={name} username={username} location={location} />
       </div>
-      <div>
+      <div className={css.job__period}>
         {start_date} - {end_date}
       </div>
       <div className={css.job__footer}>

@@ -11,7 +11,9 @@ import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
 import { usePaymentShared } from '../payment.shared';
 import css from './desktop.module.scss';
-import {HourlySubmissionsCard} from "../../../components/templates/hourly-submissions-card";
+import { HourlySubmissionsCard } from '../../../components/templates/hourly-submissions-card';
+import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
+import { TopUpSummaryCard } from 'src/components/templates/top-up-summary-card';
 
 export const Desktop: React.FC = () => {
   const {
@@ -31,7 +33,7 @@ export const Desktop: React.FC = () => {
     isDisabledProceedPayment,
     status,
   } = usePaymentShared();
-  const { job_category, recipient, project, total_hours,weekly_limit } = offer || {};
+  const { job_category, recipient, project, total_hours, weekly_limit } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const { isLoggedIn } = useAuth();
@@ -42,7 +44,7 @@ export const Desktop: React.FC = () => {
       <div>
         <div className={css.congratulationsText}>Payment required</div>
         <div className={css.congratulationsText}>
-          {applicant_name} has accepted your offer. Proceed to payment to start this mission.
+          {applicant_name} has accepted your offer. Proceed to payment to start this job.
         </div>
       </div>
     </div>
@@ -72,8 +74,15 @@ export const Desktop: React.FC = () => {
             end_date="Present"
             payment_scheme={project.payment_scheme}
             info_list={[
-              { icon: 'suitcase', name: `${project?.payment_scheme}` || '' },
-              { icon: 'hourglass', name: project.payment_scheme === 'FIXED'? `${total_hours} hrs`:`${weekly_limit} hrs / week` },
+              {
+                icon: 'suitcase',
+                name: `Paid - ${translatePaymentTerms(project.payment_scheme)}`,
+              },
+
+              {
+                icon: 'clock',
+                name: project.payment_scheme === 'FIXED' ? `${total_hours} hrs` : `Max ${weekly_limit} hrs / week`,
+              },
             ]}
             img={(avatar as string) || ''}
             type={recipient?.type || 'users'}
@@ -83,18 +92,25 @@ export const Desktop: React.FC = () => {
             total_mission={assignment_total}
             unit={unit}
           />
-            {printWhen(<HourlySubmissionsCard title="Hourly Submissions" start_date={start_date} end_date="Present" submissions={[]}/>,project.payment_scheme === "HOURLY")}
-          <PaymentSummaryCard
-            title="Payment summary"
-            unit={unit}
-            list={[
-              { title: 'Total assignement', price: assignment_total },
-              { title: ' Socious commision', price: commision },
-            ]}
-            total_price={total_price}
-          />
+          {printWhen(
+            <HourlySubmissionsCard
+              title="Hours submissions"
+              start_date={start_date}
+              end_date="Present"
+              submissions={[]}
+            />,
+            project.payment_scheme === 'HOURLY'
+          )}
+          <PaymentSummaryCard title="Payment summary" unit={unit} list={checkList} total_price={total_price} />
         </div>
         <div className={css.container}>
+          <TopUpSummaryCard
+            title="Payment summary"
+            unit={unit}
+            weekly_limit={weekly_limit}
+            isPaidCrypto={isPaidCrypto}
+            offer_rate={total_price}
+          />
           <PaymentMethods
             crypto_method={
               isPaidCrypto ? (

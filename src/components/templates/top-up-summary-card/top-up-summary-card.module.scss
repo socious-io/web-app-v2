@@ -1,0 +1,47 @@
+.payment {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  font-size: var(--font-size-s2);
+
+  &__title {
+    font-weight: 600;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-gray-04);
+    font-size: var(--font-size-m);
+  }
+
+  &__input {
+    margin: 24px 0px;
+
+    &__name {
+      margin-bottom: 6px;
+    }
+    &__instruction {
+      margin-top: 6px;
+    }
+
+    &__incorrect {
+      color: var(--color-error-01);
+    }
+  }
+
+  &__detail {
+    padding: 16px 0;
+  }
+
+  &__total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-gray-04);
+  }
+
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--font-size-l);
+  }
+}

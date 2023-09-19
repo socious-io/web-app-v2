@@ -305,16 +305,15 @@ export type MissionsResp = Pagination<
       released_at: string;
       created_at: string;
     };
-    submitted_works:
-        [
-            {
-              id:string,
-              created_at:string,
-              start_at:string,
-              end_at:string,
-              status:string,
-              total_hours:number,
-            }
+    submitted_works: [
+      {
+        id: string;
+        created_at: string;
+        start_at: string;
+        end_at: string;
+        status: string;
+        total_hours: number;
+      }
     ];
     amount: number;
     total: number;
@@ -419,7 +418,7 @@ export type OfferPayload = {
   payment_mode: string;
   crypto_currency_address?: string;
   weekly_limit?: string;
-  paid_hourly_rate?: number;
+  offer_rate?: number;
   currency?: string;
 };
 
