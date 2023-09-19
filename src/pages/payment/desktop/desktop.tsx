@@ -17,7 +17,7 @@ export const Desktop: React.FC = () => {
     offer,
     assignment_total,
     unit,
-    commision,
+    checkList,
     total_price,
     start_date,
     cards,
@@ -81,15 +81,7 @@ export const Desktop: React.FC = () => {
             total_mission={assignment_total}
             unit={unit}
           />
-          <PaymentSummaryCard
-            title="Payment summary"
-            unit={unit}
-            list={[
-              { title: 'Total assignement', price: assignment_total },
-              { title: ' Socious commision', price: commision },
-            ]}
-            total_price={total_price}
-          />
+          <PaymentSummaryCard title="Payment summary" unit={unit} list={checkList} total_price={total_price} />
         </div>
         <div className={css.container}>
           <PaymentMethods

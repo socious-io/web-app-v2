@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import css from './WebMenu.module.scss';
+import css from './webMenu.module.scss';
 import { Search } from 'src/components/atoms/search/search';
 import { Menu, getAvatar, menuList } from './webMenu.services';
 import { useLocation, useNavigate } from '@tanstack/react-location';
