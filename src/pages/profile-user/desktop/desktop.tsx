@@ -34,6 +34,7 @@ export const Desktop = (): JSX.Element => {
     connectStatus,
     showMessageIcon,
     onMessage,
+    missions,
     openToWork,
     onOpenToWork,
     openToVolunteer,
@@ -42,7 +43,6 @@ export const Desktop = (): JSX.Element => {
   const { isLoggedIn } = useAuth();
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
-
   const cityLinkJSX = (
     <div className={css.contactItem}>
       <img height={22} src="/icons/pin-green.svg" />
@@ -94,7 +94,29 @@ export const Desktop = (): JSX.Element => {
       <div className={css.mission}>{user.mission}</div>
     </Divider>
   );
-
+  const expriencesJSX = (
+    <Divider title="Experiences">
+      {missions.map((mission) => (
+        <div className={css.exprience}>
+          <div className={css.organizationImageContainer}>
+            <img
+              className={css.exprinceOrgImage}
+              alt="organization"
+              src={mission.organizationImage ? mission.organizationImage : '/icons/organization.svg'}
+            />
+          </div>
+          <div>
+            <div className={css.exprienceDetails}>
+              <div className={css.exprienceTitle}>{mission.organizationName}</div>
+              <div className={css.exprienceDetail}>{mission.role}</div>
+              <div className={css.exprienceDetail}>{`${mission.dateFrom} - ${mission.dateTo}`}</div>
+              <div className={css.exprienceDetail}>{mission.location}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </Divider>
+  );
   const cultureJSX = (
     <Divider title="Culture">
       <div className={css.culture}>{user.culture}</div>
@@ -115,15 +137,19 @@ export const Desktop = (): JSX.Element => {
 
   const openToWorkToggleJSX = (
     <Divider>
-      <label>Open to Work</label>
-      <Toggle name="OpenToWork" checked={openToWork} onChange={onOpenToWork} />
+      <div className={css.profileStatus}>
+        <label>Open to Work</label>
+        <Toggle name="OpenToWork" checked={openToWork} onChange={onOpenToWork} />
+      </div>
     </Divider>
   );
 
   const openToVolunteerToggleJSX = (
     <Divider>
-      <label>Open to volunteer</label>
-      <Toggle name="OpenToVolunteer" checked={openToVolunteer} onChange={onOpenToVolunteer} />
+      <div className={css.profileStatus}>
+        <label>Open to volunteer</label>
+        <Toggle name="OpenToVolunteer" checked={openToVolunteer} onChange={onOpenToVolunteer} />
+      </div>
     </Divider>
   );
 
@@ -165,7 +191,14 @@ export const Desktop = (): JSX.Element => {
           <div className={css.header}>
             <div style={{ backgroundImage: `url(${user.cover_image?.url})` }} className={css.cover}>
               <div className={css.avatarContainer}>
-                <Avatar img={avatarImage} size="8rem" type="users" />
+                <Avatar
+                  img={avatarImage}
+                  size="8rem"
+                  type="users"
+                  {...(openToWork || openToVolunteer
+                    ? { badge: { color: '#004a46', image: '/icons/available.svg' } }
+                    : {})}
+                />
               </div>
             </div>
             <div className={css.menu}>
@@ -204,6 +237,7 @@ export const Desktop = (): JSX.Element => {
                 <div>{user.followers} Followers</div>
               </div>
             </Divider>
+            {printWhen(expriencesJSX, missions.length > 0)}
             <Divider title="Social Causes">
               <CategoriesClickable list={socialCauses} />
             </Divider>
