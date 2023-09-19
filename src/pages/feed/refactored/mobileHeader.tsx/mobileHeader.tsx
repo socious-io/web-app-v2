@@ -1,5 +1,4 @@
 import { useNavigate } from '@tanstack/react-location';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { IdentityReq } from 'src/core/types';
