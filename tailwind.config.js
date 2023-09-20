@@ -6,10 +6,10 @@ export default {
       colors: {
         'primary-01': '#004a46',
         'off-white-01': '#f8f8f8',
-        'gray-01': 'rgba(128, 130, 137, 1)',
+        'gray-01': '#808289',
         'gray-02': '#a2a6b6',
         'gray-03': '#bec0c7',
-        'gray-04': 'rgba(228, 230, 237, 1)',
+        'gray-04': '#e4e6ed',
         'border-gray-01': '#e2e2e2',
       },
       spacing: {

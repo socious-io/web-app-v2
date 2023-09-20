@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
 import css from './touchMenu.module.scss';
-import { Menu, menuList } from './touchMenu.services';
+import { Menu, menuList } from '../menu.services';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 const TouchMenu = () => {
