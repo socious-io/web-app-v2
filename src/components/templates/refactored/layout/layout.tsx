@@ -1,7 +1,6 @@
 import { Outlet } from '@tanstack/react-location';
-import React from 'react';
-import TouchMenu from '../touchMenu/touchMenu';
-import WebMenu from '../webMenu/webMenu';
+import TouchMenu from '../menu/touchMenu/touchMenu';
+import WebMenu from '../menu/webMenu/webMenu';
 
 const Layout = () => {
   return (
