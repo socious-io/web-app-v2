@@ -9,9 +9,9 @@ import { Card } from '../../../components/atoms/card/card';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { DialogCreate } from '../dialog-create/dialog-create';
-import { getFeedList, submitPost, uploadImage } from '../mobile/mobile.service';
 import css from './dialog-review.module.scss';
 import { DialogReviewProps } from './dialog-review.types';
+import { getFeedList, submitPost, uploadImage } from '../refactored/feed.service';
 
 export const DialogReview = (props: DialogReviewProps) => {
   const [openDialog, setOpenDialog] = useState(false);
