@@ -1,10 +1,11 @@
-import { LanguageCode } from '../types';
+import { LanguageCode, PaginateRes } from '../types';
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
   comment?: string;
   blocked: boolean;
 }
+
 export interface UpdateProfileReq {
   first_name: string;
   last_name: string;
@@ -60,6 +61,10 @@ export interface DeleteUserReq {
 }
 
 // -------------------- Responses ----------------------
+
+export interface UsersRes extends PaginateRes {
+  items: User[];
+}
 
 export interface User {
   id: string;

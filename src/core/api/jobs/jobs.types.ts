@@ -1,3 +1,7 @@
+import { Currency } from 'iso-country-currency';
+import { Organization } from '../organizations/organizations.types';
+import { Payment } from '../payments/payments.types';
+import { Identity } from '../site/site.type';
 import {
   ProjectLengthType,
   ProjectPaymentSchemeType,
@@ -7,7 +11,10 @@ import {
   ProjectType,
   SocialCauses,
   PaginateRes,
+  ApplicantStatus,
+  MissionStatus,
 } from '../types';
+import { User } from '../users/users.types';
 
 // --------------- Requests -----------------------
 
@@ -85,4 +92,94 @@ export interface Category {
   hourly_wage_dollars: number;
   created_at: Date;
   updated_at: Date;
+}
+
+export interface OffersRes {
+  items: Offer[];
+}
+
+export interface MissionsRes {
+  items: Mission[];
+}
+
+export interface ApplicantsRes {
+  items: Applicant[];
+}
+
+export interface Applicant {
+  id: string;
+  cover_letter: string;
+  status: ApplicantStatus;
+  cv_link?: string;
+  cv_name?: string;
+  share_contact_info?: boolean;
+  attachment?: string;
+
+  user: User;
+  project: Job;
+  organization: Organization;
+
+  created_at: Date;
+  updated_at: Date;
+  closed_at?: Date;
+}
+
+export interface Offer {
+  id: string;
+  assignment_total: number;
+  offer_rate?: number;
+  offer_message: string;
+  status: string;
+  due_date?: Date;
+  weekly_limit?: number;
+  total_hours: number;
+  payment_mode: string;
+  crypto_currency_address?: string;
+  currency: string;
+  job_category: Category;
+  project: Job;
+  offerer: Identity;
+  recipient: Identity;
+  organization: Organization;
+  applicant: Applicant;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface Mission {
+  id: string;
+  status: MissionStatus;
+  job_category: Category;
+  applicant: Applicant;
+  project: Job;
+  assignee: Identity;
+  assigner: Identity;
+  escrow: Escrow;
+  payment: Payment;
+  organization: Organization;
+  offer: Offer;
+  user_feedback?: any;
+  org_feedback?: any;
+  submitted_works?: any;
+
+  amount: number;
+  fee: number;
+  stripe_fee: number;
+  total: number;
+  payout: number;
+  app_fee: number;
+
+  created_at: Date;
+  complete_at?: Date;
+  updated_at: Date;
+}
+
+export interface Escrow {
+  id: string;
+  amount: number;
+  currency?: Currency;
+  created_at: Date;
+  released_at?: Date;
+  refound_at?: Date;
+  release_id?: string;
 }

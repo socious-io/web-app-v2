@@ -1,7 +1,17 @@
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq } from '../types';
-import { JobCategoriesRes, Job, JobReq, JobsRes, QuestionReq, Question } from './jobs.types';
-import { QuestionsRes } from 'src/core/types';
+import {
+  JobCategoriesRes,
+  Job,
+  JobReq,
+  JobsRes,
+  QuestionReq,
+  Question,
+  OffersRes,
+  MissionsRes,
+  ApplicantsRes,
+} from './jobs.types';
+import { ApplicantResp, QuestionsRes } from 'src/core/types';
 
 export async function jobCategories(): Promise<JobCategoriesRes> {
   return (await get<JobCategoriesRes>('projects/categories')).data;
@@ -13,6 +23,18 @@ export async function jobs(params: PaginateReq): Promise<JobsRes> {
 
 export async function job(id: string): Promise<Job> {
   return (await get<Job>(`projects/${id}`)).data;
+}
+
+export async function jobOffers(id: string, params: PaginateReq): Promise<OffersRes> {
+  return (await get<OffersRes>(`projects/${id}/offers`, { params })).data;
+}
+
+export async function jobMissions(id: string, params: PaginateReq): Promise<MissionsRes> {
+  return (await get<MissionsRes>(`projects/${id}/missions`, { params })).data;
+}
+
+export async function jobApplicants(id: string, params: PaginateReq): Promise<ApplicantsRes> {
+  return (await get<ApplicantsRes>(`projects/${id}/missions`, { params })).data;
 }
 
 export async function createJob(payload: JobReq): Promise<Job> {
