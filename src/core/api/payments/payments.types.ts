@@ -37,6 +37,6 @@ export interface Card extends CardReq {
   created_at: Date;
 }
 
-export interface Payout extends SuccessRes {
+export interface PayoutRes extends SuccessRes {
   transaction_id: string;
 }
