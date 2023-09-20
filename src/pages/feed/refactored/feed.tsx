@@ -12,17 +12,13 @@ import { useAuth } from 'src/hooks/use-auth';
 import { RootState } from 'src/store/store';
 import css from './feed.module.scss';
 import MobileHeader from './mobileHeader.tsx/mobileHeader';
-import { useMatch } from '@tanstack/react-location';
-import { Resolver } from './feed.types';
-import { getFeedList, like, unlike } from './feed.service';
 import { ModalCreate } from '../modal-create';
 import { Dialog } from '@mui/material';
 import { DialogCreate } from '../dialog-create/dialog-create';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { Modal } from 'src/components/templates/modal/modal';
-import { endpoint } from 'src/core/endpoints';
-import { dialog } from 'src/core/dialog/dialog';
 import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
+import { useFeed } from './useFeed';
 
 const Feed = () => {
   const { isLoggedIn } = useAuth();
@@ -31,11 +27,6 @@ const Feed = () => {
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
   const [touchDevice, setTouchDevice] = useState(isTouchDevice());
-  const list = useMatch().ownData as Resolver;
-  const [openDialog, setOpenDialog] = useState(false);
-  const [feedList, setFeedList] = useState(list.items);
-  const [page, setPage] = useState(1);
-  const totalCount = list.total_count;
   const [feed, setFeed] = useState<Feed>();
 
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
@@ -43,6 +34,19 @@ const Feed = () => {
   });
 
   const avatarImg = identity ? identity.meta?.avatar || identity.meta?.image : '';
+
+  const {
+    onMoreClick,
+    onMorePage,
+    onRemoveLike,
+    onLike,
+    feedList,
+    handleClickOpen,
+    setFeedList,
+    handleClose,
+    openDialog,
+    onShowSeeMore,
+  } = useFeed();
 
   const NetworkMenuList = [
     { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
@@ -70,32 +74,6 @@ const Feed = () => {
     },
   ];
 
-  const handleClickOpen = () => {
-    setOpenDialog(true);
-  };
-
-  const handleClose = () => {
-    setOpenDialog(false);
-  };
-
-  const onLike = (id: string) => {
-    const clone = [...feedList];
-    const ref = clone.find((item) => item.id === id) as Feed;
-    ref.liked = true;
-    ref.likes = ref.likes + 1;
-    setFeedList(clone);
-    like(id).then(() => {});
-  };
-
-  const onRemoveLike = (id: string) => {
-    const clone = [...feedList];
-    const ref = clone.find((item) => item.id === id) as Feed;
-    ref.liked = false;
-    ref.likes = ref.likes - 1;
-    setFeedList(clone);
-    unlike(id).then(() => {});
-  };
-
   const showActions = async (feed: Feed) => {
     const name = feed.identity_meta.name;
     if (touchDevice) {
@@ -116,39 +94,9 @@ const Feed = () => {
     }
   };
 
-  const onMoreClick = (index: number, feed: Feed) => {
-    switch (index) {
-      case 0:
-        if (feed?.id) {
-          endpoint.post.posts['{post_id}/report'](feed?.id, { blocked: true, comment: 'comment' }).then(() => {
-            dialog.alert({ title: 'Blocked', message: 'You successfully blocked the feed' });
-          });
-        }
-        break;
-      case 1:
-        if (feed?.id) {
-          endpoint.post.posts['{post_id}/report'](feed?.id, { blocked: false, comment: 'comment' }).then(() => {
-            dialog.alert({ title: 'Report', message: 'You successfully Reported the feed' });
-          });
-        }
-        break;
-    }
-  };
-
   const onClickMoreOption = (index: number) => {
     onMoreClick(index, feed as Feed);
     setOpenMoreBox(false);
-  };
-
-  function onMorePage() {
-    getFeedList({ page: page + 1 }).then((resp) => {
-      setPage((v) => v + 1);
-      setFeedList((list) => [...list, ...resp.items]);
-    });
-  }
-
-  const onShowSeeMore = (length: number): boolean => {
-    return length < totalCount;
   };
 
   return (
