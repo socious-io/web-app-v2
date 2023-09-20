@@ -6,10 +6,10 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { RootState } from 'src/store/store';
 import { printWhen } from 'src/core/utils';
-import { getFeedList, submitPost, uploadImage } from '../mobile/mobile.service';
 import { IdentityReq } from 'src/core/types';
 import { ModalReviewProps } from './modal-review.types';
 import css from './modal-review.module.scss';
+import { getFeedList, submitPost, uploadImage } from '../refactored/feed.service';
 
 export const ModalReview: React.FC<ModalReviewProps> = ({
   open,

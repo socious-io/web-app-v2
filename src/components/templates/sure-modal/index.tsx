@@ -7,11 +7,13 @@ export const SureModal: React.FC<SureModalProps> = ({ open, onClose, modalTexts,
   return (
     <Modal open={open} onClose={onClose} className={css.modal}>
       <>
-        <span className={css.header}>{modalTexts.title}</span>
+        <span className={css.header} style={{ color: modalTexts?.titleColor }}>
+          {modalTexts.title}
+        </span>
         {modalTexts.body}
         <div className={css.buttons}>
           <Button color="blue" onClick={onDone}>
-           {modalTexts.confirmButton}
+            {modalTexts.confirmButton}
           </Button>
           <Button color="white" onClick={onClose}>
             {modalTexts.cancleButton}
