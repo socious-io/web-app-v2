@@ -6,8 +6,9 @@ import { CategoriesClickable } from 'src/components/atoms/categories-clickable/c
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { printWhen } from 'src/core/utils';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { OrganizationListProps } from './organization-list.types';
 
-export const OrganizationList = (props) => {
+export const OrganizationList = (props: OrganizationListProps) => {
   const { data, onMorePageClick, showMorePage, onClick, ...rest } = props;
 
   const seeMoreJSX = (

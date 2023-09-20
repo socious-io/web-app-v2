@@ -19,7 +19,6 @@ export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element 
   }
 
   function onSubmit() {
-    console.log(socialCausesToCategoryAdaptor());
     const selectedCauses = socialCausesToCategoryAdaptor().filter((cause) => selected.includes(cause.value));
     props.onSubmit(selectedCauses);
     props.onClose();

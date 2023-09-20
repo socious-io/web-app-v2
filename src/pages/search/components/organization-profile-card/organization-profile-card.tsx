@@ -9,7 +9,6 @@ import { Button } from 'src/components/atoms/button/button';
 import { useNavigate } from '@tanstack/react-location';
 
 const OrganizationProfileCard = ({ organization }) => {
-  console.log('details', organization);
   const navigate = useNavigate();
 
   const bioJSX = (
@@ -35,12 +34,6 @@ const OrganizationProfileCard = ({ organization }) => {
       <div className={css.culture}>{organization.culture}</div>
     </Divider>
   );
-
-//   const skillsJSX = (
-//     <Divider title="Skills">
-//       <CategoriesClickable list={skills} />
-//     </Divider>
-//   );
 
   const websiteLinkJSX = (
     <div className={css.contactItem}>
@@ -72,24 +65,6 @@ const OrganizationProfileCard = ({ organization }) => {
     </div>
   );
 
-  //   const cityLinkJSX = (
-  //     <div className={css.contactItem}>
-  //       <img height={22} src="/icons/pin-green.svg" />
-  //       <div className={css.contactData}>{address}</div>
-  //     </div>
-  //   );
-
-  //   const connectJSX = (
-  //     <Button
-  //       width="8.5rem"
-  //       onClick={() => setOpenConnectModal(true)}
-  //       disabled={connectStatus === 'PENDING'}
-  //       color={connectStatus === 'PENDING' ? 'white' : 'blue'}
-  //     >
-  //       {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
-  //     </Button>
-  //   );
-
   const messageJSX = (
     <div
       className={css.message}
@@ -112,12 +87,7 @@ const OrganizationProfileCard = ({ organization }) => {
             </div>
           </div>
           <div className={css.menu}>
-            <div className={css.btnContainer}>
-              {/* {printWhen(messageJSX, !profileBelongToCurrentUser && showMessageIcon())}
-              {printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}
-              {printWhen(editButtonJSX, profileBelongToCurrentUser)} */}
-              {/* {printWhen(<ThreeDotsButton onClick={() => showActions(user.id)} />, !profileBelongToCurrentUser)} */}
-            </div>
+            <div className={css.btnContainer}></div>
           </div>
         </div>
         <div>
@@ -125,7 +95,6 @@ const OrganizationProfileCard = ({ organization }) => {
             {printWhen(orgNameJSX, !!organization?.name)}
             {printWhen(userFullNameJSX, !!organization?.first_name || !!organization?.last_name)}
             {printWhen(usernameJSX, !!organization?.username)}
-            {/* <div>{printWhen(hiringJSX, profileBelongToCurrentUser)}</div> */}
           </Divider>
           {printWhen(bioJSX, !!organization.bio)}
           <Divider>
@@ -134,18 +103,14 @@ const OrganizationProfileCard = ({ organization }) => {
               <div>{organization.followers} Followers</div>
             </div>
           </Divider>
-          {/* <Divider title="Social Causes">
-            <CategoriesClickable list={socialCauses} />
-          </Divider> */}
+
           <Divider title="Contact">
             {printWhen(contactLinkJSX, !!organization.mobile_country_code)}
             {printWhen(emailLinkJSX, !!organization.email)}
             {printWhen(websiteLinkJSX, !!organization.website)}
-            {/* {printWhen(cityLinkJSX, !!organization.city)} */}
           </Divider>
           {printWhen(missionJSX, !!organization.mission)}
           {printWhen(cultureJSX, !!organization.culture)}
-          {/* {printWhen(skillsJSX, organization.skills && organization.skills.length > 0)} */}
         </div>
       </div>
     </Card>
