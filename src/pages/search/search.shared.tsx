@@ -43,18 +43,16 @@ export const useSearchShared = () => {
   };
 
   const updateList = (newState: PayloadModel, option?: { reset: boolean }) => {
-    console.log('state', newState);
     search(newState).then((resp) => {
       setResult(resp.total_count);
       option?.reset && setList([]);
-      console.log('posts', resp);
       setList((prev) => [...prev, ...resp.items]);
     });
   };
 
   const onMorePageClick = () => {
     navigate({
-      to: `/d/search`,
+      to: `/search`,
       search: (p) => ({ ...p, page: p.page++ }),
       replace: true,
     });
@@ -141,10 +139,8 @@ export const useSearchShared = () => {
     });
   }
   function onLocationChange(country: { label: string; value: string }, city: { label: string; value: string }) {
-    console.log('resutl', city, '3');
     setSelectedCountries([...new Set([...selectedCountries, country])]);
     setSelectedCities([...new Set([...selectedCities, city])]);
-    console.log('selecteds', selectedCities);
     navigate({
       search: (p) => ({
         ...p,

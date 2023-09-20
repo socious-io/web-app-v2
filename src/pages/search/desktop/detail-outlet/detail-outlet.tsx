@@ -65,7 +65,6 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
           break;
         case 'organizations':
           setLoading(true);
-          console.log('props', props);
           const orgDetails = await getOrganizationDetail(props.id.toLowerCase());
           const orgJsx = <OrganizationProfileCard organization={orgDetails} />;
           setContent(orgJsx);

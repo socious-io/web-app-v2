@@ -1,14 +1,14 @@
 import { FeedList } from 'src/components/organisms/feed-list/feed-list';
 import css from './posts-list.module.scss';
-import { useFeedShared } from 'src/pages/feed/feed.shared';
+// import { useFeedShared } from 'src/pages/feed/refactored/feed.service';
 import { printWhen } from 'src/core/utils';
 import { useNavigate } from '@tanstack/react-location';
+import { PostListProps } from './posts-list.types';
 
-export const PostsList = (props) => {
+export const PostsList = (props: PostListProps) => {
   const { list, onMorePageClick, showMorePage } = props;
-  console.log('second list', list);
   const navigate = useNavigate();
-  const { onLike, onRemoveLike } = useFeedShared();
+  // const { onLike, onRemoveLike } = useFeedShared();
   const seeMoreJSX = (
     <div className={css.seeMore} onClick={() => onMorePageClick()}>
       See more
@@ -20,8 +20,8 @@ export const PostsList = (props) => {
       <FeedList
         data={list}
         onMoreClick={(feed) => navigate({ to: `/feeds/${feed.id}` })}
-        onLike={onLike}
-        onRemoveLike={onRemoveLike}
+        onLike={() => {}}
+        onRemoveLike={() => {}}
         onMorePageClick={showMorePage}
         showSeeMore={false}
       />

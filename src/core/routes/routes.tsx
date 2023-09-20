@@ -133,6 +133,17 @@ export const routes: Route[] = [
     ],
   },
   {
+    path: 'search',
+    element: <Layout />,
+    children: [
+      {
+        path: '/',
+        element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),
+        loader: (p) => search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 }),
+      },
+    ],
+  },
+  {
     loader: jobsPageLoader,
     children: [
       {
@@ -410,7 +421,7 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/d/search',
+        path: '/search',
         element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),
         loader: (p) => search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 }),
       },
@@ -610,17 +621,6 @@ export const routes: Route[] = [
                   import('../../pages/chat/contact-list/contact-list.container').then((m) => <m.ContactList />),
               },
             ],
-          },
-          {
-            path: '/d/search',
-            element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),
-            loader: (p) =>
-              search({
-                filter: {},
-                q: p.search.q as string,
-                type: p.search.type,
-                page: 1,
-              }),
           },
           {
             path: 'd/jobs/created/:id/overview',

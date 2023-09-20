@@ -59,10 +59,14 @@ export const Search = () => {
           isMobile ? navigate({ to: `/jobs/${id}` }) : navigate({ search: (p) => ({ ...p, type: 'projects', id }) });
           break;
         case 'users':
-          navigate({ search: (p) => ({ ...p, type: 'users', id }) });
+          isMobile
+            ? navigate({ to: `/profile/users/${id}/view` })
+            : navigate({ search: (p) => ({ ...p, type: 'users', id }) });
           break;
         case 'organizations':
-          navigate({ search: (p) => ({ ...p, type: 'organizations', id }) });
+          isMobile
+            ? navigate({ to: `/profile/organizations/${id}/view` })
+            : navigate({ search: (p) => ({ ...p, type: 'organizations', id }) });
           break;
         case 'posts':
           navigate({ search: (p) => ({ ...p, type: 'posts', id }) });
@@ -72,7 +76,7 @@ export const Search = () => {
   }
   function navigateToSearch(q: string) {
     navigate({
-      to: '/d/search',
+      to: '/search',
       search: (p: any) => {
         const type = p.type ?? 'projects';
         const page = p.page ?? 1;
@@ -98,7 +102,7 @@ export const Search = () => {
   const jobListJSX = (
     <JobList
       showMorePage={result > list.length}
-      onClick={onListItemClick('projects')}
+      onClick={(shortname) => onListItemClick('projects')}
       data={list}
       onMorePageClick={onMorePageClick}
     />
@@ -155,7 +159,7 @@ export const Search = () => {
           title: 'Location',
           list: [...selectedCities, ...selectedCountries],
           onEdit: () => setOpenLocationsModal(true),
-          onRemove: (item: string) => console.log('this is the item', item),
+          onRemove: (item: string) => console.log(item),
         },
       ]}
     />
@@ -233,7 +237,6 @@ export const Search = () => {
       <FiltersModal
         open={showFiltersModal && !openSocialSkillsModal && !openLocationsModal && !openSkillsModal}
         onClose={() => {
-          console.log('close me');
           setShowFiltersModal(false);
         }}
       >

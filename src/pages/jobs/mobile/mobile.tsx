@@ -20,7 +20,7 @@ export const Mobile = (): JSX.Element => {
   }
 
   function onEnter(value: string) {
-    navigate({ to: `/d/search?q=${value}&type=projects&page=1` });
+    navigate({ to: `/search?q=${value}&type=projects&page=1` });
   }
 
   return (

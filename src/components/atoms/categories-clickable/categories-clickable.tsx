@@ -32,7 +32,6 @@ export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Elemen
     const newList = exist ? selectedList.filter((item) => item !== value) : [...selectedList, value];
     return () => {
       setSelectedList(newList);
-      console.log('list', newList);
       onChange?.(newList);
     };
   }
@@ -44,15 +43,19 @@ export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Elemen
 
   return (
     <div style={rest} className={css.container}>
-      {list.map(({ value, label }) => (
-        <div
-          style={{ cursor: clickable ? 'pointer' : 'default' }}
-          onClick={onLabelClick(value)}
-          key={value}
-          className={`${css.item} ${setSelectedStyle(value)}`}
-        >
-          {label}
-        </div>
+      {list?.map(({ value, label }) => (
+        <>
+          {value && (
+            <div
+              style={{ cursor: clickable ? 'pointer' : 'default' }}
+              onClick={onLabelClick(value)}
+              key={value}
+              className={`${css.item} ${setSelectedStyle(value)}`}
+            >
+              {label}
+            </div>
+          )}
+        </>
       ))}
     </div>
   );

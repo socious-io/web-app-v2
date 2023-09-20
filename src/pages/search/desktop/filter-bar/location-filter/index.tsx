@@ -16,7 +16,6 @@ export const LocationFilter = (props: LocationFilterProps): JSX.Element => {
   const [cities, setCities] = useState<DropdownItem[]>([]);
 
   function onSubmit() {
-    console.log('count', selectedCountry, 'city', selectedCity);
     props.onSubmit(selectedCountry, selectedCity);
     props.onClose();
   }
@@ -37,7 +36,6 @@ export const LocationFilter = (props: LocationFilterProps): JSX.Element => {
               list={COUNTRIES}
               value={selectedCountry?.label}
               onValueChange={(option) => {
-                console.log('country', option);
                 setSelectedCountry({ value: option.value as string, label: option.label });
                 updateCityList(option.value as string);
               }}
@@ -50,7 +48,6 @@ export const LocationFilter = (props: LocationFilterProps): JSX.Element => {
             value={selectedCity?.label}
             list={cities}
             onValueChange={(option) => {
-              console.log('city', option);
               setSelectedCity({ value: option.value as string, label: option.label });
             }}
           />
