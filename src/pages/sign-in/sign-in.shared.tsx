@@ -18,6 +18,7 @@ import {
 } from '../../core/pushNotification';
 import { Capacitor } from '@capacitor/core';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { getProfileRequest } from '../sign-up/sign-up-user-onboarding/sign-up-user-onboarding.service';
 
 const addListeners = () => {
   addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
@@ -49,7 +50,6 @@ const saveToken = async (token: string) => {
       },
     });
     localStorage.setItem('fcm', token);
-   
   }
 };
 
@@ -68,10 +68,26 @@ export const useSignInShared = () => {
     const resp = await getIdentities();
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(resp));
-    navigate({ to: path ? path : '/sign-up/user/welcome', replace: true });
+    const selectedIdentity = resp.find((identity) => identity.primary);
+    const userProfile = await getProfileRequest(selectedIdentity?.id);
+    const userLandingPath = checkOnboardingMandatoryFields(userProfile) ? '/sign-up/user/welcome' : '/jobs';
+    navigate({ to: path ? path : userLandingPath, replace: true });
     return loginResp;
   }
-
+  const checkOnboardingMandatoryFields = (profile) => {
+    const mandatoryFields = ['country', 'city', 'social_causes', 'skills'];
+    let shouldDisplayOnboarding = false;
+    mandatoryFields.forEach((field) => {
+      if (
+        profile[field] === null ||
+        profile[field] === '' ||
+        (Array.isArray(profile[field]) && profile[field].length === 0)
+      ) {
+        shouldDisplayOnboarding = true;
+      }
+    });
+    return shouldDisplayOnboarding;
+  };
   async function onLogin() {
     const formValues = getFormValues(form) as LoginPayload;
     endpoint.post.auth
