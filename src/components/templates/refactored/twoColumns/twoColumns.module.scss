@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-off-white-01);
+  min-height: calc(100vh - var(--desktop-nav-height));
+}
+
+.boundaries {
+  width: 61rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.main {
+  width: 100%;
+}

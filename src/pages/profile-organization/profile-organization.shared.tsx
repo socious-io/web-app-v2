@@ -14,7 +14,7 @@ export const useProfileOrganizationShared = () => {
   const navigate = useNavigate();
   const resolver = useMatch().data as Resolver;
   const [organization, setOrganization] = useState<ProfileReq>(resolver.user);
-  const socialCauses = socialCausesToCategory(resolver.user.social_causes);
+  const socialCauses = socialCausesToCategory(resolver.user?.social_causes);
   const skills = skillsToCategory(resolver.user.skills);
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
