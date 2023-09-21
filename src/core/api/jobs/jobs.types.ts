@@ -13,6 +13,8 @@ import {
   PaginateRes,
   ApplicantStatus,
   MissionStatus,
+  PaymentMode,
+  OfferStatus,
 } from '../types';
 import { User } from '../users/users.types';
 
@@ -47,6 +49,38 @@ export interface QuestionReq {
   question: string;
   required?: boolean;
   options?: string[];
+}
+
+export interface ApplyReq {
+  cover_letter: string;
+  cv_link: string;
+  cv_name: string;
+  share_contact_info: boolean;
+  answers?: Answer[];
+}
+
+export interface OfferReq {
+  payment_mode?: PaymentMode;
+  offer_rate?: number;
+  offer_message: string;
+  due_date?: string;
+  assignment_total: number;
+  weekly_limit?: number;
+  total_hours?: number;
+  currency?: Currency;
+  crypto_currency_address?: string;
+}
+
+export interface Answer {
+  id: string;
+  answer: string;
+  selected_option?: number;
+}
+
+export interface HourlyWorkReq {
+  total_hours: number;
+  start_at: Date;
+  end_at: Date;
 }
 
 // --------------- Responses -----------------------
@@ -106,6 +140,11 @@ export interface ApplicantsRes {
   items: Applicant[];
 }
 
+export interface HourlyWork extends HourlyWorkReq {
+  id: string;
+  created_at: Date;
+}
+
 export interface Applicant {
   id: string;
   cover_letter: string;
@@ -124,24 +163,15 @@ export interface Applicant {
   closed_at?: Date;
 }
 
-export interface Offer {
+export interface Offer extends OfferReq {
   id: string;
-  assignment_total: number;
-  offer_rate?: number;
-  offer_message: string;
-  status: string;
-  due_date?: Date;
-  weekly_limit?: number;
-  total_hours: number;
-  payment_mode: string;
-  crypto_currency_address?: string;
-  currency: string;
+  status: OfferStatus;
   job_category: Category;
   project: Job;
   offerer: Identity;
   recipient: Identity;
   organization: Organization;
-  applicant: Applicant;
+  applicant?: Applicant;
   created_at: Date;
   updated_at: Date;
 }
@@ -150,7 +180,7 @@ export interface Mission {
   id: string;
   status: MissionStatus;
   job_category: Category;
-  applicant: Applicant;
+  applicant?: Applicant;
   project: Job;
   assignee: Identity;
   assigner: Identity;
@@ -160,7 +190,7 @@ export interface Mission {
   offer: Offer;
   user_feedback?: any;
   org_feedback?: any;
-  submitted_works?: any;
+  submitted_works?: HourlyWork[];
 
   amount: number;
   fee: number;

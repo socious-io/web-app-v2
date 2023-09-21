@@ -10,6 +10,12 @@ import {
   OffersRes,
   MissionsRes,
   ApplicantsRes,
+  ApplyReq,
+  Applicant,
+  OfferReq,
+  Offer,
+  Mission,
+  HourlyWorkReq,
 } from './jobs.types';
 import { ApplicantResp, QuestionsRes } from 'src/core/types';
 
@@ -63,4 +69,83 @@ export async function updateQuestionJob(jobId: string, questionId: string, paylo
 
 export async function removeQuestionJob(jobId: string, questionId: string, payload: QuestionReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`projects/remove/${jobId}/questions/${questionId}`, payload)).data;
+}
+
+export async function applyJob(jobId: string, payload: ApplyReq): Promise<Applicant> {
+  return (await post<Applicant>(`projects/${jobId}/applicants`, payload)).data;
+}
+
+export async function applicant(id: string): Promise<Applicant> {
+  return (await get<Applicant>(`applicants/${id}`)).data;
+}
+
+export async function getOffer(id: string): Promise<Offer> {
+  return (await get<Offer>(`offers/${id}`)).data;
+}
+
+export async function getMission(id: string): Promise<Mission> {
+  return (await get<Mission>(`missions/${id}`)).data;
+}
+
+export async function offer(jobId: string, userId: string, payload: OfferReq): Promise<Offer> {
+  return (await post<Offer>(`projects/${jobId}/offer/${userId}`, payload)).data;
+}
+
+export async function offerByApplicant(applicantId: string, payload: OfferReq): Promise<Offer> {
+  return (await post<Offer>(`applicants/${applicantId}/offer`, payload)).data;
+}
+
+// talent side
+export async function rejectOffer(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`offers/${id}/withrawn`, {})).data;
+}
+// talent side
+export async function acceptOffer(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`offers/${id}/approve`, {})).data;
+}
+
+// org side
+export async function cancelOffer(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`offers/${id}/cancel`, {})).data;
+}
+// org side
+export async function hireOffer(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`offers/${id}/hire`, {})).data;
+}
+
+// talent side
+export async function cancelMission(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`missions/${id}/cancel`, {})).data;
+}
+// talent side
+export async function completeMission(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`missions/${id}/complete`, {})).data;
+}
+
+// talent side
+export async function submitWork(missionId: string, payload: HourlyWorkReq): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`missions/${missionId}/submitworks`, payload)).data;
+}
+
+// org side
+export async function confirmMission(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`missions/${id}/confirm`, {})).data;
+}
+
+// org side
+export async function confirmWorkMission(missionId: string, workId: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`missions/${missionId}/confirm/${workId}`, {})).data;
+}
+
+// org side
+export async function dropMission(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`missions/${id}/kickout`, {})).data;
+}
+
+export async function feedbackMission(id: string, content?: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`missions/${id}/feedback`, { content })).data;
+}
+
+export async function contestMission(id: string, content?: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`missions/${id}/contest`, { content })).data;
 }
