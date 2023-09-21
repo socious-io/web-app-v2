@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMatch } from '@tanstack/react-location';
 import { useAccount } from 'wagmi';
 import Dapp from 'src/dapp';
 import store from 'src/store/store';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
 import { endpoint } from 'src/core/endpoints';
-import { confirmPayment, getCreditCardInfo } from './payment.service';
+import { confirmPayment, getCreditCardInfo, getMissions } from './payment.service';
 import { dialog } from 'src/core/dialog/dialog';
 import { getMonthName } from 'src/core/time';
 import { Resolver } from './payment.types';
-import { CardInfoResp } from 'src/core/types';
+import { CardInfoResp, MissionsResp } from 'src/core/types';
 import { getFlooredFixed } from 'src/core/numbers';
 
 export const usePaymentShared = () => {
@@ -20,6 +20,8 @@ export const usePaymentShared = () => {
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
   const [cards, setCards] = useState(cardInfo);
   const [status, setStatus] = useState(offer.status);
+  const [missions, setMissions] = useState<MissionsResp>();
+
   const offerId = offer?.id;
   const {
     created_at,
@@ -34,6 +36,7 @@ export const usePaymentShared = () => {
     payment_mode,
   } = offer || {};
   const { wallet_address: contributor } = recipient?.meta || {};
+
   const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
   const isPaidCrypto = project?.payment_type === 'PAID' && payment_mode === 'CRYPTO';
   const isDisabledProceedPayment =
@@ -48,6 +51,10 @@ export const usePaymentShared = () => {
   function setCardsList(list: CardInfoResp) {
     setCards(list);
   }
+
+  useEffect(() => {
+    getMissions({ id: project_id, page: 1 }).then((value) => setMissions(value));
+  }, []);
 
   async function onRemoveCard(id: string) {
     setSelectedCard('');
@@ -144,6 +151,7 @@ export const usePaymentShared = () => {
     onSelectCard,
     onRemoveCard,
     onClickProceedPayment: isPaidCrypto ? proceedCryptoPayment : proceedFiatPayment,
+    missions,
     isDisabledProceedPayment,
     status,
   };

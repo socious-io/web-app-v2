@@ -32,6 +32,7 @@ export const Desktop: React.FC = () => {
     onClickProceedPayment,
     isDisabledProceedPayment,
     status,
+    missions,
   } = usePaymentShared();
   const { job_category, recipient, project, total_hours, weekly_limit } = offer || {};
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
@@ -97,7 +98,7 @@ export const Desktop: React.FC = () => {
               title="Hours submissions"
               start_date={start_date}
               end_date="Present"
-              submissions={[]}
+              submissions={missions?.items[0]?.submitted_works}
             />,
             project.payment_scheme === 'HOURLY'
           )}

@@ -21,14 +21,6 @@
     margin-top: 16px;
     font-size: var(--font-size-s2);
     text-align: center;
-
-    .submissions {
-      margin-top: 1rem;
-    }
-    .nosubmissions {
-      margin-top: 1rem;
-      color: var(--color-gray-01);
-    }
   }
 
   &__total {
@@ -45,12 +37,41 @@
     align-items: center;
     gap: 0.5rem;
   }
-
+  &__period {
+    margin-bottom: 1rem;
+  }
   &__info {
     color: var(--color-gray-light-1);
     font-size: var(--font-size-s2);
+  }
+}
+
+.submissions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+
+  &__nosubmissions {
+    margin-top: 1rem;
+    color: var(--color-gray-01);
+  }
+  &__hours_status {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
+  }
+  &__text {
+    line-height: 18px;
+  }
+  &__icon {
+    width: 18px;
+    height: 18px;
+  }
+  &__view_more {
+    color: var(--color-primary-01);
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: left;
   }
 }

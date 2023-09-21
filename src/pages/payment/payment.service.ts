@@ -12,3 +12,9 @@ export async function getCreditCardInfoById(id: string) {
 export async function confirmPayment(offerId: string, body: unknown) {
   await endpoint.post.payments['{offer_id/confirm}'](offerId, body);
 }
+
+export async function getMissions(payload: { id: string; page: number }): Promise<MissionsResp> {
+  return get(`projects/${payload.id}/missions?limit=100&filter.status=ACTIVE,COMPLETE&page=${payload.page}`).then(
+    ({ data }) => data
+  );
+}
