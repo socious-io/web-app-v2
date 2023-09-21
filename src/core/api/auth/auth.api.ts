@@ -39,14 +39,14 @@ export async function resendVerifyCode(payload: OtpReq): Promise<SuccessRes> {
   return (await post<SuccessRes>('auth/resend-verify-code', payload)).data;
 }
 
-export async function otpConfirm(payload: OtpConfirmReq): Promise<AuthRes> {
-  return (await get<AuthRes>('auth/otp/confirm', { params: payload })).data;
+export async function otpConfirm(params: OtpConfirmReq): Promise<AuthRes> {
+  return (await get<AuthRes>('auth/otp/confirm', { params })).data;
 }
 
-export async function stripeLink(payload: AuthStripeReq): Promise<StripeLinkRes> {
-  return (await get<StripeLinkRes>('auth/stripe/connect-link', { params: payload })).data;
+export async function stripeLink(params: AuthStripeReq): Promise<StripeLinkRes> {
+  return (await get<StripeLinkRes>('auth/stripe/connect-link', { params })).data;
 }
 
-export async function stripeProfile(payload: SrtipeProfileReq): Promise<StripeProfileRes> {
-  return (await get<StripeProfileRes>('auth/stripe/profile', { params: payload })).data;
+export async function stripeProfile(params: SrtipeProfileReq): Promise<StripeProfileRes> {
+  return (await get<StripeProfileRes>('auth/stripe/profile', { params })).data;
 }
