@@ -26,7 +26,7 @@ export const LocationFilter = (props: LocationFilterProps): JSX.Element => {
   }
   return (
     <Modal height="45rem" maxHeight="35vh" width="400px" open={props.open} onClose={props.onClose}>
-      <div style={{ height: '45rem', maxHeight: '35vh' }} className={css.body}>
+      <div className={css.body}>
         <div>
           <div className={css.country}>
             <Dropdown
@@ -41,19 +41,23 @@ export const LocationFilter = (props: LocationFilterProps): JSX.Element => {
               }}
             />
           </div>
-          <Dropdown
-            label="City"
-            placeholder="city"
-            name="city"
-            value={selectedCity?.label}
-            list={cities}
-            onValueChange={(option) => {
-              setSelectedCity({ value: option.value as string, label: option.label });
-            }}
-          />
+          <div className={css.city}>
+            <Dropdown
+              label="City"
+              placeholder="city"
+              name="city"
+              value={selectedCity?.label}
+              list={cities}
+              onValueChange={(option) => {
+                setSelectedCity({ value: option.value as string, label: option.label });
+              }}
+            />
+          </div>
         </div>
         <div className={css.footer}>
-          <Button onClick={onSubmit}>Submit</Button>
+          <Button disabled={!(selectedCity && selectedCountry)} onClick={onSubmit}>
+            Submit
+          </Button>
         </div>
       </div>
     </Modal>

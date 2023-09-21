@@ -36,7 +36,14 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
         return (
           <Card key={user.id} cursor="pointer" onClick={() => props.onClick(user)}>
             <div className={css.header}>
-              <Avatar marginRight="0.5rem" type="users" img={user?.avatar?.url} />
+              <Avatar
+                marginRight="0.5rem"
+                type="users"
+                img={user?.avatar?.url}
+                {...(user.open_to_work
+                  ? { badge: { color: '#004a46', image: '/icons/available.svg', width: '24px', height: '24px' } }
+                  : {})}
+              />
               <div className={css.orgNameAndLocation}>
                 <div>{`${user.first_name} ${user.last_name}`} </div>
                 <div className={css.orgLocation}>{location(user)}</div>
@@ -47,7 +54,15 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
               <Categories marginBottom="1rem" list={getList(user)} />
               <CategoriesClickable marginBottom="1rem" list={socialCausesToCategory(user.social_causes)} />
             </div>
-            <div className={css.footer}>{toRelativeTime(user.created_at)}</div>
+            <div className={css.footer}>
+              <>{toRelativeTime(user.created_at)}</>
+              {user.open_to_volunteer && (
+                <div className={css.volunteer}>
+                  <img src="/icons/volunteer.svg" />
+                  Open to volunteer
+                </div>
+              )}
+            </div>
           </Card>
         );
       })}

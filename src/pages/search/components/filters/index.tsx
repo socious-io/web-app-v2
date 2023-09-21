@@ -13,7 +13,11 @@ export const Filters: React.FC<FiltersProps> = ({ filterdItems, onClear }) => {
         </span>
       </div>
       {filterdItems.map((item) => (
-        <Selectable list={item.list} title={item.title} onEdit={item.onEdit} onRemove={item.onRemove} />
+        <>
+          {item.visible && (
+            <Selectable list={item.list} title={item.title} onEdit={item.onEdit} onRemove={item.onRemove} />
+          )}
+        </>
       ))}
     </div>
   );

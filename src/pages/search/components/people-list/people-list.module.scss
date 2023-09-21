@@ -33,6 +33,9 @@
 .footer {
   font-size: var(--font-size-s2);
   color: var(--color-gray-01);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .seeMore {
@@ -42,4 +45,14 @@
   color: var(--color-primary-01);
   cursor: pointer;
   padding-bottom: 2rem;
+}
+
+.volunteer {
+  font-size: 14px;
+  color: var(--color-primary-blue);
+  display: flex;
+  img {
+    height: 14px;
+    margin-right: 4px;
+  }
 }

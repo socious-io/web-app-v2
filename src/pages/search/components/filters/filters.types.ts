@@ -4,5 +4,6 @@ export interface FiltersProps {
     list: Array<{ label: string; value: string }>;
     onEdit: () => void;
     onRemove: (item: string) => void;
+    visible: boolean;
   }>;
 }

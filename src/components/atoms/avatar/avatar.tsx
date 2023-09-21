@@ -23,7 +23,7 @@ export const Avatar = (props: AvatarProps): JSX.Element => {
     <div onClick={props.onClick} style={style} className={`${css.container} ${customStyle}`}>
       {img && <img className={css.img} src={img} />}
       {badge && (
-        <div className={css.badge} style={{ backgroundColor: badge.color }}>
+        <div className={css.badge} style={{ backgroundColor: badge.color, width: badge.width, height: badge.height }}>
           <img className={css.img} src={badge.image} />
         </div>
       )}

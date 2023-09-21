@@ -17,10 +17,10 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 16px;
+  overflow: hidden;
 }
 
 .footer {
-  border-top: 1px solid var(--border-gray-01);
   padding: 0 1rem;
   display: flex;
   justify-content: center;
@@ -34,4 +34,7 @@
 }
 .country {
   margin: 16px 0;
+}
+.city {
+  margin-bottom: 2rem;
 }
