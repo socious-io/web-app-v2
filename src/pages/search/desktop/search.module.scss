@@ -126,3 +126,19 @@
   align-items: center;
   font-size: var(--font-size-s);
 }
+
+.resetButton {
+  height: 2.25rem;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 50px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--color-primary-blue);
+  &:hover {
+    background-color: rgb(231, 231, 231);
+  }
+}

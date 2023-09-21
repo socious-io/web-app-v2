@@ -22,10 +22,20 @@ export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element 
     const selectedCauses = socialCausesToCategoryAdaptor().filter((cause) => selected.includes(cause.value));
     props.onSubmit(selectedCauses);
     props.onClose();
+    setSelected([]);
   }
 
   return (
-    <Modal height="45rem" maxHeight="70vh" width="400px" open={props.open} onClose={props.onClose}>
+    <Modal
+      height="45rem"
+      maxHeight="70vh"
+      width="400px"
+      open={props.open}
+      onClose={() => {
+        props.onClose();
+        setSelected([]);
+      }}
+    >
       <div style={{ height: '45rem', maxHeight: '70vh' }} className={css.body}>
         <div className={css.searchContainer}>
           <Search onValueChange={onSearch} width={'100%'} placeholder="Search" />

@@ -17,7 +17,8 @@ import { useAlert } from 'src/hooks/use-alert';
 
 export const Hired = (props: HiredProps): JSX.Element => {
   const navigate = useNavigate();
-  const { hiredList, endHiredList, onDone } = props;
+  const { hiredList, endHiredList: endHiredListDefault, onDone } = props;
+  const [endHiredList, setEndHiredList] = useState(endHiredListDefault);
   const { web3 } = Dapp.useWeb3();
   const [process, setProcess] = useState(false);
   const resolver = useMatch().ownData as Loader;
@@ -35,7 +36,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
   async function onUserConfirm(id: string, escrowId?: string) {
     store.dispatch(showSpinner());
     setProcess(true);
-    
+
     if (!web3 && escrowId) {
       dialog.confirm({
         title: 'Connect your wallet',
@@ -61,7 +62,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
     } else {
       endpoint.post.missions['{mission_id}/confirm'](id).then(onDone);
     }
-        
+
     store.dispatch(hideSpinner());
     setProcess(false);
   }
@@ -79,15 +80,26 @@ export const Hired = (props: HiredProps): JSX.Element => {
   }
 
   function onSubmitFeedback() {
+    const updatedEndHiredList = { ...endHiredList };
+    const itemIndex = endHiredList.items.findIndex((item) => item.id === selectedIdFeedback.id);
+
     setSelectedIdFeedback(false);
     if (satisfactory === 'satisfactory') {
-      endpoint.post.missions['{mission_id}/feedback'](selectedIdFeedback.id, { content: feedbackText }).then(() =>
-        setSelectedIdFeedback(false)
-      );
+      endpoint.post.missions['{mission_id}/feedback'](selectedIdFeedback.id, { content: feedbackText }).then(() => {
+        {
+          updatedEndHiredList.items[itemIndex].org_feedback = { content: feedbackText };
+          setEndHiredList({ ...updatedEndHiredList });
+          setSelectedIdFeedback(false);
+        }
+      });
     } else {
-      endpoint.post.missions['{mission_id}/contest'](selectedIdFeedback.id, { content: feedbackText }).then(() =>
-        setSelectedIdFeedback(false)
-      );
+      endpoint.post.missions['{mission_id}/contest'](selectedIdFeedback.id, { content: feedbackText }).then(() => {
+        {
+          updatedEndHiredList.items[itemIndex].org_feedback = { content: feedbackText };
+          setEndHiredList({ ...updatedEndHiredList });
+          setSelectedIdFeedback(false);
+        }
+      });
     }
   }
 

@@ -7,6 +7,13 @@ import { Pagination } from 'src/core/types';
 import { removeEmptyArrays } from 'src/core/utils';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
+type FilterRules = {
+  [entity: string]: {
+    socialCauses: boolean;
+    skills: boolean;
+    location: boolean;
+  };
+};
 export const useSearchShared = () => {
   const resolver = useMatch();
   const data = resolver.ownData as Pagination<unknown>;
@@ -81,9 +88,12 @@ export const useSearchShared = () => {
             const userParam = {
               page: 1,
               type: 'users',
+              q: p.q,
               filter: removeEmptyArrays({
                 skills: p?.filter?.skills || [],
                 social_causes: p?.filter?.causes_tags || [],
+                country: p?.filter?.country || [],
+                city: p?.filter?.city || [],
               }),
             };
 
@@ -92,9 +102,12 @@ export const useSearchShared = () => {
             const jobsParam = {
               page: 1,
               type: 'projects',
+              q: p.q,
               filter: removeEmptyArrays({
                 skills: p?.filter?.skills || [],
                 causes_tags: p?.filter?.social_causes || [],
+                country: p?.filter?.country || [],
+                city: p?.filter?.city || [],
               }),
             };
             return jobsParam;
@@ -102,9 +115,12 @@ export const useSearchShared = () => {
             const organizationsParam = {
               page: 1,
               type: 'organizations',
+              q: p.q,
               filter: removeEmptyArrays({
                 skills: p?.filter?.skills || [],
-                causes_tags: p?.filter?.social_causes || [],
+                social_causes: p?.filter?.social_causes || [],
+                country: p?.filter?.country || [],
+                city: p?.filter?.city || [],
               }),
             };
             return organizationsParam;
@@ -112,8 +128,8 @@ export const useSearchShared = () => {
             const postsParam = {
               page: 1,
               type: 'posts',
+              q: p.q,
               filter: removeEmptyArrays({
-                skills: p?.filter?.skills || [],
                 causes_tags: p?.filter?.social_causes || [],
               }),
             };
@@ -128,7 +144,7 @@ export const useSearchShared = () => {
   }
 
   function onSkillsChange(skills: Array<{ label: string; value: string }>) {
-    setSelectedSkills(skills);
+    setSelectedSkills([...new Set(skills)]);
     navigate({
       search: (p) => ({
         ...p,
@@ -154,17 +170,34 @@ export const useSearchShared = () => {
       replace: true,
     });
   }
+  function onLocationRemove(name: string) {
+    const updatedCities = selectedCities.filter((item) => item.label !== name);
+    const updatedCountries = selectedCountries.filter((item) => item.value !== name);
+    setSelectedCountries(updatedCountries);
+    setSelectedCities(updatedCities);
+    navigate({
+      search: (p) => ({
+        ...p,
+        page: 1,
+        filter: removeEmptyArrays({
+          ...p.filter,
+          country: updatedCountries.map((c) => c.value),
+          city: updatedCities.map((c) => c.value),
+        }),
+      }),
+      replace: true,
+    });
+  }
   function onSocialCausesChange(social_causes: Array<{ label: string; value: string }>) {
-    setSelectedSocialCauses([...selectedSocialCauses, ...social_causes]);
+    setSelectedSocialCauses([...new Set(social_causes)]);
 
     const causesValues = social_causes.map((c) => c.value);
     navigate({
       search: (p) => {
         const projectCauses = { causes_tags: causesValues };
         const usersCauses = { social_causes: causesValues };
-
         function causesFilter() {
-          if (p.type === 'projects') {
+          if (p.type === 'projects' || p.type === 'posts') {
             return projectCauses;
           } else {
             return usersCauses;
@@ -175,6 +208,37 @@ export const useSearchShared = () => {
       },
       replace: true,
     });
+  }
+
+  function shouldShowFilterForEntity(entityName: keyof FilterRules, filterName: keyof FilterRules[string]): boolean {
+    const filterRules: FilterRules = {
+      projects: {
+        socialCauses: true,
+        skills: true,
+        location: true,
+      },
+      users: {
+        socialCauses: true,
+        skills: true,
+        location: true,
+      },
+      posts: {
+        socialCauses: true,
+        skills: false,
+        location: false,
+      },
+      organizations: {
+        socialCauses: true,
+        skills: false,
+        location: true,
+      },
+    };
+
+    if (filterRules.hasOwnProperty(entityName) && filterRules[entityName][filterName] !== undefined) {
+      return filterRules[entityName][filterName];
+    }
+
+    return false;
   }
 
   return {
@@ -200,5 +264,8 @@ export const useSearchShared = () => {
     openSocialSkillsModal,
     setOpenSocialSkillsModal,
     selectedSocialCauses,
+    setList,
+    onLocationRemove,
+    shouldShowFilterForEntity,
   };
 };

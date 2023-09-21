@@ -44,6 +44,9 @@ export const Search = () => {
     openSocialSkillsModal,
     setOpenSocialSkillsModal,
     selectedSocialCauses,
+    setList,
+    onLocationRemove,
+    shouldShowFilterForEntity,
   } = useSearchShared();
 
   const navigate = useNavigate();
@@ -93,7 +96,10 @@ export const Search = () => {
   const peopleListJSX = (
     <PeopleList
       showMorePage={result > list.length}
-      onClick={(people) => onListItemClick('users')(people.username)}
+      onClick={(people) => {
+        onListItemClick('users')(people.username);
+        setShowAllFilters(false);
+      }}
       data={list}
       onMorePageClick={onMorePageClick}
     />
@@ -102,7 +108,10 @@ export const Search = () => {
   const jobListJSX = (
     <JobList
       showMorePage={result > list.length}
-      onClick={(shortname) => onListItemClick('projects')}
+      onClick={(id) => {
+        onListItemClick('projects')(id);
+        setShowAllFilters(false);
+      }}
       data={list}
       onMorePageClick={onMorePageClick}
     />
@@ -117,13 +126,24 @@ export const Search = () => {
       <img className={css.chevronDown} src={icon} />
     </div>
   );
-  const postsListJsx = <PostsList list={list} onMorePageClick={onMorePageClick} showMorePage={result > list.length} />;
+  const postsListJsx = (
+    <PostsList
+      list={list}
+      onMorePageClick={onMorePageClick}
+      showMorePage={result > list.length}
+      onChangeList={(newList) => {
+        setList([...newList]);
+      }}
+    />
+  );
   const organizationListJsx = (
     <OrganizationList
       data={list}
-      onClick={onListItemClick('organizations')}
+      onClick={(id) => {
+        setShowAllFilters(false);
+        onListItemClick('organizations')(id);
+      }}
       showMorePage={result > list.length}
-      data={list}
       onMorePageClick={onMorePageClick}
     />
   );
@@ -147,19 +167,22 @@ export const Search = () => {
           list: selectedSkills,
           onEdit: () => setOpenSkillsModal(true),
           onRemove: (removedItem) => onSkillsChange(selectedSkills.filter((skill) => skill.value !== removedItem)),
+          visible: shouldShowFilterForEntity(location.current.search.type, 'skills'),
         },
         {
           title: 'Social causes',
           list: selectedSocialCauses,
           onEdit: () => setOpenSocialSkillsModal(true),
           onRemove: (removedItem) =>
-            onSkillsChange(selectedSocialCauses.filter((skill) => skill.value !== removedItem)),
+            onSocialCausesChange(selectedSocialCauses.filter((skill) => skill.value !== removedItem)),
+          visible: shouldShowFilterForEntity(location.current.search.type, 'socialCauses'),
         },
         {
           title: 'Location',
           list: [...selectedCities, ...selectedCountries],
           onEdit: () => setOpenLocationsModal(true),
-          onRemove: (item: string) => console.log(item),
+          onRemove: (item: string) => onLocationRemove(item),
+          visible: shouldShowFilterForEntity(location.current.search.type, 'location'),
         },
       ]}
     />
@@ -177,24 +200,27 @@ export const Search = () => {
               menus={menu}
               value={findLabelByValue(location.current.search.type, 'Type')}
             />
-            {filterButtonJSX(
-              'Social causes',
-              () => setOpenSocialSkillsModal(true),
-              '/icons/arrow-down-black.svg',
-              !!selectedSocialCauses.length
-            )}
-            {filterButtonJSX(
-              'Skills',
-              () => setOpenSkillsModal(true),
-              '/icons/arrow-down-black.svg',
-              !!selectedSkills.length
-            )}
-            {filterButtonJSX(
-              'Location',
-              () => setOpenLocationsModal(true),
-              '/icons/arrow-down-black.svg',
-              !!selectedCountries.length
-            )}
+            {shouldShowFilterForEntity(location.current.search.type, 'socialCauses') &&
+              filterButtonJSX(
+                'Social causes',
+                () => setOpenSocialSkillsModal(true),
+                '/icons/arrow-down-black.svg',
+                !!selectedSocialCauses.length
+              )}
+            {shouldShowFilterForEntity(location.current.search.type, 'skills') &&
+              filterButtonJSX(
+                'Skills',
+                () => setOpenSkillsModal(true),
+                '/icons/arrow-down-black.svg',
+                !!selectedSkills.length
+              )}
+            {shouldShowFilterForEntity(location.current.search.type, 'location') &&
+              filterButtonJSX(
+                'Location',
+                () => setOpenLocationsModal(true),
+                '/icons/arrow-down-black.svg',
+                !!selectedCountries.length
+              )}
             {filterButtonJSX(
               'All filters',
               () => {
@@ -203,6 +229,9 @@ export const Search = () => {
               '/icons/filters.svg',
               false
             )}
+            <span className={css.resetButton} onClick={clearFilters}>
+              Reset
+            </span>
           </div>
         </div>
       </div>

@@ -10,12 +10,13 @@
   background-size: 65%;
   background-position: 50%;
   background-repeat: no-repeat;
-  overflow: hidden;
+  // overflow: hidden;
   cursor: pointer;
+  position: relative;
 }
 
 .img {
-  height: 100%;
+  max-width: 100%;
 }
 
 .badge {
@@ -28,5 +29,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px;
+  padding: 6px;
 }
