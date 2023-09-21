@@ -125,13 +125,19 @@ export const routes: Route[] = [
         },
         element: () => import('../../pages/feed/refactored/feedDetails/feedDetails').then((m) => <m.default />),
       },
+    ],
+  },
+  {
+    path: 'jobs',
+    element: <Layout />,
+    children: [
       {
-        path: '/',
-        element: () => import('../../pages/feed/refactored/feed').then((m) => <m.default />),
-        loader: () => getFeedList({ page: 1 }),
+        element: () => import('../../pages/jobs').then((m) => <m.Jobs />),
+        loader: () => getJobList({ page: 1 }),
       },
     ],
   },
+
   {
     loader: jobsPageLoader,
     children: [
@@ -701,11 +707,6 @@ export const routes: Route[] = [
           {
             path: '/jobIndexing',
             element: () => import('../../pages/job-indexing-google/job-indexing-google').then((m) => <m.default />),
-          },
-          {
-            path: '/jobs',
-            element: () => import('../../pages/jobs/jobs.container').then((m) => <m.JobsContainer />),
-            loader: () => getJobList({ page: 1 }),
           },
           {
             path: '/achievements/d',
