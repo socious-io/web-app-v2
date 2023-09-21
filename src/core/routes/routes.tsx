@@ -6,8 +6,6 @@ import { isTouchDevice } from '../device-type-detector';
 import { getMessagesById, getParticipantsById } from '../../pages/chat/message-detail/message-detail.services';
 import { createChats } from '../../pages/chat/new-chat/new-chat.services';
 import { getActiveJobs, getArchivedJobs, getDraftJobs } from '../../pages/job-create/my-jobs/my-jobs.services';
-import { getFeedList } from '../../pages/feed/mobile/mobile.service';
-import { getComments, getPostDetail } from '../../pages/feed/post-detail/post-detail.service';
 import { getJobCategories } from '../../pages/job-create/info/info.services';
 import { getNotificationList } from '../../pages/notifications/notifications.service';
 import { getScreeningQuestions } from '../../pages/job-apply/apply/apply.services';
@@ -38,6 +36,9 @@ import store from 'src/store/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getIdentities } from '../api';
 import { useEffect, useState } from 'react';
+import Layout from 'src/components/templates/refactored/layout/layout';
+import { getComments, getPostDetail } from 'src/pages/feed/refactored/feedDetails/post-detail.service';
+import { getFeedList } from 'src/pages/feed/refactored/feed.service';
 
 export const routes: Route[] = [
   {
@@ -108,6 +109,26 @@ export const routes: Route[] = [
       {
         path: '/password',
         element: () => import('../../pages/forget-password/password/password.container').then((m) => <m.Password />),
+      },
+    ],
+  },
+  {
+    path: 'feeds',
+    element: <Layout />,
+    children: [
+      {
+        path: '/:id',
+        loader: async ({ params }) => {
+          const requests = [getPostDetail(params.id), getComments(params.id, 1)];
+          const [post, comments] = await Promise.all(requests);
+          return { post, comments };
+        },
+        element: () => import('../../pages/feed/refactored/feedDetails/feedDetails').then((m) => <m.default />),
+      },
+      {
+        path: '/',
+        element: () => import('../../pages/feed/refactored/feed').then((m) => <m.default />),
+        loader: () => getFeedList({ page: 1 }),
       },
     ],
   },
@@ -467,6 +488,7 @@ export const routes: Route[] = [
         path: '/jobs/:id/confirm',
         element: () => import('../../pages/job-apply/confirm/confirm').then((m) => <m.Confirm />),
       },
+
       {
         element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
         children: [
@@ -668,6 +690,19 @@ export const routes: Route[] = [
             element: () => import('../../pages/job-detail/job-detail.container').then((m) => <m.JobDetailContainer />),
           },
           {
+            path: '/job-datails/:id',
+            loader: async ({ params }) => {
+              const requests = [endpoint.get.projects.project_id(params.id), getScreeningQuestions(params.id)];
+              const [jobDetail, screeningQuestions] = await Promise.all(requests);
+              return { jobDetail, screeningQuestions };
+            },
+            element: () => import('../../pages/job-detail/job-detail.container').then((m) => <m.JobDetailContainer />),
+          },
+          {
+            path: '/jobIndexing',
+            element: () => import('../../pages/job-indexing-google/job-indexing-google').then((m) => <m.default />),
+          },
+          {
             path: '/jobs',
             element: () => import('../../pages/jobs/jobs.container').then((m) => <m.JobsContainer />),
             loader: () => getJobList({ page: 1 }),
@@ -737,20 +772,6 @@ export const routes: Route[] = [
             ],
           },
           {
-            path: '/feeds/:id',
-            loader: async ({ params }) => {
-              const requests = [getPostDetail(params.id), getComments(params.id, 1)];
-              const [post, comments] = await Promise.all(requests);
-              return { post, comments };
-            },
-            element: () => import('../../pages/feed/post-detail/post-detail.container').then((m) => <m.PostDetail />),
-          },
-          {
-            path: 'feeds',
-            element: () => import('../../pages/feed/feed.container').then((m) => <m.Feed />),
-            loader: () => getFeedList({ page: 1 }),
-          },
-          {
             path: 'network',
             children: [
               {
@@ -790,6 +811,7 @@ export const routes: Route[] = [
               return { members, followings };
             },
           },
+
           {
             element: <DefaultRoute />,
           },

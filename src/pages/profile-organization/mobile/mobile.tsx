@@ -193,7 +193,7 @@ export const Mobile = (): JSX.Element => {
         </Divider>
         {printWhen(missionJSX, !!organization.mission)}
         {printWhen(cultureJSX, !!organization.culture)}
-        {printWhen(skillsJSX, organization.skills && organization.skills.length > 0)}
+        {printWhen(skillsJSX, organization.skills && organization.skills?.length > 0)}
         {jobsJSX}
       </div>
       <ConnectModal
