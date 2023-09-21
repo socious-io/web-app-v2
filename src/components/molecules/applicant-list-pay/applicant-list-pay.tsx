@@ -14,6 +14,10 @@ const statuses = {
     label: 'Awaiting confirmation',
     color: 'orange',
   },
+  ACTIVE: {
+    label: 'Awaiting approval',
+    color: 'orange',
+  },
   CLOSED: {
     label: 'Closed',
     color: 'unspecified',
@@ -60,28 +64,22 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             </div>
             <div className={css.typeItem}>
               <img src="/icons/time.svg" />
-                {
-                    printWhen(
-                        <>
-                            { applicant.totalHour} hrs
-                        </>,
-                        applicant.paymentMode === 'Fixed'
-                    )
-                }
-                {
-                    printWhen(
-                        <>
-                            { applicant.weeklyLimit} hrs / week
-                        </>,
-                        applicant.paymentMode === 'Hourly'
-                    )
-                }
+              {printWhen(<>{applicant.totalHour} hrs</>, applicant.paymentMode === 'Fixed')}
+              {printWhen(<>{applicant.weeklyLimit} hrs / week</>, applicant.paymentMode === 'Hourly')}
             </div>
           </div>
-          {/* <div className={css.totalMission}>
-            <div>Total mission</div>
-            <div className={css.totalMissionValue}>{applicant.totalMission}</div>
-          </div> */}
+          <div className={css.totalMission}>
+            {printWhen(<>Total mission</>, applicant.paymentMode === 'Fixed')}
+            {printWhen(<>Paid - Hourly rate</>, applicant.paymentMode === 'Hourly')}
+            {printWhen(
+              <div className={css.totalMissionValue}>{applicant.totalMission}</div>,
+              applicant.paymentMode === 'Fixed'
+            )}
+            {printWhen(
+              <div className={css.totalMissionValue}>{applicant.totalMission}</div>,
+              applicant.paymentMode === 'Hourly'
+            )}
+          </div>
         </div>
         <div className={css.applicantFooter}>
           {printWhen(
@@ -90,8 +88,14 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             </div>,
             props.isPaidCrypto
           )}
-          {printWhen(confirmBtn(applicant.id, applicant.payment?.meta?.id), props.confirmable || applicant.status === 'COMPLETE')}
-          {printWhen(feedbackBtn(applicant.id, applicant.status), !!props?.onFeedback && applicant?.user_feedback === null)}
+          {printWhen(
+            confirmBtn(applicant.id, applicant.payment?.meta?.id),
+            props.confirmable || applicant.status === 'COMPLETE'
+          )}
+          {printWhen(
+            feedbackBtn(applicant.id, applicant.status),
+            !!props?.onFeedback && applicant?.user_feedback === null
+          )}
           <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>

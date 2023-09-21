@@ -50,6 +50,7 @@
   align-items: center;
   border-radius: 10px;
   background: var(--color-off-white-01);
+  font-size: var(--font-size-s2);
 
   .header {
     display: flex;
@@ -79,9 +80,5 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
-  }
-
-  .totalMissionValue {
-    color: var(--color-gray-01);
   }
 }
