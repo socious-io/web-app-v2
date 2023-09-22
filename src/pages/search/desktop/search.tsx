@@ -12,11 +12,8 @@ import { LocationFilter } from './filter-bar/location-filter';
 import { PayloadModel } from './search.types';
 import { useLocation, useNavigate } from '@tanstack/react-location';
 import { DetailOutlet } from './detail-outlet/detail-outlet';
-import { FeedList } from 'src/components/organisms/feed-list/feed-list';
 import { Filters } from 'src/pages/search/components/filters';
 import { useState } from 'react';
-import { SKILLS } from 'src/constants/SKILLS';
-import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { Search as MobileSearch } from 'src/components/atoms/search/search';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { FiltersModal } from '../components/filters/FiltersModal';
@@ -248,6 +245,7 @@ export const Search = () => {
         </div>
       </div>
       <SocialCausesFilter
+        selectedCauses={selectedSocialCauses}
         onSubmit={onSocialCausesChange}
         open={openSocialSkillsModal}
         onClose={() => setOpenSocialSkillsModal(false)}

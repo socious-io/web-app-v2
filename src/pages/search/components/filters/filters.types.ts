@@ -6,4 +6,5 @@ export interface FiltersProps {
     onRemove: (item: string) => void;
     visible: boolean;
   }>;
+  onClear: () => void;
 }

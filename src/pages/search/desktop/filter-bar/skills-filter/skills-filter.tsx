@@ -22,7 +22,6 @@ export const SkillsFilter = (props: SkillsFilterProps): JSX.Element => {
     const selectedSkills = SKILLS.filter((skill) => selected.includes(skill.value));
     props.onSubmit(selectedSkills);
     props.onClose();
-    setSelected([]);
   }
 
   return (
@@ -33,7 +32,6 @@ export const SkillsFilter = (props: SkillsFilterProps): JSX.Element => {
       open={props.open}
       onClose={() => {
         props.onClose();
-        setSelected([]);
       }}
     >
       <div style={{ height: '45rem', maxHeight: '70vh' }} className={css.body}>
@@ -42,10 +40,11 @@ export const SkillsFilter = (props: SkillsFilterProps): JSX.Element => {
         </div>
         <div className={css.categoryContainer}>
           <CategoriesClickable
-            selected={selected.map((selected) => selected.label)}
-            onChange={setSelected}
+            selected={props.selectedSkills.map((item) => item.value)}
+            onChange={(value) => setSelected(value)}
             clickable
             list={list}
+            isOpen={props.open}
           />
         </div>
         <div className={css.footer}>

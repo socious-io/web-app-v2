@@ -31,7 +31,7 @@ export const OrganizationList = (props: OrganizationListProps) => {
         return (
           <Card key={organization.id} cursor="pointer" onClick={() => props.onClick(organization.shortname)}>
             <div className={css.header}>
-              <Avatar marginRight="0.5rem" type="organizations" img={organization?.image?.url} />
+              <Avatar type="organizations" img={organization?.image?.url} />
               <div className={css.orgNameAndLocation}>
                 <div>{`${organization.name}`} </div>
                 <div className={css.orgLocation}>{organization.city}</div>

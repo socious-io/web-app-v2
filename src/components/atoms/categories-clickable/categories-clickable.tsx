@@ -20,8 +20,14 @@ function hasReachedLimit(list: string[], min?: number, max?: number): boolean {
 }
 
 export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Element => {
-  const { list, clickable = false, selected = [], onChange, ...rest } = props;
-  const [selectedList, setSelectedList] = useState<string[]>(selected);
+  const { list, clickable = false, selected, onChange, ...rest } = props;
+  const [selectedList, setSelectedList] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!props.isOpen) {
+      setSelectedList(props?.selected || []);
+    }
+  }, [props.selected]);
 
   function onLabelClick(value: string) {
     if (!clickable) {
@@ -37,7 +43,8 @@ export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Elemen
   }
 
   function setSelectedStyle(value: string): string {
-    const exist = selectedList.includes(value);
+    console.log('failed list', selectedList);
+    const exist = selectedList?.includes(value);
     return exist ? css.active : '';
   }
 
