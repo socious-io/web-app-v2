@@ -3,7 +3,7 @@ import styles from './filters.module.scss';
 import { Selectable } from './Selectable';
 import { FiltersProps } from './filters.types';
 
-export const Filters: React.FC<FiltersProps> = ({ filterdItems, onClear }) => {
+export const Filters = ({ filterdItems, onClear }: FiltersProps): JSX.Element => {
   return (
     <div className={styles['filters']}>
       <div className={styles['filters__header']}>

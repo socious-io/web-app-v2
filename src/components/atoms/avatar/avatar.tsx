@@ -18,10 +18,15 @@ export const Avatar = (props: AvatarProps): JSX.Element => {
     minHeight: size,
     backgroundImage: `url(${images[type]})`,
   };
-
   return (
-    <div onClick={props.onClick} style={style} className={`${css.container} ${customStyle}`}>
-      {img && <img className={css.img} src={img} />}
+    <div
+      onClick={props.onClick}
+      style={{ width: size, height: size, minWidth: size, minHeight: size }}
+      className={`${css.container} ${customStyle}`}
+    >
+      <div onClick={props.onClick} style={style} className={css.imageContainer}>
+        {img && <img className={css.img} src={img} />}
+      </div>
       {badge && (
         <div className={css.badge} style={{ backgroundColor: badge.color, width: badge.width, height: badge.height }}>
           <img className={css.img} src={badge.image} />

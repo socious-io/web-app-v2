@@ -37,7 +37,6 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
           <Card key={user.id} cursor="pointer" onClick={() => props.onClick(user)}>
             <div className={css.header}>
               <Avatar
-                marginRight="0.5rem"
                 type="users"
                 img={user?.avatar?.url}
                 {...(user.open_to_work

@@ -10,7 +10,6 @@ import { SocialCausesFilterProps } from './social-causes-filter.types';
 export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element => {
   const [list, setList] = useState(socialCausesToCategoryAdaptor());
   const [selected, setSelected] = useState(props.value || []);
-
   function onSearch(value: string) {
     const searchResult = socialCausesToCategoryAdaptor().filter((item) =>
       item.label.toLowerCase().includes(value.toLowerCase())
@@ -41,7 +40,13 @@ export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element 
           <Search onValueChange={onSearch} width={'100%'} placeholder="Search" />
         </div>
         <div className={css.categoryContainer}>
-          <CategoriesClickable onChange={setSelected} clickable list={list} />
+          <CategoriesClickable
+            selected={props.selectedCauses.map((item) => item.value)}
+            onChange={setSelected}
+            clickable
+            list={list}
+            isOpen={props.open}
+          />
         </div>
         <div className={css.footer}>
           <Button onClick={onSubmit}>Submit</Button>
