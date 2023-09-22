@@ -9,7 +9,7 @@ import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { printWhen } from 'src/core/utils';
-import { formatDate } from 'src/core/utils';
+import { formatDate } from 'src/core/time';
 import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './mobile.module.scss';
 import { useState } from 'react';

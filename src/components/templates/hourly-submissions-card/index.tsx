@@ -1,8 +1,9 @@
 import { Card } from 'src/components/atoms/card/card';
 import { HourlySubmissionsCardProps } from './job-description-card.types';
 import css from './job-description-card.module.scss';
-import { formatDate, printWhen } from 'src/core/utils';
+import { printWhen } from 'src/core/utils';
 import { useState } from 'react';
+import { formatDate } from 'src/core/time';
 
 export const HourlySubmissionsCard: React.FC<HourlySubmissionsCardProps> = ({
   title,

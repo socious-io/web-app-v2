@@ -15,7 +15,7 @@ import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
-import { formatDate } from 'src/core/utils';
+import { formatDate } from 'src/core/time';
 import { useCompleteMissionShared } from '../complete-mission.shared';
 import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';

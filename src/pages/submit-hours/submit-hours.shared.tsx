@@ -33,11 +33,6 @@ export const useSubmittedHoursShared = () => {
     alert.confirm(options, onConfirm);
   }
 
-  const formatDate = (d: string) => {
-    var date = new Date(d);
-    return date.toLocaleDateString('en-us', { month: 'short', day: 'numeric' });
-  };
-
   function nextWeek() {
     setSelectedWeek({
       start_at: moment(selectedWeek.start_at).weekday(8).toISOString(),
@@ -88,7 +83,6 @@ export const useSubmittedHoursShared = () => {
     mission,
     nextWeek,
     previousWeek,
-    formatDate,
     isSelectedWeekCurrent,
   };
 };

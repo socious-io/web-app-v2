@@ -5,7 +5,7 @@ import { ProfileView } from 'src/components/molecules/profile-view/profile-view'
 import { Input } from 'src/components/atoms/input/input';
 import { WebModal } from 'src/components/templates/web-modal';
 import { useSubmittedHoursShared } from '../submit-hours.shared';
-import { formatDate } from 'src/core/utils';
+import { formatDate } from 'src/core/time';
 import { printWhen } from 'src/core/utils';
 import moment from 'moment';
 
