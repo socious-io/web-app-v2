@@ -103,13 +103,15 @@ export const Mobile = (): JSX.Element => {
             </div>,
             project.payment_scheme === 'FIXED'
           )}
-          <TopUpSummaryCard
-            title="Payment summary"
-            unit={unit}
-            weekly_limit={weekly_limit}
-            isPaidCrypto={isPaidCrypto}
-            offer_rate={assignment_total}
-          />
+          <div className={css.container__spacer}>
+            <TopUpSummaryCard
+              title="Payment summary"
+              unit={unit}
+              weekly_limit={weekly_limit}
+              isPaidCrypto={isPaidCrypto}
+              offer_rate={assignment_total}
+            />
+          </div>
           <PaymentMethods
             crypto_method={
               isPaidCrypto ? (
