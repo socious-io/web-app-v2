@@ -5,7 +5,7 @@ import { endpoint } from 'src/core/endpoints';
 
 export const useApplicantDetailShared = () => {
   const navigate = useNavigate();
-  const { screeningQuestions, applicantDetail,missions } = useMatch().ownData as Resolver;
+  const { screeningQuestions, applicantDetail, missions } = useMatch().ownData as Resolver;
   let unit = 'USDC';
 
   function navigateToOverview() {
@@ -15,10 +15,8 @@ export const useApplicantDetailShared = () => {
   function onReject(id: string) {
     return () => rejectApplicant(id).then(navigateToOverview);
   }
-  function submitHours(mission_id:string,work_id:string){
-    endpoint.post.missions['{mission_id}/confirm/{work_id}'](mission_id,work_id).then(() => {
-
-    })
+  function submitHours(mission_id: string, work_id: string) {
+    endpoint.post.missions['{mission_id}/confirm/{work_id}'](mission_id, work_id).then(() => {});
   }
-  return { navigate, screeningQuestions, applicantDetail,submitHours,missions, onReject,unit };
+  return { navigate, screeningQuestions, applicantDetail, submitHours, missions, onReject, unit };
 };

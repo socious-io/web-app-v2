@@ -19,7 +19,7 @@ import { useOfferShared } from '../offer.shared';
 import css from './offer-modal.module.scss';
 
 export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicantDetail, onDone }) => {
-  const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '',weekly_limit:'' });
+  const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '', weekly_limit: '' });
   const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
   const [paymentScheme, setPaymentScheme] = useState(applicantDetail?.project?.payment_scheme || 'FIXED');
   const isPaidType = applicantDetail?.project?.payment_type === 'PAID';
@@ -28,7 +28,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
   const [paymentMode, setPaymentMode] = useState(defaultPaymentMode);
   const isPaidCrypto = isPaidType && paymentMode === 'CRYPTO';
   const isPaidFiat = isPaidType && paymentMode === 'FIAT';
-  const memoizedFormState = useMemo(() => formModel(isHourly,isPaidType, isPaidFiat, initialForm), [paymentMode]);
+  const memoizedFormState = useMemo(() => formModel(isHourly, isPaidType, isPaidFiat, initialForm), [paymentMode]);
   const form = useForm(memoizedFormState);
   const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
   const {
@@ -49,11 +49,13 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
       assignment_total: isPaidType ? (form.controls.assignmentTotal.value as number) : 1,
       offer_message: (form.controls.message.value as string) || initialForm.message,
       weekly_limit: (form.controls.weekly_limit.value as string) || initialForm.weekly_limit,
+      // TODO Check which field to use, offer_rate or assignment total
+      // offer_rate: form.controls.offer_rate.value as number,
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
       currency: selectedCurrency,
     };
-    if(!isHourly) {
-      payload.total_hours =  form.controls.estimatedTotalHours.value as string || initialForm.estimatedTotalHours;
+    if (!isHourly) {
+      payload.total_hours = (form.controls.estimatedTotalHours.value as string) || initialForm.estimatedTotalHours;
     }
     offer(applicantDetail.id, payload).then(() => {
       onClose();
@@ -83,11 +85,11 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
           list={PROJECT_PAYMENT_SCHEME}
         />
         <Input
-            register={form}
-            name="estimatedTotalHours"
-            label="Estimated total hours"
-            placeholder="hrs"
-            onKeyUp={(e) => setInitialForm({ ...initialForm, estimatedTotalHours: e.currentTarget.value })}
+          register={form}
+          name="estimatedTotalHours"
+          label="Estimated total hours"
+          placeholder="hrs"
+          onKeyUp={(e) => setInitialForm({ ...initialForm, estimatedTotalHours: e.currentTarget.value })}
         />
         {printWhen(
           <RadioGroup
@@ -141,16 +143,16 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
           isPaidFiat
         )}
         <Textarea
-            register={form}
-            name="message"
-            label="Message"
-            placeholder="Write message"
-            onKeyUp={(e) => setInitialForm({ ...initialForm, message: e.currentTarget.value })}
+          register={form}
+          name="message"
+          label="Message"
+          placeholder="Write message"
+          onKeyUp={(e) => setInitialForm({ ...initialForm, message: e.currentTarget.value })}
         />
 
         {printWhen(
-            <Input register={form} name="weekly_limit" label="Weekly limit" placeholder="15 hrs/week" />,
-            isHourly
+          <Input register={form} name="weekly_limit" label="Weekly limit" placeholder="15 hrs/week" />,
+          isHourly
         )}
       </div>
     </WebModal>
