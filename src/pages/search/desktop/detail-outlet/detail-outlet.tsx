@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
 import { UserProfileCard } from '../../components/user-profile-card/user-profile-card';
-import { getUserDetail } from 'src/pages/profile-user/profile-user.services';
+import { getUserDetail } from 'src/pages/profile-user/refactored/profileUser.services';
 
 export function DetailOutlet(props: DetailOutletProps): JSX.Element {
   const [loading, setLoading] = useState(false);
