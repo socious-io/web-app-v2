@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { ConnectStatus, IdentityReq } from 'src/core/types';
-import { ProfileReq, Resolver } from './profile-organization.types';
-import { getConnectStatus, sendRequestConnection, hiringCall } from './profile-organization.services';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { ConnectStatus, IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
+import { getConnectStatus, hiringCall, sendRequestConnection } from './profileOrg.services';
+import { ProfileReq, Resolver } from './profileOrg.types';
 
-export const useProfileOrganizationShared = () => {
+export const useProfileOrg = () => {
   const navigate = useNavigate();
   const resolver = useMatch().data as Resolver;
   const [organization, setOrganization] = useState<ProfileReq>(resolver.user);
