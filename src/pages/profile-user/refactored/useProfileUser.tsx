@@ -3,15 +3,22 @@ import { useSelector } from 'react-redux';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { ProfileReq, Resolver } from './profile-user.types';
+import { ProfileReq, Resolver } from './profileUser.types';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { useEffect, useState } from 'react';
 import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
-import { getConnectStatus, getUserMissions, sendRequestConnection, openToWorkCall, openToVolunteerCall } from './profile-user.services';
+import {
+  getConnectStatus,
+  getUserMissions,
+  sendRequestConnection,
+  openToWorkCall,
+  openToVolunteerCall,
+} from './profileUser.services';
+import { isTouchDevice } from 'src/core/device-type-detector';
 
-export const useProfileUserShared = () => {
+export const useProfileUser = () => {
   const navigate = useNavigate();
   const resolver = useMatch().data as Resolver;
   const [user, setUser] = useState<ProfileReq>(resolver.user);
@@ -26,6 +33,10 @@ export const useProfileUserShared = () => {
   const [following, setFollowing] = useState<boolean>();
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [message, setMessage] = useState('please connect to me');
+  const [openToWork, setOpenToWork] = useState(user.open_to_work);
+  const [openToVolunteer, setOpenToVolunteer] = useState(user.open_to_volunteer);
+  const [editOpen, setEditOpen] = useState(false);
+
   const [missions, setMissons] = useState<
     {
       organizationName: string;
@@ -36,8 +47,6 @@ export const useProfileUserShared = () => {
       organizationImage: string;
     }[]
   >([]);
-  const [openToWork, setOpenToWork] = useState(user.open_to_work);
-  const [openToVolunteer, setOpenToVolunteer] = useState(user.open_to_volunteer);
 
   useEffect(() => {
     const getConnectionsStatus = async () => {
@@ -119,10 +128,6 @@ export const useProfileUserShared = () => {
     navigate({ to: `/achievements/m?proofspace_connect_id=${connectId}` });
   }
 
-  function navigateToEdit() {
-    navigate({ to: '../edit' });
-  }
-
   async function onConnect(id: string) {
     const result = await sendRequestConnection(id, message);
     setConnectStatus(result?.status);
@@ -143,6 +148,14 @@ export const useProfileUserShared = () => {
     setMessage(value || 'please connect to me');
   }
 
+  function onEdit() {
+    if (isTouchDevice()) {
+      navigate({ to: '../edit' });
+    } else {
+      setEditOpen(true);
+    }
+  }
+
   return {
     user,
     setUser,
@@ -161,7 +174,7 @@ export const useProfileUserShared = () => {
     onClose,
     gotToDesktopAchievement,
     gotToMobileAchievement,
-    navigateToEdit,
+    onEdit,
     follow,
     unfollow,
     onConnect,
@@ -169,5 +182,7 @@ export const useProfileUserShared = () => {
     showMessageIcon,
     onMessage,
     missions,
+    editOpen,
+    setEditOpen,
   };
 };
