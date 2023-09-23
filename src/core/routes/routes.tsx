@@ -37,7 +37,7 @@ import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getIdentities } from '../api';
 import { useEffect, useState } from 'react';
 import Layout from 'src/components/templates/refactored/layout/layout';
-import { getComments, getPostDetail } from 'src/pages/feed/refactored/feedDetails/post-detail.service';
+import { getComments, getPostDetail } from 'src/pages/feed/refactored/feedDetails/feedDetail.service';
 import { getFeedList } from 'src/pages/feed/refactored/feed.service';
 
 export const routes: Route[] = [
@@ -114,6 +114,7 @@ export const routes: Route[] = [
   },
   {
     path: 'feeds',
+    loader: jobsPageLoader,
     element: <Layout />,
     children: [
       {
@@ -128,7 +129,8 @@ export const routes: Route[] = [
     ],
   },
   {
-    path: 'jobs',
+    path: 'jobs/',
+    loader: jobsPageLoader,
     element: <Layout />,
     children: [
       {
