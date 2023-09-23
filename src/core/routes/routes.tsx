@@ -134,6 +134,30 @@ export const routes: Route[] = [
     ],
   },
   {
+    path: 'profile/users',
+    loader: jobsPageLoader,
+    element: <Layout />,
+    children: [
+      {
+        path: '/:id',
+        loader: profileUserPageLoader,
+        children: [
+          {
+            path: 'view',
+            element: () => import('../../pages/profile-user/refactored/profileUser').then((m) => <m.default />),
+          },
+          {
+            path: 'edit',
+            element: () =>
+              import('../../pages/profile-user-edit/profile-user-edit.container').then((m) => (
+                <m.ProfileUserEditContainer />
+              )),
+          },
+        ],
+      },
+    ],
+  },
+  {
     loader: jobsPageLoader,
     children: [
       {
@@ -712,24 +736,6 @@ export const routes: Route[] = [
             path: '/achievements/d',
             loader: AchievementsPageLoader,
             element: () => import('../../pages/achievements/desktop/desktop').then((m) => <m.Desktop />),
-          },
-          {
-            path: 'profile/users/:id',
-            loader: profileUserPageLoader,
-            children: [
-              {
-                path: 'view',
-                element: () =>
-                  import('../../pages/profile-user/profile-user.container').then((m) => <m.ProfileUserContainer />),
-              },
-              {
-                path: 'edit',
-                element: () =>
-                  import('../../pages/profile-user-edit/profile-user-edit.container').then((m) => (
-                    <m.ProfileUserEditContainer />
-                  )),
-              },
-            ],
           },
           {
             path: 'profile/organizations/:id',
