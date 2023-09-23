@@ -158,6 +158,34 @@ export const routes: Route[] = [
     ],
   },
   {
+    path: 'profile/organizations',
+    loader: jobsPageLoader,
+    element: <Layout />,
+    children: [
+      {
+        path: '/:id',
+        loader: profileOrganizationPageLoader,
+        children: [
+          {
+            path: 'view',
+            element: () => import('../../pages/profile-organization/refactored/profileOrg').then((m) => <m.default />),
+          },
+          {
+            path: 'edit',
+            element: () =>
+              import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => (
+                <m.ProfileOrganizationEdit />
+              )),
+          },
+          {
+            path: 'jobs',
+            element: () => import('../../pages/jobs-index/jobs-index.container').then((m) => <m.JobsIndexContainer />),
+          },
+        ],
+      },
+    ],
+  },
+  {
     loader: jobsPageLoader,
     children: [
       {
@@ -736,31 +764,6 @@ export const routes: Route[] = [
             path: '/achievements/d',
             loader: AchievementsPageLoader,
             element: () => import('../../pages/achievements/desktop/desktop').then((m) => <m.Desktop />),
-          },
-          {
-            path: 'profile/organizations/:id',
-            loader: profileOrganizationPageLoader,
-            children: [
-              {
-                path: 'view',
-                element: () =>
-                  import('../../pages/profile-organization/profile-organization.container').then((m) => (
-                    <m.ProfileOrganizationContainer />
-                  )),
-              },
-              {
-                path: 'edit',
-                element: () =>
-                  import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => (
-                    <m.ProfileOrganizationEdit />
-                  )),
-              },
-              {
-                path: 'jobs',
-                element: () =>
-                  import('../../pages/jobs-index/jobs-index.container').then((m) => <m.JobsIndexContainer />),
-              },
-            ],
           },
           {
             path: 'notifications',
