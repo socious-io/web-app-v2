@@ -21,7 +21,6 @@ import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 import { useState } from 'react';
 import { SubmittedHoursModal } from '../../submit-hours/submitted-hours-modal';
-import { SubmitHour } from '../complete-mission.types';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -110,18 +109,7 @@ export const Desktop = (): JSX.Element => {
     ...NetworkMenuList,
     { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
   ];
-  const submitHours: Array<SubmitHour> = [
-    {
-      time: 'Jan 8 - Jan 15',
-      hours: 10,
-      confirmed: false,
-    },
-    {
-      time: 'Jan 1 - Jan 7',
-      hours: 15,
-      confirmed: true,
-    },
-  ];
+
   const SubmitHoursJSX = () => (
     <div className={css.missionDetailContainer}>
       {mission.submitted_works?.slice(0, displayedSubmissions).map((item) => (
@@ -156,7 +144,9 @@ export const Desktop = (): JSX.Element => {
   );
   const hoursSubmission = () => (
     <Accordion title="Hours submission" id="hours-submission">
-      <div className={css.missionDetailContainer}>{printWhen(SubmitHoursJSX(), submitHours.length > 0)}</div>
+      <div className={css.missionDetailContainer}>
+        {printWhen(SubmitHoursJSX(), mission.submitted_works?.length > 0)}
+      </div>
     </Accordion>
   );
   return (

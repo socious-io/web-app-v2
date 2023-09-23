@@ -40,10 +40,7 @@ export const Mobile = (): JSX.Element => {
       <img src="/icons/clock.svg" />
       <div>
         <div className={css.congratulationsText}>Submit your hours.</div>
-        <div className={css.congratulationsText}>
-          {/*  TODO check the time of week to show*/}
-          Please submit your hours for the week Jan 8 - Jan 15
-        </div>
+        <div className={css.congratulationsText}>Please submit your hours for the week Jan 8 - Jan 15</div>
       </div>
     </div>
   );
@@ -89,19 +86,7 @@ export const Mobile = (): JSX.Element => {
       </Button>
     </div>
   );
-  // TODO get submit hours from API
-  const submit_hours: Array<any> = [
-    {
-      time: 'Jan 8 - Jan 15',
-      hours: 10,
-      confirmed: false,
-    },
-    {
-      time: 'Jan 1 - Jan 7',
-      hours: 15,
-      confirmed: true,
-    },
-  ];
+
   const SubmitHoursJSX = () => (
     <div className={css.missionDetailContainer}>
       {mission.submitted_works?.slice(0, displayedSubmissions).map((item) => (
@@ -134,7 +119,9 @@ export const Mobile = (): JSX.Element => {
   );
   const hoursSubmission = () => (
     <Accordion title="Hours submission" id="hours-submission">
-      <div className={css.missionDetailContainer}>{printWhen(SubmitHoursJSX(), submit_hours.length > 0)}</div>
+      <div className={css.missionDetailContainer}>
+        {printWhen(SubmitHoursJSX(), mission.submitted_works?.length > 0)}
+      </div>
     </Accordion>
   );
   return (
