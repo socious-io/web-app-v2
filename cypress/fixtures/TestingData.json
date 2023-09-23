@@ -85,12 +85,23 @@
 
   "apply": [
     {
+      "jobId": "008dc9e3-a043-43f4-b80e-cc429d399db7",
       "message": "application 1: I am writing here for apply for this position",
-      "cv": "attachCV"
+      "cv": "no"
     },
     {
+      "jobId": "eaf1de27-1aac-4bc7-9b1a-1d4cd7483f5c",
       "message": "application 2: I am writing here for apply for this position",
-      "cv": "no"    
+      "cv": "attachCV"
+    }
+  ],
+
+  "organization": [
+    {
+      "organizationName": "Automated Test-Organization Name1",
+      "organizationBio": "Automated Test-Organization Bio1",
+      "organizationEmail": "automated.org@gmail.com",
+      "organizationCulture": "Automated Test-Organization Culture1"
     }
   ],
 
@@ -114,10 +125,5 @@
   "ValidConfirmPassword": "Socious1234",
   "ExistingEmail": "testazintest4@gmail.com",
 
-  "SocialCause": "POVERTY",
-  "organizationName": "Automated Test-Organization Name",
-  "organizationBio": "Automated Test-Organization Bio",
-  "organizationEmail": "azintestbackend@gmail.com",
-  "organizationCulture": "Automated Test-Organization Culture",
-  "applyMessage": "I am interested in this job"
+  "SocialCause": "POVERTY"
 }

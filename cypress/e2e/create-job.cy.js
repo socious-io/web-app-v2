@@ -4,37 +4,27 @@ import TestingData from '../fixtures/TestingData.json';
 
 const createjob = new CreateJobPage();
 describe('Create job suit', function () {
+  before(function () {
+    Cypress.config('defaultCommandTimeout', 9000);
+  });
   beforeEach(() => {
     cy.loginUsingUI(TestingData.EmailForLogin, TestingData.PasswordForLogin);
+    cy.intercept('GET', `${Cypress.env('api_server')}/identities*`, (req) => {
+      req.headers['Authorization'] = TestingData.token_type + TestingData.access_token;
+    });
+    cy.intercept('GET', `${Cypress.env('api_server')}/projects*`);
+    cy.intercept('POST', `${Cypress.env('api_server')}/projects`, { fixture: 'responses/CreateJob.json' }).as(
+      'createJob'
+    );
+    cy.intercept('POST', `${Cypress.env('api_server')}/auth/refresh`, TestingData.refresh_token);
   });
   TestingData.jobs.forEach((data) => {
     it('create job', function () {
-      cy.intercept('POST', `${Cypress.env('api_server')}/projects`, (req) => {
-        req.reply({
-          statusCode: 200,
-          body: {
-            description:
-              'Automated Test Job Descrirption1- Remote, Full time, More than 6months, Volunteer & Fixed-payment Job',
-            project_type: 'FULL_TIME',
-            project_length: '6_MONTHS_OR_MORE',
-            payment_range_lower: '1',
-            payment_range_higher: '2',
-            experience_level: 0,
-            payment_type: 'VOLUNTEER',
-            payment_scheme: 'FIXED',
-            title: 'Automated Test Job Title1-Remote, Full time, More than 6months, Volunteer & Fixed-payment Job',
-            country: 'IR',
-            skills: ['ACCOUNTING'],
-            causes_tags: ['POVERTY'],
-            remote_preference: 'REMOTE',
-            city: 'Abadan',
-          },
-        });
-      }).as('reqAlias');
       cy.visit(`${Cypress.env('app_url')}/jobs`);
+      cy.log(Cypress.config('defaultCommandTimeout'));
       createjob.clickOnswitchAccountLink();
       createjob.selectOrgAccount();
-      cy.wait(5000);
+      cy.visit(`${Cypress.env('app_url')}/jobs`);
       createjob.clickOnCreatedLink();
       createjob.clickOncreateJobLink();
       createjob.assertShowingSocialCauseStep();
@@ -58,16 +48,10 @@ describe('Create job suit', function () {
       //createjob.selectExperienceLevel(TestingData.ExperienceLevelExpert)
       createjob.clickOnContinueButton();
       createjob.clickOnSkipBtnInScreenerStep();
-      cy.wait('@reqAlias');
-      cy.get('@reqAlias').then((req) => {
-        //expect(req.response.statusCode).to.equal(200);
-        // expect(req.response.body).to.have.ownProperty('description', TestingData.JobDescription1);
-        // expect(req.response.body.city).to.equal('Abadan');
-        //expect(req.response.body.causes_tags).to.equal('POVERTY')
-        // expect(req.response.body.experience_level).to.equal(0);
+      cy.wait('@createJob');
+      cy.get('@createJob').then((req) => {
+        expect(req.response.statusCode).to.equal(200);
       });
-      /* createjob.clickOnswitchAccountLink();
-    createjob.logout(); */
     });
   });
 });

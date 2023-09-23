@@ -1,0 +1,19 @@
+{
+  "create-posts": [
+    {
+      "content": "post 1: I am writing here for testing the create post 1",
+      "causes_tags": ["POVERTY"],
+      "media": [
+        {
+          "id": "03a84fd5-a68d-40f2-a948-4255993aa788",
+          "url": "https://socious-new.s3.ap-northeast-1.amazonaws.com/339b48eccd787ccdbc6f816d66275746.png"
+        }
+      ]
+    },
+    {
+      "content": "post 2: I am writing here for testing the create post 2",
+      "causes_tags": ["POVERTY"],
+      "media": null
+    }
+  ]
+}

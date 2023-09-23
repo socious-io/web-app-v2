@@ -1,0 +1,22 @@
+{
+  "apply": [
+    {
+      "cover_letter": "application 1: I am writing here for apply for this position",
+      "status": "PENDING",
+      "share_contact_info": null,
+      "attachment": null
+    },
+    {
+      "cover_letter": "application 2: I am writing here for apply for this position",
+      "status": "PENDING",
+      "share_contact_info": null,
+      "attachment": {
+        "id": "a0a73233-3a47-4e3e-86e5-d0b3fa79df0f",
+        "identity_id": "f0850c9f-0acb-495d-adb4-fb14743e4937",
+        "filename": "simplefile.pdf",
+        "url": "https://socious-new.s3.ap-northeast-1.amazonaws.com/4b41a3475132bd861b30a878e30aa56a.pdf",
+        "created_at": "2023-09-19T09:48:47.832064+00:00"
+      }
+    }
+  ]
+}
