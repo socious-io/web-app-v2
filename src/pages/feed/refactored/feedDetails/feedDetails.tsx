@@ -10,127 +10,41 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { like, unlike } from '../feed.service';
-import { addComment, getComments, likeComment, removeCommentLike } from './post-detail.service';
+import { addComment, getComments, likeComment, removeCommentLike } from './feedDetail.service';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { SendBox } from 'src/components/molecules/send-box/send-box';
 import { Comment } from 'src/components/molecules/comment/comment';
 import { Header } from 'src/components/atoms/header/header';
+import { Modal } from 'src/components/templates/modal/modal';
+import css from '../feed.module.scss';
+import { endpoint } from 'src/core/endpoints';
+import { dialog } from 'src/core/dialog/dialog';
+import { isTouchDevice } from 'src/core/device-type-detector';
+import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
+import { useFeedDetails } from './useFeedDetails';
 
 const FeedDetails = () => {
-  const { post, comments } = useMatch().ownData as {
-    post: Feed;
-    comments: Pagination<CommentModel[]>;
-  };
-  const [message, setMessage] = useState('');
-  const [commentList, setCommentList] = useState<CommentModel[]>(comments.items);
-  const [postObj, setPostObj] = useState<Feed>(post);
-  const [page, setPage] = useState(1);
-  const [openMoreBox, setOpenMoreBox] = useState(false);
-  const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
-  const [feed, setFeed] = useState<Feed>();
-  const totalCount = comments.total_count;
   const navigate = useNavigate();
-
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
-  });
-
-  const onShowSeeMore = (length: number): boolean => {
-    if (length < totalCount) {
-      return true;
-    }
-    return false;
-  };
-
-  const actionList = (likes: number, liked: boolean) => [
-    {
-      label: 'Like',
-      iconName: 'heart-blue',
-      like: likes,
-      isLiked: liked,
-      onClick: () => {
-        hapticsImpactLight();
-        postObj!.liked ? onRemoveLike(postObj.id) : onLike(postObj.id);
-      },
-      onLike: () => {
-        hapticsImpactLight();
-        return onLike(postObj.id);
-      },
-      onRemoveLike: () => {
-        hapticsImpactLight();
-        onRemoveLike(postObj.id);
-      },
-    },
-    { label: 'Comment', iconName: 'comment-blue' },
-  ];
-
-  const onLike = (id: string) => {
-    like(id).then(() => {
-      const clone = { ...postObj };
-      clone.liked = true;
-      clone.likes = clone.likes + 1;
-      setPostObj(clone);
-    });
-  };
-
-  const onRemoveLike = (id: string) => {
-    unlike(id).then(() => {
-      const clone = { ...postObj };
-      clone.liked = false;
-      clone.likes = clone.likes - 1;
-      setPostObj(clone);
-    });
-  };
-
-  const changeMessageHandler = (value: string) => {
-    setMessage(value);
-  };
-
-  const sendMessage = () => {
-    addComment(message, postObj.id).then(() => {
-      getComments(postObj.id, 1).then((resp) => {
-        setCommentList(resp.items);
-        setMessage('');
-      });
-    });
-  };
-
-  function onMorePage() {
-    getComments(postObj.id, page + 1).then((resp) => {
-      setPage((v) => v + 1);
-      setCommentList((list) => [...list, ...resp.items]);
-    });
-  }
-
-  function updateHeartIcon(commentId: string, type: 'like' | 'removeLike') {
-    return () => {
-      const clone = [...commentList];
-      const comment = clone.find((item) => item.id === commentId);
-      if (comment) {
-        comment.liked = type === 'like' ? true : false;
-        comment.likes = type === 'like' ? comment.likes + 1 : comment.likes - 1;
-      }
-      setCommentList(clone);
-    };
-  }
-
-  function onCommentLike(postId: string, commentId: string) {
-    likeComment(postId, commentId).then(updateHeartIcon(commentId, 'like'));
-  }
-
-  function onCommentLikeRemove(postId: string, commentId: string) {
-    removeCommentLike(postId, commentId).then(updateHeartIcon(commentId, 'removeLike'));
-  }
-
-  const showActions = async (feed: Feed) => {
-    const name = feed.identity_meta.name;
-    const options = [{ title: `Block ${name}` }, { title: `Report ${name}` }, { title: 'Cancel' }];
-    setMoreOptions(options);
-    setFeed(feed);
-    setOpenMoreBox(true);
-  };
+  const {
+    postObj,
+    actionList,
+    showActions,
+    identity,
+    changeMessageHandler,
+    sendMessage,
+    message,
+    commentList,
+    onCommentLike,
+    onCommentLikeRemove,
+    onMorePage,
+    onShowSeeMore,
+    openMoreBox,
+    setOpenMoreBox,
+    moreOptions,
+    onClickMoreOption,
+  } = useFeedDetails();
 
   return (
     <div className="w-full h-full">
@@ -181,6 +95,16 @@ const FeedDetails = () => {
           </div>
         </div>
       </div>
+      <Modal open={openMoreBox} onClose={() => setOpenMoreBox(false)}>
+        <div className={css.moreBox}>
+          <div className={css.moreHeader}>What do you want to do?</div>
+          {moreOptions?.map((option, index) => (
+            <div key={option.title} className={css.moreOption} onClick={() => onClickMoreOption(index)}>
+              {option.title}
+            </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
 };
