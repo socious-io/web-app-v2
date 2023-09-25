@@ -120,6 +120,6 @@ export const useProfileOrg = () => {
     navigateJobs,
     hiring,
     onHiring,
-    userIsLoggedIn,
+    userIsLoggedIn
   };
 };
