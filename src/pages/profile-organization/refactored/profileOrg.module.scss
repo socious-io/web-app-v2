@@ -5,12 +5,10 @@
   top: 2.5rem;
 }
 
-.back {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  font-weight: bold;
+.container {
+  //   background-color: #ffffff;
+  border: 1px solid var(--color-gray-04);
+  overflow: hidden;
 }
 
 .header {
@@ -23,7 +21,6 @@
     width: 2.25rem;
     height: 2.25rem;
     top: 2rem;
-    display: flex;
     justify-content: center;
     align-items: center;
     right: 2rem;
@@ -59,6 +56,24 @@
     gap: 0.5rem;
   }
 }
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.message {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid #e4e6ed;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 
 .userConnections {
   display: flex;
@@ -82,38 +97,9 @@
   color: var(--color-gray-01);
 }
 
-.contactItem {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
 .name {
   font-size: var(--font-size-l);
   font-weight: 600;
-}
-
-.username {
-  height: 27px;
-  line-height: 1.75rem;
-  font-size: 1.125rem;
-  color: #2f4786;
-}
-
-.message {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  border: 1px solid #e4e6ed;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-.main {
-  background-color: wheat;
 }
 
 .hireStatus {
