@@ -19,6 +19,7 @@ export const useProfileOrg = () => {
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
+  const userIsLoggedIn = !!currentIdentity;
   const address = `${organization.city}, ${getCountryName(
     organization.country as keyof typeof COUNTRIES_DICT | undefined
   )}`;
@@ -119,5 +120,6 @@ export const useProfileOrg = () => {
     navigateJobs,
     hiring,
     onHiring,
+    userIsLoggedIn,
   };
 };
