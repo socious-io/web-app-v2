@@ -41,7 +41,7 @@ export const balance = async (web3: Web3, token: string) => {
 
 export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
   // Note: Escrow new contract issue that sends index instead of id
-  const id = (parseInt(escrowId) + 1).toString()
+  const id = (parseInt(escrowId) + 1).toString();
   // TODO: get this from contributor info
   const chainId = await web3.eth.getChainId();
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];

@@ -8,7 +8,7 @@ import { CategoriesClickable } from 'src/components/atoms/categories-clickable/c
 import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
 import { Button } from 'src/components/atoms/button/button';
 import { Toggle } from 'src/components/atoms/toggle';
-import { useNavigate } from '@tanstack/react-location';
+
 import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { BackLink } from 'src/components/molecules/back-link';
 import { Card } from 'src/components/atoms/card/card';
@@ -20,7 +20,7 @@ import { showActions } from './profileOrg.services';
 
 const profileOrg = () => {
   const { isLoggedIn } = useAuth();
-  const navigate = useNavigate();
+  const navigate = {};
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
   const {

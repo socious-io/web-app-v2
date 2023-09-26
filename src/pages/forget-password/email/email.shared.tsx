@@ -1,11 +1,10 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useForm } from 'src/core/form';
 import { formModel } from './email.form';
 import { handleError } from 'src/core/http';
 import { forgetPassword } from '../forget-password.service';
 
 export const useEmailShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const form = useForm(formModel);
 
   const navigateToOtp = () => {

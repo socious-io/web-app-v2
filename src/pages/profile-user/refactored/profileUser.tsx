@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Button } from 'src/components/atoms/button/button';
@@ -18,7 +17,7 @@ import { useProfileUser } from './useProfileUser';
 const ProfileUser = () => {
   const [openConnectModal, setOpenConnectModal] = useState(false);
 
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     user,
     updateUser,

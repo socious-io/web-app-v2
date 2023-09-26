@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch, useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
@@ -10,7 +9,7 @@ import { useSocialCausesShared } from '../social-causes.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
   const { onSearch, socialCauses, selectedSocialCauses, isValid } = useSocialCausesShared();
 

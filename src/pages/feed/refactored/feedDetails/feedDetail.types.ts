@@ -1,4 +1,4 @@
-import { Feed } from "src/components/organisms/feed-list/feed-list.types";
+import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 
 export type MobileProps = {
   data: Feed;

@@ -18,7 +18,7 @@ export const BankAccounts: React.FC<BankAccountsProps> = ({ accounts, bankAccoun
         !!accounts?.length
       )}
       <Button color="white" disabled={isDisabled} className={css.btn}>
-        <a href={bankAccountLink} target='_blank' className={`${css.link} ${isDisabled && css.link__disabled}`}>
+        <a href={bankAccountLink} target="_blank" className={`${css.link} ${isDisabled && css.link__disabled}`}>
           <img src="/icons/add.svg" width={18} height={18} />
           Add a bank account
         </a>

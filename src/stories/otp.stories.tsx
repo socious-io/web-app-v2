@@ -10,6 +10,6 @@ const Template: ComponentStory<typeof Otp> = (args) => <Otp {...args} />;
 
 export const Primary = Template.bind({});
 
-Primary.args = { 
-    length: 6,
- };
+Primary.args = {
+  length: 6,
+};

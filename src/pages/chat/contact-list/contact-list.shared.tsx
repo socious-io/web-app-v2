@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
 import { Resolver } from './contact-list.types';
 import {
@@ -11,7 +11,7 @@ import {
 import { createChats, postFind } from '../new-chat/new-chat.services';
 
 export const useContactListShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = useMatch().ownData as Resolver;
   const { summery, followings } = resolver || {};
   const initialState = chatEntityToContactListAdaptor(summery?.items);

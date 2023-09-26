@@ -25,7 +25,7 @@ export const SkillsFilter = (props: SkillsFilterProps): JSX.Element => {
   }
 
   return (
-    <div className={css.container} style={{border: selected.length ? '1px solid var(--color-primary-01)' : '0px'}} >
+    <div className={css.container} style={{ border: selected.length ? '1px solid var(--color-primary-01)' : '0px' }}>
       <Modal height="45rem" maxHeight="70vh" width="400px" open={modalOpen} onClose={() => setModalOpen(false)}>
         <div style={{ height: '45rem', maxHeight: '70vh' }} className={css.body}>
           <div className={css.searchContainer}>

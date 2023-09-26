@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { AwaitingResp, DeclinedResp, EndedResp, Loader, MyJobs, OnGoingResp, PendingResp } from './my-jobs.types';
 import { useState } from 'react';
 import {
@@ -13,7 +12,7 @@ import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
 export const useMyJobShared = () => {
   const resolver = useMatch();
   const tab = useMatch()?.search?.tab as MyJobs;
-  const navigate = useNavigate();
+  const navigate = {};
   const defaultTab = tab || 'Applied';
   const { pendingApplicants, awaitingApplicants, declinedApplicants, onGoingApplicants, endedApplicants } =
     resolver.data as Loader;

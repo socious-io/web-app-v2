@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 import { useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ export const useJobsIndexShared = () => {
   const { data } = useMatch();
   const [jobList, setJobList] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1 });
-  const navigate = useNavigate();
+  const navigate = {};
   const identities = useSelector<RootState, IdentityReq | undefined>((state) => state.identity.entities);
   useEffect(() => {
     getOrganizationJobs({ identityId: data.user.id, page: pagination.page }).then((resp) => {

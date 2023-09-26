@@ -1,12 +1,15 @@
-import { ContactItem } from "src/components/molecules/contact-item/contact-item.types";
-import { FollowingsReq } from "src/core/types";
+import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
+import { FollowingsReq } from 'src/core/types';
 
 export function followingToContactListAdaptor(following: FollowingsReq): ContactItem {
   return {
     id: following.identity_id,
-    name: following.identity_meta.name || following.identity_meta.username || following.identity_meta?.shortname as string,
+    name:
+      following.identity_meta.name ||
+      following.identity_meta.username ||
+      (following.identity_meta?.shortname as string),
     text: '',
-    img: following.identity_meta.avatar || following.identity_meta?.image as string,
+    img: following.identity_meta.avatar || (following.identity_meta?.image as string),
     type: following.identity_type,
     date: '',
     date2: '',

@@ -2,9 +2,9 @@ import React from 'react';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import css from './allow-notification.module.scss';
-import { useNavigate } from '@tanstack/react-location';
+
 export const AllowNotification: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   return (
     <div className={css['container']}>
       <Card className={css['card']}>

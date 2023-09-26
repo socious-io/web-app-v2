@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { CSSProperties } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIdentities } from '../../../core/api';
@@ -19,7 +18,7 @@ import { useAuth } from 'src/hooks/use-auth';
 
 export const Mobile = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = {};
   const { isLoggedIn } = useAuth();
 
   const identity = useSelector<RootState, IdentityReq>((state) => {

@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import { FeedItem } from 'src/components/molecules/feed-item/feed-item';
 import { ProfileCard } from 'src/components/templates/profile-card';
@@ -26,7 +25,7 @@ import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { useFeedDetails } from './useFeedDetails';
 
 const FeedDetails = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     postObj,
     actionList,

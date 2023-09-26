@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
@@ -11,7 +10,7 @@ import { getConnectStatus, hiringCall, sendRequestConnection } from './profileOr
 import { ProfileReq, Resolver } from './profileOrg.types';
 
 export const useProfileOrg = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = useMatch().data as Resolver;
   const [organization, setOrganization] = useState<ProfileReq>(resolver.user);
   const socialCauses = socialCausesToCategory(resolver.user?.social_causes);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { endpoint } from 'src/core/endpoints';
@@ -9,7 +9,7 @@ import { Resolver } from './connections.types';
 import { getConnections } from './connections.service';
 
 export const useConnectionsShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });

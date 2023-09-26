@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { formModel } from './sign-in.form';
 import { getFcmTokens, getUsersTokens, setAuthCookies, setFcmTokens } from './sign-in.services';
 import { LoginResp } from 'src/core/types';
@@ -60,7 +59,7 @@ function registerPushNotifications() {
 }
 
 export const useSignInShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const form = useForm(formModel);
 
   async function onLoginSucceed(loginResp: LoginResp) {

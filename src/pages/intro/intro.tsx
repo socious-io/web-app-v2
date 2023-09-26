@@ -1,11 +1,11 @@
 import css from './intro.module.scss';
+import { useNavigate } from 'react-router-dom';
 import { Steps } from '../../components/atoms/steps-v2/steps';
 import { list } from './intro.constants';
 import { Typography } from '../../components/atoms/typography/typography';
 import { Button } from '../../components/atoms/button/button';
 import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
 
 export const Intro = (): JSX.Element => {
   const navigate = useNavigate();
@@ -24,10 +24,10 @@ export const Intro = (): JSX.Element => {
         <Steps autoPlay length={list.length} current={step} onStepClick={setStep} />
       </div>
       <div className={css.buttonContainer}>
-        <Button onClick={() => navigate({ to: '/sign-up/user/email' })} color="blue">
+        <Button onClick={() => navigate('/sign-up/user/email')} color="blue">
           Join now
         </Button>
-        <Button onClick={() => navigate({ to: '/sign-in' })} color="white">
+        <Button onClick={() => navigate('/sign-in')} color="white">
           Sign in
         </Button>
       </div>

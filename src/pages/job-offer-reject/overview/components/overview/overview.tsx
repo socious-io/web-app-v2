@@ -10,7 +10,7 @@ import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Divider } from 'src/components/templates/divider/divider';
 import { OverviewProps } from './overview.types';
 import { printWhen } from 'src/core/utils';
-import { useNavigate } from '@tanstack/react-location';
+
 import { InfoModal } from 'src/pages/job-edit/info/info-modal';
 import { SkillsModal } from 'src/pages/job-edit/skills/skills-modal';
 import { SocialCausesModal } from 'src/pages/job-edit/social-causes/social-causes-modal';
@@ -27,7 +27,7 @@ import {
 import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
 
 export const Overview = ({ data, questions, updateApplicantList }: OverviewProps): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const [openInfoModal, setOpenInfoModal] = useState<boolean>(false);
   const [openSkillsModal, setOpenSkillsModal] = useState<boolean>(false);
   const [openSocialCausesModal, setOpenSocialCausesModal] = useState<boolean>(false);

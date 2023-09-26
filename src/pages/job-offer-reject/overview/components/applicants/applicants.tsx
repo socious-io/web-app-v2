@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { Accordion } from '../../../../../components/atoms/accordion/accordion';
 import { ApplicantList } from '../../../../../components/molecules/applicant-list/applicant-list';
 import { applicantToApplicantListAdaptor, rejectApplicant } from '../../../job-offer-reject.services';
@@ -6,7 +5,7 @@ import { ApplicantsProps } from './applicants.types';
 
 export const Applicants = (props: ApplicantsProps): JSX.Element => {
   const { toReviewList, declinedList, onOfferClick, onRejectClick } = props;
-  const navigate = useNavigate();
+  const navigate = {};
 
   function onApplicantClick(applicantId: string) {
     navigate({ to: `./${applicantId}` });

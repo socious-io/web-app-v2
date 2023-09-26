@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { RootState } from 'src/store/store';
 import { endpoint } from 'src/core/endpoints';
 import { IdentityReq, MemberIdentity, Pagination, UserType } from 'src/core/types';
@@ -8,7 +8,7 @@ import { Resolver } from './team.type';
 import { convertFollowingsToContactList } from './team.service';
 
 export const useTeamShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { members, followings } = (useMatch().ownData as Resolver) || {};
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;

@@ -13,7 +13,9 @@ export async function findTokenRate(id: string) {
 }
 
 export async function getStripeLink(country: string, is_jp?: boolean): Promise<any> {
-  return get('/auth/stripe/connect-link', { params: { country, is_jp, redirect_url: location.href } }).then(({ data }) => data);
+  return get('/auth/stripe/connect-link', { params: { country, is_jp, redirect_url: location.href } }).then(
+    ({ data }) => data
+  );
 }
 
 export async function getSrtipeProfile(is_jp?: boolean): Promise<any> {

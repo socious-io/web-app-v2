@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
@@ -15,7 +14,7 @@ import {
 import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
 
 export const useMessageDetailShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const [sendingValue, setSendingValue] = useState('');
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;

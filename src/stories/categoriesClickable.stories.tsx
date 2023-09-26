@@ -6,9 +6,7 @@ export default {
   component: CategoriesClickable,
 } as ComponentMeta<typeof CategoriesClickable>;
 
-const Template: ComponentStory<typeof CategoriesClickable> = (args) => (
-  <CategoriesClickable {...args} />
-);
+const Template: ComponentStory<typeof CategoriesClickable> = (args) => <CategoriesClickable {...args} />;
 
 export const Primary = Template.bind({});
 
@@ -25,5 +23,5 @@ const ORGANIZATION_TYPE = [
 
 Primary.args = {
   list: ORGANIZATION_TYPE,
-  clickable: false
+  clickable: false,
 };

@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { IdentityReq } from 'src/core/types';
@@ -8,7 +7,7 @@ import css from './mobileHeader.module.scss';
 import { Search } from 'src/components/atoms/search/search';
 
 const MobileHeader = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);

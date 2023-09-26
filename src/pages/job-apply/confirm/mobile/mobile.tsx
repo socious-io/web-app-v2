@@ -1,9 +1,8 @@
-import { useMatch, useNavigate, useRouter } from '@tanstack/react-location';
 import { Button } from '../../../../components/atoms/button/button';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const queryParams = useMatch().search as { company?: string };
 
   return (
@@ -11,8 +10,8 @@ export const Mobile = (): JSX.Element => {
       <div className={css.main}>
         <div className={css.title}>Application sent!</div>
         <p className={css.message}>
-          <span className={css.companyName}>{queryParams?.company}</span> has received your
-          application to review. Wait for them to respond to you.
+          <span className={css.companyName}>{queryParams?.company}</span> has received your application to review. Wait
+          for them to respond to you.
         </p>
       </div>
       <div className={css.btnContainer}>

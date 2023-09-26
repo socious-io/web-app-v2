@@ -1,9 +1,8 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Button } from '../../../components/atoms/button/button';
 import css from './confirm.module.scss';
 
 export const Confirm = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const queryParam = useMatch().search;
   const email = queryParam.email;
 

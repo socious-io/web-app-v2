@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { visibility } from 'src/store/reducers/menu.reducer';
@@ -13,7 +12,7 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
 
 export const Jobs = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
   const { onMorePage, jobList, identity, goToJobDetail, showMorePageBtn } = useJobsShared();
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;

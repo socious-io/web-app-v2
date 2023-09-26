@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
@@ -14,7 +14,7 @@ import { SureModal } from 'src/components/templates/sure-modal';
 import { printWhen } from 'src/core/utils';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = useMatch().ownData as Loader;
   const { id } = useMatch().params || {};
   const tab = useMatch()?.search?.tab as string;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Header } from 'src/components/atoms/header/header';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
@@ -11,7 +11,7 @@ import { useSettingsShared } from '../settings.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     generateSettings: settings,
     payload,

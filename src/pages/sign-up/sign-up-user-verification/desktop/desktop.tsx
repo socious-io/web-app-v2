@@ -6,7 +6,6 @@ import { Typography } from 'src/components/atoms/typography/typography';
 import { Button } from 'src/components/atoms/button/button';
 import { Link } from 'src/components/atoms/link/link';
 
-
 export const Desktop = (): JSX.Element => {
   const { otp, setOtp, onResendRequest, onSubmit, navigateToSignIn } = useSignUpUserVerificationShared();
 

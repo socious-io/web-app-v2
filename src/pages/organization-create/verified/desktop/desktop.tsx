@@ -43,8 +43,7 @@ export const Desktop = (): JSX.Element => {
           </div>
         </div>
         <div className={css.bottom}>
-        <Button onClick={navigateToJobs}>Continue</Button>
-
+          <Button onClick={navigateToJobs}>Continue</Button>
         </div>
       </Card>
     </div>

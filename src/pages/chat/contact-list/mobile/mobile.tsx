@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
@@ -11,7 +10,7 @@ import { HeaderStaticMobile } from 'src/components/templates/header-static-mobil
 import { useContactListShared } from '../contact-list.shared';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     chats,
     onScroll,

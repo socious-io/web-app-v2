@@ -5,6 +5,6 @@ export const validatorsRecord: ValidatorsRecord = {
     return value.length >= amount;
   },
   number: (value: string, amount: number = 1) => {
-    return /\d/.test(value)
+    return /\d/.test(value);
   },
 };

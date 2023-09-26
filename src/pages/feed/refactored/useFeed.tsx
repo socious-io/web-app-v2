@@ -1,4 +1,3 @@
-import { useMatch } from '@tanstack/react-location';
 import { Resolver } from './feed.types';
 import { useState } from 'react';
 import { getFeedList, like, unlike } from './feed.service';

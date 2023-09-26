@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import {
@@ -13,7 +13,7 @@ import { formModel } from './screener-questions.form';
 import { updateForm } from './screener-questions.service';
 
 export const useScreenerQuestionsShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
   const formState = useSelector<RootState, CreateQuestionWizard>((state) => state.createQuestionWizard);
   const memoizedFormState = useMemo(() => formModel(formState), [formState.question_type, formState.add_choices]);

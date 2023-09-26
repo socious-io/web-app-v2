@@ -1,3 +1,3 @@
 export type SkillsFilterProps = {
-    onSubmit: (values: string[]) => void;
-}
+  onSubmit: (values: string[]) => void;
+};

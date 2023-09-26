@@ -2,14 +2,7 @@ import en from './en.json' assert { type: 'json' };
 
 export type Language = 'EN';
 
-export type Cluster =
-  | 'ERROR'
-  | 'SKILL'
-  | 'PASSION'
-  | 'SDG'
-  | 'ORGTYPE'
-  | 'PAYMENT'
-  | 'PROJECT';
+export type Cluster = 'ERROR' | 'SKILL' | 'PASSION' | 'SDG' | 'ORGTYPE' | 'PAYMENT' | 'PROJECT';
 
 export type Options = {
   i18n?: Language;

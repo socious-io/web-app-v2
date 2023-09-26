@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { endpoint } from 'src/core/endpoints';
 import { FollowingsReq, Pagination, UserType } from 'src/core/types';
 import { getFollowings } from './followings.service';
 
 export const useFollowingsShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = (useMatch().ownData as Pagination<FollowingsReq[]>) || {};
   const [followings, setFollowings] = useState(resolver);
   const [followingStatus, setFollowingStatus] = useState<{ [x: string]: 'FOLLOW' | 'UNFOLLOW' }>({});

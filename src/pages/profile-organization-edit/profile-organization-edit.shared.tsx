@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useMemo, useState } from 'react';
 import { useForm } from 'src/core/form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-organization-edit.services';
@@ -23,7 +22,7 @@ export const useProfileOrganizationEditShared = () => {
   const updateCityList = cityDispatcher(setCities);
   const [coverImage, setCoverImage] = useState(organization?.cover_image?.url);
   const [avatarImage, setAvatarImage] = useState(organization?.image?.url);
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
 
   async function runAvatarEditActions(type: 'upload' | 'remove' | undefined) {

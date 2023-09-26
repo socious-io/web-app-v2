@@ -1,4 +1,16 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.5641 18.1282C14.7416 18.1282 18.1282 14.7416 18.1282 10.5641C18.1282 6.38656 14.7416 3 10.5641 3C6.38656 3 3 6.38656 3 10.5641C3 14.7416 6.38656 18.1282 10.5641 18.1282Z" stroke="#BEC0C7" stroke-width="1.39559" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M21.1426 21.1425L15.9092 15.9091" stroke="#BEC0C7" stroke-width="1.39559" stroke-linecap="round" stroke-linejoin="round"/>
+<path
+    d="M10.5641 18.1282C14.7416 18.1282 18.1282 14.7416 18.1282 10.5641C18.1282 6.38656 14.7416 3 10.5641 3C6.38656 3 3 6.38656 3 10.5641C3 14.7416 6.38656 18.1282 10.5641 18.1282Z"
+    stroke="#BEC0C7"
+    stroke-width="1.39559"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+<path
+    d="M21.1426 21.1425L15.9092 15.9091"
+    stroke="#BEC0C7"
+    stroke-width="1.39559"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
 </svg>

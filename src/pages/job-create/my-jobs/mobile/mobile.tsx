@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Header } from 'src/components/atoms/header/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
@@ -8,7 +7,7 @@ import { useMyJobShared } from '../my-job.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     onGoingTitle,
     activeJobList,

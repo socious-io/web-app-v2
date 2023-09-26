@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import Dapp from 'src/dapp';
 import { Header } from 'src/components/atoms/header/header';
 import { Input } from 'src/components/atoms/input/input';
@@ -21,7 +21,7 @@ import { useOfferShared } from '../offer.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { applicantDetail } = (useMatch().ownData as Resolver) || {};
   const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '' });
   const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
@@ -40,8 +40,8 @@ export const Mobile = (): JSX.Element => {
     const payload: OfferPayload = {
       payment_mode: paymentMode,
       assignment_total: isPaidType ? (form.controls.assignmentTotal.value as number) : 1,
-      offer_message: form.controls.message.value as string || initialForm.message,
-      total_hours: form.controls.estimatedTotalHours.value as string || initialForm.estimatedTotalHours,
+      offer_message: (form.controls.message.value as string) || initialForm.message,
+      total_hours: (form.controls.estimatedTotalHours.value as string) || initialForm.estimatedTotalHours,
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
     offer(applicantDetail.id, payload).then(() => {

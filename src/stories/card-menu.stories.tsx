@@ -6,9 +6,7 @@ export default {
   component: CardMenu,
 } as ComponentMeta<typeof CardMenu>;
 
-const Template: ComponentStory<typeof CardMenu> = (args) => (
-  <CardMenu {...args}>Button</CardMenu>
-);
+const Template: ComponentStory<typeof CardMenu> = (args) => <CardMenu {...args}>Button</CardMenu>;
 
 export const Primary = Template.bind({});
 

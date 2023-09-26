@@ -1,7 +1,6 @@
 import { DropdownBtnItem } from 'src/components/atoms/dropdown-btn/dropdown-btn.types';
 import { search } from './desktop/search.services';
 import { PayloadModel } from './desktop/search.types';
-import { useMatch, useNavigate, useLocation, useRouter } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
 import { Pagination } from 'src/core/types';
 import { removeEmptyArrays } from 'src/core/utils';
@@ -12,7 +11,7 @@ export const useSearchShared = () => {
   const data = resolver.ownData as Pagination<unknown>;
   const [list, setList] = useState(data.items);
   const [result, setResult] = useState<number>(data.total_count);
-  const navigate = useNavigate();
+  const navigate = {};
   const location = useLocation();
 
   useEffect(() => {

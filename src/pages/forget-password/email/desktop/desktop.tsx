@@ -11,12 +11,7 @@ export const Desktop: React.FC = () => {
     <div className={css.container}>
       <Card className={css.card}>
         <div className={css.header}>
-          <img
-            src="/icons/chevron-left.svg"
-            alt="back-icon"
-            className={css.icon}
-            onClick={backToPerviousPage}
-          />
+          <img src="/icons/chevron-left.svg" alt="back-icon" className={css.icon} onClick={backToPerviousPage} />
         </div>
         <div className={css.main}>
           <div className={css.title}>Forget your password?</div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { Achievements } from '../pages/achievements/achievements';
 
 export default {
@@ -7,9 +7,7 @@ export default {
   component: Achievements,
 } as ComponentMeta<typeof Achievements>;
 
-const Template: ComponentStory<typeof Achievements> = (args) => (
-  <Achievements {...args} />
-);
+const Template: ComponentStory<typeof Achievements> = (args) => <Achievements {...args} />;
 
 export const Primary = Template.bind({});
 

@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
 import { ProfileCard } from 'src/components/templates/profile-card';
@@ -12,7 +11,7 @@ import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     updateMembers,
     identity,

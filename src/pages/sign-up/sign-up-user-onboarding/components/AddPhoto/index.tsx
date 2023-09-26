@@ -6,12 +6,11 @@ import { uploadImage } from 'src/pages/profile-user-edit/profile-user-edit.servi
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { useUser } from '../../sign-up-user-onboarding.context';
 
-import { useNavigate } from '@tanstack/react-location';
 import { post } from 'src/core/http';
 import { removeValuesFromObject } from 'src/core/utils';
 
 const AddPhoto: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { state, updateUser } = useUser();
   const [image, setImage] = useState({ imageUrl: state.avatar?.url, id: '' });
   const onUploadImage = async () => {

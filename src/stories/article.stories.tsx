@@ -1,14 +1,12 @@
-import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {Article} from '../components/molecules/article/article';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Article } from '../components/molecules/article/article';
 
 export default {
   title: 'MOLECULES/Article',
   component: Article,
 } as ComponentMeta<typeof Article>;
 
-const Template: ComponentStory<typeof Article> = (args) => (
-  <Article {...args} />
-);
+const Template: ComponentStory<typeof Article> = (args) => <Article {...args} />;
 
 export const Primary = Template.bind({});
 

@@ -1,4 +1,3 @@
-import { MakeGenerics } from '@tanstack/react-location';
 import {
   FollowingsReq,
   IdentityMeta,

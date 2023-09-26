@@ -6,11 +6,11 @@ import { getIdentities } from '../../../core/api';
 import { updateProfile } from './sign-up-user.complete.services';
 import { useDispatch } from 'react-redux';
 import { setIdentityList } from '../../../store/reducers/identity.reducer';
-import { useNavigate } from '@tanstack/react-location';
+
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 
 export const useSignUpUserCompleteShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
   const form = useForm(formModel);
 

@@ -1,4 +1,3 @@
-import { Outlet } from '@tanstack/react-location';
 import { useEffect } from 'react';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 import TouchMenu from '../menu/touchMenu/touchMenu';

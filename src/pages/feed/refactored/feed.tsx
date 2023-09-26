@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
@@ -22,7 +21,7 @@ import { useFeed } from './useFeed';
 
 const Feed = () => {
   const { isLoggedIn } = useAuth();
-  const navigate = useNavigate();
+  const navigate = {};
 
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
