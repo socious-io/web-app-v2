@@ -61,7 +61,7 @@ export const useMessageDetailShared = () => {
         img: receiver?.img,
         text: data.text,
         type: 'receiver',
-        time: receiver.time,
+        time: data.updated_at,
       },
     ]);
   });

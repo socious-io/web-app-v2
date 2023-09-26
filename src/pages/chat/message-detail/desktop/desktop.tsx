@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
@@ -93,6 +93,11 @@ export const Desktop = (): JSX.Element => {
     </div>
   );
 
+  useEffect(() => {
+    const messageBody = document.getElementById('chat-list-div');
+    if (messageBody) messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+  }, [list]);
+
   return (
     <div className={css.container}>
       <TwoColumnCursor visibleSidebar={isLoggedIn} height="100%">
@@ -126,7 +131,9 @@ export const Desktop = (): JSX.Element => {
               <span className={css.loader} />
             </div>
           ) : (
-            <div className={css.main}>{list.length ? <ChatList list={list} /> : emptyBoxJSX}</div>
+            <div id="chat-list-div" className={css.main}>
+              {list.length ? <ChatList list={list} /> : emptyBoxJSX}
+            </div>
           )}
           <div className={css.sendBoxContainer}>
             <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={onSend} disabled={loadingChat} />
