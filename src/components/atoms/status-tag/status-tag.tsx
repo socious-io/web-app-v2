@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import css from './status-tag.module.scss';
 import { StatusTagProps } from './status-tag.types';
 

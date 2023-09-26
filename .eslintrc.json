@@ -1,6 +1,23 @@
 {
-  "extends": ["react-app", "react-app/jest", "prettier"],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "import"],
   "rules": {
-    "semi": "error"
+    "semi": "error",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "groups": [["builtin", "external"], "internal", ["parent", "sibling", "index"]],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   }
 }

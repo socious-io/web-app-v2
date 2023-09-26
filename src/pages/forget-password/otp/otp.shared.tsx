@@ -1,10 +1,10 @@
 import { useState } from 'react';
-
+import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { handleError } from 'src/core/http';
-import { dialog } from 'src/core/dialog/dialog';
-import translate from 'src/translations';
 import { setAuthCookies } from 'src/pages/sign-in/sign-in.services';
+import translate from 'src/translations';
+
 import { forgetPassword } from '../forget-password.service';
 
 export const useOtpShared = () => {

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import Web3 from 'web3';
+import { switchNetwork } from '@wagmi/core';
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum';
 import { Web3Modal, Web3Button } from '@web3modal/react';
-import { configureChains, createClient, WagmiConfig, useAccount, Connector, Address, ConnectorData } from 'wagmi';
-import { switchNetwork } from '@wagmi/core';
-import { Chain } from 'wagmi/chains';
+import React, { useState, useEffect } from 'react';
 import { config } from 'src/config';
+import { configureChains, createClient, WagmiConfig, useAccount, Connector, Address, ConnectorData } from 'wagmi';
+import { Chain } from 'wagmi/chains';
+import Web3 from 'web3';
+
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
 import FlintWallet from './wallets/flint';

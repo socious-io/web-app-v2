@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import css from './webMenu.module.scss';
-import { Search } from 'src/components/atoms/search/search';
-import { Menu, getAvatar, menuList } from '../menu.services';
-
-import { PayloadModel } from 'src/pages/search/desktop/search.types';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { IdentityReq } from 'src/core/types';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Search } from 'src/components/atoms/search/search';
+import { IdentityReq } from 'src/core/types';
+import { PayloadModel } from 'src/pages/search/desktop/search.types';
+import { RootState } from 'src/store/store';
+
+import css from './webMenu.module.scss';
 import { SwitchAccount } from '../../../menu-cursor/components/switch-account/switch-account';
+import { Menu, getAvatar, menuList } from '../menu.services';
 
 const WebMenu = () => {
   const navigate = {};

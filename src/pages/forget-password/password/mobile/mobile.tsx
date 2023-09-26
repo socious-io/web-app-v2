@@ -1,7 +1,8 @@
 import { Button } from 'src/components/atoms/button/button';
 import { Input } from 'src/components/atoms/input/input';
-import { usePasswordShared } from '../password.shared';
+
 import css from './mobile.module.scss';
+import { usePasswordShared } from '../password.shared';
 
 export const Mobile = () => {
   const { backToPerviousPage, form, formIsValid, onChangePassword } = usePasswordShared();

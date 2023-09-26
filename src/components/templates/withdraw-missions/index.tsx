@@ -1,9 +1,10 @@
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
-import { printWhen } from 'src/core/utils';
 import { getFlooredFixed } from 'src/core/numbers';
-import { WithdrawMissionsProps } from './withdraw-missions.types';
+import { printWhen } from 'src/core/utils';
+
 import css from './withdraw-missions.module.scss';
+import { WithdrawMissionsProps } from './withdraw-missions.types';
 
 export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
   mission_name,

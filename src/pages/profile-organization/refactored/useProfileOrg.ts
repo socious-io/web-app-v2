@@ -6,6 +6,7 @@ import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
+
 import { getConnectStatus, hiringCall, sendRequestConnection } from './profileOrg.services';
 import { ProfileReq, Resolver } from './profileOrg.types';
 

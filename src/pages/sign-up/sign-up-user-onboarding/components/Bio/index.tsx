@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
-import StepHeader from '../stepHeader';
-import css from './bio.module.scss';
 import { Button } from 'src/components/atoms/button/button';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
-import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
+
+import css from './bio.module.scss';
 import { useUser } from '../../sign-up-user-onboarding.context';
 import { StepsContext } from '../steper';
+import StepHeader from '../stepHeader';
 
 const Bio: React.FC = () => {
   const { state, updateUser } = useUser();

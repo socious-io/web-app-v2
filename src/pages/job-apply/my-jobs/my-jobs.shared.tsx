@@ -1,5 +1,6 @@
-import { AwaitingResp, DeclinedResp, EndedResp, Loader, MyJobs, OnGoingResp, PendingResp } from './my-jobs.types';
 import { useState } from 'react';
+import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
+
 import {
   getAwaitingReviewList,
   getDeclinedApplicants,
@@ -7,7 +8,7 @@ import {
   getOnGoingList,
   getPendingApplicants,
 } from './my-jobs.services';
-import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
+import { AwaitingResp, DeclinedResp, EndedResp, Loader, MyJobs, OnGoingResp, PendingResp } from './my-jobs.types';
 
 export const useMyJobShared = () => {
   const resolver = useMatch();

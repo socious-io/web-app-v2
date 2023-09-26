@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+
 import { ImpactBadge } from './impact-badge';
 import '@testing-library/jest-dom';
 

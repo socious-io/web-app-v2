@@ -9,8 +9,9 @@ import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { printWhen } from 'src/core/utils';
-import { useCompleteMissionShared } from '../complete-mission.shared';
+
 import css from './mobile.module.scss';
+import { useCompleteMissionShared } from '../complete-mission.shared';
 
 export const Mobile = (): JSX.Element => {
   const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
@@ -121,7 +122,7 @@ export const Mobile = (): JSX.Element => {
               <Divider title="Resume">
                 <div className={css.uploadedResume}>
                   <img src="/icons/attachment-black.svg" />
-                  <a href={media.url} target="_blank">
+                  <a href={media.url} target="_blank" rel="noreferrer">
                     {media.filename}
                   </a>
                 </div>

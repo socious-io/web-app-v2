@@ -1,19 +1,20 @@
 import { useState } from 'react';
-
-import store from 'src/store/store';
-import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
-import css from './hired.module.scss';
-import { Accordion } from '../../../../../components/atoms/accordion/accordion';
-import { missionToApplicantListPayAdaptor } from '../../../job-offer-reject.services';
-import { HiredProps } from './hired.types';
-import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
-import { ApplicantListPay } from '../../../../../components/molecules/applicant-list-pay/applicant-list-pay';
-import { endpoint } from '../../../../../core/endpoints';
-import { dialog } from '../../../../../core/dialog/dialog';
 import Dapp from 'src/dapp';
+import { useAlert } from 'src/hooks/use-alert';
+import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
+import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
+import store from 'src/store/store';
+
+import css from './hired.module.scss';
+import { HiredProps } from './hired.types';
+import { Accordion } from '../../../../../components/atoms/accordion/accordion';
+import { ApplicantListPay } from '../../../../../components/molecules/applicant-list-pay/applicant-list-pay';
+import { dialog } from '../../../../../core/dialog/dialog';
+import { endpoint } from '../../../../../core/endpoints';
+import { missionToApplicantListPayAdaptor } from '../../../job-offer-reject.services';
 import { FeedbackModal } from '../feedback-modal';
 import { Rate } from '../feedback-modal/feedback-modal.types';
-import { useAlert } from 'src/hooks/use-alert';
+
 
 export const Hired = (props: HiredProps): JSX.Element => {
   const navigate = {};

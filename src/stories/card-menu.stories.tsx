@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { CardMenu } from '../components/molecules/card-menu/card-menu';
 
 export default {

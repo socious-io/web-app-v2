@@ -16,7 +16,7 @@ export default (msg: string, options?: Options): string => {
   const section = options?.section ? options?.section + '.' : '';
 
   // TODO: fix typing for index
-  const index: string = `${cluster}${section}${msgId}`;
+  const index = `${cluster}${section}${msgId}`;
 
   switch (options?.i18n) {
     default:

@@ -1,8 +1,9 @@
 import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateProjectType } from 'src/constants/PROJECT_TYPES';
-import { Job } from './people-list.types';
 import { convertSnakeCaseToLowerCase } from 'src/core/stringTransformation';
+
+import { Job } from './people-list.types';
 
 export const EXPERIENCE_LEVEL_OPTIONS = [
   { value: 'no_exp', label: 'No experience' },

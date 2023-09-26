@@ -1,7 +1,9 @@
-import css from './applicant-info.module.scss';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { ApplicantInfoProps } from './applicant-info.types';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+
+import css from './applicant-info.module.scss';
+import { ApplicantInfoProps } from './applicant-info.types';
+
 
 export const ApplicantInfo = (props: ApplicantInfoProps): JSX.Element => {
   return (

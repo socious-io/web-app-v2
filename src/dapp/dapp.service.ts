@@ -1,7 +1,8 @@
+import Web3 from 'web3';
+
+import { dappConfig } from './dapp.config';
 import { NETWORKS } from './dapp.connect';
 import { EscrowParams } from './dapp.types';
-import { dappConfig } from './dapp.config';
-import Web3 from 'web3';
 
 const makeAmount = async (web3: Web3, token: string, amount: number): Promise<string> => {
   const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);

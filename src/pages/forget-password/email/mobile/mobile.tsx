@@ -1,7 +1,8 @@
 import { Button } from 'src/components/atoms/button/button';
 import { Input } from 'src/components/atoms/input/input';
-import { useEmailShared } from '../email.shared';
+
 import css from './mobile.module.scss';
+import { useEmailShared } from '../email.shared';
 
 export const Mobile = () => {
   const { backToPerviousPage, form, navigateToOtp } = useEmailShared();

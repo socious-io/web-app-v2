@@ -1,21 +1,26 @@
 import { useState } from 'react';
-
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { ProfileCard } from 'src/components/templates/profile-card';
 import { Card } from 'src/components/atoms/card/card';
-import { Applicants } from '../components/applicants/applicants';
+import { BackLink } from 'src/components/molecules/back-link';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
+import { ApplicantResp } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
+import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
+import { getApplicantDetail, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
+import { Loader } from '../../job-offer-reject.types';
 import { OfferModal } from '../../offer/offer-modal';
+import { Applicants } from '../components/applicants/applicants';
 import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
-import { printWhen } from 'src/core/utils';
-import { Loader } from '../../job-offer-reject.types';
-import { ApplicantResp } from 'src/core/types';
-import { getApplicantDetail, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
-import css from './desktop.module.scss';
-import { useAuth } from 'src/hooks/use-auth';
-import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
-import { BackLink } from 'src/components/molecules/back-link';
+
+
+
+
+
 
 export const Desktop = (): JSX.Element => {
   const navigate = {};

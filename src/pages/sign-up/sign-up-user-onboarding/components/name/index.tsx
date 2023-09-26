@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
-import StepHeader from '../stepHeader';
-import css from './name.module.scss';
 import { Button } from 'src/components/atoms/button/button';
 import { Input } from 'src/components/atoms/input/input';
+
+import css from './name.module.scss';
 import { useUser } from '../../sign-up-user-onboarding.context';
 import { StepsContext } from '../steper';
+import StepHeader from '../stepHeader';
 
 const Name: React.FC = () => {
   const { state, updateUser } = useUser();

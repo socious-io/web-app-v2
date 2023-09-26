@@ -1,11 +1,11 @@
-import { getCountryByShortname } from 'src/constants/COUNTRIES';
-import { translateProjectType } from 'src/constants/PROJECT_TYPES';
-import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
-import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
-import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { translatePaymentRange } from 'src/constants/PAYMENT_RANGE';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { getCountryByShortname } from 'src/constants/COUNTRIES';
+import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
+import { translatePaymentRange } from 'src/constants/PAYMENT_RANGE';
+import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
+import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { translateProjectType } from 'src/constants/PROJECT_TYPES';
 import { when } from 'src/core/utils';
 
 export function getCategories(job: Job): Array<JSX.Element | string> {

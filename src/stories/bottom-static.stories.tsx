@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { BottomStatic } from '../components/templates/bottom-static/bottom-static';
 
 export default {

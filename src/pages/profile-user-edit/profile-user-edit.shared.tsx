@@ -1,18 +1,19 @@
-import { useMemo, useState } from 'react';
 
-import { useForm } from 'src/core/form';
-import { cityDispatcher, showActionSheet, uploadImage } from './profile-user-edit.services';
-import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
 import { Camera } from '@capacitor/camera';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { endpoint } from 'src/core/endpoints';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { generateFormModel } from './profile-user-edit.form';
+import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { getIdentities } from 'src/core/api';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { dialog } from 'src/core/dialog/dialog';
+import { endpoint } from 'src/core/endpoints';
+import { useForm } from 'src/core/form';
+import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { removedEmptyProps } from 'src/core/utils';
+import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+
+import { generateFormModel } from './profile-user-edit.form';
+import { cityDispatcher, showActionSheet, uploadImage } from './profile-user-edit.services';
 import { EditProps } from '../profile-user/desktop/edit/edit.types';
 
 export const useProfileUserEditShared = (props?: EditProps) => {

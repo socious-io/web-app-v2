@@ -1,22 +1,22 @@
-import css from './profileOrg.module.scss';
 
 import { useState } from 'react';
-import { Divider } from 'src/components/templates/divider/divider';
-import { useAuth } from 'src/hooks/use-auth';
-import { useProfileOrg } from './useProfileOrg';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
-import { Button } from 'src/components/atoms/button/button';
 import { Toggle } from 'src/components/atoms/toggle';
-
-import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { BackLink } from 'src/components/molecules/back-link';
-import { Card } from 'src/components/atoms/card/card';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Divider } from 'src/components/templates/divider/divider';
+import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { printWhen } from 'src/core/utils';
-import { EditOrganization } from '../desktop/edit/edit';
-import { ConnectModal } from '../connect-modal';
+import { useAuth } from 'src/hooks/use-auth';
+
+import css from './profileOrg.module.scss';
 import { showActions } from './profileOrg.services';
+import { useProfileOrg } from './useProfileOrg';
+import { ConnectModal } from '../connect-modal';
+import { EditOrganization } from '../desktop/edit/edit';
 
 const profileOrg = () => {
   const { isLoggedIn } = useAuth();

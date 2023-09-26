@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import Dapp from 'src/dapp';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
-import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
-import { PaymentMethods } from 'src/components/templates/payment-methods';
 import { Button } from 'src/components/atoms/button/button';
 import { BackLink } from 'src/components/molecules/back-link';
-import { AddCardModal } from '../credit-card/add-card-modal';
+import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
+import { PaymentMethods } from 'src/components/templates/payment-methods';
+import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
+import Dapp from 'src/dapp';
 import { useAuth } from 'src/hooks/use-auth';
-import { usePaymentShared } from '../payment.shared';
+
 import css from './desktop.module.scss';
+import { AddCardModal } from '../credit-card/add-card-modal';
+import { usePaymentShared } from '../payment.shared';
 
 export const Desktop: React.FC = () => {
   const {

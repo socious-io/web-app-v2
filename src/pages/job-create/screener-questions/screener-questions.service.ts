@@ -1,15 +1,17 @@
-import { Dispatch } from 'react';
 import { AnyAction } from '@reduxjs/toolkit';
+import { Dispatch } from 'react';
+import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
 import { post } from 'src/core/http';
-import { formModel } from './screener-questions.form';
+import { CreatePostPayload, CreateQuestionPayload } from 'src/core/types';
 import {
   setChoices,
   setQuestionType,
   setQuestions,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { CreatePostPayload, CreateQuestionPayload } from 'src/core/types';
-import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
+
+import { formModel } from './screener-questions.form';
+
 
 export const QUESTION_TYPE = [
   { value: 'TEXT', label: 'Text' },

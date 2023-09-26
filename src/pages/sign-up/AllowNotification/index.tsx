@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
+
 import css from './allow-notification.module.scss';
 
 export const AllowNotification: React.FC = () => {

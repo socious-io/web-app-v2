@@ -1,7 +1,7 @@
-import { createOrgWizardSlice } from '../../store/reducers/createOrgWizard.reducer';
-import { post } from '../../core/http';
-import { CreateOrgWizard } from '../../store/reducers/createOrgWizard.reducer';
 import { AddOrganizationPayload } from './organization-create.types';
+import { post } from '../../core/http';
+import { createOrgWizardSlice } from '../../store/reducers/createOrgWizard.reducer';
+import { CreateOrgWizard } from '../../store/reducers/createOrgWizard.reducer';
 
 export async function addOrganization(payload: AddOrganizationPayload) {
   return post('/orgs', payload).then(({ data }) => data);

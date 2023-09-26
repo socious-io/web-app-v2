@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { ContactList } from '../components/organisms/contact-list/contact-list';
 import { ContactListProps } from '../components/organisms/contact-list/contact-list.types';
 

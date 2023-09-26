@@ -1,7 +1,7 @@
+import css from './desktop.module.scss';
 import { Button } from '../../../../components/atoms/button/button';
 import { Card } from '../../../../components/atoms/card/card';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
-import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const { navigateToVerified, organizationName } = useOrganizationCreateShared();

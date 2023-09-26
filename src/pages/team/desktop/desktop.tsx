@@ -1,14 +1,15 @@
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { AddMemberModal } from '../add-member-modal';
+import { Card } from 'src/components/atoms/card/card';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { ProfileCard } from 'src/components/templates/profile-card';
 import { SureModal } from 'src/components/templates/sure-modal';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
-import { useTeamShared } from '../team.shared';
-import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
+import { AddMemberModal } from '../add-member-modal';
+import { useTeamShared } from '../team.shared';
 
 export const Desktop: React.FC = () => {
   const navigate = {};

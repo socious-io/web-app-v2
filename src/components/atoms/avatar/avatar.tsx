@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import css from './avatar.module.scss';
 import { AvatarProps } from './avatar.types';
 

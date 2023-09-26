@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { config } from 'src/config';
 import { dialog } from 'src/core/dialog/dialog';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
 import store from 'src/store/store';
 import translate from 'src/translations';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 
 export const http = axios.create({
   baseURL: config.baseURL,

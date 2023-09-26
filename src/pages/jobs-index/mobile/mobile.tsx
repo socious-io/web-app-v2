@@ -1,10 +1,11 @@
 import React from 'react';
-import { useJobsIndexShared } from '../jobs-index.shared';
 import { JobIntroCard } from 'src/components/templates/job-into-card';
-import css from './mobile.module.scss';
-import { toRelativeTime } from 'src/core/relative-time';
 import { OrganizationIntroCard } from 'src/components/templates/organization-intro-card/organization-intro-card';
+import { toRelativeTime } from 'src/core/relative-time';
 import { printWhen } from 'src/core/utils';
+
+import css from './mobile.module.scss';
+import { useJobsIndexShared } from '../jobs-index.shared';
 
 export const Mobile = () => {
   const { identities, jobList, data, showMorePageBtn, onMorePage } = useJobsIndexShared();

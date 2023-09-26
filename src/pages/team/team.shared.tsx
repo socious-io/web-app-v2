@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-
-import { RootState } from 'src/store/store';
 import { endpoint } from 'src/core/endpoints';
 import { IdentityReq, MemberIdentity, Pagination, UserType } from 'src/core/types';
-import { Resolver } from './team.type';
+import { RootState } from 'src/store/store';
+
 import { convertFollowingsToContactList } from './team.service';
+import { Resolver } from './team.type';
 
 export const useTeamShared = () => {
   const navigate = {};

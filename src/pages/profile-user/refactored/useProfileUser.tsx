@@ -1,13 +1,14 @@
-import { useSelector } from 'react-redux';
-import { ConnectStatus, IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { ProfileReq, Resolver } from './profileUser.types';
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { ConnectStatus, IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
+
 import {
   getConnectStatus,
   getUserMissions,
@@ -15,7 +16,10 @@ import {
   openToWorkCall,
   openToVolunteerCall,
 } from './profileUser.services';
-import { isTouchDevice } from 'src/core/device-type-detector';
+import { ProfileReq, Resolver } from './profileUser.types';
+
+
+
 
 export const useProfileUser = () => {
   const navigate = {};

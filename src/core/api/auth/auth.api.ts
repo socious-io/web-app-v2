@@ -1,5 +1,3 @@
-import { post, get } from '../http';
-import { SuccessRes } from '../types';
 import {
   LoginReq,
   PreRegisterReq,
@@ -14,6 +12,8 @@ import {
   PreRegisterRes,
   AuthRes,
 } from './auth.types';
+import { post, get } from '../http';
+import { SuccessRes } from '../types';
 
 export async function login(payload: LoginReq): Promise<AuthRes> {
   return (await post<AuthRes>('auth/login', payload)).data;

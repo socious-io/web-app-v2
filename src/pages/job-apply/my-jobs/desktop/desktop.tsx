@@ -1,19 +1,19 @@
 import { useState } from 'react';
-
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Card } from 'src/components/atoms/card/card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
-import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { ProfileCard } from 'src/components/templates/profile-card';
-import { printWhen } from 'src/core/utils';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { IdentityReq } from 'src/core/types';
-import { MyJobs } from '../my-jobs.types';
-import { useMyJobShared } from '../my-jobs.shared';
-import css from './desktop.module.scss';
+import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
+import { RootState } from 'src/store/store';
+
+import css from './desktop.module.scss';
+import { useMyJobShared } from '../my-jobs.shared';
+import { MyJobs } from '../my-jobs.types';
 
 export const Desktop: React.FC = () => {
   const navigate = {};

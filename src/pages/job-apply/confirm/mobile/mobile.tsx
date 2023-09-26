@@ -1,5 +1,5 @@
-import { Button } from '../../../../components/atoms/button/button';
 import css from './mobile.module.scss';
+import { Button } from '../../../../components/atoms/button/button';
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};

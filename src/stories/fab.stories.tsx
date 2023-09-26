@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { Fab } from '../components/atoms/fab/fab';
 
 export default {

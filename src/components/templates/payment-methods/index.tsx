@@ -1,9 +1,10 @@
 import { Card } from 'src/components/atoms/card/card';
-import { SelectCard } from 'src/components/molecules/select-card';
 import { Link } from 'src/components/atoms/link/link';
+import { SelectCard } from 'src/components/molecules/select-card';
 import { printWhen } from 'src/core/utils';
-import { PaymentMethodsProps } from './payment-methods.types';
+
 import css from './payment-methods.module.scss';
+import { PaymentMethodsProps } from './payment-methods.types';
 
 export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   crypto_method,

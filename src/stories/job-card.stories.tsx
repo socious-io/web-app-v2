@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { JobCard } from '../components/molecules/job-card/job-card';
 
 export default {

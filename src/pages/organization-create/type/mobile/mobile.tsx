@@ -1,8 +1,8 @@
-import { ORGANIZATION_TYPE } from '../../../../constants/ORGANIZATION_TYPE';
+import css from './mobile.module.scss';
 import { Button } from '../../../../components/atoms/button/button';
 import { Steps } from '../../../../components/atoms/steps/steps';
 import { TypeSelector } from '../../../../components/atoms/type-selector/type-selector';
-import css from './mobile.module.scss';
+import { ORGANIZATION_TYPE } from '../../../../constants/ORGANIZATION_TYPE';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {

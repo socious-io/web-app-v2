@@ -1,6 +1,6 @@
+import { CardReq, CardsRes, PaymentsRes, Card, PayReq, PayoutRes } from './payments.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq } from '../types';
-import { CardReq, CardsRes, PaymentsRes, Card, PayReq, PayoutRes } from './payments.types';
 
 export async function payments(params: PaginateReq): Promise<PaymentsRes> {
   return (await get<PaymentsRes>('payments', { params })).data;

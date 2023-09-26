@@ -1,6 +1,7 @@
+import { useAuth } from 'src/hooks/use-auth';
+
 import css from './twoColumns.module.scss';
 import { TwoColumnCursorProps } from './twoColumns.types';
-import { useAuth } from 'src/hooks/use-auth';
 
 export const TwoColumns = (props: TwoColumnCursorProps): JSX.Element => {
   const { children, ...rest } = props;

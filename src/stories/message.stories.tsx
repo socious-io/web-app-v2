@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { Message } from '../components/atoms/message/message';
 
 export default {

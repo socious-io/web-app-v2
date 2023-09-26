@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
-import { visibility } from 'src/store/reducers/menu.reducer';
-import css from './mobileHeader.module.scss';
 import { Search } from 'src/components/atoms/search/search';
+import { IdentityReq } from 'src/core/types';
+import { visibility } from 'src/store/reducers/menu.reducer';
+import { RootState } from 'src/store/store';
+
+import css from './mobileHeader.module.scss';
 
 const MobileHeader = () => {
   const navigate = {};

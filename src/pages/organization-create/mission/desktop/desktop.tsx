@@ -1,10 +1,10 @@
+import css from './desktop.module.scss';
 import { Button } from '../../../../components/atoms/button/button';
 import { Card } from '../../../../components/atoms/card/card';
 import { Steps } from '../../../../components/atoms/steps/steps';
 import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import css from './desktop.module.scss';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { required, useForm } from '../../../../core/form';
+import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Desktop = (): JSX.Element => {
   const { onMissionSkip, missionValue, navigateToCulture, updateMission, navigateToProfile } =

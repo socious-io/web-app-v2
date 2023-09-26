@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import { getIdentities } from 'src/core/api';
+
 import { getProfileRequest } from './sign-up-user-onboarding.service';
 
 const initialState = {

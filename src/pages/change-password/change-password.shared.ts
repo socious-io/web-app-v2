@@ -1,8 +1,9 @@
+import { dialog } from 'src/core/dialog/dialog';
 import { useForm } from 'src/core/form';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { changePassword } from './change-password.services';
-import { dialog } from 'src/core/dialog/dialog';
+
 import { formModel } from './change-password.form';
+import { changePassword } from './change-password.services';
 
 export const useChangePasswordShared = () => {
   const form = useForm(formModel);

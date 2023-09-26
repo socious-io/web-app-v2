@@ -1,4 +1,5 @@
 import { useRef, KeyboardEvent, MutableRefObject, useCallback, useEffect } from 'react';
+
 import css from './otp.module.scss';
 import { OtpProps } from './otp.types';
 

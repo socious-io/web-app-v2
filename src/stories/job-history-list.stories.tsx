@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { JobHistoryList } from '../components/organisms/job-history-list/job-history-list';
 
 export default {

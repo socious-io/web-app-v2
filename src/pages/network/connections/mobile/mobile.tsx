@@ -1,15 +1,15 @@
 import { useState } from 'react';
-
-import { Header } from 'src/components/atoms/header/header';
-import { Tabs } from 'src/components/atoms/tabs/tabs';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
-import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { Header } from 'src/components/atoms/header/header';
+import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
 import { printWhen } from 'src/core/utils';
+
+import css from './mobile.module.scss';
 import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
 import { useConnectionsShared } from '../connections.shared';
-import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
   const navigate = {};

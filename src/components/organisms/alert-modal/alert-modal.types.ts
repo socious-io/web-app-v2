@@ -1,5 +1,5 @@
-import { CardSlideProps } from 'src/components/templates/card-slide-up/card-slide-up.types';
 import { ButtonProps } from 'src/components/atoms/button/button.types';
+import { CardSlideProps } from 'src/components/templates/card-slide-up/card-slide-up.types';
 
 export interface AlertModalProps extends Omit<CardSlideProps, 'children'> {
   title: string;

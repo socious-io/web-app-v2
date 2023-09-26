@@ -1,8 +1,9 @@
-import { Card } from 'src/components/atoms/card/card';
 import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
 import { printWhen } from 'src/core/utils';
-import { BankAccountsProps } from './bank-accounts.types';
+
 import css from './bank-accounts.module.scss';
+import { BankAccountsProps } from './bank-accounts.types';
 
 export const BankAccounts: React.FC<BankAccountsProps> = ({ accounts, bankAccountLink, isDisabled }) => {
   return (
@@ -18,7 +19,7 @@ export const BankAccounts: React.FC<BankAccountsProps> = ({ accounts, bankAccoun
         !!accounts?.length
       )}
       <Button color="white" disabled={isDisabled} className={css.btn}>
-        <a href={bankAccountLink} target="_blank" className={`${css.link} ${isDisabled && css.link__disabled}`}>
+        <a href={bankAccountLink} target="_blank" className={`${css.link} ${isDisabled && css.link__disabled}`} rel="noreferrer">
           <img src="/icons/add.svg" width={18} height={18} />
           Add a bank account
         </a>

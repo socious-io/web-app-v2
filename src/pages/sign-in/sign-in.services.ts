@@ -1,9 +1,10 @@
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { post, get } from '../../core/http';
-import { CreateFcmPayload, FcmListResp, LoginResp } from '../../core/types';
-import { LoginPayload } from './sign-in.types';
 import { config } from 'src/config';
 import { dialog } from 'src/core/dialog/dialog';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+
+import { LoginPayload } from './sign-in.types';
+import { post, get } from '../../core/http';
+import { CreateFcmPayload, FcmListResp, LoginResp } from '../../core/types';
 
 export async function login(payload: LoginPayload): Promise<LoginResp> {
   return post('auth/web/login', payload).then(({ data }) => data);

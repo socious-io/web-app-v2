@@ -1,15 +1,17 @@
 import { CSSProperties, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { endpoint } from 'src/core/endpoints';
+import { IdentityReq } from 'src/core/types';
 import { JobDetailCard } from 'src/pages/job-detail/components/job-detail-card/job-detail-card';
 import { getScreeningQuestions } from 'src/pages/job-offer-reject/job-offer-reject.services';
-import { DetailOutletProps } from './detail-outlet.types';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { IdentityReq } from 'src/core/types';
-import { UserProfileCard } from '../../components/user-profile-card/user-profile-card';
 import { getUserDetail } from 'src/pages/profile-user/refactored/profileUser.services';
+import { RootState } from 'src/store/store';
+
+import { DetailOutletProps } from './detail-outlet.types';
+import { UserProfileCard } from '../../components/user-profile-card/user-profile-card';
+
 
 export function DetailOutlet(props: DetailOutletProps): JSX.Element {
   const [loading, setLoading] = useState(false);

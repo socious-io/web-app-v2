@@ -1,4 +1,4 @@
-import { Identity } from '../site/site.type';
+import { Identity } from '../site/site.types';
 import { PaginateRes } from '../types';
 
 export interface MessageReq {

@@ -1,5 +1,6 @@
-import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React from 'react';
+
 import { JobHistoryItem } from '../components/molecules/job-history-item/job-history-item';
 
 export default {

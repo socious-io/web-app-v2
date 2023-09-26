@@ -1,10 +1,12 @@
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
-import { useSocialCausesShared } from '../social-causes.shared';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+
 import css from './mobile.module.scss';
 import { createFormInitState, jobEditRequest } from '../../info/info.services';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { useSocialCausesShared } from '../social-causes.shared';
+
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};

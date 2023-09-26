@@ -1,11 +1,12 @@
-import { WebModal } from 'src/components/templates/web-modal';
-import { Search } from 'src/components/atoms/search/search';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { SkillsModalProps } from './skills-modal.types';
-import { useSkillsShared } from '../skills.shared';
-import css from './skills-modal.module.scss';
+import { Search } from 'src/components/atoms/search/search';
+import { WebModal } from 'src/components/templates/web-modal';
 
+import css from './skills-modal.module.scss';
+import { SkillsModalProps } from './skills-modal.types';
 import { createFormInitState, jobEditRequest } from '../../info/info.services';
+import { useSkillsShared } from '../skills.shared';
+
 
 export const SkillsModal: React.FC<SkillsModalProps> = ({ open, onClose, onDone, jobOverview }) => {
   const { onSearch, socialCauses, selectedSkills, isValid, setSelectedSkills } = useSkillsShared(jobOverview.skills);

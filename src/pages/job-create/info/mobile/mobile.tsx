@@ -1,25 +1,26 @@
 import { useDispatch } from 'react-redux';
+import { Button } from 'src/components/atoms/button/button';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { Button } from 'src/components/atoms/button/button';
+import { Divider } from 'src/components/templates/divider/divider';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
+import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
-import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
+import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
+import { CategoriesResp, CreatePostPayload } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
 import { setPostPaymentScheme, setPostPaymentType } from 'src/store/reducers/createPostWizard.reducer';
 import { setQuestionProjectIds } from 'src/store/reducers/createQuestionWizard.reducer';
-import { printWhen } from 'src/core/utils';
-import { CategoriesResp, CreatePostPayload } from 'src/core/types';
+
+import css from './mobile.module.scss';
 import { createPost } from '../info.services';
 import { useInfoShared } from '../info.shared';
-import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const dispatch = useDispatch();

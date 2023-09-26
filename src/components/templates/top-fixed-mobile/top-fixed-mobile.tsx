@@ -1,6 +1,7 @@
-import { TopFixedMobileProps } from './top-fixed-mobile.types';
-import css from './top-fixed-mobile.module.scss';
 import { CSSProperties } from 'react';
+
+import css from './top-fixed-mobile.module.scss';
+import { TopFixedMobileProps } from './top-fixed-mobile.types';
 
 export const TopFixedMobile = (props: TopFixedMobileProps): JSX.Element => {
   const style: CSSProperties = {

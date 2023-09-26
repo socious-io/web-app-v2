@@ -1,16 +1,17 @@
 import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from '../../../core/types';
-import { RootState } from '../../../store/store';
+import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
+
+import css from './dialog-review.module.scss';
+import { DialogReviewProps } from './dialog-review.types';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Button } from '../../../components/atoms/button/button';
 import { Card } from '../../../components/atoms/card/card';
 import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
-import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
+import { IdentityReq } from '../../../core/types';
+import { RootState } from '../../../store/store';
 import { DialogCreate } from '../dialog-create/dialog-create';
-import css from './dialog-review.module.scss';
-import { DialogReviewProps } from './dialog-review.types';
 import { getFeedList, submitPost, uploadImage } from '../refactored/feed.service';
 
 export const DialogReview = (props: DialogReviewProps) => {

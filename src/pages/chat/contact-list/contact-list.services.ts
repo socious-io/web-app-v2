@@ -1,8 +1,8 @@
+import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
 import { get } from 'src/core/http';
 import { toRelativeTime } from 'src/core/relative-time';
 import { FollowingsReq, Pagination, SummaryReq } from 'src/core/types';
 import store, { RootState } from 'src/store/store';
-import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
 
 export async function getFollowings(payload: { page?: number; name: string }): Promise<Pagination<FollowingsReq[]>> {
   return get(`follows/followings?page=${payload?.page || ''}&name=${payload.name}`).then(({ data }) => {

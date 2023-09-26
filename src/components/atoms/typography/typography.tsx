@@ -1,5 +1,6 @@
-import css from './typography.module.scss';
 import { CSSProperties } from 'react';
+
+import css from './typography.module.scss';
 import { TypeList, TypographyProps } from './typography.types';
 
 export const Typography = (props: TypographyProps): JSX.Element => {

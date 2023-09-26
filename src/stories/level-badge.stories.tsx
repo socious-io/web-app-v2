@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { LevelBadge } from '../components/atoms/level-badge/level-badge';
 
 export default {
