@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { TwoThird } from '../components/templates/two-third/two-third';
 
 export default {

@@ -1,6 +1,7 @@
+import { CSSProperties } from 'react';
+
 import css from './button.module.scss';
 import { ButtonProps } from './button.types';
-import { CSSProperties } from 'react';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
 
 const colorStyle: Record<NonNullable<ButtonProps['color']>, CSSProperties> = {

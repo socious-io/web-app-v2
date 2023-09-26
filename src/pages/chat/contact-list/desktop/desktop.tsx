@@ -1,11 +1,13 @@
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { Card } from 'src/components/atoms/card/card';
 import { Fab } from 'src/components/atoms/fab/fab';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
-import { Card } from 'src/components/atoms/card/card';
-import { CreateChatModal } from '../create-chat-modal';
-import { useContactListShared } from '../contact-list.shared';
-import css from './desktop.module.scss';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
+import { useContactListShared } from '../contact-list.shared';
+import { CreateChatModal } from '../create-chat-modal';
+
 
 export const Desktop = (): JSX.Element => {
   const navigate = {};

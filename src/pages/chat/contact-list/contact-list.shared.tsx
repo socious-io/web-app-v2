@@ -1,13 +1,13 @@
 import { useState } from 'react';
-
 import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
-import { Resolver } from './contact-list.types';
+
 import {
   chatEntityToContactListAdaptor,
   convertFollowingsToContactList,
   getChatsSummery,
   getFollowings,
 } from './contact-list.services';
+import { Resolver } from './contact-list.types';
 import { createChats, postFind } from '../new-chat/new-chat.services';
 
 export const useContactListShared = () => {

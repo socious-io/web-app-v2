@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
+import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
 import { socket } from 'src/core/socket';
 import { IdentityReq } from 'src/core/types';
-import { MessageLoader } from './message-detail.types';
+import { RootState } from 'src/store/store';
+
 import {
   chatListAdaptor,
   getMessagesById,
@@ -11,7 +12,7 @@ import {
   getParticipantsById,
   onPostMessage,
 } from './message-detail.services';
-import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
+import { MessageLoader } from './message-detail.types';
 
 export const useMessageDetailShared = () => {
   const navigate = {};

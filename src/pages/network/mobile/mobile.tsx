@@ -1,8 +1,9 @@
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Search } from 'src/components/atoms/search/search';
 import { Card } from 'src/components/atoms/card/card';
-import { useNetworkShared } from '../network.shared';
+import { Search } from 'src/components/atoms/search/search';
+
 import css from './mobile.module.scss';
+import { useNetworkShared } from '../network.shared';
 
 export const Mobile: React.FC = () => {
   const { navigateNetwork, identity } = useNetworkShared();

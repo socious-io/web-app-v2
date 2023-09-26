@@ -1,11 +1,13 @@
-import css from './intro.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { Steps } from '../../components/atoms/steps-v2/steps';
-import { list } from './intro.constants';
-import { Typography } from '../../components/atoms/typography/typography';
-import { Button } from '../../components/atoms/button/button';
-import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { list } from './intro.constants';
+import css from './intro.module.scss';
+import { Button } from '../../components/atoms/button/button';
+import { Steps } from '../../components/atoms/steps-v2/steps';
+import { Typography } from '../../components/atoms/typography/typography';
+import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
+
 
 export const Intro = (): JSX.Element => {
   const navigate = useNavigate();

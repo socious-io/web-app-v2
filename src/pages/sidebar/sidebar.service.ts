@@ -1,4 +1,5 @@
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+
 import { post } from '../../core/http';
 
 export async function logout() {

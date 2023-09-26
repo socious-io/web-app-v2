@@ -1,11 +1,13 @@
-import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
-import css from './desktop.module.scss';
-import { Input } from 'src/components/atoms/input/input';
 import { Button } from 'src/components/atoms/button/button';
-import { useChangePasswordShared } from '../change-password.shared';
-import { Header } from 'src/components/atoms/header-v2/header';
-import { printWhen } from 'src/core/utils';
 import { Card } from 'src/components/atoms/card/card';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Input } from 'src/components/atoms/input/input';
+import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
+import { printWhen } from 'src/core/utils';
+
+import css from './desktop.module.scss';
+import { useChangePasswordShared } from '../change-password.shared';
+
 
 export const Desktop = (): JSX.Element => {
   const { form, onSubmit, formIsValid, notMatchingPasswords } = useChangePasswordShared();

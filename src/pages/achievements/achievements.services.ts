@@ -1,4 +1,5 @@
 import { TIERS, Tiers } from 'src/constants/TIERS_TABLE';
+
 import { get } from '../../core/http';
 import { BadgesResp } from '../../core/types';
 

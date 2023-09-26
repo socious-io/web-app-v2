@@ -1,14 +1,13 @@
 import css from './desktop.module.scss';
-import Steper from '../components/steper';
-import SocialCauses from '../components/social-causes';
-import Location from '../components/location';
-import PhoneNumber from '../components/phone-number';
-import { UserProvider } from '../sign-up-user-onboarding.context';
-import Bio from '../components/Bio';
 import AddPhoto from '../components/AddPhoto';
-import Skills from '../components/Skills';
-
+import Bio from '../components/Bio';
+import Location from '../components/location';
 import Name from '../components/name';
+import PhoneNumber from '../components/phone-number';
+import Skills from '../components/Skills';
+import SocialCauses from '../components/social-causes';
+import Steper from '../components/steper';
+import { UserProvider } from '../sign-up-user-onboarding.context';
 
 export const Desktop = (): JSX.Element => {
   const navigate = {};

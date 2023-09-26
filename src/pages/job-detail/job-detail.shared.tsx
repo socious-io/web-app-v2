@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
+
 import { Resolver } from './job-detail.types';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 
 export const useJobDetailShared = () => {
   const navigate = {};

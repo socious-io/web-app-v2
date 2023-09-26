@@ -1,6 +1,6 @@
 import { LoginReq, RefreshReq, ResendVerifyCode } from './../types';
-import { get, post } from '../http';
 import { Offer, Endpoints } from './index.types';
+import { get, post } from '../http';
 
 function getDataProp<T = unknown>(resp: { data: T }) {
   return resp.data;

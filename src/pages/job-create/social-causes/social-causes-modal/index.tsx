@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { WebModal } from 'src/components/templates/web-modal';
-import { Search } from 'src/components/atoms/search/search';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Search } from 'src/components/atoms/search/search';
+import { WebModal } from 'src/components/templates/web-modal';
 import { SkillsModal } from 'src/pages/job-create/skills/skills-modal';
 import { setPostCausesTags } from 'src/store/reducers/createPostWizard.reducer';
+
+import css from './social-causes-modal.module.scss';
 import { SocialCausesModalProps } from './social-causes-modal.types';
 import { useSocialCausesShared } from '../social-causes.shared';
-import css from './social-causes-modal.module.scss';
 
 export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onClose, onDone, onOpen }) => {
   const dispatch = useDispatch();

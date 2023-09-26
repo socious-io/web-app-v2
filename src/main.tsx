@@ -1,8 +1,9 @@
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Helmet } from 'react-helmet';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Helmet } from 'react-helmet';
+
 import App from './App';
 import './index.scss';
 import FallBack from './pages/fall-back/fall-back';

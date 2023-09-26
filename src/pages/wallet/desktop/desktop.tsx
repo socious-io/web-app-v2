@@ -1,19 +1,20 @@
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
+import { Card } from 'src/components/atoms/card/card';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { BankAccounts } from 'src/components/templates/bank-accounts';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { Card } from 'src/components/atoms/card/card';
 import { ProfileCard } from 'src/components/templates/profile-card';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { printWhen } from 'src/core/utils';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { IdentityReq } from 'src/core/types';
-import { useWalletShared } from '../wallet.shared';
-import css from './desktop.module.scss';
+import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
+import { RootState } from 'src/store/store';
+
+import css from './desktop.module.scss';
+import { useWalletShared } from '../wallet.shared';
 
 export const Desktop: React.FC = () => {
   const navigate = {};

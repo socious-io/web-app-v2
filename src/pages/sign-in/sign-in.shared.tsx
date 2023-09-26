@@ -1,23 +1,21 @@
-import { formModel } from './sign-in.form';
-import { getFcmTokens, getUsersTokens, setAuthCookies, setFcmTokens } from './sign-in.services';
-import { LoginResp } from 'src/core/types';
-import { getIdentities } from 'src/core/api';
+import { Capacitor } from '@capacitor/core';
+import { useNavigate } from 'react-router-dom';
+import { User, profile, identities, AuthRes, LoginReq, login, handleError } from 'src/core/api';
+import { useForm } from 'src/core/form';
+import { getFormValues } from 'src/core/form/customValidators/formValues';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import store from 'src/store/store';
-import { endpoint } from 'src/core/endpoints';
-import { get, handleError, post } from 'src/core/http';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { LoginPayload } from './sign-in.types';
-import { useForm } from 'src/core/form';
+
+import { formModel } from './sign-in.form';
+import { getFcmTokens, setAuthCookies, setFcmTokens } from './sign-in.services';
 import {
   addNotificationReceivedListener,
   getDeliveredNotifications,
   getToken,
   requestPermissions,
 } from '../../core/pushNotification';
-import { Capacitor } from '@capacitor/core';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { getProfileRequest } from '../sign-up/sign-up-user-onboarding/sign-up-user-onboarding.service';
+
 
 const addListeners = () => {
   addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
@@ -59,38 +57,32 @@ function registerPushNotifications() {
 }
 
 export const useSignInShared = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const form = useForm(formModel);
 
-  async function onLoginSucceed(loginResp: LoginResp) {
+  async function onLoginSucceed(loginResp: AuthRes) {
     await setAuthCookies(loginResp);
-    const resp = await getIdentities();
     const path = await nonPermanentStorage.get('savedLocation');
-    store.dispatch(setIdentityList(resp));
-    const selectedIdentity = resp.find((identity) => identity.primary);
-    const userProfile = await getProfileRequest(selectedIdentity?.id);
+    store.dispatch(setIdentityList(await identities()));
+    const userProfile = await profile();
     const userLandingPath = checkOnboardingMandatoryFields(userProfile) ? '/sign-up/user/welcome' : '/jobs';
-    navigate({ to: path ? path : userLandingPath, replace: true });
+    navigate(path ? path : userLandingPath);
     return loginResp;
   }
-  const checkOnboardingMandatoryFields = (profile) => {
-    const mandatoryFields = ['country', 'city', 'social_causes', 'skills'];
-    let shouldDisplayOnboarding = false;
-    mandatoryFields.forEach((field) => {
-      if (
-        profile[field] === null ||
-        profile[field] === '' ||
-        (Array.isArray(profile[field]) && profile[field].length === 0)
-      ) {
-        shouldDisplayOnboarding = true;
-      }
+
+  const checkOnboardingMandatoryFields = (profile: User) => {
+    const mandatoryFields: (keyof User)[] = ['country', 'city', 'social_causes', 'skills'];
+
+    return mandatoryFields.some((field) => {
+      const value = profile[field];
+      return value === null || value === '' || (Array.isArray(value) && value.length === 0);
     });
-    return shouldDisplayOnboarding;
   };
+
   async function onLogin() {
-    const formValues = getFormValues(form) as LoginPayload;
-    endpoint.post.auth
-      .login(formValues)
+    const formValues = getFormValues(form) as LoginReq;
+
+    login(formValues)
       .then(onLoginSucceed)
       .then(registerPushNotifications)
       .catch(handleError({ title: 'Login Failed' }));

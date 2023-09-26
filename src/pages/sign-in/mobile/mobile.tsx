@@ -29,7 +29,7 @@ export const Mobile = (): JSX.Element => {
           />
         </form>
         <div className={css.forgotPassword}>
-          <Link onClick={() => navigate({ to: '/forget-password/email' })}>Forgot your password?</Link>
+          <Link onClick={() => navigate('/forget-password/email')}>Forgot your password?</Link>
         </div>
       </div>
       <div>
@@ -39,7 +39,7 @@ export const Mobile = (): JSX.Element => {
           </Button>
           <Typography marginTop="1rem">
             <span>Not a member? </span>
-            <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>Sign up</Link>
+            <Link onClick={() => navigate('/sign-up/user/email')}>Sign up</Link>
           </Typography>
         </div>
       </div>

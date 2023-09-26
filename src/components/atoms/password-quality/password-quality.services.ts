@@ -4,7 +4,7 @@ export const validatorsRecord: ValidatorsRecord = {
   characters: (value: string, amount: number) => {
     return value.length >= amount;
   },
-  number: (value: string, amount: number = 1) => {
+  number: (value: string, amount = 1) => {
     return /\d/.test(value);
   },
 };

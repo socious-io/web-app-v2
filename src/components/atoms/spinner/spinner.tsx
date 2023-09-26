@@ -1,6 +1,7 @@
-import css from './spinner.module.scss';
 import { LinearProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
+
+import css from './spinner.module.scss';
 import { RootState } from '../../../store/store';
 
 export function Spinner(): JSX.Element {

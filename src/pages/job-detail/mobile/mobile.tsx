@@ -1,21 +1,23 @@
+import { useEffect, useState } from 'react';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { Header } from 'src/components/atoms/header/header';
+import { SureModal } from 'src/components/templates/sure-modal';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { AuthGuard } from 'src/core/auth-guard/auth-guard';
+import { useAuth } from 'src/hooks/use-auth';
+
 import css from './mobile.module.scss';
 import { Button } from '../../../components/atoms/button/button';
-import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
 import { Categories } from '../../../components/atoms/categories/categories';
+import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
-import { getCategories } from '../job-detail.services';
 import { Divider } from '../../../components/templates/divider/divider';
 import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors';
 import { printWhen } from '../../../core/utils';
-import { Header } from 'src/components/atoms/header/header';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { getCategories } from '../job-detail.services';
 import { useJobDetailShared } from '../job-detail.shared';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
-import { AuthGuard } from 'src/core/auth-guard/auth-guard';
-import { useAuth } from 'src/hooks/use-auth';
-import { useEffect, useState } from 'react';
 import { getJobStructuresData } from '../job-details.jobStructuredData';
-import { SureModal } from 'src/components/templates/sure-modal';
+
 
 export const Mobile = (): JSX.Element => {
   const { navigate, job, identity, location, screeningQuestions } = useJobDetailShared();

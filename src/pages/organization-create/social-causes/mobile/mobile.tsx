@@ -1,11 +1,12 @@
 import { useState } from 'react';
+
+import css from './mobile.module.scss';
 import { Button } from '../../../../components/atoms/button/button';
 import { CategoriesClickable } from '../../../../components/atoms/categories-clickable/categories-clickable';
 import { Search } from '../../../../components/atoms/search/search';
 import { Steps } from '../../../../components/atoms/steps/steps';
-import { SOCIAL_CAUSES } from '../social-causes.services';
-import css from './mobile.module.scss';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
+import { SOCIAL_CAUSES } from '../social-causes.services';
 
 export const Mobile = (): JSX.Element => {
   const { socialCauses, updateSocialCauses, isSocialCausesValid, navigateToProfile, navigateToType } =

@@ -1,13 +1,16 @@
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import css from './desktop.module.scss';
 import { Card } from 'src/components/atoms/card/card';
 import { DesktopBackBox } from 'src/components/molecules/desktop-back-box/desktop-back-box';
-import { useAchievementsShared } from '../achievements.shared';
-import { Reward } from '../components/reward/reward';
-import { getTierRowBasedOnCurrentTier } from '../achievements.services';
 import { Modal } from 'src/components/templates/modal/modal';
-import { ClaimPoints } from '../components/claim-points/claim-points';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
+import { getTierRowBasedOnCurrentTier } from '../achievements.services';
+import { useAchievementsShared } from '../achievements.shared';
+import { ClaimPoints } from '../components/claim-points/claim-points';
+import { Reward } from '../components/reward/reward';
+
+
 
 export const Desktop = (): JSX.Element => {
   const {

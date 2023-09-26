@@ -1,8 +1,9 @@
+import { useForm } from 'src/core/form';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { handleError } from 'src/core/http';
+
 import { formModel } from './sign-up-user-email.form';
 import { preRegister, register } from './sign-up-user-email.services';
-import { useForm } from 'src/core/form';
 
 export const useSignUpUserEmailShared = () => {
   const form = useForm(formModel);

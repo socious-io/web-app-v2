@@ -1,20 +1,22 @@
 import { CSSProperties } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIdentities } from '../../../core/api';
-import { IdentityReq } from '../../../core/types';
-import { setIdentityList } from '../../../store/reducers/identity.reducer';
-import { visibility } from '../../../store/reducers/menu.reducer';
-import { RootState } from '../../../store/store';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { useAuth } from 'src/hooks/use-auth';
+
+import css from './mobile.module.scss';
+import { AccountsModel } from './mobile.types';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Button } from '../../../components/atoms/button/button';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
-import { setIdentityHeader, logout } from '../sidebar.service';
-import css from './mobile.module.scss';
-import { AccountsModel } from './mobile.types';
-import { printWhen } from '../../../core/utils';
+import { getIdentities } from '../../../core/api';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { useAuth } from 'src/hooks/use-auth';
+import { IdentityReq } from '../../../core/types';
+import { printWhen } from '../../../core/utils';
+import { setIdentityList } from '../../../store/reducers/identity.reducer';
+import { visibility } from '../../../store/reducers/menu.reducer';
+import { RootState } from '../../../store/store';
+import { setIdentityHeader, logout } from '../sidebar.service';
+
 
 export const Mobile = () => {
   const dispatch = useDispatch();

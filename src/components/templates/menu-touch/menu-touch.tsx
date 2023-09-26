@@ -1,8 +1,9 @@
-import { hapticsImpactLight } from '../../../core/haptic/haptic';
-import css from './menu-touch.module.scss';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
+
+import css from './menu-touch.module.scss';
+import { hapticsImpactLight } from '../../../core/haptic/haptic';
 import { Menu, menuList } from '../menu-cursor/menu-cursor.services';
 
 export const MenuTouch = (): JSX.Element => {

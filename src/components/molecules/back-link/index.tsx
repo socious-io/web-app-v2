@@ -1,6 +1,7 @@
 import { Card } from 'src/components/atoms/card/card';
-import { BackLinkProps } from './back-link.types';
+
 import css from './back-link.module.scss';
+import { BackLinkProps } from './back-link.types';
 
 export const BackLink = (props: BackLinkProps): JSX.Element => {
   function onClick() {

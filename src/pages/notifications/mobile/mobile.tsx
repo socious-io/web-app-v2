@@ -1,7 +1,7 @@
-import { NotificationList } from '../../../components/organisms/notification-list/notification-list';
-import { Avatar } from '../../../components/atoms/avatar/avatar';
-import { useNotificationsShared } from '../notifications.shared';
 import css from './mobile.module.scss';
+import { Avatar } from '../../../components/atoms/avatar/avatar';
+import { NotificationList } from '../../../components/organisms/notification-list/notification-list';
+import { useNotificationsShared } from '../notifications.shared';
 
 export const Mobile: React.FC = () => {
   const navigate = {};

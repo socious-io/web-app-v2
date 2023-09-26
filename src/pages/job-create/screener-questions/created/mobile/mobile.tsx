@@ -1,11 +1,12 @@
-import store from 'src/store/store';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
-import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
-import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { dialog } from 'src/core/dialog/dialog';
-import { useCreatedShared } from '../created.shared';
+import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
+import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
+import store from 'src/store/store';
+
 import css from './mobile.module.scss';
+import { useCreatedShared } from '../created.shared';
 
 export const Mobile: React.FC = () => {
   const navigate = {};

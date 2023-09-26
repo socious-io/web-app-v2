@@ -1,20 +1,21 @@
 import { useState } from 'react';
-
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
-import { Button } from 'src/components/atoms/button/button';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { SocialCausesModal } from 'src/pages/job-create/social-causes/social-causes-modal';
-import { printWhen } from 'src/core/utils';
-import { getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
-import { useMyJobShared } from '../my-job.shared';
-import { MyJobs } from '../my-jobs.types';
-import css from './desktop.module.scss';
-import { useAuth } from 'src/hooks/use-auth';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
 import { BackLink } from 'src/components/molecules/back-link';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { printWhen } from 'src/core/utils';
+import { useAuth } from 'src/hooks/use-auth';
+import { SocialCausesModal } from 'src/pages/job-create/social-causes/social-causes-modal';
+
+import css from './desktop.module.scss';
+import { useMyJobShared } from '../my-job.shared';
+import { getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
+import { MyJobs } from '../my-jobs.types';
+
 
 export const Desktop: React.FC = () => {
   const resolver = useMatch();

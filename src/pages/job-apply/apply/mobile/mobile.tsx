@@ -1,15 +1,16 @@
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { resumeInitialState } from '../apply.services';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Input } from 'src/components/atoms/input/input';
 import { Button } from 'src/components/atoms/button/button';
 import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
-import { Header } from 'src/components/atoms/header/header';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { Header } from 'src/components/atoms/header/header';
+import { Input } from 'src/components/atoms/input/input';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { Divider } from 'src/components/templates/divider/divider';
 import { printWhen } from 'src/core/utils';
-import { useApplyShared } from '../apply.shared';
+
 import css from './mobile.module.scss';
+import { resumeInitialState } from '../apply.services';
+import { useApplyShared } from '../apply.shared';
 
 export const Mobile = (): JSX.Element => {
   const {
@@ -46,7 +47,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.uploadedResume}>
       <img src="/icons/attachment-black.svg" />
       {resume?.file && (
-        <a href={URL.createObjectURL(resume.file)} target="_blank">
+        <a href={URL.createObjectURL(resume.file)} target="_blank" rel="noreferrer">
           {resume.name}
         </a>
       )}

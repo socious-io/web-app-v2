@@ -1,6 +1,6 @@
+import { ConnectRequest, ConnectionsRes } from './connection.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq } from '../types';
-import { ConnectRequest, ConnectionsRes } from './connection.type';
 
 export async function connections(params: PaginateReq): Promise<ConnectionsRes> {
   return (await get<ConnectionsRes>('connections', { params })).data;

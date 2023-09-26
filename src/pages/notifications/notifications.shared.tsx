@@ -1,9 +1,9 @@
 import { useState } from 'react';
-
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { getNotificationList } from './notifications.service';
 import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
+
+import { getNotificationList } from './notifications.service';
 import { Resolver } from './notifications.types';
 
 export const useNotificationsShared = () => {

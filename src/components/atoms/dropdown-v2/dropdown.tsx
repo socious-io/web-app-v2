@@ -1,8 +1,10 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { printWhen } from '../../../core/utils';
+import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
+
 import css from './dropdown.module.scss';
 import { DropdownItem, DropdownProps } from './dropdown.types';
-import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
+import { printWhen } from '../../../core/utils';
+
 
 const submenuHeightREM = 2.75;
 

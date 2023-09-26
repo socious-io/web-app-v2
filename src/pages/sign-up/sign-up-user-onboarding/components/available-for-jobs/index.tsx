@@ -1,9 +1,10 @@
 // this page has not been implemented
 import React, { useState } from 'react';
-import StepHeader from '../stepHeader';
-import css from './available-for-jobs.module.scss';
 import { Button } from 'src/components/atoms/button/button';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+
+import css from './available-for-jobs.module.scss';
+import StepHeader from '../stepHeader';
 
 const AvailableForJobs: React.FC = () => {
   const [isAvailable, setIsAvailable] = useState('1');

@@ -1,3 +1,6 @@
+import { OnPostMessageParams, ParticipantDetail } from './message-detail.types';
+import { Message } from '../../../components/atoms/message/message.types';
+import { get, post } from '../../../core/http';
 import {
   Pagination,
   IdentityMeta,
@@ -6,10 +9,7 @@ import {
   PostMessageResp,
   UserType,
 } from '../../../core/types';
-import { get, post } from '../../../core/http';
 import { MessagesReq } from '../../../core/types';
-import { Message } from '../../../components/atoms/message/message.types';
-import { OnPostMessageParams, ParticipantDetail } from './message-detail.types';
 
 export async function getMessagesById(payload: { id: string; page: number }): Promise<Pagination<MessagesReq[]>> {
   return get(`chats/${payload.id}/messages?page=${payload.page}`).then(({ data }) => data);

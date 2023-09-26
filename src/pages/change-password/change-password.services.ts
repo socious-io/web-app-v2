@@ -1,5 +1,5 @@
-import { post } from '../../core/http';
 import { Validator } from '../../components/atoms/password-quality/password-quality.types';
+import { post } from '../../core/http';
 
 export async function changePassword(payload: { current_password: string; password: string }) {
   return post('user/change-password', payload).then(({ data }) => data);

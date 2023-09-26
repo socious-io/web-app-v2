@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { Card } from '../components/atoms/card/card';
 
 export default {

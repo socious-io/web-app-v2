@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import css from './addphoto.module.scss';
-import { Button } from 'src/components/atoms/button/button';
 import { Camera } from '@capacitor/camera';
-import { uploadImage } from 'src/pages/profile-user-edit/profile-user-edit.services';
+import React, { useState } from 'react';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { useUser } from '../../sign-up-user-onboarding.context';
-
+import { Button } from 'src/components/atoms/button/button';
 import { post } from 'src/core/http';
 import { removeValuesFromObject } from 'src/core/utils';
+import { uploadImage } from 'src/pages/profile-user-edit/profile-user-edit.services';
+
+import css from './addphoto.module.scss';
+import { useUser } from '../../sign-up-user-onboarding.context';
 
 const AddPhoto: React.FC = () => {
   const navigate = {};

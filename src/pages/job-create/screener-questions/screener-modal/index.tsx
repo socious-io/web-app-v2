@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import store from 'src/store/store';
-import { WebModal } from 'src/components/templates/web-modal';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { ButtonProps } from 'src/components/atoms/button/button.types';
+import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Toggle } from 'src/components/atoms/toggle';
-import { Input } from 'src/components/atoms/input/input';
-import { CreatedModal } from '../created/created-modal';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { AlertModal } from 'src/components/organisms/alert-modal';
+import { WebModal } from 'src/components/templates/web-modal';
+import { CreateQuestionPayload } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
+import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import {
   resetCreatedQuestion,
   resetQuestions,
@@ -17,14 +19,13 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
-import { printWhen } from 'src/core/utils';
-import { ButtonProps } from 'src/components/atoms/button/button.types';
+import store from 'src/store/store';
+
+import css from './screener-modal.module.scss';
 import { ScreenerModalProps } from './screener-modal.types';
-import { CreateQuestionPayload } from 'src/core/types';
+import { CreatedModal } from '../created/created-modal';
 import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';
 import { useScreenerQuestionsShared } from '../screener-questions.shared';
-import css from './screener-modal.module.scss';
 
 export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onDone, onOpen }) => {
   const { navigate, dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =

@@ -1,8 +1,9 @@
 import { Search } from 'src/components/atoms/search/search';
-import { Modal } from 'src/components/templates/modal/modal';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { CreateChatModalProps } from './create-chat-modal.types';
+import { Modal } from 'src/components/templates/modal/modal';
+
 import css from './create-chat-modal.module.scss';
+import { CreateChatModalProps } from './create-chat-modal.types';
 
 export const CreateChatModal: React.FC<CreateChatModalProps> = ({
   open,

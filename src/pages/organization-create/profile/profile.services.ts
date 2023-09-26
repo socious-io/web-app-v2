@@ -1,5 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { Dispatch, SetStateAction } from 'react';
+
+import { DropdownItem } from '../../../components/atoms/dropdown/dropdown.types';
 import { citiesToCategories } from '../../../core/adaptors';
 import {
   CreateOrgWizard,
@@ -15,7 +17,6 @@ import {
   setWebsite,
   setAgreement,
 } from '../../../store/reducers/createOrgWizard.reducer';
-import { DropdownItem } from '../../../components/atoms/dropdown/dropdown.types';
 import { getCityList } from '../../job-create/info/info.services';
 
 export function updateCityList(dispatcher: Dispatch<SetStateAction<DropdownItem[]>>) {

@@ -1,6 +1,6 @@
 import { noEmptyString } from 'src/core/form/customValidators/customValidators';
-import { CreateQuestionWizard } from 'src/store/reducers/createQuestionWizard.reducer';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
+import { CreateQuestionWizard } from 'src/store/reducers/createQuestionWizard.reducer';
 
 export function formModel(formState: CreateQuestionWizard): FormModel {
   const choicesValidation = Object.keys(formState.choices).map((key) => {

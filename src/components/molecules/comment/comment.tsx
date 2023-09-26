@@ -1,9 +1,10 @@
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+
+import css from './comment.module.scss';
+import { CommentProps } from './comment.types';
 import { toRelativeTime } from '../../../core/relative-time';
 import { Avatar } from '../../atoms/avatar/avatar';
 import { ChatBox } from '../../atoms/chat-box/chat-box';
-import { CommentProps } from './comment.types';
-import css from './comment.module.scss';
 
 export const Comment = (props: CommentProps) => {
   const onHeartClick = (data: CommentProps['list'][0]) => {

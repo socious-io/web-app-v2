@@ -1,5 +1,6 @@
-import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React from 'react';
+
 import { ImpactBadge } from '../components/atoms/impact-badge/impact-badge';
 
 export default {

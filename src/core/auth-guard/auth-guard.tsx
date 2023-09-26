@@ -1,10 +1,10 @@
 import { SyntheticEvent, useState } from 'react';
-import { useAuth } from '../../hooks/use-auth';
-import { AuthGuardProps } from './auth-guard.types';
-import { Modal } from 'src/components/templates/modal/modal';
 import { Button } from 'src/components/atoms/button/button';
-import css from './auth-guard.module.scss';
+import { Modal } from 'src/components/templates/modal/modal';
 
+import css from './auth-guard.module.scss';
+import { AuthGuardProps } from './auth-guard.types';
+import { useAuth } from '../../hooks/use-auth';
 import { nonPermanentStorage } from '../storage/non-permanent';
 
 export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {

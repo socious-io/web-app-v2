@@ -7,7 +7,7 @@ export interface PostReq {
   media?: string[];
 }
 
-export interface ReportReq {
+export interface PostReportReq {
   comment: string;
   blocked: boolean;
 }

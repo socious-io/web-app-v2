@@ -1,8 +1,9 @@
+import { RadioGroupProps } from 'src/components/molecules/radio-group/radio-group.types';
+import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { get, post } from 'src/core/http';
 import { QuestionsRes } from 'src/core/types';
+
 import { ApplyApplicationPayload, Resume } from './apply.types';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { RadioGroupProps } from 'src/components/molecules/radio-group/radio-group.types';
 
 export async function getScreeningQuestions(id: string): Promise<QuestionsRes> {
   return get(`projects/${id}/questions`).then(({ data }) => data);

@@ -1,6 +1,6 @@
+import { endpoint } from 'src/core/endpoints/index';
 import { required } from 'src/core/form';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
-import { endpoint } from 'src/core/endpoints/index';
 import { get } from 'src/core/http';
 
 export async function receivedOfferLoader(params: { id: string }) {

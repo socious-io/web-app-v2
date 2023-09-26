@@ -1,10 +1,11 @@
-import { DropdownBtnItem } from 'src/components/atoms/dropdown-btn/dropdown-btn.types';
-import { search } from './desktop/search.services';
-import { PayloadModel } from './desktop/search.types';
 import { useEffect, useState } from 'react';
+import { DropdownBtnItem } from 'src/components/atoms/dropdown-btn/dropdown-btn.types';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { Pagination } from 'src/core/types';
 import { removeEmptyArrays } from 'src/core/utils';
-import { isTouchDevice } from 'src/core/device-type-detector';
+
+import { search } from './desktop/search.services';
+import { PayloadModel } from './desktop/search.types';
 
 export const useSearchShared = () => {
   const resolver = useMatch();

@@ -1,15 +1,18 @@
 import { useDispatch } from 'react-redux';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { visibility } from 'src/store/reducers/menu.reducer';
-import { useJobsShared } from './jobs.shared';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { JobList } from 'src/components/organisms/job-list/job-list';
-import { printWhen } from 'src/core/utils';
-import css from './jobs.module.scss';
-import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { JobList } from 'src/components/organisms/job-list/job-list';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { printWhen } from 'src/core/utils';
+import { visibility } from 'src/store/reducers/menu.reducer';
+
+import css from './jobs.module.scss';
+import { useJobsShared } from './jobs.shared';
+
+
 
 export const Jobs = (): JSX.Element => {
   const navigate = {};

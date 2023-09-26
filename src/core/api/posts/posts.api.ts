@@ -1,6 +1,6 @@
+import { CommentReq, CommentsRes, Post, PostReq, PostsRes, PostReportReq } from './posts.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq } from '../types';
-import { CommentReq, CommentsRes, Post, PostReq, PostsRes, ReportReq } from './posts.types';
 
 export async function posts(params: PaginateReq): Promise<PostsRes> {
   return (await get<PostsRes>('posts', { params })).data;
@@ -26,7 +26,7 @@ export async function unlikePost(id: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`posts/${id}/unlike`, {})).data;
 }
 
-export async function reportPost(id: string, payload: ReportReq): Promise<SuccessRes> {
+export async function reportPost(id: string, payload: PostReportReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`posts/${id}/report`, payload)).data;
 }
 

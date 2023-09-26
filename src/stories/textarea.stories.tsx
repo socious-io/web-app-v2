@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { Textarea } from '../components/atoms/textarea/textarea';
 
 export default {

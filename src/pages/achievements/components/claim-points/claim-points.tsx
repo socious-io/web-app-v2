@@ -1,11 +1,13 @@
-import css from './claim-points.module.scss';
-import { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { generateQRCode } from './claim-points.services';
-import { printWhen } from 'src/core/utils';
 import { Capacitor } from '@capacitor/core';
 import { encode } from 'js-base64';
+import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { printWhen } from 'src/core/utils';
+import { RootState } from 'src/store/store';
+
+import css from './claim-points.module.scss';
+import { generateQRCode } from './claim-points.services';
+
 
 export const ClaimPoints = (): JSX.Element => {
   const qrCodeRef = useRef<HTMLDivElement>(null);
@@ -38,19 +40,19 @@ export const ClaimPoints = (): JSX.Element => {
   }, []);
 
   const appStoreJSX = (
-    <a href="https://apps.apple.com/us/app/proofspace/id1512258409" target="_blank">
+    <a href="https://apps.apple.com/us/app/proofspace/id1512258409" target="_blank" rel="noreferrer">
       <img width={170} src="/images/download-appstore.svg" />
     </a>
   );
 
   const playStoreJSX = (
-    <a href="https://play.google.com/store/apps/details?id=io.zaka.app&pli=1" target="_blank">
+    <a href="https://play.google.com/store/apps/details?id=io.zaka.app&pli=1" target="_blank" rel="noreferrer">
       <img width={170} src="/images/download-googleplay.png" />
     </a>
   );
 
   const goToProofspaceJSX = (
-    <a className={css.proofspaceButton} href={deepLinkUrl} target="_blank">
+    <a className={css.proofspaceButton} href={deepLinkUrl} target="_blank" rel="noreferrer">
       <div className={css.proofspaceLink}>Go to proofSpace app</div>
     </a>
   );

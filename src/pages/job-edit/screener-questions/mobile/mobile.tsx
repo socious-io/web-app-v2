@@ -1,9 +1,10 @@
-import store from 'src/store/store';
 import { Button } from 'src/components/atoms/button/button';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Toggle } from 'src/components/atoms/toggle';
-import { Input } from 'src/components/atoms/input/input';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { CreateQuestionPayload } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
 import {
   resetQuestions,
   setChoices,
@@ -12,11 +13,11 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { printWhen } from 'src/core/utils';
-import { CreateQuestionPayload } from 'src/core/types';
+import store from 'src/store/store';
+
+import css from './mobile.module.scss';
 import { QUESTION_TYPE, createQuestion, updateQuestion } from '../screener-questions.service';
 import { useScreenerQuestionsShared } from '../screener-questions.shared';
-import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
   const { dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =

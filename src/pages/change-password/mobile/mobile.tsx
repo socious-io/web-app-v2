@@ -1,10 +1,12 @@
-import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
-import css from './mobile.module.scss';
-import { Input } from 'src/components/atoms/input/input';
 import { Button } from 'src/components/atoms/button/button';
-import { useChangePasswordShared } from '../change-password.shared';
 import { Header } from 'src/components/atoms/header-v2/header';
+import { Input } from 'src/components/atoms/input/input';
+import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
 import { printWhen } from 'src/core/utils';
+
+import css from './mobile.module.scss';
+import { useChangePasswordShared } from '../change-password.shared';
+
 
 export const Mobile = (): JSX.Element => {
   const { form, onSubmit, formIsValid, notMatchingPasswords } = useChangePasswordShared();

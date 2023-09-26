@@ -1,7 +1,7 @@
-import { Badge } from '../../atoms/badge/badge';
-import { ProfileView } from '../profile-view/profile-view';
 import css from './contact-item.module.scss';
 import { ContactItemProps } from './contact-item.types';
+import { Badge } from '../../atoms/badge/badge';
+import { ProfileView } from '../profile-view/profile-view';
 
 export const ContactItem = (props: ContactItemProps): JSX.Element => {
   const { onContactClick, ...rest } = props;

@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { Otp } from '../components/atoms/otp/otp';
 
 export default {

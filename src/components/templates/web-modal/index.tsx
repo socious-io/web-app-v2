@@ -1,8 +1,9 @@
 import { Button } from 'src/components/atoms/button/button';
-import { Modal } from '../modal/modal';
-import { WebModalProps } from './web-modal.types';
 import { printWhen } from 'src/core/utils';
+
 import css from './web-modal.module.scss';
+import { WebModalProps } from './web-modal.types';
+import { Modal } from '../modal/modal';
 
 export const WebModal: React.FC<WebModalProps> = ({
   open,

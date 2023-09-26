@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Input } from 'src/components/atoms/input/input';
-import { Modal } from 'src/components/templates/modal/modal';
 import { InputProps } from 'src/components/atoms/input/input.types';
+import { Modal } from 'src/components/templates/modal/modal';
 import { debounce } from 'src/core/utils';
+
 import css from './input-modal.module.scss';
 import { InputModalProps } from './input-modal.types';
 

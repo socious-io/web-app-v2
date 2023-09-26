@@ -1,18 +1,20 @@
-import { useMemo, useState } from 'react';
-import { useForm } from 'src/core/form';
-import { cityDispatcher, showActionSheet, uploadImage } from './profile-organization-edit.services';
-import { generateFormModel } from './profile-organization-edit.form';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { ProfileReq } from '../profile-user/profile-user.types';
 import { Camera } from '@capacitor/camera';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { endpoint } from 'src/core/endpoints';
-import { getIdentities } from 'src/core/api';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { getIdentities } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
+import { endpoint } from 'src/core/endpoints';
+import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
+import { useForm } from 'src/core/form';
+import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { removedEmptyProps } from 'src/core/utils';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+
+import { generateFormModel } from './profile-organization-edit.form';
+import { cityDispatcher, showActionSheet, uploadImage } from './profile-organization-edit.services';
+import { ProfileReq } from '../profile-user/profile-user.types';
+
 
 export const useProfileOrganizationEditShared = () => {
   const organization = useMatch().data.user as ProfileReq;

@@ -1,11 +1,12 @@
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
-import { useNetworkShared } from '../network.shared';
-import { ProfileCard } from 'src/components/templates/profile-card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
-import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
+import { useNetworkShared } from '../network.shared';
 
 export const Desktop: React.FC = () => {
   const navigate = {};
