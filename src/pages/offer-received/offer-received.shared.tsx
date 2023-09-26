@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Dapp from 'src/dapp';
 import { StripeProfileResp } from 'src/core/types';
-import { useMatch } from '@tanstack/react-location';
+
 import { useAccount } from 'wagmi';
 import { Resolver } from './offer-received.types';
 import { StatusKeys } from 'src/constants/APPLICANT_STATUS';

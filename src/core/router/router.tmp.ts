@@ -1,4 +1,5 @@
-import { Navigate, Route } from '@tanstack/react-location';
+// NOTE this file is temp and it's just exists for easier ref
+
 import { getChatsSummery, getFollowings } from '../../pages/chat/contact-list/contact-list.services';
 import { MenuCursor as RootCursorLayout } from '../../components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../../components/templates/menu-touch/menu-touch';

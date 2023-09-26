@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Fab } from 'src/components/atoms/fab/fab';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
@@ -9,7 +8,7 @@ import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { isLoggedIn } = useAuth();
   const {
     chats,

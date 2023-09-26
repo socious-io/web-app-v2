@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { evaluateTier } from './mobile/achievements.service';
-import { useMatch } from '@tanstack/react-location';
+
 import { Loader } from './achievements.types';
 import { Header } from './components/header/header';
 import { ImpactCategoryList } from 'src/components/organisms/impact-category-list/impact-category-list';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
+
 import { NotificationSettings } from 'src/constants/constants';
 import { endpoint } from 'src/core/endpoints';
 import { Payload } from './settings.types';

@@ -26,5 +26,5 @@ export function getList(job: Job) {
     translateProjectType(job.project_type),
     translatePaymentType(job.payment_type),
     translateExperienceLevel(job.experience_level),
-  ].filter(item => item);
+  ].filter((item) => item);
 }

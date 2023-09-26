@@ -16,7 +16,10 @@ export const formModel = (isPaid: boolean, isFiat: boolean, initialForm: Initial
   const assignTotalValidators = isPaid ? assignTotalPaid : [];
   return {
     assignmentTotal: { initialValue: '', validators: assignTotalValidators },
-    estimatedTotalHours: { initialValue: initialForm.estimatedTotalHours || '', validators: [required(), patternNumber] },
+    estimatedTotalHours: {
+      initialValue: initialForm.estimatedTotalHours || '',
+      validators: [required(), patternNumber],
+    },
     message: { initialValue: initialForm.message || '', validators: [noEmptyString()] },
   };
 };

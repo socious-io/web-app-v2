@@ -1,6 +1,6 @@
 import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {Tabs} from '../components/atoms/tabs/tabs';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Tabs } from '../components/atoms/tabs/tabs';
 
 export default {
   title: 'ATOM/Tabs',
@@ -13,7 +13,7 @@ export const Primary = Template.bind({});
 
 Primary.args = {
   tabs: [
-    {name: 'Achievements', content: <div>content of tab 1</div>, default: true},
-    {name: 'History', content: <div>content of tab 2</div>},
+    { name: 'Achievements', content: <div>content of tab 1</div>, default: true },
+    { name: 'History', content: <div>content of tab 2</div> },
   ],
 };

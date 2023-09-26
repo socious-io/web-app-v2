@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from '../../../core/types';
@@ -12,7 +11,7 @@ import { formModel } from './password.form';
 import { handleError } from '../../../core/http';
 
 export const Password = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const form = useForm(formModel);
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -34,7 +33,7 @@ export const Password = () => {
           });
         }
       })
-      .catch(handleError({message: 'Not matched password'}));
+      .catch(handleError({ message: 'Not matched password' }));
   };
 
   const cancel = () => {

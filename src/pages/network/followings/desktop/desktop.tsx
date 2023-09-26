@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { BackLink } from 'src/components/molecules/back-link';
 import { Card } from 'src/components/atoms/card/card';
@@ -12,7 +12,7 @@ import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { followings, followStatusUser, onUnfollow, onFollow, loadMore, onProfileClick } = useFollowingsShared();
   const [selectedUser, setSelectedUser] = useState({ name: '', id: '' });
   const { isLoggedIn } = useAuth();

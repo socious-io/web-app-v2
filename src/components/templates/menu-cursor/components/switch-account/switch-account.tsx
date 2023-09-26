@@ -6,7 +6,7 @@ import { ProfileView } from 'src/components/molecules/profile-view/profile-view'
 import { logout, setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
 import { getIdentities } from 'src/core/api';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { useNavigate } from '@tanstack/react-location';
+
 import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 import { Divider } from 'src/components/templates/divider/divider';
 import { SwitchAccountProps } from './switch-account.types';
@@ -20,7 +20,7 @@ let timer: NodeJS.Timeout;
 
 export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = {};
   const [pendingAccId, setPendingAccId] = useState('');
   const [changePassOpen, setChangePassOpen] = useState(false);
   const [containerStyles, setContainerStyle] = useState<CSSProperties>({});

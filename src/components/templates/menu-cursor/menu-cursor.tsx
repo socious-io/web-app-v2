@@ -1,5 +1,5 @@
 import css from './menu-cursor.module.scss';
-import { Outlet, useLocation } from '@tanstack/react-location';
+
 import { Avatar } from '../../atoms/avatar/avatar';
 import { Menu, getAvatar, menuList } from './menu-cursor.services';
 import { useSelector } from 'react-redux';
@@ -7,12 +7,12 @@ import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
 import { SwitchAccount } from './components/switch-account/switch-account';
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+
 import { Search } from 'src/components/atoms/search/search';
 import { PayloadModel } from 'src/pages/search/desktop/search.types';
 
 export const MenuCursor = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const route = useLocation();
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);

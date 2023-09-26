@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
+
 import { useAccount } from 'wagmi';
 import Dapp from 'src/dapp';
 import store from 'src/store/store';

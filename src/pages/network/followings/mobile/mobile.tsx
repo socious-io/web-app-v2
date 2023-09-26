@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+
 import { Header } from 'src/components/atoms/header/header';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Button } from 'src/components/atoms/button/button';
@@ -9,7 +9,7 @@ import { useFollowingsShared } from '../followings.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { followings, followStatusUser, onUnfollow, onFollow, loadMore, onProfileClick } = useFollowingsShared();
   const [selectedUser, setSelectedUser] = useState({ name: '', id: '' });
 

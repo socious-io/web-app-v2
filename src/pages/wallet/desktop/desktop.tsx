@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
@@ -17,7 +16,7 @@ import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });

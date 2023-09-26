@@ -1,11 +1,10 @@
-import { useNavigate } from '@tanstack/react-location';
 import { NotificationList } from '../../../components/organisms/notification-list/notification-list';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { useNotificationsShared } from '../notifications.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore } = useNotificationsShared();
 
   return (

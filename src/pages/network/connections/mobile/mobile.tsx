@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+
 import { Header } from 'src/components/atoms/header/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
@@ -12,7 +12,7 @@ import { useConnectionsShared } from '../connections.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     currentId,
     connectionList,

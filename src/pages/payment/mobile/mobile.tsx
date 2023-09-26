@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import Dapp from 'src/dapp';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Button } from 'src/components/atoms/button/button';
@@ -12,7 +11,7 @@ import { usePaymentShared } from '../payment.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     offer,
     assignment_total,

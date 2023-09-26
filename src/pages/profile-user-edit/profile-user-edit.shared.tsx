@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { useForm } from 'src/core/form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-user-edit.services';
 import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
@@ -23,7 +23,7 @@ export const useProfileUserEditShared = (props?: EditProps) => {
   const updateCityList = cityDispatcher(setCities);
   const [coverImage, setCoverImage] = useState(user?.cover_image?.url);
   const [avatarImage, setAvatarImage] = useState(user?.avatar?.url);
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
 
   async function runCoverEditActions(type: 'upload' | 'remove' | undefined) {

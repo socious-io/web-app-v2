@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
 import { Button } from 'src/components/atoms/button/button';
@@ -18,7 +18,7 @@ import { BackLink } from 'src/components/molecules/back-link';
 
 export const Desktop: React.FC = () => {
   const resolver = useMatch();
-  const navigate = useNavigate();
+  const navigate = {};
   const { isLoggedIn } = useAuth();
   const {
     onGoingTitle,

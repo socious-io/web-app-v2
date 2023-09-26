@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
@@ -8,7 +7,7 @@ import { createFormInitState, jobEditRequest } from '../../info/info.services';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { overview } = useMatch().ownData as { overview: Job };
   const { onSearch, socialCauses, selectedSocialCauses, isValid, setSelectedSocialCauses } = useSocialCausesShared(
     overview.causes_tags

@@ -1,4 +1,3 @@
-import { MakeGenerics } from '@tanstack/react-location';
 import { Job } from '../../components/organisms/job-list/job-list.types';
 import { QuestionsRes } from 'src/core/types';
 

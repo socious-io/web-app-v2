@@ -8,7 +8,4 @@ export interface TypographyProps extends CSSProperties {
   className?: string;
 }
 
-export type TypeList = Record<
-  NonNullable<TypographyProps['type']>,
-  CSSProperties
->;
+export type TypeList = Record<NonNullable<TypographyProps['type']>, CSSProperties>;

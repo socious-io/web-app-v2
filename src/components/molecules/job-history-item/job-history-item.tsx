@@ -1,5 +1,5 @@
-import {JobHistoryItem as JobHistoryItemNormal} from './job-history-item/job-history-item';
-import {JobHistoryItemProps} from './job-history-item.types';
+import { JobHistoryItem as JobHistoryItemNormal } from './job-history-item/job-history-item';
+import { JobHistoryItemProps } from './job-history-item.types';
 
 export const JobHistoryItem = (props: JobHistoryItemProps): JSX.Element => {
   const data = props as Required<JobHistoryItemProps>;

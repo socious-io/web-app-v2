@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { NotificationListProps, Notifications } from './notification-list.types';
@@ -8,7 +7,7 @@ import { IdentityReq } from 'src/core/types';
 import css from './notification-list.module.scss';
 
 export const NotificationList = ({ list, onMorePageClick, showSeeMore, route }: NotificationListProps): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const currentIdentity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });

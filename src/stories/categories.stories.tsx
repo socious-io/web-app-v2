@@ -6,9 +6,7 @@ export default {
   component: Categories,
 } as ComponentMeta<typeof Categories>;
 
-const Template: ComponentStory<typeof Categories> = (args) => (
-  <Categories {...args} />
-);
+const Template: ComponentStory<typeof Categories> = (args) => <Categories {...args} />;
 
 export const Primary = Template.bind({});
 

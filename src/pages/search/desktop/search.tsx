@@ -7,7 +7,7 @@ import { useSearchShared } from '../search.shared';
 import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
 import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
 import { PayloadModel } from './search.types';
-import { useLocation, useNavigate } from '@tanstack/react-location';
+
 import { DetailOutlet } from './detail-outlet/detail-outlet';
 
 export const Search = () => {
@@ -23,7 +23,7 @@ export const Search = () => {
     onSkillsChange,
   } = useSearchShared();
 
-  const navigate = useNavigate();
+  const navigate = {};
   const { current } = useLocation();
   const { search: params } = current as unknown as { search: { id: string; type: PayloadModel['type'] } };
 
@@ -72,7 +72,7 @@ export const Search = () => {
             menus={menu}
             value={findLabelByValue(location.current.search.type, 'Type')}
           />
-          <SocialCausesFilter  onSubmit={onSocialCausesChange} />
+          <SocialCausesFilter onSubmit={onSocialCausesChange} />
           <SkillsFilter onSubmit={onSkillsChange} />
         </div>
       </div>

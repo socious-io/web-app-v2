@@ -11,7 +11,7 @@ export const useSkillsShared = (oldSelected: string[]) => {
     );
     setSocialCauses(filteredValue);
   }
-  const isValid = selectedSkills.length !==null && selectedSkills.length <= 10;
+  const isValid = selectedSkills.length !== null && selectedSkills.length <= 10;
 
   return { onSearch, socialCauses, selectedSkills, isValid, setSocialCauses, setSelectedSkills };
 };

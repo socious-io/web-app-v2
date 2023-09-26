@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { getActiveJobs, getArchivedJobs, getDraftJobs, jobListToJobCardListAdaptor } from './my-jobs.services';
 import { MyJobsResolver } from './my-jobs.types';
 
 export const useMyJobShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = useMatch();
   const { activeJobs, draftJobs, archivedJobs } = resolver.ownData as MyJobsResolver;
   const onGoingTitle = `On-Going (${activeJobs.total_count})`;

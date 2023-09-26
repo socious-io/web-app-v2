@@ -1,5 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
-
 import { Header } from './header/header';
 import { SendBox } from 'src/components/molecules/send-box/send-box';
 import { ChatList } from 'src/components/organisms/chat-list/chat-list';
@@ -8,7 +6,7 @@ import css from './mobile.module.scss';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { participantDetail, list, sendingValue, setSendingValue, onSend } = useMessageDetailShared();
 
   const emptyBoxJSX = (

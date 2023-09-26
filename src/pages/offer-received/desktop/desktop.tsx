@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import Dapp from 'src/dapp';
@@ -25,7 +24,7 @@ import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { BankAccounts } from 'src/components/templates/bank-accounts';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { isLoggedIn } = useAuth();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;

@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import store from 'src/store/store';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
@@ -12,7 +11,7 @@ import { useCreatedShared } from '../created.shared';
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = useMatch();
 
   const defaultQuestions = useMatch().ownData.defaultQuestions?.questions;

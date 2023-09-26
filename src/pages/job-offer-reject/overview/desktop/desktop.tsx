@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { Card } from 'src/components/atoms/card/card';
@@ -18,7 +18,7 @@ import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
 import { BackLink } from 'src/components/molecules/back-link';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = useMatch().ownData as Loader;
   const { id } = useMatch().params || {};
   const tab = useMatch()?.search?.tab as string;

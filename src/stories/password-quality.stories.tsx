@@ -6,9 +6,7 @@ export default {
   component: PasswordQuality,
 } as ComponentMeta<typeof PasswordQuality>;
 
-const Template: ComponentStory<typeof PasswordQuality> = (args) => (
-  <PasswordQuality {...args} />
-);
+const Template: ComponentStory<typeof PasswordQuality> = (args) => <PasswordQuality {...args} />;
 
 export const Primary = Template.bind({});
 

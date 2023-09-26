@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Card } from 'src/components/atoms/card/card';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
@@ -23,7 +23,7 @@ import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = useMatch<MessageLoader>();
   const { isLoggedIn } = useAuth();
   const { summery, followings } = resolver.data || {};

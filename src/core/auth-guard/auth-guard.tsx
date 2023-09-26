@@ -4,13 +4,13 @@ import { AuthGuardProps } from './auth-guard.types';
 import { Modal } from 'src/components/templates/modal/modal';
 import { Button } from 'src/components/atoms/button/button';
 import css from './auth-guard.module.scss';
-import { useLocation, useNavigate } from '@tanstack/react-location';
+
 import { nonPermanentStorage } from '../storage/non-permanent';
 
 export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   const { isLoggedIn } = useAuth();
   const [modalVisibility, setModalVisibility] = useState(false);
-  const navigate = useNavigate();
+  const navigate = {};
   const route = useLocation();
 
   function onClick() {

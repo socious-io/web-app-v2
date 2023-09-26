@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
@@ -28,7 +27,7 @@ import { useEffect } from 'react';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
   const resolvedJobCategories = useMatch().ownData.jobCategories?.categories as CategoriesResp['categories'];

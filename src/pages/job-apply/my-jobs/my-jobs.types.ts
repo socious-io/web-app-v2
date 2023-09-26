@@ -12,7 +12,7 @@ export type Loader = {
   awaitingApplicants: AwaitingResp;
   declinedApplicants: DeclinedResp;
   onGoingApplicants: OnGoingResp;
-  endedApplicants: EndedResp
+  endedApplicants: EndedResp;
 };
 
 export type MyJobs = 'Applied' | 'Hired';

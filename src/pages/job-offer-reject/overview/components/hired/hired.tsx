@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import store from 'src/store/store';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
 import css from './hired.module.scss';
@@ -16,7 +16,7 @@ import { Rate } from '../feedback-modal/feedback-modal.types';
 import { useAlert } from 'src/hooks/use-alert';
 
 export const Hired = (props: HiredProps): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { hiredList, endHiredList: endHiredListDefault, onDone } = props;
   const [endHiredList, setEndHiredList] = useState(endHiredListDefault);
   const { web3 } = Dapp.useWeb3();

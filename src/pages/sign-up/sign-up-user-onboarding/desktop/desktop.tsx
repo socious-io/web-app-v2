@@ -7,11 +7,11 @@ import { UserProvider } from '../sign-up-user-onboarding.context';
 import Bio from '../components/Bio';
 import AddPhoto from '../components/AddPhoto';
 import Skills from '../components/Skills';
-import { useNavigate } from '@tanstack/react-location';
+
 import Name from '../components/name';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
 
   return (
     <UserProvider>

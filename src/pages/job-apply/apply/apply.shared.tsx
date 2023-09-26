@@ -1,5 +1,5 @@
 import { ChangeEvent, useMemo, useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+
 import { Resolver, Resume } from './apply.types';
 import {
   applyApplication,
@@ -26,7 +26,7 @@ type useApplySharedProps = {
 };
 
 export const useApplyShared = (data?: useApplySharedProps) => {
-  const navigate = useNavigate();
+  const navigate = {};
   const [resume, setResume] = useState<Resume>(resumeInitialState);
   const resolver = useMatch().ownData as Resolver;
   const jobDetail = (data?.job || resolver.jobDetail) as Job;

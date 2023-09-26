@@ -5,9 +5,7 @@ export default {
   component: Link,
 } as ComponentMeta<typeof Link>;
 
-const Template: ComponentStory<typeof Link> = (args) => (
-  <Link {...args}>this is a link</Link>
-);
+const Template: ComponentStory<typeof Link> = (args) => <Link {...args}>this is a link</Link>;
 
 export const Primary = Template.bind({});
 

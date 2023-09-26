@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+
 import store from 'src/store/store';
 import { WebModal } from 'src/components/templates/web-modal';
 import { Accordion } from 'src/components/atoms/accordion/accordion';

@@ -1,4 +1,3 @@
-import { Outlet, useNavigate, useRouter } from '@tanstack/react-location';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
 import css from './menu-touch.module.scss';
 import { useSelector } from 'react-redux';
@@ -7,7 +6,7 @@ import { IdentityReq } from 'src/core/types';
 import { Menu, menuList } from '../menu-cursor/menu-cursor.services';
 
 export const MenuTouch = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { state } = useRouter();
 
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {

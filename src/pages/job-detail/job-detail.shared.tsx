@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
@@ -6,7 +5,7 @@ import { Resolver } from './job-detail.types';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 
 export const useJobDetailShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { jobDetail: job, screeningQuestions } = useMatch().data as Resolver;
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {

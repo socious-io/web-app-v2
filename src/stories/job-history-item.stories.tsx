@@ -1,15 +1,13 @@
 import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {JobHistoryItem} from '../components/molecules/job-history-item/job-history-item';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { JobHistoryItem } from '../components/molecules/job-history-item/job-history-item';
 
 export default {
   title: 'MOLECULES/JobHistoryItem',
   component: JobHistoryItem,
 } as ComponentMeta<typeof JobHistoryItem>;
 
-const Template: ComponentStory<typeof JobHistoryItem> = (args) => (
-  <JobHistoryItem {...args} />
-);
+const Template: ComponentStory<typeof JobHistoryItem> = (args) => <JobHistoryItem {...args} />;
 
 export const Primary = Template.bind({});
 

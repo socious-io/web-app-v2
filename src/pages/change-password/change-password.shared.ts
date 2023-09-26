@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useForm } from 'src/core/form';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { changePassword } from './change-password.services';
@@ -7,7 +6,7 @@ import { formModel } from './change-password.form';
 
 export const useChangePasswordShared = () => {
   const form = useForm(formModel);
-  const navigate = useNavigate();
+  const navigate = {};
 
   function onSubmitError(err: { error: string }) {
     // FIXME: we should get an error code instead of a string

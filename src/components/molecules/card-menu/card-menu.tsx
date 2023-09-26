@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { Card } from '../../atoms/card/card';
 import { Typography } from '../../atoms/typography/typography';
 import css from './card-menu.module.scss';

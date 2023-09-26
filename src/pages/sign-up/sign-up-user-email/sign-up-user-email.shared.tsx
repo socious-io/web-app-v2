@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { handleError } from 'src/core/http';
 import { formModel } from './sign-up-user-email.form';
@@ -7,7 +6,7 @@ import { useForm } from 'src/core/form';
 
 export const useSignUpUserEmailShared = () => {
   const form = useForm(formModel);
-  const navigate = useNavigate();
+  const navigate = {};
 
   async function onSubmit() {
     const formValues = getFormValues(form);

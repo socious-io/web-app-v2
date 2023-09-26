@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
@@ -8,7 +7,7 @@ import { useSkillsShared } from '../skills.shared';
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
   const { onSearch, socialCauses, selectedSkills, isValid } = useSkillsShared();
 

@@ -18,7 +18,7 @@ export const StatusTag = (props: StatusTagProps): JSX.Element => {
     red: {
       color: 'white',
       backgroundColor: '#DF3030',
-    }
+    },
   };
 
   return (

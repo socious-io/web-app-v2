@@ -1,14 +1,12 @@
-import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {ImpactBarLevel} from '../components/atoms/impact-bar-level/impact-bar-level';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ImpactBarLevel } from '../components/atoms/impact-bar-level/impact-bar-level';
 
 export default {
   title: 'ATOM/ImpactBarLevel',
   component: ImpactBarLevel,
 } as ComponentMeta<typeof ImpactBarLevel>;
 
-const Template: ComponentStory<typeof ImpactBarLevel> = (args) => (
-  <ImpactBarLevel {...args} />
-);
+const Template: ComponentStory<typeof ImpactBarLevel> = (args) => <ImpactBarLevel {...args} />;
 
 export const Primary = Template.bind({});
 

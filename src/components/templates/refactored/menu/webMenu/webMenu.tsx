@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import css from './webMenu.module.scss';
 import { Search } from 'src/components/atoms/search/search';
 import { Menu, getAvatar, menuList } from '../menu.services';
-import { useLocation, useNavigate } from '@tanstack/react-location';
+
 import { PayloadModel } from 'src/pages/search/desktop/search.types';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
@@ -11,7 +11,7 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { SwitchAccount } from '../../../menu-cursor/components/switch-account/switch-account';
 
 const WebMenu = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const route = useLocation();
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);

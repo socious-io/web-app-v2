@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+
 import { Card } from 'src/components/atoms/card/card';
 import { BackLink } from 'src/components/molecules/back-link';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
@@ -13,7 +13,7 @@ import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     currentId,
     connectionList,

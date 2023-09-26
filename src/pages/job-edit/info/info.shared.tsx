@@ -13,7 +13,7 @@ export const useInfoShared = () => {
   const updateField = updateForm(dispatch);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const formState = useSelector<RootState, CreatePostWizard>((state) => state.createPostWizard);
-  
+
   const memoizedFormState = useMemo(
     () => formModel(formState),
     [formState.payment_range_lower, formState.payment_range_higher]

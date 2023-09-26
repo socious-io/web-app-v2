@@ -6,9 +6,7 @@ export default {
   component: Textarea,
 } as ComponentMeta<typeof Textarea>;
 
-const Template: ComponentStory<typeof Textarea> = (args) => (
-  <Textarea {...args} />
-);
+const Template: ComponentStory<typeof Textarea> = (args) => <Textarea {...args} />;
 
 export const Primary = Template.bind({});
 
@@ -16,5 +14,5 @@ Primary.args = {
   label: 'label',
   title: 'TITLE',
   onValueChange: console.log,
-  variant: 'outline'
+  variant: 'outline',
 };

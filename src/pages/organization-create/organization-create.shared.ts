@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -19,7 +18,7 @@ import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { handleError } from 'src/core/http';
 
 export const useOrganizationCreateShared = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const dispatch = useDispatch();
 
   async function updateIdentityList() {
@@ -73,7 +72,6 @@ export const useOrganizationCreateShared = () => {
   function navigateToVerified() {
     navigate({ to: '../verified' });
   }
-
 
   function onMissionSkip() {
     dispatch(setMission(''));
@@ -153,6 +151,6 @@ export const useOrganizationCreateShared = () => {
     updateCulture,
     submitForm,
     navigateToVerified,
-    organizationName
+    organizationName,
   };
 };

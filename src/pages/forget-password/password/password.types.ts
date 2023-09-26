@@ -1,3 +1,3 @@
 export type PasswordProps = {
-    title: string;
-}
+  title: string;
+};

@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { Accordion } from '../../../../../components/atoms/accordion/accordion';
 import { ApplicantListHire } from '../../../../../components/molecules/applicant-list-hire/applicant-list-hire';
 import { endpoint } from '../../../../../core/endpoints';
@@ -9,7 +8,7 @@ import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const Offered = (props: OfferedProps): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = useMatch().ownData as Loader;
   const {
     jobOverview: { payment_type },

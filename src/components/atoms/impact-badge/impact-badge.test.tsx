@@ -1,5 +1,5 @@
-import {render, screen} from '@testing-library/react';
-import {ImpactBadge} from './impact-badge';
+import { render, screen } from '@testing-library/react';
+import { ImpactBadge } from './impact-badge';
 import '@testing-library/jest-dom';
 
 describe('impact-badge', () => {

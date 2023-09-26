@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
@@ -7,7 +6,7 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import css from './profile-card.module.scss';
 
 export const ProfileCard: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
@@ -21,12 +20,11 @@ export const ProfileCard: React.FC = () => {
   }
 
   function getAvatarUrl(identity: IdentityReq) {
-   if(identity.type === 'organizations') {
-    return identity.meta.image
-   } else {
-    return identity.meta.avatar
-   }
-
+    if (identity.type === 'organizations') {
+      return identity.meta.image;
+    } else {
+      return identity.meta.avatar;
+    }
   }
 
   return (

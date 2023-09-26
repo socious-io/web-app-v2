@@ -1,12 +1,11 @@
 import css from './profile-view.module.scss';
 import { Avatar } from '../../atoms/avatar/avatar';
 import { ProfileViewProps } from './profile-view.types';
-import { useNavigate } from '@tanstack/react-location';
 import { CSSProperties } from 'react';
 
 export const ProfileView = (props: ProfileViewProps): JSX.Element => {
   const { type, img, name, username, size = '3rem', location, theme = 'light' } = props;
-  const navigate = useNavigate();
+  const navigate = {};
 
   function navigateToProfile() {
     if (type === 'users') {

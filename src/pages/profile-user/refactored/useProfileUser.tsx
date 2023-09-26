@@ -1,4 +1,3 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
@@ -19,7 +18,7 @@ import {
 import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const useProfileUser = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const resolver = useMatch().data as Resolver;
   const [user, setUser] = useState<ProfileReq>(resolver.user);
   const socialCauses = socialCausesToCategory(user.social_causes);

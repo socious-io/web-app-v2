@@ -12,5 +12,5 @@ export const Primary = Template.bind({});
 
 Primary.args = {
   type: 'users',
-  size: '3rem'
+  size: '3rem',
 };

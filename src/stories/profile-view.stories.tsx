@@ -6,9 +6,7 @@ export default {
   component: ProfileView,
 } as ComponentMeta<typeof ProfileView>;
 
-const Template: ComponentStory<typeof ProfileView> = (args) => (
-  <ProfileView {...args} />
-);
+const Template: ComponentStory<typeof ProfileView> = (args) => <ProfileView {...args} />;
 
 export const Primary = Template.bind({});
 
