@@ -1,5 +1,4 @@
 import { config } from 'src/config';
-import { dialog } from 'src/core/dialog/dialog';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 
 import { LoginPayload } from './sign-in.types';

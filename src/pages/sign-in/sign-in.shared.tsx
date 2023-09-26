@@ -1,20 +1,20 @@
 import { Capacitor } from '@capacitor/core';
 import { useNavigate } from 'react-router-dom';
-import { User, profile, identities, AuthRes, LoginReq, login, handleError } from 'src/core/api';
+import { User, profile, identities, AuthRes, LoginReq, login, handleError, devices, newDevice } from 'src/core/api';
 import { useForm } from 'src/core/form';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import store from 'src/store/store';
-
-import { formModel } from './sign-in.form';
-import { getFcmTokens, setAuthCookies, setFcmTokens } from './sign-in.services';
 import {
   addNotificationReceivedListener,
   getDeliveredNotifications,
   getToken,
   requestPermissions,
-} from '../../core/pushNotification';
+} from 'src/core/pushNotification';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import store from 'src/store/store';
+
+import { formModel } from './sign-in.form';
+import { setAuthCookies } from './sign-in.services';
 
 
 const addListeners = () => {
@@ -38,12 +38,18 @@ const saveToken = async (token: string) => {
   if (!token) {
     return;
   }
-  const getDeviceTokens = await getFcmTokens();
-  if (!getDeviceTokens.some((item) => item.token === token)) {
-    setFcmTokens({
+  const getDeviceTokens = await devices();
+  const isTokenExisting = getDeviceTokens.some(device => device.token === token);
+  const determinePlatform = () => {
+    const platform = Capacitor.getPlatform();
+    return platform === 'android' ? 'ANDROID' : 'IOS';
+  };
+  
+  if (!isTokenExisting) {
+    newDevice({
       token,
       meta: {
-        os: Capacitor.getPlatform() === 'android' ? 'ANDROID' : 'IOS',
+        os: determinePlatform(),
       },
     });
     localStorage.setItem('fcm', token);
