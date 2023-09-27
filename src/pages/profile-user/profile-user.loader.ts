@@ -1,4 +1,4 @@
-import { getUserDetail } from './profile-user.services';
+import { getUserDetail } from './refactored/profileUser.services';
 import { getBadges } from '../achievements/achievements.services';
 
 export async function profileUserPageLoader({ params }) {

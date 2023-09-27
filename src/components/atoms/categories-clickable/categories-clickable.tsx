@@ -43,7 +43,6 @@ export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Elemen
   }
 
   function setSelectedStyle(value: string): string {
-    console.log('failed list', selectedList);
     const exist = selectedList?.includes(value);
     return exist ? css.active : '';
   }

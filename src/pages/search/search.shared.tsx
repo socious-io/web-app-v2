@@ -28,6 +28,7 @@ export const useSearchShared = () => {
   const [selectedCities, setSelectedCities] = useState<Array<{ label: string; value: string }>>([]);
   const [selectedCountries, setSelectedCountries] = useState<Array<{ label: string; value: string }>>([]);
   const [openLocationsModal, setOpenLocationsModal] = useState(false);
+
   useEffect(() => {
     location.listeners.push(() => {
       const query = location.current.search as unknown as PayloadModel;
@@ -50,6 +51,12 @@ export const useSearchShared = () => {
   };
 
   const updateList = (newState: PayloadModel, option?: { reset: boolean }) => {
+    if (newState.filter === undefined) {
+      setSelectedCities([]);
+      setSelectedCountries([]);
+      setSelectedSkills([]);
+      setSelectedSocialCauses([]);
+    }
     search(newState).then((resp) => {
       setResult(resp.total_count);
       option?.reset && setList([]);

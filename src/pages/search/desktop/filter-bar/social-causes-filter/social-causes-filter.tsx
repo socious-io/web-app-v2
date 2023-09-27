@@ -3,13 +3,13 @@ import css from './social-causes-filter.module.scss';
 import { Search } from 'src/components/atoms/search/search';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'src/components/atoms/button/button';
 import { SocialCausesFilterProps } from './social-causes-filter.types';
 
 export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element => {
   const [list, setList] = useState(socialCausesToCategoryAdaptor());
-  const [selected, setSelected] = useState(props.value || []);
+  const [selected, setSelected] = useState(props.selectedCauses);
   function onSearch(value: string) {
     const searchResult = socialCausesToCategoryAdaptor().filter((item) =>
       item.label.toLowerCase().includes(value.toLowerCase())
@@ -21,9 +21,12 @@ export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element 
     const selectedCauses = socialCausesToCategoryAdaptor().filter((cause) => selected.includes(cause.value));
     props.onSubmit(selectedCauses);
     props.onClose();
-    setSelected([]);
   }
-
+  useEffect(() => {
+    if (!props.open) {
+      setSelected(props?.selectedCauses.map((item) => item.value));
+    }
+  }, [props?.selectedCauses]);
   return (
     <Modal
       height="45rem"
@@ -32,7 +35,6 @@ export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element 
       open={props.open}
       onClose={() => {
         props.onClose();
-        setSelected([]);
       }}
     >
       <div style={{ height: '45rem', maxHeight: '70vh' }} className={css.body}>
@@ -42,7 +44,7 @@ export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element 
         <div className={css.categoryContainer}>
           <CategoriesClickable
             selected={props.selectedCauses.map((item) => item.value)}
-            onChange={setSelected}
+            onChange={(value) => setSelected(value)}
             clickable
             list={list}
             isOpen={props.open}
