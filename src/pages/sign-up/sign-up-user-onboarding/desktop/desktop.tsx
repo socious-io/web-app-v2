@@ -10,7 +10,6 @@ import Steper from '../components/steper';
 import { UserProvider } from '../sign-up-user-onboarding.context';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = {};
 
   return (
     <UserProvider>
