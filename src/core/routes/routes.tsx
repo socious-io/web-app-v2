@@ -126,10 +126,69 @@ export const routes: Route[] = [
         },
         element: () => import('../../pages/feed/refactored/feedDetails/feedDetails').then((m) => <m.default />),
       },
+    ],
+  },
+  {
+    path: 'jobs/',
+    loader: jobsPageLoader,
+    element: <Layout />,
+    children: [
       {
-        path: '/',
-        element: () => import('../../pages/feed/refactored/feed').then((m) => <m.default />),
-        loader: () => getFeedList({ page: 1 }),
+        element: () => import('../../pages/jobs').then((m) => <m.Jobs />),
+        loader: () => getJobList({ page: 1 }),
+      },
+    ],
+  },
+
+  {
+    path: 'profile/users',
+    loader: jobsPageLoader,
+    element: <Layout />,
+    children: [
+      {
+        path: '/:id',
+        loader: profileUserPageLoader,
+        children: [
+          {
+            path: 'view',
+            element: () => import('../../pages/profile-user/refactored/profileUser').then((m) => <m.default />),
+          },
+          {
+            path: 'edit',
+            element: () =>
+              import('../../pages/profile-user-edit/profile-user-edit.container').then((m) => (
+                <m.ProfileUserEditContainer />
+              )),
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: 'profile/organizations',
+    loader: jobsPageLoader,
+    element: <Layout />,
+    children: [
+      {
+        path: '/:id',
+        loader: profileOrganizationPageLoader,
+        children: [
+          {
+            path: 'view',
+            element: () => import('../../pages/profile-organization/refactored/profileOrg').then((m) => <m.default />),
+          },
+          {
+            path: 'edit',
+            element: () =>
+              import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => (
+                <m.ProfileOrganizationEdit />
+              )),
+          },
+          {
+            path: 'jobs',
+            element: () => import('../../pages/jobs-index/jobs-index.container').then((m) => <m.JobsIndexContainer />),
+          },
+        ],
       },
     ],
   },
@@ -704,57 +763,9 @@ export const routes: Route[] = [
             element: () => import('../../pages/job-indexing-google/job-indexing-google').then((m) => <m.default />),
           },
           {
-            path: '/jobs',
-            element: () => import('../../pages/jobs/jobs.container').then((m) => <m.JobsContainer />),
-            loader: () => getJobList({ page: 1 }),
-          },
-          {
             path: '/achievements/d',
             loader: AchievementsPageLoader,
             element: () => import('../../pages/achievements/desktop/desktop').then((m) => <m.Desktop />),
-          },
-          {
-            path: 'profile/users/:id',
-            loader: profileUserPageLoader,
-            children: [
-              {
-                path: 'view',
-                element: () =>
-                  import('../../pages/profile-user/profile-user.container').then((m) => <m.ProfileUserContainer />),
-              },
-              {
-                path: 'edit',
-                element: () =>
-                  import('../../pages/profile-user-edit/profile-user-edit.container').then((m) => (
-                    <m.ProfileUserEditContainer />
-                  )),
-              },
-            ],
-          },
-          {
-            path: 'profile/organizations/:id',
-            loader: profileOrganizationPageLoader,
-            children: [
-              {
-                path: 'view',
-                element: () =>
-                  import('../../pages/profile-organization/profile-organization.container').then((m) => (
-                    <m.ProfileOrganizationContainer />
-                  )),
-              },
-              {
-                path: 'edit',
-                element: () =>
-                  import('../../pages/profile-organization-edit/profile-organization-edit').then((m) => (
-                    <m.ProfileOrganizationEdit />
-                  )),
-              },
-              {
-                path: 'jobs',
-                element: () =>
-                  import('../../pages/jobs-index/jobs-index.container').then((m) => <m.JobsIndexContainer />),
-              },
-            ],
           },
           {
             path: 'notifications',
