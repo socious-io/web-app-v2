@@ -1,5 +1,5 @@
-import { ItemsProps } from './items.types';
 import css from './items.module.scss';
+import { ItemsProps } from './items.types';
 
 export const Items = ({ title, value, onClick }: ItemsProps) => {
   return (

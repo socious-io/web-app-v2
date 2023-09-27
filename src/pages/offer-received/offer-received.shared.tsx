@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import Dapp from 'src/dapp';
-import { StripeProfileResp } from 'src/core/types';
-
-import { useAccount } from 'wagmi';
-import { Resolver } from './offer-received.types';
 import { StatusKeys } from 'src/constants/APPLICANT_STATUS';
+import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { useForm } from 'src/core/form';
-import { dialog } from 'src/core/dialog/dialog';
+import { StripeProfileResp } from 'src/core/types';
+import Dapp from 'src/dapp';
+import { useAccount } from 'wagmi';
+
 import { findTokenRate, getStripeLink, getSrtipeProfile, formModel } from './offer-received.services';
+import { Resolver } from './offer-received.types';
 
 export const useOfferReceivedShared = () => {
   const { offer, media } = useMatch().ownData as Resolver;

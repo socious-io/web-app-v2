@@ -1,22 +1,23 @@
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
+import { Typography } from 'src/components/atoms/typography/typography';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
-import { Typography } from 'src/components/atoms/typography/typography';
 import { ProfileCard } from 'src/components/templates/profile-card';
-import { Button } from 'src/components/atoms/button/button';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
-import { useCompleteMissionShared } from '../complete-mission.shared';
-import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+import { RootState } from 'src/store/store';
+
+import css from './desktop.module.scss';
+import { useCompleteMissionShared } from '../complete-mission.shared';
 
 export const Desktop = (): JSX.Element => {
   const navigate = {};
@@ -153,7 +154,7 @@ export const Desktop = (): JSX.Element => {
                   <Divider title="Resume">
                     <div className={css.uploadedResume}>
                       <img src="/icons/attachment-black.svg" />
-                      <a href={media.url} target="_blank">
+                      <a href={media.url} target="_blank" rel="noreferrer">
                         {media.filename}
                       </a>
                     </div>

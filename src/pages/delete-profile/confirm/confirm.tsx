@@ -1,5 +1,5 @@
-import { Button } from '../../../components/atoms/button/button';
 import css from './confirm.module.scss';
+import { Button } from '../../../components/atoms/button/button';
 
 export const Confirm = () => {
   const navigate = {};

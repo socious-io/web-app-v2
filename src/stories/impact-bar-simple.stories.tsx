@@ -1,5 +1,6 @@
-import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React from 'react';
+
 import { ImpactBarSimple } from '../components/atoms/impact-bar-simple/impact-bar-simple';
 
 export default {

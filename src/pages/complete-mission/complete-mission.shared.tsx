@@ -1,8 +1,8 @@
 import { useState } from 'react';
-
-import { Loader } from './complete-mission.types';
 import { endpoint } from 'src/core/endpoints';
 import { useAlert } from 'src/hooks/use-alert';
+
+import { Loader } from './complete-mission.types';
 
 export const useCompleteMissionShared = () => {
   const resolver = useMatch().ownData;

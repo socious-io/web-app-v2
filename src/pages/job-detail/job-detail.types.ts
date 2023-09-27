@@ -1,5 +1,6 @@
-import { Job } from '../../components/organisms/job-list/job-list.types';
 import { QuestionsRes } from 'src/core/types';
+
+import { Job } from '../../components/organisms/job-list/job-list.types';
 
 export type JobDetailProps = {};
 

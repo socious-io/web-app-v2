@@ -1,5 +1,3 @@
-import { post, get } from '../http';
-import { SuccessRes } from '../types';
 import {
   ReportReq,
   UpdateProfileReq,
@@ -12,6 +10,8 @@ import {
   ChangePasswordDirectReq,
   DeleteUserReq,
 } from './users.types';
+import { post, get } from '../http';
+import { SuccessRes } from '../types';
 
 export async function profile(): Promise<User> {
   return (await get<User>('user/profile')).data;

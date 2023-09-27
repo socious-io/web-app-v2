@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { WebModal } from 'src/components/templates/web-modal';
 import { Dropdown } from 'src/components/atoms/dropdown/dropdown';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { WebModal } from 'src/components/templates/web-modal';
+import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
+import { dialog } from 'src/core/dialog/dialog';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
-import { dialog } from 'src/core/dialog/dialog';
-import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
+
+import css from './modal-create.module.scss';
 import { ModalCreateProps } from './modal-create.types';
 import { ModalReview } from '../modal-review';
-import css from './modal-create.module.scss';
 
 export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeedList }) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);

@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { printWhen } from 'src/core/utils';
+
 import css from './textarea.module.scss';
 import { TextareaProps } from './textarea.types';
-import { printWhen } from 'src/core/utils';
 
 export const Textarea = (props: TextareaProps): JSX.Element => {
   const [outline, setOutline] = useState(false);

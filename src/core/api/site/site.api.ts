@@ -1,9 +1,9 @@
+import { CurrentIdentity, Device, DeviceReq, SearchReq } from './site.types';
 import { post, get } from '../http';
-import { CurrentIdentity, Device, DeviceReq, SearchReq } from './site.type';
-import { SuccessRes, PaginateReq, PaginateRes } from '../types';
-import { OrganizationsRes } from '../organizations/organizations.types';
 import { JobsRes } from '../jobs/jobs.types';
+import { OrganizationsRes } from '../organizations/organizations.types';
 import { PostsRes } from '../posts/posts.types';
+import { SuccessRes, PaginateReq, PaginateRes } from '../types';
 import { UsersRes } from '../users/users.types';
 
 export async function search(payload: SearchReq, params: PaginateReq) {

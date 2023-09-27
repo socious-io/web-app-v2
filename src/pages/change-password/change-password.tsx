@@ -1,9 +1,9 @@
 import css from './change-password.module.scss';
+import { useChangePasswordShared } from './change-password.shared';
 import { Button } from '../../components/atoms/button/button';
 import { Header } from '../../components/atoms/header/header';
 import { Input } from '../../components/atoms/input/input';
 import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
-import { useChangePasswordShared } from './change-password.shared';
 
 export const ChangePassword = (): JSX.Element => {
   const { form, navigateToJobs, onSubmit, formIsValid } = useChangePasswordShared();

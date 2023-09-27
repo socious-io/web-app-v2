@@ -1,7 +1,7 @@
 import { useState } from 'react';
-
 import { endpoint } from 'src/core/endpoints';
 import { FollowingsReq, Pagination, UserType } from 'src/core/types';
+
 import { getFollowings } from './followings.service';
 
 export const useFollowingsShared = () => {

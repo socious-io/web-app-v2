@@ -1,14 +1,14 @@
 import { useState } from 'react';
-
 import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { Header } from 'src/components/atoms/header/header';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { Toggle } from 'src/components/atoms/toggle';
 import { Button } from 'src/components/atoms/button/button';
+import { Header } from 'src/components/atoms/header/header';
+import { Toggle } from 'src/components/atoms/toggle';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { printWhen } from 'src/core/utils';
 import translate from 'src/translations';
-import { useSettingsShared } from '../settings.shared';
+
 import css from './mobile.module.scss';
+import { useSettingsShared } from '../settings.shared';
 
 export const Mobile: React.FC = () => {
   const navigate = {};
@@ -73,7 +73,7 @@ export const Mobile: React.FC = () => {
                         </div>
                         <span className={css.notification__subtitle}>
                           To manage your email notification settings, please{' '}
-                          <a href={settingsGuide} className={css.notification__link} target="_blank">
+                          <a href={settingsGuide} className={css.notification__link} target="_blank" rel="noreferrer">
                             click here
                           </a>
                         </span>

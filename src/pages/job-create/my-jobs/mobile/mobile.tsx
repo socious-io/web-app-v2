@@ -1,10 +1,11 @@
 import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { Fab } from 'src/components/atoms/fab/fab';
 import { Header } from 'src/components/atoms/header/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
-import { Fab } from 'src/components/atoms/fab/fab';
-import { useMyJobShared } from '../my-job.shared';
+
 import css from './mobile.module.scss';
+import { useMyJobShared } from '../my-job.shared';
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};

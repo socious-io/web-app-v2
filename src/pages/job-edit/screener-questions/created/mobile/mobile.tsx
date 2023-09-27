@@ -1,4 +1,3 @@
-import store from 'src/store/store';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import {
@@ -7,8 +6,10 @@ import {
   setDefaultQuestion,
   setQuestionProjectIds,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { useCreatedShared } from '../created.shared';
+import store from 'src/store/store';
+
 import css from './mobile.module.scss';
+import { useCreatedShared } from '../created.shared';
 
 export const Mobile: React.FC = () => {
   const navigate = {};

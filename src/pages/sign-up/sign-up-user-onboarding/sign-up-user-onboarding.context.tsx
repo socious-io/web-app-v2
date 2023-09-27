@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useReducer } from 'react';
-import { getIdentities } from 'src/core/api';
+import { identities } from 'src/core/api';
+
 import { getProfileRequest } from './sign-up-user-onboarding.service';
 
 const initialState = {
@@ -45,7 +46,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getIdentities();
+        const response = await identities();
         const selectedIdentity = response.find((identity) => identity.primary);
         const userProfile = await getProfileRequest(selectedIdentity?.id);
         dispatch({ type: 'UPDATE_USER', payload: userProfile });

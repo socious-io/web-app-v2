@@ -1,5 +1,5 @@
-import { spinnerSlice } from './reducers/spinner.reducer';
 import { configureStore } from '@reduxjs/toolkit';
+
 import { chatSlice } from './reducers/chat.reducer';
 import { createOrgWizardSlice } from './reducers/createOrgWizard.reducer';
 import { createPostWizardSlice } from './reducers/createPostWizard.reducer';
@@ -7,6 +7,7 @@ import { createQuestionWizardSlice } from './reducers/createQuestionWizard.reduc
 import { identitySlice } from './reducers/identity.reducer';
 import { menuSlice } from './reducers/menu.reducer';
 import { modalsSlice } from './reducers/modal.reducer';
+import { spinnerSlice } from './reducers/spinner.reducer';
 
 const store = configureStore({
   reducer: {

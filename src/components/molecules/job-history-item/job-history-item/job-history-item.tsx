@@ -1,4 +1,5 @@
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+
 import css from './job-history-item.module.scss';
 import { JobHistoryItemProps as Props } from './job-history-item.types';
 

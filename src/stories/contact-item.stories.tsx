@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { ContactItem } from '../components/molecules/contact-item/contact-item';
 
 export default {

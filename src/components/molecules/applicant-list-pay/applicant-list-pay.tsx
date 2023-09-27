@@ -1,9 +1,11 @@
+import Dapp from 'src/dapp';
+
+import css from './applicant-list-pay.module.scss';
+import { Applicant, ApplicantListPayProps } from './applicant-list-pay.types';
 import { printWhen } from '../../../core/utils';
 import { StatusTag } from '../../atoms/status-tag/status-tag';
 import { ProfileView } from '../profile-view/profile-view';
-import css from './applicant-list-pay.module.scss';
-import { Applicant, ApplicantListPayProps } from './applicant-list-pay.types';
-import Dapp from 'src/dapp';
+
 
 const statuses = {
   CONFIRMED: {

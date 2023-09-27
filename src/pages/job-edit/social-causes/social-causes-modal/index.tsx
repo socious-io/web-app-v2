@@ -1,10 +1,11 @@
-import { WebModal } from 'src/components/templates/web-modal';
-import { Search } from 'src/components/atoms/search/search';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { SocialCausesModalProps } from './social-causes-modal.types';
-import { useSocialCausesShared } from '../social-causes.shared';
+import { Search } from 'src/components/atoms/search/search';
+import { WebModal } from 'src/components/templates/web-modal';
+
 import css from './social-causes-modal.module.scss';
+import { SocialCausesModalProps } from './social-causes-modal.types';
 import { createFormInitState, jobEditRequest } from '../../info/info.services';
+import { useSocialCausesShared } from '../social-causes.shared';
 
 export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onClose, onDone, jobOverview }) => {
   const { onSearch, socialCauses, selectedSocialCauses, isValid, setSelectedSocialCauses } = useSocialCausesShared(

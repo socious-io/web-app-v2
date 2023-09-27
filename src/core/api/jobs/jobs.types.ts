@@ -1,7 +1,8 @@
 import { Currency } from 'iso-country-currency';
+
 import { Organization } from '../organizations/organizations.types';
 import { Payment } from '../payments/payments.types';
-import { Identity } from '../site/site.type';
+import { Identity } from '../site/site.types';
 import {
   ProjectLengthType,
   ProjectPaymentSchemeType,

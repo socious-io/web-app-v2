@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { ChatList } from '../components/organisms/chat-list/chat-list';
 import { ChatListProps } from '../components/organisms/chat-list/chat-list.types';
 

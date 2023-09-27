@@ -1,9 +1,9 @@
 import css from './mobile.module.scss';
 import { Button } from '../../../../components/atoms/button/button';
+import { Input } from '../../../../components/atoms/input/input';
 import { Link } from '../../../../components/atoms/link/link';
 import { Typography } from '../../../../components/atoms/typography/typography';
 import { BottomStatic } from '../../../../components/templates/bottom-static/bottom-static';
-import { Input } from '../../../../components/atoms/input/input';
 import { useSignUpUserCompleteShared } from '../sign-up-user-complete.shared';
 
 export const Mobile = (): JSX.Element => {

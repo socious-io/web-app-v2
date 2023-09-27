@@ -1,10 +1,11 @@
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
 import { NotificationList } from 'src/components/organisms/notification-list/notification-list';
-import { useNotificationsShared } from '../notifications.shared';
-import css from './desktop.module.scss';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
+import { useNotificationsShared } from '../notifications.shared';
 
 export const Desktop = (): JSX.Element => {
   const navigate = {};

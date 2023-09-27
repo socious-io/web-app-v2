@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { Levels } from '../pages/levels/levels';
 
 export default {

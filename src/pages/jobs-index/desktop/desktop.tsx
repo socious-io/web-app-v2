@@ -1,12 +1,13 @@
 import React from 'react';
-import { useJobsIndexShared } from '../jobs-index.shared';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { JobIntroCard } from 'src/components/templates/job-into-card';
 import { Card } from 'src/components/atoms/card/card';
-import css from './desktop.module.scss';
-import { toRelativeTime } from 'src/core/relative-time';
+import { JobIntroCard } from 'src/components/templates/job-into-card';
 import { OrganizationIntroCard } from 'src/components/templates/organization-intro-card/organization-intro-card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { toRelativeTime } from 'src/core/relative-time';
 import { printWhen } from 'src/core/utils';
+
+import css from './desktop.module.scss';
+import { useJobsIndexShared } from '../jobs-index.shared';
 
 export const Desktop = () => {
   const { jobList, data, showMorePageBtn, onMorePage, identities } = useJobsIndexShared();

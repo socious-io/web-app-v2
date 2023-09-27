@@ -1,6 +1,7 @@
 import { useForm } from 'src/core/form';
-import { formModel } from './email.form';
 import { handleError } from 'src/core/http';
+
+import { formModel } from './email.form';
 import { forgetPassword } from '../forget-password.service';
 
 export const useEmailShared = () => {

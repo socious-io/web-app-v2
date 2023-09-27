@@ -1,3 +1,5 @@
+import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
+import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
@@ -5,20 +7,18 @@ import { Card } from 'src/components/atoms/card/card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { FeedList } from 'src/components/organisms/feed-list/feed-list';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { Modal } from 'src/components/templates/modal/modal';
 import { ProfileCard } from 'src/components/templates/profile-card';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { IdentityReq } from 'src/core/types';
 import { useAuth } from 'src/hooks/use-auth';
 import { RootState } from 'src/store/store';
 import css from './feed.module.scss';
 import MobileHeader from './mobileHeader.tsx/mobileHeader';
-import { ModalCreate } from '../modal-create';
-import { Dialog } from '@mui/material';
-import { DialogCreate } from '../dialog-create/dialog-create';
-import { isTouchDevice } from 'src/core/device-type-detector';
-import { Modal } from 'src/components/templates/modal/modal';
-import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { useFeed } from './useFeed';
 import { useNavigate } from 'react-router-dom';
+import { DialogCreate } from '../dialog-create/dialog-create';
+import { ModalCreate } from '../modal-create';
 
 export const Feeds = () => {
   const { isLoggedIn } = useAuth();

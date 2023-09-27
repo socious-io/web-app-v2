@@ -15,7 +15,7 @@ export const TextClickableURLs: React.FC<TextClickableUrlsProps> = ({ text }) =>
             key={index}
             href={includesProtocols.test(word) ? word : `https://${word}`}
             target="_blank"
-            className={css.link}
+            className={css.link} rel="noreferrer"
           >
             {' '}
             {word}

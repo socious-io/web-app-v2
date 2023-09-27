@@ -1,6 +1,6 @@
 import css from './job-history-list.module.scss';
-import { JobHistoryItem } from '../../molecules/job-history-item/job-history-item';
 import { JobHistoryListProps } from './job-history-list.types';
+import { JobHistoryItem } from '../../molecules/job-history-item/job-history-item';
 
 export const JobHistoryList = (props: JobHistoryListProps): JSX.Element => {
   const { data, ...rest } = props;

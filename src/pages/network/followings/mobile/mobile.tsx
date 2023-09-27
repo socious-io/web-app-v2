@@ -1,12 +1,12 @@
 import { useState } from 'react';
-
-import { Header } from 'src/components/atoms/header/header';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Button } from 'src/components/atoms/button/button';
-import { UnfollowModal } from '../unfollow-modal';
+import { Header } from 'src/components/atoms/header/header';
 import { printWhen } from 'src/core/utils';
-import { useFollowingsShared } from '../followings.shared';
+
 import css from './mobile.module.scss';
+import { useFollowingsShared } from '../followings.shared';
+import { UnfollowModal } from '../unfollow-modal';
 
 export const Mobile: React.FC = () => {
   const navigate = {};

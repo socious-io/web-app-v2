@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react';
 import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
+import { APPLICANT_STATUS, setApplicantStatusLabel } from 'src/constants/APPLICANT_STATUS';
 import { get } from 'src/core/http';
 import { toRelativeTime } from 'src/core/relative-time';
 import { GetOffer, Pagination, UserApplicantResp, DeclinedApplicantListResp, MissionsResp } from 'src/core/types';
-import { APPLICANT_STATUS, setApplicantStatusLabel } from 'src/constants/APPLICANT_STATUS';
 
 export async function getEndedList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
   return get(`/user/missions?status=COMPLETE,CONFIRMED&page=${payload.page}`)

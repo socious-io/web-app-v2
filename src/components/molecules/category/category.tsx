@@ -1,12 +1,14 @@
+import { useState } from 'react';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Search } from 'src/components/atoms/search/search';
 import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
+import { Modal } from 'src/components/templates/modal/modal';
+import { isTouchDevice } from 'src/core/device-type-detector';
+import { printWhen } from 'src/core/utils';
+
 import css from './category.module.scss';
 import { CategoryItem, CategoryProps } from './category.types';
-import { useState } from 'react';
-import { printWhen } from 'src/core/utils';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { isTouchDevice } from 'src/core/device-type-detector';
-import { Modal } from 'src/components/templates/modal/modal';
-import { Search } from 'src/components/atoms/search/search';
+
 
 function translate(selected: string | number, list: CategoryProps['list']): string {
   const translation = list.find((item) => item.value === selected);

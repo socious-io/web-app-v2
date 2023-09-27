@@ -1,14 +1,15 @@
-import Dapp from 'src/dapp';
-import { Header } from 'src/components/atoms/header-v2/header';
 import { Button } from 'src/components/atoms/button/button';
+import { Header } from 'src/components/atoms/header-v2/header';
 import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
-import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
 import { PaymentMethods } from 'src/components/templates/payment-methods';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
 import { Sticky } from 'src/components/templates/sticky';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { printWhen } from 'src/core/utils';
-import { usePaymentShared } from '../payment.shared';
+import Dapp from 'src/dapp';
+
 import css from './mobile.module.scss';
+import { usePaymentShared } from '../payment.shared';
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};

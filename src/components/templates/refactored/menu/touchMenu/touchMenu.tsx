@@ -1,12 +1,11 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
+
 import css from './touchMenu.module.scss';
 import { Menu, menuList } from '../menu.services';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 const TouchMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();

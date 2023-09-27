@@ -9,7 +9,7 @@ export async function login(email: string, password: string) {
   return post('/auth/web/login', body).then(({ data }) => data);
 }
 
-export async function deleteAccount(reason: string = 'unknown') {
+export async function deleteAccount(reason = 'unknown') {
   const body = {
     reason,
   };

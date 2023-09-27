@@ -1,13 +1,14 @@
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Header } from 'src/components/atoms/header/header';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { BankAccounts } from 'src/components/templates/bank-accounts';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { printWhen } from 'src/core/utils';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { useWalletShared } from '../wallet.shared';
+import { printWhen } from 'src/core/utils';
+
 import css from './mobile.module.scss';
+import { useWalletShared } from '../wallet.shared';
 
 export const Mobile: React.FC = () => {
   const {

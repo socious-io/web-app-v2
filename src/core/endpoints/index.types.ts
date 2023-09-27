@@ -1,5 +1,6 @@
-import { LoginPayload } from 'src/pages/sign-in/sign-in.types';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { LoginPayload } from 'src/pages/sign-in/sign-in.types';
+
 import {
   ConnectStatus,
   ConnectionItem,

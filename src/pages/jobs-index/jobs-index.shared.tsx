@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-
+import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
-import { useSelector } from 'react-redux';
+
 import { getOrganizationJobs } from './jobs-index.service';
 
 export const useJobsIndexShared = () => {

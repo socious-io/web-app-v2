@@ -1,6 +1,14 @@
 import { ChangeEvent, useMemo, useState } from 'react';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { dialog } from 'src/core/dialog/dialog';
+import { useForm } from 'src/core/form';
+import { FormModel } from 'src/core/form/useForm/useForm.types';
+import { QuestionsRes, UserType } from 'src/core/types';
 
-import { Resolver, Resume } from './apply.types';
+import { generateFormModel } from './apply.form';
 import {
   applyApplication,
   convertOptionsToRadioGroup,
@@ -8,15 +16,7 @@ import {
   resumeInitialState,
   submit,
 } from './apply.services';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
-import { QuestionsRes, UserType } from 'src/core/types';
-import { FormModel } from 'src/core/form/useForm/useForm.types';
-import { generateFormModel } from './apply.form';
-import { useForm } from 'src/core/form';
-import { dialog } from 'src/core/dialog/dialog';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { Resolver, Resume } from './apply.types';
 
 type useApplySharedProps = {
   job: Job;

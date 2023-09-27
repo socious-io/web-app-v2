@@ -1,15 +1,15 @@
-import css from './menu-cursor.module.scss';
 
-import { Avatar } from '../../atoms/avatar/avatar';
-import { Menu, getAvatar, menuList } from './menu-cursor.services';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { IdentityReq } from 'src/core/types';
-import { SwitchAccount } from './components/switch-account/switch-account';
 import { useState } from 'react';
-
+import { useSelector } from 'react-redux';
 import { Search } from 'src/components/atoms/search/search';
+import { IdentityReq } from 'src/core/types';
 import { PayloadModel } from 'src/pages/search/desktop/search.types';
+import { RootState } from 'src/store/store';
+
+import { SwitchAccount } from './components/switch-account/switch-account';
+import css from './menu-cursor.module.scss';
+import { Menu, getAvatar, menuList } from './menu-cursor.services';
+import { Avatar } from '../../atoms/avatar/avatar';
 
 export const MenuCursor = (): JSX.Element => {
   const navigate = {};

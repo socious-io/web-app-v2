@@ -1,8 +1,8 @@
+import css from './desktop.module.scss';
 import { Button } from '../../../../components/atoms/button/button';
 import { Card } from '../../../../components/atoms/card/card';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { getProcess } from '../verified.services';
-import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const processes = getProcess('verify@socious.com');

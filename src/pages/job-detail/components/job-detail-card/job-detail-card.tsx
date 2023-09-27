@@ -1,19 +1,21 @@
-import { Categories } from 'src/components/atoms/categories/categories';
-import css from './job-detail-card.module.scss';
+import { useState } from 'react';
+import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
+import { Categories } from 'src/components/atoms/categories/categories';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
-import { printWhen } from 'src/core/utils';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { Button } from 'src/components/atoms/button/button';
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { getCategories } from '../../job-detail.services';
-import { JobDetailCardProps } from './job-detail-card.types';
-import { useState } from 'react';
-import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
-import { AuthGuard } from 'src/core/auth-guard/auth-guard';
 import { SureModal } from 'src/components/templates/sure-modal';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { AuthGuard } from 'src/core/auth-guard/auth-guard';
+import { printWhen } from 'src/core/utils';
+import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
+
+import css from './job-detail-card.module.scss';
+import { JobDetailCardProps } from './job-detail-card.types';
+import { getCategories } from '../../job-detail.services';
+
 
 export function JobDetailCard(props: JobDetailCardProps) {
   const [openApplyModal, setOpenApplyModal] = useState(false);

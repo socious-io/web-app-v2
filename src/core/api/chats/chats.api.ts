@@ -1,7 +1,8 @@
 import { Message } from 'react-hook-form';
+
+import { Chat, ChatReq, ChatsRes, MessageReq, MessagesRes } from './chats.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq } from '../types';
-import { Chat, ChatReq, ChatsRes, MessageReq, MessagesRes } from './chats.types';
 
 export async function chats(params: PaginateReq): Promise<ChatsRes> {
   return (await get<ChatsRes>('chats/summary', { params })).data;

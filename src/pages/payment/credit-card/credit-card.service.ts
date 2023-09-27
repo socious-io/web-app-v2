@@ -1,6 +1,6 @@
-import { FormModel } from 'src/core/form/useForm/useForm.types';
-import { number } from 'src/core/form/customValidators/customValidators';
 import { max, min, minLength, required } from 'src/core/form';
+import { number } from 'src/core/form/customValidators/customValidators';
+import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { CardItems } from 'src/core/types';
 
 export const formModel = {

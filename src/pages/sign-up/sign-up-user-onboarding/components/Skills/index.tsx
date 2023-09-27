@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
+import { skillsToCategoryAdaptor } from 'src/core/adaptors';
+
 import css from './skills.module.scss';
 import { Button } from '../../../../../components/atoms/button/button';
 import { CategoriesClickable } from '../../../../../components/atoms/categories-clickable/categories-clickable';
 import { Search } from '../../../../../components/atoms/search/search';
-import StepHeader from '../stepHeader';
-import { StepsContext } from '../steper';
 import { useUser } from '../../sign-up-user-onboarding.context';
-import { skillsToCategoryAdaptor } from 'src/core/adaptors';
 import { isValidArrayRange } from '../../sign-up-user-onboarding.service';
+import { StepsContext } from '../steper';
+import StepHeader from '../stepHeader';
 
 const Skills: React.FC = () => {
   const { updateSelectedStep } = useContext(StepsContext);

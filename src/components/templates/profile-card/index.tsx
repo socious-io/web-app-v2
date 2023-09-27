@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { IdentityReq } from 'src/core/types';
-import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
+import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
+
 import css from './profile-card.module.scss';
 
 export const ProfileCard: React.FC = () => {

@@ -1,5 +1,4 @@
 import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
-
 import { useEffect } from 'react';
 
 export const DeepLinks = (): JSX.Element => {

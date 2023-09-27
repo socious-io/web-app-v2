@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { PasswordQuality } from '../components/atoms/password-quality/password-quality';
 
 export default {

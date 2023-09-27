@@ -1,5 +1,8 @@
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { identities } from 'src/core/api';
+import { useForm } from 'src/core/form';
+import { handleError } from 'src/core/http';
 import {
   CreateOrgWizard,
   resetCreateOrgWizard,
@@ -8,22 +11,20 @@ import {
   setOrgType,
   setSocialCauses,
 } from 'src/store/reducers/createOrgWizard.reducer';
-import { RootState } from 'src/store/store';
-import { formModel } from './profile/profile.form';
-import { useForm } from 'src/core/form';
-import { updateForm } from './profile/profile.services';
-import { addOrganization, wizardFormToPayloadAdaptor } from './organization-create';
-import { getIdentities } from 'src/core/api';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { handleError } from 'src/core/http';
+import { RootState } from 'src/store/store';
+
+import { addOrganization, wizardFormToPayloadAdaptor } from './organization-create';
+import { formModel } from './profile/profile.form';
+import { updateForm } from './profile/profile.services';
+
 
 export const useOrganizationCreateShared = () => {
   const navigate = {};
   const dispatch = useDispatch();
 
   async function updateIdentityList() {
-    const identities = await getIdentities();
-    dispatch(setIdentityList(identities));
+    dispatch(setIdentityList(await identities()));
   }
 
   function submitOrganization(wizardForm: CreateOrgWizard) {

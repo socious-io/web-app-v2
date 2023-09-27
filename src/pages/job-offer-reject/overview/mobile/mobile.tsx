@@ -1,17 +1,18 @@
 import { useState } from 'react';
-
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
+import { SureModal } from 'src/components/templates/sure-modal';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { printWhen } from 'src/core/utils';
+
+import css from './mobile.module.scss';
+import { archiveJob, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
+import { Loader } from '../../job-offer-reject.types';
 import { Applicants } from '../components/applicants/applicants';
 import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
-import { Loader } from '../../job-offer-reject.types';
-import { archiveJob, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
-import css from './mobile.module.scss';
-import { SureModal } from 'src/components/templates/sure-modal';
-import { printWhen } from 'src/core/utils';
+
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};

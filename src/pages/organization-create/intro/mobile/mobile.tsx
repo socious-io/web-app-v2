@@ -1,7 +1,7 @@
-import { Button } from '../../../../components/atoms/button/button';
-import { LIST_ITEM } from '../intro.services';
 import css from './mobile.module.scss';
+import { Button } from '../../../../components/atoms/button/button';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
+import { LIST_ITEM } from '../intro.services';
 
 export const Mobile = (): JSX.Element => {
   const { navigateToJobs, navigateToType } = useOrganizationCreateShared();

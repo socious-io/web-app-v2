@@ -1,14 +1,15 @@
 import { useSelector } from 'react-redux';
-import { WebModal } from 'src/components/templates/web-modal';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
-import { RootState } from 'src/store/store';
-import { printWhen } from 'src/core/utils';
+import { WebModal } from 'src/components/templates/web-modal';
 import { IdentityReq } from 'src/core/types';
-import { ModalReviewProps } from './modal-review.types';
+import { printWhen } from 'src/core/utils';
+import { RootState } from 'src/store/store';
+
 import css from './modal-review.module.scss';
+import { ModalReviewProps } from './modal-review.types';
 import { getFeedList, submitPost, uploadImage } from '../refactored/feed.service';
 
 export const ModalReview: React.FC<ModalReviewProps> = ({

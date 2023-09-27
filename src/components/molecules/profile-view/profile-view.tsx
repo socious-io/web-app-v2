@@ -1,7 +1,8 @@
-import css from './profile-view.module.scss';
-import { Avatar } from '../../atoms/avatar/avatar';
-import { ProfileViewProps } from './profile-view.types';
 import { CSSProperties } from 'react';
+
+import css from './profile-view.module.scss';
+import { ProfileViewProps } from './profile-view.types';
+import { Avatar } from '../../atoms/avatar/avatar';
 
 export const ProfileView = (props: ProfileViewProps): JSX.Element => {
   const { type, img, name, username, size = '3rem', location, theme = 'light' } = props;

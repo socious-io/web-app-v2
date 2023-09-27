@@ -1,5 +1,4 @@
 import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
-
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
@@ -10,9 +9,10 @@ import { endpoint } from 'src/core/endpoints';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { IdentityReq, Pagination } from 'src/core/types';
 import { RootState } from 'src/store/store';
-import { like, unlike } from '../feed.service';
+
 import { addComment, getComments, likeComment, removeCommentLike } from './feedDetail.service';
 import { CommentModel } from './feedDetail.types';
+import { like, unlike } from '../feed.service';
 
 export const useFeedDetails = () => {
   const identity = useSelector<RootState, IdentityReq>((state) => {

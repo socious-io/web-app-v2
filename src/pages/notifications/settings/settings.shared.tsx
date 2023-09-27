@@ -1,9 +1,9 @@
 import { useState } from 'react';
-
 import { NotificationSettings } from 'src/constants/constants';
 import { endpoint } from 'src/core/endpoints';
-import { Payload } from './settings.types';
 import { NotificationSettingsRes } from 'src/core/types';
+
+import { Payload } from './settings.types';
 
 export const useSettingsShared = () => {
   const { settings } = useMatch().data as NotificationSettingsRes;

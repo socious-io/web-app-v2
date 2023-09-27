@@ -1,3 +1,9 @@
+import { Applicant } from '../../components/molecules/applicant-list/applicant-list.types';
+import { Applicant as ApplicantHire } from '../../components/molecules/applicant-list-pay/applicant-list-pay.types';
+import { Job } from '../../components/organisms/job-list/job-list.types';
+import { translatePaymentTerms } from '../../constants/PROJECT_PAYMENT_SCHEME';
+import { translatePaymentType } from '../../constants/PROJECT_PAYMENT_TYPE';
+import { endpoint } from '../../core/endpoints';
 import { get, post } from '../../core/http';
 import { isoToStandard } from '../../core/time';
 import {
@@ -9,12 +15,6 @@ import {
   QuestionsRes,
   UserApplicantResp,
 } from '../../core/types';
-import { Applicant } from '../../components/molecules/applicant-list/applicant-list.types';
-import { Applicant as ApplicantHire } from '../../components/molecules/applicant-list-pay/applicant-list-pay.types';
-import { Job } from '../../components/organisms/job-list/job-list.types';
-import { endpoint } from '../../core/endpoints';
-import { translatePaymentTerms } from '../../constants/PROJECT_PAYMENT_SCHEME';
-import { translatePaymentType } from '../../constants/PROJECT_PAYMENT_TYPE';
 import { getJobCategories } from '../job-create/info/info.services';
 
 export async function jobOfferRejectLoader({ params }: { params: { id: string } }) {
