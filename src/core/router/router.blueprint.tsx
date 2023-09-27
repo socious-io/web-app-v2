@@ -1,4 +1,8 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import Layout from 'src/components/templates/refactored/layout/layout';
+import { getFeedList } from 'src/pages/feed/refactored/feed.service';
+import { getComments, getPostDetail } from 'src/pages/feed/refactored/feedDetails/feedDetail.service';
+import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 
 export const blueprint: RouteObject[] = [
   {
@@ -121,6 +125,36 @@ export const blueprint: RouteObject[] = [
           return {
             Component: Password,
           };
+        },
+      },
+    ],
+  },
+  {
+    element: <Layout />,
+    loader: jobsPageLoader,
+    children: [
+      {
+        path: 'feeds',
+        async lazy() {
+          const { Feeds } = await import('../../pages/feed/refactored/feed');
+          return {
+            Component: Feeds,
+          };
+        },
+        loader: () => getFeedList({ page: 1 }),
+      },
+      {
+        path: 'feeds/:id',
+        async lazy() {
+          const { FeedDetails } = await import('../../pages/feed/refactored/feedDetails/feedDetails');
+          return {
+            Component: FeedDetails,
+          };
+        },
+        loader: async ({ params }) => {
+          const requests = [getPostDetail(params.id!), getComments(params.id!, 1)];
+          const [post, comments] = await Promise.all(requests);
+          return { post, comments };
         },
       },
     ],

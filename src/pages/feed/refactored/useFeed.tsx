@@ -4,9 +4,10 @@ import { getFeedList, like, unlike } from './feed.service';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { endpoint } from 'src/core/endpoints';
 import { dialog } from 'src/core/dialog/dialog';
+import { useLoaderData } from 'react-router-dom';
 
 export const useFeed = () => {
-  const list = useMatch().ownData as Resolver;
+  const list = useLoaderData() as Resolver;
   const [openDialog, setOpenDialog] = useState(false);
   const [feedList, setFeedList] = useState(list.items);
   const [page, setPage] = useState(1);
