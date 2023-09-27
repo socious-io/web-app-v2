@@ -2,7 +2,7 @@ import { Camera } from '@capacitor/camera';
 import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { getIdentities } from 'src/core/api';
+import { identities } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
@@ -78,7 +78,7 @@ export const useProfileOrganizationEditShared = () => {
   };
 
   async function updateIdentityList() {
-    return getIdentities().then((resp) => dispatch(setIdentityList(resp)));
+    return identities().then((resp) => dispatch(setIdentityList(resp)));
   }
 
   async function onSave() {
