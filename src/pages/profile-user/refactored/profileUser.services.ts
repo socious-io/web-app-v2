@@ -54,16 +54,6 @@ export const showActions = async (id: string) => {
   }
 };
 
-// export async function profilePageLoader({ params }: RouteMatch<DefaultGenerics>) {
-//   const userType = params.userType;
-//   if (userType === 'users') {
-//     const profile = await getUserDetail(params.id);
-//     return { profile };
-//   }
-//   const profile = await getOrganizationDetail(params.id);
-//   return { profile };
-// }
-
 export function badgesList(badges: unknown[]): ImpactBadgeProps[] {
   const filter = ([key, value], i: number) => {
     return badges.some((item) => item.social_cause_category === key && i <= 4);
