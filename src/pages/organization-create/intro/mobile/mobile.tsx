@@ -1,5 +1,6 @@
+import { Button } from 'src/components/atoms/button/button';
+
 import css from './mobile.module.scss';
-import { Button } from '../../../../components/atoms/button/button';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { LIST_ITEM } from '../intro.services';
 

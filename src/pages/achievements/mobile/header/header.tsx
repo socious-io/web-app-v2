@@ -1,9 +1,9 @@
+import { Button } from 'src/components/atoms/button/button';
+import { ImpactBarLevel } from 'src/components/atoms/impact-bar-level/impact-bar-level';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 import css from './header.module.scss';
 import { HeaderProps } from './header.types';
-import { Button } from '../../../../components/atoms/button/button';
-import { ImpactBarLevel } from '../../../../components/atoms/impact-bar-level/impact-bar-level';
 
 function onBack() {
   hapticsImpactLight();

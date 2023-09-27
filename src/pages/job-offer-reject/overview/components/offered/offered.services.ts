@@ -1,6 +1,6 @@
-import { Applicant } from '../../../../../components/molecules/applicant-list/applicant-list.types';
 import { isoToStandard } from '../../../../../core/time';
 import { Offer } from '../../../../../core/types';
+import { Applicant } from '../src/components/molecules/applicant-list/applicant-list.types';
 
 export function jobToApplicantListAdaptor(applicant: Offer[]): Applicant[] {
   if (applicant.length === 0) {
