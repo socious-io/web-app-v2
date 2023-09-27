@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { dialog } from 'src/core/dialog/dialog';
+import { endpoint } from 'src/core/endpoints';
 import { LoginResp } from 'src/core/types';
 import { setAuthCookies } from 'src/pages/sign-in/sign-in.services';
-import { endpoint } from 'src/core/endpoints';
 
 export const useSignUpUserVerificationShared = () => {
   const navigate = {};

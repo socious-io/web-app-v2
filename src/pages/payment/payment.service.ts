@@ -1,5 +1,5 @@
-import { get } from 'src/core/http';
 import { endpoint } from 'src/core/endpoints';
+import { get } from 'src/core/http';
 
 export async function getCreditCardInfo(is_jp: boolean) {
   return get('/payments/cards', { params: { 'filter.is_jp': is_jp } }).then(({ data }) => data);

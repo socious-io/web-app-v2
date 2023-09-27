@@ -1,16 +1,16 @@
+import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { useState, useEffect } from 'react';
-
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { Header } from 'src/components/atoms/header/header';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
+import { Header } from 'src/components/atoms/header/header';
 import { Sticky } from 'src/components/templates/sticky';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { config } from 'src/config';
+import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { Offer } from 'src/core/types';
+
 import css from './mobile.module.scss';
-import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
-import { dialog } from 'src/core/dialog/dialog';
 
 type Resolver = {
   offer: Offer;

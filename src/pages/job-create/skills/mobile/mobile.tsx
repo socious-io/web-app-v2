@@ -3,8 +3,9 @@ import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
 import { setPostSkills } from 'src/store/reducers/createPostWizard.reducer';
-import { useSkillsShared } from '../skills.shared';
+
 import css from './mobile.module.scss';
+import { useSkillsShared } from '../skills.shared';
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};

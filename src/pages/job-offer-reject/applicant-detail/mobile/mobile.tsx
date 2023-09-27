@@ -1,8 +1,9 @@
-import css from './mobile.module.scss';
-import { Header } from 'src/components/atoms/header/header';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
+import { Header } from 'src/components/atoms/header/header';
 import { printWhen } from 'src/core/utils';
+
+import css from './mobile.module.scss';
 import { useApplicantDetailShared } from '../applicant-detail.shared';
 import { ApplicantInfo } from '../components/applicant-info';
 
@@ -32,7 +33,7 @@ export const Mobile = (): JSX.Element => {
     <Accordion id="resume" title="Resume">
       <div className={css.uploadedResume}>
         <img src="/icons/attachment-black.svg" />
-        <a href={applicantDetail?.attachment?.url} target="_blank">
+        <a href={applicantDetail?.attachment?.url} target="_blank" rel="noreferrer">
           {applicantDetail?.attachment?.filename}
         </a>
       </div>

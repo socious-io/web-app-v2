@@ -1,18 +1,19 @@
-import { FeedItem } from 'src/components/molecules/feed-item/feed-item';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import feedcss from '../feed.module.scss';
-import { socialCausesToCategory } from 'src/core/adaptors';
-import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { SendBox } from 'src/components/molecules/send-box/send-box';
-import { Comment } from 'src/components/molecules/comment/comment';
+import { Card } from 'src/components/atoms/card/card';
 import { Header } from 'src/components/atoms/header/header';
-import { Modal } from 'src/components/templates/modal/modal';
-import css from '../feed.module.scss';
+import { Comment } from 'src/components/molecules/comment/comment';
+import { FeedItem } from 'src/components/molecules/feed-item/feed-item';
+import { SendBox } from 'src/components/molecules/send-box/send-box';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { socialCausesToCategory } from 'src/core/adaptors';
 import { useFeedDetails } from './useFeedDetails';
+import feedcss from '../feed.module.scss';
+import css from '../feed.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { Modal } from 'src/components/templates/modal/modal';
 
 export const FeedDetails = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const {
     postObj,
     actionList,
@@ -35,7 +36,7 @@ export const FeedDetails = () => {
   return (
     <div className="w-full h-full">
       <div className="md:hidden">
-        <Header onBack={() => navigate({ to: '/feeds' })} title="Post" />
+        <Header onBack={() => navigate('/feeds')} title="Post" />
       </div>
       <div className={`${feedcss.container} p-4 md:p-0`}>
         <div className={`${feedcss.boundaries} md:mt-10 md:mr-10 md:mb-0 md:ml-10`}>

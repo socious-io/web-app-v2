@@ -9,10 +9,11 @@ import { Divider } from 'src/components/templates/divider/divider';
 import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { printWhen } from 'src/core/utils';
 import { ConnectModal } from 'src/pages/profile-organization/connect-modal';
-import { Edit } from '../desktop/edit/edit';
+
 import css from './profileUser.module.scss';
 import { badgesList } from './profileUser.services';
 import { useProfileUser } from './useProfileUser';
+import { Edit } from '../desktop/edit/edit';
 
 const ProfileUser = () => {
   const [openConnectModal, setOpenConnectModal] = useState(false);

@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { HeaderStaticMobile } from '../components/templates/header-static-mobile/header-static-mobile';
 
 export default {

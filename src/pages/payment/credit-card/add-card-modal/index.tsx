@@ -1,13 +1,14 @@
+import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { useState, useEffect } from 'react';
-import { Modal } from 'src/components/templates/modal/modal';
 import { Button } from 'src/components/atoms/button/button';
+import { Modal } from 'src/components/templates/modal/modal';
 import { config } from 'src/config';
+import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
+
+import css from './add-card-modal.module.scss';
 import { AddCardModalProps } from './add-card-modal.types';
 import { getCreditCardInfo } from '../../payment.service';
-import css from './add-card-modal.module.scss';
-import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
-import { dialog } from 'src/core/dialog/dialog';
 
 export const AddCardModal: React.FC<AddCardModalProps> = ({ open, onClose, setCardsList, currency }) => {
   const [stripe, setStripe] = useState<Stripe | null>();

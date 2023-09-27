@@ -1,8 +1,8 @@
 import { useState } from 'react';
-
 import { dialog } from 'src/core/dialog/dialog';
-import { useForm } from 'src/core/form';
 import { endpoint } from 'src/core/endpoints';
+import { useForm } from 'src/core/form';
+
 import { formModel, getMissionsList, getStripeLink } from './wallet.service';
 import { Resolver, RespPayout } from './wallet.types';
 
@@ -13,7 +13,7 @@ export const useWalletShared = () => {
     jpStripeProfile,
   } = useMatch().data as Resolver;
 
-  let accounts = [];
+  const accounts = [];
   if (stripeProfile?.external_accounts?.data.length > 0) accounts.push(...stripeProfile?.external_accounts.data);
   if (jpStripeProfile?.external_accounts?.data.length > 0) accounts.push(...jpStripeProfile?.external_accounts.data);
 

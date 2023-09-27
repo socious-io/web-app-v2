@@ -1,16 +1,16 @@
 import { useState } from 'react';
-
-import { BackLink } from 'src/components/molecules/back-link';
-import { Card } from 'src/components/atoms/card/card';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Toggle } from 'src/components/atoms/toggle';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
+import { Toggle } from 'src/components/atoms/toggle';
+import { BackLink } from 'src/components/molecules/back-link';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
-import translate from 'src/translations';
-import { useSettingsShared } from '../settings.shared';
-import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+import translate from 'src/translations';
+
+import css from './desktop.module.scss';
+import { useSettingsShared } from '../settings.shared';
 
 export const Desktop: React.FC = () => {
   const navigate = {};
@@ -80,7 +80,7 @@ export const Desktop: React.FC = () => {
                         </div>
                         <span className={css.notification__subtitle}>
                           To manage your email notification settings, please{' '}
-                          <a href={settingsGuide} className={css.notification__link} target="_blank">
+                          <a href={settingsGuide} className={css.notification__link} target="_blank" rel="noreferrer">
                             click here
                           </a>
                         </span>

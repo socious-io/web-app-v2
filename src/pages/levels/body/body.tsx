@@ -1,6 +1,6 @@
-import { Tab } from '../../../components/atoms/tabs/tabs.types';
-import { Tabs } from '../../../components/atoms/tabs/tabs';
 import { BodyProps } from './body.types';
+import { Tabs } from '../../../components/atoms/tabs/tabs';
+import { Tab } from '../../../components/atoms/tabs/tabs.types';
 import { JobHistoryList } from '../../../components/organisms/job-history-list/job-history-list';
 import { LevelList } from '../../../components/organisms/level-list/level-list';
 

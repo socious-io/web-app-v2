@@ -2,8 +2,9 @@ import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { Modal } from 'src/components/templates/modal/modal';
 import { printWhen } from 'src/core/utils';
-import { AlertModalProps } from './alert-modal.types';
+
 import css from './alert-modal.module.scss';
+import { AlertModalProps } from './alert-modal.types';
 
 export const AlertModal: React.FC<AlertModalProps> = ({
   open,

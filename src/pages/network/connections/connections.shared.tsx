@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { endpoint } from 'src/core/endpoints';
 import { dialog } from 'src/core/dialog/dialog';
+import { endpoint } from 'src/core/endpoints';
 import { IdentityReq, UserType } from 'src/core/types';
-import { Resolver } from './connections.types';
+import { RootState } from 'src/store/store';
+
 import { getConnections } from './connections.service';
+import { Resolver } from './connections.types';
 
 export const useConnectionsShared = () => {
   const navigate = {};

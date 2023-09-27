@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Category } from 'src/components/molecules/category/category';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
+import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
+import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+
+import css from './mobile.module.scss';
 import { Header } from '../../../components/atoms/header-v2/header';
 import { Input } from '../../../components/atoms/input/input';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import css from './mobile.module.scss';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
-import { Category } from 'src/components/molecules/category/category';
 import { useProfileOrganizationEditShared } from '../profile-organization-edit.shared';
-import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
 
 export const Mobile = (): JSX.Element => {
   const { onSave, onAvatarEdit, onCoverEdit, avatarImage, coverImage, updateCityList, form, cities, organization } =

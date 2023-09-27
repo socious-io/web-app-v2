@@ -1,16 +1,16 @@
 import { useState } from 'react';
-
-import { Card } from 'src/components/atoms/card/card';
-import { BackLink } from 'src/components/molecules/back-link';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { BackLink } from 'src/components/molecules/back-link';
 import { Modal } from 'src/components/templates/modal/modal';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
+import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
 import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
 import { useConnectionsShared } from '../connections.shared';
-import css from './desktop.module.scss';
-import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop: React.FC = () => {
   const navigate = {};

@@ -1,14 +1,14 @@
-import css from './search.module.scss';
 import { DropdownBtn } from 'src/components/atoms/dropdown-btn/dropdown-btn';
 import { JobList } from 'src/components/organisms/job-list/job-list';
-import { PeopleList } from '../components/people-list/people-list';
 import { printWhen } from 'src/core/utils';
-import { useSearchShared } from '../search.shared';
-import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
-import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
-import { PayloadModel } from './search.types';
 
 import { DetailOutlet } from './detail-outlet/detail-outlet';
+import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
+import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
+import css from './search.module.scss';
+import { PayloadModel } from './search.types';
+import { PeopleList } from '../components/people-list/people-list';
+import { useSearchShared } from '../search.shared';
 
 export const Search = () => {
   const {

@@ -1,7 +1,7 @@
 import css from './job-card.module.scss';
+import { JobCardProps } from './job-card.types';
 import { printWhen } from '../../../core/utils';
 import { ProfileView } from '../profile-view/profile-view';
-import { JobCardProps } from './job-card.types';
 
 export const JobCard = (props: JobCardProps): JSX.Element => {
   const mainContent = () => {

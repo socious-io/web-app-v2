@@ -1,6 +1,6 @@
+import { MembersRes, Organization, OrganizationReq, OrganizationsRes } from './organizations.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq, PaginateRes } from '../types';
-import { MembersRes, Organization, OrganizationReq, OrganizationsRes } from './organizations.types';
 
 export async function organizations(params: PaginateReq): Promise<OrganizationsRes> {
   return (await get<OrganizationsRes>('orgs', { params })).data;

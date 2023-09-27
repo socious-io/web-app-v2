@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
+import { IdentityReq } from 'src/core/types';
 import { resetCreatePostWizard, setPostCausesTags } from 'src/store/reducers/createPostWizard.reducer';
-import { useSocialCausesShared } from '../social-causes.shared';
+import { RootState } from 'src/store/store';
+
 import css from './mobile.module.scss';
+import { useSocialCausesShared } from '../social-causes.shared';
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};

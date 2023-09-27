@@ -1,7 +1,8 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'react';
+import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
 import { get, post } from 'src/core/http';
-import { formModel } from './info.form';
+import { CategoriesResp, Cities, CreatePostPayload, Pagination } from 'src/core/types';
 import {
   setMaxRange,
   setMinRange,
@@ -15,8 +16,9 @@ import {
   setPostRemotePreference,
   setPostTitle,
 } from 'src/store/reducers/createPostWizard.reducer';
-import { CategoriesResp, Cities, CreatePostPayload, Pagination } from 'src/core/types';
-import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
+
+import { formModel } from './info.form';
+
 
 export async function getJobCategories(): Promise<CategoriesResp> {
   return get('/projects/categories').then(({ data }) => data);

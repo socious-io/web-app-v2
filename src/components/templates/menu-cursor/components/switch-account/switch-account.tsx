@@ -1,20 +1,20 @@
-import css from './switch-account.module.scss';
-import { RootState } from 'src/store/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { AccountsModel } from 'src/pages/sidebar/mobile/mobile.types';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { logout, setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
-import { getIdentities } from 'src/core/api';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
-
 import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'src/components/atoms/button/button';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
-import { SwitchAccountProps } from './switch-account.types';
-import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
+import { identities } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { printWhen } from 'src/core/utils';
-import { Button } from 'src/components/atoms/button/button';
 import { useAuth } from 'src/hooks/use-auth';
+import { AccountsModel } from 'src/pages/sidebar/mobile/mobile.types';
+import { logout, setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { RootState } from 'src/store/store';
+
+import css from './switch-account.module.scss';
+import { SwitchAccountProps } from './switch-account.types';
+import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
 import { useNavigate } from 'react-router-dom';
 
 let timer: NodeJS.Timeout;
@@ -91,13 +91,13 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const switchAccount = async (id: string) => {
     setPendingAccId(id);
     await setIdentityHeader(id);
-    getIdentities()
+    identities()
       .then((resp) => dispatch(setIdentityList(resp)))
       .then(() => navigate('/jobs'))
       .then(closeMenu);
   };
 
-  function accountBgColor(id: string, current: Boolean) {
+  function accountBgColor(id: string, current: boolean) {
     if (current) {
       return 'var(--color-primary-01)';
     }

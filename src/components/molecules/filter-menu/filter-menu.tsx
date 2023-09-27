@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import css from './filter-menu.module.scss';
 import { FilterMenuProps } from './filter-menu.types';
 

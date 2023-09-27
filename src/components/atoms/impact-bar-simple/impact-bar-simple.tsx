@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import css from './impact-bar-simple.module.scss';
 import { ImpactBarSimpleProps } from './impact-bar-simple.module.types';
 

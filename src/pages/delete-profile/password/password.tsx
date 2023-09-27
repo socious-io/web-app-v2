@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from '../../../core/types';
-import { RootState } from '../../../store/store';
+
+import { formModel } from './password.form';
+import css from './password.module.scss';
 import { Button } from '../../../components/atoms/button/button';
 import { Input } from '../../../components/atoms/input/input';
-import { deleteAccount, login } from '../delete-profile.service';
-import css from './password.module.scss';
 import { useForm } from '../../../core/form';
-import { formModel } from './password.form';
 import { handleError } from '../../../core/http';
+import { IdentityReq } from '../../../core/types';
+import { RootState } from '../../../store/store';
+import { deleteAccount, login } from '../delete-profile.service';
 
 export const Password = () => {
   const navigate = {};

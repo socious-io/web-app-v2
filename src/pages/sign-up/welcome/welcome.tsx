@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
+
 import css from './welcome.module.scss';
 
 export const Welcome: React.FC = () => {

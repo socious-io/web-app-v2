@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-
-import store from 'src/store/store';
-import { WebModal } from 'src/components/templates/web-modal';
+import { useDispatch } from 'react-redux';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { AlertModal } from 'src/components/organisms/alert-modal';
+import { WebModal } from 'src/components/templates/web-modal';
 import {
   resetCreatedQuestion,
   resetQuestions,
@@ -11,11 +10,14 @@ import {
   setDefaultQuestion,
   setQuestionProjectIds,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { CreatedModalProps } from './created-modal.types';
-import { useCreatedShared } from '../created.shared';
+import store from 'src/store/store';
+
 import css from './created-modal.module.scss';
-import { useDispatch } from 'react-redux';
+import { CreatedModalProps } from './created-modal.types';
 import { ScreenerModal } from '../../screener-modal';
+import { useCreatedShared } from '../created.shared';
+
+
 
 export const CreatedModal: React.FC<CreatedModalProps> = ({
   userQuestions,

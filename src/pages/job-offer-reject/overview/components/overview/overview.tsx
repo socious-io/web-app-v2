@@ -1,30 +1,30 @@
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
-import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
-import { translatePaymentRange } from 'src/constants/PAYMENT_RANGE';
-import { translateProjectType } from 'src/constants/PROJECT_TYPES';
+import { useEffect, useState } from 'react';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Divider } from 'src/components/templates/divider/divider';
-import { OverviewProps } from './overview.types';
+import { SureModal } from 'src/components/templates/sure-modal';
+import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
+import { translatePaymentRange } from 'src/constants/PAYMENT_RANGE';
+import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
+import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
+import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translateProjectType } from 'src/constants/PROJECT_TYPES';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { isTouchDevice } from 'src/core/device-type-detector';
+import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
 import { printWhen } from 'src/core/utils';
-
 import { InfoModal } from 'src/pages/job-edit/info/info-modal';
+import { CreatedModal } from 'src/pages/job-edit/screener-questions/created/created-modal';
 import { SkillsModal } from 'src/pages/job-edit/skills/skills-modal';
 import { SocialCausesModal } from 'src/pages/job-edit/social-causes/social-causes-modal';
-import { CreatedModal } from 'src/pages/job-edit/screener-questions/created/created-modal';
-import css from './overview.module.scss';
-import { useEffect, useState } from 'react';
-import { isTouchDevice } from 'src/core/device-type-detector';
-import { SureModal } from 'src/components/templates/sure-modal';
 import {
   archiveJob,
   getJobOverview,
   getScreeningQuestions,
 } from 'src/pages/job-offer-reject/job-offer-reject.services';
-import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
+
+import css from './overview.module.scss';
+import { OverviewProps } from './overview.types';
 
 export const Overview = ({ data, questions, updateApplicantList }: OverviewProps): JSX.Element => {
   const navigate = {};

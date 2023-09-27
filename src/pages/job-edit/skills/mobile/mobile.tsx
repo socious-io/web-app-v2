@@ -2,10 +2,12 @@ import { useDispatch } from 'react-redux';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
-import { useSkillsShared } from '../skills.shared';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+
 import css from './mobile.module.scss';
 import { createFormInitState, jobEditRequest } from '../../info/info.services';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { useSkillsShared } from '../skills.shared';
+
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};

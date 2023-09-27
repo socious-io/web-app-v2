@@ -1,4 +1,5 @@
 import { Endpoints } from 'src/core/endpoints/index.types';
+
 import { BadgesResp, Pagination } from '../../core/types';
 
 export type Loader = {

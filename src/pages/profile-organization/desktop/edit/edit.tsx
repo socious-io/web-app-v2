@@ -1,24 +1,25 @@
-import { Header } from 'src/components/atoms/header-v2/header';
-import css from './edit.module.scss';
-import { Modal } from 'src/components/templates/modal/modal';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
-import { Category } from 'src/components/molecules/category/category';
-import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
 import { useEffect, useRef, useState } from 'react';
-import { Input } from 'src/components/atoms/input/input';
-import { EditProps } from './edit.types';
-import { useProfileOrganizationEditShared } from 'src/pages/profile-organization-edit/profile-organization-edit.shared';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { endpoint } from 'src/core/endpoints';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Input } from 'src/components/atoms/input/input';
 import { Popover } from 'src/components/atoms/popover/popover';
 import { PopoverProps } from 'src/components/atoms/popover/popover.types';
-import { removedEmptyProps } from 'src/core/utils';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Category } from 'src/components/molecules/category/category';
+import { Modal } from 'src/components/templates/modal/modal';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
+import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
 import { dialog } from 'src/core/dialog/dialog';
+import { endpoint } from 'src/core/endpoints';
+import { getFormValues } from 'src/core/form/customValidators/formValues';
+import { removedEmptyProps } from 'src/core/utils';
+import { useProfileOrganizationEditShared } from 'src/pages/profile-organization-edit/profile-organization-edit.shared';
+
+import css from './edit.module.scss';
+import { EditProps } from './edit.types';
 
 export const EditOrganization = (props: EditProps): JSX.Element => {
   const {

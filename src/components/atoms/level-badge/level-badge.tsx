@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import css from './level-badge.module.scss';
 import { LevelBadgeProps } from './level-badge.types';
 

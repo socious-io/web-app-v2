@@ -1,8 +1,9 @@
+import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { Input } from 'src/components/atoms/input/input';
-import { Button } from 'src/components/atoms/button/button';
-import { useEmailShared } from '../email.shared';
+
 import css from './desktop.module.scss';
+import { useEmailShared } from '../email.shared';
 
 export const Desktop: React.FC = () => {
   const { backToPerviousPage, form, navigateToOtp } = useEmailShared();

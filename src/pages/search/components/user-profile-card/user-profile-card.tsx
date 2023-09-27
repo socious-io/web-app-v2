@@ -1,17 +1,18 @@
-import { Card } from 'src/components/atoms/card/card';
-import css from './user-profile-card.module.scss';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { printWhen } from 'src/core/utils';
-import { Divider } from 'src/components/templates/divider/divider';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Button } from 'src/components/atoms/button/button';
-import { UserProfileCardProps } from './user-profile-card.types';
+import { Card } from 'src/components/atoms/card/card';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Divider } from 'src/components/templates/divider/divider';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
-import { useState } from 'react';
+import { printWhen } from 'src/core/utils';
+import { RootState } from 'src/store/store';
+
+import css from './user-profile-card.module.scss';
+import { UserProfileCardProps } from './user-profile-card.types';
 
 function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
   if (shortname && COUNTRIES_DICT[shortname]) {

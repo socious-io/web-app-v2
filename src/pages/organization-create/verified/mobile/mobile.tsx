@@ -1,7 +1,7 @@
-import { Button } from '../../../../components/atoms/button/button';
-import { getProcess } from '../verified.services';
 import css from './mobile.module.scss';
+import { Button } from '../../../../components/atoms/button/button';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
+import { getProcess } from '../verified.services';
 
 export const Mobile = (): JSX.Element => {
   const processes = getProcess('verify@socious.io');

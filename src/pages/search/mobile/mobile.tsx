@@ -1,14 +1,17 @@
-import css from './mobile.module.scss';
-import { Search } from 'src/components/atoms/search/search';
-import { useSearchShared } from '../search.shared';
 import { DropdownBtn } from 'src/components/atoms/dropdown-btn/dropdown-btn';
-
-import { PayloadModel } from '../desktop/search.types';
-import { SocialCausesFilter } from '../desktop/filter-bar/social-causes-filter/social-causes-filter';
-import { SkillsFilter } from '../desktop/filter-bar/skills-filter/skills-filter';
-import { printWhen } from 'src/core/utils';
-import { PeopleList } from '../components/people-list/people-list';
+import { Search } from 'src/components/atoms/search/search';
 import { JobList } from 'src/components/organisms/job-list/job-list';
+import { printWhen } from 'src/core/utils';
+
+import css from './mobile.module.scss';
+import { PeopleList } from '../components/people-list/people-list';
+import { SkillsFilter } from '../desktop/filter-bar/skills-filter/skills-filter';
+import { SocialCausesFilter } from '../desktop/filter-bar/social-causes-filter/social-causes-filter';
+import { PayloadModel } from '../desktop/search.types';
+import { useSearchShared } from '../search.shared';
+
+
+
 
 export const Mobile = (): JSX.Element => {
   const {

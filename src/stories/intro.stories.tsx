@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { Intro } from '../pages/intro/intro';
 
 export default {

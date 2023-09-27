@@ -1,13 +1,14 @@
-import { changePasswordDirect } from './sign-up-user-complete.services';
-import { useForm } from '../../../core/form';
-import { formModel } from './sign-up-user-complete.form';
-import { handleError } from '../../../core/http';
-import { getIdentities } from '../../../core/api';
-import { updateProfile } from './sign-up-user.complete.services';
 import { useDispatch } from 'react-redux';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+
+import { formModel } from './sign-up-user-complete.form';
+import { changePasswordDirect } from './sign-up-user-complete.services';
+import { updateProfile } from './sign-up-user.complete.services';
+import { identities } from '../../../core/api';
+import { useForm } from '../../../core/form';
+import { handleError } from '../../../core/http';
 import { setIdentityList } from '../../../store/reducers/identity.reducer';
 
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 
 export const useSignUpUserCompleteShared = () => {
   const navigate = {};
@@ -15,9 +16,9 @@ export const useSignUpUserCompleteShared = () => {
   const form = useForm(formModel);
 
   async function setProfileName() {
-    const identities = await getIdentities();
+    const currentIdentities = await identities();
     dispatch(setIdentityList(identities));
-    const username = identities.find((identity) => identity.current)?.meta.username;
+    const username = currentIdentities.find((identity) => identity.current)?.meta.username;
 
     const payload = {
       username,

@@ -1,20 +1,19 @@
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import router from 'src/core/router';
-import store, { RootState } from './store/store';
-import { Spinner } from './components/atoms/spinner/spinner';
-import { Sidebar } from './pages/sidebar/sidebar';
-import { location } from './core/router/config.routes';
-import { DeepLinks } from './core/deepLinks';
-import { nonPermanentStorage } from './core/storage/non-permanent';
-import { endpoint } from './core/endpoints';
-import { setAuthCookies } from './pages/sign-in/sign-in.services';
-import { PostRefreshResp } from './core/endpoints/index.types';
-import { closeModal } from './store/reducers/modal.reducer';
-import { Modal } from './components/templates/modal/modal';
 import { useEffect } from 'react';
-import { getIdentities } from './core/api';
-import { setIdentityList } from './store/reducers/identity.reducer';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
+import router from 'src/core/router';
+
+import { Spinner } from './components/atoms/spinner/spinner';
+import { Modal } from './components/templates/modal/modal';
+import { DeepLinks } from './core/deepLinks';
+import { endpoint } from './core/endpoints';
+import { PostRefreshResp } from './core/endpoints/index.types';
+import { nonPermanentStorage } from './core/storage/non-permanent';
+import { Sidebar } from './pages/sidebar/sidebar';
+import { setAuthCookies } from './pages/sign-in/sign-in.services';
+import { closeModal } from './store/reducers/modal.reducer';
+import store, { RootState } from './store/store';
+
 
 async function fetchNewAuth(
   refresh_token: Awaited<ReturnType<typeof nonPermanentStorage.get>>

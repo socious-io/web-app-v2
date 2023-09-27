@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { Steps } from '../components/atoms/steps/steps';
 
 export default {

@@ -1,19 +1,20 @@
+import { useState } from 'react';
+import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { citiesToCategories } from 'src/core/adaptors';
+import { getCityList } from 'src/pages/job-create/info/info.services';
+
 import css from './desktop.module.scss';
+import { Button } from '../../../../components/atoms/button/button';
+import { Card } from '../../../../components/atoms/card/card';
 import { Input } from '../../../../components/atoms/input/input';
+import { Steps } from '../../../../components/atoms/steps/steps';
 import { Textarea } from '../../../../components/atoms/textarea/textarea';
 import { Divider } from '../../../../components/templates/divider/divider';
-import { Card } from '../../../../components/atoms/card/card';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Button } from '../../../../components/atoms/button/button';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
-import { useState } from 'react';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { formModel } from '../profile.form';
-import { getCityList } from 'src/pages/job-create/info/info.services';
-import { citiesToCategories } from 'src/core/adaptors';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
 import { formIsInvalid } from '../profile.services';
 
 const sharedProps: Record<string, string> = {

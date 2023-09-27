@@ -1,10 +1,11 @@
-import { Modal } from 'src/components/templates/modal/modal';
-import css from './skills-filter.module.scss';
-import { Search } from 'src/components/atoms/search/search';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { skillsToCategoryAdaptor } from 'src/core/adaptors';
 import { useState } from 'react';
 import { Button } from 'src/components/atoms/button/button';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Search } from 'src/components/atoms/search/search';
+import { Modal } from 'src/components/templates/modal/modal';
+import { skillsToCategoryAdaptor } from 'src/core/adaptors';
+
+import css from './skills-filter.module.scss';
 import { SkillsFilterProps } from './skills-filter.types';
 
 const SKILLS = skillsToCategoryAdaptor();

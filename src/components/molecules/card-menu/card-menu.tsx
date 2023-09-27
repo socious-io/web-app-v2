@@ -1,7 +1,7 @@
-import { Card } from '../../atoms/card/card';
-import { Typography } from '../../atoms/typography/typography';
 import css from './card-menu.module.scss';
 import { CardMenuProps } from './card-menu.types';
+import { Card } from '../../atoms/card/card';
+import { Typography } from '../../atoms/typography/typography';
 
 export const CardMenu = (props: CardMenuProps): JSX.Element => {
   const { title, list } = props;

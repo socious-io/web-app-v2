@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import { ContactItem } from '../../molecules/contact-item/contact-item.types';
 
 export interface ContactListProps extends CSSProperties {

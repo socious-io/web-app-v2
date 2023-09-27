@@ -1,5 +1,5 @@
-import { Button } from '../../../components/atoms/button/button';
 import css from './delete.module.scss';
+import { Button } from '../../../components/atoms/button/button';
 
 export const Delete = () => {
   const navigate = {};

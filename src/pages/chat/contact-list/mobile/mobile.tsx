@@ -1,13 +1,14 @@
 import { useSelector } from 'react-redux';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Fab } from 'src/components/atoms/fab/fab';
 import { Header } from 'src/components/atoms/header/header';
-import { CreateChatModal } from '../create-chat-modal';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
 import { HeaderStaticMobile } from 'src/components/templates/header-static-mobile/header-static-mobile';
+import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store/store';
+
 import { useContactListShared } from '../contact-list.shared';
+import { CreateChatModal } from '../create-chat-modal';
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};
