@@ -23,7 +23,11 @@ export const SkillsFilter = (props: SkillsFilterProps): JSX.Element => {
     props.onSubmit(selectedSkills);
     props.onClose();
   }
-
+  useEffect(() => {
+    if (!props.open) {
+      setSelected(props?.selectedSkills.map((item) => item.value));
+    }
+  }, [props?.selectedSkills]);
   return (
     <Modal
       height="45rem"
