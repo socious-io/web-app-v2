@@ -5,15 +5,12 @@ import router from 'src/core/router';
 
 import { Spinner } from './components/atoms/spinner/spinner';
 import { Modal } from './components/templates/modal/modal';
-import { getIdentities } from './core/api';
 import { DeepLinks } from './core/deepLinks';
 import { endpoint } from './core/endpoints';
 import { PostRefreshResp } from './core/endpoints/index.types';
-import { location } from './core/router/config.routes';
 import { nonPermanentStorage } from './core/storage/non-permanent';
 import { Sidebar } from './pages/sidebar/sidebar';
 import { setAuthCookies } from './pages/sign-in/sign-in.services';
-import { setIdentityList } from './store/reducers/identity.reducer';
 import { closeModal } from './store/reducers/modal.reducer';
 import store, { RootState } from './store/store';
 

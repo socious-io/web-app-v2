@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'src/components/atoms/button/button';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
-import { getIdentities } from 'src/core/api';
+import { identities } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
@@ -91,7 +91,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const switchAccount = async (id: string) => {
     setPendingAccId(id);
     await setIdentityHeader(id);
-    getIdentities()
+    identities()
       .then((resp) => dispatch(setIdentityList(resp)))
       .then(() => navigate({ to: '/jobs' }))
       .then(closeMenu);

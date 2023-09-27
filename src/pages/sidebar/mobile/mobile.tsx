@@ -8,7 +8,7 @@ import { AccountsModel } from './mobile.types';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Button } from '../../../components/atoms/button/button';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
-import { getIdentities } from '../../../core/api';
+import { identities } from '../../../core/api';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
 import { IdentityReq } from '../../../core/types';
 import { printWhen } from '../../../core/utils';
@@ -54,7 +54,7 @@ export const Mobile = () => {
   const switchAccount = async (id: string) => {
     hapticsImpactLight();
     await setIdentityHeader(id);
-    getIdentities()
+    identities()
       .then((resp) => dispatch(setIdentityList(resp)))
       .then(() => navigate({ to: '/jobs' }))
       .then(closeSidebar);

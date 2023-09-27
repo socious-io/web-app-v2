@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIdentities } from 'src/core/api';
+import { identities } from 'src/core/api';
 import { useForm } from 'src/core/form';
 import { handleError } from 'src/core/http';
 import {
@@ -24,8 +24,7 @@ export const useOrganizationCreateShared = () => {
   const dispatch = useDispatch();
 
   async function updateIdentityList() {
-    const identities = await getIdentities();
-    dispatch(setIdentityList(identities));
+    dispatch(setIdentityList(await identities()));
   }
 
   function submitOrganization(wizardForm: CreateOrgWizard) {
