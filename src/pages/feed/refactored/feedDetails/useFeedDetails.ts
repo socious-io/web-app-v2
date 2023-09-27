@@ -2,6 +2,7 @@ import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLoaderData } from 'react-router-dom';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { dialog } from 'src/core/dialog/dialog';
@@ -17,7 +18,7 @@ export const useFeedDetails = () => {
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-  const { post, comments } = useMatch().ownData as {
+  const { post, comments } = useLoaderData() as {
     post: Feed;
     comments: Pagination<CommentModel[]>;
   };

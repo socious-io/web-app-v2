@@ -18,10 +18,11 @@ import { isTouchDevice } from 'src/core/device-type-detector';
 import { Modal } from 'src/components/templates/modal/modal';
 import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { useFeed } from './useFeed';
+import { useNavigate } from 'react-router-dom';
 
-const Feed = () => {
+export const Feeds = () => {
   const { isLoggedIn } = useAuth();
-  const navigate = {};
+  const navigate = useNavigate();
 
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
@@ -48,20 +49,20 @@ const Feed = () => {
   } = useFeed();
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity?.id}` }) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity?.id}`) },
   ];
 
   const jobsMenuListUser = [
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate({ to: `/d/jobs/applied/${identity?.id}` }),
+      link: () => navigate(`/d/jobs/applied/${identity?.id}`),
     },
   ];
 
@@ -69,7 +70,7 @@ const Feed = () => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate({ to: `/d/jobs/created/${identity?.id}` }),
+      link: () => navigate(`/d/jobs/created/${identity?.id}`),
     },
   ];
 
@@ -173,5 +174,3 @@ const Feed = () => {
     </div>
   );
 };
-
-export default Feed;

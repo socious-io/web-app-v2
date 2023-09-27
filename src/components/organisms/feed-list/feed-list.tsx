@@ -4,9 +4,10 @@ import css from './feed-list.module.scss';
 import { socialCausesToCategory } from '../../../core/adaptors';
 
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { useNavigate } from 'react-router-dom';
 
 export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeMore, onMoreClick }: FeedListProps) => {
-  const navigate = {};
+  const navigate = useNavigate();
 
   const actionList = (id: string, likes: number, liked: boolean) => [
     {
@@ -36,14 +37,14 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
 
   const navigateToPostDetail = (id: string) => {
     hapticsImpactLight();
-    navigate({ to: `./${id}` });
+    navigate(`./${id}`);
   };
 
   function redirectToProfile(feed: Feed) {
     if (feed.identity_type === 'users') {
-      navigate({ to: `/profile/users/${feed.identity_meta.username}/view` });
+      navigate(`/profile/users/${feed.identity_meta.username}/view`);
     } else {
-      navigate({ to: `/profile/organizations/${feed.identity_meta.shortname}/view` });
+      navigate(`/profile/organizations/${feed.identity_meta.shortname}/view`);
     }
   }
 

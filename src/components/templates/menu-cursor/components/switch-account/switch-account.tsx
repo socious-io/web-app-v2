@@ -15,12 +15,13 @@ import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { printWhen } from 'src/core/utils';
 import { Button } from 'src/components/atoms/button/button';
 import { useAuth } from 'src/hooks/use-auth';
+import { useNavigate } from 'react-router-dom';
 
 let timer: NodeJS.Timeout;
 
 export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const dispatch = useDispatch();
-  const navigate = {};
+  const navigate = useNavigate();
   const [pendingAccId, setPendingAccId] = useState('');
   const [changePassOpen, setChangePassOpen] = useState(false);
   const [containerStyles, setContainerStyle] = useState<CSSProperties>({});
@@ -56,13 +57,13 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   }, []);
 
   function logOut() {
-    logout().then(() => navigate({ to: '/sign-in' }));
+    logout().then(() => navigate('/sign-in'));
     props.onClose();
     nonPermanentStorage.clear();
   }
 
   function login() {
-    navigate({ to: '/sign-in' });
+    navigate('/sign-in');
     props.onClose();
   }
 
@@ -92,7 +93,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     await setIdentityHeader(id);
     getIdentities()
       .then((resp) => dispatch(setIdentityList(resp)))
-      .then(() => navigate({ to: '/jobs' }))
+      .then(() => navigate('/jobs'))
       .then(closeMenu);
   };
 
@@ -106,7 +107,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   }
 
   const navigateToRoute = (route: string) => {
-    navigate({ to: route });
+    navigate(route);
     closeMenu();
   };
 

@@ -5,22 +5,23 @@ import { IdentityReq } from 'src/core/types';
 import css from './touchMenu.module.scss';
 import { Menu, menuList } from '../menu.services';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const TouchMenu = () => {
-  const navigate = {};
-  const { state } = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
   function isActive(route: string): boolean {
-    return state.location.pathname === route;
+    return location.pathname === route;
   }
 
   function onMenuClick(item: Menu) {
     return () => {
-      navigate({ to: item.link });
+      navigate(item.link);
       hapticsImpactLight();
     };
   }

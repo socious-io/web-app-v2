@@ -9,9 +9,10 @@ import { RootState } from 'src/store/store';
 import { IdentityReq } from 'src/core/types';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { SwitchAccount } from '../../../menu-cursor/components/switch-account/switch-account';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const WebMenu = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const route = useLocation();
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -21,21 +22,22 @@ const WebMenu = () => {
   const [searchValue, setSearchValue] = useState('');
 
   function navigateToSearch(q: string) {
-    navigate({
-      to: '/d/search',
-      search: (p: PayloadModel) => {
-        const type = p.type ?? 'projects';
-        const page = p.page ?? 1;
-        return { type, q, page };
-      },
-    });
+    navigate(
+      '/d/search'
+      //  ,
+      // (p: PayloadModel) => {
+      //   const type = p.type ?? 'projects';
+      //   const page = p.page ?? 1;
+      //   return { type, q, page };
+      // }
+    );
   }
 
   function onMenuItemClick(menu: Menu) {
-    if (route.current.pathname !== menu.link) {
+    if (route.pathname !== menu.link) {
       setSearchValue('');
     }
-    navigate({ to: menu.link });
+    navigate(menu.link);
   }
 
   function filterIfNotLoggedIn(item: Menu) {
@@ -47,7 +49,7 @@ const WebMenu = () => {
   return (
     <div className={css.menu}>
       <div className={css.menuItems}>
-        <div className={css.logo} onClick={() => navigate({ to: '/jobs' })}>
+        <div className={css.logo} onClick={() => navigate('/jobs')}>
           <img style={{ minWidth: 32 }} height={32} src="/icons/logo-white.svg" />
         </div>
         <Search

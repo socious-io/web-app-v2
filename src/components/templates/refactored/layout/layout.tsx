@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 import TouchMenu from '../menu/touchMenu/touchMenu';
 import WebMenu from '../menu/webMenu/webMenu';
