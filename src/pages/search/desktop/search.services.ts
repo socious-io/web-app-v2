@@ -4,7 +4,7 @@ import { SearchReq } from 'src/core/types';
 
 export async function search(payload: PayloadModel): Promise<SearchReq> {
   let body = {
-    filter: payload.filter,
+    filter: { ...payload.filter },
     type: payload.type,
   };
   if (payload.q) {
