@@ -126,6 +126,11 @@ export const routes: Route[] = [
         },
         element: () => import('../../pages/feed/refactored/feedDetails/feedDetails').then((m) => <m.default />),
       },
+      {
+        path: '/',
+        element: () => import('../../pages/feed/refactored/feed').then((m) => <m.default />),
+        loader: () => getFeedList({ page: 1 }),
+      },
     ],
   },
   {
