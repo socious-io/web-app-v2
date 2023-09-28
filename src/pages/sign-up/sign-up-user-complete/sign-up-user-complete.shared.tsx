@@ -1,29 +1,32 @@
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { identities, handleError, updateProfile,UserMeta } from 'src/core/api';
+import { useForm,  } from 'src/core/form';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 import { formModel } from './sign-up-user-complete.form';
 import { changePasswordDirect } from './sign-up-user-complete.services';
-import { updateProfile } from './sign-up-user.complete.services';
-import { identities } from '../../../core/api';
-import { useForm } from '../../../core/form';
-import { handleError } from '../../../core/http';
-import { setIdentityList } from '../../../store/reducers/identity.reducer';
+
+
 
 
 export const useSignUpUserCompleteShared = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const form = useForm(formModel);
 
   async function setProfileName() {
     const currentIdentities = await identities();
     dispatch(setIdentityList(identities));
-    const username = currentIdentities.find((identity) => identity.current)?.meta.username;
+    
+    const meta = currentIdentities.find((identity) => identity.primary)?.meta as UserMeta;
+
 
     const payload = {
-      username,
-      firstName: form.controls.firstName.value,
-      lastName: form.controls.lastName.value,
+      username: meta.username,
+      first_name: form.controls.firstName.value as  string,
+      last_name: form.controls.lastName.value as string,
     };
     updateProfile(payload);
   }
@@ -34,20 +37,20 @@ export const useSignUpUserCompleteShared = () => {
 
     changePasswordDirect(password)
       .then(setProfileName)
-      .then(() => navigate({ to: path ? path : '/sign-up/user/welcome' }))
+      .then(() => navigate(path ? path : '/sign-up/user/welcome'))
       .catch(handleError());
   }
 
   function navigateToTermsConditions() {
-    navigate({ to: '/terms-conditions' });
+    navigate('/terms-conditions');
   }
 
   function navigateToPrivacyPolicy() {
-    navigate({ to: '/privacy-policy' });
+    navigate('/privacy-policy');
   }
 
   function navigateToSignIn() {
-    navigate({ to: '/sign-in' });
+    navigate('/sign-in');
   }
 
   return {

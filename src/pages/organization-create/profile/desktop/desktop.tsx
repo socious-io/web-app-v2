@@ -1,18 +1,18 @@
 import { useState } from 'react';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
 import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { Input } from 'src/components/atoms/input/input';
+import { Steps } from 'src/components/atoms/steps/steps';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Divider } from 'src/components/templates/divider/divider';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { citiesToCategories } from 'src/core/adaptors';
 import { getCityList } from 'src/pages/job-create/info/info.services';
 
 import css from './desktop.module.scss';
-import { Button } from '../../../../components/atoms/button/button';
-import { Card } from '../../../../components/atoms/card/card';
-import { Input } from '../../../../components/atoms/input/input';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import { Divider } from '../../../../components/templates/divider/divider';
 import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { formModel } from '../profile.form';
 import { formIsInvalid } from '../profile.services';
