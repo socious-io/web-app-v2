@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
-import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
+
+
+import { Outlet } from 'react-router-dom';
 
 import TouchMenu from '../menu/touchMenu/touchMenu';
 import WebMenu from '../menu/webMenu/webMenu';
@@ -12,7 +13,7 @@ const Layout = () => {
       </div>
 
       <div className="w-full h-[calc(100%-var(--menu-height))] md:h-[calc(100%-var(--desktop-nav-height))] overflow-x-hidden">
-        <Outlet />
+        <Outlet/>
       </div>
       <div className="sm:hidden fixed bottom-0 w-full">
         <TouchMenu />

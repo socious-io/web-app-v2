@@ -1,11 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 
 import css from './allow-notification.module.scss';
 
 export const AllowNotification: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   return (
     <div className={css['container']}>
       <Card className={css['card']}>
@@ -18,10 +19,10 @@ export const AllowNotification: React.FC = () => {
           <div className={css['card__sub-title']}>Stay up to date with messages, recommendations and posts</div>
         </div>
         <div className={css['card__buttons']}>
-          <Button color="white" onClick={() => navigate({ to: '/jobs' })}>
+          <Button color="white" onClick={() => navigate('/jobs')}>
             Allow notification
           </Button>
-          <Button onClick={() => navigate({ to: '/jobs' })}>I'll do it later</Button>
+          <Button onClick={() => navigate('/jobs')}>I'll do it later</Button>
         </div>
       </Card>
     </div>

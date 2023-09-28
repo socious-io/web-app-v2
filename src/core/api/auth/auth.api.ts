@@ -35,6 +35,10 @@ export async function otp(payload: OtpReq): Promise<SuccessRes> {
   return (await post<SuccessRes>('auth/otp', payload)).data;
 }
 
+export async function forgetPassword(payload: OtpReq): Promise<SuccessRes> {
+  return (await post<SuccessRes>('auth/forget-password', payload)).data;
+}
+
 export async function resendVerifyCode(payload: OtpReq): Promise<SuccessRes> {
   return (await post<SuccessRes>('auth/resend-verify-code', payload)).data;
 }
