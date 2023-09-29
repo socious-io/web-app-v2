@@ -57,7 +57,7 @@ function endedItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCard
     body: applicant.assigner.meta.name,
     img: applicant.assigner.meta.image,
     date: `Applied ${toRelativeTime(applicant.created_at)}`,
-    bottomRight: setStatusJSX("COMPLETED"),
+    bottomRight: setStatusJSX('COMPLETED'),
   };
 }
 
@@ -73,7 +73,7 @@ function onGoingItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCa
     img: applicant.assigner.meta.image,
     date: `Applied ${toRelativeTime(applicant.created_at)}`,
     // TODO change this base on status 'Submit hours' && 'Awaiting approval'
-    bottomRight: setStatusJSX("CONFIRMED"),
+    bottomRight: setStatusJSX('CONFIRMED'),
   };
 }
 
@@ -103,7 +103,7 @@ function setStatusJSX(status: keyof typeof APPLICANT_STATUS) {
     height: '1.5rem',
     backgroundColor: 'var(--color-success-01)',
     borderRadius: '25px',
-    color: '#fff',
+    color: 'var(--color-white)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -126,7 +126,7 @@ function setStatusJSX(status: keyof typeof APPLICANT_STATUS) {
     backgroundColor: 'var(--color-success-01)',
     borderRadius: '25px',
     display: 'flex',
-    color: '#fff',
+    color: 'var(--color-white)',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 'var(--font-size-s)',
@@ -137,7 +137,7 @@ function setStatusJSX(status: keyof typeof APPLICANT_STATUS) {
     backgroundColor: 'var(--color-gray-04)',
     borderRadius: '25px',
     display: 'flex',
-    color: '#333',
+    color: 'var(--font-color-primary)',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 'var(--font-size-s)',
