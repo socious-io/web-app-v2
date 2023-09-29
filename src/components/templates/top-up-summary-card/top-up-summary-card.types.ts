@@ -1,5 +1,3 @@
-import { PaymentDetailProps } from 'src/components/molecules/payment-detail/payment-detail.types';
-
 export interface TopUpSummaryCardProps {
   title: string;
   unit?: string;
