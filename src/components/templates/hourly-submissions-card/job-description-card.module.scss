@@ -5,7 +5,7 @@
   margin-top: 1rem;
 
   &__title {
-    color: var(--color-gray-dark);
+    color: var(--color-black-01);
     font-size: var(--font-size-m);
     font-weight: 600;
   }
@@ -41,7 +41,7 @@
     margin-bottom: 1rem;
   }
   &__info {
-    color: var(--color-gray-light-1);
+    color: var(--color-gray-dark-01);
     font-size: var(--font-size-s2);
   }
 }

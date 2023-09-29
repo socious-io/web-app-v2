@@ -4,7 +4,7 @@
   padding: 24px;
 
   &__title {
-    color: var(--color-gray-dark);
+    color: var(--color-black-01);
     font-size: 16px;
     font-weight: 600;
   }
@@ -41,7 +41,7 @@
   }
 
   &__info {
-    color: var(--color-gray-light-1);
+    color: var(--color-gray-dark-01);
     font-size: var(--font-size-s);
     display: flex;
     align-items: center;
