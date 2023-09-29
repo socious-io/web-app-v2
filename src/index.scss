@@ -3,6 +3,23 @@
 @import './components/primitives';
 @import './components/reset';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: Inter;
+    src: url('/fonts/Inter-Regular.woff2');
+  }
+
+  @font-face {
+    font-family: Inter;
+    font-weight: 600;
+    src: url('/fonts/Inter-SemiBold.woff2');
+  }
+}
+
 pwa-action-sheet {
   position: fixed;
   right: 0;
@@ -13,7 +30,9 @@ pwa-action-sheet {
 html,
 body {
   ::-webkit-scrollbar {
-    width: 4px;
+    @media screen and (min-width: 600px) {
+      width: 4px;
+    }
   }
 
   ::-webkit-scrollbar-thumb {

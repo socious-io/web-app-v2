@@ -17,6 +17,8 @@ import { dialog } from 'src/core/dialog/dialog';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { printWhen } from 'src/core/utils';
+import { isTouchDevice } from 'src/core/device-type-detector';
 
 type useApplySharedProps = {
   job: Job;
@@ -25,7 +27,7 @@ type useApplySharedProps = {
   userType: UserType;
 };
 
-export const useApplyShared = (data?: useApplySharedProps) => {
+export const useApplyShared = (data?: useApplySharedProps, onSubmittedNow) => {
   const navigate = useNavigate();
   const [resume, setResume] = useState<Resume>(resumeInitialState);
   const resolver = useMatch().ownData as Resolver;
@@ -60,7 +62,8 @@ export const useApplyShared = (data?: useApplySharedProps) => {
   }
 
   function navigateToJobDetail() {
-    navigate({ to: '..' });
+    if (isTouchDevice()) navigate({ to: '..' });
+    onSubmittedNow?.();
   }
 
   function onSubmit() {
@@ -75,31 +78,40 @@ export const useApplyShared = (data?: useApplySharedProps) => {
     return generatePayload(form)
   }
   function createTextQuestion(question: QuestionsRes['questions'][0], i: number): JSX.Element {
+    console.log('QQ', form);
     return (
       <div>
-        <Textarea
-          register={form}
-          name={question.id}
-          optional={!question.required}
-          placeholder="Your answer..."
-          label={`${i}. ${question.question}`}
-        />
+        {printWhen(
+          <Textarea
+            register={form}
+            name={question.id}
+            optional={!question.required}
+            placeholder="Your answer..."
+            label={`${i}. ${question.question}`}
+          />,
+          !!questions.length
+        )}
       </div>
     );
   }
 
   function createRadioQuestion(question: QuestionsRes['questions'][0], i: number): JSX.Element {
     return (
-      <RadioGroup
-        label={`${i}. ${question.question}`}
-        list={convertOptionsToRadioGroup(question.options, question.id)}
-        value={answersRadio[`question-${i}`]}
-        name={question.id}
-        onChange={(value, label) => {
-          setAnswersRadio({ ...answersRadio, [`question-${i}`]: value });
-          form.controls[question.id].setValue(label);
-        }}
-      />
+      <div>
+        {printWhen(
+          <RadioGroup
+            label={`${i}. ${question.question}`}
+            list={convertOptionsToRadioGroup(question.options, question.id)}
+            value={answersRadio[`question-${i}`]}
+            name={question.id}
+            onChange={(value, label) => {
+              setAnswersRadio({ ...answersRadio, [`question-${i}`]: value });
+              form.controls[question.id].setValue(label);
+            }}
+          />,
+          !!questions.length
+        )}
+      </div>
     );
   }
 

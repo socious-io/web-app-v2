@@ -1,3 +1,6 @@
 export type SkillsFilterProps = {
-    onSubmit: (values: string[]) => void;
-}
+  onSubmit: (values: Array<{ label: string; value: string }>) => void;
+  open: boolean;
+  onClose: () => void;
+  selectedSkills: Array<{ label: string; value: string }>;
+};

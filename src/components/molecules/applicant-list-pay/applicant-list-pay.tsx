@@ -94,7 +94,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
           )}
           {printWhen(
             feedbackBtn(applicant.id, applicant.status),
-            !!props?.onFeedback && applicant?.user_feedback === null
+            applicant.showFeedback && !!props?.onFeedback && applicant?.user_feedback === null
           )}
           <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
             <img src="/icons/message-blue.svg" />

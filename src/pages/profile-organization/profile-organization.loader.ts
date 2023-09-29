@@ -1,4 +1,4 @@
-import { getOrganizationDetail } from './profile-organization.services';
+import { getOrganizationDetail } from './refactored/profileOrg.services';
 
 export async function profileOrganizationPageLoader({ params }) {
   const requests = [getOrganizationDetail(params.id)];

@@ -1,0 +1,72 @@
+.sidebar {
+  display: grid;
+  gap: 1rem;
+  position: sticky;
+  top: 2.5rem;
+}
+
+.banner {
+  height: 8.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 2.5rem;
+  border-radius: 30px;
+  background-image: url('/images/jobs-page-header.png');
+  background-size: cover;
+  background-position: 30%;
+  background-color: var(--color-gray-04);
+  @media (max-width: 640px) {
+    border-radius: 0;
+    height: 13rem;
+    padding: 3.75rem 1rem 1rem;
+  }
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  color: #ffffff;
+  font-weight: 600;
+  font-family: 'Inter';
+}
+
+.tagline {
+  color: #d4d2d0;
+  font-size: var(--font-size-m);
+}
+
+.list {
+  padding: 0 1rem;
+  margin-top: 1rem;
+}
+
+.followers,
+.connections {
+  color: var(--color-gray-02);
+}
+
+.search {
+  height: 100%;
+  background: #ffffff;
+  border: 1px solid var(--color-gray-04);
+  border-radius: 50px;
+  color: var(--color-gray-03);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-m);
+}
+
+.menu {
+  @media (max-width: 640px) {
+    margin-bottom: 1.625rem;
+    display: grid;
+    grid-template-columns: 2rem 1fr 2rem;
+    grid-template-rows: 2.25rem;
+    align-items: center;
+    gap: 1rem;
+  }
+}

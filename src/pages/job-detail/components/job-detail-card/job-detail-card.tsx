@@ -10,7 +10,7 @@ import { Button } from 'src/components/atoms/button/button';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { getCategories } from '../../job-detail.services';
 import { JobDetailCardProps } from './job-detail-card.types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
 import { AuthGuard } from 'src/core/auth-guard/auth-guard';
 import { SureModal } from 'src/components/templates/sure-modal';
@@ -18,24 +18,18 @@ import { SureModal } from 'src/components/templates/sure-modal';
 export function JobDetailCard(props: JobDetailCardProps) {
   const [openApplyModal, setOpenApplyModal] = useState(false);
   const [openExternalModal, setOpenExternalModal] = useState(false);
-
+  const [isSubmittedNow, setIsSubmittedNow] = useState(false);
   function onApply() {
     if (props.job?.other_party_id) setOpenExternalModal(true);
     else setOpenApplyModal(true);
   }
-  function onSaveJob() {
-    console.log('save job');
-  }
-
+  useEffect(() => {
+    setIsSubmittedNow(false);
+  }, [props.job.id]);
   const buttonJSX = (
-    <>
-      <Button disabled={props.job.applied} onClick={onApply}>
-        Apply now
-      </Button>
-      <Button color="white" onClick={onSaveJob}>
-        Save job
-      </Button>
-    </>
+    <Button disabled={props.job.applied || isSubmittedNow} onClick={onApply}>
+      Apply now
+    </Button>
   );
 
   const applicationSubmittedJSX = (
@@ -80,9 +74,14 @@ export function JobDetailCard(props: JobDetailCardProps) {
   );
 
   return (
-    <Card padding={0}>
-      <ApplyModal data={props} open={openApplyModal} onClose={() => setOpenApplyModal(false)} />
-      {printWhen(applicationSubmittedJSX, props.job.applied && props.userType === 'users')}
+    <Card className={css.card} padding={0}>
+      <ApplyModal
+        data={props}
+        open={openApplyModal}
+        onClose={() => setOpenApplyModal(false)}
+        onSubmittedNow={() => setIsSubmittedNow(true)}
+      />
+      {printWhen(applicationSubmittedJSX, isSubmittedNow || (props.job.applied && props.userType === 'users'))}
       <Divider>
         <div className={css.firstRow}>
           <ProfileView
