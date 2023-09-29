@@ -27,11 +27,7 @@ export const Mobile: React.FC = () => {
     useScreenerQuestionsShared();
 
   function submitSkip() {
-    // dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-        navigate({ to: '../final-review' });
-      // store.dispatch(resetCreatedQuestion());
-      // store.dispatch(resetCreatePostWizard());
-    // });
+    navigate({ to: '../final-review' });
   }
 
   function submitWithQuestions() {
@@ -51,8 +47,7 @@ export const Mobile: React.FC = () => {
       dispatch(setQuestionProjectIds({ ...formState.question_project_id, question_id: resp.id }));
       store.dispatch(resetQuestions());
       form.reset();
-      // navigate({ to: `created/${formState.question_project_id.identity_id}` });
-        navigate({ to: '../final-review' });
+      navigate({ to: '../final-review' });
     });
   }
 
@@ -110,9 +105,6 @@ export const Mobile: React.FC = () => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        {/* <div className={css.chevron} onClick={() => navigate({ to: `/jobs/create/info` })}>
-          <img height={24} src="/icons/chevron-left.svg" />
-        </div> */}
         <div className={css.headerTitle}>Create job</div>
       </div>
       <div className={css.screener}>
