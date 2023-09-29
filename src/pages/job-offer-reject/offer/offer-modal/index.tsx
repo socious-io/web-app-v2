@@ -70,13 +70,27 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
       buttons={[{ children: 'Send offer', disabled: formIsInvalid, onClick: onSubmit }]}
     >
       <div className={css.form}>
-        <RadioGroup
-          name="paymentType"
-          value={paymentType}
-          onChange={console.log}
-          label="Payment type"
-          list={PROJECT_PAYMENT_TYPE}
-        />
+        {/* Temporary logic, if hourly-paid, then force paymentType to VOLUNTEER */}
+        {printWhen(
+          <RadioGroup
+            name="paymentType"
+            value={paymentType}
+            onChange={console.log}
+            label="Payment type"
+            list={PROJECT_PAYMENT_TYPE}
+          />,
+          !isHourly
+        )}
+        {printWhen(
+          <RadioGroup
+            name="paymentType"
+            value={'VOLUNTEER'}
+            onChange={console.log}
+            label="Payment type"
+            list={PROJECT_PAYMENT_TYPE}
+          />,
+          isHourly
+        )}
         <RadioGroup
           name="PaymentScheme"
           value={paymentScheme}
