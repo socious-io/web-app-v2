@@ -10,7 +10,7 @@ import { useCreatedShared } from '../created.shared';
 import css from './created-modal.module.scss';
 import { ReviewModal } from 'src/pages/job-create/final-review/review-modal';
 
-export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose,onEdit, onBack, onDone }) => {
+export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onEdit, onBack, onDone }) => {
   const navigate = useNavigate();
   const { questions, onRemoveCreatedQuestion } = useCreatedShared();
   const [openReviewModal, setOpenReviewModal] = useState(false);
@@ -57,20 +57,16 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose,onEdit
                   {question.question}
                 </div>
                 <div className={css.operation}>
-                <div className={css.edit}>
-                  <img
-                    className={css.edit__icon}
-                    src="/icons/trash-bin.svg"
-                    onClick={() => onRemoveCreatedQuestion(question)}
-                  />
-                </div>
-                <div className={css.edit}>
-                  <img
-                    className={css.edit__icon}
-                    src="/icons/edit.svg"
-                    onClick={() => onEdit(question)}
-                  />
-                </div>
+                  <div className={css.edit}>
+                    <img
+                      className={css.edit__icon}
+                      src="/icons/trash-bin.svg"
+                      onClick={() => onRemoveCreatedQuestion(question)}
+                    />
+                  </div>
+                  <div className={css.edit}>
+                    <img className={css.edit__icon} src="/icons/pen.svg" onClick={() => onEdit(question)} />
+                  </div>
                 </div>
               </Accordion>
             ))}
@@ -83,7 +79,7 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose,onEdit
       </WebModal>
       <ReviewModal
         open={openReviewModal}
-        onClose={()=>{
+        onClose={() => {
           setOpenReviewModal(false);
           // done();
         }}
@@ -91,8 +87,8 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose,onEdit
           setOpenReviewModal(false);
           // onOpen();
         }}
-        onOpen={()=>{
-          console.log("open modal")
+        onOpen={() => {
+          console.log('open modal');
         }}
         onDone={onDone}
       />

@@ -71,7 +71,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, onClose, onDone,
             <div className={css.reviewSection}>
               <div className={css.title}>Job info</div>
               <div className={css.edit}>
-                <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" onClick={() => console.log} />
+                <img alt="edit icon" className={css.edit__icon} src="/icons/pen.svg" onClick={() => console.log} />
               </div>
             </div>
             <div className={css.info}>
@@ -125,7 +125,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, onClose, onDone,
             <div className={css.reviewSectionList}>
               <div className={css.title}>Social cause</div>
               <div className={css.edit}>
-                <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" onClick={() => console.log} />
+                <img alt="edit icon" className={css.edit__icon} src="/icons/pen.svg" onClick={() => console.log} />
               </div>
             </div>
             <div className={css.list}>
@@ -136,7 +136,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, onClose, onDone,
             <div className={css.reviewSectionList}>
               <div className={css.title}>Skills</div>
               <div className={css.edit}>
-                <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" onClick={() => console.log} />
+                <img alt="edit icon" className={css.edit__icon} src="/icons/pen.svg" onClick={() => console.log} />
               </div>
             </div>
             <div className={css.list}>
@@ -147,7 +147,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, onClose, onDone,
             <div className={css.reviewSectionList}>
               <div className={css.title}>Screening questions</div>
               <div className={css.edit}>
-                <img alt="edit icon" className={css.edit__icon} src="/icons/edit.svg" onClick={() => console.log} />
+                <img alt="edit icon" className={css.edit__icon} src="/icons/pen.svg" onClick={() => console.log} />
               </div>
             </div>
             <div className={css.list}>
