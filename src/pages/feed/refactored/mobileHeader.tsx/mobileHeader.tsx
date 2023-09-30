@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
 import { IdentityReq } from 'src/core/types';
@@ -8,7 +9,7 @@ import { RootState } from 'src/store/store';
 import css from './mobileHeader.module.scss';
 
 const MobileHeader = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -17,7 +18,7 @@ const MobileHeader = () => {
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   const onSearchEnter = (value: string) => {
-    navigate({ to: `/search?q=${value}` });
+    navigate(`/search?q=${value}`);
   };
 
   function openSidebar() {

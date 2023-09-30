@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
+import { SwitchAccount } from 'src/components/templates/menu-cursor/components/switch-account/switch-account';
+import { Menu, getAvatar, menuList } from 'src/components/templates/refactored/menu/menu.services';
 import { IdentityReq } from 'src/core/types';
-import { PayloadModel } from 'src/pages/search/desktop/search.types';
 import { RootState } from 'src/store/store';
 
 import css from './webMenu.module.scss';
-import { SwitchAccount } from '../../../menu-cursor/components/switch-account/switch-account';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Menu, getAvatar, menuList } from '../menu.services';
 
 const WebMenu = () => {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ const WebMenu = () => {
 
   function navigateToSearch(q: string) {
     navigate(
-      '/d/search'
+      '/d/search',
       //  ,
       // (p: PayloadModel) => {
       //   const type = p.type ?? 'projects';
@@ -50,7 +49,7 @@ const WebMenu = () => {
     <div className={css.menu}>
       <div className={css.menuItems}>
         <div className={css.logo} onClick={() => navigate('/jobs')}>
-          <img style={{ minWidth: 32 }} height={32} src="/icons/logo-white.svg" />
+          <img style={{ minWidth: 32 }} height={32} src="/icons/logo-white.svg" alt="" />
         </div>
         <Search
           onEnter={navigateToSearch}
@@ -62,7 +61,7 @@ const WebMenu = () => {
         <ul className={css.navContainer}>
           {menuList.filter(filterIfNotLoggedIn).map((item) => (
             <li key={item.label} className={css.navItem} onClick={() => onMenuItemClick(item)}>
-              <img className={css.navIcon} height={24} src={item.icons.nonActive.desktop} />
+              <img className={css.navIcon} height={24} src={item.icons.nonActive.desktop} alt="" />
               <div className={css.navLabel}>{item.label}</div>
             </li>
           ))}

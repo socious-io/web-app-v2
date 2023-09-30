@@ -1,16 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
 import { Header } from 'src/components/atoms/header/header';
 import { Comment } from 'src/components/molecules/comment/comment';
 import { FeedItem } from 'src/components/molecules/feed-item/feed-item';
 import { SendBox } from 'src/components/molecules/send-box/send-box';
+import { Modal } from 'src/components/templates/modal/modal';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { socialCausesToCategory } from 'src/core/adaptors';
-import { useFeedDetails } from './useFeedDetails';
-import feedcss from '../feed.module.scss';
-import css from '../feed.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { Modal } from 'src/components/templates/modal/modal';
+import feedcss from 'src/pages/feed/refactored/feed.module.scss';
+import { useFeedDetails } from 'src/pages/feed/refactored/feedDetails/useFeedDetails';
 
 export const FeedDetails = () => {
   const navigate = useNavigate();
@@ -57,7 +56,7 @@ export const FeedDetails = () => {
                 name={postObj.identity_meta.name}
                 actionList={actionList(postObj.likes, postObj.liked)}
                 lineLimit="none"
-                date={postObj.created_at}
+                date={postObj.created_at.toString()}
                 categories={socialCausesToCategory(postObj.causes_tags)}
                 onMoreClick={() => showActions(postObj)}
               />
@@ -83,10 +82,10 @@ export const FeedDetails = () => {
         </div>
       </div>
       <Modal open={openMoreBox} onClose={() => setOpenMoreBox(false)}>
-        <div className={css.moreBox}>
-          <div className={css.moreHeader}>What do you want to do?</div>
+        <div className={feedcss.moreBox}>
+          <div className={feedcss.moreHeader}>What do you want to do?</div>
           {moreOptions?.map((option, index) => (
-            <div key={option.title} className={css.moreOption} onClick={() => onClickMoreOption(index)}>
+            <div key={option.title} className={feedcss.moreOption} onClick={() => onClickMoreOption(index)}>
               {option.title}
             </div>
           ))}

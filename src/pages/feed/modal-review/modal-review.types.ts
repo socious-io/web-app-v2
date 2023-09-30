@@ -1,10 +1,10 @@
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { ModalProps } from 'src/components/templates/modal/modal.types';
+import { Post, SocialCauses } from 'src/core/api';
 
 export interface ModalReviewProps extends Omit<ModalProps, 'children'> {
-  soucialValue: string;
+  soucialValue: SocialCauses;
   text: string;
-  setFeedList: (feed: Feed[]) => void;
+  setFeedList: (feed: Post[]) => void;
   onDone: () => void;
   imgFile?: string;
   imgUrl?: string;
