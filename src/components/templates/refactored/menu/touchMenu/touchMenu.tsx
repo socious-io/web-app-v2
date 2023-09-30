@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Menu, menuList } from 'src/components/templates/refactored/menu/menu.services';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 
 import css from './touchMenu.module.scss';
-import { Menu, menuList } from '../menu.services';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { useLocation, useNavigate } from 'react-router-dom';
+
 const TouchMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,6 +42,7 @@ const TouchMenu = () => {
               className={css.navIcon}
               height={24}
               src={isActive(item.link) ? item.icons.active.mobile : item.icons.nonActive.mobile}
+              alt=""
             />
             <div style={{ color: isActive(item.link) ? 'var(--color-primary-01)' : '' }} className={css.navLabel}>
               {item.label}

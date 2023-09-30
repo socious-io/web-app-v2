@@ -1,11 +1,11 @@
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { useNavigate } from 'react-router-dom';
+import { Post } from 'src/core/api';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 import css from './feed-list.module.scss';
-import { Feed, FeedListProps } from './feed-list.types';
+import { FeedListProps } from './feed-list.types';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { FeedItem } from '../../molecules/feed-item/feed-item';
-
 
 export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeMore, onMoreClick }: FeedListProps) => {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
     navigate(`./${id}`);
   };
 
-  function redirectToProfile(feed: Feed) {
+  function redirectToProfile(feed: Post) {
     if (feed.identity_type === 'users') {
       navigate(`/profile/users/${feed.identity_meta.username}/view`);
     } else {
@@ -49,7 +49,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
     }
   }
 
-  function setAvatar(feed: Feed) {
+  function setAvatar(feed: Post) {
     if (feed.identity_type === 'organizations') {
       return feed.identity_meta.image;
     }
@@ -69,7 +69,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
           text={item.content}
           name={item.identity_meta.name}
           actionList={actionList(item.id, item.likes, item.liked)}
-          date={item.created_at}
+          date={item.created_at.toString()}
           categories={socialCausesToCategory(item.causes_tags)}
           lineLimit="none"
         />
