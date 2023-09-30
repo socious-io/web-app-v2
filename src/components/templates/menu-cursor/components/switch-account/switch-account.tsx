@@ -1,5 +1,6 @@
 import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
@@ -15,7 +16,6 @@ import { RootState } from 'src/store/store';
 import css from './switch-account.module.scss';
 import { SwitchAccountProps } from './switch-account.types';
 import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
-import { useNavigate } from 'react-router-dom';
 
 let timer: NodeJS.Timeout;
 
@@ -207,14 +207,14 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
               <img src="/icons/key-black.svg" width={22} height={22} />
               <span>Change password</span>
             </div>,
-            isLoggedIn
+            isLoggedIn,
           )}
           {printWhen(
             <div className={css.menuItem} onClick={() => navigateToRoute('/delete-profile/delete')}>
               <img src="/icons/delete-account-black.svg" />
               <span>Delete Account</span>
             </div>,
-            isLoggedIn
+            isLoggedIn,
           )}
         </div>
       </Divider>
@@ -227,7 +227,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
             </div>
           </div>
         </Divider>,
-        isLoggedIn
+        isLoggedIn,
       )}
       {printWhen(
         <Divider>
@@ -238,7 +238,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
             </div>
           </div>
         </Divider>,
-        !isLoggedIn
+        !isLoggedIn,
       )}
       <ChangePasswordModal open={changePassOpen} onClose={() => setChangePassOpen(false)} />
     </div>

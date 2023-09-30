@@ -5,18 +5,18 @@ import { Dropdown } from 'src/components/atoms/dropdown/dropdown';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { WebModal } from 'src/components/templates/web-modal';
 import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
+import { SocialCauses } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
 import { IdentityReq } from 'src/core/types';
+import css from 'src/pages/feed/modal-create/modal-create.module.scss';
+import { ModalCreateProps } from 'src/pages/feed/modal-create/modal-create.types';
+import { ModalReview } from 'src/pages/feed/modal-review';
 import { RootState } from 'src/store/store';
-
-import css from './modal-create.module.scss';
-import { ModalCreateProps } from './modal-create.types';
-import { ModalReview } from '../modal-review';
 
 export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeedList }) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
-  const intialValue = { social: '', text: '', imgUrl: '' };
+  const intialValue = { social: '' as SocialCauses | '', text: '', imgUrl: '' };
   const [state, setState] = useState(intialValue);
 
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
@@ -29,7 +29,7 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
   };
 
   const getSocialValue = (value: string) => {
-    setState({ ...state, social: value });
+    setState({ ...state, social: value as SocialCauses | '' });
   };
 
   const onChangeTextHandler = (e: any) => {

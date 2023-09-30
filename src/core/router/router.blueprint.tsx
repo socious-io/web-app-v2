@@ -1,8 +1,6 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
 import Layout from 'src/components/templates/refactored/layout/layout';
-import { jobs } from 'src/core/api';
-import { getFeedList } from 'src/pages/feed/refactored/feed.service';
-import { getComments, getPostDetail } from 'src/pages/feed/refactored/feedDetails/feedDetail.service';
+import { jobs, posts, postComments, getPost } from 'src/core/api';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 
 export const blueprint: RouteObject[] = [
@@ -140,7 +138,7 @@ export const blueprint: RouteObject[] = [
             Component: Feeds,
           };
         },
-        loader: () => getFeedList({ page: 1 }),
+        loader: () => posts({ page: 1 }),
       },
       {
         path: 'feeds/:id',
@@ -151,7 +149,7 @@ export const blueprint: RouteObject[] = [
           };
         },
         loader: async ({ params }) => {
-          const requests = [getPostDetail(params.id!), getComments(params.id!, 1)];
+          const requests = [getPost(params.id!), postComments(params.id!, { page: 1 })];
           const [post, comments] = await Promise.all(requests);
           return { post, comments };
         },
