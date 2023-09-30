@@ -1,9 +1,9 @@
+import { Button } from 'src/components/atoms/button/button';
+import { ImpactBarLevel } from 'src/components/atoms/impact-bar-level/impact-bar-level';
 import { printWhen } from 'src/core/utils';
 
 import css from './header.module.scss';
 import { HeaderProps } from './header.types';
-import { Button } from '../../../../components/atoms/button/button';
-import { ImpactBarLevel } from '../../../../components/atoms/impact-bar-level/impact-bar-level';
 
 export const Header = (props: HeaderProps): JSX.Element => {
   const connectId = useMatch().search.proofspace_connect_id;

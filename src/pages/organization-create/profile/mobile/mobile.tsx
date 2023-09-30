@@ -1,14 +1,14 @@
 import { useState } from 'react';
+import { Button } from 'src/components/atoms/button/button';
+import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { Input } from 'src/components/atoms/input/input';
+import { Steps } from 'src/components/atoms/steps/steps';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Divider } from 'src/components/templates/divider/divider';
 
 import css from './mobile.module.scss';
-import { Button } from '../../../../components/atoms/button/button';
-import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
-import { Dropdown } from '../../../../components/atoms/dropdown-v2/dropdown';
-import { DropdownItem } from '../../../../components/atoms/dropdown-v2/dropdown.types';
-import { Input } from '../../../../components/atoms/input/input';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import { Divider } from '../../../../components/templates/divider/divider';
 import { COUNTRIES } from '../../../../constants/COUNTRIES';
 import { citiesToCategories } from '../../../../core/adaptors';
 import { getCityList } from '../../../job-create/info/info.services';

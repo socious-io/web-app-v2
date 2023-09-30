@@ -1,25 +1,25 @@
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { forgetPassword, handleError, otpConfirm } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
-import { handleError } from 'src/core/http';
 import { setAuthCookies } from 'src/pages/sign-in/sign-in.services';
 import translate from 'src/translations';
 
-import { forgetPassword } from '../forget-password.service';
-
 export const useOtpShared = () => {
-  const navigate = {};
-  const queryParam = useMatch().search;
-  const email = String(queryParam.email);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const email = searchParams.get('email');
   const [otpValue, setOtpValue] = useState('');
 
   function submit() {
-    endpoint.get.auth['otp/confirm']({ email, otp: otpValue })
+    if (!email) return;
+    
+    
+    otpConfirm({email, otp: otpValue })
       .then((resp) => {
-        if (resp.access_token && resp.access_token?.length > 0) {
           setAuthCookies(resp);
-          navigate({ to: '../password' });
-        }
+          navigate('../password');
       })
       .catch((err) => {
         handleError()(err);
@@ -28,7 +28,9 @@ export const useOtpShared = () => {
   }
 
   function onResendOtp() {
-    forgetPassword(email)
+    if (!email) return;
+    
+    forgetPassword({email})
       .then(() => dialog.alert({ title: 'success', message: translate('OTP sent success') }))
       .catch((err) => {
         handleError()(err);
@@ -37,7 +39,7 @@ export const useOtpShared = () => {
   }
 
   const backToPerviousPage = () => {
-    navigate({ to: '../email' });
+    navigate('../email');
   };
 
   return { backToPerviousPage, otpValue, setOtpValue, submit, onResendOtp };

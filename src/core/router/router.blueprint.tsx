@@ -1,12 +1,12 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
 import Layout from 'src/components/templates/refactored/layout/layout';
+import { jobs } from 'src/core/api';
 import { getFeedList } from 'src/pages/feed/refactored/feed.service';
 import { getComments, getPostDetail } from 'src/pages/feed/refactored/feedDetails/feedDetail.service';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 
 export const blueprint: RouteObject[] = [
   {
-    id: 'intro',
     path: '/intro',
     async lazy() {
       const { Intro } = await import('../../pages/intro/intro');
@@ -16,7 +16,6 @@ export const blueprint: RouteObject[] = [
     },
   },
   {
-    id: 'signin',
     path: '/sign-in',
     async lazy() {
       const { SignInContainer } = await import('../../pages/sign-in/sign-in-container');
@@ -155,6 +154,17 @@ export const blueprint: RouteObject[] = [
           const requests = [getPostDetail(params.id!), getComments(params.id!, 1)];
           const [post, comments] = await Promise.all(requests);
           return { post, comments };
+        },
+      },
+      {
+        path: 'jobs',
+        async lazy() {
+          const { Jobs } = await import('../../pages/jobs');
+          const jobsList = await jobs({ page: 1 });
+          return {
+            Component: Jobs,
+            Loader: jobsList,
+          };
         },
       },
     ],

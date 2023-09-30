@@ -7,13 +7,13 @@ import store from 'src/store/store';
 
 import css from './hired.module.scss';
 import { HiredProps } from './hired.types';
-import { Accordion } from '../../../../../components/atoms/accordion/accordion';
-import { ApplicantListPay } from '../../../../../components/molecules/applicant-list-pay/applicant-list-pay';
 import { dialog } from '../../../../../core/dialog/dialog';
 import { endpoint } from '../../../../../core/endpoints';
 import { missionToApplicantListPayAdaptor } from '../../../job-offer-reject.services';
 import { FeedbackModal } from '../feedback-modal';
 import { Rate } from '../feedback-modal/feedback-modal.types';
+import { Accordion } from '../src/components/atoms/accordion/accordion';
+import { ApplicantListPay } from '../src/components/molecules/applicant-list-pay/applicant-list-pay';
 
 
 export const Hired = (props: HiredProps): JSX.Element => {
