@@ -1,7 +1,7 @@
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { Post } from 'src/core/api';
 
 export type MobileProps = {
-  data: Feed;
+  data: Post;
 };
 
 export type CommentModel = {

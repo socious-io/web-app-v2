@@ -2,33 +2,38 @@ import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import {
+  createPostComment,
+  likePost,
+  likePostComment,
+  postComments,
+  unlikePost,
+  unlikePostComment,
+  Post,
+  CommentsRes,
+} from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { IdentityReq, Pagination } from 'src/core/types';
+import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
-
-import { addComment, getComments, likeComment, removeCommentLike } from './feedDetail.service';
-import { CommentModel } from './feedDetail.types';
-import { like, unlike } from '../feed.service';
 
 export const useFeedDetails = () => {
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
   const { post, comments } = useLoaderData() as {
-    post: Feed;
-    comments: Pagination<CommentModel[]>;
+    post: Post;
+    comments: CommentsRes;
   };
   const [message, setMessage] = useState('');
-  const [commentList, setCommentList] = useState<CommentModel[]>(comments.items);
-  const [postObj, setPostObj] = useState<Feed>(post);
+  const [commentList, setCommentList] = useState(comments.items);
+  const [postObj, setPostObj] = useState<Post>(post);
   const [page, setPage] = useState(1);
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
-  const [feed, setFeed] = useState<Feed>();
+  const [feed, setFeed] = useState<Post>();
   const totalCount = comments.total_count;
 
   const onShowSeeMore = (length: number): boolean => {
@@ -61,7 +66,7 @@ export const useFeedDetails = () => {
   ];
 
   const onLike = (id: string) => {
-    like(id).then(() => {
+    likePost(id).then(() => {
       const clone = { ...postObj };
       clone.liked = true;
       clone.likes = clone.likes + 1;
@@ -70,7 +75,7 @@ export const useFeedDetails = () => {
   };
 
   const onRemoveLike = (id: string) => {
-    unlike(id).then(() => {
+    unlikePost(id).then(() => {
       const clone = { ...postObj };
       clone.liked = false;
       clone.likes = clone.likes - 1;
@@ -81,10 +86,13 @@ export const useFeedDetails = () => {
   const changeMessageHandler = (value: string) => {
     setMessage(value);
   };
-
+  // export interface CommentReq {
+  //   content: string;
+  //   replay_id?: string;
+  // }
   const sendMessage = () => {
-    addComment(message, postObj.id).then(() => {
-      getComments(postObj.id, 1).then((resp) => {
+    createPostComment(postObj.id, { content: message }).then(() => {
+      postComments(postObj.id, { page: 1 }).then((resp) => {
         setCommentList(resp.items);
         setMessage('');
       });
@@ -92,7 +100,7 @@ export const useFeedDetails = () => {
   };
 
   function onMorePage() {
-    getComments(postObj.id, page + 1).then((resp) => {
+    postComments(postObj.id, { page: page + 1 }).then((resp) => {
       setPage((v) => v + 1);
       setCommentList((list) => [...list, ...resp.items]);
     });
@@ -111,14 +119,14 @@ export const useFeedDetails = () => {
   }
 
   function onCommentLike(postId: string, commentId: string) {
-    likeComment(postId, commentId).then(updateHeartIcon(commentId, 'like'));
+    likePostComment(postId, commentId).then(updateHeartIcon(commentId, 'like'));
   }
 
   function onCommentLikeRemove(postId: string, commentId: string) {
-    removeCommentLike(postId, commentId).then(updateHeartIcon(commentId, 'removeLike'));
+    unlikePostComment(postId, commentId).then(updateHeartIcon(commentId, 'removeLike'));
   }
 
-  const showActions = async (feed: Feed) => {
+  const showActions = async (feed: Post) => {
     const name = feed.identity_meta.name;
     if (isTouchDevice()) {
       const result = await ActionSheet.showActions({
@@ -138,7 +146,7 @@ export const useFeedDetails = () => {
     }
   };
 
-  function onMoreClick(index: number, feed: Feed) {
+  function onMoreClick(index: number, feed: Post) {
     switch (index) {
       case 0:
         if (feed?.id) {
@@ -157,7 +165,7 @@ export const useFeedDetails = () => {
     }
   }
   const onClickMoreOption = (index: number) => {
-    onMoreClick(index, feed as Feed);
+    onMoreClick(index, feed as Post);
     setOpenMoreBox(false);
   };
   return {
