@@ -1,6 +1,6 @@
 import css from './header.module.scss';
 import { HeaderProps } from './header.types';
-import { ProfileView } from '../../../../../components/molecules/profile-view/profile-view';
+import { ProfileView } from '../src/components/molecules/profile-view/profile-view';
 
 export const Header = (props: HeaderProps): JSX.Element => {
   const { onBack, type, name, username, img, lastOnline } = props;

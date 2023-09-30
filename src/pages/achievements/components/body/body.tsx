@@ -1,11 +1,12 @@
+
+import { Tabs } from 'src/components/atoms/tabs/tabs';
+import { Tab } from 'src/components/atoms/tabs/tabs.types';
+import { ImpactCategoryList } from 'src/components/organisms/impact-category-list/impact-category-list';
+import { JobHistoryList } from 'src/components/organisms/job-history-list/job-history-list';
 import { JobHistoryListProps } from 'src/components/organisms/job-history-list/job-history-list.types';
 
 import css from './body.module.scss';
 import { BodyProps } from './body.types';
-import { Tabs } from '../../../../components/atoms/tabs/tabs';
-import { Tab } from '../../../../components/atoms/tabs/tabs.types';
-import { ImpactCategoryList } from '../../../../components/organisms/impact-category-list/impact-category-list';
-import { JobHistoryList } from '../../../../components/organisms/job-history-list/job-history-list';
 import { Loader } from '../../achievements.types';
 import { evaluateTier } from '../../mobile/achievements.service';
 import { Tier } from '../tier/tier';

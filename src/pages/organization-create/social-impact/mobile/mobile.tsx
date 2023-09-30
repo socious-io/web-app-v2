@@ -1,7 +1,8 @@
+import { Button } from 'src/components/atoms/button/button';
+import { Steps } from 'src/components/atoms/steps/steps';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+
 import css from './mobile.module.scss';
-import { Button } from '../../../../components/atoms/button/button';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
 
 export const Mobile = (): JSX.Element => {
   const navigate = {};

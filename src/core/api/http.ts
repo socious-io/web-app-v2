@@ -23,7 +23,7 @@ export async function getAuthHeaders(): Promise<{ Authorization: string; Current
 }
 
 export async function post<T>(uri: string, payload: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
-  return axios.post<T>(uri, payload, config);
+  return http.post<T>(uri, payload, config);
 }
 
 export async function get<T>(uri: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
@@ -34,7 +34,7 @@ export async function get<T>(uri: string, config?: AxiosRequestConfig): Promise<
     ...config?.params,
   };
 
-  return axios.get<T>(uri, config);
+  return http.get<T>(uri, config);
 }
 
 export type ErrorSection = 'AUTH' | 'FORGET_PASSWORD';
