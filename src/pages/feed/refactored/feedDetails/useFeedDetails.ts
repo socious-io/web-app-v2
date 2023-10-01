@@ -86,10 +86,7 @@ export const useFeedDetails = () => {
   const changeMessageHandler = (value: string) => {
     setMessage(value);
   };
-  // export interface CommentReq {
-  //   content: string;
-  //   replay_id?: string;
-  // }
+
   const sendMessage = () => {
     createPostComment(postObj.id, { content: message }).then(() => {
       postComments(postObj.id, { page: 1 }).then((resp) => {
