@@ -1,7 +1,6 @@
 class CreateJobPage {
   elements = {
     switchAccount: () => cy.get('._avatar_anzop_65'),
-    logoutBtn: () => cy.contains('Log out'),
     OrgAccount: () => cy.get('._name_xy33b_15').contains('IO company'),
     createdLink: () =>
       cy.get(':nth-child(3) > ._container_c9ywk_1 > :nth-child(2) > ._menuItem_459xl_7 > ._container_1ww5x_1'),
@@ -27,6 +26,7 @@ class CreateJobPage {
     desctxt: () => cy.get('textarea[id="Job description"]'),
     jobcategory: () => cy.get(':nth-child(2) > ._inputContainer_1p1vn_1 > ._input_1p1vn_1'),
     selectedJobcategory: () => cy.contains('Backend development'),
+    selectedJobcategoryFE: () => cy.contains('Frontend development'),
     countryTxt: () => cy.get(':nth-child(4) > ._inputContainer_1p1vn_1 > ._input_1p1vn_1'),
     cityTxt: () => cy.get(':nth-child(5) > ._inputContainer_1p1vn_1 > ._input_1p1vn_1'),
     selectedCountry: () => cy.get(':nth-child(4) > ._options_1p1vn_32 > ._option_1p1vn_32'),
@@ -57,10 +57,6 @@ class CreateJobPage {
 
   clickOnswitchAccountLink() {
     this.elements.switchAccount().click();
-  }
-  logout() {
-    this.elements.logoutBtn().click();
-    cy.wait(4000);
   }
   selectOrgAccount() {
     this.elements.OrgAccount().click();
@@ -99,14 +95,18 @@ class CreateJobPage {
   }
   selectJobCategory(JobCategory) {
     this.elements.jobcategory().click(), this.elements.jobcategory().type(JobCategory);
-    this.elements.selectedJobcategory().click();
+    if (JobCategory == 'backend') {
+      this.elements.selectedJobcategory().click();
+    } else if (JobCategory == 'frontend') {
+      this.elements.selectedJobcategoryFE().click();
+    }
   }
-  selectCountry() {
-    this.elements.countryTxt().type('iran');
+  selectCountry(country) {
+    this.elements.countryTxt().type(country);
     this.elements.selectedCountry().click();
   }
-  selectCity() {
-    this.elements.cityTxt().type('abadan');
+  selectCity(city) {
+    this.elements.cityTxt().type(city);
     this.elements.selectedCity().click();
   }
   selectRemotePreference(RemotePreferenceText) {

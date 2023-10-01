@@ -16,7 +16,7 @@ describe('Add org', () => {
     cy.intercept('POST', `${Cypress.env('api_server')}/auth/refresh`, TestingData.refresh_token);
   });
 
-  TestingData.organization.forEach((data) => {
+  TestingData.organization.forEach((data, index) => {
     it('create org', () => {
       cy.visit(`${Cypress.env('app_url')}/jobs`);
       createorganization.gotoCreateOrg();
@@ -46,7 +46,10 @@ describe('Add org', () => {
       cy.get('@AddOrg').then((req) => {
         expect(req.response.statusCode).to.equal(200);
         cy.log(JSON.stringify(req.response.body));
-        //expect(req.response.body).to.have.ownProperty('bio', data.organizationBio);
+        const res = req.response.body.addOrganization[index];
+        expect(res).to.have.property('name', data.organizationName);
+        expect(res).to.have.property('bio', data.organizationBio);
+        expect(res).to.have.property('culture', data.organizationCulture);
       });
     });
   });

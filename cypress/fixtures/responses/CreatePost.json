@@ -1,5 +1,5 @@
 {
-  "create-posts": [
+  "posts": [
     {
       "content": "post 1: I am writing here for testing the create post 1",
       "causes_tags": ["POVERTY"],

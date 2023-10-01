@@ -20,6 +20,27 @@
       "created_by": "f0850c9f-0acb-495d-adb4-fb14743e4937",
       "shortname": "automated_test-organization_name16035",
       "status": "ACTIVE"
+    },
+    {
+      "id": "9bca39b8-4f10-412a-b753-57bfb26c5e78",
+      "name": "Automated Test-Organization Name2",
+      "bio": "Automated Test-Organization Bio2",
+      "description": null,
+      "email": "automated2.org@gmail.com",
+      "phone": null,
+      "city": "Abadan",
+      "type": "IIF",
+      "address": null,
+      "website": null,
+      "created_at": "2023-09-20T07:50:25.020Z",
+      "updated_at": "2023-09-20T07:50:25.020Z",
+      "social_causes": ["POVERTY"],
+      "country": "IR",
+      "culture": "Automated Test-Organization Culture2",
+      "mobile_country_code": null,
+      "created_by": "f0850c9f-0acb-495d-adb4-fb14743e4937",
+      "shortname": "automated_test-organization_name16035",
+      "status": "ACTIVE"
     }
   ]
 }

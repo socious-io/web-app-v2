@@ -1,9 +1,9 @@
 /// <reference types = "cypress"/>
-import ApplyPage from './pages/ApplyPage';
+import RejectApplicationPage from './pages/RejectApplicationPage';
 import TestingData from '../fixtures/TestingData.json';
 
-const apply = new ApplyPage();
-describe('Apply', () => {
+const reject = new RejectApplicationPage();
+describe('Reject', () => {
   before(function () {
     Cypress.config('defaultCommandTimeout', 9000);
   });
@@ -18,24 +18,19 @@ describe('Apply', () => {
     );
     cy.intercept('GET', `${Cypress.env('api_server')}/projects/*/questions*`).as('reqQuestions');
   });
-  TestingData.apply.forEach((data, index) => {
-    it('Apply job without attachment', () => {
+  TestingData.rejectApplication.forEach((data) => {
+    it('Reject application', () => {
       cy.visit(`${Cypress.env('app_url')}/jobs/` + data.jobId);
-      apply.assertShowingApplyButton();
-      apply.clickOnApplyBtn();
-      apply.setMessage(data.message);
-      apply.uploadResume(data.cv);
-      apply.clickOnSubmitBtn();
-      // apply.assertApplyBtnIsDisabled()
+      reject.clickOnswitchAccountLink();
+      reject.selectOrgAccount();
+      reject.clickOnCreatedLink();
+      reject.clickOnOngoingLink();
+      reject.clickOnapplicantsTab();
+      reject.clickOntoReviewTab();
+      reject.clickOnopenApplication();
+      //reject.clickOnrejectBtn();
       cy.wait('@reqApply');
-      cy.get('@reqApply').then((req) => {
-        expect(req.response.statusCode).to.equal(200);
-        cy.log(JSON.stringify(req.response.body.apply));
-        cy.log(JSON.stringify(req.response.body.apply[index]));
-        const res = req.response.body.apply[index];
-        expect(res).to.have.property('cover_letter', data.message);
-        expect(res).to.have.property('attachment');        
-      });
+      cy.get('@reqApply').then((req) => {});
     });
   });
 });

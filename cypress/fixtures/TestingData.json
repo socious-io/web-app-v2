@@ -28,7 +28,8 @@
       "max_commitment": "2",
       "experience_level": "no",
       "skills": ["accounting"],
-      "social_causes": ["poverty"]
+      "social_causes": ["poverty"],
+      "jobId": "8abd5ff6-3cb8-4a72-ae85-c309f7f8b58b"      
     },
     {
       "title": "job 2:Onsite, Part time, 1-3 months, Volunteer & Hourly-payment Job, entry level",
@@ -36,7 +37,7 @@
       "category": "frontend",
       "country": "iran",
       "city": "abadan",
-      "remote_preference": "site",
+      "remote_preference": "onsite",
       "type": "part",
       "length": "1",
       "payment_type": "volunteer",
@@ -45,7 +46,8 @@
       "max_commitment": "200",
       "experience_level": "entry",
       "skills": ["accounting"],
-      "social_causes": ["poverty"]
+      "social_causes": ["poverty"],
+      "jobId": "8c991cd4-a04e-48d1-a39f-f0e72394ce84"  
     },
     {
       "title": "job 3:Onsite, Part time, 3-6 months, Paid & Fixed-payment Job, intermediate level",
@@ -53,7 +55,7 @@
       "category": "backend",
       "country": "japan",
       "city": "tokyo",
-      "remote_preference": "site",
+      "remote_preference": "onsite",
       "type": "part",
       "length": "3-",
       "payment_type": "paid",
@@ -62,7 +64,8 @@
       "max_commitment": "30",
       "experience_level": "inter",
       "skills": ["accounting"],
-      "social_causes": ["poverty"]
+      "social_causes": ["poverty"],
+      "jobId": "e39ce0d8-81c4-4f8d-a22a-2a10e95ab8b9"  
     },
     {
       "title": "job 4:Hybrid, On-Off, Less than a month, Paid & Hourly-payment Job, expert level",
@@ -79,18 +82,19 @@
       "max_commitment": "250",
       "experience_level": "expert",
       "skills": ["accounting"],
-      "social_causes": ["poverty"]
+      "social_causes": ["poverty"],
+      "jobId": "d4177f12-e6dd-4216-b0c8-eb514409ee44" 
     }
   ],
 
   "apply": [
     {
-      "jobId": "008dc9e3-a043-43f4-b80e-cc429d399db7",
+      "jobId": "8abd5ff6-3cb8-4a72-ae85-c309f7f8b58b",
       "message": "application 1: I am writing here for apply for this position",
-      "cv": "no"
+      "cv": "null"
     },
     {
-      "jobId": "eaf1de27-1aac-4bc7-9b1a-1d4cd7483f5c",
+      "jobId": "8c991cd4-a04e-48d1-a39f-f0e72394ce84",
       "message": "application 2: I am writing here for apply for this position",
       "cv": "attachCV"
     }
@@ -102,12 +106,26 @@
       "organizationBio": "Automated Test-Organization Bio1",
       "organizationEmail": "automated.org@gmail.com",
       "organizationCulture": "Automated Test-Organization Culture1"
+    },
+    {
+      "organizationName": "Automated Test-Organization Name2",
+      "organizationBio": "Automated Test-Organization Bio2",
+      "organizationEmail": "automated2.org@gmail.com",
+      "organizationCulture": "Automated Test-Organization Culture2"
+    }
+  ],
+
+  "rejectApplication":[
+    {
+      "jobId": "008dc9e3-a043-43f4-b80e-cc429d399db7"
+
     }
   ],
 
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5MWEyNzdlLWRmZmQtNDE1Yy1hNTQzLTc5ZTI4ZjJiMjU5MSIsInJlZnJlc2giOmZhbHNlLCJpYXQiOjE2OTIyODc5NTEsImV4cCI6MTY5MjQ2MDc1MX0.C6nJGe96yN-TxfeVg7ceEIS9V1jqukJcW4zIHbaKpP0",
   "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5MWEyNzdlLWRmZmQtNDE1Yy1hNTQzLTc5ZTI4ZjJiMjU5MSIsInJlZnJlc2giOnRydWUsImlhdCI6MTY5MjI4Nzk1MSwiZXhwIjoxNjk0ODc5OTUxfQ.uhiOGvd41rMQanuRojlO2J8976m3_2ibezEpmtt2AU8",
   "token_type": "Bearer",
+  
 
   "EmailForLogin": "testazintest4@gmail.com",
   "Email2ForLogin": "testazintest2@gmail.com",

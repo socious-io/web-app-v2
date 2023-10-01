@@ -18,7 +18,7 @@ class ApplyPage {
   uploadResume(cv) {
     if (cv == 'attachCV') {
       this.elements.UploadBtn().selectFile('cypress/fixtures/simplefile.pdf', { force: true });
-    } else if (cv == 'no') {
+    } else if (cv == 'null') {
     }
   }
   selectContactInfo() {
