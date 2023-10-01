@@ -33,6 +33,7 @@ export const useProfileUser = () => {
   });
   const address = `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
   const profileBelongToCurrentUser = currentIdentity?.id === user.id;
+  const userIsLoggedIn = !!currentIdentity;
   const [following, setFollowing] = useState<boolean>();
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [message, setMessage] = useState('please connect to me');
@@ -187,5 +188,6 @@ export const useProfileUser = () => {
     missions,
     editOpen,
     setEditOpen,
+    userIsLoggedIn,
   };
 };

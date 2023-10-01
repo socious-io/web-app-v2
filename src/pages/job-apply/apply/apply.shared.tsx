@@ -1,14 +1,6 @@
 import { ChangeEvent, useMemo, useState } from 'react';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { dialog } from 'src/core/dialog/dialog';
-import { useForm } from 'src/core/form';
-import { FormModel } from 'src/core/form/useForm/useForm.types';
-import { QuestionsRes, UserType } from 'src/core/types';
-
-import { generateFormModel } from './apply.form';
+import { useMatch, useNavigate } from '@tanstack/react-location';
+import { Resolver, Resume } from './apply.types';
 import {
   applyApplication,
   convertOptionsToRadioGroup,
@@ -16,7 +8,17 @@ import {
   resumeInitialState,
   submit,
 } from './apply.services';
-import { Resolver, Resume } from './apply.types';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { QuestionsRes, UserType } from 'src/core/types';
+import { FormModel } from 'src/core/form/useForm/useForm.types';
+import { generateFormModel } from './apply.form';
+import { useForm } from 'src/core/form';
+import { dialog } from 'src/core/dialog/dialog';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { printWhen } from 'src/core/utils';
+import { isTouchDevice } from 'src/core/device-type-detector';
 
 type useApplySharedProps = {
   job: Job;
@@ -25,8 +27,8 @@ type useApplySharedProps = {
   userType: UserType;
 };
 
-export const useApplyShared = (data?: useApplySharedProps) => {
-  const navigate = {};
+export const useApplyShared = (data?: useApplySharedProps, onSubmittedNow) => {
+  const navigate = useNavigate();
   const [resume, setResume] = useState<Resume>(resumeInitialState);
   const resolver = useMatch().ownData as Resolver;
   const jobDetail = (data?.job || resolver.jobDetail) as Job;
@@ -61,7 +63,8 @@ export const useApplyShared = (data?: useApplySharedProps) => {
   }
 
   function navigateToJobDetail() {
-    navigate({ to: '..' });
+    if (isTouchDevice()) navigate('..');
+    onSubmittedNow?.();
   }
 
   function onSubmit() {
@@ -76,29 +79,37 @@ export const useApplyShared = (data?: useApplySharedProps) => {
   function createTextQuestion(question: QuestionsRes['questions'][0], i: number): JSX.Element {
     return (
       <div>
-        <Textarea
-          register={form}
-          name={question.id}
-          optional={!question.required}
-          placeholder="Your answer..."
-          label={`${i}. ${question.question}`}
-        />
+        {printWhen(
+          <Textarea
+            register={form}
+            name={question.id}
+            optional={!question.required}
+            placeholder="Your answer..."
+            label={`${i}. ${question.question}`}
+          />,
+          !!questions.length
+        )}
       </div>
     );
   }
 
   function createRadioQuestion(question: QuestionsRes['questions'][0], i: number): JSX.Element {
     return (
-      <RadioGroup
-        label={`${i}. ${question.question}`}
-        list={convertOptionsToRadioGroup(question.options, question.id)}
-        value={answersRadio[`question-${i}`]}
-        name={question.id}
-        onChange={(value, label) => {
-          setAnswersRadio({ ...answersRadio, [`question-${i}`]: value });
-          form.controls[question.id].setValue(label);
-        }}
-      />
+      <div>
+        {printWhen(
+          <RadioGroup
+            label={`${i}. ${question.question}`}
+            list={convertOptionsToRadioGroup(question.options, question.id)}
+            value={answersRadio[`question-${i}`]}
+            name={question.id}
+            onChange={(value, label) => {
+              setAnswersRadio({ ...answersRadio, [`question-${i}`]: value });
+              form.controls[question.id].setValue(label);
+            }}
+          />,
+          !!questions.length
+        )}
+      </div>
     );
   }
 
