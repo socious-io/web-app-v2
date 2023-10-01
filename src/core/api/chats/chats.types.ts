@@ -12,7 +12,6 @@ export interface ChatReq {
   type: 'CHAT';
   participants: string[];
 }
-
 export interface ChatsRes extends PaginateRes {
   items: Chat[];
 }
@@ -65,4 +64,34 @@ export interface Participant extends Identity {
   all_read: boolean;
   last_read_id: string;
   last_read_at: Date;
+}
+
+export interface ParticipantRes extends PaginateRes {
+  items: Participant[];
+}
+
+export interface Following extends Identity {
+  followingId: string;
+  mutual: boolean;
+  following: boolean;
+}
+
+export interface FollowingRes extends PaginateRes {
+  items: Following[];
+}
+
+export interface chatIdRes {
+  id: string[];
+}
+
+export interface Summary {
+  items: {
+    id: string;
+    name: string;
+    unread_count: string;
+    updated_at: string;
+    last_message: {
+      text: string;
+    };
+  }[];
 }

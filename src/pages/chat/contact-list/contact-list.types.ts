@@ -1,6 +1,7 @@
-import { FollowingsReq, Pagination, SummaryReq } from 'src/core/types';
+import { Following, Summary } from 'src/core/api';
+import { Pagination } from 'src/core/types';
 
 export type Resolver = {
-  summery: Pagination<SummaryReq[]>;
-  followings: Pagination<FollowingsReq[]>;
+  summery: Pagination<Summary[]>;
+  followings: Pagination<Following[]>;
 };
