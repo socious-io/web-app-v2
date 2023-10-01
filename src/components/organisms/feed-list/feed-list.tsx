@@ -37,7 +37,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
 
   const navigateToPostDetail = (id: string) => {
     hapticsImpactLight();
-    navigate({ to: `./${id}` });
+    navigate({ to: `/feeds/${id}` });
   };
 
   function redirectToProfile(feed: Feed) {

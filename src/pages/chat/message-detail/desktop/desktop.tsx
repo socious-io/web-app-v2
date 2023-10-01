@@ -1,29 +1,29 @@
 import { useState } from 'react';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Card } from 'src/components/atoms/card/card';
-import { Fab } from 'src/components/atoms/fab/fab';
-import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
-import { SendBox } from 'src/components/molecules/send-box/send-box';
-import { ChatList } from 'src/components/organisms/chat-list/chat-list';
-import { ContactList } from 'src/components/organisms/contact-list/contact-list';
+import { useMatch, useNavigate } from '@tanstack/react-location';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { useAuth } from 'src/hooks/use-auth';
-
-import css from './desktop.module.scss';
+import { Card } from 'src/components/atoms/card/card';
+import { ContactList } from 'src/components/organisms/contact-list/contact-list';
+import { Fab } from 'src/components/atoms/fab/fab';
+import { ChatList } from 'src/components/organisms/chat-list/chat-list';
+import { SendBox } from 'src/components/molecules/send-box/send-box';
+import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Header } from './header';
+import { CreateChatModal } from '../../contact-list/create-chat-modal';
+import { MessageLoader } from '../message-detail.types';
 import {
   chatEntityToContactListAdaptor,
   convertFollowingsToContactList,
   getChatsSummery,
   getFollowings,
 } from '../../contact-list/contact-list.services';
-import { CreateChatModal } from '../../contact-list/create-chat-modal';
 import { createChats } from '../../new-chat/new-chat.services';
 import { useMessageDetailShared } from '../message-detail.shared';
-import { MessageLoader } from '../message-detail.types';
+import css from './desktop.module.scss';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const resolver = useMatch<MessageLoader>();
   const { isLoggedIn } = useAuth();
   const { summery, followings } = resolver.data || {};
@@ -93,6 +93,11 @@ export const Desktop = (): JSX.Element => {
     </div>
   );
 
+  useEffect(() => {
+    const messageBody = document.getElementById('chat-list-div');
+    messageBody!.scrollTop = messageBody!.scrollHeight - messageBody!.clientHeight;
+  }, [list]);
+
   return (
     <div className={css.container}>
       <TwoColumnCursor visibleSidebar={isLoggedIn} height="100%">
@@ -126,7 +131,9 @@ export const Desktop = (): JSX.Element => {
               <span className={css.loader} />
             </div>
           ) : (
-            <div className={css.main}>{list.length ? <ChatList list={list} /> : emptyBoxJSX}</div>
+            <div id="chat-list-div" className={css.main}>
+              {list.length ? <ChatList list={list} /> : emptyBoxJSX}
+            </div>
           )}
           <div className={css.sendBoxContainer}>
             <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={onSend} disabled={loadingChat} />
