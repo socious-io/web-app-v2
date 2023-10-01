@@ -5,22 +5,24 @@ import { RootState } from 'src/store/store';
 import css from './menu-touch.module.scss';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
 import { Menu, menuList } from '../menu-cursor/menu-cursor.services';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Sidebar } from 'src/pages/sidebar/sidebar';
 
 export const MenuTouch = (): JSX.Element => {
-  const navigate = {};
-  const { state } = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
   function isActive(route: string): boolean {
-    return state.location.pathname === route;
+    return location.pathname === route;
   }
 
   function onMenuClick(item: Menu) {
     return () => {
-      navigate({ to: item.link });
+      navigate(item.link);
       hapticsImpactLight();
     };
   }
@@ -35,6 +37,7 @@ export const MenuTouch = (): JSX.Element => {
 
   return (
     <div className={css.container}>
+      <Sidebar />
       <div className={css.body}>
         <Outlet />
       </div>
