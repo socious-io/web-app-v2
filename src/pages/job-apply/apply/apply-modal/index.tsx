@@ -12,7 +12,7 @@ import { resumeInitialState } from '../apply.services';
 import { useApplyShared } from '../apply.shared';
 import css from './apply-modal.module.scss';
 
-export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClose, data }) => {
+export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClose, data, onSubmittedNow }) => {
   const {
     questions,
     resume,
@@ -23,7 +23,7 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
     onSubmit,
     createTextQuestion,
     createRadioQuestion,
-  } = useApplyShared(data);
+  } = useApplyShared(data, onSubmittedNow);
 
   const renderQuestions = () => {
     return (
@@ -77,7 +77,16 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
       header="Apply"
       open={open}
       onClose={onModalClose}
-      buttons={[{ children: ' Submit application', disabled: !form.isValid, onClick: onSubmit }]}
+      buttons={[
+        {
+          children: ' Submit application',
+          disabled: !form.isValid,
+          onClick: () => {
+            onSubmit();
+            onModalClose();
+          },
+        },
+      ]}
     >
       <div className={css.main}>
         <Divider>
