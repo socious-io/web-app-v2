@@ -1,7 +1,8 @@
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { ApplicantList } from 'src/components/molecules/applicant-list/applicant-list';
+
 import { ApplicantsProps } from './applicants.types';
 import { applicantToApplicantListAdaptor, rejectApplicant } from '../../../job-offer-reject.services';
-import { Accordion } from '../src/components/atoms/accordion/accordion';
-import { ApplicantList } from '../src/components/molecules/applicant-list/applicant-list';
 
 export const Applicants = (props: ApplicantsProps): JSX.Element => {
   const { toReviewList, declinedList, onOfferClick, onRejectClick } = props;
