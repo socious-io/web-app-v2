@@ -1,4 +1,4 @@
-import { post } from '../../../core/http';
+import { post } from 'src/core/http';
 
 export async function uploadImage(file: string) {
   const formData = new FormData();
