@@ -1,26 +1,30 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
+import { chatMessages, getChatParticipantsById } from 'src/core/api';
 import { socket } from 'src/core/socket';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 
 import {
   chatListAdaptor,
-  getMessagesById,
   getParticipantDetail,
-  getParticipantsById,
+  // getMessagesById,
+  // getParticipantDetail,
+  // getParticipantsById,
   onPostMessage,
 } from './message-detail.services';
 import { MessageLoader } from './message-detail.types';
 
 export const useMessageDetailShared = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const [sendingValue, setSendingValue] = useState('');
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-  const resolver = useMatch<MessageLoader>();
+  const resolver = useLoaderData() as MessageLoader;
+  // useMatch<MessageLoader>();
   const id = resolver.params.id;
   const { messages, participants } = resolver.data;
   const chatList = chatListAdaptor(identity.id, messages!.items, participants!.items);
@@ -38,15 +42,16 @@ export const useMessageDetailShared = () => {
   async function updateMessages(id: string) {
     setList([]);
     setLoadingChat(true);
-    const messages = await getMessagesById({ id, page: 1 });
-    const participants = await getParticipantsById(id);
+    const messages = await chatMessages(id, { page: 1 });
+    const participants = await getChatParticipantsById(id);
+
     const chatList = chatListAdaptor(identity.id, messages!.items, participants!.items);
     setList(chatList);
     setLoadingChat(false);
   }
 
   async function onContactClick(contact: ContactItem) {
-    navigate({ to: `../${contact.id}` });
+    navigate(`../${contact.id}`);
     updateMessages(contact.id);
   }
 

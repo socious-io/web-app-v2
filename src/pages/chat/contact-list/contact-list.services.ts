@@ -1,18 +1,7 @@
 import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
-import { get } from 'src/core/http';
+import { Following } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
-import { FollowingsReq, Pagination, SummaryReq } from 'src/core/types';
-import store, { RootState } from 'src/store/store';
-
-export async function getFollowings(payload: { page?: number; name: string }): Promise<Pagination<FollowingsReq[]>> {
-  return get(`follows/followings?page=${payload?.page || ''}&name=${payload.name}`).then(({ data }) => {
-    return data;
-  });
-}
-
-export async function getChatsSummery(payload: { page?: number; filter: string }): Promise<SummaryReq> {
-  return get(`chats/summary?limit=100&filter=${payload.filter}&page=${payload?.page || ''}`).then(({ data }) => data);
-}
+import { RootState } from 'src/store/store';
 
 export function chatEntityToContactListAdaptor(chatEntity: RootState['chat']['entities']): ContactItem[] {
   return chatEntity.map((item) => {
@@ -32,20 +21,20 @@ export function chatEntityToContactListAdaptor(chatEntity: RootState['chat']['en
   });
 }
 
-export function followingToContactListAdaptor(following: FollowingsReq): ContactItem {
+export function followingToContactListAdaptor(following: Following): ContactItem {
   return {
-    id: following.identity_id,
-    name: following.identity_meta.name,
+    id: following.id,
+    name: following.meta.name,
     text: '',
-    img: following.identity_meta.avatar || following.identity_meta.image,
-    type: following.identity_type,
+    img: following.meta.hasOwnProperty('image') ? following.meta.image : following.meta.avatar,
+    type: following.type,
     date: '',
     date2: '',
     badge: '',
   };
 }
 
-export function convertFollowingsToContactList(followings: FollowingsReq[]): ContactItem[] {
+export function convertFollowingsToContactList(followings: Following[]): ContactItem[] {
   const mutualList = followings.filter((item) => item.mutual && item.following);
   return mutualList.map((item) => followingToContactListAdaptor(item));
 }

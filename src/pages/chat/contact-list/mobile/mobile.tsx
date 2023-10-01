@@ -1,17 +1,17 @@
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Fab } from 'src/components/atoms/fab/fab';
 import { Header } from 'src/components/atoms/header/header';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
 import { HeaderStaticMobile } from 'src/components/templates/header-static-mobile/header-static-mobile';
 import { IdentityReq } from 'src/core/types';
+import { useContactListShared } from 'src/pages/chat/contact-list/contact-list.shared';
+import { CreateChatModal } from 'src/pages/chat/contact-list/create-chat-modal';
 import { RootState } from 'src/store/store';
 
-import { useContactListShared } from '../contact-list.shared';
-import { CreateChatModal } from '../create-chat-modal';
-
 export const Mobile = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const {
     chats,
     onScroll,
@@ -30,7 +30,7 @@ export const Mobile = (): JSX.Element => {
     <>
       <HeaderStaticMobile>
         <Header
-          onBack={() => navigate({ to: '/jobs' })}
+          onBack={() => navigate('/jobs')}
           border="0"
           height="auto"
           title="Chats"
@@ -39,7 +39,7 @@ export const Mobile = (): JSX.Element => {
         <ContactList
           height="calc(var(--window-height) - var(--safe-area) + 1.5rem)"
           onScroll={onScroll}
-          onContactClick={(contact) => navigate({ to: contact.id })}
+          onContactClick={(contact) => navigate(contact.id)}
           list={chats}
           onSearch={onSearch}
         />

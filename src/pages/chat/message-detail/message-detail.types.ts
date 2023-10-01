@@ -24,6 +24,6 @@ export type OnPostMessageParams = {
   text: string;
 };
 
-export interface ParticipantDetail extends IdentityMeta {
-  type: UserType;
-}
+// export interface ParticipantDetail extends IdentityMeta {
+//   type: UserType;
+// }
