@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import css from './categories-clickable.module.scss';
 import { CategoriesClickableProps } from './categories-clickable.types';
 

@@ -1,10 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { NotificationList } from 'src/components/organisms/notification-list/notification-list';
+import { useNotificationsShared } from 'src/pages/notifications/notifications.shared';
+
 import css from './mobile.module.scss';
-import { Avatar } from '../../../components/atoms/avatar/avatar';
-import { NotificationList } from '../../../components/organisms/notification-list/notification-list';
-import { useNotificationsShared } from '../notifications.shared';
 
 export const Mobile: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore } = useNotificationsShared();
 
   return (
@@ -12,7 +14,7 @@ export const Mobile: React.FC = () => {
       <div className={css.header}>
         <Avatar size="2.25rem" type={identity.type} img={avatarImg} />
         <span className={css.title}>Notifications</span>
-        <img src="/icons/settings-black.svg" onClick={() => navigate({ to: 'settings' })} />
+        <img src="/icons/settings-black.svg" onClick={() => navigate('settings')} alt="" />
       </div>
       <div className={css.main}>
         <NotificationList

@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { NotificationSettings } from 'src/constants/constants';
+import { NotificationsSettings, NotificationType } from 'src/core/api';
 import { endpoint } from 'src/core/endpoints';
-import { NotificationSettingsRes } from 'src/core/types';
 
 import { Payload } from './settings.types';
 
 export const useSettingsShared = () => {
-  const { settings } = useMatch().data as NotificationSettingsRes;
+  const { settings } = useLoaderData() as NotificationsSettings;
   const mapRequestToStatic = NotificationSettings.map((notif) => ({
     ...notif,
     ...settings?.find((setting) => setting.type === notif.type),
@@ -18,7 +19,7 @@ export const useSettingsShared = () => {
   const [allChecked, setAllChekced] = useState(!notAllow);
   const settingsGuide = 'https://www.notion.so/socious/Notification-Settings-32a002269adc44d4984955bd77626cb6';
 
-  function onChange(checked: boolean, type: string, key: string) {
+  function onChange(checked: boolean, type: NotificationType, key: string) {
     setPayload({ ...payload, [type]: { ...payload[type], [key]: checked } });
   }
 

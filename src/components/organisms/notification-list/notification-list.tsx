@@ -1,15 +1,16 @@
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { NotificationItem } from 'src/components/molecules/notification-item/notification-item';
+import { Notification } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 
 import css from './notification-list.module.scss';
-import { NotificationListProps, Notifications } from './notification-list.types';
-import { NotificationItem } from '../../molecules/notification-item/notification-item';
-
+import { NotificationListProps } from './notification-list.types';
 
 export const NotificationList = ({ list, onMorePageClick, showSeeMore, route }: NotificationListProps): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const currentIdentity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
@@ -42,13 +43,13 @@ export const NotificationList = ({ list, onMorePageClick, showSeeMore, route }: 
   const navigateToPost = (id: string, type: string, identity: string, username?: string) => {
     const to = mapTypeToRoute(id, identity, username)[type];
     to
-      ? navigate({ to })
+      ? navigate(to)
       : dialog.alert({
           message: `Please, switch your identity to ${isOrg ? 'user' : 'organization'} first`,
         });
   };
 
-  const avatarImage = (item: Notifications): string =>
+  const avatarImage = (item: Notification): string =>
     item.data.identity.meta.avatar || item.data.identity.meta.image || '';
 
   return (
@@ -60,13 +61,13 @@ export const NotificationList = ({ list, onMorePageClick, showSeeMore, route }: 
               item.data.type === 'OFFER' ? item.data.refId : item.data.parentId,
               item.data.type,
               item.data.identity.type,
-              item.data.identity.meta.username || item.data.identity.meta.shortname
+              item.data.identity.meta.username || item.data.identity.meta.shortname,
             )
           }
           key={item.id}
-          body={item.data.body.body}
+          body={item.data.body.body?.toString() || ''}
           type={item.data.identity.type}
-          date={item.created_at}
+          date={item.created_at.toString()}
           img={avatarImage(item)}
         />
       ))}

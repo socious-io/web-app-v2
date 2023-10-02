@@ -48,7 +48,7 @@ const WebMenu = () => {
     <div className={css.menu}>
       <div className={css.menuItems}>
         <div className={css.logo} onClick={() => navigate('/jobs')}>
-          <img style={{ minWidth: 32 }} height={32} src="/icons/logo-white.svg" alt="" />
+          <img style={{ minWidth: 32 }} height={32} src="/icons/logo-white.svg" />
         </div>
         <Search
           onEnter={navigateToSearch}
