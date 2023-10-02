@@ -98,13 +98,16 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
           label="Payment scheme"
           list={PROJECT_PAYMENT_SCHEME}
         />
-        <Input
-          register={form}
-          name="estimatedTotalHours"
-          label="Estimated total hours"
-          placeholder="hrs"
-          onKeyUp={(e) => setInitialForm({ ...initialForm, estimatedTotalHours: e.currentTarget.value })}
-        />
+        {printWhen(
+          <Input
+            register={form}
+            name="estimatedTotalHours"
+            label="Estimated total hours"
+            placeholder="hrs"
+            onKeyUp={(e) => setInitialForm({ ...initialForm, estimatedTotalHours: e.currentTarget.value })}
+          />,
+          !isHourly
+        )}
         {printWhen(
           <RadioGroup
             name="PaymentMode"
