@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { useLoaderData } from 'react-router-dom';
+import { likePost, Post, posts, PostsRes, unlikePost } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 
-import { getFeedList, like, unlike } from './feed.service';
-import { Resolver } from './feed.types';
-
 export const useFeed = () => {
-  const list = useMatch().ownData as Resolver;
+  const list = useLoaderData() as PostsRes;
   const [openDialog, setOpenDialog] = useState(false);
   const [feedList, setFeedList] = useState(list.items);
   const [page, setPage] = useState(1);
@@ -23,24 +21,24 @@ export const useFeed = () => {
 
   const onLike = (id: string) => {
     const clone = [...feedList];
-    const ref = clone.find((item) => item.id === id) as Feed;
+    const ref = clone.find((item) => item.id === id) as Post;
     ref.liked = true;
     ref.likes = ref.likes + 1;
     setFeedList(clone);
-    like(id).then(() => {});
+    likePost(id);
   };
 
   const onRemoveLike = (id: string) => {
     const clone = [...feedList];
-    const ref = clone.find((item) => item.id === id) as Feed;
+    const ref = clone.find((item) => item.id === id) as Post;
     ref.liked = false;
     ref.likes = ref.likes - 1;
     setFeedList(clone);
-    unlike(id).then(() => {});
+    unlikePost(id);
   };
 
   function onMorePage() {
-    getFeedList({ page: page + 1 }).then((resp) => {
+    posts({ page: page + 1 }).then((resp) => {
       setPage((v) => v + 1);
       setFeedList((list) => [...list, ...resp.items]);
     });
@@ -50,7 +48,7 @@ export const useFeed = () => {
     return length < totalCount;
   };
 
-  const onMoreClick = (index: number, feed: Feed) => {
+  const onMoreClick = (index: number, feed: Post) => {
     switch (index) {
       case 0:
         if (feed?.id) {
