@@ -70,16 +70,6 @@ export interface ParticipantRes extends PaginateRes {
   items: Participant[];
 }
 
-export interface Following extends Identity {
-  id: string;
-  mutual: boolean;
-  following: boolean;
-}
-
-export interface FollowingRes extends PaginateRes {
-  items: Following[];
-}
-
 export interface chatIdRes {
   id: string[];
 }
