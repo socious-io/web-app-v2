@@ -2,7 +2,19 @@ import { RouteObject, createBrowserRouter } from 'react-router-dom';
 import { MenuCursor as RootCursorLayout } from 'src/components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from 'src/components/templates/menu-touch/menu-touch';
 import Layout from 'src/components/templates/refactored/layout/layout';
-import { jobs, createChat, chatMessages, getChatParticipantsById, chats, getFollowings } from 'src/core/api';
+import {
+  jobs,
+  createChat,
+  chatMessages,
+  getChatParticipantsById,
+  chats,
+  getFollowings,
+  notificationSettings,
+  notifications,
+  posts,
+  getPost,
+  postComments,
+} from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 
@@ -227,6 +239,31 @@ export const blueprint: RouteObject[] = [
               const [summery, followings] = await Promise.all(requests);
               return { summery, followings };
             },
+          },
+        ],
+      },
+      {
+        path: 'notifications',
+        children: [
+          {
+            path: '',
+            async lazy() {
+              const { Notifications } = await import('src/pages/notifications/notifications.container');
+              return {
+                Component: Notifications,
+              };
+            },
+            loader: () => notifications({ page: 1 }),
+          },
+          {
+            path: 'settings',
+            async lazy() {
+              const { Settings } = await import('src/pages/notifications/settings/settings.container');
+              return {
+                Component: Settings,
+              };
+            },
+            loader: () => notificationSettings(),
           },
         ],
       },
