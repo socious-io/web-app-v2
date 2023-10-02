@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styles from './selectable.module.scss';
 
 export const Selectable: React.FC<SelectableProps> = ({ title, list, onEdit, onRemove }) => {

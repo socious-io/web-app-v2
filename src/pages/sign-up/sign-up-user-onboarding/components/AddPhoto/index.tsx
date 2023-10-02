@@ -32,8 +32,8 @@ const AddPhoto: React.FC = () => {
           ...state,
           ...avatarImage,
         },
-        ['', null]
-      )
+        ['', null],
+      ),
     ).then(() => {
       navigate({ to: '/sign-up/user/allow-notification' });
     });

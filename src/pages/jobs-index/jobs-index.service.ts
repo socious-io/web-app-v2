@@ -6,6 +6,6 @@ export async function getOrganizationJobs(payload: {
   page: number;
 }): Promise<Pagination<GetJobs[]>> {
   return get(`/projects?identity_id=${payload.identityId}&status=ACTIVE&page=${payload.page}&limit=15`).then(
-    ({ data }) => data
+    ({ data }) => data,
   );
 }

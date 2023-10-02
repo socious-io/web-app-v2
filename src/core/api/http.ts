@@ -2,9 +2,11 @@ import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { config } from 'src/config';
 import { dialog } from 'src/core/dialog/dialog';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import store from 'src/store';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
-import store from 'src/store/store';
 import translate from 'src/translations';
+
+import { refreshToken } from './auth/auth.service';
 
 export const http = axios.create({
   baseURL: config.baseURL,
@@ -75,7 +77,7 @@ http.interceptors.request.use(
     store.dispatch(hideSpinner());
     // Do something with request error
     return Promise.reject(error);
-  }
+  },
 );
 
 http.interceptors.response.use(
@@ -84,11 +86,19 @@ http.interceptors.response.use(
     // Any status code that lie within the range of 2xx cause this function to trigger
     return response;
   },
-  function (error) {
+  async function (error) {
     store.dispatch(hideSpinner());
+    if (error.response.status === 401 && !error.config.url.includes('auth')) {
+      try {
+        await refreshToken();
+        return http.request(error.config);
+      } catch {
+        return Promise.reject(error);
+      }
+    }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     return Promise.reject(error);
-  }
+  },
 );
 
 function getErrorSection(request: XMLHttpRequest): string | undefined {

@@ -69,7 +69,7 @@ export function getParticipantDetail(id: string, participants: ParticipantsReq[]
 export function chatListAdaptor(
   myId: string,
   messagesList: MessagesReq[] = [],
-  participants: ParticipantsReq[] = []
+  participants: ParticipantsReq[] = [],
 ): Message[] {
   const list = messagesList.map((msg) => {
     const isMyMessage = msg.identity_id === myId;

@@ -10,8 +10,8 @@ import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
 import { AccountsModel } from 'src/pages/sidebar/mobile/mobile.types';
 import { logout, setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
+import { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { RootState } from 'src/store/store';
 
 import css from './switch-account.module.scss';
 import { SwitchAccountProps } from './switch-account.types';

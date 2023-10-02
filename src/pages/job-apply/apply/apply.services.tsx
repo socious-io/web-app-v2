@@ -47,7 +47,7 @@ export function generatePayload(form) {
       }
       return prev;
     },
-    { answers: [] }
+    { answers: [] },
   );
   return formatted;
 }

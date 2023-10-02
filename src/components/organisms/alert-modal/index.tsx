@@ -43,7 +43,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
               </Button>
             ))}
           </div>,
-          !!buttons?.length
+          !!buttons?.length,
         )}
       </>
     </Modal>

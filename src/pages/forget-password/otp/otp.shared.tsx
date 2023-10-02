@@ -14,12 +14,11 @@ export const useOtpShared = () => {
 
   function submit() {
     if (!email) return;
-    
-    
-    otpConfirm({email, otp: otpValue })
+
+    otpConfirm({ email, otp: otpValue })
       .then((resp) => {
-          setAuthCookies(resp);
-          navigate('../password');
+        setAuthCookies(resp);
+        navigate('../password');
       })
       .catch((err) => {
         handleError()(err);
@@ -29,8 +28,8 @@ export const useOtpShared = () => {
 
   function onResendOtp() {
     if (!email) return;
-    
-    forgetPassword({email})
+
+    forgetPassword({ email })
       .then(() => dialog.alert({ title: 'success', message: translate('OTP sent success') }))
       .catch((err) => {
         handleError()(err);

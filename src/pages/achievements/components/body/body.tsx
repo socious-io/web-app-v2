@@ -1,4 +1,3 @@
-
 import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { Tab } from 'src/components/atoms/tabs/tabs.types';
 import { ImpactCategoryList } from 'src/components/organisms/impact-category-list/impact-category-list';

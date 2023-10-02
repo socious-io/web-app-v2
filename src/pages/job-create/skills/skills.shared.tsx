@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const useSkillsShared = () => {
   const [socialCauses, setSocialCauses] = useState(skillsToCategoryAdaptor());
@@ -11,7 +11,7 @@ export const useSkillsShared = () => {
 
   function onSearch(v: string) {
     const filteredValue = skillsToCategoryAdaptor().filter((item) =>
-      item.label.toLowerCase().includes(v.toLowerCase())
+      item.label.toLowerCase().includes(v.toLowerCase()),
     );
     setSocialCauses(filteredValue);
   }

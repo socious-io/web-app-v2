@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
 import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store';
 import { visibility } from 'src/store/reducers/menu.reducer';
-import { RootState } from 'src/store/store';
 
 import css from './mobileHeader.module.scss';
 

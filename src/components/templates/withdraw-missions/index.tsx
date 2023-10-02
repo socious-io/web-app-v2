@@ -42,21 +42,21 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
           <span className={css.title}>Transaction date</span>
           <div className={css.rowItem}>{new Date(escrow?.released_at).toLocaleString()}</div>
         </>,
-        escrow?.released_at != null
+        escrow?.released_at != null,
       )}
       {printWhen(
         <>
           <span className={css.title}>Transaction id</span>
           <div className={css.rowItem}>{escrow?.release_id}</div>
         </>,
-        escrow?.release_id != null
+        escrow?.release_id != null,
       )}
       {printWhen(<div className={css.errorText}>{disableText}</div>, !!disableText && isStripe)}
       {printWhen(
         <Button color="blue" disabled={disbaledWithdraw} onClick={onClickWithdraw} className={css.button}>
           Withdraw funds
         </Button>,
-        isStripe
+        isStripe,
       )}
     </Card>
   );

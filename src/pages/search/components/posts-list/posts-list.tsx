@@ -1,11 +1,12 @@
-import { FeedList } from 'src/components/organisms/feed-list/feed-list';
-import css from './posts-list.module.scss';
-import { printWhen } from 'src/core/utils';
 import { useNavigate } from '@tanstack/react-location';
-import { PostListProps } from './posts-list.types';
 import { useState } from 'react';
-import { like, unlike } from 'src/pages/feed/refactored/feed.service';
+import { FeedList } from 'src/components/organisms/feed-list/feed-list';
 import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { printWhen } from 'src/core/utils';
+import { like, unlike } from 'src/pages/feed/refactored/feed.service';
+
+import css from './posts-list.module.scss';
+import { PostListProps } from './posts-list.types';
 
 export const PostsList = (props: PostListProps) => {
   const { list, onMorePageClick, showMorePage, onChangeList } = props;

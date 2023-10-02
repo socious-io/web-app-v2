@@ -1,26 +1,27 @@
-import { useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
-import { ContactList } from 'src/components/organisms/contact-list/contact-list';
-import { Fab } from 'src/components/atoms/fab/fab';
-import { ChatList } from 'src/components/organisms/chat-list/chat-list';
-import { SendBox } from 'src/components/molecules/send-box/send-box';
-import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
+import { useState } from 'react';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
+import { Fab } from 'src/components/atoms/fab/fab';
+import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
+import { SendBox } from 'src/components/molecules/send-box/send-box';
+import { ChatList } from 'src/components/organisms/chat-list/chat-list';
+import { ContactList } from 'src/components/organisms/contact-list/contact-list';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
 import { Header } from './header';
-import { CreateChatModal } from '../../contact-list/create-chat-modal';
-import { MessageLoader } from '../message-detail.types';
 import {
   chatEntityToContactListAdaptor,
   convertFollowingsToContactList,
   getChatsSummery,
   getFollowings,
 } from '../../contact-list/contact-list.services';
+import { CreateChatModal } from '../../contact-list/create-chat-modal';
 import { createChats } from '../../new-chat/new-chat.services';
 import { useMessageDetailShared } from '../message-detail.shared';
-import css from './desktop.module.scss';
-import { useAuth } from 'src/hooks/use-auth';
+import { MessageLoader } from '../message-detail.types';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();

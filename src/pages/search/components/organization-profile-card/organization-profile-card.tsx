@@ -1,12 +1,13 @@
+import { useNavigate } from '@tanstack/react-location';
 import React from 'react';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Divider } from 'src/components/templates/divider/divider';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { printWhen } from 'src/core/utils';
-import css from './organization-profile-card.module.scss';
-import { Card } from 'src/components/atoms/card/card';
 import { Button } from 'src/components/atoms/button/button';
-import { useNavigate } from '@tanstack/react-location';
+import { Card } from 'src/components/atoms/card/card';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Divider } from 'src/components/templates/divider/divider';
+import { printWhen } from 'src/core/utils';
+
+import css from './organization-profile-card.module.scss';
 
 const OrganizationProfileCard = ({ organization }) => {
   const navigate = useNavigate();

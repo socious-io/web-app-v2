@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
 import { socket } from 'src/core/socket';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import {
   chatListAdaptor,

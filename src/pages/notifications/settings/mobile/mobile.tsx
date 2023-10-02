@@ -96,7 +96,7 @@ export const Mobile: React.FC = () => {
               </Button>
             </div>
           </>,
-          !!settings.length && allowedNotifications
+          !!settings.length && allowedNotifications,
         )}
       </>
     </TopFixedMobile>

@@ -100,7 +100,7 @@ export const Desktop: React.FC = () => {
                 Save settings
               </Button>
             </>,
-            !!settings.length && allowedNotifications
+            !!settings.length && allowedNotifications,
           )}
         </Card>
       </TwoColumnCursor>

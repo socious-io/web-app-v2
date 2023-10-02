@@ -7,12 +7,11 @@ import css from './mobile.module.scss';
 import { createFormInitState, jobEditRequest } from '../../info/info.services';
 import { useSocialCausesShared } from '../social-causes.shared';
 
-
 export const Mobile = (): JSX.Element => {
   const navigate = {};
   const { overview } = useMatch().ownData as { overview: Job };
   const { onSearch, socialCauses, selectedSocialCauses, isValid, setSelectedSocialCauses } = useSocialCausesShared(
-    overview.causes_tags
+    overview.causes_tags,
   );
   function editSocialCauses() {
     jobEditRequest(overview.id, { ...createFormInitState(overview), causes_tags: selectedSocialCauses }).then(() => {

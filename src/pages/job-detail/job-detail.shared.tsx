@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import { Resolver } from './job-detail.types';
 
@@ -18,7 +18,7 @@ export const useJobDetailShared = () => {
   }
 
   const location = `${job.identity_meta.city}, ${getCountryName(
-    job.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined
+    job.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined,
   )}`;
 
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
