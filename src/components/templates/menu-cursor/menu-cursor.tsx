@@ -23,7 +23,7 @@ export const MenuCursor = (): JSX.Element => {
 
   function navigateToSearch(q: string) {
     navigate({
-      to: '/d/search',
+      to: '/search',
       search: (p: PayloadModel) => {
         const type = p.type ?? 'projects';
         const page = p.page ?? 1;
