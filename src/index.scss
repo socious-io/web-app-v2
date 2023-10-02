@@ -30,7 +30,9 @@ pwa-action-sheet {
 html,
 body {
   ::-webkit-scrollbar {
-    width: 4px;
+    @media screen and (min-width: 600px) {
+      width: 4px;
+    }
   }
 
   ::-webkit-scrollbar-thumb {
