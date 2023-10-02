@@ -1,28 +1,14 @@
 import { CSSProperties } from 'react';
+import { Post } from 'src/core/api';
 
 export interface FeedListProps extends CSSProperties {
-  data: Feed[];
+  data: Post[];
   onMorePageClick: () => void;
-  onMoreClick?: (id: Feed) => void;
+  onMoreClick?: (id: Post) => void;
   onLike: (id: string) => void;
   onRemoveLike: (id: string) => void;
   showSeeMore: boolean;
 }
-
-export type Feed = {
-  causes_tags: string[];
-  content: string;
-  created_at: string;
-  deleted_at: string;
-  hashtags: string;
-  id: string;
-  identity_id: string;
-  identity_meta: IdentityMeta;
-  media: Media[];
-  liked: boolean;
-  likes: number;
-  identity_type: 'organizations' | 'users';
-};
 
 export type IdentityMeta = {
   name: string;
