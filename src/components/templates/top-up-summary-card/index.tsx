@@ -82,7 +82,7 @@ export const TopUpSummaryCard: React.FC<TopUpSummaryCardProps> = ({
           value={inputAmount}
         />
         <div className={`${css.payment__input__instruction} ${!isIncorrectInput && css.payment__input__incorrect}`}>
-          Please enter at least {minTopUp.toFixed(2)} {unit} for 2 weeks of work.
+          Please enter at least {minTopUp.toFixed(2)} {unit} for 1 week of work.
         </div>
       </div>
       <div className={css.payment__detail}>
