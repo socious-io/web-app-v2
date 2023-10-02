@@ -35,7 +35,8 @@ export const Mobile = (): JSX.Element => {
   const memoizedFormState = useMemo(() => formModel(isHourly, isPaidType, isPaidFiat, initialForm), [paymentMode]);
   const form = useForm(memoizedFormState);
   const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
-  const { tokens, openModal, setOpenModal, selectedToken, onSelectTokens, equivalentUSD, web3 } = useOfferShared();
+  const { tokens, openModal, setOpenModal, selectedToken, selectedCurrency, onSelectTokens, equivalentUSD, web3 } =
+    useOfferShared();
 
   async function onSubmit() {
     const payload: OfferPayload = {
@@ -109,6 +110,7 @@ export const Mobile = (): JSX.Element => {
         {printWhen(<Dapp.Connect />, isPaidCrypto)}
         {printWhen(
           <div className={css.tokens}>
+            {printWhen(<div className={css.inputTitle}>Paid - Hourly rate</div>, isHourly)}
             <InputModal
               name="assignmentTotal"
               register={form}
@@ -129,7 +131,25 @@ export const Mobile = (): JSX.Element => {
         )}
         {printWhen(
           <Input register={form} name="assignmentTotal" label="Assignment total (USD)" placeholder="amount" />,
-          isPaidFiat
+          isPaidFiat && !isHourly
+        )}
+        {printWhen(
+          <Input register={form} name="assignmentTotal" label="Paid - Hourly rate" placeholder="amount" />,
+          isPaidFiat && isHourly
+        )}
+        {printWhen(
+          <div className={css.tokens}>
+            <Input register={form} name="weekly_limit" label="Weekly limit" placeholder="15 hrs/week" />
+            <div className={css.tokens__rate}>
+              Max per week:{' '}
+              <span>
+                {Number(form.controls.weekly_limit.value) * Number(form.controls.assignmentTotal.value)}{' '}
+                {printWhen(<>{selectedToken?.symbol || tokens[0]?.subtitle}</>, isPaidCrypto)}
+                {printWhen(<>{selectedCurrency}</>, isPaidFiat)}
+              </span>
+            </div>
+          </div>,
+          isHourly
         )}
         <Textarea
           register={form}
@@ -138,10 +158,6 @@ export const Mobile = (): JSX.Element => {
           placeholder="Write message"
           onKeyUp={(e) => setInitialForm({ ...initialForm, message: e.currentTarget.value })}
         />
-        {printWhen(
-          <Input register={form} name="weekly_limit" label="Weekly limit" placeholder="15 hrs/week" />,
-          isHourly
-        )}
       </div>
       <div className={css.btnContainer}>
         <Button onClick={onSubmit} disabled={formIsInvalid}>

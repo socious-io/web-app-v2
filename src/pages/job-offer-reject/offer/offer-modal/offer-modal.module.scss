@@ -18,4 +18,16 @@
     font-weight: 600;
     color: var(--color-gray-02);
   }
+  &__note {
+    margin-top: 0.5rem;
+    align-self: flex-end;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-02);
+  }
+}
+
+.inputTitle {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }

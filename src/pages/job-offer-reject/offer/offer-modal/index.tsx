@@ -121,6 +121,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
         {printWhen(<Dapp.Connect />, isPaidCrypto)}
         {printWhen(
           <div className={css.tokens}>
+            {printWhen(<div className={css.inputTitle}>Paid - Hourly rate</div>, isHourly)}
             <InputModal
               name="assignmentTotal"
               register={form}
@@ -140,24 +141,41 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
           isPaidCrypto && !!web3
         )}
         {printWhen(
-          <InputModal
-            name="assignmentTotal"
-            register={form}
-            placeholder="amount"
-            modalHeader="Select a currency"
-            items={
-              [
-                { title: 'USD', value: 'USD', subtitle: 'USD' },
-                { title: 'JPY', value: 'JPY', subtitle: 'JPY' },
-              ] as Item[]
-            }
-            open={openModal}
-            onOpen={() => setOpenModal(true)}
-            onClose={() => setOpenModal(false)}
-            selectedItem={selectedCurrency}
-            onSelectItem={onSelectCurrency}
-          />,
+          <div className={css.tokens}>
+            {printWhen(<div className={css.inputTitle}>Paid - Hourly rate</div>, isHourly)}
+            <InputModal
+              name="assignmentTotal"
+              register={form}
+              placeholder="amount"
+              modalHeader="Select a currency"
+              items={
+                [
+                  { title: 'USD', value: 'USD', subtitle: 'USD' },
+                  { title: 'JPY', value: 'JPY', subtitle: 'JPY' },
+                ] as Item[]
+              }
+              open={openModal}
+              onOpen={() => setOpenModal(true)}
+              onClose={() => setOpenModal(false)}
+              selectedItem={selectedCurrency}
+              onSelectItem={onSelectCurrency}
+            />
+          </div>,
           isPaidFiat
+        )}
+        {printWhen(
+          <div className={css.tokens}>
+            <Input register={form} name="weekly_limit" label="Weekly limit" placeholder="15 hrs/week" />
+            <div className={css.tokens__rate}>
+              Max per week:{' '}
+              <span>
+                {Number(form.controls.weekly_limit.value) * Number(form.controls.assignmentTotal.value)}{' '}
+                {printWhen(<>{selectedToken?.symbol || tokens[0]?.subtitle}</>, isPaidCrypto)}
+                {printWhen(<>{selectedCurrency}</>, isPaidFiat)}
+              </span>
+            </div>
+          </div>,
+          isHourly
         )}
         <Textarea
           register={form}
@@ -166,11 +184,6 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
           placeholder="Write message"
           onKeyUp={(e) => setInitialForm({ ...initialForm, message: e.currentTarget.value })}
         />
-
-        {printWhen(
-          <Input register={form} name="weekly_limit" label="Weekly limit" placeholder="15 hrs/week" />,
-          isHourly
-        )}
       </div>
     </WebModal>
   );
