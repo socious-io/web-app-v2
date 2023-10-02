@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import css from 'scr/pages/chat/contact-list/desktop/desktop.module.scss';
 import { Card } from 'src/components/atoms/card/card';
 import { Fab } from 'src/components/atoms/fab/fab';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
@@ -7,6 +6,8 @@ import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-
 import { useAuth } from 'src/hooks/use-auth';
 import { useContactListShared } from 'src/pages/chat/contact-list/contact-list.shared';
 import { CreateChatModal } from 'src/pages/chat/contact-list/create-chat-modal';
+
+import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export const Desktop = (): JSX.Element => {
             <ContactList
               height="calc(var(--window-height) - 6.2rem)"
               onScroll={onScroll}
-              onContactClick={(contact) => navigate(contact.id)}
+              onContactClick={(contact) => navigate(`/d/chats/contacts/${contact.id}`)}
               list={chats}
               onSearch={onSearch}
               profileViewWidth={175}

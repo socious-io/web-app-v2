@@ -13,7 +13,7 @@ export const attachBindToFormGroup =
     (addToRef: AddToRef, rerender: () => void) =>
     (formGroup: FormGroup): Required<FormGroup> => {
         formGroup.bind = (controlName: string) => {
-            const initialValue = formGroup.controls[controlName].value;
+            const initialValue = formGroup.controls[controlName]?.value;
             const valueIsBoolean = typeof initialValue === 'boolean';
             const defaultChecked = setDefaultChecked(initialValue);
 
@@ -44,13 +44,13 @@ export const attachBindToFormGroup =
                     formGroup.isTouched = true;
                     rerender();
                 },
-                disabled: formGroup.controls[controlName].isDisabled as boolean,
+                disabled: formGroup.controls[controlName]?.isDisabled as boolean,
                 ...(valueIsBoolean && { defaultChecked }),
                 ...(!valueIsBoolean && {
-                    defaultValue: formGroup.controls[controlName].value as DefaultValue,
+                    defaultValue: formGroup.controls[controlName]?.value as DefaultValue,
                 }),
                 ref: (ref: HTMLInputElement) => {
-                    if (ref) {
+                    if (ref && formGroup.controls[controlName]) {
                         formGroup.controls[controlName].type = ref.type;
                         addToRef(controlName, ref);
                     }

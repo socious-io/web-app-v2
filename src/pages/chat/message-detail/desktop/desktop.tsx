@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
@@ -24,7 +24,7 @@ export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
   const resolver = useLoaderData() as MessageLoader;
   const { isLoggedIn } = useAuth();
-  const { summery, followings } = resolver.data || {};
+  const { summery, followings } = resolver || {};
   const {
     participantDetail,
     list,
@@ -76,7 +76,7 @@ export const Desktop = (): JSX.Element => {
   async function onCreateChat(id: string) {
     const createdChats = await createChat({ name: 'nameless', type: 'CHAT', participants: [id] });
     setOpenCreateChatModal(false);
-    navigate(`../${createdChats?.id}`);
+    navigate(`/d/chats/contacts/${createdChats?.id}`);
     updateMessages(createdChats?.id);
     updateChatList();
   }
@@ -85,21 +85,20 @@ export const Desktop = (): JSX.Element => {
     <div className={css.emptyBoxContainer}>
       <Avatar
         type={participantDetail.type}
-        img={
-          'avatar' in participantDetail.meta
-            ? participantDetail.meta.avatar
-            : 'image' in participantDetail.meta
-            ? participantDetail.meta.image
-            : ''
-        }
+        img={participantDetail.identity_meta.avatar || participantDetail.identity_meta.image || ''}
         size="8rem"
       />
       <div className={css.text}>
         Start chatting with
-        <span>{participantDetail.meta.name}</span>
+        <span>{participantDetail.identity_meta.name}</span>
       </div>
     </div>
   );
+
+  useEffect(() => {
+    const messageBody = document.getElementById('chat-list-div');
+    if (messageBody) messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+  }, [list]);
 
   return (
     <div className={css.container}>
@@ -124,21 +123,9 @@ export const Desktop = (): JSX.Element => {
         <Card className={css.rightContainer}>
           <Header
             type={participantDetail.type}
-            name={participantDetail.meta.name}
-            img={
-              'avatar' in participantDetail.meta
-                ? participantDetail.meta.avatar
-                : 'image' in participantDetail.meta
-                ? participantDetail.meta.image
-                : ''
-            }
-            username={
-              'username' in participantDetail.meta
-                ? participantDetail.meta.username
-                : 'shortname' in participantDetail.meta
-                ? participantDetail.meta.shortname
-                : ''
-            }
+            name={participantDetail.identity_meta.name}
+            img={participantDetail.identity_meta.avatar || participantDetail.identity_meta.image || ''}
+            username={participantDetail.identity_meta.username || participantDetail.identity_meta.shortname || ''}
             loading={loadingChat}
           />
           {loadingChat ? (
@@ -146,7 +133,9 @@ export const Desktop = (): JSX.Element => {
               <span className={css.loader} />
             </div>
           ) : (
-            <div className={css.main}>{list.length ? <ChatList list={list} /> : emptyBoxJSX}</div>
+            <div id="chat-list-div" className={css.main}>
+              {list.length ? <ChatList list={list} /> : emptyBoxJSX}
+            </div>
           )}
           <div className={css.sendBoxContainer}>
             <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={onSend} disabled={loadingChat} />
