@@ -4,9 +4,9 @@ import { skillsToCategoryAdaptor } from 'src/core/adaptors';
 import css from './skills.module.scss';
 import { useUser } from '../../sign-up-user-onboarding.context';
 import { isValidArrayRange } from '../../sign-up-user-onboarding.service';
-import { Button } from '../src/components/atoms/button/button';
-import { CategoriesClickable } from '../src/components/atoms/categories-clickable/categories-clickable';
-import { Search } from '../src/components/atoms/search/search';
+import { Button } from 'src/components/atoms/button/button';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Search } from 'src/components/atoms/search/search';
 import { StepsContext } from '../steper';
 import StepHeader from '../stepHeader';
 

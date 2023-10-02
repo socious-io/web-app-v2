@@ -12,9 +12,8 @@ import { endpoint } from '../../../../../core/endpoints';
 import { missionToApplicantListPayAdaptor } from '../../../job-offer-reject.services';
 import { FeedbackModal } from '../feedback-modal';
 import { Rate } from '../feedback-modal/feedback-modal.types';
-import { Accordion } from '../src/components/atoms/accordion/accordion';
-import { ApplicantListPay } from '../src/components/molecules/applicant-list-pay/applicant-list-pay';
-
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { ApplicantListPay } from 'src/components/molecules/applicant-list-pay/applicant-list-pay';
 
 export const Hired = (props: HiredProps): JSX.Element => {
   const navigate = {};
