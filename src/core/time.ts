@@ -30,7 +30,7 @@ const monthNames = [
 
 export function getMonthName(value: string): string {
   const date = new Date(value);
-  return monthNames[date.getMonth() + 1];
+  return monthNames[date.getMonth()];
 }
 
 // Return "Month(short) day" from ISO string, for example "Jan 16"
