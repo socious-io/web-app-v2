@@ -1,6 +1,7 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
 import Layout from 'src/components/templates/refactored/layout/layout';
-import {jobs} from 'src/core/api';
+import { jobs, posts, postComments, getPost } from 'src/core/api';
+import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 
 export const blueprint: RouteObject[] = [
   {
@@ -126,18 +127,43 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
-    path: 'jobs',
     element: <Layout />,
+    loader: jobsPageLoader,
     children: [
       {
+        path: 'feeds',
+        async lazy() {
+          const { Feeds } = await import('../../pages/feed/refactored/feed');
+          return {
+            Component: Feeds,
+          };
+        },
+        loader: () => posts({ page: 1 }),
+      },
+      {
+        path: 'feeds/:id',
+        async lazy() {
+          const { FeedDetails } = await import('../../pages/feed/refactored/feedDetails/feedDetails');
+          return {
+            Component: FeedDetails,
+          };
+        },
+        loader: async ({ params }) => {
+          const requests = [getPost(params.id!), postComments(params.id!, { page: 1 })];
+          const [post, comments] = await Promise.all(requests);
+          return { post, comments };
+        },
+      },
+      {
+        path: 'jobs',
         async lazy() {
           const { Jobs } = await import('../../pages/jobs');
           const jobsList = await jobs({ page: 1 });
           return {
             Component: Jobs,
-            Loader: jobsList
+            Loader: jobsList,
           };
-        }
+        },
       },
     ],
   },

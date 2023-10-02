@@ -2,13 +2,14 @@ import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { FeedList } from 'src/components/organisms/feed-list/feed-list';
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { Modal } from 'src/components/templates/modal/modal';
 import { ProfileCard } from 'src/components/templates/profile-card';
+import { Post } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { IdentityReq } from 'src/core/types';
 import { useAuth } from 'src/hooks/use-auth';
@@ -20,16 +21,14 @@ import { useFeed } from './useFeed';
 import { DialogCreate } from '../dialog-create/dialog-create';
 import { ModalCreate } from '../modal-create';
 
-
-
-const Feed = () => {
+export const Feeds = () => {
   const { isLoggedIn } = useAuth();
-  const navigate = {};
+  const navigate = useNavigate();
 
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
   const [touchDevice, setTouchDevice] = useState(isTouchDevice());
-  const [feed, setFeed] = useState<Feed>();
+  const [feed, setFeed] = useState<Post>();
 
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -51,20 +50,20 @@ const Feed = () => {
   } = useFeed();
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity?.id}` }) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity?.id}`) },
   ];
 
   const jobsMenuListUser = [
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate({ to: `/d/jobs/applied/${identity?.id}` }),
+      link: () => navigate(`/d/jobs/applied/${identity?.id}`),
     },
   ];
 
@@ -72,11 +71,11 @@ const Feed = () => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate({ to: `/d/jobs/created/${identity?.id}` }),
+      link: () => navigate(`/d/jobs/created/${identity?.id}`),
     },
   ];
 
-  const showActions = async (feed: Feed) => {
+  const showActions = async (feed: Post) => {
     const name = feed.identity_meta.name;
     if (touchDevice) {
       const result = await ActionSheet.showActions({
@@ -97,7 +96,7 @@ const Feed = () => {
   };
 
   const onClickMoreOption = (index: number) => {
-    onMoreClick(index, feed as Feed);
+    onMoreClick(index, feed as Post);
     setOpenMoreBox(false);
   };
 
@@ -176,5 +175,3 @@ const Feed = () => {
     </div>
   );
 };
-
-export default Feed;

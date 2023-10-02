@@ -1,4 +1,4 @@
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { Post } from 'src/core/api';
 import { get, post } from 'src/core/http';
 import { LikeResp, SearchReq } from 'src/core/types';
 
@@ -10,7 +10,7 @@ export function removeCommentLike(postId: string, commentId: string): Promise<Li
   return post(`/posts/${postId}/comments/${commentId}/unlike`, {}).then(({ data }) => data);
 }
 
-export async function getPostDetail(id: string): Promise<Feed> {
+export async function getPostDetail(id: string): Promise<Post> {
   return get(`posts/${id}`).then(({ data }) => data);
 }
 
