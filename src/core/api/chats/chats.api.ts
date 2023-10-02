@@ -1,14 +1,4 @@
-import {
-  Chat,
-  chatIdRes,
-  ChatReq,
-  ChatsRes,
-  FollowingRes,
-  Message,
-  MessageReq,
-  MessagesRes,
-  ParticipantRes,
-} from './chats.types';
+import { Chat, chatIdRes, ChatReq, ChatsRes, Message, MessageReq, MessagesRes, ParticipantRes } from './chats.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq, FilterReq } from '../types';
 
@@ -43,18 +33,10 @@ export async function getChatParticipantsById(id: string): Promise<ParticipantRe
   return (await get<ParticipantRes>(`chats/${id}/participants`)).data;
 }
 
-export async function getFollowings(params: PaginateReq): Promise<FollowingRes> {
-  return (await get<FollowingRes>('follows/followings', { params })).data;
-}
-
 export async function findChat(payload: { participants: string[] }): Promise<chatIdRes> {
   return (await post<chatIdRes>('chats/find', payload)).data;
 }
 
 export async function filterChats(params: FilterReq): Promise<ChatsRes> {
   return (await get<ChatsRes>('chats/summary', { params })).data;
-}
-
-export async function filterFollowings(params: FilterReq): Promise<FollowingRes> {
-  return (await get<FollowingRes>(`follows/followings?page=${params?.page || ''}&name=${params.filter}`)).data;
 }
