@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import css from './categories-clickable.module.scss';
 import { CategoriesClickableProps } from './categories-clickable.types';
 
@@ -21,8 +20,14 @@ function hasReachedLimit(list: string[], min?: number, max?: number): boolean {
 }
 
 export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Element => {
-  const { list, clickable = false, selected = [], onChange, ...rest } = props;
-  const [selectedList, setSelectedList] = useState<string[]>(selected);
+  const { list, clickable = false, selected, onChange, ...rest } = props;
+  const [selectedList, setSelectedList] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!props.isOpen) {
+      setSelectedList(props?.selected || []);
+    }
+  }, [props.selected]);
 
   function onLabelClick(value: string) {
     if (!clickable) {
@@ -38,21 +43,25 @@ export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Elemen
   }
 
   function setSelectedStyle(value: string): string {
-    const exist = selectedList.includes(value);
+    const exist = selectedList?.includes(value);
     return exist ? css.active : '';
   }
 
   return (
     <div style={rest} className={css.container}>
-      {list.map(({ value, label }) => (
-        <div
-          style={{ cursor: clickable ? 'pointer' : 'default' }}
-          onClick={onLabelClick(value)}
-          key={value}
-          className={`${css.item} ${setSelectedStyle(value)}`}
-        >
-          {label}
-        </div>
+      {list?.map(({ value, label }) => (
+        <>
+          {value && (
+            <div
+              style={{ cursor: clickable ? 'pointer' : 'default' }}
+              onClick={onLabelClick(value)}
+              key={value}
+              className={`${css.item} ${setSelectedStyle(value)}`}
+            >
+              {label}
+            </div>
+          )}
+        </>
       ))}
     </div>
   );

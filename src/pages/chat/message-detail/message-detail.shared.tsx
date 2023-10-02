@@ -1,20 +1,13 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
 import { chatMessages, getChatParticipantsById } from 'src/core/api';
 import { socket } from 'src/core/socket';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 
-import {
-  chatListAdaptor,
-  getParticipantDetail,
-  // getMessagesById,
-  // getParticipantDetail,
-  // getParticipantsById,
-  onPostMessage,
-} from './message-detail.services';
+import { chatListAdaptor, getParticipantDetail, onPostMessage } from './message-detail.services';
 import { MessageLoader } from './message-detail.types';
 
 export const useMessageDetailShared = () => {
@@ -24,9 +17,9 @@ export const useMessageDetailShared = () => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
   const resolver = useLoaderData() as MessageLoader;
-  // useMatch<MessageLoader>();
-  const id = resolver.params.id;
-  const { messages, participants } = resolver.data;
+  const { id } = useParams();
+  const { messages, participants } = resolver;
+
   const chatList = chatListAdaptor(identity.id, messages!.items, participants!.items);
   const participantDetail = getParticipantDetail(identity.id, participants!.items);
   const [list, setList] = useState(chatList);
@@ -51,7 +44,7 @@ export const useMessageDetailShared = () => {
   }
 
   async function onContactClick(contact: ContactItem) {
-    navigate(`../${contact.id}`);
+    navigate(`/d/chats/contacts/${contact.id}`);
     updateMessages(contact.id);
   }
 
@@ -66,7 +59,7 @@ export const useMessageDetailShared = () => {
         img: receiver?.img,
         text: data.text,
         type: 'receiver',
-        time: receiver.time,
+        time: data.updated_at,
       },
     ]);
   });

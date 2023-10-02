@@ -1,4 +1,6 @@
 export type SocialCausesFilterProps = {
-  onSubmit: (values: string[]) => void;
+  onSubmit: (values: Array<{ label: string; value: string }>) => void;
   value?: string[];
+  open: boolean;
+  onClose: () => void;
 };

@@ -10,6 +10,7 @@ import { Resolver } from 'src/pages/chat/contact-list/contact-list.types';
 
 export const useContactListShared = () => {
   const navigate = useNavigate();
+
   const resolver = useLoaderData() as Resolver;
   const { summery, followings } = resolver || {};
   const initialState = chatEntityToContactListAdaptor(summery?.items);
@@ -46,7 +47,7 @@ export const useContactListShared = () => {
   async function onCreateChat(id: string) {
     const createdChats = await createChat({ name: 'nameless', type: 'CHAT', participants: [id] });
     setOpenCreateChatModal(false);
-    navigate(`${createdChats?.id}`);
+    navigate(`/d/chats/contacts/${createdChats?.id}`);
   }
 
   return {

@@ -2,15 +2,7 @@ import { RouteObject, createBrowserRouter } from 'react-router-dom';
 import { MenuCursor as RootCursorLayout } from 'src/components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from 'src/components/templates/menu-touch/menu-touch';
 import Layout from 'src/components/templates/refactored/layout/layout';
-import {
-  jobs,
-  createChat,
-  chatMessages,
-  getChatParticipantsById,
-  chats,
-  getFollowings,
-  chatMessages,
-} from 'src/core/api';
+import { jobs, createChat, chatMessages, getChatParticipantsById, chats, getFollowings } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 

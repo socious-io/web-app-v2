@@ -1,32 +1,13 @@
 import { Message as MessageRes } from 'src/components/atoms/message/message.types';
 import { createChatMessage, Message, Participant } from 'src/core/api';
 import { post } from 'src/core/http';
-import { IdentityMeta, ParticipantsReq, PostMessagePayload, PostMessageResp, UserType } from 'src/core/types';
-import { MessagesReq } from 'src/core/types';
+import { PostMessagePayload, PostMessageResp } from 'src/core/types';
 
-import { OnPostMessageParams, ParticipantDetail } from './message-detail.types';
-
-// export async function getMessagesById(payload: { id: string; page: number }): Promise<Pagination<MessagesReq[]>> {
-//   return get(`chats/${payload.id}/messages?page=${payload.page}`).then(({ data }) => data);
-// }
+import { OnPostMessageParams } from './message-detail.types';
 
 export async function postMessage(payload: PostMessagePayload): Promise<PostMessageResp> {
   return post(`chats/${payload.id}/messages`, { text: payload.text }).then(({ data }) => data);
 }
-
-// export async function getParticipantsById(id: string): Promise<Pagination<ParticipantsReq[]>> {
-//   return get(`chats/${id}/participants`).then(({ data }) => data);
-// }
-
-// async function getRead(id: string, messageId: string): Promise<unknown> {
-//   return post(`chats/update/${id}/messages/${messageId}/read`, {}).then(({ data }) => data);
-// }
-
-// export async function setMessageAsRead(id: string, messageId: string): Promise<boolean> {
-//   return getRead(id, messageId).then(() => {
-//     return true;
-//   });
-// }
 
 export async function onPostMessage(payload: OnPostMessageParams): Promise<MessageRes> {
   const resp = await createChatMessage(payload.id, { text: payload.text });
@@ -43,11 +24,11 @@ export async function onPostMessage(payload: OnPostMessageParams): Promise<Messa
 
 function getImage(myId: string, msgId: string, participants: Participant[]): string {
   const msgIsMine = msgId === myId;
-  const participant = participants.find((p) => p.id === msgId);
+  const participant = participants.find((p) => p.identity_id === msgId);
   if (msgIsMine) {
-    return 'image' in participant!.meta ? participant!.meta.image : '';
+    return participant.identity_meta.image || '';
   } else {
-    return 'avatar' in participant!.meta ? participant!.meta.avatar || '' : '';
+    return participant.identity_meta.avatar || '';
   }
 }
 

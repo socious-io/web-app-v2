@@ -23,10 +23,10 @@ export function chatEntityToContactListAdaptor(chatEntity: RootState['chat']['en
 
 export function followingToContactListAdaptor(following: Following): ContactItem {
   return {
-    id: following.id,
-    name: following.meta.name,
+    id: following.identity_id,
+    name: following.identity_meta.name,
     text: '',
-    img: following.meta.hasOwnProperty('image') ? following.meta.image : following.meta.avatar,
+    img: following.identity_meta.image || following.identity_meta.avatar,
     type: following.type,
     date: '',
     date2: '',

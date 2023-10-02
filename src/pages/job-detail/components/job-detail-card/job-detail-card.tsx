@@ -1,33 +1,33 @@
-import { useState } from 'react';
-import { Button } from 'src/components/atoms/button/button';
-import { Card } from 'src/components/atoms/card/card';
 import { Categories } from 'src/components/atoms/categories/categories';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
+import css from './job-detail-card.module.scss';
+import { Card } from 'src/components/atoms/card/card';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
-import { SureModal } from 'src/components/templates/sure-modal';
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { AuthGuard } from 'src/core/auth-guard/auth-guard';
 import { printWhen } from 'src/core/utils';
-import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
-
-import css from './job-detail-card.module.scss';
-import { JobDetailCardProps } from './job-detail-card.types';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Button } from 'src/components/atoms/button/button';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { getCategories } from '../../job-detail.services';
-
+import { JobDetailCardProps } from './job-detail-card.types';
+import { useState } from 'react';
+import { ApplyModal } from 'src/pages/job-apply/apply/apply-modal';
+import { AuthGuard } from 'src/core/auth-guard/auth-guard';
+import { SureModal } from 'src/components/templates/sure-modal';
 
 export function JobDetailCard(props: JobDetailCardProps) {
   const [openApplyModal, setOpenApplyModal] = useState(false);
   const [openExternalModal, setOpenExternalModal] = useState(false);
-
+  const [isSubmittedNow, setIsSubmittedNow] = useState(false);
   function onApply() {
     if (props.job?.other_party_id) setOpenExternalModal(true);
     else setOpenApplyModal(true);
   }
-
+  useEffect(() => {
+    setIsSubmittedNow(false);
+  }, [props.job.id]);
   const buttonJSX = (
-    <Button disabled={props.job.applied} onClick={onApply}>
+    <Button disabled={props.job.applied || isSubmittedNow} onClick={onApply}>
       Apply now
     </Button>
   );
@@ -75,8 +75,13 @@ export function JobDetailCard(props: JobDetailCardProps) {
 
   return (
     <Card className={css.card} padding={0}>
-      <ApplyModal data={props} open={openApplyModal} onClose={() => setOpenApplyModal(false)} />
-      {printWhen(applicationSubmittedJSX, props.job.applied && props.userType === 'users')}
+      <ApplyModal
+        data={props}
+        open={openApplyModal}
+        onClose={() => setOpenApplyModal(false)}
+        onSubmittedNow={() => setIsSubmittedNow(true)}
+      />
+      {printWhen(applicationSubmittedJSX, isSubmittedNow || (props.job.applied && props.userType === 'users'))}
       <Divider>
         <div className={css.firstRow}>
           <ProfileView
