@@ -1,5 +1,6 @@
 import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
@@ -16,6 +17,7 @@ import css from './switch-account.module.scss';
 import { SwitchAccountProps } from './switch-account.types';
 import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
 import { useNavigate } from 'react-router-dom';
+
 
 let timer: NodeJS.Timeout;
 

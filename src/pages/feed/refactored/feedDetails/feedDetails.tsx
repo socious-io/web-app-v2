@@ -1,32 +1,18 @@
-import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
 import { Header } from 'src/components/atoms/header/header';
 import { Comment } from 'src/components/molecules/comment/comment';
 import { FeedItem } from 'src/components/molecules/feed-item/feed-item';
 import { SendBox } from 'src/components/molecules/send-box/send-box';
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 import { Modal } from 'src/components/templates/modal/modal';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { socialCausesToCategory } from 'src/core/adaptors';
-import { isTouchDevice } from 'src/core/device-type-detector';
-import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { IdentityReq, Pagination } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import feedcss from 'src/pages/feed/refactored/feed.module.scss';
+import { useFeedDetails } from 'src/pages/feed/refactored/feedDetails/useFeedDetails';
 
-import { addComment, getComments, likeComment, removeCommentLike } from './feedDetail.service';
-import { CommentModel } from './feedDetail.types';
-import { useFeedDetails } from './useFeedDetails';
-import feedcss from '../feed.module.scss';
-import css from '../feed.module.scss';
-import { like, unlike } from '../feed.service';
-
-const FeedDetails = () => {
-  const navigate = {};
+export const FeedDetails = () => {
+  const navigate = useNavigate();
   const {
     postObj,
     actionList,
@@ -49,7 +35,7 @@ const FeedDetails = () => {
   return (
     <div className="w-full h-full">
       <div className="md:hidden">
-        <Header onBack={() => navigate({ to: '/feeds' })} title="Post" />
+        <Header onBack={() => navigate('/feeds')} title="Post" />
       </div>
       <div className={`${feedcss.container} p-4 md:p-0`}>
         <div className={`${feedcss.boundaries} md:mt-10 md:mr-10 md:mb-0 md:ml-10`}>
@@ -70,7 +56,7 @@ const FeedDetails = () => {
                 name={postObj.identity_meta.name}
                 actionList={actionList(postObj.likes, postObj.liked)}
                 lineLimit="none"
-                date={postObj.created_at}
+                date={postObj.created_at.toString()}
                 categories={socialCausesToCategory(postObj.causes_tags)}
                 onMoreClick={() => showActions(postObj)}
               />
@@ -96,10 +82,10 @@ const FeedDetails = () => {
         </div>
       </div>
       <Modal open={openMoreBox} onClose={() => setOpenMoreBox(false)}>
-        <div className={css.moreBox}>
-          <div className={css.moreHeader}>What do you want to do?</div>
+        <div className={feedcss.moreBox}>
+          <div className={feedcss.moreHeader}>What do you want to do?</div>
           {moreOptions?.map((option, index) => (
-            <div key={option.title} className={css.moreOption} onClick={() => onClickMoreOption(index)}>
+            <div key={option.title} className={feedcss.moreOption} onClick={() => onClickMoreOption(index)}>
               {option.title}
             </div>
           ))}
@@ -108,5 +94,3 @@ const FeedDetails = () => {
     </div>
   );
 };
-
-export default FeedDetails;

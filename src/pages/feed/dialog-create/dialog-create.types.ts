@@ -1,6 +1,6 @@
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
+import { Post } from 'src/core/api';
 
 export type DialogCreateProps = {
   onClose: () => void;
-  setFeedList: (feed: Feed[]) => void;
+  setFeedList: (feed: Post[]) => void;
 };

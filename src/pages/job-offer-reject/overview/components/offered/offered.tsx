@@ -1,3 +1,5 @@
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { ApplicantListHire } from 'src/components/molecules/applicant-list-hire/applicant-list-hire';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
 
@@ -5,8 +7,6 @@ import css from './offered.module.scss';
 import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
 import { endpoint } from '../../../../../core/endpoints';
-import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { ApplicantListHire } from 'src/components/molecules/applicant-list-hire/applicant-list-hire';
 
 export const Offered = (props: OfferedProps): JSX.Element => {
   const navigate = {};
