@@ -2,6 +2,9 @@ export interface PaginateReq {
   page?: number;
   limit?: number;
 }
+export interface FilterReq extends PaginateReq {
+  filter?: string;
+}
 
 export interface SuccessRes {
   message: string;

@@ -26,7 +26,7 @@ export interface UserMeta {
   city: string;
   name: string;
   email: string;
-  avatar: null;
+  avatar?: string;
   status: string;
   address: null;
   country: string;

@@ -1,6 +1,9 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import { MenuCursor as RootCursorLayout } from 'src/components/templates/menu-cursor/menu-cursor';
+import { MenuTouch as RootTouchLayout } from 'src/components/templates/menu-touch/menu-touch';
 import Layout from 'src/components/templates/refactored/layout/layout';
-import { jobs, posts, postComments, getPost } from 'src/core/api';
+import { jobs, createChat, chatMessages, getChatParticipantsById, chats, getFollowings } from 'src/core/api';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 
 export const blueprint: RouteObject[] = [
@@ -164,6 +167,68 @@ export const blueprint: RouteObject[] = [
             Loader: jobsList,
           };
         },
+      },
+    ],
+  },
+  {
+    element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
+    loader: jobsPageLoader,
+    children: [
+      {
+        path: 'd/chats',
+        children: [
+          {
+            path: 'new/:id',
+            async lazy() {
+              const { NewChat } = await import('src/pages/chat/new-chat/new-chat');
+              return {
+                Component: NewChat,
+              };
+            },
+            loader: async ({ params }) => {
+              const createdChats = await createChat({ name: 'nameless', type: 'CHAT', participants: [params.id] });
+              return createdChats?.id;
+            },
+          },
+          {
+            path: 'contacts/:id',
+            async lazy() {
+              const { MessageDetail } = await import('src/pages/chat/message-detail/message-detail.container');
+              return {
+                Component: MessageDetail,
+              };
+            },
+            loader: async ({ params }) => {
+              const requests = [
+                chatMessages(params.id, { page: 1 }),
+                getChatParticipantsById(params.id),
+                chats({ page: 1 }),
+                getFollowings({ page: 1 }),
+              ];
+              const [messages, participants, summery, followings] = await Promise.all(requests);
+              return {
+                messages,
+                participants,
+                summery,
+                followings,
+              };
+            },
+          },
+          {
+            path: 'contacts',
+            async lazy() {
+              const { ContactList } = await import('src/pages/chat/contact-list/contact-list.container');
+              return {
+                Component: ContactList,
+              };
+            },
+            loader: async () => {
+              const requests = [chats({ page: 1 }), getFollowings({ page: 1 })];
+              const [summery, followings] = await Promise.all(requests);
+              return { summery, followings };
+            },
+          },
+        ],
       },
     ],
   },

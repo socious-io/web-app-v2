@@ -16,6 +16,8 @@ import { RootState } from 'src/store/store';
 import css from './switch-account.module.scss';
 import { SwitchAccountProps } from './switch-account.types';
 import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
+import { useNavigate } from 'react-router-dom';
+
 
 let timer: NodeJS.Timeout;
 
