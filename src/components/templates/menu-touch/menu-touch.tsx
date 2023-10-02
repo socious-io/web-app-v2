@@ -1,4 +1,7 @@
 import { useSelector } from 'react-redux';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, menuList } from 'src/components/templates/menu-cursor/menu-cursor.services';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store/store';
 
@@ -7,6 +10,7 @@ import { hapticsImpactLight } from '../../../core/haptic/haptic';
 import { Menu, menuList } from '../menu-cursor/menu-cursor.services';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Sidebar } from 'src/pages/sidebar/sidebar';
+
 
 export const MenuTouch = (): JSX.Element => {
   const navigate = useNavigate();
