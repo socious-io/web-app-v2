@@ -1,17 +1,17 @@
 import { CSSProperties, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { endpoint } from 'src/core/endpoints';
-import { IdentityReq } from 'src/core/types';
 import { JobDetailCard } from 'src/pages/job-detail/components/job-detail-card/job-detail-card';
 import { getScreeningQuestions } from 'src/pages/job-offer-reject/job-offer-reject.services';
-import { getUserDetail } from 'src/pages/profile-user/refactored/profileUser.services';
-import { RootState } from 'src/store/store';
-
 import { DetailOutletProps } from './detail-outlet.types';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
+import { IdentityReq } from 'src/core/types';
 import { UserProfileCard } from '../../components/user-profile-card/user-profile-card';
-
+import OrganizationProfileCard from '../../components/organization-profile-card/organization-profile-card';
+import { getOrganizationDetail } from 'src/pages/profile-organization/refactored/profileOrg.services';
+import { getUserDetail } from 'src/pages/profile-user/refactored/profileUser.services';
 
 export function DetailOutlet(props: DetailOutletProps): JSX.Element {
   const [loading, setLoading] = useState(false);
@@ -61,6 +61,13 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
           const user = await getUserDetail(props.id);
           const jsx = <UserProfileCard user={user} />;
           setContent(jsx);
+          setLoading(false);
+          break;
+        case 'organizations':
+          setLoading(true);
+          const orgDetails = await getOrganizationDetail(props.id.toLowerCase());
+          const orgJsx = <OrganizationProfileCard organization={orgDetails} />;
+          setContent(orgJsx);
           setLoading(false);
           break;
       }

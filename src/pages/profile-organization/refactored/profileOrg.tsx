@@ -39,6 +39,7 @@ const profileOrg = () => {
     onConnect,
     onMessage,
     navigateToEdit,
+    userIsLoggedIn,
   } = useProfileOrg();
 
   const bioJSX = (
@@ -185,7 +186,7 @@ const profileOrg = () => {
             <div className={css.menu}>
               <div className={css.btnContainer}>
                 {printWhen(messageJSX, !profileBelongToCurrentUser && showMessageIcon())}
-                {printWhen(connectJSX, !profileBelongToCurrentUser && connectStatus !== 'CONNECTED')}
+                {printWhen(connectJSX, !profileBelongToCurrentUser && userIsLoggedIn && connectStatus !== 'CONNECTED')}
                 {printWhen(editButtonJSX, profileBelongToCurrentUser)}
                 <div className="md:hidden">
                   {printWhen(

@@ -42,6 +42,7 @@ const ProfileUser = () => {
     editOpen,
     setEditOpen,
     onEdit,
+    userIsLoggedIn,
   } = useProfileUser();
 
   const orgNameJSX = <div className={css.name}>{user?.name}</div>;
@@ -187,7 +188,7 @@ const ProfileUser = () => {
                     <img src="/icons/message-blue.svg" />
                   </div>
                 )}
-                {!profileBelongToCurrentUser && connectStatus !== 'CONNECTED' && (
+                {!profileBelongToCurrentUser && userIsLoggedIn && connectStatus !== 'CONNECTED' && (
                   <Button
                     width="8.5rem"
                     onClick={() => setOpenConnectModal(true)}
