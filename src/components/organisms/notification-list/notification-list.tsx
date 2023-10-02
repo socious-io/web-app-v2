@@ -1,12 +1,11 @@
 import { useSelector } from 'react-redux';
 import { dialog } from 'src/core/dialog/dialog';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './notification-list.module.scss';
 import { NotificationListProps, Notifications } from './notification-list.types';
 import { NotificationItem } from '../../molecules/notification-item/notification-item';
-
 
 export const NotificationList = ({ list, onMorePageClick, showSeeMore, route }: NotificationListProps): JSX.Element => {
   const navigate = {};
@@ -60,7 +59,7 @@ export const NotificationList = ({ list, onMorePageClick, showSeeMore, route }: 
               item.data.type === 'OFFER' ? item.data.refId : item.data.parentId,
               item.data.type,
               item.data.identity.type,
-              item.data.identity.meta.username || item.data.identity.meta.shortname
+              item.data.identity.meta.username || item.data.identity.meta.shortname,
             )
           }
           key={item.id}

@@ -5,7 +5,6 @@ import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { maxArrayLength, minArrayLength, website } from './../../core/form/customValidators/customValidators';
 import { ProfileReq } from '../profile-user/profile-user.types';
 
-
 export function generateFormModel(organization: ProfileReq): FormModel {
   return {
     type: { initialValue: organization.type },

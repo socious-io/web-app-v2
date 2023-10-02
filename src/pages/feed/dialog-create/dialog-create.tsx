@@ -12,7 +12,7 @@ import { IdentityReq } from 'src/core/types';
 import css from 'src/pages/feed/dialog-create/dialog-create.module.scss';
 import { DialogCreateProps } from 'src/pages/feed/dialog-create/dialog-create.types';
 import { DialogReview } from 'src/pages/feed/dialog-review/dialog-review';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   const [openDialog, setOpenDialog] = useState(false);

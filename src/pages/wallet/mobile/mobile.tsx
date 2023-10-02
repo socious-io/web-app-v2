@@ -65,7 +65,7 @@ export const Mobile: React.FC = () => {
           <div className={css.load} onClick={loadMoreMissions}>
             load more...
           </div>,
-          totalMissions < total_count
+          totalMissions < total_count,
         )}
         {printWhen(
           <Dropdown
@@ -76,7 +76,7 @@ export const Mobile: React.FC = () => {
             list={COUNTRIES}
             onValueChange={(selected) => onSelectCountry(selected.value as string)}
           />,
-          !externalAccounts?.length
+          !externalAccounts?.length,
         )}
         <BankAccounts
           accounts={externalAccounts}

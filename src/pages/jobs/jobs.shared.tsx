@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import { getJobList } from './jobs.services';
-
 
 export const useJobsShared = () => {
   const { data } = useMatch();

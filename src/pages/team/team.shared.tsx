@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { endpoint } from 'src/core/endpoints';
 import { IdentityReq, MemberIdentity, Pagination, UserType } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import { convertFollowingsToContactList } from './team.service';
 import { Resolver } from './team.type';
@@ -39,7 +39,7 @@ export const useTeamShared = () => {
 
   function onSeeMoreClick() {
     endpoint.get.members['org_id'](identity.id, { page: updateMembers.page + 1 }).then((res) =>
-      setUpdateMembers({ ...updateMembers, ...res, items: [...updateMembers.items, ...res.items] })
+      setUpdateMembers({ ...updateMembers, ...res, items: [...updateMembers.items, ...res.items] }),
     );
   }
 

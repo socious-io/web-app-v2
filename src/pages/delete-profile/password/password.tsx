@@ -8,7 +8,7 @@ import { Input } from '../../../components/atoms/input/input';
 import { useForm } from '../../../core/form';
 import { handleError } from '../../../core/http';
 import { IdentityReq } from '../../../core/types';
-import { RootState } from '../../../store/store';
+import { RootState } from '../../../store';
 import { deleteAccount, login } from '../delete-profile.service';
 
 export const Password = () => {

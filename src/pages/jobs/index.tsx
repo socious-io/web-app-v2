@@ -13,8 +13,6 @@ import { visibility } from 'src/store/reducers/menu.reducer';
 import css from './jobs.module.scss';
 import { useJobsShared } from './jobs.shared';
 
-
-
 export const Jobs = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,8 +20,8 @@ export const Jobs = (): JSX.Element => {
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections' ) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings' ) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [

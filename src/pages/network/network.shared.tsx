@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const useNetworkShared = () => {
   const navigate = {};

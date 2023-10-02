@@ -42,7 +42,7 @@ export const Desktop = () => {
             <div className={css.seeMore} onClick={onMorePage}>
               Load more
             </div>,
-            showMorePageBtn
+            showMorePageBtn,
           )}
         </div>
       </>

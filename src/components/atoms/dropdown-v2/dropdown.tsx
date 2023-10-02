@@ -5,7 +5,6 @@ import css from './dropdown.module.scss';
 import { DropdownItem, DropdownProps } from './dropdown.types';
 import { printWhen } from '../../../core/utils';
 
-
 const submenuHeightREM = 2.75;
 
 export const Dropdown = (props: DropdownProps): JSX.Element => {
@@ -28,7 +27,7 @@ export const Dropdown = (props: DropdownProps): JSX.Element => {
   function onSearch(e: ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     const newFilteredList = props.list.filter((option) =>
-      option.label.toLowerCase().includes(value.toLocaleLowerCase())
+      option.label.toLowerCase().includes(value.toLocaleLowerCase()),
     );
     setFilteredList(newFilteredList);
   }

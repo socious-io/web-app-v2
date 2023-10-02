@@ -5,7 +5,7 @@ import { Header } from 'src/components/atoms/header/header';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
 import { HeaderStaticMobile } from 'src/components/templates/header-static-mobile/header-static-mobile';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import { useContactListShared } from '../contact-list.shared';
 import { CreateChatModal } from '../create-chat-modal';

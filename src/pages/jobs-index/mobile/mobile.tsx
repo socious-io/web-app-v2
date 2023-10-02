@@ -38,7 +38,7 @@ export const Mobile = () => {
             <div className={css.seeMore} onClick={onMorePage}>
               Load more
             </div>,
-            showMorePageBtn
+            showMorePageBtn,
           )}
         </div>
       </div>

@@ -1,6 +1,18 @@
-import { ChangeEvent, useMemo, useState } from 'react';
 import { useMatch, useNavigate } from '@tanstack/react-location';
-import { Resolver, Resume } from './apply.types';
+import { ChangeEvent, useMemo, useState } from 'react';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { isTouchDevice } from 'src/core/device-type-detector';
+import { dialog } from 'src/core/dialog/dialog';
+import { useForm } from 'src/core/form';
+import { FormModel } from 'src/core/form/useForm/useForm.types';
+import { QuestionsRes, UserType } from 'src/core/types';
+
+import { printWhen } from 'src/core/utils';
+import { generateFormModel } from './apply.form';
+
 import {
   applyApplication,
   convertOptionsToRadioGroup,
@@ -8,17 +20,7 @@ import {
   resumeInitialState,
   submit,
 } from './apply.services';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
-import { QuestionsRes, UserType } from 'src/core/types';
-import { FormModel } from 'src/core/form/useForm/useForm.types';
-import { generateFormModel } from './apply.form';
-import { useForm } from 'src/core/form';
-import { dialog } from 'src/core/dialog/dialog';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { printWhen } from 'src/core/utils';
-import { isTouchDevice } from 'src/core/device-type-detector';
+import { Resolver, Resume } from './apply.types';
 
 type useApplySharedProps = {
   job: Job;
@@ -46,7 +48,7 @@ export const useApplyShared = (data?: useApplySharedProps, onSubmittedNow) => {
   }
 
   const location = `${jobDetail.identity_meta.city}, ${getCountryName(
-    jobDetail.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined
+    jobDetail.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined,
   )}`;
 
   function onResumeLoad(e: ChangeEvent<HTMLInputElement>) {
@@ -87,7 +89,7 @@ export const useApplyShared = (data?: useApplySharedProps, onSubmittedNow) => {
             placeholder="Your answer..."
             label={`${i}. ${question.question}`}
           />,
-          !!questions.length
+          !!questions.length,
         )}
       </div>
     );
@@ -107,7 +109,7 @@ export const useApplyShared = (data?: useApplySharedProps, onSubmittedNow) => {
               form.controls[question.id].setValue(label);
             }}
           />,
-          !!questions.length
+          !!questions.length,
         )}
       </div>
     );

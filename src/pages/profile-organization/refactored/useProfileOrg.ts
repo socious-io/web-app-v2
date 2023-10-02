@@ -5,7 +5,7 @@ import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import { getConnectStatus, hiringCall, sendRequestConnection } from './profileOrg.services';
 import { ProfileReq, Resolver } from './profileOrg.types';
@@ -21,7 +21,7 @@ export const useProfileOrg = () => {
   });
   const userIsLoggedIn = !!currentIdentity;
   const address = `${organization.city}, ${getCountryName(
-    organization.country as keyof typeof COUNTRIES_DICT | undefined
+    organization.country as keyof typeof COUNTRIES_DICT | undefined,
   )}`;
   const profileBelongToCurrentUser = currentIdentity?.id === organization.id;
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
@@ -120,6 +120,6 @@ export const useProfileOrg = () => {
     navigateJobs,
     hiring,
     onHiring,
-    userIsLoggedIn
+    userIsLoggedIn,
   };
 };

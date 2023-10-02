@@ -8,7 +8,6 @@ import css from './desktop.module.scss';
 import { useContactListShared } from '../contact-list.shared';
 import { CreateChatModal } from '../create-chat-modal';
 
-
 export const Desktop = (): JSX.Element => {
   const navigate = {};
   const { isLoggedIn } = useAuth();
