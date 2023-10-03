@@ -1,26 +1,24 @@
 import { Dialog } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Button } from 'src/components/atoms/button/button';
+import { Dropdown } from 'src/components/atoms/dropdown/dropdown';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
+import { SocialCauses } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-
-import css from './dialog-create.module.scss';
-import { DialogCreateProps } from './dialog-create.types';
-import { Avatar } from '../../../components/atoms/avatar/avatar';
-import { Button } from '../../../components/atoms/button/button';
-import { Dropdown } from '../../../components/atoms/dropdown/dropdown';
-import { Textarea } from '../../../components/atoms/textarea/textarea';
-import { socialCausesToDropdownAdaptor } from '../../../core/adaptors';
-import { IdentityReq } from '../../../core/types';
-import { RootState } from '../../../store/store';
-import { DialogReview } from '../dialog-review/dialog-review';
-
-
+import { IdentityReq } from 'src/core/types';
+import css from 'src/pages/feed/dialog-create/dialog-create.module.scss';
+import { DialogCreateProps } from 'src/pages/feed/dialog-create/dialog-create.types';
+import { DialogReview } from 'src/pages/feed/dialog-review/dialog-review';
+import { RootState } from 'src/store/store';
 
 export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [state, setState] = useState({
-    social: '',
+    social: '' as SocialCauses | '',
     text: '',
     imgUrl: '',
   });
@@ -45,7 +43,7 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   };
 
   const getSocialValue = (value: string) => {
-    setState({ ...state, social: value });
+    setState({ ...state, social: value as SocialCauses | '' });
   };
 
   const onChangeTextHandler = (e: any) => {

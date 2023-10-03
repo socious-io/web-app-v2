@@ -1,6 +1,6 @@
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import css from 'src/pages/chat/message-detail/desktop/header/header.module.scss';
 
-import css from './header.module.scss';
 import { HeaderProps } from './header.types';
 
 export const Header: React.FC<HeaderProps> = ({ name, type, username, img, lastOnline, loading = false }) => {

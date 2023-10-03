@@ -1,3 +1,4 @@
+import { Identity } from '../site/site.types';
 import { ConnectStatus, PaginateRes } from '../types';
 
 export interface ConnectionsRes extends PaginateRes {
@@ -22,4 +23,14 @@ export interface Connection {
 
 export interface ConnectRequest {
   text: string;
+}
+
+export interface Following extends Identity {
+  id: string;
+  mutual: boolean;
+  following: boolean;
+}
+
+export interface FollowingRes extends PaginateRes {
+  items: Following[];
 }

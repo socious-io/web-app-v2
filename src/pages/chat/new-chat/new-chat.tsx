@@ -1,4 +1,6 @@
+import { Navigate, useLoaderData } from 'react-router-dom';
+
 export const NewChat = (): JSX.Element => {
-  const chatId = useMatch().ownData;
-  return <Navigate replace to={`../../contacts/${chatId}`} />;
+  const chatId = useLoaderData();
+  return <Navigate replace to={`/d/contacts/${chatId}`} />;
 };
