@@ -1,4 +1,6 @@
 import { ChangeEvent, useMemo, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
@@ -26,9 +28,9 @@ type useApplySharedProps = {
 };
 
 export const useApplyShared = (data?: useApplySharedProps) => {
-  const navigate = {};
+  const navigate = useNavigate();
   const [resume, setResume] = useState<Resume>(resumeInitialState);
-  const resolver = useMatch().ownData as Resolver;
+  const resolver = useLoaderData() as Resolver;
   const jobDetail = (data?.job || resolver.jobDetail) as Job;
   const questions = (data?.screeningQuestions || resolver.screeningQuestions.questions) as QuestionsRes['questions'];
   const formModel: FormModel = useMemo(() => generateFormModel(questions), []);
@@ -44,7 +46,7 @@ export const useApplyShared = (data?: useApplySharedProps) => {
   }
 
   const location = `${jobDetail.identity_meta.city}, ${getCountryName(
-    jobDetail.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined
+    jobDetail.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined,
   )}`;
 
   function onResumeLoad(e: ChangeEvent<HTMLInputElement>) {
@@ -61,7 +63,7 @@ export const useApplyShared = (data?: useApplySharedProps) => {
   }
 
   function navigateToJobDetail() {
-    navigate({ to: '..' });
+    navigate('..');
   }
 
   function onSubmit() {

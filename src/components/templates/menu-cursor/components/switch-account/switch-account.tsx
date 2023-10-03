@@ -114,7 +114,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const createdJobDividerJSX = (
     <Divider title="Jobs">
       <div className={css.settingsMenuContainer}>
-        <div onClick={() => navigateToRoute(`/d/jobs/created/${props.identity.id}`)} className={css.menuItem}>
+        <div onClick={() => navigateToRoute(`/jobs/created/${props.identity.id}`)} className={css.menuItem}>
           <img src="/icons/folder-black.svg" />
           <span>Created</span>
         </div>

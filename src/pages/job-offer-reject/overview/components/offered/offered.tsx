@@ -1,3 +1,6 @@
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { ApplicantListHire } from 'src/components/molecules/applicant-list-hire/applicant-list-hire';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
 
@@ -5,13 +8,10 @@ import css from './offered.module.scss';
 import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
 import { endpoint } from '../../../../../core/endpoints';
-import { Accordion } from '../src/components/atoms/accordion/accordion';
-import { ApplicantListHire } from '../src/components/molecules/applicant-list-hire/applicant-list-hire';
-
 
 export const Offered = (props: OfferedProps): JSX.Element => {
-  const navigate = {};
-  const resolver = useMatch().ownData as Loader;
+  const navigate = useNavigate();
+  const resolver = useLoaderData() as Loader;
   const {
     jobOverview: { payment_type },
   } = resolver;
@@ -19,24 +19,24 @@ export const Offered = (props: OfferedProps): JSX.Element => {
   async function onHire(offerId: string) {
     if (payment_type === 'PAID' && !props.approved.items[0]?.escrow) {
       if (isTouchDevice()) {
-        navigate({ to: `/payment/${offerId}` });
+        navigate(`/payment/${offerId}`);
       } else {
-        navigate({ to: `/d/payment/${offerId}` });
+        navigate(`/d/payment/${offerId}`);
       }
     } else {
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
+      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => navigate(-1));
     }
   }
 
   async function onReject(offerId: string) {
-    return endpoint.post.offers['{offer_id}/cancel'](offerId).then(() => history.back());
+    return endpoint.post.offers['{offer_id}/cancel'](offerId).then(() => navigate(-1));
   }
 
   function onMessageClick(id: string) {
     if (isTouchDevice()) {
-      navigate({ to: `/chats/new/${id}` });
+      navigate(`/chats/new/${id}`);
     } else {
-      navigate({ to: `/d/chats/new/${id}` });
+      navigate(`/d/chats/new/${id}`);
     }
   }
 

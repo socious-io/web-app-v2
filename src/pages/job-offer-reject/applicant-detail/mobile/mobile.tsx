@@ -11,7 +11,7 @@ export const Mobile = (): JSX.Element => {
   const { navigate, screeningQuestions, applicantDetail, onReject } = useApplicantDetailShared();
 
   function onOffer() {
-    navigate({ to: `./offer` });
+    navigate(`./offer`);
   }
 
   const screeningQuestionAccordion = (

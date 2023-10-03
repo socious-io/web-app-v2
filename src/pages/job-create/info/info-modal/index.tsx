@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLoaderData } from 'react-router-dom';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
@@ -28,8 +29,9 @@ import { useInfoShared } from '../info.shared';
 export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onBack, onOpen }) => {
   const dispatch = useDispatch();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const { categories } = (useMatch().ownData.jobCategories as CategoriesResp) || {};
+  const { categories } = (useLoaderData().jobCategories as CategoriesResp) || {};
   const categoriesList = jobCategoriesToDropdown(categories);
+
   const [openScreenerModal, setOpenScreenerModal] = useState(false);
 
   function createJob(payload: CreatePostPayload) {
@@ -179,11 +181,11 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
                     </div>
                     {printWhen(
                       errorsJSX,
-                      !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher)
+                      !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher),
                     )}
                     {printWhen(
                       <span className={css.info}>Prices will be shown in USD ($)</span>,
-                      formState.payment_type === 'PAID'
+                      formState.payment_type === 'PAID',
                     )}
                   </div>
                 </div>

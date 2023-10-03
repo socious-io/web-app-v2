@@ -1,3 +1,5 @@
+import { job, jobOffers } from 'src/core/api';
+
 import { Applicant } from '../../components/molecules/applicant-list/applicant-list.types';
 import { Applicant as ApplicantHire } from '../../components/molecules/applicant-list-pay/applicant-list-pay.types';
 import { Job } from '../../components/organisms/job-list/job-list.types';
@@ -19,8 +21,8 @@ import { getJobCategories } from '../job-create/info/info.services';
 
 export async function jobOfferRejectLoader({ params }: { params: { id: string } }) {
   const requests = [
-    getOfferOverview(params.id),
-    getJobOverview(params.id),
+    jobOffers(params.id),
+    job(params.id),
     getScreeningQuestions(params.id),
     getToReviewList({ id: params.id, page: 1 }),
     getDeclinedList({ id: params.id, page: 1 }),
@@ -74,19 +76,19 @@ export async function getJobOverview(id: string): Promise<Job> {
 
 export async function getToReviewList(payload: { id: string; page: number }): Promise<Pagination<UserApplicantResp[]>> {
   return get(`projects/${payload.id}/applicants?limit=100&status=PENDING&page=${payload.page}`).then(
-    ({ data }) => data
+    ({ data }) => data,
   );
 }
 
 export async function getDeclinedList(payload: { id: string; page: number }): Promise<Pagination<UserApplicantResp[]>> {
   return get(`projects/${payload.id}/applicants?limit=100&status=REJECTED&page=${payload.page}`).then(
-    ({ data }) => data
+    ({ data }) => data,
   );
 }
 
 export async function getHiredList(payload: { id: string; page: number }): Promise<MissionsResp> {
   return get(`projects/${payload.id}/missions?limit=100&filter.status=ACTIVE,COMPLETE&page=${payload.page}`).then(
-    ({ data }) => data
+    ({ data }) => data,
   );
 }
 
@@ -96,7 +98,7 @@ export async function getScreeningQuestions(id: string): Promise<QuestionsRes> {
 
 export async function getEndHiredList(payload: { id: string; page: number }): Promise<MissionsResp> {
   return get(
-    `projects/${payload.id}/missions?limit=100&filter.status=CONFIRMED,CANCELED,KICKED_OUT&page=${payload.page}`
+    `projects/${payload.id}/missions?limit=100&filter.status=CONFIRMED,CANCELED,KICKED_OUT&page=${payload.page}`,
   ).then(({ data }) => data);
 }
 

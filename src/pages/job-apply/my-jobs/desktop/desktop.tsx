@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Card } from 'src/components/atoms/card/card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
 import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
@@ -16,7 +18,7 @@ import { useMyJobShared } from '../my-jobs.shared';
 import { MyJobs } from '../my-jobs.types';
 
 export const Desktop: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -38,13 +40,13 @@ export const Desktop: React.FC = () => {
   const [myJobsMode, setMyJobsMode] = useState<MyJobs>(defaultTab);
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity.id}`) },
   ];
 
   const JobsMenuList = [
@@ -53,7 +55,10 @@ export const Desktop: React.FC = () => {
       icon: '/icons/my-applications.svg',
       link: () => {
         setMyJobsMode('Applied');
-        navigate({ to: '.', search: { tab: 'Applied' }, replace: true });
+        navigate({
+          pathname: '.',
+          search: `?tab=Applied`,
+        });
       },
     },
     {
@@ -61,7 +66,10 @@ export const Desktop: React.FC = () => {
       icon: '/icons/hired-jobs.svg',
       link: () => {
         setMyJobsMode('Hired');
-        navigate({ to: '.', search: { tab: 'Hired' }, replace: true });
+        navigate({
+          pathname: '.',
+          search: `?tab=Hired`,
+        });
       },
     },
   ];
@@ -78,7 +86,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updatePendingList}
             />
           </div>,
-          !!pendingList.items.length
+          !!pendingList.items.length,
         )}
       </Accordion>
       <Accordion id="awaiting-review" title={`Awaiting review (${awaitingList.total_count})`}>
@@ -86,12 +94,12 @@ export const Desktop: React.FC = () => {
           <div className={css.listContainer}>
             <JobCardList
               list={awaitingList.items}
-              onItemClick={(id) => navigate({ to: `/jobs/received-offer/${id}/d` })}
+              onItemClick={(id) => navigate(`/jobs/received-offer/${id}`)}
               totalCount={awaitingList.total_count}
               onSeeMoreClick={updateAwaitingList}
             />
           </div>,
-          !!awaitingList.items.length
+          !!awaitingList.items.length,
         )}
       </Accordion>
       <Accordion id="declined" title={`Declined (${declinedList.total_count})`} no_border>
@@ -104,7 +112,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updateDeclinedList}
             />
           </div>,
-          !!declinedList.items.length
+          !!declinedList.items.length,
         )}
       </Accordion>
     </Card>
@@ -117,12 +125,12 @@ export const Desktop: React.FC = () => {
           <div className={css.listContainer}>
             <JobCardList
               list={onGoingList.items}
-              onItemClick={(id) => navigate({ to: `/d/jobs/applied/complete-mission/${id}` })}
+              onItemClick={(id) => navigate(`/jobs/applied/complete-mission/${id}`)}
               totalCount={onGoingList.total_count}
               onSeeMoreClick={updateOnGoingList}
             />
           </div>,
-          !!onGoingList.items.length
+          !!onGoingList.items.length,
         )}
       </Accordion>
       <Accordion id="ended" title={`Ended (${endedList.total_count})`} no_border>
@@ -135,14 +143,14 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updateEndedList}
             />
           </div>,
-          !!endedList.items.length
+          !!endedList.items.length,
         )}
       </Accordion>
     </Card>
   );
 
   return (
-    <TwoColumnCursor visibleSidebar={isLoggedIn}>
+    <TwoColumns>
       <div className={css.leftContainer}>
         <ProfileCard />
         <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
@@ -153,6 +161,6 @@ export const Desktop: React.FC = () => {
         {printWhen(myJobsAppliedJSX, myJobsMode === 'Applied')}
         {printWhen(myJobsHiredJSX, myJobsMode === 'Hired')}
       </div>
-    </TwoColumnCursor>
+    </TwoColumns>
   );
 };

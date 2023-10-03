@@ -18,7 +18,6 @@ import { getCategories } from '../job-detail.services';
 import { useJobDetailShared } from '../job-detail.shared';
 import { getJobStructuresData } from '../job-details.jobStructuredData';
 
-
 export const Mobile = (): JSX.Element => {
   const { navigate, job, identity, location, screeningQuestions } = useJobDetailShared();
   const { isLoggedIn } = useAuth();
@@ -37,7 +36,7 @@ export const Mobile = (): JSX.Element => {
 
   function onApply() {
     if (job?.other_party_id) setOpenExternalModal(true);
-    else navigate({ to: './apply' });
+    else navigate('./apply');
   }
 
   const buttonJSX = (
@@ -87,7 +86,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile containsMenu>
-      <Header title={job.title || 'Job detail'} onBack={() => navigate({ to: '/jobs' })} />
+      <Header title={job.title || 'Job detail'} onBack={() => navigate(-1)} />
       <div>
         {printWhen(applicationSubmittedJSX, job.applied && identity?.type === 'users')}
         <Divider>

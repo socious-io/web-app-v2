@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
@@ -15,14 +16,14 @@ import { useApplicantDetailShared } from '../applicant-detail.shared';
 
 export const Desktop: React.FC = () => {
   const { isLoggedIn } = useAuth();
-  const { id } = useMatch().params || {};
+  const { id } = useParams() || {};
   const { navigate, screeningQuestions, applicantDetail, onReject } = useApplicantDetailShared();
   const [openOfferModal, setOpenOfferModal] = useState(false);
 
   async function updateApplicantList() {
     await jobOfferRejectLoader({ params: { id } });
     setOpenOfferModal(false);
-    navigate({ to: '..' });
+    navigate('..');
   }
 
   const screeningQuestionAccordion = (
@@ -55,7 +56,7 @@ export const Desktop: React.FC = () => {
     <>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
-          <BackLink title="Overview" onBack={() => history.back()} />
+          <BackLink title="Overview" onBack={() => navigate(-1)} />
         </div>
         <Card className={css.rightContainer}>
           <Accordion id="cover-letter" title="Cover letter">
@@ -78,7 +79,7 @@ export const Desktop: React.FC = () => {
           applicantDetail={applicantDetail as ApplicantResp}
           onDone={updateApplicantList}
         />,
-        applicantDetail !== undefined
+        applicantDetail !== undefined,
       )}
     </>
   );

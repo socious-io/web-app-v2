@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Fab } from 'src/components/atoms/fab/fab';
 import { Header } from 'src/components/atoms/header/header';
@@ -8,7 +9,7 @@ import css from './mobile.module.scss';
 import { useMyJobShared } from '../my-job.shared';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const {
     onGoingTitle,
     activeJobList,
@@ -73,11 +74,11 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Header onBack={() => navigate({ to: '/jobs' })} border="0" paddingTop={'var(--safe-area)'} title="My Jobs" />
+      <Header onBack={() => navigate('/jobs')} border="0" paddingTop={'var(--safe-area)'} title="My Jobs" />
       <div className={css.tabContainer}>
         <Tabs tabs={tabs} />
       </div>
-      <Fab onClick={() => navigate({ to: '/jobs/create/social-causes' })} />
+      <Fab onClick={() => navigate('/jobs/create/social-causes')} />
     </div>
   );
 };

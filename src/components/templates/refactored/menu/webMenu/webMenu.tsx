@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
 import { IdentityReq } from 'src/core/types';
@@ -11,7 +12,7 @@ import { SwitchAccount } from '../../../menu-cursor/components/switch-account/sw
 import { Menu, getAvatar, menuList } from '../menu.services';
 
 const WebMenu = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const route = useLocation();
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -21,21 +22,21 @@ const WebMenu = () => {
   const [searchValue, setSearchValue] = useState('');
 
   function navigateToSearch(q: string) {
-    navigate({
-      to: '/d/search',
-      search: (p: PayloadModel) => {
-        const type = p.type ?? 'projects';
-        const page = p.page ?? 1;
-        return { type, q, page };
-      },
-    });
+    // navigate({
+    //   to: '/d/search',
+    //   search: (p: PayloadModel) => {
+    //     const type = p.type ?? 'projects';
+    //     const page = p.page ?? 1;
+    //     return { type, q, page };
+    //   },
+    // });
   }
 
   function onMenuItemClick(menu: Menu) {
-    if (route.current.pathname !== menu.link) {
-      setSearchValue('');
-    }
-    navigate({ to: menu.link });
+    // if (route.current.pathname !== menu.link) {
+    //   setSearchValue('');
+    // }
+    // navigate({ to: menu.link });
   }
 
   function filterIfNotLoggedIn(item: Menu) {

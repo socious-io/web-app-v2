@@ -43,7 +43,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
     store.dispatch(resetCreatePostWizard());
     setOpenAlertModal(false);
     onDone();
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
   }
 
   function submitWithQuestions() {
@@ -114,7 +114,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
             </div>
           ))}
         </div>,
-        formState.add_choices > 0
+        formState.add_choices > 0,
       )}
     </>
   );
@@ -155,7 +155,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
                 <img src="/icons/add-circle.svg" />
                 Add question
               </div>,
-              !formState.add_question
+              !formState.add_question,
             )}
             {printWhen(addQuestionsJSX, formState.add_question)}
             {printWhen(multipleChoiceJSX, formState.question_type === 'MULTIPLE')}

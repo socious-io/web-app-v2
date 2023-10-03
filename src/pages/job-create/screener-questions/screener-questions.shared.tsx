@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'src/core/form';
 import { CreateQuestionWizard, setAddChoices, setChoices } from 'src/store/reducers/createQuestionWizard.reducer';
 import { RootState } from 'src/store/store';
@@ -8,7 +9,7 @@ import { formModel } from './screener-questions.form';
 import { updateForm } from './screener-questions.service';
 
 export const useScreenerQuestionsShared = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const formState = useSelector<RootState, CreateQuestionWizard>((state) => state.createQuestionWizard);
   const memoizedFormState = useMemo(() => formModel(formState), [formState.question_type, formState.add_choices]);

@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { dialog } from 'src/core/dialog/dialog';
@@ -9,13 +10,14 @@ import css from './mobile.module.scss';
 import { useCreatedShared } from '../created.shared';
 
 export const Mobile: React.FC = () => {
-  const navigate = {};
-  const resolver = useMatch();
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   const { questions, onRemoveCreatedQuestion } = useCreatedShared();
 
   function submit() {
     dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-      navigate({ to: `/m/jobs/created/${resolver.params.id}` });
+      navigate(`/jobs/created/${id}`);
       store.dispatch(resetCreatedQuestion());
       store.dispatch(resetCreatePostWizard());
     });
@@ -24,7 +26,7 @@ export const Mobile: React.FC = () => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: `/jobs/create/screener-questions` })}>
+        <div className={css.chevron} onClick={() => navigate(`/jobs/create/screener-questions`)}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.headerTitle}>Create job</div>
@@ -54,7 +56,7 @@ export const Mobile: React.FC = () => {
         <div
           className={css.addQuestions}
           onClick={() => {
-            navigate({ to: `/jobs/create/screener-questions` });
+            navigate(`/jobs/create/screener-questions`);
           }}
         >
           <img src="/icons/add-circle.svg" />

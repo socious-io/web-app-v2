@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Header } from 'src/components/atoms/header/header';
 import { Input } from 'src/components/atoms/input/input';
@@ -21,8 +22,8 @@ import { useOfferShared } from '../offer.shared';
 import { Resolver } from '../offer.types';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = {};
-  const { applicantDetail } = (useMatch().ownData as Resolver) || {};
+  const navigate = useNavigate();
+  const { applicantDetail } = (useLoaderData() as Resolver) || {};
   const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '' });
   const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
   const [paymentScheme, setPaymentScheme] = useState(applicantDetail?.project?.payment_scheme || 'FIXED');
@@ -45,13 +46,13 @@ export const Mobile = (): JSX.Element => {
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
     offer(applicantDetail.id, payload).then(() => {
-      navigate({ to: '../..' });
+      navigate('../..');
     });
   }
 
   return (
     <div className={css.container}>
-      <Header onBack={() => navigate({ to: '..' })} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
+      <Header onBack={() => navigate('..')} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
       <div className={css.sentTo}>An offer will be sent to {applicantDetail.user.name}.</div>
       <div className={css.form}>
         <RadioGroup
@@ -83,7 +84,7 @@ export const Mobile = (): JSX.Element => {
             label="Payment mode"
             list={PROJECT_PAYMENT_MODE}
           />,
-          isPaidType
+          isPaidType,
         )}
         {printWhen(<Dapp.Connect />, isPaidCrypto)}
         {printWhen(
@@ -104,11 +105,11 @@ export const Mobile = (): JSX.Element => {
               USD equivalent: <span>{equivalentUSD(form.controls.assignmentTotal.value)}</span>
             </div>
           </div>,
-          isPaidCrypto && !!web3
+          isPaidCrypto && !!web3,
         )}
         {printWhen(
           <Input register={form} name="assignmentTotal" label="Assignment total (USD)" placeholder="amount" />,
-          isPaidFiat
+          isPaidFiat,
         )}
         <Textarea
           register={form}

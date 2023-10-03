@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
@@ -25,7 +26,7 @@ import css from './desktop.module.scss';
 import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -86,13 +87,13 @@ export const Desktop = (): JSX.Element => {
   );
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity.id}`) },
   ];
 
   return (
@@ -133,7 +134,7 @@ export const Desktop = (): JSX.Element => {
                       {offer.assignment_total} <span>{unit}</span>
                       {printWhen(
                         <span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>,
-                        isPaidCrypto
+                        isPaidCrypto,
                       )}
                     </div>
                   </div>
@@ -175,7 +176,7 @@ export const Desktop = (): JSX.Element => {
                       </a>
                     </div>
                   </Divider>,
-                  !!media.url
+                  !!media.url,
                 )}
               </div>
             </Accordion>
@@ -189,7 +190,7 @@ export const Desktop = (): JSX.Element => {
             <div className={css.wallet}>
               <PaymentMethods crypto_method={<Dapp.Connect />} />
             </div>,
-            isPaidCrypto
+            isPaidCrypto,
           )}
           {printWhen(
             <Dropdown
@@ -200,11 +201,11 @@ export const Desktop = (): JSX.Element => {
               list={COUNTRIES}
               onValueChange={(selected) => onSelectCountry(selected.value as string)}
             />,
-            !isPaidCrypto && !stripeProfile
+            !isPaidCrypto && !stripeProfile,
           )}
           {printWhen(
             <BankAccounts accounts={stripeProfile} isDisabled={!stripeLink} bankAccountLink={stripeLink} />,
-            !isPaidCrypto && isPaid
+            !isPaidCrypto && isPaid,
           )}
           {printWhen(buttonsJSX, status === 'PENDING')}
         </Card>
