@@ -1,4 +1,4 @@
-import { useNavigate } from '@tanstack/react-location';
+import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Button } from 'src/components/atoms/button/button';
