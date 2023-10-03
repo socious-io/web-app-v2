@@ -1,4 +1,5 @@
 import { Navigate, RouteObject, createBrowserRouter } from 'react-router-dom';
+import { ComponentType } from 'react';
 import { MenuCursor as RootCursorLayout } from '../../components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from '../../components/templates/menu-touch/menu-touch';
 import Layout from 'src/components/templates/refactored/layout/layout';
@@ -200,7 +201,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { NewChat } = await import('src/pages/chat/new-chat/new-chat');
               return {
-                Component: NewChat,
+                Component: Protect(NewChat),
               };
             },
             loader: async ({ params }) => {
@@ -213,7 +214,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { MessageDetail } = await import('src/pages/chat/message-detail/message-detail.container');
               return {
-                Component: MessageDetail,
+                Component: Protect(MessageDetail),
               };
             },
             loader: async ({ params }) => {
@@ -237,7 +238,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { ContactList } = await import('src/pages/chat/contact-list/contact-list.container');
               return {
-                Component: ContactList,
+                Component: Protect(ContactList),
               };
             },
             loader: async () => {
@@ -256,7 +257,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { Notifications } = await import('src/pages/notifications/notifications.container');
               return {
-                Component: Notifications,
+                Component: Protect(Notifications),
               };
             },
             loader: () => notifications({ page: 1 }),
@@ -266,7 +267,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { Settings } = await import('src/pages/notifications/settings/settings.container');
               return {
-                Component: Settings,
+                Component: Protect(Settings),
               };
             },
             loader: () => notificationSettings(),
@@ -277,11 +278,21 @@ export const blueprint: RouteObject[] = [
   },
 ];
 
+
+function Protect<T extends {}>(Component: ComponentType<T>): ComponentType<T> {
+  return function ProtectedRoute(props: T) {
+    const status = useSelector((state: RootState) => state.identity.status);
+    // TODO: We may notify user before redirect to intro page
+    if (status === 'loading') return <div></div>;
+    if (status === 'failed') return <Navigate to="/intro" />;
+    return <Component {...props} />;
+  };
+}
+
 function DefaultRoute(): JSX.Element {
   const status = useSelector((state: RootState) => state.identity.status);
 
   if (status === 'loading') return <div></div>;
-
   if (status === 'failed') return <Navigate to="/intro" />;
 
   return <Navigate to="/jobs" />;
