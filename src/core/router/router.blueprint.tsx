@@ -1,5 +1,6 @@
-import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
 import { ComponentType } from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
 import { MenuCursor as RootCursorLayout } from 'src/components/templates/menu-cursor/menu-cursor';
 import { MenuTouch as RootTouchLayout } from 'src/components/templates/menu-touch/menu-touch';
 import Layout from 'src/components/templates/refactored/layout/layout';
@@ -17,14 +18,12 @@ import {
   postComments,
 } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store';
 import FallBack from 'src/pages/fall-back/fall-back';
+import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
+  { path: '/', element: <DefaultRoute /> },
   {
-    path: '/',
-    element: <DefaultRoute />,
     children: [
       {
         element: <Layout />,
@@ -291,6 +290,8 @@ function Protect<T extends {}>(Component: ComponentType<T>): ComponentType<T> {
 
 function DefaultRoute(): JSX.Element {
   const status = useSelector((state: RootState) => state.identity.status);
+  console.log(status);
+  if (status === 'succeeded') return <Navigate to="/jobs" />;
 
   if (status === 'loading') return <div></div>;
   if (status === 'failed') return <Navigate to="/intro" />;
@@ -299,7 +300,7 @@ function DefaultRoute(): JSX.Element {
 }
 
 function ErrorBoundary() {
-  let error: any = useRouteError();
+  const error: any = useRouteError();
   if (error?.response?.status === 401) return <Navigate to="/intro" />;
   return <FallBack />;
 }
