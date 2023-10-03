@@ -6,6 +6,7 @@ import { ChatList } from 'src/components/organisms/chat-list/chat-list';
 import { useMessageDetailShared } from '../message-detail.shared';
 import css from './mobile.module.scss';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { useEffect } from 'react';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -21,6 +22,11 @@ export const Mobile = (): JSX.Element => {
     </div>
   );
 
+  useEffect(() => {
+    const messageBody = document.getElementById('chat-list-div');
+    if (messageBody) messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+  }, [list]);
+
   return (
     <div className={css.container}>
       <div className={css.header}>
@@ -32,7 +38,7 @@ export const Mobile = (): JSX.Element => {
           username={participantDetail.username || participantDetail?.shortname}
         />
       </div>
-      <div className={css.main}>{list.length ? <ChatList list={list} /> : emptyBoxJSX}</div>
+      <div id="chat-list-div" className={css.main}>{list.length ? <ChatList list={list} /> : emptyBoxJSX}</div>
       <div className={css.sendBoxContainer}>
         <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={onSend} />
       </div>
