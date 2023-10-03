@@ -63,13 +63,24 @@ export function handleError(params?: ErrorHandlerParams) {
   };
 }
 
+http.interceptors.request.use(
+  async function (config) {
+    const { Authorization, CurrentIdentity } = await getAuthHeaders();
+    config.headers.set('Authorization', Authorization);
+    config.headers.set('Current-Identity', CurrentIdentity);
+    // Do something before request is sent
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  },
+);
+
 export function setupInterceptors(store: Store) {
   http.interceptors.request.use(
     async function (config) {
       store.dispatch(showSpinner());
-      const { Authorization, CurrentIdentity } = await getAuthHeaders();
-      config.headers.set('Authorization', Authorization);
-      config.headers.set('Current-Identity', CurrentIdentity);
       // Do something before request is sent
       return config;
     },
