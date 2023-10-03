@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
 import { IdentityReq } from 'src/core/types';
-import { PayloadModel } from 'src/pages/search/desktop/search.types';
-import { RootState } from 'src/store';
+import { RootState } from 'src/store/store';
 
 import { SwitchAccount } from './components/switch-account/switch-account';
 import css from './menu-cursor.module.scss';
 import { Menu, getAvatar, menuList } from './menu-cursor.services';
-import { Avatar } from '../../atoms/avatar/avatar';
 
 export const MenuCursor = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const route = useLocation();
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -21,21 +21,21 @@ export const MenuCursor = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState('');
 
   function navigateToSearch(q: string) {
-    navigate({
-      to: '/search',
-      search: (p: PayloadModel) => {
-        const type = p.type ?? 'projects';
-        const page = p.page ?? 1;
-        return { type, q, page };
-      },
-    });
+    navigate(
+      '/search',
+      // search: (p: PayloadModel) => {
+      //   const type = p.type ?? 'projects';
+      //   const page = p.page ?? 1;
+      //   return { type, q, page };
+      // },
+    );
   }
 
   function onMenuItemClick(menu: Menu) {
-    if (route.current.pathname !== menu.link) {
+    if (route.pathname !== menu.link) {
       setSearchValue('');
     }
-    navigate({ to: menu.link });
+    navigate(menu.link);
   }
 
   function filterIfNotLoggedIn(item: Menu) {
@@ -50,7 +50,7 @@ export const MenuCursor = (): JSX.Element => {
     <div className={css.container}>
       <div className={css.menu}>
         <div className={css.menuItems}>
-          <div className={css.logo} onClick={() => navigate({ to: '/jobs' })}>
+          <div className={css.logo} onClick={() => navigate('/jobs')}>
             <img style={{ minWidth: 32 }} height={32} src="/icons/logo-white.svg" />
           </div>
           <Search
