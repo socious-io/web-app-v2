@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { CurrentIdentity } from 'src/core/api';
-import { currentIdentities } from 'src/core/api/auth/auth.service';
+
+import { currentIdentities } from '../thunks/identity.thunks';
 
 export const identitySlice = createSlice({
   name: 'identity',

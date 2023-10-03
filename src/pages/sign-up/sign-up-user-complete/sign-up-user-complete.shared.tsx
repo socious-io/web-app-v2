@@ -4,7 +4,6 @@ import { identities, handleError, updateProfile, UserMeta } from 'src/core/api';
 import { useForm } from 'src/core/form';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-
 import { formModel } from './sign-up-user-complete.form';
 import { changePasswordDirect } from './sign-up-user-complete.services';
 
