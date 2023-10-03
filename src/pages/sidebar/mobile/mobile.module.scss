@@ -22,7 +22,9 @@
   top: 0;
   background-color: var(--color-off-white-01);
   overflow-y: scroll;
-  transition: transform 180ms, visibility 0s;
+  transition:
+    transform 180ms,
+    visibility 0s;
 }
 
 .header {

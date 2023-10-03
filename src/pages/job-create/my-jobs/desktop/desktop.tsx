@@ -16,7 +16,6 @@ import { useMyJobShared } from '../my-job.shared';
 import { getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
 import { MyJobs } from '../my-jobs.types';
 
-
 export const Desktop: React.FC = () => {
   const resolver = useMatch();
   const navigate = {};
@@ -77,7 +76,7 @@ export const Desktop: React.FC = () => {
                 onSeeMoreClick={updateActiveJobList}
               />
             </div>,
-            !!activeJobList.items.length
+            !!activeJobList.items.length,
           )}
         </Accordion>
         <Accordion id="drafts" title={draftTitle} no_border>
@@ -90,7 +89,7 @@ export const Desktop: React.FC = () => {
                 onSeeMoreClick={updateDraftJobList}
               />
             </div>,
-            !!draftJobList.items.length
+            !!draftJobList.items.length,
           )}
         </Accordion>
       </Card>
@@ -109,7 +108,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updateArchivedJobList}
             />
           </div>,
-          !!archivedJobList.items.length
+          !!archivedJobList.items.length,
         )}
       </Accordion>
     </Card>

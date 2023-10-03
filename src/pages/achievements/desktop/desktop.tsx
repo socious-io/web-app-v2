@@ -10,8 +10,6 @@ import { useAchievementsShared } from '../achievements.shared';
 import { ClaimPoints } from '../components/claim-points/claim-points';
 import { Reward } from '../components/reward/reward';
 
-
-
 export const Desktop = (): JSX.Element => {
   const {
     tier,

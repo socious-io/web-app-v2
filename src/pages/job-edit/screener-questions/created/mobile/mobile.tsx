@@ -1,12 +1,12 @@
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
+import store from 'src/store';
 import {
   resetCreatedQuestion,
   setAddQuestion,
   setDefaultQuestion,
   setQuestionProjectIds,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import store from 'src/store/store';
 
 import css from './mobile.module.scss';
 import { useCreatedShared } from '../created.shared';
@@ -54,7 +54,7 @@ export const Mobile: React.FC = () => {
                     setQuestionProjectIds({
                       project_id: resolver.params.id,
                       question_id: defaultQuestions[index].id,
-                    })
+                    }),
                   );
                   navigate({ to: `/jobs/edit/screener-questions` });
                 }}

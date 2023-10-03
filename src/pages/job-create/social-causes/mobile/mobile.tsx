@@ -3,8 +3,8 @@ import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
 import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store';
 import { resetCreatePostWizard, setPostCausesTags } from 'src/store/reducers/createPostWizard.reducer';
-import { RootState } from 'src/store/store';
 
 import css from './mobile.module.scss';
 import { useSocialCausesShared } from '../social-causes.shared';

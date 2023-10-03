@@ -75,7 +75,7 @@ export const Mobile: React.FC = () => {
         <div className={css.seeMore} onClick={() => loadMore('connections')}>
           See more
         </div>,
-        connectionList?.total_count > connectionList?.items.length
+        connectionList?.total_count > connectionList?.items.length,
       )}
     </>
   ) : (
@@ -109,7 +109,7 @@ export const Mobile: React.FC = () => {
         <div className={css.seeMore} onClick={() => loadMore('sent')}>
           See more
         </div>,
-        sentRequestsList?.total_count > sentRequestsList?.items.length
+        sentRequestsList?.total_count > sentRequestsList?.items.length,
       )}
     </>
   );
@@ -148,7 +148,7 @@ export const Mobile: React.FC = () => {
         <div className={css.seeMore} onClick={() => loadMore('received')}>
           See more
         </div>,
-        receivedRequestsList?.total_count > receivedRequestsList?.items.length
+        receivedRequestsList?.total_count > receivedRequestsList?.items.length,
       )}
     </>
   );

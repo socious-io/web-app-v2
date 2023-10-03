@@ -28,7 +28,7 @@ export const endpoint: Endpoints = {
     follows: {
       followings: (payload) =>
         get(
-          `follows/followings?page=${payload?.page || ''}&name=${payload?.name || ''}&type=${payload?.type || ''}`
+          `follows/followings?page=${payload?.page || ''}&name=${payload?.name || ''}&type=${payload?.type || ''}`,
         ).then(getDataProp),
       followers: () => get('follows/followers').then(getDataProp),
     },
@@ -37,7 +37,7 @@ export const endpoint: Endpoints = {
         get(
           `/connections?page=${payload.page}&filter.status=${payload?.status || ''}&filter.requester_id=${
             payload?.requester_id || ''
-          }&filter.requested_id=${payload?.requested_id || ''}`
+          }&filter.requested_id=${payload?.requested_id || ''}`,
         ).then(getDataProp),
       connection_status: (id) => get(`/connections/related/${id}`).then(getDataProp),
     },

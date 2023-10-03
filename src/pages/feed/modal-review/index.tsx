@@ -10,7 +10,7 @@ import { printWhen } from 'src/core/utils';
 import css from 'src/pages/feed/modal-review/modal-review.module.scss';
 import { ModalReviewProps } from 'src/pages/feed/modal-review/modal-review.types';
 import { uploadImage } from 'src/pages/feed/refactored/feed.service';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const ModalReview: React.FC<ModalReviewProps> = ({
   open,
