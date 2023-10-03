@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { identities } from 'src/core/api';
 import { useForm } from 'src/core/form';
 import { handleError } from 'src/core/http';
+import { RootState } from 'src/store';
 import {
   CreateOrgWizard,
   resetCreateOrgWizard,
@@ -12,12 +13,10 @@ import {
   setSocialCauses,
 } from 'src/store/reducers/createOrgWizard.reducer';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { RootState } from 'src/store/store';
 
 import { addOrganization, wizardFormToPayloadAdaptor } from './organization-create';
 import { formModel } from './profile/profile.form';
 import { updateForm } from './profile/profile.services';
-
 
 export const useOrganizationCreateShared = () => {
   const navigate = {};

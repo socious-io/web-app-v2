@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { WebModal } from 'src/components/templates/web-modal';
+import store from 'src/store';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
-import store from 'src/store/store';
 
 import css from './created-modal.module.scss';
 import { CreatedModalProps } from './created-modal.types';

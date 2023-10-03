@@ -13,7 +13,6 @@ import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
 
-
 export const Mobile = (): JSX.Element => {
   const navigate = {};
   const resolver = useMatch().ownData as Loader;

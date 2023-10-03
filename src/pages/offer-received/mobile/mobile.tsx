@@ -138,7 +138,7 @@ export const Mobile = (): JSX.Element => {
                   </a>
                 </div>
               </Divider>,
-              !!media.url
+              !!media.url,
             )}
             {/* <Divider title="Contact Info">
               <Typography>
@@ -157,7 +157,7 @@ export const Mobile = (): JSX.Element => {
           <div className={css.wallet}>
             <PaymentMethods crypto_method={<Dapp.Connect />} />
           </div>,
-          isPaidCrypto
+          isPaidCrypto,
         )}
         {printWhen(
           <Dropdown
@@ -168,11 +168,11 @@ export const Mobile = (): JSX.Element => {
             list={COUNTRIES}
             onValueChange={(selected) => onSelectCountry(selected.value as string)}
           />,
-          !isPaidCrypto && !stripeProfile
+          !isPaidCrypto && !stripeProfile,
         )}
         {printWhen(
           <BankAccounts accounts={stripeProfile} isDisabled={!stripeLink} bankAccountLink={stripeLink} />,
-          !isPaidCrypto
+          !isPaidCrypto,
         )}
         {printWhen(buttonsJSX, status === 'PENDING')}
       </div>

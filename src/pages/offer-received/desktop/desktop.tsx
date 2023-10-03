@@ -19,7 +19,7 @@ import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import Dapp from 'src/dapp';
 import { useAuth } from 'src/hooks/use-auth';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './desktop.module.scss';
 import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';
@@ -133,7 +133,7 @@ export const Desktop = (): JSX.Element => {
                       {offer.assignment_total} <span>{unit}</span>
                       {printWhen(
                         <span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>,
-                        isPaidCrypto
+                        isPaidCrypto,
                       )}
                     </div>
                   </div>
@@ -175,7 +175,7 @@ export const Desktop = (): JSX.Element => {
                       </a>
                     </div>
                   </Divider>,
-                  !!media.url
+                  !!media.url,
                 )}
               </div>
             </Accordion>
@@ -189,7 +189,7 @@ export const Desktop = (): JSX.Element => {
             <div className={css.wallet}>
               <PaymentMethods crypto_method={<Dapp.Connect />} />
             </div>,
-            isPaidCrypto
+            isPaidCrypto,
           )}
           {printWhen(
             <Dropdown
@@ -200,11 +200,11 @@ export const Desktop = (): JSX.Element => {
               list={COUNTRIES}
               onValueChange={(selected) => onSelectCountry(selected.value as string)}
             />,
-            !isPaidCrypto && !stripeProfile
+            !isPaidCrypto && !stripeProfile,
           )}
           {printWhen(
             <BankAccounts accounts={stripeProfile} isDisabled={!stripeLink} bankAccountLink={stripeLink} />,
-            !isPaidCrypto && isPaid
+            !isPaidCrypto && isPaid,
           )}
           {printWhen(buttonsJSX, status === 'PENDING')}
         </Card>

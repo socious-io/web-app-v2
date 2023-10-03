@@ -95,7 +95,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
             label="Payment mode"
             list={PROJECT_PAYMENT_MODE}
           />,
-          isPaidType
+          isPaidType,
         )}
         {printWhen(<Dapp.Connect />, isPaidCrypto)}
         {printWhen(
@@ -116,7 +116,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
               USD equivalent: <span>{equivalentUSD(form.controls.assignmentTotal.value)}</span>
             </div>
           </div>,
-          isPaidCrypto && !!web3
+          isPaidCrypto && !!web3,
         )}
         {printWhen(
           <InputModal
@@ -136,7 +136,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
             selectedItem={selectedCurrency}
             onSelectItem={onSelectCurrency}
           />,
-          isPaidFiat
+          isPaidFiat,
         )}
         <Textarea
           register={form}

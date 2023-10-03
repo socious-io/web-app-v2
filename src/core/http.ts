@@ -3,8 +3,8 @@ import { config } from 'src/config';
 
 import { dialog } from './dialog/dialog';
 import { nonPermanentStorage } from './storage/non-permanent';
+import store from '../store';
 import { hideSpinner, showSpinner } from '../store/reducers/spinner.reducer';
-import store from '../store/store';
 import translate from '../translations';
 
 export const http = axios.create({
@@ -76,7 +76,7 @@ http.interceptors.request.use(
     store.dispatch(hideSpinner());
     // Do something with request error
     return Promise.reject(error);
-  }
+  },
 );
 
 http.interceptors.response.use(
@@ -89,7 +89,7 @@ http.interceptors.response.use(
     store.dispatch(hideSpinner());
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     return Promise.reject(error);
-  }
+  },
 );
 
 function getErrorSection(request: XMLHttpRequest): string | undefined {

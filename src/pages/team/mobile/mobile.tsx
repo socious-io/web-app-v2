@@ -67,7 +67,7 @@ export const Mobile: React.FC = () => {
             <div onClick={onSeeMoreClick} className={css.seeMore}>
               See more
             </div>,
-            updateMembers.total_count > updateMembers.items?.length
+            updateMembers.total_count > updateMembers.items?.length,
           )}
         </>
       </TopFixedMobile>

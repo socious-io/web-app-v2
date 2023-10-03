@@ -13,7 +13,7 @@ import { Post } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { IdentityReq } from 'src/core/types';
 import { useAuth } from 'src/hooks/use-auth';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './feed.module.scss';
 import MobileHeader from './mobileHeader.tsx/mobileHeader';

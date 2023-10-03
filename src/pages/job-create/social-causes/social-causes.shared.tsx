@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const useSocialCausesShared = () => {
   const [socialCauses, setSocialCauses] = useState(socialCausesToCategoryAdaptor);
@@ -12,7 +12,7 @@ export const useSocialCausesShared = () => {
 
   function onSearch(v: string) {
     const filteredValue = socialCausesToCategoryAdaptor().filter((item) =>
-      item.label.toLowerCase().includes(v.toLowerCase())
+      item.label.toLowerCase().includes(v.toLowerCase()),
     );
     setSocialCauses(filteredValue);
   }

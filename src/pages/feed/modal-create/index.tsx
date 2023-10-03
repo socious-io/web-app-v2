@@ -11,7 +11,7 @@ import { IdentityReq } from 'src/core/types';
 import css from 'src/pages/feed/modal-create/modal-create.module.scss';
 import { ModalCreateProps } from 'src/pages/feed/modal-create/modal-create.types';
 import { ModalReview } from 'src/pages/feed/modal-review';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeedList }) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);

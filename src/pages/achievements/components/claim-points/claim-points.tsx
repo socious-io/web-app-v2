@@ -3,11 +3,10 @@ import { encode } from 'js-base64';
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { printWhen } from 'src/core/utils';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './claim-points.module.scss';
 import { generateQRCode } from './claim-points.services';
-
 
 export const ClaimPoints = (): JSX.Element => {
   const qrCodeRef = useRef<HTMLDivElement>(null);
