@@ -6,6 +6,7 @@ import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { dialog } from 'src/core/dialog/dialog';
 import { CreateQuestionPayload } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
+import store from 'src/store';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import {
   resetCreatedQuestion,
@@ -17,7 +18,6 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import store from 'src/store/store';
 
 import css from './mobile.module.scss';
 import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';
@@ -102,7 +102,7 @@ export const Mobile: React.FC = () => {
             </div>
           ))}
         </div>,
-        formState.add_choices > 0
+        formState.add_choices > 0,
       )}
     </>
   );
@@ -125,7 +125,7 @@ export const Mobile: React.FC = () => {
             <img src="/icons/add-circle.svg" />
             Add question
           </div>,
-          !formState.add_question
+          !formState.add_question,
         )}
         {printWhen(addQuestionsJSX, formState.add_question)}
         {printWhen(multipleChoiceJSX, formState.question_type === 'MULTIPLE')}
@@ -135,7 +135,7 @@ export const Mobile: React.FC = () => {
           <Button color="white" onClick={submitSkip}>
             Skip
           </Button>,
-          !formState.add_question
+          !formState.add_question,
         )}
         {printWhen(
           <>
@@ -146,7 +146,7 @@ export const Mobile: React.FC = () => {
               Cancel
             </Button>
           </>,
-          formState.add_question
+          formState.add_question,
         )}
       </div>
     </div>

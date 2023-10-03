@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <ErrorBoundary fallback={<FallBack />} onError={logError}>
       <App />
     </ErrorBoundary>
-  </>
+  </>,
   //   </React.StrictMode>
 );
 defineCustomElements(window);

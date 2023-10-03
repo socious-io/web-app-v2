@@ -4,8 +4,8 @@ import { ApplicantListPay } from 'src/components/molecules/applicant-list-pay/ap
 import Dapp from 'src/dapp';
 import { useAlert } from 'src/hooks/use-alert';
 import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
+import store from 'src/store';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
-import store from 'src/store/store';
 
 import css from './hired.module.scss';
 import { HiredProps } from './hired.types';

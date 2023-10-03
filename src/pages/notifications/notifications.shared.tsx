@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
 import { notifications, NotificationsRes } from 'src/core/api';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const useNotificationsShared = () => {
   const list = useLoaderData() as NotificationsRes;

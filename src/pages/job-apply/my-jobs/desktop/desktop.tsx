@@ -9,7 +9,7 @@ import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './desktop.module.scss';
 import { useMyJobShared } from '../my-jobs.shared';
@@ -78,7 +78,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updatePendingList}
             />
           </div>,
-          !!pendingList.items.length
+          !!pendingList.items.length,
         )}
       </Accordion>
       <Accordion id="awaiting-review" title={`Awaiting review (${awaitingList.total_count})`}>
@@ -91,7 +91,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updateAwaitingList}
             />
           </div>,
-          !!awaitingList.items.length
+          !!awaitingList.items.length,
         )}
       </Accordion>
       <Accordion id="declined" title={`Declined (${declinedList.total_count})`} no_border>
@@ -104,7 +104,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updateDeclinedList}
             />
           </div>,
-          !!declinedList.items.length
+          !!declinedList.items.length,
         )}
       </Accordion>
     </Card>
@@ -122,7 +122,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updateOnGoingList}
             />
           </div>,
-          !!onGoingList.items.length
+          !!onGoingList.items.length,
         )}
       </Accordion>
       <Accordion id="ended" title={`Ended (${endedList.total_count})`} no_border>
@@ -135,7 +135,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updateEndedList}
             />
           </div>,
-          !!endedList.items.length
+          !!endedList.items.length,
         )}
       </Accordion>
     </Card>

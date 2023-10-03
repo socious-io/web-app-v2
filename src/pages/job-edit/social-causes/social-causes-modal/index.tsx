@@ -9,7 +9,7 @@ import { useSocialCausesShared } from '../social-causes.shared';
 
 export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onClose, onDone, jobOverview }) => {
   const { onSearch, socialCauses, selectedSocialCauses, isValid, setSelectedSocialCauses } = useSocialCausesShared(
-    jobOverview.causes_tags
+    jobOverview.causes_tags,
   );
 
   function editSocialCauses() {
@@ -17,7 +17,7 @@ export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onCl
       (resp) => {
         onClose();
         onDone(resp);
-      }
+      },
     );
   }
   return (

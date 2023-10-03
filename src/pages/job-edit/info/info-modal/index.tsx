@@ -16,19 +16,18 @@ import { PROJECT_TYPE_DICT, PROJECT_TYPE_V2, translateProjectType } from 'src/co
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
 import { CategoriesResp, CreatePostPayload } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
+import store from 'src/store';
 import {
   resetCreatePostWizard,
   setInitPostWizard,
   setPostPaymentScheme,
   setPostPaymentType,
 } from 'src/store/reducers/createPostWizard.reducer';
-import store from 'src/store/store';
 
 import css from './info-modal.module.scss';
 import { InfoModalProps } from './info-modal.types';
 import { createFormInitState, jobEditRequest } from '../info.services';
 import { useInfoShared } from '../info.shared';
-
 
 export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, jobOverview }) => {
   const dispatch = useDispatch();
@@ -200,11 +199,11 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, job
                     </div>
                     {printWhen(
                       errorsJSX,
-                      !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher)
+                      !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher),
                     )}
                     {printWhen(
                       <span className={css.info}>Prices will be shown in USD ($)</span>,
-                      formState.payment_type === 'PAID'
+                      formState.payment_type === 'PAID',
                     )}
                   </div>
                 </div>

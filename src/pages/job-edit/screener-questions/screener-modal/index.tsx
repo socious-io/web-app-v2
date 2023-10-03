@@ -7,6 +7,7 @@ import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { WebModal } from 'src/components/templates/web-modal';
 import { CreateQuestionPayload } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
+import store from 'src/store';
 import {
   resetQuestions,
   setChoices,
@@ -15,7 +16,6 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import store from 'src/store/store';
 
 import css from './screener-modal.module.scss';
 import { ScreenerModalProps } from './screener-modal.types';
@@ -42,7 +42,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
     updateQuestion(
       payloadQuestion,
       formState.question_project_id.project_id,
-      formState.question_project_id.question_id
+      formState.question_project_id.question_id,
     ).then((resp) => {
       store.dispatch(resetQuestions());
       form.reset();
@@ -117,7 +117,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
             </div>
           ))}
         </div>,
-        formState.add_choices > 0
+        formState.add_choices > 0,
       )}
     </>
   );
