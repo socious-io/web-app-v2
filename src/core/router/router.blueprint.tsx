@@ -1,7 +1,7 @@
 import { Navigate, RouteObject, createBrowserRouter } from 'react-router-dom';
 import { ComponentType } from 'react';
-import { MenuCursor as RootCursorLayout } from '../../components/templates/menu-cursor/menu-cursor';
-import { MenuTouch as RootTouchLayout } from '../../components/templates/menu-touch/menu-touch';
+import { MenuCursor as RootCursorLayout } from 'src/components/templates/menu-cursor/menu-cursor';
+import { MenuTouch as RootTouchLayout } from 'src/components/templates/menu-touch/menu-touch';
 import Layout from 'src/components/templates/refactored/layout/layout';
 import {
   jobs,
