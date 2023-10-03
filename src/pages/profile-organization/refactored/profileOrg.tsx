@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Button } from 'src/components/atoms/button/button';
@@ -191,7 +190,7 @@ const profileOrg = () => {
                 <div className="md:hidden">
                   {printWhen(
                     <ThreeDotsButton onClick={() => showActions(organization.id)} />,
-                    !profileBelongToCurrentUser
+                    !profileBelongToCurrentUser,
                   )}
                 </div>
               </div>

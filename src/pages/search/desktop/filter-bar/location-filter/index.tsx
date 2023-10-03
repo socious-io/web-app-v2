@@ -1,13 +1,14 @@
-import { Modal } from 'src/components/templates/modal/modal';
-import css from './location-filter.module.scss';
 import { useState } from 'react';
 import { Button } from 'src/components/atoms/button/button';
-import { LocationFilterProps } from './location-filter.types';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { Modal } from 'src/components/templates/modal/modal';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { citiesToCategories } from 'src/core/adaptors';
 import { getCityList } from 'src/pages/job-create/info/info.services';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+
+import css from './location-filter.module.scss';
+import { LocationFilterProps } from './location-filter.types';
 
 export const LocationFilter = (props: LocationFilterProps): JSX.Element => {
   const [selectedCountry, setSelectedCountry] = useState<{ label: string; value: string }>();

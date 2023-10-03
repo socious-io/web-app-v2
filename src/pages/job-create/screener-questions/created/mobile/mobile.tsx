@@ -1,9 +1,9 @@
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { dialog } from 'src/core/dialog/dialog';
+import store from 'src/store';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
-import store from 'src/store/store';
 
 import css from './mobile.module.scss';
 import { useCreatedShared } from '../created.shared';

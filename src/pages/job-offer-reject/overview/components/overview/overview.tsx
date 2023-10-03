@@ -50,7 +50,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
             overviewData.payment_range_lower,
             overviewData.payment_range_higher,
             overviewData.payment_type,
-            overviewData.payment_scheme
+            overviewData.payment_scheme,
           ).label
         }
       </div>
@@ -60,7 +60,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
             overviewData.payment_range_lower,
             overviewData.payment_range_higher,
             overviewData.payment_type,
-            overviewData.payment_scheme
+            overviewData.payment_scheme,
           ).value
         }
       </div>
@@ -81,7 +81,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
             />
           </div>
         </Divider>,
-        !isTouchDevice() && overviewData.status !== 'EXPIRE'
+        !isTouchDevice() && overviewData.status !== 'EXPIRE',
       )}
       {isTouchDevice() && data.status === 'EXPIRE' && (
         <div className={css.mobileArchived}>

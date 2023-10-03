@@ -10,7 +10,6 @@ import { Card } from '../../atoms/card/card';
 import { CategoriesClickable } from '../../atoms/categories-clickable/categories-clickable';
 import { Typography } from '../../atoms/typography/typography';
 
-
 export const FeedItem = (props: FeedItemProps): JSX.Element => {
   const { type, actionList, date, lineLimit = 3, img, name, imgAvatar } = props;
   const { showIfLoggedIn } = useAuth();

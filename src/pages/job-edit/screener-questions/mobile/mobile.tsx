@@ -5,6 +5,7 @@ import { Toggle } from 'src/components/atoms/toggle';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { CreateQuestionPayload } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
+import store from 'src/store';
 import {
   resetQuestions,
   setChoices,
@@ -13,7 +14,6 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import store from 'src/store/store';
 
 import css from './mobile.module.scss';
 import { QUESTION_TYPE, createQuestion, updateQuestion } from '../screener-questions.service';
@@ -58,7 +58,7 @@ export const Mobile: React.FC = () => {
     updateQuestion(
       payloadQuestion,
       formState.question_project_id.project_id,
-      formState.question_project_id.question_id
+      formState.question_project_id.question_id,
     ).then((resp) => {
       store.dispatch(resetQuestions());
       form.reset();
@@ -111,7 +111,7 @@ export const Mobile: React.FC = () => {
             </div>
           ))}
         </div>,
-        formState.add_choices > 0
+        formState.add_choices > 0,
       )}
     </>
   );
@@ -144,7 +144,7 @@ export const Mobile: React.FC = () => {
               Cancel
             </Button>
           </>,
-          !formState.add_question
+          !formState.add_question,
         )}
         {printWhen(
           <>
@@ -162,7 +162,7 @@ export const Mobile: React.FC = () => {
               Cancel
             </Button>
           </>,
-          formState.add_question
+          formState.add_question,
         )}
       </div>
     </div>

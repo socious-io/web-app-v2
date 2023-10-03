@@ -15,8 +15,8 @@ function removeCookiesFromAllPaths() {
           (document.cookie = `${name}=;max-age=0;path=/;domain=${domain}`),
           domain
         ),
-        location.hostname
-      )
+        location.hostname,
+      ),
   );
 }
 

@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './profile-card.module.scss';
 

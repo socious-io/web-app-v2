@@ -127,7 +127,7 @@ export const Mobile = (): JSX.Element => {
                   </a>
                 </div>
               </Divider>,
-              !!media.url
+              !!media.url,
             )}
             {/* <Divider title="Contact Info">
           <Typography>

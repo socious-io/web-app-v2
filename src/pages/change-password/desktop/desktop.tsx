@@ -8,7 +8,6 @@ import { printWhen } from 'src/core/utils';
 import css from './desktop.module.scss';
 import { useChangePasswordShared } from '../change-password.shared';
 
-
 export const Desktop = (): JSX.Element => {
   const { form, onSubmit, formIsValid, notMatchingPasswords } = useChangePasswordShared();
   return (

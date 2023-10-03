@@ -9,7 +9,7 @@ import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './user-profile-card.module.scss';
 import { UserProfileCardProps } from './user-profile-card.types';
@@ -182,7 +182,7 @@ export const UserProfileCard = (props: UserProfileCardProps): JSX.Element => {
           <Divider title="Culture">
             <div className={css.culture}>{user.culture}</div>
           </Divider>,
-          !!user.culture
+          !!user.culture,
         )}
       </div>
     </Card>

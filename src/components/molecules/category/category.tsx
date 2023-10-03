@@ -9,7 +9,6 @@ import { printWhen } from 'src/core/utils';
 import css from './category.module.scss';
 import { CategoryItem, CategoryProps } from './category.types';
 
-
 function translate(selected: string | number, list: CategoryProps['list']): string {
   const translation = list.find((item) => item.value === selected);
   if (!translation?.label) {
@@ -23,7 +22,7 @@ export const Category = (props: CategoryProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState<Array<CategoryItem>>(props.list);
   const [selected, setSelected] = useState<Array<string | number>>(
-    (props.register.controls[props.name].value as []) || []
+    (props.register.controls[props.name].value as []) || [],
   );
 
   function onChange(list: string[]) {

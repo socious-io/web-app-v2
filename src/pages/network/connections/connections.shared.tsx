@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { IdentityReq, UserType } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import { getConnections } from './connections.service';
 import { Resolver } from './connections.types';

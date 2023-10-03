@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { citiesToCategories } from 'src/core/adaptors';
 import { useForm } from 'src/core/form';
+import { RootState } from 'src/store';
 import { CreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
-import { RootState } from 'src/store/store';
 
 import { formModel } from './info.form';
 import { getCityList, updateForm } from './info.services';
-
 
 export const useInfoShared = () => {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ export const useInfoShared = () => {
 
   const memoizedFormState = useMemo(
     () => formModel(formState),
-    [formState.payment_range_lower, formState.payment_range_higher]
+    [formState.payment_range_lower, formState.payment_range_higher],
   );
   const form = useForm(memoizedFormState);
   const controlErrors =

@@ -1,7 +1,8 @@
 import React from 'react';
+
 import styles from './filters.module.scss';
-import { Selectable } from './Selectable';
 import { FiltersProps } from './filters.types';
+import { Selectable } from './Selectable';
 
 export const Filters = ({ filterdItems, onClear }: FiltersProps): JSX.Element => {
   return (

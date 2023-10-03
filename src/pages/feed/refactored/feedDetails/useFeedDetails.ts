@@ -17,7 +17,7 @@ import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const useFeedDetails = () => {
   const identity = useSelector<RootState, IdentityReq>((state) => {
