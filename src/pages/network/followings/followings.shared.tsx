@@ -13,7 +13,7 @@ export const useFollowingsShared = () => {
 
   function onUnfollow(id: string) {
     endpoint.post.follows['{identity_id}/unfollow'](id).then(() =>
-      setFollowingStatus({ ...followingStatus, [id]: 'UNFOLLOW' })
+      setFollowingStatus({ ...followingStatus, [id]: 'UNFOLLOW' }),
     );
   }
 

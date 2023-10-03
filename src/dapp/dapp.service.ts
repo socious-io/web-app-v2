@@ -69,7 +69,7 @@ export const escrow = async (params: EscrowParams) => {
       params.projectId,
       await makeAmount(params.web3, token, params.escrowAmount),
       params.verifiedOrg,
-      token
+      token,
     )
     .send({ from: params.web3.eth.defaultAccount });
 

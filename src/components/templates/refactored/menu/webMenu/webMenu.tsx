@@ -6,7 +6,7 @@ import { Search } from 'src/components/atoms/search/search';
 import { SwitchAccount } from 'src/components/templates/menu-cursor/components/switch-account/switch-account';
 import { Menu, getAvatar, menuList } from 'src/components/templates/refactored/menu/menu.services';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './webMenu.module.scss';
 

@@ -17,11 +17,6 @@ import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
 
-
-
-
-
-
 export const Desktop = (): JSX.Element => {
   const navigate = {};
   const resolver = useMatch().ownData as Loader;
@@ -146,7 +141,7 @@ export const Desktop = (): JSX.Element => {
           applicantDetail={applicantDetail as ApplicantResp}
           onDone={updateApplicantList}
         />,
-        applicantDetail !== undefined
+        applicantDetail !== undefined,
       )}
     </>
   );

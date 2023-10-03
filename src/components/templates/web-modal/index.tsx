@@ -31,11 +31,9 @@ export const WebModal: React.FC<WebModalProps> = ({
         {children}
         {printWhen(
           <div className={`${css.bottom} ${footerClassName}`}>
-            {buttons?.map((btn, index) => (
-              <Button key={index} {...btn} />
-            ))}
+            {buttons?.map((btn, index) => <Button key={index} {...btn} />)}
           </div>,
-          !!buttons?.length
+          !!buttons?.length,
         )}
       </div>
     </Modal>

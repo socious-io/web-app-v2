@@ -19,7 +19,6 @@ import {
 
 import { formModel } from './info.form';
 
-
 export async function getJobCategories(): Promise<CategoriesResp> {
   return get('/projects/categories').then(({ data }) => data);
 }

@@ -8,6 +8,7 @@ import { AlertModal } from 'src/components/organisms/alert-modal';
 import { WebModal } from 'src/components/templates/web-modal';
 import { CreateQuestionPayload } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
+import store from 'src/store';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import {
   resetCreatedQuestion,
@@ -19,7 +20,6 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import store from 'src/store/store';
 
 import css from './screener-modal.module.scss';
 import { ScreenerModalProps } from './screener-modal.types';
@@ -114,7 +114,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
             </div>
           ))}
         </div>,
-        formState.add_choices > 0
+        formState.add_choices > 0,
       )}
     </>
   );
@@ -155,7 +155,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
                 <img src="/icons/add-circle.svg" />
                 Add question
               </div>,
-              !formState.add_question
+              !formState.add_question,
             )}
             {printWhen(addQuestionsJSX, formState.add_question)}
             {printWhen(multipleChoiceJSX, formState.question_type === 'MULTIPLE')}

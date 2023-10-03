@@ -7,7 +7,6 @@ import { SkillsModalProps } from './skills-modal.types';
 import { createFormInitState, jobEditRequest } from '../../info/info.services';
 import { useSkillsShared } from '../skills.shared';
 
-
 export const SkillsModal: React.FC<SkillsModalProps> = ({ open, onClose, onDone, jobOverview }) => {
   const { onSearch, socialCauses, selectedSkills, isValid, setSelectedSkills } = useSkillsShared(jobOverview.skills);
 

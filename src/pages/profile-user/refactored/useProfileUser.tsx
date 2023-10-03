@@ -7,7 +7,7 @@ import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { ConnectStatus, IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import {
   getConnectStatus,
@@ -17,9 +17,6 @@ import {
   openToVolunteerCall,
 } from './profileUser.services';
 import { ProfileReq, Resolver } from './profileUser.types';
-
-
-
 
 export const useProfileUser = () => {
   const navigate = {};
@@ -65,7 +62,7 @@ export const useProfileUser = () => {
           dateFrom: new Date(mission.project.created_at).toLocaleDateString('en-US'),
           dateTo: new Date(mission.project.updated_at).toLocaleDateString('en-US'),
           location: COUNTRIES_DICT[mission.project.country as keyof typeof COUNTRIES_DICT],
-        }))
+        })),
       );
     };
     getConnectionsStatus();
