@@ -1,17 +1,18 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { Header } from 'src/components/atoms/header/header';
 import { Toggle } from 'src/components/atoms/toggle';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { printWhen } from 'src/core/utils';
+import { useSettingsShared } from 'src/pages/notifications/settings/settings.shared';
 import translate from 'src/translations';
 
 import css from './mobile.module.scss';
-import { useSettingsShared } from '../settings.shared';
 
 export const Mobile: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const {
     generateSettings: settings,
     payload,
@@ -35,7 +36,7 @@ export const Mobile: React.FC = () => {
 
   return (
     <TopFixedMobile>
-      <Header title="Notification settings" onBack={() => navigate({ to: '/notifications' })} />
+      <Header title="Notification settings" onBack={() => navigate('/notifications')} />
       <>
         {printWhen(turnedOffMessageBoxJSX, !allowedNotifications && !closeAlert)}
         <div className={css.notification_all}>
@@ -96,7 +97,7 @@ export const Mobile: React.FC = () => {
               </Button>
             </div>
           </>,
-          !!settings.length && allowedNotifications
+          !!settings.length && allowedNotifications,
         )}
       </>
     </TopFixedMobile>
