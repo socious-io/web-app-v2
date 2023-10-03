@@ -127,6 +127,11 @@ export const routes: Route[] = [
         },
         element: () => import('../../pages/feed/refactored/feedDetails/feedDetails').then((m) => <m.default />),
       },
+      {
+        path: '/',
+        element: () => import('../../pages/feed/refactored/feed').then((m) => <m.default />),
+        loader: () => getFeedList({ page: 1 }),
+      },
     ],
   },
   {
@@ -190,6 +195,17 @@ export const routes: Route[] = [
             element: () => import('../../pages/jobs-index/jobs-index.container').then((m) => <m.JobsIndexContainer />),
           },
         ],
+      },
+    ],
+  },
+  {
+    path: 'search',
+    element: <Layout />,
+    children: [
+      {
+        path: '/',
+        element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),
+        loader: (p) => search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 }),
       },
     ],
   },
@@ -471,8 +487,8 @@ export const routes: Route[] = [
         ],
       },
       {
-        path: '/m/search',
-        element: () => import('../../pages/search/mobile/mobile').then((m) => <m.Mobile />),
+        path: '/search',
+        element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),
         loader: (p) => search({ filter: {}, q: p.search.q as string, type: 'projects', page: 1 }),
       },
       {
@@ -671,17 +687,6 @@ export const routes: Route[] = [
                   import('../../pages/chat/contact-list/contact-list.container').then((m) => <m.ContactList />),
               },
             ],
-          },
-          {
-            path: '/d/search',
-            element: () => import('../../pages/search/desktop/search').then((m) => <m.Search />),
-            loader: (p) =>
-              search({
-                filter: {},
-                q: p.search.q as string,
-                type: p.search.type,
-                page: 1,
-              }),
           },
           {
             path: 'd/jobs/created/:id/overview',

@@ -4,13 +4,13 @@ import { Card } from 'src/components/atoms/card/card';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { WebModal } from 'src/components/templates/web-modal';
+import { createPost, posts } from 'src/core/api';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
+import css from 'src/pages/feed/modal-review/modal-review.module.scss';
+import { ModalReviewProps } from 'src/pages/feed/modal-review/modal-review.types';
+import { uploadImage } from 'src/pages/feed/refactored/feed.service';
 import { RootState } from 'src/store/store';
-
-import css from './modal-review.module.scss';
-import { ModalReviewProps } from './modal-review.types';
-import { getFeedList, submitPost, uploadImage } from '../refactored/feed.service';
 
 export const ModalReview: React.FC<ModalReviewProps> = ({
   open,
@@ -39,8 +39,8 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
       content: text,
       media: imageId,
     };
-    submitPost(payload).then(() => {
-      getFeedList({ page: 1 }).then((resp) => {
+    createPost(payload).then(() => {
+      posts({ page: 1 }).then((resp) => {
         setFeedList(resp.items);
         onClose();
         onDone();
@@ -77,10 +77,10 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
         {printWhen(
           <div className={css.image}>
             <Card>
-              <img src={imgUrl} />
+              <img src={imgUrl} alt="" />
             </Card>
           </div>,
-          !!imgUrl
+          !!imgUrl,
         )}
       </div>
     </WebModal>

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
 import { Fab } from 'src/components/atoms/fab/fab';
@@ -7,26 +8,23 @@ import { SendBox } from 'src/components/molecules/send-box/send-box';
 import { ChatList } from 'src/components/organisms/chat-list/chat-list';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { createChat, filterChats, filterFollowings } from 'src/core/api';
 import { useAuth } from 'src/hooks/use-auth';
-
-import css from './desktop.module.scss';
-import { Header } from './header';
 import {
   chatEntityToContactListAdaptor,
   convertFollowingsToContactList,
-  getChatsSummery,
-  getFollowings,
-} from '../../contact-list/contact-list.services';
-import { CreateChatModal } from '../../contact-list/create-chat-modal';
-import { createChats } from '../../new-chat/new-chat.services';
-import { useMessageDetailShared } from '../message-detail.shared';
-import { MessageLoader } from '../message-detail.types';
+} from 'src/pages/chat/contact-list/contact-list.services';
+import { CreateChatModal } from 'src/pages/chat/contact-list/create-chat-modal';
+import css from 'src/pages/chat/message-detail/desktop/desktop.module.scss';
+import { Header } from 'src/pages/chat/message-detail/desktop/header';
+import { useMessageDetailShared } from 'src/pages/chat/message-detail/message-detail.shared';
+import { MessageLoader } from 'src/pages/chat/message-detail/message-detail.types';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = {};
-  const resolver = useMatch<MessageLoader>();
+  const navigate = useNavigate();
+  const resolver = useLoaderData() as MessageLoader;
   const { isLoggedIn } = useAuth();
-  const { summery, followings } = resolver.data || {};
+  const { summery, followings } = resolver || {};
   const {
     participantDetail,
     list,
@@ -46,14 +44,14 @@ export const Desktop = (): JSX.Element => {
 
   function updateChatList() {
     const payload = { page: 1, filter: '' };
-    getChatsSummery(payload).then((resp) => {
+    filterChats(payload).then((resp) => {
       setChats(chatEntityToContactListAdaptor(resp.items));
     });
   }
 
   function onSearch(value: string) {
     const payload = { page: 1, filter: value };
-    getChatsSummery(payload).then((resp) => {
+    filterChats(payload).then((resp) => {
       setChats(chatEntityToContactListAdaptor(resp.items));
       setState(payload);
     });
@@ -61,14 +59,14 @@ export const Desktop = (): JSX.Element => {
 
   function onCreateSearch(value: string) {
     const payload = { page: 1, name: value };
-    getFollowings(payload)
+    filterFollowings(payload)
       .then(({ items }) => convertFollowingsToContactList(items))
       .then(setUserList);
   }
 
   function onScroll(page: number) {
     const payload = { ...state, page: state.page + 1 };
-    getChatsSummery(payload).then((resp) => {
+    filterChats(payload).then((resp) => {
       const newList = chatEntityToContactListAdaptor(resp.items);
       setChats([...chats, ...newList]);
       setState(payload);
@@ -76,22 +74,31 @@ export const Desktop = (): JSX.Element => {
   }
 
   async function onCreateChat(id: string) {
-    const createdChats = await createChats({ name: 'nameless', type: 'CHAT', participants: [id] });
+    const createdChats = await createChat({ name: 'nameless', type: 'CHAT', participants: [id] });
     setOpenCreateChatModal(false);
-    navigate({ to: `../${createdChats?.id}` });
+    navigate(`/d/chats/contacts/${createdChats?.id}`);
     updateMessages(createdChats?.id);
     updateChatList();
   }
 
   const emptyBoxJSX = (
     <div className={css.emptyBoxContainer}>
-      <Avatar type={participantDetail.type} img={participantDetail.avatar || participantDetail?.image} size="8rem" />
+      <Avatar
+        type={participantDetail.type}
+        img={participantDetail.identity_meta.avatar || participantDetail.identity_meta.image || ''}
+        size="8rem"
+      />
       <div className={css.text}>
         Start chatting with
-        <span>{participantDetail.name}</span>
+        <span>{participantDetail.identity_meta.name}</span>
       </div>
     </div>
   );
+
+  useEffect(() => {
+    const messageBody = document.getElementById('chat-list-div');
+    if (messageBody) messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+  }, [list]);
 
   return (
     <div className={css.container}>
@@ -116,9 +123,9 @@ export const Desktop = (): JSX.Element => {
         <Card className={css.rightContainer}>
           <Header
             type={participantDetail.type}
-            name={participantDetail.name}
-            img={participantDetail.avatar || participantDetail?.image}
-            username={participantDetail.username || participantDetail?.shortname}
+            name={participantDetail.identity_meta.name}
+            img={participantDetail.identity_meta.avatar || participantDetail.identity_meta.image || ''}
+            username={participantDetail.identity_meta.username || participantDetail.identity_meta.shortname || ''}
             loading={loadingChat}
           />
           {loadingChat ? (
@@ -126,7 +133,9 @@ export const Desktop = (): JSX.Element => {
               <span className={css.loader} />
             </div>
           ) : (
-            <div className={css.main}>{list.length ? <ChatList list={list} /> : emptyBoxJSX}</div>
+            <div id="chat-list-div" className={css.main}>
+              {list.length ? <ChatList list={list} /> : emptyBoxJSX}
+            </div>
           )}
           <div className={css.sendBoxContainer}>
             <SendBox value={sendingValue} onValueChange={setSendingValue} onSend={onSend} disabled={loadingChat} />

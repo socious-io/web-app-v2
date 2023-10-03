@@ -1,13 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+import { Post } from 'src/core/api';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 import css from './feed-list.module.scss';
-import { Feed, FeedListProps } from './feed-list.types';
+import { FeedListProps } from './feed-list.types';
 import { socialCausesToCategory } from '../../../core/adaptors';
 import { FeedItem } from '../../molecules/feed-item/feed-item';
 
-
 export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeMore, onMoreClick }: FeedListProps) => {
-  const navigate = {};
+  const navigate = useNavigate();
 
   const actionList = (id: string, likes: number, liked: boolean) => [
     {
@@ -37,18 +38,18 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
 
   const navigateToPostDetail = (id: string) => {
     hapticsImpactLight();
-    navigate({ to: `./${id}` });
+    navigate(`./${id}`);
   };
 
-  function redirectToProfile(feed: Feed) {
+  function redirectToProfile(feed: Post) {
     if (feed.identity_type === 'users') {
-      navigate({ to: `/profile/users/${feed.identity_meta.username}/view` });
+      navigate(`/profile/users/${feed.identity_meta.username}/view`);
     } else {
-      navigate({ to: `/profile/organizations/${feed.identity_meta.shortname}/view` });
+      navigate(`/profile/organizations/${feed.identity_meta.shortname}/view`);
     }
   }
 
-  function setAvatar(feed: Feed) {
+  function setAvatar(feed: Post) {
     if (feed.identity_type === 'organizations') {
       return feed.identity_meta.image;
     }
@@ -68,7 +69,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
           text={item.content}
           name={item.identity_meta.name}
           actionList={actionList(item.id, item.likes, item.liked)}
-          date={item.created_at}
+          date={item.created_at.toString()}
           categories={socialCausesToCategory(item.causes_tags)}
           lineLimit="none"
         />

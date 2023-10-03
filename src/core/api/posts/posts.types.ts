@@ -39,7 +39,7 @@ export interface Post extends PostReq {
   updated_at: Date;
   deleted_at?: Date;
 
-  identity_type: string;
+  identity_type: 'organizations' | 'users';
   identity_meta: any;
   identity_id: string;
 }

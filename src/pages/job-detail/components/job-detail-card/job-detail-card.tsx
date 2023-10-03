@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { Categories } from 'src/components/atoms/categories/categories';
@@ -16,18 +16,19 @@ import css from './job-detail-card.module.scss';
 import { JobDetailCardProps } from './job-detail-card.types';
 import { getCategories } from '../../job-detail.services';
 
-
 export function JobDetailCard(props: JobDetailCardProps) {
   const [openApplyModal, setOpenApplyModal] = useState(false);
   const [openExternalModal, setOpenExternalModal] = useState(false);
-
+  const [isSubmittedNow, setIsSubmittedNow] = useState(false);
   function onApply() {
     if (props.job?.other_party_id) setOpenExternalModal(true);
     else setOpenApplyModal(true);
   }
-
+  useEffect(() => {
+    setIsSubmittedNow(false);
+  }, [props.job.id]);
   const buttonJSX = (
-    <Button disabled={props.job.applied} onClick={onApply}>
+    <Button disabled={props.job.applied || isSubmittedNow} onClick={onApply}>
       Apply now
     </Button>
   );
@@ -75,8 +76,13 @@ export function JobDetailCard(props: JobDetailCardProps) {
 
   return (
     <Card className={css.card} padding={0}>
-      <ApplyModal data={props} open={openApplyModal} onClose={() => setOpenApplyModal(false)} />
-      {printWhen(applicationSubmittedJSX, props.job.applied && props.userType === 'users')}
+      <ApplyModal
+        data={props}
+        open={openApplyModal}
+        onClose={() => setOpenApplyModal(false)}
+        onSubmittedNow={() => setIsSubmittedNow(true)}
+      />
+      {printWhen(applicationSubmittedJSX, isSubmittedNow || (props.job.applied && props.userType === 'users'))}
       <Divider>
         <div className={css.firstRow}>
           <ProfileView

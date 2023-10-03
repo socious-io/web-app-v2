@@ -14,9 +14,8 @@ import { setAuthCookies } from './pages/sign-in/sign-in.services';
 import { closeModal } from './store/reducers/modal.reducer';
 import store, { RootState } from './store/store';
 
-
 async function fetchNewAuth(
-  refresh_token: Awaited<ReturnType<typeof nonPermanentStorage.get>>
+  refresh_token: Awaited<ReturnType<typeof nonPermanentStorage.get>>,
 ): Promise<PostRefreshResp | void> {
   if (refresh_token) {
     const newAuth = await endpoint.post.auth.refresh({ refresh_token });
@@ -55,7 +54,6 @@ function App() {
       <ModalPlaceholder />
       <DeepLinks />
       <Spinner />
-      <Sidebar />
     </Provider>
   );
 }
