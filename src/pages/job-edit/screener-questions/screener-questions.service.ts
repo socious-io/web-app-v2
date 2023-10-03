@@ -12,7 +12,6 @@ import {
 
 import { formModel } from './screener-questions.form';
 
-
 export const QUESTION_TYPE = [
   { value: 'TEXT', label: 'Text' },
   { value: 'MULTIPLE', label: 'Multiple choices' },

@@ -167,11 +167,11 @@ export const Mobile = (): JSX.Element => {
                 </div>
                 {printWhen(
                   errorsJSX,
-                  !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher)
+                  !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher),
                 )}
                 {printWhen(
                   <span className={css.info}>Prices will be shown in USD ($)</span>,
-                  formState.payment_type === 'PAID'
+                  formState.payment_type === 'PAID',
                 )}
               </div>
             </div>

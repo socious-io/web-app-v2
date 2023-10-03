@@ -11,7 +11,7 @@ import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './desktop.module.scss';
 import { useWalletShared } from '../wallet.shared';
@@ -64,7 +64,7 @@ export const Desktop: React.FC = () => {
               list={COUNTRIES}
               onValueChange={(selected) => onSelectCountry(selected.value as string)}
             />,
-            !externalAccounts?.length
+            !externalAccounts?.length,
           )}
           <BankAccounts
             accounts={externalAccounts}
@@ -107,7 +107,7 @@ export const Desktop: React.FC = () => {
           <div className={css.load} onClick={loadMoreMissions}>
             load more...
           </div>,
-          totalMissions < total_count
+          totalMissions < total_count,
         )}
       </div>
     </TwoColumnCursor>

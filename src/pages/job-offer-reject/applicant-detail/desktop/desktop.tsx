@@ -78,7 +78,7 @@ export const Desktop: React.FC = () => {
           applicantDetail={applicantDetail as ApplicantResp}
           onDone={updateApplicantList}
         />,
-        applicantDetail !== undefined
+        applicantDetail !== undefined,
       )}
     </>
   );

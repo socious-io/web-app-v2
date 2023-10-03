@@ -8,7 +8,6 @@ import { JobDetailCard } from '../components/job-detail-card/job-detail-card';
 import { useJobDetailShared } from '../job-detail.shared';
 import { getJobStructuresData } from '../job-details.jobStructuredData';
 
-
 export const Desktop = (): JSX.Element => {
   const { identity, job, location, screeningQuestions } = useJobDetailShared();
 

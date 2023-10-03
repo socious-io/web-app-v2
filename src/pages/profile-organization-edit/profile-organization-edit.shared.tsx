@@ -15,7 +15,6 @@ import { generateFormModel } from './profile-organization-edit.form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-organization-edit.services';
 import { ProfileReq } from '../profile-user/profile-user.types';
 
-
 export const useProfileOrganizationEditShared = () => {
   const organization = useMatch().data.user as ProfileReq;
   const formModel = useMemo(() => generateFormModel(organization), []);

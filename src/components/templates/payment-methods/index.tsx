@@ -41,7 +41,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
             </div>
           ))}
         </div>,
-        !!added_cards.length
+        !!added_cards.length,
       )}
       <div className={css['connect__text']}>
         All payments in Socious are done with cryptocurrencies or credit card. By connecting a wallet, you agree to

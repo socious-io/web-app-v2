@@ -14,7 +14,7 @@ import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERE
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './desktop.module.scss';
 import { useCompleteMissionShared } from '../complete-mission.shared';
@@ -159,7 +159,7 @@ export const Desktop = (): JSX.Element => {
                       </a>
                     </div>
                   </Divider>,
-                  !!media.url
+                  !!media.url,
                 )}
                 {/* <Divider title="Contact Info">
           <Typography>

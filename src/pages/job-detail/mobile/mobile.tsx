@@ -18,7 +18,6 @@ import { getCategories } from '../job-detail.services';
 import { useJobDetailShared } from '../job-detail.shared';
 import { getJobStructuresData } from '../job-details.jobStructuredData';
 
-
 export const Mobile = (): JSX.Element => {
   const { navigate, job, identity, location, screeningQuestions } = useJobDetailShared();
   const { isLoggedIn } = useAuth();

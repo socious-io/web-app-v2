@@ -1,17 +1,25 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+import { Steps } from 'src/components/atoms/steps-v2/steps';
+import { Typography } from 'src/components/atoms/typography/typography';
+import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
+import { RootState } from 'src/store';
 
 import { list } from './intro.constants';
 import css from './intro.module.scss';
-import { Button } from '../../components/atoms/button/button';
-import { Steps } from '../../components/atoms/steps-v2/steps';
-import { Typography } from '../../components/atoms/typography/typography';
-import { BottomStatic } from '../../components/templates/bottom-static/bottom-static';
-
 
 export const Intro = (): JSX.Element => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const status = useSelector((state: RootState) => state.identity.status);
+
+  if (status === 'succeeded') return <Navigate to="/jobs" />;
+
+  if (status === 'loading') {
+    return <div></div>;
+  }
 
   return (
     <BottomStatic backgroundColor="var(--color-off-white-01)">

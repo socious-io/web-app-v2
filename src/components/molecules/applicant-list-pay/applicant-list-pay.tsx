@@ -6,7 +6,6 @@ import { printWhen } from '../../../core/utils';
 import { StatusTag } from '../../atoms/status-tag/status-tag';
 import { ProfileView } from '../profile-view/profile-view';
 
-
 const statuses = {
   CONFIRMED: {
     label: 'Confirmed',
@@ -74,15 +73,15 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             <div className={css.footerItem}>
               <Dapp.Connect />
             </div>,
-            props.isPaidCrypto
+            props.isPaidCrypto,
           )}
           {printWhen(
             confirmBtn(applicant.id, applicant.payment?.meta?.id),
-            props.confirmable || applicant.status === 'COMPLETE'
+            props.confirmable || applicant.status === 'COMPLETE',
           )}
           {printWhen(
             feedbackBtn(applicant.id, applicant.status),
-            applicant.showFeedback && !!props?.onFeedback && applicant?.user_feedback === null
+            applicant.showFeedback && !!props?.onFeedback && applicant?.user_feedback === null,
           )}
           <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
             <img src="/icons/message-blue.svg" />

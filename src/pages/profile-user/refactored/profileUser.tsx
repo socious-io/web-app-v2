@@ -255,7 +255,7 @@ const ProfileUser = () => {
               <Divider title="Culture">
                 <div className={css.culture}>{user.culture}</div>
               </Divider>,
-              !!user.culture
+              !!user.culture,
             )}
           </div>
           <Edit

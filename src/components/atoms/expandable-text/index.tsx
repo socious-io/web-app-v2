@@ -44,7 +44,7 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
         <span className={css.expect__seeMore} onClick={toggleExpect}>
           See more
         </span>,
-        shouldViewMore
+        shouldViewMore,
       )}
     </div>
   );
