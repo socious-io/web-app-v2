@@ -1,6 +1,4 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
-import { MenuCursor as RootCursorLayout } from 'src/components/templates/menu-cursor/menu-cursor';
-import { MenuTouch as RootTouchLayout } from 'src/components/templates/menu-touch/menu-touch';
 import Layout from 'src/components/templates/refactored/layout/layout';
 import {
   jobs,
@@ -14,8 +12,9 @@ import {
   posts,
   getPost,
   postComments,
+  missions,
+  stripeProfile,
 } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
 
 export const blueprint: RouteObject[] = [
@@ -180,12 +179,6 @@ export const blueprint: RouteObject[] = [
           };
         },
       },
-    ],
-  },
-  {
-    element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
-    loader: jobsPageLoader,
-    children: [
       {
         path: 'd/chats',
         children: [
@@ -266,6 +259,20 @@ export const blueprint: RouteObject[] = [
             loader: () => notificationSettings(),
           },
         ],
+      },
+      {
+        path: 'wallet',
+        async lazy() {
+          const { Wallet } = await import('src/pages/wallet/wallet.container');
+          return {
+            Component: Wallet,
+          };
+        },
+        loader: async () => {
+          const requests = [missions({ page: 1 }), stripeProfile({}), stripeProfile({ is_jp: true })];
+          const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
+          return { missionsList, stripeProfileRes, jpStripeProfileRes };
+        },
       },
     ],
   },
