@@ -1,13 +1,4 @@
-import {
-  FollowingsReq,
-  IdentityMeta,
-  IdentityReq,
-  MessagesReq,
-  Pagination,
-  ParticipantsReq,
-  SummaryReq,
-  UserType,
-} from '../../../core/types';
+import { FollowingsReq, IdentityReq, MessagesReq, Pagination, ParticipantsReq, SummaryReq } from '../../../core/types';
 
 export type MessageLoader = MakeGenerics<{
   LoaderData: {
@@ -23,7 +14,3 @@ export type OnPostMessageParams = {
   identity: IdentityReq;
   text: string;
 };
-
-export interface ParticipantDetail extends IdentityMeta {
-  type: UserType;
-}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
@@ -7,13 +8,13 @@ import { BackLink } from 'src/components/molecules/back-link';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
+import { useSettingsShared } from 'src/pages/notifications/settings/settings.shared';
 import translate from 'src/translations';
 
 import css from './desktop.module.scss';
-import { useSettingsShared } from '../settings.shared';
 
 export const Desktop: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const {
     generateSettings: settings,
     payload,
@@ -44,7 +45,7 @@ export const Desktop: React.FC = () => {
     <>
       {printWhen(turnedOffMessageBoxJSX, !allowedNotifications && !closeAlert)}
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
-        <BackLink title="Notifications" onBack={() => navigate({ to: '/notifications' })} />
+        <BackLink title="Notifications" onBack={() => navigate('/notifications')} />
         <Card>
           <div className={`${css.notification_all} ${!allowedNotifications && css['notification_all--noBorder']}`}>
             Allow notifications

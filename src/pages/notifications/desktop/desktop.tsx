@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
 import { NotificationList } from 'src/components/organisms/notification-list/notification-list';
@@ -8,7 +9,7 @@ import css from './desktop.module.scss';
 import { useNotificationsShared } from '../notifications.shared';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore } = useNotificationsShared();
   const { isLoggedIn } = useAuth();
 
@@ -19,7 +20,7 @@ export const Desktop = (): JSX.Element => {
           <Avatar size="2.25rem" type={identity.type} img={avatarImg} />
           Notifications
         </div>
-        <img src="/icons/settings-black.svg" className={css.icon} onClick={() => navigate({ to: 'settings' })} />
+        <img src="/icons/settings-black.svg" className={css.icon} onClick={() => navigate('settings')} />
       </Card>
       <Card>
         <NotificationList

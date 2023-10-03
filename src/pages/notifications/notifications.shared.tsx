@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLoaderData } from 'react-router-dom';
+import { notifications, NotificationsRes } from 'src/core/api';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store';
 
-import { getNotificationList } from './notifications.service';
-import { Resolver } from './notifications.types';
-
 export const useNotificationsShared = () => {
-  const list = useMatch().ownData as Resolver;
+  const list = useLoaderData() as NotificationsRes;
   const [notificationList, setNotificationList] = useState(list.items);
   const [page, setPage] = useState(1);
   const totalCount = list.total_count;
@@ -24,7 +23,7 @@ export const useNotificationsShared = () => {
   };
 
   const onMorePageClick = () => {
-    getNotificationList({ page: page + 1 }).then((resp) => {
+    notifications({ page: page + 1 }).then((resp) => {
       setPage((v) => v + 1);
       setNotificationList((list) => [...list, ...resp.items]);
     });
