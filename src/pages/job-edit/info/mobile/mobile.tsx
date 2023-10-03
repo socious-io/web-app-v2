@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
@@ -27,21 +28,19 @@ import css from './mobile.module.scss';
 import { createFormInitState, jobEditRequest } from '../info.services';
 import { useInfoShared } from '../info.shared';
 
-
 export const Mobile = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const resolvedJobCategories = useMatch().ownData.jobCategories?.categories as CategoriesResp['categories'];
-  const overview = useMatch().ownData.overview as Job;
-  const categories = jobCategoriesToDropdown(resolvedJobCategories);
+  const { categories } = (useLoaderData().jobCategories as CategoriesResp) || {};
+
   useEffect(() => {
     dispatch(setInitPostWizard(createFormInitState(overview)));
   }, []);
 
   function editJob(id: string, payload: CreatePostPayload) {
     jobEditRequest(overview.id, payload).then(() => {
-      navigate({ to: `/m/jobs/created/${id}/overview` });
+      navigate(`/jobs/created/${id}/overview`);
     });
   }
 
@@ -57,7 +56,7 @@ export const Mobile = (): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: `/m/jobs/created/${overview.id}/overview` })}>
+        <div className={css.chevron} onClick={() => navigate(`/jobs/created/${overview.id}/overview`)}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.headerTitle}>Edit job</div>
@@ -181,11 +180,11 @@ export const Mobile = (): JSX.Element => {
                 </div>
                 {printWhen(
                   errorsJSX,
-                  !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher)
+                  !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher),
                 )}
                 {printWhen(
                   <span className={css.info}>Prices will be shown in USD ($)</span>,
-                  formState.payment_type === 'PAID'
+                  formState.payment_type === 'PAID',
                 )}
               </div>
             </div>
@@ -205,7 +204,7 @@ export const Mobile = (): JSX.Element => {
           </Divider>
           <div className={css.btnContainer}>
             <Button onClick={() => editJob(overview.id, formState)}>Save changes</Button>
-            <Button color="white" onClick={() => navigate({ to: `/m/jobs/created/${overview.id}/overview` })}>
+            <Button color="white" onClick={() => navigate(`/jobs/created/${overview.id}/overview`)}>
               Cancel
             </Button>
           </div>

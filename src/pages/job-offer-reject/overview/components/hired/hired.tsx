@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { ApplicantListPay } from 'src/components/molecules/applicant-list-pay/applicant-list-pay';
 import Dapp from 'src/dapp';
 import { useAlert } from 'src/hooks/use-alert';
 import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
@@ -12,17 +15,14 @@ import { endpoint } from '../../../../../core/endpoints';
 import { missionToApplicantListPayAdaptor } from '../../../job-offer-reject.services';
 import { FeedbackModal } from '../feedback-modal';
 import { Rate } from '../feedback-modal/feedback-modal.types';
-import { Accordion } from '../src/components/atoms/accordion/accordion';
-import { ApplicantListPay } from '../src/components/molecules/applicant-list-pay/applicant-list-pay';
-
 
 export const Hired = (props: HiredProps): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const { hiredList, endHiredList: endHiredListDefault, onDone } = props;
   const [endHiredList, setEndHiredList] = useState(endHiredListDefault);
   const { web3 } = Dapp.useWeb3();
   const [process, setProcess] = useState(false);
-  const resolver = useMatch().ownData as Loader;
+  const resolver = useLoaderData() as Loader;
   const { offerOverview, jobOverview } = resolver || {};
   const isPaidCrypto = jobOverview?.payment_type === 'PAID' && offerOverview?.payment_mode === 'CRYPTO';
   const [selectedIdFeedback, setSelectedIdFeedback] = useState<{ id: string; status: 'CONFIRMED' | string }>({
@@ -77,7 +77,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
   }
 
   function onMessageClick(id: string) {
-    navigate({ to: `/chats/new/${id}` });
+    navigate(`/chats/new/${id}`);
   }
 
   function onSubmitFeedback() {

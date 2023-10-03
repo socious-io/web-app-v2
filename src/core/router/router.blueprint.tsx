@@ -1,8 +1,30 @@
-import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import { RouteObject, createBrowserRouter, Navigate } from 'react-router-dom';
 import Layout from 'src/components/templates/refactored/layout/layout';
-import {jobs} from 'src/core/api';
+import { getMedia, job, jobs } from 'src/core/api';
+import { getMission, getOffer } from 'src/core/api';
+import {
+  getAwaitingReviewList,
+  getDeclinedApplicants,
+  getEndedList,
+  getOnGoingList,
+  getPendingApplicants,
+} from 'src/pages/job-apply/my-jobs/my-jobs.services';
+import { getJobCategories } from 'src/pages/job-create/info/info.services';
+import { getActiveJobs, getArchivedJobs, getDraftJobs } from 'src/pages/job-create/my-jobs/my-jobs.services';
+import {
+  getApplicantDetail,
+  getScreeningQuestions,
+  jobOfferRejectLoader,
+} from 'src/pages/job-offer-reject/job-offer-reject.services';
+import { jobsPageLoader } from 'src/pages/jobs/jobs.loader';
+import { receivedOfferLoader } from 'src/pages/offer-received/offer-received.services';
+import store from 'src/store/store';
 
 export const blueprint: RouteObject[] = [
+  {
+    path: '/',
+    element: <DefaultRoute />,
+  },
   {
     path: '/intro',
     async lazy() {
@@ -126,21 +148,168 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
-    path: 'jobs',
     element: <Layout />,
+    loader: jobsPageLoader,
+    path: '/jobs',
     children: [
       {
+        path: '',
+        loader: async () => {
+          const data = await jobs({ page: 1 });
+          return { data };
+        },
         async lazy() {
           const { Jobs } = await import('../../pages/jobs');
-          const jobsList = await jobs({ page: 1 });
           return {
             Component: Jobs,
-            Loader: jobsList
           };
-        }
+        },
+      },
+      {
+        path: 'applied/complete-mission/:id',
+        loader: async ({ params }) => {
+          let media = { url: '' };
+          const mission = await getMission(params.id);
+          const offer = await getOffer(mission.offer_id);
+          if (offer.applicant?.attachment) {
+            media = await getMedia(offer.applicant.attachment);
+          }
+          return { mission, offer, media };
+        },
+        async lazy() {
+          const { CompleteMission } = await import('../../pages/complete-mission/complete-mission.container');
+          return {
+            Component: CompleteMission,
+          };
+        },
+      },
+      {
+        path: ':id',
+        loader: async ({ params }) => {
+          const requests = [job(params.id), getScreeningQuestions(params.id)];
+          const [jobDetail, screeningQuestions] = await Promise.all(requests);
+          return { jobDetail, screeningQuestions };
+        },
+        async lazy() {
+          const { JobDetailContainer } = await import('../../pages/job-detail/job-detail.container');
+          return { Component: JobDetailContainer };
+        },
+      },
+      {
+        path: ':id/apply',
+        loader: async ({ params }) => {
+          const requests = [job(params.id), getScreeningQuestions(params.id)];
+          const [jobDetail, screeningQuestions] = await Promise.all(requests);
+          return { jobDetail, screeningQuestions };
+        },
+        async lazy() {
+          const { JobApply } = await import('../../pages/job-apply/apply/apply.container');
+          return { Component: JobApply };
+        },
+      },
+
+      {
+        path: 'created/:id/overview/:applicantId/offer',
+        loader: async ({ params }) => {
+          const requests = [getApplicantDetail(params.applicantId)];
+          const [applicantDetail] = await Promise.all(requests);
+          return { applicantDetail };
+        },
+        async lazy() {
+          const { Offer } = await import('../../pages/job-offer-reject/offer/offer.container');
+          return { Component: Offer };
+        },
+      },
+      {
+        path: 'created/:id/overview/:applicantId',
+        loader: async ({ params }) => {
+          const requests = [getScreeningQuestions(params.id), getApplicantDetail(params.applicantId)];
+          const [screeningQuestions, applicantDetail] = await Promise.all(requests);
+          return { applicantDetail, screeningQuestions };
+        },
+        async lazy() {
+          const { ApplicantDetail } = await import('../../pages/job-offer-reject/applicant-detail/applicant-detail');
+          return { Component: ApplicantDetail };
+        },
+      },
+      {
+        path: 'created/:id/overview',
+        loader: (params) => jobOfferRejectLoader(params),
+        async lazy() {
+          const { JobOfferReject } = await import('../../pages/job-offer-reject/job-offer-reject.container');
+          return { Component: JobOfferReject };
+        },
+      },
+      {
+        path: 'applied/:id',
+        loader: async () => {
+          const requests = [
+            getPendingApplicants({ page: 1 }),
+            getAwaitingReviewList({ page: 1 }),
+            getDeclinedApplicants({ page: 1 }),
+            getOnGoingList({ page: 1 }),
+            getEndedList({ page: 1 }),
+          ];
+          const [pendingApplicants, awaitingApplicants, declinedApplicants, onGoingApplicants, endedApplicants] =
+            await Promise.all(requests);
+          return {
+            pendingApplicants,
+            awaitingApplicants,
+            declinedApplicants,
+            onGoingApplicants,
+            endedApplicants,
+          };
+        },
+        async lazy() {
+          const { MyJobs } = await import('../../pages/job-apply/my-jobs/my-jobs');
+          return { Component: MyJobs };
+        },
+      },
+      {
+        path: 'created/:id',
+        loader: async ({ params }) => {
+          const requests = [
+            getActiveJobs({ identityId: params.id, page: 1 }),
+            getDraftJobs({ identityId: params.id, page: 1 }),
+            getArchivedJobs({ identityId: params.id, page: 1 }),
+            getJobCategories(),
+          ];
+          const [activeJobs, draftJobs, archivedJobs, jobCategories] = await Promise.all(requests);
+          return { activeJobs, draftJobs, archivedJobs, jobCategories };
+        },
+        async lazy() {
+          const { MyJobs } = await import('../../pages/job-create/my-jobs/my-jobs.container');
+          return { Component: MyJobs };
+        },
+      },
+      {
+        path: 'received-offer/:id',
+        loader: async ({ params }) => {
+          let media = { url: '' };
+          const { offer } = await receivedOfferLoader(params);
+          if (offer.applicant?.attachment) {
+            media = await getMedia(offer.applicant.attachment);
+          }
+          return { offer, media };
+        },
+        async lazy() {
+          const { OfferReceived } = await import('../../pages/offer-received/offer-received.container');
+          return { Component: OfferReceived };
+        },
       },
     ],
   },
+  {
+    path: '*',
+    element: <div>Page not found :(</div>,
+  },
 ];
-
+function DefaultRoute(): JSX.Element {
+  const state = store.getState().identity.entities;
+  if (state.length) {
+    return <Navigate to="/jobs" />;
+  } else {
+    return <Navigate to="/intro" />;
+  }
+}
 export const routes = createBrowserRouter(blueprint);

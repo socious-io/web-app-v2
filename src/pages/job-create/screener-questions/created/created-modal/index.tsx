@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { WebModal } from 'src/components/templates/web-modal';
@@ -11,7 +12,7 @@ import { CreatedModalProps } from './created-modal.types';
 import { useCreatedShared } from '../created.shared';
 
 export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBack, onDone }) => {
-  const navigate = {};
+  const navigate = useNavigate();
   const { questions, onRemoveCreatedQuestion } = useCreatedShared();
   const [openAlertModal, setOpenAlertModal] = useState(false);
 
@@ -25,7 +26,7 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBac
     store.dispatch(resetCreatePostWizard());
     setOpenAlertModal(false);
     onDone();
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
   }
 
   return (

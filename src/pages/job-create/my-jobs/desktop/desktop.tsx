@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
@@ -16,10 +18,9 @@ import { useMyJobShared } from '../my-job.shared';
 import { getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
 import { MyJobs } from '../my-jobs.types';
 
-
 export const Desktop: React.FC = () => {
-  const resolver = useMatch();
-  const navigate = {};
+  const { id } = useParams();
+  const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
   const {
     onGoingTitle,
@@ -42,8 +43,8 @@ export const Desktop: React.FC = () => {
   const [onGoingTitleUpdate, setOnGoingTitleUpdate] = useState(onGoingTitle);
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const JobsMenuList = [
@@ -52,7 +53,7 @@ export const Desktop: React.FC = () => {
   ];
 
   async function onCreateJob() {
-    const identityId = resolver.params.id;
+    const identityId = id;
     const payload = { identityId, page: 1 };
     getActiveJobs(payload).then((data) => {
       setActiveJobList({ ...data, items: jobListToJobCardListAdaptor(data.items) });
@@ -77,7 +78,7 @@ export const Desktop: React.FC = () => {
                 onSeeMoreClick={updateActiveJobList}
               />
             </div>,
-            !!activeJobList.items.length
+            !!activeJobList.items.length,
           )}
         </Accordion>
         <Accordion id="drafts" title={draftTitle} no_border>
@@ -90,7 +91,7 @@ export const Desktop: React.FC = () => {
                 onSeeMoreClick={updateDraftJobList}
               />
             </div>,
-            !!draftJobList.items.length
+            !!draftJobList.items.length,
           )}
         </Accordion>
       </Card>
@@ -109,7 +110,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updateArchivedJobList}
             />
           </div>,
-          !!archivedJobList.items.length
+          !!archivedJobList.items.length,
         )}
       </Accordion>
     </Card>
@@ -119,7 +120,7 @@ export const Desktop: React.FC = () => {
     <>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
-          <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
+          <BackLink title="Jobs" onBack={() => navigate('/jobs')} />
           <ProfileCard />
           <CardMenu title="Network" list={NetworkMenuList} />
           <CardMenu title="My Jobs" list={JobsMenuList} />

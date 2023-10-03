@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
@@ -13,8 +14,6 @@ import { visibility } from 'src/store/reducers/menu.reducer';
 import css from './jobs.module.scss';
 import { useJobsShared } from './jobs.shared';
 
-
-
 export const Jobs = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,8 +21,8 @@ export const Jobs = (): JSX.Element => {
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections' ) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings' ) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
@@ -35,7 +34,7 @@ export const Jobs = (): JSX.Element => {
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate(`/d/jobs/applied/${identity.id}`),
+      link: () => navigate(`/jobs/applied/${identity.id}`),
     },
   ];
 
@@ -43,7 +42,7 @@ export const Jobs = (): JSX.Element => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate(`/d/jobs/created/${identity.id}`),
+      link: () => navigate(`/jobs/created/${identity.id}`),
     },
   ];
   function openSidebar() {

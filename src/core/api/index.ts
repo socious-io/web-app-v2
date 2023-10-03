@@ -30,3 +30,6 @@ export * from './payments/payments.types';
 
 export * from './posts/posts.api';
 export * from './posts/posts.types';
+
+export * from './media/media.api';
+export * from './media/media.types';
