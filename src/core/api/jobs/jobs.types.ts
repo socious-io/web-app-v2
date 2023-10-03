@@ -133,7 +133,7 @@ export interface OffersRes {
   items: Offer[];
 }
 
-export interface MissionsRes {
+export interface MissionsRes extends PaginateRes {
   items: Mission[];
 }
 
