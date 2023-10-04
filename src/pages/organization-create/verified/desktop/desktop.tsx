@@ -1,9 +1,9 @@
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
+import { getProcess } from 'src/pages/organization-create/verified/verified.services';
 
 import css from './desktop.module.scss';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
-import { getProcess } from '../verified.services';
 
 export const Desktop = (): JSX.Element => {
   const processes = getProcess('verify@socious.com');

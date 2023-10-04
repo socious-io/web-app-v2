@@ -1,10 +1,10 @@
 import { Button } from 'src/components/atoms/button/button';
 import { Steps } from 'src/components/atoms/steps/steps';
 import { TypeSelector } from 'src/components/atoms/type-selector/type-selector';
+import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
 
 import css from './mobile.module.scss';
-import { ORGANIZATION_TYPE } from '../../../../constants/ORGANIZATION_TYPE';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {
   const { type, updateOrgType, navigateToSocialCauses, navigateToIntro } = useOrganizationCreateShared();
@@ -21,7 +21,7 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div className={css.question}>What type of organization?</div>
       <div className={css.main}>
-        <TypeSelector value={type} padding="2rem 1rem" onChange={updateOrgType} list={ORGANIZATION_TYPE} />
+        <TypeSelector value={type || ''} padding="2rem 1rem" onChange={updateOrgType} list={ORGANIZATION_TYPE} />
       </div>
       <div className={css.bottom}>
         <Button disabled={!type} onClick={navigateToSocialCauses}>

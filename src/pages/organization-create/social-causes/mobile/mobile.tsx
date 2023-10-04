@@ -3,10 +3,10 @@ import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
 import { Steps } from 'src/components/atoms/steps/steps';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
+import { SOCIAL_CAUSES } from 'src/pages/organization-create/social-causes/social-causes.services';
 
 import css from './mobile.module.scss';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
-import { SOCIAL_CAUSES } from '../social-causes.services';
 
 export const Mobile = (): JSX.Element => {
   const { socialCauses, updateSocialCauses, isSocialCausesValid, navigateToProfile, navigateToType } =

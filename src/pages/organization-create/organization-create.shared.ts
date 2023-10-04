@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { identities } from 'src/core/api';
+import { useNavigate } from 'react-router-dom';
+import { createOrganization, identities, OrganizationType, SocialCauses } from 'src/core/api';
 import { useForm } from 'src/core/form';
 import { handleError } from 'src/core/http';
 import { RootState } from 'src/store';
@@ -14,12 +15,12 @@ import {
 } from 'src/store/reducers/createOrgWizard.reducer';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
-import { addOrganization, wizardFormToPayloadAdaptor } from './organization-create';
+import { wizardFormToPayloadAdaptor } from './organization-create';
 import { formModel } from './profile/profile.form';
 import { updateForm } from './profile/profile.services';
 
 export const useOrganizationCreateShared = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   async function updateIdentityList() {
@@ -28,7 +29,8 @@ export const useOrganizationCreateShared = () => {
 
   function submitOrganization(wizardForm: CreateOrgWizard) {
     const payload = wizardFormToPayloadAdaptor(wizardForm);
-    addOrganization(payload).then(navigateToSuccess).then(updateIdentityList).catch(handleError());
+    createOrganization(payload).then(navigateToSuccess).then(updateIdentityList).catch(handleError());
+    // addOrganization(payload).then(navigateToSuccess).then(updateIdentityList).catch(handleError());
   }
 
   function submitForm() {
@@ -37,40 +39,40 @@ export const useOrganizationCreateShared = () => {
   }
 
   function navigateToJobs() {
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
     dispatch(resetCreateOrgWizard());
   }
 
   function navigateToType() {
-    navigate({ to: '../type' });
+    navigate('../type');
   }
 
   function navigateToIntro() {
-    navigate({ to: '../intro' });
+    navigate('../intro');
   }
 
   function navigateToSocialCauses() {
-    navigate({ to: '../social-causes' });
+    navigate('../social-causes');
   }
 
   function navigateToProfile() {
-    navigate({ to: '../profile' });
+    navigate('../profile');
   }
 
   function navigateToMission() {
-    navigate({ to: '../mission' });
+    navigate('../mission');
   }
 
   function navigateToCulture() {
-    navigate({ to: '../culture' });
+    navigate('../culture');
   }
 
   function navigateToSuccess() {
-    navigate({ to: '../succeed' });
+    navigate('../succeed');
   }
 
   function navigateToVerified() {
-    navigate({ to: '../verified' });
+    navigate('../verified');
   }
 
   function onMissionSkip() {
@@ -99,11 +101,11 @@ export const useOrganizationCreateShared = () => {
     dispatch(setCulture(value));
   }
 
-  const type = useSelector<RootState, string>((state) => {
+  const type = useSelector<RootState, OrganizationType | undefined>((state) => {
     return state.createOrgWizard.type;
   });
 
-  const socialCauses = useSelector<RootState, string[]>((state) => {
+  const socialCauses = useSelector<RootState, SocialCauses[]>((state) => {
     return state.createOrgWizard.socialCauses;
   });
 

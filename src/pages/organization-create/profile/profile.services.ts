@@ -1,8 +1,8 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { Dispatch, SetStateAction } from 'react';
-
-import { DropdownItem } from '../../../components/atoms/dropdown/dropdown.types';
-import { citiesToCategories } from '../../../core/adaptors';
+import { DropdownItem } from 'src/components/atoms/dropdown/dropdown.types';
+import { citiesToCategories } from 'src/core/adaptors';
+import { cities as getCities } from 'src/core/api';
 import {
   CreateOrgWizard,
   setAddress,
@@ -16,12 +16,11 @@ import {
   setPhoneNumber,
   setWebsite,
   setAgreement,
-} from '../../../store/reducers/createOrgWizard.reducer';
-import { getCityList } from '../../job-create/info/info.services';
+} from 'src/store/reducers/createOrgWizard.reducer';
 
 export function updateCityList(dispatcher: Dispatch<SetStateAction<DropdownItem[]>>) {
   return (countryCode: string) => {
-    getCityList(countryCode)
+    getCities(countryCode)
       .then(({ items }) => citiesToCategories(items))
       .then(dispatcher);
   };

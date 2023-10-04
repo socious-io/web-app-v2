@@ -7,14 +7,14 @@ import { Input } from 'src/components/atoms/input/input';
 import { Steps } from 'src/components/atoms/steps/steps';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Divider } from 'src/components/templates/divider/divider';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { citiesToCategories } from 'src/core/adaptors';
+import { cities as getCities } from 'src/core/api';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
+import { formModel } from 'src/pages/organization-create/profile/profile.form';
+import { formIsInvalid } from 'src/pages/organization-create/profile/profile.services';
 
 import css from './mobile.module.scss';
-import { COUNTRIES } from '../../../../constants/COUNTRIES';
-import { citiesToCategories } from '../../../../core/adaptors';
-import { getCityList } from '../../../job-create/info/info.services';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
-import { formModel } from '../profile.form';
-import { formIsInvalid } from '../profile.services';
 
 export const Mobile = (): JSX.Element => {
   const { updateField, profileForm, formState, navigateToSocialCauses, navigateToMission } =
@@ -27,7 +27,7 @@ export const Mobile = (): JSX.Element => {
   });
 
   function updateCityList(countryCode: string) {
-    getCityList(countryCode)
+    getCities(countryCode)
       .then(({ items }) => citiesToCategories(items))
       .then(setCities);
   }
