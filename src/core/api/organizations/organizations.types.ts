@@ -2,7 +2,7 @@ import { SocialCauses, PaginateRes, OrganizationType } from '../types';
 
 export interface OrganizationReq {
   name: string;
-  shortname: string;
+  shortname?: string;
   bio?: string;
   description?: string;
   email: string;
