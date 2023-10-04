@@ -17,7 +17,6 @@ import {
   missions,
   stripeProfile,
 } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import FallBack from 'src/pages/fall-back/fall-back';
 import { RootState } from 'src/store';
 
