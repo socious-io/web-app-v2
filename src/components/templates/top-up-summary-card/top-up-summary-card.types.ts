@@ -1,3 +1,5 @@
+import { Offer } from 'src/core/types';
+
 export interface TopUpSummaryCardProps {
   title: string;
   unit?: string;
@@ -5,4 +7,5 @@ export interface TopUpSummaryCardProps {
   weekly_limit: number;
   isPaidCrypto: boolean;
   containerClassName?: string;
+  verified_impact?: boolean;
 }

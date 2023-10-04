@@ -114,6 +114,7 @@ export const Desktop: React.FC = () => {
             weekly_limit={weekly_limit}
             isPaidCrypto={isPaidCrypto}
             offer_rate={assignment_total}
+            verified_impact={offer.offerer.meta.verified_impact}
           />
           <PaymentMethods
             crypto_method={

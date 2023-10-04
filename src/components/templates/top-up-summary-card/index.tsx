@@ -15,6 +15,7 @@ export const TopUpSummaryCard: React.FC<TopUpSummaryCardProps> = ({
   isPaidCrypto,
   unit,
   containerClassName = '',
+  verified_impact,
   ...rest
 }) => {
   const {
@@ -32,17 +33,22 @@ export const TopUpSummaryCard: React.FC<TopUpSummaryCardProps> = ({
   const [inputAmount, setInputAmount] = useState('');
   const [isIncorrectInput, setIncorrectInput] = useState(false);
   const minTopUp = weekly_limit * offer_rate;
+  const verificationStatus = verified_impact ? 'VERIFIED' : 'NOT_VERIFIED';
   const feesList = [
     {
-      title: `${COMMISSIONS.SOCIOUS.label} (${COMMISSIONS.SOCIOUS.value}%)`,
-      price: parseFloat(((inputAmount ? parseFloat(inputAmount) : 0 * COMMISSIONS.SOCIOUS.value) / 100).toFixed(2)),
+      title: `${COMMISSIONS[verificationStatus].SOCIOUS.label} (${COMMISSIONS[verificationStatus].SOCIOUS.value}%)`,
+      price: parseFloat(
+        (((inputAmount ? parseFloat(inputAmount) : 0) * COMMISSIONS[verificationStatus].SOCIOUS.value) / 100).toFixed(2)
+      ),
     },
   ];
 
   if (!isPaidCrypto) {
     feesList.push({
-      title: `${COMMISSIONS.STRIPE.label} (${COMMISSIONS.STRIPE.value}%)`,
-      price: parseFloat(((inputAmount ? parseFloat(inputAmount) : 0 * COMMISSIONS.STRIPE.value) / 100).toFixed(2)),
+      title: `${COMMISSIONS[verificationStatus].STRIPE.label} (${COMMISSIONS[verificationStatus].STRIPE.value}%)`,
+      price: parseFloat(
+        (((inputAmount ? parseFloat(inputAmount) : 0) * COMMISSIONS[verificationStatus].STRIPE.value) / 100).toFixed(2)
+      ),
     });
   }
 

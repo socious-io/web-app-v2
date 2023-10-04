@@ -110,6 +110,7 @@ export const Mobile = (): JSX.Element => {
               weekly_limit={weekly_limit}
               isPaidCrypto={isPaidCrypto}
               offer_rate={assignment_total}
+              verified_impact={offer.offerer.meta.verified_impact}
             />
           </div>
           <PaymentMethods
