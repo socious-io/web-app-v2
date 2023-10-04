@@ -29,29 +29,29 @@ export const TopUpSummaryCard: React.FC<TopUpSummaryCardProps> = ({
     web3,
   } = useOfferShared();
 
-  const [inputAmount, setInputAmount] = useState('0');
+  const [inputAmount, setInputAmount] = useState('');
   const [isIncorrectInput, setIncorrectInput] = useState(false);
-
   const minTopUp = weekly_limit * offer_rate;
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.target.value === '' ? setInputAmount('0') : setInputAmount(`${parseFloat(event.target.value)}`);
-    setIncorrectInput(parseFloat(event.target.value) >= minTopUp);
-  };
-
   const feesList = [
     {
       title: `${COMMISSIONS.SOCIOUS.label} (${COMMISSIONS.SOCIOUS.value}%)`,
-      price: parseFloat(((parseFloat(inputAmount) * COMMISSIONS.SOCIOUS.value) / 100).toFixed(2)),
+      price: parseFloat(((inputAmount ? parseFloat(inputAmount) : 0 * COMMISSIONS.SOCIOUS.value) / 100).toFixed(2)),
     },
   ];
 
   if (!isPaidCrypto) {
     feesList.push({
       title: `${COMMISSIONS.STRIPE.label} (${COMMISSIONS.STRIPE.value}%)`,
-      price: parseFloat(((parseFloat(inputAmount) * COMMISSIONS.STRIPE.value) / 100).toFixed(2)),
+      price: parseFloat(((inputAmount ? parseFloat(inputAmount) : 0 * COMMISSIONS.STRIPE.value) / 100).toFixed(2)),
     });
   }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isNaN(Number(event.target.value))) {
+      setInputAmount(event.target.value);
+    }
+    setIncorrectInput(parseFloat(event.target.value) >= minTopUp);
+  };
 
   const totalFees = function (list: { title: string; price: number }[]) {
     let total = 0;
@@ -68,14 +68,12 @@ export const TopUpSummaryCard: React.FC<TopUpSummaryCardProps> = ({
         <div className={css.payment__input__name}>{isPaidCrypto ? 'Top up amount' : 'Payment amount'}</div>
         <InputModal
           name="assignmentTotal"
-          // register={form}
           placeholder="amount"
           modalHeader="Select a token"
           items={tokens as Item[]}
           open={openModal}
           onOpen={() => setOpenModal(true)}
           onClose={() => setOpenModal(false)}
-          //   selectedItem={(selectedToken?.symbol || tokens[0]?.subtitle) as string}
           selectedItem={isPaidCrypto ? ((selectedToken?.symbol || tokens[0]?.subtitle) as string) : selectedCurrency}
           onSelectItem={isPaidCrypto ? onSelectTokens : onSelectCurrency}
           onChange={handleChange}
@@ -91,13 +89,13 @@ export const TopUpSummaryCard: React.FC<TopUpSummaryCardProps> = ({
       <div className={css.payment__total}>
         Total payment
         <div className={css.payment__price}>
-          {unit} {(totalFees(feesList) + parseFloat(inputAmount)).toFixed(2).toLocaleString()}
+          {unit} {(totalFees(feesList) + (inputAmount ? parseFloat(inputAmount) : 0)).toFixed(2).toLocaleString()}
         </div>
       </div>
       <div className={css.payment__detail}>
         <PaymentDetail
           unit={unit}
-          list={[{ title: 'Socious balance after top-up', price: parseFloat(inputAmount) }]}
+          list={[{ title: 'Socious balance after top-up', price: inputAmount ? parseFloat(inputAmount) : 0 }]}
           {...rest}
         />
       </div>
