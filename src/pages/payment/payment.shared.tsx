@@ -11,6 +11,7 @@ import { getMonthName } from 'src/core/time';
 import { Resolver } from './payment.types';
 import { CardInfoResp, MissionsResp } from 'src/core/types';
 import { getFlooredFixed } from 'src/core/numbers';
+import { COMMISSIONS } from 'src/constants/PAYMENT_COMMISSIONS';
 
 export const usePaymentShared = () => {
   const { web3 } = Dapp.useWeb3();
@@ -37,10 +38,40 @@ export const usePaymentShared = () => {
   } = offer || {};
   const { wallet_address: contributor } = recipient?.meta || {};
 
+  const verificationStatus = offer.offerer.meta.verified_impact ? 'VERIFIED' : 'NOT_VERIFIED';
+  const [topupAmount, setTopupAmount] = useState('');
   const start_date = getMonthName(created_at) + ' ' + new Date(created_at).getDate();
   const isPaidCrypto = project?.payment_type === 'PAID' && payment_mode === 'CRYPTO';
   const isDisabledProceedPayment =
     process || (isPaidCrypto ? !isConnected || !account : !selectedCard) || status === 'HIRED';
+
+  const feesList = [
+    {
+      title: `${COMMISSIONS[verificationStatus].SOCIOUS.label} (${COMMISSIONS[verificationStatus].SOCIOUS.value}%)`,
+      price: parseFloat(
+        (((topupAmount ? parseFloat(topupAmount) : 0) * COMMISSIONS[verificationStatus].SOCIOUS.value) / 100).toFixed(2)
+      ),
+    },
+  ];
+
+  if (!isPaidCrypto) {
+    feesList.push({
+      title: `${COMMISSIONS[verificationStatus].STRIPE.label} (${COMMISSIONS[verificationStatus].STRIPE.value}%)`,
+      price: parseFloat(
+        (((topupAmount ? parseFloat(topupAmount) : 0) * COMMISSIONS[verificationStatus].STRIPE.value) / 100).toFixed(2)
+      ),
+    });
+  }
+
+  const totalFees = function (list: { title: string; price: number }[]) {
+    let total = 0;
+    for (var item of list) {
+      total += item.price;
+    }
+    return total;
+  };
+
+  const totalTopup = (totalFees(feesList) + (topupAmount ? parseFloat(topupAmount) : 0)).toFixed(2).toLocaleString();
 
   let unit = offer.currency || 'USD';
 
@@ -154,5 +185,10 @@ export const usePaymentShared = () => {
     missions,
     isDisabledProceedPayment,
     status,
+    topupAmount,
+    setTopupAmount,
+    feesList,
+    totalFees,
+    totalTopup,
   };
 };
