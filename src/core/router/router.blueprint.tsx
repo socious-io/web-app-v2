@@ -158,6 +158,101 @@ export const blueprint: RouteObject[] = [
               return { missionsList, stripeProfileRes, jpStripeProfileRes };
             },
           },
+          {
+            path: 'organization',
+            children: [
+              {
+                path: 'create',
+                children: [
+                  {
+                    path: 'intro',
+                    async lazy() {
+                      const { Intro } = await import('src/pages/organization-create/intro/intro');
+                      return {
+                        Component: Intro,
+                      };
+                    },
+                  },
+                  {
+                    path: 'type',
+                    async lazy() {
+                      const { Type } = await import('src/pages/organization-create/type/type');
+                      return {
+                        Component: Type,
+                      };
+                    },
+                  },
+                  {
+                    path: 'social-causes',
+                    async lazy() {
+                      const { SocialCauses } = await import(
+                        'src/pages/organization-create/social-causes/social-causes'
+                      );
+                      return {
+                        Component: SocialCauses,
+                      };
+                    },
+                  },
+                  {
+                    path: 'profile',
+                    async lazy() {
+                      const { Profile } = await import('src/pages/organization-create/profile/profile');
+                      return {
+                        Component: Profile,
+                      };
+                    },
+                  },
+                  {
+                    path: 'mission',
+                    async lazy() {
+                      const { Mission } = await import('src/pages/organization-create/mission/mission');
+                      return {
+                        Component: Mission,
+                      };
+                    },
+                  },
+                  {
+                    path: 'culture',
+                    async lazy() {
+                      const { Culture } = await import('src/pages/organization-create/culture/culture');
+                      return {
+                        Component: Culture,
+                      };
+                    },
+                  },
+                  {
+                    path: 'social-impact',
+                    async lazy() {
+                      const { SocialImpact } = await import(
+                        'src/pages/organization-create/social-impact/social-impact'
+                      );
+                      return {
+                        Component: SocialImpact,
+                      };
+                    },
+                  },
+                  {
+                    path: 'succeed',
+                    async lazy() {
+                      const { Succeed } = await import('src/pages/organization-create/succeed/succeed');
+                      return {
+                        Component: Succeed,
+                      };
+                    },
+                  },
+                  {
+                    path: 'verified',
+                    async lazy() {
+                      const { Verified } = await import('src/pages/organization-create/verified/verified');
+                      return {
+                        Component: Verified,
+                      };
+                    },
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
     ],
