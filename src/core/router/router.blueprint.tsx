@@ -1,8 +1,6 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
-import { MenuCursor as RootCursorLayout } from 'src/components/templates/menu-cursor/menu-cursor';
-import { MenuTouch as RootTouchLayout } from 'src/components/templates/menu-touch/menu-touch';
 import Layout from 'src/components/templates/refactored/layout/layout';
 import {
   jobs,
@@ -16,8 +14,9 @@ import {
   posts,
   getPost,
   postComments,
+  missions,
+  stripeProfile,
 } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import FallBack from 'src/pages/fall-back/fall-back';
 import { RootState } from 'src/store';
 
@@ -63,11 +62,6 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
-        ],
-      },
-      {
-        element: isTouchDevice() ? <RootTouchLayout /> : <RootCursorLayout />,
-        children: [
           {
             path: 'd/chats',
             children: [
@@ -148,6 +142,21 @@ export const blueprint: RouteObject[] = [
                 loader: () => notificationSettings(),
               },
             ],
+          },
+          {
+            path: 'wallet',
+            async lazy() {
+              const { Wallet } = await import('src/pages/wallet/wallet.container');
+
+              return {
+                Component: Protect(Wallet),
+              };
+            },
+            loader: async () => {
+              const requests = [missions({ page: 1 }), stripeProfile({}), stripeProfile({ is_jp: true })];
+              const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
+              return { missionsList, stripeProfileRes, jpStripeProfileRes };
+            },
           },
         ],
       },

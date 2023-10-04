@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Header } from 'src/components/atoms/header/header';
 import { AlertModal } from 'src/components/organisms/alert-modal';
@@ -6,11 +7,12 @@ import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fi
 import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { printWhen } from 'src/core/utils';
+import { useWalletShared } from 'src/pages/wallet/wallet.shared';
 
 import css from './mobile.module.scss';
-import { useWalletShared } from '../wallet.shared';
 
 export const Mobile: React.FC = () => {
+  const navigate = useNavigate();
   const {
     form,
     externalAccounts,
@@ -30,7 +32,7 @@ export const Mobile: React.FC = () => {
 
   return (
     <TopFixedMobile>
-      <Header title="Wallet" onBack={() => history.back()} />
+      <Header title="Wallet" onBack={() => navigate(-1)} />
       <div className={css.container}>
         {generatedItems?.map((item) => (
           <WithdrawMissions
@@ -41,14 +43,14 @@ export const Mobile: React.FC = () => {
             total={item.payout}
             fee={item.app_fee}
             service={item?.payment?.service}
-            currency={item.offer.currency}
+            currency={item.offer.currency?.currency}
             disableText={
               item.escrow.release_id == null && isDisablePayout(item.escrow) ? 'You can payout after e few days' : ''
             }
             disbaledWithdraw={
               !externalAccounts?.length || item.escrow.release_id != null || isDisablePayout(item.escrow)
             }
-            onClickWithdraw={() => withdrawFund(item.escrow.mission_id)}
+            onClickWithdraw={() => withdrawFund(item.id)}
           />
         ))}
         <AlertModal

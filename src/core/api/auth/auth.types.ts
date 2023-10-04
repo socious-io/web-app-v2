@@ -32,7 +32,7 @@ export interface OtpConfirmReq {
 
 export interface AuthStripeReq {
   country: string;
-  redirect_url: string;
+  redirect_url?: string;
   is_jp?: boolean;
 }
 
