@@ -141,7 +141,7 @@ export const blueprint: RouteObject[] = [
                   return { data };
                 },
                 async lazy() {
-                  const { Jobs } = await import('../../pages/jobs');
+                  const { Jobs } = await import('src/pages/jobs');
                   return {
                     Component: Jobs,
                   };
@@ -159,7 +159,7 @@ export const blueprint: RouteObject[] = [
                   return { mission, offer, media };
                 },
                 async lazy() {
-                  const { CompleteMission } = await import('../../pages/complete-mission/complete-mission.container');
+                  const { CompleteMission } = await import('src/pages/complete-mission/complete-mission.container');
                   return {
                     Component: CompleteMission,
                   };
@@ -173,7 +173,7 @@ export const blueprint: RouteObject[] = [
                   return { jobDetail, screeningQuestions };
                 },
                 async lazy() {
-                  const { JobDetailContainer } = await import('../../pages/job-detail/job-detail.container');
+                  const { JobDetailContainer } = await import('src/pages/job-detail/job-detail.container');
                   return { Component: JobDetailContainer };
                 },
               },
@@ -185,7 +185,7 @@ export const blueprint: RouteObject[] = [
                   return { jobDetail, screeningQuestions };
                 },
                 async lazy() {
-                  const { JobApply } = await import('../../pages/job-apply/apply/apply.container');
+                  const { JobApply } = await import('src/pages/job-apply/apply/apply.container');
                   return { Component: JobApply };
                 },
               },
@@ -198,7 +198,7 @@ export const blueprint: RouteObject[] = [
                   return { applicantDetail };
                 },
                 async lazy() {
-                  const { Offer } = await import('../../pages/job-offer-reject/offer/offer.container');
+                  const { Offer } = await import('src/pages/job-offer-reject/offer/offer.container');
                   return { Component: Offer };
                 },
               },
@@ -211,7 +211,7 @@ export const blueprint: RouteObject[] = [
                 },
                 async lazy() {
                   const { ApplicantDetail } = await import(
-                    '../../pages/job-offer-reject/applicant-detail/applicant-detail'
+                    'src/pages/job-offer-reject/applicant-detail/applicant-detail'
                   );
                   return { Component: ApplicantDetail };
                 },
@@ -220,7 +220,7 @@ export const blueprint: RouteObject[] = [
                 path: 'created/:id/overview',
                 loader: (params) => jobOfferRejectLoader(params),
                 async lazy() {
-                  const { JobOfferReject } = await import('../../pages/job-offer-reject/job-offer-reject.container');
+                  const { JobOfferReject } = await import('src/pages/job-offer-reject/job-offer-reject.container');
                   return { Component: JobOfferReject };
                 },
               },
@@ -250,7 +250,7 @@ export const blueprint: RouteObject[] = [
                   };
                 },
                 async lazy() {
-                  const { MyJobs } = await import('../../pages/job-apply/my-jobs/my-jobs');
+                  const { MyJobs } = await import('src/pages/job-apply/my-jobs/my-jobs');
                   return { Component: MyJobs };
                 },
               },
@@ -259,15 +259,15 @@ export const blueprint: RouteObject[] = [
                 loader: async ({ params }) => {
                   const requests = [
                     jobs({ identity_id: params.id, page: 1, status: 'ACTIVE' }),
-                    getDraftJobs({ identityId: params.id, page: 1, status: 'DRAFT' }),
-                    getArchivedJobs({ identityId: params.id, page: 1, status: 'EXPIRE' }),
+                    jobs({ identityId: params.id, page: 1, status: 'DRAFT' }),
+                    jobs({ identityId: params.id, page: 1, status: 'EXPIRE' }),
                     jobCategoriesReq(),
                   ];
                   const [activeJobs, draftJobs, archivedJobs, jobCategories] = await Promise.all(requests);
                   return { activeJobs, draftJobs, archivedJobs, jobCategories };
                 },
                 async lazy() {
-                  const { MyJobs } = await import('../../pages/job-create/my-jobs/my-jobs.container');
+                  const { MyJobs } = await import('src/pages/job-create/my-jobs/my-jobs.container');
                   return { Component: MyJobs };
                 },
               },
@@ -282,7 +282,7 @@ export const blueprint: RouteObject[] = [
                   return { offer, media };
                 },
                 async lazy() {
-                  const { OfferReceived } = await import('../../pages/offer-received/offer-received.container');
+                  const { OfferReceived } = await import('src/pages/offer-received/offer-received.container');
                   return { Component: OfferReceived };
                 },
               },
