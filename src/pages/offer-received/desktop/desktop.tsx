@@ -20,7 +20,7 @@ import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import Dapp from 'src/dapp';
 import { useAuth } from 'src/hooks/use-auth';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './desktop.module.scss';
 import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';

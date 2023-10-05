@@ -13,9 +13,9 @@ import { identities } from '../../../core/api';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
 import { IdentityReq } from '../../../core/types';
 import { printWhen } from '../../../core/utils';
+import { RootState } from '../../../store';
 import { setIdentityList } from '../../../store/reducers/identity.reducer';
 import { visibility } from '../../../store/reducers/menu.reducer';
-import { RootState } from '../../../store/store';
 import { setIdentityHeader, logout } from '../sidebar.service';
 
 export const Mobile = () => {

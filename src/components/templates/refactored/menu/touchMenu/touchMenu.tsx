@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, menuList } from 'src/components/templates/refactored/menu/menu.services';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store';
 
 import css from './touchMenu.module.scss';
 

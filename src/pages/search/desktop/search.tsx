@@ -1,22 +1,22 @@
-import css from './search.module.scss';
-import { DropdownBtn } from 'src/components/atoms/dropdown-btn/dropdown-btn';
-import { JobList } from 'src/components/organisms/job-list/job-list';
-import { PeopleList } from '../components/people-list/people-list';
-import { PostsList } from '../components/posts-list/posts-list';
-import { OrganizationList } from '../components/organization-list/organization-list';
-import { printWhen } from 'src/core/utils';
-import { useSearchShared } from '../search.shared';
-import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
-import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
 import { LocationFilter } from './filter-bar/location-filter';
 import { PayloadModel } from './search.types';
 import { useLocation, useNavigate } from '@tanstack/react-location';
 import { DetailOutlet } from './detail-outlet/detail-outlet';
 import { Filters } from 'src/pages/search/components/filters';
 import { useState } from 'react';
+import { DropdownBtn } from 'src/components/atoms/dropdown-btn/dropdown-btn';
 import { Search as MobileSearch } from 'src/components/atoms/search/search';
+import { JobList } from 'src/components/organisms/job-list/job-list';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { printWhen } from 'src/core/utils';
+import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
+import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
+import css from './search.module.scss';
 import { FiltersModal } from '../components/filters/FiltersModal';
+import { OrganizationList } from '../components/organization-list/organization-list';
+import { PeopleList } from '../components/people-list/people-list';
+import { PostsList } from '../components/posts-list/posts-list';
+import { useSearchShared } from '../search.shared';
 
 export const Search = () => {
   const {
@@ -202,21 +202,21 @@ export const Search = () => {
                 'Social causes',
                 () => setOpenSocialSkillsModal(true),
                 '/icons/arrow-down-black.svg',
-                !!selectedSocialCauses.length
+                !!selectedSocialCauses.length,
               )}
             {shouldShowFilterForEntity(location.current.search.type, 'skills') &&
               filterButtonJSX(
                 'Skills',
                 () => setOpenSkillsModal(true),
                 '/icons/arrow-down-black.svg',
-                !!selectedSkills.length
+                !!selectedSkills.length,
               )}
             {shouldShowFilterForEntity(location.current.search.type, 'location') &&
               filterButtonJSX(
                 'Location',
                 () => setOpenLocationsModal(true),
                 '/icons/arrow-down-black.svg',
-                !!selectedCountries.length
+                !!selectedCountries.length,
               )}
             {filterButtonJSX(
               'All filters',
@@ -224,7 +224,7 @@ export const Search = () => {
                 isTouchDevice() ? setShowFiltersModal(true) : setShowAllFilters(!showAllFilters);
               },
               '/icons/filters.svg',
-              false
+              false,
             )}
             <span className={css.resetButton} onClick={clearFilters}>
               Reset

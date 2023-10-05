@@ -7,7 +7,7 @@ export const useSkillsShared = (oldSelected: string[]) => {
 
   function onSearch(v: string) {
     const filteredValue = skillsToCategoryAdaptor().filter((item) =>
-      item.label.toLowerCase().includes(v.toLowerCase())
+      item.label.toLowerCase().includes(v.toLowerCase()),
     );
     setSocialCauses(filteredValue);
   }

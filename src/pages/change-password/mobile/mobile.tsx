@@ -7,7 +7,6 @@ import { printWhen } from 'src/core/utils';
 import css from './mobile.module.scss';
 import { useChangePasswordShared } from '../change-password.shared';
 
-
 export const Mobile = (): JSX.Element => {
   const { form, onSubmit, formIsValid, notMatchingPasswords } = useChangePasswordShared();
   return (

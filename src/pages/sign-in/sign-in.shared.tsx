@@ -10,12 +10,11 @@ import {
   requestPermissions,
 } from 'src/core/pushNotification';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import store from 'src/store/store';
 
 import { formModel } from './sign-in.form';
 import { setAuthCookies } from './sign-in.services';
-
 
 const addListeners = () => {
   addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
@@ -39,12 +38,12 @@ const saveToken = async (token: string) => {
     return;
   }
   const getDeviceTokens = await devices();
-  const isTokenExisting = getDeviceTokens.some(device => device.token === token);
+  const isTokenExisting = getDeviceTokens.some((device) => device.token === token);
   const determinePlatform = () => {
     const platform = Capacitor.getPlatform();
     return platform === 'android' ? 'ANDROID' : 'IOS';
   };
-  
+
   if (!isTokenExisting) {
     newDevice({
       token,

@@ -33,3 +33,6 @@ export * from './posts/posts.types';
 
 export * from './media/media.api';
 export * from './media/media.types';
+
+export * from './geo/geo.api';
+export * from './geo/geo.types';

@@ -65,7 +65,7 @@ export const indexPageUrls = async (token: string) => {
         url: item,
         type: 'URL_UPDATED',
       },
-      { headers }
+      { headers },
     );
   });
 };

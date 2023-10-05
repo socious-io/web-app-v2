@@ -28,10 +28,10 @@ export async function jobOfferRejectLoader({ params }: { params: { id: string } 
     getDeclinedList({ id: params.id, page: 1 }),
     getHiredList({ id: params.id, page: 1 }),
     getEndHiredList({ id: params.id, page: 1 }),
-    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'PENDING' }),
-    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'APPROVED' }),
-    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'HIRED' }),
-    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'CLOSED,CANCELED,WITHDRAWN' }),
+    jobOffers(params.id, { page: 1, status: 'PENDING' }),
+    jobOffers(params.id, { page: 1, status: 'APPROVED' }),
+    jobOffers(params.id, { page: 1, status: 'HIRED' }),
+    jobOffers(params.id, { page: 1, status: 'CLOSED,CANCELED,WITHDRAWN' }),
     getJobCategories(),
   ];
   const [

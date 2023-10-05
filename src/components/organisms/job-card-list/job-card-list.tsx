@@ -6,7 +6,6 @@ import { JobCardListProps } from './job-card-list.types';
 import { printWhen } from '../../../core/utils';
 import { JobCard } from '../../molecules/job-card/job-card';
 
-
 export const JobCardList = (props: JobCardListProps): JSX.Element => {
   const [page, setPage] = useState(1);
 

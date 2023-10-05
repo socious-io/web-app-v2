@@ -33,7 +33,7 @@ import { getJobList } from 'src/pages/jobs/jobs.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { getMissionsList, getSrtipeProfile } from 'src/pages/wallet/wallet.service';
 import { search } from 'src/pages/search/desktop/search.services';
-import store from 'src/store/store';
+import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getIdentities } from '../api';
 import { useEffect, useState } from 'react';

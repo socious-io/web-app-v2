@@ -1,8 +1,8 @@
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
 
 import css from './desktop.module.scss';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Desktop = (): JSX.Element => {
   const { navigateToVerified, organizationName } = useOrganizationCreateShared();

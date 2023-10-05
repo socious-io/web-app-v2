@@ -52,7 +52,7 @@ export const Desktop: React.FC = () => {
         <div className={css.seeMore} onClick={loadMore}>
           See more
         </div>,
-        followings?.total_count > followings?.items.length
+        followings?.total_count > followings?.items.length,
       )}
     </>
   );
