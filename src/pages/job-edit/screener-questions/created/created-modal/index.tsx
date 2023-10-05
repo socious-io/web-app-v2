@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { WebModal } from 'src/components/templates/web-modal';
+import store from 'src/store';
 import {
   resetCreatedQuestion,
   resetQuestions,
@@ -10,14 +11,11 @@ import {
   setDefaultQuestion,
   setQuestionProjectIds,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import store from 'src/store/store';
 
 import css from './created-modal.module.scss';
 import { CreatedModalProps } from './created-modal.types';
 import { ScreenerModal } from '../../screener-modal';
 import { useCreatedShared } from '../created.shared';
-
-
 
 export const CreatedModal: React.FC<CreatedModalProps> = ({
   userQuestions,
@@ -81,7 +79,7 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({
                         setQuestionProjectIds({
                           project_id: projectIds.projectId,
                           question_id: userQuestions[index].id,
-                        })
+                        }),
                       );
                     }}
                   />
@@ -109,7 +107,7 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({
                   setQuestionProjectIds({
                     project_id: projectIds.projectId,
                     identity_id: projectIds.identityId,
-                  })
+                  }),
                 );
                 dispatch(setAddQuestion(true));
                 onClose();

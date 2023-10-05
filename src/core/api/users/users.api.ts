@@ -1,3 +1,7 @@
+import { post, get } from 'src/core/api/http';
+import { MissionsRes } from 'src/core/api/jobs/jobs.types';
+import { PaginateReq, SuccessRes } from 'src/core/api/types';
+
 import {
   ReportReq,
   UpdateProfileReq,
@@ -10,8 +14,6 @@ import {
   ChangePasswordDirectReq,
   DeleteUserReq,
 } from './users.types';
-import { post, get } from '../http';
-import { SuccessRes } from '../types';
 
 export async function profile(): Promise<User> {
   return (await get<User>('user/profile')).data;
@@ -83,4 +85,12 @@ export async function changePasswordDirect(payload: ChangePasswordDirectReq): Pr
 
 export async function selfDelete(payload: DeleteUserReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/delete`, payload)).data;
+}
+
+export async function missions(payload: PaginateReq): Promise<MissionsRes> {
+  return (
+    await get<MissionsRes>('/user/missions', {
+      params: { 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED', page: payload.page },
+    })
+  ).data;
 }

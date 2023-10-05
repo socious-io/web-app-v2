@@ -12,7 +12,7 @@ import { DialogCreate } from 'src/pages/feed/dialog-create/dialog-create';
 import css from 'src/pages/feed/dialog-review/dialog-review.module.scss';
 import { DialogReviewProps } from 'src/pages/feed/dialog-review/dialog-review.types';
 import { uploadImage } from 'src/pages/feed/refactored/feed.service';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const DialogReview = (props: DialogReviewProps) => {
   const [openDialog, setOpenDialog] = useState(false);

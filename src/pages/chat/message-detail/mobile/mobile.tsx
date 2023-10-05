@@ -27,6 +27,7 @@ export const Mobile = (): JSX.Element => {
     const messageBody = document.getElementById('chat-list-div');
     if (messageBody) messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
   }, [list]);
+
   return (
     <div className={css.container}>
       <div className={css.header}>

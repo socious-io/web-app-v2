@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLoaderData } from 'react-router-dom';
 import { JobsRes } from 'src/core/api';
 import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import { getJobList } from './jobs.services';
 

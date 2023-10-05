@@ -11,7 +11,7 @@ import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './desktop.module.scss';
 import { useMyJobShared } from '../my-jobs.shared';

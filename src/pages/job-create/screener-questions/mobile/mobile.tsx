@@ -6,6 +6,7 @@ import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { dialog } from 'src/core/dialog/dialog';
 import { CreateQuestionPayload } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
+import store from 'src/store';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import {
   resetCreatedQuestion,
@@ -17,7 +18,6 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import store from 'src/store/store';
 
 import css from './mobile.module.scss';
 import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';

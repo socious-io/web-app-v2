@@ -8,7 +8,6 @@ import css from './tier.module.scss';
 import { TierProps } from './tier.types';
 import { TierSlide } from '../tier-slide/tier-slide';
 
-
 export const Tier = (props: TierProps): JSX.Element => {
   const [slideVisibility, setSlideVisibility] = useState(false);
 

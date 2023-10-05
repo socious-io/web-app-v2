@@ -1,11 +1,12 @@
-import css from './organization-list.module.scss';
-import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
 import { Categories } from 'src/components/atoms/categories/categories';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { printWhen } from 'src/core/utils';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+
+import css from './organization-list.module.scss';
 import { OrganizationListProps } from './organization-list.types';
 
 export const OrganizationList = (props: OrganizationListProps) => {

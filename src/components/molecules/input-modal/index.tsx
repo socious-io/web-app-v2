@@ -28,11 +28,11 @@ export const InputModal: React.FC<InputModalProps> = ({
       const filteredItems = items?.filter(
         (item) =>
           item.title.toLocaleLowerCase().includes(searchTerm) ||
-          item?.subtitle?.toLocaleLowerCase().includes(searchTerm)
+          item?.subtitle?.toLocaleLowerCase().includes(searchTerm),
       );
       setGeneratedItems(filteredItems);
     }, 500),
-    []
+    [],
   );
 
   return (

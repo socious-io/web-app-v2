@@ -7,7 +7,6 @@ import { BADGES } from 'src/constants/constants';
 import css from './badge-detail-slide.module.scss';
 import { BadgeDetailSlideProps } from './badge-detail-slide.types';
 
-
 export const BadgeDetailSlide = ({ id = 'NO_POVERTY' }: BadgeDetailSlideProps): JSX.Element => {
   const b = BADGES[id];
 

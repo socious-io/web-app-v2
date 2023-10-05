@@ -1,9 +1,7 @@
-import { MissionsResp, StripeLinkResp, StripeProfileResp } from 'src/core/types';
+import { MissionsRes, StripeProfileRes } from 'src/core/api';
 
 export type Resolver = {
-  missionsList: MissionsResp;
-  stripeProfile: StripeProfileResp;
-  jpStripeProfile: StripeProfileResp;
+  missionsList: MissionsRes;
+  stripeProfileRes: StripeProfileRes;
+  jpStripeProfileRes: StripeProfileRes;
 };
-
-export type RespPayout = { message: string; transaction_id: string };

@@ -47,11 +47,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
             />
           </div>
         </div>
-        <div className={css.footer}>
-          {buttons?.map((button, index) => (
-            <Button key={index} {...button} />
-          ))}
-        </div>
+        <div className={css.footer}>{buttons?.map((button, index) => <Button key={index} {...button} />)}</div>
       </>
     </Modal>
   );
