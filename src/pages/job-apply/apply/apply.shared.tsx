@@ -1,5 +1,5 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { ChangeEvent, useMemo, useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
@@ -9,10 +9,9 @@ import { dialog } from 'src/core/dialog/dialog';
 import { useForm } from 'src/core/form';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 import { QuestionsRes, UserType } from 'src/core/types';
-
 import { printWhen } from 'src/core/utils';
-import { generateFormModel } from './apply.form';
 
+import { generateFormModel } from './apply.form';
 import {
   applyApplication,
   convertOptionsToRadioGroup,
@@ -32,7 +31,7 @@ type useApplySharedProps = {
 export const useApplyShared = (data?: useApplySharedProps, onSubmittedNow) => {
   const navigate = useNavigate();
   const [resume, setResume] = useState<Resume>(resumeInitialState);
-  const resolver = useMatch().ownData as Resolver;
+  const resolver = useLoaderData() as Resolver;
   const jobDetail = (data?.job || resolver.jobDetail) as Job;
   const questions = (data?.screeningQuestions || resolver.screeningQuestions.questions) as QuestionsRes['questions'];
   const formModel: FormModel = useMemo(() => generateFormModel(questions), []);

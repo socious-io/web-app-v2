@@ -1,17 +1,18 @@
-import { LocationFilter } from './filter-bar/location-filter';
-import { PayloadModel } from './search.types';
-import { useLocation, useNavigate } from '@tanstack/react-location';
-import { DetailOutlet } from './detail-outlet/detail-outlet';
-import { Filters } from 'src/pages/search/components/filters';
 import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { DropdownBtn } from 'src/components/atoms/dropdown-btn/dropdown-btn';
 import { Search as MobileSearch } from 'src/components/atoms/search/search';
 import { JobList } from 'src/components/organisms/job-list/job-list';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { printWhen } from 'src/core/utils';
+import { Filters } from 'src/pages/search/components/filters';
+
+import { DetailOutlet } from './detail-outlet/detail-outlet';
+import { LocationFilter } from './filter-bar/location-filter';
 import { SkillsFilter } from './filter-bar/skills-filter/skills-filter';
 import { SocialCausesFilter } from './filter-bar/social-causes-filter/social-causes-filter';
 import css from './search.module.scss';
+import { PayloadModel } from './search.types';
 import { FiltersModal } from '../components/filters/FiltersModal';
 import { OrganizationList } from '../components/organization-list/organization-list';
 import { PeopleList } from '../components/people-list/people-list';
@@ -23,7 +24,6 @@ export const Search = () => {
     onMorePageClick,
     menu,
     onTypeChange,
-    location,
     list,
     result,
     findLabelByValue,
@@ -44,11 +44,11 @@ export const Search = () => {
     setList,
     onLocationRemove,
     shouldShowFilterForEntity,
+    getRouterFilters,
   } = useSearchShared();
-
   const navigate = useNavigate();
-  const { current } = useLocation();
-  const { search: params } = current as unknown as { search: { id: string; type: PayloadModel['type'] } };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = getRouterFilters();
   const [showFiltersModal, setShowFiltersModal] = useState(false);
   const [showAllFilters, setShowAllFilters] = useState(false);
   function onListItemClick(type: PayloadModel['type']) {
@@ -56,39 +56,78 @@ export const Search = () => {
       const isMobile = isTouchDevice();
       switch (type) {
         case 'projects':
-          isMobile ? navigate({ to: `/jobs/${id}` }) : navigate({ search: (p) => ({ ...p, type: 'projects', id }) });
+          isMobile
+            ? navigate(`/jobs/${id}`)
+            : setSearchParams((p) => {
+                return {
+                  ...query,
+                  id,
+                  type: 'projects',
+                  filter: JSON.stringify({
+                    ...query.filter,
+                  }),
+                };
+              });
           break;
         case 'users':
           isMobile
-            ? navigate({ to: `/profile/users/${id}/view` })
-            : navigate({ search: (p) => ({ ...p, type: 'users', id }) });
+            ? navigate(`/profile/users/${id}/view`)
+            : setSearchParams(() => {
+                return {
+                  ...query,
+                  id,
+                  type: 'users',
+                  filter: JSON.stringify({
+                    ...query.filter,
+                  }),
+                };
+              });
           break;
         case 'organizations':
           isMobile
-            ? navigate({ to: `/profile/organizations/${id}/view` })
-            : navigate({ search: (p) => ({ ...p, type: 'organizations', id }) });
+            ? navigate(`/profile/organizations/${id}/view`)
+            : setSearchParams(() => {
+                return {
+                  ...query,
+                  id,
+                  type: 'organizations',
+                  filter: JSON.stringify({
+                    ...query.filter,
+                  }),
+                };
+              });
           break;
         case 'posts':
-          navigate({ search: (p) => ({ ...p, type: 'posts', id }) });
+          setSearchParams(() => {
+            return {
+              ...query,
+              id,
+              type: 'posts',
+              filter: JSON.stringify({
+                ...query.filter,
+              }),
+            };
+          });
           break;
       }
     };
   }
   function navigateToSearch(q: string) {
-    navigate({
-      to: '/search',
-      search: (p: any) => {
-        const type = p.type ?? 'projects';
-        const page = p.page ?? 1;
-        return { ...p, type, q, page };
-      },
-      replace: true,
+    setSearchParams(() => {
+      return {
+        ...query,
+        type: query.type ?? 'projects',
+        page: query.page ?? 1,
+        filter: JSON.stringify({
+          ...query.filter,
+        }),
+      };
     });
   }
-  const paramTypeIsProjects = location.current.search.type === 'projects';
-  const paramTypeIsUsers = location.current.search.type === 'users';
-  const paramTypeIsOrganizations = location.current.search.type === 'organizations';
-  const paramTypeIsPosts = location.current.search.type === 'posts';
+  const paramTypeIsProjects = searchParams.get('type') === 'projects';
+  const paramTypeIsUsers = searchParams.get('type') === 'users';
+  const paramTypeIsOrganizations = searchParams.get('type') === 'organizations';
+  const paramTypeIsPosts = searchParams.get('type') === 'posts';
 
   const peopleListJSX = (
     <PeopleList
@@ -146,11 +185,11 @@ export const Search = () => {
   );
   const mobileSearch = (
     <div className={css.searchBox}>
-      <div onClick={() => history.back()} className={css.back}>
+      <div onClick={() => navigate(-1)} className={css.back}>
         <img src="/icons/chevron-left.svg" />
       </div>
       <div className={css.searchContainer}>
-        <MobileSearch placeholder="Search" onEnter={navigateToSearch} defaultValue={location.current?.search?.q} />
+        <MobileSearch placeholder="Search" onEnter={navigateToSearch} defaultValue={query?.q} />
         <div className={css.results}>{result} Results</div>
       </div>
     </div>
@@ -164,7 +203,7 @@ export const Search = () => {
           list: selectedSkills,
           onEdit: () => setOpenSkillsModal(true),
           onRemove: (removedItem) => onSkillsChange(selectedSkills.filter((skill) => skill.value !== removedItem)),
-          visible: shouldShowFilterForEntity(location.current.search.type, 'skills'),
+          visible: shouldShowFilterForEntity(searchParams.get('type') as string, 'skills'),
         },
         {
           title: 'Social causes',
@@ -172,14 +211,14 @@ export const Search = () => {
           onEdit: () => setOpenSocialSkillsModal(true),
           onRemove: (removedItem) =>
             onSocialCausesChange(selectedSocialCauses.filter((skill) => skill.value !== removedItem)),
-          visible: shouldShowFilterForEntity(location.current.search.type, 'socialCauses'),
+          visible: shouldShowFilterForEntity(searchParams.get('type') as string, 'socialCauses'),
         },
         {
           title: 'Location',
           list: [...selectedCities, ...selectedCountries],
           onEdit: () => setOpenLocationsModal(true),
           onRemove: (item: string) => onLocationRemove(item),
-          visible: shouldShowFilterForEntity(location.current.search.type, 'location'),
+          visible: shouldShowFilterForEntity(searchParams.get('type') as string, 'location'),
         },
       ]}
     />
@@ -195,23 +234,23 @@ export const Search = () => {
               onValueChange={onTypeChange}
               placeholder="Type"
               menus={menu}
-              value={findLabelByValue(location.current.search.type, 'Type')}
+              value={findLabelByValue(searchParams.get('type'), 'Type')}
             />
-            {shouldShowFilterForEntity(location.current.search.type, 'socialCauses') &&
+            {shouldShowFilterForEntity(searchParams.get('type') as string, 'socialCauses') &&
               filterButtonJSX(
                 'Social causes',
                 () => setOpenSocialSkillsModal(true),
                 '/icons/arrow-down-black.svg',
                 !!selectedSocialCauses.length,
               )}
-            {shouldShowFilterForEntity(location.current.search.type, 'skills') &&
+            {shouldShowFilterForEntity(searchParams.get('type') as string, 'skills') &&
               filterButtonJSX(
                 'Skills',
                 () => setOpenSkillsModal(true),
                 '/icons/arrow-down-black.svg',
                 !!selectedSkills.length,
               )}
-            {shouldShowFilterForEntity(location.current.search.type, 'location') &&
+            {shouldShowFilterForEntity(searchParams.get('type') as string, 'location') &&
               filterButtonJSX(
                 'Location',
                 () => setOpenLocationsModal(true),
@@ -241,7 +280,7 @@ export const Search = () => {
         </div>
         <div className={css.item}>
           {showAllFilters && allFilters}
-          {!showAllFilters && <DetailOutlet type={params.type} id={params.id} />}
+          {!showAllFilters && <DetailOutlet type={searchParams.get('type')} id={searchParams.get('id')} />}
         </div>
       </div>
       <SocialCausesFilter
