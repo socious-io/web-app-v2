@@ -1,9 +1,7 @@
-import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Divider } from 'src/components/templates/divider/divider';
 import { printWhen } from 'src/core/utils';
 
@@ -67,14 +65,7 @@ const OrganizationProfileCard = ({ organization }) => {
   );
 
   const messageJSX = (
-    <div
-      className={css.message}
-      onClick={() =>
-        navigate({
-          to: `/chats/new/${organization?.id}`,
-        })
-      }
-    >
+    <div className={css.message} onClick={() => navigate(`/chats/new/${organization?.id}`)}>
       <img src="/icons/message-blue.svg" />
     </div>
   );

@@ -1,5 +1,5 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
 import { JobList } from 'src/components/organisms/job-list/job-list';
@@ -21,7 +21,7 @@ export const Mobile = (): JSX.Element => {
   }
 
   function onEnter(value: string) {
-    navigate({ to: `/search?q=${value}&type=projects&page=1` });
+    navigate(`/search?q=${value}&type=projects&page=1`);
   }
 
   return (
