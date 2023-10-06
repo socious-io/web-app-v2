@@ -39,7 +39,7 @@ export const FeedItem = (props: FeedItemProps): JSX.Element => {
       <CategoriesClickable list={props.categories} />
       <div className={css.text}>
         <Typography type="body" lineLimit={lineLimit} size="s2">
-          <ExpandableText text={props.text} />
+          {props.text && <ExpandableText text={props.text} />}
         </Typography>
       </div>
       <div>{showIfLoggedIn(<ActionList list={actionList} />)}</div>

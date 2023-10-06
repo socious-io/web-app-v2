@@ -18,7 +18,7 @@ const MobileHeader = () => {
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   const onSearchEnter = (value: string) => {
-    navigate(`/search?q=${value}`);
+    navigate(`/search?q=${value}&type=projects&page=1`);
   };
 
   function openSidebar() {

@@ -1,15 +1,15 @@
-import { post } from 'src/core/http';
+import { search as searchReq } from 'src/core/api/site/site.api';
 import { SearchReq } from 'src/core/types';
 
 import { PayloadModel } from './search.types';
 
 export async function search(payload: PayloadModel): Promise<SearchReq> {
   const body = {
-    filter: { ...payload.filter },
+    filter: payload.filter,
     type: payload.type,
   };
   if (payload.q) {
     Object.assign(body, { q: payload.q });
   }
-  return post(`search?page=${payload.page}&limit=50`, body).then(({ data }) => data);
+  return searchReq(body, { limit: 50, page: payload.page });
 }
