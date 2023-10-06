@@ -50,7 +50,7 @@ export const Jobs = (): JSX.Element => {
     dispatch(visibility(true));
   }
   function onEnter(value: string) {
-    navigate(`/m/search?q=${value}&type=projects&page=1`);
+    navigate(`/search?q=${value}&type=projects&page=1`);
   }
 
   return (

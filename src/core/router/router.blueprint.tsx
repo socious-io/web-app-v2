@@ -24,6 +24,7 @@ import {
   impactPoints,
 } from 'src/core/api';
 import { AchievementsPageLoader } from 'src/pages/achievements/achievements.loader';
+import { search } from 'src/core/api/site/site.api';
 import FallBack from 'src/pages/fall-back/fall-back';
 import { RootState } from 'src/store';
 
@@ -313,6 +314,29 @@ export const blueprint: RouteObject[] = [
                 Component: AchievementsContainer,
               };
             },
+          },
+          {
+            path: 'search',
+            children: [
+              {
+                path: '',
+                async lazy() {
+                  const { Search } = await import('src/pages/search/desktop/search');
+                  return {
+                    Component: Search,
+                  };
+                },
+                loader: async ({ request }) => {
+                  const url = new URL(request.url);
+                  const q = url.searchParams.get('q');
+                  const data = await search(
+                    { filter: {}, q: q as string, type: 'projects' },
+                    { page: 1, limit: 50 },
+                  );
+                  return data;
+                },
+              },
+            ],
           },
         ],
       },
