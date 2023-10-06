@@ -14,9 +14,16 @@ import {
   posts,
   getPost,
   postComments,
-  missions,
+  userPaidMissions,
   stripeProfile,
+  badges,
+  otherProfile,
+  userMissions,
+  otherProfileByUsername,
+  profile,
+  impactPoints,
 } from 'src/core/api';
+import { AchievementsPageLoader } from 'src/pages/achievements/achievements.loader';
 import FallBack from 'src/pages/fall-back/fall-back';
 import { RootState } from 'src/store';
 
@@ -153,7 +160,7 @@ export const blueprint: RouteObject[] = [
               };
             },
             loader: async () => {
-              const requests = [missions({ page: 1 }), stripeProfile({}), stripeProfile({ is_jp: true })];
+              const requests = [userPaidMissions({ page: 1 }), stripeProfile({}), stripeProfile({ is_jp: true })];
               const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
               return { missionsList, stripeProfileRes, jpStripeProfileRes };
             },
@@ -252,6 +259,60 @@ export const blueprint: RouteObject[] = [
                 ],
               },
             ],
+          },
+          {
+            path: 'profile/users',
+            children: [
+              {
+                path: ':id',
+                children: [
+                  {
+                    path: 'view',
+                    loader: async ({ params }) => {
+                      // TODO: need to load on parent and pass wit props
+                      const user = await otherProfileByUsername(params.id);
+                      const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
+                      return {
+                        user,
+                        badges: userBadges,
+                        missions,
+                      };
+                    },
+                    async lazy() {
+                      const { ProfileUser } = await import('src//pages/profile-user/refactored/profileUser');
+                      return {
+                        Component: ProfileUser,
+                      };
+                    },
+                  },
+                  {
+                    path: 'edit',
+                    loader: profile,
+                    async lazy() {
+                      const { ProfileUserEditContainer } = await import(
+                        'src//pages/profile-user-edit/profile-user-edit.container'
+                      );
+                      return {
+                        Component: ProfileUserEditContainer,
+                      };
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: '/achievements',
+            loader: async () => {
+              const [userBadges, impactPointHistory] = await Promise.all([badges(), impactPoints()]);
+              return { badges: userBadges, impactPointHistory };
+            },
+            async lazy() {
+              const { AchievementsContainer } = await import('../../pages/achievements/achievements.container');
+              return {
+                Component: AchievementsContainer,
+              };
+            },
           },
         ],
       },

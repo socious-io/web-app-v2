@@ -10,9 +10,10 @@ import { handleError } from '../../../core/http';
 import { IdentityReq } from '../../../core/types';
 import { RootState } from '../../../store';
 import { deleteAccount, login } from '../delete-profile.service';
+import { useNavigate } from 'react-router-dom';
 
 export const Password = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const form = useForm(formModel);
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
@@ -20,7 +21,7 @@ export const Password = () => {
   const email = identity.meta.email;
 
   const backToPerviousPage = () => {
-    navigate({ to: '../delete' });
+    navigate('../delete');
   };
 
   const deleteMyAccount = () => {
@@ -29,7 +30,7 @@ export const Password = () => {
         if (resp.message === 'success') {
           deleteAccount().then((resp) => {
             if (resp.message === 'success') {
-              navigate({ to: `../confirm?email=${email}` });
+              navigate(`../confirm?email=${email}`);
             }
           });
         }
@@ -38,7 +39,7 @@ export const Password = () => {
   };
 
   const cancel = () => {
-    navigate({ to: '../../jobs' });
+    navigate('../../jobs');
   };
 
   return (

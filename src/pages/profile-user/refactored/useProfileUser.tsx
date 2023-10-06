@@ -16,17 +16,20 @@ import {
   openToWorkCall,
   openToVolunteerCall,
 } from './profileUser.services';
-import { ProfileReq, Resolver } from './profileUser.types';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Badges, CurrentIdentity, Mission, MissionsRes, User, userMissions } from 'src/core/api';
 
 export const useProfileUser = () => {
-  const navigate = {};
-  const resolver = useMatch().data as Resolver;
-  const [user, setUser] = useState<ProfileReq>(resolver.user);
+  const navigate = useNavigate();
+  const resolver = useLoaderData() as { user: User; badges: Badges; missions: MissionsRes };
+
+  const [user, setUser] = useState<User>(resolver.user);
   const socialCauses = socialCausesToCategory(user.social_causes);
-  const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;
+  const avatarImage = user.avatar?.url;
   const skills = skillsToCategory(user.skills);
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
+    const current = state.identity.entities.find((identity) => identity.current);
+    return current as CurrentIdentity;
   });
   const address = `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
   const profileBelongToCurrentUser = currentIdentity?.id === user.id;
@@ -38,32 +41,10 @@ export const useProfileUser = () => {
   const [openToVolunteer, setOpenToVolunteer] = useState(user.open_to_volunteer);
   const [editOpen, setEditOpen] = useState(false);
 
-  const [missions, setMissons] = useState<
-    {
-      organizationName: string;
-      role: string;
-      dateFrom: string;
-      dateTo: string;
-      location: string;
-      organizationImage: string;
-    }[]
-  >([]);
-
   useEffect(() => {
     const getConnectionsStatus = async () => {
       const res = await getConnectStatus(user.id);
       setConnectStatus(res?.connect?.status);
-      const missionsRes = await getUserMissions(user.id);
-      setMissons(
-        missionsRes.items.map((mission) => ({
-          organizationName: mission.organization.name,
-          organizationImage: mission.organization.image,
-          role: mission.project.title,
-          dateFrom: new Date(mission.project.created_at).toLocaleDateString('en-US'),
-          dateTo: new Date(mission.project.updated_at).toLocaleDateString('en-US'),
-          location: COUNTRIES_DICT[mission.project.country as keyof typeof COUNTRIES_DICT],
-        })),
-      );
     };
     getConnectionsStatus();
   }, []);
@@ -107,7 +88,7 @@ export const useProfileUser = () => {
 
   function onClose() {
     hapticsImpactLight();
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
   }
 
   async function follow(id: string) {
@@ -120,13 +101,13 @@ export const useProfileUser = () => {
 
   function gotToDesktopAchievement() {
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate({ to: `/achievements/d?proofspace_connect_id=${connectId}` });
+    navigate(`/achievements/d?proofspace_connect_id=${connectId}`);
   }
 
   function gotToMobileAchievement() {
     hapticsImpactLight();
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate({ to: `/achievements/m?proofspace_connect_id=${connectId}` });
+    navigate(`/achievements/m?proofspace_connect_id=${connectId}`);
   }
 
   async function onConnect(id: string) {
@@ -151,7 +132,7 @@ export const useProfileUser = () => {
 
   function onEdit() {
     if (isTouchDevice()) {
-      navigate({ to: '../edit' });
+      navigate('../edit');
     } else {
       setEditOpen(true);
     }
@@ -182,7 +163,7 @@ export const useProfileUser = () => {
     connectStatus,
     showMessageIcon,
     onMessage,
-    missions,
+    missions: resolver.missions.items,
     editOpen,
     setEditOpen,
     userIsLoggedIn,

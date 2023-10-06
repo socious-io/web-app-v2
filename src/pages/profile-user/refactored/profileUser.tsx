@@ -14,11 +14,12 @@ import css from './profileUser.module.scss';
 import { badgesList } from './profileUser.services';
 import { useProfileUser } from './useProfileUser';
 import { Edit } from '../desktop/edit/edit';
+import { useNavigate } from 'react-router-dom';
 
-const ProfileUser = () => {
+export const ProfileUser = () => {
   const [openConnectModal, setOpenConnectModal] = useState(false);
 
-  const navigate = {};
+  const navigate = useNavigate();
   const {
     user,
     updateUser,
@@ -45,8 +46,7 @@ const ProfileUser = () => {
     userIsLoggedIn,
   } = useProfileUser();
 
-  const orgNameJSX = <div className={css.name}>{user?.name}</div>;
-  const usernameJSX = <div className={css.username}>@{user?.username}</div>;
+  const usernameJSX = <div className={css.username}>@{user.username}</div>;
   const userFullNameJSX = (
     <div className={css.name}>
       {user?.first_name} {user?.last_name}
@@ -84,24 +84,21 @@ const ProfileUser = () => {
             <img
               className="w-[30px]"
               alt="organization"
-              src={mission.organizationImage ? mission.organizationImage : '/icons/organization.svg'}
+              src={mission.organization.image?.url ? mission.organization.image.url : '/icons/organization.svg'}
             />
           </div>
           <div>
             <div className={css.exprienceDetails}>
-              <div className={css.exprienceTitle}>{mission.organizationName}</div>
-              <div className={css.exprienceDetail}>{mission.role}</div>
-              <div className={css.exprienceDetail}>{`${mission.dateFrom} - ${mission.dateTo}`}</div>
-              <div className={css.exprienceDetail}>{mission.location}</div>
+              <div className={css.exprienceTitle}>{mission.organization.name}</div>
+              <div className={css.exprienceDetail}>{mission.project.title}</div>
+              <div className={css.exprienceDetail}>{`${mission.project.created_at.toLocaleDateString(
+                'en-US',
+              )} - ${mission.project.updated_at?.toLocaleDateString('en-US')}`}</div>
+              <div className={css.exprienceDetail}>{mission.project.country}</div>
             </div>
           </div>
         </div>
       ))}
-    </Divider>
-  );
-  const cultureJSX = (
-    <Divider title="Culture">
-      <div className={css.culture}>{user.culture}</div>
     </Divider>
   );
   const skillsJSX = (
@@ -154,7 +151,7 @@ const ProfileUser = () => {
     <div className="w-full h-full">
       <TwoColumns>
         <div className="grid gap-4 sticky top-10">
-          <BackLink title="jobs" onBack={() => navigate({ to: '/jobs' })} />
+          <BackLink title="jobs" onBack={() => navigate('/jobs')} />
         </div>
         <div className={`${css.container} md:rounded-2xl`}>
           <div className={css.header}>
@@ -177,14 +174,7 @@ const ProfileUser = () => {
             <div className={css.menu}>
               <div className={css.btnContainer}>
                 {!profileBelongToCurrentUser && showMessageIcon() && (
-                  <div
-                    className={css.message}
-                    onClick={() =>
-                      navigate({
-                        to: `/chats/new/${user?.id}`,
-                      })
-                    }
-                  >
+                  <div className={css.message} onClick={() => navigate(`/chats/new/${user?.id}`)}>
                     <img src="/icons/message-blue.svg" />
                   </div>
                 )}
@@ -208,8 +198,7 @@ const ProfileUser = () => {
           </div>
           <div>
             <Divider>
-              {printWhen(orgNameJSX, !!user?.name)}
-              {printWhen(userFullNameJSX, !!user?.first_name || !!user?.last_name)}
+              {printWhen(userFullNameJSX, !!user.first_name)}
               {printWhen(usernameJSX, !!user?.username)}
               <div className="hidden md:block">
                 {printWhen(openToWorkToggleJSX, profileBelongToCurrentUser)}
@@ -245,18 +234,10 @@ const ProfileUser = () => {
             <Divider title="Contact">
               {printWhen(contactLinkJSX, !!user.mobile_country_code)}
               {printWhen(emailLinkJSX, !!user.email)}
-              {printWhen(websiteLinkJSX, !!user.website)}
               {printWhen(cityLinkJSX, !!user.city)}
             </Divider>
             {printWhen(missionJSX, !!user.mission)}
-            {printWhen(cultureJSX, !!user.culture)}
             {printWhen(skillsJSX, user.skills && user.skills.length > 0)}
-            {printWhen(
-              <Divider title="Culture">
-                <div className={css.culture}>{user.culture}</div>
-              </Divider>,
-              !!user.culture,
-            )}
           </div>
           <Edit
             updateUser={updateUser}

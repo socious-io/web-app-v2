@@ -9,9 +9,10 @@ import { RootState } from 'src/store';
 
 import { getConnectStatus, hiringCall, sendRequestConnection } from './profileOrg.services';
 import { ProfileReq, Resolver } from './profileOrg.types';
+import { useNavigate } from 'react-router-dom';
 
 export const useProfileOrg = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const resolver = useMatch().data as Resolver;
   const [organization, setOrganization] = useState<ProfileReq>(resolver.user);
   const socialCauses = socialCausesToCategory(resolver.user?.social_causes);
@@ -45,15 +46,15 @@ export const useProfileOrg = () => {
     }
   }
   function navigateJobs() {
-    navigate({ to: `/profile/organizations/${resolver.user.shortname}/jobs` });
+    navigate(`/profile/organizations/${resolver.user.shortname}/jobs`);
   }
   function onClose() {
     hapticsImpactLight();
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
   }
 
   function navigateToEdit() {
-    navigate({ to: '../edit' });
+    navigate('../edit');
   }
 
   async function onConnect(id: string) {

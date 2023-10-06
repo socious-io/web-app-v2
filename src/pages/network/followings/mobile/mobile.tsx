@@ -7,9 +7,10 @@ import { printWhen } from 'src/core/utils';
 import css from './mobile.module.scss';
 import { useFollowingsShared } from '../followings.shared';
 import { UnfollowModal } from '../unfollow-modal';
+import { useNavigate } from 'react-router-dom';
 
 export const Mobile: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const { followings, followStatusUser, onUnfollow, onFollow, loadMore, onProfileClick } = useFollowingsShared();
   const [selectedUser, setSelectedUser] = useState({ name: '', id: '' });
 
@@ -55,7 +56,7 @@ export const Mobile: React.FC = () => {
 
   return (
     <div>
-      <Header onBack={() => navigate({ to: '/network' })} paddingTop={'var(--safe-area)'} title="Following" />
+      <Header onBack={() => navigate('/network')} paddingTop={'var(--safe-area)'} title="Following" />
       {followings?.total_count ? followingsListJSX : <div className={css.noFollowing}>No Following</div>}
       <UnfollowModal
         open={!!selectedUser.id}

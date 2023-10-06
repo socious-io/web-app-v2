@@ -1,13 +1,14 @@
 import css from './confirm.module.scss';
 import { Button } from '../../../components/atoms/button/button';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Confirm = () => {
-  const navigate = {};
-  const queryParam = useMatch().search;
-  const email = queryParam.email;
+  const navigate = useNavigate();
+  const queryParam = new URLSearchParams(location.search);
+  const email = queryParam.get('email');
 
   const joinNow = () => {
-    navigate({ to: '/sign-up/user/email' });
+    navigate('/sign-up/user/email');
   };
 
   return (

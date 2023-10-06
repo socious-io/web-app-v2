@@ -3,9 +3,10 @@ import { endpoint } from 'src/core/endpoints';
 import { FollowingsReq, Pagination, UserType } from 'src/core/types';
 
 import { getFollowings } from './followings.service';
+import { useNavigate } from 'react-router-dom';
 
 export const useFollowingsShared = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const resolver = (useMatch().ownData as Pagination<FollowingsReq[]>) || {};
   const [followings, setFollowings] = useState(resolver);
   const [followingStatus, setFollowingStatus] = useState<{ [x: string]: 'FOLLOW' | 'UNFOLLOW' }>({});
@@ -40,9 +41,9 @@ export const useFollowingsShared = () => {
 
   function onProfileClick(type: UserType, username: string) {
     if (type === 'users') {
-      navigate({ to: `/profile/users/${username}/view` });
+      navigate(`/profile/users/${username}/view`);
     } else {
-      navigate({ to: `/profile/organizations/${username}/view` });
+      navigate(`/profile/organizations/${username}/view`);
     }
   }
 
