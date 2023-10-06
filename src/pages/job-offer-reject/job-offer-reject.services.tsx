@@ -1,3 +1,5 @@
+import { job, jobOffers } from 'src/core/api';
+
 import { Applicant } from '../../components/molecules/applicant-list/applicant-list.types';
 import { Applicant as ApplicantHire } from '../../components/molecules/applicant-list-pay/applicant-list-pay.types';
 import { Job } from '../../components/organisms/job-list/job-list.types';
@@ -19,17 +21,17 @@ import { getJobCategories } from '../job-create/info/info.services';
 
 export async function jobOfferRejectLoader({ params }: { params: { id: string } }) {
   const requests = [
-    getOfferOverview(params.id),
-    getJobOverview(params.id),
+    jobOffers(params.id),
+    job(params.id),
     getScreeningQuestions(params.id),
     getToReviewList({ id: params.id, page: 1 }),
     getDeclinedList({ id: params.id, page: 1 }),
     getHiredList({ id: params.id, page: 1 }),
     getEndHiredList({ id: params.id, page: 1 }),
-    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'PENDING' }),
-    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'APPROVED' }),
-    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'HIRED' }),
-    endpoint.get.projects['{project_id}/offers']({ id: params.id, page: 1, status: 'CLOSED,CANCELED,WITHDRAWN' }),
+    jobOffers(params.id, { page: 1, status: 'PENDING' }),
+    jobOffers(params.id, { page: 1, status: 'APPROVED' }),
+    jobOffers(params.id, { page: 1, status: 'HIRED' }),
+    jobOffers(params.id, { page: 1, status: 'CLOSED,CANCELED,WITHDRAWN' }),
     getJobCategories(),
   ];
   const [

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
@@ -10,7 +11,7 @@ import css from './mobile.module.scss';
 import { useSocialCausesShared } from '../social-causes.shared';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { onSearch, socialCauses, selectedSocialCauses, isValid } = useSocialCausesShared();
 
@@ -19,7 +20,7 @@ export const Mobile = (): JSX.Element => {
   });
 
   function onBack() {
-    navigate({ to: `/m/jobs/created/${identity.meta.id}` });
+    navigate(`/jobs/created/${identity.meta.id}`);
     dispatch(resetCreatePostWizard());
   }
 
@@ -54,7 +55,7 @@ export const Mobile = (): JSX.Element => {
       </div>
 
       <div className={css.bottom}>
-        <Button disabled={!isValid} onClick={() => navigate({ to: '../skills' })}>
+        <Button disabled={!isValid} onClick={() => navigate('../skills')}>
           Continue
         </Button>
       </div>

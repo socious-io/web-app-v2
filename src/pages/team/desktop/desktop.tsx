@@ -10,10 +10,9 @@ import { useAuth } from 'src/hooks/use-auth';
 import css from './desktop.module.scss';
 import { AddMemberModal } from '../add-member-modal';
 import { useTeamShared } from '../team.shared';
-import { useNavigate } from 'react-router-dom';
 
 export const Desktop: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const {
     updateMembers,
     identity,
@@ -29,20 +28,20 @@ export const Desktop: React.FC = () => {
   const { isLoggedIn } = useAuth();
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity.id}`) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
   ];
 
   const jobsMenuListOrg = [
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate(`/d/jobs/created/${identity.id}`),
+      link: () => navigate({ to: `/jobs/created/${identity.id}` }),
     },
   ];
 

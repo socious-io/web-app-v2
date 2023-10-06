@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store';
@@ -6,8 +7,8 @@ import { RootState } from 'src/store';
 import { Resolver } from './job-detail.types';
 
 export const useJobDetailShared = () => {
-  const navigate = {};
-  const { jobDetail: job, screeningQuestions } = useMatch().data as Resolver;
+  const navigate = useNavigate();
+  const { jobDetail: job, screeningQuestions } = useLoaderData();
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {

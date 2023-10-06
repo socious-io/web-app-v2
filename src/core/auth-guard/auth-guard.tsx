@@ -12,7 +12,7 @@ export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   const { isLoggedIn } = useAuth();
   const [modalVisibility, setModalVisibility] = useState(false);
   const navigate = useNavigate();
-  const route = useLocation();
+  const location = useLocation();
 
   function onClick() {
     if (!isLoggedIn) {
@@ -21,7 +21,7 @@ export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   }
 
   function saveCurrentRoute(): Promise<void> {
-    const path = route.current.href;
+    const path = location.pathname;
     return nonPermanentStorage.set({ key: 'savedLocation', value: path });
   }
 

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
@@ -25,6 +26,7 @@ export const Mobile = (): JSX.Element => {
     createTextQuestion,
     createRadioQuestion,
   } = useApplyShared();
+  const navigate = useNavigate();
 
   const renderQuestions = () => {
     return (
@@ -70,7 +72,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Header onBack={() => history.back()} height="var(--safe-area)" title="Apply" />
+      <Header onBack={() => navigate(-1)} height="var(--safe-area)" title="Apply" />
       <div className={css.main}>
         <Divider>
           <ProfileView

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLoaderData } from 'react-router-dom';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
@@ -32,7 +33,8 @@ import { useInfoShared } from '../info.shared';
 export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, jobOverview }) => {
   const dispatch = useDispatch();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const { categories } = (useMatch().ownData.jobCategories as CategoriesResp) || {};
+  const { categories } = (useLoaderData().jobCategories as CategoriesResp) || {};
+
   const categoriesList = jobCategoriesToDropdown(categories);
   function editJob(payload: CreatePostPayload) {
     jobEditRequest(jobOverview.id, payload).then((resp) => {

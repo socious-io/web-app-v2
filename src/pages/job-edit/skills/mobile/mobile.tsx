@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
@@ -9,16 +10,16 @@ import { createFormInitState, jobEditRequest } from '../../info/info.services';
 import { useSkillsShared } from '../skills.shared';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = {};
-  const { overview } = useMatch().ownData as { overview: Job };
+  const navigate = useNavigate();
+  const { overview } = useLoaderData() as { overview: Job };
   const { onSearch, socialCauses, selectedSkills, isValid, setSelectedSkills } = useSkillsShared(overview.skills);
   function editSkills() {
     jobEditRequest(overview.id, { ...createFormInitState(overview), skills: selectedSkills }).then((resp) => {
-      navigate({ to: `/m/jobs/created/${overview.id}/overview` });
+      navigate(`/jobs/created/${overview.id}/overview`);
     });
   }
   function onBack() {
-    navigate({ to: `/m/jobs/created/${overview.id}/overview` });
+    navigate(`/jobs/created/${overview.id}/overview`);
   }
 
   return (

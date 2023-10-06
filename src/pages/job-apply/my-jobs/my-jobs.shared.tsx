@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLoaderData, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
 
 import {
@@ -11,12 +12,13 @@ import {
 import { AwaitingResp, DeclinedResp, EndedResp, Loader, MyJobs, OnGoingResp, PendingResp } from './my-jobs.types';
 
 export const useMyJobShared = () => {
-  const resolver = useMatch();
-  const tab = useMatch()?.search?.tab as MyJobs;
-  const navigate = {};
+  const resolver = useLoaderData();
+  const [searchParams] = useSearchParams();
+  const tab = searchParams.get('tab');
+  const navigate = useNavigate();
   const defaultTab = tab || 'Applied';
   const { pendingApplicants, awaitingApplicants, declinedApplicants, onGoingApplicants, endedApplicants } =
-    resolver.data as Loader;
+    resolver as Loader;
   const [pendingList, setPendingList] = useState<PendingResp>(pendingApplicants);
   const [awaitingList, setAwaitingList] = useState<AwaitingResp>(awaitingApplicants);
   const [declinedList, setDeclinedList] = useState<AwaitingResp>(declinedApplicants);
@@ -53,7 +55,7 @@ export const useMyJobShared = () => {
   }
 
   function navigateToJobDetail(job: JobCardProps) {
-    navigate({ to: `/jobs/${job.id}` });
+    navigate(`/jobs/${job.id}`);
   }
 
   return {
