@@ -1,6 +1,6 @@
 import { post, get } from 'src/core/api/http';
 import { MissionsRes } from 'src/core/api/jobs/jobs.types';
-import { PaginateReq, SuccessRes } from 'src/core/api/types';
+import { FilterReq, PaginateReq, SuccessRes } from 'src/core/api/types';
 
 import {
   ReportReq,
@@ -13,6 +13,8 @@ import {
   ChangePasswordReq,
   ChangePasswordDirectReq,
   DeleteUserReq,
+  Badges,
+  ImpactPoints,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -21,6 +23,14 @@ export async function profile(): Promise<User> {
 
 export async function otherProfile(id: string): Promise<User> {
   return (await get<User>(`user/${id}/profile`)).data;
+}
+
+export async function badges(id?: string): Promise<Badges> {
+  return (await get<Badges>(id ? `user/${id}/badges` : 'user/badges')).data;
+}
+
+export async function impactPoints(params?: FilterReq): Promise<ImpactPoints> {
+  return (await get<ImpactPoints>(`user/impact-points`, { params })).data;
 }
 
 export async function otherProfileByUsername(username: string): Promise<User> {
@@ -87,10 +97,15 @@ export async function selfDelete(payload: DeleteUserReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/delete`, payload)).data;
 }
 
-export async function missions(payload: PaginateReq): Promise<MissionsRes> {
-  return (
-    await get<MissionsRes>('/user/missions', {
-      params: { 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED', page: payload.page },
-    })
-  ).data;
+export async function userPaidMissions(params: PaginateReq): Promise<MissionsRes> {
+  params = {
+    ...params,
+    ...{ 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' },
+  };
+  return (await get<MissionsRes>('/user/missions', { params })).data;
+}
+
+export async function userMissions(id?: string, params?: FilterReq): Promise<MissionsRes> {
+  const path = id ? `/user/${id}/missions` : '/user/missions';
+  return (await get<MissionsRes>(path, { params })).data;
 }

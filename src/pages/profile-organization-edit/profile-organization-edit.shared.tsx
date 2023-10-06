@@ -14,16 +14,17 @@ import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { generateFormModel } from './profile-organization-edit.form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-organization-edit.services';
 import { ProfileReq } from '../profile-user/profile-user.types';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
 export const useProfileOrganizationEditShared = () => {
-  const organization = useMatch().data.user as ProfileReq;
+  const organization = useLoaderData().data.user as ProfileReq;
   const formModel = useMemo(() => generateFormModel(organization), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
   const updateCityList = cityDispatcher(setCities);
   const [coverImage, setCoverImage] = useState(organization?.cover_image?.url);
   const [avatarImage, setAvatarImage] = useState(organization?.image?.url);
-  const navigate = {};
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   async function runAvatarEditActions(type: 'upload' | 'remove' | undefined) {
@@ -90,7 +91,7 @@ export const useProfileOrganizationEditShared = () => {
           shortname: organization.shortname,
         });
         await updateIdentityList();
-        navigate({ to: '/jobs' });
+        navigate('/jobs');
       } catch (err) {
         console.error(err);
       }

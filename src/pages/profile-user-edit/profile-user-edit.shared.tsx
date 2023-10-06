@@ -2,28 +2,28 @@ import { Camera } from '@capacitor/camera';
 import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { identities } from 'src/core/api';
+import { User, identities } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { useForm } from 'src/core/form';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { removedEmptyProps } from 'src/core/utils';
-import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 import { generateFormModel } from './profile-user-edit.form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-user-edit.services';
 import { EditProps } from '../profile-user/desktop/edit/edit.types';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
 export const useProfileUserEditShared = (props?: EditProps) => {
-  const user = useMatch().data.user as ProfileReq;
+  const user = useLoaderData() as User;
   const formModel = useMemo(() => generateFormModel(user), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
   const updateCityList = cityDispatcher(setCities);
   const [coverImage, setCoverImage] = useState(user?.cover_image?.url);
   const [avatarImage, setAvatarImage] = useState(user?.avatar?.url);
-  const navigate = {};
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   async function runCoverEditActions(type: 'upload' | 'remove' | undefined) {
@@ -109,7 +109,7 @@ export const useProfileUserEditShared = (props?: EditProps) => {
       const payload = removedEmptyProps(rawPayload);
       endpoint.post.user['update/profile'](payload).then(async () => {
         await updateIdentityList();
-        navigate({ to: '/jobs' });
+        navigate('/jobs');
       });
     } else {
       dialog.alert({ message: 'form is invalid' });

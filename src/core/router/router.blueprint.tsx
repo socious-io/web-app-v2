@@ -2,7 +2,6 @@ import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
 import Layout from 'src/components/templates/refactored/layout/layout';
-import { getMedia, job, getMission, getOffer } from 'src/core/api';
 import {
   jobs,
   createChat,
@@ -15,11 +14,16 @@ import {
   posts,
   getPost,
   postComments,
-  missions,
   stripeProfile,
+  getOffer,
+  getMission,
+  job,
   jobCategories as jobCategoriesReq,
   jobQuestions,
   applicant,
+  getMedia,
+  userPaidMissions,
+  profile
 } from 'src/core/api';
 import { search } from 'src/core/api/site/site.api';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -103,7 +107,6 @@ export const blueprint: RouteObject[] = [
                   const requests = [
                     chatMessages(params.id, { page: 1 }),
                     getChatParticipantsById(params.id),
-
                     chats({ page: 1 }),
                     getFollowings({ page: 1 }),
                   ];
@@ -260,8 +263,8 @@ export const blueprint: RouteObject[] = [
                 loader: async ({ params }) => {
                   const requests = [
                     jobs({ identity_id: params.id, page: 1, status: 'ACTIVE' }),
-                    jobs({ identityId: params.id, page: 1, status: 'DRAFT' }),
-                    jobs({ identityId: params.id, page: 1, status: 'EXPIRE' }),
+                    jobs({ identity_id: params.id, page: 1, status: 'DRAFT' }),
+                    jobs({ identity_id: params.id, page: 1, status: 'EXPIRE' }),
                     jobCategoriesReq(),
                   ];
                   const [activeJobs, draftJobs, archivedJobs, jobCategories] = await Promise.all(requests);
@@ -324,7 +327,7 @@ export const blueprint: RouteObject[] = [
               };
             },
             loader: async () => {
-              const requests = [missions({ page: 1 }), stripeProfile({}), stripeProfile({ is_jp: true })];
+              const requests = [userPaidMissions({ page: 1 }), stripeProfile({}), stripeProfile({ is_jp: true })];
               const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
               return { missionsList, stripeProfileRes, jpStripeProfileRes };
             },
@@ -423,6 +426,60 @@ export const blueprint: RouteObject[] = [
                 ],
               },
             ],
+          },
+          {
+            path: 'profile/users',
+            children: [
+              {
+                path: ':id',
+                children: [
+                  {
+                    path: 'view',
+                    loader: async ({ params }) => {
+                      // TODO: need to load on parent and pass wit props
+                      const user = await otherProfileByUsername(params.id);
+                      const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
+                      return {
+                        user,
+                        badges: userBadges,
+                        missions,
+                      };
+                    },
+                    async lazy() {
+                      const { ProfileUser } = await import('src//pages/profile-user/refactored/profileUser');
+                      return {
+                        Component: ProfileUser,
+                      };
+                    },
+                  },
+                  {
+                    path: 'edit',
+                    loader: profile,
+                    async lazy() {
+                      const { ProfileUserEditContainer } = await import(
+                        'src//pages/profile-user-edit/profile-user-edit.container'
+                      );
+                      return {
+                        Component: ProfileUserEditContainer,
+                      };
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: '/achievements',
+            loader: async () => {
+              const [userBadges, impactPointHistory] = await Promise.all([badges(), impactPoints()]);
+              return { badges: userBadges, impactPointHistory };
+            },
+            async lazy() {
+              const { AchievementsContainer } = await import('../../pages/achievements/achievements.container');
+              return {
+                Component: AchievementsContainer,
+              };
+            },
           },
           {
             path: 'search',

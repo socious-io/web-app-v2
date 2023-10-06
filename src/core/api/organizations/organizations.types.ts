@@ -1,4 +1,4 @@
-import { SocialCauses, PaginateRes, OrganizationType } from '../types';
+import { SocialCauses, PaginateRes, OrganizationType, Media } from '../types';
 
 export interface OrganizationReq {
   name: string;
@@ -35,8 +35,8 @@ export interface Organization extends OrganizationReq {
   followings: number;
   wallet_address?: string;
   impact_points: number;
-  image?: Image;
-  cover_image?: Image;
+  image?: Media;
+  cover_image?: Media;
   mobile_country_code?: string;
   created_by?: string;
   shortname: string;
@@ -50,14 +50,6 @@ export interface Organization extends OrganizationReq {
   hiring: boolean;
   created_at: Date;
   updated_at: Date;
-}
-
-export interface Image {
-  id: string;
-  identity_id: string;
-  filename: string;
-  url: string;
-  created_at: Date;
 }
 
 export interface Member {

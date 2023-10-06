@@ -4,10 +4,11 @@ import { getFormValues } from 'src/core/form/customValidators/formValues';
 
 import { formModel } from './change-password.form';
 import { changePassword } from './change-password.services';
+import { useNavigate } from 'react-router-dom';
 
 export const useChangePasswordShared = () => {
   const form = useForm(formModel);
-  const navigate = {};
+  const navigate = useNavigate();
 
   function onSubmitError(err: { error: string }) {
     // FIXME: we should get an error code instead of a string
@@ -35,7 +36,7 @@ export const useChangePasswordShared = () => {
     };
     return () =>
       changePassword(payload)
-        .then(() => navigate({ to: '/jobs' }))
+        .then(() => navigate('/jobs'))
         .catch((err) => {
           onSubmitError(err.response.data);
         });

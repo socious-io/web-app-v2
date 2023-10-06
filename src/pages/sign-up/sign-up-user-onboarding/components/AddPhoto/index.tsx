@@ -8,9 +8,10 @@ import { uploadImage } from 'src/pages/profile-user-edit/profile-user-edit.servi
 
 import css from './addphoto.module.scss';
 import { useUser } from '../../sign-up-user-onboarding.context';
+import { useNavigate } from 'react-router-dom';
 
 const AddPhoto: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const { state, updateUser } = useUser();
   const [image, setImage] = useState({ imageUrl: state.avatar?.url, id: '' });
   const onUploadImage = async () => {
@@ -35,7 +36,7 @@ const AddPhoto: React.FC = () => {
         ['', null],
       ),
     ).then(() => {
-      navigate({ to: '/sign-up/user/allow-notification' });
+      navigate('/sign-up/user/allow-notification');
     });
   };
   return (

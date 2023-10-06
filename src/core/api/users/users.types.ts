@@ -1,4 +1,8 @@
-import { LanguageCode, PaginateRes } from '../types';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { Mission } from '../jobs/jobs.types';
+import { Identity } from '../site/site.types';
+import { LanguageCode, Media, PaginateRes, SDG } from '../types';
+import { impactPoints } from './users.api';
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
@@ -69,6 +73,7 @@ export interface UsersRes extends PaginateRes {
 export interface User {
   id: string;
   username: string;
+  email: string;
   first_name?: string;
   last_name?: string;
   city?: string;
@@ -84,8 +89,8 @@ export interface User {
   phone?: string;
   address?: string;
   social_causes: string[];
-  avatar?: string;
-  cover_image?: string;
+  avatar?: Media;
+  cover_image?: Media;
   reported: boolean;
   mobile_country_code?: string;
   open_to_work: boolean;
@@ -110,4 +115,28 @@ export interface Experience extends ExperienceReq {
     website?: string;
   };
   created_at: Date;
+}
+
+export interface Badge {
+  total_points: number;
+  social_cause_category: SDG;
+}
+export interface Badges {
+  badges: Badge[];
+}
+
+export interface ImpactPoint {
+  id: string;
+  job_category: {
+    name: string;
+  };
+  mission: Mission;
+  project: Job;
+  created_at: Date;
+  total_points: number;
+  organization: Identity;
+}
+
+export interface ImpactPoints extends PaginateRes {
+  items: ImpactPoint[];
 }
