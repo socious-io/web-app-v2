@@ -43,7 +43,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
     store.dispatch(resetCreatePostWizard());
     setOpenAlertModal(false);
     onDone();
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
   }
 
   function submitWithQuestions() {

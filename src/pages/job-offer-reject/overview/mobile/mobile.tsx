@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLoaderData, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { SureModal } from 'src/components/templates/sure-modal';
@@ -14,10 +15,11 @@ import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = {};
-  const resolver = useMatch().ownData as Loader;
-  const { id } = useMatch().params || {};
-  const tab = useMatch()?.search?.tab as string;
+  const navigate = useNavigate();
+  const resolver = useLoaderData() as Loader;
+  const [searchParams] = useSearchParams();
+  const { id } = useParams();
+  const tab = searchParams.get('tab');
   const defaultTab = tab || 'Overview';
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
   const [showArchiveConfirm, setShowArchiveConfirm] = useState(false);
@@ -48,7 +50,7 @@ export const Mobile = (): JSX.Element => {
         <Applicants
           toReviewList={updatedApplicantList.reviewList}
           declinedList={updatedApplicantList.declinedList}
-          onOfferClick={(id) => navigate({ to: `./${id}/offer` })}
+          onOfferClick={(id) => navigate(`./${id}/offer`)}
           onRejectClick={onRejectClick}
         />
       ),
@@ -98,7 +100,15 @@ export const Mobile = (): JSX.Element => {
             )
           }
         />
-        <Tabs tabs={tabs} onClick={(name) => navigate({ to: '.', search: { tab: name }, replace: true })} />
+        <Tabs
+          tabs={tabs}
+          onClick={(name) =>
+            navigate({
+              pathname: '.',
+              search: `?tab=${name}`,
+            })
+          }
+        />
       </TopFixedMobile>
       <SureModal
         open={showArchiveConfirm}

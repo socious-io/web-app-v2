@@ -7,10 +7,9 @@ import { useAuth } from 'src/hooks/use-auth';
 
 import css from './desktop.module.scss';
 import { useNetworkShared } from '../network.shared';
-import { useNavigate } from 'react-router-dom';
 
 export const Desktop: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = {};
   const { navigateNetwork, identity } = useNetworkShared();
   const { isLoggedIn } = useAuth();
 
@@ -28,7 +27,7 @@ export const Desktop: React.FC = () => {
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate(`/d/jobs/applied/${identity.id}`),
+      link: () => navigate({ to: `/d/jobs/applied/${identity.id}` }),
     },
   ];
 
@@ -36,7 +35,7 @@ export const Desktop: React.FC = () => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate(`/d/jobs/created/${identity.id}`),
+      link: () => navigate({ to: `/jobs/created/${identity.id}` }),
     },
   ];
 

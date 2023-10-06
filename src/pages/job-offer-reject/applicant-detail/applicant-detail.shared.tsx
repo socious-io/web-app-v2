@@ -1,12 +1,14 @@
+import { useLoaderData, useNavigate } from 'react-router-dom';
+
 import { Resolver } from './applicant-detail.types';
 import { rejectApplicant } from '../job-offer-reject.services';
 
 export const useApplicantDetailShared = () => {
-  const navigate = {};
-  const { screeningQuestions, applicantDetail } = useMatch().ownData as Resolver;
+  const navigate = useNavigate();
+  const { screeningQuestions, applicantDetail } =  useLoaderData() as Resolver;
 
   function navigateToOverview() {
-    navigate({ to: '..' });
+    navigate('..');
   }
 
   function onReject(id: string) {

@@ -1,3 +1,4 @@
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
@@ -8,8 +9,8 @@ import { createFormInitState, jobEditRequest } from '../../info/info.services';
 import { useSocialCausesShared } from '../social-causes.shared';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = {};
-  const { overview } = useMatch().ownData as { overview: Job };
+  const navigate = useNavigate();
+  const { overview } = useLoaderData() as { overview: Job };
   const { onSearch, socialCauses, selectedSocialCauses, isValid, setSelectedSocialCauses } = useSocialCausesShared(
     overview.causes_tags,
   );
@@ -19,7 +20,7 @@ export const Mobile = (): JSX.Element => {
     });
   }
   function onBack() {
-    navigate({ to: `/m/jobs/created/${overview.id}/overview` });
+    navigate(`/jobs/created/${overview.id}/overview`);
   }
 
   return (

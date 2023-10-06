@@ -29,7 +29,7 @@ export const Mobile: React.FC = () => {
 
   function submitSkip() {
     dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-      navigate({ to: `/m/jobs/created/${formState.question_project_id.identity_id}` });
+      navigate(`/jobs/created/${formState.question_project_id.identity_id}`);
       store.dispatch(resetCreatedQuestion());
       store.dispatch(resetCreatePostWizard());
     });
@@ -52,7 +52,7 @@ export const Mobile: React.FC = () => {
       dispatch(setQuestionProjectIds({ ...formState.question_project_id, question_id: resp.id }));
       store.dispatch(resetQuestions());
       form.reset();
-      navigate({ to: `created/${formState.question_project_id.identity_id}` });
+      navigate(`created/${formState.question_project_id.identity_id}`);
     });
   }
 
