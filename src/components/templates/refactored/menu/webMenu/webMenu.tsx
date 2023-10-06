@@ -21,14 +21,7 @@ const WebMenu = () => {
   const [searchValue, setSearchValue] = useState('');
 
   function navigateToSearch(q: string) {
-    navigate(
-      '/search',
-      // search: (p: PayloadModel) => {
-      //   const type = p.type ?? 'projects';
-      //   const page = p.page ?? 1;
-      //   return { type, q, page };
-      // },
-    );
+    navigate(`/search?q=${searchValue}&type=projects&page=1`);
   }
 
   function onMenuItemClick(menu: Menu) {
