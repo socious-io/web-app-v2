@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
@@ -24,15 +25,14 @@ import { useInfoShared } from '../info.shared';
 
 export const Mobile = (): JSX.Element => {
   const dispatch = useDispatch();
-  const navigate = {};
+  const navigate = useNavigate();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const resolvedJobCategories = useMatch().ownData.categories as CategoriesResp['categories'];
-  const categories = jobCategoriesToDropdown(resolvedJobCategories);
+  const { categories } = (useLoaderData().jobCategories as CategoriesResp) || {};
 
   function createJob(payload: CreatePostPayload) {
     createPost(payload).then((resp) => {
       dispatch(setQuestionProjectIds({ project_id: resp.id, identity_id: resp.identity_id }));
-      navigate({ to: '../screener-questions' });
+      navigate('../screener-questions');
     });
   }
 
@@ -49,7 +49,7 @@ export const Mobile = (): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: `/jobs/create/skills` })}>
+        <div className={css.chevron} onClick={() => navigate(`/jobs/create/skills`)}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.headerTitle}>Create job</div>

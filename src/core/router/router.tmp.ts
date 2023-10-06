@@ -720,7 +720,7 @@ export const routes: Route[] = [
             ],
           },
           {
-            path: '/d/jobs/created/:id',
+            path: '/jobs/created/:id',
             loader: async ({ params }) => {
               const requests = [
                 getActiveJobs({ identityId: params.id, page: 1 }),

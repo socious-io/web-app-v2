@@ -2,6 +2,7 @@ import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
 import Layout from 'src/components/templates/refactored/layout/layout';
+import { getMedia, job, getMission, getOffer } from 'src/core/api';
 import {
   jobs,
   createChat,
@@ -16,9 +17,20 @@ import {
   postComments,
   missions,
   stripeProfile,
+  jobCategories as jobCategoriesReq,
+  jobQuestions,
+  applicant,
 } from 'src/core/api';
 import { search } from 'src/core/api/site/site.api';
 import FallBack from 'src/pages/fall-back/fall-back';
+import {
+  getAwaitingReviewList,
+  getDeclinedApplicants,
+  getEndedList,
+  getOnGoingList,
+  getPendingApplicants,
+} from 'src/pages/job-apply/my-jobs/my-jobs.services';
+import { jobOfferRejectLoader } from 'src/pages/job-offer-reject/job-offer-reject.services';
 import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
@@ -91,6 +103,7 @@ export const blueprint: RouteObject[] = [
                   const requests = [
                     chatMessages(params.id, { page: 1 }),
                     getChatParticipantsById(params.id),
+
                     chats({ page: 1 }),
                     getFollowings({ page: 1 }),
                   ];
@@ -115,6 +128,163 @@ export const blueprint: RouteObject[] = [
                   const requests = [chats({ page: 1 }), getFollowings({ page: 1 })];
                   const [summery, followings] = await Promise.all(requests);
                   return { summery, followings };
+                },
+              },
+            ],
+          },
+          {
+            path: '/jobs',
+            children: [
+              {
+                path: '',
+                loader: async () => {
+                  const data = await jobs({ page: 1 });
+                  return { data };
+                },
+                async lazy() {
+                  const { Jobs } = await import('src/pages/jobs');
+                  return {
+                    Component: Jobs,
+                  };
+                },
+              },
+              {
+                path: 'applied/complete-mission/:id',
+                loader: async ({ params }) => {
+                  let media = { url: '' };
+                  const mission = await getMission(params.id);
+                  const offer = await getOffer(mission.offer_id);
+                  if (offer.applicant?.attachment) {
+                    media = await getMedia(offer.applicant.attachment);
+                  }
+                  return { mission, offer, media };
+                },
+                async lazy() {
+                  const { CompleteMission } = await import('src/pages/complete-mission/complete-mission.container');
+                  return {
+                    Component: CompleteMission,
+                  };
+                },
+              },
+              {
+                path: ':id',
+                loader: async ({ params }) => {
+                  const requests = [job(params.id), jobQuestions(params.id)];
+                  const [jobDetail, screeningQuestions] = await Promise.all(requests);
+                  return { jobDetail, screeningQuestions };
+                },
+                async lazy() {
+                  const { JobDetailContainer } = await import('src/pages/job-detail/job-detail.container');
+                  return { Component: JobDetailContainer };
+                },
+              },
+              {
+                path: ':id/apply',
+                loader: async ({ params }) => {
+                  const requests = [job(params.id), jobQuestions(params.id)];
+                  const [jobDetail, screeningQuestions] = await Promise.all(requests);
+                  return { jobDetail, screeningQuestions };
+                },
+                async lazy() {
+                  const { JobApply } = await import('src/pages/job-apply/apply/apply.container');
+                  return { Component: JobApply };
+                },
+              },
+
+              {
+                path: 'created/:id/overview/:applicantId/offer',
+                loader: async ({ params }) => {
+                  const requests = [applicant(params.applicantId)];
+                  const [applicantDetail] = await Promise.all(requests);
+                  return { applicantDetail };
+                },
+                async lazy() {
+                  const { Offer } = await import('src/pages/job-offer-reject/offer/offer.container');
+                  return { Component: Offer };
+                },
+              },
+              {
+                path: 'created/:id/overview/:applicantId',
+                loader: async ({ params }) => {
+                  const requests = [jobQuestions(params.id), applicant(params.applicantId)];
+                  const [screeningQuestions, applicantDetail] = await Promise.all(requests);
+                  return { applicantDetail, screeningQuestions };
+                },
+                async lazy() {
+                  const { ApplicantDetail } = await import(
+                    'src/pages/job-offer-reject/applicant-detail/applicant-detail'
+                  );
+                  return { Component: ApplicantDetail };
+                },
+              },
+              {
+                path: 'created/:id/overview',
+                loader: (params) => jobOfferRejectLoader(params),
+                async lazy() {
+                  const { JobOfferReject } = await import('src/pages/job-offer-reject/job-offer-reject.container');
+                  return { Component: JobOfferReject };
+                },
+              },
+              {
+                path: 'applied/:id',
+                loader: async () => {
+                  const requests = [
+                    getPendingApplicants({ page: 1 }),
+                    getAwaitingReviewList({ page: 1 }),
+                    getDeclinedApplicants({ page: 1 }),
+                    getOnGoingList({ page: 1 }),
+                    getEndedList({ page: 1 }),
+                  ];
+                  const [
+                    pendingApplicants,
+                    awaitingApplicants,
+                    declinedApplicants,
+                    onGoingApplicants,
+                    endedApplicants,
+                  ] = await Promise.all(requests);
+                  return {
+                    pendingApplicants,
+                    awaitingApplicants,
+                    declinedApplicants,
+                    onGoingApplicants,
+                    endedApplicants,
+                  };
+                },
+                async lazy() {
+                  const { MyJobs } = await import('src/pages/job-apply/my-jobs/my-jobs');
+                  return { Component: MyJobs };
+                },
+              },
+              {
+                path: 'created/:id',
+                loader: async ({ params }) => {
+                  const requests = [
+                    jobs({ identity_id: params.id, page: 1, status: 'ACTIVE' }),
+                    jobs({ identityId: params.id, page: 1, status: 'DRAFT' }),
+                    jobs({ identityId: params.id, page: 1, status: 'EXPIRE' }),
+                    jobCategoriesReq(),
+                  ];
+                  const [activeJobs, draftJobs, archivedJobs, jobCategories] = await Promise.all(requests);
+                  return { activeJobs, draftJobs, archivedJobs, jobCategories };
+                },
+                async lazy() {
+                  const { MyJobs } = await import('src/pages/job-create/my-jobs/my-jobs.container');
+                  return { Component: MyJobs };
+                },
+              },
+              {
+                path: 'received-offer/:id',
+                loader: async ({ params }) => {
+                  let media = { url: '' };
+                  const offer = await getOffer(params.id);
+                  if (offer.applicant?.attachment) {
+                    media = await getMedia(offer.applicant.attachment);
+                  }
+                  return { offer, media };
+                },
+                async lazy() {
+                  const { OfferReceived } = await import('src/pages/offer-received/offer-received.container');
+                  return { Component: OfferReceived };
                 },
               },
             ],
@@ -403,6 +573,10 @@ export const blueprint: RouteObject[] = [
         Component: SignInContainer,
       };
     },
+  },
+  {
+    path: '*',
+    element: <div>Page not found :(</div>,
   },
 ];
 

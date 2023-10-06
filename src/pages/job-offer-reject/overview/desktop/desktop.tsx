@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLoaderData, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Card } from 'src/components/atoms/card/card';
 import { BackLink } from 'src/components/molecules/back-link';
 import { ProfileCard } from 'src/components/templates/profile-card';
@@ -18,10 +19,11 @@ import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
 
 export const Desktop = (): JSX.Element => {
-  const navigate = {};
-  const resolver = useMatch().ownData as Loader;
-  const { id } = useMatch().params || {};
-  const tab = useMatch()?.search?.tab as string;
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const resolver = useLoaderData() as Loader;
+  const { id } = useParams() || {};
+  const tab = searchParams.get('tab');
   const defaultTab = tab || 'Overview';
   const [selectedTab, setSelectedTab] = useState(defaultTab);
   const [openOfferModal, setOpenOfferModal] = useState(false);
@@ -105,7 +107,7 @@ export const Desktop = (): JSX.Element => {
     <>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
-          <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
+          <BackLink title="Jobs" onBack={() => navigate('/jobs')} />
           <ProfileCard />
           <Card className={css.tabs}>
             {tabs.map((tab) => (
@@ -113,7 +115,10 @@ export const Desktop = (): JSX.Element => {
                 key={tab.name}
                 onClick={() => {
                   setSelectedTab(tab.name);
-                  navigate({ to: '.', search: { tab: tab.name }, replace: true });
+                  navigate({
+                    pathname: '.',
+                    search: `?tab=${tab.name}`,
+                  });
                 }}
                 className={selectedTab === tab.name ? css.selected : css.item}
               >
