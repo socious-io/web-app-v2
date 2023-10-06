@@ -14,11 +14,16 @@ import {
   posts,
   getPost,
   postComments,
-  missions,
   stripeProfile,
+  getOffer,
+  getMission,
+  job,
   jobCategories as jobCategoriesReq,
   jobQuestions,
   applicant,
+  getMedia,
+  userPaidMissions,
+  profile
 } from 'src/core/api';
 import { search } from 'src/core/api/site/site.api';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -258,8 +263,8 @@ export const blueprint: RouteObject[] = [
                 loader: async ({ params }) => {
                   const requests = [
                     jobs({ identity_id: params.id, page: 1, status: 'ACTIVE' }),
-                    jobs({ identityId: params.id, page: 1, status: 'DRAFT' }),
-                    jobs({ identityId: params.id, page: 1, status: 'EXPIRE' }),
+                    jobs({ identity_id: params.id, page: 1, status: 'DRAFT' }),
+                    jobs({ identity_id: params.id, page: 1, status: 'EXPIRE' }),
                     jobCategoriesReq(),
                   ];
                   const [activeJobs, draftJobs, archivedJobs, jobCategories] = await Promise.all(requests);
