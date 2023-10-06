@@ -1,19 +1,20 @@
 import css from './delete.module.scss';
-import { Button } from '../../../components/atoms/button/button';
+import { Button } from 'src/components/atoms/button/button';
+import { useNavigate } from 'react-router-dom';
 
 export const Delete = () => {
-  const navigate = {};
+  const navigate = useNavigate();
 
   const backToPerviousPage = () => {
-    navigate({ to: '../../jobs' });
+    navigate('/jobs');
   };
 
   const navigateToPassword = () => {
-    navigate({ to: '../password' });
+    navigate('../password');
   };
 
   const cancel = () => {
-    navigate({ to: '../../jobs' });
+    navigate('/jobs');
   };
 
   return (

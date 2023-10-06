@@ -16,10 +16,11 @@ import { showActions } from './profileOrg.services';
 import { useProfileOrg } from './useProfileOrg';
 import { ConnectModal } from '../connect-modal';
 import { EditOrganization } from '../desktop/edit/edit';
+import { useNavigate } from 'react-router-dom';
 
 const profileOrg = () => {
   const { isLoggedIn } = useAuth();
-  const navigate = {};
+  const navigate = useNavigate();
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
   const {
@@ -147,14 +148,7 @@ const profileOrg = () => {
   );
 
   const messageJSX = (
-    <div
-      className={css.message}
-      onClick={() =>
-        navigate({
-          to: `/chats/new/${organization?.id}`,
-        })
-      }
-    >
+    <div className={css.message} onClick={() => navigate(`/chats/new/${organization?.id}`)}>
       <img src="/icons/message-blue.svg" />
     </div>
   );
@@ -162,7 +156,7 @@ const profileOrg = () => {
     <>
       <TwoColumns>
         <div className={css.sidebar}>
-          <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
+          <BackLink title="Jobs" onBack={() => navigate('/jobs')} />
           <Card>
             <div onClick={navigateJobs}>Job opportunities </div>
           </Card>

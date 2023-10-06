@@ -10,9 +10,10 @@ import Dapp from 'src/dapp';
 
 import css from './mobile.module.scss';
 import { usePaymentShared } from '../payment.shared';
+import { useNavigate } from 'react-router-dom';
 
 export const Mobile = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const {
     offer,
     assignment_total,
@@ -96,7 +97,7 @@ export const Mobile = (): JSX.Element => {
               <Button
                 color="white"
                 disabled={isPaidCrypto || cards?.items?.length >= 3}
-                onClick={() => navigate({ to: 'add-card' })}
+                onClick={() => navigate('add-card')}
               >
                 <>
                   <img src="/icons/debit.svg" width={18} height={18} />

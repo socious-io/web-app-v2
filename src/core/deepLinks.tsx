@@ -1,5 +1,6 @@
 import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const DeepLinks = (): JSX.Element => {
   const navigate = {};
@@ -8,7 +9,7 @@ export const DeepLinks = (): JSX.Element => {
   useEffect(() => {
     CapacitorApp.addListener('appUrlOpen', (e: URLOpenListenerEvent) => {
       if (e.url.includes(proofspace)) {
-        navigate({ to: '/achievements' });
+        navigate('/achievements');
       }
     });
   }, []);
