@@ -18,13 +18,13 @@ import {
   HourlyWorkReq,
 } from './jobs.types';
 import { post, get } from '../http';
-import { SuccessRes, PaginateReq } from '../types';
+import { SuccessRes, PaginateReq, FilterReq } from '../types';
 
 export async function jobCategories(): Promise<JobCategoriesRes> {
   return (await get<JobCategoriesRes>('projects/categories')).data;
 }
 
-export async function jobs(params: PaginateReq): Promise<JobsRes> {
+export async function jobs(params: FilterReq): Promise<JobsRes> {
   return (await get<JobsRes>('projects', { params })).data;
 }
 

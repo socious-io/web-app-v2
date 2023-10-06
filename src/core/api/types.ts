@@ -3,7 +3,7 @@ export interface PaginateReq {
   limit?: number;
 }
 export interface FilterReq extends PaginateReq {
-  filter?: string;
+  [key: string]: any;
 }
 
 export interface SuccessRes {
