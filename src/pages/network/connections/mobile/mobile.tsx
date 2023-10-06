@@ -10,9 +10,10 @@ import { printWhen } from 'src/core/utils';
 import css from './mobile.module.scss';
 import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
 import { useConnectionsShared } from '../connections.shared';
+import { useNavigate } from 'react-router-dom';
 
 export const Mobile: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const {
     currentId,
     connectionList,
@@ -177,7 +178,7 @@ export const Mobile: React.FC = () => {
   return (
     <div className={css.container}>
       <Header
-        onBack={() => navigate({ to: '/network' })}
+        onBack={() => navigate('/network')}
         border="0"
         paddingTop={'var(--safe-area)'}
         title="Manage connections"

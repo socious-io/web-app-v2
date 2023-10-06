@@ -7,9 +7,10 @@ import { RootState } from 'src/store';
 
 import { getConnections } from './connections.service';
 import { Resolver } from './connections.types';
+import { useNavigate } from 'react-router-dom';
 
 export const useConnectionsShared = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
@@ -125,9 +126,9 @@ export const useConnectionsShared = () => {
 
   function onProfileClick(type: UserType, username: string) {
     if (type === 'users') {
-      navigate({ to: `/profile/users/${username}/view` });
+      navigate(`/profile/users/${username}/view`);
     } else {
-      navigate({ to: `/profile/organizations/${username}/view` });
+      navigate(`/profile/organizations/${username}/view`);
     }
   }
 

@@ -6,10 +6,11 @@ import { RootState } from 'src/store';
 
 import { convertFollowingsToContactList } from './team.service';
 import { Resolver } from './team.type';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
 export const useTeamShared = () => {
-  const navigate = {};
-  const { members, followings } = (useMatch().ownData as Resolver) || {};
+  const navigate = useNavigate();
+  const { members, followings } = (useLoaderData().ownData as Resolver) || {};
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
@@ -27,7 +28,7 @@ export const useTeamShared = () => {
   const [memberList, setMemberList] = useState(initialMemberList);
 
   function navigateToMemberProfile(username: string) {
-    navigate({ to: `/profile/users/${username}/view` });
+    navigate(`/profile/users/${username}/view`);
   }
 
   function getNewFollowings(name: string) {

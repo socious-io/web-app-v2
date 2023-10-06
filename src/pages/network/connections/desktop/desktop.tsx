@@ -13,7 +13,6 @@ import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } f
 import { useConnectionsShared } from '../connections.shared';
 
 export const Desktop: React.FC = () => {
-  const navigate = {};
   const {
     currentId,
     connectionList,

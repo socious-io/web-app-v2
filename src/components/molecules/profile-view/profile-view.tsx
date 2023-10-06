@@ -3,16 +3,17 @@ import { CSSProperties } from 'react';
 import css from './profile-view.module.scss';
 import { ProfileViewProps } from './profile-view.types';
 import { Avatar } from '../../atoms/avatar/avatar';
+import { useNavigate } from 'react-router-dom';
 
 export const ProfileView = (props: ProfileViewProps): JSX.Element => {
   const { type, img, name, username, size = '3rem', location, theme = 'light' } = props;
-  const navigate = {};
+  const navigate = useNavigate();
 
   function navigateToProfile() {
     if (type === 'users') {
-      navigate({ to: `/profile/users/${username}/view` });
+      navigate(`/profile/users/${username}/view`);
     } else {
-      navigate({ to: `/profile/organizations/${username}/view` });
+      navigate(`/profile/organizations/${username}/view`);
     }
   }
 

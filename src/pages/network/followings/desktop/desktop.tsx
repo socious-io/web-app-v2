@@ -12,7 +12,6 @@ import { useFollowingsShared } from '../followings.shared';
 import { UnfollowModal } from '../unfollow-modal';
 
 export const Desktop: React.FC = () => {
-  const navigate = {};
   const { followings, followStatusUser, onUnfollow, onFollow, loadMore, onProfileClick } = useFollowingsShared();
   const [selectedUser, setSelectedUser] = useState({ name: '', id: '' });
   const { isLoggedIn } = useAuth();

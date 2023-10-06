@@ -5,18 +5,19 @@ import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store';
 
 import css from './profile-card.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 export const ProfileCard: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
 
   function navigateToProfile() {
     if (identity.type === 'users') {
-      navigate({ to: `/profile/users/${identity.meta.username}/view` });
+      navigate(`/profile/users/${identity.meta.username}/view`);
     } else {
-      navigate({ to: `/profile/organizations/${identity.meta.shortname}/view` });
+      navigate(`/profile/organizations/${identity.meta.shortname}/view`);
     }
   }
 
