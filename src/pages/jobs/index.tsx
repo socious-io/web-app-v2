@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
@@ -33,7 +34,7 @@ export const Jobs = (): JSX.Element => {
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate(`/d/jobs/applied/${identity.id}`),
+      link: () => navigate(`/jobs/applied/${identity.id}`),
     },
   ];
 
@@ -41,7 +42,7 @@ export const Jobs = (): JSX.Element => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate(`/d/jobs/created/${identity.id}`),
+      link: () => navigate(`/jobs/created/${identity.id}`),
     },
   ];
   function openSidebar() {

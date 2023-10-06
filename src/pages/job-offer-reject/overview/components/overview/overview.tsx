@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Divider } from 'src/components/templates/divider/divider';
@@ -27,7 +28,7 @@ import css from './overview.module.scss';
 import { OverviewProps } from './overview.types';
 
 export const Overview = ({ data, questions, updateApplicantList }: OverviewProps): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const [openInfoModal, setOpenInfoModal] = useState<boolean>(false);
   const [openSkillsModal, setOpenSkillsModal] = useState<boolean>(false);
   const [openSocialCausesModal, setOpenSocialCausesModal] = useState<boolean>(false);
@@ -92,9 +93,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
 
       <Divider
         title="Job description"
-        onEdit={() =>
-          isTouchDevice() ? navigate({ to: `/jobs/edit/info/${overviewData.id}` }) : setOpenInfoModal(true)
-        }
+        onEdit={() => (isTouchDevice() ? navigate(`/jobs/edit/info/${overviewData.id}`) : setOpenInfoModal(true))}
       >
         <div className={css.group}>
           <div className={css.groupTitle}>Job title</div>
@@ -143,27 +142,21 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
       <Divider
         title="Social causes"
         onEdit={() =>
-          isTouchDevice()
-            ? navigate({ to: `/jobs/edit/social-causes/${overviewData.id}` })
-            : setOpenSocialCausesModal(true)
+          isTouchDevice() ? navigate(`/jobs/edit/social-causes/${overviewData.id}`) : setOpenSocialCausesModal(true)
         }
       >
         <CategoriesClickable list={socialCausesToCategory(overviewData.causes_tags)} />
       </Divider>
       <Divider
         title="Skills"
-        onEdit={() =>
-          isTouchDevice() ? navigate({ to: `/jobs/edit/skills/${overviewData.id}` }) : setOpenSkillsModal(true)
-        }
+        onEdit={() => (isTouchDevice() ? navigate(`/jobs/edit/skills/${overviewData.id}`) : setOpenSkillsModal(true))}
       >
         <CategoriesClickable list={skillsToCategory(overviewData.skills)} />
       </Divider>
       <Divider
         title="Screening questions"
         onEdit={() =>
-          isTouchDevice()
-            ? navigate({ to: `/jobs/edit/screener-questions/${overviewData.id}` })
-            : setOpenScreenerModal(true)
+          isTouchDevice() ? navigate(`/jobs/edit/screener-questions/${overviewData.id}`) : setOpenScreenerModal(true)
         }
       >
         <div className={css.screeningQuestionBody}>

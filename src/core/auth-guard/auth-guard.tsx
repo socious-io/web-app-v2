@@ -1,4 +1,6 @@
 import { SyntheticEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Modal } from 'src/components/templates/modal/modal';
 
@@ -10,8 +12,8 @@ import { nonPermanentStorage } from '../storage/non-permanent';
 export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   const { isLoggedIn } = useAuth();
   const [modalVisibility, setModalVisibility] = useState(false);
-  const navigate = {};
-  const route = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   function onClick() {
     if (!isLoggedIn) {
@@ -20,18 +22,18 @@ export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   }
 
   function saveCurrentRoute(): Promise<void> {
-    const path = route.current.href;
+    const path = location.pathname;
     return nonPermanentStorage.set({ key: 'savedLocation', value: path });
   }
 
   async function navigateToLogin() {
     await saveCurrentRoute();
-    navigate({ to: '/sign-in' });
+    navigate('/sign-in');
   }
 
   async function navigateToSignup() {
     await saveCurrentRoute();
-    navigate({ to: '/sign-up/user/email' });
+    navigate('/sign-up/user/email');
   }
 
   return (

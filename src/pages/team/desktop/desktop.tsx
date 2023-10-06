@@ -41,7 +41,7 @@ export const Desktop: React.FC = () => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate({ to: `/d/jobs/created/${identity.id}` }),
+      link: () => navigate({ to: `/jobs/created/${identity.id}` }),
     },
   ];
 

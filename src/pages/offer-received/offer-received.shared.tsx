@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { StatusKeys } from 'src/constants/APPLICANT_STATUS';
 import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
@@ -11,7 +12,7 @@ import { findTokenRate, getStripeLink, getSrtipeProfile, formModel } from './off
 import { Resolver } from './offer-received.types';
 
 export const useOfferReceivedShared = () => {
-  const { offer, media } = useMatch().ownData as Resolver;
+  const { offer, media } = useLoaderData() as Resolver;
   const { project, payment_mode, recipient } = offer;
   const { payment_type } = project || {};
   const { wallet_address } = recipient?.meta || {};
@@ -72,7 +73,7 @@ export const useOfferReceivedShared = () => {
 };
 
 export const useWalletShared = () => {
-  const { offer } = useMatch().ownData as Resolver;
+  const { offer } = useLoaderData() as Resolver;
   const form = useForm(formModel);
   const [stripeLink, setStripeLink] = useState('');
   const [stripeProfile, setStripeProfile] = useState(null);
