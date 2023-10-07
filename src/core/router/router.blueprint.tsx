@@ -66,7 +66,7 @@ export const blueprint: RouteObject[] = [
               };
             },
             loader: async ({ params }) => {
-              const requests = [getPost(params.id), postComments(params.id!, { page: 1 })];
+              const requests = [getPost(params.id!), postComments(params.id!, { page: 1 })];
               const [post, comments] = await Promise.all(requests);
               return { post, comments };
             },
@@ -83,7 +83,7 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
-            path: 'chats',
+            path: 'd/chats',
             children: [
               {
                 path: 'new/:id',

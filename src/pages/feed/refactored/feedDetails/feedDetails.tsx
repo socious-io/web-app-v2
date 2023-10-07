@@ -50,9 +50,9 @@ export const FeedDetails = () => {
             <div>
               <FeedItem
                 key={postObj.id}
-                type={postObj.identity_type}
+                type={postObj.identity_meta.type}
                 img={postObj.media != null && postObj.media.length > 0 ? postObj.media[0].url : ''}
-                imgAvatar={postObj.identity_meta.avatar || postObj.identity_meta?.image}
+                imgAvatar={postObj.identity_meta.avatar || postObj.identity_meta.image || ''}
                 text={postObj.content}
                 name={postObj.identity_meta.name}
                 actionList={actionList(postObj.likes, postObj.liked)}

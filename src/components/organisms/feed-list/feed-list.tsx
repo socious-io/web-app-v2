@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { FeedItem } from 'src/components/molecules/feed-item/feed-item';
+import { socialCausesToCategory } from 'src/core/adaptors';
 import { Post } from 'src/core/api';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 
 import css from './feed-list.module.scss';
 import { FeedListProps } from './feed-list.types';
-import { socialCausesToCategory } from '../../../core/adaptors';
-import { FeedItem } from '../../molecules/feed-item/feed-item';
 
 export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeMore, onMoreClick }: FeedListProps) => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
         if (obj) obj.liked ? onRemoveLike(id) : onLike(id);
       },
       onLike: () => {
-        return onLike(id);
+        onLike(id);
       },
       onRemoveLike: () => {
         onRemoveLike(id);
@@ -41,7 +41,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
   };
 
   function redirectToProfile(feed: Post) {
-    if (feed.identity_type === 'users') {
+    if (feed.identity_meta.type === 'users') {
       navigate(`/profile/users/${feed.identity_meta.username}/view`);
     } else {
       navigate(`/profile/organizations/${feed.identity_meta.shortname}/view`);
@@ -49,20 +49,20 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
   }
 
   function setAvatar(feed: Post) {
-    if (feed.identity_type === 'organizations') {
-      return feed.identity_meta.image;
+    if (feed.identity_meta.type === 'organizations') {
+      return feed.identity_meta.image || '';
     }
-    return feed.identity_meta.avatar;
+    return feed.identity_meta.avatar || '';
   }
 
   return (
     <div className={css.container}>
       {data.map((item) => (
         <FeedItem
+          key={item.id}
           onAvatarClick={() => redirectToProfile(item)}
           onMoreClick={() => onMoreClick?.(item)}
-          key={item.id}
-          type={item.identity_type}
+          type={item.identity_meta.type}
           img={item.media != null && item.media.length > 0 ? item.media[0]?.url : ''}
           imgAvatar={setAvatar(item)}
           text={item.content}
