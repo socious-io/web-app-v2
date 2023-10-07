@@ -98,11 +98,7 @@ export async function selfDelete(payload: DeleteUserReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/delete`, payload)).data;
 }
 
-export async function userPaidMissions(params: PaginateReq): Promise<MissionsRes> {
-  params = {
-    ...params,
-    ...{ 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' },
-  };
+export async function userPaidMissions(params: FilterReq): Promise<MissionsRes> {
   return (await get<MissionsRes>('/user/missions', { params })).data;
 }
 
