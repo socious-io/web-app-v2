@@ -1,4 +1,4 @@
-import { Media } from 'src/core/api';
+import { Media, Identity } from 'src/core/api';
 
 import { SocialCauses, PaginateRes } from '../types';
 
@@ -41,10 +41,7 @@ export interface Post {
   updated_at: Date;
   deleted_at?: Date;
 
-  identity_type: 'organizations' | 'users';
-  identity_meta: PostIdentityMeta;
-  identity_id: string;
-
+  identity_meta: Identity;
   content: string;
   causes_tags: SocialCauses[];
   hashtags?: string[];
@@ -62,13 +59,7 @@ export interface Comment {
   reported: boolean;
   liked: boolean;
   identity_type: string;
-  identity_meta: PostIdentityMeta;
+  identity_meta: Identity;
   created_at: Date;
   updated_at: Date;
-}
-
-export interface PostIdentityMeta {
-  name: string;
-  avatar: string;
-  image: string;
 }

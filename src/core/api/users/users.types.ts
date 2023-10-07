@@ -1,8 +1,9 @@
 import { Mission } from '../jobs/jobs.types';
 import { Applicant, Category, Escrow, Job } from '../jobs/jobs.types';
+import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
 import { Identity } from '../site/site.types';
-import { LanguageCode, Media, PaymentMode, SDG, PaginateRes } from '../types';
+import { LanguageCode, PaymentMode, SDG, PaginateRes } from '../types';
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
