@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { getFlooredFixed } from 'src/core/numbers';
@@ -15,7 +16,7 @@ import { Resolver } from './payment.types';
 export const usePaymentShared = () => {
   const { web3 } = Dapp.useWeb3();
   const { address: account, isConnected } = useAccount();
-  const { offer, cardInfo } = useMatch().ownData as Resolver;
+  const { offer, cardInfo } = useLoaderData() as Resolver;
   const [process, setProcess] = useState(false);
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
   const [cards, setCards] = useState(cardInfo);

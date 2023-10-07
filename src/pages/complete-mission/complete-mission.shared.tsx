@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { endpoint } from 'src/core/endpoints';
 import { useAlert } from 'src/hooks/use-alert';
 
 import { Loader } from './complete-mission.types';
 
 export const useCompleteMissionShared = () => {
-  const resolver = useMatch().ownData;
+  const resolver = useLoaderData();
   const { offer, mission, media } = (resolver as Loader) || {};
   const [status, setStatus] = useState(offer.status);
   const alert = useAlert();

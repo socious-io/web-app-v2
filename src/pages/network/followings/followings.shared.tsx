@@ -1,13 +1,13 @@
 import { useState } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { endpoint } from 'src/core/endpoints';
 import { FollowingsReq, Pagination, UserType } from 'src/core/types';
 
 import { getFollowings } from './followings.service';
-import { useNavigate } from 'react-router-dom';
 
 export const useFollowingsShared = () => {
   const navigate = useNavigate();
-  const resolver = (useMatch().ownData as Pagination<FollowingsReq[]>) || {};
+  const resolver = useLoaderData() as Pagination<FollowingsReq[]>) || {};
   const [followings, setFollowings] = useState(resolver);
   const [followingStatus, setFollowingStatus] = useState<{ [x: string]: 'FOLLOW' | 'UNFOLLOW' }>({});
   const [currentPage, setCurrectPage] = useState(1);

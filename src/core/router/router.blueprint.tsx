@@ -15,17 +15,20 @@ import {
   getPost,
   postComments,
   stripeProfile,
-  getOffer,
-  getMission,
-  job,
   jobCategories as jobCategoriesReq,
   jobQuestions,
   applicant,
   getMedia,
   userPaidMissions,
-  profile
+  profile,
+  job,
+  getMission,
+  getOffer,
+  search,
+  otherProfileByUsername,
+  badges,
+  userMissions,
 } from 'src/core/api';
-import { search } from 'src/core/api/site/site.api';
 import FallBack from 'src/pages/fall-back/fall-back';
 import {
   getAwaitingReviewList,
@@ -63,7 +66,7 @@ export const blueprint: RouteObject[] = [
               };
             },
             loader: async ({ params }) => {
-              const requests = [getPost(params.id!), postComments(params.id!, { page: 1 })];
+              const requests = [getPost(params.id), postComments(params.id!, { page: 1 })];
               const [post, comments] = await Promise.all(requests);
               return { post, comments };
             },
@@ -80,7 +83,7 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
-            path: 'd/chats',
+            path: 'chats',
             children: [
               {
                 path: 'new/:id',
@@ -475,7 +478,7 @@ export const blueprint: RouteObject[] = [
               return { badges: userBadges, impactPointHistory };
             },
             async lazy() {
-              const { AchievementsContainer } = await import('../../pages/achievements/achievements.container');
+              const { AchievementsContainer } = await import('src/pages/achievements/achievements.container');
               return {
                 Component: AchievementsContainer,
               };
@@ -495,10 +498,7 @@ export const blueprint: RouteObject[] = [
                 loader: async ({ request }) => {
                   const url = new URL(request.url);
                   const q = url.searchParams.get('q');
-                  const data = await search(
-                    { filter: {}, q: q as string, type: 'projects' },
-                    { page: 1, limit: 50 },
-                  );
+                  const data = await search({ filter: {}, q: q as string, type: 'projects' }, { page: 1, limit: 50 });
                   return data;
                 },
               },

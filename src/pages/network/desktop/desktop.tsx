@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Card } from 'src/components/atoms/card/card';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { ProfileCard } from 'src/components/templates/profile-card';
@@ -9,25 +10,25 @@ import css from './desktop.module.scss';
 import { useNetworkShared } from '../network.shared';
 
 export const Desktop: React.FC = () => {
-  const navigate = {};
+  const navigate = useNavigate();
   const { navigateNetwork, identity } = useNetworkShared();
   const { isLoggedIn } = useAuth();
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity.id}`) },
   ];
 
   const jobsMenuListUser = [
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate({ to: `/d/jobs/applied/${identity.id}` }),
+      link: () => navigate(`/jobs/applied/${identity.id}`),
     },
   ];
 
@@ -35,7 +36,7 @@ export const Desktop: React.FC = () => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate({ to: `/jobs/created/${identity.id}` }),
+      link: () => navigate(`/jobs/created/${identity.id}`),
     },
   ];
 

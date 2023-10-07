@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const DeepLinks = (): JSX.Element => {
-  const navigate = {};
+  const navigate = useNavigate();
   const proofspace = 'zakaio://platform.proofspace.id/native/execute';
 
   useEffect(() => {

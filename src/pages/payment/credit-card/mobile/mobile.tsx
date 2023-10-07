@@ -1,5 +1,6 @@
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { useState, useEffect } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { Header } from 'src/components/atoms/header/header';
@@ -17,7 +18,7 @@ type Resolver = {
 };
 
 export const Mobile: React.FC = () => {
-  const { offer } = useMatch().ownData as Resolver;
+  const { offer } = useLoaderData() as Resolver;
   const [stripe, setStripe] = useState<Stripe | null>();
   const [card, setCard] = useState<StripeCardElement | null>();
   const is_jp = offer.currency === 'JPY';

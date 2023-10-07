@@ -1,9 +1,17 @@
 import { CSSProperties } from 'react';
 import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
 import { APPLICANT_STATUS, setApplicantStatusLabel } from 'src/constants/APPLICANT_STATUS';
+import { OfferRes, userOffers } from 'src/core/api';
 import { get } from 'src/core/http';
 import { toRelativeTime } from 'src/core/relative-time';
-import { GetOffer, Pagination, UserApplicantResp, DeclinedApplicantListResp, MissionsResp } from 'src/core/types';
+import {
+  GetOffer,
+  Pagination,
+  UserApplicantResp,
+  DeclinedApplicantListResp,
+  MissionsResp,
+  Offer,
+} from 'src/core/types';
 
 export async function getEndedList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
   return get(`/user/missions?status=COMPLETE,CONFIRMED&page=${payload.page}`)
@@ -42,12 +50,10 @@ export async function getPendingApplicants(payload: { page: number }): Promise<P
 }
 
 export async function getAwaitingReviewList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
-  return get(`/user/offers?status=PENDING,APPROVED&page=${payload.page}`)
-    .then(({ data }) => data)
-    .then((resp) => {
-      const adopted = awaitingListToJobCardList(resp.items);
-      return { ...resp, items: adopted };
-    });
+  return userOffers({ status: 'PENDING,APPROVED', page: payload.page }).then((resp) => {
+    const adopted = awaitingListToJobCardList(resp.items);
+    return { ...resp, items: adopted };
+  });
 }
 
 function endedItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCardProps {
@@ -139,7 +145,7 @@ function setStatusJSX(status: keyof typeof APPLICANT_STATUS) {
   }
 }
 
-function awaitingItemToJobCardAdaptor(applicant: GetOffer['items'][0]): JobCardProps {
+function awaitingItemToJobCardAdaptor(applicant: Offer): JobCardProps {
   return {
     id: applicant.id,
     title: applicant.project.title,
@@ -150,7 +156,7 @@ function awaitingItemToJobCardAdaptor(applicant: GetOffer['items'][0]): JobCardP
   };
 }
 
-function awaitingListToJobCardList(applicants: GetOffer['items']): JobCardProps[] {
+function awaitingListToJobCardList(applicants:  Offer[]): JobCardProps[] {
   return applicants.map(awaitingItemToJobCardAdaptor);
 }
 

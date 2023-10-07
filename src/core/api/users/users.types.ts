@@ -1,8 +1,8 @@
-import { Job } from 'src/components/organisms/job-list/job-list.types';
 import { Mission } from '../jobs/jobs.types';
+import { Applicant, Category, Escrow, Job } from '../jobs/jobs.types';
+import { Organization } from '../organizations/organizations.types';
 import { Identity } from '../site/site.types';
-import { LanguageCode, Media, PaginateRes, SDG } from '../types';
-import { impactPoints } from './users.api';
+import { LanguageCode, Media, PaymentMode, SDG, PaginateRes } from '../types';
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
@@ -139,4 +139,34 @@ export interface ImpactPoint {
 
 export interface ImpactPoints extends PaginateRes {
   items: ImpactPoint[];
+}
+export interface Offer {
+  applicant: Applicant;
+  applicant_id: string;
+  assignment_total: number;
+  created_at: string;
+  crypto_currency_address: string;
+  currency: string;
+  due_date: Date | string;
+  escrow: Escrow | string;
+  id: string;
+  job_category: Category;
+  offer_message: string;
+  offer_rate: string | null;
+  offerer_id: string;
+  offerer: Identity;
+  organization: Organization;
+  payment_mode: PaymentMode;
+  project: Job;
+  project_id: string;
+  recipient: Identity;
+  recipient_id: string;
+  status: string;
+  total_hours: number | null;
+  updated_at: Date;
+  weekly_limit: number;
+}
+
+export interface OfferRes extends PaginateRes {
+  items: Offer[];
 }

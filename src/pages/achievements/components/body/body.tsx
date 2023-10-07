@@ -1,3 +1,4 @@
+import { useLoaderData } from 'react-router-dom';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { Tab } from 'src/components/atoms/tabs/tabs.types';
 import { ImpactCategoryList } from 'src/components/organisms/impact-category-list/impact-category-list';
@@ -38,7 +39,7 @@ const data = [
 // }
 
 export const Body = (props: BodyProps): JSX.Element => {
-  const loader = useMatch().ownData as Loader;
+  const loader = useLoaderData() as Loader;
 
   const points = loader.badges.badges.reduce((prev, curr) => prev + curr.total_points, 0);
   const tier = evaluateTier(points);
