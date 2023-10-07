@@ -29,7 +29,7 @@ function App() {
   return (
     <Provider store={store}>
       <RouterProvider router={router.routes} />
-      {/* <DeepLinks /> */}
+      <DeepLinks />
       <ModalPlaceholder />
       <Spinner />
     </Provider>
