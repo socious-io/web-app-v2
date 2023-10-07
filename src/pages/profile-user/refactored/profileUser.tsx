@@ -75,7 +75,6 @@ export const ProfileUser = () => {
       <div className={css.bio}>{user.bio}</div>
     </Divider>
   );
-  console.log(mission);
   const expriencesJSX = (
     <Divider title="Experiences">
       {missions.map((mission) => (
@@ -91,9 +90,9 @@ export const ProfileUser = () => {
             <div className={css.exprienceDetails}>
               <div className={css.exprienceTitle}>{mission.organization.name}</div>
               <div className={css.exprienceDetail}>{mission.project.title}</div>
-              {/* <div className={css.exprienceDetail}>{`${mission.project.created_at.toLocaleDateString(
+              <div className={css.exprienceDetail}>{`${new Date(mission.project.created_at).toLocaleDateString(
                 'en-US',
-              )} - ${mission.project.updated_at?.toLocaleDateString('en-US')}`}</div> */}
+              )} - ${new Date(mission.project.updated_at).toLocaleDateString('en-US')}`}</div>
               <div className={css.exprienceDetail}>{mission.project.country}</div>
             </div>
           </div>
@@ -101,6 +100,7 @@ export const ProfileUser = () => {
       ))}
     </Divider>
   );
+
   const skillsJSX = (
     <Divider title="Skills">
       <CategoriesClickable list={skills} />
