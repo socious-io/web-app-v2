@@ -1,12 +1,14 @@
-import { post } from 'src/core/http';
+import { reportPost } from 'src/core/api';
+import { dialog } from 'src/core/dialog/dialog';
 
-export async function uploadImage(file: string) {
-  const formData = new FormData();
-  formData.append('file', file);
-  const header = {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  };
-  return post('/media/upload', formData, header);
+export function report(feedId: string) {
+  reportPost(feedId, { blocked: true, comment: 'comment' }).then(() => {
+    dialog.alert({ title: 'Blocked', message: 'You successfully blocked the feed' });
+  });
+}
+
+export function block(feedId: string) {
+  reportPost(feedId, { blocked: false, comment: 'comment' }).then(() => {
+    dialog.alert({ title: 'Report', message: 'You successfully Reported the feed' });
+  });
 }

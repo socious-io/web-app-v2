@@ -4,12 +4,10 @@ import { Card } from 'src/components/atoms/card/card';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { WebModal } from 'src/components/templates/web-modal';
-import { createPost, posts } from 'src/core/api';
-import { IdentityReq } from 'src/core/types';
+import { createPost, CurrentIdentity, posts, uploadMedia } from 'src/core/api';
 import { printWhen } from 'src/core/utils';
 import css from 'src/pages/feed/modal-review/modal-review.module.scss';
 import { ModalReviewProps } from 'src/pages/feed/modal-review/modal-review.types';
-import { uploadImage } from 'src/pages/feed/refactored/feed.service';
 import { RootState } from 'src/store';
 
 export const ModalReview: React.FC<ModalReviewProps> = ({
@@ -22,16 +20,18 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
   setFeedList,
   onDone,
 }) => {
-  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
+  const avatarImg = useSelector<RootState, string>((state) => {
+    return state.identity.avatarImage;
+  });
 
   async function onSubmit() {
     let imageId: string[] = [];
     if (imgFile) {
-      const id = await uploadImage(imgFile).then((resp) => resp.data.id);
+      const id = await uploadMedia(imgFile).then((resp) => resp.id);
       imageId = [id];
     }
     const payload = {
@@ -39,6 +39,7 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
       content: text,
       media: imageId,
     };
+
     createPost(payload).then(() => {
       posts({ page: 1 }).then((resp) => {
         setFeedList(resp.items);

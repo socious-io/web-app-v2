@@ -28,9 +28,10 @@ function App() {
   }, []);
   return (
     <Provider store={store}>
-      <RouterProvider router={router.routes} />
+      <RouterProvider router={router.routes}>
+        <DeepLinks />
+      </RouterProvider>
       <ModalPlaceholder />
-      <DeepLinks />
       <Spinner />
     </Provider>
   );

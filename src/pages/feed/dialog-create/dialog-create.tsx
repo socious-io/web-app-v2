@@ -6,9 +6,8 @@ import { Button } from 'src/components/atoms/button/button';
 import { Dropdown } from 'src/components/atoms/dropdown/dropdown';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
-import { SocialCauses } from 'src/core/api';
+import { CurrentIdentity, SocialCauses } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { IdentityReq } from 'src/core/types';
 import css from 'src/pages/feed/dialog-create/dialog-create.module.scss';
 import { DialogCreateProps } from 'src/pages/feed/dialog-create/dialog-create.types';
 import { DialogReview } from 'src/pages/feed/dialog-review/dialog-review';
@@ -18,17 +17,18 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [state, setState] = useState({
-    social: '' as SocialCauses | '',
+    social: '' as SocialCauses,
     text: '',
     imgUrl: '',
   });
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
-
+  const avatarImg = useSelector<RootState, string>((state) => {
+    return state.identity.avatarImage;
+  });
   const isDisable = () => {
     return [state.social, state.text].every((item) => !!item);
   };
@@ -43,7 +43,7 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   };
 
   const getSocialValue = (value: string) => {
-    setState({ ...state, social: value as SocialCauses | '' });
+    setState({ ...state, social: value as SocialCauses });
   };
 
   const onChangeTextHandler = (e: any) => {
@@ -82,7 +82,7 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
         </div>
       </div>
       <div className={css.social}>
-        <Avatar img={avatarImg} type={identity.type} />
+        {identity && <Avatar img={avatarImg} type={identity.type} />}
         <Dropdown
           placeholder="Social Cause"
           list={socialCausesToDropdownAdaptor()}
@@ -91,12 +91,17 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
         />
       </div>
       <div className={css.text}>
-        <Textarea rows="15" variant="outline" onChange={onChangeTextHandler} placeholder="I feel like ..." />
+        <Textarea
+          // rows="15"
+          variant="outline"
+          onChange={onChangeTextHandler}
+          placeholder="I feel like ..."
+        />
       </div>
       <div className={css.footer}>
         <div className={css.image}>
           <div>
-            <img src="icons/image.svg" />
+            <img src="icons/image.svg" alt="" />
             <input type="file" onChange={imagUpload} />
           </div>
         </div>
