@@ -6,6 +6,6 @@ export interface ModalReviewProps extends Omit<ModalProps, 'children'> {
   text: string;
   setFeedList: (feed: Post[]) => void;
   onDone: () => void;
-  imgFile?: string;
+  imgFile?: File;
   imgUrl?: string;
 }

@@ -30,6 +30,7 @@ export const FeedDetails = () => {
     setOpenMoreBox,
     moreOptions,
     onClickMoreOption,
+    avatarImg,
   } = useFeedDetails();
 
   return (
@@ -50,7 +51,7 @@ export const FeedDetails = () => {
               <FeedItem
                 key={postObj.id}
                 type={postObj.identity_type}
-                img={postObj.media != null && postObj.media.length > 0 ? postObj.media[0]?.url : ''}
+                img={postObj.media != null && postObj.media.length > 0 ? postObj.media[0].url : ''}
                 imgAvatar={postObj.identity_meta.avatar || postObj.identity_meta?.image}
                 text={postObj.content}
                 name={postObj.identity_meta.name}
@@ -63,7 +64,7 @@ export const FeedDetails = () => {
 
               <Card className="flex items-center gap-3 my-4 mx-0">
                 <div className="hidden md:block">
-                  <Avatar size="2rem" img={identity.meta.image} type={identity.type} />
+                  {identity && <Avatar size="2rem" img={avatarImg} type={identity.type} />}
                 </div>
                 <SendBox className="flex-1" onValueChange={changeMessageHandler} onSend={sendMessage} value={message} />
               </Card>

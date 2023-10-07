@@ -9,17 +9,16 @@ import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { FeedList } from 'src/components/organisms/feed-list/feed-list';
 import { Modal } from 'src/components/templates/modal/modal';
 import { ProfileCard } from 'src/components/templates/profile-card';
-import { Post } from 'src/core/api';
+import { CurrentIdentity, Post } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { IdentityReq } from 'src/core/types';
 import { useAuth } from 'src/hooks/use-auth';
+import { DialogCreate } from 'src/pages/feed/dialog-create/dialog-create';
+import { ModalCreate } from 'src/pages/feed/modal-create';
 import { RootState } from 'src/store';
 
 import css from './feed.module.scss';
 import MobileHeader from './mobileHeader.tsx/mobileHeader';
 import { useFeed } from './useFeed';
-import { DialogCreate } from '../dialog-create/dialog-create';
-import { ModalCreate } from '../modal-create';
 
 export const Feeds = () => {
   const { isLoggedIn } = useAuth();
@@ -27,14 +26,16 @@ export const Feeds = () => {
 
   const [openMoreBox, setOpenMoreBox] = useState(false);
   const [moreOptions, setMoreOptions] = useState<{ title: string }[]>([]);
-  const [touchDevice, setTouchDevice] = useState(isTouchDevice());
+  const [touchDevice] = useState(isTouchDevice());
   const [feed, setFeed] = useState<Post>();
 
-  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
-  const avatarImg = identity ? identity.meta?.avatar || identity.meta?.image : '';
+  const avatarImg = useSelector<RootState, string>((state) => {
+    return state.identity.avatarImage;
+  });
 
   const {
     onMoreClick,

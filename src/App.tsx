@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
+import { Router, RouterProvider } from 'react-router-dom';
 import { currentIdentities } from 'src/store/thunks/identity.thunks';
 import router from 'src/core/router';
 
@@ -29,8 +29,8 @@ function App() {
   return (
     <Provider store={store}>
       <RouterProvider router={router.routes} />
+      {/* <DeepLinks /> */}
       <ModalPlaceholder />
-      <DeepLinks />
       <Spinner />
     </Provider>
   );
