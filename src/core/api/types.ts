@@ -386,11 +386,3 @@ export type LanguageCode =
   | 'ZA'
   | 'ZH'
   | 'ZU';
-
-export type Media = {
-  id: string;
-  url: string;
-  filename: string;
-  identity_id: string;
-  created_at: string;
-};
