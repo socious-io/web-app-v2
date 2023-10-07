@@ -125,7 +125,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const myApplicationsJSX = (
     <Divider title="Jobs">
       <div className={css.settingsMenuContainer}>
-        <div onClick={() => navigateToRoute(`/d/jobs/applied/${props.identity.id}`)} className={css.menuItem}>
+        <div onClick={() => navigateToRoute(`/jobs/applied/${props.identity.id}`)} className={css.menuItem}>
           <img src="/icons/document-black.svg" />
           <span>My applications</span>
         </div>

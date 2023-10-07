@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { Badges, CurrentIdentity, Mission, MissionsRes, User, userMissions } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
@@ -16,8 +18,6 @@ import {
   openToWorkCall,
   openToVolunteerCall,
 } from './profileUser.services';
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import { Badges, CurrentIdentity, Mission, MissionsRes, User, userMissions } from 'src/core/api';
 
 export const useProfileUser = () => {
   const navigate = useNavigate();
