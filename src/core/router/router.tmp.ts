@@ -601,7 +601,7 @@ export const routes: Route[] = [
             ],
           },
           {
-            path: '/d/jobs/applied/complete-mission/:id',
+            path: '/jobs/applied/complete-mission/:id',
             loader: async ({ params }) => {
               let media = { url: '' };
               const mission = await endpoint.get.missions.mission_id(params.id);
@@ -615,7 +615,7 @@ export const routes: Route[] = [
               import('../../pages/complete-mission/complete-mission.container').then((m) => <m.CompleteMission />),
           },
           {
-            path: '/d/jobs/applied',
+            path: '/jobs/applied',
             loader: async () => {
               const requests = [
                 getPendingApplicants({ page: 1 }),
