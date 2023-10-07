@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { userPaidMissions, payoutByMission, PayoutRes, stripeLink as getStripeLink } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
 import { useForm } from 'src/core/form';
 
 import { formModel } from './wallet.service';
@@ -40,13 +39,21 @@ export const useWalletShared = () => {
     payoutByMission(id).then(async (data) => {
       setOpenAlertModal(true);
       setRespPayout(data as PayoutRes);
-      const result = await userPaidMissions({ page: page });
+      const result = await userPaidMissions({
+        page: page,
+        'filter.p.payment_type': 'PAID',
+        'filter.status': 'CONFIRMED',
+      });
       setGeneratedItems((prev) => prev.concat(result.items));
     });
   }
 
   async function loadMoreMissions() {
-    const result = await userPaidMissions({ page: page + 1 });
+    const result = await userPaidMissions({
+      page: page + 1,
+      'filter.p.payment_type': 'PAID',
+      'filter.status': 'CONFIRMED',
+    });
     setGeneratedItems((prev) => prev.concat(result.items));
     setTotalMissions((prev: number) => prev + result.items.length);
   }

@@ -331,7 +331,11 @@ export const blueprint: RouteObject[] = [
               };
             },
             loader: async () => {
-              const requests = [userPaidMissions({ page: 1 }), stripeProfile({}), stripeProfile({ is_jp: true })];
+              const requests = [
+                userPaidMissions({ page: 1, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' }),
+                stripeProfile({}),
+                stripeProfile({ is_jp: true }),
+              ];
               const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
               return { missionsList, stripeProfileRes, jpStripeProfileRes };
             },
