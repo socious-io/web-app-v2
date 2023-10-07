@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { likePost, Post, posts, PostsRes, unlikePost } from 'src/core/api';
-import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
+
+import { block, report } from './feed.service';
 
 export const useFeed = () => {
   const list = useLoaderData() as PostsRes;
@@ -52,16 +52,12 @@ export const useFeed = () => {
     switch (index) {
       case 0:
         if (feed?.id) {
-          endpoint.post.posts['{post_id}/report'](feed?.id, { blocked: true, comment: 'comment' }).then(() => {
-            dialog.alert({ title: 'Blocked', message: 'You successfully blocked the feed' });
-          });
+          report(feed?.id);
         }
         break;
       case 1:
         if (feed?.id) {
-          endpoint.post.posts['{post_id}/report'](feed?.id, { blocked: false, comment: 'comment' }).then(() => {
-            dialog.alert({ title: 'Report', message: 'You successfully Reported the feed' });
-          });
+          block(feed?.id);
         }
         break;
     }

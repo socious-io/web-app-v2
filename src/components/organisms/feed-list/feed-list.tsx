@@ -9,7 +9,6 @@ import { FeedItem } from '../../molecules/feed-item/feed-item';
 
 export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeMore, onMoreClick }: FeedListProps) => {
   const navigate = useNavigate();
-
   const actionList = (id: string, likes: number, liked: boolean) => [
     {
       label: likes < 2 ? 'Like' : 'Likes',
@@ -19,7 +18,7 @@ export const FeedList = ({ data, onMorePageClick, onLike, onRemoveLike, showSeeM
       type: 'like',
       onClick: () => {
         const obj = data.find((item) => item.id === id);
-        obj!.liked ? onRemoveLike(id) : onLike(id);
+        if (obj) obj.liked ? onRemoveLike(id) : onLike(id);
       },
       onLike: () => {
         return onLike(id);
