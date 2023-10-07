@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
@@ -9,11 +10,10 @@ import { RootState } from 'src/store';
 
 import { getConnectStatus, hiringCall, sendRequestConnection } from './profileOrg.services';
 import { ProfileReq, Resolver } from './profileOrg.types';
-import { useNavigate } from 'react-router-dom';
 
 export const useProfileOrg = () => {
   const navigate = useNavigate();
-  const resolver = useMatch().data as Resolver;
+  const resolver = useLoaderData() as Resolver;
   const [organization, setOrganization] = useState<ProfileReq>(resolver.user);
   const socialCauses = socialCausesToCategory(resolver.user?.social_causes);
   const skills = skillsToCategory(resolver.user.skills);

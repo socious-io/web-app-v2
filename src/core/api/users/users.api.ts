@@ -15,6 +15,7 @@ import {
   DeleteUserReq,
   Badges,
   ImpactPoints,
+  OfferRes,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -108,4 +109,8 @@ export async function userPaidMissions(params: PaginateReq): Promise<MissionsRes
 export async function userMissions(id?: string, params?: FilterReq): Promise<MissionsRes> {
   const path = id ? `/user/${id}/missions` : '/user/missions';
   return (await get<MissionsRes>(path, { params })).data;
+}
+
+export async function userOffers(params: PaginateReq): Promise<OfferRes> {
+  return (await get<OfferRes>(`user/offers`, { params })).data;
 }

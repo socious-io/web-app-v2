@@ -141,7 +141,7 @@ export const Mobile = () => {
 
   function navigateToAppliedApplications() {
     hapticsImpactLight();
-    navigate(`/m/jobs/applied/${identity.id}`);
+    navigate(`/jobs/applied/${identity.id}`);
     closeSidebar();
   }
 

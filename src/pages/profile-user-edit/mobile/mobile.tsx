@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Category } from 'src/components/molecules/category/category';
@@ -14,7 +15,7 @@ import { Input } from '../../../components/atoms/input/input';
 import { useProfileUserEditShared } from '../profile-user-edit.shared';
 
 export const Mobile = (): JSX.Element => {
-  const user = useMatch().data.user as ProfileReq;
+  const user = useLoaderData() as ProfileReq;
 
   const { onCoverEdit, onAvatarEdit, onSave, onCountryUpdate, updateCityList, coverImage, avatarImage, cities, form } =
     useProfileUserEditShared();

@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store';
 
 import { getOrganizationJobs } from './jobs-index.service';
 
 export const useJobsIndexShared = () => {
-  const { data } = useMatch();
+  const { data } = useLoaderData();
   const [jobList, setJobList] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1 });
-  const navigate = {};
+  const navigate = useNavigate();
   const identities = useSelector<RootState, IdentityReq | undefined>((state) => state.identity.entities);
   useEffect(() => {
     getOrganizationJobs({ identityId: data.user.id, page: pagination.page }).then((resp) => {
@@ -26,7 +27,7 @@ export const useJobsIndexShared = () => {
   }
 
   function goToJobDetail(id: string) {
-    navigate({ to: `/jobs/${id}` });
+    navigate(`/jobs/${id}`);
   }
 
   const showMorePageBtn = jobList.length < pagination.total;
