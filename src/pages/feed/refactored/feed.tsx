@@ -63,7 +63,7 @@ export const Feeds = () => {
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate(`/d/jobs/applied/${identity?.id}`),
+      link: () => navigate(`/jobs/applied/${identity?.id}`),
     },
   ];
 

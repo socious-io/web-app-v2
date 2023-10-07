@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
-import { currentIdentities } from 'src/store/thunks/identity.thunks';
 import router from 'src/core/router';
+import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
 import { Spinner } from './components/atoms/spinner/spinner';
 import { Modal } from './components/templates/modal/modal';
+import { setupInterceptors } from './core/api';
 import { DeepLinks } from './core/deepLinks';
 import store from './store';
-import { setupInterceptors } from './core/api';
 import { closeModal } from './store/reducers/modal.reducer';
 
 function ModalPlaceholder() {
@@ -28,9 +28,10 @@ function App() {
   }, []);
   return (
     <Provider store={store}>
-      <RouterProvider router={router.routes} />
+      <RouterProvider router={router.routes}>
+        <DeepLinks />
+      </RouterProvider>
       <ModalPlaceholder />
-      <DeepLinks />
       <Spinner />
     </Provider>
   );

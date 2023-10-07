@@ -28,6 +28,7 @@ import {
   otherProfileByUsername,
   badges,
   userMissions,
+  impactPoints,
 } from 'src/core/api';
 import FallBack from 'src/pages/fall-back/fall-back';
 import {
@@ -449,7 +450,7 @@ export const blueprint: RouteObject[] = [
                       };
                     },
                     async lazy() {
-                      const { ProfileUser } = await import('src//pages/profile-user/refactored/profileUser');
+                      const { ProfileUser } = await import('src/pages/profile-user/refactored/profileUser');
                       return {
                         Component: ProfileUser,
                       };
