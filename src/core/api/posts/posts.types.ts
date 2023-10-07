@@ -50,7 +50,6 @@ export interface Post {
 
 export interface Comment {
   id: string;
-  identity_id: string;
   post_id: string;
   content: string;
   reply_id?: string;
@@ -58,7 +57,6 @@ export interface Comment {
   likes: number;
   reported: boolean;
   liked: boolean;
-  identity_type: string;
   identity_meta: Identity;
   created_at: Date;
   updated_at: Date;
