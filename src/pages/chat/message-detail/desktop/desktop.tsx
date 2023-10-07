@@ -95,7 +95,7 @@ export const Desktop = (): JSX.Element => {
 
   useEffect(() => {
     const messageBody = document.getElementById('chat-list-div');
-    messageBody!.scrollTop = messageBody!.scrollHeight - messageBody!.clientHeight;
+    if (messageBody) messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
   }, [list]);
 
   return (
