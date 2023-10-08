@@ -9,10 +9,26 @@ export const identitySlice = createSlice({
     entities: [],
     status: 'idle',
     error: null,
-  } as { entities: CurrentIdentity[]; status: string; error: any },
+    avatarImage: '',
+  } as {
+    entities: CurrentIdentity[];
+    status: string;
+    error: any;
+    avatarImage: string;
+  },
   reducers: {
     setIdentityList: (state, action) => {
       state.entities = action.payload;
+
+      const identity = state.entities.find((identity) => identity.current);
+      if (identity && identity.meta) {
+        state.avatarImage =
+          'avatar' in identity.meta
+            ? identity.meta.avatar || ''
+            : 'image' in identity.meta
+            ? identity.meta.image || ''
+            : '';
+      } else state.avatarImage = '';
     },
   },
   extraReducers: (builder) => {

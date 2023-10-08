@@ -1,3 +1,5 @@
+import { Media, Identity } from 'src/core/api';
+
 import { SocialCauses, PaginateRes } from '../types';
 
 export interface PostReq {
@@ -25,7 +27,7 @@ export interface CommentsRes extends PaginateRes {
   items: Comment[];
 }
 
-export interface Post extends PostReq {
+export interface Post {
   id: string;
   likes: number;
   shared: number;
@@ -39,14 +41,15 @@ export interface Post extends PostReq {
   updated_at: Date;
   deleted_at?: Date;
 
-  identity_type: 'organizations' | 'users';
-  identity_meta: any;
-  identity_id: string;
+  identity_meta: Identity;
+  content: string;
+  causes_tags: SocialCauses[];
+  hashtags?: string[];
+  media?: Media[];
 }
 
 export interface Comment {
   id: string;
-  identity_id: string;
   post_id: string;
   content: string;
   reply_id?: string;
@@ -54,8 +57,7 @@ export interface Comment {
   likes: number;
   reported: boolean;
   liked: boolean;
-  identity_type: string;
-  identity_meta: any;
+  identity_meta: Identity;
   created_at: Date;
   updated_at: Date;
 }
