@@ -114,9 +114,6 @@ export const Mobile = (): JSX.Element => {
         mission.submitted_works?.length > displayedSubmissions
       )}
       {printWhen(<div className={css.noSubmissions}>No submissions yet</div>, mission.submitted_works === null)}
-      <div className={css.btn}>
-        <Button onClick={onSubmitHours}>Submit Hours</Button>
-      </div>
     </div>
   );
   const hoursSubmission = () => (

@@ -13,8 +13,8 @@ export const useSubmittedHoursShared = () => {
   const { offer, mission, media } = (resolver as Loader) || {};
   const [status, setStatus] = useState(offer.status);
   const [selectedWeek, setSelectedWeek] = useState({
-    start_at: moment().clone().weekday(1).toISOString(),
-    end_at: moment().clone().weekday(7).toISOString(),
+    start_at: moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).clone().weekday(1).toISOString(),
+    end_at: moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).clone().weekday(7).toISOString(),
   });
   const alert = useAlert();
   const form = useForm(formModel);
@@ -41,7 +41,17 @@ export const useSubmittedHoursShared = () => {
   }
 
   function isSelectedWeekCurrent() {
-    return moment(selectedWeek.start_at) <= moment() && moment() <= moment(selectedWeek.end_at);
+    return (
+      moment(selectedWeek.start_at) <= moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }) &&
+      moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }) <= moment(selectedWeek.end_at)
+    );
+  }
+
+  function isFirstWeekOfMission() {
+    return (
+      moment(selectedWeek.start_at) <= moment(mission.created_at) &&
+      moment(mission.created_at) <= moment(selectedWeek.end_at)
+    );
   }
 
   function previousWeek() {
@@ -84,5 +94,6 @@ export const useSubmittedHoursShared = () => {
     nextWeek,
     previousWeek,
     isSelectedWeekCurrent,
+    isFirstWeekOfMission,
   };
 };

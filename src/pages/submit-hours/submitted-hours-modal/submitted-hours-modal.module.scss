@@ -15,7 +15,13 @@
   .rightChevron {
     transform: rotate(180deg);
   }
+  .rightChevron {
+    visibility: visible;
+  }
   .currentWeek {
+    visibility: hidden;
+  }
+  .firstWeek {
     visibility: hidden;
   }
   img {

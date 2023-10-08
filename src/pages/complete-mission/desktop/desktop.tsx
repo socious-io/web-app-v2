@@ -137,11 +137,6 @@ export const Desktop = (): JSX.Element => {
         mission.submitted_works?.length > displayedSubmissions
       )}
       {printWhen(<div className={css.noSubmissions}>No submissions yet</div>, mission.submitted_works === null)}
-      <div className={css.hours_btn}>
-        <Button className={css.btn_full} onClick={onSubmitHours}>
-          Submit Hours
-        </Button>
-      </div>
     </div>
   );
   const hoursSubmission = () => (

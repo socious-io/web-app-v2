@@ -6,24 +6,18 @@ import { Input } from 'src/components/atoms/input/input';
 import { WebModal } from 'src/components/templates/web-modal';
 import { useSubmittedHoursShared } from '../submit-hours.shared';
 import { formatDate } from 'src/core/time';
-import { printWhen } from 'src/core/utils';
-import moment from 'moment';
 
 export const SubmittedHoursModal: React.FC<SubmittedHoursModalTypes> = ({ open, onClose, onSend, onMessage }) => {
   const {
     offer,
-    media,
-    status,
-    onCompleteMission,
     onSubmitHours,
-    onStopMission,
-    mission,
     form,
     onCancel,
     selectedWeek,
     nextWeek,
     previousWeek,
     isSelectedWeekCurrent,
+    isFirstWeekOfMission,
   } = useSubmittedHoursShared();
 
   function onModalClose() {
@@ -50,11 +44,15 @@ export const SubmittedHoursModal: React.FC<SubmittedHoursModalTypes> = ({ open, 
         <div className={css.body}>
           <div className={css.jobInfoContainer}>
             <Card className={css.weekSelector}>
-              <img src="/icons/chevron-left.svg" onClick={previousWeek} />
+              <img
+                className={`${isFirstWeekOfMission() ? css.firstWeek : css.leftChevron}`}
+                src="/icons/chevron-left.svg"
+                onClick={previousWeek}
+              />
               {formatDate(selectedWeek.start_at)} - {formatDate(selectedWeek.end_at)},{' '}
               {selectedWeek.end_at.substring(0, 4)}
               <img
-                className={`${css.rightChevron} ${isSelectedWeekCurrent() ? css.currentWeek : css.rightChevron}`}
+                className={`${isSelectedWeekCurrent() ? css.currentWeek : css.rightChevron}`}
                 src="/icons/chevron-left.svg"
                 onClick={nextWeek}
               />
@@ -71,7 +69,7 @@ export const SubmittedHoursModal: React.FC<SubmittedHoursModalTypes> = ({ open, 
               <div className={css.agreement}>
                 <span className={css.title}>Agreement : </span>
                 <span className={css.subtitle}>
-                  {mission.offer.weekly_limit} Max {offer.total_hours} hrs / week
+                  {offer.weekly_limit} Max {offer.total_hours} hrs / week
                 </span>
               </div>
             </Card>
