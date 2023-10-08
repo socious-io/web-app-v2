@@ -3,11 +3,13 @@ export type ActionListProps = {
 };
 
 export type ActionObj = {
-  id: string;
+  id?: string;
   label: string;
   iconName: string;
   like?: number;
   isLiked?: boolean;
-  type: 'like' | 'comment';
-  onClick?: (item: ActionObj) => void;
+  type: string;
+  onClick?: () => void;
+  onLike?: () => void;
+  onRemoveLike?: () => void;
 };

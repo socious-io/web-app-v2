@@ -11,17 +11,19 @@ import {
   unlikePostComment,
   Post,
   CommentsRes,
+  CurrentIdentity,
 } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { IdentityReq } from 'src/core/types';
+import { block, report } from 'src/pages/feed/refactored/feed.service';
 import { RootState } from 'src/store';
 
 export const useFeedDetails = () => {
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
+  const avatarImg = useSelector<RootState, string>((state) => {
+    return state.identity.avatarImage;
   });
   const { post, comments } = useLoaderData() as {
     post: Post;
@@ -51,7 +53,7 @@ export const useFeedDetails = () => {
       isLiked: liked,
       onClick: () => {
         hapticsImpactLight();
-        postObj!.liked ? onRemoveLike(postObj.id) : onLike(postObj.id);
+        postObj.liked ? onRemoveLike(postObj.id) : onLike(postObj.id);
       },
       onLike: () => {
         hapticsImpactLight();
@@ -147,16 +149,12 @@ export const useFeedDetails = () => {
     switch (index) {
       case 0:
         if (feed?.id) {
-          endpoint.post.posts['{post_id}/report'](feed?.id, { blocked: true, comment: 'comment' }).then(() => {
-            dialog.alert({ title: 'Blocked', message: 'You successfully blocked the feed' });
-          });
+          report(feed?.id);
         }
         break;
       case 1:
         if (feed?.id) {
-          endpoint.post.posts['{post_id}/report'](feed?.id, { blocked: false, comment: 'comment' }).then(() => {
-            dialog.alert({ title: 'Report', message: 'You successfully Reported the feed' });
-          });
+          block(feed?.id);
         }
         break;
     }
@@ -182,5 +180,6 @@ export const useFeedDetails = () => {
     setOpenMoreBox,
     moreOptions,
     onClickMoreOption,
+    avatarImg,
   };
 };
