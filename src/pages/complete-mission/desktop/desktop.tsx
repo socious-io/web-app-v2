@@ -10,9 +10,9 @@ import { Typography } from 'src/components/atoms/typography/typography';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { Button } from 'src/components/atoms/button/button';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translatePaymentMode } from 'src/constants/PROJECT_PAYMENT_MODE';
 import { IdentityReq } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import { formatDate } from 'src/core/time';
@@ -21,6 +21,7 @@ import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 import { useState } from 'react';
 import { SubmittedHoursModal } from '../../submit-hours/submitted-hours-modal';
+import { useOfferReceivedShared } from 'src/pages/offer-received/offer-received.shared';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ export const Desktop = (): JSX.Element => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
   const { offer, media, status, mission, onCompleteMission, onStopMission } = useCompleteMissionShared();
+  const { isPaidCrypto, unit, equivalentUSD } = useOfferReceivedShared();
 
   const { isLoggedIn } = useAuth();
 
@@ -178,22 +180,48 @@ export const Desktop = (): JSX.Element => {
                   </div>
                   <div className={css.detailItem}>
                     <div className={css.detailItemLabel}>Payment mode</div>
-                    <div className={css.detailItemValue}>
-                      {translateRemotePreferences(offer.project.remote_preference)}
-                    </div>
+                    <div className={css.detailItemValue}>{translatePaymentMode(offer.payment_mode)}</div>
                   </div>
-                  <div className={css.detailItem}>
-                    <div className={css.detailItemLabel}>Job total</div>
-                    <div className={css.detailItemValue}>{offer.assignment_total}</div>
-                  </div>
+                  {printWhen(
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Job total</div>
+                      <div className={css.detailItemValue}>
+                        {offer.assignment_total} <span>{unit}</span>
+                        {printWhen(
+                          <span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>,
+                          isPaidCrypto
+                        )}
+                      </div>
+                    </div>,
+                    offer.project.payment_scheme === 'FIXED'
+                  )}
                   {/* <div className={css.detailItem}>
                     <div className={css.detailItemLabel}>Due date</div>
                     <div className={css.detailItemValue}>{offer.due_date || 'Unspecified'}</div>
                   </div> */}
-                  <div className={css.detailItem}>
-                    <div className={css.detailItemLabel}>Estimate total hours</div>
-                    <div className={css.detailItemValue}>{offer.total_hours} hrs</div>
-                  </div>
+                  {printWhen(
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Estimate total hours</div>
+                      <div className={css.detailItemValue}>{offer.total_hours} hrs</div>
+                    </div>,
+                    offer.project.payment_scheme === 'FIXED'
+                  )}
+                  {printWhen(
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Paid - Hourly rate</div>
+                      <div className={css.detailItemValue}>
+                        {offer.assignment_total} {unit} / hour
+                      </div>
+                    </div>,
+                    offer.project.payment_scheme === 'HOURLY'
+                  )}
+                  {printWhen(
+                    <div className={css.detailItem}>
+                      <div className={css.detailItemLabel}>Weekly limit</div>
+                      <div className={css.detailItemValue}>{offer.weekly_limit} hrs / week</div>
+                    </div>,
+                    offer.project.payment_scheme === 'HOURLY'
+                  )}
                 </div>
               </div>
             </Accordion>
