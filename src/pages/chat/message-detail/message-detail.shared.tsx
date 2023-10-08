@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import { ContactItem } from 'src/components/molecules/contact-item/contact-item.types';
-import { chatMessages, getChatParticipantsById } from 'src/core/api';
+import { chatMessages, CurrentIdentity, getChatParticipantsById } from 'src/core/api';
 import { socket } from 'src/core/socket';
-import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store';
 
 import { chatListAdaptor, getParticipantDetail, onPostMessage } from './message-detail.services';
@@ -13,23 +12,25 @@ import { MessageLoader } from './message-detail.types';
 export const useMessageDetailShared = () => {
   const navigate = useNavigate();
   const [sendingValue, setSendingValue] = useState('');
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
   const resolver = useLoaderData() as MessageLoader;
   const { id } = useParams();
   const { messages, participants } = resolver;
 
-  const chatList = chatListAdaptor(identity.id, messages!.items, participants!.items);
-  const participantDetail = getParticipantDetail(identity.id, participants!.items);
+  const chatList = chatListAdaptor(identity!.id, messages!.items, participants!.items);
+  const participantDetail = getParticipantDetail(identity!.id, participants!.items);
   const [list, setList] = useState(chatList);
   const [loadingChat, setLoadingChat] = useState(false);
 
   function onSend() {
-    const params = { id, identity, text: sendingValue };
-    onPostMessage(params)
-      .then((resp) => setList([...list, resp]))
-      .then(() => setSendingValue(''));
+    if (id !== undefined && identity !== undefined) {
+      const params = { id, identity, text: sendingValue };
+      onPostMessage(params)
+        .then((resp) => setList([...list, resp]))
+        .then(() => setSendingValue(''));
+    }
   }
 
   async function updateMessages(id: string) {
@@ -38,7 +39,7 @@ export const useMessageDetailShared = () => {
     const messages = await chatMessages(id, { page: 1 });
     const participants = await getChatParticipantsById(id);
 
-    const chatList = chatListAdaptor(identity.id, messages!.items, participants!.items);
+    const chatList = chatListAdaptor(identity!.id, messages!.items, participants!.items);
     setList(chatList);
     setLoadingChat(false);
   }
@@ -49,8 +50,8 @@ export const useMessageDetailShared = () => {
   }
 
   socket?.on('chat', (data) => {
-    const receiver = list.filter((l) => l.type == 'receiver')[0];
-    if (!receiver || data.identity_id === identity.id) return;
+    const receiver = list.filter((l) => l.type === 'receiver')[0];
+    if (!receiver || data.identity_id === identity!.id) return;
     setList([
       ...list,
       {
