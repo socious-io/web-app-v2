@@ -17,10 +17,10 @@ export const Desktop = (): JSX.Element => {
     <TwoColumnCursor visibleSidebar={isLoggedIn}>
       <Card className={css.rightContainer}>
         <div className={css.avatar}>
-          <Avatar size="2.25rem" type={identity.type} img={avatarImg} />
+          {identity && <Avatar size="2.25rem" type={identity.type} img={avatarImg} />}
           Notifications
         </div>
-        <img src="/icons/settings-black.svg" className={css.icon} onClick={() => navigate('settings')} />
+        <img src="/icons/settings-black.svg" className={css.icon} onClick={() => navigate('settings')} alt="" />
       </Card>
       <Card>
         <NotificationList
