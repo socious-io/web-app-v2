@@ -36,7 +36,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.chevron} onClick={navigateToSocialCauses}>
-          <img height={24} src="/icons/chevron-left.svg" />
+          <img height={24} src="/icons/chevron-left.svg" alt="" />
         </div>
         <div className={css.stepsContainer}>
           <Steps clickable={false} length={6} current={3} />
@@ -84,7 +84,7 @@ export const Mobile = (): JSX.Element => {
               placeholder="city"
               name="city"
               value={formState.city}
-              onValueChange={(options) => updateField('geoname_id', options.id)}
+              onValueChange={(options) => updateField('geoname_id', options.id!)}
               list={cities}
             />
             <Input register={profileForm} name="address" optional label="Address" placeholder="Address" />

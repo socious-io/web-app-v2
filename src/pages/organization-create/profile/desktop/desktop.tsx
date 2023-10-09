@@ -91,7 +91,7 @@ export const Desktop = (): JSX.Element => {
                 placeholder="city"
                 name="city"
                 value={formState.city}
-                onValueChange={(options) => updateField('geoname_id', options.id)}
+                onValueChange={(options) => updateField('geoname_id', options.id!)}
                 list={cities}
               />
               <Input register={profileForm} name="address" optional label="Address" placeholder="Address" />

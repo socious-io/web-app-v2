@@ -8,16 +8,10 @@ import { isTouchDevice } from 'src/core/device-type-detector';
 import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { ConnectStatus, IdentityReq } from 'src/core/types';
+import { ConnectStatus } from 'src/core/types';
 import { RootState } from 'src/store';
 
-import {
-  getConnectStatus,
-  getUserMissions,
-  sendRequestConnection,
-  openToWorkCall,
-  openToVolunteerCall,
-} from './profileUser.services';
+import { getConnectStatus, sendRequestConnection, openToWorkCall, openToVolunteerCall } from './profileUser.services';
 
 export const useProfileUser = () => {
   const navigate = useNavigate();
