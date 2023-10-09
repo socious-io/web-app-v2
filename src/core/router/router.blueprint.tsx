@@ -73,17 +73,6 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
-            path: 'jobs',
-            async lazy() {
-              const { Jobs } = await import('src/pages/jobs');
-              const jobsList = await jobs({ page: 1 });
-              return {
-                Component: Jobs,
-                Loader: jobsList,
-              };
-            },
-          },
-          {
             path: 'chats',
             children: [
               {
@@ -293,6 +282,118 @@ export const blueprint: RouteObject[] = [
                   const { OfferReceived } = await import('src/pages/offer-received/offer-received.container');
                   return { Component: OfferReceived };
                 },
+              },
+              {
+                path: 'create',
+                children: [
+                  {
+                    path: 'social-causes',
+                    async lazy() {
+                      const { SocialCauses } = await import(
+                        'src/pages/job-create/social-causes/social-causes.container'
+                      );
+                      return { Component: SocialCauses };
+                    },
+                  },
+                  {
+                    path: 'skills',
+                    async lazy() {
+                      const { Skills } = await import('src/pages/job-create/skills/skills.container');
+                      return { Component: Skills };
+                    },
+                  },
+                  {
+                    path: 'info',
+                    loader: async () => {
+                      const jobs = jobCategoriesReq();
+                      return jobs;
+                    },
+                    async lazy() {
+                      const { Info } = await import('src/pages/job-create/info/info.container');
+                      return { Component: Info };
+                    },
+                  },
+                  {
+                    path: 'screener-questions/created/:id',
+                    async lazy() {
+                      const { ScreenerQuestions } = await import(
+                        'src/pages/job-create/screener-questions/screener-questions.container'
+                      );
+                      return { Component: ScreenerQuestions };
+                    },
+                  },
+                  {
+                    path: 'screener-questions',
+                    async lazy() {
+                      const { ScreenerQuestions } = await import(
+                        'src/pages/job-create/screener-questions/screener-questions.container'
+                      );
+                      return { Component: ScreenerQuestions };
+                    },
+                  },
+                ],
+              },
+              {
+                path: 'edit',
+                children: [
+                  {
+                    path: 'social-causes/:id',
+                    loader: async ({ params }) => {
+                      const overview = await job(params.id);
+                      return { overview };
+                    },
+                    async lazy() {
+                      const { SocialCauses } = await import('src/pages/job-edit/social-causes/social-causes.container');
+                      return { Component: SocialCauses };
+                    },
+                  },
+                  {
+                    path: 'skills/:id',
+                    loader: async ({ params }) => {
+                      const overview = await job(params.id);
+                      return { overview };
+                    },
+                    async lazy() {
+                      const { Skills } = await import('src/pages/job-edit/skills/skills.container');
+                      return { Component: Skills };
+                    },
+                  },
+                  {
+                    path: 'info/:id',
+                    loader: async ({ params }) => {
+                      const jobs = jobCategoriesReq();
+                      const requests = [jobCategoriesReq(), job(params.id)];
+                      const [jobCategories, overview] = await Promise.all(requests);
+                      return { jobCategories, overview };
+                    },
+                    async lazy() {
+                      const { Info } = await import('src/pages/job-edit/info/info.container');
+                      return { Component: Info };
+                    },
+                  },
+                  {
+                    path: 'screener-questions',
+                    async lazy() {
+                      const { ScreenerQuestions } = await import(
+                        'src/pages/job-edit/screener-questions/screener-questions.container'
+                      );
+                      return { Component: ScreenerQuestions };
+                    },
+                  },
+                  {
+                    path: 'screener-questions/:id',
+                    async lazy() {
+                      const { ScreenerQuestions } = await import(
+                        'src/pages/job-edit/screener-questions/screener-questions.container'
+                      );
+                      return { Component: ScreenerQuestions };
+                    },
+                    loader: async ({ params }) => {
+                      const defaultQuestions = await jobQuestions(params.id);
+                      return { defaultQuestions };
+                    },
+                  },
+                ],
               },
             ],
           },

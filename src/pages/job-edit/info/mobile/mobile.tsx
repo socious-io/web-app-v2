@@ -32,7 +32,8 @@ export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const { categories } = (useLoaderData().jobCategories as CategoriesResp) || {};
+  const { jobCategories, overview } = useLoaderData() || {};
+  const categoriesList = jobCategoriesToDropdown(jobCategories.categories);
 
   useEffect(() => {
     dispatch(setInitPostWizard(createFormInitState(overview)));
@@ -76,7 +77,7 @@ export const Mobile = (): JSX.Element => {
                 name="job_category_id"
                 label="Job category"
                 placeholder="job category"
-                list={categories}
+                list={categoriesList}
                 defaultValue={overview.job_category?.name}
               />
               <Textarea

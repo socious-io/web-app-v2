@@ -27,8 +27,10 @@ export const Mobile = (): JSX.Element => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const { categories } = (useLoaderData().jobCategories as CategoriesResp) || {};
+  const { categories: catagoryList } = (useLoaderData() as CategoriesResp) || {};
+  const categories = jobCategoriesToDropdown(catagoryList);
 
+  console.log('my catas', categories);
   function createJob(payload: CreatePostPayload) {
     createPost(payload).then((resp) => {
       dispatch(setQuestionProjectIds({ project_id: resp.id, identity_id: resp.identity_id }));

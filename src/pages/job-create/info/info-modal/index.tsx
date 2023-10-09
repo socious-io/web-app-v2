@@ -29,6 +29,7 @@ import { useInfoShared } from '../info.shared';
 export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onBack, onOpen }) => {
   const dispatch = useDispatch();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
+  console.log('datae', useLoaderData());
   const { categories } = (useLoaderData().jobCategories as CategoriesResp) || {};
   const categoriesList = jobCategoriesToDropdown(categories);
 
