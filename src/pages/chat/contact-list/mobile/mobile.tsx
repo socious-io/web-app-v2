@@ -5,10 +5,10 @@ import { Fab } from 'src/components/atoms/fab/fab';
 import { Header } from 'src/components/atoms/header/header';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
 import { HeaderStaticMobile } from 'src/components/templates/header-static-mobile/header-static-mobile';
-import { IdentityReq } from 'src/core/types';
+import { CurrentIdentity, OrgMeta, UserMeta } from 'src/core/api';
 import { useContactListShared } from 'src/pages/chat/contact-list/contact-list.shared';
 import { CreateChatModal } from 'src/pages/chat/contact-list/create-chat-modal';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ export const Mobile = (): JSX.Element => {
     userList,
     onCreateChat,
   } = useContactListShared();
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
   return (
@@ -34,7 +34,15 @@ export const Mobile = (): JSX.Element => {
           border="0"
           height="auto"
           title="Chats"
-          right={<Avatar size="2rem" type="users" img={identity.meta.image} />}
+          right={
+            identity && (
+              <Avatar
+                size="2rem"
+                type="users"
+                img={(identity.meta as UserMeta).avatar || (identity.meta as OrgMeta).image || ''}
+              />
+            )
+          }
         />
         <ContactList
           height="calc(var(--window-height) - var(--safe-area) + 1.5rem)"

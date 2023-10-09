@@ -14,7 +14,7 @@ export const useSettingsShared = () => {
   }));
   const settingsList = settings?.length ? mapRequestToStatic : NotificationSettings;
   const [generateSettings, setGenerateSettings] = useState(settingsList);
-  const [payload, setPayload] = useState<Payload>({});
+  const [payload, setPayload] = useState<Payload>({} as Payload);
   const notAllow = generateSettings.every((setting) => !setting.in_app && !setting.email && !setting.push);
   const [allChecked, setAllChekced] = useState(!notAllow);
   const settingsGuide = 'https://www.notion.so/socious/Notification-Settings-32a002269adc44d4984955bd77626cb6';
@@ -30,9 +30,9 @@ export const useSettingsShared = () => {
         const defaultValueOfKey = generateSettings.find((setting) => setting.type === key);
         return {
           type: key,
-          in_app: obj.in_app != undefined ? obj.in_app : (defaultValueOfKey?.in_app as boolean),
-          email: obj.email != undefined ? obj.email : (defaultValueOfKey?.email as boolean),
-          push: obj.push != undefined ? obj.push : (defaultValueOfKey?.push as boolean),
+          in_app: obj.in_app !== undefined ? obj.in_app : (defaultValueOfKey?.in_app as boolean),
+          email: obj.email !== undefined ? obj.email : (defaultValueOfKey?.email as boolean),
+          push: obj.push !== undefined ? obj.push : (defaultValueOfKey?.push as boolean),
         };
       });
     const keys = new Set(payloadRes.map((d) => d.type));

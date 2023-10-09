@@ -26,11 +26,11 @@ export const Mobile: React.FC = () => {
 
   const turnedOffMessageBoxJSX = (
     <div className={css.turnedOffMessageBox}>
-      <img src="/icons/info.svg" height={18} width={18} />
+      <img src="/icons/info.svg" height={18} width={18} alt="" />
       <div className={css.turnedOffMessage}>
         We recommend you turn on all notifications to stay up to date with the latest activity on Socious.
       </div>
-      <img src="/icons/close-white.svg" height={16} width={16} onClick={() => setCloseAlert(true)} />
+      <img src="/icons/close-white.svg" height={16} width={16} onClick={() => setCloseAlert(true)} alt="" />
     </div>
   );
 
@@ -56,7 +56,7 @@ export const Mobile: React.FC = () => {
                         <Toggle
                           name="app"
                           checked={
-                            payload[setting.type]?.in_app != undefined ? payload[setting.type].in_app : setting.in_app
+                            payload[setting.type]?.in_app !== undefined ? payload[setting.type].in_app : setting.in_app
                           }
                           onChange={(checked) => onChange(checked, setting.type, 'in_app')}
                         />
@@ -67,7 +67,7 @@ export const Mobile: React.FC = () => {
                           <Toggle
                             name="email"
                             checked={
-                              payload[setting.type]?.email != undefined ? payload[setting.type].email : setting.email
+                              payload[setting.type]?.email !== undefined ? payload[setting.type].email : setting.email
                             }
                             onChange={(checked) => onChange(checked, setting.type, 'email')}
                           />
@@ -83,7 +83,9 @@ export const Mobile: React.FC = () => {
                         Push
                         <Toggle
                           name="push"
-                          checked={payload[setting.type]?.push != undefined ? payload[setting.type].push : setting.push}
+                          checked={
+                            payload[setting.type]?.push !== undefined ? payload[setting.type].push : setting.push
+                          }
                           onChange={(checked) => onChange(checked, setting.type, 'push')}
                         />
                       </div>

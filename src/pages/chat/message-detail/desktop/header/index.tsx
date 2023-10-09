@@ -16,9 +16,6 @@ export const Header: React.FC<HeaderProps> = ({ name, type, username, img, lastO
           </div>
         )}
       </div>
-      {/* <div>
-        <img src="/icons/three-dots-blue.svg" />
-      </div> */}
     </div>
   );
 };
