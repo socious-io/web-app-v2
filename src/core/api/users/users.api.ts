@@ -1,5 +1,5 @@
 import { post, get } from 'src/core/api/http';
-import { MissionsRes } from 'src/core/api/jobs/jobs.types';
+import { ApplicantsRes, MissionsRes, OfferReq, OffersRes } from 'src/core/api/jobs/jobs.types';
 import { FilterReq, PaginateReq, SuccessRes } from 'src/core/api/types';
 
 import {
@@ -15,7 +15,6 @@ import {
   DeleteUserReq,
   Badges,
   ImpactPoints,
-  OfferRes,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -107,6 +106,10 @@ export async function userMissions(id?: string, params?: FilterReq): Promise<Mis
   return (await get<MissionsRes>(path, { params })).data;
 }
 
-export async function userOffers(params: PaginateReq): Promise<OfferRes> {
-  return (await get<OfferRes>(`user/offers`, { params })).data;
+export async function userOffers(params: PaginateReq): Promise<OffersRes> {
+  return (await get<OffersRes>(`user/offers`, { params })).data;
+}
+
+export async function userApplicants(params: PaginateReq): Promise<ApplicantsRes> {
+  return (await get<ApplicantsRes>(`user/applicants`, { params })).data;
 }

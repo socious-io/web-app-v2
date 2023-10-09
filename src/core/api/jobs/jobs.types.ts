@@ -129,7 +129,7 @@ export interface Category {
   updated_at: Date;
 }
 
-export interface OffersRes {
+export interface OffersRes extends PaginateRes {
   items: Offer[];
 }
 
@@ -137,7 +137,7 @@ export interface MissionsRes extends PaginateRes {
   items: Mission[];
 }
 
-export interface ApplicantsRes {
+export interface ApplicantsRes extends PaginateRes {
   items: Applicant[];
 }
 
