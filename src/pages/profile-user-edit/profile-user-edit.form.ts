@@ -1,10 +1,9 @@
+import { User } from 'src/core/api';
 import { required } from 'src/core/form';
 import { minArrayLength, maxArrayLength } from 'src/core/form/customValidators/customValidators';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 
-import { ProfileReq } from '../profile-user/profile-user.types';
-
-export function generateFormModel(profile: ProfileReq): FormModel {
+export function generateFormModel(profile: User): FormModel {
   return {
     first_name: { initialValue: profile.first_name, validators: [required()] },
     last_name: { initialValue: profile.last_name, validators: [required()] },

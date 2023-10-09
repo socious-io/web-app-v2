@@ -1,6 +1,6 @@
+import { skills } from './api';
 import { CategoriesResp, Cities } from './types';
 import { DropdownItem } from '../components/atoms/dropdown-v2/dropdown.types';
-import { SKILLS } from '../constants/SKILLS';
 import { SOCIAL_CAUSES } from '../constants/SOCIAL_CAUSES';
 
 export function socialCausesToCategoryAdaptor() {
@@ -15,9 +15,13 @@ export function socialCausesToDropdownAdaptor() {
     .sort((a, b) => a.title.localeCompare(b.title));
 }
 
-export function skillsToCategoryAdaptor() {
-  return Object.entries(SKILLS).map(([key, value]) => {
-    return { value: key, label: value };
+export async function skillsToCategoryAdaptor() {
+  const skillList = await skills({ limit: 500 });
+  return skillList.items.map((item) => {
+    return {
+      value: item.name,
+      label: item.name,
+    };
   });
 }
 
@@ -54,7 +58,7 @@ export function citiesToCategories(cities: Cities[]): DropdownItem[] {
 export function skillsToCategory(skills: string[] = []) {
   try {
     return skills.map((name) => {
-      return { value: name, label: SKILLS[name] };
+      return { value: name, label: name };
     });
   } catch {
     return [];
