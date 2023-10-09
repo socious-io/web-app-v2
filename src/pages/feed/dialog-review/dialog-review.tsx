@@ -6,22 +6,22 @@ import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
-import { posts, createPost } from 'src/core/api';
-import { IdentityReq } from 'src/core/types';
+import { posts, createPost, CurrentIdentity, uploadMedia } from 'src/core/api';
 import { DialogCreate } from 'src/pages/feed/dialog-create/dialog-create';
 import css from 'src/pages/feed/dialog-review/dialog-review.module.scss';
 import { DialogReviewProps } from 'src/pages/feed/dialog-review/dialog-review.types';
-import { uploadImage } from 'src/pages/feed/refactored/feed.service';
 import { RootState } from 'src/store';
 
 export const DialogReview = (props: DialogReviewProps) => {
   const [openDialog, setOpenDialog] = useState(false);
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
+  const avatarImg = useSelector<RootState, string>((state) => {
+    return state.identity.avatarImage;
+  });
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -35,7 +35,7 @@ export const DialogReview = (props: DialogReviewProps) => {
   async function onSubmit() {
     let imageId: string[] = [];
     if (props.imgFile) {
-      const id = await uploadImage(props.imgFile).then((resp) => resp.data.id);
+      const id = await uploadMedia(props.imgFile).then((resp) => resp.id);
       imageId = [id];
     }
     const payload = {
@@ -43,7 +43,6 @@ export const DialogReview = (props: DialogReviewProps) => {
       content: props.text,
       media: imageId,
     };
-    console.log('props.soucialValue', props.soucialValue);
     createPost(payload).then(() => {
       posts({ page: 1 }).then((resp) => {
         props.setFeedList(resp.items);
@@ -72,7 +71,7 @@ export const DialogReview = (props: DialogReviewProps) => {
       </div>
       <div className={css.main}>
         <div className={css.social}>
-          <Avatar img={avatarImg} type={identity.type} />
+          {identity && <Avatar img={avatarImg} type={identity.type} />}
           <CategoriesClickable list={obj} />
         </div>
         <div className={css.text}>
