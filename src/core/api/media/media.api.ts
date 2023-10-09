@@ -1,5 +1,5 @@
-import { Media } from './media.types';
-import { get, post } from '../http';
+import { PostMediaUploadRes } from './media.types';
+import { get } from '../http';
 
 export async function getMedia(id: string): Promise<Media> {
   return (await get<Media>(`/media/${id}`)).data;

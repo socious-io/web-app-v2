@@ -5,7 +5,7 @@ import { rejectApplicant } from '../job-offer-reject.services';
 
 export const useApplicantDetailShared = () => {
   const navigate = useNavigate();
-  const { screeningQuestions, applicantDetail } =  useLoaderData() as Resolver;
+  const { screeningQuestions, applicantDetail } = useLoaderData() as Resolver;
 
   function navigateToOverview() {
     navigate('..');
