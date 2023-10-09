@@ -9,16 +9,3 @@ export interface FeedListProps extends CSSProperties {
   onRemoveLike: (id: string) => void;
   showSeeMore: boolean;
 }
-
-export type IdentityMeta = {
-  name: string;
-  image: string;
-  avatar: string;
-  username: string;
-  shortname?: string;
-};
-
-export type Media = {
-  id: string;
-  url: string;
-};

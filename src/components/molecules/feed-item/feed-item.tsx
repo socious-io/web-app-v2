@@ -1,14 +1,14 @@
+import { ActionList } from 'src/components/atoms/action-list/action-list';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { Typography } from 'src/components/atoms/typography/typography';
+import { toRelativeTime } from 'src/core/relative-time';
 import { useAuth } from 'src/hooks/use-auth';
 
 import css from './feed-item.module.scss';
 import { FeedItemProps } from './feed-item.types';
-import { toRelativeTime } from '../../../core/relative-time';
-import { ActionList } from '../../atoms/action-list/action-list';
-import { Avatar } from '../../atoms/avatar/avatar';
-import { Card } from '../../atoms/card/card';
-import { CategoriesClickable } from '../../atoms/categories-clickable/categories-clickable';
-import { Typography } from '../../atoms/typography/typography';
 
 export const FeedItem = (props: FeedItemProps): JSX.Element => {
   const { type, actionList, date, lineLimit = 3, img, name, imgAvatar } = props;
@@ -16,7 +16,7 @@ export const FeedItem = (props: FeedItemProps): JSX.Element => {
 
   const threeDotMenu = (
     <div className={css.icon} onClick={props.onMoreClick}>
-      <img src="/icons/three-dots-blue.svg" />
+      <img src="/icons/three-dots-blue.svg" alt="" />
     </div>
   );
 
@@ -29,12 +29,9 @@ export const FeedItem = (props: FeedItemProps): JSX.Element => {
           <span className={css.date}>{toRelativeTime(date)}</span>
         </div>
         {showIfLoggedIn(threeDotMenu)}
-        {/* <div className={css.icon} onClick={props.onMoreClick}>
-          <img src="/icons/three-dots-blue.svg" />
-        </div> */}
       </div>
       <div className={css.img}>
-        <img src={img} />
+        <img src={img} alt="" />
       </div>
       <CategoriesClickable list={props.categories} />
       <div className={css.text}>

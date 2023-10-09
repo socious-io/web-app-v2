@@ -19,5 +19,6 @@ export interface TextareaProps<T = unknown> extends ReactHTMLTextareaElement {
   optional?: boolean;
   errors?: string[];
   limit?: number;
+  rows?: string;
   onValueChange?: (value: string) => void;
 }
