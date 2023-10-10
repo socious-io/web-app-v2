@@ -1,7 +1,9 @@
+import i18next from 'i18next';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
+
 import { skills } from './api';
 import { CategoriesResp, Cities } from './types';
-import { DropdownItem } from '../components/atoms/dropdown-v2/dropdown.types';
-import { SOCIAL_CAUSES } from '../constants/SOCIAL_CAUSES';
 
 export function socialCausesToCategoryAdaptor() {
   return Object.entries(SOCIAL_CAUSES).map(([, value]) => value);
@@ -20,7 +22,7 @@ export async function skillsToCategoryAdaptor() {
   return skillList.items.map((item) => {
     return {
       value: item.name,
-      label: item.name,
+      label: i18next.t(item.name),
     };
   });
 }
@@ -58,7 +60,7 @@ export function citiesToCategories(cities: Cities[]): DropdownItem[] {
 export function skillsToCategory(skills: string[] = []) {
   try {
     return skills.map((name) => {
-      return { value: name, label: name };
+      return { value: name, label: i18next.t(name) };
     });
   } catch {
     return [];
