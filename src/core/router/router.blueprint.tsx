@@ -779,6 +779,24 @@ export const blueprint: RouteObject[] = [
     },
   },
   {
+    path: 'privacy-policy',
+    async lazy() {
+      const { PrivacyPolicy } = await import('src/pages/privacy-policy/privacy-policy');
+      return {
+        Component: PrivacyPolicy,
+      };
+    },
+  },
+  {
+    path: 'terms-conditions',
+    async lazy() {
+      const { TermsConditions } = await import('src/pages/terms-conditions/terms-conditions');
+      return {
+        Component: TermsConditions,
+      };
+    },
+  },
+  {
     path: '*',
     element: <div>Page not found :(</div>,
   },
