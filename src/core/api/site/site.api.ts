@@ -1,4 +1,4 @@
-import { CurrentIdentity, Device, DeviceReq, SearchReq } from './site.types';
+import { CurrentIdentity, Device, DeviceReq, SearchReq, Skill, SkillRes } from './site.types';
 import { post, get } from '../http';
 import { JobsRes } from '../jobs/jobs.types';
 import { OrganizationsRes } from '../organizations/organizations.types';
@@ -32,4 +32,8 @@ export async function devices(): Promise<Device[]> {
 
 export async function newDevice(payload: DeviceReq): Promise<Device> {
   return (await post<Device>('devices', payload)).data;
+}
+
+export async function skills(params: PaginateReq): Promise<SkillRes> {
+  return (await get<SkillRes>('skills', { params })).data;
 }
