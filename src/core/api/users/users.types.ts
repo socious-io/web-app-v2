@@ -99,6 +99,7 @@ export interface User {
   languages?: Language[] | null;
   experiences?: Experience[] | null;
   created_at: Date;
+  geoname_id?: string;
 }
 
 export interface Language extends LanguageReq {

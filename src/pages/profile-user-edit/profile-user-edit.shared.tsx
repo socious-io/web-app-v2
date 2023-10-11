@@ -1,6 +1,7 @@
 import { Camera } from '@capacitor/camera';
 import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { User, identities } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
@@ -12,11 +13,11 @@ import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 import { generateFormModel } from './profile-user-edit.form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-user-edit.services';
+import { Resolver } from './profile-user-edit.type';
 import { EditProps } from '../profile-user/desktop/edit/edit.types';
-import { useLoaderData, useNavigate } from 'react-router-dom';
 
 export const useProfileUserEditShared = (props?: EditProps) => {
-  const user = useLoaderData() as User;
+  const { user } = useLoaderData() as Resolver;
   const formModel = useMemo(() => generateFormModel(user), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
