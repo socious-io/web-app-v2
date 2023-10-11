@@ -720,6 +720,47 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
+    path: 'change-password',
+    async lazy() {
+      const { ChangePasswordContainer } = await import('src/pages/change-password/change-password.container');
+      return {
+        Component: ChangePasswordContainer,
+      };
+    },
+  },
+  {
+    path: 'delete-profile',
+    children: [
+      {
+        path: 'delete',
+        async lazy() {
+          const { Delete } = await import('src/pages/delete-profile/delete/delete');
+          return {
+            Component: Delete,
+          };
+        },
+      },
+      {
+        path: 'password',
+        async lazy() {
+          const { Password } = await import('src/pages/delete-profile/password/password');
+          return {
+            Component: Password,
+          };
+        },
+      },
+      {
+        path: 'confirm',
+        async lazy() {
+          const { Confirm } = await import('src/pages/delete-profile/confirm/confirm');
+          return {
+            Component: Confirm,
+          };
+        },
+      },
+    ],
+  },
+  {
     path: '/intro',
     async lazy() {
       const { Intro } = await import('src/pages/intro/intro');
