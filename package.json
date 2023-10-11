@@ -1,7 +1,7 @@
 {
   "name": "socious-web-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "7.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000 --host 0.0.0.0 --mode development",
@@ -28,6 +28,7 @@
     "@capacitor/preferences": "^4.0.2",
     "@capacitor/push-notifications": "^4.1.2",
     "@capacitor/toast": "^4.1.0",
+    "@datadog/browser-rum": "^4.50.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@ionic/pwa-elements": "^3.2.2",

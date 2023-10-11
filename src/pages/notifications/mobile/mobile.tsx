@@ -12,7 +12,7 @@ export const Mobile: React.FC = () => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <Avatar size="2.25rem" type={identity.type} img={avatarImg} />
+        {identity && <Avatar size="2.25rem" type={identity.type} img={avatarImg} />}
         <span className={css.title}>Notifications</span>
         <img src="/icons/settings-black.svg" onClick={() => navigate('settings')} alt="" />
       </div>

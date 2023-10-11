@@ -19,7 +19,7 @@ export const CreateChatModal: React.FC<CreateChatModalProps> = ({
           <span></span>
           Create Chat
           <div onClick={onClose} className={css.icon}>
-            <img src="/icons/close-black.svg" />
+            <img src="/icons/close-black.svg" alt="" />
           </div>
         </div>
         <div className={css.container}>
