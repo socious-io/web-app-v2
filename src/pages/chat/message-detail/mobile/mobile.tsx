@@ -32,7 +32,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.container}>
       <div className={css.header}>
         <Header
-          onBack={() => navigate('/d/chats/contacts')}
+          onBack={() => navigate('/chats/contacts')}
           type={participantDetail.type}
           name={participantDetail.identity_meta.name}
           img={participantDetail.identity_meta.avatar || participantDetail.identity_meta.image || ''}

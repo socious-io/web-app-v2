@@ -420,6 +420,15 @@ export const blueprint: RouteObject[] = [
                 },
                 loader: () => notificationSettings(),
               },
+              {
+                path: ':id',
+                async lazy() {
+                  const { DeepLinks } = await import('src/pages/notifications/deepLinks/index');
+                  return {
+                    Component: DeepLinks,
+                  };
+                },
+              },
             ],
           },
           {

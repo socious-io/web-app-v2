@@ -32,7 +32,7 @@ export const Desktop = (): JSX.Element => {
             <ContactList
               height="calc(var(--window-height) - 6.2rem)"
               onScroll={onScroll}
-              onContactClick={(contact) => navigate(`/d/chats/contacts/${contact.id}`)}
+              onContactClick={(contact) => navigate(`/chats/contacts/${contact.id}`)}
               list={chats}
               onSearch={onSearch}
               profileViewWidth={175}
