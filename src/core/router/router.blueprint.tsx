@@ -566,7 +566,7 @@ export const blueprint: RouteObject[] = [
                     loader: profile,
                     async lazy() {
                       const { ProfileUserEditContainer } = await import(
-                        'src//pages/profile-user-edit/profile-user-edit.container'
+                        'src/pages/profile-user-edit/profile-user-edit.container'
                       );
                       return {
                         Component: ProfileUserEditContainer,
@@ -775,6 +775,24 @@ export const blueprint: RouteObject[] = [
       const { SignInContainer } = await import('src/pages/sign-in/sign-in-container');
       return {
         Component: SignInContainer,
+      };
+    },
+  },
+  {
+    path: 'privacy-policy',
+    async lazy() {
+      const { PrivacyPolicy } = await import('src/pages/privacy-policy/privacy-policy');
+      return {
+        Component: PrivacyPolicy,
+      };
+    },
+  },
+  {
+    path: 'terms-conditions',
+    async lazy() {
+      const { TermsConditions } = await import('src/pages/terms-conditions/terms-conditions');
+      return {
+        Component: TermsConditions,
       };
     },
   },

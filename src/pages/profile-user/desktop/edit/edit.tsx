@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Input } from 'src/components/atoms/input/input';
@@ -33,6 +33,14 @@ export const Edit = (props: EditProps): JSX.Element => {
     { id: 1, label: 'Upload image', cb: onAvatarEdit.desktop('upload') },
     { id: 2, label: 'Remove image', cb: onAvatarEdit.desktop('remove') },
   ];
+
+  const [skills, setSkills] = useState<{ value: string; label: string }[]>([]);
+
+  useEffect(() => {
+    skillsToCategoryAdaptor().then((data) => {
+      setSkills(data);
+    });
+  }, []);
 
   return (
     <Modal height={props.height} width={props.width} open={props.open} onClose={props.onClose}>
@@ -85,13 +93,7 @@ export const Edit = (props: EditProps): JSX.Element => {
               list={socialCausesToCategoryAdaptor()}
               placeholder="Social causes"
             />
-            <Category
-              register={form}
-              name="skills"
-              label="Skills"
-              list={skillsToCategoryAdaptor()}
-              placeholder="skills"
-            />
+            <Category register={form} name="skills" label="Skills" list={skills} placeholder="skills" />
             <Textarea register={form} label="Address" name="address" placeholder="address" />
             <Dropdown
               register={form}
