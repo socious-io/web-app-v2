@@ -19,7 +19,6 @@ export const identitySlice = createSlice({
   reducers: {
     setIdentityList: (state, action) => {
       state.entities = action.payload;
-
       const identity = state.entities.find((identity) => identity.current);
       if (identity && identity.meta) {
         state.avatarImage =

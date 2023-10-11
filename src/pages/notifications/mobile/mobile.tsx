@@ -8,7 +8,6 @@ import css from './mobile.module.scss';
 export const Mobile: React.FC = () => {
   const navigate = useNavigate();
   const { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore } = useNotificationsShared();
-
   return (
     <div className={css.container}>
       <div className={css.header}>

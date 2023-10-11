@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { RootState } from 'src/store';
 
 import { Desktop } from './desktop/desktop';
 import { Mobile } from './mobile/mobile';
-import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const SignInContainer = (): JSX.Element => {
   const status = useSelector((state: RootState) => state.identity.status);
