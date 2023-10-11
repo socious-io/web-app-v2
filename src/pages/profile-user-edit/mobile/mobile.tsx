@@ -1,27 +1,29 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Category } from 'src/components/molecules/category/category';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
+import { ProfileReq } from 'src/pages/profile-organization/refactored/profileOrg.types';
 
 import css from './mobile.module.scss';
-import { Header } from '../../../components/atoms/header-v2/header';
-import { Input } from '../../../components/atoms/input/input';
 import { useProfileUserEditShared } from '../profile-user-edit.shared';
 
 export const Mobile = (): JSX.Element => {
   const user = useLoaderData() as ProfileReq;
+  const [skills, setSkills] = useState<{ value: string; label: string }[]>([]);
 
   const { onCoverEdit, onAvatarEdit, onSave, onCountryUpdate, updateCityList, coverImage, avatarImage, cities, form } =
     useProfileUserEditShared();
 
   useEffect(() => {
     updateCityList(user.country);
+    skillsToCategoryAdaptor().then((data) => setSkills(data));
   }, []);
 
   return (
@@ -55,13 +57,7 @@ export const Mobile = (): JSX.Element => {
             list={socialCausesToCategoryAdaptor()}
             placeholder="Social causes"
           />
-          <Category
-            register={form}
-            name="skills"
-            label="Skills"
-            list={skillsToCategoryAdaptor()}
-            placeholder="skills"
-          />
+          <Category register={form} name="skills" label="Skills" list={skills} placeholder="skills" />
           <Textarea register={form} label="Address" name="address" placeholder="address" />
           <Dropdown
             register={form}

@@ -8,8 +8,9 @@ import { Spinner } from './components/atoms/spinner/spinner';
 import { Modal } from './components/templates/modal/modal';
 import { setupInterceptors } from './core/api';
 import { DeepLinks } from './core/deepLinks';
-import store from './store';
+import store, { RootState } from './store';
 import { closeModal } from './store/reducers/modal.reducer';
+import 'src/core/translation/i18n';
 
 function ModalPlaceholder() {
   const modal = useSelector<RootState>((state) => state.modal);
