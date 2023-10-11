@@ -11,4 +11,6 @@ export const config = {
   webTokenClientId: import.meta.env.VITE_CLIENT_SECRET_TOKEN_CLIENT_ID,
   webTokenRedirectURL: import.meta.env.VITE_CLIENT_SECRET_TOKEN_REDIRECT_URL,
   logDiscordWebHook: import.meta.env.VITE_LOG_DISCORD_WEBHOOK,
+  datadogAppId: import.meta.env.VITE_DATADOG_APP_ID,
+  datadogClientToken: import.meta.env.VITE_DATADOG_CLIENT_TOKEN,
 };

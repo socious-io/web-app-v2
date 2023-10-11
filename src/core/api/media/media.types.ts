@@ -1,10 +1,7 @@
-export interface MediaMeta {
+export type PostMediaUploadRes = {
   id: string;
-  url: string;
-}
-
-export interface Media extends MediaMeta {
-  filename: string;
   identity_id: string;
+  filename: string;
+  url: string;
   created_at: string;
-}
+};

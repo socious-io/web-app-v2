@@ -11,8 +11,8 @@ export const Mobile = (): JSX.Element => {
       <div className={css.main}>
         <div className={css.title}>Application sent!</div>
         <p className={css.message}>
-          <span className={css.companyName}>{company}</span> has received your application to review. Wait
-          for them to respond to you.
+          <span className={css.companyName}>{company}</span> has received your application to review. Wait for them to
+          respond to you.
         </p>
       </div>
       <div className={css.btnContainer}>

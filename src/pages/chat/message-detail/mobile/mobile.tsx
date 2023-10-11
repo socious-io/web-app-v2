@@ -14,7 +14,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.emptyBoxContainer}>
       <Avatar
         type={participantDetail.type}
-        img={participantDetail.identity_meta.avatar || participantDetail.identity_meta.image}
+        img={participantDetail.identity_meta.avatar || participantDetail.identity_meta.image || ''}
         size="8rem"
       />
       <div className={css.text}>
@@ -35,7 +35,7 @@ export const Mobile = (): JSX.Element => {
           onBack={() => navigate('/d/chats/contacts')}
           type={participantDetail.type}
           name={participantDetail.identity_meta.name}
-          img={participantDetail.identity_meta.avatar || participantDetail.identity_meta.image}
+          img={participantDetail.identity_meta.avatar || participantDetail.identity_meta.image || ''}
           username={participantDetail.identity_meta.username || participantDetail.identity_meta.shortname || ''}
         />
       </div>
