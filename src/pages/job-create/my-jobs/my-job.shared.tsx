@@ -58,7 +58,6 @@ export const useMyJobShared = () => {
   }
 
   function navigateToOverview(id?: string) {
-    console.log('fakeshma');
     navigate(`/jobs/created/${id}/overview`);
   }
 

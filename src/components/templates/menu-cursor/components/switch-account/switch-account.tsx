@@ -10,8 +10,8 @@ import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
 import { AccountsModel } from 'src/pages/sidebar/mobile/mobile.types';
 import { logout, setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
-import { RootState } from 'src/store';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import store, { RootState } from 'src/store';
+import { setIdentityList, removeIdentityList } from 'src/store/reducers/identity.reducer';
 
 import css from './switch-account.module.scss';
 import { SwitchAccountProps } from './switch-account.types';
@@ -56,7 +56,9 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     }, 180);
   }, []);
 
-  function logOut() {
+  async function logOut() {
+    store.dispatch(removeIdentityList());
+
     logout().then(() => navigate('/sign-in'));
     props.onClose();
     nonPermanentStorage.clear();
