@@ -566,7 +566,7 @@ export const blueprint: RouteObject[] = [
                     loader: profile,
                     async lazy() {
                       const { ProfileUserEditContainer } = await import(
-                        'src//pages/profile-user-edit/profile-user-edit.container'
+                        'src/pages/profile-user-edit/profile-user-edit.container'
                       );
                       return {
                         Component: ProfileUserEditContainer,

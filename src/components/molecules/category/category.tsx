@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
 import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
@@ -24,6 +24,10 @@ export const Category = (props: CategoryProps): JSX.Element => {
   const [selected, setSelected] = useState<Array<string | number>>(
     (props.register.controls[props.name].value as []) || [],
   );
+
+  useEffect(() => {
+    setList(props.list);
+  }, [props.list]);
 
   function onChange(list: string[]) {
     props.register.controls[props.name].setValue(list);
