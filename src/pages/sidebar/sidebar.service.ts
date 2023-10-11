@@ -1,9 +1,12 @@
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import store from 'src/store';
+import { removeIdentityList } from 'src/store/reducers/identity.reducer';
 
 import { post } from '../../core/http';
 
 export async function logout() {
   //   Cookie.flush();
+  store.dispatch(removeIdentityList());
   removeFcmToken();
   return post(`/auth/logout`, {}).then(({ data }) => data);
 }

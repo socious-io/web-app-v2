@@ -3,14 +3,15 @@ import { CurrentIdentity } from 'src/core/api';
 
 import { currentIdentities } from '../thunks/identity.thunks';
 
+const initState = {
+  entities: [],
+  status: 'idle',
+  error: null,
+  avatarImage: '',
+};
 export const identitySlice = createSlice({
   name: 'identity',
-  initialState: {
-    entities: [],
-    status: 'idle',
-    error: null,
-    avatarImage: '',
-  } as {
+  initialState: initState as {
     entities: CurrentIdentity[];
     status: string;
     error: any;
@@ -30,6 +31,9 @@ export const identitySlice = createSlice({
             : '';
       } else state.avatarImage = '';
     },
+    removeIdentityList: () => {
+      return initState;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,4 +51,4 @@ export const identitySlice = createSlice({
   },
 });
 
-export const { setIdentityList } = identitySlice.actions;
+export const { setIdentityList, removeIdentityList } = identitySlice.actions;

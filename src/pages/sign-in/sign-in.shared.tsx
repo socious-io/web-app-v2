@@ -15,7 +15,6 @@ import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 import { formModel } from './sign-in.form';
 import { setAuthCookies } from './sign-in.services';
-import { callMetric } from 'src/core/datadog';
 
 const addListeners = () => {
   addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
