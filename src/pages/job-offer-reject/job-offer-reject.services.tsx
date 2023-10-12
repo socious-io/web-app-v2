@@ -5,8 +5,6 @@ import { Applicant as ApplicantHire } from '../../components/molecules/applicant
 import { Job } from '../../components/organisms/job-list/job-list.types';
 import { translatePaymentTerms } from '../../constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from '../../constants/PROJECT_PAYMENT_TYPE';
-import { endpoint } from '../../core/endpoints';
-import { get, post } from '../../core/http';
 import { isoToStandard } from '../../core/time';
 import {
   ApplicantResp,
