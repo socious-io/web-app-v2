@@ -14,6 +14,7 @@ import { useApplicantDetailShared } from '../applicant-detail.shared';
 import css from './desktop.module.scss';
 import { ApproveModal } from '../approve-modal';
 import { isoToStandard } from '../../../../core/time';
+import { formatDate } from 'src/core/time';
 
 export const Desktop: React.FC = () => {
   const { isLoggedIn } = useAuth();
@@ -56,16 +57,6 @@ export const Desktop: React.FC = () => {
       </div>
     </Accordion>
   );
-  const currentSubmission = {
-    time: 'Jan 8 - Jan 15',
-    hours: 10,
-  };
-  const previousSubmission = [
-    {
-      time: 'Jan 1 - Jan 7',
-      hours: 15,
-    },
-  ];
   const hoursSubmissions = () => (
     <Accordion id="submissions" title="Hours submissions">
       <div className={css.accordionContainer}>
@@ -80,12 +71,18 @@ export const Desktop: React.FC = () => {
                   <>
                     <div className={css.current_submission}>
                       <div className={css.time}>
-                        {isoToStandard(submit_work.start_at)} - {isoToStandard(submit_work.end_at)}
+                        {formatDate(submit_work.start_at)} - {formatDate(submit_work.end_at)}
                       </div>
                       <div className={css.hours}>{submit_work.total_hours} hours</div>
                     </div>
                     <div className={css.btn_submission}>
-                      <Button onClick={() => onApprove(mission.id, submit_work.id)}>Approve</Button>
+                      <Button
+                        onClick={() => {
+                          onApprove(mission.id, submit_work.id);
+                        }}
+                      >
+                        Approve
+                      </Button>
                       <Button onClick={onReject(applicantDetail.id)} color="white">
                         Contest
                       </Button>
@@ -108,12 +105,15 @@ export const Desktop: React.FC = () => {
                     <>
                       <div className={css.submission}>
                         <span className={css.time}>
-                          {isoToStandard(submit_work.start_at)} - {isoToStandard(submit_work.end_at)}
+                          {formatDate(submit_work.start_at)} - {formatDate(submit_work.end_at)}
                         </span>
-                        <span className={css.hours}>{submit_work.total_hours} hours</span>
+                        <span className={css.hours}>
+                          {submit_work.total_hours} hours{' '}
+                          <img className={css.icon} src="/icons/confirmed-submit.svg" alt="submitted" />
+                        </span>
                       </div>
                     </>,
-                    submit_work.status === 'APPROVED'
+                    submit_work.status === 'CONFIRMED'
                   )}
                 </div>
               ))}

@@ -7,10 +7,12 @@ import { useApplicantDetailShared } from '../applicant-detail.shared';
 import { ApplicantInfo } from '../components/applicant-info';
 import { useState } from 'react';
 import { Card } from 'src/components/atoms/card/card';
+import { formatDate } from 'src/core/time';
 
 export const Mobile = (): JSX.Element => {
-  const { navigate, screeningQuestions, applicantDetail, onReject, unit } = useApplicantDetailShared();
+  const { navigate, screeningQuestions, applicantDetail, onReject, missions, unit } = useApplicantDetailShared();
   const [showApprove, setShowApprove] = useState(false);
+  // const [missionDetail, setMissionDetail] = useState({ mission_id: '', work_id: '' });
 
   function onOffer() {
     navigate({ to: `./offer` });
@@ -49,10 +51,6 @@ export const Mobile = (): JSX.Element => {
       </div>
     </Accordion>
   );
-  const currentSubmission = {
-    time: 'Jan 8 - Jan 15',
-    hours: 10,
-  };
   const previousSubmission = [
     {
       time: 'Jan 1 - Jan 7',
@@ -65,23 +63,60 @@ export const Mobile = (): JSX.Element => {
         <div className={css.title_submisson}>
           {applicantDetail.user.first_name} has submitted new hours. Please approve or contest.
         </div>
-        <div className={css.current_submission}>
-          <div className={css.time}>{currentSubmission.time}</div>
-          <div className={css.hours}>{currentSubmission.hours} hours</div>
-        </div>
-        <div className={css.btn_submission}>
-          <Button onClick={onApprove}>Approve</Button>
-          <Button onClick={onReject(applicantDetail.id)} color="white">
-            Contest
-          </Button>
-        </div>
+        {missions.items.map((mission: any) => (
+          <>
+            {mission.submitted_works.map((submit_work: any) => (
+              <div>
+                {printWhen(
+                  <>
+                    <div className={css.current_submission}>
+                      <div className={css.time}>
+                        {formatDate(submit_work.start_at)} - {formatDate(submit_work.end_at)}
+                      </div>
+                      <div className={css.hours}>{submit_work.total_hours} hours</div>
+                    </div>
+                    <div className={css.btn_submission}>
+                      <Button
+                        onClick={() => {
+                          onApprove();
+                        }}
+                      >
+                        Approve
+                      </Button>
+                      <Button onClick={onReject(applicantDetail.id)} color="white">
+                        Contest
+                      </Button>
+                    </div>
+                  </>,
+                  submit_work.status === 'PENDING'
+                )}
+              </div>
+            ))}
+          </>
+        ))}
         <div className={css.previous_submission}>
           <div className={css.title}>Previous Submissions</div>
-          {previousSubmission.map((item) => (
-            <div className={css.submission}>
-              <span className={css.time}>{item.time}</span>
-              <span className={css.hours}>{item.hours} hours</span>
-            </div>
+          {missions.items.map((mission: any) => (
+            <>
+              {mission.submitted_works.map((submit_work: any) => (
+                <div>
+                  {printWhen(
+                    <>
+                      <div className={css.submission}>
+                        <span className={css.time}>
+                          {formatDate(submit_work.start_at)} - {formatDate(submit_work.end_at)}
+                        </span>
+                        <span className={css.hours}>
+                          {submit_work.total_hours} hours{' '}
+                          <img className={css.icon} src="/icons/confirmed-submit.svg" alt="submitted" />
+                        </span>
+                      </div>
+                    </>,
+                    submit_work.status === 'CONFIRMED'
+                  )}
+                </div>
+              ))}
+            </>
           ))}
         </div>
       </div>

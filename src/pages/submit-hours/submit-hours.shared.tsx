@@ -10,15 +10,21 @@ import moment from 'moment';
 
 export const useSubmittedHoursShared = () => {
   const resolver = useMatch().ownData;
+  const timedifference = -new Date().getTimezoneOffset() / 60;
   const { offer, mission, media } = (resolver as Loader) || {};
   const [status, setStatus] = useState(offer.status);
   const [selectedWeek, setSelectedWeek] = useState({
-    start_at: moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).clone().weekday(1).toISOString(),
-    end_at: moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).clone().weekday(7).toISOString(),
+    start_at: moment()
+      .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+      .add(timedifference, 'hours')
+      .clone()
+      .weekday(1)
+      .toISOString(),
+    end_at: moment().set({ hour: 9, minute: 0, second: 0, millisecond: 0 }).clone().weekday(7).toISOString(),
   });
+
   const alert = useAlert();
   const form = useForm(formModel);
-  const navigate = useNavigate();
 
   function onCompleteMission() {
     function onConfirm() {
@@ -35,15 +41,25 @@ export const useSubmittedHoursShared = () => {
 
   function nextWeek() {
     setSelectedWeek({
-      start_at: moment(selectedWeek.start_at).weekday(8).toISOString(),
-      end_at: moment(selectedWeek.end_at).weekday(7).toISOString(),
+      start_at: moment(selectedWeek.start_at)
+        .weekday(8)
+        .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        .add(timedifference, 'hours')
+        .toISOString(),
+      end_at: moment(selectedWeek.end_at)
+        .weekday(7)
+        .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        .add(timedifference, 'hours')
+        .toISOString(),
     });
   }
 
   function isSelectedWeekCurrent() {
     return (
-      moment(selectedWeek.start_at) <= moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }) &&
-      moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }) <= moment(selectedWeek.end_at)
+      moment(selectedWeek.start_at) <=
+        moment().set({ hour: 9, minute: 0, second: 0, millisecond: 0 }).add(timedifference, 'hours') &&
+      moment().set({ hour: 9, minute: 0, second: 0, millisecond: 0 }).add(timedifference, 'hours') <=
+        moment(selectedWeek.end_at)
     );
   }
 
@@ -56,18 +72,27 @@ export const useSubmittedHoursShared = () => {
 
   function previousWeek() {
     setSelectedWeek({
-      start_at: moment(selectedWeek.start_at).weekday(-6).toISOString(),
-      end_at: moment(selectedWeek.end_at).weekday(-7).toISOString(),
+      start_at: moment(selectedWeek.start_at)
+        .weekday(-6)
+        .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        .add(timedifference, 'hours')
+        .toISOString(),
+      end_at: moment(selectedWeek.end_at)
+        .weekday(-7)
+        .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        .add(timedifference, 'hours')
+        .toISOString(),
     });
   }
 
   function onSubmitHours() {
     const values: any = getFormValues(form);
-    const firstDayOfTheWeek = moment().clone().weekday(1).toISOString();
-    const lastDayOfTheWeek = moment().clone().weekday(7).toISOString();
 
-    values.start_at = selectedWeek.start_at; //firstDayOfTheWeek; //'2021-10-14T13:32:30.211Z';
-    values.end_at = selectedWeek.end_at; //lastDayOfTheWeek; //'2021-10-15T13:32:30.211Z';
+    values.start_at = moment(selectedWeek.start_at)
+      .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+      .add(timedifference, 'hours')
+      .toISOString();
+    values.end_at = selectedWeek.end_at;
     endpoint.post.missions['{mission_id}/submitworks'](mission.id, values).then(() => {});
   }
 
