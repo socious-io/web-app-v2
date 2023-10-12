@@ -62,7 +62,7 @@ export const Mobile = (): JSX.Element => {
           {/* <Button disabled={!basicValidity} onClick={onSubmit(formState)}>
             Join
           </Button> */}
-          <Button onClick={shared.onSubmit} disabled={!shared.form.isValid}>
+          <Button onClick={shared.onSubmit} >
             Join
           </Button>
           <Typography marginTop="1rem">
