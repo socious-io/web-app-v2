@@ -72,7 +72,7 @@ export const Feeds = () => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate(`/d/jobs/created/${identity?.id}`),
+      link: () => navigate(`/jobs/created/${identity?.id}`),
     },
   ];
 

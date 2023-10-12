@@ -423,6 +423,39 @@ export const blueprint: RouteObject[] = [
             ],
           },
           {
+            path: 'network',
+            children: [
+              {
+                path: '',
+                async lazy() {
+                  const { Network } = await import('src/pages/network/network.container');
+                  return {
+                    Component: Protect(Network),
+                  };
+                },
+              },
+              {
+                path: 'connections',
+                async lazy() {
+                  const { Connections } = await import('src/pages/network/connections/connections.container');
+                  return {
+                    Component: Protect(Connections),
+                  };
+                },
+              },
+              {
+                path: 'followings',
+                async lazy() {
+                  const { Followings } = await import('src/pages/network/followings/followings.container');
+                  return {
+                    Component: Protect(Followings),
+                  };
+                },
+                loader: () => getFollowings({ page: 1 }),
+              },
+            ],
+          },
+          {
             path: 'wallet',
             async lazy() {
               const { Wallet } = await import('src/pages/wallet/wallet.container');

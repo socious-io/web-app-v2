@@ -7,10 +7,14 @@ import { Modal } from 'src/components/templates/modal/modal';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
+import {
+  connectionListAdaptor,
+  receivedRequestsAdaptor,
+  sentRequestsAdaptor,
+} from 'src/pages/network/connections/connections.service';
+import { useConnectionsShared } from 'src/pages/network/connections/connections.shared';
 
 import css from './desktop.module.scss';
-import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
-import { useConnectionsShared } from '../connections.shared';
 
 export const Desktop: React.FC = () => {
   const {
