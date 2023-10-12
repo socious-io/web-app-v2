@@ -39,6 +39,7 @@ import {
   getPendingApplicants,
 } from 'src/pages/job-apply/my-jobs/my-jobs.services';
 import { jobOfferRejectLoader } from 'src/pages/job-offer-reject/job-offer-reject.services';
+import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
@@ -391,6 +392,51 @@ export const blueprint: RouteObject[] = [
                     loader: async ({ params }) => {
                       const defaultQuestions = await jobQuestions(params.id);
                       return { defaultQuestions };
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: 'profile/organizations',
+            children: [
+              {
+                path: ':id',
+                children: [
+                  {
+                    path: 'view',
+                    loader: async ({ params }) => {
+                      const user = profileOrganizationPageLoader({ params });
+                      return user;
+                    },
+                    async lazy() {
+                      const { profileOrg } = await import('src/pages/profile-organization/refactored/profileOrg');
+                      return { Component: profileOrg };
+                    },
+                  },
+                  {
+                    path: 'edit',
+                    loader: async ({ params }) => {
+                      const user = profileOrganizationPageLoader({ params });
+                      return user;
+                    },
+                    async lazy() {
+                      const { ProfileOrganizationEdit } = await import(
+                        'src/pages/profile-organization-edit/profile-organization-edit'
+                      );
+                      return { Component: ProfileOrganizationEdit };
+                    },
+                  },
+                  {
+                    path: 'jobs',
+                    loader: async ({ params }) => {
+                      const user = profileOrganizationPageLoader({ params });
+                      return user;
+                    },
+                    async lazy() {
+                      const { JobsIndexContainer } = await import('../../pages/jobs-index/jobs-index.container');
+                      return { Component: JobsIndexContainer };
                     },
                   },
                 ],
