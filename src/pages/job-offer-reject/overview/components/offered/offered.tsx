@@ -36,7 +36,7 @@ export const Offered = (props: OfferedProps): JSX.Element => {
     if (isTouchDevice()) {
       navigate(`/chats/new/${id}`);
     } else {
-      navigate(`/d/chats/new/${id}`);
+      navigate(`/chats/new/${id}`);
     }
   }
 
