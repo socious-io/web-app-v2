@@ -32,7 +32,7 @@ export async function job(id: string): Promise<Job> {
   return (await get<Job>(`projects/${id}`)).data;
 }
 
-export async function jobOffers(id: string, params?: PaginateReq): Promise<OffersRes> {
+export async function jobOffers(id: string, params?: FilterReq): Promise<OffersRes> {
   return (await get<OffersRes>(`projects/${id}/offers`, { params })).data;
 }
 
