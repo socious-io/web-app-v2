@@ -5,7 +5,7 @@ import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
 import { SwitchAccount } from 'src/components/templates/menu-cursor/components/switch-account/switch-account';
 import { Menu, getAvatar, menuList } from 'src/components/templates/refactored/menu/menu.services';
-import { IdentityReq } from 'src/core/types';
+import { CurrentIdentity } from 'src/core/api';
 import { RootState } from 'src/store';
 
 import css from './webMenu.module.scss';
@@ -13,7 +13,7 @@ import css from './webMenu.module.scss';
 const WebMenu = () => {
   const navigate = useNavigate();
   const route = useLocation();
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
@@ -65,7 +65,7 @@ const WebMenu = () => {
             }}
             size="2rem"
             type={currentIdentity?.type || 'users'}
-            img={getAvatar(currentIdentity)}
+            img={currentIdentity ? getAvatar(currentIdentity) : ''}
           />
           <div className={css.switchAccountMenu}>
             <SwitchAccount

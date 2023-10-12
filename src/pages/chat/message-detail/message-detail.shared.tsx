@@ -45,7 +45,7 @@ export const useMessageDetailShared = () => {
   }
 
   async function onContactClick(contact: ContactItem) {
-    navigate(`/d/chats/contacts/${contact.id}`);
+    navigate(`/chats/contacts/${contact.id}`);
     updateMessages(contact.id);
   }
 

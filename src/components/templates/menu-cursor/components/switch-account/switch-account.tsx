@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
-import { identities } from 'src/core/api';
+import { identities, OrgMeta, UserMeta } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
@@ -29,8 +29,8 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const accountList = useSelector<RootState, AccountsModel[]>((state) => {
     return state.identity.entities.map((item) => ({
       name: item.meta.name,
-      image: item.meta.image,
-      avatar: item?.meta?.avatar,
+      image: (item.meta as OrgMeta).image || '',
+      avatar: (item.meta as UserMeta).avatar || '',
       type: item.type,
       id: item.id,
       current: item.current,
