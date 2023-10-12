@@ -27,7 +27,7 @@ export interface OtpReq {
 
 export interface OtpConfirmReq {
   email: string;
-  otp: string;
+  code: string;
 }
 
 export interface AuthStripeReq {

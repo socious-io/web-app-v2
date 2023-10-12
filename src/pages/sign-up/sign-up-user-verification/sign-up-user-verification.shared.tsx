@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { otpConfirm } from 'src/core/api';
+import { setAuthParams } from 'src/core/api/auth/auth.service';
 import { dialog } from 'src/core/dialog/dialog';
 import { endpoint } from 'src/core/endpoints';
 import { LoginResp } from 'src/core/types';
-import { setAuthCookies } from 'src/pages/sign-in/sign-in.services';
 
 export const useSignUpUserVerificationShared = () => {
   const navigate = useNavigate();
@@ -14,13 +15,13 @@ export const useSignUpUserVerificationShared = () => {
   }
 
   async function successOTP(resp: LoginResp) {
-    await setAuthCookies(resp);
+    await setAuthParams(resp);
     navigate('../complete');
   }
 
   function onSubmit() {
     const email = localStorage.getItem('email') as string;
-    endpoint.get.auth['otp/confirm']({ email, otp }).then(successOTP).catch(onIncorrectOtp);
+    otpConfirm({ email, code: otp }).then(successOTP).catch(onIncorrectOtp);
   }
 
   function onResendSucceed() {
