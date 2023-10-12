@@ -47,7 +47,7 @@ export const useContactListShared = () => {
   async function onCreateChat(id: string) {
     const createdChats = await createChat({ name: 'nameless', type: 'CHAT', participants: [id] });
     setOpenCreateChatModal(false);
-    navigate(`/d/chats/contacts/${createdChats?.id}`);
+    navigate(`/chats/contacts/${createdChats?.id}`);
   }
 
   return {
