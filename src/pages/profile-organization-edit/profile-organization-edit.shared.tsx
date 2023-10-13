@@ -1,6 +1,7 @@
 import { Camera } from '@capacitor/camera';
 import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { identities } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
@@ -13,11 +14,9 @@ import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 import { generateFormModel } from './profile-organization-edit.form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-organization-edit.services';
-import { ProfileReq } from '../profile-user/profile-user.types';
-import { useLoaderData, useNavigate } from 'react-router-dom';
 
 export const useProfileOrganizationEditShared = () => {
-  const organization = useLoaderData().data.user as ProfileReq;
+  const organization = useLoaderData().user;
   const formModel = useMemo(() => generateFormModel(organization), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
@@ -16,9 +17,8 @@ import { showActions } from './profileOrg.services';
 import { useProfileOrg } from './useProfileOrg';
 import { ConnectModal } from '../connect-modal';
 import { EditOrganization } from '../desktop/edit/edit';
-import { useNavigate } from 'react-router-dom';
 
-const profileOrg = () => {
+export const profileOrg = () => {
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const [editOpen, setEditOpen] = useState(false);
