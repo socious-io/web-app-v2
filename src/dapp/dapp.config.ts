@@ -1,4 +1,5 @@
-import { polygon, polygonMumbai, Chain } from 'wagmi/chains';
+import { DappConfig } from './dapp.types';
+import { bsc, bscTestnet, polygon, polygonMumbai, Chain } from 'wagmi/chains';
 
 import { DappConfig } from './dapp.types';
 
@@ -69,6 +70,23 @@ export const dappConfig: DappConfig = {
       ],
     },
     {
+      chain: bscTestnet,
+      escrow: '0xE0B476D0F9370D162f6d0D4bB5B1CDf4C26509d5',
+      logic: '0xE0B476D0F9370D162f6d0D4bB5B1CDf4C26509d5',
+      tokens: [
+        {
+          name: 'USDC',
+          symbol: 'USDC',
+          address: '0x082A2027DC16F42d6e69bE8FA13C94C17c910EbE',
+        },
+        {
+          name: 'Tether',
+          symbol: 'USDT',
+          address: '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd',
+        },
+      ],
+    },
+    {
       chain: polygonMumbai,
       escrow: '0xF2B4BCc3F1687288a8c0c06Ee720350CA09dfb23',
       tokens: [
@@ -115,6 +133,23 @@ export const dappConfig: DappConfig = {
           name: 'Wrapped ADA',
           symbol: 'WADA',
           address: '0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9',
+        },
+      ],
+    },
+    {
+      chain: bsc,
+      escrow: 'changeme',
+      logic: 'changeme',
+      tokens: [
+        {
+          name: 'USDC',
+          symbol: 'USDC',
+          address: 'changeme',
+        },
+        {
+          name: 'Tether',
+          symbol: 'USDT',
+          address: 'changeme',
         },
       ],
     },

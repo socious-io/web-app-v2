@@ -39,7 +39,12 @@ import {
   getPendingApplicants,
 } from 'src/pages/job-apply/my-jobs/my-jobs.services';
 import { jobOfferRejectLoader } from 'src/pages/job-offer-reject/job-offer-reject.services';
+import { receivedOfferLoader } from 'src/pages/offer-received/offer-received.services';
+import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
+import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { RootState } from 'src/store';
+
+import { endpoint } from '../endpoints';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
@@ -398,6 +403,51 @@ export const blueprint: RouteObject[] = [
             ],
           },
           {
+            path: 'profile/organizations',
+            children: [
+              {
+                path: ':id',
+                children: [
+                  {
+                    path: 'view',
+                    loader: async ({ params }) => {
+                      const user = profileOrganizationPageLoader({ params });
+                      return user;
+                    },
+                    async lazy() {
+                      const { profileOrg } = await import('src/pages/profile-organization/refactored/profileOrg');
+                      return { Component: profileOrg };
+                    },
+                  },
+                  {
+                    path: 'edit',
+                    loader: async ({ params }) => {
+                      const user = profileOrganizationPageLoader({ params });
+                      return user;
+                    },
+                    async lazy() {
+                      const { ProfileOrganizationEdit } = await import(
+                        'src/pages/profile-organization-edit/profile-organization-edit'
+                      );
+                      return { Component: ProfileOrganizationEdit };
+                    },
+                  },
+                  {
+                    path: 'jobs',
+                    loader: async ({ params }) => {
+                      const user = profileOrganizationPageLoader({ params });
+                      return user;
+                    },
+                    async lazy() {
+                      const { JobsIndexContainer } = await import('../../pages/jobs-index/jobs-index.container');
+                      return { Component: JobsIndexContainer };
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
             path: 'notifications',
             children: [
               {
@@ -472,6 +522,69 @@ export const blueprint: RouteObject[] = [
               ];
               const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
               return { missionsList, stripeProfileRes, jpStripeProfileRes };
+            },
+          },
+          {
+            path: '/payment/:id',
+            children: [
+              {
+                path: 'add-card',
+                loader: async () => {
+                  const [cardInfo] = await Promise.all([getCreditCardInfo()]);
+                  return cardInfo;
+                },
+                async lazy() {
+                  const { CreditCard } = await import('src/pages/payment/credit-card/credit-card.container');
+                  return {
+                    Component: Protect(CreditCard),
+                  };
+                },
+              },
+              {
+                path: 'edit-card/:id',
+                loader: async ({ params }) => {
+                  const [cardInfo] = await Promise.all([getCreditCardInfoById(params.id)]);
+                  return cardInfo;
+                },
+                async lazy() {
+                  const { CreditCard } = await import('src/pages/payment/credit-card/credit-card.container');
+                  return {
+                    Component: Protect(CreditCard),
+                  };
+                },
+              },
+              {
+                path: '',
+                loader: async ({ params }) => {
+                  const { offer } = await receivedOfferLoader(params);
+                  const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
+                  return { offer, cardInfo };
+                },
+                async lazy() {
+                  const { Payment } = await import('src/pages/payment/payment.container');
+                  return {
+                    Component: Protect(Payment),
+                  };
+                },
+              },
+            ],
+          },
+          {
+            path: 'team/:id',
+            async lazy() {
+              const { Team } = await import('src/pages/team/team.container');
+
+              return {
+                Component: Team,
+              };
+            },
+            loader: async ({ params }) => {
+              const requests = [
+                endpoint.get.members['org_id'](params.id, { page: 1 }),
+                endpoint.get.follows['followings']({ page: 1, name: '', type: 'users' }),
+              ];
+              const [members, followings] = await Promise.all(requests);
+              return { members, followings };
             },
           },
           {
