@@ -1,17 +1,19 @@
 import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { Tab } from 'src/components/atoms/tabs/tabs.types';
 import { JobHistoryItemProps } from 'src/components/molecules/job-history-item/job-history-item.types';
 import { ImpactCategoryList } from 'src/components/organisms/impact-category-list/impact-category-list';
 import { JobHistoryList } from 'src/components/organisms/job-history-list/job-history-list';
+import { Badge, Badges, ImpactPoints, OrgMeta } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
+
 import { Header } from './components/header/header';
 import { Tier } from './components/tier/tier';
 import { evaluateTier } from './mobile/achievements.service';
-import { useLoaderData } from 'react-router-dom';
-import { Badge, Badges, ImpactPoints, OrgMeta } from 'src/core/api';
 
 export const useAchievementsShared = () => {
+  console.log('DDDDDDDDD', useLoaderData());
   const { badges, impactPointHistory } = useLoaderData() as { badges: Badges; impactPointHistory: ImpactPoints };
 
   const activeList = badges.badges.map((badge: Badge) => badge.social_cause_category);
@@ -30,15 +32,15 @@ export const useAchievementsShared = () => {
   );
 
   const adoptUserBadgeToJobHistoryComp: JobHistoryItemProps[] = impactPointHistory.items.map((item) => {
-    const meta = item.organization.meta as OrgMeta;
+    const meta = item.organization?.meta as OrgMeta;
     return {
       jobTitle: item?.project?.title,
       date: isoToStandard(item.created_at.toString()),
       total: item.total_points.toString(),
-      organizationName: meta.name,
-      dataStart: isoToStandard(item.mission.created_at.toString()),
-      dataEnd: isoToStandard(item.created_at.toString()),
-      avatarUrl: meta.image,
+      organizationName: meta?.name,
+      dataStart: item?.mission ? isoToStandard(item?.mission.created_at?.toString()) : '',
+      dataEnd: item.created_at ? isoToStandard(item.created_at?.toString()) : '',
+      avatarUrl: meta?.image,
     };
   });
 
