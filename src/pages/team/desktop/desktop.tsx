@@ -51,7 +51,7 @@ export const Desktop: React.FC = () => {
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <ProfileCard />
-          <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
+          <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
           <CardMenu title="Jobs" list={jobsMenuListOrg} />
         </div>
         <div className={css.rightContainer}>
