@@ -41,9 +41,9 @@ export const useConnectionsShared = () => {
     const [connectionListReq, sentRequestsListReq, receivedRequestsListReq]: Awaited<
       [ConnectionsRes, ConnectionsRes, ConnectionsRes]
     > = await Promise.all([
-      connections({ page: currectPages.connections, status: 'CONNECTED' }),
-      connections({ page: currectPages.sent, status: 'PENDING', requester_id: identity?.id }),
-      connections({ page: currectPages.received, status: 'PENDING', requested_id: identity?.id }),
+      connections({ page: currectPages.connections, 'filter.status': 'CONNECTED' }),
+      connections({ page: currectPages.sent, 'filter.status': 'PENDING', 'filter.requester_id': identity?.id }),
+      connections({ page: currectPages.received, 'filter.status': 'PENDING', 'filter.requested_id': identity?.id }),
     ]);
     setConnectionList(connectionListReq);
     setSentRequestsList(sentRequestsListReq);
@@ -51,7 +51,7 @@ export const useConnectionsShared = () => {
   }
 
   async function initConnectionsList() {
-    const connectionListReq = await connections({ page: currectPages.connections, status: 'CONNECTED' });
+    const connectionListReq = await connections({ page: currectPages.connections, 'filter.status': 'CONNECTED' });
     setConnectionList(connectionListReq);
   }
 
@@ -91,7 +91,10 @@ export const useConnectionsShared = () => {
   function loadMore(tag: string) {
     const req: Record<string, () => Promise<void>> = {
       connections: async () => {
-        const listReq: ConnectionsRes = await connections({ page: currectPages.connections + 1, status: 'CONNECTED' });
+        const listReq: ConnectionsRes = await connections({
+          page: currectPages.connections + 1,
+          'filter.status': 'CONNECTED',
+        });
         setCurrectPages({ ...currectPages, connections: currectPages.connections + 1 });
         setConnectionList({
           ...connectionList,
@@ -102,8 +105,8 @@ export const useConnectionsShared = () => {
       sent: async () => {
         const listReq: ConnectionsRes = await connections({
           page: currectPages.sent + 1,
-          status: 'PENDING',
-          requester_id: identity?.id,
+          'filter.status': 'PENDING',
+          'filter.requester_id': identity?.id,
         });
         setCurrectPages({ ...currectPages, sent: currectPages.sent + 1 });
         setSentRequestsList({
@@ -115,8 +118,8 @@ export const useConnectionsShared = () => {
       received: async () => {
         const listReq: ConnectionsRes = await connections({
           page: currectPages.received + 1,
-          status: 'PENDING',
-          requested_id: identity?.id,
+          'filter.status': 'PENDING',
+          'filter.requested_id': identity?.id,
         });
         setCurrectPages({ ...currectPages, received: currectPages.received + 1 });
         setReceivedRequestsList({

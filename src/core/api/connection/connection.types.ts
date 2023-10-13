@@ -6,9 +6,9 @@ export interface ConnectionsRes extends PaginateRes {
 }
 
 export interface ConnectionReq extends PaginateReq {
-  status?: ConnectStatus;
-  requester_id?: string;
-  requested_id?: string;
+  'filter.status'?: ConnectStatus;
+  'filter.requester_id'?: string;
+  'filter.requested_id'?: string;
 }
 
 export interface Connection {
