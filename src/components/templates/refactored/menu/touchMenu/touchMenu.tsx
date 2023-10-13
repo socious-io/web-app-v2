@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, menuList } from 'src/components/templates/refactored/menu/menu.services';
+import { CurrentIdentity } from 'src/core/api';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store';
 
 import css from './touchMenu.module.scss';
@@ -11,7 +11,7 @@ const TouchMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 

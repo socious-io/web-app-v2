@@ -1,19 +1,20 @@
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
 import { Search } from 'src/components/atoms/search/search';
+import { OrgMeta, UserMeta } from 'src/core/api';
+import { useNetworkShared } from 'src/pages/network/network.shared';
 
 import css from './mobile.module.scss';
-import { useNetworkShared } from '../network.shared';
 
 export const Mobile: React.FC = () => {
   const { navigateNetwork, identity } = useNetworkShared();
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
+  const avatarImg = (identity?.meta as UserMeta).avatar || (identity?.meta as OrgMeta).image || '';
 
   return (
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.menu}>
-          <Avatar size="2.25rem" type={identity?.type} img={avatarImg} />
+          {identity && <Avatar size="2.25rem" type={identity.type} img={avatarImg} />}
           <Search placeholder="Search network" />
           <div>
             <img className={css.logo} src="icons/chat-white.svg" />
