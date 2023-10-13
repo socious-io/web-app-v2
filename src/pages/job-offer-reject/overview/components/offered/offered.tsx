@@ -32,7 +32,6 @@ export const Offered = (props: OfferedProps): JSX.Element => {
   }
 
   function onMessageClick(id: string) {
-    navigate(`/jobs/created/${resolver?.jobOverview.id}`);
     navigate(`/chats/new/${id}`);
   }
 

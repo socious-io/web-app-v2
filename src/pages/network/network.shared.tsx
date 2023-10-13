@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { IdentityReq } from 'src/core/types';
+import { CurrentIdentity } from 'src/core/api';
 import { RootState } from 'src/store';
 
 export const useNetworkShared = () => {
   const navigate = useNavigate();
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
   function navigateNetwork(path: string) {
