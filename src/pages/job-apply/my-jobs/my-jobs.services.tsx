@@ -7,13 +7,13 @@ import { toRelativeTime } from 'src/core/relative-time';
 import { Pagination } from 'src/core/types';
 
 export async function getEndedList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
-  const missions = await userMissions('', { status: 'ACTIVE', page: payload.page });
+  const missions = await userMissions('', { status: 'COMPLETE,CONFIRMED', page: payload.page });
   const adopted = endedListToJobCardList(missions.items);
   return { ...missions, items: adopted };
 }
 
 export async function getOnGoingList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
-  const missions = await userMissions('', { status: 'COMPLETE,CONFIRMED', page: payload.page });
+  const missions = await userMissions('', { status: 'ACTIVE', page: payload.page });
   const adopted = onGoingListToJobCardList(missions.items);
   return { ...missions, items: adopted };
 }

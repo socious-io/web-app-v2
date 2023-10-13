@@ -4,6 +4,7 @@ import { identities, handleError, updateProfile, UserMeta } from 'src/core/api';
 import { useForm } from 'src/core/form';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
+
 import { formModel } from './sign-up-user-complete.form';
 import { changePasswordDirect } from './sign-up-user-complete.services';
 
@@ -14,6 +15,7 @@ export const useSignUpUserCompleteShared = () => {
 
   async function setProfileName() {
     const currentIdentities = await identities();
+    console.log('identitieesss', currentIdentities);
     dispatch(setIdentityList(identities));
 
     const meta = currentIdentities.find((identity) => identity.primary)?.meta as UserMeta;
@@ -23,16 +25,21 @@ export const useSignUpUserCompleteShared = () => {
       first_name: form.controls.firstName.value as string,
       last_name: form.controls.lastName.value as string,
     };
+    console.log('before update', payload);
     updateProfile(payload);
   }
 
   async function onSubmit() {
+    console.log('called');
     const password = form.controls.password.value as string;
     const path = await nonPermanentStorage.get('savedLocation');
-
+    console.log(path);
     changePasswordDirect(password)
       .then(setProfileName)
-      .then(() => navigate(path ? path : '/sign-up/user/welcome'))
+      .then(() => {
+        console.log('reached navigate ', path);
+        navigate(path ? path : '/sign-up/user/welcome');
+      })
       .catch(handleError());
   }
 
