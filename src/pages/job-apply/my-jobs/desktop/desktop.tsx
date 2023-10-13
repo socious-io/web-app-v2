@@ -154,7 +154,7 @@ export const Desktop: React.FC = () => {
     <TwoColumns>
       <div className={css.leftContainer}>
         <ProfileCard />
-        <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
+        <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         <CardMenu title="My Jobs" list={JobsMenuList} />
       </div>
       <div className={css.rightContainer}>

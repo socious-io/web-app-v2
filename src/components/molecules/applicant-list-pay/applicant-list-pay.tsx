@@ -1,3 +1,4 @@
+import { offer, offerByApplicant } from 'src/core/api';
 import Dapp from 'src/dapp';
 
 import css from './applicant-list-pay.module.scss';
@@ -22,6 +23,7 @@ const statuses = {
 };
 
 export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
+  console.log('end hi', props);
   const confirmBtn = (id: string, escrowId?: string) => (
     <div onClick={() => props.onConfirm?.(id, escrowId)} className={css.footerItem}>
       <img src="/icons/user-accept-blue.svg" />
@@ -36,7 +38,26 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
     </div>
   );
 
+  const reHireBtn = (applicant: Applicant) => (
+    <div
+      onClick={() => {
+        console.log(applicant);
+        offer('f096ffaf-3924-4913-8ac9-f4fb01c77004', applicant.user_id, {
+          offer_message: 'khkuhuj                          ',
+          assignment_total: applicant.totalHour,
+          payment_mode: "FIAT",
+        });
+        console.log('all data', props.id, props);
+      }}
+      className={css.footerItem}
+    >
+      <img src="/icons/rehire.svg" width={'25px'} />
+      <div className={css.footerLabel}>Hire again</div>
+    </div>
+  );
+
   const applicantJSX = (applicant: Applicant) => {
+    console.log(applicant);
     return (
       <div key={applicant.id} className={css.applicantContainer}>
         <ProfileView
@@ -83,6 +104,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             feedbackBtn(applicant.id, applicant.status),
             applicant.showFeedback && !!props?.onFeedback && applicant?.user_feedback === null,
           )}
+          {printWhen(reHireBtn(applicant), true)}
           <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>
