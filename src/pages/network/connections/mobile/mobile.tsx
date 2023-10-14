@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
@@ -6,11 +7,14 @@ import { Header } from 'src/components/atoms/header/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
 import { printWhen } from 'src/core/utils';
+import {
+  connectionListAdaptor,
+  receivedRequestsAdaptor,
+  sentRequestsAdaptor,
+} from 'src/pages/network/connections/connections.service';
+import { useConnectionsShared } from 'src/pages/network/connections/connections.shared';
 
 import css from './mobile.module.scss';
-import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
-import { useConnectionsShared } from '../connections.shared';
-import { useNavigate } from 'react-router-dom';
 
 export const Mobile: React.FC = () => {
   const navigate = useNavigate();

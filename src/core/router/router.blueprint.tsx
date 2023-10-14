@@ -470,6 +470,48 @@ export const blueprint: RouteObject[] = [
                 },
                 loader: () => notificationSettings(),
               },
+              {
+                path: ':id',
+                async lazy() {
+                  const { DeepLinks } = await import('src/pages/notifications/deepLinks/index');
+                  return {
+                    Component: DeepLinks,
+                  };
+                },
+              },
+            ],
+          },
+          {
+            path: 'network',
+            children: [
+              {
+                path: '',
+                async lazy() {
+                  const { Network } = await import('src/pages/network/network.container');
+                  return {
+                    Component: Protect(Network),
+                  };
+                },
+              },
+              {
+                path: 'connections',
+                async lazy() {
+                  const { Connections } = await import('src/pages/network/connections/connections.container');
+                  return {
+                    Component: Protect(Connections),
+                  };
+                },
+              },
+              {
+                path: 'followings',
+                async lazy() {
+                  const { Followings } = await import('src/pages/network/followings/followings.container');
+                  return {
+                    Component: Protect(Followings),
+                  };
+                },
+                loader: () => getFollowings({ page: 1 }),
+              },
             ],
           },
           {
@@ -927,7 +969,6 @@ function Protect<T extends {}>(Component: ComponentType<T>): ComponentType<T> {
 
 function DefaultRoute(): JSX.Element {
   const status = useSelector((state: RootState) => state.identity.status);
-  console.log(status);
   if (status === 'succeeded') return <Navigate to="/jobs" />;
 
   if (status === 'loading') return <div></div>;

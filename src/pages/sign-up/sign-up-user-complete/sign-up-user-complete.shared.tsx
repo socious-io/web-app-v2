@@ -15,9 +15,7 @@ export const useSignUpUserCompleteShared = () => {
 
   async function setProfileName() {
     const currentIdentities = await identities();
-    console.log('identitieesss', currentIdentities);
-    dispatch(setIdentityList(identities));
-
+    dispatch(setIdentityList(currentIdentities));
     const meta = currentIdentities.find((identity) => identity.primary)?.meta as UserMeta;
 
     const payload = {
@@ -25,20 +23,16 @@ export const useSignUpUserCompleteShared = () => {
       first_name: form.controls.firstName.value as string,
       last_name: form.controls.lastName.value as string,
     };
-    console.log('before update', payload);
     updateProfile(payload);
   }
 
   async function onSubmit() {
-    console.log('called');
     const password = form.controls.password.value as string;
     const path = await nonPermanentStorage.get('savedLocation');
-    console.log(path);
     changePasswordDirect(password)
       .then(setProfileName)
       .then(() => {
-        console.log('reached navigate ', path);
-        navigate(path ? path : '/sign-up/user/welcome');
+        navigate(path || '/sign-up/user/welcome');
       })
       .catch(handleError());
   }
