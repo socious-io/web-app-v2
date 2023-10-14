@@ -470,6 +470,15 @@ export const blueprint: RouteObject[] = [
                 },
                 loader: () => notificationSettings(),
               },
+              {
+                path: ':id',
+                async lazy() {
+                  const { DeepLinks } = await import('src/pages/notifications/deepLinks/index');
+                  return {
+                    Component: DeepLinks,
+                  };
+                },
+              },
             ],
           },
           {
@@ -960,7 +969,6 @@ function Protect<T extends {}>(Component: ComponentType<T>): ComponentType<T> {
 
 function DefaultRoute(): JSX.Element {
   const status = useSelector((state: RootState) => state.identity.status);
-  console.log(status);
   if (status === 'succeeded') return <Navigate to="/jobs" />;
 
   if (status === 'loading') return <div></div>;
