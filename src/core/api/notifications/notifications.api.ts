@@ -1,4 +1,4 @@
-import { NotificationsRes, NotificationsSettings } from './notifications.types';
+import { NotificationsRes, NotificationsSettings, Notification } from './notifications.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq } from '../types';
 
