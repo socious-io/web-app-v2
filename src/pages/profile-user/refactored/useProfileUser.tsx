@@ -95,13 +95,13 @@ export const useProfileUser = () => {
 
   function gotToDesktopAchievement() {
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate(`/achievements/d?proofspace_connect_id=${connectId}`);
+    navigate(`/achievements?proofspace_connect_id=${connectId}`);
   }
 
   function gotToMobileAchievement() {
     hapticsImpactLight();
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate(`/achievements/m?proofspace_connect_id=${connectId}`);
+    navigate(`/achievements?proofspace_connect_id=${connectId}`);
   }
 
   async function onConnect(id: string) {

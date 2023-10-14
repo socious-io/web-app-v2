@@ -38,6 +38,7 @@ export const Desktop: React.FC = () => {
     navigateToJobDetail,
   } = useMyJobShared();
   const [myJobsMode, setMyJobsMode] = useState<MyJobs>(defaultTab);
+  
 
   const NetworkMenuList = [
     { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
