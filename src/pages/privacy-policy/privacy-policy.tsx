@@ -1,11 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+
 import css from './privacy-policy.module.scss';
 
 export const PrivacyPolicy = () => {
+  const navigate = useNavigate();
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div onClick={() => history.back()}>
-          <img src="/icons/chevron-left.svg" />
+        <div onClick={() => navigate(-1)}>
+          <img src="/icons/chevron-left.svg" alt="" />
         </div>
       </div>
       <span>

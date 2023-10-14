@@ -3,14 +3,15 @@ import { CurrentIdentity } from 'src/core/api';
 
 import { currentIdentities } from '../thunks/identity.thunks';
 
+const initState = {
+  entities: [],
+  status: 'idle',
+  error: null,
+  avatarImage: '',
+};
 export const identitySlice = createSlice({
   name: 'identity',
-  initialState: {
-    entities: [],
-    status: 'idle',
-    error: null,
-    avatarImage: '',
-  } as {
+  initialState: initState as {
     entities: CurrentIdentity[];
     status: string;
     error: any;
@@ -19,6 +20,7 @@ export const identitySlice = createSlice({
   reducers: {
     setIdentityList: (state, action) => {
       state.entities = action.payload;
+      if (action.payload.length) state.status = 'succeeded';
       const identity = state.entities.find((identity) => identity.current);
       if (identity && identity.meta) {
         state.avatarImage =
@@ -28,6 +30,9 @@ export const identitySlice = createSlice({
             ? identity.meta.image || ''
             : '';
       } else state.avatarImage = '';
+    },
+    removeIdentityList: () => {
+      return initState;
     },
   },
   extraReducers: (builder) => {
@@ -46,4 +51,4 @@ export const identitySlice = createSlice({
   },
 });
 
-export const { setIdentityList } = identitySlice.actions;
+export const { setIdentityList, removeIdentityList } = identitySlice.actions;

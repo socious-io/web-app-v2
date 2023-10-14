@@ -1,7 +1,7 @@
-import { IdentityReq } from 'src/core/types';
+import { CurrentIdentity } from 'src/core/api';
 
 export type SwitchAccountProps = {
   open: boolean;
-  identity?: IdentityReq;
+  identity?: CurrentIdentity;
   onClose: () => void;
 };

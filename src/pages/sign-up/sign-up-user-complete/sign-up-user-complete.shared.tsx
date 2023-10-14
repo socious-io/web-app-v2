@@ -4,6 +4,7 @@ import { identities, handleError, updateProfile, UserMeta } from 'src/core/api';
 import { useForm } from 'src/core/form';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
+
 import { formModel } from './sign-up-user-complete.form';
 import { changePasswordDirect } from './sign-up-user-complete.services';
 
@@ -14,8 +15,7 @@ export const useSignUpUserCompleteShared = () => {
 
   async function setProfileName() {
     const currentIdentities = await identities();
-    dispatch(setIdentityList(identities));
-
+    dispatch(setIdentityList(currentIdentities));
     const meta = currentIdentities.find((identity) => identity.primary)?.meta as UserMeta;
 
     const payload = {
@@ -29,10 +29,11 @@ export const useSignUpUserCompleteShared = () => {
   async function onSubmit() {
     const password = form.controls.password.value as string;
     const path = await nonPermanentStorage.get('savedLocation');
-
     changePasswordDirect(password)
       .then(setProfileName)
-      .then(() => navigate(path ? path : '/sign-up/user/welcome'))
+      .then(() => {
+        navigate(path || '/sign-up/user/welcome');
+      })
       .catch(handleError());
   }
 

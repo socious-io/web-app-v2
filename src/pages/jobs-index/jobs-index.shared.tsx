@@ -7,7 +7,7 @@ import { RootState } from 'src/store';
 import { getOrganizationJobs } from './jobs-index.service';
 
 export const useJobsIndexShared = () => {
-  const { data } = useLoaderData();
+  const data = useLoaderData();
   const [jobList, setJobList] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1 });
   const navigate = useNavigate();

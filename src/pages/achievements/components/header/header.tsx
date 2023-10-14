@@ -49,10 +49,10 @@ export const Header = (props: HeaderProps): JSX.Element => {
         marginTop="3.5rem"
       />
 
-      {printWhen(claimPointsSentenceJSX, connectId === null)}
-      {printWhen(claimNowBtnJSX, connectId === null)}
-      {printWhen(checkRewardBtnJSX, connectId !== null)}
-      {printWhen(whatIsImpactPointsJSX, connectId !== null)}
+      {printWhen(claimPointsSentenceJSX, proofspace_connect_id === null)}
+      {printWhen(claimNowBtnJSX, proofspace_connect_id === null)}
+      {printWhen(checkRewardBtnJSX, proofspace_connect_id !== null)}
+      {printWhen(whatIsImpactPointsJSX, proofspace_connect_id !== null)}
     </div>
   );
 };

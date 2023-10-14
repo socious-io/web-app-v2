@@ -290,7 +290,9 @@ export const Search = () => {
         onClose={() => setOpenSocialSkillsModal(false)}
       />
       <SkillsFilter
-        selectedSkills={selectedSkills}
+        selectedSkills={selectedSkills.map((item) => {
+          return item.value;
+        })}
         onSubmit={onSkillsChange}
         open={openSkillsModal}
         onClose={() => setOpenSkillsModal(false)}

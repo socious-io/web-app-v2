@@ -39,7 +39,12 @@ import {
   getPendingApplicants,
 } from 'src/pages/job-apply/my-jobs/my-jobs.services';
 import { jobOfferRejectLoader } from 'src/pages/job-offer-reject/job-offer-reject.services';
+import { receivedOfferLoader } from 'src/pages/offer-received/offer-received.services';
+import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
+import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { RootState } from 'src/store';
+
+import { endpoint } from '../endpoints';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
@@ -398,6 +403,51 @@ export const blueprint: RouteObject[] = [
             ],
           },
           {
+            path: 'profile/organizations',
+            children: [
+              {
+                path: ':id',
+                children: [
+                  {
+                    path: 'view',
+                    loader: async ({ params }) => {
+                      const user = profileOrganizationPageLoader({ params });
+                      return user;
+                    },
+                    async lazy() {
+                      const { profileOrg } = await import('src/pages/profile-organization/refactored/profileOrg');
+                      return { Component: profileOrg };
+                    },
+                  },
+                  {
+                    path: 'edit',
+                    loader: async ({ params }) => {
+                      const user = profileOrganizationPageLoader({ params });
+                      return user;
+                    },
+                    async lazy() {
+                      const { ProfileOrganizationEdit } = await import(
+                        'src/pages/profile-organization-edit/profile-organization-edit'
+                      );
+                      return { Component: ProfileOrganizationEdit };
+                    },
+                  },
+                  {
+                    path: 'jobs',
+                    loader: async ({ params }) => {
+                      const user = profileOrganizationPageLoader({ params });
+                      return user;
+                    },
+                    async lazy() {
+                      const { JobsIndexContainer } = await import('../../pages/jobs-index/jobs-index.container');
+                      return { Component: JobsIndexContainer };
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
             path: 'notifications',
             children: [
               {
@@ -432,6 +482,39 @@ export const blueprint: RouteObject[] = [
             ],
           },
           {
+            path: 'network',
+            children: [
+              {
+                path: '',
+                async lazy() {
+                  const { Network } = await import('src/pages/network/network.container');
+                  return {
+                    Component: Protect(Network),
+                  };
+                },
+              },
+              {
+                path: 'connections',
+                async lazy() {
+                  const { Connections } = await import('src/pages/network/connections/connections.container');
+                  return {
+                    Component: Protect(Connections),
+                  };
+                },
+              },
+              {
+                path: 'followings',
+                async lazy() {
+                  const { Followings } = await import('src/pages/network/followings/followings.container');
+                  return {
+                    Component: Protect(Followings),
+                  };
+                },
+                loader: () => getFollowings({ page: 1 }),
+              },
+            ],
+          },
+          {
             path: 'wallet',
             async lazy() {
               const { Wallet } = await import('src/pages/wallet/wallet.container');
@@ -448,6 +531,69 @@ export const blueprint: RouteObject[] = [
               ];
               const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
               return { missionsList, stripeProfileRes, jpStripeProfileRes };
+            },
+          },
+          {
+            path: '/payment/:id',
+            children: [
+              {
+                path: 'add-card',
+                loader: async () => {
+                  const [cardInfo] = await Promise.all([getCreditCardInfo()]);
+                  return cardInfo;
+                },
+                async lazy() {
+                  const { CreditCard } = await import('src/pages/payment/credit-card/credit-card.container');
+                  return {
+                    Component: Protect(CreditCard),
+                  };
+                },
+              },
+              {
+                path: 'edit-card/:id',
+                loader: async ({ params }) => {
+                  const [cardInfo] = await Promise.all([getCreditCardInfoById(params.id)]);
+                  return cardInfo;
+                },
+                async lazy() {
+                  const { CreditCard } = await import('src/pages/payment/credit-card/credit-card.container');
+                  return {
+                    Component: Protect(CreditCard),
+                  };
+                },
+              },
+              {
+                path: '',
+                loader: async ({ params }) => {
+                  const { offer } = await receivedOfferLoader(params);
+                  const cardInfo = await getCreditCardInfo(offer.currency === 'JPY');
+                  return { offer, cardInfo };
+                },
+                async lazy() {
+                  const { Payment } = await import('src/pages/payment/payment.container');
+                  return {
+                    Component: Protect(Payment),
+                  };
+                },
+              },
+            ],
+          },
+          {
+            path: 'team/:id',
+            async lazy() {
+              const { Team } = await import('src/pages/team/team.container');
+
+              return {
+                Component: Team,
+              };
+            },
+            loader: async ({ params }) => {
+              const requests = [
+                endpoint.get.members['org_id'](params.id, { page: 1 }),
+                endpoint.get.follows['followings']({ page: 1, name: '', type: 'users' }),
+              ];
+              const [members, followings] = await Promise.all(requests);
+              return { members, followings };
             },
           },
           {
@@ -575,7 +721,7 @@ export const blueprint: RouteObject[] = [
                     loader: profile,
                     async lazy() {
                       const { ProfileUserEditContainer } = await import(
-                        'src//pages/profile-user-edit/profile-user-edit.container'
+                        'src/pages/profile-user-edit/profile-user-edit.container'
                       );
                       return {
                         Component: ProfileUserEditContainer,
@@ -729,6 +875,47 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
+    path: 'change-password',
+    async lazy() {
+      const { ChangePasswordContainer } = await import('src/pages/change-password/change-password.container');
+      return {
+        Component: ChangePasswordContainer,
+      };
+    },
+  },
+  {
+    path: 'delete-profile',
+    children: [
+      {
+        path: 'delete',
+        async lazy() {
+          const { Delete } = await import('src/pages/delete-profile/delete/delete');
+          return {
+            Component: Delete,
+          };
+        },
+      },
+      {
+        path: 'password',
+        async lazy() {
+          const { Password } = await import('src/pages/delete-profile/password/password');
+          return {
+            Component: Password,
+          };
+        },
+      },
+      {
+        path: 'confirm',
+        async lazy() {
+          const { Confirm } = await import('src/pages/delete-profile/confirm/confirm');
+          return {
+            Component: Confirm,
+          };
+        },
+      },
+    ],
+  },
+  {
     path: '/intro',
     async lazy() {
       const { Intro } = await import('src/pages/intro/intro');
@@ -743,6 +930,24 @@ export const blueprint: RouteObject[] = [
       const { SignInContainer } = await import('src/pages/sign-in/sign-in-container');
       return {
         Component: SignInContainer,
+      };
+    },
+  },
+  {
+    path: 'privacy-policy',
+    async lazy() {
+      const { PrivacyPolicy } = await import('src/pages/privacy-policy/privacy-policy');
+      return {
+        Component: PrivacyPolicy,
+      };
+    },
+  },
+  {
+    path: 'terms-conditions',
+    async lazy() {
+      const { TermsConditions } = await import('src/pages/terms-conditions/terms-conditions');
+      return {
+        Component: TermsConditions,
       };
     },
   },
@@ -764,7 +969,6 @@ function Protect<T extends {}>(Component: ComponentType<T>): ComponentType<T> {
 
 function DefaultRoute(): JSX.Element {
   const status = useSelector((state: RootState) => state.identity.status);
-  console.log(status);
   if (status === 'succeeded') return <Navigate to="/jobs" />;
 
   if (status === 'loading') return <div></div>;

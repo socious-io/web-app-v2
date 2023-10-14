@@ -12,7 +12,6 @@ export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
   const { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore } = useNotificationsShared();
   const { isLoggedIn } = useAuth();
-
   return (
     <TwoColumnCursor visibleSidebar={isLoggedIn}>
       <Card className={css.rightContainer}>
