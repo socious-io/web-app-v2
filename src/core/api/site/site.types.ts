@@ -1,3 +1,5 @@
+import { PaginateRes } from 'src/core/api';
+
 export interface SearchReq {
   type: 'projects' | 'users' | 'posts' | 'organizations';
   q: string;
@@ -56,4 +58,14 @@ export interface OrgMeta {
 export interface CurrentIdentity extends Identity {
   current: boolean;
   primary: boolean;
+}
+
+export interface Skill {
+  id: string;
+  name: string;
+  created_at: Date;
+}
+
+export interface SkillRes extends PaginateRes {
+  items: Skill[];
 }

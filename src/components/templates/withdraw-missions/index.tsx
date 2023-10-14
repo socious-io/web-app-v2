@@ -40,7 +40,7 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
       {printWhen(
         <>
           <span className={css.title}>Transaction date</span>
-          <div className={css.rowItem}>{escrow?.released_at!.toLocaleString()}</div>
+          <div className={css.rowItem}>{escrow?.released_at?.toLocaleString()}</div>
         </>,
         escrow?.released_at != null,
       )}

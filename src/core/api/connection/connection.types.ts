@@ -1,8 +1,14 @@
 import { Identity } from '../site/site.types';
-import { ConnectStatus, PaginateRes } from '../types';
+import { ConnectStatus, PaginateReq, PaginateRes } from '../types';
 
 export interface ConnectionsRes extends PaginateRes {
   items: Connection[];
+}
+
+export interface ConnectionReq extends PaginateReq {
+  'filter.status'?: ConnectStatus;
+  'filter.requester_id'?: string;
+  'filter.requested_id'?: string;
 }
 
 export interface Connection {
@@ -17,8 +23,8 @@ export interface Connection {
   created_at: Date;
   following: boolean;
   follower: boolean;
-  requested: any;
-  requester: any;
+  requested: Identity;
+  requester: Identity;
 }
 
 export interface ConnectRequest {

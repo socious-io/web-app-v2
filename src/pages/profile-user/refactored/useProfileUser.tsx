@@ -8,16 +8,10 @@ import { isTouchDevice } from 'src/core/device-type-detector';
 import { endpoint } from 'src/core/endpoints';
 import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { ConnectStatus, IdentityReq } from 'src/core/types';
+import { ConnectStatus } from 'src/core/types';
 import { RootState } from 'src/store';
 
-import {
-  getConnectStatus,
-  getUserMissions,
-  sendRequestConnection,
-  openToWorkCall,
-  openToVolunteerCall,
-} from './profileUser.services';
+import { getConnectStatus, sendRequestConnection, openToWorkCall, openToVolunteerCall } from './profileUser.services';
 
 export const useProfileUser = () => {
   const navigate = useNavigate();
@@ -101,13 +95,13 @@ export const useProfileUser = () => {
 
   function gotToDesktopAchievement() {
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate(`/achievements/d?proofspace_connect_id=${connectId}`);
+    navigate(`/achievements?proofspace_connect_id=${connectId}`);
   }
 
   function gotToMobileAchievement() {
     hapticsImpactLight();
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate(`/achievements/m?proofspace_connect_id=${connectId}`);
+    navigate(`/achievements?proofspace_connect_id=${connectId}`);
   }
 
   async function onConnect(id: string) {

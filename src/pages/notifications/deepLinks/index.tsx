@@ -13,7 +13,7 @@ export const DeepLinks = () => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
-  const identities = useSelector((state: RootState) => state.identity.entities);
+  const status = useSelector((state: RootState) => state.identity.status);
   const { id } = useParams();
 
   async function getNotificationData() {
@@ -71,15 +71,14 @@ export const DeepLinks = () => {
   }
 
   useEffect(() => {
-    if (!identities.length) {
+    if (status === 'failed') {
       const path = location.pathname;
       nonPermanentStorage.set({ key: 'savedLocation', value: path });
       navigate('/sign-in');
-    }
-    if (identities.length > 0) {
+    } else if (status === 'succeeded') {
       getNotificationData();
     }
-  }, [identities]);
+  }, [status]);
 
   return <div></div>;
 };
