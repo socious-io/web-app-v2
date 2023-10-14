@@ -1,4 +1,3 @@
-import { offer, offerByApplicant } from 'src/core/api';
 import Dapp from 'src/dapp';
 
 import css from './applicant-list-pay.module.scss';
@@ -23,7 +22,6 @@ const statuses = {
 };
 
 export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
-  console.log('end hi', props);
   const confirmBtn = (id: string, escrowId?: string) => (
     <div onClick={() => props.onConfirm?.(id, escrowId)} className={css.footerItem}>
       <img src="/icons/user-accept-blue.svg" />
@@ -41,13 +39,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
   const reHireBtn = (applicant: Applicant) => (
     <div
       onClick={() => {
-        console.log(applicant);
-        offer('f096ffaf-3924-4913-8ac9-f4fb01c77004', applicant.user_id, {
-          offer_message: 'khkuhuj                          ',
-          assignment_total: applicant.totalHour,
-          payment_mode: "FIAT",
-        });
-        console.log('all data', props.id, props);
+        props.onRehire && props.onRehire(applicant.id);
       }}
       className={css.footerItem}
     >
@@ -57,7 +49,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
   );
 
   const applicantJSX = (applicant: Applicant) => {
-    console.log(applicant);
+    console.log('applicant', applicant);
     return (
       <div key={applicant.id} className={css.applicantContainer}>
         <ProfileView
