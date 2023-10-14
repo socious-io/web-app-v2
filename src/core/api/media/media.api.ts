@@ -1,11 +1,11 @@
 import { PostMediaUploadRes } from './media.types';
-import { get } from '../http';
+import { get, post } from '../http';
 
-export async function getMedia(id: string): Promise<Media> {
-  return (await get<Media>(`/media/${id}`)).data;
+export async function getMedia(id: string): Promise<PostMediaUploadRes> {
+  return (await get<PostMediaUploadRes>(`/media/${id}`)).data;
 }
 
-export async function uploadMedia(file: File): Promise<Media> {
+export async function uploadMedia(file: File): Promise<PostMediaUploadRes> {
   const formData = new FormData();
   formData.append('file', file);
   const header = {
@@ -13,5 +13,5 @@ export async function uploadMedia(file: File): Promise<Media> {
       'Content-Type': 'multipart/form-data',
     },
   };
-  return (await post<Media>('/media/upload', formData, header)).data;
+  return (await post<PostMediaUploadRes>('/media/upload', formData, header)).data;
 }
