@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { endpoint } from 'src/core/endpoints';
 import { IdentityReq, MemberIdentity, Pagination, UserType } from 'src/core/types';
 import { RootState } from 'src/store';
 
 import { convertFollowingsToContactList } from './team.service';
 import { Resolver } from './team.type';
-import { useLoaderData, useNavigate } from 'react-router-dom';
 
 export const useTeamShared = () => {
   const navigate = useNavigate();
-  const { members, followings } = (useLoaderData().ownData as Resolver) || {};
+  const { members, followings } = (useLoaderData() as Resolver) || {};
   const identity = useSelector<RootState, IdentityReq>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
