@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { ApplicantListPay } from 'src/components/molecules/applicant-list-pay/applicant-list-pay';
+import { offerByApplicant } from 'src/core/api';
 import Dapp from 'src/dapp';
 import { useAlert } from 'src/hooks/use-alert';
 import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
@@ -103,7 +104,19 @@ export const Hired = (props: HiredProps): JSX.Element => {
       });
     }
   }
-
+  function onRehireClick(projectId: string) {
+    const selected = props.endHiredList.items.find((item) => item.id === projectId);
+    if (selected) {
+      offerByApplicant(selected.applicant.id, {
+        offer_message: selected.offer.offer_message,
+        assignment_total: selected.offer.total_hours,
+        payment_mode: selected.offer.payment_mode,
+        crypto_currency_address: selected.offer.crypto_currency_address,
+      });
+    }
+    dialog.alert({ title: 'Confirmed', message: 'You successfully sent an offer' });
+    navigate(`/jobs`);
+  }
   return (
     <div className={css.container}>
       <Accordion id="hired" title={`Hired (${hiredList.total_count})`}>
@@ -120,6 +133,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
           list={missionToApplicantListPayAdaptor(endHiredList.items)}
           onMessageClick={onMessageClick}
           onFeedback={(id, status) => setSelectedIdFeedback({ id, status })}
+          onRehire={onRehireClick}
         />
       </Accordion>
       <FeedbackModal
