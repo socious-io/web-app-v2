@@ -22,7 +22,6 @@ function hasReachedLimit(list: string[], min?: number, max?: number): boolean {
 
 export const CategoriesClickable = (props: CategoriesClickableProps): JSX.Element => {
   const { list, clickable = false, selected, onChange, ...rest } = props;
-  console.log('test log CategoriesClickable', list);
   const [selectedList, setSelectedList] = useState<string[]>([]);
 
   useEffect(() => {

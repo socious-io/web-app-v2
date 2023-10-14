@@ -15,29 +15,24 @@ export const Offered = (props: OfferedProps): JSX.Element => {
   const {
     jobOverview: { payment_type },
   } = resolver;
-
   async function onHire(offerId: string) {
     if (payment_type === 'PAID' && !props.approved.items[0]?.escrow) {
-      if (isTouchDevice()) {
-        navigate(`/payment/${offerId}`);
-      } else {
-        navigate(`/d/payment/${offerId}`);
-      }
+      navigate(`/payment/${offerId}`);
     } else {
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => navigate(-1));
+      endpoint.post.offers['{offer_id}/hire'](offerId).then(() =>
+        navigate(`/jobs/created/${resolver?.jobOverview.id}`),
+      );
     }
   }
 
   async function onReject(offerId: string) {
-    return endpoint.post.offers['{offer_id}/cancel'](offerId).then(() => navigate(-1));
+    return endpoint.post.offers['{offer_id}/cancel'](offerId).then(() =>
+      navigate(`/jobs/created/${resolver?.jobOverview.id}`),
+    );
   }
 
   function onMessageClick(id: string) {
-    if (isTouchDevice()) {
-      navigate(`/chats/new/${id}`);
-    } else {
-      navigate(`/d/chats/new/${id}`);
-    }
+    navigate(`/chats/new/${id}`);
   }
 
   return (

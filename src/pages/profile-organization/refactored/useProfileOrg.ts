@@ -14,6 +14,7 @@ import { ProfileReq, Resolver } from './profileOrg.types';
 export const useProfileOrg = () => {
   const navigate = useNavigate();
   const resolver = useLoaderData() as Resolver;
+  console.log('user data', resolver);
   const [organization, setOrganization] = useState<ProfileReq>(resolver.user);
   const socialCauses = socialCausesToCategory(resolver.user?.social_causes);
   const skills = skillsToCategory(resolver.user.skills);
