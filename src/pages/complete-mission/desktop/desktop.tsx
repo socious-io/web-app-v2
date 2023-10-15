@@ -96,7 +96,7 @@ export const Desktop = (): JSX.Element => {
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <ProfileCard />
-          <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
+          <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         </div>
         <Card className={css.rightContainer}>
           <div>

@@ -36,7 +36,20 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
     </div>
   );
 
+  const reHireBtn = (applicant: Applicant) => (
+    <div
+      onClick={() => {
+        props.onRehire && props.onRehire(applicant.id);
+      }}
+      className={css.footerItem}
+    >
+      <img src="/icons/rehire.svg" width={'25px'} />
+      <div className={css.footerLabel}>Hire again</div>
+    </div>
+  );
+
   const applicantJSX = (applicant: Applicant) => {
+    console.log('applicant', applicant);
     return (
       <div key={applicant.id} className={css.applicantContainer}>
         <ProfileView
@@ -83,6 +96,7 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             feedbackBtn(applicant.id, applicant.status),
             applicant.showFeedback && !!props?.onFeedback && applicant?.user_feedback === null,
           )}
+          {printWhen(reHireBtn(applicant), true)}
           <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>

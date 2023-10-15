@@ -14,7 +14,7 @@ export function jobToApplicantListAdaptor(applicant: Offer[]): Applicant[] {
       image: item.recipient.meta.avatar || '',
       profileLink: '',
       applyDate: isoToStandard(item.created_at),
-      coverLetter: item.applicant.cover_letter,
+      coverLetter: item.applicant?.cover_letter,
       user_id: item.recipient.meta.id,
     };
   });
