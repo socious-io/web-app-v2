@@ -1,13 +1,7 @@
 import { Message as MessageRes } from 'src/components/atoms/message/message.types';
 import { createChatMessage, Message, OrgMeta, Participant, UserMeta } from 'src/core/api';
-import { post } from 'src/core/http';
-import { PostMessagePayload, PostMessageResp } from 'src/core/types';
 
 import { OnPostMessageParams } from './message-detail.types';
-
-export async function postMessage(payload: PostMessagePayload): Promise<PostMessageResp> {
-  return post(`chats/${payload.id}/messages`, { text: payload.text }).then(({ data }) => data);
-}
 
 export async function onPostMessage(payload: OnPostMessageParams): Promise<MessageRes> {
   const resp = await createChatMessage(payload.id, { text: payload.text });

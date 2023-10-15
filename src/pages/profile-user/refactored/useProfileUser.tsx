@@ -3,10 +3,9 @@ import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { Badges, CurrentIdentity, Mission, MissionsRes, User, userMissions } from 'src/core/api';
+import { Badges, CurrentIdentity, MissionsRes, User } from 'src/core/api';
+import { follow as followApi, unfollow as unfollowApi } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { endpoint } from 'src/core/endpoints';
-import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { ConnectStatus } from 'src/core/types';
 import { RootState } from 'src/store';
@@ -51,7 +50,7 @@ export const useProfileUser = () => {
     }
   }
 
-  function updateUser(params: PostUpdateProfileResp) {
+  function updateUser(params: User) {
     setUser((prev) => ({
       ...prev,
       avatar: params.avatar,
@@ -86,11 +85,11 @@ export const useProfileUser = () => {
   }
 
   async function follow(id: string) {
-    return endpoint.post.follows['{identity_id}'](id).then(() => setFollowing(true));
+    return followApi(id).then(() => setFollowing(true));
   }
 
   async function unfollow(id: string) {
-    return endpoint.post.follows['{identity_id}/unfollow'](id).then(() => setFollowing(false));
+    return unfollowApi(id).then(() => setFollowing(false));
   }
 
   function gotToDesktopAchievement() {

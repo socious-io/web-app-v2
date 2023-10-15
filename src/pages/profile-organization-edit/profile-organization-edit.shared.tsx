@@ -3,10 +3,8 @@ import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { identities } from 'src/core/api';
+import { identities, updateOrganization } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
-import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 import { useForm } from 'src/core/form';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { removedEmptyProps } from 'src/core/utils';
@@ -85,10 +83,11 @@ export const useProfileOrganizationEditShared = () => {
       try {
         const rawPayload = getFormValues(form);
         const payload = removedEmptyProps(rawPayload);
-        await endpoint.post.organizations['orgs/update/{org_id}'](organization.id, {
+        await updateOrganization(organization.id, {
           ...payload,
           shortname: organization.shortname,
         });
+
         await updateIdentityList();
         navigate('/jobs');
       } catch (err) {

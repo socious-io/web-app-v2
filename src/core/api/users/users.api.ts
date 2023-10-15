@@ -1,5 +1,5 @@
 import { post, get } from 'src/core/api/http';
-import { ApplicantsRes, MissionsRes, OfferReq, OffersRes } from 'src/core/api/jobs/jobs.types';
+import { ApplicantsRes, MissionsRes, OffersRes } from 'src/core/api/jobs/jobs.types';
 import { FilterReq, PaginateReq, SuccessRes } from 'src/core/api/types';
 
 import {

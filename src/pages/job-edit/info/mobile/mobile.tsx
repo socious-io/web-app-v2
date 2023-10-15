@@ -16,6 +16,7 @@ import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2, translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_DICT, PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
+import { JobReq } from 'src/core/api';
 import { CategoriesResp, CreatePostPayload } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import {
@@ -39,7 +40,7 @@ export const Mobile = (): JSX.Element => {
     dispatch(setInitPostWizard(createFormInitState(overview)));
   }, []);
 
-  function editJob(id: string, payload: CreatePostPayload) {
+  function editJob(id: string, payload: JobReq) {
     jobEditRequest(overview.id, payload).then(() => {
       navigate(`/jobs/created/${id}/overview`);
     });
@@ -204,7 +205,7 @@ export const Mobile = (): JSX.Element => {
             </div>
           </Divider>
           <div className={css.btnContainer}>
-            <Button onClick={() => editJob(overview.id, formState)}>Save changes</Button>
+            <Button onClick={() => editJob(overview.id, formState as JobReq)}>Save changes</Button>
             <Button color="white" onClick={() => navigate(`/jobs/created/${overview.id}/overview`)}>
               Cancel
             </Button>

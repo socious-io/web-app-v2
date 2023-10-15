@@ -3,10 +3,11 @@ import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { JobReq } from 'src/core/api';
+import { createFormInitState, jobEditRequest } from 'src/pages/job-edit/info/info.services';
+import { useSocialCausesShared } from 'src/pages/job-edit/social-causes/social-causes.shared';
 
 import css from './mobile.module.scss';
-import { createFormInitState, jobEditRequest } from '../../info/info.services';
-import { useSocialCausesShared } from '../social-causes.shared';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -15,9 +16,11 @@ export const Mobile = (): JSX.Element => {
     overview.causes_tags,
   );
   function editSocialCauses() {
-    jobEditRequest(overview.id, { ...createFormInitState(overview), causes_tags: selectedSocialCauses }).then(() => {
-      onBack();
-    });
+    jobEditRequest(overview.id, { ...createFormInitState(overview), causes_tags: selectedSocialCauses } as JobReq).then(
+      () => {
+        onBack();
+      },
+    );
   }
   function onBack() {
     navigate(`/jobs/created/${overview.id}/overview`);

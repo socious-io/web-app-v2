@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { NotificationSettings } from 'src/constants/constants';
-import { NotificationsSettings, NotificationType } from 'src/core/api';
-import { endpoint } from 'src/core/endpoints';
+import { NotificationsSettings, NotificationType, updateNotificationSettings } from 'src/core/api';
 
 import { Payload } from './settings.types';
 
@@ -37,7 +36,7 @@ export const useSettingsShared = () => {
       });
     const keys = new Set(payloadRes.map((d) => d.type));
     const merged = [...generateSettings.filter((setting) => !keys.has(setting.type)), ...payloadRes];
-    endpoint.post.notifications['settings_confirm']({ settings: merged });
+    updateNotificationSettings({ settings: merged } as NotificationsSettings);
   }
 
   function onAllowNotifications(checked: boolean) {
@@ -49,7 +48,7 @@ export const useSettingsShared = () => {
       push: checked,
     }));
     setGenerateSettings(result);
-    endpoint.post.notifications['settings_confirm']({ settings: result });
+    updateNotificationSettings({ settings: result });
   }
 
   return {
