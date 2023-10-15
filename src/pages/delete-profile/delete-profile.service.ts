@@ -1,18 +1,13 @@
-import { post } from '../../core/http';
+import { selfDelete } from 'src/core/api';
+import { login as loginApi } from 'src/core/api';
 
 export async function login(email: string, password: string) {
-  const body = {
-    email,
-    password,
-  };
-
-  return post('/auth/web/login', body).then(({ data }) => data);
+  return loginApi({ email, password });
 }
 
 export async function deleteAccount(reason = 'unknown') {
   const body = {
     reason,
   };
-
-  return post('/user/delete', body).then(({ data }) => data);
+  return selfDelete(body);
 }

@@ -29,6 +29,8 @@ import {
   badges,
   userMissions,
   impactPoints,
+  filterFollowings,
+  getOrganizationMembers,
 } from 'src/core/api';
 import FallBack from 'src/pages/fall-back/fall-back';
 import {
@@ -43,8 +45,6 @@ import { receivedOfferLoader } from 'src/pages/offer-received/offer-received.ser
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { RootState } from 'src/store';
-
-import { endpoint } from '../endpoints';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
@@ -415,8 +415,8 @@ export const blueprint: RouteObject[] = [
                       return user;
                     },
                     async lazy() {
-                      const { profileOrg } = await import('src/pages/profile-organization/refactored/profileOrg');
-                      return { Component: profileOrg };
+                      const { ProfileOrg } = await import('src/pages/profile-organization/refactored/profileOrg');
+                      return { Component: ProfileOrg };
                     },
                   },
                   {
@@ -580,8 +580,8 @@ export const blueprint: RouteObject[] = [
             },
             loader: async ({ params }) => {
               const requests = [
-                endpoint.get.members['org_id'](params.id, { page: 1 }),
-                endpoint.get.follows['followings']({ page: 1, name: '', type: 'users' }),
+                getOrganizationMembers(params.id, { page: 1 }),
+                filterFollowings({ page: 1, name: '', type: 'users' }),
               ];
               const [members, followings] = await Promise.all(requests);
               return { members, followings };

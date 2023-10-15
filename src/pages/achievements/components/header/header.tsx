@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { ImpactBarLevel } from 'src/components/atoms/impact-bar-level/impact-bar-level';
 import { printWhen } from 'src/core/utils';
@@ -8,6 +8,7 @@ import { HeaderProps } from './header.types';
 
 export const Header = (props: HeaderProps): JSX.Element => {
   const { proofspace_connect_id } = useParams();
+  const navigate = useNavigate();
   const claimPointsSentenceJSX = (
     <div className={css.impactPointDescLink}>Claim impact points as verifiable credentials to receive rewards</div>
   );
@@ -32,7 +33,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <img onClick={() => history.back()} className={css.chevron} src="/icons/chevron-left.svg" />
+      <img onClick={() => navigate(-1)} className={css.chevron} src="/icons/chevron-left.svg" />
       <div className={css.impactPointsContainer}>
         <div className={css.impactPoints}>{Math.ceil(props.point)}</div>
         <div className={css.impactPointsLabel}>Impact Points</div>

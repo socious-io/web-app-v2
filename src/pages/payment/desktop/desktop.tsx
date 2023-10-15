@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { BackLink } from 'src/components/molecules/back-link';
 import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
@@ -35,6 +36,7 @@ export const Desktop: React.FC = () => {
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   const offeredMessageBoxJSX = (
     <div className={css.offeredMessageBoxJSX}>
@@ -65,7 +67,7 @@ export const Desktop: React.FC = () => {
       </div>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={`${css.container} ${css.right}`}>
-          <BackLink title="Return" onBack={() => history.back()} />
+          <BackLink title="Return" onBack={() => navigate(-1)} />
           <JobDescrioptionCard
             job_title={job_category?.name || ''}
             start_date={start_date}

@@ -12,8 +12,8 @@ import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
 import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { OrganizationReq, updateOrganization } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { removedEmptyProps } from 'src/core/utils';
 import { useProfileOrganizationEditShared } from 'src/pages/profile-organization-edit/profile-organization-edit.shared';
@@ -60,7 +60,7 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
   function onSaveDesktop() {
     if (form.isValid) {
       const payload = removedEmptyProps(getFormValues(form));
-      endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload).then(async (resp) => {
+      updateOrganization(organization.id, payload as OrganizationReq).then(async (resp) => {
         await updateIdentityList();
         props?.updateOrganization(resp);
         props.onClose();

@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { follow, FollowingRes, getFollowings, unfollow } from 'src/core/api';
-// import { endpoint } from 'src/core/endpoints';
-// import { FollowingsReq, Pagination, UserType } from 'src/core/types';
-
-// import { getFollowings } from './followings.service';
 
 export const useFollowingsShared = () => {
   const navigate = useNavigate();

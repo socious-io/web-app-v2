@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from 'src/config';
-import { get } from 'src/core/http';
+import { jobs } from 'src/core/api';
 
 export const getJobPageURIs = async () => {
   const appURL = config.appBaseURL;
@@ -8,8 +8,8 @@ export const getJobPageURIs = async () => {
   let result: string[] = [];
 
   do {
-    const test = await get(`projects?status=ACTIVE&page=${page}`).then(({ data }) => {
-      return data.items.map((i) => `${appURL}job-datails/${i.id}`);
+    const test = await jobs({ ipage: page, status: 'ACTIVE' }).then((res) => {
+      return res.items.map((i) => `${appURL}job-datails/${i.id}`);
     });
     result = result.concat(test);
     page += 1;

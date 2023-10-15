@@ -40,3 +40,9 @@ export interface Following extends Identity {
 export interface FollowingRes extends PaginateRes {
   items: Following[];
 }
+
+export interface ConnectionStatus {
+  connect?: {
+    status: ConnectStatus;
+  };
+}

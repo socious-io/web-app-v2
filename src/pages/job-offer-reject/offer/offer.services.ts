@@ -1,8 +1,7 @@
-import { get } from 'src/core/http';
-
-import { min, pattern, required } from '../../../core/form';
-import { noEmptyString, number } from '../../../core/form/customValidators/customValidators';
-import { FormModel } from '../../../core/form/useForm/useForm.types';
+import { tokenRate } from 'src/core/api';
+import { min, pattern, required } from 'src/core/form';
+import { noEmptyString } from 'src/core/form/customValidators/customValidators';
+import { FormModel } from 'src/core/form/useForm/useForm.types';
 
 type InitialFormType = {
   estimatedTotalHours: string;
@@ -26,5 +25,5 @@ export const formModel = (isPaid: boolean, isFiat: boolean, initialForm: Initial
 };
 
 export async function findTokenRate(id: string) {
-  return get(`/payments/crypto/rate?token=${id}`).then(({ data }) => data);
+  return tokenRate(id);
 }

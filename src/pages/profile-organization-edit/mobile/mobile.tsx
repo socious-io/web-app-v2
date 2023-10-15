@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Category } from 'src/components/molecules/category/category';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
@@ -8,11 +10,9 @@ import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
 import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { useProfileOrganizationEditShared } from 'src/pages/profile-organization-edit/profile-organization-edit.shared';
 
 import css from './mobile.module.scss';
-import { Header } from '../../../components/atoms/header-v2/header';
-import { Input } from '../../../components/atoms/input/input';
-import { useProfileOrganizationEditShared } from '../profile-organization-edit.shared';
 
 export const Mobile = (): JSX.Element => {
   const { onSave, onAvatarEdit, onCoverEdit, avatarImage, coverImage, updateCityList, form, cities, organization } =
