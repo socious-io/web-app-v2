@@ -2,23 +2,23 @@ import { CSSProperties, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { endpoint } from 'src/core/endpoints';
-import { IdentityReq } from 'src/core/types';
+// import { endpoint } from 'src/core/endpoints';
+import { CurrentIdentity, jobOffers } from 'src/core/api';
 import { JobDetailCard } from 'src/pages/job-detail/components/job-detail-card/job-detail-card';
 import { getScreeningQuestions } from 'src/pages/job-offer-reject/job-offer-reject.services';
 import { getOrganizationDetail } from 'src/pages/profile-organization/refactored/profileOrg.services';
 import { getUserDetail } from 'src/pages/profile-user/refactored/profileUser.services';
+import OrganizationProfileCard from 'src/pages/search/components/organization-profile-card/organization-profile-card';
+import { UserProfileCard } from 'src/pages/search/components/user-profile-card/user-profile-card';
 import { RootState } from 'src/store';
 
 import { DetailOutletProps } from './detail-outlet.types';
-import OrganizationProfileCard from '../../components/organization-profile-card/organization-profile-card';
-import { UserProfileCard } from '../../components/user-profile-card/user-profile-card';
 
 export function DetailOutlet(props: DetailOutletProps): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState<null | JSX.Element>(null);
 
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
@@ -44,7 +44,7 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
       switch (props.type) {
         case 'projects':
           setLoading(true);
-          const job = await endpoint.get.projects.project_id(props.id);
+          const job = await jobOffers(props.id);
           const { questions } = await getScreeningQuestions(props.id);
           const jobDetailCardJSX = (
             <JobDetailCard

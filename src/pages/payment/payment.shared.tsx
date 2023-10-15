@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { CardsRes, hireOffer, removeCard } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
 import { getFlooredFixed } from 'src/core/numbers';
 import { getMonthName } from 'src/core/time';
-import { CardInfoResp } from 'src/core/types';
 import Dapp from 'src/dapp';
 import store from 'src/store';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
@@ -46,13 +45,13 @@ export const usePaymentShared = () => {
     setSelectedCard(id);
   }
 
-  function setCardsList(list: CardInfoResp) {
+  function setCardsList(list: CardsRes) {
     setCards(list);
   }
 
   async function onRemoveCard(id: string) {
     setSelectedCard('');
-    endpoint.post.payments['{card_id}/remove'](id).then(async () => {
+    removeCard(id).then(async () => {
       const result = await getCreditCardInfo(offer.currency === 'JPY');
       setCards(result);
     });
@@ -85,8 +84,7 @@ export const usePaymentShared = () => {
         txHash: result.txHash,
         meta: result,
       });
-
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
+      hireOffer(offerId).then(() => setStatus('HIRED'));
     } catch (err: any) {
       dialog.alert({
         message: err?.response?.data.error || err?.message,
@@ -105,7 +103,7 @@ export const usePaymentShared = () => {
         service: 'STRIPE',
         source: selectedCard,
       });
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
+      hireOffer(offerId).then(() => setStatus('HIRED'));
     } catch (err: any) {
       dialog.alert({
         message: err?.response?.data.error || err?.message,

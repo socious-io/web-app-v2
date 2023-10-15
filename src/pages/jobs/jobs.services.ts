@@ -1,5 +1,5 @@
-import { get } from 'src/core/http';
+import { jobs } from 'src/core/api';
 
 export async function getJobList({ page } = { page: 1 }) {
-  return get(`projects?status=ACTIVE&page=${page}`).then(({ data }) => data);
+  return jobs({ page, status: 'ACTIVE' });
 }

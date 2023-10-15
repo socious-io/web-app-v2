@@ -2,19 +2,19 @@ import { useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { ApplicantListPay } from 'src/components/molecules/applicant-list-pay/applicant-list-pay';
+import { confirmMission, contestMission, feedbackMission } from 'src/core/api';
+import { dialog } from 'src/core/dialog/dialog';
 import Dapp from 'src/dapp';
 import { useAlert } from 'src/hooks/use-alert';
+import { missionToApplicantListPayAdaptor } from 'src/pages/job-offer-reject/job-offer-reject.services';
 import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
+import { FeedbackModal } from 'src/pages/job-offer-reject/overview/components/feedback-modal';
+import { Rate } from 'src/pages/job-offer-reject/overview/components/feedback-modal/feedback-modal.types';
 import store from 'src/store';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
 
 import css from './hired.module.scss';
 import { HiredProps } from './hired.types';
-import { dialog } from '../../../../../core/dialog/dialog';
-import { endpoint } from '../../../../../core/endpoints';
-import { missionToApplicantListPayAdaptor } from '../../../job-offer-reject.services';
-import { FeedbackModal } from '../feedback-modal';
-import { Rate } from '../feedback-modal/feedback-modal.types';
 
 export const Hired = (props: HiredProps): JSX.Element => {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
     if (web3 && escrowId) {
       try {
         await Dapp.withdrawnEscrow(web3, escrowId);
-        endpoint.post.missions['{mission_id}/confirm'](id).then(onDone);
+        confirmMission(id).then(onDone);
       } catch (err: any) {
         dialog.confirm({
           title: 'Unhandled Error',
@@ -61,7 +61,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
         });
       }
     } else {
-      endpoint.post.missions['{mission_id}/confirm'](id).then(onDone);
+      confirmMission(id).then(onDone);
     }
 
     store.dispatch(hideSpinner());
@@ -86,7 +86,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
 
     setSelectedIdFeedback(false);
     if (satisfactory === 'satisfactory') {
-      endpoint.post.missions['{mission_id}/feedback'](selectedIdFeedback.id, { content: feedbackText }).then(() => {
+      feedbackMission(selectedIdFeedback.id, feedbackText).then(() => {
         {
           updatedEndHiredList.items[itemIndex].org_feedback = { content: feedbackText };
           setEndHiredList({ ...updatedEndHiredList });
@@ -94,7 +94,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
         }
       });
     } else {
-      endpoint.post.missions['{mission_id}/contest'](selectedIdFeedback.id, { content: feedbackText }).then(() => {
+      contestMission(selectedIdFeedback.id, feedbackText).then(() => {
         {
           updatedEndHiredList.items[itemIndex].org_feedback = { content: feedbackText };
           setEndHiredList({ ...updatedEndHiredList });

@@ -1,25 +1,22 @@
-import { endpoint } from 'src/core/endpoints/index';
+import { getOffer, stripeLink, StripeLinkRes, stripeProfile, StripeProfileRes, tokenRate } from 'src/core/api';
 import { required } from 'src/core/form';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
-import { get } from 'src/core/http';
 
 export async function receivedOfferLoader(params: { id: string }) {
-  const offer = await endpoint.get.offers.offer_id(params.id);
+  const offer = await getOffer(params.id);
   return { offer };
 }
 
 export async function findTokenRate(id: string) {
-  return get(`/payments/crypto/rate?token=${id}`).then(({ data }) => data);
+  return tokenRate(id);
 }
 
-export async function getStripeLink(country: string, is_jp?: boolean): Promise<any> {
-  return get('/auth/stripe/connect-link', { params: { country, is_jp, redirect_url: location.href } }).then(
-    ({ data }) => data,
-  );
+export async function getStripeLink(country: string, redirect_url: string, is_jp?: boolean): Promise<StripeLinkRes> {
+  return stripeLink({ country, is_jp, redirect_url });
 }
 
-export async function getSrtipeProfile(is_jp?: boolean): Promise<any> {
-  return get('/auth/stripe/profile', { params: { is_jp } }).then(({ data }) => data);
+export async function getSrtipeProfile(is_jp?: boolean): Promise<StripeProfileRes> {
+  return stripeProfile({ is_jp });
 }
 
 export const formModel: FormModel = {

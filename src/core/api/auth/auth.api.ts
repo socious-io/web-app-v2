@@ -19,6 +19,10 @@ export async function login(payload: LoginReq): Promise<AuthRes> {
   return (await post<AuthRes>('auth/login', payload)).data;
 }
 
+export async function logout(): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`/auth/logout`, {})).data;
+}
+
 export async function refresh(payload: RefreshReq): Promise<AuthRes> {
   return (await post<AuthRes>('auth/refresh', payload)).data;
 }

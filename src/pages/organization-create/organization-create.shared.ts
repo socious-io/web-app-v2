@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createOrganization, identities, OrganizationType, SocialCauses } from 'src/core/api';
+import { createOrganization, handleError, identities, OrganizationType, SocialCauses } from 'src/core/api';
 import { useForm } from 'src/core/form';
-import { handleError } from 'src/core/http';
 import { RootState } from 'src/store';
 import {
   CreateOrgWizard,
@@ -30,7 +29,6 @@ export const useOrganizationCreateShared = () => {
   function submitOrganization(wizardForm: CreateOrgWizard) {
     const payload = wizardFormToPayloadAdaptor(wizardForm);
     createOrganization(payload).then(navigateToSuccess).then(updateIdentityList).catch(handleError());
-    // addOrganization(payload).then(navigateToSuccess).then(updateIdentityList).catch(handleError());
   }
 
   function submitForm() {

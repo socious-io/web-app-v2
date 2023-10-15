@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useLocation } from 'react-router-dom';
 import { StatusKeys } from 'src/constants/APPLICANT_STATUS';
+import { acceptOffer, rejectOffer, updateWallet } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
 import { useForm } from 'src/core/form';
-import { StripeProfileResp } from 'src/core/types';
 import Dapp from 'src/dapp';
 import { useAccount } from 'wagmi';
 
@@ -32,9 +31,7 @@ export const useOfferReceivedShared = () => {
 
   useEffect(() => {
     if (isConnected && account && (!wallet_address || String(wallet_address) !== account)) {
-      endpoint.post.user['{user_id}/update_wallet']({
-        wallet_address: account,
-      });
+      updateWallet({ wallet_address: account });
     }
   }, [isConnected, account]);
 
@@ -48,7 +45,7 @@ export const useOfferReceivedShared = () => {
 
   function onAccept(id: string) {
     return () =>
-      endpoint.post.offers['{offer_id}/approve'](id).then(() => {
+      acceptOffer(id).then(() => {
         dialog.alert({ title: 'Offer accepted', message: 'You have successfully accepted the offer' }).then(() => {
           setStatus('APPROVED');
         });
@@ -57,7 +54,7 @@ export const useOfferReceivedShared = () => {
 
   function onDeclined(id: string) {
     return () => {
-      endpoint.post.offers['{offer_id}/withdrawn'](id).then(() => {
+      rejectOffer(id).then(() => {
         dialog.alert({ title: 'Offer declined', message: 'You have successfully declined the offer' }).then(() => {
           setStatus('WITHRAWN');
         });
@@ -77,10 +74,11 @@ export const useWalletShared = () => {
   const form = useForm(formModel);
   const [stripeLink, setStripeLink] = useState('');
   const [stripeProfile, setStripeProfile] = useState(null);
+  const location = useLocation();
 
   async function onSelectCountry(value: string) {
     try {
-      const result = await getStripeLink(value, offer.currency === 'JPY');
+      const result = await getStripeLink(value, location.pathname, offer.currency === 'JPY');
       const {
         link: { url },
       } = result;

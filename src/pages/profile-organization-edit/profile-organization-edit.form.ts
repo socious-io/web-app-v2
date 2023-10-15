@@ -1,11 +1,10 @@
+import { OrganizationReq } from 'src/core/api';
 import { required } from 'src/core/form';
 import { email } from 'src/core/form/customValidators/customValidators';
+import { maxArrayLength, minArrayLength, website } from 'src/core/form/customValidators/customValidators';
 import { FormModel } from 'src/core/form/useForm/useForm.types';
 
-import { maxArrayLength, minArrayLength, website } from './../../core/form/customValidators/customValidators';
-import { ProfileReq } from '../profile-user/profile-user.types';
-
-export function generateFormModel(organization: ProfileReq): FormModel {
+export function generateFormModel(organization: OrganizationReq): FormModel {
   return {
     type: { initialValue: organization.type },
     cover_image: { initialValue: organization.cover_image?.id },

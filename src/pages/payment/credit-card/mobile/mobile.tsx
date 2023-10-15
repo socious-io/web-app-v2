@@ -1,15 +1,14 @@
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { useState, useEffect } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { Header } from 'src/components/atoms/header/header';
 import { Sticky } from 'src/components/templates/sticky';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { config } from 'src/config';
+import { addCard, Offer } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
-import { Offer } from 'src/core/types';
 
 import css from './mobile.module.scss';
 
@@ -21,8 +20,8 @@ export const Mobile: React.FC = () => {
   const { offer } = useLoaderData() as Resolver;
   const [stripe, setStripe] = useState<Stripe | null>();
   const [card, setCard] = useState<StripeCardElement | null>();
-  const is_jp = offer.currency === 'JPY';
-
+  const is_jp = offer.currency?.currency === 'JPY';
+  const navigate = useNavigate();
   useEffect(() => {
     loadStripe(is_jp ? config.jpStripePublicKey : config.stripePublicKey).then((s) => setStripe(s));
   }, []);
@@ -72,7 +71,7 @@ export const Mobile: React.FC = () => {
     };
 
     try {
-      await endpoint.post.payments['add-card'](payload, is_jp);
+      await addCard(payload, is_jp);
     } catch (err) {
       dialog.alert({
         title: 'add card error',
@@ -80,12 +79,12 @@ export const Mobile: React.FC = () => {
       });
       return;
     }
-    history.back();
+    navigate(-1);
   }
 
   return (
     <TopFixedMobile>
-      <Header title="Add a credit card" onBack={() => history.back()} />
+      <Header title="Add a credit card" onBack={() => navigate(-1)} />
       <>
         <div className={css.container}>
           <Card className={css.card}>
@@ -99,7 +98,7 @@ export const Mobile: React.FC = () => {
           <Button
             color="white"
             className={`${css['footer__btn']} ${css['footer__btn--cancel']}`}
-            onClick={() => history.back()}
+            onClick={() => navigate(-1)}
           >
             Cancel
           </Button>

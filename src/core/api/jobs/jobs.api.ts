@@ -68,7 +68,7 @@ export async function updateQuestionJob(jobId: string, questionId: string, paylo
   return (await post<Question>(`projects/update/${jobId}/questions/${questionId}`, payload)).data;
 }
 
-export async function removeQuestionJob(jobId: string, questionId: string, payload: QuestionReq): Promise<SuccessRes> {
+export async function removeQuestionJob(jobId: string, questionId: string, payload?: QuestionReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`projects/remove/${jobId}/questions/${questionId}`, payload)).data;
 }
 
@@ -98,7 +98,7 @@ export async function offerByApplicant(applicantId: string, payload: OfferReq): 
 
 // talent side
 export async function rejectOffer(id: string): Promise<SuccessRes> {
-  return (await post<SuccessRes>(`offers/${id}/withrawn`, {})).data;
+  return (await post<SuccessRes>(`offers/${id}/withdrawn`, {})).data;
 }
 // talent side
 export async function acceptOffer(id: string): Promise<SuccessRes> {
