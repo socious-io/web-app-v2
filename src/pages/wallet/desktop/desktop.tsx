@@ -54,7 +54,7 @@ export const Desktop: React.FC = () => {
     <TwoColumnCursor visibleSidebar={isLoggedIn}>
       <div className={css.leftContainer}>
         <ProfileCard />
-        <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
+        <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         <Card className={!externalAccounts?.length ? css.accounts : css.noCard}>
           {printWhen(
             <Dropdown

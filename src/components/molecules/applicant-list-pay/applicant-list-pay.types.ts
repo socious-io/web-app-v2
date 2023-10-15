@@ -29,4 +29,5 @@ export type ApplicantListPayProps = {
   onMessageClick?: (id: string) => void;
   onApplicantClick?: (applicantId: string) => void;
   isPaidCrypto?: boolean;
+  onRehire?: (id: string) => void;
 };

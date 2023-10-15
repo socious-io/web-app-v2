@@ -1,39 +1,38 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { NotificationItem } from 'src/components/molecules/notification-item/notification-item';
-import { Notification } from 'src/core/api';
+import { CurrentIdentity, Notification } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 
 import css from './notification-list.module.scss';
 import { NotificationListProps } from './notification-list.types';
 
 export const NotificationList = ({ list, onMorePageClick, showSeeMore, route }: NotificationListProps): JSX.Element => {
   const navigate = useNavigate();
-  const currentIdentity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
-  const isOrg = currentIdentity.type === 'organizations';
+  const isOrg = currentIdentity && currentIdentity.type === 'organizations';
 
   const mapTypeToRoute = (id: string, notifIdentity: string, username?: string): Record<string, string> => {
     return {
       FOLLOWED: `/profile/${notifIdentity}/${username}/view`,
       COMMENT_LIKE: `/feeds/${id}`,
       POST_LIKE: `/feeds/${id}`,
-      CHAT: `/${route}/chats/contacts/${id}`,
+      CHAT: `/chats/contacts/${id}`,
       SHARE_POST: '',
       SHARE_PROJECT: '',
       COMMENT: `/feeds/${id}`,
-      APPLICATION: isOrg ? `/${route}/jobs/created/${id}/overview?tab=Applicants` : '',
-      OFFER: isOrg ? '' : `/jobs/received-offer/${id}/${route}`,
-      REJECT: isOrg ? '' : `/${route}/jobs/applied/${id}?tab=Applied`,
-      APPROVED: isOrg ? `/${route}/jobs/created/${id}/overview?tab=Offered` : '',
-      HIRED: isOrg ? '' : `/${route}/jobs/applied/${id}?tab=Hired`,
-      PROJECT_COMPLETE: isOrg ? `/${route}/jobs/created/${id}/overview?tab=Hired` : '',
-      ASSIGNEE_CANCELED: isOrg ? `/${route}/jobs/created/${id}/overview?tab=Offered` : '',
-      ASSIGNER_CANCELED: isOrg ? '' : `/${route}/jobs/applied/${id}?tab=Applied`,
-      ASSIGNER_CONFIRMED: isOrg ? '' : `/${route}/jobs/applied/${id}?tab=Hired`,
+      APPLICATION: isOrg ? `/jobs/created/${id}/overview?tab=Applicants` : '',
+      OFFER: isOrg ? '' : `/jobs/received-offer/${id}`,
+      REJECT: isOrg ? '' : `/jobs/applied/${id}?tab=Applied`,
+      APPROVED: isOrg ? `/jobs/created/${id}/overview?tab=Offered` : '',
+      HIRED: isOrg ? '' : `/jobs/applied/${id}?tab=Hired`,
+      PROJECT_COMPLETE: isOrg ? `/jobs/created/${id}/overview?tab=Hired` : '',
+      ASSIGNEE_CANCELED: isOrg ? `/jobs/created/${id}/overview?tab=Offered` : '',
+      ASSIGNER_CANCELED: isOrg ? '' : `/jobs/applied/${id}?tab=Applied`,
+      ASSIGNER_CONFIRMED: isOrg ? '' : `/jobs/applied/${id}?tab=Hired`,
       CONNECT: `/profile/${notifIdentity}/${username}/view`,
       ACCEPT_CONNECT: `/profile/${notifIdentity}/${username}/view`,
       MEMBERED: '', // FIXME: later for member feature
