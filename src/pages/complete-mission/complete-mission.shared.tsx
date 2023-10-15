@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { endpoint } from 'src/core/endpoints';
+import { cancelMission, completeMission } from 'src/core/api';
 import { useAlert } from 'src/hooks/use-alert';
 
 import { Loader } from './complete-mission.types';
 
 export const useCompleteMissionShared = () => {
-  const resolver = useLoaderData();
-  const { offer, mission, media } = (resolver as Loader) || {};
+  const resolver = useLoaderData() as Loader;
+  const { offer, mission, media } = resolver || {};
   const [status, setStatus] = useState(offer.status);
   const alert = useAlert();
 
   function onCompleteMission() {
     function onConfirm() {
-      endpoint.post.missions['{mission_id}/complete'](mission.id).then(() => setStatus('CLOSED'));
+      completeMission(mission.id).then(() => setStatus('CLOSED'));
     }
 
     const options = {
@@ -26,7 +26,7 @@ export const useCompleteMissionShared = () => {
 
   function onStopMission() {
     // TODO: ask @jeyem the current status string
-    endpoint.post.missions['{mission_id}/cancel'](mission.id).then(() => setStatus('KICK_OUT'));
+    cancelMission(mission.id).then(() => setStatus('KICK_OUT'));
   }
 
   return { offer, media, status, onCompleteMission, onStopMission };

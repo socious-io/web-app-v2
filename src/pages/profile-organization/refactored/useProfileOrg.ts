@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
+import { CurrentIdentity } from 'src/core/api';
+// import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { ConnectStatus, IdentityReq } from 'src/core/types';
+import { ConnectStatus } from 'src/core/types';
 import { RootState } from 'src/store';
 
 import { getConnectStatus, hiringCall, sendRequestConnection } from './profileOrg.services';
@@ -18,7 +19,7 @@ export const useProfileOrg = () => {
   const [organization, setOrganization] = useState<ProfileReq>(resolver.user);
   const socialCauses = socialCausesToCategory(resolver.user?.social_causes);
   const skills = skillsToCategory(resolver.user.skills);
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
   const userIsLoggedIn = !!currentIdentity;
@@ -78,7 +79,7 @@ export const useProfileOrg = () => {
     setMessage(value || 'please connect to me');
   }
 
-  function updateOrganization(params: PostUpdateProfileResp) {
+  function updateOrganization(params: ProfileReq) {
     setOrganization((prev) => {
       return {
         ...prev,

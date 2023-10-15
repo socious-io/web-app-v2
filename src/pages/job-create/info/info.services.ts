@@ -1,8 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'react';
+import { cities, CityRes, createJob, jobCategories, JobCategoriesRes, JobReq } from 'src/core/api';
 import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
-import { get, post } from 'src/core/http';
-import { CategoriesResp, Cities, CreatePostPayload, Pagination } from 'src/core/types';
 import {
   setMaxRange,
   setMinRange,
@@ -19,16 +18,16 @@ import {
 
 import { formModel } from './info.form';
 
-export async function getJobCategories(): Promise<CategoriesResp> {
-  return get('/projects/categories').then(({ data }) => data);
+export async function getJobCategories(): Promise<JobCategoriesRes> {
+  return jobCategories();
 }
 
-export async function getCityList(countryCode: string): Promise<Pagination<Cities[]>> {
-  return get(`/geo/locations/country/${countryCode}?limit=301000`).then(({ data }) => data);
+export async function getCityList(countryCode: string): Promise<CityRes> {
+  return cities(countryCode);
 }
 
-export async function createPost(payload: CreatePostPayload) {
-  return post('/projects', payload).then(({ data }) => data);
+export async function createPost(payload: JobReq) {
+  return createJob(payload);
 }
 
 export function updateForm(dispatch: Dispatch<AnyAction>) {

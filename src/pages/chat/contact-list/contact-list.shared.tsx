@@ -29,7 +29,7 @@ export const useContactListShared = () => {
   }
 
   function onCreateSearch(value: string) {
-    const payload = { filter: value };
+    const payload = { name: value };
     filterFollowings(payload)
       .then(({ items }) => convertFollowingsToContactList(items))
       .then(setUserList);

@@ -1,14 +1,13 @@
 import { Camera } from '@capacitor/camera';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Button } from 'src/components/atoms/button/button';
-import { post } from 'src/core/http';
 import { removeValuesFromObject } from 'src/core/utils';
 import { uploadImage } from 'src/pages/profile-user-edit/profile-user-edit.services';
+import { useUser } from 'src/pages/sign-up/sign-up-user-onboarding/sign-up-user-onboarding.context';
 
 import css from './addphoto.module.scss';
-import { useUser } from '../../sign-up-user-onboarding.context';
-import { useNavigate } from 'react-router-dom';
 
 const AddPhoto: React.FC = () => {
   const navigate = useNavigate();
@@ -26,8 +25,7 @@ const AddPhoto: React.FC = () => {
   };
   const updateProfile = () => {
     const avatarImage = state.avatar ? { avatar: image.id } : {};
-    post(
-      '/user/update/profile',
+    updateProfile(
       removeValuesFromObject(
         {
           ...state,

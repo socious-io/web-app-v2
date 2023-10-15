@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { otpConfirm } from 'src/core/api';
+import { otpConfirm, resendVerifyCode } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
 import { LoginResp } from 'src/core/types';
 
 export const useSignUpUserVerificationShared = () => {
@@ -30,7 +29,7 @@ export const useSignUpUserVerificationShared = () => {
 
   function onResendRequest() {
     const email = localStorage.getItem('email') as string;
-    endpoint.post.auth['resend-verify-code']({ email }).then(onResendSucceed);
+    resendVerifyCode({ email }).then(onResendSucceed);
   }
 
   function navigateToSignIn() {

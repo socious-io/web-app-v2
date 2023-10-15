@@ -1,9 +1,8 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'react';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { cities, CityRes, jobCategories, JobCategoriesRes, JobReq, updateJob } from 'src/core/api';
 import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
-import { get, post } from 'src/core/http';
-import { CategoriesResp, Cities, CreatePostPayload, Pagination } from 'src/core/types';
 import {
   CreatePostWizard,
   setMaxRange,
@@ -21,12 +20,12 @@ import {
 
 import { formModel } from './info.form';
 
-export async function getJobCategories(): Promise<CategoriesResp> {
-  return get('/projects/categories').then(({ data }) => data);
+export async function getJobCategories(): Promise<JobCategoriesRes> {
+  return jobCategories();
 }
 
-export async function getCityList(countryCode: string): Promise<Pagination<Cities[]>> {
-  return get(`/geo/locations/country/${countryCode}?limit=301000`).then(({ data }) => data);
+export async function getCityList(countryCode: string): Promise<CityRes> {
+  return cities(countryCode);
 }
 export function createFormInitState(data: Job): CreatePostWizard {
   return {
@@ -49,8 +48,8 @@ export function createFormInitState(data: Job): CreatePostWizard {
     payment_range_higher: data.payment_range_higher || '',
   };
 }
-export async function jobEditRequest(id: string, payload: CreatePostPayload) {
-  return post(`/projects/update/${id}`, payload).then(({ data }) => data);
+export async function jobEditRequest(id: string, payload: JobReq) {
+  return updateJob(id, payload);
 }
 
 export function updateForm(dispatch: Dispatch<AnyAction>) {

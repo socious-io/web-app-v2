@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { Header } from 'src/components/atoms/header/header';
@@ -15,7 +16,7 @@ import { useCompleteMissionShared } from '../complete-mission.shared';
 
 export const Mobile = (): JSX.Element => {
   const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
-
+  const navigate = useNavigate();
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
       <img src="/icons/tick-white-simple.svg" />
@@ -64,7 +65,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile>
-      <Header title={`${offer.job_category.name}`} onBack={() => history.back()} />
+      <Header title={`${offer.job_category.name}`} onBack={() => navigate(-1)} />
       <div className={css.body}>
         {printWhen(offeredMessageBoxJSX, status === 'HIRED')}
         {printWhen(acceptedMessageBoxJSX, status === 'CLOSED')}
