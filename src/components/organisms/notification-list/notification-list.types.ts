@@ -4,5 +4,5 @@ export interface NotificationListProps {
   list: Notification[];
   onMorePageClick: () => void;
   showSeeMore: boolean;
-  route: 'd' | 'm';
+  switchAccount: (id: string) => void;
 }
