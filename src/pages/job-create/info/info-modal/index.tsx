@@ -15,16 +15,17 @@ import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
+import { JobReq } from 'src/core/api';
 import { CategoriesResp, CreatePostPayload } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
+import { useInfoShared } from 'src/pages/job-create/info//info.shared';
+import { createPost } from 'src/pages/job-create/info/info.services';
+import { ScreenerModal } from 'src/pages/job-create/screener-questions/screener-modal';
 import { setPostPaymentScheme, setPostPaymentType } from 'src/store/reducers/createPostWizard.reducer';
 import { setQuestionProjectIds } from 'src/store/reducers/createQuestionWizard.reducer';
 
 import css from './info-modal.module.scss';
 import { InfoModalProps } from './info-modal.types';
-import { ScreenerModal } from '../../screener-questions/screener-modal';
-import { createPost } from '../info.services';
-import { useInfoShared } from '../info.shared';
 
 export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onBack, onOpen }) => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
   const [openScreenerModal, setOpenScreenerModal] = useState(false);
 
   function createJob(payload: CreatePostPayload) {
-    createPost(payload).then((resp) => {
+    createPost(payload as JobReq).then((resp) => {
       dispatch(setQuestionProjectIds({ project_id: resp.id, identity_id: resp.identity_id }));
       onClose();
       setOpenScreenerModal(true);

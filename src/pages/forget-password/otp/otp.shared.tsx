@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { forgetPassword, handleError, otpConfirm } from 'src/core/api';
+import { setAuthParams } from 'src/core/api/auth/auth.service';
 import { dialog } from 'src/core/dialog/dialog';
-import { setAuthCookies } from 'src/pages/sign-in/sign-in.services';
 import translate from 'src/translations';
 
 export const useOtpShared = () => {
@@ -15,9 +15,9 @@ export const useOtpShared = () => {
   function submit() {
     if (!email) return;
 
-    otpConfirm({ email, otp: otpValue })
+    otpConfirm({ email, code: otpValue })
       .then((resp) => {
-        setAuthCookies(resp);
+        setAuthParams(resp);
         navigate('../password');
       })
       .catch((err) => {

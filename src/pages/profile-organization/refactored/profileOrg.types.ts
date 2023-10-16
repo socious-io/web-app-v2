@@ -1,5 +1,3 @@
-import { ConnectionItem, Pagination } from 'src/core/types';
-
 export type ProfileReq = {
   id: string;
   name: string;

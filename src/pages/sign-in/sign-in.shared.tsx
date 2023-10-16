@@ -14,7 +14,7 @@ import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 import { formModel } from './sign-in.form';
-import { setAuthCookies } from './sign-in.services';
+import { setAuthParams } from 'src/core/api/auth/auth.service';
 
 const addListeners = () => {
   addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
@@ -66,7 +66,7 @@ export const useSignInShared = () => {
   const form = useForm(formModel);
 
   async function onLoginSucceed(loginResp: AuthRes) {
-    await setAuthCookies(loginResp);
+    await setAuthParams(loginResp);
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(await identities()));
     const userProfile = await profile();

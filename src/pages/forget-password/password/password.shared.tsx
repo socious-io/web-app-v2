@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { changePasswordDirect } from 'src/core/api';
+import { changePasswordDirect, handleError } from 'src/core/api';
 import { useForm } from 'src/core/form';
-import { handleError } from 'src/core/http';
 
 import { formModel } from './password.form';
 

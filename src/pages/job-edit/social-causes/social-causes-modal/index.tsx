@@ -1,11 +1,12 @@
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
 import { WebModal } from 'src/components/templates/web-modal';
+import { JobReq } from 'src/core/api';
+import { createFormInitState, jobEditRequest } from 'src/pages/job-edit/info/info.services';
+import { useSocialCausesShared } from 'src/pages/job-edit/social-causes/social-causes.shared';
 
 import css from './social-causes-modal.module.scss';
 import { SocialCausesModalProps } from './social-causes-modal.types';
-import { createFormInitState, jobEditRequest } from '../../info/info.services';
-import { useSocialCausesShared } from '../social-causes.shared';
 
 export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onClose, onDone, jobOverview }) => {
   const { onSearch, socialCauses, selectedSocialCauses, isValid, setSelectedSocialCauses } = useSocialCausesShared(
@@ -13,12 +14,13 @@ export const SocialCausesModal: React.FC<SocialCausesModalProps> = ({ open, onCl
   );
 
   function editSocialCauses() {
-    jobEditRequest(jobOverview.id, { ...createFormInitState(jobOverview), causes_tags: selectedSocialCauses }).then(
-      (resp) => {
-        onClose();
-        onDone(resp);
-      },
-    );
+    jobEditRequest(jobOverview.id, {
+      ...createFormInitState(jobOverview),
+      causes_tags: selectedSocialCauses,
+    } as JobReq).then((resp) => {
+      onClose();
+      onDone(resp);
+    });
   }
   return (
     <>

@@ -1,7 +1,4 @@
 import { ImpactBadge } from 'src/components/atoms/impact-badge/impact-badge';
-import { ImpactBarSimple } from 'src/components/atoms/impact-bar-simple/impact-bar-simple';
-import { TierBadge } from 'src/components/atoms/tier-badge/tier-badge';
-import { ImpactCategoryItem } from 'src/components/molecules/impact-category-item/impact-category-item';
 import { BADGES } from 'src/constants/constants';
 
 import css from './badge-detail-slide.module.scss';

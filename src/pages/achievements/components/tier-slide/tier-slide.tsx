@@ -1,4 +1,3 @@
-import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
 import { ImpactBarSimple } from 'src/components/atoms/impact-bar-simple/impact-bar-simple';
 import { TierBadge } from 'src/components/atoms/tier-badge/tier-badge';
 import { TIERS } from 'src/constants/TIERS_TABLE';

@@ -1,24 +1,22 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+import { Input } from 'src/components/atoms/input/input';
+import { CurrentIdentity, handleError } from 'src/core/api';
+import { useForm } from 'src/core/form';
+import { RootState } from 'src/store';
 
 import { formModel } from './password.form';
 import css from './password.module.scss';
-import { Button } from '../../../components/atoms/button/button';
-import { Input } from '../../../components/atoms/input/input';
-import { useForm } from '../../../core/form';
-import { handleError } from '../../../core/http';
-import { IdentityReq } from '../../../core/types';
-import { RootState } from '../../../store';
 import { deleteAccount, login } from '../delete-profile.service';
-import { useNavigate } from 'react-router-dom';
 
 export const Password = () => {
   const navigate = useNavigate();
   const form = useForm(formModel);
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
-  const email = identity.meta.email;
+  const email = identity?.meta.email;
 
   const backToPerviousPage = () => {
     navigate('../delete');
