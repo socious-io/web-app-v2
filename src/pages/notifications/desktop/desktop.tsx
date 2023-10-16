@@ -10,7 +10,8 @@ import { useNotificationsShared } from '../notifications.shared';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
-  const { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore } = useNotificationsShared();
+  const { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore, switchAccount } =
+    useNotificationsShared();
   const { isLoggedIn } = useAuth();
   return (
     <TwoColumnCursor visibleSidebar={isLoggedIn}>
@@ -26,7 +27,7 @@ export const Desktop = (): JSX.Element => {
           onMorePageClick={onMorePageClick}
           list={notificationList}
           showSeeMore={onShowSeeMore(notificationList.length)}
-          route="d"
+          switchAccount={switchAccount}
         />
       </Card>
     </TwoColumnCursor>
