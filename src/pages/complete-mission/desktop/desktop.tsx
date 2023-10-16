@@ -12,7 +12,7 @@ import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { IdentityReq } from 'src/core/types';
+import { CurrentIdentity } from 'src/core/api';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
 import { RootState } from 'src/store';
@@ -22,8 +22,8 @@ import { useCompleteMissionShared } from '../complete-mission.shared';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
   const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
   const { isLoggedIn } = useAuth();

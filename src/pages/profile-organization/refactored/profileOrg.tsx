@@ -10,7 +10,6 @@ import { BackLink } from 'src/components/molecules/back-link';
 import { Divider } from 'src/components/templates/divider/divider';
 import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { printWhen } from 'src/core/utils';
-import { useAuth } from 'src/hooks/use-auth';
 
 import css from './profileOrg.module.scss';
 import { showActions } from './profileOrg.services';
@@ -18,8 +17,7 @@ import { useProfileOrg } from './useProfileOrg';
 import { ConnectModal } from '../connect-modal';
 import { EditOrganization } from '../desktop/edit/edit';
 
-export const profileOrg = () => {
-  const { isLoggedIn } = useAuth();
+export const ProfileOrg = (): JSX.Element => {
   const navigate = useNavigate();
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
@@ -241,5 +239,3 @@ export const profileOrg = () => {
     </>
   );
 };
-
-export default profileOrg;

@@ -2,8 +2,7 @@ import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
 import { Dispatch, SetStateAction } from 'react';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { citiesToCategories } from 'src/core/adaptors';
-import { endpoint } from 'src/core/endpoints';
-import { PostMediaUploadResp } from 'src/core/endpoints/index.types';
+import { PostMediaUploadRes, uploadMedia } from 'src/core/api';
 
 import { getCityList } from '../job-create/info/info.services';
 
@@ -15,11 +14,9 @@ export function cityDispatcher(setCities: Dispatch<SetStateAction<DropdownItem[]
   };
 }
 
-export async function uploadImage(url: string): Promise<PostMediaUploadResp> {
+export async function uploadImage(url: string): Promise<PostMediaUploadRes> {
   const blob = await fetch(url).then((resp) => resp.blob());
-  const formData = new FormData();
-  formData.append('file', blob);
-  return endpoint.post.media.upload(formData);
+  return uploadMedia(blob as File);
 }
 
 export async function showActionSheet(): Promise<'upload' | 'remove' | undefined> {

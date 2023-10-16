@@ -1,13 +1,12 @@
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { ApplicantListHire } from 'src/components/molecules/applicant-list-hire/applicant-list-hire';
-import { isTouchDevice } from 'src/core/device-type-detector';
+import { cancelOffer, hireOffer } from 'src/core/api';
 import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
 
 import css from './offered.module.scss';
 import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
-import { endpoint } from '../../../../../core/endpoints';
 
 export const Offered = (props: OfferedProps): JSX.Element => {
   const navigate = useNavigate();
@@ -19,16 +18,12 @@ export const Offered = (props: OfferedProps): JSX.Element => {
     if (payment_type === 'PAID' && !props.approved.items[0]?.escrow) {
       navigate(`/payment/${offerId}`);
     } else {
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() =>
-        navigate(`/jobs/created/${resolver?.jobOverview.id}`),
-      );
+      hireOffer(offerId).then(() => navigate(`/jobs/created/${resolver?.jobOverview.id}`));
     }
   }
 
   async function onReject(offerId: string) {
-    return endpoint.post.offers['{offer_id}/cancel'](offerId).then(() =>
-      navigate(`/jobs/created/${resolver?.jobOverview.id}`),
-    );
+    cancelOffer(offerId).then(() => navigate(`/jobs/created/${resolver?.jobOverview.id}`));
   }
 
   function onMessageClick(id: string) {

@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { Button } from 'src/components/atoms/button/button';
 import { Modal } from 'src/components/templates/modal/modal';
 import { config } from 'src/config';
+import { addCard } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
 
 import css from './add-card-modal.module.scss';
 import { AddCardModalProps } from './add-card-modal.types';
@@ -63,7 +63,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, onClose, setCa
       meta: token.card,
     };
     try {
-      await endpoint.post.payments['add-card'](payload, is_jp);
+      await addCard(payload, is_jp);
     } catch (err) {
       dialog.alert({
         title: 'add card error',

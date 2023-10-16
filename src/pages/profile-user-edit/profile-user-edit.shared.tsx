@@ -3,9 +3,8 @@ import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { User, identities } from 'src/core/api';
+import { identities, updateProfile, UpdateProfileReq } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
 import { useForm } from 'src/core/form';
 import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { removedEmptyProps } from 'src/core/utils';
@@ -108,7 +107,7 @@ export const useProfileUserEditShared = (props?: EditProps) => {
     if (form.isValid) {
       const rawPayload = getFormValues(form);
       const payload = removedEmptyProps(rawPayload);
-      endpoint.post.user['update/profile'](payload).then(async () => {
+      updateProfile(payload as UpdateProfileReq).then(async () => {
         await updateIdentityList();
         navigate('/jobs');
       });
@@ -121,7 +120,7 @@ export const useProfileUserEditShared = (props?: EditProps) => {
     if (form.isValid) {
       const rawPayload = getFormValues(form);
       const payload = removedEmptyProps(rawPayload);
-      endpoint.post.user['update/profile'](payload).then(async (resp) => {
+      updateProfile(payload as UpdateProfileReq).then(async (resp) => {
         await updateIdentityList();
         props?.updateUser(resp);
         props?.onClose();

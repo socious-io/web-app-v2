@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
@@ -22,6 +23,7 @@ import { useScreenerQuestionsShared } from '../screener-questions.shared';
 export const Mobile: React.FC = () => {
   const { dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
     useScreenerQuestionsShared();
+  const navigate = useNavigate();
   function submitWithQuestions() {
     const payloadQuestion: CreateQuestionPayload =
       formState.question_type === 'MULTIPLE'
@@ -39,7 +41,7 @@ export const Mobile: React.FC = () => {
       dispatch(setQuestionProjectIds({ ...formState.question_project_id, question_id: resp.id }));
       store.dispatch(resetQuestions());
       form.reset();
-      history.back();
+      navigate(-1);
     });
   }
   function updateSelectedQuestion() {
@@ -62,7 +64,7 @@ export const Mobile: React.FC = () => {
     ).then((resp) => {
       store.dispatch(resetQuestions());
       form.reset();
-      history.back();
+      navigate(-1);
     });
   }
   const addQuestionsJSX = (
@@ -138,7 +140,7 @@ export const Mobile: React.FC = () => {
               onClick={() => {
                 store.dispatch(resetQuestions());
                 form.reset();
-                history.back();
+                navigate(-1);
               }}
             >
               Cancel
@@ -156,7 +158,7 @@ export const Mobile: React.FC = () => {
               onClick={() => {
                 store.dispatch(resetQuestions());
                 form.reset();
-                history.back();
+                navigate(-1);
               }}
             >
               Cancel
