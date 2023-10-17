@@ -9,20 +9,20 @@ import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fi
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { ProfileReq } from 'src/pages/profile-organization/refactored/profileOrg.types';
+import { Organization } from 'src/core/api';
 
 import css from './mobile.module.scss';
 import { useProfileUserEditShared } from '../profile-user-edit.shared';
 
 export const Mobile = (): JSX.Element => {
-  const user = useLoaderData() as ProfileReq;
+  const user = useLoaderData() as Organization;
   const [skills, setSkills] = useState<{ value: string; label: string }[]>([]);
 
   const { onCoverEdit, onAvatarEdit, onSave, onCountryUpdate, updateCityList, coverImage, avatarImage, cities, form } =
     useProfileUserEditShared();
 
   useEffect(() => {
-    updateCityList(user.country);
+    updateCityList(user.country || '');
     skillsToCategoryAdaptor().then((data) => setSkills(data));
   }, []);
 
