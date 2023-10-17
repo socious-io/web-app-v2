@@ -7,6 +7,7 @@ export function jobToApplicantListAdaptor(applicant: Offer[]): Applicant[] {
   if (applicant.length === 0) {
     return [];
   }
+  // console.log('applicant ', applicant);
   return applicant.map((item) => {
     return {
       id: item.id,

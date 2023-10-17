@@ -9,6 +9,7 @@ import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
 
 export const Offered = (props: OfferedProps): JSX.Element => {
+  console.log('offer props', props);
   const navigate = useNavigate();
   const resolver = useLoaderData() as Loader;
   const {
@@ -27,7 +28,8 @@ export const Offered = (props: OfferedProps): JSX.Element => {
   }
 
   function onMessageClick(id: string) {
-    navigate(`/chats/new/${id}`);
+    console.log(id, 'other stuff', props);
+    navigate(`/chats/new/${"2bd26aa5-f745-4f12-bca7-17916161ae8b"}`);
   }
 
   return (

@@ -8,6 +8,7 @@ import { Typography } from '../../atoms/typography/typography';
 import { ProfileView } from '../profile-view/profile-view';
 
 export const ApplicantListHire = (props: ApplicantListProps): JSX.Element => {
+  console.log('inside ', props);
   const hireBtn = (id: string) => (
     <div onClick={() => props.onHireClick?.(id)} className={css.footerItem}>
       <img src="/icons/user-accept-blue.svg" />
