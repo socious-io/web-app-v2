@@ -43,7 +43,7 @@ export const balance = async (web3: Web3, token: string) => {
   return web3.utils.fromWei(result);
 };
 
-export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
+export const withdrawnEscrow = async (web3: Web3, escrowId: string, verifiedOrg?: boolean) => {
   // Note: Escrow new contract issue that sends index instead of id
   const id = (parseInt(escrowId) + 1).toString();
   // TODO: get this from contributor info
@@ -51,8 +51,11 @@ export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
   const escrowABI = selectedNetwork.old ? dappConfig.abis.escrow_old : dappConfig.abis.escrow;
   const escrowContract = new web3.eth.Contract(escrowABI, selectedNetwork.escrow);
-
-  const result = await escrowContract.methods.withdrawn(id).send({ from: web3.eth.defaultAccount });
+  const result = (
+    selectedNetwork.old
+      ? await escrowContract.methods.withdrawn(id, verifiedOrg)
+      : await escrowContract.methods.withdrawn(id)
+  ).send({ from: web3.eth.defaultAccount });
 
   return result.transactionHash;
 };
