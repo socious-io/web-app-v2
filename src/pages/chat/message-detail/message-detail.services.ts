@@ -30,7 +30,7 @@ function getIdentityType(msgId: string, participants: Participant[]): 'organizat
 }
 
 export function getParticipantDetail(id: string, participants: Participant[] = []): Participant {
-  return participants.find((p) => p.id !== id) || ({} as Participant);
+  return participants.find((p) => p.identity_id !== id) || ({} as Participant);
 }
 
 export function chatListAdaptor(
