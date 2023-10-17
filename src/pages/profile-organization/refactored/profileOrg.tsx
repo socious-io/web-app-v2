@@ -23,7 +23,6 @@ export const ProfileOrg = (): JSX.Element => {
   const [openConnectModal, setOpenConnectModal] = useState(false);
   const {
     organization,
-    skills,
     hiring,
     onHiring,
     address,
@@ -46,12 +45,6 @@ export const ProfileOrg = (): JSX.Element => {
     </Divider>
   );
 
-  const userFullNameJSX = (
-    <div className={css.name}>
-      {organization?.first_name} {organization?.last_name}
-    </div>
-  );
-
   const missionJSX = (
     <Divider title="Mission">
       <div className={css.mission}>{organization.mission}</div>
@@ -69,11 +62,6 @@ export const ProfileOrg = (): JSX.Element => {
       <div onClick={navigateJobs} className={css.mission}>
         See Jobs
       </div>
-    </Divider>
-  );
-  const skillsJSX = (
-    <Divider title="Skills">
-      <CategoriesClickable list={skills} />
     </Divider>
   );
 
@@ -107,7 +95,6 @@ export const ProfileOrg = (): JSX.Element => {
   );
 
   const orgNameJSX = <div className={css.name}>{organization?.name}</div>;
-  const usernameJSX = <div className={css.username}>@{organization?.username}</div>;
 
   const contactLinkJSX = (
     <div className={css.contactItem}>
@@ -189,11 +176,7 @@ export const ProfileOrg = (): JSX.Element => {
             </div>
           </div>
           <div>
-            <Divider>
-              {printWhen(orgNameJSX, !!organization?.name)}
-              {printWhen(userFullNameJSX, !!organization?.first_name || !!organization?.last_name)}
-              {printWhen(usernameJSX, !!organization?.username)}
-            </Divider>
+            <Divider>{printWhen(orgNameJSX, !!organization.name)}</Divider>
 
             {printWhen(hiringJSX, profileBelongToCurrentUser)}
             {printWhen(bioJSX, !!organization.bio)}
@@ -215,7 +198,6 @@ export const ProfileOrg = (): JSX.Element => {
             </Divider>
             {printWhen(missionJSX, !!organization.mission)}
             {printWhen(cultureJSX, !!organization.culture)}
-            {printWhen(skillsJSX, organization.skills && organization.skills?.length > 0)}
             <div className="md:hidden">{jobsJSX}</div>
           </div>
           <EditOrganization
