@@ -4,10 +4,10 @@ import { Header } from 'src/components/atoms/header-v2/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { SureModal } from 'src/components/templates/sure-modal';
 import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { printWhen } from 'src/core/utils';
+import { closeJob, rejectApplicant } from 'src/core/api';
 
 import css from './mobile.module.scss';
-import { archiveJob, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
+import { jobOfferRejectLoader } from '../../job-offer-reject.services';
 import { Loader } from '../../job-offer-reject.types';
 import { Applicants } from '../components/applicants/applicants';
 import { Hired } from '../components/hired/hired';
@@ -114,9 +114,9 @@ export const Mobile = (): JSX.Element => {
         open={showArchiveConfirm}
         onClose={() => setShowArchiveConfirm(false)}
         onDone={() => {
-          archiveJob(id).then(() => {
+          closeJob(id).then(() => {
             setShowArchiveConfirm(false);
-            history.back();
+            navigate(-1);
           });
         }}
         modalTexts={{

@@ -4,13 +4,14 @@ import { Card } from 'src/components/atoms/card/card';
 import { BackLink } from 'src/components/molecules/back-link';
 import { ProfileCard } from 'src/components/templates/profile-card';
 import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { applicant, rejectApplicant } from 'src/core/api';
 import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
 import { ApplicantResp } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
 
 import css from './desktop.module.scss';
-import { getApplicantDetail, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
+import { jobOfferRejectLoader } from '../../job-offer-reject.services';
 import { Loader } from '../../job-offer-reject.types';
 import { OfferModal } from '../../offer/offer-modal';
 import { Applicants } from '../components/applicants/applicants';
@@ -31,7 +32,7 @@ export const Desktop = (): JSX.Element => {
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
   const { isLoggedIn } = useAuth();
   async function onOfferClick(id: string) {
-    const result = await getApplicantDetail(id);
+    const result = await applicant(id);
     if (Object.keys(result)?.length) {
       setApplicantDetail(result);
       setOpenOfferModal(true);

@@ -980,6 +980,7 @@ function DefaultRoute(): JSX.Element {
 function ErrorBoundary() {
   const error: any = useRouteError();
   if (error?.response?.status === 401) return <Navigate to="/intro" />;
+  console.log(error);
   return <FallBack />;
 }
 

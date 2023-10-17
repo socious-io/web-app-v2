@@ -1,7 +1,7 @@
 import { useLoaderData, useNavigate } from 'react-router-dom';
+import { rejectApplicant } from 'src/core/api';
 
 import { Resolver } from './applicant-detail.types';
-import { rejectApplicant } from '../job-offer-reject.services';
 
 export const useApplicantDetailShared = () => {
   const navigate = useNavigate();

@@ -11,6 +11,7 @@ import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateProjectType } from 'src/constants/PROJECT_TYPES';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { closeJob, jobQuestions } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
 import { printWhen } from 'src/core/utils';
@@ -18,11 +19,6 @@ import { InfoModal } from 'src/pages/job-edit/info/info-modal';
 import { CreatedModal } from 'src/pages/job-edit/screener-questions/created/created-modal';
 import { SkillsModal } from 'src/pages/job-edit/skills/skills-modal';
 import { SocialCausesModal } from 'src/pages/job-edit/social-causes/social-causes-modal';
-import {
-  archiveJob,
-  getJobOverview,
-  getScreeningQuestions,
-} from 'src/pages/job-offer-reject/job-offer-reject.services';
 
 import css from './overview.module.scss';
 import { OverviewProps } from './overview.types';
@@ -38,7 +34,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
   const [screeningQuestions, SetScreeningQuestions] = useState(questions);
 
   const updateScreeningQuestions = async () => {
-    const updatedQuestion = await getScreeningQuestions(data.id);
+    const updatedQuestion = await jobQuestions(data.id);
     SetScreeningQuestions(updatedQuestion.questions);
     console.log(updatedQuestion.questions);
   };
@@ -200,7 +196,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
         open={showArchiveConfirm}
         onClose={() => setShowArchiveConfirm(false)}
         onDone={() => {
-          archiveJob(overviewData.id).then((resp) => {
+          closeJob(overviewData.id).then((resp) => {
             setShowArchiveConfirm(false);
             updateApplicantList();
           });
