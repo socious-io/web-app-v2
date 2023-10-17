@@ -3,9 +3,13 @@ import { EscrowParams } from './dapp.types';
 import { dappConfig } from './dapp.config';
 import Web3 from 'web3';
 
-const makeAmount = async (web3: Web3, token: string, amount: number): Promise<string> => {
-  const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
-  const decimals = await erc20Contract.methods.decimals().call();
+const makeAmount = async (web3: Web3, token: string, amount: number, decimals?: number): Promise<string> => {
+  if (!decimals) {
+    const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
+    decimals = await erc20Contract.methods.decimals().call();
+    if (!decimals) decimals = 18;
+  }
+
   const parts = amount.toString().split('.');
   let fraction = parts[1] || '0';
   while (fraction.length < decimals) {
@@ -17,9 +21,9 @@ const makeAmount = async (web3: Web3, token: string, amount: number): Promise<st
   // return web3.utils.toBN(amount*100).mul(web3.utils.toBN(Math.pow(10, decimals-2))).toString();
 };
 
-export const allowance = async (web3: Web3, token: string, amount: number) => {
+export const allowance = async (web3: Web3, token: string, amount: number, decimals?: number) => {
   // TODO: we may configure this fee ratio later
-  const allowanceAmount = await makeAmount(web3, token, amount);
+  const allowanceAmount = await makeAmount(web3, token, amount, decimals);
   const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
 
   const chainId = await web3.eth.getChainId();
@@ -41,11 +45,12 @@ export const balance = async (web3: Web3, token: string) => {
 
 export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
   // Note: Escrow new contract issue that sends index instead of id
-  const id = (parseInt(escrowId) + 1).toString()
+  const id = (parseInt(escrowId) + 1).toString();
   // TODO: get this from contributor info
   const chainId = await web3.eth.getChainId();
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
-  const escrowContract = new web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
+  const escrowABI = selectedNetwork.old ? dappConfig.abis.escrow_old : dappConfig.abis.escrow;
+  const escrowContract = new web3.eth.Contract(escrowABI, selectedNetwork.escrow);
 
   const result = await escrowContract.methods.withdrawn(id).send({ from: web3.eth.defaultAccount });
 
@@ -57,16 +62,18 @@ export const escrow = async (params: EscrowParams) => {
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
   let token = params.token;
   if (!token) token = selectedNetwork.tokens[0].address;
+  const tokenConfig = selectedNetwork.tokens.find((t) => t.address === token);
+  if (!tokenConfig) throw new Error("Offered token is not exists on this network you'd selected!");
   // First need allowance to verify that transaction is possible for smart contract
-  await allowance(params.web3, token, params.totalAmount);
-
-  const escrowContract = new params.web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
+  await allowance(params.web3, token, params.totalAmount, tokenConfig?.decimals);
+  const escrowABI = selectedNetwork.old ? dappConfig.abis.escrow_old : dappConfig.abis.escrow;
+  const escrowContract = new params.web3.eth.Contract(escrowABI, selectedNetwork.escrow);
 
   const result = await escrowContract.methods
     .newEscrow(
       params.contributor,
       params.projectId,
-      await makeAmount(params.web3, token, params.escrowAmount),
+      await makeAmount(params.web3, token, params.escrowAmount, tokenConfig?.decimals),
       params.verifiedOrg,
       token
     )

@@ -6,11 +6,13 @@ export interface Token {
   name: string;
   symbol: string;
   address: string;
+  decimals?: number;
 }
 
 export interface Network {
   chain: Chain;
   escrow: string;
+  old?: boolean;
   logic?: string;
   tokens: Token[];
 }
@@ -21,6 +23,7 @@ export interface DappConfig {
   testnet: Network[];
   abis: {
     escrow: AbiItem[];
+    escrow_old: AbiItem[];
     token: AbiItem[];
   };
 }
