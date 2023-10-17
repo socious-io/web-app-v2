@@ -44,6 +44,7 @@ export const Mobile = (): JSX.Element => {
             )
           }
         />
+
         <ContactList
           height="calc(var(--window-height) - var(--safe-area) + 1.5rem)"
           onScroll={onScroll}

@@ -1,21 +1,33 @@
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Card } from 'src/components/atoms/card/card';
 import { Search } from 'src/components/atoms/search/search';
 import { OrgMeta, UserMeta } from 'src/core/api';
 import { useNetworkShared } from 'src/pages/network/network.shared';
+import { visibility } from 'src/store/reducers/menu.reducer';
 
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
   const { navigateNetwork, identity } = useNetworkShared();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const avatarImg = (identity?.meta as UserMeta).avatar || (identity?.meta as OrgMeta).image || '';
 
+  function openSidebar() {
+    dispatch(visibility(true));
+  }
+
+  const onSearchEnter = (value: string) => {
+    navigate(`/search?q=${value}&type=projects&page=1`);
+  };
   return (
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.menu}>
-          {identity && <Avatar size="2.25rem" type={identity.type} img={avatarImg} />}
-          <Search placeholder="Search network" />
+          {identity && <Avatar size="2.25rem" type={identity.type} img={avatarImg} onClick={openSidebar} />}
+          <Search placeholder="Search network" onEnter={onSearchEnter} />
           <div>
             <img className={css.logo} src="icons/chat-white.svg" />
           </div>
