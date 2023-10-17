@@ -10,13 +10,13 @@ import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { PROJECT_PAYMENT_MODE } from 'src/constants/PROJECT_PAYMENT_MODE';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { offerByApplicant } from 'src/core/api';
 import { useForm } from 'src/core/form';
 import { OfferPayload } from 'src/core/types';
 import { printWhen } from 'src/core/utils';
 import Dapp from 'src/dapp';
 
 import css from './mobile.module.scss';
-import { offer } from '../../job-offer-reject.services';
 import { formModel } from '../offer.services';
 import { useOfferShared } from '../offer.shared';
 import { Resolver } from '../offer.types';
@@ -45,7 +45,7 @@ export const Mobile = (): JSX.Element => {
       total_hours: (form.controls.estimatedTotalHours.value as string) || initialForm.estimatedTotalHours,
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
-    offer(applicantDetail.id, payload).then(() => {
+    offerByApplicant(applicantDetail.id, payload).then(() => {
       navigate('../..');
     });
   }

@@ -1,31 +1,22 @@
-import { job, jobOffers } from 'src/core/api';
+import { job, jobApplicants, jobMissions, jobOffers, jobQuestions } from 'src/core/api';
 
 import { Applicant } from '../../components/molecules/applicant-list/applicant-list.types';
 import { Applicant as ApplicantHire } from '../../components/molecules/applicant-list-pay/applicant-list-pay.types';
-import { Job } from '../../components/organisms/job-list/job-list.types';
 import { translatePaymentTerms } from '../../constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from '../../constants/PROJECT_PAYMENT_TYPE';
 import { isoToStandard } from '../../core/time';
-import {
-  ApplicantResp,
-  MissionsResp,
-  Offer,
-  OfferPayload,
-  Pagination,
-  QuestionsRes,
-  UserApplicantResp,
-} from '../../core/types';
+import { ApplicantResp, MissionsResp, Pagination, UserApplicantResp } from '../../core/types';
 import { getJobCategories } from '../job-create/info/info.services';
 
 export async function jobOfferRejectLoader({ params }: { params: { id: string } }) {
   const requests = [
     jobOffers(params.id),
     job(params.id),
-    getScreeningQuestions(params.id),
-    getToReviewList({ id: params.id, page: 1 }),
-    getDeclinedList({ id: params.id, page: 1 }),
-    getHiredList({ id: params.id, page: 1 }),
-    getEndHiredList({ id: params.id, page: 1 }),
+    jobQuestions(params.id),
+    jobApplicants(params.id, { page: 1, status: 'PENDING', limit: 100 }),
+    jobApplicants(params.id, { page: 1, status: 'REJECTED', limit: 100 }),
+    jobMissions(params.id, { page: 1, 'filter.status': 'ACTIVE,COMPLETE', limit: 100 }),
+    jobMissions(params.id, { page: 1, 'filter.status': 'CONFIRMED,CANCELED,KICKED_OUT', limit: 100 }),
     jobOffers(params.id, { page: 1, status: 'PENDING' }),
     jobOffers(params.id, { page: 1, status: 'APPROVED' }),
     jobOffers(params.id, { page: 1, status: 'HIRED' }),
@@ -62,52 +53,6 @@ export async function jobOfferRejectLoader({ params }: { params: { id: string } 
   };
 }
 
-export async function getOfferOverview(id: string): Promise<Offer> {
-  return get(`projects/${id}/offers`).then(({ data }) => data?.items[0]);
-}
-
-export async function getJobOverview(id: string): Promise<Job> {
-  return get(`projects/${id}`).then(({ data }) => {
-    return data;
-  });
-}
-
-export async function getToReviewList(payload: { id: string; page: number }): Promise<Pagination<UserApplicantResp[]>> {
-  return get(`projects/${payload.id}/applicants?limit=100&status=PENDING&page=${payload.page}`).then(
-    ({ data }) => data,
-  );
-}
-
-export async function getDeclinedList(payload: { id: string; page: number }): Promise<Pagination<UserApplicantResp[]>> {
-  return get(`projects/${payload.id}/applicants?limit=100&status=REJECTED&page=${payload.page}`).then(
-    ({ data }) => data,
-  );
-}
-
-export async function getHiredList(payload: { id: string; page: number }): Promise<MissionsResp> {
-  return get(`projects/${payload.id}/missions?limit=100&filter.status=ACTIVE,COMPLETE&page=${payload.page}`).then(
-    ({ data }) => data,
-  );
-}
-
-export async function getScreeningQuestions(id: string): Promise<QuestionsRes> {
-  return get(`projects/${id}/questions`).then(({ data }) => data);
-}
-
-export async function getEndHiredList(payload: { id: string; page: number }): Promise<MissionsResp> {
-  return get(
-    `projects/${payload.id}/missions?limit=100&filter.status=CONFIRMED,CANCELED,KICKED_OUT&page=${payload.page}`,
-  ).then(({ data }) => data);
-}
-
-export async function getApplicantDetail(applicantId: string): Promise<ApplicantResp> {
-  return get(`/applicants/${applicantId}`).then(({ data }) => data);
-}
-
-export async function rejectApplicant(id: string): Promise<ApplicantResp> {
-  return post(`/applicants/${id}/reject`, {}).then(({ data }) => data);
-}
-
 export function applicantToApplicantListAdaptor(applicant: UserApplicantResp[]): Applicant[] {
   if (applicant.length === 0) {
     return [];
@@ -124,10 +69,6 @@ export function applicantToApplicantListAdaptor(applicant: UserApplicantResp[]):
       user_id: item.user.id,
     };
   });
-}
-
-export function offer(id: string, payload: OfferPayload) {
-  return post(`/applicants/${id}/offer`, payload);
 }
 
 export function missionToApplicantListAdaptor(mission: MissionsResp['items']): Applicant[] {
@@ -169,8 +110,4 @@ export function missionToApplicantListPayAdaptor(mission: MissionsResp['items'])
       projectId: item?.project.id,
     };
   });
-}
-
-export async function archiveJob(projectId: string) {
-  return post(`/projects/update/${projectId}/close`, {});
 }

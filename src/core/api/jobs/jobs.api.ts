@@ -41,7 +41,7 @@ export async function jobMissions(id: string, params: PaginateReq): Promise<Miss
 }
 
 export async function jobApplicants(id: string, params: PaginateReq): Promise<ApplicantsRes> {
-  return (await get<ApplicantsRes>(`projects/${id}/missions`, { params })).data;
+  return (await get<ApplicantsRes>(`projects/${id}/applicants`, { params })).data;
 }
 
 export async function createJob(payload: JobReq): Promise<Job> {
@@ -80,6 +80,9 @@ export async function applicant(id: string): Promise<Applicant> {
   return (await get<Applicant>(`applicants/${id}`)).data;
 }
 
+export async function rejectApplicant(id: string): Promise<Applicant> {
+  return (await post<Applicant>(`applicants/${id}/reject`,{})).data;
+}
 export async function getOffer(id: string): Promise<Offer> {
   return (await get<Offer>(`offers/${id}`)).data;
 }
