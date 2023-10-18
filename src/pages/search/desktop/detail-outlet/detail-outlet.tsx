@@ -2,7 +2,7 @@ import { CSSProperties, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { CurrentIdentity, jobOffers, jobQuestions } from 'src/core/api';
+import { CurrentIdentity, job, jobQuestions } from 'src/core/api';
 import { JobDetailCard } from 'src/pages/job-detail/components/job-detail-card/job-detail-card';
 import { getOrganizationDetail } from 'src/pages/profile-organization/refactored/profileOrg.services';
 import { getUserDetail } from 'src/pages/profile-user/refactored/profileUser.services';
@@ -41,14 +41,15 @@ export function DetailOutlet(props: DetailOutletProps): JSX.Element {
       }
       switch (props.type) {
         case 'projects':
+          console.log('type');
           setLoading(true);
-          const job = await jobOffers(props.id);
+          const jobDetail = await job(props.id);
           const { questions } = await jobQuestions(props.id);
           const jobDetailCardJSX = (
             <JobDetailCard
-              job={job}
+              job={jobDetail}
               screeningQuestions={questions}
-              location={location(job)}
+              location={location(jobDetail)}
               userType={currentIdentity?.type || 'users'}
             />
           );
