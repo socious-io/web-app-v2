@@ -1,8 +1,9 @@
 import { Capacitor } from '@capacitor/core';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { User, profile, identities, AuthRes, LoginReq, login, handleError, devices, newDevice } from 'src/core/api';
-import { useForm } from 'src/core/form';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
+import { setAuthParams } from 'src/core/api/auth/auth.service';
 import {
   addNotificationReceivedListener,
   getDeliveredNotifications,
@@ -13,8 +14,7 @@ import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
-import { formModel } from './sign-in.form';
-import { setAuthParams } from 'src/core/api/auth/auth.service';
+import { schema } from './sign-in.form';
 
 const addListeners = () => {
   addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
@@ -63,7 +63,15 @@ function registerPushNotifications() {
 
 export const useSignInShared = () => {
   const navigate = useNavigate();
-  const form = useForm(formModel);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    getValues,
+  } = useForm({
+    mode: 'all',
+    resolver: yupResolver(schema),
+  });
 
   async function onLoginSucceed(loginResp: AuthRes) {
     await setAuthParams(loginResp);
@@ -85,12 +93,12 @@ export const useSignInShared = () => {
   };
 
   async function onLogin() {
-    const formValues = getFormValues(form) as LoginReq;
+    const formValues = getValues() as LoginReq;
     login(formValues)
       .then(onLoginSucceed)
       .then(registerPushNotifications)
       .catch(handleError({ title: 'Login Failed' }));
   }
 
-  return { onLogin, form, navigate };
+  return { onLogin, navigate, register, handleSubmit, errors, isValid };
 };
