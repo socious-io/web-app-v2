@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { ApplicantListHire } from 'src/components/molecules/applicant-list-hire/applicant-list-hire';
 import { cancelOffer, hireOffer } from 'src/core/api';
@@ -9,7 +9,7 @@ import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
 
 export const Offered = (props: OfferedProps): JSX.Element => {
-  console.log('offer props', props);
+  const { id } = useParams();
   const navigate = useNavigate();
   const resolver = useLoaderData() as Loader;
   const {
@@ -19,17 +19,16 @@ export const Offered = (props: OfferedProps): JSX.Element => {
     if (payment_type === 'PAID' && !props.approved.items[0]?.escrow) {
       navigate(`/payment/${offerId}`);
     } else {
-      hireOffer(offerId).then(() => navigate(`/jobs/created/${resolver?.jobOverview.id}`));
+      hireOffer(offerId).then(() => navigate(`/jobs/created/${id}`));
     }
   }
 
   async function onReject(offerId: string) {
-    cancelOffer(offerId).then(() => navigate(`/jobs/created/${resolver?.jobOverview.id}`));
+    cancelOffer(offerId).then(() => navigate(`/jobs/created/${id}`));
   }
 
   function onMessageClick(id: string) {
-    console.log(id, 'other stuff', props);
-    navigate(`/chats/new/${"2bd26aa5-f745-4f12-bca7-17916161ae8b"}`);
+    navigate(`/chats/new/${id}`);
   }
 
   return (
