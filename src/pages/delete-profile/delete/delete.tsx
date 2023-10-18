@@ -1,6 +1,7 @@
-import css from './delete.module.scss';
-import { Button } from 'src/components/atoms/button/button';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+
+import css from './delete.module.scss';
 
 export const Delete = () => {
   const navigate = useNavigate();

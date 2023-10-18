@@ -23,10 +23,11 @@ export const Password = () => {
   };
 
   const deleteMyAccount = () => {
-    login(email, form.controls.password.value)
+    login(email!, form.controls.password.value)
       .then((resp) => {
-        if (resp.message === 'success') {
+        if (resp.access_token) {
           deleteAccount().then((resp) => {
+            console.log('test log resp', resp);
             if (resp.message === 'success') {
               navigate(`../confirm?email=${email}`);
             }
