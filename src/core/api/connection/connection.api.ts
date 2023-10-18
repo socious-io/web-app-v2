@@ -32,9 +32,7 @@ export async function getFollowings(params: PaginateReq): Promise<FollowingRes> 
   return (await get<FollowingRes>('follows/followings', { params })).data;
 }
 export async function filterFollowings(params: FilterReq): Promise<FollowingRes> {
-  return (
-    await get<FollowingRes>(`follows/followings?page=${params?.page || ''}&name=${params.name}&type=${params?.type}`)
-  ).data;
+  return (await get<FollowingRes>(`follows/followings`, { params })).data;
 }
 export async function follow(identityId: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`follows/${identityId}`, {})).data;
