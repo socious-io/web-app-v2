@@ -274,7 +274,7 @@ export const blueprint: RouteObject[] = [
                 },
               },
               {
-                path: 'received-offer/:id',
+                path: 'received-offer/:id/*',
                 loader: async ({ params }) => {
                   let media = { url: '' };
                   const offer = await getOffer(params.id);
