@@ -48,10 +48,10 @@ export const Hired = (props: HiredProps): JSX.Element => {
       setProcess(false);
       return;
     }
-
     if (web3 && escrowId) {
       try {
-        await Dapp.withdrawnEscrow(web3, escrowId);
+        
+        await Dapp.withdrawnEscrow(web3, escrowId, offerOverview.offerer.meta.verified_impact);
         confirmMission(id).then(onDone);
       } catch (err: any) {
         dialog.confirm({
