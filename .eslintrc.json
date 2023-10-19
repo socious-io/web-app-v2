@@ -1,13 +1,33 @@
 {
-  "extends": ["react-app", "react-app/jest", "prettier", "plugin:@typescript-eslint/recommended"],
-  "plugins": ["@typescript-eslint", "import"],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:storybook/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
   "rules": {
     "semi": "error",
     "import/order": [
       "error",
       {
         "newlines-between": "always",
-        "groups": [["builtin", "external"], "internal", ["parent", "sibling", "index"]],
+        "groups": [
+          [
+            "builtin",
+            "external"
+          ],
+          "internal",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
+        ],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
