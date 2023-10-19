@@ -29,9 +29,13 @@ export const allowance = async (web3: Web3, token: string, amount: number, decim
   const chainId = await web3.eth.getChainId();
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
 
+  const estimatedGas = await erc20Contract.methods
+    .approve(selectedNetwork.escrow, allowanceAmount)
+    .estimateGas({ from: web3.eth.defaultAccount });
+
   const approved = await erc20Contract.methods
     .approve(selectedNetwork.escrow, allowanceAmount)
-    .send({ from: web3.eth.defaultAccount });
+    .send({ from: web3.eth.defaultAccount, gasPrice: estimatedGas });
 
   if (!approved) throw new Error('Allowance not approved for escorw');
 };
@@ -51,11 +55,7 @@ export const withdrawnEscrow = async (web3: Web3, escrowId: string, verifiedOrg?
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
   const escrowABI = selectedNetwork.old ? dappConfig.abis.escrow_old : dappConfig.abis.escrow;
   const escrowContract = new web3.eth.Contract(escrowABI, selectedNetwork.escrow);
-  const result = (
-    selectedNetwork.old
-      ? await escrowContract.methods.withdrawn(id, verifiedOrg)
-      : await escrowContract.methods.withdrawn(id)
-  ).send({ from: web3.eth.defaultAccount });
+  const result = await escrowContract.methods.withdrawn(id).send({ from: web3.eth.defaultAccount });
 
   return result.transactionHash;
 };
