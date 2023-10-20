@@ -1,14 +1,12 @@
-import css from './body.module.scss';
-import { Tab } from '../../../../components/atoms/tabs/tabs.types';
-import { Tabs } from '../../../../components/atoms/tabs/tabs';
+import { useLoaderData } from 'react-router-dom';
+import { Tabs } from 'src/components/atoms/tabs/tabs';
+import { Tab } from 'src/components/atoms/tabs/tabs.types';
+import { ImpactCategoryList } from 'src/components/organisms/impact-category-list/impact-category-list';
+import { Badges, ImpactPoints } from 'src/core/api';
+import { Tier } from 'src/pages/achievements/components/tier/tier';
+import { evaluateTier } from 'src/pages/achievements/mobile/achievements.service';
+
 import { BodyProps } from './body.types';
-import { ImpactCategoryList } from '../../../../components/organisms/impact-category-list/impact-category-list';
-import { JobHistoryList } from '../../../../components/organisms/job-history-list/job-history-list';
-import { Tier } from '../tier/tier';
-import { useMatch } from '@tanstack/react-location';
-import { Loader } from '../../achievements.types';
-import { evaluateTier } from '../../mobile/achievements.service';
-import { JobHistoryListProps } from 'src/components/organisms/job-history-list/job-history-list.types';
 
 const data = [
   {
@@ -38,7 +36,7 @@ const data = [
 // }
 
 export const Body = (props: BodyProps): JSX.Element => {
-  const loader = useMatch().ownData as Loader;
+  const loader = useLoaderData() as { badges: Badges; impactPointHistory: ImpactPoints };
 
   const points = loader.badges.badges.reduce((prev, curr) => prev + curr.total_points, 0);
   const tier = evaluateTier(points);

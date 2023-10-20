@@ -1,15 +1,9 @@
-import { toRelativeTime } from '../../../core/relative-time';
-import { Avatar } from '../../atoms/avatar/avatar';
 import css from './notification-item.module.scss';
 import { NotificationItemProps } from './notification-item.types';
+import { toRelativeTime } from '../../../core/relative-time';
+import { Avatar } from '../../atoms/avatar/avatar';
 
-export const NotificationItem = ({
-  body,
-  img,
-  date,
-  type,
-  onClick,
-}: NotificationItemProps): JSX.Element => {
+export const NotificationItem = ({ body, img, date, type, onClick }: NotificationItemProps): JSX.Element => {
   return (
     <div className={css.container} onClick={onClick}>
       <Avatar size="3rem" type={type} img={img} />

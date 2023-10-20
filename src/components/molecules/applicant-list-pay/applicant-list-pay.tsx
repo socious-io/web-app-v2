@@ -1,9 +1,10 @@
+import Dapp from 'src/dapp';
+
+import css from './applicant-list-pay.module.scss';
+import { Applicant, ApplicantListPayProps } from './applicant-list-pay.types';
 import { printWhen } from '../../../core/utils';
 import { StatusTag } from '../../atoms/status-tag/status-tag';
 import { ProfileView } from '../profile-view/profile-view';
-import css from './applicant-list-pay.module.scss';
-import { Applicant, ApplicantListPayProps } from './applicant-list-pay.types';
-import Dapp from 'src/dapp';
 
 const statuses = {
   CONFIRMED: {
@@ -35,7 +36,20 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
     </div>
   );
 
+  const reHireBtn = (applicant: Applicant) => (
+    <div
+      onClick={() => {
+        props.onRehire && props.onRehire(applicant.id);
+      }}
+      className={css.footerItem}
+    >
+      <img src="/icons/rehire.svg" width={'25px'} />
+      <div className={css.footerLabel}>Hire again</div>
+    </div>
+  );
+
   const applicantJSX = (applicant: Applicant) => {
+    console.log('applicant', applicant);
     return (
       <div key={applicant.id} className={css.applicantContainer}>
         <ProfileView
@@ -72,16 +86,17 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             <div className={css.footerItem}>
               <Dapp.Connect />
             </div>,
-            props.isPaidCrypto
+            props.isPaidCrypto,
           )}
           {printWhen(
             confirmBtn(applicant.id, applicant.payment?.meta?.id),
-            props.confirmable || applicant.status === 'COMPLETE'
+            props.confirmable || applicant.status === 'COMPLETE',
           )}
           {printWhen(
             feedbackBtn(applicant.id, applicant.status),
-            applicant.showFeedback && !!props?.onFeedback && applicant?.user_feedback === null
+            applicant.showFeedback && !!props?.onFeedback && applicant?.user_feedback === null,
           )}
+          {printWhen(reHireBtn(applicant), true)}
           <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import Dapp from 'src/dapp';
 import { Item } from 'src/components/molecules/input-modal/input-modal.types';
 import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
+import Dapp from 'src/dapp';
 import { useChainId } from 'wagmi';
+
 import { findTokenRate } from './offer.services';
 
 export const useOfferShared = () => {

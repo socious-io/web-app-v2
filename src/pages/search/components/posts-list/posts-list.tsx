@@ -1,11 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { FeedList } from 'src/components/organisms/feed-list/feed-list';
-import css from './posts-list.module.scss';
+import { likePost, unlikePost } from 'src/core/api';
+import { Post } from 'src/core/api';
 import { printWhen } from 'src/core/utils';
-import { useNavigate } from '@tanstack/react-location';
+
+import css from './posts-list.module.scss';
 import { PostListProps } from './posts-list.types';
-import { useState } from 'react';
-import { like, unlike } from 'src/pages/feed/refactored/feed.service';
-import { Feed } from 'src/components/organisms/feed-list/feed-list.types';
 
 export const PostsList = (props: PostListProps) => {
   const { list, onMorePageClick, showMorePage, onChangeList } = props;
@@ -13,19 +13,19 @@ export const PostsList = (props: PostListProps) => {
 
   const onLike = (id: string) => {
     const clone = [...list];
-    const ref = clone.find((item) => item.id === id) as Feed;
+    const ref = clone.find((item) => item.id === id) as Post;
     ref.liked = true;
     ref.likes = ref.likes + 1;
     onChangeList(clone);
-    like(id).then(() => {});
+    likePost(id);
   };
   const onRemoveLike = (id: string) => {
     const clone = [...list];
-    const ref = clone.find((item) => item.id === id) as Feed;
+    const ref = clone.find((item) => item.id === id) as Post;
     ref.liked = false;
     ref.likes = ref.likes - 1;
     onChangeList(clone);
-    unlike(id).then(() => {});
+    unlikePost(id);
   };
   const seeMoreJSX = (
     <div className={css.seeMore} onClick={() => onMorePageClick()}>
@@ -37,7 +37,9 @@ export const PostsList = (props: PostListProps) => {
     <div className={css.container}>
       <FeedList
         data={list}
-        onMoreClick={(feed) => navigate({ to: `/feeds/${feed.id}` })}
+        onMoreClick={(feed) => {
+          console.log('fake');
+        }}
         onLike={onLike}
         onRemoveLike={onRemoveLike}
         onMorePageClick={showMorePage}

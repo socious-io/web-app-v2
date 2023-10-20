@@ -1,9 +1,9 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { otpConfirm, resendVerifyCode } from 'src/core/api';
+import { setAuthParams } from 'src/core/api/auth/auth.service';
 import { dialog } from 'src/core/dialog/dialog';
 import { LoginResp } from 'src/core/types';
-import { setAuthCookies } from 'src/pages/sign-in/sign-in.services';
-import { endpoint } from 'src/core/endpoints';
 
 export const useSignUpUserVerificationShared = () => {
   const navigate = useNavigate();
@@ -14,13 +14,13 @@ export const useSignUpUserVerificationShared = () => {
   }
 
   async function successOTP(resp: LoginResp) {
-    await setAuthCookies(resp);
-    navigate({ to: '../complete' });
+    await setAuthParams(resp);
+    navigate('../complete');
   }
 
   function onSubmit() {
     const email = localStorage.getItem('email') as string;
-    endpoint.get.auth['otp/confirm']({ email, otp }).then(successOTP).catch(onIncorrectOtp);
+    otpConfirm({ email, code: otp }).then(successOTP).catch(onIncorrectOtp);
   }
 
   function onResendSucceed() {
@@ -29,11 +29,11 @@ export const useSignUpUserVerificationShared = () => {
 
   function onResendRequest() {
     const email = localStorage.getItem('email') as string;
-    endpoint.post.auth['resend-verify-code']({ email }).then(onResendSucceed);
+    resendVerifyCode({ email }).then(onResendSucceed);
   }
 
   function navigateToSignIn() {
-    navigate({ to: '/sign-in' });
+    navigate('/sign-in');
   }
 
   return {

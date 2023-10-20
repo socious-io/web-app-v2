@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import Dapp from 'src/dapp';
-import { StripeProfileResp } from 'src/core/types';
-import { useMatch } from '@tanstack/react-location';
-import { useAccount } from 'wagmi';
-import { Resolver } from './offer-received.types';
+import { useLoaderData, useLocation } from 'react-router-dom';
 import { StatusKeys } from 'src/constants/APPLICANT_STATUS';
-import { endpoint } from 'src/core/endpoints';
-import { useForm } from 'src/core/form';
+import { acceptOffer, rejectOffer, updateWallet } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
+import { useForm } from 'src/core/form';
+import Dapp from 'src/dapp';
+import { useAccount } from 'wagmi';
+
 import { findTokenRate, getStripeLink, getSrtipeProfile, formModel } from './offer-received.services';
+import { Resolver } from './offer-received.types';
 
 export const useOfferReceivedShared = () => {
-  const { offer, media } = useMatch().ownData as Resolver;
+  const { offer, media } = useLoaderData() as Resolver;
   const { project, payment_mode, recipient } = offer;
   const { payment_type } = project || {};
   const { wallet_address } = recipient?.meta || {};
@@ -31,9 +31,7 @@ export const useOfferReceivedShared = () => {
 
   useEffect(() => {
     if (isConnected && account && (!wallet_address || String(wallet_address) !== account)) {
-      endpoint.post.user['{user_id}/update_wallet']({
-        wallet_address: account,
-      });
+      updateWallet({ wallet_address: account });
     }
   }, [isConnected, account]);
 
@@ -47,7 +45,7 @@ export const useOfferReceivedShared = () => {
 
   function onAccept(id: string) {
     return () =>
-      endpoint.post.offers['{offer_id}/approve'](id).then(() => {
+      acceptOffer(id).then(() => {
         dialog.alert({ title: 'Offer accepted', message: 'You have successfully accepted the offer' }).then(() => {
           setStatus('APPROVED');
         });
@@ -56,7 +54,7 @@ export const useOfferReceivedShared = () => {
 
   function onDeclined(id: string) {
     return () => {
-      endpoint.post.offers['{offer_id}/withdrawn'](id).then(() => {
+      rejectOffer(id).then(() => {
         dialog.alert({ title: 'Offer declined', message: 'You have successfully declined the offer' }).then(() => {
           setStatus('WITHRAWN');
         });
@@ -72,14 +70,15 @@ export const useOfferReceivedShared = () => {
 };
 
 export const useWalletShared = () => {
-  const { offer } = useMatch().ownData as Resolver;
+  const { offer } = useLoaderData() as Resolver;
   const form = useForm(formModel);
   const [stripeLink, setStripeLink] = useState('');
   const [stripeProfile, setStripeProfile] = useState(null);
+  const location = useLocation();
 
   async function onSelectCountry(value: string) {
     try {
-      const result = await getStripeLink(value, offer.currency === 'JPY');
+      const result = await getStripeLink(value, location.pathname, offer.currency === 'JPY');
       const {
         link: { url },
       } = result;

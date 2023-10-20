@@ -1,21 +1,22 @@
-import Dapp from 'src/dapp';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Typography } from 'src/components/atoms/typography/typography';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { BankAccounts } from 'src/components/templates/bank-accounts';
 import { Divider } from 'src/components/templates/divider/divider';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { PaymentMethods } from 'src/components/templates/payment-methods';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { printWhen } from 'src/core/utils';
-import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';
+import Dapp from 'src/dapp';
+
 import css from './mobile.module.scss';
-import { BankAccounts } from 'src/components/templates/bank-accounts';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';
 
 export const Mobile = (): JSX.Element => {
   const { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD } =
@@ -132,12 +133,12 @@ export const Mobile = (): JSX.Element => {
               <Divider title="Resume">
                 <div className={css.uploadedResume}>
                   <img src="/icons/attachment-black.svg" />
-                  <a href={media.url} target="_blank">
+                  <a href={media.url} target="_blank" rel="noreferrer">
                     {media.filename}
                   </a>
                 </div>
               </Divider>,
-              !!media.url
+              !!media.url,
             )}
             {/* <Divider title="Contact Info">
               <Typography>
@@ -156,7 +157,7 @@ export const Mobile = (): JSX.Element => {
           <div className={css.wallet}>
             <PaymentMethods crypto_method={<Dapp.Connect />} />
           </div>,
-          isPaidCrypto
+          isPaidCrypto,
         )}
         {printWhen(
           <Dropdown
@@ -167,11 +168,11 @@ export const Mobile = (): JSX.Element => {
             list={COUNTRIES}
             onValueChange={(selected) => onSelectCountry(selected.value as string)}
           />,
-          !isPaidCrypto && !stripeProfile
+          !isPaidCrypto && !stripeProfile,
         )}
         {printWhen(
           <BankAccounts accounts={stripeProfile} isDisabled={!stripeLink} bankAccountLink={stripeLink} />,
-          !isPaidCrypto
+          !isPaidCrypto,
         )}
         {printWhen(buttonsJSX, status === 'PENDING')}
       </div>

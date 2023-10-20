@@ -2,7 +2,7 @@ export const translatePaymentRange = (
   lower: string,
   higher: string,
   type: string,
-  scheme: string
+  scheme: string,
 ): {
   value: string;
   label: string;

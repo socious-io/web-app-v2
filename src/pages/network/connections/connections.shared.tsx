@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { endpoint } from 'src/core/endpoints';
+import { useNavigate } from 'react-router-dom';
+import {
+  connections,
+  ConnectionsRes,
+  connectRequestAccept,
+  connectRequestReject,
+  CurrentIdentity,
+  follow,
+  unfollow,
+} from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { IdentityReq, UserType } from 'src/core/types';
-import { Resolver } from './connections.types';
-import { getConnections } from './connections.service';
+import { RootState } from 'src/store';
 
 export const useConnectionsShared = () => {
   const navigate = useNavigate();
-  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
   const initialValues = {
@@ -19,9 +24,9 @@ export const useConnectionsShared = () => {
     page: 1,
     total_count: 0,
   };
-  const [connectionList, setConnectionList] = useState<Resolver>(initialValues);
-  const [sentRequestsList, setSentRequestsList] = useState<Resolver>(initialValues);
-  const [receivedRequestsList, setReceivedRequestsList] = useState<Resolver>(initialValues);
+  const [connectionList, setConnectionList] = useState<ConnectionsRes>(initialValues);
+  const [sentRequestsList, setSentRequestsList] = useState<ConnectionsRes>(initialValues);
+  const [receivedRequestsList, setReceivedRequestsList] = useState<ConnectionsRes>(initialValues);
   const [currectPages, setCurrectPages] = useState<{ connections: number; sent: number; received: number }>({
     connections: 1,
     sent: 1,
@@ -33,28 +38,29 @@ export const useConnectionsShared = () => {
   }, []);
 
   async function initConnections() {
-    const [connectionListReq, sentRequestsListReq, receivedRequestsListReq]: Awaited<[Resolver, Resolver, Resolver]> =
-      await Promise.all([
-        getConnections({ page: currectPages.connections, status: 'CONNECTED' }),
-        getConnections({ page: currectPages.sent, status: 'PENDING', requester_id: identity?.id }),
-        getConnections({ page: currectPages.received, status: 'PENDING', requested_id: identity?.id }),
-      ]);
+    const [connectionListReq, sentRequestsListReq, receivedRequestsListReq]: Awaited<
+      [ConnectionsRes, ConnectionsRes, ConnectionsRes]
+    > = await Promise.all([
+      connections({ page: currectPages.connections, 'filter.status': 'CONNECTED' }),
+      connections({ page: currectPages.sent, 'filter.status': 'PENDING', 'filter.requester_id': identity?.id }),
+      connections({ page: currectPages.received, 'filter.status': 'PENDING', 'filter.requested_id': identity?.id }),
+    ]);
     setConnectionList(connectionListReq);
     setSentRequestsList(sentRequestsListReq);
     setReceivedRequestsList(receivedRequestsListReq);
   }
 
   async function initConnectionsList() {
-    const connectionListReq = await getConnections({ page: currectPages.connections, status: 'CONNECTED' });
+    const connectionListReq = await connections({ page: currectPages.connections, 'filter.status': 'CONNECTED' });
     setConnectionList(connectionListReq);
   }
 
   function acceptRequest(connect_id: string) {
-    endpoint.post.connections['{connect_id}/accept'](connect_id).then(() => initConnections());
+    connectRequestAccept(connect_id).then(() => initConnections());
   }
 
   async function blockRequest(connect_id: string) {
-    endpoint.post.connections['{connect_id}/block'](connect_id).then(async () => {
+    connectRequestReject(connect_id).then(async () => {
       dialog.alert({ title: 'Blocked', message: 'You successfully blocked the feed' });
       initConnections();
     });
@@ -65,9 +71,9 @@ export const useConnectionsShared = () => {
       case 0:
         try {
           if (following) {
-            endpoint.post.follows['{identity_id}/unfollow'](identity_id).then(initConnectionsList);
+            unfollow(identity_id).then(initConnections);
           } else {
-            endpoint.post.follows['{identity_id}'](identity_id).then(initConnectionsList);
+            follow(identity_id).then(initConnectionsList);
           }
         } catch (err: any) {
           dialog.alert({
@@ -85,7 +91,10 @@ export const useConnectionsShared = () => {
   function loadMore(tag: string) {
     const req: Record<string, () => Promise<void>> = {
       connections: async () => {
-        const listReq: Resolver = await getConnections({ page: currectPages.connections + 1, status: 'CONNECTED' });
+        const listReq: ConnectionsRes = await connections({
+          page: currectPages.connections + 1,
+          'filter.status': 'CONNECTED',
+        });
         setCurrectPages({ ...currectPages, connections: currectPages.connections + 1 });
         setConnectionList({
           ...connectionList,
@@ -94,10 +103,10 @@ export const useConnectionsShared = () => {
         });
       },
       sent: async () => {
-        const listReq: Resolver = await getConnections({
+        const listReq: ConnectionsRes = await connections({
           page: currectPages.sent + 1,
-          status: 'PENDING',
-          requester_id: identity?.id,
+          'filter.status': 'PENDING',
+          'filter.requester_id': identity?.id,
         });
         setCurrectPages({ ...currectPages, sent: currectPages.sent + 1 });
         setSentRequestsList({
@@ -107,10 +116,10 @@ export const useConnectionsShared = () => {
         });
       },
       received: async () => {
-        const listReq: Resolver = await getConnections({
+        const listReq: ConnectionsRes = await connections({
           page: currectPages.received + 1,
-          status: 'PENDING',
-          requested_id: identity?.id,
+          'filter.status': 'PENDING',
+          'filter.requested_id': identity?.id,
         });
         setCurrectPages({ ...currectPages, received: currectPages.received + 1 });
         setReceivedRequestsList({
@@ -123,11 +132,11 @@ export const useConnectionsShared = () => {
     req[tag]();
   }
 
-  function onProfileClick(type: UserType, username: string) {
+  function onProfileClick(type: string, username: string) {
     if (type === 'users') {
-      navigate({ to: `/profile/users/${username}/view` });
+      navigate(`/profile/users/${username}/view`);
     } else {
-      navigate({ to: `/profile/organizations/${username}/view` });
+      navigate(`/profile/organizations/${username}/view`);
     }
   }
 

@@ -1,6 +1,8 @@
 import { DappConfig } from './dapp.types';
 import { bsc, bscTestnet, polygon, polygonMumbai, Chain } from 'wagmi/chains';
 
+import { DappConfig } from './dapp.types';
+
 export const milkomeda: Chain = {
   id: 2001,
   name: 'Milkomeda',

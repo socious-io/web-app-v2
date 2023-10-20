@@ -1,11 +1,12 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
 import { setPostSkills } from 'src/store/reducers/createPostWizard.reducer';
-import { useSkillsShared } from '../skills.shared';
+
 import css from './mobile.module.scss';
+import { useSkillsShared } from '../skills.shared';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const Mobile = (): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: `../social-causes` })}>
+        <div className={css.chevron} onClick={() => navigate(`../social-causes`)}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.headerTitle}>Create job</div>
@@ -43,7 +44,7 @@ export const Mobile = (): JSX.Element => {
       </div>
 
       <div className={css.bottom}>
-        <Button disabled={!isValid} onClick={() => navigate({ to: '../info' })}>
+        <Button disabled={!isValid} onClick={() => navigate('../info')}>
           Continue
         </Button>
       </div>

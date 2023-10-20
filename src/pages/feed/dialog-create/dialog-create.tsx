@@ -1,33 +1,34 @@
-import { DialogCreateProps } from './dialog-create.types';
-import css from './dialog-create.module.scss';
-import { Avatar } from '../../../components/atoms/avatar/avatar';
-import { Dropdown } from '../../../components/atoms/dropdown/dropdown';
-import { Textarea } from '../../../components/atoms/textarea/textarea';
-import { Button } from '../../../components/atoms/button/button';
 import { Dialog } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { DialogReview } from '../dialog-review/dialog-review';
-import { socialCausesToDropdownAdaptor } from '../../../core/adaptors';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from '../../../core/types';
-import { RootState } from '../../../store/store';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Button } from 'src/components/atoms/button/button';
+import { Dropdown } from 'src/components/atoms/dropdown/dropdown';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
+import { CurrentIdentity, SocialCauses } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
+import css from 'src/pages/feed/dialog-create/dialog-create.module.scss';
+import { DialogCreateProps } from 'src/pages/feed/dialog-create/dialog-create.types';
+import { DialogReview } from 'src/pages/feed/dialog-review/dialog-review';
+import { RootState } from 'src/store';
 
 export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedFile, setSelectedFile] = useState();
+  const [selectedFile, setSelectedFile] = useState<File | undefined>();
   const [state, setState] = useState({
-    social: '',
+    social: '' as SocialCauses,
     text: '',
     imgUrl: '',
   });
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
-
+  const avatarImg = useSelector<RootState, string>((state) => {
+    return state.identity.avatarImage;
+  });
   const isDisable = () => {
     return [state.social, state.text].every((item) => !!item);
   };
@@ -42,15 +43,15 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
   };
 
   const getSocialValue = (value: string) => {
-    setState({ ...state, social: value });
+    setState({ ...state, social: value as SocialCauses });
   };
 
-  const onChangeTextHandler = (e: any) => {
+  const onChangeTextHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setState({ ...state, text: value });
   };
 
-  const imagUpload = (e: any) => {
+  const imagUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
       return;
@@ -77,11 +78,11 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
         <span></span>
         <span className={css.title}>Create Post</span>
         <div onClick={onClose}>
-          <img src="icons/close-black.svg" />
+          <img src="icons/close-black.svg" alt="" />
         </div>
       </div>
       <div className={css.social}>
-        <Avatar img={avatarImg} type={identity.type} />
+        {identity && <Avatar img={avatarImg} type={identity.type} />}
         <Dropdown
           placeholder="Social Cause"
           list={socialCausesToDropdownAdaptor()}
@@ -95,7 +96,7 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
       <div className={css.footer}>
         <div className={css.image}>
           <div>
-            <img src="icons/image.svg" />
+            <img src="icons/image.svg" alt="" />
             <input type="file" onChange={imagUpload} />
           </div>
         </div>
@@ -108,7 +109,7 @@ export const DialogCreate = ({ onClose, setFeedList }: DialogCreateProps) => {
       <Dialog fullScreen open={openDialog}>
         <DialogReview
           onClose={handleClose}
-          imgFile={selectedFile || ''}
+          imgFile={selectedFile}
           imgUrl={state.imgUrl}
           text={state.text}
           soucialValue={state.social}

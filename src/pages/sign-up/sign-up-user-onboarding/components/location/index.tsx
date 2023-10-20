@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react';
-import StepHeader from '../stepHeader';
-import css from './location.module.scss';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { Button } from 'src/components/atoms/button/button';
-import { StepsContext } from '../steper';
-import { useUser } from '../../sign-up-user-onboarding.context';
-import { getCityList } from 'src/pages/job-create/info/info.services';
-import { citiesToCategories } from 'src/core/adaptors';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { citiesToCategories } from 'src/core/adaptors';
+import { getCityList } from 'src/pages/job-create/info/info.services';
+
+import css from './location.module.scss';
+import { useUser } from '../../sign-up-user-onboarding.context';
+import { StepsContext } from '../steper';
+import StepHeader from '../stepHeader';
 
 const Location: React.FC = () => {
   const { updateSelectedStep } = useContext(StepsContext);

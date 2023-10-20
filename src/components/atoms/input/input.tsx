@@ -1,7 +1,8 @@
 import { forwardRef, useState } from 'react';
-import { printWhen } from '../../../core/utils';
+
 import css from './input.module.scss';
 import { InputProps } from './input.types';
+import { printWhen } from '../../../core/utils';
 
 export const Input = forwardRef((props: InputProps, ref): JSX.Element => {
   const { optional = false, variant = 'outline', type, ...rest } = props;

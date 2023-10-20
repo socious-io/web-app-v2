@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
 import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store';
+
 import { getOrganizationJobs } from './jobs-index.service';
 
 export const useJobsIndexShared = () => {
-  const { data } = useMatch();
+  const data = useLoaderData();
   const [jobList, setJobList] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1 });
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export const useJobsIndexShared = () => {
   }
 
   function goToJobDetail(id: string) {
-    navigate({ to: `/jobs/${id}` });
+    navigate(`/jobs/${id}`);
   }
 
   const showMorePageBtn = jobList.length < pagination.total;

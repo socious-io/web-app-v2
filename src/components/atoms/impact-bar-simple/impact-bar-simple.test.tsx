@@ -1,6 +1,7 @@
+import { render, screen } from '@testing-library/react';
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {ImpactBarSimple} from './impact-bar-simple';
+
+import { ImpactBarSimple } from './impact-bar-simple';
 import '@testing-library/jest-dom';
 
 describe('impact-bar-simple', () => {

@@ -1,5 +1,5 @@
-import { Chain } from 'wagmi/chains';
 import { Connector, Address, ConnectorData } from 'wagmi';
+import { Chain } from 'wagmi/chains';
 
 export default class extends Connector {
   id = 'flint';

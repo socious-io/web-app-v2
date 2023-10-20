@@ -1,7 +1,8 @@
+import Web3 from 'web3';
+
+import { dappConfig } from './dapp.config';
 import { NETWORKS } from './dapp.connect';
 import { EscrowParams } from './dapp.types';
-import { dappConfig } from './dapp.config';
-import Web3 from 'web3';
 
 const makeAmount = async (web3: Web3, token: string, amount: number, decimals?: number): Promise<string> => {
   if (!decimals) {
@@ -78,7 +79,7 @@ export const escrow = async (params: EscrowParams) => {
       params.projectId,
       await makeAmount(params.web3, token, params.escrowAmount, tokenConfig?.decimals),
       params.verifiedOrg,
-      token
+      token,
     )
     .send({ from: params.web3.eth.defaultAccount });
 

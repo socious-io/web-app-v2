@@ -1,11 +1,11 @@
-import { DropdownBtnItem } from 'src/components/atoms/dropdown-btn/dropdown-btn.types';
-import { search } from './desktop/search.services';
-import { PayloadModel } from './desktop/search.types';
-import { useMatch, useNavigate, useLocation, useRouter } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
+import { useLoaderData, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { DropdownBtnItem } from 'src/components/atoms/dropdown-btn/dropdown-btn.types';
 import { Pagination } from 'src/core/types';
 import { removeEmptyArrays } from 'src/core/utils';
-import { isTouchDevice } from 'src/core/device-type-detector';
+
+import { search } from './desktop/search.services';
+import { PayloadModel } from './desktop/search.types';
 
 type FilterRules = {
   [entity: string]: {
@@ -15,12 +15,12 @@ type FilterRules = {
   };
 };
 export const useSearchShared = () => {
-  const resolver = useMatch();
-  const data = resolver.ownData as Pagination<unknown>;
+  const data = useLoaderData() as Pagination<unknown>;
   const [list, setList] = useState(data.items);
   const [result, setResult] = useState<number>(data.total_count);
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedSkills, setSelectedSkills] = useState<Array<{ label: string; value: string }>>([]);
   const [selectedSocialCauses, setSelectedSocialCauses] = useState<Array<{ label: string; value: string }>>([]);
   const [openSkillsModal, setOpenSkillsModal] = useState(false);
@@ -28,26 +28,31 @@ export const useSearchShared = () => {
   const [selectedCities, setSelectedCities] = useState<Array<{ label: string; value: string }>>([]);
   const [selectedCountries, setSelectedCountries] = useState<Array<{ label: string; value: string }>>([]);
   const [openLocationsModal, setOpenLocationsModal] = useState(false);
+  const query = new URLSearchParams(location.search);
 
   useEffect(() => {
-    location.listeners.push(() => {
-      const query = location.current.search as unknown as PayloadModel;
-      updateList(query, { reset: query.page === 1 });
-    });
-    return () => {
-      location.listeners.pop();
-    };
-  }, []);
+    const query = getRouterFilters();
+    searchParams.delete('id');
+    updateList({ ...query, filter: query.filter || {} }, { reset: Number(query.page) === 1 });
+  }, [location]);
 
+  const getRouterFilters = (): PayloadModel => {
+    const filter = JSON.parse(query.get('filter'));
+    const q = query.get('q');
+    const page = query.get('page');
+    const type = query.get('type');
+    return { q, page, type, filter };
+  };
   const clearFilters = () => {
     setSelectedCities([]);
     setSelectedCountries([]);
     setSelectedSkills([]);
     setSelectedSocialCauses([]);
-    navigate({
-      search: (p) => ({ ...p, page: 1, filter: {} }),
-      replace: true,
-    });
+    if (searchParams.has('filter')) {
+      searchParams.set('filter', '{}');
+      searchParams.set('page', '1');
+      setSearchParams(searchParams);
+    }
   };
 
   const updateList = (newState: PayloadModel, option?: { reset: boolean }) => {
@@ -65,11 +70,9 @@ export const useSearchShared = () => {
   };
 
   const onMorePageClick = () => {
-    navigate({
-      to: `/search`,
-      search: (p) => ({ ...p, page: p.page++ }),
-      replace: true,
-    });
+    const page = query.get('page');
+    searchParams.set('page', (Number(page) + 1).toString());
+    setSearchParams(searchParams);
   };
 
   function findLabelByValue(value: string | unknown, defaultName: string): string {
@@ -87,133 +90,132 @@ export const useSearchShared = () => {
   function onTypeChange(menu: DropdownBtnItem) {
     setList([]);
     setResult(0);
-
-    navigate({
-      search: (p) => {
-        switch (menu.value) {
-          case 'users':
-            const userParam = {
-              page: 1,
-              type: 'users',
-              q: p.q,
-              filter: removeEmptyArrays({
-                skills: p?.filter?.skills || [],
-                social_causes: p?.filter?.causes_tags || [],
-                country: p?.filter?.country || [],
-                city: p?.filter?.city || [],
-              }),
-            };
-
-            return userParam;
-          case 'projects':
-            const jobsParam = {
-              page: 1,
-              type: 'projects',
-              q: p.q,
-              filter: removeEmptyArrays({
-                skills: p?.filter?.skills || [],
-                causes_tags: p?.filter?.social_causes || [],
-                country: p?.filter?.country || [],
-                city: p?.filter?.city || [],
-              }),
-            };
-            return jobsParam;
-          case 'organizations':
-            const organizationsParam = {
-              page: 1,
-              type: 'organizations',
-              q: p.q,
-              filter: removeEmptyArrays({
-                skills: p?.filter?.skills || [],
-                social_causes: p?.filter?.social_causes || [],
-                country: p?.filter?.country || [],
-                city: p?.filter?.city || [],
-              }),
-            };
-            return organizationsParam;
-          case 'posts':
-            const postsParam = {
-              page: 1,
-              type: 'posts',
-              q: p.q,
-              filter: removeEmptyArrays({
-                causes_tags: p?.filter?.social_causes || [],
-              }),
-            };
-            return postsParam;
-
-          default:
-            break;
-        }
-      },
-      replace: true,
-    });
+    const filters = getRouterFilters();
+    searchParams.set('page', '1');
+    searchParams.set('q', filters.q);
+    switch (menu.value) {
+      case 'users':
+        searchParams.set(
+          'filter',
+          JSON.stringify(
+            removeEmptyArrays({
+              skills: filters?.skills || [],
+              social_causes: filters?.causes_tags || [],
+              country: filters?.country || [],
+              city: filters?.city || [],
+            }),
+          ),
+        );
+        searchParams.set('type', 'users');
+        break;
+      case 'projects':
+        searchParams.set(
+          'filter',
+          JSON.stringify(
+            removeEmptyArrays({
+              skills: filters?.skills || [],
+              causes_tags: filters?.causes_tags || [],
+              country: filters?.country || [],
+              city: filters?.city || [],
+            }),
+          ),
+        );
+        searchParams.set('type', 'projects');
+        break;
+      case 'organizations':
+        searchParams.set(
+          'filter',
+          JSON.stringify(
+            removeEmptyArrays({
+              skills: filters?.skills || [],
+              social_causes: filters?.causes_tags || [],
+              country: filters?.country || [],
+              city: filters?.city || [],
+            }),
+          ),
+        );
+        searchParams.set('type', 'organizations');
+        break;
+      case 'posts':
+        searchParams.set(
+          'filter',
+          JSON.stringify(
+            removeEmptyArrays({
+              causes_tags: filters?.social_causes || [],
+            }),
+          ),
+        );
+        searchParams.set('type', 'posts');
+        break;
+      default:
+        break;
+    }
+    setSearchParams(searchParams);
   }
 
   function onSkillsChange(skills: Array<{ label: string; value: string }>) {
     setSelectedSkills([...new Set(skills)]);
-    navigate({
-      search: (p) => ({
-        ...p,
-        page: 1,
-        filter: removeEmptyArrays({ ...p.filter, skills: skills.map((s) => s.value) }),
-      }),
-      replace: true,
+    const filters = getRouterFilters();
+    setSearchParams((p) => {
+      return { ...filters, page: 1, filter: JSON.stringify({ ...filters.filter, skills: skills.map((s) => s.value) }) };
     });
   }
   function onLocationChange(country: { label: string; value: string }, city: { label: string; value: string }) {
+    const filters = getRouterFilters();
     setSelectedCountries([...new Set([...selectedCountries, country])]);
     setSelectedCities([...new Set([...selectedCities, city])]);
-    navigate({
-      search: (p) => ({
-        ...p,
-        page: 1,
-        filter: removeEmptyArrays({
-          ...p.filter,
+    setSearchParams((p) => {
+      return {
+        ...filters,
+        filter: JSON.stringify({
+          ...filters.filter,
+          page: 1,
           country: [...selectedCountries.map((c) => c.value), country.value],
           city: [...selectedCities.map((c) => c.value), city.value],
         }),
-      }),
-      replace: true,
+      };
     });
   }
   function onLocationRemove(name: string) {
+    const filters = getRouterFilters();
     const updatedCities = selectedCities.filter((item) => item.label !== name);
     const updatedCountries = selectedCountries.filter((item) => item.value !== name);
     setSelectedCountries(updatedCountries);
     setSelectedCities(updatedCities);
-    navigate({
-      search: (p) => ({
-        ...p,
+    setSearchParams((p) => {
+      return {
+        ...filters,
         page: 1,
-        filter: removeEmptyArrays({
-          ...p.filter,
+        filter: JSON.stringify({
+          ...filters.filter,
           country: updatedCountries.map((c) => c.value),
           city: updatedCities.map((c) => c.value),
         }),
-      }),
-      replace: true,
+      };
     });
   }
   function onSocialCausesChange(social_causes: Array<{ label: string; value: string }>) {
+    const filters = getRouterFilters();
     setSelectedSocialCauses([...new Set(social_causes)]);
-
     const causesValues = social_causes.map((c) => c.value);
-    navigate({
-      search: (p) => {
-        const projectCauses = { causes_tags: causesValues };
-        const usersCauses = { social_causes: causesValues };
-        function causesFilter() {
-          if (p.type === 'projects' || p.type === 'posts') {
-            return projectCauses;
-          } else {
-            return usersCauses;
-          }
+    setSearchParams((p) => {
+      const projectCauses = { causes_tags: causesValues };
+      const usersCauses = { social_causes: causesValues };
+      function causesFilter() {
+        if (filters.type === 'projects' || filters.type === 'posts') {
+          return projectCauses;
+        } else {
+          return usersCauses;
         }
-
-        return { ...p, page: 1, filter: removeEmptyArrays({ ...p.filter, ...causesFilter() }) };
-      },
-      replace: true,
+      }
+      return {
+        ...filters,
+        page: 1,
+        filter: JSON.stringify({
+          ...filters.filter,
+          ...causesFilter(),
+        }),
+      };
     });
   }
 
@@ -274,5 +276,6 @@ export const useSearchShared = () => {
     setList,
     onLocationRemove,
     shouldShowFilterForEntity,
+    getRouterFilters,
   };
 };

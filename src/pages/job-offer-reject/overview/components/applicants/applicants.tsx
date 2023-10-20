@@ -1,19 +1,19 @@
-import { useNavigate } from '@tanstack/react-location';
-import { Accordion } from '../../../../../components/atoms/accordion/accordion';
-import { ApplicantList } from '../../../../../components/molecules/applicant-list/applicant-list';
-import { applicantToApplicantListAdaptor, rejectApplicant } from '../../../job-offer-reject.services';
+import { useNavigate } from 'react-router-dom';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { ApplicantList } from 'src/components/molecules/applicant-list/applicant-list';
+
 import { ApplicantsProps } from './applicants.types';
+import { applicantToApplicantListAdaptor, rejectApplicant } from '../../../job-offer-reject.services';
 
 export const Applicants = (props: ApplicantsProps): JSX.Element => {
   const { toReviewList, declinedList, onOfferClick, onRejectClick } = props;
   const navigate = useNavigate();
-
   function onApplicantClick(applicantId: string) {
-    navigate({ to: `./${applicantId}` });
+    navigate(`./${applicantId}`);
   }
 
   function onMessageClick(id: string) {
-    navigate({ to: `/chats/new/${id}` });
+    navigate(`/chats/new/${id}`);
   }
 
   return (

@@ -1,14 +1,14 @@
+import { Button } from 'src/components/atoms/button/button';
+import { NewInput } from 'src/components/atoms/input/refactored/input';
+import { Link } from 'src/components/atoms/link/link';
+import { Typography } from 'src/components/atoms/typography/typography';
+import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
+
 import css from './desktop.module.scss';
-import { Button } from '../../../components/atoms/button/button';
-import { Input } from '../../../components/atoms/input/input';
-import { Link } from '../../../components/atoms/link/link';
-import { Typography } from '../../../components/atoms/typography/typography';
-import { BottomStatic } from '../../../components/templates/bottom-static/bottom-static';
 import { useSignInShared } from '../sign-in.shared';
 
 export const Desktop = (): JSX.Element => {
-  const { onLogin, form, navigate } = useSignInShared();
-
+  const { onLogin, handleSubmit, navigate, register, errors, isValid } = useSignInShared();
   return (
     <BottomStatic>
       <div className={css.top}>
@@ -18,28 +18,38 @@ export const Desktop = (): JSX.Element => {
           </Typography>
         </div>
         <form className={css.formContainer}>
-          <Input register={form} autoComplete="Email" label="Email" name="email" placeholder="Email" />
-          <Input
-            register={form}
+          <NewInput
+            {...register('email')}
+            autoComplete="Email"
+            label="Email"
+            name="email"
+            placeholder="Email"
+            register={register}
+            errors={[errors['email']?.message]}
+          />
+          <NewInput
+            {...register('password')}
             autoComplete="current-password"
             type="password"
             label="Password"
             name="password"
             placeholder="Password"
+            register={register}
+            errors={[errors['password']?.message]}
           />
         </form>
         <div className={css.forgotPassword}>
-          <Link onClick={() => navigate({ to: '/forget-password/email' })}>Forgot your password?</Link>
+          <Link onClick={() => navigate('/forget-password/email')}>Forgot your password?</Link>
         </div>
       </div>
       <div>
         <div className={css.bottom}>
-          <Button disabled={!form.isValid} onClick={onLogin}>
+          <Button disabled={!isValid} onClick={handleSubmit(onLogin)}>
             Sign in
           </Button>
           <Typography marginTop="1rem">
             <span>Not a member? </span>
-            <Link onClick={() => navigate({ to: '/sign-up/user/email' })}>Sign up</Link>
+            <Link onClick={() => navigate('/sign-up/user/email')}>Sign up</Link>
           </Typography>
         </div>
       </div>

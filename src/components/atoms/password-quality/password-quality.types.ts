@@ -8,7 +8,4 @@ export type Validator = {
   amount: number;
 };
 
-export type ValidatorsRecord = Record<
-  Validator['name'],
-  (value: string, amount: number) => boolean
->;
+export type ValidatorsRecord = Record<Validator['name'], (value: string, amount: number) => boolean>;

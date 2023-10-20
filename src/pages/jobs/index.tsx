@@ -1,16 +1,18 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { visibility } from 'src/store/reducers/menu.reducer';
-import { useJobsShared } from './jobs.shared';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { JobList } from 'src/components/organisms/job-list/job-list';
-import { printWhen } from 'src/core/utils';
-import css from './jobs.module.scss';
-import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
+import { useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Search } from 'src/components/atoms/search/search';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { JobList } from 'src/components/organisms/job-list/job-list';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { printWhen } from 'src/core/utils';
+import { visibility } from 'src/store/reducers/menu.reducer';
+
+import css from './jobs.module.scss';
+import { useJobsShared } from './jobs.shared';
 
 export const Jobs = (): JSX.Element => {
   const navigate = useNavigate();
@@ -19,20 +21,20 @@ export const Jobs = (): JSX.Element => {
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity.id}`) },
   ];
 
   const jobsMenuListUser = [
     {
       label: 'My applications',
       icon: '/icons/my-applications.svg',
-      link: () => navigate({ to: `/d/jobs/applied/${identity.id}` }),
+      link: () => navigate(`/jobs/applied/${identity.id}`),
     },
   ];
 
@@ -40,7 +42,7 @@ export const Jobs = (): JSX.Element => {
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate({ to: `/d/jobs/created/${identity.id}` }),
+      link: () => navigate(`/jobs/created/${identity.id}`),
     },
   ];
   function openSidebar() {
@@ -49,7 +51,7 @@ export const Jobs = (): JSX.Element => {
     dispatch(visibility(true));
   }
   function onEnter(value: string) {
-    navigate({ to: `/m/search?q=${value}&type=projects&page=1` });
+    navigate(`/search?q=${value}&type=projects&page=1`);
   }
 
   return (

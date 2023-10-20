@@ -1,5 +1,5 @@
-import { post } from 'src/core/http';
+import { removeQuestionJob } from 'src/core/api';
 
 export async function removeCreateQuestion(payload: { project_id: string; question_id: string }) {
-  return post(`/projects/remove/${payload.project_id}/questions/${payload.question_id}`, {}).then(({ data }) => data);
+  return removeQuestionJob(payload.project_id, payload.question_id);
 }

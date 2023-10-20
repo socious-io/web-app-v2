@@ -1,8 +1,9 @@
-import { useNavigate } from '@tanstack/react-location';
-import { Button } from '../../../../components/atoms/button/button';
-import { Card } from '../../../../components/atoms/card/card';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
+import { Steps } from 'src/components/atoms/steps/steps';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
@@ -12,7 +13,7 @@ export const Desktop = (): JSX.Element => {
     <div className={css.container}>
       <Card padding="0" className={css.card}>
         <div className={css.header}>
-          <div className={css.chevron} onClick={() => navigate({ to: '../culture' })}>
+          <div className={css.chevron} onClick={() => navigate('../culture')}>
             <img height={24} src="/icons/chevron-left.svg" />
           </div>
           <div className={css.stepsContainer}>
@@ -25,7 +26,7 @@ export const Desktop = (): JSX.Element => {
           <Textarea variant="outline" placeholder="Your organization's achievements" />
         </div>
         <div className={css.bottom}>
-          <Button onClick={() => navigate({ to: '../succeed' })}>Continue</Button>
+          <Button onClick={() => navigate('../succeed')}>Continue</Button>
         </div>
       </Card>
     </div>

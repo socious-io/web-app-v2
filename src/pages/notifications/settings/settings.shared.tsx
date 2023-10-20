@@ -1,24 +1,24 @@
 import { useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
+import { useLoaderData } from 'react-router-dom';
 import { NotificationSettings } from 'src/constants/constants';
-import { endpoint } from 'src/core/endpoints';
+import { NotificationsSettings, NotificationType, updateNotificationSettings } from 'src/core/api';
+
 import { Payload } from './settings.types';
-import { NotificationSettingsRes } from 'src/core/types';
 
 export const useSettingsShared = () => {
-  const { settings } = useMatch().data as NotificationSettingsRes;
+  const { settings } = useLoaderData() as NotificationsSettings;
   const mapRequestToStatic = NotificationSettings.map((notif) => ({
     ...notif,
     ...settings?.find((setting) => setting.type === notif.type),
   }));
   const settingsList = settings?.length ? mapRequestToStatic : NotificationSettings;
   const [generateSettings, setGenerateSettings] = useState(settingsList);
-  const [payload, setPayload] = useState<Payload>({});
+  const [payload, setPayload] = useState<Payload>({} as Payload);
   const notAllow = generateSettings.every((setting) => !setting.in_app && !setting.email && !setting.push);
   const [allChecked, setAllChekced] = useState(!notAllow);
   const settingsGuide = 'https://www.notion.so/socious/Notification-Settings-32a002269adc44d4984955bd77626cb6';
 
-  function onChange(checked: boolean, type: string, key: string) {
+  function onChange(checked: boolean, type: NotificationType, key: string) {
     setPayload({ ...payload, [type]: { ...payload[type], [key]: checked } });
   }
 
@@ -29,14 +29,14 @@ export const useSettingsShared = () => {
         const defaultValueOfKey = generateSettings.find((setting) => setting.type === key);
         return {
           type: key,
-          in_app: obj.in_app != undefined ? obj.in_app : (defaultValueOfKey?.in_app as boolean),
-          email: obj.email != undefined ? obj.email : (defaultValueOfKey?.email as boolean),
-          push: obj.push != undefined ? obj.push : (defaultValueOfKey?.push as boolean),
+          in_app: obj.in_app !== undefined ? obj.in_app : (defaultValueOfKey?.in_app as boolean),
+          email: obj.email !== undefined ? obj.email : (defaultValueOfKey?.email as boolean),
+          push: obj.push !== undefined ? obj.push : (defaultValueOfKey?.push as boolean),
         };
       });
     const keys = new Set(payloadRes.map((d) => d.type));
     const merged = [...generateSettings.filter((setting) => !keys.has(setting.type)), ...payloadRes];
-    endpoint.post.notifications['settings_confirm']({ settings: merged });
+    updateNotificationSettings({ settings: merged } as NotificationsSettings);
   }
 
   function onAllowNotifications(checked: boolean) {
@@ -48,7 +48,7 @@ export const useSettingsShared = () => {
       push: checked,
     }));
     setGenerateSettings(result);
-    endpoint.post.notifications['settings_confirm']({ settings: result });
+    updateNotificationSettings({ settings: result });
   }
 
   return {

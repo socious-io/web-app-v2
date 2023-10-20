@@ -2,14 +2,7 @@ import en from './en.json' assert { type: 'json' };
 
 export type Language = 'EN';
 
-export type Cluster =
-  | 'ERROR'
-  | 'SKILL'
-  | 'PASSION'
-  | 'SDG'
-  | 'ORGTYPE'
-  | 'PAYMENT'
-  | 'PROJECT';
+export type Cluster = 'ERROR' | 'SKILL' | 'PASSION' | 'SDG' | 'ORGTYPE' | 'PAYMENT' | 'PROJECT';
 
 export type Options = {
   i18n?: Language;
@@ -23,7 +16,7 @@ export default (msg: string, options?: Options): string => {
   const section = options?.section ? options?.section + '.' : '';
 
   // TODO: fix typing for index
-  const index: string = `${cluster}${section}${msgId}`;
+  const index = `${cluster}${section}${msgId}`;
 
   switch (options?.i18n) {
     default:

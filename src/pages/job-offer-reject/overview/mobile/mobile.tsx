@@ -1,23 +1,25 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { useLoaderData, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
+import { SureModal } from 'src/components/templates/sure-modal';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { closeJob, rejectApplicant } from 'src/core/api';
+
+import css from './mobile.module.scss';
+import { jobOfferRejectLoader } from '../../job-offer-reject.services';
+import { Loader } from '../../job-offer-reject.types';
 import { Applicants } from '../components/applicants/applicants';
 import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
-import { Loader } from '../../job-offer-reject.types';
-import { archiveJob, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
-import css from './mobile.module.scss';
-import { SureModal } from 'src/components/templates/sure-modal';
-import { printWhen } from 'src/core/utils';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
-  const resolver = useMatch().ownData as Loader;
-  const { id } = useMatch().params || {};
-  const tab = useMatch()?.search?.tab as string;
+  const resolver = useLoaderData() as Loader;
+  const [searchParams] = useSearchParams();
+  const { id } = useParams();
+  const tab = searchParams.get('tab');
   const defaultTab = tab || 'Overview';
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
   const [showArchiveConfirm, setShowArchiveConfirm] = useState(false);
@@ -48,7 +50,7 @@ export const Mobile = (): JSX.Element => {
         <Applicants
           toReviewList={updatedApplicantList.reviewList}
           declinedList={updatedApplicantList.declinedList}
-          onOfferClick={(id) => navigate({ to: `./${id}/offer` })}
+          onOfferClick={(id) => navigate(`./${id}/offer`)}
           onRejectClick={onRejectClick}
         />
       ),
@@ -98,15 +100,23 @@ export const Mobile = (): JSX.Element => {
             )
           }
         />
-        <Tabs tabs={tabs} onClick={(name) => navigate({ to: '.', search: { tab: name }, replace: true })} />
+        <Tabs
+          tabs={tabs}
+          onClick={(name) =>
+            navigate({
+              pathname: '.',
+              search: `?tab=${name}`,
+            })
+          }
+        />
       </TopFixedMobile>
       <SureModal
         open={showArchiveConfirm}
         onClose={() => setShowArchiveConfirm(false)}
         onDone={() => {
-          archiveJob(id).then(() => {
+          closeJob(id).then(() => {
             setShowArchiveConfirm(false);
-            history.back();
+            navigate(-1);
           });
         }}
         modalTexts={{

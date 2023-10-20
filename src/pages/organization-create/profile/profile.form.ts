@@ -1,7 +1,7 @@
-import { required } from '../../../core/form';
-import { email } from '../../../core/form/customValidators/customValidators';
-import { FormModel } from '../../../core/form/useForm/useForm.types';
-import { CreateOrgWizard } from '../../../store/reducers/createOrgWizard.reducer';
+import { required } from 'src/core/form';
+import { email } from 'src/core/form/customValidators/customValidators';
+import { FormModel } from 'src/core/form/useForm/useForm.types';
+import { CreateOrgWizard } from 'src/store/reducers/createOrgWizard.reducer';
 
 export function formModel(formState: CreateOrgWizard): FormModel {
   return {
@@ -14,6 +14,6 @@ export function formModel(formState: CreateOrgWizard): FormModel {
     website: { initialValue: formState.website },
     country: { initialValue: formState.country, validators: [required()] },
     city: { initialValue: formState.city, validators: [required()] },
-    agreement: { initialValue: formState.agreement, validators: [required()]},
+    agreement: { initialValue: formState.agreement, validators: [required()] },
   };
 }

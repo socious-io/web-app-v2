@@ -1,8 +1,9 @@
 import { CSSProperties } from 'react';
-import { Avatar } from '../avatar/avatar';
-import { ChatBox } from '../chat-box/chat-box';
+
 import css from './message.module.scss';
 import { MessageProps } from './message.types';
+import { Avatar } from '../avatar/avatar';
+import { ChatBox } from '../chat-box/chat-box';
 
 export const Message = (props: MessageProps): JSX.Element => {
   const { text, type, userType, img, ...rest } = props;

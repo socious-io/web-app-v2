@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import css from './impact-bar-level.module.scss';
 import { ImpactBarLevelProps } from './impact-bar-level.types';
 

@@ -1,20 +1,21 @@
 import { useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { getNotificationList } from './notifications.service';
-import { IdentityReq } from 'src/core/types';
-import { Resolver } from './notifications.types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoaderData } from 'react-router-dom';
+import { CurrentIdentity, identities, notifications, NotificationsRes, OrgMeta, UserMeta } from 'src/core/api';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { RootState } from 'src/store';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 export const useNotificationsShared = () => {
-  const list = useMatch().ownData as Resolver;
+  const list = useLoaderData() as NotificationsRes;
+  const dispatch = useDispatch();
   const [notificationList, setNotificationList] = useState(list.items);
   const [page, setPage] = useState(1);
   const totalCount = list.total_count;
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
+  const avatarImg = identity ? (identity.meta as UserMeta).avatar || (identity.meta as OrgMeta).image : '';
 
   const onShowSeeMore = (length: number): boolean => {
     if (length < totalCount) {
@@ -24,11 +25,16 @@ export const useNotificationsShared = () => {
   };
 
   const onMorePageClick = () => {
-    getNotificationList({ page: page + 1 }).then((resp) => {
+    notifications({ page: page + 1 }).then((resp) => {
       setPage((v) => v + 1);
       setNotificationList((list) => [...list, ...resp.items]);
     });
   };
 
-  return { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore };
+  const switchAccount = async (id: string) => {
+    await nonPermanentStorage.set({ key: 'identity', value: id });
+    identities().then((resp) => dispatch(setIdentityList(resp)));
+  };
+
+  return { notificationList, identity, avatarImg, onMorePageClick, onShowSeeMore, switchAccount };
 };

@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
+import { RootState } from 'src/store';
 import {
   CreateQuestionWizard,
   CreatedQuestionsType,
   setCreatedQuestions,
 } from 'src/store/reducers/createQuestionWizard.reducer';
+
 import { removeCreateQuestion } from './created.service';
 
 export const useCreatedShared = () => {

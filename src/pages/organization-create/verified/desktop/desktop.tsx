@@ -1,7 +1,8 @@
-import { Button } from '../../../../components/atoms/button/button';
-import { Card } from '../../../../components/atoms/card/card';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
-import { getProcess } from '../verified.services';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
+import { getProcess } from 'src/pages/organization-create/verified/verified.services';
+
 import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
@@ -43,8 +44,7 @@ export const Desktop = (): JSX.Element => {
           </div>
         </div>
         <div className={css.bottom}>
-        <Button onClick={navigateToJobs}>Continue</Button>
-
+          <Button onClick={navigateToJobs}>Continue</Button>
         </div>
       </Card>
     </div>

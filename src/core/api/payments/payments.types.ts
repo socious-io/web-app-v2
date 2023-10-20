@@ -40,3 +40,7 @@ export interface Card extends CardReq {
 export interface PayoutRes extends SuccessRes {
   transaction_id: string;
 }
+
+export interface TokenRes {
+  rate: number;
+}
