@@ -27,7 +27,6 @@ export const Password = () => {
       .then((resp) => {
         if (resp.access_token) {
           deleteAccount().then((resp) => {
-            console.log('test log resp', resp);
             if (resp.message === 'success') {
               navigate(`../confirm?email=${email}`);
             }
