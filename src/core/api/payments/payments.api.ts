@@ -1,17 +1,20 @@
+import { CardReq, CardsRes, PaymentsRes, Card, PayReq, PayoutRes, TokenRes } from './payments.types';
 import { post, get } from '../http';
-import { SuccessRes, PaginateReq } from '../types';
-import { CardReq, CardsRes, PaymentsRes, Card, PayReq, PayoutRes } from './payments.types';
+import { SuccessRes, PaginateReq, FilterReq } from '../types';
 
 export async function payments(params: PaginateReq): Promise<PaymentsRes> {
   return (await get<PaymentsRes>('payments', { params })).data;
 }
 
-export async function cards(params: PaginateReq): Promise<CardsRes> {
+export async function cards(params: FilterReq): Promise<CardsRes> {
   return (await get<CardsRes>('payments/cards', { params })).data;
 }
+export async function cardById(id: string): Promise<CardsRes> {
+  return (await get<CardsRes>(`payments/cards/${id}`)).data;
+}
 
-export async function addCard(payload: CardReq): Promise<Card> {
-  return (await post<Card>('payments/cards', payload)).data;
+export async function addCard(payload: CardReq, is_jp?: boolean): Promise<Card> {
+  return (await post<Card>('payments/cards', payload, { params: { is_jp } })).data;
 }
 
 export async function updateCard(id: string, payload: CardReq): Promise<Card> {
@@ -28,4 +31,8 @@ export async function payByOffer(offerId: string, payload: PayReq): Promise<Succ
 
 export async function payoutByMission(missionId: string): Promise<PayoutRes> {
   return (await post<PayoutRes>(`payments/missions/${missionId}/payout`, {})).data;
+}
+
+export async function tokenRate(id: string): Promise<TokenRes> {
+  return (await get<TokenRes>(`/payments/crypto/rate?token=${id}`)).data;
 }

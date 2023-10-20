@@ -1,5 +1,5 @@
-import { post, get } from '../http';
-import { SuccessRes, PaginateReq } from '../types';
+import { ApplicantResp, QuestionsRes } from 'src/core/types';
+
 import {
   JobCategoriesRes,
   Job,
@@ -17,13 +17,14 @@ import {
   Mission,
   HourlyWorkReq,
 } from './jobs.types';
-import { ApplicantResp, QuestionsRes } from 'src/core/types';
+import { post, get } from '../http';
+import { SuccessRes, PaginateReq, FilterReq } from '../types';
 
 export async function jobCategories(): Promise<JobCategoriesRes> {
   return (await get<JobCategoriesRes>('projects/categories')).data;
 }
 
-export async function jobs(params: PaginateReq): Promise<JobsRes> {
+export async function jobs(params: FilterReq): Promise<JobsRes> {
   return (await get<JobsRes>('projects', { params })).data;
 }
 
@@ -31,7 +32,7 @@ export async function job(id: string): Promise<Job> {
   return (await get<Job>(`projects/${id}`)).data;
 }
 
-export async function jobOffers(id: string, params: PaginateReq): Promise<OffersRes> {
+export async function jobOffers(id: string, params?: FilterReq): Promise<OffersRes> {
   return (await get<OffersRes>(`projects/${id}/offers`, { params })).data;
 }
 
@@ -40,7 +41,7 @@ export async function jobMissions(id: string, params: PaginateReq): Promise<Miss
 }
 
 export async function jobApplicants(id: string, params: PaginateReq): Promise<ApplicantsRes> {
-  return (await get<ApplicantsRes>(`projects/${id}/missions`, { params })).data;
+  return (await get<ApplicantsRes>(`projects/${id}/applicants`, { params })).data;
 }
 
 export async function createJob(payload: JobReq): Promise<Job> {
@@ -67,7 +68,7 @@ export async function updateQuestionJob(jobId: string, questionId: string, paylo
   return (await post<Question>(`projects/update/${jobId}/questions/${questionId}`, payload)).data;
 }
 
-export async function removeQuestionJob(jobId: string, questionId: string, payload: QuestionReq): Promise<SuccessRes> {
+export async function removeQuestionJob(jobId: string, questionId: string, payload?: QuestionReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`projects/remove/${jobId}/questions/${questionId}`, payload)).data;
 }
 
@@ -79,6 +80,9 @@ export async function applicant(id: string): Promise<Applicant> {
   return (await get<Applicant>(`applicants/${id}`)).data;
 }
 
+export async function rejectApplicant(id: string): Promise<Applicant> {
+  return (await post<Applicant>(`applicants/${id}/reject`,{})).data;
+}
 export async function getOffer(id: string): Promise<Offer> {
   return (await get<Offer>(`offers/${id}`)).data;
 }
@@ -97,7 +101,7 @@ export async function offerByApplicant(applicantId: string, payload: OfferReq): 
 
 // talent side
 export async function rejectOffer(id: string): Promise<SuccessRes> {
-  return (await post<SuccessRes>(`offers/${id}/withrawn`, {})).data;
+  return (await post<SuccessRes>(`offers/${id}/withdrawn`, {})).data;
 }
 // talent side
 export async function acceptOffer(id: string): Promise<SuccessRes> {

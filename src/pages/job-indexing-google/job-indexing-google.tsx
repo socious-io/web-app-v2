@@ -4,7 +4,7 @@ import { indexPageUrls, oauthSignIn } from './job-indexing-google.service';
 
 const GoogleJobIndexing = () => {
   useEffect(() => {
-    let uri = window.location.href;
+    const uri = window.location.href;
     const hash = uri.split('#')[1];
     if (hash) {
       const params = hash.split('&');

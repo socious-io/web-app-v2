@@ -1,6 +1,6 @@
-import { AbiItem } from 'web3-utils';
-import Web3 from 'web3';
 import { Chain } from 'wagmi/chains';
+import Web3 from 'web3';
+import { AbiItem } from 'web3-utils';
 
 export interface Token {
   name: string;

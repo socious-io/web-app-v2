@@ -1,28 +1,29 @@
 import { useMemo, useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import Dapp from 'src/dapp';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
 import { Header } from 'src/components/atoms/header/header';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Button } from 'src/components/atoms/button/button';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { InputModal } from 'src/components/molecules/input-modal';
 import { Item } from 'src/components/molecules/input-modal/input-modal.types';
-import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { PROJECT_PAYMENT_MODE } from 'src/constants/PROJECT_PAYMENT_MODE';
+import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
+import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { offerByApplicant } from 'src/core/api';
 import { useForm } from 'src/core/form';
-import { printWhen } from 'src/core/utils';
-import { Resolver } from '../offer.types';
 import { OfferPayload } from 'src/core/types';
-import { offer } from '../../job-offer-reject.services';
+import { printWhen } from 'src/core/utils';
+import Dapp from 'src/dapp';
+
+import css from './mobile.module.scss';
 import { formModel } from '../offer.services';
 import { useOfferShared } from '../offer.shared';
-import css from './mobile.module.scss';
+import { Resolver } from '../offer.types';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
-  const { applicantDetail } = (useMatch().ownData as Resolver) || {};
+  const { applicantDetail } = (useLoaderData() as Resolver) || {};
   const [initialForm, setInitialForm] = useState({ estimatedTotalHours: '', message: '' });
   const [paymentType, setPaymentType] = useState(applicantDetail?.project?.payment_type || 'VOLUNTEER');
   const [paymentScheme, setPaymentScheme] = useState(applicantDetail?.project?.payment_scheme || 'FIXED');
@@ -40,18 +41,18 @@ export const Mobile = (): JSX.Element => {
     const payload: OfferPayload = {
       payment_mode: paymentMode,
       assignment_total: isPaidType ? (form.controls.assignmentTotal.value as number) : 1,
-      offer_message: form.controls.message.value as string || initialForm.message,
-      total_hours: form.controls.estimatedTotalHours.value as string || initialForm.estimatedTotalHours,
+      offer_message: (form.controls.message.value as string) || initialForm.message,
+      total_hours: (form.controls.estimatedTotalHours.value as string) || initialForm.estimatedTotalHours,
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
-    offer(applicantDetail.id, payload).then(() => {
-      navigate({ to: '../..' });
+    offerByApplicant(applicantDetail.id, payload).then(() => {
+      navigate('../..');
     });
   }
 
   return (
     <div className={css.container}>
-      <Header onBack={() => navigate({ to: '..' })} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
+      <Header onBack={() => navigate('..')} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
       <div className={css.sentTo}>An offer will be sent to {applicantDetail.user.name}.</div>
       <div className={css.form}>
         <RadioGroup
@@ -83,7 +84,7 @@ export const Mobile = (): JSX.Element => {
             label="Payment mode"
             list={PROJECT_PAYMENT_MODE}
           />,
-          isPaidType
+          isPaidType,
         )}
         {printWhen(<Dapp.Connect />, isPaidCrypto)}
         {printWhen(
@@ -104,11 +105,11 @@ export const Mobile = (): JSX.Element => {
               USD equivalent: <span>{equivalentUSD(form.controls.assignmentTotal.value)}</span>
             </div>
           </div>,
-          isPaidCrypto && !!web3
+          isPaidCrypto && !!web3,
         )}
         {printWhen(
           <Input register={form} name="assignmentTotal" label="Assignment total (USD)" placeholder="amount" />,
-          isPaidFiat
+          isPaidFiat,
         )}
         <Textarea
           register={form}

@@ -1,38 +1,41 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { Button } from 'src/components/atoms/button/button';
+import { Divider } from 'src/components/templates/divider/divider';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
+import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
-import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
+import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
+import { JobReq } from 'src/core/api';
+import { CategoriesResp, CreatePostPayload } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
+import { createPost } from 'src/pages/job-create/info/info.services';
+import { useInfoShared } from 'src/pages/job-create/info/info.shared';
 import { setPostPaymentScheme, setPostPaymentType } from 'src/store/reducers/createPostWizard.reducer';
 import { setQuestionProjectIds } from 'src/store/reducers/createQuestionWizard.reducer';
-import { printWhen } from 'src/core/utils';
-import { CategoriesResp, CreatePostPayload } from 'src/core/types';
-import { createPost } from '../info.services';
-import { useInfoShared } from '../info.shared';
+
 import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const resolvedJobCategories = useMatch().ownData.categories as CategoriesResp['categories'];
-  const categories = jobCategoriesToDropdown(resolvedJobCategories);
+  const { categories: catagoryList } = (useLoaderData() as CategoriesResp) || {};
+  const categories = jobCategoriesToDropdown(catagoryList);
 
+  console.log('my catas', categories);
   function createJob(payload: CreatePostPayload) {
-    createPost(payload).then((resp) => {
+    createPost(payload as JobReq).then((resp) => {
       dispatch(setQuestionProjectIds({ project_id: resp.id, identity_id: resp.identity_id }));
-      navigate({ to: '../screener-questions' });
+      navigate('../screener-questions');
     });
   }
 
@@ -49,7 +52,7 @@ export const Mobile = (): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: `/jobs/create/skills` })}>
+        <div className={css.chevron} onClick={() => navigate(`/jobs/create/skills`)}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.headerTitle}>Create job</div>
@@ -167,11 +170,11 @@ export const Mobile = (): JSX.Element => {
                 </div>
                 {printWhen(
                   errorsJSX,
-                  !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher)
+                  !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher),
                 )}
                 {printWhen(
                   <span className={css.info}>Prices will be shown in USD ($)</span>,
-                  formState.payment_type === 'PAID'
+                  formState.payment_type === 'PAID',
                 )}
               </div>
             </div>

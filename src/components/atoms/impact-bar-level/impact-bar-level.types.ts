@@ -1,4 +1,4 @@
-import {CSSProperties} from 'react';
+import { CSSProperties } from 'react';
 export interface ImpactBarLevelProps extends CSSProperties {
   start: number;
   end: number;

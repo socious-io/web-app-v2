@@ -1,22 +1,20 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { useMemo, useState } from 'react';
-import { useForm } from 'src/core/form';
-import { cityDispatcher, showActionSheet, uploadImage } from './profile-organization-edit.services';
-import { generateFormModel } from './profile-organization-edit.form';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { ProfileReq } from '../profile-user/profile-user.types';
 import { Camera } from '@capacitor/camera';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { endpoint } from 'src/core/endpoints';
-import { getIdentities } from 'src/core/api';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { identities, updateOrganization } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
+import { useForm } from 'src/core/form';
+import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { removedEmptyProps } from 'src/core/utils';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+
+import { generateFormModel } from './profile-organization-edit.form';
+import { cityDispatcher, showActionSheet, uploadImage } from './profile-organization-edit.services';
 
 export const useProfileOrganizationEditShared = () => {
-  const organization = useMatch().data.user as ProfileReq;
+  const organization = useLoaderData().user;
   const formModel = useMemo(() => generateFormModel(organization), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
@@ -77,7 +75,7 @@ export const useProfileOrganizationEditShared = () => {
   };
 
   async function updateIdentityList() {
-    return getIdentities().then((resp) => dispatch(setIdentityList(resp)));
+    return identities().then((resp) => dispatch(setIdentityList(resp)));
   }
 
   async function onSave() {
@@ -85,12 +83,13 @@ export const useProfileOrganizationEditShared = () => {
       try {
         const rawPayload = getFormValues(form);
         const payload = removedEmptyProps(rawPayload);
-        await endpoint.post.organizations['orgs/update/{org_id}'](organization.id, {
+        await updateOrganization(organization.id, {
           ...payload,
           shortname: organization.shortname,
         });
+
         await updateIdentityList();
-        navigate({ to: '/jobs' });
+        navigate('/jobs');
       } catch (err) {
         console.error(err);
       }

@@ -1,5 +1,7 @@
-import { post, get } from '../http';
-import { SuccessRes } from '../types';
+import { post, get } from 'src/core/api/http';
+import { ApplicantsRes, MissionsRes, OffersRes } from 'src/core/api/jobs/jobs.types';
+import { FilterReq, PaginateReq, SuccessRes } from 'src/core/api/types';
+
 import {
   ReportReq,
   UpdateProfileReq,
@@ -11,6 +13,8 @@ import {
   ChangePasswordReq,
   ChangePasswordDirectReq,
   DeleteUserReq,
+  Badges,
+  ImpactPoints,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -19,6 +23,14 @@ export async function profile(): Promise<User> {
 
 export async function otherProfile(id: string): Promise<User> {
   return (await get<User>(`user/${id}/profile`)).data;
+}
+
+export async function badges(id?: string): Promise<Badges> {
+  return (await get<Badges>(id ? `user/${id}/badges` : 'user/badges')).data;
+}
+
+export async function impactPoints(params?: FilterReq): Promise<ImpactPoints> {
+  return (await get<ImpactPoints>(`user/impact-points`, { params })).data;
 }
 
 export async function otherProfileByUsername(username: string): Promise<User> {
@@ -83,4 +95,21 @@ export async function changePasswordDirect(payload: ChangePasswordDirectReq): Pr
 
 export async function selfDelete(payload: DeleteUserReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/delete`, payload)).data;
+}
+
+export async function userPaidMissions(params: FilterReq): Promise<MissionsRes> {
+  return (await get<MissionsRes>('/user/missions', { params })).data;
+}
+
+export async function userMissions(id?: string, params?: FilterReq): Promise<MissionsRes> {
+  const path = id ? `/user/${id}/missions` : '/user/missions';
+  return (await get<MissionsRes>(path, { params })).data;
+}
+
+export async function userOffers(params: PaginateReq): Promise<OffersRes> {
+  return (await get<OffersRes>(`user/offers`, { params })).data;
+}
+
+export async function userApplicants(params: PaginateReq): Promise<ApplicantsRes> {
+  return (await get<ApplicantsRes>(`user/applicants`, { params })).data;
 }

@@ -1,5 +1,3 @@
-import { post, get } from '../http';
-import { SuccessRes } from '../types';
 import {
   LoginReq,
   PreRegisterReq,
@@ -14,9 +12,15 @@ import {
   PreRegisterRes,
   AuthRes,
 } from './auth.types';
+import { post, get } from '../http';
+import { SuccessRes } from '../types';
 
 export async function login(payload: LoginReq): Promise<AuthRes> {
   return (await post<AuthRes>('auth/login', payload)).data;
+}
+
+export async function logout(): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`/auth/logout`, {})).data;
 }
 
 export async function refresh(payload: RefreshReq): Promise<AuthRes> {
@@ -33,6 +37,10 @@ export async function register(payload: RegisterReq): Promise<SuccessRes> {
 
 export async function otp(payload: OtpReq): Promise<SuccessRes> {
   return (await post<SuccessRes>('auth/otp', payload)).data;
+}
+
+export async function forgetPassword(payload: OtpReq): Promise<SuccessRes> {
+  return (await post<SuccessRes>('auth/forget-password', payload)).data;
 }
 
 export async function resendVerifyCode(payload: OtpReq): Promise<SuccessRes> {

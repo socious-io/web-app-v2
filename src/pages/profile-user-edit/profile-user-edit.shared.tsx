@@ -1,22 +1,22 @@
-import { useMemo, useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { useForm } from 'src/core/form';
-import { cityDispatcher, showActionSheet, uploadImage } from './profile-user-edit.services';
-import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
 import { Camera } from '@capacitor/camera';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { endpoint } from 'src/core/endpoints';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { generateFormModel } from './profile-user-edit.form';
+import { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getIdentities } from 'src/core/api';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { identities, updateProfile, UpdateProfileReq } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
+import { useForm } from 'src/core/form';
+import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { removedEmptyProps } from 'src/core/utils';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+
+import { generateFormModel } from './profile-user-edit.form';
+import { cityDispatcher, showActionSheet, uploadImage } from './profile-user-edit.services';
+import { Resolver } from './profile-user-edit.type';
 import { EditProps } from '../profile-user/desktop/edit/edit.types';
 
 export const useProfileUserEditShared = (props?: EditProps) => {
-  const user = useMatch().data.user as ProfileReq;
+  const { user } = useLoaderData() as Resolver;
   const formModel = useMemo(() => generateFormModel(user), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
@@ -86,7 +86,7 @@ export const useProfileUserEditShared = (props?: EditProps) => {
   };
 
   async function updateIdentityList() {
-    return getIdentities().then((resp) => dispatch(setIdentityList(resp)));
+    return identities().then((resp) => dispatch(setIdentityList(resp)));
   }
 
   const onAvatarEdit = {
@@ -107,9 +107,9 @@ export const useProfileUserEditShared = (props?: EditProps) => {
     if (form.isValid) {
       const rawPayload = getFormValues(form);
       const payload = removedEmptyProps(rawPayload);
-      endpoint.post.user['update/profile'](payload).then(async () => {
+      updateProfile(payload as UpdateProfileReq).then(async () => {
         await updateIdentityList();
-        navigate({ to: '/jobs' });
+        navigate('/jobs');
       });
     } else {
       dialog.alert({ message: 'form is invalid' });
@@ -120,7 +120,7 @@ export const useProfileUserEditShared = (props?: EditProps) => {
     if (form.isValid) {
       const rawPayload = getFormValues(form);
       const payload = removedEmptyProps(rawPayload);
-      endpoint.post.user['update/profile'](payload).then(async (resp) => {
+      updateProfile(payload as UpdateProfileReq).then(async (resp) => {
         await updateIdentityList();
         props?.updateUser(resp);
         props?.onClose();

@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
+import { Button } from 'src/components/atoms/button/button';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Search } from 'src/components/atoms/search/search';
+
 import css from './social-causes.module.scss';
-import { Button } from '../../../../../components/atoms/button/button';
-import { CategoriesClickable } from '../../../../../components/atoms/categories-clickable/categories-clickable';
-import { Search } from '../../../../../components/atoms/search/search';
 import { SOCIAL_CAUSES } from '../../../../organization-create/social-causes/social-causes.services';
-import StepHeader from '../stepHeader';
-import { StepsContext } from '../steper';
 import { useUser } from '../../sign-up-user-onboarding.context';
 import { isValidArrayRange } from '../../sign-up-user-onboarding.service';
+import { StepsContext } from '../steper';
+import StepHeader from '../stepHeader';
 
 const SocialCauses: React.FC = () => {
   const { updateSelectedStep } = useContext(StepsContext);

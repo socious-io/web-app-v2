@@ -1,9 +1,10 @@
+import { Button } from 'src/components/atoms/button/button';
+import { Input } from 'src/components/atoms/input/input';
+import { Link } from 'src/components/atoms/link/link';
+import { Typography } from 'src/components/atoms/typography/typography';
+import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
+
 import css from './desktop.module.scss';
-import { Button } from '../../../../components/atoms/button/button';
-import { Link } from '../../../../components/atoms/link/link';
-import { Typography } from '../../../../components/atoms/typography/typography';
-import { BottomStatic } from '../../../../components/templates/bottom-static/bottom-static';
-import { Input } from '../../../../components/atoms/input/input';
 import { useSignUpUserCompleteShared } from '../sign-up-user-complete.shared';
 
 export const Desktop = (): JSX.Element => {
@@ -61,9 +62,7 @@ export const Desktop = (): JSX.Element => {
           {/* <Button disabled={!basicValidity} onClick={onSubmit(formState)}>
             Join
           </Button> */}
-          <Button onClick={shared.onSubmit} disabled={!shared.form.isValid}>
-            Join
-          </Button>
+          <Button onClick={shared.onSubmit}>Join</Button>
           <Typography marginTop="1rem">
             <span>Already a member? </span>
             <Link onClick={shared.navigateToSignIn}>Sign in</Link>

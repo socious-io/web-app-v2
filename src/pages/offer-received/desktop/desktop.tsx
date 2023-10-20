@@ -1,28 +1,29 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import Dapp from 'src/dapp';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Typography } from 'src/components/atoms/typography/typography';
-import { ProfileCard } from 'src/components/templates/profile-card';
 import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { Typography } from 'src/components/atoms/typography/typography';
 import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { BankAccounts } from 'src/components/templates/bank-accounts';
+import { Divider } from 'src/components/templates/divider/divider';
 import { PaymentMethods } from 'src/components/templates/payment-methods';
-import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { printWhen } from 'src/core/utils';
+import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { IdentityReq } from 'src/core/types';
-import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';
-import css from './desktop.module.scss';
+import { printWhen } from 'src/core/utils';
+import Dapp from 'src/dapp';
 import { useAuth } from 'src/hooks/use-auth';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { BankAccounts } from 'src/components/templates/bank-accounts';
+import { RootState } from 'src/store';
+
+import css from './desktop.module.scss';
+import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';
 
 export const Desktop = (): JSX.Element => {
   const navigate = useNavigate();
@@ -86,13 +87,13 @@ export const Desktop = (): JSX.Element => {
   );
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity.id}`) },
   ];
 
   return (
@@ -105,7 +106,7 @@ export const Desktop = (): JSX.Element => {
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <ProfileCard />
-          <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
+          <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         </div>
         <Card className={css.rightContainer}>
           <div>
@@ -133,7 +134,7 @@ export const Desktop = (): JSX.Element => {
                       {offer.assignment_total} <span>{unit}</span>
                       {printWhen(
                         <span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>,
-                        isPaidCrypto
+                        isPaidCrypto,
                       )}
                     </div>
                   </div>
@@ -170,12 +171,12 @@ export const Desktop = (): JSX.Element => {
                   <Divider title="Resume">
                     <div className={css.uploadedResume}>
                       <img src="/icons/attachment-black.svg" />
-                      <a href={media.url} target="_blank">
+                      <a href={media.url} target="_blank" rel="noreferrer">
                         {media.filename}
                       </a>
                     </div>
                   </Divider>,
-                  !!media.url
+                  !!media.url,
                 )}
               </div>
             </Accordion>
@@ -189,7 +190,7 @@ export const Desktop = (): JSX.Element => {
             <div className={css.wallet}>
               <PaymentMethods crypto_method={<Dapp.Connect />} />
             </div>,
-            isPaidCrypto
+            isPaidCrypto,
           )}
           {printWhen(
             <Dropdown
@@ -200,11 +201,11 @@ export const Desktop = (): JSX.Element => {
               list={COUNTRIES}
               onValueChange={(selected) => onSelectCountry(selected.value as string)}
             />,
-            !isPaidCrypto && !stripeProfile
+            !isPaidCrypto && !stripeProfile,
           )}
           {printWhen(
             <BankAccounts accounts={stripeProfile} isDisabled={!stripeLink} bankAccountLink={stripeLink} />,
-            !isPaidCrypto && isPaid
+            !isPaidCrypto && isPaid,
           )}
           {printWhen(buttonsJSX, status === 'PENDING')}
         </Card>

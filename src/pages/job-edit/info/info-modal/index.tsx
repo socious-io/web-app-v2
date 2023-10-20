@@ -1,38 +1,40 @@
 import { useEffect, useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
-import { WebModal } from 'src/components/templates/web-modal';
+import { useLoaderData } from 'react-router-dom';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { Divider } from 'src/components/templates/divider/divider';
+import { WebModal } from 'src/components/templates/web-modal';
 import { COUNTRIES, COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { PROJECT_REMOTE_PREFERENCES_V2, translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { PROJECT_TYPE_DICT, PROJECT_TYPE_V2, translateProjectType } from 'src/constants/PROJECT_TYPES';
+import { EXPERIENCE_LEVEL_V2, translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2, translateProjectLength } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
-import { EXPERIENCE_LEVEL_V2, translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
+import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_REMOTE_PREFERENCES_V2, translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { PROJECT_TYPE_DICT, PROJECT_TYPE_V2, translateProjectType } from 'src/constants/PROJECT_TYPES';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
+import { CategoriesResp, CreatePostPayload } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
+import store from 'src/store';
 import {
   resetCreatePostWizard,
   setInitPostWizard,
   setPostPaymentScheme,
   setPostPaymentType,
 } from 'src/store/reducers/createPostWizard.reducer';
-import { printWhen } from 'src/core/utils';
+
+import css from './info-modal.module.scss';
 import { InfoModalProps } from './info-modal.types';
-import { CategoriesResp, CreatePostPayload } from 'src/core/types';
 import { createFormInitState, jobEditRequest } from '../info.services';
 import { useInfoShared } from '../info.shared';
-import css from './info-modal.module.scss';
-import store from 'src/store/store';
 
 export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, jobOverview }) => {
   const dispatch = useDispatch();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const { categories } = (useMatch().ownData.jobCategories as CategoriesResp) || {};
+  const { categories } = (useLoaderData().jobCategories as CategoriesResp) || {};
+
   const categoriesList = jobCategoriesToDropdown(categories);
   function editJob(payload: CreatePostPayload) {
     jobEditRequest(jobOverview.id, payload).then((resp) => {
@@ -199,11 +201,11 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, job
                     </div>
                     {printWhen(
                       errorsJSX,
-                      !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher)
+                      !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher),
                     )}
                     {printWhen(
                       <span className={css.info}>Prices will be shown in USD ($)</span>,
-                      formState.payment_type === 'PAID'
+                      formState.payment_type === 'PAID',
                     )}
                   </div>
                 </div>

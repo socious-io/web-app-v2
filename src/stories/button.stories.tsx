@@ -1,15 +1,11 @@
-import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {Button} from '../components/atoms/button/button';
+import React from 'react';
+import { Button } from 'src/Nowruz/general/Button';
 
 export default {
-  title: 'ATOM/Button',
+  title: 'Components/Button',
   component: Button,
-} as ComponentMeta<typeof Button>;
+};
 
-const Template: ComponentStory<typeof Button> = (args) => (
-  <Button {...args}>Button</Button>
-);
+const Template = (args) => <Button {...args} />;
 
 export const Primary = Template.bind({});
-
-Primary.args = {color: 'blue'};

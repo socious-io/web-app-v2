@@ -1,15 +1,18 @@
+import { useNavigate } from 'react-router-dom';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Header } from 'src/components/atoms/header/header';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { BankAccounts } from 'src/components/templates/bank-accounts';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { printWhen } from 'src/core/utils';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { useWalletShared } from '../wallet.shared';
+import { printWhen } from 'src/core/utils';
+import { useWalletShared } from 'src/pages/wallet/wallet.shared';
+
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
+  const navigate = useNavigate();
   const {
     form,
     externalAccounts,
@@ -29,7 +32,7 @@ export const Mobile: React.FC = () => {
 
   return (
     <TopFixedMobile>
-      <Header title="Wallet" onBack={() => history.back()} />
+      <Header title="Wallet" onBack={() => navigate(-1)} />
       <div className={css.container}>
         {generatedItems?.map((item) => (
           <WithdrawMissions
@@ -40,14 +43,14 @@ export const Mobile: React.FC = () => {
             total={item.payout}
             fee={item.app_fee}
             service={item?.payment?.service}
-            currency={item.offer.currency}
+            currency={item.offer.currency?.currency}
             disableText={
               item.escrow.release_id == null && isDisablePayout(item.escrow) ? 'You can payout after e few days' : ''
             }
             disbaledWithdraw={
               !externalAccounts?.length || item.escrow.release_id != null || isDisablePayout(item.escrow)
             }
-            onClickWithdraw={() => withdrawFund(item.escrow.mission_id)}
+            onClickWithdraw={() => withdrawFund(item.id)}
           />
         ))}
         <AlertModal
@@ -64,7 +67,7 @@ export const Mobile: React.FC = () => {
           <div className={css.load} onClick={loadMoreMissions}>
             load more...
           </div>,
-          totalMissions < total_count
+          totalMissions < total_count,
         )}
         {printWhen(
           <Dropdown
@@ -75,7 +78,7 @@ export const Mobile: React.FC = () => {
             list={COUNTRIES}
             onValueChange={(selected) => onSelectCountry(selected.value as string)}
           />,
-          !externalAccounts?.length
+          !externalAccounts?.length,
         )}
         <BankAccounts
           accounts={externalAccounts}

@@ -1,6 +1,6 @@
+import { MembersRes, Organization, OrganizationReq, OrganizationsRes } from './organizations.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq, PaginateRes } from '../types';
-import { MembersRes, Organization, OrganizationReq, OrganizationsRes } from './organizations.types';
 
 export async function organizations(params: PaginateReq): Promise<OrganizationsRes> {
   return (await get<OrganizationsRes>('orgs', { params })).data;
@@ -12,6 +12,9 @@ export async function createOrganization(payload: OrganizationReq): Promise<Orga
 
 export async function getOrganization(id: string): Promise<Organization> {
   return (await get<Organization>(`orgs/${id}`)).data;
+}
+export async function getOrganizationByShortName(shortName: string): Promise<Organization> {
+  return (await get<Organization>(`orgs/by-shortname/${shortName}`)).data;
 }
 
 export async function updateOrganization(id: string, payload: OrganizationReq): Promise<Organization> {

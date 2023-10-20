@@ -27,12 +27,12 @@ export interface OtpReq {
 
 export interface OtpConfirmReq {
   email: string;
-  otp: string;
+  code: string;
 }
 
 export interface AuthStripeReq {
   country: string;
-  redirect_url: string;
+  redirect_url?: string;
   is_jp?: boolean;
 }
 

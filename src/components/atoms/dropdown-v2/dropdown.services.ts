@@ -1,4 +1,5 @@
 import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
+
 import { DropdownProps } from './dropdown.types';
 
 export function getInitialValue(props: DropdownProps): string {

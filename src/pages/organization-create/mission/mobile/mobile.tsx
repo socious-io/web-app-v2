@@ -1,9 +1,10 @@
+import { Button } from 'src/components/atoms/button/button';
+import { Steps } from 'src/components/atoms/steps/steps';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { required, useForm } from 'src/core/form';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
+
 import css from './mobile.module.scss';
-import { Button } from '../../../../components/atoms/button/button';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import { required, useForm } from '../../../../core/form';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {
   const { onMissionSkip, missionValue, navigateToCulture, updateMission, navigateToProfile } =

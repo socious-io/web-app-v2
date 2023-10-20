@@ -1,3 +1,3 @@
 export type OtpPropss = {
-    title: string;
-}
+  title: string;
+};

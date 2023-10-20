@@ -1,9 +1,13 @@
-import store from 'src/store/store';
 import { Button } from 'src/components/atoms/button/button';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Toggle } from 'src/components/atoms/toggle';
-import { Input } from 'src/components/atoms/input/input';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { dialog } from 'src/core/dialog/dialog';
+import { CreateQuestionPayload } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
+import store from 'src/store';
+import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import {
   resetCreatedQuestion,
   resetQuestions,
@@ -14,13 +18,10 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
-import { dialog } from 'src/core/dialog/dialog';
-import { printWhen } from 'src/core/utils';
-import { CreateQuestionPayload } from 'src/core/types';
+
+import css from './mobile.module.scss';
 import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';
 import { useScreenerQuestionsShared } from '../screener-questions.shared';
-import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
   const { navigate, dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
@@ -28,7 +29,7 @@ export const Mobile: React.FC = () => {
 
   function submitSkip() {
     dialog.alert({ title: 'Successfully', message: 'You have successfully created a job post' }).then(() => {
-      navigate({ to: `/m/jobs/created/${formState.question_project_id.identity_id}` });
+      navigate(`/jobs/created/${formState.question_project_id.identity_id}`);
       store.dispatch(resetCreatedQuestion());
       store.dispatch(resetCreatePostWizard());
     });
@@ -51,7 +52,7 @@ export const Mobile: React.FC = () => {
       dispatch(setQuestionProjectIds({ ...formState.question_project_id, question_id: resp.id }));
       store.dispatch(resetQuestions());
       form.reset();
-      navigate({ to: `created/${formState.question_project_id.identity_id}` });
+      navigate(`created/${formState.question_project_id.identity_id}`);
     });
   }
 
@@ -101,7 +102,7 @@ export const Mobile: React.FC = () => {
             </div>
           ))}
         </div>,
-        formState.add_choices > 0
+        formState.add_choices > 0,
       )}
     </>
   );
@@ -124,7 +125,7 @@ export const Mobile: React.FC = () => {
             <img src="/icons/add-circle.svg" />
             Add question
           </div>,
-          !formState.add_question
+          !formState.add_question,
         )}
         {printWhen(addQuestionsJSX, formState.add_question)}
         {printWhen(multipleChoiceJSX, formState.question_type === 'MULTIPLE')}
@@ -134,7 +135,7 @@ export const Mobile: React.FC = () => {
           <Button color="white" onClick={submitSkip}>
             Skip
           </Button>,
-          !formState.add_question
+          !formState.add_question,
         )}
         {printWhen(
           <>
@@ -145,7 +146,7 @@ export const Mobile: React.FC = () => {
               Cancel
             </Button>
           </>,
-          formState.add_question
+          formState.add_question,
         )}
       </div>
     </div>

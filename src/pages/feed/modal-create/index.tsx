@@ -1,42 +1,45 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { WebModal } from 'src/components/templates/web-modal';
 import { Dropdown } from 'src/components/atoms/dropdown/dropdown';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
-import { dialog } from 'src/core/dialog/dialog';
+import { WebModal } from 'src/components/templates/web-modal';
 import { socialCausesToDropdownAdaptor } from 'src/core/adaptors';
-import { ModalCreateProps } from './modal-create.types';
-import { ModalReview } from '../modal-review';
-import css from './modal-create.module.scss';
+import { CurrentIdentity, SocialCauses } from 'src/core/api';
+import { dialog } from 'src/core/dialog/dialog';
+import css from 'src/pages/feed/modal-create/modal-create.module.scss';
+import { ModalCreateProps } from 'src/pages/feed/modal-create/modal-create.types';
+import { ModalReview } from 'src/pages/feed/modal-review';
+import { RootState } from 'src/store';
 
 export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeedList }) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
-  const [selectedFile, setSelectedFile] = useState();
-  const intialValue = { social: '', text: '', imgUrl: '' };
+  const [selectedFile, setSelectedFile] = useState<File | undefined>();
+  const intialValue = { social: '' as SocialCauses, text: '', imgUrl: '' };
   const [state, setState] = useState(intialValue);
 
-  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
+
+  const avatarImg = useSelector<RootState, string>((state) => {
+    return state.identity.avatarImage;
+  });
 
   const isDisable = () => {
     return [state.social, state.text].every((item) => !!item);
   };
 
   const getSocialValue = (value: string) => {
-    setState({ ...state, social: value });
+    setState({ ...state, social: value as SocialCauses });
   };
 
-  const onChangeTextHandler = (e: any) => {
+  const onChangeTextHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setState({ ...state, text: value });
   };
 
-  const imagUpload = (e: any) => {
+  const imagUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
       return;
@@ -101,7 +104,7 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
           </div>
 
           <div className={css.image}>
-            <img src="icons/image.svg" />
+            <img src="icons/image.svg" alt="" />
             <input type="file" onChange={imagUpload} />
           </div>
         </>
@@ -111,7 +114,7 @@ export const ModalCreate: React.FC<ModalCreateProps> = ({ open, onClose, setFeed
         onClose={() => setOpenReviewModal(false)}
         soucialValue={state.social}
         text={state.text}
-        imgFile={selectedFile || ''}
+        imgFile={selectedFile}
         imgUrl={state.imgUrl}
         setFeedList={setFeedList}
         onDone={() => {

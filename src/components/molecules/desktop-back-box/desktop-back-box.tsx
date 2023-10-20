@@ -1,5 +1,6 @@
-import css from './desktop-back-box.module.scss';
 import { Card } from 'src/components/atoms/card/card';
+
+import css from './desktop-back-box.module.scss';
 import { DesktopBackBoxProps } from './desktop-back-box.types';
 
 export const DesktopBackBox = (props: DesktopBackBoxProps) => {

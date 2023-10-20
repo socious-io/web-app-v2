@@ -1,12 +1,13 @@
-import { convertSnakeCaseToLowerCase } from 'src/core/stringTransformation';
-import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
-import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { translateProjectType } from 'src/constants/PROJECT_TYPES';
 import { getCountryByShortname } from 'src/constants/COUNTRIES';
-import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
+import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
 import { translatePaymentRange } from 'src/constants/PAYMENT_RANGE';
+import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
+import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { translateProjectType } from 'src/constants/PROJECT_TYPES';
+import { convertSnakeCaseToLowerCase } from 'src/core/stringTransformation';
 import { when } from 'src/core/utils';
+
 import { Job } from './job-list.types';
 
 export const EXPERIENCE_LEVEL_OPTIONS = [

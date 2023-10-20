@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import Dapp from 'src/dapp';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
-import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
-import { PaymentMethods } from 'src/components/templates/payment-methods';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { BackLink } from 'src/components/molecules/back-link';
-import { AddCardModal } from '../credit-card/add-card-modal';
+import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
+import { PaymentMethods } from 'src/components/templates/payment-methods';
+import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
+import Dapp from 'src/dapp';
 import { useAuth } from 'src/hooks/use-auth';
-import { usePaymentShared } from '../payment.shared';
+
 import css from './desktop.module.scss';
+import { AddCardModal } from '../credit-card/add-card-modal';
+import { usePaymentShared } from '../payment.shared';
 
 export const Desktop: React.FC = () => {
   const {
@@ -34,6 +36,7 @@ export const Desktop: React.FC = () => {
   const { avatar, city, country, name: applicant_name, username: applicant_username } = recipient?.meta || {};
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   const offeredMessageBoxJSX = (
     <div className={css.offeredMessageBoxJSX}>
@@ -64,7 +67,7 @@ export const Desktop: React.FC = () => {
       </div>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={`${css.container} ${css.right}`}>
-          <BackLink title="Return" onBack={() => history.back()} />
+          <BackLink title="Return" onBack={() => navigate(-1)} />
           <JobDescrioptionCard
             job_title={job_category?.name || ''}
             start_date={start_date}

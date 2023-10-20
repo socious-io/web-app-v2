@@ -1,4 +1,4 @@
-import { FormGroup } from "src/core/form/useForm/useForm.types";
+import { FormGroup } from 'src/core/form/useForm/useForm.types';
 
 export type CheckboxProps = {
   label: string;

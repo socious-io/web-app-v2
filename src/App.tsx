@@ -1,43 +1,16 @@
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import { Outlet, Router } from '@tanstack/react-location';
-import { routes } from './core/routes/routes';
-import store, { RootState } from './store/store';
-import { Spinner } from './components/atoms/spinner/spinner';
-import { Sidebar } from './pages/sidebar/sidebar';
-import { location } from './core/routes/config.routes';
-import { DeepLinks } from './core/deepLinks';
-import { nonPermanentStorage } from './core/storage/non-permanent';
-import { endpoint } from './core/endpoints';
-import { setAuthCookies } from './pages/sign-in/sign-in.services';
-import { PostRefreshResp } from './core/endpoints/index.types';
-import { closeModal } from './store/reducers/modal.reducer';
-import { Modal } from './components/templates/modal/modal';
 import { useEffect } from 'react';
-import { getIdentities } from './core/api';
-import { setIdentityList } from './store/reducers/identity.reducer';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+import router from 'src/core/router';
+import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
-async function fetchNewAuth(
-  refresh_token: Awaited<ReturnType<typeof nonPermanentStorage.get>>
-): Promise<PostRefreshResp | void> {
-  if (refresh_token) {
-    const newAuth = await endpoint.post.auth.refresh({ refresh_token });
-    return newAuth;
-  }
-}
-
-async function storeNewAuth(newAuth: Awaited<ReturnType<typeof fetchNewAuth>>) {
-  if (newAuth !== undefined) {
-    await setAuthCookies(newAuth);
-  }
-}
-
-function refreshToken() {
-  nonPermanentStorage.get('refresh_token').then(fetchNewAuth).then(storeNewAuth);
-}
-
-refreshToken();
-
-setInterval(refreshToken, 1000 * 60 * 15);
+import { Spinner } from './components/atoms/spinner/spinner';
+import { Modal } from './components/templates/modal/modal';
+import { setupInterceptors } from './core/api';
+import { DeepLinks } from './core/deepLinks';
+import store, { RootState } from './store';
+import { closeModal } from './store/reducers/modal.reducer';
+import 'src/core/translation/i18n';
 
 function ModalPlaceholder() {
   const modal = useSelector<RootState>((state) => state.modal);
@@ -50,15 +23,16 @@ function ModalPlaceholder() {
 }
 
 function App() {
+  useEffect(() => {
+    setupInterceptors(store);
+    store.dispatch(currentIdentities());
+  }, []);
   return (
     <Provider store={store}>
-      <Router location={location} routes={routes}>
-        <ModalPlaceholder />
-        <DeepLinks />
-        <Spinner />
-        <Sidebar />
-        <Outlet />
-      </Router>
+      <RouterProvider router={router.routes} />
+      <DeepLinks />
+      <ModalPlaceholder />
+      <Spinner />
     </Provider>
   );
 }

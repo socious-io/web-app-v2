@@ -1,6 +1,7 @@
-import { Button } from '../../../../components/atoms/button/button';
+import { Button } from 'src/components/atoms/button/button';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
+
 import css from './mobile.module.scss';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
 
 export const Mobile = (): JSX.Element => {
   const { navigateToVerified, organizationName } = useOrganizationCreateShared();

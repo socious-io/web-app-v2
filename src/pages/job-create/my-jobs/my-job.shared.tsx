@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
+import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
+
 import { getActiveJobs, getArchivedJobs, getDraftJobs, jobListToJobCardListAdaptor } from './my-jobs.services';
 import { MyJobsResolver } from './my-jobs.types';
 
 export const useMyJobShared = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const resolver = useMatch();
-  const { activeJobs, draftJobs, archivedJobs } = resolver.ownData as MyJobsResolver;
+  const { activeJobs, draftJobs, archivedJobs } = useLoaderData() as MyJobsResolver;
   const onGoingTitle = `On-Going (${activeJobs.total_count})`;
   const draftTitle = `Drafts (${draftJobs.total_count})`;
   const archivedTitle = `Archived (${archivedJobs.total_count})`;
@@ -18,7 +19,7 @@ export const useMyJobShared = () => {
   const [archivedJobList, setArchivedJobList] = useState({ ...archivedJobs, items: adoptedArchivedList });
 
   async function updateActiveJobList() {
-    const identityId = resolver.params.id;
+    const identityId = id;
     const payload = { identityId, page: activeJobList.page + 1 };
     getActiveJobs(payload)
       .then(({ items }) => ({
@@ -31,7 +32,7 @@ export const useMyJobShared = () => {
   }
 
   async function updateDraftJobList() {
-    const identityId = resolver.params.id;
+    const identityId = id;
     const payload = { identityId, page: draftJobList.page + 1 };
     getDraftJobs(payload)
       .then(({ items }) => ({
@@ -57,7 +58,7 @@ export const useMyJobShared = () => {
   }
 
   function navigateToOverview(id?: string) {
-    navigate({ to: `../${id}/overview` });
+    navigate(`/jobs/created/${id}/overview`);
   }
 
   return {

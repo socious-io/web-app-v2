@@ -1,10 +1,11 @@
+import { Button } from 'src/components/atoms/button/button';
+import { Input } from 'src/components/atoms/input/input';
+import { Link } from 'src/components/atoms/link/link';
+import { Typography } from 'src/components/atoms/typography/typography';
+import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
+
 import css from './desktop.module.scss';
 import { REGEX } from '../../../../constants/REGEX';
-import { Button } from '../../../../components/atoms/button/button';
-import { Input } from '../../../../components/atoms/input/input';
-import { Link } from '../../../../components/atoms/link/link';
-import { Typography } from '../../../../components/atoms/typography/typography';
-import { BottomStatic } from '../../../../components/templates/bottom-static/bottom-static';
 import { useSignUpUserEmailShared } from '../sign-up-user-email.shared';
 
 export const Desktop = (): JSX.Element => {

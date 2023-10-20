@@ -1,20 +1,21 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
+import { useNavigate } from 'react-router-dom';
+import { Card } from 'src/components/atoms/card/card';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
 import { AlertModal } from 'src/components/organisms/alert-modal';
 import { BankAccounts } from 'src/components/templates/bank-accounts';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { Card } from 'src/components/atoms/card/card';
 import { ProfileCard } from 'src/components/templates/profile-card';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { printWhen } from 'src/core/utils';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { WithdrawMissions } from 'src/components/templates/withdraw-missions';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { IdentityReq } from 'src/core/types';
-import { useWalletShared } from '../wallet.shared';
-import css from './desktop.module.scss';
+import { printWhen } from 'src/core/utils';
 import { useAuth } from 'src/hooks/use-auth';
+import { useWalletShared } from 'src/pages/wallet/wallet.shared';
+import { RootState } from 'src/store/store';
+
+import css from './desktop.module.scss';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
@@ -40,20 +41,20 @@ export const Desktop: React.FC = () => {
   const { isLoggedIn } = useAuth();
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity.id}`) },
   ];
 
   return (
     <TwoColumnCursor visibleSidebar={isLoggedIn}>
       <div className={css.leftContainer}>
         <ProfileCard />
-        <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
+        <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
         <Card className={!externalAccounts?.length ? css.accounts : css.noCard}>
           {printWhen(
             <Dropdown
@@ -64,7 +65,7 @@ export const Desktop: React.FC = () => {
               list={COUNTRIES}
               onValueChange={(selected) => onSelectCountry(selected.value as string)}
             />,
-            !externalAccounts?.length
+            !externalAccounts?.length,
           )}
           <BankAccounts
             accounts={externalAccounts}
@@ -82,15 +83,17 @@ export const Desktop: React.FC = () => {
             amount={item.amount}
             total={item.payout}
             fee={item.app_fee}
-            currency={item.offer.currency}
+            currency={item.offer.currency?.currency}
             service={item?.payment?.service}
             disableText={
-              item.escrow.release_id == null && isDisablePayout(item.escrow) ? 'You can payout after e few days' : ''
+              item.escrow.release_id == null && isDisablePayout({ created_at: item.escrow.created_at })
+                ? 'You can payout after e few days'
+                : ''
             }
             disbaledWithdraw={
               !externalAccounts?.length || item.escrow.release_id != null || isDisablePayout(item.escrow)
             }
-            onClickWithdraw={() => withdrawFund(item.escrow.mission_id)}
+            onClickWithdraw={() => withdrawFund(item.id)}
           />
         ))}
         <AlertModal
@@ -107,7 +110,7 @@ export const Desktop: React.FC = () => {
           <div className={css.load} onClick={loadMoreMissions}>
             load more...
           </div>,
-          totalMissions < total_count
+          totalMissions < total_count,
         )}
       </div>
     </TwoColumnCursor>

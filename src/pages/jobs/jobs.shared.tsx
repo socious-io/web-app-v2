@@ -1,12 +1,18 @@
 import { useState } from 'react';
-import { getJobList } from './jobs.services';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
+import { JobsRes } from 'src/core/api';
+import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store';
 
+import { getJobList } from './jobs.services';
+
+interface Loader {
+  data: JobsRes;
+}
 export const useJobsShared = () => {
-  const { data } = useMatch();
+  const { data } = useLoaderData() as Loader;
   const [jobList, setJobList] = useState(data.items);
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
@@ -23,7 +29,7 @@ export const useJobsShared = () => {
   }
 
   function goToJobDetail(id: string) {
-    navigate({ to: `/jobs/${id}` });
+    navigate(`/jobs/${id}`);
   }
 
   const showMorePageBtn = jobList.length < data.total_count;

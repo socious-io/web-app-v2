@@ -1,10 +1,11 @@
-import { Modal } from 'src/components/templates/modal/modal';
-import css from './social-causes-filter.module.scss';
-import { Search } from 'src/components/atoms/search/search';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
 import { useEffect, useState } from 'react';
 import { Button } from 'src/components/atoms/button/button';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Search } from 'src/components/atoms/search/search';
+import { Modal } from 'src/components/templates/modal/modal';
+import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+
+import css from './social-causes-filter.module.scss';
 import { SocialCausesFilterProps } from './social-causes-filter.types';
 
 export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element => {
@@ -12,7 +13,7 @@ export const SocialCausesFilter = (props: SocialCausesFilterProps): JSX.Element 
   const [selected, setSelected] = useState(props.selectedCauses);
   function onSearch(value: string) {
     const searchResult = socialCausesToCategoryAdaptor().filter((item) =>
-      item.label.toLowerCase().includes(value.toLowerCase())
+      item.label.toLowerCase().includes(value.toLowerCase()),
     );
     setList(searchResult);
   }
