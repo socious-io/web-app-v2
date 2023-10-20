@@ -40,7 +40,7 @@ export const JobList = (props: JobListProps): JSX.Element => {
           <Card key={job.id} cursor="pointer" onClick={() => props.onClick(job.id)}>
             <div className={css.header}>
               <Avatar
-                marginRight="0.5rem"
+                customStyle={css.avatar}
                 type="organizations"
                 img={job.identity_meta ? job.identity_meta.image : ''}
               />
