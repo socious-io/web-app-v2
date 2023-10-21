@@ -3,9 +3,9 @@ import { Input } from 'src/components/atoms/input/input';
 import { Link } from 'src/components/atoms/link/link';
 import { Typography } from 'src/components/atoms/typography/typography';
 import { BottomStatic } from 'src/components/templates/bottom-static/bottom-static';
+import { REGEX } from 'src/constants/REGEX';
 
 import css from './desktop.module.scss';
-import { REGEX } from '../../../../constants/REGEX';
 import { useSignUpUserEmailShared } from '../sign-up-user-email.shared';
 
 export const Desktop = (): JSX.Element => {

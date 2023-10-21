@@ -25,7 +25,7 @@ export const Desktop = (): JSX.Element => {
             name="email"
             placeholder="Email"
             register={register}
-            errors={[errors['email']?.message]}
+            errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
           />
           <NewInput
             {...register('password')}
@@ -35,7 +35,7 @@ export const Desktop = (): JSX.Element => {
             name="password"
             placeholder="Password"
             register={register}
-            errors={[errors['password']?.message]}
+            errors={errors['password']?.message ? [errors['password']?.message.toString()] : undefined}
           />
         </form>
         <div className={css.forgotPassword}>
