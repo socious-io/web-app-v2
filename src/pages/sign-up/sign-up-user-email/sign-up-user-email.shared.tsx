@@ -13,15 +13,15 @@ export const useSignUpUserEmailShared = () => {
     const formValues = getFormValues(form) as RegisterReq;
 
     const response = await preRegister({ email: formValues.email });
-    if (response.email === 'EXIST') {
-      handleError(Error('email already exists'));
+    if (response.email === 'EXISTS') {
+      handleError({ title: 'error', message: 'Email already in use. Please sign in or choose another email.' })();
       return;
+    } else {
+      register(formValues)
+        .then(() => localStorage.setItem('email', formValues.email))
+        .then(() => navigate('../verification'))
+        .catch(handleError());
     }
-
-    register(formValues)
-      .then(() => localStorage.setItem('email', formValues.email))
-      .then(() => navigate('../verification'))
-      .catch(handleError());
   }
 
   function navigateToSignIn() {

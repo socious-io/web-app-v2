@@ -49,8 +49,8 @@ export interface AuthRes {
 }
 
 export interface PreRegisterRes {
-  email?: 'EXIST' | null;
-  username?: 'EXIST' | null;
+  email?: 'EXISTS' | null;
+  username?: 'EXISTS' | null;
 }
 
 export interface StripeLinkRes {
