@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { ApplicantListPay } from 'src/components/molecules/applicant-list-pay/applicant-list-pay';
-import { confirmMission, contestMission, feedbackMission,offerByApplicant } from 'src/core/api';
+import { confirmMission, contestMission, feedbackMission, offerByApplicant } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
 import Dapp from 'src/dapp';
 import { useAlert } from 'src/hooks/use-alert';
@@ -50,7 +50,6 @@ export const Hired = (props: HiredProps): JSX.Element => {
     }
     if (web3 && escrowId) {
       try {
-        
         await Dapp.withdrawnEscrow(web3, escrowId, offerOverview.offerer.meta.verified_impact);
         confirmMission(id).then(onDone);
       } catch (err: any) {
@@ -103,18 +102,27 @@ export const Hired = (props: HiredProps): JSX.Element => {
       });
     }
   }
-  function onRehireClick(projectId: string) {
+  async function onRehireClick(projectId: string) {
     const selected = props.endHiredList.items.find((item) => item.id === projectId);
     if (selected) {
-      offerByApplicant(selected.applicant.id, {
+      let payload = {
         offer_message: selected.offer.offer_message,
         assignment_total: selected.offer.total_hours,
-        payment_mode: selected.offer.payment_mode,
-        crypto_currency_address: selected.offer.crypto_currency_address,
-      });
+      };
+      if (selected.project.payment_type === 'PAID' && selected.offer.payment_mode !== 'FIAT')
+        payload = {
+          ...payload,
+          crypto_currency_address: selected.offer.crypto_currency_address,
+          payment_mode: selected.offer.payment_mode,
+        };
+      try {
+        const offerRes = await offerByApplicant(selected.applicant.id, payload);
+        dialog.alert({ title: 'Confirmed', message: 'You successfully sent an offer' });
+        navigate(`/jobs`);
+      } catch {
+        dialog.alert({ title: 'Failed', message: 'Please try again later' });
+      }
     }
-    dialog.alert({ title: 'Confirmed', message: 'You successfully sent an offer' });
-    navigate(`/jobs`);
   }
   return (
     <div className={css.container}>
