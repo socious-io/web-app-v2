@@ -1,10 +1,11 @@
+import { Store } from '@reduxjs/toolkit';
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { config } from 'src/config';
 import { dialog } from 'src/core/dialog/dialog';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
 import translate from 'src/translations';
-import { Store } from '@reduxjs/toolkit';
+
 import { refreshToken } from './auth/auth.service';
 
 export const http = axios.create({
@@ -49,13 +50,14 @@ export type ErrorHandlerParams = {
 const errorSections: ErrorSection[] = ['AUTH', 'FORGET_PASSWORD'];
 
 export function handleError(params?: ErrorHandlerParams) {
-  return (err: AxiosError<{ error: string }>) => {
+  return (err?: AxiosError<{ error: string }>) => {
     const errMessage = params?.message || err?.response?.data.error || 'An error accrued';
+    const section = params?.section || (err && err.request ? getErrorSection(err?.request) : '');
+
     const message = translate(errMessage, {
       cluster: 'ERROR',
-      section: params?.section || getErrorSection(err?.request),
+      section,
     });
-
     dialog.alert({
       message,
       title: params?.title || 'Failed',
