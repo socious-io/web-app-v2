@@ -8,8 +8,12 @@ frontend:
       commands:
         - if [ "${AWS_BRANCH}" = "prod" ]; then npx vite build --mode production; fi
         - if [ "${AWS_BRANCH}" = "main" ]; then npx vite build --mode development; fi
+        - if [ "${AWS_BRANCH}" = "story" ]; then npm story:build; fi
   artifacts:
-    baseDirectory: dist
+    baseDirectory:
+    - if [ "${AWS_BRANCH}" = "story" ]; then storybook-static; fi
+    - if [ "${AWS_BRANCH}" = "main" ]; then dist; fi
+    - if [ "${AWS_BRANCH}" = "prod" ]; then dist; fi
     files:
       - '**/*'
   cache:
