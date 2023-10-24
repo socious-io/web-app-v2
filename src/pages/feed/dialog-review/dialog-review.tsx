@@ -1,26 +1,27 @@
 import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from '../../../core/types';
-import { RootState } from '../../../store/store';
-import { Avatar } from '../../../components/atoms/avatar/avatar';
-import { Button } from '../../../components/atoms/button/button';
-import { Card } from '../../../components/atoms/card/card';
-import { CategoriesClickable } from '../../../components/atoms/categories-clickable/categories-clickable';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
-import { DialogCreate } from '../dialog-create/dialog-create';
-import css from './dialog-review.module.scss';
-import { DialogReviewProps } from './dialog-review.types';
-import { getFeedList, submitPost, uploadImage } from '../refactored/feed.service';
+import { posts, createPost, CurrentIdentity, uploadMedia } from 'src/core/api';
+import { DialogCreate } from 'src/pages/feed/dialog-create/dialog-create';
+import css from 'src/pages/feed/dialog-review/dialog-review.module.scss';
+import { DialogReviewProps } from 'src/pages/feed/dialog-review/dialog-review.types';
+import { RootState } from 'src/store';
 
 export const DialogReview = (props: DialogReviewProps) => {
   const [openDialog, setOpenDialog] = useState(false);
 
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
+  const avatarImg = useSelector<RootState, string>((state) => {
+    return state.identity.avatarImage;
+  });
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -34,7 +35,7 @@ export const DialogReview = (props: DialogReviewProps) => {
   async function onSubmit() {
     let imageId: string[] = [];
     if (props.imgFile) {
-      const id = await uploadImage(props.imgFile).then((resp) => resp.data.id);
+      const id = await uploadMedia(props.imgFile).then((resp) => resp.id);
       imageId = [id];
     }
     const payload = {
@@ -42,8 +43,8 @@ export const DialogReview = (props: DialogReviewProps) => {
       content: props.text,
       media: imageId,
     };
-    submitPost(payload).then(() => {
-      getFeedList({ page: 1 }).then((resp) => {
+    createPost(payload).then(() => {
+      posts({ page: 1 }).then((resp) => {
         props.setFeedList(resp.items);
         handleClose();
       });
@@ -61,16 +62,16 @@ export const DialogReview = (props: DialogReviewProps) => {
     <div className={css.container}>
       <div className={css.header}>
         <div onClick={handleClickOpen}>
-          <img src="/icons/chevron-left.svg" />
+          <img src="/icons/chevron-left.svg" alt="" />
         </div>
         <span className={css.title}>Review Post</span>
         <div onClick={props.onClose}>
-          <img src="/icons/close-black.svg" />
+          <img src="/icons/close-black.svg" alt="" />
         </div>
       </div>
       <div className={css.main}>
         <div className={css.social}>
-          <Avatar img={avatarImg} type={identity.type} />
+          {identity && <Avatar img={avatarImg} type={identity.type} />}
           <CategoriesClickable list={obj} />
         </div>
         <div className={css.text}>
@@ -78,7 +79,7 @@ export const DialogReview = (props: DialogReviewProps) => {
         </div>
         <div className={css.image}>
           <Card>
-            <img src={props.imgUrl} />
+            <img src={props.imgUrl} alt="" />
           </Card>
         </div>
       </div>

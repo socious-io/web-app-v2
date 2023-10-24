@@ -15,16 +15,16 @@ function removeCookiesFromAllPaths() {
           (document.cookie = `${name}=;max-age=0;path=/;domain=${domain}`),
           domain
         ),
-        location.hostname
-      )
+        location.hostname,
+      ),
   );
 }
 
-async function set(payload: SetOptions,expires?:number): Promise<void> {
+async function set(payload: SetOptions, expires?: number): Promise<void> {
   if (isNative) {
     await Preferences.set(payload);
   } else {
-    Cookies.set(payload.key, payload.value, { sameSite: 'Strict', secure: true ,...(expires && { expires }),});
+    Cookies.set(payload.key, payload.value, { sameSite: 'Strict', secure: true, ...(expires && { expires }) });
   }
 }
 

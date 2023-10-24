@@ -1,8 +1,9 @@
-import { Search } from '../../atoms/search/search';
-import { ContactItem } from '../../molecules/contact-item/contact-item';
+import InfiniteScroll from 'react-infinite-scroller';
+import { Search } from 'src/components/atoms/search/search';
+import { ContactItem } from 'src/components/molecules/contact-item/contact-item';
+
 import css from './contact-list.module.scss';
 import { ContactListProps } from './contact-list.types';
-import InfiniteScroll from 'react-infinite-scroller';
 
 export const ContactList = (props: ContactListProps): JSX.Element => {
   const { list, message, onSearch, onContactClick, ...rest } = props;

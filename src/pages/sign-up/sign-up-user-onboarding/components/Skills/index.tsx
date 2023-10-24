@@ -1,23 +1,29 @@
-import React, { useContext, useState } from 'react';
-import css from './skills.module.scss';
-import { Button } from '../../../../../components/atoms/button/button';
-import { CategoriesClickable } from '../../../../../components/atoms/categories-clickable/categories-clickable';
-import { Search } from '../../../../../components/atoms/search/search';
-import StepHeader from '../stepHeader';
-import { StepsContext } from '../steper';
-import { useUser } from '../../sign-up-user-onboarding.context';
+import React, { useContext, useEffect, useState } from 'react';
+import { Button } from 'src/components/atoms/button/button';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Search } from 'src/components/atoms/search/search';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
-import { isValidArrayRange } from '../../sign-up-user-onboarding.service';
+import { StepsContext } from 'src/pages/sign-up/sign-up-user-onboarding/components/steper';
+import StepHeader from 'src/pages/sign-up/sign-up-user-onboarding/components/stepHeader';
+import { useUser } from 'src/pages/sign-up/sign-up-user-onboarding/sign-up-user-onboarding.context';
+import { isValidArrayRange } from 'src/pages/sign-up/sign-up-user-onboarding/sign-up-user-onboarding.service';
+
+import css from './skills.module.scss';
 
 const Skills: React.FC = () => {
   const { updateSelectedStep } = useContext(StepsContext);
   const { state, updateUser } = useUser();
-  const [list, setList] = useState(skillsToCategoryAdaptor());
+  const [list, setList] = useState<{ value: string; label: string }[]>([]);
+
+  useEffect(() => {
+    skillsToCategoryAdaptor().then((data) => setList(data));
+  }, []);
+
   const updateSocialCauses = (skills: Array<string>) => {
     updateUser({ ...state, skills });
   };
   function onSearch(value: string) {
-    const filtered = skillsToCategoryAdaptor().filter((item) => item.label.toLowerCase().includes(value.toLowerCase()));
+    const filtered = list.filter((item) => item.label.toLowerCase().includes(value.toLowerCase()));
     setList(filtered);
   }
 

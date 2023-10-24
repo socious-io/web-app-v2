@@ -1,5 +1,5 @@
-import { MissionsResp, Offer, Pagination, QuestionsRes, UserApplicantResp } from '../../core/types';
 import { Job } from '../../components/organisms/job-list/job-list.types';
+import { MissionsResp, Offer, Pagination, QuestionsRes, UserApplicantResp } from '../../core/types';
 
 export type Loader = {
   offerOverview: Offer;

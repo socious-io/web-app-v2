@@ -1,27 +1,28 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import store from 'src/store/store';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
+import store from 'src/store';
 import {
   resetCreatedQuestion,
   setAddQuestion,
   setDefaultQuestion,
   setQuestionProjectIds,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { useCreatedShared } from '../created.shared';
+
 import css from './mobile.module.scss';
+import { useCreatedShared } from '../created.shared';
 
 export const Mobile: React.FC = () => {
   const navigate = useNavigate();
-  const resolver = useMatch();
+  const { id } = useParams();
 
-  const defaultQuestions = useMatch().ownData.defaultQuestions?.questions;
+  const defaultQuestions = useLoaderData().defaultQuestions?.questions;
   const { questions, onRemoveCreatedQuestion } = useCreatedShared(defaultQuestions);
 
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: `/jobs/create/screener-questions` })}>
+        <div className={css.chevron} onClick={() => navigate(`/jobs/create/screener-questions`)}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.headerTitle}>Edit job</div>
@@ -52,19 +53,17 @@ export const Mobile: React.FC = () => {
                   store.dispatch(setDefaultQuestion(defaultQuestions[index]));
                   store.dispatch(
                     setQuestionProjectIds({
-                      project_id: resolver.params.id,
+                      project_id: id,
                       question_id: defaultQuestions[index].id,
-                    })
+                    }),
                   );
-                  navigate({ to: `/jobs/edit/screener-questions` });
+                  navigate(`/jobs/edit/screener-questions`);
                 }}
               />
               <img
                 src="/icons/trash-bin.svg"
                 alt="remove"
-                onClick={() =>
-                  onRemoveCreatedQuestion({ projectId: resolver.params.id, questionId: defaultQuestions[index].id })
-                }
+                onClick={() => onRemoveCreatedQuestion({ projectId: id, questionId: defaultQuestions[index].id })}
               />
             </div>
           </Accordion>
@@ -74,10 +73,10 @@ export const Mobile: React.FC = () => {
           onClick={() => {
             store.dispatch(setAddQuestion(true));
             setQuestionProjectIds({
-              project_id: resolver.params.id,
+              project_id: id,
             });
 
-            navigate({ to: `/jobs/edit/screener-questions` });
+            navigate(`/jobs/edit/screener-questions`);
           }}
         >
           <img src="/icons/add-circle.svg" />
@@ -85,7 +84,7 @@ export const Mobile: React.FC = () => {
         </div>
       </div>
       <div className={css.btnContainer}>
-        <Button onClick={() => history.back()}>Done</Button>
+        <Button onClick={() => navigate(-1)}>Done</Button>
       </div>
     </div>
   );

@@ -1,46 +1,48 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { Button } from 'src/components/atoms/button/button';
+import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { Divider } from 'src/components/templates/divider/divider';
 import { COUNTRIES, COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { PROJECT_REMOTE_PREFERENCES_V2, translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { PROJECT_TYPE_DICT, PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
+import { EXPERIENCE_LEVEL_V2, translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2, translateProjectLength } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
-import { EXPERIENCE_LEVEL_V2, translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
+import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_REMOTE_PREFERENCES_V2, translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { PROJECT_TYPE_DICT, PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
+import { JobReq } from 'src/core/api';
+import { CategoriesResp, CreatePostPayload } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
 import {
   setPostPaymentScheme,
   setPostPaymentType,
   setInitPostWizard,
 } from 'src/store/reducers/createPostWizard.reducer';
-import { printWhen } from 'src/core/utils';
-import { CategoriesResp, CreatePostPayload } from 'src/core/types';
+
+import css from './mobile.module.scss';
 import { createFormInitState, jobEditRequest } from '../info.services';
 import { useInfoShared } from '../info.shared';
-import css from './mobile.module.scss';
-import { useEffect } from 'react';
-import { Job } from 'src/components/organisms/job-list/job-list.types';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const resolvedJobCategories = useMatch().ownData.jobCategories?.categories as CategoriesResp['categories'];
-  const overview = useMatch().ownData.overview as Job;
-  const categories = jobCategoriesToDropdown(resolvedJobCategories);
+  const { jobCategories, overview } = useLoaderData() || {};
+  const categoriesList = jobCategoriesToDropdown(jobCategories.categories);
+
   useEffect(() => {
     dispatch(setInitPostWizard(createFormInitState(overview)));
   }, []);
 
-  function editJob(id: string, payload: CreatePostPayload) {
+  function editJob(id: string, payload: JobReq) {
     jobEditRequest(overview.id, payload).then(() => {
-      navigate({ to: `/m/jobs/created/${id}/overview` });
+      navigate(`/jobs/created/${id}/overview`);
     });
   }
 
@@ -56,7 +58,7 @@ export const Mobile = (): JSX.Element => {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.chevron} onClick={() => navigate({ to: `/m/jobs/created/${overview.id}/overview` })}>
+        <div className={css.chevron} onClick={() => navigate(`/jobs/created/${overview.id}/overview`)}>
           <img height={24} src="/icons/chevron-left.svg" />
         </div>
         <div className={css.headerTitle}>Edit job</div>
@@ -76,7 +78,7 @@ export const Mobile = (): JSX.Element => {
                 name="job_category_id"
                 label="Job category"
                 placeholder="job category"
-                list={categories}
+                list={categoriesList}
                 defaultValue={overview.job_category?.name}
               />
               <Textarea
@@ -180,11 +182,11 @@ export const Mobile = (): JSX.Element => {
                 </div>
                 {printWhen(
                   errorsJSX,
-                  !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher)
+                  !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher),
                 )}
                 {printWhen(
                   <span className={css.info}>Prices will be shown in USD ($)</span>,
-                  formState.payment_type === 'PAID'
+                  formState.payment_type === 'PAID',
                 )}
               </div>
             </div>
@@ -203,8 +205,8 @@ export const Mobile = (): JSX.Element => {
             </div>
           </Divider>
           <div className={css.btnContainer}>
-            <Button onClick={() => editJob(overview.id, formState)}>Save changes</Button>
-            <Button color="white" onClick={() => navigate({ to: `/m/jobs/created/${overview.id}/overview` })}>
+            <Button onClick={() => editJob(overview.id, formState as JobReq)}>Save changes</Button>
+            <Button color="white" onClick={() => navigate(`/jobs/created/${overview.id}/overview`)}>
               Cancel
             </Button>
           </div>

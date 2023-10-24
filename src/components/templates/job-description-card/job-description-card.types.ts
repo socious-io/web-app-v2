@@ -1,4 +1,4 @@
-import { ProfileViewProps } from "src/components/molecules/profile-view/profile-view.types";
+import { ProfileViewProps } from 'src/components/molecules/profile-view/profile-view.types';
 
 export interface JobDescriptionCardProps extends ProfileViewProps {
   job_title: string;

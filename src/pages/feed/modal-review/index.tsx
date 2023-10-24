@@ -1,15 +1,14 @@
 import { useSelector } from 'react-redux';
-import { WebModal } from 'src/components/templates/web-modal';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
-import { RootState } from 'src/store/store';
+import { WebModal } from 'src/components/templates/web-modal';
+import { createPost, CurrentIdentity, posts, uploadMedia } from 'src/core/api';
 import { printWhen } from 'src/core/utils';
-import { IdentityReq } from 'src/core/types';
-import { ModalReviewProps } from './modal-review.types';
-import css from './modal-review.module.scss';
-import { getFeedList, submitPost, uploadImage } from '../refactored/feed.service';
+import css from 'src/pages/feed/modal-review/modal-review.module.scss';
+import { ModalReviewProps } from 'src/pages/feed/modal-review/modal-review.types';
+import { RootState } from 'src/store';
 
 export const ModalReview: React.FC<ModalReviewProps> = ({
   open,
@@ -21,16 +20,18 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
   setFeedList,
   onDone,
 }) => {
-  const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
-  const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
+  const avatarImg = useSelector<RootState, string>((state) => {
+    return state.identity.avatarImage;
+  });
 
   async function onSubmit() {
     let imageId: string[] = [];
     if (imgFile) {
-      const id = await uploadImage(imgFile).then((resp) => resp.data.id);
+      const id = await uploadMedia(imgFile).then((resp) => resp.id);
       imageId = [id];
     }
     const payload = {
@@ -38,8 +39,9 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
       content: text,
       media: imageId,
     };
-    submitPost(payload).then(() => {
-      getFeedList({ page: 1 }).then((resp) => {
+
+    createPost(payload).then(() => {
+      posts({ page: 1 }).then((resp) => {
         setFeedList(resp.items);
         onClose();
         onDone();
@@ -76,10 +78,10 @@ export const ModalReview: React.FC<ModalReviewProps> = ({
         {printWhen(
           <div className={css.image}>
             <Card>
-              <img src={imgUrl} />
+              <img src={imgUrl} alt="" />
             </Card>
           </div>,
-          !!imgUrl
+          !!imgUrl,
         )}
       </div>
     </WebModal>

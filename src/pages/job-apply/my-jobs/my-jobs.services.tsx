@@ -1,56 +1,40 @@
 import { CSSProperties } from 'react';
 import { JobCardProps } from 'src/components/molecules/job-card/job-card.types';
-import { get } from 'src/core/http';
-import { toRelativeTime } from 'src/core/relative-time';
-import { GetOffer, Pagination, UserApplicantResp, DeclinedApplicantListResp, MissionsResp } from 'src/core/types';
 import { APPLICANT_STATUS, setApplicantStatusLabel } from 'src/constants/APPLICANT_STATUS';
+import { userOffers, Offer, userApplicants, Applicant, userMissions, Mission } from 'src/core/api';
+import { toRelativeTime } from 'src/core/relative-time';
+import { Pagination } from 'src/core/types';
 
 export async function getEndedList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
-  return get(`/user/missions?status=COMPLETE,CONFIRMED&page=${payload.page}`)
-    .then(({ data }) => data)
-    .then((resp) => {
-      const adopted = endedListToJobCardList(resp.items);
-      return { ...resp, items: adopted };
-    });
+  const missions = await userMissions('', { status: 'COMPLETE,CONFIRMED', page: payload.page });
+  const adopted = endedListToJobCardList(missions.items);
+  return { ...missions, items: adopted };
 }
 
 export async function getOnGoingList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
-  return get(`/user/missions?status=ACTIVE&page=${payload.page}`)
-    .then(({ data }) => data)
-    .then((resp) => {
-      const adopted = onGoingListToJobCardList(resp.items);
-      return { ...resp, items: adopted };
-    });
+  const missions = await userMissions('', { status: 'ACTIVE', page: payload.page });
+  const adopted = onGoingListToJobCardList(missions.items);
+  return { ...missions, items: adopted };
 }
 
 export async function getDeclinedApplicants(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
-  return get(`/user/applicants?status=REJECTED&page=${payload.page}`)
-    .then(({ data }) => data)
-    .then((resp) => {
-      const adopted = declinedListToJobCardList(resp.items);
-      return { ...resp, items: adopted };
-    });
+  const applicants = await userApplicants({ status: 'REJECTED', page: payload.page });
+  const adopted = declinedListToJobCardList(applicants.items);
+  return { ...applicants, items: adopted };
 }
-
 export async function getPendingApplicants(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
-  return get(`/user/applicants?status=PENDING&page=${payload.page}`)
-    .then(({ data }) => data)
-    .then((resp) => {
-      const adopted = pendingListToJobCardList(resp.items);
-      return { ...resp, items: adopted };
-    });
+  const applicants = await userApplicants({ status: 'PENDING', page: payload.page });
+  const adopted = pendingListToJobCardList(applicants.items);
+  return { ...applicants, items: adopted };
 }
 
 export async function getAwaitingReviewList(payload: { page: number }): Promise<Pagination<JobCardProps[]>> {
-  return get(`/user/offers?status=PENDING,APPROVED&page=${payload.page}`)
-    .then(({ data }) => data)
-    .then((resp) => {
-      const adopted = awaitingListToJobCardList(resp.items);
-      return { ...resp, items: adopted };
-    });
+  const offers = await userOffers({ status: 'PENDING,APPROVED', page: payload.page });
+  const adopted = awaitingListToJobCardList(offers.items);
+  return { ...offers, items: adopted };
 }
 
-function endedItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCardProps {
+function endedItemToJobCardAdaptor(applicant: Mission): JobCardProps {
   return {
     id: applicant.project.id,
     title: applicant.project.title,
@@ -60,11 +44,11 @@ function endedItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCard
   };
 }
 
-function endedListToJobCardList(applicants: MissionsResp['items']): JobCardProps[] {
+function endedListToJobCardList(applicants: Mission[]): JobCardProps[] {
   return applicants.map(endedItemToJobCardAdaptor);
 }
 
-function onGoingItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCardProps {
+function onGoingItemToJobCardAdaptor(applicant: Mission): JobCardProps {
   return {
     id: applicant.id,
     title: applicant.project.title,
@@ -74,11 +58,11 @@ function onGoingItemToJobCardAdaptor(applicant: MissionsResp['items'][0]): JobCa
   };
 }
 
-function onGoingListToJobCardList(applicants: MissionsResp['items']): JobCardProps[] {
+function onGoingListToJobCardList(applicants: Mission[]): JobCardProps[] {
   return applicants.map(onGoingItemToJobCardAdaptor);
 }
 
-function declinedItemToJobCardAdaptor(applicant: DeclinedApplicantListResp['items'][0][0]): JobCardProps {
+function declinedItemToJobCardAdaptor(applicant: Applicant): JobCardProps {
   return {
     id: applicant.project.id,
     title: applicant.project.title,
@@ -88,7 +72,7 @@ function declinedItemToJobCardAdaptor(applicant: DeclinedApplicantListResp['item
   };
 }
 
-function declinedListToJobCardList(applicants: DeclinedApplicantListResp['items'][0]): JobCardProps[] {
+function declinedListToJobCardList(applicants: Applicant[]): JobCardProps[] {
   return applicants.map(declinedItemToJobCardAdaptor);
 }
 
@@ -139,7 +123,7 @@ function setStatusJSX(status: keyof typeof APPLICANT_STATUS) {
   }
 }
 
-function awaitingItemToJobCardAdaptor(applicant: GetOffer['items'][0]): JobCardProps {
+function awaitingItemToJobCardAdaptor(applicant: Offer): JobCardProps {
   return {
     id: applicant.id,
     title: applicant.project.title,
@@ -150,11 +134,11 @@ function awaitingItemToJobCardAdaptor(applicant: GetOffer['items'][0]): JobCardP
   };
 }
 
-function awaitingListToJobCardList(applicants: GetOffer['items']): JobCardProps[] {
+function awaitingListToJobCardList(applicants: Offer[]): JobCardProps[] {
   return applicants.map(awaitingItemToJobCardAdaptor);
 }
 
-function pendingItemToJobCard(applicant: UserApplicantResp): JobCardProps {
+function pendingItemToJobCard(applicant: Applicant): JobCardProps {
   return {
     id: applicant.project.id,
     title: applicant.project.title,
@@ -164,6 +148,6 @@ function pendingItemToJobCard(applicant: UserApplicantResp): JobCardProps {
   };
 }
 
-function pendingListToJobCardList(applicants: UserApplicantResp[]): JobCardProps[] {
+function pendingListToJobCardList(applicants: Applicant[]): JobCardProps[] {
   return applicants.map(pendingItemToJobCard);
 }

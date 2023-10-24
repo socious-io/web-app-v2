@@ -1,31 +1,28 @@
-import css from './profileOrg.module.scss';
-
 import { useState } from 'react';
-import { Divider } from 'src/components/templates/divider/divider';
-import { useAuth } from 'src/hooks/use-auth';
-import { useProfileOrg } from './useProfileOrg';
+import { useNavigate } from 'react-router-dom';
+import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { ThreeDotsButton } from 'src/components/atoms/three-dots-button/three-dots-button';
-import { Button } from 'src/components/atoms/button/button';
 import { Toggle } from 'src/components/atoms/toggle';
-import { useNavigate } from '@tanstack/react-location';
-import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { BackLink } from 'src/components/molecules/back-link';
-import { Card } from 'src/components/atoms/card/card';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Divider } from 'src/components/templates/divider/divider';
+import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { printWhen } from 'src/core/utils';
-import { EditOrganization } from '../desktop/edit/edit';
-import { ConnectModal } from '../connect-modal';
-import { showActions } from './profileOrg.services';
 
-const profileOrg = () => {
-  const { isLoggedIn } = useAuth();
+import css from './profileOrg.module.scss';
+import { showActions } from './profileOrg.services';
+import { useProfileOrg } from './useProfileOrg';
+import { ConnectModal } from '../connect-modal';
+import { EditOrganization } from '../desktop/edit/edit';
+
+export const ProfileOrg = (): JSX.Element => {
   const navigate = useNavigate();
   const [editOpen, setEditOpen] = useState(false);
   const [openConnectModal, setOpenConnectModal] = useState(false);
   const {
     organization,
-    skills,
     hiring,
     onHiring,
     address,
@@ -48,12 +45,6 @@ const profileOrg = () => {
     </Divider>
   );
 
-  const userFullNameJSX = (
-    <div className={css.name}>
-      {organization?.first_name} {organization?.last_name}
-    </div>
-  );
-
   const missionJSX = (
     <Divider title="Mission">
       <div className={css.mission}>{organization.mission}</div>
@@ -71,11 +62,6 @@ const profileOrg = () => {
       <div onClick={navigateJobs} className={css.mission}>
         See Jobs
       </div>
-    </Divider>
-  );
-  const skillsJSX = (
-    <Divider title="Skills">
-      <CategoriesClickable list={skills} />
     </Divider>
   );
 
@@ -109,7 +95,6 @@ const profileOrg = () => {
   );
 
   const orgNameJSX = <div className={css.name}>{organization?.name}</div>;
-  const usernameJSX = <div className={css.username}>@{organization?.username}</div>;
 
   const contactLinkJSX = (
     <div className={css.contactItem}>
@@ -148,14 +133,7 @@ const profileOrg = () => {
   );
 
   const messageJSX = (
-    <div
-      className={css.message}
-      onClick={() =>
-        navigate({
-          to: `/chats/new/${organization?.id}`,
-        })
-      }
-    >
+    <div className={css.message} onClick={() => navigate(`/chats/new/${organization?.id}`)}>
       <img src="/icons/message-blue.svg" />
     </div>
   );
@@ -163,7 +141,7 @@ const profileOrg = () => {
     <>
       <TwoColumns>
         <div className={css.sidebar}>
-          <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
+          <BackLink title="Jobs" onBack={() => navigate('/jobs')} />
           <Card>
             <div onClick={navigateJobs}>Job opportunities </div>
           </Card>
@@ -191,18 +169,14 @@ const profileOrg = () => {
                 <div className="md:hidden">
                   {printWhen(
                     <ThreeDotsButton onClick={() => showActions(organization.id)} />,
-                    !profileBelongToCurrentUser
+                    !profileBelongToCurrentUser,
                   )}
                 </div>
               </div>
             </div>
           </div>
           <div>
-            <Divider>
-              {printWhen(orgNameJSX, !!organization?.name)}
-              {printWhen(userFullNameJSX, !!organization?.first_name || !!organization?.last_name)}
-              {printWhen(usernameJSX, !!organization?.username)}
-            </Divider>
+            <Divider>{printWhen(orgNameJSX, !!organization.name)}</Divider>
 
             {printWhen(hiringJSX, profileBelongToCurrentUser)}
             {printWhen(bioJSX, !!organization.bio)}
@@ -224,7 +198,6 @@ const profileOrg = () => {
             </Divider>
             {printWhen(missionJSX, !!organization.mission)}
             {printWhen(cultureJSX, !!organization.culture)}
-            {printWhen(skillsJSX, organization.skills && organization.skills?.length > 0)}
             <div className="md:hidden">{jobsJSX}</div>
           </div>
           <EditOrganization
@@ -248,5 +221,3 @@ const profileOrg = () => {
     </>
   );
 };
-
-export default profileOrg;

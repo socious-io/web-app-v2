@@ -1,9 +1,9 @@
+import { CurrentIdentity, Device, DeviceReq, SearchReq, Skill, SkillRes } from './site.types';
 import { post, get } from '../http';
-import { CurrentIdentity, Device, DeviceReq, SearchReq } from './site.type';
-import { SuccessRes, PaginateReq, PaginateRes } from '../types';
-import { OrganizationsRes } from '../organizations/organizations.types';
 import { JobsRes } from '../jobs/jobs.types';
+import { OrganizationsRes } from '../organizations/organizations.types';
 import { PostsRes } from '../posts/posts.types';
+import { PaginateReq, PaginateRes, SuccessRes } from '../types';
 import { UsersRes } from '../users/users.types';
 
 export async function search(payload: SearchReq, params: PaginateReq) {
@@ -32,4 +32,12 @@ export async function devices(): Promise<Device[]> {
 
 export async function newDevice(payload: DeviceReq): Promise<Device> {
   return (await post<Device>('devices', payload)).data;
+}
+
+export async function removeDevice(fcm: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`devices/remove/${fcm}`, {})).data;
+}
+
+export async function skills(params: PaginateReq): Promise<SkillRes> {
+  return (await get<SkillRes>('skills', { params })).data;
 }

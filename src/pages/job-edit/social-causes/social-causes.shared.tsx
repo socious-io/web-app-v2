@@ -9,7 +9,7 @@ export const useSocialCausesShared = (oldSelected: string[]) => {
 
   function onSearch(v: string) {
     const filteredValue = socialCausesToCategoryAdaptor().filter((item) =>
-      item.label.toLowerCase().includes(v.toLowerCase())
+      item.label.toLowerCase().includes(v.toLowerCase()),
     );
     setSocialCauses(filteredValue);
   }

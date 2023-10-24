@@ -1,6 +1,7 @@
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { Mobile } from './mobile/mobile';
+
 import { Desktop } from './desktop/desktop';
+import { Mobile } from './mobile/mobile';
 
 export const Password: React.FC = () => {
   return isTouchDevice() ? <Mobile /> : <Desktop />;

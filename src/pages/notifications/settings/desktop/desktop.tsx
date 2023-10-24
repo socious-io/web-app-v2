@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
-import { BackLink } from 'src/components/molecules/back-link';
-import { Card } from 'src/components/atoms/card/card';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Toggle } from 'src/components/atoms/toggle';
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
+import { Toggle } from 'src/components/atoms/toggle';
+import { BackLink } from 'src/components/molecules/back-link';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
-import translate from 'src/translations';
-import { useSettingsShared } from '../settings.shared';
-import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+import { useSettingsShared } from 'src/pages/notifications/settings/settings.shared';
+import translate from 'src/translations';
+
+import css from './desktop.module.scss';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
@@ -30,12 +31,12 @@ export const Desktop: React.FC = () => {
     <div className={css.header}>
       <div className={css.turnedOffMessageBox}>
         <div className={css.turnOffInfo}>
-          <img src="/icons/info.svg" height={18} width={18} />
+          <img src="/icons/info.svg" height={18} width={18} alt="" />
           <div className={css.turnedOffMessage}>
             We recommend you turn on all notifications to stay up to date with the latest activity on Socious.
           </div>
         </div>
-        <img src="/icons/close-white.svg" height={16} width={16} onClick={() => setCloseAlert(true)} />
+        <img src="/icons/close-white.svg" height={16} width={16} onClick={() => setCloseAlert(true)} alt="" />
       </div>
     </div>
   );
@@ -44,7 +45,7 @@ export const Desktop: React.FC = () => {
     <>
       {printWhen(turnedOffMessageBoxJSX, !allowedNotifications && !closeAlert)}
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
-        <BackLink title="Notifications" onBack={() => navigate({ to: '/notifications' })} />
+        <BackLink title="Notifications" onBack={() => navigate('/notifications')} />
         <Card>
           <div className={`${css.notification_all} ${!allowedNotifications && css['notification_all--noBorder']}`}>
             Allow notifications
@@ -62,7 +63,7 @@ export const Desktop: React.FC = () => {
                         <Toggle
                           name="app"
                           checked={
-                            payload[setting.type]?.in_app != undefined ? payload[setting.type].in_app : setting.in_app
+                            payload[setting.type]?.in_app !== undefined ? payload[setting.type].in_app : setting.in_app
                           }
                           onChange={(checked) => onChange(checked, setting.type, 'in_app')}
                         />
@@ -73,14 +74,14 @@ export const Desktop: React.FC = () => {
                           <Toggle
                             name="email"
                             checked={
-                              payload[setting.type]?.email != undefined ? payload[setting.type].email : setting.email
+                              payload[setting.type]?.email !== undefined ? payload[setting.type].email : setting.email
                             }
                             onChange={(checked) => onChange(checked, setting.type, 'email')}
                           />
                         </div>
                         <span className={css.notification__subtitle}>
                           To manage your email notification settings, please{' '}
-                          <a href={settingsGuide} className={css.notification__link} target="_blank">
+                          <a href={settingsGuide} className={css.notification__link} target="_blank" rel="noreferrer">
                             click here
                           </a>
                         </span>
@@ -89,7 +90,9 @@ export const Desktop: React.FC = () => {
                         Push
                         <Toggle
                           name="push"
-                          checked={payload[setting.type]?.push != undefined ? payload[setting.type].push : setting.push}
+                          checked={
+                            payload[setting.type]?.push !== undefined ? payload[setting.type].push : setting.push
+                          }
                           onChange={(checked) => onChange(checked, setting.type, 'push')}
                         />
                       </div>
@@ -100,7 +103,7 @@ export const Desktop: React.FC = () => {
                 Save settings
               </Button>
             </>,
-            !!settings.length && allowedNotifications
+            !!settings.length && allowedNotifications,
           )}
         </Card>
       </TwoColumnCursor>

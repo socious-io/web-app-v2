@@ -1,13 +1,12 @@
-import { changePasswordDirect } from './sign-up-user-complete.services';
-import { useForm } from '../../../core/form';
-import { formModel } from './sign-up-user-complete.form';
-import { handleError } from '../../../core/http';
-import { getIdentities } from '../../../core/api';
-import { updateProfile } from './sign-up-user.complete.services';
 import { useDispatch } from 'react-redux';
-import { setIdentityList } from '../../../store/reducers/identity.reducer';
-import { useNavigate } from '@tanstack/react-location';
+import { useNavigate } from 'react-router-dom';
+import { identities, handleError, updateProfile, UserMeta } from 'src/core/api';
+import { useForm } from 'src/core/form';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+
+import { formModel } from './sign-up-user-complete.form';
+import { changePasswordDirect } from './sign-up-user-complete.services';
 
 export const useSignUpUserCompleteShared = () => {
   const navigate = useNavigate();
@@ -15,14 +14,14 @@ export const useSignUpUserCompleteShared = () => {
   const form = useForm(formModel);
 
   async function setProfileName() {
-    const identities = await getIdentities();
-    dispatch(setIdentityList(identities));
-    const username = identities.find((identity) => identity.current)?.meta.username;
+    const currentIdentities = await identities();
+    dispatch(setIdentityList(currentIdentities));
+    const meta = currentIdentities.find((identity) => identity.primary)?.meta as UserMeta;
 
     const payload = {
-      username,
-      firstName: form.controls.firstName.value,
-      lastName: form.controls.lastName.value,
+      username: meta.username,
+      first_name: form.controls.firstName.value as string,
+      last_name: form.controls.lastName.value as string,
     };
     updateProfile(payload);
   }
@@ -30,23 +29,24 @@ export const useSignUpUserCompleteShared = () => {
   async function onSubmit() {
     const password = form.controls.password.value as string;
     const path = await nonPermanentStorage.get('savedLocation');
-
     changePasswordDirect(password)
       .then(setProfileName)
-      .then(() => navigate({ to: path ? path : '/sign-up/user/welcome' }))
+      .then(() => {
+        navigate(path || '/sign-up/user/welcome');
+      })
       .catch(handleError());
   }
 
   function navigateToTermsConditions() {
-    navigate({ to: '/terms-conditions' });
+    navigate('/terms-conditions');
   }
 
   function navigateToPrivacyPolicy() {
-    navigate({ to: '/privacy-policy' });
+    navigate('/privacy-policy');
   }
 
   function navigateToSignIn() {
-    navigate({ to: '/sign-in' });
+    navigate('/sign-in');
   }
 
   return {

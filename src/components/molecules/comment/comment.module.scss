@@ -1,37 +1,37 @@
 .container {
-    margin: 2rem 0;
-    border-bottom: 1px solid var(--border-gray-01);
-    padding-bottom: 1rem;
+  margin: 2rem 0;
+  border-bottom: 1px solid var(--border-gray-01);
+  padding-bottom: 1rem;
 }
 
 .info {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .date {
-    color: var(--color-gray-01);
+  color: var(--color-gray-01);
 }
 
 .wrapper {
-    margin-left: 10%;
+  margin-left: 10%;
 }
 
 .messageBox {
-    margin: 0.75rem 0;
-    word-wrap: break-word;
+  margin: 0.75rem 0;
+  word-wrap: break-word;
 }
 
 .like {
-    display: flex;
-    gap: 0.5rem;
-    cursor: pointer;
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
 }
 
 .seeMore {
-    text-align: center;
-    font-weight: 600;
-    font-size: var(--font-size-s2);
-    color: var(--color-primary-01);
-  }
+  text-align: center;
+  font-weight: 600;
+  font-size: var(--font-size-s2);
+  color: var(--color-primary-01);
+}

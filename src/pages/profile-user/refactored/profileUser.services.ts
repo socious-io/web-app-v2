@@ -1,36 +1,39 @@
 import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
-import { dialog } from 'src/core/dialog/dialog';
-import { endpoint } from 'src/core/endpoints';
-import { get, post } from 'src/core/http';
-import { BADGES } from 'src/constants/constants';
 import { ImpactBadgeProps } from 'src/components/atoms/impact-badge/impact-badge.types';
+import { BADGES } from 'src/constants/constants';
+import {
+  connectionStatus,
+  connectRequest,
+  getOrganizationByShortName,
+  openToVolunteer,
+  openToWork,
+  otherProfileByUsername,
+  report,
+} from 'src/core/api';
+import { dialog } from 'src/core/dialog/dialog';
 
 export async function getUserDetail(username: string) {
-  return get(`/user/by-username/${username}/profile`).then(({ data }) => data);
+  return otherProfileByUsername(username);
 }
 
 export async function getOrganizationDetail(shortname: string) {
-  return get(`/orgs/by-shortname/${shortname}`).then(({ data }) => data);
+  return getOrganizationByShortName(shortname);
 }
 
 export function getConnectStatus(identity_id: string) {
-  return endpoint.get.connections['connection_status'](identity_id);
+  return connectionStatus(identity_id);
 }
 
 export function sendRequestConnection(id: string, text: string) {
-  return post(`/connections/${id}`, {
-    text,
-  }).then(({ data }) => data);
+  return connectRequest(id, { text });
 }
 
 export async function openToWorkCall() {
-  const { data } = await post('/user/open-to-work', {});
-  return data.open_to_work;
+  return openToWork();
 }
 
 export async function openToVolunteerCall() {
-  const { data } = await post('/user/open-to-volunteer', {});
-  return data.open_to_volunteer;
+  return openToVolunteer();
 }
 
 export const showActions = async (id: string) => {
@@ -42,12 +45,12 @@ export const showActions = async (id: string) => {
 
   switch (result.index) {
     case 0:
-      endpoint.post.user['{user_id}/report'](id, { blocked: true, comment: 'comment' }).then(() => {
+      report(id, { blocked: true, comment: 'comment' }).then(() => {
         dialog.alert({ title: 'Blocked', message: 'You successfully blocked the user' });
       });
       break;
     case 1:
-      endpoint.post.user['{user_id}/report'](id, { blocked: false, comment: 'comment' }).then(() => {
+      report(id, { blocked: false, comment: 'comment' }).then(() => {
         dialog.alert({ title: 'Report', message: 'You successfully Reported the user' });
       });
       break;
@@ -67,9 +70,4 @@ export function badgesList(badges: unknown[]): ImpactBadgeProps[] {
         color: value.color,
       };
     });
-}
-
-// it is expriences in design
-export function getUserMissions(id: string) {
-  return get(`/user/${id}/missions`).then(({ data }) => data);
 }

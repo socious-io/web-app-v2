@@ -1,4 +1,5 @@
 import React from 'react';
+
 import css from './stepHeader.module.scss';
 
 interface Props {

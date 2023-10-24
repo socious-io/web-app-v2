@@ -1,27 +1,27 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
+import { socialCausesToCategory } from 'src/core/adaptors';
+import { CurrentIdentity, Organization } from 'src/core/api';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { ConnectStatus, IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { ConnectStatus } from 'src/core/types';
+import { RootState } from 'src/store';
+
 import { getConnectStatus, hiringCall, sendRequestConnection } from './profileOrg.services';
-import { ProfileReq, Resolver } from './profileOrg.types';
+import { Resolver } from './profileOrg.types';
 
 export const useProfileOrg = () => {
   const navigate = useNavigate();
-  const resolver = useMatch().data as Resolver;
-  const [organization, setOrganization] = useState<ProfileReq>(resolver.user);
+  const resolver = useLoaderData() as Resolver;
+  const [organization, setOrganization] = useState<Organization>(resolver.user);
   const socialCauses = socialCausesToCategory(resolver.user?.social_causes);
-  const skills = skillsToCategory(resolver.user.skills);
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
   const userIsLoggedIn = !!currentIdentity;
   const address = `${organization.city}, ${getCountryName(
-    organization.country as keyof typeof COUNTRIES_DICT | undefined
+    organization.country as keyof typeof COUNTRIES_DICT | undefined,
   )}`;
   const profileBelongToCurrentUser = currentIdentity?.id === organization.id;
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
@@ -45,15 +45,15 @@ export const useProfileOrg = () => {
     }
   }
   function navigateJobs() {
-    navigate({ to: `/profile/organizations/${resolver.user.shortname}/jobs` });
+    navigate(`/profile/organizations/${resolver.user.shortname}/jobs`);
   }
   function onClose() {
     hapticsImpactLight();
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
   }
 
   function navigateToEdit() {
-    navigate({ to: '../edit' });
+    navigate('../edit');
   }
 
   async function onConnect(id: string) {
@@ -76,7 +76,7 @@ export const useProfileOrg = () => {
     setMessage(value || 'please connect to me');
   }
 
-  function updateOrganization(params: PostUpdateProfileResp) {
+  function updateOrganization(params: Organization) {
     setOrganization((prev) => {
       return {
         ...prev,
@@ -109,7 +109,6 @@ export const useProfileOrg = () => {
     organization,
     address,
     socialCauses,
-    skills,
     profileBelongToCurrentUser,
     navigateToEdit,
     onConnect,
@@ -120,6 +119,6 @@ export const useProfileOrg = () => {
     navigateJobs,
     hiring,
     onHiring,
-    userIsLoggedIn
+    userIsLoggedIn,
   };
 };

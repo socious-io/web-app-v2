@@ -1,21 +1,19 @@
-import { get, post } from '../../core/http';
+import { changePasswordDirect, forgetPassword as forgetPasswordApi, otpConfirm } from 'src/core/api';
 
 export async function forgetPassword(email: string) {
   const body = {
     email,
   };
-
-  return post('/auth/forget-password', body).then(({ data }) => data);
+  return forgetPasswordApi(body);
 }
 
 export async function confirm(email: string, code: string) {
-  return get(`/auth/otp/confirm/web?email=${email}&code=${code}`).then(({ data }) => data);
+  return otpConfirm({ email, code });
 }
 
 export async function changePassword(password: string) {
   const body = {
     password,
   };
-
-  return post('/user/change-password-direct', body).then(({ data }) => data);
+  return changePasswordDirect(body);
 }

@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
-import { Header } from 'src/components/atoms/header/header';
-import { Tabs } from 'src/components/atoms/tabs/tabs';
+import { useNavigate } from 'react-router-dom';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
-import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { Header } from 'src/components/atoms/header/header';
+import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
 import { printWhen } from 'src/core/utils';
-import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
-import { useConnectionsShared } from '../connections.shared';
+import {
+  connectionListAdaptor,
+  receivedRequestsAdaptor,
+  sentRequestsAdaptor,
+} from 'src/pages/network/connections/connections.service';
+import { useConnectionsShared } from 'src/pages/network/connections/connections.shared';
+
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
@@ -75,7 +80,7 @@ export const Mobile: React.FC = () => {
         <div className={css.seeMore} onClick={() => loadMore('connections')}>
           See more
         </div>,
-        connectionList?.total_count > connectionList?.items.length
+        connectionList?.total_count > connectionList?.items.length,
       )}
     </>
   ) : (
@@ -109,7 +114,7 @@ export const Mobile: React.FC = () => {
         <div className={css.seeMore} onClick={() => loadMore('sent')}>
           See more
         </div>,
-        sentRequestsList?.total_count > sentRequestsList?.items.length
+        sentRequestsList?.total_count > sentRequestsList?.items.length,
       )}
     </>
   );
@@ -148,7 +153,7 @@ export const Mobile: React.FC = () => {
         <div className={css.seeMore} onClick={() => loadMore('received')}>
           See more
         </div>,
-        receivedRequestsList?.total_count > receivedRequestsList?.items.length
+        receivedRequestsList?.total_count > receivedRequestsList?.items.length,
       )}
     </>
   );
@@ -177,7 +182,7 @@ export const Mobile: React.FC = () => {
   return (
     <div className={css.container}>
       <Header
-        onBack={() => navigate({ to: '/network' })}
+        onBack={() => navigate('/network')}
         border="0"
         paddingTop={'var(--safe-area)'}
         title="Manage connections"

@@ -1,12 +1,13 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { JobList } from 'src/components/organisms/job-list/job-list';
 import { Search } from 'src/components/atoms/search/search';
+import { JobList } from 'src/components/organisms/job-list/job-list';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { visibility } from 'src/store/reducers/menu.reducer';
-import { useJobsShared } from '../jobs.shared';
+
 import css from './mobile.module.scss';
+import { useJobsShared } from '../jobs.shared';
 
 export const Mobile = (): JSX.Element => {
   const { onMorePage, jobList, identity, goToJobDetail, showMorePageBtn } = useJobsShared();
@@ -20,7 +21,7 @@ export const Mobile = (): JSX.Element => {
   }
 
   function onEnter(value: string) {
-    navigate({ to: `/search?q=${value}&type=projects&page=1` });
+    navigate(`/search?q=${value}&type=projects&page=1`);
   }
 
   return (

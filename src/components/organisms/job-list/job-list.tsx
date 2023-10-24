@@ -1,17 +1,18 @@
+import { useEffect } from 'react';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { socialCausesToCategory } from 'src/core/adaptors';
+import { toRelativeTime } from 'src/core/relative-time';
+import { printWhen } from 'src/core/utils';
+import { getJobStructuresData } from 'src/pages/job-detail/job-details.jobStructuredData';
+
 import css from './job-list.module.scss';
-import { Card } from '../../atoms/card/card';
+import { getCategories } from './job-list.services';
 import { JobListProps } from './job-list.types';
+import { Avatar } from '../../atoms/avatar/avatar';
+import { Card } from '../../atoms/card/card';
 import { Categories } from '../../atoms/categories/categories';
 import { CategoriesClickable } from '../../atoms/categories-clickable/categories-clickable';
-import { getCategories } from './job-list.services';
-import { Avatar } from '../../atoms/avatar/avatar';
-import { toRelativeTime } from 'src/core/relative-time';
-import { socialCausesToCategory } from 'src/core/adaptors';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
-import { printWhen } from 'src/core/utils';
-import { useEffect } from 'react';
-import { getJobStructuresData } from 'src/pages/job-detail/job-details.jobStructuredData';
 
 export const JobList = (props: JobListProps): JSX.Element => {
   const { data, showMorePage, onMorePageClick, ...rest } = props;
@@ -38,7 +39,11 @@ export const JobList = (props: JobListProps): JSX.Element => {
         return (
           <Card key={job.id} cursor="pointer" onClick={() => props.onClick(job.id)}>
             <div className={css.header}>
-              <Avatar marginRight="0.5rem" type="organizations" img={job.identity_meta.image} />
+              <Avatar
+                customStyle={css.avatar}
+                type="organizations"
+                img={job.identity_meta ? job.identity_meta.image : ''}
+              />
               <div className={css.orgNameAndLocation}>
                 <div>{job.identity_meta?.name}</div>
                 <div className={css.orgLocation}>{location(job)}</div>

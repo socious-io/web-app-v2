@@ -1,10 +1,10 @@
-import { Feed } from "src/components/organisms/feed-list/feed-list.types";
+import { Post, SocialCauses } from 'src/core/api';
 
 export type DialogReviewProps = {
-    onClose: () => void;
-    soucialValue: string,
-    imgFile: string;
-    text: string,
-    imgUrl: string,
-    setFeedList: (feed: Feed[]) => void;
-}
+  onClose: () => void;
+  soucialValue: SocialCauses;
+  imgFile?: File;
+  text: string;
+  imgUrl: string;
+  setFeedList: (feed: Post[]) => void;
+};

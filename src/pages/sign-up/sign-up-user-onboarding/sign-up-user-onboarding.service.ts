@@ -1,8 +1,7 @@
-import { get } from 'src/core/http';
-import { Profile } from 'src/core/types';
+import { profile, User } from 'src/core/api';
 
-export async function getProfileRequest(identity: string): Promise<Profile> {
-  return get(`/user/profile`).then(({ data }) => data);
+export async function getProfileRequest(identity: string): Promise<User> {
+  return profile();
 }
 export const isValidArrayRange = (value: string[] | null, min: number, max: number) => {
   if (value === null) {

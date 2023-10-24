@@ -1,13 +1,12 @@
 import { TIERS, Tiers } from 'src/constants/TIERS_TABLE';
-import { get } from '../../core/http';
-import { BadgesResp } from '../../core/types';
+import { Badges, badges, ImpactPoints, impactPoints } from 'src/core/api';
 
-export async function getBadges(): Promise<BadgesResp> {
-  return get('/user/badges').then(({ data }) => data);
+export async function getBadges(): Promise<Badges> {
+  return badges();
 }
 
-export async function getImpactPoints() {
-  return get('/user/impact-points?limit=100').then(({ data }) => data);
+export async function getImpactPoints(): Promise<ImpactPoints> {
+  return impactPoints({ limit: 100 });
 }
 
 export function getTierRowBasedOnCurrentTier(currentTier: number): Tiers | undefined {

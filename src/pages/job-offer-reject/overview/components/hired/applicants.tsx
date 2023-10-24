@@ -1,8 +1,9 @@
-import { Accordion } from '../../../../../components/atoms/accordion/accordion';
-import { ApplicantList } from '../../../../../components/molecules/applicant-list/applicant-list';
-import { applicantToApplicantListAdaptor } from '../../../job-offer-reject.services';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { ApplicantList } from 'src/components/molecules/applicant-list/applicant-list';
+
 import css from './applicants.module.scss';
-import { ApplicantsProps } from './applicants.types';
+import { applicantToApplicantListAdaptor } from '../../../job-offer-reject.services';
+import { ApplicantsProps } from '../applicants/applicants.types';
 
 export const Applicants = (props: ApplicantsProps): JSX.Element => {
   const { toReviewList, declinedList } = props;
