@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
 import { Header } from 'src/components/atoms/header/header';
@@ -9,12 +10,13 @@ import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { printWhen } from 'src/core/utils';
-import { useCompleteMissionShared } from '../complete-mission.shared';
+
 import css from './mobile.module.scss';
+import { useCompleteMissionShared } from '../complete-mission.shared';
 
 export const Mobile = (): JSX.Element => {
   const { offer, media, status, onCompleteMission, onStopMission } = useCompleteMissionShared();
-
+  const navigate = useNavigate();
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
       <img src="/icons/tick-white-simple.svg" />
@@ -63,7 +65,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <TopFixedMobile>
-      <Header title={`${offer.job_category.name}`} onBack={() => history.back()} />
+      <Header title={`${offer.job_category.name}`} onBack={() => navigate(-1)} />
       <div className={css.body}>
         {printWhen(offeredMessageBoxJSX, status === 'HIRED')}
         {printWhen(acceptedMessageBoxJSX, status === 'CLOSED')}
@@ -121,12 +123,12 @@ export const Mobile = (): JSX.Element => {
               <Divider title="Resume">
                 <div className={css.uploadedResume}>
                   <img src="/icons/attachment-black.svg" />
-                  <a href={media.url} target="_blank">
+                  <a href={media.url} target="_blank" rel="noreferrer">
                     {media.filename}
                   </a>
                 </div>
               </Divider>,
-              !!media.url
+              !!media.url,
             )}
             {/* <Divider title="Contact Info">
           <Typography>

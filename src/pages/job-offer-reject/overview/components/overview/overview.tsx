@@ -1,30 +1,27 @@
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
-import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
-import { translatePaymentRange } from 'src/constants/PAYMENT_RANGE';
-import { translateProjectType } from 'src/constants/PROJECT_TYPES';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Divider } from 'src/components/templates/divider/divider';
-import { OverviewProps } from './overview.types';
+import { SureModal } from 'src/components/templates/sure-modal';
+import { translateExperienceLevel } from 'src/constants/EXPERIENCE_LEVEL';
+import { translatePaymentRange } from 'src/constants/PAYMENT_RANGE';
+import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
+import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
+import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { translateProjectType } from 'src/constants/PROJECT_TYPES';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { closeJob, jobQuestions } from 'src/core/api';
+import { isTouchDevice } from 'src/core/device-type-detector';
+import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
 import { printWhen } from 'src/core/utils';
-import { useNavigate } from '@tanstack/react-location';
 import { InfoModal } from 'src/pages/job-edit/info/info-modal';
+import { CreatedModal } from 'src/pages/job-edit/screener-questions/created/created-modal';
 import { SkillsModal } from 'src/pages/job-edit/skills/skills-modal';
 import { SocialCausesModal } from 'src/pages/job-edit/social-causes/social-causes-modal';
-import { CreatedModal } from 'src/pages/job-edit/screener-questions/created/created-modal';
+
 import css from './overview.module.scss';
-import { useEffect, useState } from 'react';
-import { isTouchDevice } from 'src/core/device-type-detector';
-import { SureModal } from 'src/components/templates/sure-modal';
-import {
-  archiveJob,
-  getJobOverview,
-  getScreeningQuestions,
-} from 'src/pages/job-offer-reject/job-offer-reject.services';
-import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
+import { OverviewProps } from './overview.types';
 
 export const Overview = ({ data, questions, updateApplicantList }: OverviewProps): JSX.Element => {
   const navigate = useNavigate();
@@ -37,7 +34,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
   const [screeningQuestions, SetScreeningQuestions] = useState(questions);
 
   const updateScreeningQuestions = async () => {
-    const updatedQuestion = await getScreeningQuestions(data.id);
+    const updatedQuestion = await jobQuestions(data.id);
     SetScreeningQuestions(updatedQuestion.questions);
     console.log(updatedQuestion.questions);
   };
@@ -50,7 +47,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
             overviewData.payment_range_lower,
             overviewData.payment_range_higher,
             overviewData.payment_type,
-            overviewData.payment_scheme
+            overviewData.payment_scheme,
           ).label
         }
       </div>
@@ -60,7 +57,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
             overviewData.payment_range_lower,
             overviewData.payment_range_higher,
             overviewData.payment_type,
-            overviewData.payment_scheme
+            overviewData.payment_scheme,
           ).value
         }
       </div>
@@ -81,7 +78,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
             />
           </div>
         </Divider>,
-        !isTouchDevice() && overviewData.status !== 'EXPIRE'
+        !isTouchDevice() && overviewData.status !== 'EXPIRE',
       )}
       {isTouchDevice() && data.status === 'EXPIRE' && (
         <div className={css.mobileArchived}>
@@ -92,9 +89,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
 
       <Divider
         title="Job description"
-        onEdit={() =>
-          isTouchDevice() ? navigate({ to: `/jobs/edit/info/${overviewData.id}` }) : setOpenInfoModal(true)
-        }
+        onEdit={() => (isTouchDevice() ? navigate(`/jobs/edit/info/${overviewData.id}`) : setOpenInfoModal(true))}
       >
         <div className={css.group}>
           <div className={css.groupTitle}>Job title</div>
@@ -143,27 +138,21 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
       <Divider
         title="Social causes"
         onEdit={() =>
-          isTouchDevice()
-            ? navigate({ to: `/jobs/edit/social-causes/${overviewData.id}` })
-            : setOpenSocialCausesModal(true)
+          isTouchDevice() ? navigate(`/jobs/edit/social-causes/${overviewData.id}`) : setOpenSocialCausesModal(true)
         }
       >
         <CategoriesClickable list={socialCausesToCategory(overviewData.causes_tags)} />
       </Divider>
       <Divider
         title="Skills"
-        onEdit={() =>
-          isTouchDevice() ? navigate({ to: `/jobs/edit/skills/${overviewData.id}` }) : setOpenSkillsModal(true)
-        }
+        onEdit={() => (isTouchDevice() ? navigate(`/jobs/edit/skills/${overviewData.id}`) : setOpenSkillsModal(true))}
       >
         <CategoriesClickable list={skillsToCategory(overviewData.skills)} />
       </Divider>
       <Divider
         title="Screening questions"
         onEdit={() =>
-          isTouchDevice()
-            ? navigate({ to: `/jobs/edit/screener-questions/${overviewData.id}` })
-            : setOpenScreenerModal(true)
+          isTouchDevice() ? navigate(`/jobs/edit/screener-questions/${overviewData.id}`) : setOpenScreenerModal(true)
         }
       >
         <div className={css.screeningQuestionBody}>
@@ -207,7 +196,7 @@ export const Overview = ({ data, questions, updateApplicantList }: OverviewProps
         open={showArchiveConfirm}
         onClose={() => setShowArchiveConfirm(false)}
         onDone={() => {
-          archiveJob(overviewData.id).then((resp) => {
+          closeJob(overviewData.id).then((resp) => {
             setShowArchiveConfirm(false);
             updateApplicantList();
           });

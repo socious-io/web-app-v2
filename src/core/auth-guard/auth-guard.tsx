@@ -1,17 +1,18 @@
 import { SyntheticEvent, useState } from 'react';
-import { useAuth } from '../../hooks/use-auth';
-import { AuthGuardProps } from './auth-guard.types';
-import { Modal } from 'src/components/templates/modal/modal';
 import { Button } from 'src/components/atoms/button/button';
+import { Modal } from 'src/components/templates/modal/modal';
+
 import css from './auth-guard.module.scss';
-import { useLocation, useNavigate } from '@tanstack/react-location';
+import { AuthGuardProps } from './auth-guard.types';
+import { useAuth } from '../../hooks/use-auth';
 import { nonPermanentStorage } from '../storage/non-permanent';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   const { isLoggedIn } = useAuth();
   const [modalVisibility, setModalVisibility] = useState(false);
   const navigate = useNavigate();
-  const route = useLocation();
+  const location = useLocation();
 
   function onClick() {
     if (!isLoggedIn) {
@@ -20,18 +21,18 @@ export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   }
 
   function saveCurrentRoute(): Promise<void> {
-    const path = route.current.href;
+    const path = location.pathname;
     return nonPermanentStorage.set({ key: 'savedLocation', value: path });
   }
 
   async function navigateToLogin() {
     await saveCurrentRoute();
-    navigate({ to: '/sign-in' });
+    navigate('/sign-in');
   }
 
   async function navigateToSignup() {
     await saveCurrentRoute();
-    navigate({ to: '/sign-up/user/email' });
+    navigate('/sign-up/user/email');
   }
 
   return (

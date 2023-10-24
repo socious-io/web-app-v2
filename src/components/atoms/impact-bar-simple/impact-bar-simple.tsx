@@ -1,9 +1,10 @@
-import {CSSProperties} from 'react';
+import { CSSProperties } from 'react';
+
 import css from './impact-bar-simple.module.scss';
-import {ImpactBarSimpleProps} from './impact-bar-simple.module.types';
+import { ImpactBarSimpleProps } from './impact-bar-simple.module.types';
 
 export const ImpactBarSimple = (props: ImpactBarSimpleProps): JSX.Element => {
-  const {start, end, current, ...rest} = props;
+  const { start, end, current, ...rest } = props;
 
   const curr = current - start;
   const diff = end - start;

@@ -1,18 +1,17 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { BackLink } from 'src/components/molecules/back-link';
-import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Button } from 'src/components/atoms/button/button';
-import { UnfollowModal } from '../unfollow-modal';
+import { Card } from 'src/components/atoms/card/card';
+import { BackLink } from 'src/components/molecules/back-link';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
-import { useFollowingsShared } from '../followings.shared';
-import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
 
+import css from './desktop.module.scss';
+import { useFollowingsShared } from '../followings.shared';
+import { UnfollowModal } from '../unfollow-modal';
+
 export const Desktop: React.FC = () => {
-  const navigate = useNavigate();
   const { followings, followStatusUser, onUnfollow, onFollow, loadMore, onProfileClick } = useFollowingsShared();
   const [selectedUser, setSelectedUser] = useState({ name: '', id: '' });
   const { isLoggedIn } = useAuth();
@@ -52,7 +51,7 @@ export const Desktop: React.FC = () => {
         <div className={css.seeMore} onClick={loadMore}>
           See more
         </div>,
-        followings?.total_count > followings?.items.length
+        followings?.total_count > followings?.items.length,
       )}
     </>
   );

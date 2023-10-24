@@ -1,5 +1,6 @@
-import { Badge } from '../../atoms/badge/badge';
-import { ProfileView } from '../profile-view/profile-view';
+import { Badge } from 'src/components/atoms/badge/badge';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+
 import css from './contact-item.module.scss';
 import { ContactItemProps } from './contact-item.types';
 

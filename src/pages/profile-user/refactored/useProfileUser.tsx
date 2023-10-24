@@ -1,32 +1,28 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { useSelector } from 'react-redux';
-import { ConnectStatus, IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
-import { hapticsImpactLight } from 'src/core/haptic/haptic';
-import { ProfileReq, Resolver } from './profileUser.types';
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { useEffect, useState } from 'react';
-import { endpoint } from 'src/core/endpoints';
-import { PostUpdateProfileResp } from 'src/core/endpoints/index.types';
-import {
-  getConnectStatus,
-  getUserMissions,
-  sendRequestConnection,
-  openToWorkCall,
-  openToVolunteerCall,
-} from './profileUser.services';
+import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { Badges, CurrentIdentity, MissionsRes, User } from 'src/core/api';
+import { follow as followApi, unfollow as unfollowApi } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { hapticsImpactLight } from 'src/core/haptic/haptic';
+import { ConnectStatus } from 'src/core/types';
+import { RootState } from 'src/store';
+
+import { getConnectStatus, sendRequestConnection, openToWorkCall, openToVolunteerCall } from './profileUser.services';
 
 export const useProfileUser = () => {
   const navigate = useNavigate();
-  const resolver = useMatch().data as Resolver;
-  const [user, setUser] = useState<ProfileReq>(resolver.user);
+  const resolver = useLoaderData() as { user: User; badges: Badges; missions: MissionsRes };
+
+  const [user, setUser] = useState<User>(resolver.user);
   const socialCauses = socialCausesToCategory(user.social_causes);
-  const avatarImage = user.avatar?.url ? user.avatar?.url : user.image?.url;
+  const avatarImage = user.avatar?.url;
   const skills = skillsToCategory(user.skills);
-  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
+    const current = state.identity.entities.find((identity) => identity.current);
+    return current as CurrentIdentity;
   });
   const address = `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
   const profileBelongToCurrentUser = currentIdentity?.id === user.id;
@@ -38,32 +34,10 @@ export const useProfileUser = () => {
   const [openToVolunteer, setOpenToVolunteer] = useState(user.open_to_volunteer);
   const [editOpen, setEditOpen] = useState(false);
 
-  const [missions, setMissons] = useState<
-    {
-      organizationName: string;
-      role: string;
-      dateFrom: string;
-      dateTo: string;
-      location: string;
-      organizationImage: string;
-    }[]
-  >([]);
-
   useEffect(() => {
     const getConnectionsStatus = async () => {
       const res = await getConnectStatus(user.id);
       setConnectStatus(res?.connect?.status);
-      const missionsRes = await getUserMissions(user.id);
-      setMissons(
-        missionsRes.items.map((mission) => ({
-          organizationName: mission.organization.name,
-          organizationImage: mission.organization.image,
-          role: mission.project.title,
-          dateFrom: new Date(mission.project.created_at).toLocaleDateString('en-US'),
-          dateTo: new Date(mission.project.updated_at).toLocaleDateString('en-US'),
-          location: COUNTRIES_DICT[mission.project.country as keyof typeof COUNTRIES_DICT],
-        }))
-      );
     };
     getConnectionsStatus();
   }, []);
@@ -76,7 +50,7 @@ export const useProfileUser = () => {
     }
   }
 
-  function updateUser(params: PostUpdateProfileResp) {
+  function updateUser(params: User) {
     setUser((prev) => ({
       ...prev,
       avatar: params.avatar,
@@ -107,26 +81,26 @@ export const useProfileUser = () => {
 
   function onClose() {
     hapticsImpactLight();
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
   }
 
   async function follow(id: string) {
-    return endpoint.post.follows['{identity_id}'](id).then(() => setFollowing(true));
+    return followApi(id).then(() => setFollowing(true));
   }
 
   async function unfollow(id: string) {
-    return endpoint.post.follows['{identity_id}/unfollow'](id).then(() => setFollowing(false));
+    return unfollowApi(id).then(() => setFollowing(false));
   }
 
   function gotToDesktopAchievement() {
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate({ to: `/achievements/d?proofspace_connect_id=${connectId}` });
+    navigate(`/achievements?proofspace_connect_id=${connectId}`);
   }
 
   function gotToMobileAchievement() {
     hapticsImpactLight();
     const connectId = user.proofspace_connect_id ? user.proofspace_connect_id : null;
-    navigate({ to: `/achievements/m?proofspace_connect_id=${connectId}` });
+    navigate(`/achievements?proofspace_connect_id=${connectId}`);
   }
 
   async function onConnect(id: string) {
@@ -151,7 +125,7 @@ export const useProfileUser = () => {
 
   function onEdit() {
     if (isTouchDevice()) {
-      navigate({ to: '../edit' });
+      navigate('../edit');
     } else {
       setEditOpen(true);
     }
@@ -182,7 +156,7 @@ export const useProfileUser = () => {
     connectStatus,
     showMessageIcon,
     onMessage,
-    missions,
+    missions: resolver.missions.items,
     editOpen,
     setEditOpen,
     userIsLoggedIn,

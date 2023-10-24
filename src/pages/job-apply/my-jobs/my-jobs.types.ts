@@ -1,5 +1,5 @@
-import { Pagination } from '../../../core/types';
 import { JobCardProps } from '../../../components/molecules/job-card/job-card.types';
+import { Pagination } from '../../../core/types';
 
 export type PendingResp = Pagination<JobCardProps[]>;
 export type AwaitingResp = Pagination<JobCardProps[]>;
@@ -12,7 +12,7 @@ export type Loader = {
   awaitingApplicants: AwaitingResp;
   declinedApplicants: DeclinedResp;
   onGoingApplicants: OnGoingResp;
-  endedApplicants: EndedResp
+  endedApplicants: EndedResp;
 };
 
 export type MyJobs = 'Applied' | 'Hired';

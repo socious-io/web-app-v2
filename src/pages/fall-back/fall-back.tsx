@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'src/components/atoms/button/button';
 import { Typography } from 'src/components/atoms/typography/typography';
+
 import css from './fall-back.module.scss';
 
 const FallBack = (): JSX.Element => {

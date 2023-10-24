@@ -27,12 +27,12 @@ export interface OtpReq {
 
 export interface OtpConfirmReq {
   email: string;
-  otp: string;
+  code: string;
 }
 
 export interface AuthStripeReq {
   country: string;
-  redirect_url: string;
+  redirect_url?: string;
   is_jp?: boolean;
 }
 
@@ -49,8 +49,8 @@ export interface AuthRes {
 }
 
 export interface PreRegisterRes {
-  email?: 'EXIST' | null;
-  username?: 'EXIST' | null;
+  email?: 'EXISTS' | null;
+  username?: 'EXISTS' | null;
 }
 
 export interface StripeLinkRes {

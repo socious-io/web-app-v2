@@ -1,11 +1,12 @@
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { Header } from 'src/components/atoms/header-v2/header';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { AddMemberModal } from '../add-member-modal';
+import { Header } from 'src/components/atoms/header-v2/header';
 import { SureModal } from 'src/components/templates/sure-modal';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { printWhen } from 'src/core/utils';
-import { useTeamShared } from '../team.shared';
+
 import css from './mobile.module.scss';
+import { AddMemberModal } from '../add-member-modal';
+import { useTeamShared } from '../team.shared';
 
 export const Mobile: React.FC = () => {
   const {
@@ -66,7 +67,7 @@ export const Mobile: React.FC = () => {
             <div onClick={onSeeMoreClick} className={css.seeMore}>
               See more
             </div>,
-            updateMembers.total_count > updateMembers.items?.length
+            updateMembers.total_count > updateMembers.items?.length,
           )}
         </>
       </TopFixedMobile>

@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
-import { useAccount } from 'wagmi';
-import Dapp from 'src/dapp';
-import store from 'src/store/store';
-import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
-import { endpoint } from 'src/core/endpoints';
-import { confirmPayment, getCreditCardInfo } from './payment.service';
+import { useLoaderData } from 'react-router-dom';
+import { CardsRes, hireOffer, removeCard } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { getMonthName } from 'src/core/time';
-import { Resolver } from './payment.types';
-import { CardInfoResp } from 'src/core/types';
 import { getFlooredFixed } from 'src/core/numbers';
+import { getMonthName } from 'src/core/time';
+import Dapp from 'src/dapp';
+import store from 'src/store';
+import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
+import { useAccount } from 'wagmi';
+
+import { confirmPayment, getCreditCardInfo } from './payment.service';
+import { Resolver } from './payment.types';
 
 export const usePaymentShared = () => {
   const { web3 } = Dapp.useWeb3();
   const { address: account, isConnected } = useAccount();
-  const { offer, cardInfo } = useMatch().ownData as Resolver;
+  const { offer, cardInfo } = useLoaderData() as Resolver;
   const [process, setProcess] = useState(false);
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
   const [cards, setCards] = useState(cardInfo);
@@ -45,13 +45,13 @@ export const usePaymentShared = () => {
     setSelectedCard(id);
   }
 
-  function setCardsList(list: CardInfoResp) {
+  function setCardsList(list: CardsRes) {
     setCards(list);
   }
 
   async function onRemoveCard(id: string) {
     setSelectedCard('');
-    endpoint.post.payments['{card_id}/remove'](id).then(async () => {
+    removeCard(id).then(async () => {
       const result = await getCreditCardInfo(offer.currency === 'JPY');
       setCards(result);
     });
@@ -84,8 +84,7 @@ export const usePaymentShared = () => {
         txHash: result.txHash,
         meta: result,
       });
-
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
+      hireOffer(offerId).then(() => setStatus('HIRED'));
     } catch (err: any) {
       dialog.alert({
         message: err?.response?.data.error || err?.message,
@@ -104,7 +103,7 @@ export const usePaymentShared = () => {
         service: 'STRIPE',
         source: selectedCard,
       });
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => setStatus('HIRED'));
+      hireOffer(offerId).then(() => setStatus('HIRED'));
     } catch (err: any) {
       dialog.alert({
         message: err?.response?.data.error || err?.message,

@@ -1,14 +1,15 @@
-import css from './people-list.module.scss';
-import { People, PeopleListProps } from './people-list.types';
-import { Card } from 'src/components/atoms/card/card';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
 import { Categories } from 'src/components/atoms/categories/categories';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { toRelativeTime } from 'src/core/relative-time';
-import { getList } from './people-list.services';
 import { printWhen } from 'src/core/utils';
-import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+
+import css from './people-list.module.scss';
+import { getList } from './people-list.services';
+import { People, PeopleListProps } from './people-list.types';
 
 export const PeopleList = (props: PeopleListProps): JSX.Element => {
   const { data, onMorePageClick, showMorePage, ...rest } = props;

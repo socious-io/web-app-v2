@@ -1,20 +1,21 @@
-import css from './switch-account.module.scss';
-import { RootState } from 'src/store/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { AccountsModel } from 'src/pages/sidebar/mobile/mobile.types';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { logout, setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
-import { getIdentities } from 'src/core/api';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { useNavigate } from '@tanstack/react-location';
 import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
 import { Divider } from 'src/components/templates/divider/divider';
-import { SwitchAccountProps } from './switch-account.types';
-import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
+import { identities, OrgMeta, UserMeta } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { printWhen } from 'src/core/utils';
-import { Button } from 'src/components/atoms/button/button';
 import { useAuth } from 'src/hooks/use-auth';
+import { AccountsModel } from 'src/pages/sidebar/mobile/mobile.types';
+import { logout, setIdentityHeader } from 'src/pages/sidebar/sidebar.service';
+import store, { RootState } from 'src/store';
+import { setIdentityList, removeIdentityList } from 'src/store/reducers/identity.reducer';
+
+import css from './switch-account.module.scss';
+import { SwitchAccountProps } from './switch-account.types';
+import { ChangePasswordModal } from '../change-password-modal/change-password-modal';
 
 let timer: NodeJS.Timeout;
 
@@ -28,8 +29,8 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const accountList = useSelector<RootState, AccountsModel[]>((state) => {
     return state.identity.entities.map((item) => ({
       name: item.meta.name,
-      image: item.meta.image,
-      avatar: item?.meta?.avatar,
+      image: (item.meta as OrgMeta).image || '',
+      avatar: (item.meta as UserMeta).avatar || '',
       type: item.type,
       id: item.id,
       current: item.current,
@@ -55,14 +56,16 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
     }, 180);
   }, []);
 
-  function logOut() {
-    logout().then(() => navigate({ to: '/sign-in' }));
+  async function logOut() {
+    store.dispatch(removeIdentityList());
+
+    logout().then(() => navigate('/sign-in'));
     props.onClose();
     nonPermanentStorage.clear();
   }
 
   function login() {
-    navigate({ to: '/sign-in' });
+    navigate('/sign-in');
     props.onClose();
   }
 
@@ -90,13 +93,13 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const switchAccount = async (id: string) => {
     setPendingAccId(id);
     await setIdentityHeader(id);
-    getIdentities()
+    identities()
       .then((resp) => dispatch(setIdentityList(resp)))
-      .then(() => navigate({ to: '/jobs' }))
+      .then(() => navigate('/jobs'))
       .then(closeMenu);
   };
 
-  function accountBgColor(id: string, current: Boolean) {
+  function accountBgColor(id: string, current: boolean) {
     if (current) {
       return 'var(--color-primary-01)';
     }
@@ -106,14 +109,14 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   }
 
   const navigateToRoute = (route: string) => {
-    navigate({ to: route });
+    navigate(route);
     closeMenu();
   };
 
   const createdJobDividerJSX = (
     <Divider title="Jobs">
       <div className={css.settingsMenuContainer}>
-        <div onClick={() => navigateToRoute(`/d/jobs/created/${props.identity.id}`)} className={css.menuItem}>
+        <div onClick={() => navigateToRoute(`/jobs/created/${props.identity.id}`)} className={css.menuItem}>
           <img src="/icons/folder-black.svg" />
           <span>Created</span>
         </div>
@@ -124,7 +127,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
   const myApplicationsJSX = (
     <Divider title="Jobs">
       <div className={css.settingsMenuContainer}>
-        <div onClick={() => navigateToRoute(`/d/jobs/applied/${props.identity.id}`)} className={css.menuItem}>
+        <div onClick={() => navigateToRoute(`/jobs/applied/${props.identity.id}`)} className={css.menuItem}>
           <img src="/icons/document-black.svg" />
           <span>My applications</span>
         </div>
@@ -206,14 +209,14 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
               <img src="/icons/key-black.svg" width={22} height={22} />
               <span>Change password</span>
             </div>,
-            isLoggedIn
+            isLoggedIn,
           )}
           {printWhen(
             <div className={css.menuItem} onClick={() => navigateToRoute('/delete-profile/delete')}>
               <img src="/icons/delete-account-black.svg" />
               <span>Delete Account</span>
             </div>,
-            isLoggedIn
+            isLoggedIn,
           )}
         </div>
       </Divider>
@@ -226,7 +229,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
             </div>
           </div>
         </Divider>,
-        isLoggedIn
+        isLoggedIn,
       )}
       {printWhen(
         <Divider>
@@ -237,7 +240,7 @@ export const SwitchAccount = (props: SwitchAccountProps): JSX.Element => {
             </div>
           </div>
         </Divider>,
-        !isLoggedIn
+        !isLoggedIn,
       )}
       <ChangePasswordModal open={changePassOpen} onClose={() => setChangePassOpen(false)} />
     </div>

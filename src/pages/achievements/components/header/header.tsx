@@ -1,12 +1,14 @@
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+import { ImpactBarLevel } from 'src/components/atoms/impact-bar-level/impact-bar-level';
 import { printWhen } from 'src/core/utils';
-import { Button } from '../../../../components/atoms/button/button';
-import { ImpactBarLevel } from '../../../../components/atoms/impact-bar-level/impact-bar-level';
+
 import css from './header.module.scss';
 import { HeaderProps } from './header.types';
-import { useMatch } from '@tanstack/react-location';
 
 export const Header = (props: HeaderProps): JSX.Element => {
-  const connectId = useMatch().search.proofspace_connect_id;
+  const { proofspace_connect_id } = useParams();
+  const navigate = useNavigate();
   const claimPointsSentenceJSX = (
     <div className={css.impactPointDescLink}>Claim impact points as verifiable credentials to receive rewards</div>
   );
@@ -31,7 +33,7 @@ export const Header = (props: HeaderProps): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <img onClick={() => history.back()} className={css.chevron} src="/icons/chevron-left.svg" />
+      <img onClick={() => navigate(-1)} className={css.chevron} src="/icons/chevron-left.svg" />
       <div className={css.impactPointsContainer}>
         <div className={css.impactPoints}>{Math.ceil(props.point)}</div>
         <div className={css.impactPointsLabel}>Impact Points</div>
@@ -48,10 +50,10 @@ export const Header = (props: HeaderProps): JSX.Element => {
         marginTop="3.5rem"
       />
 
-      {printWhen(claimPointsSentenceJSX, connectId === null)}
-      {printWhen(claimNowBtnJSX, connectId === null)}
-      {printWhen(checkRewardBtnJSX, connectId !== null)}
-      {printWhen(whatIsImpactPointsJSX, connectId !== null)}
+      {printWhen(claimPointsSentenceJSX, proofspace_connect_id === null)}
+      {printWhen(claimNowBtnJSX, proofspace_connect_id === null)}
+      {printWhen(checkRewardBtnJSX, proofspace_connect_id !== null)}
+      {printWhen(whatIsImpactPointsJSX, proofspace_connect_id !== null)}
     </div>
   );
 };

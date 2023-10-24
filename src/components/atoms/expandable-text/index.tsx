@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { printWhen } from 'src/core/utils';
-import { TextClickableURLs } from '../text-clickable-urls';
-import { ExpandableTextProps } from './expandable-text.types';
 import { convertMarkdownToJSX } from 'src/core/convert-md-to-jsx';
+import { printWhen } from 'src/core/utils';
+
 import css from './expandable-text.module.scss';
+import { ExpandableTextProps } from './expandable-text.types';
+import { TextClickableURLs } from '../text-clickable-urls';
 
 export const ExpandableText: React.FC<ExpandableTextProps> = ({
   text,
@@ -43,7 +44,7 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
         <span className={css.expect__seeMore} onClick={toggleExpect}>
           See more
         </span>,
-        shouldViewMore
+        shouldViewMore,
       )}
     </div>
   );

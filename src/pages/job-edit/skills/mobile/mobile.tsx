@@ -1,24 +1,25 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
-import { useSkillsShared } from '../skills.shared';
-import css from './mobile.module.scss';
-import { createFormInitState, jobEditRequest } from '../../info/info.services';
 import { Job } from 'src/components/organisms/job-list/job-list.types';
+import { JobReq } from 'src/core/api';
+import { createFormInitState, jobEditRequest } from 'src/pages/job-edit/info/info.services';
+import { useSkillsShared } from 'src/pages/job-edit/skills/skills.shared';
+
+import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
-  const { overview } = useMatch().ownData as { overview: Job };
+  const { overview } = useLoaderData() as { overview: Job };
   const { onSearch, socialCauses, selectedSkills, isValid, setSelectedSkills } = useSkillsShared(overview.skills);
   function editSkills() {
-    jobEditRequest(overview.id, { ...createFormInitState(overview), skills: selectedSkills }).then((resp) => {
-      navigate({ to: `/m/jobs/created/${overview.id}/overview` });
+    jobEditRequest(overview.id, { ...createFormInitState(overview), skills: selectedSkills } as JobReq).then((resp) => {
+      navigate(`/jobs/created/${overview.id}/overview`);
     });
   }
   function onBack() {
-    navigate({ to: `/m/jobs/created/${overview.id}/overview` });
+    navigate(`/jobs/created/${overview.id}/overview`);
   }
 
   return (

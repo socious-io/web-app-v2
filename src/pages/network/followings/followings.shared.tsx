@@ -1,24 +1,20 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { endpoint } from 'src/core/endpoints';
-import { FollowingsReq, Pagination, UserType } from 'src/core/types';
-import { getFollowings } from './followings.service';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { follow, FollowingRes, getFollowings, unfollow } from 'src/core/api';
 
 export const useFollowingsShared = () => {
   const navigate = useNavigate();
-  const resolver = (useMatch().ownData as Pagination<FollowingsReq[]>) || {};
+  const resolver = (useLoaderData() as FollowingRes) || {};
   const [followings, setFollowings] = useState(resolver);
   const [followingStatus, setFollowingStatus] = useState<{ [x: string]: 'FOLLOW' | 'UNFOLLOW' }>({});
   const [currentPage, setCurrectPage] = useState(1);
 
   function onUnfollow(id: string) {
-    endpoint.post.follows['{identity_id}/unfollow'](id).then(() =>
-      setFollowingStatus({ ...followingStatus, [id]: 'UNFOLLOW' })
-    );
+    unfollow(id).then(() => setFollowingStatus({ ...followingStatus, [id]: 'UNFOLLOW' }));
   }
 
   function onFollow(id: string) {
-    endpoint.post.follows['{identity_id}'](id).then(() => setFollowingStatus({ ...followingStatus, [id]: 'FOLLOW' }));
+    follow(id).then(() => setFollowingStatus({ ...followingStatus, [id]: 'FOLLOW' }));
   }
 
   async function loadMore() {
@@ -38,11 +34,11 @@ export const useFollowingsShared = () => {
     return followingStatus[id] !== 'UNFOLLOW';
   }
 
-  function onProfileClick(type: UserType, username: string) {
+  function onProfileClick(type: string, username: string) {
     if (type === 'users') {
-      navigate({ to: `/profile/users/${username}/view` });
+      navigate(`/profile/users/${username}/view`);
     } else {
-      navigate({ to: `/profile/organizations/${username}/view` });
+      navigate(`/profile/organizations/${username}/view`);
     }
   }
 

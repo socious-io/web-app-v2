@@ -1,4 +1,4 @@
-import { Identity } from '../site/site.type';
+import { Identity } from '../site/site.types';
 import { PaginateRes } from '../types';
 
 export interface MessageReq {
@@ -12,7 +12,6 @@ export interface ChatReq {
   type: 'CHAT';
   participants: string[];
 }
-
 export interface ChatsRes extends PaginateRes {
   items: Chat[];
 }
@@ -65,4 +64,12 @@ export interface Participant extends Identity {
   all_read: boolean;
   last_read_id: string;
   last_read_at: Date;
+}
+
+export interface ParticipantRes extends PaginateRes {
+  items: Participant[];
+}
+
+export interface chatIdRes {
+  id: string[];
 }

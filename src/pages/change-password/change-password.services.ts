@@ -1,9 +1,8 @@
-import { post } from '../../core/http';
-import { Validator } from '../../components/atoms/password-quality/password-quality.types';
+import { Validator } from 'src/components/atoms/password-quality/password-quality.types';
+import { changePassword as changePasswordApi } from 'src/core/api';
 
 export async function changePassword(payload: { current_password: string; password: string }) {
-  return post('user/change-password', payload)
-    .then(({ data }) => data)
+  return changePasswordApi(payload);
 }
 
 export const formInitialState = {

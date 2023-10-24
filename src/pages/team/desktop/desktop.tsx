@@ -1,15 +1,16 @@
-import { useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
-import { AddMemberModal } from '../add-member-modal';
+import { Card } from 'src/components/atoms/card/card';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { ProfileCard } from 'src/components/templates/profile-card';
 import { SureModal } from 'src/components/templates/sure-modal';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
-import { useTeamShared } from '../team.shared';
-import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
+import { AddMemberModal } from '../add-member-modal';
+import { useTeamShared } from '../team.shared';
 
 export const Desktop: React.FC = () => {
   const navigate = useNavigate();
@@ -28,20 +29,20 @@ export const Desktop: React.FC = () => {
   const { isLoggedIn } = useAuth();
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const NetworkMenuListOrg = [
     ...NetworkMenuList,
-    { label: 'Team', icon: '/icons/team.svg', link: () => navigate({ to: `/team/${identity.id}` }) },
+    { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity.id}`) },
   ];
 
   const jobsMenuListOrg = [
     {
       label: 'Created',
       icon: '/icons/folder-black.svg',
-      link: () => navigate({ to: `/d/jobs/created/${identity.id}` }),
+      link: () => navigate(`/jobs/created/${identity.id}`),
     },
   ];
 
@@ -50,7 +51,7 @@ export const Desktop: React.FC = () => {
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
           <ProfileCard />
-          <CardMenu title="Network" list={identity.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
+          <CardMenu title="Network" list={identity?.type === 'organizations' ? NetworkMenuListOrg : NetworkMenuList} />
           <CardMenu title="Jobs" list={jobsMenuListOrg} />
         </div>
         <div className={css.rightContainer}>
@@ -97,7 +98,7 @@ export const Desktop: React.FC = () => {
             <div onClick={onSeeMoreClick} className={css.seeMore}>
               See more
             </div>,
-            updateMembers.total_count > updateMembers.items?.length
+            updateMembers.total_count > updateMembers.items?.length,
           )}
         </div>
       </TwoColumnCursor>

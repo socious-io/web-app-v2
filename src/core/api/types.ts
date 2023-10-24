@@ -2,6 +2,9 @@ export interface PaginateReq {
   page?: number;
   limit?: number;
 }
+export interface FilterReq extends PaginateReq {
+  [key: string]: any;
+}
 
 export interface SuccessRes {
   message: string;
@@ -184,7 +187,7 @@ export type LanguageLevel = 'BASIC' | 'CONVERSANT' | 'PROFICIENT' | 'FLUENT' | '
 
 export type MissionStatus = 'ACTIVE' | 'COMPLETE' | 'CONFIRMED' | 'CANCELED' | 'KICKED_OUT';
 
-export type OfferStatus = 'PENDING' | 'WITHDRAWN' | 'APPROVED' | 'HIRED' | 'CLOSED' | 'CANCELED';
+export type OfferStatus = 'PENDING' | 'WITHDRAWN' | 'APPROVED' | 'HIRED' | 'CLOSED' | 'CANCELED' | 'KICK_OUT';
 
 export type ConnectStatus = 'PENDING' | 'CONNECTED' | 'BLOCKED';
 

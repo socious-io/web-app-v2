@@ -1,16 +1,16 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { useNavigate } from 'react-router-dom';
+import { CurrentIdentity } from 'src/core/api';
+import { RootState } from 'src/store';
 
 export const useNetworkShared = () => {
   const navigate = useNavigate();
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
   function navigateNetwork(path: string) {
-    navigate({ to: `/network/${path}` });
+    navigate(`/network/${path}`);
   }
 
   return {

@@ -1,30 +1,14 @@
-import { MakeGenerics } from '@tanstack/react-location';
-import {
-  FollowingsReq,
-  IdentityMeta,
-  IdentityReq,
-  MessagesReq,
-  Pagination,
-  ParticipantsReq,
-  SummaryReq,
-  UserType,
-} from '../../../core/types';
+import { ChatsRes, FollowingRes, Identity, MessagesRes, ParticipantRes } from 'src/core/api';
 
-export type MessageLoader = MakeGenerics<{
-  LoaderData: {
-    messages: Pagination<MessagesReq[]>;
-    participants: Pagination<ParticipantsReq[]>;
-    summery: Pagination<SummaryReq[]>;
-    followings: Pagination<FollowingsReq[]>;
-  };
-}>;
+export type MessageLoader = {
+  messages: MessagesRes;
+  participants: ParticipantRes;
+  summery: ChatsRes;
+  followings: FollowingRes;
+};
 
 export type OnPostMessageParams = {
   id: string;
-  identity: IdentityReq;
+  identity: Identity;
   text: string;
 };
-
-export interface ParticipantDetail extends IdentityMeta {
-  type: UserType;
-}

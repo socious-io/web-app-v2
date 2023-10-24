@@ -1,9 +1,10 @@
 import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
-import { printWhen } from 'src/core/utils';
 import { getFlooredFixed } from 'src/core/numbers';
-import { WithdrawMissionsProps } from './withdraw-missions.types';
+import { printWhen } from 'src/core/utils';
+
 import css from './withdraw-missions.module.scss';
+import { WithdrawMissionsProps } from './withdraw-missions.types';
 
 export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
   mission_name,
@@ -39,23 +40,23 @@ export const WithdrawMissions: React.FC<WithdrawMissionsProps> = ({
       {printWhen(
         <>
           <span className={css.title}>Transaction date</span>
-          <div className={css.rowItem}>{new Date(escrow?.released_at).toLocaleString()}</div>
+          <div className={css.rowItem}>{escrow?.released_at?.toLocaleString()}</div>
         </>,
-        escrow?.released_at != null
+        escrow?.released_at != null,
       )}
       {printWhen(
         <>
           <span className={css.title}>Transaction id</span>
           <div className={css.rowItem}>{escrow?.release_id}</div>
         </>,
-        escrow?.release_id != null
+        escrow?.release_id != null,
       )}
       {printWhen(<div className={css.errorText}>{disableText}</div>, !!disableText && isStripe)}
       {printWhen(
         <Button color="blue" disabled={disbaledWithdraw} onClick={onClickWithdraw} className={css.button}>
           Withdraw funds
         </Button>,
-        isStripe
+        isStripe,
       )}
     </Card>
   );

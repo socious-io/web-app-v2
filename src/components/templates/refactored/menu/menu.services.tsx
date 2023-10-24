@@ -1,4 +1,4 @@
-import { IdentityReq } from 'src/core/types';
+import { CurrentIdentity, OrgMeta, UserMeta } from 'src/core/api';
 
 export type Menu = {
   label: string;
@@ -74,7 +74,7 @@ export const menuList: Menu[] = [
         desktop: '/icons/chat-active.svg',
       },
     },
-    link: '/d/chats/contacts',
+    link: '/chats/contacts',
     public: false,
   },
   {
@@ -109,6 +109,6 @@ export const settingsList = [
   },
 ];
 
-export function getAvatar(identity?: IdentityReq) {
-  return identity?.type === 'organizations' ? identity.meta.image : identity?.meta.avatar;
+export function getAvatar(identity: CurrentIdentity) {
+  return identity.type === 'organizations' ? (identity.meta as OrgMeta).image : (identity.meta as UserMeta).avatar;
 }

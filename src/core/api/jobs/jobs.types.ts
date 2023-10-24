@@ -1,7 +1,8 @@
 import { Currency } from 'iso-country-currency';
+
 import { Organization } from '../organizations/organizations.types';
 import { Payment } from '../payments/payments.types';
-import { Identity } from '../site/site.type';
+import { Identity } from '../site/site.types';
 import {
   ProjectLengthType,
   ProjectPaymentSchemeType,
@@ -128,15 +129,15 @@ export interface Category {
   updated_at: Date;
 }
 
-export interface OffersRes {
+export interface OffersRes extends PaginateRes {
   items: Offer[];
 }
 
-export interface MissionsRes {
+export interface MissionsRes extends PaginateRes {
   items: Mission[];
 }
 
-export interface ApplicantsRes {
+export interface ApplicantsRes extends PaginateRes {
   items: Applicant[];
 }
 
