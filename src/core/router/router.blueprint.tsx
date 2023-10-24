@@ -24,7 +24,6 @@ import {
   job,
   getMission,
   getOffer,
-  search,
   otherProfileByUsername,
   badges,
   userMissions,
@@ -44,6 +43,7 @@ import { jobOfferRejectLoader } from 'src/pages/job-offer-reject/job-offer-rejec
 import { receivedOfferLoader } from 'src/pages/offer-received/offer-received.services';
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
+import { search } from 'src/pages/search/desktop/search.services';
 import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
@@ -759,7 +759,7 @@ export const blueprint: RouteObject[] = [
                 loader: async ({ request }) => {
                   const url = new URL(request.url);
                   const q = url.searchParams.get('q');
-                  const data = await search({ filter: {}, q: q as string, type: 'projects' }, { page: 1, limit: 50 });
+                  const data = await search({ filter: {}, q: q as string, type: 'projects' });
                   return data;
                 },
               },
