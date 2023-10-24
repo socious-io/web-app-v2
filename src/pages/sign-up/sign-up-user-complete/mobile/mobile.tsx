@@ -45,9 +45,6 @@ export const Mobile = (): JSX.Element => {
             placeholder="Password"
           />
         </form>
-        {/* <div className={css.passwordQuality}>
-          <PasswordQuality value={form.controls.password.value} validators={passwordQualityValidators} />
-        </div> */}
 
         <div className={css.passwordQuality}>
           <Typography textAlign="center" paddingBottom="1rem">
@@ -59,10 +56,7 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div>
         <div className={css.bottom}>
-          {/* <Button disabled={!basicValidity} onClick={onSubmit(formState)}>
-            Join
-          </Button> */}
-          <Button onClick={shared.onSubmit} >
+          <Button onClick={shared.onSubmit} disabled={!shared.form.isValid}>
             Join
           </Button>
           <Typography marginTop="1rem">
