@@ -4,11 +4,25 @@ import { FormModel } from '../../../core/form/useForm/useForm.types';
 export const formModel: FormModel = {
   firstName: {
     initialValue: '',
-    validators: [required()],
+    validators: [
+      required(),
+      {
+        name: 'notEmpty',
+        message: 'Please enter a valid name',
+        validateWith: (value: string) => value.trim().length > 0,
+      },
+    ],
   },
   lastName: {
     initialValue: '',
-    validators: [required()],
+    validators: [
+      required(),
+      {
+        name: 'notEmpty',
+        message: 'Please enter a valid name',
+        validateWith: (value: string) => value.trim().length > 0,
+      },
+    ],
   },
   password: {
     initialValue: '',
