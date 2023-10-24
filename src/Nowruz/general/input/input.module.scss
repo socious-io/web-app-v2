@@ -1,0 +1,90 @@
+.container {
+  position: relative;
+}
+.inputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.simpleInput {
+  width: 100%;
+  height: 44px;
+  padding: 10px 14px;
+  gap: 8px;
+  box-shadow: 0px 1px 2px 0px #1018280d;
+  border: 1px solid;
+  border-radius: 8px;
+}
+.prefixContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.prefixInput {
+  width: 100%;
+  height: 44px;
+  padding: 10px 14px;
+  gap: 8px;
+  box-shadow: 0px 1px 2px 0px #1018280d;
+  border: solid 1px;
+  border-radius: 0 8px 8px 0;
+}
+.error {
+  border-color: red;
+}
+.normal {
+  border-color: #d6d6d6;
+}
+
+input::placeholder {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #101828;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 6px;
+}
+
+.icon {
+  position: absolute;
+  right: 14px;
+  color: red;
+}
+
+.msg {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 6px;
+}
+.successMsg {
+  color: #099250;
+}
+.errorMsg {
+  color: red;
+}
+
+.prefix {
+  border-top: solid 1px #d6d6d6;
+  border-bottom: solid 1px #d6d6d6;
+  border-left: solid 1px #d6d6d6;
+  border-radius: 8px 0 0 8px;
+  width: fit-content;
+  height: 44px;
+  padding: 10px 14px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
