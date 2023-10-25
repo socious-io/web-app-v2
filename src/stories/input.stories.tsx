@@ -8,7 +8,8 @@ export const Normal = {
     type: 'text',
     label: 'Input Label',
     required: true,
-    placeHolder: 'Placeholder',
+    color: 'primary',
+    placeholder: 'Placeholder',
   },
 };
 
@@ -16,12 +17,14 @@ export const Error = {
   args: {
     id: 'input-2',
     name: 'inputName',
-    type: 'text',
     label: 'Input Label',
     required: true,
     placeHolder: 'Placeholder',
     errors: ['Error message 1', 'Error message 2'],
     isValid: false,
+    type: 'text',
+    color: 'primary',
+    placeholder: 'Placeholder',
   },
 };
 
@@ -31,9 +34,10 @@ export const Prefix = {
     name: 'inputName',
     type: 'text',
     label: 'Input Label',
-    required: true,
-    placeHolder: 'Placeholder',
+    required: false,
     prefix: 'https://',
+    color: 'primary',
+    placeholder: 'Placeholder',
   },
 };
 
@@ -44,8 +48,9 @@ export const Success = {
     type: 'text',
     label: 'Input Label',
     required: true,
-    placeHolder: 'Placeholder',
+    placeholder: 'Placeholder',
     isValid: true,
     validMessage: 'field value is valid',
+    color: 'primary',
   },
 };
