@@ -1,23 +1,22 @@
 import { createTheme } from '@mui/material/styles';
+import variables from 'src/components/_exports.module.scss';
 
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#004A46',
-      light: '#42a5f5',
-      dark: '#912082',
-      contrastText: '#FFFFFF',
+      main: variables.color_primary_600,
+      dark: variables.color_primary_700,
+      contrastText: variables.color_white,
     },
     secondary: {
-      main: '#344054',
-      light: '#FFFFFF',
-      dark: '#F9FAFB',
-      contrastText: '#FFFFFF',
+      main: variables.color_grey_700,
+      dark: variables.color_grey_300,
+      contrastText: variables.color_white,
     },
     error: {
-      main: '#D92D20',
-      dark: '#B42318',
-      contrastText: '#FFFFFF',
+      main: variables.color_error_600,
+      dark: variables.color_error_400,
+      contrastText: variables.color_white,
     },
   },
 });
