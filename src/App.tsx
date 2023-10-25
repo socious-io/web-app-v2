@@ -10,7 +10,10 @@ import { setupInterceptors } from './core/api';
 import { DeepLinks } from './core/deepLinks';
 import store, { RootState } from './store';
 import { closeModal } from './store/reducers/modal.reducer';
+
 import 'src/core/translation/i18n';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from 'material.theme';
 
 function ModalPlaceholder() {
   const modal = useSelector<RootState>((state) => state.modal);
@@ -29,7 +32,9 @@ function App() {
   }, []);
   return (
     <Provider store={store}>
-      <RouterProvider router={router.routes} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router.routes} />
+      </ThemeProvider>
       <DeepLinks />
       <ModalPlaceholder />
       <Spinner />
