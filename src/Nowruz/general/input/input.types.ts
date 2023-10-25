@@ -1,4 +1,5 @@
-export type InputProps = {
+import { TextFieldProps as DefaultProps } from '@mui/material';
+export interface InputProps extends DefaultProps {
   id?: string;
   name?: string;
   label?: string;
@@ -10,4 +11,4 @@ export type InputProps = {
   prefix?: string;
   color: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
   placeholder?: string;
-};
+}

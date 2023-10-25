@@ -4,8 +4,19 @@ import { TextField, InputAdornment } from '@mui/material';
 import css from './input.module.scss';
 import { InputProps } from './input.types';
 
-export const Input = (props: InputProps) => {
-  const { id, name, label, required, errors, isValid, validMessage, prefix, color, placeholder } = props;
+export const Input: React.FC<InputProps> = ({
+  id,
+  name,
+  label,
+  required,
+  errors,
+  isValid,
+  validMessage,
+  prefix,
+  color,
+  placeholder,
+  ...props
+}) => {
   const colorStyle = errors ? 'error' : color;
 
   return (
@@ -37,6 +48,7 @@ export const Input = (props: InputProps) => {
             </InputAdornment>
           ),
         }}
+        {...props}
       />
 
       {errors &&
