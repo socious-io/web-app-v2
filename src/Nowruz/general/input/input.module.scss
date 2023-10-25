@@ -56,8 +56,6 @@ input::placeholder {
 }
 
 .icon {
-  position: absolute;
-  right: 14px;
   color: red;
 }
 
@@ -76,15 +74,45 @@ input::placeholder {
   color: red;
 }
 
+.root {
+  & label.Mui-focused {
+    color: red;
+  }
+  & .MuiInput-underline:after {
+    border-bottom-color: red;
+  }
+  & .MuiOutlinedInput-root {
+    & fieldset {
+      border-color: red;
+    }
+    &:hover fieldset {
+      border-color: red;
+    }
+    &.Mui-focused fieldset {
+      border-color: red;
+    }
+  }
+}
+
+.default {
+  input {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #101828;
+    height: 44px;
+    width: 100%;
+    padding: 0 14px 0 14px;
+  }
+  fieldset {
+    border-radius: 8px;
+  }
+}
 .prefix {
-  border-top: solid 1px #d6d6d6;
-  border-bottom: solid 1px #d6d6d6;
-  border-left: solid 1px #d6d6d6;
-  border-radius: 8px 0 0 8px;
-  width: fit-content;
+  min-height: 44px;
   height: 44px;
-  padding: 10px 14px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
+  border-right: solid 1px #d6d6d6;
+  padding-right: 14px;
 }
