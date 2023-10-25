@@ -1,10 +1,13 @@
 import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
+import { TextField, InputAdornment } from '@mui/material';
 
 import css from './input.module.scss';
 import { InputProps } from './input.types';
 
 export const Input = (props: InputProps) => {
-  const { id, name, type, label, required, placeHolder, errors, isValid, validMessage, prefix } = props;
+  const { id, name, label, required, errors, isValid, validMessage, prefix, color, placeholder } = props;
+  const colorStyle = errors ? 'error' : color;
+
   return (
     <div className={css.container}>
       {label && (
@@ -13,30 +16,29 @@ export const Input = (props: InputProps) => {
           {required && '*'}
         </div>
       )}
-      <div className={css.inputContainer}>
-        {prefix ? (
-          <div className={css.prefixContainer}>
-            <div className={css.prefix}>{prefix}</div>
-            <input
-              type={type || 'text'}
-              id={id}
-              name={name}
-              placeholder={placeHolder}
-              className={`${errors ? css.error : css.normal} ${css.prefixInput} `}
-            />
-          </div>
-        ) : (
-          <input
-            type={type || 'text'}
-            id={id}
-            name={name}
-            placeholder={placeHolder}
-            className={`${errors ? css.error : css.normal} ${css.simpleInput} `}
-          />
-        )}
+      <TextField
+        id={id}
+        name={name}
+        variant="outlined"
+        color={colorStyle}
+        focused
+        className={css.default}
+        fullWidth
+        placeholder={placeholder}
+        InputProps={{
+          endAdornment: errors && (
+            <InputAdornment position="end">
+              <ErrorOutlineRoundedIcon className={css.icon} />
+            </InputAdornment>
+          ),
+          startAdornment: prefix && (
+            <InputAdornment position="start" className={css.prefix}>
+              {prefix}
+            </InputAdornment>
+          ),
+        }}
+      />
 
-        {errors && <ErrorOutlineRoundedIcon className={css.icon} />}
-      </div>
       {errors &&
         errors.map((e, index) => (
           <p key={index} className={`${css.errorMsg} ${css.msg}`}>
