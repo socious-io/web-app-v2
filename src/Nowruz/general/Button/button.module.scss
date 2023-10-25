@@ -1,3 +1,28 @@
-.button {
-  background-color: black;
+.default {
+  &:global(.MuiButton-root) {
+    text-transform: none;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+}
+.block {
+  display: block;
+  width: 100%;
+}
+.primary {
+  &:global(.MuiButton-root) {
+    &:disabled {
+      background-color: #ccdbda;
+      color: #fff;
+      cursor: not-allowed;
+    }
+  }
+}
+.error {
+  &:global(.MuiButton-root) {
+    &:disabled {
+      background-color: #fecdca;
+      color: #fff;
+      cursor: not-allowed;
+    }
+  }
 }
