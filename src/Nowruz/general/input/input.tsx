@@ -26,10 +26,10 @@ export const Input: React.FC<InputProps> = ({
       )}
       <TextField
         variant="outlined"
-        color={colorStyle}
         focused
-        className={css.default}
+        className={`${css.default} ${!colorStyle && css.defaultColor}`}
         fullWidth
+        color={colorStyle}
         InputProps={{
           endAdornment: errors && (
             <InputAdornment position="end">
