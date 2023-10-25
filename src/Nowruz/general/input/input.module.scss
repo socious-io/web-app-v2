@@ -8,7 +8,7 @@
 }
 
 .icon {
-  color: red;
+  color: var($color-error-500);
 }
 
 .msg {
@@ -20,10 +20,10 @@
   margin-top: 6px;
 }
 .successMsg {
-  color: #099250;
+  color: var($color-success-600);
 }
 .errorMsg {
-  color: red;
+  color: var($color-error-500);
 }
 
 .default {
@@ -33,7 +33,7 @@
     line-height: 24px;
     letter-spacing: 0em;
     text-align: left;
-    color: #101828;
+    color: var($color-grey-900);
     height: 44px;
     width: 100%;
     padding: 0 14px 0 14px;
@@ -45,6 +45,6 @@
 .prefix {
   min-height: 44px;
   height: 44px;
-  border-right: solid 1px #d6d6d6;
+  border-right: solid 1px var($color-grey-300);
   padding-right: 14px;
 }
