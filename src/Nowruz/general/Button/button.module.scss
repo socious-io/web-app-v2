@@ -1,3 +1,4 @@
+@import 'src/components/_primitives.scss';
 .default {
   &:global(.MuiButton-root) {
     text-transform: none;
@@ -11,8 +12,17 @@
 .primary {
   &:global(.MuiButton-root) {
     &:disabled {
-      background-color: #ccdbda;
-      color: #fff;
+      background-color: $color-primary-200;
+      color: $color-white;
+      cursor: not-allowed;
+    }
+  }
+}
+.secondary {
+  &:global(.MuiButton-root) {
+    &:disabled {
+      background-color: $color-grey-200;
+      color: $color-white;
       cursor: not-allowed;
     }
   }
@@ -20,8 +30,8 @@
 .error {
   &:global(.MuiButton-root) {
     &:disabled {
-      background-color: #fecdca;
-      color: #fff;
+      background-color: $color-error-200;
+      color: $color-white;
       cursor: not-allowed;
     }
   }
