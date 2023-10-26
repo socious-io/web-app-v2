@@ -1,42 +1,33 @@
-import { Checkbox as MUICheckbox, FormControlLabel } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
+import { Checkbox as MUICheckbox, Typography } from '@mui/material';
+import React from 'react';
 
+import css from './checkbox.module.scss';
 import { CheckboxProps } from './checkbox.types';
-import { useState } from 'react';
 
-export const Checkbox: React.FC<CheckboxProps> = ({
-  id,
-  name,
-  label,
-  required,
-  errors,
-  isValid,
-  checked,
-  disabled,
-  ...props
-}) => {
-  const [check, setcheck] = useState(checked);
+interface IconProps {
+  checked: boolean;
+}
+const BpCheckedIcon: React.FC<IconProps> = ({ checked }) => {
   return (
-    <FormControlLabel
-      control={
-        <MUICheckbox
-          id={id}
-          name={name}
-          checked={check}
-          disabled={disabled}
-          {...props}
-          onChange={() => setcheck(!check)}
-          sx={{
-            width: '1rem',
-            height: '1rem',
-            borderRadius: '4px',
-            // color: pink[800],
-            // '&.Mui-checked': {
-            //   color: pink[600],
-            // },
-          }}
-        />
-      }
-      label={label}
-    />
+    <div className={`${css.icon} ${checked && css.iconChecked}`}>
+      {checked && <DoneIcon color="primary" fontSize="smaller" />}
+    </div>
+  );
+};
+export const Checkbox: React.FC<CheckboxProps> = ({ label, required, errors, isValid, ...props }) => {
+  return (
+    <div className={css.container}>
+      <MUICheckbox
+        disableRipple
+        color="default"
+        checkedIcon={<BpCheckedIcon checked />}
+        icon={<BpCheckedIcon checked={false} />}
+        {...props}
+      />
+      <Typography variant="subtitle1" className={css.label}>
+        {label}
+      </Typography>
+    </div>
   );
 };
