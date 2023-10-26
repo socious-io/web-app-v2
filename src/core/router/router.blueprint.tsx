@@ -139,7 +139,7 @@ export const blueprint: RouteObject[] = [
               {
                 path: '',
                 loader: async () => {
-                  const data = await jobs({ page: 1 });
+                  const data = await jobs({ page: 1, status: 'ACTIVE' });
                   return { data };
                 },
                 async lazy() {
