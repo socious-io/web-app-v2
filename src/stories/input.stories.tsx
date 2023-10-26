@@ -8,7 +8,6 @@ export const Normal = {
     type: 'text',
     label: 'Input Label',
     required: true,
-    color: 'primary',
     placeholder: 'Placeholder',
   },
 };
@@ -23,7 +22,6 @@ export const Error = {
     errors: ['Error message 1', 'Error message 2'],
     isValid: false,
     type: 'text',
-    color: 'primary',
     placeholder: 'Placeholder',
   },
 };
@@ -36,7 +34,6 @@ export const Prefix = {
     label: 'Input Label',
     required: false,
     prefix: 'https://',
-    color: 'primary',
     placeholder: 'Placeholder',
   },
 };
@@ -51,6 +48,5 @@ export const Success = {
     placeholder: 'Placeholder',
     isValid: true,
     validMessage: 'field value is valid',
-    color: 'primary',
   },
 };

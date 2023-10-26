@@ -5,8 +5,6 @@ import css from './input.module.scss';
 import { InputProps } from './input.types';
 
 export const Input: React.FC<InputProps> = ({
-  id,
-  name,
   label,
   required,
   errors,
@@ -14,13 +12,12 @@ export const Input: React.FC<InputProps> = ({
   validMessage,
   prefix,
   color,
-  placeholder,
   ...props
 }) => {
   const colorStyle = errors ? 'error' : color;
 
   return (
-    <div className={css.container}>
+    <div>
       {label && (
         <div className={css.label}>
           {label}
@@ -28,14 +25,11 @@ export const Input: React.FC<InputProps> = ({
         </div>
       )}
       <TextField
-        id={id}
-        name={name}
         variant="outlined"
-        color={colorStyle}
         focused
-        className={css.default}
+        className={`${css.default} ${!colorStyle && css.defaultColor}`}
         fullWidth
-        placeholder={placeholder}
+        color={colorStyle}
         InputProps={{
           endAdornment: errors && (
             <InputAdornment position="end">
