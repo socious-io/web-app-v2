@@ -50,7 +50,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
     }
     if (web3 && escrowId) {
       try {
-        await Dapp.withdrawnEscrow(web3, escrowId, offerOverview.offerer.meta.verified_impact);
+        await Dapp.withdrawnEscrow(web3, escrowId);
         confirmMission(id).then(onDone);
       } catch (err: any) {
         dialog.confirm({
