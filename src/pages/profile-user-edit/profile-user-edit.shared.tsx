@@ -12,11 +12,12 @@ import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 import { generateFormModel } from './profile-user-edit.form';
 import { cityDispatcher, showActionSheet, uploadImage } from './profile-user-edit.services';
-import { Resolver } from './profile-user-edit.type';
 import { EditProps } from '../profile-user/desktop/edit/edit.types';
 
 export const useProfileUserEditShared = (props?: EditProps) => {
-  const { user } = useLoaderData() as Resolver;
+  const res = useLoaderData();
+  const user = res.user || res;
+
   const formModel = useMemo(() => generateFormModel(user), []);
   const [cities, setCities] = useState<DropdownItem[]>([]);
   const form = useForm(formModel);
