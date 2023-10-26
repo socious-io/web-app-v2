@@ -9,13 +9,13 @@ import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fi
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { Organization } from 'src/core/api';
+import { User } from 'src/core/api';
 
 import css from './mobile.module.scss';
 import { useProfileUserEditShared } from '../profile-user-edit.shared';
 
 export const Mobile = (): JSX.Element => {
-  const user = useLoaderData() as Organization;
+  const user = useLoaderData() as User;
   const [skills, setSkills] = useState<{ value: string; label: string }[]>([]);
 
   const { onCoverEdit, onAvatarEdit, onSave, onCountryUpdate, updateCityList, coverImage, avatarImage, cities, form } =

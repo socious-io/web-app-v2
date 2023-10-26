@@ -20,7 +20,6 @@ export const useTeamShared = () => {
   const { members, followings } = (useLoaderData() as Resolver) || {};
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
-
   });
   const initialMemberList = convertFollowingsToContactList(followings?.items);
   const [updateMembers, setUpdateMembers] = useState<MembersRes>(members);
