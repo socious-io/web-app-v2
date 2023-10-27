@@ -1,6 +1,6 @@
 import { SvgProps } from './svg.types';
 
-export const Start02: React.FC<SvgProps> = ({ stroke }) => {
+export const Star02: React.FC<SvgProps> = ({ stroke }) => {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
