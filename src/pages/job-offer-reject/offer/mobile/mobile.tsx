@@ -46,13 +46,13 @@ export const Mobile = (): JSX.Element => {
       crypto_currency_address: isPaidCrypto ? selectedToken?.address || tokens[0]?.value : undefined,
     };
     offerByApplicant(applicantDetail.id, payload).then(() => {
-      navigate('../..');
+      navigate(-1);
     });
   }
 
   return (
     <div className={css.container}>
-      <Header onBack={() => navigate('..')} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
+      <Header onBack={() => navigate(-1)} paddingTop="var(--safe-area)" title={applicantDetail.user.name} />
       <div className={css.sentTo}>An offer will be sent to {applicantDetail.user.name}.</div>
       <div className={css.form}>
         <RadioGroup
