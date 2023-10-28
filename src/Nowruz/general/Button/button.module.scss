@@ -1,3 +1,44 @@
+
+@import 'src/components/_primitives.scss';
+.default {
+  &:global(.MuiButton-root) {
+    text-transform: none;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+}
+.block {
+  display: block;
+  width: 100%;
+}
+.primary {
+  &:global(.MuiButton-root) {
+    &:disabled {
+      background-color: $color-primary-200;
+      color: $color-white;
+      cursor: not-allowed;
+    }
+  }
+}
+.secondary {
+  &:global(.MuiButton-root) {
+    &:disabled {
+      background-color: $color-grey-300;
+      color: $color-white;
+      cursor: not-allowed;
+    }
+  }
+}
+.error {
+  &:global(.MuiButton-root) {
+    &:disabled {
+      background-color: $color-error-200;
+      color: $color-white;
+      cursor: not-allowed;
+    }
+  }
+}
+
 .button {
   background-color: black;
 }
+
