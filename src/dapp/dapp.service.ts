@@ -48,7 +48,7 @@ export const balance = async (web3: Web3, token: string) => {
   return web3.utils.fromWei(result);
 };
 
-export const withdrawnEscrow = async (web3: Web3, escrowId: string, verifiedOrg?: boolean) => {
+export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
   // Note: Escrow new contract issue that sends index instead of id
   const id = (parseInt(escrowId) + 1).toString();
   // TODO: get this from contributor info
