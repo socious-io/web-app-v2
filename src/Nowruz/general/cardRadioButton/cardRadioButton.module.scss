@@ -1,0 +1,67 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1rem;
+  justify-content: flex-start;
+  height: fit-content;
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.normalContainer {
+  border: solid 1px $color-grey-200;
+}
+.normalContainer:hover {
+  border: solid 1px $color-primary-200;
+}
+.selectedContainer {
+  border: solid 1px $color-primary-600;
+  background-color: $color-primary-50;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.iconDiv {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 200px;
+  background-color: $color-primary-100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rbIcon {
+  width: 1rem;
+  height: 1rem;
+  border: solid 1px;
+  border-color: $color-primary-200;
+  border-radius: 0.5rem;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.rbIcon:hover {
+  border-color: $color-primary-600;
+  background-color: $color-primary-50;
+}
+
+.rbSelectedIcon {
+  width: 1rem;
+  height: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: $color-primary-600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rbContainer {
+  width: 1rem;
+}
