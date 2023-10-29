@@ -1,4 +1,4 @@
-import { TextFieldProps as DefaultProps } from '@mui/material';
+import { OutlinedTextFieldProps as DefaultProps } from '@mui/material';
 export interface InputProps extends DefaultProps {
   label?: string;
   required?: boolean;
@@ -6,5 +6,4 @@ export interface InputProps extends DefaultProps {
   isValid?: boolean;
   validMessage?: string;
   prefix?: string;
-  color: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
 }
