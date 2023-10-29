@@ -25,7 +25,18 @@ export const theme = createTheme({
       fontWeight: 500,
       lineHeight: '20px',
       letterSpacing: '0em',
-      textAlign: 'left',
+    },
+    subtitle2: {
+      fontSize: '14px',
+      fontWeight: 600,
+      lineHeight: '20px',
+      letterSpacing: '0em',
+    },
+    caption: {
+      fontSize: '14px',
+      fontWeight: 400,
+      lineHeight: '20px',
+      letterSpacing: '0em',
     },
   },
 });
