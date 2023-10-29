@@ -1,3 +1,4 @@
+
 @import 'src/components/_primitives.scss';
 .default {
   &:global(.MuiButton-root) {
@@ -36,3 +37,8 @@
     }
   }
 }
+
+.button {
+  background-color: black;
+}
+
