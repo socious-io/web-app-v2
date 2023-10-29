@@ -9,7 +9,7 @@ import { useJobsIndexShared } from '../jobs-index.shared';
 
 export const Mobile = () => {
   const { identities, jobList, data, showMorePageBtn, onMorePage } = useJobsIndexShared();
-  console.log('data ',data);
+  console.log('data ', data);
   const hires = (missions: string) =>
     identities?.some((identity) => identity?.id === data.user?.id) ? `, hires ${missions}` : '';
   return (

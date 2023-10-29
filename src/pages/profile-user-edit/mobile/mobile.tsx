@@ -9,13 +9,13 @@ import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fi
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { Organization } from 'src/core/api';
+import { User } from 'src/core/api';
 
 import css from './mobile.module.scss';
 import { useProfileUserEditShared } from '../profile-user-edit.shared';
 
 export const Mobile = (): JSX.Element => {
-  const user = useLoaderData() as Organization;
+  const user = useLoaderData() as User;
   const [skills, setSkills] = useState<{ value: string; label: string }[]>([]);
 
   const { onCoverEdit, onAvatarEdit, onSave, onCountryUpdate, updateCityList, coverImage, avatarImage, cities, form } =
@@ -66,6 +66,7 @@ export const Mobile = (): JSX.Element => {
             list={COUNTRIES}
             placeholder="country"
             onValueChange={onCountryUpdate}
+            defaultValue={COUNTRIES.find((item) => item.id === form.controls.country['value'])?.label || ''}
           />
           <Dropdown
             register={form}
@@ -74,11 +75,18 @@ export const Mobile = (): JSX.Element => {
             list={cities}
             placeholder="city"
             onValueChange={(option) => form.controls.geoname_id.setValue(option.id)}
+            defaultValue={form.controls.city['value']?.toString()}
           />
           <div>
             <div className={css.label}>Phone</div>
             <div className={css.phoneContainer}>
-              <Dropdown register={form} name="mobile_country_code" placeholder="+1" list={COUNTRY_CODES} />
+              <Dropdown
+                register={form}
+                name="mobile_country_code"
+                placeholder="+1"
+                list={COUNTRY_CODES}
+                defaultValue={form.controls.mobile_country_code.value?.toString()}
+              />
               <Input register={form} name="phone" placeholder="phone" />
             </div>
           </div>
