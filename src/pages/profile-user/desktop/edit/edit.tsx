@@ -102,6 +102,7 @@ export const Edit = (props: EditProps): JSX.Element => {
               list={COUNTRIES}
               placeholder="country"
               onValueChange={onCountryUpdate}
+              defaultValue={COUNTRIES.find((item) => item.id === form.controls.country['value'])?.label || ''}
             />
             <Dropdown
               register={form}
@@ -110,11 +111,18 @@ export const Edit = (props: EditProps): JSX.Element => {
               list={cities}
               placeholder="city"
               onValueChange={(option) => form.controls.geoname_id.setValue(option.id)}
+              defaultValue={form.controls.city['value']?.toString()}
             />
             <div>
               <div className={css.label}>Phone</div>
               <div className={css.phoneContainer}>
-                <Dropdown register={form} name="mobile_country_code" placeholder="+1" list={COUNTRY_CODES} />
+                <Dropdown
+                  register={form}
+                  name="mobile_country_code"
+                  placeholder="+1"
+                  list={COUNTRY_CODES}
+                  defaultValue={form.controls.mobile_country_code.value?.toString()}
+                />
                 <Input register={form} name="phone" placeholder="phone" />
               </div>
             </div>
