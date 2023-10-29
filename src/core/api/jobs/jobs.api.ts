@@ -81,7 +81,7 @@ export async function applicant(id: string): Promise<Applicant> {
 }
 
 export async function rejectApplicant(id: string): Promise<Applicant> {
-  return (await post<Applicant>(`applicants/${id}/reject`,{})).data;
+  return (await post<Applicant>(`applicants/${id}/reject`, {})).data;
 }
 export async function getOffer(id: string): Promise<Offer> {
   return (await get<Offer>(`offers/${id}`)).data;
