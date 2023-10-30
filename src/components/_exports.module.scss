@@ -1,0 +1,17 @@
+//TODO these files dont belong here
+@import './primitives';
+
+:export {
+  color_primary_200: $color-primary-200;
+  color_primary_600: $color-primary-600;
+  color_primary_700: $color-primary-700;
+
+  color_white: $color-white;
+
+  color_grey_700: $color-grey-700;
+  color_grey_300: $color-grey-300;
+
+  color_error_200: $color-error-200;
+  color_error_600: $color-error-600;
+  color_error_700: $color-error-700;
+}

@@ -1,0 +1,59 @@
+@import 'src/components/_primitives.scss';
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 6px;
+}
+
+.icon {
+  color: $color-error-500;
+}
+
+.msg {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 6px;
+}
+.successMsg {
+  color: $color-success-600;
+}
+.errorMsg {
+  color: $color-error-500;
+}
+
+.default {
+  input {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: $color-grey-900;
+    height: 44px;
+    width: 100%;
+    padding: 0 14px 0 14px;
+  }
+  fieldset {
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px 0px #1018280d;
+  }
+}
+
+.defaultColor {
+  fieldset {
+    border: 1px solid $color-grey-300 !important;
+  }
+}
+
+.prefix {
+  min-height: 44px;
+  height: 44px;
+  border-right: solid 1px $color-grey-300;
+  padding-right: 14px;
+}

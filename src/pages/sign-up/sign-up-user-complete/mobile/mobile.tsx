@@ -56,9 +56,11 @@ export const Mobile = (): JSX.Element => {
       </div>
       <div>
         <div className={css.bottom}>
+
           <Button onClick={shared.onSubmit} disabled={!shared.form.isValid}>
             Join
           </Button>
+
           <Typography marginTop="1rem">
             <span>Already a member? </span>
             <Link onClick={shared.navigateToSignIn}>Sign in</Link>

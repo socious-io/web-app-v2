@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLoaderData } from 'react-router-dom';
-import { JobsRes } from 'src/core/api';
+import { JobsRes, jobs } from 'src/core/api';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store';
-
-import { getJobList } from './jobs.services';
 
 interface Loader {
   data: JobsRes;
@@ -22,7 +20,7 @@ export const useJobsShared = () => {
   });
 
   function onMorePage() {
-    getJobList({ page: page + 1 }).then((resp) => {
+    jobs({ page: page + 1, status: 'ACTIVE' }).then((resp) => {
       setPage((v) => v + 1);
       setJobList((list) => [...list, ...resp.items]);
     });
