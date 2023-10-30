@@ -45,9 +45,6 @@ export const Desktop = (): JSX.Element => {
             placeholder="Password"
           />
         </form>
-        {/* <div className={css.passwordQuality}>
-          <PasswordQuality value={form.controls.password.value} validators={passwordQualityValidators} />
-        </div> */}
 
         <div className={css.passwordQuality}>
           <Typography textAlign="center" paddingBottom="1rem">
@@ -59,10 +56,9 @@ export const Desktop = (): JSX.Element => {
       </div>
       <div>
         <div className={css.bottom}>
-          {/* <Button disabled={!basicValidity} onClick={onSubmit(formState)}>
+          <Button onClick={shared.onSubmit} disabled={!shared.form.isValid}>
             Join
-          </Button> */}
-          <Button onClick={shared.onSubmit}>Join</Button>
+          </Button>
           <Typography marginTop="1rem">
             <span>Already a member? </span>
             <Link onClick={shared.navigateToSignIn}>Sign in</Link>
