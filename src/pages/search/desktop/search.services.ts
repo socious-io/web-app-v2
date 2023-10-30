@@ -8,7 +8,7 @@ export async function search(payload: PayloadModel): Promise<SearchReq> {
     filter: payload.filter,
     type: payload.type,
   };
-  if (payload.q) {
+  if (payload.q.trim()) {
     Object.assign(body, { q: payload.q });
   }
   return searchReq(body, { limit: 50, page: payload.page });
