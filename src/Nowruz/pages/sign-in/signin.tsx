@@ -40,7 +40,7 @@ export const SignIn = () => {
               value={keepLoggedIn}
               onChange={() => setKeepLoggedIn(!keepLoggedIn)}
             />
-            <Link href="/forget-password" className={css.forgotPass}>
+            <Link href="/forget-password/email" className={css.forgotPass}>
               Forgot password
             </Link>
           </div>

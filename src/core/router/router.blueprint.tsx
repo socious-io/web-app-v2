@@ -848,7 +848,7 @@ export const blueprint: RouteObject[] = [
       {
         path: 'email',
         async lazy() {
-          const { Email } = await import('src/pages/forget-password/email/email.container');
+          const { Email } = await import('src/Nowruz/pages/forget-password/email/email');
           return {
             Component: Email,
           };
