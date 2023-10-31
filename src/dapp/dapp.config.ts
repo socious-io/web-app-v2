@@ -63,8 +63,7 @@ export const dappConfig: DappConfig = {
         {
           name: 'USDC',
           symbol: 'USDC',
-          address: '0xC12F6Ee5c853393105f29EF0310e61e6B494a70F',
-          decimals: 18,
+          address: '0xC12F6Ee5c853393105f29EF0310e61e6B494a70F'
         },
       ],
     },
