@@ -1,12 +1,22 @@
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { AuthRes } from './auth.types';
 import { config } from 'src/config';
-import { refresh } from './auth.api';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 
-export async function setAuthParams(auth: AuthRes) {
-  await nonPermanentStorage.set({ key: 'access_token', value: auth.access_token }, Number(config.accessExpire));
-  await nonPermanentStorage.set({ key: 'refresh_token', value: auth.refresh_token }, Number(config.refreshExpire));
-  await nonPermanentStorage.set({ key: 'token_type', value: auth.token_type }, Number(config.refreshExpire));
+import { refresh } from './auth.api';
+import { AuthRes } from './auth.types';
+
+export async function setAuthParams(auth: AuthRes, keepLoggedIn?: boolean) {
+  await nonPermanentStorage.set(
+    { key: 'access_token', value: auth.access_token },
+    keepLoggedIn ? Number(config.accessExpire) : undefined,
+  );
+  await nonPermanentStorage.set(
+    { key: 'refresh_token', value: auth.refresh_token },
+    keepLoggedIn ? Number(config.refreshExpire) : undefined,
+  );
+  await nonPermanentStorage.set(
+    { key: 'token_type', value: auth.token_type },
+    keepLoggedIn ? Number(config.refreshExpire) : undefined,
+  );
 }
 
 export async function refreshToken() {

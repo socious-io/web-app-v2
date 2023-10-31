@@ -9,7 +9,7 @@ interface StepperIconProps {
   disabledColor: string;
 }
 
-const StepperIconWrapper: React.FC<StepperIconProps & { Component: React.ComponentType }> = ({
+export const StepperIconWrapper: React.FC<StepperIconProps & { Component: React.ComponentType }> = ({
   step,
   activeStep,
   activeColor,
@@ -22,5 +22,3 @@ const StepperIconWrapper: React.FC<StepperIconProps & { Component: React.Compone
     </div>
   );
 };
-
-export default StepperIconWrapper;
