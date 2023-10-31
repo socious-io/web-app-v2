@@ -855,9 +855,9 @@ export const blueprint: RouteObject[] = [
         },
       },
       {
-        path: 'otp',
+        path: 'otp/*',
         async lazy() {
-          const { Otp } = await import('src/pages/forget-password/otp/otp.container');
+          const { Otp } = await import('src/Nowruz/pages/forget-password/otp/otp');
           return {
             Component: Otp,
           };
