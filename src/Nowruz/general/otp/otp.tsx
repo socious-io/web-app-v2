@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import OtpInput from 'react-otp-input';
 
 import css from './otp.module.scss';

@@ -1,0 +1,63 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 2rem;
+  gap: 24px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.forgotPass {
+  background-color: transparent;
+  color: $color-primary-700;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.signup {
+  background-color: transparent;
+  color: $color-primary-700;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.centeredDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.action {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.button {
+  height: 44px;
+  text-transform: none;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0em;
+}
+.buttonTitle {
+  margin-left: 0.5rem;
+}
+.signupTitle {
+  color: $color-grey-600;
+  margin-right: 0.3rem;
+}
