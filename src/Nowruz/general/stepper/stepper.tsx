@@ -5,7 +5,7 @@ import variables from 'src/components/_exports.module.scss';
 
 import css from './stepper.module.scss';
 import { StepperProps } from './stepper.types';
-import StepperIconWrapper from './stepperIcon';
+import { StepperIconWrapper } from './stepperIcon';
 
 export const Stepper: React.FC<StepperProps> = (props) => {
   const { activeStep, orientation, steps } = props;
@@ -37,9 +37,6 @@ export const Stepper: React.FC<StepperProps> = (props) => {
   }));
 
   const VerticalStepConnector = styled(StepConnector)(() => ({
-    // [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    //   left: 20,
-    // },
     [`&.${stepConnectorClasses.active}`]: {
       [`& .${stepConnectorClasses.line}`]: {
         backgroundColor: activeColor,
