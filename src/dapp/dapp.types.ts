@@ -23,7 +23,6 @@ export interface DappConfig {
   testnet: Network[];
   abis: {
     escrow: AbiItem[];
-    escrow_old: AbiItem[];
     token: AbiItem[];
   };
 }
