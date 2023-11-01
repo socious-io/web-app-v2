@@ -8,7 +8,7 @@ import { Stepper } from 'src/Nowruz/general/stepper/stepper';
 import { StepInfo } from 'src/Nowruz/general/stepper/stepper.types';
 
 export default {
-  title: 'stepper',
+  title: 'General/stepper',
   component: Stepper,
 } as const;
 

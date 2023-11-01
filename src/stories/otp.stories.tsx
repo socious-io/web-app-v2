@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { OTP } from 'src/Nowruz/general/otp/otp';
 
 export default {
-  title: 'OTP',
+  title: 'Auth/OTP',
   component: OTP,
 } as const;
 
