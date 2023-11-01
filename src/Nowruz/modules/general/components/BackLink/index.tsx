@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'src/Nowruz/general/Button';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
 
 import { BackLinkProps } from './back-link.types';
 export const BackLink: React.FC<BackLinkProps> = (props) => {

@@ -1,11 +1,12 @@
 import { Link, Typography } from '@mui/material';
 import { Google } from 'public/icons/nowruz/google';
 import { LinkedIn } from 'public/icons/nowruz/linkedin';
-import { Button } from 'src/Nowruz/general/Button';
-import { Checkbox } from 'src/Nowruz/general/checkbox/checkbox';
-import { Input } from 'src/Nowruz/general/input/input';
+import { Logo } from 'public/icons/nowruz/logo';
+import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
+import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
-import { Header } from './logo/header';
 import css from './signin.module.scss';
 import { useSignin } from './useSignin';
 
@@ -15,7 +16,11 @@ export const SignIn = () => {
     <div className={css.container}>
       <div className="display:none md:flex-1 md:block" />
       <div className={css.main}>
-        <Header />
+        <IntroHeader
+          title="Log in to your account"
+          description=" Welcome back! Please enter your details."
+          logo={<Logo width={48} height={48} />}
+        />
         <form className={css.form}>
           <Input
             autoComplete="Email"

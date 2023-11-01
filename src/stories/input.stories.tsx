@@ -1,4 +1,4 @@
-import { Input } from 'src/Nowruz/general/input/input';
+import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 export default { component: Input };
 export const Normal = {

@@ -1,6 +1,6 @@
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
-import { OTP } from 'src/Nowruz/general/otp/otp';
+import { OTP } from 'src/Nowruz/modules/general/components/otp/otp';
 
 export default {
   title: 'Auth/OTP',
