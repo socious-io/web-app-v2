@@ -4,7 +4,7 @@ import React from 'react';
 import { Button } from 'src/Nowruz/general/Button';
 import { ButtonProps } from 'src/Nowruz/general/Button/button.types';
 export default {
-  title: 'Components/Button',
+  title: 'General/Button',
   component: Button,
 } as Meta;
 
