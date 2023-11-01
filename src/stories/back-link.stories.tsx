@@ -5,7 +5,7 @@ import { BackLinkProps } from 'src/Nowruz/general/BackLink/back-link.types';
 
 import { withRouter } from '.storybook/withRouter';
 export default {
-  title: 'Components/BackLink',
+  title: 'General/BackLink',
   component: BackLink,
   decorators: [withRouter],
 } as Meta;
