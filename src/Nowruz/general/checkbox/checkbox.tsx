@@ -23,6 +23,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({ label, required, errors, isV
         color="default"
         checkedIcon={<BpCheckedIcon checked />}
         icon={<BpCheckedIcon checked={false} />}
+        sx={{ paddingLeft: '0' }}
         {...props}
       />
       <Typography variant="subtitle1" className={css.label}>
