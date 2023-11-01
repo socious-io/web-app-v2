@@ -812,7 +812,7 @@ export const blueprint: RouteObject[] = [
           {
             path: 'welcome',
             async lazy() {
-              const { Welcome } = await import('src/pages/sign-up/welcome/welcome');
+              const { Welcome } = await import('src/Nowruz/pages/sign-up/welcome');
               return {
                 Component: Welcome,
               };

@@ -4,8 +4,8 @@ import { Passcode } from 'public/icons/nowruz/passcode';
 import { Star02 } from 'public/icons/nowruz/star-02';
 import { User01 } from 'public/icons/nowruz/user-01';
 import { useState } from 'react';
-import { Stepper } from 'src/Nowruz/general/stepper/stepper';
-import { StepInfo } from 'src/Nowruz/general/stepper/stepper.types';
+import { Stepper } from 'src/Nowruz/modules/general/components/stepper/stepper';
+import { StepInfo } from 'src/Nowruz/modules/general/components/stepper/stepper.types';
 
 export default {
   title: 'General/stepper',
