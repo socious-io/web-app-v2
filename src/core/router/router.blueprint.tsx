@@ -927,9 +927,9 @@ export const blueprint: RouteObject[] = [
   {
     path: '/sign-in',
     async lazy() {
-      const { SignInContainer } = await import('src/pages/sign-in/sign-in-container');
+      const { SignIn } = await import('src/Nowruz/pages/sign-in/signin');
       return {
-        Component: SignInContainer,
+        Component: SignIn,
       };
     },
   },
