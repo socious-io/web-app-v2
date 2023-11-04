@@ -33,7 +33,6 @@ const Steper: React.FC<Props> = ({ components }) => {
       <div className={css['box']}>
         <div className={css['box__header']}>
           <div className={css['box__back']}>
-            {/* @todo: icon pack */}
             {step > 0 && (
               <img
                 className={`${css['back']} ${!hasPrevStep && css['back--disabled']}`}

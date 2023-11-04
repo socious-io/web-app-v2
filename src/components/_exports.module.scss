@@ -2,16 +2,31 @@
 @import './primitives';
 
 :export {
+  color_primary_50: $color-primary-50;
+  color_primary_100: $color-primary-100;
   color_primary_200: $color-primary-200;
   color_primary_600: $color-primary-600;
   color_primary_700: $color-primary-700;
 
   color_white: $color-white;
 
-  color_grey_700: $color-grey-700;
+  color_grey_50: $color-grey-50;
+  color_grey_100: $color-grey-100;
+  color_grey_200: $color-grey-200;
   color_grey_300: $color-grey-300;
+  color_grey_600: $color-grey-600;
+  color_grey_700: $color-grey-700;
+  color_grey_900: $color-grey-900;
+
+  color_grey_blue_50: $color-grey-blue-50;
+  color_grey_blue_200: $color-grey-blue-200;
+  color_grey_blue_700: $color-grey-blue-700;
 
   color_error_200: $color-error-200;
+  color_error_300: $color-error-300;
+  color_error_500: $color-error-500;
   color_error_600: $color-error-600;
   color_error_700: $color-error-700;
+
+  color_success_600: $color-success-600;
 }

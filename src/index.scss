@@ -40,3 +40,13 @@ body {
     border-radius: 12px;
   }
 }
+
+//shared container for all sign up pages
+.form-container {
+  width: 360px;
+  margin: auto;
+
+  @media (max-width: 640px) {
+    width: 100%;
+  }
+}
