@@ -62,7 +62,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         disabled={value.length >= (max || 0)}
         renderInput={(params) => (
           <Input
-            variant="outlined"
             placeholder={value.length ? '' : placeholder}
             multiline
             onChange={(e) => filterItems(e.target.value)}
