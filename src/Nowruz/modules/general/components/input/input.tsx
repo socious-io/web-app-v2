@@ -1,4 +1,4 @@
-import { TextField, InputAdornment } from '@mui/material';
+import { TextField, InputAdornment, Typography } from '@mui/material';
 import { AlertCircle } from 'public/icons/nowruz/alert-circle';
 import variables from 'src/components/_exports.module.scss';
 
@@ -16,23 +16,21 @@ export const Input: React.FC<InputProps> = ({
   register,
   ...props
 }) => {
-  const colorStyle = errors ? 'error' : color;
-
   return (
     <div>
       {label && (
-        <div className={css.label}>
-          {label}
-          {required && '*'}
+        <div>
+          <Typography variant="subtitle1" textAlign="left" className={css.label}>
+            {label}
+          </Typography>
         </div>
       )}
       <TextField
         {...props}
         variant="outlined"
         focused
-        className={`${css.default} ${!colorStyle && css.defaultColor} ${props.className}`}
+        className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
-        color={colorStyle}
         InputProps={{
           ...props.InputProps,
           style: {
@@ -50,6 +48,7 @@ export const Input: React.FC<InputProps> = ({
           ),
         }}
         {...(register ? register(props.name) : {})}
+        {...props}
       />
 
       {errors &&
