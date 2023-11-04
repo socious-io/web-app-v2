@@ -30,13 +30,9 @@ export const allowance = async (web3: Web3, token: string, amount: number, decim
   const chainId = await web3.eth.getChainId();
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
 
-  const estimatedGas = await erc20Contract.methods
-    .approve(selectedNetwork.escrow, allowanceAmount)
-    .estimateGas({ from: web3.eth.defaultAccount });
-
   const approved = await erc20Contract.methods
     .approve(selectedNetwork.escrow, allowanceAmount)
-    .send({ from: web3.eth.defaultAccount, gasPrice: estimatedGas });
+    .send({ from: web3.eth.defaultAccount });
 
   if (!approved) throw new Error('Allowance not approved for escorw');
 };
