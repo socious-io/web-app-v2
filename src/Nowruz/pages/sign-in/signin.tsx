@@ -13,8 +13,7 @@ export const SignIn = () => {
   const { register, errors, isValid, handleSubmit, onLogin, keepLoggedIn, setKeepLoggedIn } = useSignin();
   return (
     <div className={css.container}>
-      <div className="display:none md:flex-1 md:block" />
-      <div className={css.main}>
+      <div className={`${css.main}`}>
         <Header />
         <form className={css.form}>
           <Input
@@ -22,7 +21,7 @@ export const SignIn = () => {
             label="Email"
             name="email"
             register={register}
-            placeholder="Email"
+            placeholder="Enter your email"
             errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
           />
           <Input
@@ -31,16 +30,16 @@ export const SignIn = () => {
             label="Password"
             name="password"
             register={register}
-            placeholder="Password"
+            placeholder="Enter your password"
             errors={errors['password']?.message ? [errors['password']?.message.toString()] : undefined}
           />
-          <div className={css.container}>
+          <div className={css.forgetPassDiv}>
             <Checkbox
               label={'Keep me logged in'}
               value={keepLoggedIn}
               onChange={() => setKeepLoggedIn(!keepLoggedIn)}
             />
-            <Link href="/forget-password" className={css.forgotPass}>
+            <Link href="/forget-password/email" className={css.forgotPass}>
               Forgot password
             </Link>
           </div>
@@ -48,14 +47,14 @@ export const SignIn = () => {
             <Button disabled={!isValid} color="primary" onClick={handleSubmit(onLogin)} className={css.button}>
               Continue
             </Button>
-            <Button variant="outlined" color="secondary" className={css.button}>
+            {/* <Button variant="outlined" color="secondary" className={css.button}>
               <Google />
               <div className={css.buttonTitle}>Continue with Google</div>
             </Button>
             <Button variant="outlined" color="secondary" className={css.button}>
               <LinkedIn />
               <div className={css.buttonTitle}>Continue with LinkedIn</div>
-            </Button>
+            </Button> */}
           </div>
         </form>
         <div className={css.centeredDiv}>
@@ -67,7 +66,6 @@ export const SignIn = () => {
           </Link>
         </div>
       </div>
-      <div className="display:none md:flex-1 md:block" />
     </div>
   );
 };

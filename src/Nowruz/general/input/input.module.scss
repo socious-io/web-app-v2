@@ -1,11 +1,7 @@
 @import 'src/components/_primitives.scss';
 .label {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: 0em;
-  text-align: left;
   margin-bottom: 6px;
+  color: $color-grey-700;
 }
 
 .icon {
@@ -48,6 +44,11 @@
 .defaultColor {
   fieldset {
     border: 1px solid $color-grey-300 !important;
+  }
+}
+.errorColor {
+  fieldset {
+    border: 1px solid $color-error-300 !important;
   }
 }
 
