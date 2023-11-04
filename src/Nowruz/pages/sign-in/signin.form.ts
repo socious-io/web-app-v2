@@ -8,7 +8,7 @@ export const formModel = {
 export const schema = yup
   .object()
   .shape({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
+    email: yup.string().email('Enter a correct email').required('Enter a correct email'),
+    password: yup.string().required('Enter a correct password'),
   })
   .required();
