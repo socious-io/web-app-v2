@@ -21,7 +21,7 @@ export const theme = createTheme({
   },
   typography: {
     body1: {
-      fontSize: '30px',
+      // fontSize: '30px',
       fontWeight: 600,
       lineHeight: '38px',
       letterSpacing: '0em',

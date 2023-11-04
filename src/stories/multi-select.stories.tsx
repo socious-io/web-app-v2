@@ -1,7 +1,7 @@
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
-import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
+import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
 
 export default {
   title: 'Multi Select',

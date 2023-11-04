@@ -6,24 +6,24 @@ import { FormModel } from 'src/core/form/useForm/useForm.types';
 export function generateFormModel(profile: User): FormModel {
   return {
     first_name: {
-      initialValue: profile.first_name,
+      initialValue: profile?.first_name,
       validators: [
         required(),
         {
           name: 'notEmpty',
           message: 'Please enter a valid name',
-          validateWith: (value: string) => value.trim().length > 0,
+          validateWith: (value: string) => value?.trim().length > 0,
         },
       ],
     },
     last_name: {
-      initialValue: profile.last_name,
+      initialValue: profile?.last_name,
       validators: [
         required(),
         {
           name: 'notEmpty',
           message: 'Please enter a valid name',
-          validateWith: (value: string) => value.trim().length > 0,
+          validateWith: (value: string) => value?.trim().length > 0,
         },
       ],
     },

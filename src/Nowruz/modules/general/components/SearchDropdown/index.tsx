@@ -24,21 +24,21 @@ const MyChip = (props) => {
     />
   );
 };
-export const SearchDropdown = ({ placeholder, options, label, ...props }) => {
+export const SearchDropdown = ({ placeholder, options, className, label, ...props }) => {
   return (
-    <div>
+    <div className={css.container}>
       <label className={css.label}>{label}</label>
       <Autocomplete<Option>
         options={options}
-        className={css.autocompelete}
+        className={`${css.autocompelete} ${className}`}
         renderOption={(props, option, state) => {
           return (
             <div
               {...props}
               className={`MuiAutocomplete-option ${css.option} ${state.selected ? css.selectedOption : ''}`}
             >
-              <div className={css.label}>
-                {option?.avatar && <Avatar className={css.optionAvatar} alt="Natacha" src={option?.avatar} />}
+              <div className={css.optionLabel}>
+                {option?.avatar && <Avatar className={css.optionAvatar} src={option?.avatar} />}
                 {option.label}
                 <span className={css.subtitle}>{option.subtitle}</span>
               </div>

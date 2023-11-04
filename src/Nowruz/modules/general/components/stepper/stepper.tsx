@@ -2,14 +2,16 @@ import { Stepper as MUIStepper, Step, StepConnector, StepLabel, Typography, step
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
+import { isTouchDevice } from 'src/core/device-type-detector';
 
 import css from './stepper.module.scss';
 import { StepperProps } from './stepper.types';
 import { StepperIconWrapper } from './stepperIcon';
 
 export const Stepper: React.FC<StepperProps> = (props) => {
+  const isMobile = isTouchDevice();
   const { activeStep, orientation, steps } = props;
-  const dir = orientation ? orientation : 'horizontal';
+  const dir = orientation ? orientation : isMobile ? 'vertical' : 'horizontal';
 
   const activeColor = variables.color_grey_700;
   const disabledColor = variables.color_grey_300;
