@@ -13,7 +13,7 @@ import { useSignin } from './useSignin';
 export const SignIn = () => {
   const { register, errors, isValid, handleSubmit, onLogin, keepLoggedIn, setKeepLoggedIn } = useSignin();
   return (
-    <div className={css.container}>
+    <div className={`${css.container} container mx-auto`}>
       <div className="display:none md:flex-1 md:block" />
       <div className={css.main}>
         <IntroHeader

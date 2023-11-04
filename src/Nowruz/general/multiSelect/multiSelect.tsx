@@ -3,11 +3,11 @@ import { Close } from 'public/icons/nowruz/close';
 import { Plus } from 'public/icons/nowruz/plus';
 import React, { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
+import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 import Chip from './chip';
 import css from './multiSelect.module.scss';
 import { MultiSelectProps } from './multiSelect.types';
-import { Input } from '../input/input';
 
 const AddIcon: React.FC = () => {
   return <Plus stroke={variables.color_primary_600} width={12} height={12} />;

@@ -5,7 +5,7 @@ import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { BackLinkProps } from './back-link.types';
 export const BackLink: React.FC<BackLinkProps> = (props) => {
   const navigate = useNavigate();
-  const { onBack, title } = props;
+  const { onBack, title, block = false } = props;
   const onClick = () => {
     if (onBack) {
       onBack();
@@ -20,6 +20,7 @@ export const BackLink: React.FC<BackLinkProps> = (props) => {
       variant="text"
       startIcon={<img height={24} src="/icons/arrow-left.svg" />}
       onClick={onClick}
+      block
     >
       {title}
     </Button>

@@ -27,12 +27,17 @@ export const Input: React.FC<InputProps> = ({
         </div>
       )}
       <TextField
+        {...props}
         variant="outlined"
         focused
         className={`${css.default} ${!colorStyle && css.defaultColor}`}
         fullWidth
         color={colorStyle}
         InputProps={{
+          ...props.InputProps,
+          style: {
+            height: props.customHeight ? props.customHeight : '44px',
+          },
           endAdornment: errors && (
             <InputAdornment position="end">
               <AlertCircle width={14} height={14} stroke={`${variables.color_error_600}`} />
@@ -44,8 +49,7 @@ export const Input: React.FC<InputProps> = ({
             </InputAdornment>
           ),
         }}
-        {...register(props.name)}
-        {...props}
+        {...(register ? register(props.name) : {})}
       />
 
       {errors &&

@@ -1,0 +1,20 @@
+@import 'src/components/_primitives.scss';
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0.75px solid $color-grey-900;
+  opacity: 0.08;
+}
+
+.headerImage {
+  width: 32px;
+  height: 32px;
+  @media screen and (min-width: 600px) {
+    width: 131px;
+  }
+}
