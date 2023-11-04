@@ -20,7 +20,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    body1: {
+    h3: {
       fontSize: '30px',
       fontWeight: 600,
       lineHeight: '38px',

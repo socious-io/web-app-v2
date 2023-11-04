@@ -1,0 +1,21 @@
+@import 'src/components/_primitives.scss';
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 0.75px solid $color-grey-900;
+  opacity: 0.08;
+  background-color: $color-grey-200;
+}
+
+
+
+.uploadBox {
+}
+.uploadLogoContainer{
+
+}

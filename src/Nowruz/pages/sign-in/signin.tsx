@@ -1,11 +1,12 @@
 import { Link, Typography } from '@mui/material';
 import { Google } from 'public/icons/nowruz/google';
 import { LinkedIn } from 'public/icons/nowruz/linkedin';
-import { Button } from 'src/Nowruz/general/Button';
-import { Checkbox } from 'src/Nowruz/general/checkbox/checkbox';
-import { Input } from 'src/Nowruz/general/input/input';
+import { Logo } from 'public/icons/nowruz/logo';
+import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
+import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
-import { Header } from './logo/header';
 import css from './signin.module.scss';
 import { useSignin } from './useSignin';
 
@@ -13,16 +14,20 @@ export const SignIn = () => {
   const { register, errors, isValid, handleSubmit, onLogin, keepLoggedIn, setKeepLoggedIn } = useSignin();
   return (
     <div className={css.container}>
-      <div className="display:none md:flex-1 md:block" />
-      <div className={css.main}>
-        <Header />
+      <div className={`${css.main}`}>
+        <IntroHeader
+          title="Log in to your account"
+          description=" Welcome back! Please enter your details."
+          logo={<Logo width={48} height={48} />}
+        />
+
         <form className={css.form}>
           <Input
             autoComplete="Email"
             label="Email"
             name="email"
             register={register}
-            placeholder="Email"
+            placeholder="Enter your email"
             errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
           />
           <Input
@@ -31,10 +36,10 @@ export const SignIn = () => {
             label="Password"
             name="password"
             register={register}
-            placeholder="Password"
+            placeholder="Enter your password"
             errors={errors['password']?.message ? [errors['password']?.message.toString()] : undefined}
           />
-          <div className={css.container}>
+          <div className={css.forgetPassDiv}>
             <Checkbox
               label={'Keep me logged in'}
               value={keepLoggedIn}
@@ -48,14 +53,14 @@ export const SignIn = () => {
             <Button disabled={!isValid} color="primary" onClick={handleSubmit(onLogin)} className={css.button}>
               Continue
             </Button>
-            <Button variant="outlined" color="secondary" className={css.button}>
+            {/* <Button variant="outlined" color="secondary" className={css.button}>
               <Google />
               <div className={css.buttonTitle}>Continue with Google</div>
             </Button>
             <Button variant="outlined" color="secondary" className={css.button}>
               <LinkedIn />
               <div className={css.buttonTitle}>Continue with LinkedIn</div>
-            </Button>
+            </Button> */}
           </div>
         </form>
         <div className={css.centeredDiv}>
@@ -67,7 +72,6 @@ export const SignIn = () => {
           </Link>
         </div>
       </div>
-      <div className="display:none md:flex-1 md:block" />
     </div>
   );
 };
