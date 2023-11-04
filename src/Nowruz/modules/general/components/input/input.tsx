@@ -30,7 +30,7 @@ export const Input: React.FC<InputProps> = ({
         {...props}
         variant="outlined"
         focused
-        className={`${css.default} ${!colorStyle && css.defaultColor}`}
+        className={`${css.default} ${!colorStyle && css.defaultColor} ${props.className}`}
         fullWidth
         color={colorStyle}
         InputProps={{

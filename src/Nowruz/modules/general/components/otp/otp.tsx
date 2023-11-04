@@ -5,7 +5,6 @@ import { OTPProps } from './otp.types';
 
 const handlePaste: React.ClipboardEventHandler = (event) => {
   const data = event.clipboardData.getData('text');
-  console.log(data);
 };
 
 export const OTP: React.FC<OTPProps> = ({ value, setValue }) => {

@@ -10,7 +10,7 @@ export const VerifyForm = () => {
   return (
     <>
       <OTP value={otpValue} setValue={setOtpValue} />
-      <div className="mt-8">
+      <div className="mt-8 bg-red">
         <Button color="primary" block onClick={onSubmit}>
           Continue
         </Button>
