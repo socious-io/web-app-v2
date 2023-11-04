@@ -795,6 +795,15 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
+            path: 'password',
+            async lazy() {
+              const { ChoosePassword } = await import('src/Nowruz/pages/sign-up/ChoosePassword');
+              return {
+                Component: ChoosePassword,
+              };
+            },
+          },
+          {
             path: 'complete',
             async lazy() {
               const { SignUpUserCompleteContainer } = await import(
