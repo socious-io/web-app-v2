@@ -16,8 +16,6 @@ export const Input: React.FC<InputProps> = ({
   register,
   ...props
 }) => {
-  // const colorStyle = errors ? 'error' : color;
-
   return (
     <div>
       {label && (
