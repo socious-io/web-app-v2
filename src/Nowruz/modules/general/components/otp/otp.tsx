@@ -18,6 +18,7 @@ export const OTP: React.FC<OTPProps> = ({ value, setValue }) => {
       inputStyle={css.input}
       inputType="tel"
       renderInput={(props) => <input {...props} />}
+      containerStyle={css.container}
     />
   );
 };

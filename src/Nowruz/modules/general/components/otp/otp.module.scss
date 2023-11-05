@@ -1,6 +1,10 @@
 @import 'src/components/_primitives.scss';
 
 .input {
+  @media (max-width: 640px) {
+    width: 48px !important;
+    height: 48px;
+  }
   width: 4rem !important;
   height: 4rem;
   border: solid 1px #d0d5dd;
@@ -24,4 +28,7 @@ input:focus::placeholder {
 }
 ::placeholder {
   color: $color-grey-300;
+}
+.container {
+  justify-content: center;
 }

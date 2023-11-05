@@ -9,7 +9,7 @@ import { Stepper } from 'src/Nowruz/modules/general/components/stepper/stepper';
 export const Congrats = () => {
   const navigate = useNavigate();
   return (
-    <div className="container mx-auto flex flex-col h-screen pb-16">
+    <div className="container mx-auto flex flex-col h-screen pb-16 md:pt-24 pt-12 px-4">
       <div className={` md:pt-24 form-container`}>
         <IntroHeader
           title="Congratulations"
