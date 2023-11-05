@@ -814,15 +814,15 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
-          {
-            path: 'welcome',
-            async lazy() {
-              const { Welcome } = await import('src/Nowruz/pages/sign-up/Welcome');
-              return {
-                Component: Welcome,
-              };
-            },
-          },
+          // {
+          //   path: 'welcome',
+          //   async lazy() {
+          //     const { Welcome } = await import('src/Nowruz/pages/sign-up/Welcome');
+          //     return {
+          //       Component: Welcome,
+          //     };
+          //   },
+          // },
           {
             path: 'onboarding',
             async lazy() {
