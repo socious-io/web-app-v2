@@ -8,7 +8,7 @@ import { Stepper } from 'src/Nowruz/modules/general/components/stepper/stepper';
 
 export const Details = () => {
   return (
-    <div className="container mx-auto flex flex-col h-screen pb-16">
+    <div className="container mx-auto flex flex-col h-screen pb-16 md:pt-24 pt-12 px-4">
       <div className={`form-container md:pt-24`}>
         <IntroHeader title="Your details" description="" logo={<FeaturedIcon src="/icons/user-outlined.svg" />} />
         <div className="mt-5">

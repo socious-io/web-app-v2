@@ -10,7 +10,7 @@ export const Verify = () => {
   const email = localStorage.getItem('email') as string;
 
   return (
-    <div className="container mx-auto flex flex-col h-screen pb-16">
+    <div className="container mx-auto flex flex-col h-screen pb-16 md:pt-24 pt-12 px-4">
       <div className={`${css.verify} md:pt-24`}>
         <IntroHeader
           title="Check your email"
