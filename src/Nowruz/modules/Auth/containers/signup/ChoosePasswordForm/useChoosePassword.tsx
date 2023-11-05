@@ -37,6 +37,7 @@ export const useChoosePassword = () => {
   const onSubmit: SubmitHandler<Inputs> = async ({ password, confirm }) => {
     try {
       changePasswordDirect({ password });
+      navigate('../complete');
     } catch (e) {
       console.log(e);
     }

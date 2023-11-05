@@ -1,17 +1,40 @@
+import { Link, Typography } from '@mui/material';
 import { Logo } from 'public/icons/nowruz/logo';
 import React from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import { EmailForm } from 'src/Nowruz/modules/Auth/containers/signup/EmailForm';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
+
+import css from './email.module.scss';
 export const Email = () => {
   return (
-    <div className={`md:pt-24 form-container`}>
+    <div className={`md:pt-24 pt-12 px-4 form-container`}>
       <IntroHeader
         title="Create an account"
         description="Sign up and start making an impact"
         logo={<Logo width={48} height={48} />}
       />
       <EmailForm />
+      <div className="my-5">
+        <Typography variant="caption" className={css.signupTitle}>
+          Already have an account?
+        </Typography>
+        <Link href="/sign-in" className={`${css.link} mt-5`}>
+          Log in
+        </Link>
+      </div>
+      <div className="privacy">
+        <Typography variant="caption" className={css.signupTitle}>
+          By clicking 'Continue', you acknowledge that you have read and accepted the
+        </Typography>
+        <Link href="/terms-conditions" className={css.link}>
+          Terms of Use
+        </Link>
+        and
+        <Link href="/privacy-policy" className={css.link}>
+          Privacy Policy.
+        </Link>
+      </div>
     </div>
   );
 };

@@ -12,7 +12,7 @@ export const EmailForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           autoComplete="Email"
-          label="Email"
+          label="Email*"
           name="email"
           register={register}
           placeholder="Email"
