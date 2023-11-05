@@ -1,5 +1,14 @@
 @import 'src/components/_primitives.scss';
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  @media screen and (min-width: 600px) {
+    width: 480px;
+  }
+}
 .user {
   display: flex;
   align-items: center;

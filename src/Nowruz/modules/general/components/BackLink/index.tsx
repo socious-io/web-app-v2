@@ -18,6 +18,7 @@ export const BackLink: React.FC<BackLinkProps> = (props) => {
     <Button
       color="secondary"
       variant="text"
+      className='flex'
       startIcon={<img height={24} src="/icons/arrow-left.svg" />}
       onClick={onClick}
       block
