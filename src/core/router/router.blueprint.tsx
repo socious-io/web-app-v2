@@ -806,11 +806,9 @@ export const blueprint: RouteObject[] = [
           {
             path: 'complete',
             async lazy() {
-              const { SignUpUserCompleteContainer } = await import(
-                'src/pages/sign-up/sign-up-user-complete/sign-up-user-complete.container'
-              );
+              const { Details } = await import('src/Nowruz/pages/sign-up/Details');
               return {
-                Component: SignUpUserCompleteContainer,
+                Component: Details,
               };
             },
           },
