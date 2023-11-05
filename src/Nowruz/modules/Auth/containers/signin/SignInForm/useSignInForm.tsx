@@ -14,10 +14,17 @@ import {
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import * as yup from 'yup';
 
-import { schema } from './signin.form';
+const schema = yup
+  .object()
+  .shape({
+    email: yup.string().email('Enter a correct email').required('Enter a correct email'),
+    password: yup.string().required('Enter a correct password'),
+  })
+  .required();
 
-export const useSignin = () => {
+export const useSignInForm = () => {
   const navigate = useNavigate();
 
   const {
@@ -103,5 +110,23 @@ export const useSignin = () => {
       .catch(handleError({ title: 'Login Failed' }));
   }
 
-  return { register, handleSubmit, errors, isValid, getValues, onLogin, keepLoggedIn, setKeepLoggedIn };
+  function navigateToForgetPassword() {
+    navigate('/forget-password/email');
+  }
+
+  function navigateToSignUp() {
+    navigate('/sign-up/user/email');
+  }
+  return {
+    register,
+    handleSubmit,
+    errors,
+    isValid,
+    getValues,
+    onLogin,
+    keepLoggedIn,
+    setKeepLoggedIn,
+    navigateToForgetPassword,
+    navigateToSignUp,
+  };
 };
