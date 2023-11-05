@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 
 import { BackLinkProps } from './back-link.types';
+import css from './index.module.scss';
+
 export const BackLink: React.FC<BackLinkProps> = (props) => {
   const navigate = useNavigate();
   const { onBack, title, block = false } = props;
@@ -18,10 +20,13 @@ export const BackLink: React.FC<BackLinkProps> = (props) => {
     <Button
       color="secondary"
       variant="text"
-      startIcon={<img height={24} src="/icons/arrow-left.svg" />}
+      // startIcon={<img height={24} src="/icons/arrow-left.svg" />}
       onClick={onClick}
       block
+      fullWidth
+      className={css.textButton}
     >
+      <img height={24} src="/icons/arrow-left.svg" />
       {title}
     </Button>
   );
