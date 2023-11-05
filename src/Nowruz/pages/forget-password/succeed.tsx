@@ -6,12 +6,10 @@ import { FeaturedIcon } from 'src/Nowruz/modules/general/components/FeaturedIcon
 
 export const Succeed = () => {
   const navigate = useNavigate();
-  const navigateToJobs = () => {
-    navigate('../../jobs');
-  };
-  const onBack = () => {
+  const navigateToLogin = () => {
     navigate('/sign-in');
   };
+
   return (
     <div className={`pt-12 px-4 space-y-8 md:pt-24  form-container`}>
       <IntroHeader
@@ -19,10 +17,10 @@ export const Succeed = () => {
         description="Your password has been successfully reset. Click below to log in magically."
         logo={<FeaturedIcon src="/icons/check-circle.svg" />}
       />
-      <Button color="primary" onClick={navigateToJobs} fullWidth>
+      <Button color="primary" onClick={navigateToLogin} fullWidth>
         Continue
       </Button>
-      <BackLink title="Back to log in" onBack={onBack} variant="subtitle2" textAlign="center" />
+      <BackLink title="Back to log in" onBack={navigateToLogin} variant="subtitle2" textAlign="center" />
     </div>
   );
 };
