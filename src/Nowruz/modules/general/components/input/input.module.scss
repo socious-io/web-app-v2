@@ -34,6 +34,10 @@
     height: 44px;
     width: 100%;
     padding: 0 14px 0 14px;
+    &::placeholder {
+      color: $color-grey-500;
+      opacity: 1;
+    }
   }
   fieldset {
     border-radius: 8px;

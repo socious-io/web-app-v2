@@ -1,4 +1,3 @@
-
 import { Button as MaterialButton } from '@mui/material';
 import * as React from 'react';
 
@@ -25,4 +24,3 @@ export const Button: React.FC<ButtonProps> = ({
     </MaterialButton>
   );
 };
-
