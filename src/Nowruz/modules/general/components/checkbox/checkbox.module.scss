@@ -13,19 +13,24 @@
 .icon {
   width: 1rem;
   height: 1rem;
-  border: 1px solid $color_grey_300;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid;
+}
+.iconNotChecked {
+  border-color: $color_grey_300;
+}
+.checkboxContainer:hover .iconNotChecked {
+  background-color: $color-primary-100;
+  border-color: $color-primary-600;
 }
 
 .iconChecked {
+  border-color: $color_grey_300;
   background-color: $color-primary-50;
 }
-.iconChecked:hover {
+.checkboxContainer:hover .iconChecked {
   background-color: transparent;
-}
-.checkIcon {
-  font-size: 10px;
 }
