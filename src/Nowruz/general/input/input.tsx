@@ -1,5 +1,6 @@
-import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 import { TextField, InputAdornment } from '@mui/material';
+import { AlertCircle } from 'public/icons/nowruz/alert-circle';
+import variables from 'src/components/_exports.module.scss';
 
 import css from './input.module.scss';
 import { InputProps } from './input.types';
@@ -12,6 +13,7 @@ export const Input: React.FC<InputProps> = ({
   validMessage,
   prefix,
   color,
+  register,
   ...props
 }) => {
   const colorStyle = errors ? 'error' : color;
@@ -33,7 +35,7 @@ export const Input: React.FC<InputProps> = ({
         InputProps={{
           endAdornment: errors && (
             <InputAdornment position="end">
-              <ErrorOutlineRoundedIcon className={css.icon} />
+              <AlertCircle width={14} height={14} stroke={`${variables.color_error_600}`} />
             </InputAdornment>
           ),
           startAdornment: prefix && (
@@ -42,6 +44,7 @@ export const Input: React.FC<InputProps> = ({
             </InputAdornment>
           ),
         }}
+        {...register(props.name)}
         {...props}
       />
 

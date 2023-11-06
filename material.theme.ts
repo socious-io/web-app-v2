@@ -20,6 +20,25 @@ export const theme = createTheme({
     },
   },
   typography: {
+    body1: {
+      fontSize: '30px',
+      fontWeight: 600,
+      lineHeight: '38px',
+      letterSpacing: '0em',
+    },
+    h4: {
+      fontSize: '16px',
+      fontWeight: 600,
+      lineHeight: '24px',
+      letterSpacing: '0em',
+    },
+
+    h5: {
+      fontSize: '16px',
+      fontWeight: 400,
+      lineHeight: '24px',
+      letterSpacing: '0em',
+    },
     subtitle1: {
       fontSize: '14px',
       fontWeight: 500,

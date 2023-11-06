@@ -6,7 +6,7 @@ import CardRadioButton from 'src/Nowruz/general/cardRadioButton/cardRadioButton'
 import { CardRadioButtonItem } from 'src/Nowruz/general/cardRadioButton/cardRadioButton.types';
 
 export default {
-  title: 'Card-Radio-Button',
+  title: 'General/Card-Radio-Button',
   component: CardRadioButton,
 } as const;
 
