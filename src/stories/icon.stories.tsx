@@ -13,10 +13,6 @@ const Template: Story = (args) => <Icon {...args} />;
 export const IconComponent = Template.bind({});
 IconComponent.args = {
   name: 'variable',
-};
-
-export const IconComponentColored = Template.bind({});
-IconComponent.args = {
-  name: 'variable',
-  color: '#F10F',
+  fontSize: 48,
+  color: 'red',
 };
