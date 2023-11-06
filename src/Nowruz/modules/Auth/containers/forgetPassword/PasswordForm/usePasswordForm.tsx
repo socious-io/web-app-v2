@@ -46,6 +46,7 @@ export const usePasswordForm = () => {
   };
 
   const checkPassword = (passwordVal: string) => {
+    console.log('test log password', passwordVal);
     const regex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     setValidLength(passwordVal.length >= 8);
     setSpecialChar(regex.test(passwordVal));
