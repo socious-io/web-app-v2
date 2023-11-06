@@ -18,7 +18,7 @@ const RBSelectedIcon: React.FC = () => {
   );
 };
 
-const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
+export const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
   const { items, selectedValue, setSelectedValue } = props;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
@@ -53,5 +53,3 @@ const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
     </RadioGroup>
   );
 };
-
-export default CardRadioButton;

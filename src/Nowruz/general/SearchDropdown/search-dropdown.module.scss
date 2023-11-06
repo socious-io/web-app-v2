@@ -1,0 +1,49 @@
+@import 'src/components/_primitives.scss';
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+.option {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  padding: 16px !important;
+  background-color: $color-white;
+  .label {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    display: flex;
+    gap: 8px;
+  }
+  .subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: $color-grey-600;
+  }
+  .optionAvatar {
+    width: 24px;
+    height: 24px;
+  }
+}
+.selectedOption {
+  background-color: $color-grey-50 !important;
+}
+
+.chip {
+  &:global(.MuiChip-root) {
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    color: $color-grey-700;
+  }
+}
