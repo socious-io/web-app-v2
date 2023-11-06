@@ -33,7 +33,7 @@ export const PasswordForm = () => {
             <FormCheck passCondition={specialChar} label={'Must contain one special character'} />
           </div>
         </div>
-        <Button color="primary" block onClick={handleSubmit(onChangePassword)}>
+        <Button color="primary" block onClick={handleSubmit(onChangePassword)} disabled={!validLength}>
           Reset password
         </Button>
       </form>

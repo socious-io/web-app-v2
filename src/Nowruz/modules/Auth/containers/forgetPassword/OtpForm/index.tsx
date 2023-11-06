@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Typography, CircularProgress } from '@mui/material';
 import variables from 'src/components/_exports.module.scss';
 import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -7,14 +7,20 @@ import { OTP } from 'src/Nowruz/modules/general/components/otp/otp';
 import { useOtpForm } from './useOtpForm';
 
 export const OtpForm = () => {
-  const { otpVal, setOtpVal, sendOtp, resendOtp, onBack } = useOtpForm();
+  const { otpVal, setOtpVal, sendOtp, resendOtp, onBack, isValid, loading } = useOtpForm();
   return (
     <div className="flex flex-col gap-8 justify-center items-center ">
       <div className="mt-8">
-        <OTP value={otpVal} setValue={setOtpVal} />
+        <OTP
+          value={otpVal}
+          setValue={setOtpVal}
+          isValid={isValid}
+          errorMessage={'Incorrect verification code entered'}
+        />
       </div>
-      <Button color="primary" onClick={sendOtp} fullWidth>
-        Verify email
+
+      <Button color="primary" disabled={!otpVal.length} onClick={sendOtp} fullWidth>
+        {loading ? <CircularProgress size="32px" /> : 'Verify email'}
       </Button>
       <div>
         <Typography variant="caption" color={variables.color_grey_600}>
