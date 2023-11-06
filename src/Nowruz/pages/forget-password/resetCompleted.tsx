@@ -4,7 +4,7 @@ import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/FeaturedIcon';
 
-export const Succeed = () => {
+export const ResetCompleted = () => {
   const navigate = useNavigate();
   const navigateToLogin = () => {
     navigate('/sign-in');
