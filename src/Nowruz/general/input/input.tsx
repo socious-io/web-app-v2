@@ -44,7 +44,7 @@ export const Input: React.FC<InputProps> = ({
             </InputAdornment>
           ),
         }}
-        {...register(props.name)}
+        {...(register ? register(props.name) : {})}
         {...props}
       />
 
