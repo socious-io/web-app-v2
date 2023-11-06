@@ -1,11 +1,11 @@
 import { Typography } from '@mui/material';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { StepsContext } from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 
 import css from './welcome.module.scss';
 export const Welcome = () => {
-  const navigate = useNavigate();
+  const { updateSelectedStep } = useContext(StepsContext);
 
   return (
     <div className="flex flex-col items-center">
@@ -21,7 +21,7 @@ export const Welcome = () => {
         <Typography variant="h5" align="center" className={css.subtitle} mb={6}>
           Complete your profile to find impact jobs
         </Typography>
-        <Button color="primary" block onClick={() => navigate('/sign-up/user/onboarding')}>
+        <Button color="primary" block onClick={() => updateSelectedStep(1)}>
           Continue
         </Button>
       </div>
