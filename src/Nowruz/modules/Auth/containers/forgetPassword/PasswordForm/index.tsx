@@ -9,6 +9,8 @@ export const PasswordForm = () => {
   const { register, errors, handleSubmit, checkPassword, validLength, specialChar, onChangePassword, onBack, isValid } =
     usePasswordForm();
 
+  console.log('test log validLength', validLength);
+  console.log('test log specialChar', specialChar);
   return (
     <div className="flex flex-col">
       <form className="my-8">
