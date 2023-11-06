@@ -5,7 +5,6 @@ import { OTPProps } from './otp.types';
 
 const handlePaste: React.ClipboardEventHandler = (event) => {
   const data = event.clipboardData.getData('text');
-  console.log(data);
 };
 
 export const OTP: React.FC<OTPProps> = ({ value, setValue }) => {
@@ -19,6 +18,7 @@ export const OTP: React.FC<OTPProps> = ({ value, setValue }) => {
       inputStyle={`${css.input} !w-[48px] md:!w-[64px] h-[48px] md:h-[64px]`}
       inputType="tel"
       renderInput={(props) => <input {...props} />}
+      containerStyle={css.container}
     />
   );
 };
