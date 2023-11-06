@@ -885,12 +885,11 @@ export const blueprint: RouteObject[] = [
         },
       },
       {
-        path: 'succeed',
+        path: 'reset-completed',
         async lazy() {
-          // const { Password } = await import('src/pages/forget-password/password/password.container');
-          const { Succeed } = await import('src/Nowruz/pages/forget-password/succeed');
+          const { ResetCompleted } = await import('src/Nowruz/pages/forget-password/resetCompleted');
           return {
-            Component: Succeed,
+            Component: ResetCompleted,
           };
         },
       },
