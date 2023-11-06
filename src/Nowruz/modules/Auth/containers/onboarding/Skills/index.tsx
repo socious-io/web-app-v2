@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
+import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import { StepsContext } from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 
@@ -14,7 +15,10 @@ export const Skills = () => {
   });
   return (
     <>
-      What are you passionated about? Select up to 5 social causes
+      <IntroHeader
+        title=" What are you passionated about? Select up to 5 social causes"
+        description="Select up to 5 social causes"
+      />
       <MultiSelect
         searchTitle={'Select at least 1 cause*'}
         max={5}
@@ -24,9 +28,11 @@ export const Skills = () => {
         value={value}
         setValue={setValue}
       />
-      <Button color="primary" block onClick={() => updateSelectedStep(2)}>
-        Continue
-      </Button>
+      <div className="mt-6 mb-2">
+        <Button color="primary" block onClick={() => updateSelectedStep(4)}>
+          Continue
+        </Button>
+      </div>
     </>
   );
 };
