@@ -14,7 +14,6 @@ export const useOtpForm = () => {
 
   function sendOtp() {
     if (!email || loading) return;
-
     otpConfirm({ email, code: otpVal })
       .then((resp) => {
         setAuthParams(resp);
@@ -40,5 +39,6 @@ export const useOtpForm = () => {
   const onBack = () => {
     navigate('/sign-in');
   };
+
   return { otpVal, setOtpVal, sendOtp, resendOtp, onBack, isValid, loading };
 };

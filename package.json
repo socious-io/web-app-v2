@@ -35,7 +35,6 @@
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.2",
     "@ionic/pwa-elements": "^3.2.2",
-    "@mui/icons-material": "^5.14.14",
     "@mui/material": "^5.14.14",
     "@reduxjs/toolkit": "^1.9.1",
     "@stripe/stripe-js": "^2.1.0",

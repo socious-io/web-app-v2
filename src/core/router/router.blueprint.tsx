@@ -821,6 +821,7 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+
           {
             path: 'welcome',
             async lazy() {
@@ -830,6 +831,7 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+
           {
             path: 'onboarding',
             async lazy() {
@@ -946,7 +948,7 @@ export const blueprint: RouteObject[] = [
   {
     path: '/sign-in',
     async lazy() {
-      const { SignIn } = await import('src/Nowruz/pages/sign-in/signin');
+      const { SignIn } = await import('src/Nowruz/pages/sign-in');
       return {
         Component: SignIn,
       };
