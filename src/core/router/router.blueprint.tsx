@@ -821,6 +821,7 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+
           {
             path: 'welcome',
             async lazy() {
@@ -830,6 +831,7 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+
           {
             path: 'onboarding',
             async lazy() {
@@ -858,27 +860,37 @@ export const blueprint: RouteObject[] = [
       {
         path: 'email',
         async lazy() {
-          const { Email } = await import('src/pages/forget-password/email/email.container');
+          const { Email } = await import('src/Nowruz/pages/forget-password/email');
           return {
             Component: Email,
           };
         },
       },
       {
-        path: 'otp',
+        path: 'otp/*',
         async lazy() {
-          const { Otp } = await import('src/pages/forget-password/otp/otp.container');
+          const { Otp } = await import('src/Nowruz/pages/forget-password/otp');
           return {
             Component: Otp,
           };
         },
       },
       {
-        path: 'password',
+        path: 'password/*',
         async lazy() {
-          const { Password } = await import('src/pages/forget-password/password/password.container');
+          const { Password } = await import('src/Nowruz/pages/forget-password/password');
           return {
             Component: Password,
+          };
+        },
+      },
+      {
+        path: 'succeed',
+        async lazy() {
+          // const { Password } = await import('src/pages/forget-password/password/password.container');
+          const { Succeed } = await import('src/Nowruz/pages/forget-password/succeed');
+          return {
+            Component: Succeed,
           };
         },
       },
@@ -937,7 +949,7 @@ export const blueprint: RouteObject[] = [
   {
     path: '/sign-in',
     async lazy() {
-      const { SignIn } = await import('src/Nowruz/pages/sign-in/signin');
+      const { SignIn } = await import('src/Nowruz/pages/sign-in');
       return {
         Component: SignIn,
       };
