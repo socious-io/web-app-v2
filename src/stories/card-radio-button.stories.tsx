@@ -2,7 +2,7 @@ import { StoryFn } from '@storybook/react';
 import { Building05 } from 'public/icons/nowruz/building-05';
 import { User01 } from 'public/icons/nowruz/user-01';
 import { useState } from 'react';
-import CardRadioButton from 'src/Nowruz/general/cardRadioButton/cardRadioButton';
+import { CardRadioButton } from 'src/Nowruz/general/cardRadioButton/cardRadioButton';
 import { CardRadioButtonItem } from 'src/Nowruz/general/cardRadioButton/cardRadioButton.types';
 
 export default {
