@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export interface IntroHeaderProps {
-  logo: ReactNode;
+  logo?: ReactNode;
   title: string;
   description: string;
 }
