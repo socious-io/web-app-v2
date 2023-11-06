@@ -806,11 +806,9 @@ export const blueprint: RouteObject[] = [
           {
             path: 'complete',
             async lazy() {
-              const { SignUpUserCompleteContainer } = await import(
-                'src/pages/sign-up/sign-up-user-complete/sign-up-user-complete.container'
-              );
+              const { Details } = await import('src/Nowruz/pages/sign-up/Details');
               return {
-                Component: SignUpUserCompleteContainer,
+                Component: Details,
               };
             },
           },
@@ -823,15 +821,17 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
-          // {
-          //   path: 'welcome',
-          //   async lazy() {
-          //     const { Welcome } = await import('src/Nowruz/pages/sign-up/Welcome');
-          //     return {
-          //       Component: Welcome,
-          //     };
-          //   },
-          // },
+
+          {
+            path: 'welcome',
+            async lazy() {
+              const { Welcome } = await import('src/Nowruz/modules/Auth/containers/onboarding/Welcome');
+              return {
+                Component: Welcome,
+              };
+            },
+          },
+
           {
             path: 'onboarding',
             async lazy() {

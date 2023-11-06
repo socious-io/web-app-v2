@@ -1,0 +1,10 @@
+@import 'src/components/_primitives.scss';
+
+.link {
+  color: $color-primary-700;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 4px;
+  margin-left: 4px;
+}
