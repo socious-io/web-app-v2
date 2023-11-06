@@ -14,7 +14,7 @@ export const schema = yup.object().shape({
   password: yup
     .string()
     .min(8, '')
-    .matches(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/),
+    .matches(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/, ' '),
   confirmPassword: yup.string().test('passwords-match', 'Passwords entered are not the same', function (value) {
     return this.parent.password === value;
   }),

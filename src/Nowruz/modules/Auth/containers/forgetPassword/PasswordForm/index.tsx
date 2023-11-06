@@ -6,7 +6,7 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { usePasswordForm } from './usePasswordForm';
 
 export const PasswordForm = () => {
-  const { register, errors, handleSubmit, checkPassword, validLength, specialChar, onChangePassword, onBack } =
+  const { register, errors, handleSubmit, checkPassword, validLength, specialChar, onChangePassword, onBack, isValid } =
     usePasswordForm();
 
   return (
@@ -33,7 +33,7 @@ export const PasswordForm = () => {
             <FormCheck passCondition={specialChar} label={'Must contain one special character'} />
           </div>
         </div>
-        <Button color="primary" block onClick={handleSubmit(onChangePassword)} disabled={!validLength}>
+        <Button color="primary" block onClick={handleSubmit(onChangePassword)} disabled={!isValid}>
           Reset password
         </Button>
       </form>
