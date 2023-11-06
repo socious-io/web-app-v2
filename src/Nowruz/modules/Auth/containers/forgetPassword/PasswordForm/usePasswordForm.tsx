@@ -15,7 +15,7 @@ export const schema = yup.object().shape({
     .string()
     .min(8, '')
     .matches(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/),
-  confirmPassword: yup.string().test('passwords-match', 'Passwords must match', function (value) {
+  confirmPassword: yup.string().test('passwords-match', 'Passwords entered are not the same', function (value) {
     return this.parent.password === value;
   }),
 });
@@ -37,7 +37,7 @@ export const usePasswordForm = () => {
 
   const onChangePassword = () => {
     changePasswordDirect({ password: getValues().password as string })
-      .then(() => navigate(`../succeed`))
+      .then(() => navigate(`../reset-completed`))
       .catch(handleError());
   };
 
