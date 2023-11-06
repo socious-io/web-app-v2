@@ -9,7 +9,7 @@ export const EmailForm = () => {
 
   return (
     <>
-      <form className="mt-[32px] mb-[32px]">
+      <form className="my-8">
         <Input
           autoComplete="Email"
           label="Email"
@@ -18,7 +18,7 @@ export const EmailForm = () => {
           placeholder="Enter your email"
           errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
         />
-        <div className="mt-[24px]">
+        <div className="mt-6">
           <Button color="primary" block onClick={handleSubmit(navigateToOtp)}>
             Reset password
           </Button>
