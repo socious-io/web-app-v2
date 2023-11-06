@@ -5,7 +5,7 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { useEmailForm } from './useEmailForm';
 
 export const EmailForm = () => {
-  const { register, errors, navigateToOtp, handleSubmit, onBack } = useEmailForm();
+  const { register, errors, navigateToOtp, handleSubmit, onBack, getValues } = useEmailForm();
 
   return (
     <>
@@ -19,7 +19,7 @@ export const EmailForm = () => {
           errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
         />
         <div className="mt-6">
-          <Button color="primary" block onClick={handleSubmit(navigateToOtp)}>
+          <Button color="primary" disabled={!getValues().email} block onClick={handleSubmit(navigateToOtp)}>
             Reset password
           </Button>
         </div>

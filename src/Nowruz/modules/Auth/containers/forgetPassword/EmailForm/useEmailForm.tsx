@@ -40,5 +40,5 @@ export const useEmailForm = () => {
     navigate('/sign-in');
   };
 
-  return { register, handleSubmit, errors, isValid, getValues, navigateToOtp, onBack };
+  return { register, handleSubmit, errors, isValid, navigateToOtp, onBack, getValues };
 };
