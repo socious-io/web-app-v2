@@ -8,13 +8,13 @@ export const VerifyForm = () => {
   const { onSubmit, otpValue, setOtpValue } = useVerifyForm();
 
   return (
-    <>
+    <div className="flex flex-col justify-center">
       <OTP value={otpValue} setValue={setOtpValue} />
-      <div className="mt-8 bg-red">
-        <Button color="primary" block onClick={onSubmit}>
+      <div className="mt-8">
+        <Button disabled={!(otpValue.length === 6)} color="primary" block onClick={onSubmit}>
           Continue
         </Button>
       </div>
-    </>
+    </div>
   );
 };
