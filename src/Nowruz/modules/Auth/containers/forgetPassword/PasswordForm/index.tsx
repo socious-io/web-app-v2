@@ -11,7 +11,7 @@ export const PasswordForm = () => {
 
   return (
     <div className="flex flex-col">
-      <form className="mt-8 mb-8">
+      <form className="my-8">
         <div className="flex flex-col gap-[20px]">
           <Input
             name="password"
