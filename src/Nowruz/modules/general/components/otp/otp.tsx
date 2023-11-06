@@ -15,7 +15,7 @@ export const OTP: React.FC<OTPProps> = ({ value, setValue }) => {
       onPaste={handlePaste}
       numInputs={6}
       placeholder="______"
-      inputStyle={css.input}
+      inputStyle={`${css.input} !w-[48px] md:!w-[64px] h-[48px] md:h-[64px]`}
       inputType="tel"
       renderInput={(props) => <input {...props} />}
       containerStyle={css.container}

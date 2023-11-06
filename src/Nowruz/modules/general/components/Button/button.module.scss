@@ -4,6 +4,14 @@
   &:global(.MuiButton-root) {
     text-transform: none;
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    height: 44px;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  &:global(.MuiButton-text) {
+    background-color: transparent;
+    box-shadow: none;
   }
 }
 .block {
