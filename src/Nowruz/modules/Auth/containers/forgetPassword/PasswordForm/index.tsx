@@ -6,11 +6,9 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { usePasswordForm } from './usePasswordForm';
 
 export const PasswordForm = () => {
-  const { register, errors, handleSubmit, checkPassword, validLength, specialChar, onChangePassword, onBack, isValid } =
+  const { register, errors, handleSubmit, validLength, specialChar, onChangePassword, onBack, isValid } =
     usePasswordForm();
 
-  console.log('test log validLength', validLength);
-  console.log('test log specialChar', specialChar);
   return (
     <div className="flex flex-col">
       <form className="my-8">
@@ -21,7 +19,6 @@ export const PasswordForm = () => {
             register={register}
             placeholder="Choose a new password"
             errors={errors['password']?.message ? [errors['password']?.message.toString()] : undefined}
-            onChange={(e) => checkPassword(e.target.value)}
           />
           <Input
             name="confirmPassword"
