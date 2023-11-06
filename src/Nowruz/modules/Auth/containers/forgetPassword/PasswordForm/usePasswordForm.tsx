@@ -5,25 +5,32 @@ import { useNavigate } from 'react-router-dom';
 import { changePasswordDirect, handleError } from 'src/core/api';
 import * as yup from 'yup';
 
-export const formModel = {
-  password: '',
-  confirmPassword: '',
-};
-
-export const schema = yup.object().shape({
-  password: yup
-    .string()
-    .min(8, '')
-    .matches(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/, ' '),
-  confirmPassword: yup.string().test('passwords-match', 'Passwords entered are not the same', function (value) {
-    return this.parent.password === value;
-  }),
-});
-
 export const usePasswordForm = () => {
   const navigate = useNavigate();
   const [validLength, setValidLength] = useState(false);
   const [specialChar, setSpecialChar] = useState(false);
+
+  const schema = yup.object().shape({
+    password: yup.string().test('password-validation', '', function (value) {
+      const regex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+      const errors: yup.ValidationError[] = [];
+      if (!value || value.length < 8) {
+        setValidLength(false);
+        errors.push(this.createError({ path: 'password', message: '' }));
+      } else setValidLength(true);
+
+      if (!value || !regex.test(value)) {
+        setSpecialChar(false);
+        errors.push(this.createError({ path: 'password', message: '' }));
+      } else setSpecialChar(true);
+
+      if (errors.length) return false;
+      return true;
+    }),
+    confirmPassword: yup.string().test('passwords-match', 'Passwords entered are not the same', function (value) {
+      return this.parent.password === value;
+    }),
+  });
 
   const {
     register,
@@ -45,12 +52,5 @@ export const usePasswordForm = () => {
     navigate('/sign-in');
   };
 
-  const checkPassword = (passwordVal: string) => {
-    console.log('test log password', passwordVal);
-    const regex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    setValidLength(passwordVal.length >= 8);
-    setSpecialChar(regex.test(passwordVal));
-  };
-
-  return { register, handleSubmit, errors, isValid, onChangePassword, onBack, checkPassword, validLength, specialChar };
+  return { register, handleSubmit, errors, isValid, onChangePassword, onBack, validLength, specialChar };
 };
