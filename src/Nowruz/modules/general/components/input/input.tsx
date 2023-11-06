@@ -22,8 +22,6 @@ export const Input: React.FC<InputProps> = ({
   const [inputType, setInputType] = useState(props.type || 'text');
 
   useEffect(() => {
-    console.log('test log showpassword ', !showPassword, errors);
-    console.log('test log condition', inputType === 'password' && !showPassword);
     if (errors) setEndIcon(<AlertCircle width={14} height={14} stroke={`${variables.color_error_600}`} />);
     else if (props.type === 'password' && showPassword) {
       setInputType('text');
@@ -35,7 +33,7 @@ export const Input: React.FC<InputProps> = ({
       setEndIcon(
         <img src="/icons/nowruz/eye.svg" onClick={() => setShowPassword(true)} alt="" className={css.iconImg} />,
       );
-    }
+    } else setEndIcon('');
   }, [errors, showPassword]);
 
   return (
