@@ -103,7 +103,7 @@ export const useSignInForm = () => {
   }
 
   async function onLogin() {
-    const formValues = getValues() as LoginReq;
+    const formValues = { email: getValues().email.trim(), password: getValues().password };
     login(formValues)
       .then(onLoginSucceed)
       .then(registerPushNotifications)
