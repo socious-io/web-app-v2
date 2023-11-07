@@ -19,7 +19,7 @@ import * as yup from 'yup';
 const schema = yup
   .object()
   .shape({
-    email: yup.string().email('Enter a correct email').required('Enter a correct email'),
+    email: yup.string().trim().email('Enter a correct email').required('Enter a correct email'),
     password: yup.string().required('Enter a correct password'),
   })
   .required();
