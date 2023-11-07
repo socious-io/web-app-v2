@@ -11,7 +11,7 @@ export const formModel = {
 export const schema = yup
   .object()
   .shape({
-    email: yup.string().email('Enter a correct email').required('Enter a correct email'),
+    email: yup.string().trim().email('Enter a correct email').required('Enter a correct email'),
   })
   .required();
 
@@ -29,7 +29,7 @@ export const useEmailForm = () => {
   });
 
   const navigateToOtp = () => {
-    const email = getValues().email;
+    const email = getValues().email.trim();
 
     forgetPassword({ email })
       .then(() => navigate(`../otp?email=${email}`))
@@ -41,5 +41,4 @@ export const useEmailForm = () => {
   };
 
   return { register, handleSubmit, errors, isValid, navigateToOtp, onBack, getValues };
-
 };
