@@ -6,12 +6,12 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { usePasswordForm } from './usePasswordForm';
 
 export const PasswordForm = () => {
-  const { register, errors, handleSubmit, checkPassword, validLength, specialChar, onChangePassword, onBack } =
+  const { register, errors, handleSubmit, validLength, specialChar, onChangePassword, onBack, isValid } =
     usePasswordForm();
 
   return (
     <div className="flex flex-col">
-      <form className="mt-8 mb-8">
+      <form className="my-8">
         <div className="flex flex-col gap-[20px]">
           <Input
             name="password"
@@ -19,7 +19,6 @@ export const PasswordForm = () => {
             register={register}
             placeholder="Choose a new password"
             errors={errors['password']?.message ? [errors['password']?.message.toString()] : undefined}
-            onChange={(e) => checkPassword(e.target.value)}
           />
           <Input
             name="confirmPassword"
@@ -33,7 +32,7 @@ export const PasswordForm = () => {
             <FormCheck passCondition={specialChar} label={'Must contain one special character'} />
           </div>
         </div>
-        <Button color="primary" block onClick={handleSubmit(onChangePassword)}>
+        <Button color="primary" block onClick={handleSubmit(onChangePassword)} disabled={!isValid}>
           Reset password
         </Button>
       </form>

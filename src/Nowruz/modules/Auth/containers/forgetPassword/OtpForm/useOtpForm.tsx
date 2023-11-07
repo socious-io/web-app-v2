@@ -9,28 +9,29 @@ export const useOtpForm = () => {
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email') || '';
   const [otpVal, setOtpVal] = useState('');
+  const [isValid, setIsValid] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   function sendOtp() {
-    if (!email) return;
-
+    if (!email || loading) return;
     otpConfirm({ email, code: otpVal })
       .then((resp) => {
         setAuthParams(resp);
         navigate(`../password?email=${email}`);
       })
       .catch((err) => {
-        handleError()(err);
-        setOtpVal('');
+        setIsValid(false);
       });
   }
 
   function resendOtp() {
     if (!email) return;
-
+    setLoading(true);
     forgetPassword({ email })
-      .then(() => dialog.alert({ title: 'success', message: 'OTP sent success' }))
+      .then(() => setLoading(false))
       .catch((err) => {
         handleError()(err);
+        setLoading(false);
         setOtpVal('');
       });
   }
@@ -38,5 +39,6 @@ export const useOtpForm = () => {
   const onBack = () => {
     navigate('/sign-in');
   };
-  return { otpVal, setOtpVal, sendOtp, resendOtp, onBack };
+
+  return { otpVal, setOtpVal, sendOtp, resendOtp, onBack, isValid, loading };
 };
