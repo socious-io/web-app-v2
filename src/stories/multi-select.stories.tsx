@@ -11,7 +11,7 @@ export default {
 
 const keyItems = Object.keys(SOCIAL_CAUSES);
 const items = keyItems.map((i) => {
-  return { id: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
+  return { value: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
 });
 const Template: StoryFn = (args) => {
   const [value, setValue] = useState<MultiSelectItem[]>([]);
@@ -23,8 +23,9 @@ const Template: StoryFn = (args) => {
         maxLabel={'Max. 5 causes'}
         items={items.slice(0, 30)}
         placeholder={'search a cause'}
-        value={value}
-        setValue={setValue}
+        componentValue={value}
+        setComponentValue={setValue}
+        customHeight="200px"
         {...args}
       />
     </div>
