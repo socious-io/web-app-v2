@@ -2,18 +2,19 @@ import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
+import { MultiSelectItem } from 'src/Nowruz/general/multiSelect/multiSelect.types';
 
 export default {
   title: 'Multi Select',
   component: MultiSelect,
 } as const;
 
-const keytems = Object.keys(SOCIAL_CAUSES);
-const items = keytems.map((i) => {
-  return SOCIAL_CAUSES[i].label;
+const keyItems = Object.keys(SOCIAL_CAUSES);
+const items = keyItems.map((i) => {
+  return { id: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
 });
 const Template: StoryFn = (args) => {
-  const [value, setValue] = useState<string[]>([]);
+  const [value, setValue] = useState<MultiSelectItem[]>([]);
   return (
     <div style={{ width: '480px' }}>
       <MultiSelect
