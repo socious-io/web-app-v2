@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export type MultiSelectItem = {
-  id: string;
+  value: string;
   label: string;
 };
 export interface CustomChipProps {
@@ -18,6 +18,7 @@ export interface MultiSelectProps {
   max?: number;
   maxLabel?: string;
   placeholder?: string;
-  value: MultiSelectItem[];
-  setValue: (newVal: MultiSelectItem[]) => void;
+  componentValue: MultiSelectItem[];
+  setComponentValue: (newVal: MultiSelectItem[]) => void;
+  customHeight?: string;
 }

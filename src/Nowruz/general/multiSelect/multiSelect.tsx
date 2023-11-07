@@ -18,7 +18,7 @@ const RemoveIcon: React.FC = () => {
 };
 
 const MultiSelect: React.FC<MultiSelectProps> = (props) => {
-  const { searchTitle, items, maxLabel, max, placeholder, value, setValue } = props;
+  const { searchTitle, items, maxLabel, max, placeholder, componentValue, setComponentValue, customHeight } = props;
   const [chipItems, setChipItems] = useState(items);
 
   function filterItems(val: string) {
@@ -27,27 +27,27 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   function handleChange(val: MultiSelectItem[]) {
     const lastItem = val[val.length - 1];
     const newVal = items?.find((i) => i.label.toLowerCase() === lastItem.label.toLowerCase());
-    if (newVal) setValue([...value, newVal]);
-    else setChipItems(items?.filter((i) => !value.includes(i)));
+    if (newVal) setComponentValue([...componentValue, newVal]);
+    else setChipItems(items?.filter((i) => !componentValue.includes(i)));
   }
 
-  function add(id: string, label: string) {
-    if (value.length < (max || 0)) setValue([...value, { id, label }]);
+  function add(value: string, label: string) {
+    if (componentValue.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
   }
 
   function remove(val: string) {
-    setValue(value.filter((item) => item.label !== val));
+    setComponentValue(componentValue.filter((item) => item.label !== val));
   }
 
   useEffect(() => {
-    setChipItems(items?.filter((i) => !value.includes(i)));
-  }, [value]);
+    setChipItems(items?.filter((i) => !componentValue.includes(i)));
+  }, [componentValue]);
 
   return (
     <div className={css.container}>
       <Typography variant="subtitle1">{searchTitle}</Typography>
       <Autocomplete
-        value={value}
+        value={componentValue}
         onChange={(event, value) => handleChange(value)}
         clearIcon={false}
         options={[]}
@@ -56,13 +56,13 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         multiple
         renderTags={(value, props) =>
           value.map((option, index) => (
-            <Chip id={option.id} label={option.label} icon={<RemoveIcon />} {...props({ index })} onClick={remove} />
+            <Chip id={option.value} label={option.label} icon={<RemoveIcon />} {...props({ index })} onClick={remove} />
           ))
         }
-        disabled={value.length >= (max || 0)}
+        disabled={componentValue.length >= (max || 0)}
         renderInput={(params) => (
           <Input
-            placeholder={value.length ? '' : placeholder}
+            placeholder={componentValue.length ? '' : placeholder}
             multiline
             onChange={(e) => filterItems(e.target.value)}
             {...params}
@@ -79,9 +79,9 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
           Popular
         </Typography>
       </div>
-      <div className={css.chipContainer}>
+      <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
         {chipItems?.map((i) => (
-          <Chip key={i.id} id={i.id} label={i.label} icon={<AddIcon />} onClick={() => add(i.id, i.label)} />
+          <Chip key={i.value} id={i.value} label={i.label} icon={<AddIcon />} onClick={() => add(i.value, i.label)} />
         ))}
       </div>
     </div>
