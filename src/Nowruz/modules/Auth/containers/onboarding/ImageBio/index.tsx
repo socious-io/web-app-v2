@@ -4,7 +4,6 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
-import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/FeaturedIcon';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
@@ -36,7 +35,7 @@ export const ImageBio = () => {
       </div>
       <Input
         label="Headline"
-        customHeight="128px"
+        // customHeight="128px"
         variant="outlined"
         placeholder="eg."
         multiline

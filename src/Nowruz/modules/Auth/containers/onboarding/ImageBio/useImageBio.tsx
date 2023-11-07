@@ -5,7 +5,6 @@ import { uploadMedia } from 'src/core/api';
 import { updateProfile as updateProfileApi } from 'src/core/api';
 import { removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
-import { uploadImage } from 'src/pages/profile-user-edit/profile-user-edit.services';
 
 export const useImageBio = () => {
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ export const useImageBio = () => {
         ['', null],
       ),
     ).then(() => {
-      navigate('/sign-up/user/allow-notification');
+      navigate('/jobs');
     });
   };
 

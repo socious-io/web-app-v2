@@ -28,19 +28,19 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     const lastItem = val[val.length - 1];
     const newVal = items?.find((i) => i.label.toLowerCase() === lastItem.label.toLowerCase());
     if (newVal) setComponentValue([...componentValue, newVal]);
-    else setChipItems(items?.filter((i) => !componentValue.includes(i)));
+    else setChipItems(items?.filter((i) => !componentValue?.includes(i)));
   }
 
   function add(value: string, label: string) {
-    if (componentValue.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
+    if (componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
   }
 
   function remove(val: string) {
-    setComponentValue(componentValue.filter((item) => item.label !== val));
+    setComponentValue(componentValue?.filter((item) => item.label !== val));
   }
 
   useEffect(() => {
-    setChipItems(items?.filter((i) => !componentValue.includes(i)));
+    setChipItems(items?.filter((i) => !componentValue?.includes(i)));
   }, [componentValue]);
 
   return (
@@ -59,10 +59,10 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
             <Chip id={option.value} label={option.label} icon={<RemoveIcon />} {...props({ index })} onClick={remove} />
           ))
         }
-        disabled={componentValue.length >= (max || 0)}
+        disabled={componentValue?.length >= (max || 0)}
         renderInput={(params) => (
           <Input
-            placeholder={componentValue.length ? '' : placeholder}
+            placeholder={componentValue?.length ? '' : placeholder}
             multiline
             onChange={(e) => filterItems(e.target.value)}
             {...params}
