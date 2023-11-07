@@ -46,7 +46,6 @@ export const Input: React.FC<InputProps> = ({
         </div>
       )}
       <TextField
-        {...props}
         variant="outlined"
         type={inputType}
         focused
@@ -64,6 +63,7 @@ export const Input: React.FC<InputProps> = ({
             </InputAdornment>
           ),
         }}
+        {...props}
         {...(register ? register(props.name) : {})}
       />
 

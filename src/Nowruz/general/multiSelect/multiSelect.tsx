@@ -7,7 +7,7 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 import Chip from './chip';
 import css from './multiSelect.module.scss';
-import { MultiSelectProps } from './multiSelect.types';
+import { MultiSelectItem, MultiSelectProps } from './multiSelect.types';
 
 const AddIcon: React.FC = () => {
   return <Plus stroke={variables.color_primary_600} width={12} height={12} />;
@@ -22,21 +22,21 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   const [chipItems, setChipItems] = useState(items);
 
   function filterItems(val: string) {
-    setChipItems(items?.filter((item) => item.toLowerCase().includes(val.toLowerCase())));
+    setChipItems(items?.filter((item) => item.label.toLowerCase().includes(val.toLowerCase())));
   }
-  function handleChange(val: string[]) {
+  function handleChange(val: MultiSelectItem[]) {
     const lastItem = val[val.length - 1];
-    const newVal = items?.find((i) => i.toLowerCase() === lastItem.toLowerCase());
+    const newVal = items?.find((i) => i.label.toLowerCase() === lastItem.label.toLowerCase());
     if (newVal) setValue([...value, newVal]);
     else setChipItems(items?.filter((i) => !value.includes(i)));
   }
 
-  function add(val: string) {
-    if (value.length < (max || 0)) setValue([...value, val]);
+  function add(id: string, label: string) {
+    if (value.length < (max || 0)) setValue([...value, { id, label }]);
   }
 
   function remove(val: string) {
-    setValue(value.filter((item) => item !== val));
+    setValue(value.filter((item) => item.label !== val));
   }
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         multiple
         renderTags={(value, props) =>
           value.map((option, index) => (
-            <Chip label={option} icon={<RemoveIcon />} {...props({ index })} onClick={remove} />
+            <Chip id={option.id} label={option.label} icon={<RemoveIcon />} {...props({ index })} onClick={remove} />
           ))
         }
         disabled={value.length >= (max || 0)}
@@ -80,7 +80,9 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         </Typography>
       </div>
       <div className={css.chipContainer}>
-        {chipItems?.map((i) => <Chip key={i} label={i} icon={<AddIcon />} onClick={add} />)}
+        {chipItems?.map((i) => (
+          <Chip key={i.id} id={i.id} label={i.label} icon={<AddIcon />} onClick={() => add(i.id, i.label)} />
+        ))}
       </div>
     </div>
   );
