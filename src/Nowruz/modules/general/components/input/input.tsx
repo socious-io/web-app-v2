@@ -52,7 +52,6 @@ export const Input: React.FC<InputProps> = ({
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
         InputProps={{
-          ...props.InputProps,
           style: {
             height: props.customHeight ? props.customHeight : '44px',
           },

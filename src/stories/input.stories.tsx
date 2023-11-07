@@ -11,7 +11,19 @@ export const Normal = {
     placeholder: 'Placeholder',
   },
 };
-
+export const MultiLine = {
+  args: {
+    id: 'input-5',
+    name: 'inputName',
+    type: 'text',
+    label: 'Input Label',
+    required: true,
+    placeholder: 'Placeholder',
+    multiline: true,
+    maxRows: 3,
+    customHeight: '150PX',
+  },
+};
 export const Error = {
   args: {
     id: 'input-2',
