@@ -14,12 +14,13 @@ const Skills: React.FC = () => {
   const { updateSelectedStep } = useContext(StepsContext);
   const { state, updateUser } = useUser();
   const [list, setList] = useState<{ value: string; label: string }[]>([]);
-
   useEffect(() => {
     skillsToCategoryAdaptor().then((data) => setList(data));
   }, []);
 
   const updateSocialCauses = (skills: Array<string>) => {
+    console.log(skills);
+
     updateUser({ ...state, skills });
   };
   function onSearch(value: string) {
