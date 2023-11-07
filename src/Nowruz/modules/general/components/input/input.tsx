@@ -47,7 +47,6 @@ export const Input: React.FC<InputProps> = ({
       )}
       <TextField
         variant="outlined"
-        type={inputType}
         focused
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
@@ -65,6 +64,7 @@ export const Input: React.FC<InputProps> = ({
         }}
         {...(register ? register(props.name) : {})}
         {...props}
+        type={inputType}
       />
 
       {errors &&
