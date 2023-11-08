@@ -7,13 +7,18 @@ export const useCauses = () => {
   const [value, setValue] = useState([]);
   const { state, updateUser } = useUser();
   const { updateSelectedStep } = useContext(StepsContext);
+  const items = keytems.map((i) => {
+    return { value: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
+  });
   useEffect(() => {
-    console.log('value', value);
-    updateUser({ ...state, causes: value.map((e) => e.value) });
+    if(state.social_causes)
+    setValue(getOptionsFromValues(state.social_causes));
+  }, []);
+  useEffect(() => {
+    updateUser({ ...state, social_causes: value.map((e) => e.value) });
   }, [value]);
 
-  const items = keytems.map((i) => {
-    return { id: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
-  });
+  const getOptionsFromValues = (values) => values.map((value) => SOCIAL_CAUSES[value]);
+
   return { items, value, setValue, updateSelectedStep };
 };

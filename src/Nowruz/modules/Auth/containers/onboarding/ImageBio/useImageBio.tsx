@@ -1,11 +1,12 @@
 import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
+import React, { useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { useNavigate } from 'react-router-dom';
 import { uploadMedia } from 'src/core/api';
 import { updateProfile as updateProfileApi } from 'src/core/api';
 import { removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
-
 export const useImageBio = () => {
   const navigate = useNavigate();
   const { state, updateUser } = useUser();
@@ -40,13 +41,13 @@ export const useImageBio = () => {
 
   const updateBio = (bio: string) => {
     if (bio.length <= 160) updateUser({ ...state, bio });
-    console.log(state);
   };
 
   async function uploadImage(url: string) {
     const blob = await fetch(url).then((resp) => resp.blob());
     return uploadMedia(blob as File);
   }
-
-  return { onUploadImage, updateBio };
+  const isValidForm = state.bio !== '';
+  const bio = state.bio;
+  return { onUploadImage, updateBio, image, isValidForm, bio, updateProfile };
 };

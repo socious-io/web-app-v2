@@ -44,7 +44,6 @@ export const UserProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const userProfile = await profile();
-        console.log(state);
         dispatch({ type: 'UPDATE_USER', payload: userProfile });
       } catch (error) {
         console.error(error);
@@ -66,7 +65,6 @@ export const useUser = () => {
   const { state, dispatch } = context;
 
   const updateUser = (updates) => {
-    console.log('updated', updates);
     dispatch({ type: 'UPDATE_USER', payload: updates });
   };
   return { updateUser, state };
