@@ -10,16 +10,15 @@ export const useSkills = () => {
   const { updateSelectedStep } = useContext(StepsContext);
   useEffect(() => {
     skillsToCategoryAdaptor().then((data) => {
-      // const itemsRes = data.map((item) => ({ label: item.label, id: item.value }));
-      console.log(data);
+      setValue(getOptionsFromValues(state.skills, data));
       setItems(data);
     });
   }, []);
 
   useEffect(() => {
-    console.log('value', value);
-   // updateUser({ ...state, skills: value.map((e) => e.value) });
+    updateUser({ ...state, skills: value.map((e) => e.value) });
   }, [value]);
+  const getOptionsFromValues = (values, options) => options.filter((option) => values.includes(option.value));
 
   return { items, value, setValue, updateSelectedStep };
 };

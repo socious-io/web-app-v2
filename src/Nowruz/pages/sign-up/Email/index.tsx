@@ -15,7 +15,7 @@ export const Email = () => {
         logo={<Logo width={48} height={48} />}
       />
       <EmailForm />
-      <div className="my-5">
+      <div className="my-5 text-center">
         <Typography variant="caption" className={css.signupTitle}>
           Already have an account?
         </Typography>
@@ -23,7 +23,7 @@ export const Email = () => {
           Log in
         </Link>
       </div>
-      <div className="privacy">
+      <div className="text-center">
         <Typography variant="caption" className={css.signupTitle}>
           By clicking 'Continue', you acknowledge that you have read and accepted the
         </Typography>

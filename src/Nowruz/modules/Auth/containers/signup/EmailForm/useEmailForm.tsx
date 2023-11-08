@@ -19,7 +19,6 @@ export const useEmailForm = () => {
     resolver: yupResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = async ({ email }) => {
-    console.log(email);
     const response = await preRegister({ email: email });
     if (response.email === 'EXISTS') {
       handleError({ title: 'error', message: 'Email already in use. Please sign in or choose another email.' })();

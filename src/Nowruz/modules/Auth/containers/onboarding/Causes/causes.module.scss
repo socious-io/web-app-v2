@@ -1,14 +1,8 @@
 @import 'src/components/_primitives.scss';
-.container {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-}
+
 .header {
   margin-bottom: 44px;
+
   .title {
     font-size: 18px;
     font-weight: 600;

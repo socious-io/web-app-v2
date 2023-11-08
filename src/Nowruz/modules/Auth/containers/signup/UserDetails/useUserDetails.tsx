@@ -63,7 +63,6 @@ export const useUserDetails = () => {
       console.log(error);
     }
   };
-  console.log('default', firstName !== '');
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
   return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid };
