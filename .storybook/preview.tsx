@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "../material.theme";
+import '../src/styles/icons.scss';
 
 export const withMuiTheme = (Story) => (
   <ThemeProvider theme={theme}>
