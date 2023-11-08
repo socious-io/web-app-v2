@@ -50,9 +50,22 @@
     border: 1px solid $color-grey-300 !important;
   }
 }
+
+.defaultColor:focus-within {
+  fieldset {
+    box-shadow: 0px 0px 0px 4px $color-primary-100;
+  }
+}
+
 .errorColor {
   fieldset {
     border: 1px solid $color-error-300 !important;
+  }
+}
+
+.errorColor:focus-within {
+  fieldset {
+    box-shadow: 0px 0px 0px 4px $color-error-100;
   }
 }
 

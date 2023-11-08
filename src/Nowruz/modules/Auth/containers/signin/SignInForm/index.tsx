@@ -20,6 +20,7 @@ export const SignInForm = () => {
     handleSubmit,
     onLogin,
     navigateToSignUp,
+    getValues,
   } = useSignInForm();
   return (
     <>
