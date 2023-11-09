@@ -8,6 +8,7 @@ import { InputProps } from './input.types';
 
 export const Input: React.FC<InputProps> = ({
   label,
+  name,
   required,
   errors,
   isValid,
@@ -20,21 +21,34 @@ export const Input: React.FC<InputProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const [endIcon, setEndIcon] = useState<React.ReactNode>('');
   const [inputType, setInputType] = useState(props.type || 'text');
-
+  const [showEyeIcon, setshowEyeIcon] = useState(false);
   useEffect(() => {
     if (errors) setEndIcon(<AlertCircle width={14} height={14} stroke={`${variables.color_error_600}`} />);
-    else if (props.type === 'password' && showPassword) {
+    else if (props.type === 'password' && showPassword && showEyeIcon) {
       setInputType('text');
       setEndIcon(
         <img src="/icons/nowruz/eye-off.svg" onClick={() => setShowPassword(false)} alt="" className={css.iconImg} />,
+        // <Icon name="eye-off" color="red" />,
       );
-    } else if (props.type === 'password' && !showPassword) {
+    } else if (props.type === 'password' && !showPassword && showEyeIcon) {
       setInputType('password');
       setEndIcon(
         <img src="/icons/nowruz/eye.svg" onClick={() => setShowPassword(true)} alt="" className={css.iconImg} />,
+        // <Icon name="eye" color="red" />,
       );
     } else setEndIcon('');
-  }, [errors, showPassword]);
+  }, [errors, showPassword, showEyeIcon]);
+
+  const setValue = (v: string) => {
+    let val = v;
+    if (props.type !== 'password') {
+      val = val.trim();
+    }
+    if (props.type === 'password')
+      if (val.length) setshowEyeIcon(true);
+      else setshowEyeIcon(false);
+    return val;
+  };
 
   return (
     <div>
@@ -45,10 +59,9 @@ export const Input: React.FC<InputProps> = ({
           </Typography>
         </div>
       )}
+
       <TextField
         variant="outlined"
-        type={inputType}
-        focused
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
         InputProps={{
@@ -62,10 +75,14 @@ export const Input: React.FC<InputProps> = ({
             </InputAdornment>
           ),
         }}
+        {...(register
+          ? register(name, {
+              setValueAs: setValue,
+            })
+          : {})}
         {...props}
-        {...(register ? register(props.name) : {})}
+        type={inputType}
       />
-
       {errors &&
         errors.map((e, index) => (
           <p key={index} className={`${css.errorMsg} ${css.msg}`}>

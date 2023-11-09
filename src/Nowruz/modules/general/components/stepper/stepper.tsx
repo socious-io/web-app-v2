@@ -79,9 +79,17 @@ export const Stepper: React.FC<StepperProps> = (props) => {
             )}
           >
             {
-              <div className={dir === 'horizontal' ? css.titleDivHorizontal : css.titleDivVertical}>
-                <Typography variant="subtitle2">{item.title}</Typography>
-                <Typography variant="caption">{item.desc}</Typography>
+              <div
+                className={`${dir === 'horizontal' ? css.titleDivHorizontal : css.titleDivVertical} ${
+                  index > activeStep && 'opacity-60'
+                }`}
+              >
+                <Typography variant="subtitle2" color={variables.color_grey_700}>
+                  {item.title}
+                </Typography>
+                <Typography variant="caption" color={variables.color_grey_600}>
+                  {item.desc}
+                </Typography>
               </div>
             }
           </StepLabel>
