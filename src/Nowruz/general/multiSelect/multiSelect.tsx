@@ -40,7 +40,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   }
 
   useEffect(() => {
-    setChipItems(items?.filter((i) => !componentValue?.includes(i)));
+    setChipItems(items?.filter((i) => !componentValue.map((cv) => cv.value).includes(i.value)));
   }, [componentValue]);
 
   return (
