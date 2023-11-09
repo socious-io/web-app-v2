@@ -25,12 +25,14 @@ export const theme = createTheme({
       fontWeight: 600,
       lineHeight: '38px',
       letterSpacing: '0em',
+      fontFamily: 'Inter',
     },
     h4: {
       fontSize: '16px',
       fontWeight: 600,
       lineHeight: '24px',
       letterSpacing: '0em',
+      fontFamily: 'Inter',
     },
 
     h5: {
@@ -38,24 +40,28 @@ export const theme = createTheme({
       fontWeight: 400,
       lineHeight: '24px',
       letterSpacing: '0em',
+      fontFamily: 'Inter',
     },
     subtitle1: {
       fontSize: '14px',
       fontWeight: 500,
       lineHeight: '20px',
       letterSpacing: '0em',
+      fontFamily: 'Inter',
     },
     subtitle2: {
       fontSize: '14px',
       fontWeight: 600,
       lineHeight: '20px',
       letterSpacing: '0em',
+      fontFamily: 'Inter',
     },
     caption: {
       fontSize: '14px',
       fontWeight: 400,
       lineHeight: '20px',
       letterSpacing: '0em',
+      fontFamily: 'Inter',
     },
   },
 });

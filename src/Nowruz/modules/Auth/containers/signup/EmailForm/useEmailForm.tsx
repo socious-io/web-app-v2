@@ -7,7 +7,7 @@ type Inputs = {
   email: string;
 };
 const schema = yup.object().shape({
-  email: yup.string().email().required('Email is required'),
+  email: yup.string().email("Enter a correct email").required('Email is required'),
 });
 export const useEmailForm = () => {
   const navigate = useNavigate();
