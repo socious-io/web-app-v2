@@ -4,4 +4,5 @@ export interface IntroHeaderProps {
   logo?: ReactNode;
   title: string;
   description: string;
+  subtitle?: string;
 }

@@ -28,10 +28,10 @@ export const UserDetails = () => {
         </div>
         <div className="mt-4">
           <Input
-            label="username*"
+            label="Username*"
             name="username"
             register={register}
-            placeholder="username"
+            placeholder="Username"
             validMessage="Username available"
             prefix="socious.io/"
             isValid={isUsernameValid}
