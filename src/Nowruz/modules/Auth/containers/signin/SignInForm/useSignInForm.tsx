@@ -19,7 +19,7 @@ import * as yup from 'yup';
 const schema = yup
   .object()
   .shape({
-    email: yup.string().email('Enter a correct email').required('Enter a correct email'),
+    email: yup.string().trim().email('Enter a correct email').required('Enter a correct email'),
     password: yup.string().required('Enter a correct password'),
   })
   .required();
@@ -103,7 +103,7 @@ export const useSignInForm = () => {
   }
 
   async function onLogin() {
-    const formValues = getValues() as LoginReq;
+    const formValues = { email: getValues().email.trim(), password: getValues().password };
     login(formValues)
       .then(onLoginSucceed)
       .then(registerPushNotifications)
