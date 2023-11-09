@@ -47,7 +47,8 @@ export const useImageBio = () => {
     const blob = await fetch(url).then((resp) => resp.blob());
     return uploadMedia(blob as File);
   }
-  const isValidForm = state.bio !== '';
+  const isValidForm = state.bio === '' || state.bio === null;
   const bio = state.bio;
-  return { onUploadImage, updateBio, image, isValidForm, bio, updateProfile };
+  const bioCounter = state.bio ? state.bio.length : 0;
+  return { onUploadImage, updateBio, image, isValidForm, bio, updateProfile, bioCounter };
 };

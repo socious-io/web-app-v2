@@ -45,7 +45,9 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
 
   return (
     <div className={css.container}>
-      <Typography variant="subtitle1">{searchTitle}</Typography>
+      <Typography variant="subtitle1" color={variables.color_grey_700}>
+        {searchTitle}
+      </Typography>
       <Autocomplete
         value={componentValue}
         onChange={(event, value) => handleChange(value)}

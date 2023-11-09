@@ -18,7 +18,7 @@ export const Causes = () => {
           max={5}
           maxLabel={'Max. 5 causes'}
           items={items.slice(0, 30)}
-          placeholder={'search a cause'}
+          placeholder={'Search a cause'}
           componentValue={value}
           setComponentValue={setValue}
           customHeight="200px"
