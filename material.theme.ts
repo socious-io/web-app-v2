@@ -20,6 +20,18 @@ export const theme = createTheme({
     },
   },
   typography: {
+    fontFamily: [
+      'Inter',
+      // 'BlinkMacSystemFont',
+      // '"Segoe UI"',
+      // 'Roboto',
+      // '"Helvetica Neue"',
+      // 'Arial',
+      // 'sans-serif',
+      // '"Apple Color Emoji"',
+      // '"Segoe UI Emoji"',
+      // '"Segoe UI Symbol"',
+    ].join(','),
     h3: {
       fontSize: '30px',
       fontWeight: 600,
