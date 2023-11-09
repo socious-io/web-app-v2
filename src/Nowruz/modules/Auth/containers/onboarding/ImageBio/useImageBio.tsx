@@ -1,17 +1,21 @@
 import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
-import React, { useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { uploadMedia } from 'src/core/api';
+import { CurrentIdentity, uploadMedia } from 'src/core/api';
 import { updateProfile as updateProfileApi } from 'src/core/api';
 import { removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
+import { RootState } from 'src/store';
+
 export const useImageBio = () => {
   const navigate = useNavigate();
   const { state, updateUser } = useUser();
   const [image, setImage] = useState({ imageUrl: state.avatar?.url, id: '' });
-
+  const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
+    const current = state.identity.entities.find((identity) => identity.current);
+    return current as CurrentIdentity;
+  });
   const onUploadImage = async () => {
     const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
     const resp = await uploadImage(webPath);
@@ -35,7 +39,7 @@ export const useImageBio = () => {
         ['', null],
       ),
     ).then(() => {
-      navigate('/jobs');
+      navigate(`/profile/users/${currentIdentity.meta?.username}/view`);
     });
   };
 
@@ -47,6 +51,7 @@ export const useImageBio = () => {
     const blob = await fetch(url).then((resp) => resp.blob());
     return uploadMedia(blob as File);
   }
+
   const isValidForm = state.bio === '' || state.bio === null;
   const bio = state.bio;
   const bioCounter = state.bio ? state.bio.length : 0;
