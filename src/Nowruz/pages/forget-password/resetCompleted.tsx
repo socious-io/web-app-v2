@@ -20,7 +20,7 @@ export const ResetCompleted = () => {
       <Button color="primary" onClick={navigateToLogin} fullWidth>
         Continue
       </Button>
-      <BackLink title="Back to log in" onBack={navigateToLogin} variant="subtitle2" textAlign="center" />
+      {/* <BackLink title="Back to log in" onBack={navigateToLogin} variant="subtitle2" textAlign="center" /> */}
     </div>
   );
 };

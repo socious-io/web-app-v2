@@ -2,8 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { preRegister, updateProfile } from 'src/core/api';
+import { identities, preRegister, updateProfile, UserMeta } from 'src/core/api';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
 
 type Inputs = {
@@ -19,6 +21,7 @@ const schema = yup.object().shape({
 export const useUserDetails = () => {
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -39,7 +42,7 @@ export const useUserDetails = () => {
     } else clearErrors('username');
   }, [username]);
 
-  const checkUsernameAvailability = async (username) => {
+  const checkUsernameAvailability = async (username: string) => {
     const checkUsername = await preRegister({ username });
     if (checkUsername.username === null) {
       console.log(checkUsername);
@@ -58,6 +61,9 @@ export const useUserDetails = () => {
   const onSubmit: SubmitHandler<Inputs> = async ({ firstName, lastName, username }) => {
     try {
       updateProfile({ username, first_name: firstName, last_name: lastName });
+      const currentIdentities = await identities();
+      
+      dispatch(setIdentityList(currentIdentities));
       navigate('../congrats');
     } catch (error) {
       console.log(error);
