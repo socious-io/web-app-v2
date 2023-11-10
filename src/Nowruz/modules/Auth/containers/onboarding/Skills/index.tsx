@@ -15,18 +15,18 @@ export const Skills = () => {
       </div>
       {!!items?.length && (
         <MultiSelect
-          searchTitle={'Select at least 1 cause*'}
-          max={5}
-          maxLabel={'Max. 5 causes'}
+          searchTitle={'Select at least 1 skill*'}
+          max={20}
+          maxLabel={'Max. 20 skill'}
           items={items}
-          placeholder={'search a cause'}
+          placeholder={'search a skill'}
           componentValue={value}
           setComponentValue={setValue}
           customHeight="200px"
         />
       )}
       <div className="mt-6 mb-2">
-        <Button color="primary" block onClick={() => updateSelectedStep(3)}>
+        <Button disabled={!!!value.length} color="primary" block onClick={() => updateSelectedStep(3)}>
           Next: Location
         </Button>
       </div>
