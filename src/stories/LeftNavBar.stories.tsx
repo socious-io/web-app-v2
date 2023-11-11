@@ -1,6 +1,6 @@
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
-import { LeftNavBar } from 'src/Nowruz/modules/layout/components/leftNavBar';
+import { LeftNavBar } from 'src/Nowruz/modules/layout/components/leftNavBar/linksContainer/linksContainer';
 
 export default {
   title: 'Layout/LeftNavBar',

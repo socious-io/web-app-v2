@@ -1,4 +1,3 @@
-import React from 'react';
 import { LeftNavBar } from '.';
 
 const TestLayout = () => {
