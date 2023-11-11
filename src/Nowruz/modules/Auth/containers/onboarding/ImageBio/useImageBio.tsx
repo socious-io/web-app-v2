@@ -1,17 +1,21 @@
 import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { uploadMedia } from 'src/core/api';
+import { CurrentIdentity, uploadMedia } from 'src/core/api';
 import { updateProfile as updateProfileApi } from 'src/core/api';
 import { removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
-import { uploadImage } from 'src/pages/profile-user-edit/profile-user-edit.services';
+import { RootState } from 'src/store';
 
 export const useImageBio = () => {
   const navigate = useNavigate();
   const { state, updateUser } = useUser();
   const [image, setImage] = useState({ imageUrl: state.avatar?.url, id: '' });
-
+  const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
+    const current = state.identity.entities.find((identity) => identity.current);
+    return current as CurrentIdentity;
+  });
   const onUploadImage = async () => {
     const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
     const resp = await uploadImage(webPath);
@@ -35,13 +39,12 @@ export const useImageBio = () => {
         ['', null],
       ),
     ).then(() => {
-      navigate('/sign-up/user/allow-notification');
+      navigate(`/profile/users/${currentIdentity.meta?.username}/view`);
     });
   };
 
   const updateBio = (bio: string) => {
     if (bio.length <= 160) updateUser({ ...state, bio });
-    console.log(state);
   };
 
   async function uploadImage(url: string) {
@@ -49,5 +52,8 @@ export const useImageBio = () => {
     return uploadMedia(blob as File);
   }
 
-  return { onUploadImage, updateBio };
+  const isValidForm = state.bio === '' || state.bio === null;
+  const bio = state.bio;
+  const bioCounter = state.bio ? state.bio.length : 0;
+  return { onUploadImage, updateBio, image, isValidForm, bio, updateProfile, bioCounter };
 };

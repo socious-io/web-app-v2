@@ -15,7 +15,7 @@ export const EmailForm = () => {
           label="Email*"
           name="email"
           register={register}
-          placeholder="Email"
+          placeholder="Enter your email"
           errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
         />
         <div className="mt-8">

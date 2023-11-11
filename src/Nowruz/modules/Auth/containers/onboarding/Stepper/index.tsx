@@ -34,7 +34,11 @@ const Steper: React.FC<Props> = ({ components }) => {
       {components.map(({ Component }, index) => {
         if (index === step) return <React.Fragment key={index}>{Component}</React.Fragment>;
       })}
-      {step !== 8 && <BackLink title="Back" onBack={handleBack} block />}
+      {step !== 0 && (
+        <div className="mt-3">
+          <BackLink title="Back" onBack={handleBack} block />
+        </div>
+      )}
     </StepsContext.Provider>
   );
 };

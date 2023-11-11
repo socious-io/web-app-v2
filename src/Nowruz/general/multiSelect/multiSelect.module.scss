@@ -26,6 +26,8 @@
 .chipContainer {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
 }
 .captionDiv {
   display: flex;

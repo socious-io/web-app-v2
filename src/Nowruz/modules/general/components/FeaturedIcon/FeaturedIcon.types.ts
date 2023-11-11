@@ -1,6 +1,7 @@
 export interface FeaturedIconProps {
-  src: string;
+  src?: string;
   width?: string;
   height?: string;
   className?: string;
+  iconName?: string;
 }
