@@ -7,7 +7,7 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 import Chip from './chip';
 import css from './multiSelect.module.scss';
-import { MultiSelectProps } from './multiSelect.types';
+import { MultiSelectItem, MultiSelectProps } from './multiSelect.types';
 
 const AddIcon: React.FC = () => {
   return <Plus stroke={variables.color_primary_600} width={12} height={12} />;
@@ -18,36 +18,38 @@ const RemoveIcon: React.FC = () => {
 };
 
 const MultiSelect: React.FC<MultiSelectProps> = (props) => {
-  const { searchTitle, items, maxLabel, max, placeholder, value, setValue } = props;
+  const { searchTitle, items, maxLabel, max, placeholder, componentValue, setComponentValue, customHeight } = props;
   const [chipItems, setChipItems] = useState(items);
 
   function filterItems(val: string) {
-    setChipItems(items?.filter((item) => item.toLowerCase().includes(val.toLowerCase())));
+    setChipItems(items?.filter((item) => item.label.toLowerCase().includes(val.toLowerCase())));
   }
-  function handleChange(val: string[]) {
+  function handleChange(val: MultiSelectItem[]) {
     const lastItem = val[val.length - 1];
-    const newVal = items?.find((i) => i.toLowerCase() === lastItem.toLowerCase());
-    if (newVal) setValue([...value, newVal]);
-    else setChipItems(items?.filter((i) => !value.includes(i)));
+    const newVal = items?.find((i) => i.label.toLowerCase() === lastItem.label.toLowerCase());
+    if (newVal) setComponentValue([...componentValue, newVal]);
+    else setChipItems(items?.filter((i) => !componentValue?.includes(i)));
   }
 
-  function add(val: string) {
-    if (value.length < (max || 0)) setValue([...value, val]);
+  function add(value: string, label: string) {
+    if (componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
   }
 
   function remove(val: string) {
-    setValue(value.filter((item) => item !== val));
+    setComponentValue(componentValue?.filter((item) => item.label !== val));
   }
 
   useEffect(() => {
-    setChipItems(items?.filter((i) => !value.includes(i)));
-  }, [value]);
+    setChipItems(items?.filter((i) => !componentValue.map((cv) => cv.value).includes(i.value)));
+  }, [componentValue]);
 
   return (
     <div className={css.container}>
-      <Typography variant="subtitle1">{searchTitle}</Typography>
+      <Typography variant="subtitle1" color={variables.color_grey_700}>
+        {searchTitle}
+      </Typography>
       <Autocomplete
-        value={value}
+        value={componentValue}
         onChange={(event, value) => handleChange(value)}
         clearIcon={false}
         options={[]}
@@ -56,13 +58,13 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         multiple
         renderTags={(value, props) =>
           value.map((option, index) => (
-            <Chip label={option} icon={<RemoveIcon />} {...props({ index })} onClick={remove} />
+            <Chip id={option.value} label={option.label} icon={<RemoveIcon />} {...props({ index })} onClick={remove} />
           ))
         }
-        disabled={value.length >= (max || 0)}
+        disabled={componentValue?.length >= (max || 0)}
         renderInput={(params) => (
           <Input
-            placeholder={value.length ? '' : placeholder}
+            placeholder={componentValue?.length ? '' : placeholder}
             multiline
             onChange={(e) => filterItems(e.target.value)}
             {...params}
@@ -79,8 +81,10 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
           Popular
         </Typography>
       </div>
-      <div className={css.chipContainer}>
-        {chipItems?.map((i) => <Chip key={i} label={i} icon={<AddIcon />} onClick={add} />)}
+      <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
+        {chipItems?.map((i) => (
+          <Chip key={i.value} id={i.value} label={i.label} icon={<AddIcon />} onClick={() => add(i.value, i.label)} />
+        ))}
       </div>
     </div>
   );

@@ -27,13 +27,18 @@ export const Input: React.FC<InputProps> = ({
     else if (props.type === 'password' && showPassword && showEyeIcon) {
       setInputType('text');
       setEndIcon(
-        <img src="/icons/nowruz/eye-off.svg" onClick={() => setShowPassword(false)} alt="" className={css.iconImg} />,
+        <img
+          src="/icons/nowruz/eye-off.svg"
+          onClick={() => setShowPassword(false)}
+          alt=""
+          className="cursor-pointer"
+        />,
         // <Icon name="eye-off" color="red" />,
       );
     } else if (props.type === 'password' && !showPassword && showEyeIcon) {
       setInputType('password');
       setEndIcon(
-        <img src="/icons/nowruz/eye.svg" onClick={() => setShowPassword(true)} alt="" className={css.iconImg} />,
+        <img src="/icons/nowruz/eye.svg" onClick={() => setShowPassword(true)} alt="" className="cursor-pointer" />,
         // <Icon name="eye" color="red" />,
       );
     } else setEndIcon('');
@@ -65,7 +70,6 @@ export const Input: React.FC<InputProps> = ({
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
         InputProps={{
-          ...props.InputProps,
           style: {
             height: props.customHeight ? props.customHeight : '44px',
           },

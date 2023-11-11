@@ -4,7 +4,10 @@
   // height: 44px;
   // background-color: aqua;
 }
-.autocompelete {
+.textfield {
+  .MuiAutocomplete-input {
+    height: 44px;
+  }
 }
 .label {
   font-size: 14px;

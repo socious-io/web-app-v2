@@ -24,11 +24,39 @@
   padding: 24px 16px;
   margin-top: 20px;
 }
-.uploadText {
-  font-family: Inter;
+
+.header {
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: $color-grey-600;
+  }
+}
+
+.counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
   color: $color-grey-600;
+  margin-top: 8px;
+}
+.uploadButton {
+  border-color: $color-grey-300;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

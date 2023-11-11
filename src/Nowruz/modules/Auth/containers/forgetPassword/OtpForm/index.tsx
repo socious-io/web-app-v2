@@ -20,7 +20,7 @@ export const OtpForm = () => {
       </div>
 
       <Button color="primary" disabled={!otpVal.length} onClick={sendOtp} fullWidth>
-        {loading ? <CircularProgress size="32px" /> : 'Verify email'}
+        {loading ? <CircularProgress size="32px" sx={{ color: variables.color_white }} /> : 'Verify email'}
       </Button>
       <div>
         <Typography variant="caption" color={variables.color_grey_600}>

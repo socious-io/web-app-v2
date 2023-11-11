@@ -17,6 +17,8 @@ export const useVerifyForm = () => {
       console.log(result);
     } catch (error) {}
   };
-
-  return { onSubmit, otpValue, setOtpValue, email };
+  function navigateToSignUp() {
+    navigate('/sign-up/user/email');
+  }
+  return { onSubmit, otpValue, setOtpValue, email, navigateToSignUp };
 };
