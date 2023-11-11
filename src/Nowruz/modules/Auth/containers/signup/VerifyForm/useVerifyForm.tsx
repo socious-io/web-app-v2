@@ -7,6 +7,8 @@ export const useVerifyForm = () => {
   const navigate = useNavigate();
   const email = localStorage.getItem('email') as string;
   const [otpValue, setOtpValue] = useState('');
+  const [isValid, setIsValid] = useState(true);
+
   const onSubmit = async () => {
     try {
       const result = await otpConfirm({ email, code: otpValue });
@@ -14,11 +16,12 @@ export const useVerifyForm = () => {
         await setAuthParams(result);
         navigate('../password');
       }
-      console.log(result);
-    } catch (error) {}
+    } catch (error) {
+      setIsValid(false);
+    }
   };
   function navigateToSignUp() {
     navigate('/sign-up/user/email');
   }
-  return { onSubmit, otpValue, setOtpValue, email, navigateToSignUp };
+  return { onSubmit, otpValue, setOtpValue, email, navigateToSignUp, isValid };
 };
