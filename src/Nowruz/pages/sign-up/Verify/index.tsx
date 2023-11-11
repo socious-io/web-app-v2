@@ -25,7 +25,7 @@ export const Verify = () => {
         </div>
       </div>
       <div className="flex-1"></div>
-      <Stepper activeStep={1} steps={steps} />
+      <Stepper activeStep={0} steps={steps} />
     </div>
   );
 };
