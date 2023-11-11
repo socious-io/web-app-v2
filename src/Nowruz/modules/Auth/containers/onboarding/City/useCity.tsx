@@ -28,7 +28,7 @@ export const useCity = () => {
     updateUser({ ...state, city: option.label, country: option.countryCode });
   };
 
-  const isFormValid = state?.city !== '';
+  const isFormValid = state?.city;
   const city = state.city;
   return { searchCities, options, onSelectCity, updateSelectedStep, isFormValid, city };
 };
