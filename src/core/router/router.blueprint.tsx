@@ -1,7 +1,7 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
-import TestLayout from 'src/Nowruz/modules/layout/components/leftNavBar/testLayout';
+import TestLayout from 'src/Nowruz/modules/layout/components/navBar/testLayout';
 import Layout from 'src/components/templates/refactored/layout/layout';
 import {
   jobs,

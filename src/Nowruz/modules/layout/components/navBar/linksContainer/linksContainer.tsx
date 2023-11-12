@@ -12,7 +12,12 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
   return (
     <div className="flex flex-col justify-start items-center w-full h-fit pt-8 gap-6">
       <div className="w-full h-fit py-0 pl-6 pr-5">
-        <img src={open ? '/icons/nowruz/logo-white.svg' : '/icons/nowruz/logoMark-white.svg'} alt="" />
+        <img
+          className="hidden md:block"
+          src={open ? '/icons/nowruz/logo-white.svg' : '/icons/nowruz/logoMark-white.svg'}
+          alt=""
+        />
+        <img className="block md:hidden" src="/icons/nowruz/logo-primary.svg" alt="" />
       </div>
       <div className="w-full flex flex-col gap-2 px-4 ">
         <LinkItem
