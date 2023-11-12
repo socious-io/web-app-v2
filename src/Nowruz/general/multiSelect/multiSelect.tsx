@@ -22,7 +22,11 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   const [chipItems, setChipItems] = useState(items);
 
   function filterItems(val: string) {
-    setChipItems(items?.filter((item) => item.label.toLowerCase().includes(val.toLowerCase())));
+    setChipItems(
+      items
+        ?.filter((item) => !componentValue.map((cv) => cv.value).includes(item.value))
+        .filter((item) => item.label.toLowerCase().includes(val.toLowerCase())),
+    );
   }
   function handleChange(val: MultiSelectItem[]) {
     const lastItem = val[val.length - 1];
@@ -32,7 +36,8 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   }
 
   function add(value: string, label: string) {
-    if (componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
+    const existed = componentValue.find((item) => item.value === value || item.label === label);
+    if (!existed && componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
   }
 
   function remove(val: string) {
