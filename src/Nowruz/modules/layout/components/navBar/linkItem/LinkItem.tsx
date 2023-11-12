@@ -8,13 +8,13 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
 
   return (
     <>
-      <div className="w-full h-12 bg-Brand-700 hover:bg-Brand-600 px-3 py-2 rounded-sm flex gap-2">
-        {iconName && <Icon name={iconName} color="white" fontSize={24} />}
+      <div className="w-full h-10 md:h-12 bg-Base-White hover:bg-Gray-light-mode-50 md:bg-Brand-700 md:hover:bg-Brand-600 px-3 py-2 rounded-sm flex gap-2">
+        {iconName && <Icon name={iconName} fontSize={24} className="text-Gray-light-mode-500 md:text-Base-White" />}
         {menuOpen && (
           <>
             <Typography
               variant="h4"
-              className="text-Brand-100 cursor-pointer hover:text-Base-White"
+              className="text-Gray-light-mode-700 hover:text-Base-Black md:text-Brand-100  md:hover:text-Base-White cursor-pointer"
               onClick={navigateFunc}
             >
               {label}
@@ -26,8 +26,12 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
       {menuOpen &&
         subMenuOpen &&
         children?.map((item) => (
-          <div className="w-full h-10 pr-3 pl-11 py-2 rounded-sm bg-Brand-700 hover:bg-Brand-600 ">
-            <Typography variant="h4" className="text-Brand-100 cursor-pointer" onClick={item.navigateFunc}>
+          <div className="w-full h-10 pr-3 pl-11 py-2 rounded-sm bg-Base-White hover:bg-Gray-light-mode-50 md:bg-Brand-700 md:hover:bg-Brand-600">
+            <Typography
+              variant="h4"
+              className="text-Gray-light-mode-700 hover:text-Base-Black md:text-Brand-100  md:hover:text-Base-White cursor-pointer"
+              onClick={item.navigateFunc}
+            >
               {item.label}
             </Typography>
           </div>

@@ -1,11 +1,11 @@
 import { Divider, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 
 import css from './avatarDropDown.module.scss';
 import { AvatarDropDownProps } from './avatarDropDown.types';
 import { AvatarLabelGroup } from '../avatarLabelGroup';
-import variables from 'src/components/_exports.module.scss';
 
 export const AvatarDropDown: React.FC<AvatarDropDownProps> = (props) => {
   const { accounts, buttonHeight } = props;
@@ -31,7 +31,7 @@ export const AvatarDropDown: React.FC<AvatarDropDownProps> = (props) => {
         )}
       </button>
       {open && (
-        <>
+        <div className={`w-full absolute ${buttonHeight ? `top-[${buttonHeight}]` : 'top-16'} bg-Base-White`}>
           <div className="w-full">
             <Divider />
           </div>
@@ -72,13 +72,13 @@ export const AvatarDropDown: React.FC<AvatarDropDownProps> = (props) => {
           <div className="w-full">
             <Divider />
           </div>
-          <div className="w-full flex flex-col py-1">
+          <div className="w-full flex py-[9px] px-[10px] gap-3">
             <Icon name="log-out-01" fontSize={16} className="text-Gray (light mode)-700" />
             <Typography variant="subtitle1" className="text-Gray (light mode)-700">
               Log out
             </Typography>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
