@@ -32,6 +32,8 @@ export const useSignInForm = () => {
     handleSubmit,
     formState: { errors, isValid },
     getValues,
+    setError,
+    clearErrors,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -107,7 +109,14 @@ export const useSignInForm = () => {
     login(formValues)
       .then(onLoginSucceed)
       .then(registerPushNotifications)
-      .catch(handleError({ title: 'Login Failed' }));
+      .catch((e) => {
+        if (e?.response?.data.error === 'Not matched') {
+          setError('password', {
+            type: 'manual',
+            message: 'Username or password not matched',
+          });
+        }
+      });
   }
 
   function navigateToForgetPassword() {
