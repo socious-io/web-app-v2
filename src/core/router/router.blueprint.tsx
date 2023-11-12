@@ -821,26 +821,45 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
-
           {
             path: 'welcome',
             async lazy() {
-              const { Welcome } = await import('src/Nowruz/modules/Auth/containers/onboarding/Welcome');
+              const { Welcome } = await import('src/pages/sign-up/welcome/welcome');
               return {
                 Component: Welcome,
               };
             },
           },
-
           {
             path: 'onboarding',
             async lazy() {
-              const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
+              const { SignUpUserOnboarding } = await import(
+                'src/pages/sign-up/sign-up-user-onboarding/sign-up-user-complete.container'
+              );
               return {
-                Component: Onboarding,
+                Component: SignUpUserOnboarding,
               };
             },
           },
+          // {
+          //   path: 'welcome',
+          //   async lazy() {
+          //     const { Welcome } = await import('src/Nowruz/modules/Auth/containers/onboarding/Welcome');
+          //     return {
+          //       Component: Welcome,
+          //     };
+          //   },
+          // },
+
+          // {
+          //   path: 'onboarding',
+          //   async lazy() {
+          //     const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
+          //     return {
+          //       Component: Onboarding,
+          //     };
+          //   },
+          // },
           {
             path: 'allow-notification',
             async lazy() {

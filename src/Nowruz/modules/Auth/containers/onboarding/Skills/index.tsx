@@ -19,7 +19,7 @@ export const Skills = () => {
           max={20}
           maxLabel={'Max. 20 skills'}
           items={items}
-          placeholder={'Search a skills'}
+          placeholder={'Search a skill'}
           componentValue={value}
           setComponentValue={setValue}
           customHeight="200px"
