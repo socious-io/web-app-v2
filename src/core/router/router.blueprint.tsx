@@ -1,8 +1,10 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
-import TestLayout from 'src/Nowruz/modules/layout/components/navBar/testLayout';
 import Layout from 'src/components/templates/refactored/layout/layout';
+import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
+import TestLayout from 'src/Nowruz/modules/layout/components/navBar/testLayout';
+
 import {
   jobs,
   createChat,
@@ -49,7 +51,40 @@ import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
-  { path: '/test', element: <TestLayout /> },
+  {
+    path: 'nowruz',
+    element: <NowruzLayout />,
+    children: [
+      {
+        path: 'profile/users',
+        children: [
+          {
+            path: ':id',
+            children: [
+              {
+                path: 'view',
+                loader: async ({ params }) => {
+                  const user = await otherProfileByUsername(params.id);
+                  const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
+                  return {
+                    user,
+                    badges: userBadges,
+                    missions,
+                  };
+                },
+                async lazy() {
+                  const { UserProifle } = await import('src/Nowruz/pages/userProfile');
+                  return {
+                    Component: UserProifle,
+                  };
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   {
     children: [
       {
