@@ -7,7 +7,7 @@ import { LinksContainerProps } from '../linksContainer/linksContainer.types';
 export const Footer: React.FC<LinksContainerProps> = ({ open }) => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col justify-start items-center w-full h-fit px-4 pb-6 gap-2 mb-0 mt-auto">
+    <div className="flex flex-col  items-center w-full h-fit px-4 pb-6 gap-2 mb-0 mt-auto">
       <LinkItem
         label="Help"
         navigateFunc={() => {

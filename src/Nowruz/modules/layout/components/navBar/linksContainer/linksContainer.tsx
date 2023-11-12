@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { TestSwitchDropDown } from 'src/Nowruz/modules/general/components/avatarDropDown/test';
 import Badge from 'src/Nowruz/modules/general/components/Badge';
 
 import { LinksContainerProps } from './linksContainer.types';
@@ -18,6 +19,9 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
           alt=""
         />
         <img className="block md:hidden" src="/icons/nowruz/logo-primary.svg" alt="" />
+      </div>
+      <div className="md:hidden w-full h-fit px-4">
+        <TestSwitchDropDown />
       </div>
       <div className="w-full flex flex-col gap-2 px-4 ">
         <LinkItem
