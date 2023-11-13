@@ -958,7 +958,7 @@ export const blueprint: RouteObject[] = [
   {
     path: '/intro',
     async lazy() {
-      const { Intro } = await import('src/pages/intro/intro');
+      const { Intro } = await import('src/Nowruz/pages/Intro');
       return {
         Component: Intro,
       };
