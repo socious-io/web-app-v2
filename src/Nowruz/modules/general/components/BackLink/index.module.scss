@@ -1,0 +1,18 @@
+@import 'src/components/_primitives.scss';
+
+.textButton {
+  text-transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: $color-grey-600;
+}
+
+.textButton:hover {
+  background-color: transparent;
+  box-shadow: none;
+}
