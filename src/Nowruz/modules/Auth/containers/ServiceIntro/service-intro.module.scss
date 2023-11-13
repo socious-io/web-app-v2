@@ -1,0 +1,36 @@
+@import 'src/components/_primitives.scss';
+
+.review {
+  max-width: 656px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.reviewText {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 38px;
+  color: $color-grey-900;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: $color-grey-900;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+.position {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: $color-grey-600;
+}
+.star {
+    margin-right: 4px;
+}

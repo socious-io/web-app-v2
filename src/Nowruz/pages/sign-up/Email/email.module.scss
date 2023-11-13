@@ -1,0 +1,30 @@
+@import 'src/components/_primitives.scss';
+.container {
+  max-width: 1440px;
+}
+.link {
+  color: $color-primary-700;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 4px;
+  margin-left: 4px;
+}
+.privacy {
+  text-align: center;
+}
+.signupTitle {
+  text-align: center;
+  color: $color-grey-600;
+}
+
+.copy {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: $color-grey-600;
+}
+.review {
+  background-color: $color-primary-50;
+}

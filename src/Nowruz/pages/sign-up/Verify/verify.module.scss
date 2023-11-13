@@ -1,0 +1,8 @@
+.verify {
+  width: 424px;
+  margin: auto;
+
+  @media (max-width: 640px) {
+    width: 100%;
+  }
+}
