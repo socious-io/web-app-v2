@@ -17,7 +17,7 @@ export const AvatarDropDown: React.FC<AvatarDropDownProps> = (props) => {
     displaySetting = false,
     createOrgFunc,
   } = props;
-  const { open, switchAccount, handleAvatarClick, accountList, selectedAccount, otherAccounts } = useAvatarDropDown();
+  const { open, switchAccount, handleAvatarClick, selectedAccount, otherAccounts } = useAvatarDropDown();
   return (
     <div className={css.container}>
       <button className={`${buttonHeight ? `h-[${buttonHeight}]` : 'h-16'} ${css.button}`} onClick={handleAvatarClick}>

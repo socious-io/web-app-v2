@@ -4,7 +4,7 @@ export interface AccountItem {
   type: 'organizations' | 'users';
   name: string;
   username: string;
-  selected: boolean;
+  selected?: boolean;
 }
 
 export interface AvatarDropDownProps {

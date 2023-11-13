@@ -6,8 +6,8 @@ import css from './avatar.module.scss';
 import { AvatarProps } from './avatar.types';
 
 export const Avatar: React.FC<AvatarProps> = (props) => {
-  const { badge, customStyle = '', size = '3rem', onClick, type = 'users', img, ...rest } = props;
-  const iconName = type === 'users' ? 'user-01' : 'building-05';
+  const { badge, customStyle = '', size = '3rem', onClick, type = 'users', img, iconName, ...rest } = props;
+  const icon = iconName || type === 'users' ? 'user-01' : 'building-05';
   const style: CSSProperties = {
     ...rest,
     width: size,
@@ -25,7 +25,7 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
         {img ? (
           <img className={css.img} src={img} alt="" />
         ) : (
-          <Icon name={iconName} fontSize={24} color={variables.color_grey_600} />
+          <Icon name={icon} fontSize={24} color={variables.color_grey_600} />
         )}
       </div>
       {badge && (
