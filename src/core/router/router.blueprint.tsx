@@ -2,9 +2,6 @@ import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
 import Layout from 'src/components/templates/refactored/layout/layout';
-import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
-import TestLayout from 'src/Nowruz/modules/layout/components/navBar/testLayout';
-
 import {
   jobs,
   createChat,
@@ -34,6 +31,7 @@ import {
   filterFollowings,
   getOrganizationMembers,
 } from 'src/core/api';
+import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
 import {
   getAwaitingReviewList,

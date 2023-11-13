@@ -6,7 +6,7 @@ import { NavBar } from './components/navBar';
 export const Layout = () => {
   return (
     <div className="w-full h-screen relative">
-      <div className="w-full h-full flex flex-col">
+      <div className="w-full h-full flex flex-col md:pl-20">
         <HeaderNavBar />
         <Outlet />
       </div>
