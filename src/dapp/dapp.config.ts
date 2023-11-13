@@ -138,18 +138,20 @@ export const dappConfig: DappConfig = {
     },
     {
       chain: bsc,
-      escrow: 'changeme',
-      logic: 'changeme',
+      escrow: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
+      logic: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
       tokens: [
         {
           name: 'USDC',
           symbol: 'USDC',
-          address: 'changeme',
+          address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+          decimals: 18
         },
         {
           name: 'Tether',
           symbol: 'USDT',
-          address: 'changeme',
+          address: '0x55d398326f99059fF775485246999027B3197955',
+          decimals: 18
         },
       ],
     },
