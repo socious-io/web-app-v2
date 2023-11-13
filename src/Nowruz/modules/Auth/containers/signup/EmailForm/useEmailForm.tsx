@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { register as registerReq, preRegister, RegisterReq, handleError } from 'src/core/api';
+import { register as registerReq, preRegister, handleError } from 'src/core/api';
 import * as yup from 'yup';
 type Inputs = {
   email: string;
