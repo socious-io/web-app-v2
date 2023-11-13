@@ -7,7 +7,7 @@ import { OTP } from 'src/Nowruz/modules/general/components/otp/otp';
 import { useVerifyForm } from './useVerifyForm';
 
 export const VerifyForm = () => {
-  const { onSubmit, otpValue, setOtpValue, navigateToSignUp, isValid } = useVerifyForm();
+  const { onSubmit, otpValue, setOtpValue, resendCode, isValid } = useVerifyForm();
 
   return (
     <div className="flex flex-col justify-center">
@@ -27,7 +27,7 @@ export const VerifyForm = () => {
           Didn’t receive the email?
         </Typography>
 
-        <Button color="primary" variant="text" onClick={navigateToSignUp}>
+        <Button color="primary" variant="text" onClick={resendCode}>
           <Typography variant="subtitle2" color={variables.color_primary_700}>
             Click to resend
           </Typography>

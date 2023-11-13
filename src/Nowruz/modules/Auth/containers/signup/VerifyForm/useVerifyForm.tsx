@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { otpConfirm } from 'src/core/api';
+import { otpConfirm, resendVerifyCode } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
 
 export const useVerifyForm = () => {
@@ -20,8 +20,9 @@ export const useVerifyForm = () => {
       setIsValid(false);
     }
   };
-  function navigateToSignUp() {
-    navigate('/sign-up/user/email');
+  function resendCode() {
+    const email = localStorage.getItem('email');
+    resendVerifyCode({ email });
   }
-  return { onSubmit, otpValue, setOtpValue, email, navigateToSignUp, isValid };
+  return { onSubmit, otpValue, setOtpValue, email, resendCode, isValid };
 };
