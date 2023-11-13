@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchDropdown } from 'src/Nowruz/general/SearchDropdown';
+import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 export default {
   title: 'General/SearchDropdown',

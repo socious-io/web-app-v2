@@ -9,7 +9,7 @@ export const formModel: FormModel = {
       {
         name: 'notEmpty',
         message: 'Please enter a valid name',
-        validateWith: (value: string) => value.trim().length > 0,
+        validateWith: (value: string) => value?.trim().length > 0,
       },
     ],
   },
@@ -20,7 +20,7 @@ export const formModel: FormModel = {
       {
         name: 'notEmpty',
         message: 'Please enter a valid name',
-        validateWith: (value: string) => value.trim().length > 0,
+        validateWith: (value: string) => value?.trim().length > 0,
       },
     ],
   },

@@ -28,7 +28,10 @@ export const PeopleList = (props: PeopleListProps): JSX.Element => {
   }
   function renderName(user: People) {
     if (user.first_name && user.last_name) return <div>{`${user.first_name} ${user.last_name}`} </div>;
-    return <div>{`${user.username}`} </div>;
+    else {
+      console.log(user.username);
+      return <div>{`${user.username}`} </div>;
+    }
   }
   const location = (user: People) =>
     `${user.city}, ${getCountryName(user.country as keyof typeof COUNTRIES_DICT | undefined)}`;
