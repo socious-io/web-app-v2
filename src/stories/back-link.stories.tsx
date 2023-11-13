@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react';
 import React from 'react';
-import { BackLink } from 'src/Nowruz/general/BackLink';
-import { BackLinkProps } from 'src/Nowruz/general/BackLink/back-link.types';
+import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
+import { BackLinkProps } from 'src/Nowruz/modules/general/components/BackLink/back-link.types';
 
 import { withRouter } from '.storybook/withRouter';
 export default {
@@ -16,8 +16,3 @@ export const Preview = Template.bind({});
 Preview.args = {
   title: 'Jobs',
 };
-
-
-
-
-

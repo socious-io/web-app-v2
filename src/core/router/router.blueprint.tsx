@@ -779,33 +779,45 @@ export const blueprint: RouteObject[] = [
           {
             path: 'email',
             async lazy() {
-              const { SignUpUserEmailContainer } = await import(
-                'src/pages/sign-up/sign-up-user-email/sign-up-user-email.container'
-              );
+              const { Email } = await import('src/Nowruz/pages/sign-up/Email');
               return {
-                Component: SignUpUserEmailContainer,
+                Component: Email,
               };
             },
           },
           {
             path: 'verification',
             async lazy() {
-              const { SignUpUserVerificationContainer } = await import(
-                'src/pages/sign-up/sign-up-user-verification/sign-up-user-verification.container'
-              );
+              const { Verify } = await import('src/Nowruz/pages/sign-up/Verify');
               return {
-                Component: SignUpUserVerificationContainer,
+                Component: Verify,
+              };
+            },
+          },
+          {
+            path: 'password',
+            async lazy() {
+              const { ChoosePassword } = await import('src/Nowruz/pages/sign-up/ChoosePassword');
+              return {
+                Component: ChoosePassword,
               };
             },
           },
           {
             path: 'complete',
             async lazy() {
-              const { SignUpUserCompleteContainer } = await import(
-                'src/pages/sign-up/sign-up-user-complete/sign-up-user-complete.container'
-              );
+              const { Details } = await import('src/Nowruz/pages/sign-up/Details');
               return {
-                Component: SignUpUserCompleteContainer,
+                Component: Details,
+              };
+            },
+          },
+          {
+            path: 'congrats',
+            async lazy() {
+              const { Congrats } = await import('src/Nowruz/pages/sign-up/Congrats');
+              return {
+                Component: Congrats,
               };
             },
           },
@@ -829,6 +841,25 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          // {
+          //   path: 'welcome',
+          //   async lazy() {
+          //     const { Welcome } = await import('src/Nowruz/modules/Auth/containers/onboarding/Welcome');
+          //     return {
+          //       Component: Welcome,
+          //     };
+          //   },
+          // },
+
+          // {
+          //   path: 'onboarding',
+          //   async lazy() {
+          //     const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
+          //     return {
+          //       Component: Onboarding,
+          //     };
+          //   },
+          // },
           {
             path: 'allow-notification',
             async lazy() {
@@ -848,27 +879,36 @@ export const blueprint: RouteObject[] = [
       {
         path: 'email',
         async lazy() {
-          const { Email } = await import('src/pages/forget-password/email/email.container');
+          const { Email } = await import('src/Nowruz/pages/forget-password/email');
           return {
             Component: Email,
           };
         },
       },
       {
-        path: 'otp',
+        path: 'otp/*',
         async lazy() {
-          const { Otp } = await import('src/pages/forget-password/otp/otp.container');
+          const { Otp } = await import('src/Nowruz/pages/forget-password/otp');
           return {
             Component: Otp,
           };
         },
       },
       {
-        path: 'password',
+        path: 'password/*',
         async lazy() {
-          const { Password } = await import('src/pages/forget-password/password/password.container');
+          const { Password } = await import('src/Nowruz/pages/forget-password/password');
           return {
             Component: Password,
+          };
+        },
+      },
+      {
+        path: 'reset-completed',
+        async lazy() {
+          const { ResetCompleted } = await import('src/Nowruz/pages/forget-password/resetCompleted');
+          return {
+            Component: ResetCompleted,
           };
         },
       },
@@ -927,7 +967,7 @@ export const blueprint: RouteObject[] = [
   {
     path: '/sign-in',
     async lazy() {
-      const { SignIn } = await import('src/Nowruz/pages/sign-in/signin');
+      const { SignIn } = await import('src/Nowruz/pages/sign-in');
       return {
         Component: SignIn,
       };

@@ -1,0 +1,36 @@
+@import 'src/components/_primitives.scss';
+
+.input {
+
+  @media (max-width: 640px) {
+    width: 48px !important;
+    height: 48px;
+  }
+  width: 4rem !important;
+  height: 4rem;
+
+  border: solid 1px #d0d5dd;
+  border-radius: 8px;
+  padding: 2px 8px 2px 8px;
+  margin-right: 8px;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 60px;
+  letter-spacing: -0.02em;
+  color: $color-primary-600;
+}
+.input:focus {
+  outline: none !important;
+  border: 1px solid $color-primary-600;
+  box-shadow: 0 0 0 3px $color-grey-300;
+}
+input:focus::placeholder {
+  color: transparent;
+}
+::placeholder {
+  color: $color-grey-300;
+}
+.container {
+  justify-content: center;
+}
