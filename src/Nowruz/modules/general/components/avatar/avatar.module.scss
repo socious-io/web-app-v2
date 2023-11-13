@@ -1,0 +1,41 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-grey-100;
+}
+.imageContainer {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: 65%;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  cursor: pointer;
+}
+.img {
+  max-width: 100%;
+}
+
+.badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+}
