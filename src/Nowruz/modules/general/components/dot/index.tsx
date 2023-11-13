@@ -8,7 +8,6 @@ interface DotProps {
 }
 export const Dot: React.FC<DotProps> = (props) => {
   const { size, color, shadow, shadowColor } = props;
-  console.log('test log color', color);
   let divSize = 0;
   switch (size) {
     case 'small':
@@ -21,5 +20,10 @@ export const Dot: React.FC<DotProps> = (props) => {
       divSize = 3;
       break;
   }
-  return <div className={`w-${divSize} h-${divSize} rounded-xl`} style={{ backgroundColor: `${color}` }} />;
+  return (
+    <div
+      className={`w-${divSize} h-${divSize} rounded-xl`}
+      style={{ backgroundColor: color, boxShadow: shadow ? `0px 0px 0px 4px ${shadowColor}` : '' }}
+    />
+  );
 };

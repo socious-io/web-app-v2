@@ -1,0 +1,13 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  padding: 0 32px 0 32px;
+}
+
+.leftCol {
+  width: 25%;
+}
+.rightCol {
+  width: 75%;
+}
