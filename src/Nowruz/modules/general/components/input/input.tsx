@@ -5,8 +5,10 @@ import variables from 'src/components/_exports.module.scss';
 
 import css from './input.module.scss';
 import { InputProps } from './input.types';
+import { Icon } from 'src/Nowruz/general/Icon';
 
 export const Input: React.FC<InputProps> = ({
+  id,
   label,
   name,
   required,
@@ -33,13 +35,13 @@ export const Input: React.FC<InputProps> = ({
           alt=""
           className="cursor-pointer"
         />,
-        // <Icon name="eye-off" color="red" />,
+        // <Icon name="eye-off" color={variables.color_grey_500} fontSize={24} />,
       );
     } else if (props.type === 'password' && !showPassword && showEyeIcon) {
       setInputType('password');
       setEndIcon(
         <img src="/icons/nowruz/eye.svg" onClick={() => setShowPassword(true)} alt="" className="cursor-pointer" />,
-        // <Icon name="eye" color="red" />,
+        // <Icon name="eye" color={variables.color_grey_500} fontSize={24} />,
       );
     } else setEndIcon('');
   }, [errors, showPassword, showEyeIcon]);
@@ -56,12 +58,10 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div>
+    <div className={css.labelContainer}>
       {label && (
         <div>
-          <Typography variant="subtitle1" textAlign="left" className={css.label}>
-            {label}
-          </Typography>
+          <label className={css.label}>{label}</label>
         </div>
       )}
 
