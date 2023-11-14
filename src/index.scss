@@ -3,10 +3,7 @@
 @import './components/primitives';
 @import './components/reset';
 @import './styles/icons.scss';
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './styles/tailwind.scss';
 
 @layer base {
   @font-face {
