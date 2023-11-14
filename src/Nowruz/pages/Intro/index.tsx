@@ -39,44 +39,46 @@ export const Intro = () => {
     );
   };
   return (
-    <div className="container mx-auto flex flex-col h-screen pb-16 md:pt-24 pt-12 px-4">
-      <div className="flex md:flex-row flex-col">
-        <div className={`w-full md:w-1/2 md:pt-24`}>
-          <div className="form-container">
-            <IntroHeader
-              title="Get started"
-              description="Join as a professional or impact organization"
-              logo={<Logo width={48} height={48} />}
+    <div className="flex h-screen ">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
+        <div className="form-container">
+          <IntroHeader
+            title="Get started"
+            description="Join as a professional or impact organization"
+            logo={<Logo width={48} height={48} />}
+          />
+          <div className="mt-7">
+            <CardRadioButton
+              items={onboardingOptons}
+              selectedValue={selectedOnboarding}
+              setSelectedValue={(value) => {
+                setSelectedOnboarding(value);
+                console.log(value);
+              }}
             />
-            <div className="mt-7">
-              <CardRadioButton
-                items={onboardingOptons}
-                selectedValue={selectedOnboarding}
-                setSelectedValue={(value) => {
-                  setSelectedOnboarding(value);
-                  console.log(value);
-                }}
-              />
-              <div className="mt-6">
-                <Button color="primary" block onClick={navigateToOnboarding}>
-                  Continue
-                </Button>
-              </div>
-            </div>
-            <div className="my-5 text-center">
-              <Typography variant="caption" className={css.signupTitle}>
-                Already have an account?
-              </Typography>
-              <Link href="/sign-in" className={`${css.link} mt-5`}>
-                Log in
-              </Link>
+            <div className="mt-6">
+              <Button color="primary" block onClick={navigateToOnboarding}>
+                Continue
+              </Button>
             </div>
           </div>
+          <div className="my-5 text-center">
+            <Typography variant="caption" className={css.signupTitle}>
+              Already have an account?
+            </Typography>
+            <Link href="/sign-in" className={`${css.link} mt-5`}>
+              Log in
+            </Link>
+          </div>
         </div>
-        <div className={`${css.review} hidden md:block w-full md:w-1/2 md:pt-24 px-16`}>{renderIntro()}</div>
+        <div className={css.copy}>
+          <div>© Socious Global Inc. 2023</div>
+        </div>
       </div>
-      <div className="flex-1"></div>
-      <div className={css.copy}>© Socious Global Inc. 2023</div>
+
+      <div className="w-1/2 items-center justify-center hidden md:block">
+        <div className={`${css.review} `}>{renderIntro()}</div>
+      </div>
     </div>
   );
 };
