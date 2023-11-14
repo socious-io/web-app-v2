@@ -1,3 +1,6 @@
+import { ThemeProvider } from '@emotion/react';
+import { StyledEngineProvider } from '@mui/material';
+import { theme } from 'material.theme';
 import { useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
@@ -12,8 +15,6 @@ import store, { RootState } from './store';
 import { closeModal } from './store/reducers/modal.reducer';
 
 import 'src/core/translation/i18n';
-import { ThemeProvider } from '@emotion/react';
-import { theme } from 'material.theme';
 
 function ModalPlaceholder() {
   const modal = useSelector<RootState>((state) => state.modal);
@@ -31,14 +32,16 @@ function App() {
     store.dispatch(currentIdentities());
   }, []);
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <RouterProvider router={router.routes} />
-      </ThemeProvider>
-      <DeepLinks />
-      <ModalPlaceholder />
-      <Spinner />
-    </Provider>
+    <StyledEngineProvider injectFirst>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <RouterProvider router={router.routes} />
+        </ThemeProvider>
+        <DeepLinks />
+        <ModalPlaceholder />
+        <Spinner />
+      </Provider>
+    </StyledEngineProvider>
   );
 }
 
