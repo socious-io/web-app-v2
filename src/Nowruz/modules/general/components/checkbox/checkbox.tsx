@@ -1,4 +1,4 @@
-import { Checkbox as MUICheckbox, Typography } from '@mui/material';
+import { FormControlLabel, Checkbox as MUICheckbox } from '@mui/material';
 import React from 'react';
 
 import css from './checkbox.module.scss';
@@ -18,18 +18,19 @@ export const Checkbox: React.FC<CheckboxProps> = ({ label, required, errors, isV
   return (
     <div className={css.container}>
       <div className={css.checkboxContainer}>
-        <MUICheckbox
-          disableRipple
-          color="default"
-          checkedIcon={<BpCheckedIcon checked />}
-          icon={<BpCheckedIcon checked={false} />}
-          sx={{ paddingLeft: '0' }}
-          {...props}
+        <FormControlLabel
+          label={<span className={css.label}>{label}</span>}
+          control={
+            <MUICheckbox
+              disableRipple
+              color="default"
+              checkedIcon={<BpCheckedIcon checked />}
+              icon={<BpCheckedIcon checked={false} />}
+              {...props}
+            />
+          }
         />
       </div>
-      <Typography variant="subtitle1" className={css.label}>
-        {label}
-      </Typography>
     </div>
   );
 };

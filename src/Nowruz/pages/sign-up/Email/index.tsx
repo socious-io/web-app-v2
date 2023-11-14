@@ -33,13 +33,13 @@ export const Email = () => {
               <Typography variant="caption" className={css.signupTitle}>
                 By continuing, you accept our
               </Typography>
-              <Link href="/terms-conditions" className={css.link}>
+              <Link href="/terms-conditions" className={css.link} underline="hover">
                 Terms of Use
               </Link>
               <Typography variant="caption" className={css.signupTitle}>
                 and
               </Typography>
-              <Link href="/privacy-policy" className={css.link}>
+              <Link href="/privacy-policy" className={css.link} underline="hover">
                 Privacy Policy.
               </Link>
             </div>
