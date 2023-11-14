@@ -16,6 +16,16 @@ const initialState = {
   avatar: '',
   address: '',
 };
+const orgInitialState = {
+  bio: '',
+  city: '',
+  country: '',
+  mission: '',
+  skills: [],
+  social_causes: [],
+  avatar: '',
+};
+const type = localStorage.getItem('registerFor');
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -35,7 +45,7 @@ const reducer = (state, action) => {
   }
 };
 
-export const UserContext = React.createContext(initialState);
+export const UserContext = React.createContext(type === 'users' ? initialState : orgInitialState);
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -49,8 +59,7 @@ export const UserProvider = ({ children }) => {
         console.error(error);
       }
     };
-
-    fetchData();
+    if (type === 'user') fetchData();
   }, []);
   return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>;
 };
