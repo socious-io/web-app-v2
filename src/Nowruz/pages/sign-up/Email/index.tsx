@@ -31,8 +31,8 @@ export const Email = () => {
     );
   };
   return (
-    <div className="flex md:flex-row flex-col">
-      <div className={`w-full md:w-1/2 md:pt-24`}>
+    <div className="flex h-screen ">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
         <div className="form-container">
           <IntroHeader
             title="Create an account"
@@ -65,8 +65,14 @@ export const Email = () => {
             </Link>
           </div>
         </div>
+        <div className={css.copy}>
+          <div>© Socious Global Inc. 2023</div>
+        </div>
       </div>
-      <div className={`${css.review} hidden md:block w-full md:w-1/2 md:pt-24 px-16`}>{renderIntro()}</div>
+
+      <div className="w-1/2 items-center justify-center hidden md:block">
+        <div className={`${css.review} `}>{renderIntro()}</div>
+      </div>
     </div>
   );
 };
