@@ -1,0 +1,36 @@
+import { User01 } from 'public/icons/nowruz/user-01';
+
+export const reviews = {
+  user: {
+    review:
+      'Socious not only helped me secure my dream environmental job, but also boosted my salary and enabled me to make a positive impact.',
+    name: 'Masaki Mashiko',
+    position: 'Head of Sales, Climate Startup',
+    image: '/images/review-avatar.png',
+  },
+  organization: {
+    review:
+      "Socious streamlined my startup's hiring process, saving time and money while finding skilled, passionate candidates.",
+    name: 'Sean Park',
+    position: 'Co-Founder and CEO, Energy X',
+    image: '/images/org-reviewer.png',
+  },
+};
+
+export const onboardingOptons = [
+  {
+    title: 'I am seeking impact work',
+    description: 'Discover roles that matter and join forces with changemakers',
+    // icon: <Icon name="user-01" fontSize={16} color={variables.color_grey_600} />,
+    icon: User01,
+    value: 'User',
+  },
+  {
+    title: 'I am hiring purpose-driven talent',
+    description: 'List opportunities and connect with talent who share your mission',
+    // icon: <Icon name="building-05" color={variables.color_grey_600} />,
+    icon: User01,
+
+    value: 'Organization',
+  },
+];

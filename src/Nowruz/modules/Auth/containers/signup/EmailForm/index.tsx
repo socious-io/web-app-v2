@@ -6,13 +6,13 @@ import { useEmailForm } from './useEmailForm';
 
 export const EmailForm = () => {
   const { register, errors, onSubmit, handleSubmit } = useEmailForm();
-
+  const type = localStorage.getItem('registerFor');
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           autoComplete="Email"
-          label="Email*"
+          label={type === 'User' ? '"Email*"' : 'Your work email*'}
           name="email"
           register={register}
           placeholder="Enter your email"
