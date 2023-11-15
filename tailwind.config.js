@@ -4,7 +4,7 @@ export default {
   theme: {
     colors: {
       Base: { White: '#ffffff', Black: '#000000' },
-      'Gray (light mode)': {
+      'Gray-light-mode': {
         25: '#fcfcfd',
         50: '#f9fafb',
         100: '#f2f4f7',

@@ -48,6 +48,7 @@ import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
+
   {
     children: [
       {
