@@ -1,0 +1,26 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.card {
+  border: solid 2px $color-grey-200;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-grey-700;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+  cursor: pointer;
+  padding: 16px;
+}
+.cardSelected {
+  background-color: $color-primary-50;
+  border-color: $color-primary-600;
+}
