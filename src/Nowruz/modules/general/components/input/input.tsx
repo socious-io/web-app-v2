@@ -2,10 +2,10 @@ import { TextField, InputAdornment, Typography } from '@mui/material';
 import { AlertCircle } from 'public/icons/nowruz/alert-circle';
 import { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
+import { Icon } from 'src/Nowruz/general/Icon';
 
 import css from './input.module.scss';
 import { InputProps } from './input.types';
-import { Icon } from 'src/Nowruz/general/Icon';
 
 export const Input: React.FC<InputProps> = ({
   id,
