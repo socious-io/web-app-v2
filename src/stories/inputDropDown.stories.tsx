@@ -19,6 +19,13 @@ const items: InputDropDownItem[] = [
   { label: 'Apple', value: 'apple', avatar: sampleAvatar, subtitle: '@unigina123' },
   { label: 'Pear', value: 'pear', avatar: sampleAvatar, subtitle: '@unigina123' },
   { label: 'Strawberry', value: 'strawberry', avatar: sampleAvatar },
+  { label: 'Cherry', value: 'cherry2', avatar: sampleAvatar, subtitle: '@unigina123' },
+  { label: 'Grape', value: 'grape2', avatar: sampleAvatar, subtitle: '@unigina123' },
+  { label: 'Lemon', value: 'lemon2', avatar: sampleAvatar, subtitle: '@unigina123' },
+  { label: 'Orange', value: 'orange2', avatar: sampleAvatar, subtitle: '@unigina123' },
+  { label: 'Apple', value: 'apple2', avatar: sampleAvatar, subtitle: '@unigina123' },
+  { label: 'Pear', value: 'pear2', avatar: sampleAvatar, subtitle: '@unigina123' },
+  { label: 'Strawberry', value: 'strawberry2', avatar: sampleAvatar },
   { label: 'Watermelon', value: 'watermelon' },
   { label: 'Kiwi', value: 'kiwi' },
 ];
