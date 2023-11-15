@@ -2,6 +2,7 @@ import { ProfileHeader } from 'src/Nowruz/modules/userProfile/components/profile
 
 import { useUserProfile } from './useUserProfile';
 import css from './userProfile.module.scss';
+import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
 
 export const UserProifle = () => {
   const { user, badges, missions } = useUserProfile();
@@ -15,7 +16,9 @@ export const UserProifle = () => {
         username={user.username}
       />
       <div className={css.content}>
-        <div className={css.leftCol}></div>
+        <div className={css.leftCol}>
+          <Impact point={0} />
+        </div>
         <div className={css.rightCol}></div>
       </div>
     </div>

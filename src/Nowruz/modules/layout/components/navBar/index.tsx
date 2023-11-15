@@ -5,7 +5,7 @@ import { Footer } from './footer/footer';
 import { LinksContainer } from './linksContainer/linksContainer';
 
 export const NavBar = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <div
       className={`${
