@@ -65,3 +65,29 @@
 .rbContainer {
   width: 1rem;
 }
+
+.title {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $color-grey-700;
+}
+.selectedTitle {
+  color: $color-primary-800;
+}
+.desc {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $color-grey-600;
+}
+.selectedDesc {
+  color: $color-primary-700;
+}
+//styleName: Text sm/Medium;
