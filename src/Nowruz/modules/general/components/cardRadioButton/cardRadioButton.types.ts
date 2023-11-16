@@ -1,4 +1,5 @@
-import { ComponentType } from 'react';
+import { ReactNode } from 'react';
+import { IconProps } from 'src/Nowruz/general/Icon';
 
 export interface CardRadioButtonProps {
   items: CardRadioButtonItem[];
@@ -7,8 +8,9 @@ export interface CardRadioButtonProps {
 }
 
 export type CardRadioButtonItem = {
-  title: string;
   value: string;
+  title: string;
   description?: string;
-  icon: ComponentType<unknown>;
+  icon?: IconProps;
+  img?: ReactNode;
 };

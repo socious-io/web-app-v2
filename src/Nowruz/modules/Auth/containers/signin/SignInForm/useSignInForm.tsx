@@ -110,7 +110,7 @@ export const useSignInForm = () => {
       .then(onLoginSucceed)
       .then(registerPushNotifications)
       .catch((e) => {
-        if (e?.response?.data.error === 'Not matched') {
+        if (e?.response?.data.error) {
           setError('password', {
             type: 'manual',
             message: 'Username or password not matched',
