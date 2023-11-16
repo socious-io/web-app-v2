@@ -23,7 +23,7 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
     >
       <div onClick={props.onClick} style={style} className={css.imageContainer}>
         {img ? (
-          <img className={css.img} src={img} alt="" />
+          <img className={css.img} src={img} alt="" width={size} height={size} />
         ) : (
           <Icon name={icon} fontSize={24} color={variables.color_grey_600} />
         )}

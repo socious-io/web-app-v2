@@ -1,4 +1,5 @@
 import { OutlinedInputProps as DefaultProps } from '@mui/material';
+
 export interface InputProps extends DefaultProps {
   name?: string;
   label?: string;
