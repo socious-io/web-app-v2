@@ -17,13 +17,15 @@ const initialState = {
   address: '',
 };
 const orgInitialState = {
+  orgName: '',
+  orgType: null,
+  social_causes: [],
   bio: '',
+  image: '',
   city: '',
   country: '',
-  mission: '',
-  skills: [],
-  social_causes: [],
-  avatar: '',
+  email: '',
+  website: '',
 };
 const type = localStorage.getItem('registerFor');
 
@@ -48,7 +50,7 @@ const reducer = (state, action) => {
 export const UserContext = React.createContext(type === 'users' ? initialState : orgInitialState);
 
 export const UserProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, type === 'users' ? initialState : orgInitialState);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,6 +76,7 @@ export const useUser = () => {
   const { state, dispatch } = context;
 
   const updateUser = (updates) => {
+    console.log('new state', state);
     dispatch({ type: 'UPDATE_USER', payload: updates });
   };
   return { updateUser, state };
