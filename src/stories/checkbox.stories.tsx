@@ -3,6 +3,7 @@ import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbo
 export default { component: Checkbox };
 export const Defalult = {
   args: {
+    id: 'checkbox',
     label: 'checkbox',
   },
 };

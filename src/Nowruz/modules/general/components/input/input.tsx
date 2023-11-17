@@ -54,11 +54,14 @@ export const Input: React.FC<InputProps> = ({
     <div className={css.labelContainer}>
       {label && (
         <div>
-          <label className={css.label}>{label}</label>
+          <label htmlFor={id} className={css.label}>
+            {label}
+          </label>
         </div>
       )}
 
       <TextField
+        id={id}
         variant="outlined"
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
