@@ -1,13 +1,8 @@
 @import 'src/components/_primitives.scss';
 
-.container {
-  width: 480px;
-  @media screen and (max-width: 600px) {
-    width: 100%;
-  }
-}
 .header {
   margin-bottom: 44px;
+
   .title {
     font-size: 18px;
     font-weight: 600;

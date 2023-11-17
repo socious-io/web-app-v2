@@ -6,6 +6,10 @@ import { City } from 'src/Nowruz/modules/Auth/containers/onboarding/City';
 import { CreateOrganization } from 'src/Nowruz/modules/Auth/containers/onboarding/CreateOrganization';
 import { ImageBio } from 'src/Nowruz/modules/Auth/containers/onboarding/ImageBio';
 import { OpWelcome } from 'src/Nowruz/modules/Auth/containers/onboarding/OpWelcome';
+import { OrganizationCauses } from 'src/Nowruz/modules/Auth/containers/onboarding/OrganizationCauses';
+import { OrganizationContact } from 'src/Nowruz/modules/Auth/containers/onboarding/OrganizationContact';
+import { OrganizationLogo } from 'src/Nowruz/modules/Auth/containers/onboarding/OrganizationLogo';
+import { OrganizationType } from 'src/Nowruz/modules/Auth/containers/onboarding/OrganizationType';
 import { Skills } from 'src/Nowruz/modules/Auth/containers/onboarding/Skills';
 import Steper from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { Welcome } from 'src/Nowruz/modules/Auth/containers/onboarding/Welcome';
@@ -47,8 +51,12 @@ export const Onboarding = () => {
         <div className={css.container}>
           <Steper
             components={[
-              { Component: <OpWelcome />, skippable: false },
+              { Component: <OrganizationContact />, skippable: false },
               { Component: <CreateOrganization />, skippable: false },
+              { Component: <OpWelcome />, skippable: false },
+              { Component: <OrganizationType />, skippable: false },
+              { Component: <OrganizationCauses />, skippable: false },
+              { Component: <OrganizationLogo />, skippable: false },
             ]}
           />
         </div>
@@ -56,3 +64,9 @@ export const Onboarding = () => {
     </UserProvider>
   );
 };
+// { Component: <OpWelcome />, skippable: false },
+// { Component: <CreateOrganization />, skippable: false },
+// { Component: <OrganizationType />, skippable: false },
+// { Component: <OrganizationCauses />, skippable: false },
+// { Component: <OrganizationLogo />, skippable: false },
+// { Component: <OrganizationContact />, skippable: false },

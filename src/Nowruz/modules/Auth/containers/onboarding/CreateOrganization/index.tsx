@@ -1,28 +1,36 @@
 import React from 'react';
-import { Input } from 'src/Nowruz/general/input/input';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 import css from './create-organization.module.scss';
+import { useCreateOrganization } from './useCreateOrganization';
 
 export const CreateOrganization = () => {
+  const { goNextPage, orgName, updateOrgName, isValidForm } = useCreateOrganization();
   return (
     <div className="md:pt-24 px-4 flex flex-col">
-      <div className={css.header}>
-        <div className={css.title}>
-          <h1>Create organization</h1>
+      <div className="container">
+        <div className={css.header}>
+          <div className={css.title}>
+            <h1>Create organization</h1>
+          </div>
+          <div className={css.description}>
+            <h2>Enter your organization name</h2>
+          </div>
         </div>
-        <div className={css.description}>
-          <h2>Enter your organization name</h2>
-        </div>
+        <Input
+          value={orgName}
+          label="Your organization name*"
+          variant="outlined"
+          placeholder="Enter your organization name"
+          onChange={(e) => updateOrgName(e.target.value)}
+        />
       </div>
-      <Input
-        value={bio}
-        label="Headline"
-        customHeight="128px"
-        variant="outlined"
-        placeholder="eg."
-        multiline
-        onChange={(e) => console.log(e)}
-      />
+      <div className="mt-44">
+        <Button disabled={!!!isValidForm} color="primary" block onClick={goNextPage}>
+          Next: Organization type
+        </Button>
+      </div>
     </div>
   );
 };
