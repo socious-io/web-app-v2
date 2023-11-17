@@ -25,7 +25,7 @@ export const Email = () => {
               <Typography variant="caption" className={css.signupTitle}>
                 Already have an account?
               </Typography>
-              <Link href="/sign-in" className={`${css.link} mt-5`}>
+              <Link href="/sign-in" className={`${css.link} mt-5`} underline="hover">
                 Log in
               </Link>
             </div>
