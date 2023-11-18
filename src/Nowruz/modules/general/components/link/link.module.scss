@@ -1,0 +1,13 @@
+@import 'src/components/_primitives.scss';
+
+.link {
+  color: $color-primary-700;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-decoration: none;
+}
+.link:focus,
+.link:hover {
+  text-decoration: underline;
+}

@@ -14,15 +14,22 @@ const BpCheckedIcon: React.FC<IconProps> = ({ checked }) => {
     </div>
   );
 };
-export const Checkbox: React.FC<CheckboxProps> = ({ label, required, errors, isValid, ...props }) => {
+
+export const Checkbox: React.FC<CheckboxProps> = ({ id, label, required, errors, isValid, ...props }) => {
   return (
     <div className={css.container}>
       <div className={css.checkboxContainer}>
         <FormControlLabel
-          label={<span className={css.label}>{label}</span>}
+          label={
+            <label htmlFor={id} className={css.label}>
+              {label}
+            </label>
+          }
           control={
             <MUICheckbox
+              id={id}
               disableRipple
+              className={css.default}
               color="default"
               checkedIcon={<BpCheckedIcon checked />}
               icon={<BpCheckedIcon checked={false} />}

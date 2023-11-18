@@ -51,14 +51,17 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div className={css.labelContainer}>
+    <div>
       {label && (
-        <div>
-          <label className={css.label}>{label}</label>
+        <div className={css.labelContainer}>
+          <label htmlFor={id} className={css.label}>
+            {label}
+          </label>
         </div>
       )}
 
       <TextField
+        id={id}
         variant="outlined"
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
@@ -72,6 +75,7 @@ export const Input: React.FC<InputProps> = ({
               {prefix}
             </InputAdornment>
           ),
+          'aria-describedby': id,
         }}
         {...(register
           ? register(name, {

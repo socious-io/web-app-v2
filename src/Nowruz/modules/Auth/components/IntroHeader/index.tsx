@@ -6,16 +6,10 @@ import { IntroHeaderProps } from './IntroHeader.types';
 export const IntroHeader: React.FC<IntroHeaderProps> = ({ logo, title, description, subtitle }) => (
   <div className={css.container}>
     {logo}
-    <Typography variant="h3" align="center" className={css.title}>
-      {title}
-    </Typography>
-    <Typography variant="h5" align="center" className={css.subtitle}>
-      {description}
-    </Typography>
-    {!!subtitle && (
-      <Typography variant="h5" align="center" className={css.subtitle}>
-        {subtitle}
-      </Typography>
-    )}
+
+    <h1 className={css.title}>{title}</h1>
+
+    <h2 className={css.subtitle}>{description}</h2>
+    {!!subtitle && <h2 className={css.subtitle}>{subtitle}</h2>}
   </div>
 );
