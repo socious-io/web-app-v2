@@ -5,6 +5,7 @@ import css from './skills.module.scss';
 import { useSkills } from './useSkills';
 export const Skills = () => {
   const { items, value, setValue, updateSelectedStep } = useSkills();
+  console.log('itms', items);
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>
@@ -25,7 +26,7 @@ export const Skills = () => {
           customHeight="200px"
         />
       )}
-      <div className="mt-6 mb-2">
+      <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ">
         <Button disabled={!!!value.length} color="primary" block onClick={() => updateSelectedStep(3)}>
           Next: Location
         </Button>

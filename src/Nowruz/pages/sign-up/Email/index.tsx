@@ -12,7 +12,7 @@ export const Email = () => {
   const type = localStorage.getItem('registerFor');
 
   const renderIntro = () => {
-    if (type === 'User')
+    if (type === 'user')
       return (
         <ServiceIntro
           name={reviews.user.name}

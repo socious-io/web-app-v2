@@ -17,9 +17,11 @@ export const Welcome = () => {
         </div>
         <img src="/images/welcome.svg" />
         <div className={css.subtitle}> Complete your profile to find impact jobs</div>
-        <Button color="primary" block onClick={() => updateSelectedStep(1)}>
-          Complete your profile
-        </Button>
+        <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ">
+          <Button color="primary" block onClick={() => updateSelectedStep(1)}>
+            Complete your profile
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -13,14 +13,14 @@ import { CardRadioButton } from 'src/Nowruz/modules/general/components/cardRadio
 import css from './intro.module.scss';
 
 export const Intro = () => {
-  const [selectedOnboarding, setSelectedOnboarding] = useState<'User' | 'Organization'>('User');
+  const [selectedOnboarding, setSelectedOnboarding] = useState<'user' | 'organization'>('user');
   const navigate = useNavigate();
   const navigateToOnboarding = () => {
     localStorage.setItem('registerFor', selectedOnboarding);
     navigate('/sign-up/user/email');
   };
   const renderIntro = () => {
-    if (selectedOnboarding === 'User')
+    if (selectedOnboarding === 'user')
       return (
         <ServiceIntro
           name={reviews.user.name}

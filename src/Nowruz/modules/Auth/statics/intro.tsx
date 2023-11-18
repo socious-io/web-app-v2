@@ -25,12 +25,12 @@ export const onboardingOptons = [
     description: 'Discover roles that matter and join forces with changemakers',
     icon: { name: 'user-01', fontSize: 21 },
 
-    value: 'User',
+    value: 'user',
   },
   {
     title: 'I am hiring purpose-driven talent',
     description: 'List opportunities and connect with talent who share your mission',
     icon: { name: 'building-05', fontSize: 21 },
-    value: 'Organization',
+    value: 'organization',
   },
 ];

@@ -19,6 +19,7 @@ import css from './onboarding.module.scss';
 export const Onboarding = () => {
   const isMobile = isTouchDevice();
   const type = localStorage.getItem('registerFor');
+  console.log('fakin type', type);
   if (type === 'user')
     return (
       <UserProvider>
@@ -30,11 +31,11 @@ export const Onboarding = () => {
           <div className={css.container}>
             <Steper
               components={[
+                { Component: <ImageBio />, skippable: false },
                 { Component: <Welcome />, skippable: false },
                 { Component: <Causes />, skippable: false },
-                { Component: <Skills />, skippable: false },
                 { Component: <City />, skippable: false },
-                { Component: <ImageBio />, skippable: false },
+                { Component: <Skills />, skippable: false },
               ]}
             />
           </div>
