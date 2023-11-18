@@ -11,6 +11,7 @@ export const EmailForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
+          id="email"
           autoComplete="Email"
           label="Email*"
           name="email"

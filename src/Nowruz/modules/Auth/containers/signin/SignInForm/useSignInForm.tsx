@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { AuthRes, LoginReq, User, devices, handleError, identities, login, newDevice, profile } from 'src/core/api';
+import { AuthRes, User, devices, identities, login, newDevice, profile } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
 import {
   addNotificationReceivedListener,
@@ -19,7 +19,12 @@ import * as yup from 'yup';
 const schema = yup
   .object()
   .shape({
-    email: yup.string().trim().email('Enter a correct email').required('Enter a correct email'),
+    email: yup
+      .string()
+      .trim()
+      .email('Enter a correct email')
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Enter a correct email')
+      .required('Enter a correct email'),
     password: yup.string().required('Enter a correct password'),
   })
   .required();
@@ -33,7 +38,6 @@ export const useSignInForm = () => {
     formState: { errors, isValid },
     getValues,
     setError,
-    clearErrors,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -119,13 +123,9 @@ export const useSignInForm = () => {
       });
   }
 
-  function navigateToForgetPassword() {
-    navigate('/forget-password/email');
-  }
-
-  function navigateToSignUp() {
-    navigate('/sign-up/user/email');
-  }
+  const handleChange = () => {
+    setKeepLoggedIn(!keepLoggedIn);
+  };
   return {
     register,
     handleSubmit,
@@ -135,7 +135,6 @@ export const useSignInForm = () => {
     onLogin,
     keepLoggedIn,
     setKeepLoggedIn,
-    navigateToForgetPassword,
-    navigateToSignUp,
+    handleChange,
   };
 };
