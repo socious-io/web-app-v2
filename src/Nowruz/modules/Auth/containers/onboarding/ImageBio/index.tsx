@@ -40,10 +40,10 @@ export const ImageBio = () => {
         <Divider sx={{ bgcolor: variables.color_primary_300 }} />
       </div>
       <Input
+        id="headline"
         value={bio}
         label="Headline"
         customHeight="128px"
-        variant="outlined"
         placeholder="eg."
         multiline
         onChange={(e) => updateBio(e.target.value)}

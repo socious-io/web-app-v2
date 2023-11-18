@@ -14,6 +14,7 @@ export const PasswordForm = () => {
       <form className="my-8">
         <div className="flex flex-col gap-[20px]">
           <Input
+            id="password"
             name="password"
             type="password"
             register={register}
@@ -21,6 +22,7 @@ export const PasswordForm = () => {
             errors={errors['password']?.message ? [errors['password']?.message.toString()] : undefined}
           />
           <Input
+            id="password-confirm"
             name="confirmPassword"
             type="password"
             register={register}
