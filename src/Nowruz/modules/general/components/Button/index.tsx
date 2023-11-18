@@ -15,6 +15,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <MaterialButton
+      disableRipple
       className={`${css.default} ${css[color]} ${size} ${customStyle}`}
       color={color}
       variant={variant}

@@ -10,6 +10,7 @@ export const UserDetails = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
+          id="first-name"
           autoComplete="first"
           label="First name*"
           name="firstName"
@@ -19,6 +20,7 @@ export const UserDetails = () => {
         />
         <div className="mt-4">
           <Input
+            id="last-name"
             label="Last name*"
             name="lastName"
             register={register}
@@ -28,6 +30,7 @@ export const UserDetails = () => {
         </div>
         <div className="mt-4">
           <Input
+            id="username"
             label="Username*"
             name="username"
             register={register}
