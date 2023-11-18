@@ -1,4 +1,6 @@
 import { User01 } from 'public/icons/nowruz/user-01';
+import variables from 'src/components/_exports.module.scss';
+import { Icon } from 'src/Nowruz/general/Icon';
 
 export const reviews = {
   user: {
@@ -21,16 +23,14 @@ export const onboardingOptons = [
   {
     title: 'I am seeking impact work',
     description: 'Discover roles that matter and join forces with changemakers',
-    // icon: <Icon name="user-01" fontSize={16} color={variables.color_grey_600} />,
-    icon: User01,
+    icon: { name: 'user-01', fontSize: 21 },
+
     value: 'User',
   },
   {
     title: 'I am hiring purpose-driven talent',
     description: 'List opportunities and connect with talent who share your mission',
-    // icon: <Icon name="building-05" color={variables.color_grey_600} />,
-    icon: User01,
-
+    icon: { name: 'building-05', fontSize: 21 },
     value: 'Organization',
   },
 ];
