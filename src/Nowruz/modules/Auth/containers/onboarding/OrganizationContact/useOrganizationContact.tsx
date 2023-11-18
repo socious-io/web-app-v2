@@ -2,11 +2,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { useContext, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createOrganization, Location, searchLocation } from 'src/core/api';
+import { CurrentIdentity, uploadMedia } from 'src/core/api';
 import { StepsContext } from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
+import { RootState } from 'src/store';
 import * as yup from 'yup';
+
 type Inputs = {
   email: string;
   size: string;
@@ -14,7 +18,7 @@ type Inputs = {
 };
 const schema = yup.object().shape({
   email: yup.string().email('Enter a correct email').required('Email is required'),
-  size: yup.string().required('Organization size is required'),
+  size: yup.string(),
   website: yup.string().matches(/^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid website URL'),
 });
 
@@ -30,8 +34,11 @@ const companySizeOptions = [
   { value: 'I', label: '10,001+ employees' },
 ];
 export const useOrganizationContact = () => {
-  const [options, setOptions] = useState([]);
   const { state, updateUser } = useUser();
+  const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
+    const current = state.identity.entities.find((identity) => identity.current);
+    return current as CurrentIdentity;
+  });
   const navigate = useNavigate();
   const {
     register,
@@ -45,10 +52,46 @@ export const useOrganizationContact = () => {
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
-  const password = watch('size');
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log('sumbitttin', data, password);
+    // updateUser({ ...state, city: option.label, country: option.countryCode });
+    const { orgName, orgType, social_causes, bio, image, city, country, email, website, size } = state;
+    console.log({
+      name: orgName,
+      type: orgType.value,
+      size: size.value,
+      social_causes,
+      bio,
+      email,
+      website,
+      city,
+      country,
+    });
+    try {
+      console.log({
+        name: orgName,
+        type: orgType.value,
+        size: size.value,
+        social_causes,
+        bio,
+        email,
+        website,
+        city,
+        country,
+      });
+      const response = await createOrganization({
+        name: orgName,
+        type: orgType.value,
+        size: size.value,
+        social_causes,
+        bio,
+        email,
+        website,
+        city,
+        country,
+      });
+      navigate(`/profile/users/${currentIdentity.meta?.username}/view`);
+    } catch (error) {}
   };
   const searchCities = async (searchText: string, cb) => {
     console.log(searchText);
@@ -65,21 +108,23 @@ export const useOrganizationContact = () => {
     return cities.map((city) => ({
       label: `${city.name}, ${city.region_name}`,
       value: city.country_code,
-      detail: city.name,
     }));
   };
-  const onSelectCity = (option) => {
-    updateUser({ ...state, city: option.label, country: option.countryCode });
+  const onSelectCity = (location) => {
+    console.log(location);
+    updateUser({ ...state, city: location.label, country: location.value });
   };
-  const onCreateOrganization = async () => {
-    // updateUser({ ...state, city: option.label, country: option.countryCode });
-    const { orgName, orgType, social_causes, bio, image, city, country, email, website } = state;
-    try {
-      const response = await createOrganization({ name: orgName, type: orgType, social_causes, bio, email });
-    } catch (error) {}
+
+  const onSelectSize = (size) => {
+    console.log('size', size);
+    updateUser({ ...state, size });
   };
+
   const updateEmail = (email: string) => updateUser({ ...state, email });
-  const updateWebsite = (website: string) => updateUser({ ...state, website });
+  const updateWebsite = (website: string) => {
+    console.log(errors);
+    updateUser({ ...state, website: 'https://' + website });
+  };
   return {
     register,
     handleSubmit,
@@ -89,9 +134,9 @@ export const useOrganizationContact = () => {
     control,
     setValue,
     searchCities,
-    options,
     updateEmail,
     updateWebsite,
     onSelectCity,
+    onSelectSize,
   };
 };

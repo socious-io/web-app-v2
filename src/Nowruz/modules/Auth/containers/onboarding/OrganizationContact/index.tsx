@@ -1,17 +1,23 @@
-import React from 'react';
-import Select from 'react-select';
-import AsyncSelect from 'react-select/async';
-import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
-import { InputDropDown } from 'src/Nowruz/modules/general/components/inputDropDown';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 import css from './contact.module.scss';
 import { useOrganizationContact } from './useOrganizationContact';
 export const OrganizationContact = () => {
-  const { register, handleSubmit, errors, onSubmit, companySizeOptions, setValue, searchCities, options } =
-    useOrganizationContact();
+  const {
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
+    companySizeOptions,
+    setValue,
+    searchCities,
+    updateWebsite,
+    updateEmail,
+    onSelectCity,
+    onSelectSize,
+  } = useOrganizationContact();
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>
@@ -20,6 +26,7 @@ export const OrganizationContact = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
+          onChange={(e) => updateEmail(e.target.value)}
           autoComplete="Email"
           label={'Your organization contact email*'}
           name="email"
@@ -37,7 +44,7 @@ export const OrganizationContact = () => {
           icon="search-lg"
           hasDropdownIcon={false}
           label="City*"
-          onChange={(value) => console.log(value)}
+          onChange={(value) => onSelectCity(value)}
         />
         <SearchDropdown
           className="mb-5"
@@ -45,10 +52,11 @@ export const OrganizationContact = () => {
           placeholder="Select a company size"
           options={companySizeOptions}
           isSearchable={false}
-          onChange={(value) => setValue('size', value.value)}
+          onChange={(value) => onSelectSize(value)}
         />
         <Input
           autoComplete="Website"
+          onChange={(e) => updateWebsite(e.target.value)}
           label={'Website'}
           name="website"
           register={register}
@@ -57,7 +65,7 @@ export const OrganizationContact = () => {
           errors={errors['website']?.message ? [errors['website']?.message.toString()] : undefined}
         />
       </form>
-      <div className="mt-6 mb-2">
+      <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ">
         <Button color="primary" block onClick={handleSubmit(onSubmit)}>
           Continue
         </Button>

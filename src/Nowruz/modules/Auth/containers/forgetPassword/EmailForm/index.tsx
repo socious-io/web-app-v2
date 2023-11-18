@@ -5,13 +5,13 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { useEmailForm } from './useEmailForm';
 
 export const EmailForm = () => {
-
   const { register, errors, navigateToOtp, handleSubmit, onBack, getValues } = useEmailForm();
 
   return (
     <>
       <form className="my-8">
         <Input
+          id="email"
           autoComplete="Email"
           label="Email"
           name="email"

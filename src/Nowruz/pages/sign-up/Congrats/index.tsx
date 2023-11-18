@@ -17,7 +17,7 @@ export const Congrats = () => {
           logo={<FeaturedIcon src="/icons/check-circle.svg" />}
         />
         <div className="mt-8">
-          <Button onClick={() => navigate('/sign-up/user/welcome')} color="primary" block>
+          <Button onClick={() => navigate('/sign-up/user/onboarding')} color="primary" block>
             Continue
           </Button>
         </div>

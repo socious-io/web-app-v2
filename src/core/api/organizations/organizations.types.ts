@@ -19,6 +19,7 @@ export interface OrganizationReq {
   cover_image?: string | any;
   mission?: string;
   culture?: string;
+  size: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'L';
 }
 
 export interface OrganizationsRes extends PaginateRes {

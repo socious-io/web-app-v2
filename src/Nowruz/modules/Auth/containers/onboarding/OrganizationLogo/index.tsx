@@ -1,7 +1,7 @@
 import Divider from '@mui/material/Divider';
 import variables from 'src/components/_exports.module.scss';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
@@ -22,7 +22,7 @@ export const OrganizationLogo = () => {
         </div>
       </div>
       <div className="flex justify-center mt-5">
-        <Avatar size="96px" type="organizations" img={image.imageUrl} />
+        <Avatar size="96px" type="organizations" img={image.imageUrl} iconSize={47} />
       </div>
       <div className="mt-5">
         <Button
@@ -49,9 +49,9 @@ export const OrganizationLogo = () => {
         onChange={(e) => updateBio(e.target.value)}
       />
       <div className={css.counter}>{bioCounter}/160</div>
-      <div className="mt-6 mb-2">
+      <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ">
         <Button disabled={isValidForm} color="primary" block onClick={goNextPage}>
-          Continue
+          Next: Contact information
         </Button>
       </div>
     </div>
