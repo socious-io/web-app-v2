@@ -51,9 +51,9 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div className={css.labelContainer}>
+    <div>
       {label && (
-        <div>
+        <div className={css.labelContainer}>
           <label htmlFor={id} className={css.label}>
             {label}
           </label>
@@ -75,6 +75,7 @@ export const Input: React.FC<InputProps> = ({
               {prefix}
             </InputAdornment>
           ),
+          'aria-describedby': id,
         }}
         {...(register
           ? register(name, {
