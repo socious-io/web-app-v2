@@ -28,6 +28,7 @@ export const City = () => {
           onSelectCity(newValue);
         }}
         label="Location*"
+        disableClearable={true}
       />
       <div className="flex-grow"></div>
       <div className="mt-6">

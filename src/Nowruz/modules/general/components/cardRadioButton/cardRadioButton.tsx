@@ -32,10 +32,19 @@ export const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
           className={`${css.container} ${selectedValue === item.value ? css.selectedContainer : css.normalContainer} `}
           onClick={() => setSelectedValue(item.value)}
         >
-          <CardRadioButtonIcon selected={selectedValue === item.value} Component={item.icon} />
+          {item.img ? (
+            item.img
+          ) : item.icon ? (
+            <CardRadioButtonIcon selected={selectedValue === item.value} icon={item.icon} />
+          ) : (
+            ''
+          )}
+
           <div className={css.content}>
-            <Typography variant="subtitle2">{item.title}</Typography>
-            <Typography variant="caption">{item.description}</Typography>
+            <div className={`${css.title} ${selectedValue === item.value ? css.selectedTitle : ''}`}>{item.title}</div>
+            <div className={`${css.desc} ${selectedValue === item.value ? css.selectedDesc : ''}`}>
+              {item.description}
+            </div>
           </div>
           <div className={css.rbContainer}>
             <Radio

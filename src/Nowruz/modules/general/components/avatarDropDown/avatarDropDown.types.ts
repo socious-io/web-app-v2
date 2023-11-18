@@ -4,10 +4,13 @@ export interface AccountItem {
   type: 'organizations' | 'users';
   name: string;
   username: string;
-  selected: boolean;
+  selected?: boolean;
 }
 
 export interface AvatarDropDownProps {
-  accounts: AccountItem[];
   buttonHeight?: string;
+  createOrg?: boolean;
+  displayOtherAccounts?: boolean;
+  displaySetting?: boolean;
+  createOrgFunc?: () => void;
 }

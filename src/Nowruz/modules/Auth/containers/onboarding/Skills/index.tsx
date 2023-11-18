@@ -17,9 +17,9 @@ export const Skills = () => {
         <MultiSelect
           searchTitle={'Select at least 1 skill*'}
           max={20}
-          maxLabel={'Max. 20 skill'}
+          maxLabel={'Max. 20 skills'}
           items={items}
-          placeholder={'search a skill'}
+          placeholder={'Search a skill'}
           componentValue={value}
           setComponentValue={setValue}
           customHeight="200px"

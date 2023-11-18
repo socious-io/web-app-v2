@@ -36,11 +36,11 @@ export async function jobOffers(id: string, params?: FilterReq): Promise<OffersR
   return (await get<OffersRes>(`projects/${id}/offers`, { params })).data;
 }
 
-export async function jobMissions(id: string, params: PaginateReq): Promise<MissionsRes> {
+export async function jobMissions(id: string, params: FilterReq): Promise<MissionsRes> {
   return (await get<MissionsRes>(`projects/${id}/missions`, { params })).data;
 }
 
-export async function jobApplicants(id: string, params: PaginateReq): Promise<ApplicantsRes> {
+export async function jobApplicants(id: string, params: FilterReq): Promise<ApplicantsRes> {
   return (await get<ApplicantsRes>(`projects/${id}/applicants`, { params })).data;
 }
 
