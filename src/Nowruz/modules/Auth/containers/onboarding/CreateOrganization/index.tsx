@@ -26,7 +26,7 @@ export const CreateOrganization = () => {
           onChange={(e) => updateOrgName(e.target.value)}
         />
       </div>
-      <div className="mt-44">
+      <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-44 ">
         <Button disabled={!!!isValidForm} color="primary" block onClick={goNextPage}>
           Next: Organization type
         </Button>

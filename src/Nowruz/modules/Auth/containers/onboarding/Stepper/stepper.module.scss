@@ -1,0 +1,9 @@
+.back {
+  @media screen and (max-width: 600px) {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  margin: 12px 0;
+}

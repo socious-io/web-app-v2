@@ -26,6 +26,7 @@ const orgInitialState = {
   country: '',
   email: '',
   website: '',
+  size: null,
 };
 const type = localStorage.getItem('registerFor');
 

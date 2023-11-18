@@ -8,6 +8,4 @@ export interface SelectCardGroupProps {
   selected?: SelectCardGroupItem;
   value?: SelectCardGroupItem;
   setValue: (newVal: SelectCardGroupItem) => void;
-  width?: string;
-  height?: string;
 }
