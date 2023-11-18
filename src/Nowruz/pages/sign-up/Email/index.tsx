@@ -31,40 +31,38 @@ export const Email = () => {
     );
   };
   return (
-    <div className="container mx-auto flex flex-col h-screen pb-16 md:pt-24 pt-12 px-4">
-      <div className="flex md:flex-row flex-col">
-        <div className={`w-full md:w-1/2 md:pt-24`}>
-          <div className="form-container">
-            <IntroHeader
-              title="Create an account"
-              description="Sign up and start making an impact"
-              logo={<Logo width={48} height={48} />}
-            />
-            <div className="mt-7">
-              <EmailForm />
-            </div>
-            <div className="my-5 text-center">
-              <Typography variant="caption" className={css.signupTitle}>
-                Already have an account?
-              </Typography>
-              <Link href="/sign-in" className={`${css.link} mt-5`}>
-                Log in
-              </Link>
-            </div>
-            <div className="text-center">
-              <Typography variant="caption" className={css.signupTitle}>
-                By continuing, you accept our
-              </Typography>
-              <Link href="/terms-conditions" className={css.link} underline="hover">
-                Terms of Use
-              </Link>
-              <Typography variant="caption" className={css.signupTitle}>
-                and
-              </Typography>
-              <Link href="/privacy-policy" className={css.link} underline="hover">
-                Privacy Policy.
-              </Link>
-            </div>
+    <div className="flex h-screen ">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
+        <div className="form-container">
+          <IntroHeader
+            title="Create an account"
+            description="Sign up and start making an impact"
+            logo={<Logo width={48} height={48} />}
+          />
+          <div className="mt-7">
+            <EmailForm />
+          </div>
+          <div className="my-5 text-center">
+            <Typography variant="caption" className={css.signupTitle}>
+              Already have an account?
+            </Typography>
+            <Link href="/sign-in" className={`${css.link} mt-5`}>
+              Log in
+            </Link>
+          </div>
+          <div className="text-center">
+            <Typography variant="caption" className={css.signupTitle}>
+              By continuing, you accept our
+            </Typography>
+            <Link href="/terms-conditions" className={css.link} underline="hover">
+              Terms of Use
+            </Link>
+            <Typography variant="caption" className={css.signupTitle}>
+              and
+            </Typography>
+            <Link href="/privacy-policy" className={css.link} underline="hover">
+              Privacy Policy.
+            </Link>
           </div>
         </div>
         <div className={css.copy}>

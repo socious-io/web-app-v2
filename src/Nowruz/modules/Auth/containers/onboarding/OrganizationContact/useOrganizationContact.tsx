@@ -15,7 +15,7 @@ type Inputs = {
 const schema = yup.object().shape({
   email: yup.string().email('Enter a correct email').required('Email is required'),
   size: yup.string().required('Organization size is required'),
-  website: yup.string().url('Please enter a valid website URL').required('Website URL is required.'),
+  website: yup.string().matches(/^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid website URL'),
 });
 
 const companySizeOptions = [
@@ -55,7 +55,6 @@ export const useOrganizationContact = () => {
     try {
       if (searchText) {
         const response = await searchLocation(searchText);
-        // setOptions(cityToOption(response.items));
         cb(cityToOption(response.items));
       }
     } catch (error) {

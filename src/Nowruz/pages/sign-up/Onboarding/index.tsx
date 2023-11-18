@@ -51,12 +51,12 @@ export const Onboarding = () => {
         <div className={css.container}>
           <Steper
             components={[
-              { Component: <OrganizationContact />, skippable: false },
-              { Component: <CreateOrganization />, skippable: false },
               { Component: <OpWelcome />, skippable: false },
+              { Component: <CreateOrganization />, skippable: false },
               { Component: <OrganizationType />, skippable: false },
               { Component: <OrganizationCauses />, skippable: false },
               { Component: <OrganizationLogo />, skippable: false },
+              { Component: <OrganizationContact />, skippable: false },
             ]}
           />
         </div>
@@ -64,9 +64,3 @@ export const Onboarding = () => {
     </UserProvider>
   );
 };
-// { Component: <OpWelcome />, skippable: false },
-// { Component: <CreateOrganization />, skippable: false },
-// { Component: <OrganizationType />, skippable: false },
-// { Component: <OrganizationCauses />, skippable: false },
-// { Component: <OrganizationLogo />, skippable: false },
-// { Component: <OrganizationContact />, skippable: false },

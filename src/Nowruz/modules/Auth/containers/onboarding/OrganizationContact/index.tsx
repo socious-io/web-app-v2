@@ -27,26 +27,21 @@ export const OrganizationContact = () => {
           placeholder="Enter your email"
           errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
         />
-        <AsyncSelect
+        <SearchDropdown
           placeholder="Search for a city"
-          defaultValue={[]}
           cacheOptions
+          isAsync
           loadOptions={searchCities}
           defaultOptions
           className="my-5"
-          styles={{
-            control: (provided) => ({
-              ...provided,
-              border: '1px solid #ccc',
-              boxShadow: 'none',
-            }),
-            indicatorSeparator: () => ({ display: 'none' }),
-            dropdownIndicator: () => ({ display: 'none' }),
-          }}
+          icon="search-lg"
+          hasDropdownIcon={false}
+          label="City*"
           onChange={(value) => console.log(value)}
         />
-        <Select
+        <SearchDropdown
           className="mb-5"
+          label="Organization size*"
           placeholder="Select a company size"
           options={companySizeOptions}
           isSearchable={false}
