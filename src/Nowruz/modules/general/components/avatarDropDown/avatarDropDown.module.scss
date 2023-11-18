@@ -9,7 +9,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 .button {
   width: 100%;
@@ -19,4 +18,5 @@
   justify-content: flex-start;
   background-color: white;
   cursor: pointer;
+  border: none;
 }

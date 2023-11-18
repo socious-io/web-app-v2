@@ -1,7 +1,7 @@
+import { AccountItem } from '../avatarDropDown/avatarDropDown.types';
+
 export interface AvatarLabelGroupProps {
-  img?: string;
-  type: 'organizations' | 'users';
-  name: string;
-  username: string;
+  account: AccountItem;
   customStyle?: string;
+  handleClick?: () => void;
 }

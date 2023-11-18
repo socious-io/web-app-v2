@@ -1,28 +1,23 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { Card } from 'src/components/atoms/card/card';
 
+import css from './back-link.module.scss';
 import { BackLinkProps } from './back-link.types';
-export const BackLink: React.FC<BackLinkProps> = (props) => {
+
+export const BackLink = (props: BackLinkProps): JSX.Element => {
   const navigate = useNavigate();
-  const { onBack, title } = props;
-  const onClick = () => {
-    if (onBack) {
-      onBack();
+  function onClick() {
+    if (props.onBack) {
+      props.onBack();
     } else {
       navigate(-1);
     }
-  };
+  }
 
   return (
-    <Button
-      color="secondary"
-      variant="text"
-      startIcon={<img height={24} src="/icons/arrow-left.svg" />}
-      onClick={onClick}
-      className="flex"
-    >
-      {title}
-    </Button>
+    <Card className={css.container} onClick={onClick}>
+      <img src="/icons/chevron-left.svg" width={16} height={16} />
+      <span className={css.title}>{props.title}</span>
+    </Card>
   );
 };
