@@ -31,7 +31,7 @@ export const City = () => {
         disableClearable={true}
       />
       <div className="flex-grow"></div>
-      <div className="mt-6">
+      <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ">
         <Button disabled={!isFormValid} color="primary" block onClick={() => updateSelectedStep(4)}>
           Next: Photo
         </Button>
