@@ -24,7 +24,7 @@ const Template: StoryFn = (args) => {
     setSelected(value);
   };
   return (
-    <div style={{ width: '432px' }}>
+    <div style={{ width: '350px' }}>
       <SelectCardGroup items={items} value={selected} setValue={handleSelect} {...args} />;
     </div>
   );
