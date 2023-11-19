@@ -17,7 +17,10 @@ type Inputs = {
   website: string;
 };
 const schema = yup.object().shape({
-  email: yup.string().email('Enter a correct email').required('Email is required'),
+  email: yup
+    .string()
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
+    .required('Email is required'),
   size: yup.string(),
   website: yup.string().matches(/^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid website URL'),
 });
