@@ -16,14 +16,14 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
       </div>
       {open && (
         <div
-          className={`w-[280px] bg-Base-White border border-solid border-Gray-light-mode-200 rounded-default shadow-Shadows/shadow-lg flex flex-col ${customStyle}`}
+          className={`w-[280px] bg-Base-White border border-solid border-Gray-light-mode-200 rounded-default shadow-Shadows/shadow-lg flex flex-col ${customStyle} cursor-pointer`}
         >
           {accounts.map((a) => (
             <AvatarLabelGroup key={a.id} account={a} />
           ))}
           {iconItems.length ? <Divider /> : ''}
           {iconItems.map((i) => (
-            <IconListItem key={i.label} iconName={i.iconName} label={i.label} />
+            <IconListItem key={i.label} iconName={i.iconName} label={i.label} onClick={i.onClick} />
           ))}
           {customItems.length ? <Divider /> : ''}
           {customItems.map((i) => i)}

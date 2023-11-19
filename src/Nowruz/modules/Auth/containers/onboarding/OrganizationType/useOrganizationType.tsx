@@ -7,7 +7,7 @@ export const useOrganizationType = () => {
   const { state, updateUser } = useUser();
 
   const items = [
-    { value: '1', label: 'Impact Startup' },
+    { value: 'STARTUP', label: 'Impact Startup' },
     { value: 'SOCIAL', label: 'Social Business' },
     { value: 'NONPROFIT', label: 'Non profit / Charity' },
     { value: 'COOP', label: 'Social Co-operative' },
