@@ -40,6 +40,7 @@ export const ImageBio = () => {
         <Divider sx={{ bgcolor: variables.color_primary_300 }} />
       </div>
       <Input
+        id="bio"
         id="headline"
         value={bio}
         label="Headline"

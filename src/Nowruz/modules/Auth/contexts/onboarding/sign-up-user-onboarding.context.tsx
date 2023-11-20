@@ -18,7 +18,7 @@ const initialState = {
 };
 const orgInitialState = {
   orgName: '',
-  orgType: null,
+  orgType: { value: 'STARTUP', label: 'Impact Startup' },
   social_causes: [],
   bio: '',
   image: '',
@@ -47,11 +47,11 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
-export const UserContext = React.createContext(type === 'users' ? initialState : orgInitialState);
+console.log('init state for', type);
+export const UserContext = React.createContext(type === 'user' ? initialState : orgInitialState);
 
 export const UserProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, type === 'users' ? initialState : orgInitialState);
+  const [state, dispatch] = useReducer(reducer, type === 'user' ? initialState : orgInitialState);
 
   useEffect(() => {
     const fetchData = async () => {

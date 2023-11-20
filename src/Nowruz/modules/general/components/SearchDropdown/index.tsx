@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Select, { type DropdownIndicatorProps, components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -41,15 +41,27 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   label,
   icon,
   errors,
+  id,
   ...props
 }) => {
+  const selectRef = useRef(null);
+
+  const handleLabelClick = () => {
+    if (selectRef.current) {
+      selectRef.current.focus();
+    }
+  };
   return (
     <div className={`${css.container} ${className}`}>
-      <div className={css.label}>
-        <label>{label}</label>
+      <div className={css.labelContainer}>
+        <label htmlFor={id} className={css.label} onClick={handleLabelClick}>
+          {label}
+        </label>
       </div>
       {isAsync ? (
         <AsyncSelect
+          id={id}
+          ref={selectRef}
           options={options}
           components={{
             Option: CustomOption,
@@ -82,6 +94,8 @@ export const SearchDropdown: React.FC<SelectProps> = ({
         />
       ) : (
         <Select
+          id={id}
+          ref={selectRef}
           options={options}
           components={{
             Option: CustomOption,
