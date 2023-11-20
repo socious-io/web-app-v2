@@ -25,6 +25,8 @@
       background-color: $color-primary-200;
       color: $color-white;
     }
+  }
+  &:global(.MuiButton-containedPrimary) {
     &:focus {
       background-color: $color-primary-700;
       color: $color-white;
