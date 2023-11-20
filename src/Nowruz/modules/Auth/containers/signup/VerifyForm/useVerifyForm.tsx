@@ -8,6 +8,7 @@ export const useVerifyForm = () => {
   const email = localStorage.getItem('email') as string;
   const [otpValue, setOtpValue] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
     try {
@@ -21,8 +22,9 @@ export const useVerifyForm = () => {
     }
   };
   function resendCode() {
+    setLoading(true);
     const email = localStorage.getItem('email');
-    resendVerifyCode({ email });
+    resendVerifyCode({ email }).then(() => setLoading(false));
   }
-  return { onSubmit, otpValue, setOtpValue, email, resendCode, isValid };
+  return { onSubmit, otpValue, setOtpValue, email, resendCode, isValid, loading };
 };
