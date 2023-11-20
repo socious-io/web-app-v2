@@ -58,3 +58,7 @@ export async function stripeLink(params: AuthStripeReq): Promise<StripeLinkRes> 
 export async function stripeProfile(params: SrtipeProfileReq): Promise<StripeProfileRes> {
   return (await get<StripeProfileRes>('auth/stripe/profile', { params })).data;
 }
+
+export async function googleOauth(code: string): Promise<AuthRes> {
+  return (await get<AuthRes>('auth/google', { params: { code } })).data;
+}
