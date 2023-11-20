@@ -58,10 +58,10 @@ export const Onboarding = () => {
           <div className={css.container}>
             <Steper
               components={[
-                { Component: <City />, skippable: false },
                 { Component: <Welcome />, skippable: false },
                 { Component: <Causes />, skippable: false },
                 { Component: <Skills />, skippable: false },
+                { Component: <City />, skippable: false },
                 { Component: <ImageBio />, skippable: false },
               ]}
             />
@@ -79,11 +79,11 @@ export const Onboarding = () => {
         <div className={css.container}>
           <Steper
             components={[
-              { Component: <OrganizationLogo />, skippable: false },
               { Component: <OpWelcome />, skippable: false },
               { Component: <CreateOrganization />, skippable: false },
               { Component: <OrganizationType />, skippable: false },
               { Component: <OrganizationCauses />, skippable: false },
+              { Component: <OrganizationLogo />, skippable: false },
               { Component: <OrganizationContact />, skippable: false },
             ]}
           />
