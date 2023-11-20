@@ -14,11 +14,11 @@ export const OrganizationLogo = () => {
   return (
     <div className="flex flex-col items-stretch lg:pt-7 sm:pt-5 px-4">
       <div className={css.header}>
-        <div className={css.title}>
-          <h1>Tell us more about your organization</h1>
+        <div>
+          <h1 className={css.title}>Tell us more about your organization</h1>
         </div>
-        <div className={css.description}>
-          <h2>Add your logo and short description</h2>
+        <div>
+          <h2 className={css.description}>Add your logo and short description</h2>
         </div>
       </div>
       <div className="flex justify-center mt-5">
@@ -40,6 +40,7 @@ export const OrganizationLogo = () => {
         <Divider sx={{ bgcolor: variables.color_primary_300 }} />
       </div>
       <Input
+        id="bio"
         value={bio}
         label="Headline"
         customHeight="128px"
@@ -50,7 +51,7 @@ export const OrganizationLogo = () => {
       />
       <div className={css.counter}>{bioCounter}/160</div>
       <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ">
-        <Button disabled={isValidForm} color="primary" block onClick={goNextPage}>
+        <Button color="primary" block onClick={goNextPage}>
           Next: Contact information
         </Button>
       </div>

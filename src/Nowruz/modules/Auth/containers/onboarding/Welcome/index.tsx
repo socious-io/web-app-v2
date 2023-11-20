@@ -10,11 +10,11 @@ export const Welcome = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col items-center max-w-md py-5 px-4">
-        <div className={css.title}>Welcome to Socious</div>
-        <div className={css.description}>
+        <h1 className={css.title}>Welcome to Socious</h1>
+        <h2 className={css.description}>
           You’re about to embark on a journey paved with opportunities to make a real impact. With Socious, turns your
           ambitions and dreams into real-world change.
-        </div>
+        </h2>
         <img src="/images/welcome.svg" />
         <div className={css.subtitle}> Complete your profile to find impact jobs</div>
         <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ">

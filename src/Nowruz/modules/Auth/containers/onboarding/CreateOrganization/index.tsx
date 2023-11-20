@@ -11,14 +11,15 @@ export const CreateOrganization = () => {
     <div className="md:pt-24 px-4 flex flex-col">
       <div className="container">
         <div className={css.header}>
-          <div className={css.title}>
-            <h1>Create organization</h1>
+          <div>
+            <h1 className={css.title}>Create organization</h1>
           </div>
-          <div className={css.description}>
-            <h2>Enter your organization name</h2>
+          <div>
+            <h2 className={css.description}>Enter your organization name</h2>
           </div>
         </div>
         <Input
+          id="name"
           value={orgName}
           label="Your organization name*"
           variant="outlined"

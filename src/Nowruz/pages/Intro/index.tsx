@@ -39,12 +39,12 @@ export const Intro = () => {
     );
   };
   return (
-    <div className="flex h-screen px-4">
+    <div className="flex h-screen px-4 sm:p-0">
       <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
         <div className="form-container">
           <IntroHeader
             title="Get started"
-            description="Join as a professional or impact organization"
+            description="Select your path: Are you purpose-driven talent seeking to make an impact, or an organization driving change?"
             logo={<Logo width={48} height={48} />}
           />
           <div className="mt-7">
@@ -72,7 +72,9 @@ export const Intro = () => {
           </div>
         </div>
         <div className={css.copy}>
-          <div>© Socious Global Inc. 2023</div>
+          <div>
+            <span className={css.copyText}>© Socious Global Inc. 2023</span>
+          </div>
         </div>
       </div>
 

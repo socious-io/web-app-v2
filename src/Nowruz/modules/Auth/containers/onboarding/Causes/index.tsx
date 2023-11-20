@@ -9,15 +9,15 @@ export const Causes = () => {
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>
-        <div className={css.title}>What are you passionated about?</div>
-        <div className={css.description}>Select up to 5 social causes</div>
+        <h1 className={css.title}>What are you passionated about?</h1>
+        <h2 className={css.description}>Select up to 5 social causes</h2>
       </div>
       <div className="mt-5">
         <MultiSelect
           searchTitle={'Select at least 1 cause*'}
           max={5}
           maxLabel={'Max. 5 causes'}
-          items={items.slice(0, 30)}
+          items={items}
           placeholder={'Search a cause'}
           componentValue={value}
           setComponentValue={setValue}

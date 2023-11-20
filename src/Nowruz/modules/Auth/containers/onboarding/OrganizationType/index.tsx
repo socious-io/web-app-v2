@@ -12,11 +12,11 @@ export const OrganizationType = () => {
     <div className="md:pt-9 px-4 flex flex-col">
       <div className="container">
         <div className={css.header}>
-          <div className={css.title}>
-            <h1>Create organization</h1>
+          <div>
+            <h1 className={css.title}>Create organization</h1>
           </div>
-          <div className={css.description}>
-            <h2>What type is your organization?</h2>
+          <div>
+            <h2 className={css.description}>Please select the category that best describes your organization</h2>
           </div>
           <SelectCardGroup items={items} value={orgType} setValue={(e) => setOrgType(e)} />
         </div>

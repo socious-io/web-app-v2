@@ -31,7 +31,7 @@ export const Email = () => {
     );
   };
   return (
-    <div className="flex h-screen px-4">
+    <div className="flex h-screen px-4 sm:p-0">
       <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
         <div className="form-container">
           <IntroHeader

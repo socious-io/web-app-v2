@@ -13,16 +13,12 @@ import * as yup from 'yup';
 
 type Inputs = {
   email: string;
-  size: string;
-  website: string;
 };
 const schema = yup.object().shape({
   email: yup
     .string()
     .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
     .required('Email is required'),
-  size: yup.string(),
-  website: yup.string().matches(/^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid website URL'),
 });
 
 const companySizeOptions = [
@@ -57,7 +53,6 @@ export const useOrganizationContact = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // updateUser({ ...state, city: option.label, country: option.countryCode });
     const { orgName, orgType, social_causes, bio, image, city, country, email, website, size } = state;
     console.log({
       name: orgName,
@@ -71,17 +66,6 @@ export const useOrganizationContact = () => {
       country,
     });
     try {
-      console.log({
-        name: orgName,
-        type: orgType.value,
-        size: size.value,
-        social_causes,
-        bio,
-        email,
-        website,
-        city,
-        country,
-      });
       const response = await createOrganization({
         name: orgName,
         type: orgType.value,
@@ -119,7 +103,6 @@ export const useOrganizationContact = () => {
   };
 
   const onSelectSize = (size) => {
-    console.log('size', size);
     updateUser({ ...state, size });
   };
 
@@ -128,6 +111,7 @@ export const useOrganizationContact = () => {
     console.log(errors);
     updateUser({ ...state, website: 'https://' + website });
   };
+  const isFormValid = state.city !== '' && state.size !== null && state.emali !== '';
   return {
     register,
     handleSubmit,
@@ -141,5 +125,6 @@ export const useOrganizationContact = () => {
     updateWebsite,
     onSelectCity,
     onSelectSize,
+    isFormValid,
   };
 };

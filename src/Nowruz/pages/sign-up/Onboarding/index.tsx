@@ -46,12 +46,7 @@ export const Onboarding = () => {
     },
   ];
   const type = localStorage.getItem('registerFor');
-
-  const logoutUser = () => {
-    logout().then(() => {
-      naviga;
-    });
-  };
+  console.log('type is', type);
   if (type === 'user')
     return (
       <UserProvider>
@@ -63,11 +58,11 @@ export const Onboarding = () => {
           <div className={css.container}>
             <Steper
               components={[
-                { Component: <ImageBio />, skippable: false },
+                { Component: <City />, skippable: false },
                 { Component: <Welcome />, skippable: false },
                 { Component: <Causes />, skippable: false },
-                { Component: <City />, skippable: false },
                 { Component: <Skills />, skippable: false },
+                { Component: <ImageBio />, skippable: false },
               ]}
             />
           </div>
@@ -80,15 +75,15 @@ export const Onboarding = () => {
         <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} />
         <IconDropDown iconItems={items} type={type === 'user' ? 'users' : 'organizations'} accounts={accounts} />
       </div>
-      <div className="flex flex-col items-center pb-4 sb:h-screen">
+      <div className="flex flex-col items-center pb-4 ">
         <div className={css.container}>
           <Steper
             components={[
+              { Component: <OrganizationLogo />, skippable: false },
               { Component: <OpWelcome />, skippable: false },
               { Component: <CreateOrganization />, skippable: false },
               { Component: <OrganizationType />, skippable: false },
               { Component: <OrganizationCauses />, skippable: false },
-              { Component: <OrganizationLogo />, skippable: false },
               { Component: <OrganizationContact />, skippable: false },
             ]}
           />

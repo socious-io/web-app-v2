@@ -10,8 +10,8 @@ export const OrganizationCauses = () => {
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>
-        <div className={css.title}>What is your organization about?</div>
-        <div className={css.description}>Select up to 5 social causes</div>
+        <h1 className={css.title}>What is your organization about?</h1>
+        <h2 className={css.description}>Select up to 5 social causes</h2>
       </div>
       <div className="mt-5">
         <MultiSelect

@@ -9,10 +9,10 @@ export const Skills = () => {
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>
-        <div className={css.title}>What skills do you have?</div>
-        <div className={css.description}>
+        <h1 className={css.title}>What skills do you have?</h1>
+        <h2 className={css.description}>
           Showcase up to 20 skills you can contribute to help social impact initiatives and organizations
-        </div>
+        </h2>
       </div>
       {!!items?.length && (
         <MultiSelect
