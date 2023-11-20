@@ -975,6 +975,20 @@ export const blueprint: RouteObject[] = [
     },
   },
   {
+    path: '/oauth',
+    children: [
+      {
+        path: 'google',
+        async lazy() {
+          const { GoogleOauth2 } = await import('src/Nowruz/pages/oauth/google');
+          return {
+            Component: GoogleOauth2,
+          };
+        },
+      },
+    ],
+  },
+  {
     path: 'privacy-policy',
     async lazy() {
       const { PrivacyPolicy } = await import('src/pages/privacy-policy/privacy-policy');
