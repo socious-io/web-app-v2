@@ -11,8 +11,7 @@ export const useCauses = () => {
     return { value: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
   });
   useEffect(() => {
-    if(state.social_causes)
-    setValue(getOptionsFromValues(state.social_causes));
+    if (state.social_causes) setValue(getOptionsFromValues(state.social_causes));
   }, []);
   useEffect(() => {
     updateUser({ ...state, social_causes: value.map((e) => e.value) });
