@@ -30,11 +30,11 @@ export const allowance = async (web3: Web3, token: string, amount: number, decim
   const chainId = await web3.eth.getChainId();
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
 
-  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined
+  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined;
 
   const approved = await erc20Contract.methods
     .approve(selectedNetwork.escrow, allowanceAmount)
-    .send({ from: web3.eth.defaultAccount, gasPrice  });
+    .send({ from: web3.eth.defaultAccount, gasPrice });
 
   if (!approved) throw new Error('Allowance not approved for escorw');
 };
@@ -49,7 +49,7 @@ export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
   const chainId = await web3.eth.getChainId();
   const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
   const escrowContract = new web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
-  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined
+  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined;
   const result = await escrowContract.methods.withdrawn(escrowId).send({ from: web3.eth.defaultAccount, gasPrice });
 
   return result.transactionHash;
@@ -65,7 +65,7 @@ export const escrow = async (params: EscrowParams) => {
   // First need allowance to verify that transaction is possible for smart contract
   await allowance(params.web3, token, params.totalAmount, tokenConfig?.decimals);
   const escrowContract = new params.web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
-  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined
+  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined;
   const result = await escrowContract.methods
     .newEscrow(
       params.contributor,
