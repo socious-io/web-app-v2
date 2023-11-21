@@ -13,4 +13,5 @@ export const config = {
   logDiscordWebHook: import.meta.env.VITE_LOG_DISCORD_WEBHOOK,
   datadogAppId: import.meta.env.VITE_DATADOG_APP_ID,
   datadogClientToken: import.meta.env.VITE_DATADOG_CLIENT_TOKEN,
+  googleOauthClientId: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID,
 };
