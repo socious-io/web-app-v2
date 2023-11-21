@@ -1,11 +1,11 @@
-import { config } from 'src/config';
+import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { setAuthParams } from 'src/core/api/auth/auth.service';
+import { config } from 'src/config';
 import { AuthRes, User, googleOauth, identities, profile } from 'src/core/api';
+import { setAuthParams } from 'src/core/api/auth/auth.service';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { useEffect } from 'react';
 
 export const GoogleOauth2 = () => {
   const googleLoginURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.googleOauthClientId}&redirect_uri=${window.location.href}&response_type=code&scope=email profile&access_type=offline&prompt=consent`;
@@ -43,7 +43,7 @@ export const GoogleOauth2 = () => {
         .then((res) => onLoginSucceed(res))
         .catch(() => navigate('/sign-in'));
     }
-  }, [code]);
+  });
 
   return <></>;
 };
