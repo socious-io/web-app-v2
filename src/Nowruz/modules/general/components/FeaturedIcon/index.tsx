@@ -8,7 +8,7 @@ export const FeaturedIcon: React.FC<FeaturedIconProps> = ({ src, className, widt
   return (
     <div className={`${css.container} ${className}`}>
       {!!src && <img src={src} width={width ? width : '28px'} height={height ? height : '28px'} />}
-      {!!iconName && <Icon fontSize={28} name="mail-01" />}
+      {!!iconName && <Icon fontSize={28} name={iconName} />}
     </div>
   );
 };

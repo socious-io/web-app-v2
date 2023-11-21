@@ -3,6 +3,7 @@ import variables from 'src/components/_exports.module.scss';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { FeaturedIcon } from 'src/Nowruz/modules/general/components/FeaturedIcon';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 import css from './image-bio.module.scss';
@@ -24,7 +25,7 @@ export const ImageBio = () => {
       <div className="flex justify-center mt-5">
         <Avatar size="96px" type="users" img={image.imageUrl} />
       </div>
-      <div className="mt-5">
+      <div className="mt-5 md:hidden">
         <Button
           startIcon={<Icon name="upload-cloud-02" fontSize={20} color={variables.color_primary_700} />}
           color="secondary"
@@ -35,6 +36,11 @@ export const ImageBio = () => {
         >
           Upload
         </Button>
+      </div>
+      <div className={`${css.uploadContainer} hidden md:flex`} onClick={onUploadImage}>
+          <FeaturedIcon iconName='upload-cloud-02' className='mb-2' />
+          <span className='font-bold'>Click to upload</span>
+          <span className={css.uploadDetailText}>SVG, PNG, JPG or GIF (max. 2MB)</span>
       </div>
       <div className="my-5">
         <Divider sx={{ bgcolor: variables.color_primary_300 }} />
