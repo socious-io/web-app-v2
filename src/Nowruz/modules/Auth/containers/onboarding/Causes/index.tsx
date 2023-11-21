@@ -1,4 +1,4 @@
-import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
+import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 

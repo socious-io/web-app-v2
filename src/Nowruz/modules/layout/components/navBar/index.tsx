@@ -1,15 +1,17 @@
-import { useState } from 'react';
 import { Icon } from 'src/Nowruz/general/Icon';
 
 import { Footer } from './footer/footer';
 import { LinksContainer } from './linksContainer/linksContainer';
 
-export const NavBar = () => {
-  const [open, setOpen] = useState(false);
+interface NavBarProps {
+  open: boolean;
+  setOpen: (val: boolean) => void;
+}
+export const NavBar: React.FC<NavBarProps> = ({ open, setOpen }) => {
   return (
     <div
-      className={`${
-        open ? ' w-full md:w-[280px] ' : ' hidden md:block w-[82px] '
+      className={` h-full fixed top-0 left-0 z-50 ${
+        open ? 'w-full  md:w-[280px] ' : ' hidden md:block w-[82px] '
       } h-full bg-Base-White md:bg-Brand-700 flex`}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}

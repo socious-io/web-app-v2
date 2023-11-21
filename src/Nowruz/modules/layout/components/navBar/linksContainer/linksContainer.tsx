@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { TestSwitchDropDown } from 'src/Nowruz/modules/general/components/avatarDropDown/test';
-import Badge from 'src/Nowruz/modules/general/components/Badge';
+import { AvatarDropDown } from 'src/Nowruz/modules/general/components/avatarDropDown';
 
 import { LinksContainerProps } from './linksContainer.types';
+import { useLinksContainer } from './useLinksContainer';
 import { LinkItem } from '../linkItem/LinkItem';
 
 export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
+  const { filteredMenu, userIsLoggedIn } = useLinksContainer();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   return (
@@ -20,87 +21,61 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
         />
         <img className="block md:hidden" src="/icons/nowruz/logo-primary.svg" alt="" />
       </div>
-      <div className="md:hidden w-full h-fit px-4">
-        <TestSwitchDropDown />
-      </div>
+      {userIsLoggedIn && (
+        <div className="md:hidden w-full h-fit px-4">
+          <AvatarDropDown createOrg displayOtherAccounts />
+        </div>
+      )}
+
       <div className="w-full flex flex-col gap-2 px-4 ">
-        <LinkItem
-          label="Dashboard"
-          navigateFunc={() => {
-            navigate('/');
-          }}
-          iconName="home-line"
-          menuOpen={open}
-        />
-        <LinkItem
-          label="Jobs"
-          navigateFunc={() => navigate('/jobs')}
-          iconName="briefcase-01"
-          children={[
-            {
-              label: 'Find work',
-              navigateFunc: () => {
-                navigate('/');
-              },
-            },
-            {
-              label: 'Saved jobs',
-              navigateFunc: () => {
-                navigate('/');
-              },
-            },
-          ]}
-          menuOpen={open}
-          subMenuOpen={subMenuOpen}
-          badgeIcon={
-            subMenuOpen ? (
-              <Icon
-                name="chevron-up"
-                className="text-Brand-300"
-                fontSize={20}
-                onClick={() => setSubMenuOpen(!subMenuOpen)}
-              />
-            ) : (
-              <Icon
-                name="chevron-down"
-                className="text-Brand-300"
-                fontSize={20}
-                onClick={() => setSubMenuOpen(!subMenuOpen)}
-              />
-            )
-          }
-        />
-        <LinkItem
-          label="Contracts"
-          navigateFunc={() => {
-            navigate('/');
-          }}
-          iconName="file-02"
-          menuOpen={open}
-        />
-        <LinkItem
-          label="Communities"
-          navigateFunc={() => {
-            navigate('/');
-          }}
-          iconName="users-01"
-          menuOpen={open}
-        />
-        <LinkItem
-          label="Messages"
-          navigateFunc={() => navigate('/chats')}
-          iconName="message-square-01"
-          menuOpen={open}
-          badgeIcon={<Badge content="10" />}
-        />
-        <LinkItem
-          label="Wallet"
-          navigateFunc={() => {
-            navigate('/');
-          }}
-          iconName="wallet-04"
-          menuOpen={open}
-        />
+        {filteredMenu.map((item) =>
+          item.children ? (
+            <LinkItem
+              key={item.label}
+              label={item.label}
+              navigateFunc={() => navigate(item.route)}
+              iconName={item.iconName}
+              children={item.children.map((ch) => {
+                return {
+                  label: ch.label,
+                  navigateFunc: () => {
+                    navigate(ch.route);
+                  },
+                };
+              })}
+              menuOpen={open}
+              subMenuOpen={subMenuOpen}
+              badgeIcon={
+                subMenuOpen ? (
+                  <Icon
+                    name="chevron-up"
+                    className="text-Brand-300 "
+                    fontSize={20}
+                    onClick={() => setSubMenuOpen(!subMenuOpen)}
+                  />
+                ) : (
+                  <Icon
+                    name="chevron-down"
+                    className="text-Brand-300 "
+                    fontSize={20}
+                    onClick={() => setSubMenuOpen(!subMenuOpen)}
+                  />
+                )
+              }
+            />
+          ) : (
+            <LinkItem
+              key={item.label}
+              label={item.label}
+              navigateFunc={() => {
+                navigate(item.route);
+              }}
+              iconName={item.iconName}
+              menuOpen={open}
+              badgeIcon={item.badgeIcon}
+            />
+          ),
+        )}
       </div>
     </div>
   );
