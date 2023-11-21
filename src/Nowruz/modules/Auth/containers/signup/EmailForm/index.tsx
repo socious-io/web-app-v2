@@ -13,7 +13,7 @@ export const EmailForm = () => {
         <Input
           id="email"
           autoComplete="Email"
-          label={type === 'User' ? 'Email*' : 'Your work email*'}
+          label={type === 'user' ? 'Email*' : 'Your work email*'}
           name="email"
           register={register}
           placeholder="Enter your email"

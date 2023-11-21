@@ -36,7 +36,7 @@ export const Email = () => {
         <div className="form-container">
           <IntroHeader
             title="Create an account"
-            description="Sign up and start making an impact"
+            description={type === 'user' ? 'Sign up and start making an impact' : 'Sign up to hire professional'}
             logo={<Logo width={48} height={48} />}
           />
           <div className="mt-7">
