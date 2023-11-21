@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 
@@ -7,13 +7,19 @@ import { AvatarProps } from './avatar.types';
 
 export const Avatar: React.FC<AvatarProps> = (props) => {
   const { badge, customStyle = '', size = '3rem', onClick, type = 'users', img, iconName, ...rest } = props;
-  const icon = iconName || type === 'users' ? 'user-01' : 'building-05';
+
+  const [icon, setIcon] = useState('');
+  useEffect(() => {
+    if (iconName) setIcon(iconName);
+    else setIcon(type === 'users' ? 'user-01' : 'building-05');
+  }, [iconName]);
+
   const style: CSSProperties = {
-    ...rest,
     width: size,
     height: size,
     minWidth: size,
     minHeight: size,
+    ...rest,
   };
   return (
     <div

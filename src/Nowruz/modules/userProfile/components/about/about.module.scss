@@ -1,0 +1,32 @@
+@import 'src/components/_primitives.scss';
+
+.title {
+  display: flex;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  color: $color-grey-900;
+}
+.editBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0;
+  margin-left: auto;
+}
+.addBtn {
+  width: fit-content;
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+  color: $color-primary-700;
+  text-transform: none;
+  border: none;
+}
+.addBtn:hover {
+  background-color: none;
+}
