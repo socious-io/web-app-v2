@@ -40,7 +40,7 @@ export const useOrganizationContact = () => {
   const { state, updateUser } = useUser();
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const isMobile = isTouchDevice();
-
+  const [isShortnameValid, setIsShortnameValid] = useState(false);
   const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
     const current = state.identity.entities.find((identity) => identity.current);
     return current as CurrentIdentity;
@@ -60,7 +60,7 @@ export const useOrganizationContact = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { orgName, orgType, social_causes, bio, image, city, country, email, website, size, username } = state;
+    const { orgName, orgType, social_causes, bio, image, city, country, email, website, size, shortname } = state;
     console.log({
       name: orgName,
       type: orgType.value,
@@ -85,19 +85,17 @@ export const useOrganizationContact = () => {
             website,
             city,
             country,
-            username,
+            shortname,
           },
           ['', null],
         ),
       );
-      if (isMobile) navigate(`sign-up/user/notification`);
-      else navigate(`/profile/users/${currentIdentity.meta?.username}/view`);
+      navigate(`/profile/organizations/${state.shortname}/view`);
+      // if (isMobile) navigate(`sign-up/user/notification`);
+      // else navigate(`/profile/organizations/${state.shortname}/view`);
     } catch (error) {}
   };
-  const username = watch('username');
-
   const searchCities = async (searchText: string, cb) => {
-    console.log(searchText);
     try {
       if (searchText) {
         const response = await searchLocation(searchText);
@@ -113,37 +111,42 @@ export const useOrganizationContact = () => {
       value: city.country_code,
     }));
   };
-  useEffect(() => {
-    if (username) {
-      debouncedCheckUsername(username);
-    } else clearErrors('username');
-  }, [username]);
-  const onSelectCity = (location) => {
-    console.log(location);
-    updateUser({ ...state, city: location.label, country: location.value });
-  };
   const checkUsernameAvailability = async (shortname: string) => {
     const checkUsername = await preRegister({ shortname });
     if (checkUsername.shortname === null) {
       console.log(checkUsername);
       setIsusernameValid(true);
       clearErrors('username');
+      setIsShortnameValid(true);
     } else {
       setIsusernameValid(false);
       setError('username', {
         type: 'manual',
         message: 'Username is not available',
       });
+      setIsShortnameValid(false);
     }
   };
   const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
+
+  useEffect(() => {
+    console.log('useeffect ');
+    if (state.shortname) {
+      debouncedCheckUsername(state.shortname);
+    } else clearErrors('username');
+  }, [state.shortname]);
+
+  const onSelectCity = (location) => {
+    console.log(location);
+    updateUser({ ...state, city: location.label, country: location.value });
+  };
 
   const onSelectSize = (size) => {
     updateUser({ ...state, size });
   };
 
   const updateEmail = (email: string) => updateUser({ ...state, email });
-  const updateUsername = (username: string) => updateUser({ ...state, username });
+  const updateUsername = (shortname: string) => updateUser({ ...state, shortname });
 
   const updateWebsite = (website: string) => {
     console.log(errors);
@@ -166,5 +169,6 @@ export const useOrganizationContact = () => {
     isFormValid,
     isUsernameValid,
     updateUsername,
+    isShortnameValid,
   };
 };

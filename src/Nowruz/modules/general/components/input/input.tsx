@@ -18,6 +18,7 @@ export const Input: React.FC<InputProps> = ({
   prefix,
   color,
   register,
+  hints,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -91,7 +92,12 @@ export const Input: React.FC<InputProps> = ({
             {e}
           </p>
         ))}
-
+      {hints &&
+        hints.map((hint, index) => (
+          <p key={index} className={`${css.hintMsg} ${css.msg}`}>
+            {hint.hide && hint.hint}
+          </p>
+        ))}
       {isValid && validMessage && <p className={`${css.successMsg} ${css.msg}`}>{validMessage}</p>}
     </div>
   );

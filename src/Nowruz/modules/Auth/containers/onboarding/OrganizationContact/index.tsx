@@ -11,7 +11,6 @@ export const OrganizationContact = () => {
     errors,
     onSubmit,
     companySizeOptions,
-    setValue,
     searchCities,
     updateWebsite,
     updateEmail,
@@ -20,6 +19,7 @@ export const OrganizationContact = () => {
     isFormValid,
     isUsernameValid,
     updateUsername,
+    isShortnameValid,
   } = useOrganizationContact();
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
@@ -47,6 +47,7 @@ export const OrganizationContact = () => {
             register={register}
             placeholder="Username"
             validMessage="Username available"
+            hints={[{ hint: 'Must be at least 4 characters.', hide: !isShortnameValid }]}
             // prefix="socious.io/"
             isValid={isUsernameValid}
             errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}

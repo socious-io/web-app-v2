@@ -11,4 +11,5 @@ export interface InputProps extends DefaultProps {
   prefix?: string;
   customHeight?: string;
   register?: any;
+  hints?: Array<{ hint: string; hide: boolean }>;
 }
