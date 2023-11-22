@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
-import { Dot } from 'src/Nowruz/modules/general/components/dot';
+import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
-import NotifBellIcon from './notifBellIcon';
-import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
+import css from './headerNavBar.module.scss';
 import { useHeaderNavBar } from './useHeaderNavBar';
+import NotifBellIcon from '../notifBellIcon';
+import { StatusDropDown } from '../statusDropDown';
 
 interface HeaderNavBarProps {
   setOpen: (val: boolean) => void;
+  logout: () => void;
 }
-const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen }) => {
-  const { userIsLoggedIn, userType, image, accounts } = useHeaderNavBar();
+const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
+  const {
+    userIsLoggedIn,
+    userType,
+    image,
+    accounts,
+    openToVolunteer,
+    openToWork,
+    hiring,
+    handleOpenToWork,
+    handleOpenToVolunteer,
+    handleHiring,
+  } = useHeaderNavBar();
 
   const [searchTerm, setSearchTerm] = useState('');
   return (
-    <div className="h-16 md:h-[72px] w-full px-4 md:px-8 flex justify-between items-center bg-Base-White border border-solid border-x-0 border-t-0 border-b-Gray-light-mode-200 shadow-Shadows/shadow-sm md:[box-shadow:none] ">
+    <div className={`h-16 md:h-[72px] px-4 md:px-8 shadow-Shadows/shadow-sm md:[box-shadow:none] ${css.container}`}>
       <div
         className="md:hidden w-10 h-10 p-2 rounded-default"
         onClick={() => {
@@ -37,7 +48,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen }) => {
         />
       </div>
       {userIsLoggedIn && (
-        <div className="flex w-fit h-10 gap-2 ">
+        <div className="flex w-fit h-10 gap-2 md:gap-4 ">
           <div className="hidden md:block">
             <NotifBellIcon unread />
           </div>
@@ -46,11 +57,15 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen }) => {
             <Icon name="bell-01" fontSize={24} className="text-Gray-light-mode-500" />
           </div>
           <div className="hidden md:block">
-            <Button variant="outlined" className="flex w-33 gap-2" color="primary">
-              <Dot size="small" color={variables.color_success_500} shadow shadowColor={variables.color_success_100} />
-              {'Status'}
-              <Icon name="chevron-down" className="text-Gray-light-mode-700" fontSize={20} />
-            </Button>
+            <StatusDropDown
+              type={userType}
+              hiring={hiring}
+              openToWork={openToWork}
+              openToVolunteer={openToVolunteer}
+              handleOpenToWork={handleOpenToWork}
+              handleOpenToVolunteer={handleOpenToVolunteer}
+              handleHiring={handleHiring}
+            />
           </div>
 
           <IconDropDown
@@ -59,7 +74,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen }) => {
             accounts={accounts}
             iconItems={[
               { iconName: 'help-circle', label: 'Support' },
-              { iconName: 'log-out-01', label: 'Log out' },
+              { iconName: 'log-out-01', label: 'Log out', onClick: logout },
             ]}
           />
         </div>

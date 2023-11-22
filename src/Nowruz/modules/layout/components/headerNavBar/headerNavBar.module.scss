@@ -1,0 +1,10 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-white;
+  border-bottom: solid 1px $color-grey-200;
+}
