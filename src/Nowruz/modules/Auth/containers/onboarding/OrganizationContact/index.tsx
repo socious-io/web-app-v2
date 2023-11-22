@@ -84,7 +84,7 @@ export const OrganizationContact = () => {
           placeholder="www.website.com"
           prefix="https://"
         />
-        <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ">
+        <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>
           <Button disabled={!isFormValid} color="primary" block onClick={handleSubmit(onSubmit)}>
             Continue
           </Button>
