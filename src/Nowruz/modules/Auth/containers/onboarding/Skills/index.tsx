@@ -1,4 +1,4 @@
-import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
+import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 
 import css from './skills.module.scss';
