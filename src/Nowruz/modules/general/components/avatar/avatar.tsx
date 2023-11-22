@@ -12,7 +12,7 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
   useEffect(() => {
     if (iconName) setIcon(iconName);
     else setIcon(type === 'users' ? 'user-01' : 'building-05');
-  }, [iconName]);
+  }, [iconName, type]);
 
   const style: CSSProperties = {
     width: size,

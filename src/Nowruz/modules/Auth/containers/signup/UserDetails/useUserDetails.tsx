@@ -62,7 +62,7 @@ export const useUserDetails = () => {
     try {
       updateProfile({ username, first_name: firstName, last_name: lastName });
       const currentIdentities = await identities();
-      
+
       dispatch(setIdentityList(currentIdentities));
       navigate('../congrats');
     } catch (error) {

@@ -1,4 +1,6 @@
 import { Typography } from '@mui/material';
+import { Google } from 'public/icons/nowruz/google';
+import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
@@ -7,11 +9,12 @@ import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import { useSignInForm } from './useSignInForm';
 
-// import { Google } from 'public/icons/nowruz/google';
 // import { LinkedIn } from 'public/icons/nowruz/linkedin';
 
 export const SignInForm = () => {
   const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin } = useSignInForm();
+  const navigate = useNavigate();
+
   return (
     <>
       <form className="flex flex-col gap-6 my-8">
@@ -47,10 +50,11 @@ export const SignInForm = () => {
           <Button color="primary" onClick={handleSubmit(onLogin)}>
             Continue
           </Button>
-          {/* <Button variant="outlined" color="secondary" className={css.button}>
-              <Google />
-              <div className={css.buttonTitle}>Continue with Google</div>
-            </Button>
+          <Button color="primary" variant="outlined" onClick={() => navigate('/oauth/google')}>
+            <Google />
+            <div>Continue with Google</div>
+          </Button>
+          {/*
             <Button variant="outlined" color="secondary" className={css.button}>
               <LinkedIn />
               <div className={css.buttonTitle}>Continue with LinkedIn</div>

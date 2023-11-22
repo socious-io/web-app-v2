@@ -1,13 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { CurrentIdentity } from 'src/core/api';
+import { RootState } from 'src/store';
 
 import { LinkItem } from '../linkItem/LinkItem';
 import { LinksContainerProps } from '../linksContainer/linksContainer.types';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store';
-import { CurrentIdentity } from 'src/core/api';
 
-export const Footer: React.FC<LinksContainerProps> = ({ open }) => {
+interface FooterProps extends LinksContainerProps {
+  logout: () => void;
+}
+export const Footer: React.FC<FooterProps> = ({ open, logout }) => {
   const navigate = useNavigate();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -35,14 +38,7 @@ export const Footer: React.FC<LinksContainerProps> = ({ open }) => {
             iconName="settings-01"
             menuOpen={open}
           />
-          <LinkItem
-            label="Logout"
-            navigateFunc={() => {
-              navigate('/');
-            }}
-            iconName="log-out-01"
-            menuOpen={open}
-          />
+          <LinkItem label="Logout" navigateFunc={logout} iconName="log-out-01" menuOpen={open} />
         </>
       )}
       {!userIsLoggedIn && (
