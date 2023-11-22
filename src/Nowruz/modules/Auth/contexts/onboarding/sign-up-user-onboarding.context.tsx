@@ -27,6 +27,7 @@ const orgInitialState = {
   email: '',
   website: '',
   size: null,
+  username: '',
 };
 const type = localStorage.getItem('registerFor');
 

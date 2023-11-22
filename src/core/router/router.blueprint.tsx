@@ -822,6 +822,17 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          {
+            path: 'notification',
+            async lazy() {
+              const { AllowNotification } = await import(
+                'src/Nowruz/modules/Auth/containers/onboarding/AllowNotification'
+              );
+              return {
+                Component: AllowNotification,
+              };
+            },
+          },
           // {
           //   path: 'welcome',
           //   async lazy() {

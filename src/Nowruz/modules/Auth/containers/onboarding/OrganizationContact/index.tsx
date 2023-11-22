@@ -18,6 +18,8 @@ export const OrganizationContact = () => {
     onSelectCity,
     onSelectSize,
     isFormValid,
+    isUsernameValid,
+    updateUsername,
   } = useOrganizationContact();
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
@@ -30,12 +32,26 @@ export const OrganizationContact = () => {
           id="email"
           onChange={(e) => updateEmail(e.target.value)}
           autoComplete="Email"
-          label={'Your organization contact email*'}
+          label={'Email'}
           name="email"
           register={register}
           placeholder="Enter your email"
           errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
         />
+        <div className="mt-5">
+          <Input
+            id="username"
+            label="Your organization Socious address*"
+            name="username"
+            onChange={(e) => updateUsername(e.target.value)}
+            register={register}
+            placeholder="Username"
+            validMessage="Username available"
+            // prefix="socious.io/"
+            isValid={isUsernameValid}
+            errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}
+          />
+        </div>
         <SearchDropdown
           id="city"
           placeholder="Search for a city"
