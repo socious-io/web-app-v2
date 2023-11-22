@@ -90,9 +90,14 @@ export const useOrganizationContact = () => {
           ['', null],
         ),
       );
-      navigate(`/profile/organizations/${state.shortname}/view`);
-      // if (isMobile) navigate(`sign-up/user/notification`);
-      // else navigate(`/profile/organizations/${state.shortname}/view`);
+
+      if (isMobile)
+        navigate(`sign-up/user/notification`, {
+          state: {
+            username: shortname,
+          },
+        });
+      else navigate(`/profile/organizations/${shortname}/view`);
     } catch (error) {}
   };
   const searchCities = async (searchText: string, cb) => {
