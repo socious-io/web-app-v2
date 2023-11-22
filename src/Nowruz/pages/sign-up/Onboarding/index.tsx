@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, Notification } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { AllowNotification } from 'src/Nowruz/modules/Auth/containers/onboarding/AllowNotification';
 import { Causes } from 'src/Nowruz/modules/Auth/containers/onboarding/Causes';
 import { City } from 'src/Nowruz/modules/Auth/containers/onboarding/City';
 import { CreateOrganization } from 'src/Nowruz/modules/Auth/containers/onboarding/CreateOrganization';
@@ -29,6 +30,7 @@ export const Onboarding = () => {
     return state.identity.entities;
   });
   const primary = identities.find((i) => i.primary);
+  const type = localStorage.getItem('registerFor');
 
   const accounts = [
     { id: '1', type: 'users', name: primary?.meta.name, username: primary?.meta.username, img: primary?.meta.avatar },
@@ -45,7 +47,6 @@ export const Onboarding = () => {
       },
     },
   ];
-  const type = localStorage.getItem('registerFor');
   console.log('type is', type);
   if (type === 'user')
     return (
@@ -79,12 +80,12 @@ export const Onboarding = () => {
         <div className={css.container}>
           <Steper
             components={[
+              { Component: <OrganizationContact />, skippable: false },
               { Component: <OpWelcome />, skippable: false },
               { Component: <CreateOrganization />, skippable: false },
               { Component: <OrganizationType />, skippable: false },
               { Component: <OrganizationCauses />, skippable: false },
               { Component: <OrganizationLogo />, skippable: false },
-              { Component: <OrganizationContact />, skippable: false },
             ]}
           />
         </div>

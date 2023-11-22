@@ -14,6 +14,10 @@ export const useOrganizationType = () => {
     { value: 'IIF', label: 'Impact Investing Funds / Foundations' },
     { value: 'PUBLIC', label: 'Public Institution' },
     { value: 'INTERGOV', label: 'Intergovernmental Organization' },
+    { value: 'EDUCATIONAL', label: 'Educational Institution' },
+    { value: 'HEALTHCARE', label: 'Healthcare Organization' },
+    { value: 'RELIGIOUS', label: 'Religious Organization' },
+    { value: 'COMMERCIAL', label: 'Commercial Enterprises' },
     { value: 'DEPARTMENT', label: 'Impact department for a profit company' },
     { value: 'OTHER', label: 'Other' },
   ];

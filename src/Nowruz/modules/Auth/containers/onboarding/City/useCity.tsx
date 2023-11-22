@@ -7,14 +7,13 @@ export const useCity = () => {
   const [options, setOptions] = useState([]);
   const { state, updateUser } = useUser();
   const { updateSelectedStep } = useContext(StepsContext);
-
+  const [selectedOption, setSelectedOption] = useState();
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
       label: `${city.name}, ${city.region_name}`,
       countryCode: city.country_code,
     }));
   };
-
 
   const searchCities = async (searchText: string, cb) => {
     console.log(searchText);
@@ -30,8 +29,16 @@ export const useCity = () => {
   const onSelectCity = (location) => {
     updateUser({ ...state, city: location.label, country: location.value });
   };
-
   const isFormValid = state?.city;
-  const city = state.city;
-  return { options, onSelectCity, updateSelectedStep, isFormValid, city, searchCities };
+  const value = state?.city === null ? null : { label: state.city };
+  return {
+    options,
+    onSelectCity,
+    updateSelectedStep,
+    isFormValid,
+    searchCities,
+    selectedOption,
+    setSelectedOption,
+    value,
+  };
 };

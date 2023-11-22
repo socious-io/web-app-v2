@@ -12,7 +12,7 @@ export const Welcome = () => {
       <div className="flex flex-col items-center max-w-md py-5 px-4">
         <h1 className={css.title}>Welcome to Socious</h1>
         <h2 className={css.description}>
-          You’re about to embark on a journey paved with opportunities to make a real impact. With Socious, turns your
+          You’re about to embark on a journey paved with opportunities to make a real impact. With Socious, turn your
           ambitions and dreams into real-world change.
         </h2>
         <img src="/images/welcome.svg" />

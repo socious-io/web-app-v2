@@ -66,7 +66,9 @@ export const Email = () => {
           </div>
         </div>
         <div className={css.copy}>
-          <div>© Socious Global Inc. 2023</div>
+          <div>
+            <span className={css.copyText}>© Socious Global Inc. 2023</span>
+          </div>
         </div>
       </div>
 
