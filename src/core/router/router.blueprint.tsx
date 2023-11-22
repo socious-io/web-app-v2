@@ -63,36 +63,7 @@ export const blueprint: RouteObject[] = [
           };
         },
       },
-      {
-        path: 'profile/users',
-        children: [
-          {
-            path: ':id',
-            children: [
-              {
-                path: 'view',
-                loader: async ({ params }) => {
-                  const user = await otherProfileByUsername(params.id);
-                  const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
-                  return {
-                    user,
-                    badges: userBadges,
-                    missions,
-                  };
-                },
-                async lazy() {
-                  const { UserProifle } = await import('src/Nowruz/pages/userProfile');
-                  return {
-                    Component: UserProifle,
-                  };
-                },
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+    
   {
     children: [
       {
