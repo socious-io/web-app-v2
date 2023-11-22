@@ -4,7 +4,7 @@ interface DotProps {
   size: 'small' | 'medium' | 'large';
   color: string;
   shadow: boolean;
-  shadowColor: string;
+  shadowColor?: string;
 }
 export const Dot: React.FC<DotProps> = (props) => {
   const { size, color, shadow, shadowColor } = props;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CurrentIdentity, Identity, OrgMeta, UserMeta } from 'src/core/api';
+import { CurrentIdentity, Identity, OrgMeta, UserMeta, notifications, Notification } from 'src/core/api';
 import { openToVolunteer as openToVolunteerApi, openToWork as openToWorkApi, hiring as hiringApi } from 'src/core/api';
 import { RootState } from 'src/store';
 
@@ -19,6 +19,12 @@ export const useHeaderNavBar = () => {
   const [openToWork, setOpenToWork] = useState(false);
   const [openToVolunteer, setOpenToVolunteer] = useState(false);
   const [image, setImage] = useState('');
+  const [openNotifPanel, setOpenNotifPanel] = useState(false);
+  const [notifList, setNotifList] = useState<Notification[]>();
+  const getNotification = async () => {
+    const res = await notifications({ page: 1, limit: 50 });
+    setNotifList(res.items);
+  };
 
   useEffect(() => {
     if (currentIdentity) {
@@ -30,6 +36,7 @@ export const useHeaderNavBar = () => {
       } else {
         setHiring((currentIdentity.meta as OrgMeta).hiring);
       }
+      getNotification();
     }
   }, [currentIdentity]);
 
@@ -71,5 +78,8 @@ export const useHeaderNavBar = () => {
     handleOpenToWork,
     handleOpenToVolunteer,
     handleHiring,
+    openNotifPanel,
+    setOpenNotifPanel,
+    notifList,
   };
 };

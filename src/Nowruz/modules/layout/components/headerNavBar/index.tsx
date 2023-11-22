@@ -3,9 +3,11 @@ import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
+import { SlideOut } from 'src/Nowruz/modules/general/components/slideOut';
 
 import css from './headerNavBar.module.scss';
 import { useHeaderNavBar } from './useHeaderNavBar';
+import { Notifications } from '../../containers/notifications';
 import NotifBellIcon from '../notifBellIcon';
 import { StatusDropDown } from '../statusDropDown';
 
@@ -25,6 +27,9 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     handleOpenToWork,
     handleOpenToVolunteer,
     handleHiring,
+    openNotifPanel,
+    setOpenNotifPanel,
+    notifList,
   } = useHeaderNavBar();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -49,12 +54,11 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
       </div>
       {userIsLoggedIn && (
         <div className="flex w-fit h-10 gap-2 md:gap-4 ">
-          <div className="hidden md:block">
-            <NotifBellIcon unread />
-          </div>
           <div className="flex gap-4 md:hidden mr-2">
             <Icon name="search-lg" fontSize={24} className="text-Gray-light-mode-500" />
-            <Icon name="bell-01" fontSize={24} className="text-Gray-light-mode-500" />
+          </div>
+          <div onClick={() => setOpenNotifPanel(true)}>
+            <NotifBellIcon unread />
           </div>
           <div className="hidden md:block">
             <StatusDropDown
@@ -79,6 +83,11 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           />
         </div>
       )}
+      <SlideOut
+        component={<Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />}
+        open={openNotifPanel}
+        handleClose={() => setOpenNotifPanel(false)}
+      />
     </div>
   );
 };
