@@ -1,5 +1,5 @@
 import React from 'react';
 
 export const Test = () => {
-  return <div>Test</div>;
+  return <div className="h-[1200px]">Test</div>;
 };
