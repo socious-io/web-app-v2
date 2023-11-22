@@ -54,7 +54,6 @@ export const theme = createTheme({
       letterSpacing: '0em',
       fontFamily: 'Inter',
     },
-
     subtitle1: {
       fontSize: '14px',
       fontWeight: 500,
