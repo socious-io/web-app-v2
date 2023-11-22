@@ -21,7 +21,7 @@ export const OrganizationType = () => {
           <SelectCardGroup items={items} value={orgType} setValue={(e) => setOrgType(e)} />
         </div>
       </div>
-      <div className="fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ">
+      <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-8 ${css.footer}`}>
         <Button disabled={!orgType} color="primary" block onClick={goNextPage}>
           Next: Social causes
         </Button>
