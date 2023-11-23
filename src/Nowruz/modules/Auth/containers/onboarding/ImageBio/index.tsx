@@ -56,7 +56,7 @@ export const ImageBio = () => {
       />
       <div className={css.counter}>{bioCounter}/160</div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>
-        <Button disabled={isValidForm} color="primary" block onClick={updateProfile}>
+        <Button color="primary" block onClick={updateProfile}>
           Continue
         </Button>
       </div>

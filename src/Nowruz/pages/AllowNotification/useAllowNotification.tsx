@@ -5,8 +5,7 @@ import { logout } from 'src/pages/sidebar/sidebar.service';
 export const useAllowNotification = () => {
   const type = localStorage.getItem('registerFor');
   const { state } = useLocation();
-  console.log(state);
-  const { username } = state;
+  const { username } = state || '';
   const { registerPushNotifications } = useSignInForm();
   const navigate = useNavigate();
 
