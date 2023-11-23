@@ -20,6 +20,13 @@ export const OrganizationContact = () => {
     isUsernameValid,
     updateUsername,
     isShortnameValid,
+    searchIndustries,
+    onSelectIndustry,
+    city,
+    industry,
+    email,
+    username,
+    website,
   } = useOrganizationContact();
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
@@ -33,6 +40,7 @@ export const OrganizationContact = () => {
           onChange={(e) => updateEmail(e.target.value)}
           autoComplete="Email"
           label={'Email'}
+          value={email}
           name="email"
           register={register}
           placeholder="Enter your email"
@@ -43,6 +51,7 @@ export const OrganizationContact = () => {
             id="username"
             label="Your organization Socious address*"
             name="username"
+            value={username}
             onChange={(e) => updateUsername(e.target.value)}
             register={register}
             placeholder="Username"
@@ -64,7 +73,22 @@ export const OrganizationContact = () => {
           icon="search-lg"
           hasDropdownIcon={false}
           label="City*"
+          value={city === '' ? null : { label: city }}
           onChange={(value) => onSelectCity(value)}
+        />
+        <SearchDropdown
+          id="industry"
+          placeholder="Search an industry"
+          cacheOptions
+          isAsync
+          loadOptions={searchIndustries}
+          defaultOptions
+          className="my-5"
+          icon="search-lg"
+          hasDropdownIcon={false}
+          label="Organization industry*"
+          value={industry === '' ? null : { label: industry }}
+          onChange={(value) => onSelectIndustry(value)}
         />
         <SearchDropdown
           className="mb-5"
@@ -78,6 +102,7 @@ export const OrganizationContact = () => {
           id="website"
           autoComplete="Website"
           onChange={(e) => updateWebsite(e.target.value)}
+          value={website}
           label={'Website'}
           name="website"
           register={register}

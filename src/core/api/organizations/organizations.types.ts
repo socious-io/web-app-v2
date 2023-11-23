@@ -61,3 +61,11 @@ export interface Member {
   last_name?: string;
   avatar?: string;
 }
+
+export interface Industry {
+  name: string;
+}
+
+export interface IndustryRes extends PaginateRes {
+  items: Industry[];
+}
