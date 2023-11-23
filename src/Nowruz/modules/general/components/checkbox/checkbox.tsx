@@ -21,7 +21,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id, label, required, errors,
       <div className={css.checkboxContainer}>
         <FormControlLabel
           label={
-            <label htmlFor={id} className={css.label}>
+            <label htmlFor={id} className={css.label} aria-describedby={id}>
               {label}
             </label>
           }
