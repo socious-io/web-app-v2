@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, uploadMedia } from 'src/core/api';
 import { updateProfile as updateProfileApi } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { RootState } from 'src/store';
@@ -12,8 +11,6 @@ import { RootState } from 'src/store';
 export const useImageBio = () => {
   const navigate = useNavigate();
   const { state, updateUser } = useUser();
-  const isMobile = isTouchDevice();
-
   const [image, setImage] = useState({ imageUrl: state.avatar?.url, id: '' });
   const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
     const current = state.identity.entities.find((identity) => identity.current);
@@ -42,13 +39,7 @@ export const useImageBio = () => {
         ['', null],
       ),
     ).then(() => {
-      if (isMobile)
-        navigate(`sign-up/user/notification`, {
-          state: {
-            username: currentIdentity.meta?.username,
-          },
-        });
-      else navigate(`/profile/users/${currentIdentity.meta?.username}/view`);
+      navigate(`/profile/users/${currentIdentity.meta?.username}/view`);
     });
   };
 

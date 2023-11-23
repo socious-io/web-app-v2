@@ -43,7 +43,7 @@ export const OrganizationContact = () => {
           value={email}
           name="email"
           register={register}
-          placeholder="Enter your email"
+          placeholder="Email"
           errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
         />
         <div className="mt-5">
