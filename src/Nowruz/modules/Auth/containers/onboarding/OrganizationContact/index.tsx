@@ -39,7 +39,7 @@ export const OrganizationContact = () => {
           id="email"
           onChange={(e) => updateEmail(e.target.value)}
           autoComplete="Email"
-          label={'Email'}
+          label={'Your organization contact email*'}
           value={email}
           name="email"
           register={register}
@@ -54,7 +54,7 @@ export const OrganizationContact = () => {
             value={username}
             onChange={(e) => updateUsername(e.target.value)}
             register={register}
-            placeholder="Username"
+            placeholder="organization"
             validMessage="Username available"
             hints={[{ hint: 'Must be at least 4 characters.', hide: !isShortnameValid }]}
             // prefix="socious.io/"

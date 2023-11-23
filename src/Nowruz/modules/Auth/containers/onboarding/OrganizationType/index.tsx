@@ -9,7 +9,7 @@ import { useOrganizationType } from './useOrganizationType';
 export const OrganizationType = () => {
   const { orgType, setOrgType, items, goNextPage } = useOrganizationType();
   return (
-    <div className="md:pt-3 px-4 flex flex-col">
+    <div className={`md:pt-3 px-4 flex flex-col ${css.container}`}>
       <div className="mb-6">
         <div className={css.header}>
           <div>
