@@ -91,7 +91,7 @@ export const useOrganizationContact = () => {
       );
 
       if (isMobile)
-        navigate(`sign-up/user/notification`, {
+        navigate(`/sign-up/user/notification`, {
           state: {
             username: shortname,
           },
