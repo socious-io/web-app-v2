@@ -72,6 +72,7 @@ export const useOrganizationContact = () => {
       country,
     });
     try {
+      const websiteUrl = state.website ? 'https://' + state.website : '';
       const response = await createOrganization(
         removeValuesFromObject(
           {
@@ -81,7 +82,7 @@ export const useOrganizationContact = () => {
             social_causes,
             bio,
             email,
-            website: 'https://' + state.website,
+            website: websiteUrl,
             city,
             country,
             shortname,

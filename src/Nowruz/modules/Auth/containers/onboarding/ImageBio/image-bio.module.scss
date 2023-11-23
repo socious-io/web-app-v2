@@ -82,11 +82,17 @@
     border-top: 1px solid $color-grey-200;
   }
 }
-
-.uploadText {
+.uploadDetailsText {
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 18px;
   color: $color-grey-600;
+}
+.uploadText {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  color: $color-primary-700;
 }

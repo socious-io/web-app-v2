@@ -23,7 +23,7 @@ export const ImageBio = () => {
         </div>
       </div>
       <div className="flex justify-center mt-5">
-        <Avatar size="96px" type="users" img={image.imageUrl} />
+        <Avatar size="96px" type="users" img={image.imageUrl} iconSize={47} />
       </div>
       <div className="mt-5 md:hidden">
         <Button
