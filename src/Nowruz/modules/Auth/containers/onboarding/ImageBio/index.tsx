@@ -1,7 +1,7 @@
 import Divider from '@mui/material/Divider';
 import variables from 'src/components/_exports.module.scss';
-import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/FeaturedIcon';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
@@ -38,9 +38,9 @@ export const ImageBio = () => {
         </Button>
       </div>
       <div className={`${css.uploadContainer} hidden md:flex`} onClick={onUploadImage}>
-          <FeaturedIcon iconName='upload-cloud-02' className='mb-2' />
-          <span className='font-bold'>Click to upload</span>
-          <span className={css.uploadDetailText}>SVG, PNG, JPG or GIF (max. 2MB)</span>
+        <FeaturedIcon iconName="upload-cloud-02" className="mb-2" />
+        <span className={css.uploadText}>Click to upload</span>
+        <span className={css.uploadDetailText}>SVG, PNG, JPG or GIF (max. 2MB)</span>
       </div>
       <div className="my-5">
         <Divider sx={{ bgcolor: variables.color_primary_300 }} />
