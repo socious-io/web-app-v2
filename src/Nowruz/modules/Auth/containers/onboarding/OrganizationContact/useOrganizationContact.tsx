@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createOrganization, Location, preRegister, searchLocation } from 'src/core/api';
+import { createOrganization, getIndustries, Location, preRegister, searchLocation } from 'src/core/api';
 import { CurrentIdentity, uploadMedia } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
@@ -49,7 +49,6 @@ export const useOrganizationContact = () => {
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     setError,
     control,
@@ -116,6 +115,21 @@ export const useOrganizationContact = () => {
       value: city.country_code,
     }));
   };
+  const searchIndustries = async (searchText: string, cb) => {
+    try {
+      if (searchText) {
+        const response = await getIndustries(searchText, { page: 1, limit: 20 });
+        cb(response.items.map((i) => ({ value: i.name, label: i.name })));
+      }
+    } catch (error) {
+      console.error('Error fetching city data:', error);
+    }
+  };
+  const onSelectIndustry = (industry) => {
+    console.log('industry', industry);
+    updateUser({ ...state, industry: industry.value });
+  };
+
   const checkUsernameAvailability = async (shortname: string) => {
     const checkUsername = await preRegister({ shortname });
     if (checkUsername.shortname === null) {
@@ -175,5 +189,12 @@ export const useOrganizationContact = () => {
     isUsernameValid,
     updateUsername,
     isShortnameValid,
+    searchIndustries,
+    onSelectIndustry,
+    industry: state.industry,
+    city: state.city,
+    email: state.email,
+    username: state.shortname,
+    website: state.website,
   };
 };

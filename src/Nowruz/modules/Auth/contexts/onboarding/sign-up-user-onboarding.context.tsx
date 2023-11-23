@@ -28,6 +28,7 @@ const orgInitialState = {
   website: '',
   size: null,
   shortname: '',
+  industry: '',
 };
 const type = localStorage.getItem('registerFor');
 
