@@ -10,8 +10,8 @@ import css from './image-bio.module.scss';
 import { useOrganizationLogo } from './useOrganizationLogo';
 
 export const OrganizationLogo = () => {
-  const { updateBio, onUploadImage, image, isValidForm, bio, goNextPage, bioCounter } = useOrganizationLogo();
-
+  const { updateBio, onUploadImage, image, isValidForm, bio, goNextPage, bioCounter, imageUrl } = useOrganizationLogo();
+  console.log(imageUrl);
   return (
     <div className="flex flex-col items-stretch lg:pt-7 sm:pt-5 px-4">
       <div className={css.header}>
@@ -23,7 +23,7 @@ export const OrganizationLogo = () => {
         </div>
       </div>
       <div className="flex justify-center mt-5">
-        <Avatar size="96px" type="organizations" img={image.imageUrl} iconSize={47} />
+        <Avatar size="96px" type="organizations" img={imageUrl} iconSize={47} />
       </div>
       <div className="mt-5 md:hidden">
         <Button
@@ -38,9 +38,9 @@ export const OrganizationLogo = () => {
         </Button>
       </div>
       <div className={`${css.uploadContainer} hidden md:flex`} onClick={onUploadImage}>
-          <FeaturedIcon iconName='upload-cloud-02' className='mb-2' />
-          <span className='font-bold'>Click to upload</span>
-          <span className={css.uploadDetailText}>SVG, PNG, JPG or GIF (max. 2MB)</span>
+        <FeaturedIcon iconName="upload-cloud-02" className="mb-2" />
+        <span className="font-bold">Click to upload</span>
+        <span className={css.uploadDetailText}>SVG, PNG, JPG or GIF (max. 2MB)</span>
       </div>
       <div className="my-5">
         <Divider sx={{ bgcolor: variables.color_primary_300 }} />

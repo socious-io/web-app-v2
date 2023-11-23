@@ -81,7 +81,7 @@ export const useOrganizationContact = () => {
             social_causes,
             bio,
             email,
-            website,
+            website: 'https://' + state.website,
             city,
             country,
             shortname,
@@ -169,9 +169,10 @@ export const useOrganizationContact = () => {
 
   const updateWebsite = (website: string) => {
     console.log(errors);
-    updateUser({ ...state, website: 'https://' + website });
+    updateUser({ ...state, website });
   };
-  const isFormValid = state.city !== '' && state.size !== null && state.emali !== '';
+  const isFormValid =
+    state.city !== '' && state.size !== null && state.emali !== '' && state.industry !== '' && state.shortname !== '';
   return {
     register,
     handleSubmit,

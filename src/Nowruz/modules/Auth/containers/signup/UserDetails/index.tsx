@@ -36,7 +36,7 @@ export const UserDetails = () => {
             register={register}
             placeholder="Username"
             validMessage="Username available"
-            prefix="socious.io/"
+            // prefix="socious.io/"
             isValid={isUsernameValid}
             errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}
           />

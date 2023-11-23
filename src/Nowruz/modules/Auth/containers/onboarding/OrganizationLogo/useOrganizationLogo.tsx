@@ -19,7 +19,7 @@ export const useOrganizationLogo = () => {
   const onUploadImage = async () => {
     const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
     const resp = await uploadImage(webPath);
-    updateUser({ ...state, avatar: resp });
+    updateUser({ ...state, image: resp });
     setImage({ imageUrl: resp.url, id: resp.id });
   };
 
@@ -37,9 +37,17 @@ export const useOrganizationLogo = () => {
     return uploadMedia(blob as File);
   }
   const goNextPage = () => updateSelectedStep(5);
-
   const isValidForm = state.bio === '' || state.bio === null;
   const bio = state.bio;
   const bioCounter = state.bio ? state.bio.length : 0;
-  return { onUploadImage, updateBio, image, isValidForm, bio, bioCounter, goNextPage };
+  return {
+    onUploadImage,
+    updateBio,
+    image,
+    isValidForm,
+    bio,
+    bioCounter,
+    goNextPage,
+    imageUrl: state.image?.url ? state.image?.url : null,
+  };
 };
