@@ -39,7 +39,7 @@ export const OrganizationLogo = () => {
       </div>
       <div className={`${css.uploadContainer} hidden md:flex`} onClick={onUploadImage}>
         <FeaturedIcon iconName="upload-cloud-02" className="mb-2" />
-        <span className="font-bold">Click to upload</span>
+        <span className={css.uploadText}>Click to upload</span>
         <span className={css.uploadDetailText}>SVG, PNG, JPG or GIF (max. 2MB)</span>
       </div>
       <div className="my-5">

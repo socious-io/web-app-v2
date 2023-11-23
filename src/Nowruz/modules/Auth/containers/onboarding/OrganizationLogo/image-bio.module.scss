@@ -77,6 +77,13 @@
     color: $color-grey-600;
     font-weight: 400;
   }
+  .uploadText {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    color: $color-primary-700;
+  }
 }
 
 @media screen and (max-width: 600px) {
