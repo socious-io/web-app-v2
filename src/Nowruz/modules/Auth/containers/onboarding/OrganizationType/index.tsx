@@ -10,7 +10,7 @@ export const OrganizationType = () => {
   const { orgType, setOrgType, items, goNextPage } = useOrganizationType();
   return (
     <div className="md:pt-3 px-4 flex flex-col">
-      <div className="sm:mb-32 mb-6">
+      <div className="mb-6">
         <div className={css.header}>
           <div>
             <h1 className={css.title}>Create organization</h1>
