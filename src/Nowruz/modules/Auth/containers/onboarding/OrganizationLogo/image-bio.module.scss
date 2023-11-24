@@ -85,7 +85,13 @@
     color: $color-primary-700;
   }
 }
-
+.uploadError {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: $color-error-500;
+}
 @media screen and (max-width: 600px) {
   .footer {
     border-top: 1px solid $color-grey-200;

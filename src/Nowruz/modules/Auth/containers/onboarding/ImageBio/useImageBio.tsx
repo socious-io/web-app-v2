@@ -11,6 +11,7 @@ import { RootState } from 'src/store';
 
 export const useImageBio = () => {
   const navigate = useNavigate();
+  const [uploadError, setUploadError] = useState('');
   const { state, updateUser } = useUser();
   const isMobile = isTouchDevice();
   const [image, setImage] = useState({ imageUrl: state.avatar?.url, id: '' });
@@ -57,11 +58,20 @@ export const useImageBio = () => {
 
   async function uploadImage(url: string) {
     const blob = await fetch(url).then((resp) => resp.blob());
-    return uploadMedia(blob as File);
+    const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+    if (blob.size > MAX_IMAGE_SIZE) {
+      setUploadError(`Image should be less than 5MB`);
+    } else {
+      setUploadError(``);
+
+      const formData = new FormData();
+      formData.append('file', blob);
+      return uploadMedia(blob as File);
+    }
   }
 
   const isValidForm = state.bio === '' || state.bio === null;
   const bio = state.bio;
   const bioCounter = state.bio ? state.bio.length : 0;
-  return { onUploadImage, updateBio, image, isValidForm, bio, updateProfile, bioCounter };
+  return { onUploadImage, updateBio, image, isValidForm, bio, updateProfile, bioCounter, uploadError };
 };

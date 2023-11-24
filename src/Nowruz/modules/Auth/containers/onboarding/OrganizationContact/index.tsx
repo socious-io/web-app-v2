@@ -29,7 +29,7 @@ export const OrganizationContact = () => {
     website,
   } = useOrganizationContact();
   return (
-    <div className="lg:pt-9 sm:pt-4 px-4">
+    <div className={`lg:pt-9 sm:pt-14 px-4 ${css.container}`}>
       <div className={css.header}>
         <h1 className={css.title}>Tell us more about your organization</h1>
         <h2 className={css.description}>Add your contact information</h2>

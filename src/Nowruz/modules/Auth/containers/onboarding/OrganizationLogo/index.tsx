@@ -10,7 +10,8 @@ import css from './image-bio.module.scss';
 import { useOrganizationLogo } from './useOrganizationLogo';
 
 export const OrganizationLogo = () => {
-  const { updateBio, onUploadImage, image, isValidForm, bio, goNextPage, bioCounter, imageUrl } = useOrganizationLogo();
+  const { updateBio, onUploadImage, image, isValidForm, bio, goNextPage, bioCounter, imageUrl, uploadError } =
+    useOrganizationLogo();
   console.log(imageUrl);
   return (
     <div className="flex flex-col items-stretch lg:pt-7 sm:pt-5 px-4">
@@ -36,12 +37,22 @@ export const OrganizationLogo = () => {
         >
           Upload
         </Button>
+        {uploadError && (
+          <div className="mt-2">
+            <span className={css.uploadError}>{uploadError}</span>
+          </div>
+        )}
       </div>
       <div className={`${css.uploadContainer} hidden md:flex`} onClick={onUploadImage}>
         <FeaturedIcon iconName="upload-cloud-02" className="mb-2" />
         <span className={css.uploadText}>Click to upload</span>
         <span className={css.uploadDetailText}>SVG, PNG, JPG or GIF (max. 2MB)</span>
       </div>
+      {uploadError && (
+        <div className="mt-2">
+          <span className={css.uploadError}>{uploadError}</span>
+        </div>
+      )}
       <div className="my-5">
         <Divider sx={{ bgcolor: variables.color_primary_300 }} />
       </div>
