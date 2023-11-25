@@ -26,7 +26,10 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
       {menuOpen &&
         subMenuOpen &&
         children?.map((item) => (
-          <div className="w-full h-10 pr-3 pl-11 py-2 rounded-sm bg-Base-White hover:bg-Gray-light-mode-50 md:bg-Brand-700 md:hover:bg-Brand-600">
+          <div
+            key={item.label}
+            className="w-full h-10 pr-3 pl-11 py-2 rounded-sm bg-Base-White hover:bg-Gray-light-mode-50 md:bg-Brand-700 md:hover:bg-Brand-600"
+          >
             <Typography
               variant="h4"
               className="text-Gray-light-mode-700 hover:text-Base-Black md:text-Brand-100  md:hover:text-Base-White cursor-pointer"

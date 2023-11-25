@@ -1,7 +1,5 @@
-import { Experience } from 'src/core/api';
+import { User } from 'src/core/api';
 
 export interface AboutProps {
-  summary?: string;
-  experiences?: Experience[] | null;
-  skills?: string[] | null;
+  user: User;
 }
