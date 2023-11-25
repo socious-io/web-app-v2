@@ -13,7 +13,7 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
 
   return (
     <div className="flex gap-3 h-full">
-      <div className="flex flex-col w-fit gap-1">
+      <div className="hidden md:flex flex-col w-fit gap-1">
         <Avatar iconName={iconName} type="users" />
 
         <div className="w-1/2 flex-1 ">
@@ -32,6 +32,9 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
               <Icon name="trash-01" fontSize={20} color={variables.color_grey_600} />
             </button>
           )}
+        </div>
+        <div className="block md:hidden mb-3">
+          <Avatar fontSize={48} iconName={iconName} type="users" />
         </div>
         <div className="pt-1 pb-6">
           <Typography variant="h4" color={variables.color_grey_900}>

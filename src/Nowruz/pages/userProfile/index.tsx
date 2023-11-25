@@ -1,8 +1,4 @@
-import { Typography } from '@mui/material';
-import variables from 'src/components/_exports.module.scss';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
-import { Link } from 'src/Nowruz/modules/general/components/link';
-import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
 import { MainInfo } from 'src/Nowruz/modules/userProfile/components/mainInfo';
 import { ProfileHeader } from 'src/Nowruz/modules/userProfile/components/profileHeader';
 

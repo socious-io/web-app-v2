@@ -20,7 +20,7 @@ export const Experiences: React.FC<ExperienceProps> = (props) => {
       </Button>
 
       {props.items && (
-        <div className="pr-48 flex flex-col gap-5">
+        <div className="md:pr-48 flex flex-col gap-5">
           {props.items.map((item) => (
             <StepperCard
               key={item.id}
