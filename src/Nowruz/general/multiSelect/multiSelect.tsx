@@ -1,4 +1,4 @@
-import { Autocomplete, Typography } from '@mui/material';
+import { Autocomplete, TextField, Typography } from '@mui/material';
 import { Close } from 'public/icons/nowruz/close';
 import { Plus } from 'public/icons/nowruz/plus';
 import React, { useEffect, useState } from 'react';
@@ -18,7 +18,20 @@ const RemoveIcon: React.FC = () => {
 };
 
 const MultiSelect: React.FC<MultiSelectProps> = (props) => {
-  const { searchTitle, items, maxLabel, max, placeholder, componentValue, setComponentValue, customHeight } = props;
+  const {
+    id,
+    searchTitle,
+    items,
+    maxLabel,
+    max,
+    placeholder,
+    componentValue,
+    setComponentValue,
+    customHeight,
+    chipBorderColor,
+    chipBgColor,
+    chipFontColor,
+  } = props;
   const [chipItems, setChipItems] = useState(items);
 
   function filterItems(val: string) {
@@ -50,10 +63,11 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
 
   return (
     <div className={css.container}>
-      <Typography variant="subtitle1" color={variables.color_grey_700}>
+      <label htmlFor={id} aria-describedby={id} className={css.searchTitle}>
         {searchTitle}
-      </Typography>
+      </label>
       <Autocomplete
+        id={id}
         value={componentValue}
         onChange={(event, value) => handleChange(value)}
         clearIcon={false}
@@ -63,17 +77,29 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         multiple
         renderTags={(value, props) =>
           value.map((option, index) => (
-            <Chip id={option.value} label={option.label} icon={<RemoveIcon />} {...props({ index })} onClick={remove} />
+            <Chip
+              id={option.value}
+              label={option.label}
+              icon={<RemoveIcon />}
+              {...props({ index })}
+              onClick={remove}
+              bgColor={chipBgColor}
+              borderColor={chipBorderColor}
+              fontColor={chipFontColor}
+            />
           ))
         }
         disabled={componentValue?.length >= (max || 0)}
         renderInput={(params) => (
-          <Input
-            placeholder={componentValue?.length ? '' : placeholder}
-            multiline
-            onChange={(e) => filterItems(e.target.value)}
-            {...params}
-          />
+          <div className={css.inputContainer}>
+            <TextField
+              variant="outlined"
+              label=""
+              placeholder={componentValue?.length ? '' : placeholder}
+              onChange={(e) => filterItems(e.target.value)}
+              {...params}
+            />
+          </div>
         )}
       />
       <div className={css.captionDiv}>
@@ -88,7 +114,16 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
       </div>
       <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
         {chipItems?.map((i) => (
-          <Chip key={i.value} id={i.value} label={i.label} icon={<AddIcon />} onClick={() => add(i.value, i.label)} />
+          <Chip
+            key={i.value}
+            id={i.value}
+            label={i.label}
+            icon={<AddIcon />}
+            onClick={() => add(i.value, i.label)}
+            bgColor={chipBgColor}
+            borderColor={chipBorderColor}
+            fontColor={chipFontColor}
+          />
         ))}
       </div>
     </div>
