@@ -1,5 +1,6 @@
 import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import variables from 'src/components/_exports.module.scss';
 
 import css from './skills.module.scss';
 import { useSkills } from './useSkills';
@@ -16,6 +17,7 @@ export const Skills = () => {
       </div>
       {!!items?.length && (
         <MultiSelect
+          id={'skills'}
           searchTitle={'Select at least 1 skill*'}
           max={20}
           maxLabel={'Max. 20 skills'}
@@ -24,6 +26,9 @@ export const Skills = () => {
           componentValue={value}
           setComponentValue={setValue}
           customHeight="200px"
+          chipFontColor={variables.color_grey_blue_700}
+          chipBorderColor={variables.color_grey_200}
+          chipBgColor={variables.color_grey_blue_50}
         />
       )}
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>

@@ -14,6 +14,7 @@ export const Causes = () => {
       </div>
       <div className="mt-5">
         <MultiSelect
+          id={'social-causes'}
           searchTitle={'Select at least 1 cause*'}
           max={5}
           maxLabel={'Max. 5 causes'}

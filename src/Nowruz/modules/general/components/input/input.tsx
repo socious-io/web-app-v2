@@ -76,6 +76,7 @@ export const Input: React.FC<InputProps> = ({
               {prefix}
             </InputAdornment>
           ),
+          spellCheck: 'false',
         }}
         {...(register
           ? register(name, {
