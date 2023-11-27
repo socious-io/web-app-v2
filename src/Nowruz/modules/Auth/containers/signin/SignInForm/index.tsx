@@ -49,9 +49,14 @@ export const SignInForm = () => {
           <Button color="primary" onClick={handleSubmit(onLogin)}>
             Continue
           </Button>
-          <Button color="primary" variant="outlined" onClick={() => navigate('/oauth/google')}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => navigate('/oauth/google')}
+            style={{ display: 'flex', gap: '12px' }}
+          >
             <Google />
-            <div>Continue with Google</div>
+            Continue with Google
           </Button>
           {/*
             <Button variant="outlined" color="secondary" className={css.button}>
