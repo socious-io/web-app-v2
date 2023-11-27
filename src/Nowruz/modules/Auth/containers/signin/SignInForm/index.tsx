@@ -64,7 +64,7 @@ export const SignInForm = () => {
         <Typography variant="caption" color={variables.color_grey_600}>
           Don't have an account?
         </Typography>
-        <Link label=" Sign up" href="/sign-up/user/email" />
+        <Link label=" Sign up" href="/intro" />
       </div>
     </>
   );
