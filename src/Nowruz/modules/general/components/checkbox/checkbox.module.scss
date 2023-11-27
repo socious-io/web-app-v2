@@ -26,26 +26,25 @@
 .iconNotChecked {
   border-color: $color_grey_300;
 }
-.checkboxContainer:hover .iconNotChecked,
-.checkboxContainer:focus-within .iconNotChecked {
+.checkboxContainer:hover .iconNotChecked {
   background-color: $color-primary-100;
   border-color: $color-primary-600;
 }
 
-.iconChecked {
-  border-color: $color_grey_300;
-  background-color: $color-primary-50;
-}
-.checkboxContainer:hover .iconChecked,
-.checkboxContainer:focus-within .iconChecked {
-  background-color: transparent;
+.checkboxContainer:focus-within .iconNotChecked {
+  background-color: $color-white;
+  border-color: $color-primary-300;
+  box-shadow: 0px 0px 0px 4px #e6eded;
 }
 
-// .default {
-//   &:global(.MuiCheckbox-root) {
-//     &:focus-visible {
-//       border-color: $color_grey_300;
-//       background-color: $color-primary-50;
-//     }
-//   }
-// }
+.iconChecked {
+  border-color: $color_grey_600;
+  background-color: $color-primary-50;
+}
+.checkboxContainer:hover .iconChecked {
+  background-color: $color-primary-100;
+}
+.checkboxContainer:focus-within .iconChecked {
+  background-color: $color-primary-50;
+  box-shadow: 0px 0px 0px 4px #e6eded;
+}
