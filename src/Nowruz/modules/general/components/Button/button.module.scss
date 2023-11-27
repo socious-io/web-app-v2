@@ -35,6 +35,20 @@
         0px 1px 2px 0px rgba(16, 24, 40, 0.05);
     }
   }
+  &:global(.MuiButton-outlinedPrimary) {
+    border: solid 1px $color-grey-300;
+    box-shadow: 0px 1px 2px 0px #1018280d;
+    color: $color-grey-700;
+    &:hover {
+      background-color: $color-grey-50;
+      color: $color-grey-800;
+    }
+    &:focus {
+      box-shadow:
+        0px 0px 0px 4px rgba(51, 110, 107, 0.24),
+        0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    }
+  }
 }
 .secondary {
   &:global(.MuiButton-root) {
