@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { identities, preRegister, updateProfile, UserMeta } from 'src/core/api';
+import { checkUsernameConditions } from 'src/core/utils';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
 
@@ -20,6 +21,7 @@ const schema = yup.object().shape({
 });
 export const useUserDetails = () => {
   const [isUsernameValid, setIsusernameValid] = useState(false);
+  const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -37,30 +39,41 @@ export const useUserDetails = () => {
   const lastName = watch('lastName');
 
   useEffect(() => {
-    if (username) {
+    const usernameConditionErrors = checkUsernameConditions(username);
+    clearErrors('username');
+    setIsusernameValid(false);
+    if (usernameConditionErrors) {
+      setIsusernameValid(false);
+      setError('username', {
+        type: 'manual',
+        message: usernameConditionErrors,
+      });
+    } else if (!usernameConditionErrors && username) {
       debouncedCheckUsername(username);
-    } else clearErrors('username');
-  }, [username]);
+      if (isUsernameAvailable) {
+        setIsusernameValid(true);
+        clearErrors('username');
+      } else {
+        setIsusernameValid(false);
+        setError('username', {
+          type: 'manual',
+          message: 'Username is not available',
+        });
+      }
+    }
+  }, [username, isUsernameAvailable]);
 
   const checkUsernameAvailability = async (username: string) => {
     const checkUsername = await preRegister({ username });
     if (checkUsername.username === null) {
-      console.log(checkUsername);
-      setIsusernameValid(true);
-      clearErrors('username');
-    } else {
-      setIsusernameValid(false);
-      setError('username', {
-        type: 'manual',
-        message: 'Username is not available',
-      });
+      setIsusernameAvailable(true);
     }
   };
   const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
 
   const onSubmit: SubmitHandler<Inputs> = async ({ firstName, lastName, username }) => {
     try {
-      updateProfile({ username, first_name: firstName, last_name: lastName });
+      updateProfile({ username: username.toLowerCase(), first_name: firstName, last_name: lastName });
       const currentIdentities = await identities();
 
       dispatch(setIdentityList(currentIdentities));
