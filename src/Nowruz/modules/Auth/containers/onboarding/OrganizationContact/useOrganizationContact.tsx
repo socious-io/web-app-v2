@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { createOrganization, getIndustries, Location, preRegister, searchLocation } from 'src/core/api';
 import { CurrentIdentity, uploadMedia } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { removeValuesFromObject } from 'src/core/utils';
+import { checkUsernameConditions, removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
@@ -41,6 +41,7 @@ export const useOrganizationContact = () => {
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const isMobile = isTouchDevice();
   const [isShortnameValid, setIsShortnameValid] = useState(false);
+  const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
   const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
     const current = state.identity.entities.find((identity) => identity.current);
     return current as CurrentIdentity;
@@ -85,7 +86,7 @@ export const useOrganizationContact = () => {
             website: websiteUrl,
             city,
             country,
-            shortname,
+            shortname: shortname.toLowerCase(),
           },
           ['', null],
         ),
@@ -150,10 +151,33 @@ export const useOrganizationContact = () => {
   const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
 
   useEffect(() => {
-    console.log('useeffect ');
-    if (state.shortname) {
+    const usernameConditionErrors = checkUsernameConditions(state.shortname);
+    clearErrors('username');
+    setIsusernameValid(false);
+    if (usernameConditionErrors) {
+      setIsusernameValid(false);
+      setError('username', {
+        type: 'manual',
+        message: usernameConditionErrors,
+      });
+    } else if (!usernameConditionErrors && state.shortname) {
       debouncedCheckUsername(state.shortname);
-    } else clearErrors('username');
+      if (isUsernameAvailable) {
+        console.log('user name is ok');
+        setIsusernameValid(true);
+        clearErrors('username');
+      } else {
+        console.log('Invalid username', state.shortname, isUsernameAvailable);
+        setIsusernameValid(false);
+        setError('username', {
+          type: 'manual',
+          message: 'Username is not available',
+        });
+      }
+    }
+    // if (state.shortname) {
+    //   debouncedCheckUsername(state.shortname);
+    // } else clearErrors('username');
   }, [state.shortname]);
 
   const onSelectCity = (location) => {

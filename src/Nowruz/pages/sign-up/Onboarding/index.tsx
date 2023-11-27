@@ -80,11 +80,11 @@ export const Onboarding = () => {
         <div className={css.container}>
           <Steper
             components={[
+              { Component: <OrganizationLogo />, skippable: false },
               { Component: <OpWelcome />, skippable: false },
               { Component: <CreateOrganization />, skippable: false },
               { Component: <OrganizationType />, skippable: false },
               { Component: <OrganizationCauses />, skippable: false },
-              { Component: <OrganizationLogo />, skippable: false },
               { Component: <OrganizationContact />, skippable: false },
             ]}
           />

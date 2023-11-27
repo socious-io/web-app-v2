@@ -56,7 +56,7 @@ export const OrganizationContact = () => {
             register={register}
             placeholder="organization"
             validMessage="Username available"
-            hints={[{ hint: 'Must be at least 4 characters.', hide: !isShortnameValid }]}
+            hints={[{ hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`, hide: !isShortnameValid }]}
             // prefix="socious.io/"
             isValid={isUsernameValid}
             errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}
