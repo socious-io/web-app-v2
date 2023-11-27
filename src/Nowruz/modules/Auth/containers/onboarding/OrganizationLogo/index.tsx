@@ -37,11 +37,6 @@ export const OrganizationLogo = () => {
         >
           Upload
         </Button>
-        {uploadError && (
-          <div className="mt-2">
-            <span className={css.uploadError}>{uploadError}</span>
-          </div>
-        )}
       </div>
       <div className={`${css.uploadContainer} hidden md:flex`} onClick={onUploadImage}>
         <FeaturedIcon iconName="upload-cloud-02" className="mb-2" />
