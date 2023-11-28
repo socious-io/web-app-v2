@@ -1,4 +1,4 @@
-import { FormControlLabel, Checkbox as MUICheckbox } from '@mui/material';
+import { Checkbox as MUICheckbox } from '@mui/material';
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -57,33 +57,27 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   return (
     <div className={css.container}>
       <div className={css.checkboxContainer}>
-        <FormControlLabel
-          label={
-            <label htmlFor={id} className={css.label} aria-describedby={id}>
-              {label}
-            </label>
+        <MUICheckbox
+          id={id}
+          disableRipple
+          onKeyDown={handleKeyDown}
+          color="default"
+          checkedIcon={type === 'checkBox' ? <SquareIcon checked size={size} /> : <CircleIcon checked size={size} />}
+          icon={
+            type === 'checkBox' ? (
+              <SquareIcon checked={false} size={size} />
+            ) : (
+              <CircleIcon checked={false} size={size} />
+            )
           }
-          control={
-            <MUICheckbox
-              id={id}
-              disableRipple
-              onKeyDown={handleKeyDown}
-              className={css.default}
-              color="default"
-              checkedIcon={
-                type === 'checkBox' ? <SquareIcon checked size={size} /> : <CircleIcon checked size={size} />
-              }
-              icon={
-                type === 'checkBox' ? (
-                  <SquareIcon checked={false} size={size} />
-                ) : (
-                  <CircleIcon checked={false} size={size} />
-                )
-              }
-              {...props}
-            />
-          }
+          sx={{ padding: '0' }}
+          {...props}
         />
+        {label && (
+          <label htmlFor={id} className={css.label} aria-describedby={id}>
+            {label}
+          </label>
+        )}
       </div>
     </div>
   );
