@@ -12,6 +12,7 @@ export interface CustomChipProps {
   borderColor?: string;
   bgColor?: string;
   fontColor?: string;
+  customStyle?: string;
 }
 
 export interface MultiSelectProps {

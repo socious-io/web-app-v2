@@ -1,5 +1,6 @@
 import { Google } from 'public/icons/nowruz/google';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
@@ -20,13 +21,18 @@ export const EmailForm = () => {
           placeholder="Enter your email"
           errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
         />
-        <div className=" flex flex-col gap-4 mt-8">
+        <div className="mt-8 flex flex-col gap-4">
           <Button color="primary" block onClick={handleSubmit(onSubmit)}>
             Continue
           </Button>
-          <Button color="primary" variant="outlined" onClick={() => navigate('/oauth/google')}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => navigate('/oauth/google')}
+            style={{ display: 'flex', gap: '12px' }}
+          >
             <Google />
-            <div>Continue with Google</div>
+            Continue with Google
           </Button>
         </div>
       </form>

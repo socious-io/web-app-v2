@@ -4,10 +4,10 @@ import css from './multiSelect.module.scss';
 import { CustomChipProps } from './multiSelect.types';
 
 const Chip: React.FC<CustomChipProps> = (props) => {
-  const { label, onClick, icon, bgColor, fontColor, borderColor } = props;
+  const { label, onClick, icon, bgColor, fontColor, borderColor, customStyle } = props;
   return (
     <div
-      className={css.chip}
+      className={`${css.chip} ${customStyle}`}
       style={{ borderColor: borderColor ? borderColor : '', backgroundColor: bgColor || '' }}
       onClick={() => onClick(label)}
     >
