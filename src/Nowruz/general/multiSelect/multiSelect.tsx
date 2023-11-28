@@ -86,6 +86,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
               bgColor={chipBgColor}
               borderColor={chipBorderColor}
               fontColor={chipFontColor}
+              customStyle="m-[3px]"
             />
           ))
         }
@@ -123,6 +124,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
             bgColor={chipBgColor}
             borderColor={chipBorderColor}
             fontColor={chipFontColor}
+            customStyle="m-1"
           />
         ))}
       </div>
