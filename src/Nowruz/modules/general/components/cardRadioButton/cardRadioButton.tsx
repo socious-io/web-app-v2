@@ -1,10 +1,10 @@
-import { Radio, RadioGroup, Typography } from '@mui/material';
+import { Radio, RadioGroup } from '@mui/material';
 import { Check } from 'public/icons/nowruz/check';
 import variables from 'src/components/_exports.module.scss';
+import { Icon } from 'src/Nowruz/general/Icon';
 
 import css from './cardRadioButton.module.scss';
 import { CardRadioButtonProps } from './cardRadioButton.types';
-import { CardRadioButtonIcon } from './cardRadioButtonIcon';
 
 const RBIcon: React.FC = () => {
   return <div className={css.rbIcon} />;
@@ -35,7 +35,7 @@ export const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
           {item.img ? (
             item.img
           ) : item.icon ? (
-            <CardRadioButtonIcon selected={selectedValue === item.value} icon={item.icon} />
+            <Icon name={item.icon.name} fontSize={item.icon.fontSize} color={variables.color_primary_600} />
           ) : (
             ''
           )}
