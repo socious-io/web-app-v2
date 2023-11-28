@@ -6,7 +6,7 @@ import css from './userProfile.module.scss';
 import { useUserProfile } from './useUserProfile';
 
 export const UserProifle = () => {
-  const { user, badges, missions, tabs } = useUserProfile();
+  const { user, badges, missions, tabs, myProfile, isLoggedIn, connectStatus } = useUserProfile();
 
   return (
     <div className="w-full">
@@ -15,6 +15,9 @@ export const UserProifle = () => {
         profileImage={user.avatar}
         name={`${user.first_name} ${user.last_name}`}
         username={user.username}
+        myProfile={myProfile}
+        isLoggedIn={isLoggedIn}
+        connectStatus={connectStatus}
       />
       <div className={`${css.content} py-0 px-4 md:px-8`}>
         <div className={` ${css.leftCol} hidden md:block`}>
