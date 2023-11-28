@@ -20,7 +20,6 @@ const items = [
 const Template: StoryFn = (args) => {
   const [selected, setSelected] = useState<SelectCardGroupItem>();
   const handleSelect = (value: SelectCardGroupItem) => {
-    console.log('value: ', value);
     setSelected(value);
   };
   return (

@@ -1,0 +1,99 @@
+@import 'src/components/_primitives.scss';
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 0.75px solid $color-grey-900;
+  opacity: 0.08;
+  background-color: $color-grey-200;
+  margin-top: 24px;
+}
+
+.uploadBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  border-radius: 12px;
+  border: 1px solid $color-grey-200;
+  padding: 24px 16px;
+  margin-top: 20px;
+}
+
+.header {
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: $color-grey-900;
+  }
+  .description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: $color-grey-600;
+  }
+}
+
+.counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: $color-grey-600;
+  margin-top: 8px;
+}
+
+.uploadButton {
+  border-color: $color-grey-300;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.uploadContainer {
+  border: 1px solid $color-grey-200;
+  border-radius: 12px;
+  padding: 16px 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 20px;
+  cursor: pointer;
+
+  .uploadDetailText {
+    color: $color-grey-600;
+    font-weight: 400;
+  }
+  .uploadText {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    color: $color-primary-700;
+  }
+}
+.uploadError {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: $color-error-500;
+}
+@media screen and (max-width: 600px) {
+  .footer {
+    border-top: 1px solid $color-grey-200;
+  }
+}
