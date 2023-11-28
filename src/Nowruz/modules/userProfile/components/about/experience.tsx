@@ -7,9 +7,10 @@ import css from './about.module.scss';
 
 interface ExperienceProps {
   items?: Experience[] | null;
+  myProfile: boolean;
 }
 
-export const Experiences: React.FC<ExperienceProps> = (props) => {
+export const Experiences: React.FC<ExperienceProps> = ({ items, myProfile }) => {
   return (
     <div className="w-full flex flex-col gap-5">
       <div className={css.title}>Experience</div>
@@ -19,17 +20,17 @@ export const Experiences: React.FC<ExperienceProps> = (props) => {
         Add experience
       </Button>
 
-      {props.items && (
+      {items && (
         <div className="md:pr-48 flex flex-col gap-5">
-          {props.items.map((item) => (
+          {items.map((item) => (
             <StepperCard
               key={item.id}
               iconName="building-05"
               title={item.title}
               subtitle={item.org.name}
               supprtingText={`${item.start_at}-${item.end_at || 'Now'}`}
-              editable
-              deletable
+              editable={myProfile}
+              deletable={myProfile}
               description={item.description}
               seeMore
             />

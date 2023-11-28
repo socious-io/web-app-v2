@@ -25,7 +25,7 @@ export const useUserProfile = () => {
   }, []);
 
   const tabs = [
-    { label: 'About', content: <About user={user} /> },
+    { label: 'About', content: <About user={user} myProfile={myProfile} /> },
     { label: 'Services', content: <div /> },
     { label: 'Reviews', content: <div /> },
   ];

@@ -21,7 +21,7 @@ export const UserProifle = () => {
       />
       <div className={`${css.content} py-0 px-4 md:px-8`}>
         <div className={` ${css.leftCol} hidden md:block`}>
-          <MainInfo user={user} />
+          <MainInfo user={user} myProfile={myProfile} />
         </div>
         <div className={css.rightCol}>
           <HorizontalTabs tabs={tabs} />

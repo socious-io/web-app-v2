@@ -1,11 +1,11 @@
+import { IconButton } from '@mui/material';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
 
 import css from './profileHeader.module.scss';
 import { ProfileHeaderProps } from './profileHeader.types';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
-import { IconButton } from '@mui/material';
 
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   coverImage,
@@ -40,16 +40,23 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             <Icon name="pencil-01" color={variables.color_grey_600} fontSize={20} />
           </div>
         )}
-        {!myProfile && isLoggedIn && connectStatus !== 'CONNECTED' && (
-          <div className={`${css.editBtn} right-4 md:right-8 w-full md:w-fit`}>
-            <Button color="primary" variant="outlined" style={{ flex: '1' }}>
+        {!myProfile && (
+          <div className={`${css.actionDiv} right-4 md:right-8 w-full md:w-fit`}>
+            <Button color="primary" variant="outlined" style={{ flex: '1', height: '40px', fontSize: '14px' }}>
               <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
               Share
             </Button>
-            <Button disabled={connectStatus === 'PENDING'} color="primary" variant="contained" style={{ flex: '1' }}>
-              {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
-            </Button>
-            <IconButton>
+            {isLoggedIn && connectStatus !== 'CONNECTED' && (
+              <Button
+                disabled={connectStatus === 'PENDING'}
+                color="primary"
+                variant="contained"
+                style={{ flex: '1', height: '40px', fontSize: '14px' }}
+              >
+                {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
+              </Button>
+            )}
+            <IconButton className={css.iconBtn}>
               <Icon fontSize={20} name="dots-vertical" color={variables.color_grey_700} />
             </IconButton>
           </div>
