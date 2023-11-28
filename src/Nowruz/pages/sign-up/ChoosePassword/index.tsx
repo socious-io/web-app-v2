@@ -7,7 +7,7 @@ import { Stepper } from 'src/Nowruz/modules/general/components/stepper/stepper';
 export const ChoosePassword = () => {
   return (
     <div className="container mx-auto flex flex-col h-screen pb-16 md:pt-24 pt-12 px-4">
-      <div className={` md:pt-24 form-container`}>
+      <div className={`form-container`}>
         <IntroHeader title="Choose a password" description="" logo={<FeaturedIcon src="/icons/passcode.svg" />} />
         <ChoosePasswordForm />
       </div>
