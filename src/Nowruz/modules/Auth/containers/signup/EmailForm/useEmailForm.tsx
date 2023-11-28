@@ -41,5 +41,5 @@ export const useEmailForm = () => {
     }
   };
 
-  return { register, handleSubmit, errors, onSubmit };
+  return { register, handleSubmit, errors, onSubmit, navigate };
 };
