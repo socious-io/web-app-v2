@@ -23,7 +23,7 @@ const schema = yup
       .string()
       .trim()
       .email('Enter a correct email')
-      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Enter a correct email')
+      .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
       .required('Enter a correct email'),
     password: yup.string().required('Enter a correct password'),
   })
