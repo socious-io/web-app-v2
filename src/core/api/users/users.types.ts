@@ -3,6 +3,7 @@ import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
 import { Identity } from '../site/site.types';
 import { LanguageCode, SDG, PaginateRes } from '../types';
+import { AdditionalRes } from '../additionals/additionals.types';
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
@@ -99,6 +100,10 @@ export interface User {
   experiences?: Experience[] | null;
   created_at: Date;
   geoname_id?: string;
+  educations?: AdditionalRes[];
+  recommendations?: AdditionalRes[];
+  portfolios?: AdditionalRes[];
+  certificates?: AdditionalRes[];
 }
 
 export interface Language extends LanguageReq {

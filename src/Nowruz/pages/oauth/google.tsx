@@ -43,7 +43,7 @@ export const GoogleOauth2 = () => {
         .then((res) => onLoginSucceed(res))
         .catch(() => navigate('/sign-in'));
     }
-  });
+  }, [code]);
 
   return <></>;
 };
