@@ -1,5 +1,6 @@
-export interface LinkProps {
+import { LinkProps as MUILinkProps } from '@mui/material';
+
+export interface LinkProps extends MUILinkProps {
   label: string;
-  href: string;
   customStyle?: string;
 }

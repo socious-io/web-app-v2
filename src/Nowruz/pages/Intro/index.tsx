@@ -1,14 +1,13 @@
-import { Link, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Logo } from 'public/icons/nowruz/logo';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import variables from 'src/components/_exports.module.scss';
-import { Icon } from 'src/Nowruz/general/Icon';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/Nowruz/modules/Auth/containers/ServiceIntro';
 import { reviews, onboardingOptons } from 'src/Nowruz/modules/Auth/statics/intro';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { CardRadioButton } from 'src/Nowruz/modules/general/components/cardRadioButton/cardRadioButton';
+import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import css from './intro.module.scss';
 
@@ -66,9 +65,7 @@ export const Intro = () => {
             <Typography variant="caption" className={css.signupTitle}>
               Already have an account?
             </Typography>
-            <Link href="/sign-in" className={`${css.link} mt-5`}>
-              Log in
-            </Link>
+            <Link href="/sign-in" label="Log in" />
           </div>
         </div>
         <div className={css.copy}>
