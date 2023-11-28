@@ -7,18 +7,6 @@ import { CardRadioButtonProps } from './cardRadioButton.types';
 import { CardRadioButtonIcon } from './cardRadioButtonIcon';
 import { Checkbox } from '../checkbox/checkbox';
 
-const RBIcon: React.FC = () => {
-  return <div className={css.rbIcon} />;
-};
-
-const RBSelectedIcon: React.FC = () => {
-  return (
-    <div className={css.rbSelectedIcon}>
-      <Check stroke={variables.color_white} width={10} height={10} />
-    </div>
-  );
-};
-
 export const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
   const { items, selectedValue, setSelectedValue } = props;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,15 +36,6 @@ export const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
             </div>
           </div>
           <div className={css.rbContainer}>
-            {/* <Radio
-              checked={selectedValue === item.value}
-              onChange={handleChange}
-              value={item.value}
-              name={item.title}
-              icon={<RBIcon />}
-              checkedIcon={<RBSelectedIcon />}
-              sx={{ padding: '0' }}
-            /> */}
             <Checkbox
               id={item.title}
               type="checkCircle"
