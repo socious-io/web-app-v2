@@ -12,7 +12,7 @@ interface CardRadioButtonIconProps {
 export const CardRadioButtonIcon: React.FC<CardRadioButtonIconProps> = ({ selected, icon }) => {
   return (
     <div className={css.iconDiv}>
-      <Icon name={icon.name} fontSize={icon.fontSize} color={selected ? variables.color_primary_600 : 'black'} />
+      <Icon name={icon.name} fontSize={icon.fontSize} color={selected ? 'black' : variables.color_primary_600} />
     </div>
   );
 };
