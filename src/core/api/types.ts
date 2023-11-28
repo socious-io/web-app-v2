@@ -120,7 +120,16 @@ export type ProjectPaymentType = 'VOLUNTEER' | 'PAID';
 
 export type ProjectPaymentSchemeType = 'HOURLY' | 'FIXED';
 
-export type OrganizationType = 'SOCIAL' | 'NONPROFIT' | 'COOP' | 'IIF' | 'PUBLIC' | 'INTERGOV' | 'DEPARTMENT' | 'OTHER';
+export type OrganizationType =
+  | 'SOCIAL'
+  | 'NONPROFIT'
+  | 'COOP'
+  | 'IIF'
+  | 'PUBLIC'
+  | 'INTERGOV'
+  | 'DEPARTMENT'
+  | 'OTHER'
+  | 'STARTUP';
 
 export type NotificationType =
   | 'FOLLOWED'

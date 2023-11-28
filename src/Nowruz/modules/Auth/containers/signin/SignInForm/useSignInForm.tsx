@@ -73,7 +73,7 @@ export const useSignInForm = () => {
       console.log('User did not grant permission to use push notification');
       throw Error;
     }
-
+    console.log('granted');
     return getToken().catch((e: Error) => {
       console.log('error accrued during retrieving token', e);
       return '';
@@ -103,9 +103,9 @@ export const useSignInForm = () => {
   };
 
   function registerPushNotifications() {
-    if (Capacitor.isNativePlatform()) {
-      requestPermissions().then(getFCMToken).then(saveToken).then(addListeners);
-    }
+    // if (Capacitor.isNativePlatform()) {
+    requestPermissions().then(getFCMToken).then(saveToken).then(addListeners);
+    // }
   }
 
   async function onLogin() {
@@ -136,5 +136,6 @@ export const useSignInForm = () => {
     keepLoggedIn,
     setKeepLoggedIn,
     handleChange,
+    registerPushNotifications,
   };
 };

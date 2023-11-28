@@ -7,28 +7,38 @@ export const useCity = () => {
   const [options, setOptions] = useState([]);
   const { state, updateUser } = useUser();
   const { updateSelectedStep } = useContext(StepsContext);
-
-  const searchCities = async (searchText: string) => {
-    try {
-      if (searchText) {
-        const response = await searchLocation(searchText);
-        setOptions(cityToOption(response.items));
-      }
-    } catch (error) {
-      console.error('Error fetching city data:', error);
-    }
-  };
+  const [selectedOption, setSelectedOption] = useState();
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
       label: `${city.name}, ${city.region_name}`,
       countryCode: city.country_code,
     }));
   };
-  const onSelectCity = (option) => {
-    updateUser({ ...state, city: option.label, country: option.countryCode });
-  };
 
+  const searchCities = async (searchText: string, cb) => {
+    console.log(searchText);
+    try {
+      if (searchText) {
+        const response = await searchLocation(searchText);
+        cb(cityToOption(response.items));
+      }
+    } catch (error) {
+      console.error('Error fetching city data:', error);
+    }
+  };
+  const onSelectCity = (location) => {
+    updateUser({ ...state, city: location.label, country: location.value });
+  };
   const isFormValid = state?.city;
-  const city = state.city;
-  return { searchCities, options, onSelectCity, updateSelectedStep, isFormValid, city };
+  const value = state?.city === null ? null : { label: state.city };
+  return {
+    options,
+    onSelectCity,
+    updateSelectedStep,
+    isFormValid,
+    searchCities,
+    selectedOption,
+    setSelectedOption,
+    value,
+  };
 };

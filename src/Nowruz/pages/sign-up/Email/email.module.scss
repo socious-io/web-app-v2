@@ -5,7 +5,7 @@
 .link {
   color: $color-primary-700;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   margin-right: 4px;
   margin-left: 4px;
@@ -23,6 +23,14 @@
 }
 
 .copy {
+  width: 100%;
+  padding-left: 32px;
+  margin-bottom: 32px;
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}
+.copyText {
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -31,4 +39,8 @@
 }
 .review {
   background-color: $color-primary-50;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
