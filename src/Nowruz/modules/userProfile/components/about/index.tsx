@@ -8,7 +8,7 @@ import { Summary } from './summary';
 import { MainInfo } from '../mainInfo';
 
 export const About: React.FC<AboutProps> = (props) => {
-  const { user } = props;
+  const { user, myProfile } = props;
 
   const testExperiences = [
     {
@@ -59,13 +59,13 @@ export const About: React.FC<AboutProps> = (props) => {
   return (
     <div className="flex flex-col gap-8">
       <div className="w-full block md:hidden">
-        <MainInfo user={user} />
+        <MainInfo user={user} myProfile={myProfile} />
       </div>
-      <Summary description={''} />
+      <Summary description={''} myProfile={myProfile} />
       <Divider />
-      <Skills skills={user.skills} />
+      <Skills skills={user.skills} myProfile={myProfile} />
       <Divider />
-      <Experiences items={testExperiences} />
+      <Experiences items={testExperiences} myProfile={myProfile} />
     </div>
   );
 };

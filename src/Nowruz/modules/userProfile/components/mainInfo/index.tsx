@@ -12,13 +12,14 @@ import { LanguageJSX } from '../languages';
 import { Location } from '../location';
 interface MainInfoProps {
   user: User;
+  myProfile: boolean;
 }
-export const MainInfo: React.FC<MainInfoProps> = ({ user }) => {
+export const MainInfo: React.FC<MainInfoProps> = ({ user, myProfile }) => {
   const socialCauses = socialCausesToCategory(user.social_causes).map((item) => item.label);
   const bioJSX = (
     <div>
       <Typography className={css.textMd} color={variables.color_gray_700}>
-        👋 {user.bio}
+        {user.bio}
       </Typography>
     </div>
   );
@@ -31,7 +32,7 @@ export const MainInfo: React.FC<MainInfoProps> = ({ user }) => {
   );
   return (
     <div className="flex flex-col gap-6">
-      <Impact point={user.impact_points} />
+      <Impact point={user.impact_points} myProfile={myProfile} />
       {user.bio && bioJSX}
       {connectionJSX}
       <ChipList items={socialCauses} />
