@@ -15,7 +15,16 @@ const BpCheckedIcon: React.FC<IconProps> = ({ checked }) => {
   );
 };
 
-export const Checkbox: React.FC<CheckboxProps> = ({ id, label, required, errors, isValid, ...props }) => {
+export const Checkbox: React.FC<CheckboxProps> = ({ id, label, required, errors, onChange, isValid, ...props }) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === ' ') {
+      // Simulate a click event when Enter is pressed
+      event.preventDefault();
+      event.stopPropagation();
+      event.target.click();
+    }
+  };
+
   return (
     <div className={css.container}>
       <div className={css.checkboxContainer}>
@@ -29,6 +38,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({ id, label, required, errors,
             <MUICheckbox
               id={id}
               disableRipple
+              onKeyDown={handleKeyDown}
               className={css.default}
               color="default"
               checkedIcon={<BpCheckedIcon checked />}
