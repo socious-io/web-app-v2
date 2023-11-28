@@ -4,13 +4,25 @@ import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 
 import css from './profileHeader.module.scss';
 import { ProfileHeaderProps } from './profileHeader.types';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { IconButton } from '@mui/material';
 
-export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ coverImage, profileImage, name, username }) => {
+export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
+  coverImage,
+  profileImage,
+  name,
+  username,
+  myProfile,
+  isLoggedIn,
+  connectStatus,
+}) => {
   return (
     <div className={`${css.container} h-[292px] md:h-[360px]`}>
-      <button aria-label="upload-banner" className={`${css.iconCamera} hidden md:block`}>
-        <Icon name="camera-01" color="white" fontSize={20} className={css.camera} />
-      </button>
+      {myProfile && (
+        <button aria-label="upload-banner" className={`${css.iconCamera} hidden md:block`}>
+          <Icon name="camera-01" color="white" fontSize={20} className={css.camera} />
+        </button>
+      )}
       <div
         className={`${css.banner} h-40 md:h-60`}
         style={{ backgroundImage: coverImage?.url ? `url(${coverImage?.url})` : 'linear-gradient(#ace0f9, #fff1eb)' }}
@@ -23,9 +35,25 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ coverImage, profil
           <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
           <div className="text-base font-normal text-Gray-light-mode-500">{username}</div>
         </div>
-        <div className={`${css.editBtn} right-4 md:right-8`}>
-          <Icon name="pencil-01" color={variables.color_grey_600} fontSize={20} />
-        </div>
+        {myProfile && (
+          <div className={`${css.editBtn} right-4 md:right-8`}>
+            <Icon name="pencil-01" color={variables.color_grey_600} fontSize={20} />
+          </div>
+        )}
+        {!myProfile && isLoggedIn && connectStatus !== 'CONNECTED' && (
+          <div className={`${css.editBtn} right-4 md:right-8 w-full md:w-fit`}>
+            <Button color="primary" variant="outlined" style={{ flex: '1' }}>
+              <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
+              Share
+            </Button>
+            <Button disabled={connectStatus === 'PENDING'} color="primary" variant="contained" style={{ flex: '1' }}>
+              {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
+            </Button>
+            <IconButton>
+              <Icon fontSize={20} name="dots-vertical" color={variables.color_grey_700} />
+            </IconButton>
+          </div>
+        )}
       </div>
     </div>
   );
