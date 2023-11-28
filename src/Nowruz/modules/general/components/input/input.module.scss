@@ -108,4 +108,12 @@
   line-height: 20px;
   color: $color-grey-600;
 }
-
+.iconBtn {
+  border: none;
+  border-radius: 8px;
+  padding: 0;
+}
+.iconBtn:focus {
+  outline: 5px auto Highlight;
+  outline: 5px auto -webkit-focus-ring-color;
+}

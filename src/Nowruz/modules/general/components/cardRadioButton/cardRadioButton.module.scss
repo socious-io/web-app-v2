@@ -18,7 +18,7 @@
   border: solid 1px $color-primary-200;
 }
 .selectedContainer {
-  border: solid 1px $color-primary-600;
+  border: solid 2px $color-primary-600;
   background-color: $color-primary-50;
 }
 .content {
@@ -30,7 +30,8 @@
   width: 2rem;
   height: 2rem;
   border-radius: 200px;
-  background-color: $color-primary-100;
+  background-color: $color-grey-100;
+  border: 1px solid rgba($color-grey-900, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,7 +70,7 @@
 .title {
   font-family: Inter;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 20px;
   letter-spacing: 0em;
   text-align: left;

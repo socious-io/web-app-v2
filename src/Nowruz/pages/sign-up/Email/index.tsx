@@ -1,11 +1,10 @@
-import { Link, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Logo } from 'public/icons/nowruz/logo';
-import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/Nowruz/modules/Auth/containers/ServiceIntro';
 import { EmailForm } from 'src/Nowruz/modules/Auth/containers/signup/EmailForm';
 import { reviews } from 'src/Nowruz/modules/Auth/statics/intro';
+import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import css from './email.module.scss';
 export const Email = () => {
@@ -46,23 +45,17 @@ export const Email = () => {
             <Typography variant="caption" className={css.signupTitle}>
               Already have an account?
             </Typography>
-            <Link href="/sign-in" className={`${css.link} mt-5`}>
-              Log in
-            </Link>
+            <Link href="/sign-in" label="Log in" />
           </div>
           <div className="text-center">
             <Typography variant="caption" className={css.signupTitle}>
               By continuing, you accept our
             </Typography>
-            <Link href="/terms-conditions" className={css.link} underline="hover">
-              Terms of Use
-            </Link>
+            <Link href="/terms-conditions" label="Terms of Use" target="_blank" />
             <Typography variant="caption" className={css.signupTitle}>
-              and
+              {` and`}
             </Typography>
-            <Link href="/privacy-policy" className={css.link} underline="hover">
-              Privacy Policy.
-            </Link>
+            <Link href="/privacy-policy" label="Privacy Policy." target="_blank" />
           </div>
         </div>
         <div className={css.copy}>
