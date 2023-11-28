@@ -2,20 +2,14 @@
 .container {
   max-width: 1440px;
 }
-.link {
-  color: $color-primary-700;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  margin-right: 4px;
-  margin-left: 4px;
-}
+
 .privacy {
   text-align: center;
 }
 .signupTitle {
   text-align: center;
   color: $color-grey-600;
+  margin-right: 4px;
 }
 
 .copy {
