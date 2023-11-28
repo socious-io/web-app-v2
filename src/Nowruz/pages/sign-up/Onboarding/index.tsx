@@ -35,7 +35,7 @@ export const Onboarding = () => {
   const accounts = [
     { id: '1', type: 'users', name: primary?.meta.name, username: primary?.meta.username, img: primary?.meta.avatar },
   ];
-  const isMobile = isTouchDevice();
+  const isMobile = window.innerWidth < 600;
   const items = [
     {
       iconName: 'log-out-01',

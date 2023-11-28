@@ -54,7 +54,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   return (
     <div className={`${css.container} ${className}`}>
       <div className={css.labelContainer}>
-        <label htmlFor={id} className={css.label} onClick={handleLabelClick}>
+        <label htmlFor={id} className={css.label} onClick={handleLabelClick} aria-describedby={id}>
           {label}
         </label>
       </div>
