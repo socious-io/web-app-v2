@@ -1,4 +1,6 @@
-import { SocialCauses, PaginateRes, OrganizationType, Media } from '../types';
+import { AdditionalRes } from '../additionals/additionals.types';
+import { Media } from '../media/media.types';
+import { SocialCauses, PaginateRes, OrganizationType } from '../types';
 
 export interface OrganizationReq {
   name: string;
@@ -48,6 +50,8 @@ export interface Organization extends OrganizationReq {
   geoname_id?: number;
   verified_impact: boolean;
   hiring: boolean;
+  recommendations?: AdditionalRes[];
+  benefits?: AdditionalRes[];
   created_at: Date;
   updated_at: Date;
 }
