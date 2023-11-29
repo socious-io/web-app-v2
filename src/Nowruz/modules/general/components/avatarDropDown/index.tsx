@@ -29,7 +29,7 @@ export const AvatarDropDown: React.FC<AvatarDropDownProps> = (props) => {
         )}
       </button>
       {open && (
-        <div className={`w-full bg-Base-White rounded-default`}>
+        <div className={`w-full max-h-96 bg-Base-White rounded-default overflow-y-auto`}>
           <div className="w-full">
             <Divider />
           </div>

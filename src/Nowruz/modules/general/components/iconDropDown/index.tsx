@@ -17,7 +17,7 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
       </div>
       {open && (
         <div
-          className={`w-[280px] bg-Base-White border border-solid border-Gray-light-mode-200 rounded-default shadow-Shadows/shadow-lg flex flex-col absolute top-[48px] ${customStyle}`}
+          className={`w-[280px] max-h-96 overflow-y-auto overflow-x-hidden bg-Base-White border border-solid border-Gray-light-mode-200 rounded-default shadow-Shadows/shadow-lg flex flex-col absolute top-[48px] ${customStyle}`}
         >
           {accounts.map((a) => (
             <AvatarLabelGroup key={a.id} account={a} handleClick={() => switchAccount(a.id)} />

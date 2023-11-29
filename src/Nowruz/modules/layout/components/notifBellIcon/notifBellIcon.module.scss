@@ -1,0 +1,31 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  height: 40px;
+  width: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.container .dot {
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  background-color: $color-error-500;
+}
+.container:hover {
+  background-color: $color-grey-100;
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms linear;
+}
+.container:hover .dot {
+  opacity: 0;
+  transition: 200ms all ease;
+}

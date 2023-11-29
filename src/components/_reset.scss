@@ -13,7 +13,7 @@
 }
 
 /* Preferred box-sizing value */
-*:not(svg):not(circle),
+*:not(span):not(svg):not(circle),
 *::before:not(span),
 *::after {
   box-sizing: border-box;
