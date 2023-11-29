@@ -6,7 +6,7 @@ import css from './avatar.module.scss';
 import { AvatarProps } from './avatar.types';
 
 export const Avatar: React.FC<AvatarProps> = (props) => {
-  const { badge, customStyle = '', size = '3rem', onClick, type = 'users', img, iconName, ...rest } = props;
+  const { badge, customStyle = '', size = '3rem', onClick, type = 'users', img, iconName, iconSize, ...rest } = props;
 
   const [icon, setIcon] = useState('');
   useEffect(() => {
