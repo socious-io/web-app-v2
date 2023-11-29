@@ -36,7 +36,13 @@ export const UserDetails = () => {
             register={register}
             placeholder="Username"
             validMessage="Username available"
-            prefix="socious.io/"
+            hints={[
+              {
+                hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`,
+                hide: !isUsernameValid,
+              },
+            ]}
+            // prefix="socious.io/"
             isValid={isUsernameValid}
             errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}
           />

@@ -20,6 +20,13 @@
   text-align: center;
   cursor: pointer;
   padding: 16px;
+  @media screen and (max-width: 600px) {
+    padding: 14px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+  }
 }
 .cardSelected {
   background-color: $color-primary-50;

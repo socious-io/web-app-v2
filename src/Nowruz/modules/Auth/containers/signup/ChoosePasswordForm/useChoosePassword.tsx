@@ -29,10 +29,10 @@ export const useChoosePassword = () => {
   const confirmPassword = watch('confirm');
   useEffect(() => {
     setIsFormValid(
-      !!password && password.length >= 8 && /^(?=.*[!@#$%^&*])/.test(password) && password === confirmPassword,
+      !!password && password.length >= 8 && /^(?=.*[!@#$%^&*?])/.test(password) && password === confirmPassword,
     );
     setIsPasswordLengthValid(!!(password && password.length >= 8));
-    setIsPasswordPatternValid(!!(password && /^(?=.*[!@#$%^&*])/.test(password)));
+    setIsPasswordPatternValid(!!(password && /^(?=.*[!@#$%^&*?])/.test(password)));
   }, [password, confirmPassword]);
   const onSubmit: SubmitHandler<Inputs> = async ({ password, confirm }) => {
     try {

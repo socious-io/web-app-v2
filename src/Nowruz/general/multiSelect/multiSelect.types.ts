@@ -9,9 +9,14 @@ export interface CustomChipProps {
   label: string;
   icon: ReactNode;
   onClick: (value: string) => void;
+  borderColor?: string;
+  bgColor?: string;
+  fontColor?: string;
+  customStyle?: string;
 }
 
 export interface MultiSelectProps {
+  id?: string;
   searchTitle?: string;
   selectedItems?: MultiSelectItem[];
   items?: MultiSelectItem[];
@@ -21,4 +26,7 @@ export interface MultiSelectProps {
   componentValue: MultiSelectItem[];
   setComponentValue: (newVal: MultiSelectItem[]) => void;
   customHeight?: string;
+  chipBorderColor?: string;
+  chipBgColor?: string;
+  chipFontColor?: string;
 }

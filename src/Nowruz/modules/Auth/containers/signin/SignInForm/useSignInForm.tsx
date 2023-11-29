@@ -23,7 +23,7 @@ const schema = yup
       .string()
       .trim()
       .email('Enter a correct email')
-      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Enter a correct email')
+      .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
       .required('Enter a correct email'),
     password: yup.string().required('Enter a correct password'),
   })
@@ -73,7 +73,7 @@ export const useSignInForm = () => {
       console.log('User did not grant permission to use push notification');
       throw Error;
     }
-
+    console.log('granted');
     return getToken().catch((e: Error) => {
       console.log('error accrued during retrieving token', e);
       return '';
@@ -103,9 +103,9 @@ export const useSignInForm = () => {
   };
 
   function registerPushNotifications() {
-    if (Capacitor.isNativePlatform()) {
-      requestPermissions().then(getFCMToken).then(saveToken).then(addListeners);
-    }
+    // if (Capacitor.isNativePlatform()) {
+    requestPermissions().then(getFCMToken).then(saveToken).then(addListeners);
+    // }
   }
 
   async function onLogin() {
@@ -136,5 +136,6 @@ export const useSignInForm = () => {
     keepLoggedIn,
     setKeepLoggedIn,
     handleChange,
+    registerPushNotifications,
   };
 };

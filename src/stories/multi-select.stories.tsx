@@ -18,6 +18,7 @@ const Template: StoryFn = (args) => {
   return (
     <div style={{ width: '480px' }}>
       <MultiSelect
+        id="social causes"
         searchTitle={'Select at least 1 cause*'}
         max={5}
         maxLabel={'Max. 5 causes'}

@@ -16,6 +16,21 @@ const initialState = {
   avatar: '',
   address: '',
 };
+const orgInitialState = {
+  orgName: '',
+  orgType: { value: 'STARTUP', label: 'Impact Startup' },
+  social_causes: [],
+  bio: '',
+  image: '',
+  city: '',
+  country: '',
+  email: '',
+  website: '',
+  size: null,
+  shortname: '',
+  industry: '',
+};
+const type = localStorage.getItem('registerFor');
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -34,11 +49,11 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
-export const UserContext = React.createContext(initialState);
+console.log('init state for', type);
+export const UserContext = React.createContext(type === 'user' ? initialState : orgInitialState);
 
 export const UserProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, type === 'user' ? initialState : orgInitialState);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,8 +64,7 @@ export const UserProvider = ({ children }) => {
         console.error(error);
       }
     };
-
-    fetchData();
+    if (type === 'user') fetchData();
   }, []);
   return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>;
 };
@@ -65,6 +79,7 @@ export const useUser = () => {
   const { state, dispatch } = context;
 
   const updateUser = (updates) => {
+    console.log('new state', state);
     dispatch({ type: 'UPDATE_USER', payload: updates });
   };
   return { updateUser, state };

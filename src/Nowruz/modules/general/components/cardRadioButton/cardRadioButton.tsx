@@ -1,22 +1,11 @@
-import { Radio, RadioGroup, Typography } from '@mui/material';
+import { Radio, RadioGroup } from '@mui/material';
 import { Check } from 'public/icons/nowruz/check';
 import variables from 'src/components/_exports.module.scss';
 
 import css from './cardRadioButton.module.scss';
 import { CardRadioButtonProps } from './cardRadioButton.types';
 import { CardRadioButtonIcon } from './cardRadioButtonIcon';
-
-const RBIcon: React.FC = () => {
-  return <div className={css.rbIcon} />;
-};
-
-const RBSelectedIcon: React.FC = () => {
-  return (
-    <div className={css.rbSelectedIcon}>
-      <Check stroke={variables.color_white} width={10} height={10} />
-    </div>
-  );
-};
+import { Checkbox } from '../checkbox/checkbox';
 
 export const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
   const { items, selectedValue, setSelectedValue } = props;
@@ -35,7 +24,7 @@ export const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
           {item.img ? (
             item.img
           ) : item.icon ? (
-            <CardRadioButtonIcon selected={selectedValue === item.value} icon={item.icon} />
+            <CardRadioButtonIcon icon={item.icon} selected={selectedValue === item.value} />
           ) : (
             ''
           )}
@@ -47,14 +36,13 @@ export const CardRadioButton: React.FC<CardRadioButtonProps> = (props) => {
             </div>
           </div>
           <div className={css.rbContainer}>
-            <Radio
-              checked={selectedValue === item.value}
+            <Checkbox
+              id={item.title}
+              type="checkCircle"
+              size="small"
               onChange={handleChange}
               value={item.value}
-              name={item.title}
-              icon={<RBIcon />}
-              checkedIcon={<RBSelectedIcon />}
-              sx={{ padding: '0' }}
+              checked={selectedValue === item.value}
             />
           </div>
         </div>

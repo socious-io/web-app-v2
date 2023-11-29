@@ -43,10 +43,12 @@
   font-weight: 600;
   src: url('/fonts/Inter-SemiBold.woff2');
 }
+
 //Nowruz Colors
 $color-primary-50: #f3f6f6;
 $color-primary-100: #e6eded;
 $color-primary-200: #ccdbda;
+$color-primary-300: #99b7b5;
 $color-primary-600: #004a46;
 $color-primary-700: #003b38;
 $color-primary-800: #002c2a;
@@ -60,10 +62,11 @@ $color-grey-300: #d0d5dd;
 $color-grey-500: #667085;
 $color-grey-600: #475467;
 $color-grey-700: #344054;
+$color-grey-800: #1d2939;
 $color-grey-900: #101828;
 
-$color-grey-blue-50: #d5d9eb;
-$color-grey-blue-200: #f8f9fc;
+$color-grey-blue-50: #f8f9fc;
+$color-grey-blue-200: #d5d9eb;
 $color-grey-blue-700: #363f72;
 
 $color-error-100: #fee4e2;
