@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { changePasswordDirect, handleError } from 'src/core/api';
+import { passwordPattern } from 'src/core/regexs';
 import * as yup from 'yup';
 
 export const usePasswordForm = () => {
@@ -12,14 +13,13 @@ export const usePasswordForm = () => {
 
   const schema = yup.object().shape({
     password: yup.string().test('password-validation', '', function (value) {
-      const regex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
       const errors: yup.ValidationError[] = [];
       if (!value || value.length < 8) {
         setValidLength(false);
         errors.push(this.createError({ path: 'password', message: '' }));
       } else setValidLength(true);
 
-      if (!value || !regex.test(value)) {
+      if (!value || !passwordPattern.test(value)) {
         setSpecialChar(false);
         errors.push(this.createError({ path: 'password', message: '' }));
       } else setSpecialChar(true);
