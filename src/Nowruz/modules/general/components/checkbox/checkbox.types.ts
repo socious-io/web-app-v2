@@ -5,4 +5,6 @@ export interface CheckboxProps extends DefaultProps {
   required?: boolean;
   errors?: string[];
   isValid?: boolean;
+  type?: 'checkBox' | 'checkCircle';
+  size?: 'small' | 'medium';
 }

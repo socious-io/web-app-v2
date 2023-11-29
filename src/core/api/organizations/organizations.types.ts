@@ -1,4 +1,6 @@
-import { SocialCauses, PaginateRes, OrganizationType, Media } from '../types';
+import { AdditionalRes } from '../additionals/additionals.types';
+import { Media } from '../media/media.types';
+import { SocialCauses, PaginateRes, OrganizationType } from '../types';
 
 export interface OrganizationReq {
   name: string;
@@ -19,6 +21,7 @@ export interface OrganizationReq {
   cover_image?: string | any;
   mission?: string;
   culture?: string;
+  size: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'L';
 }
 
 export interface OrganizationsRes extends PaginateRes {
@@ -48,6 +51,8 @@ export interface Organization extends OrganizationReq {
   geoname_id?: number;
   verified_impact: boolean;
   hiring: boolean;
+  recommendations?: AdditionalRes[];
+  benefits?: AdditionalRes[];
   created_at: Date;
   updated_at: Date;
 }
@@ -59,4 +64,12 @@ export interface Member {
   first_name?: string;
   last_name?: string;
   avatar?: string;
+}
+
+export interface Industry {
+  name: string;
+}
+
+export interface IndustryRes extends PaginateRes {
+  items: Industry[];
 }

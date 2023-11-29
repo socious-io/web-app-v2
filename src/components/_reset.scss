@@ -18,9 +18,12 @@
 *::after {
   box-sizing: border-box;
   font-family: 'Inter';
+  // color: var(--color-black-01);
+}
+div,
+label {
   color: var(--color-black-01);
 }
-
 /* Reapply the pointer cursor for anchor tags */
 a,
 button {
