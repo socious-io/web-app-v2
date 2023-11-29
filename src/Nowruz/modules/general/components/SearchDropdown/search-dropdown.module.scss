@@ -1,59 +1,61 @@
 @import 'src/components/_primitives.scss';
-.container {
-  width: 100%;
-  // height: 44px;
-  // background-color: aqua;
-}
-.textfield {
-  .MuiAutocomplete-input {
-    height: 44px;
-  }
-}
+
 .label {
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   text-align: left;
+  color: $color-grey-700;
+}
+.labelContainer {
+  margin-bottom: 6px;
 }
 .option {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: space-between !important;
-  padding: 16px !important;
-  background-color: $color-white;
-  .optionLabel {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: left;
-    display: flex;
-    gap: 8px;
-  }
-  .subtitle {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: $color-grey-600;
-  }
-  .optionAvatar {
-    width: 24px;
-    height: 24px;
-  }
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  color: $color-grey-900;
+  height: 44px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
 }
-.selectedOption {
-  background-color: $color-grey-50 !important;
+.option:hover {
+  background-color: $color-grey-50;
 }
 
-.chip {
-  &:global(.MuiChip-root) {
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    text-align: center;
-    color: $color-grey-700;
-  }
+.dropdown {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+}
+.startIcon {
+  margin-left: 14px;
+}
+
+.msg {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 6px;
+}
+
+.errorMsg {
+  color: $color-error-500;
+}
+
+.description {
+  margin-left: 8px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 }

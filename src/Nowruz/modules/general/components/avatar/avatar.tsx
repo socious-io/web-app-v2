@@ -31,7 +31,7 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
         {img ? (
           <img className={css.img} src={img} alt="" width={size} height={size} />
         ) : (
-          <Icon name={icon} fontSize={24} color={variables.color_grey_600} />
+          <Icon name={icon} fontSize={iconSize ? iconSize : 24} color={variables.color_grey_600} />
         )}
       </div>
       {badge && (

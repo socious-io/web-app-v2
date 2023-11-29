@@ -60,6 +60,7 @@
     "react-otp-input": "^3.1.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.16.0",
+    "react-select": "^5.8.0",
     "socket.io-client": "^4.6.1",
     "ssi-auth-lib": "^0.0.6",
     "vite-tsconfig-paths": "^4.0.5",

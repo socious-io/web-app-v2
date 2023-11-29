@@ -40,7 +40,7 @@ export const InputDropDown: React.FC<InputDropDownProps> = (props) => {
                 <span className={css.menuItemTitle}>{i.label}</span>
                 <span className={css.menuItemSubTitle}>{i.subtitle}</span>
                 {i.value === selected?.value && (
-                  <div className="mr-0 ml-auto">
+                  <div className="mr-0 ml-auto bg-white">
                     <Icon name="check" fontSize={20} color="black" />
                   </div>
                 )}

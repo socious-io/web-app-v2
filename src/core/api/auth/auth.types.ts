@@ -15,6 +15,7 @@ export interface RegisterReq {
 export interface PreRegisterReq {
   email?: string;
   username?: string;
+  shortname?: string;
 }
 
 export interface RefreshReq {
@@ -51,6 +52,7 @@ export interface AuthRes {
 export interface PreRegisterRes {
   email?: 'EXISTS' | null;
   username?: 'EXISTS' | null;
+  shortname?: 'EXISTS' | null;
 }
 
 export interface StripeLinkRes {

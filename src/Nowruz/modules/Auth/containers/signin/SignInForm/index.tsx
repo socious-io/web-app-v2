@@ -8,7 +8,6 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import { useSignInForm } from './useSignInForm';
-
 // import { LinkedIn } from 'public/icons/nowruz/linkedin';
 
 export const SignInForm = () => {
@@ -50,9 +49,14 @@ export const SignInForm = () => {
           <Button color="primary" onClick={handleSubmit(onLogin)}>
             Continue
           </Button>
-          <Button color="primary" variant="outlined" onClick={() => navigate('/oauth/google')}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => navigate('/oauth/google')}
+            style={{ display: 'flex', gap: '12px' }}
+          >
             <Google />
-            <div>Continue with Google</div>
+            Continue with Google
           </Button>
           {/*
             <Button variant="outlined" color="secondary" className={css.button}>
@@ -66,7 +70,7 @@ export const SignInForm = () => {
         <Typography variant="caption" color={variables.color_grey_600}>
           Don't have an account?
         </Typography>
-        <Link label=" Sign up" href="/sign-up/user/email" />
+        <Link label=" Sign up" href="/intro" />
       </div>
     </>
   );

@@ -1,18 +1,20 @@
-import { Typography } from '@mui/material';
 import React from 'react';
 
 import css from './multiSelect.module.scss';
 import { CustomChipProps } from './multiSelect.types';
 
 const Chip: React.FC<CustomChipProps> = (props) => {
-  const { label, onClick, icon } = props;
-
+  const { label, onClick, icon, bgColor, fontColor, borderColor, customStyle } = props;
   return (
-    <div className={css.chip} onClick={() => onClick(label)}>
-      <Typography variant="subtitle1" className={css.chipLabel}>
+    <div
+      className={`${css.chip} ${customStyle}`}
+      style={{ borderColor: borderColor ? borderColor : '', backgroundColor: bgColor || '' }}
+      onClick={() => onClick(label)}
+    >
+      <span className={css.chipLabel} style={{ color: fontColor || '' }}>
         {label}
-      </Typography>
-      {icon}
+      </span>
+      <div style={{ marginRight: 0, marginLeft: 'auto' }}>{icon}</div>
     </div>
   );
 };
