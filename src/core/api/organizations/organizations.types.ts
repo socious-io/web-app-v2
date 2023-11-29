@@ -21,6 +21,7 @@ export interface OrganizationReq {
   cover_image?: string | any;
   mission?: string;
   culture?: string;
+  size: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'L';
 }
 
 export interface OrganizationsRes extends PaginateRes {
@@ -63,4 +64,12 @@ export interface Member {
   first_name?: string;
   last_name?: string;
   avatar?: string;
+}
+
+export interface Industry {
+  name: string;
+}
+
+export interface IndustryRes extends PaginateRes {
+  items: Industry[];
 }

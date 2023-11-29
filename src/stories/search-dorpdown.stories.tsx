@@ -1,6 +1,17 @@
 import React from 'react';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
+const companySizeOptions = [
+  { value: 'A', label: 'Self-employed' },
+  { value: 'B', label: '1-10 employees' },
+  { value: 'C', label: '11-50 employees' },
+  { value: 'D', label: '51-200 employees' },
+  { value: 'E', label: '201-500 employees' },
+  { value: 'F', label: '501-1000 employees' },
+  { value: 'G', label: '1001-5000 employees' },
+  { value: 'H', label: '5001-10,000 employees' },
+  { value: 'I', label: '10,001+ employees' },
+];
 export default {
   title: 'General/SearchDropdown',
   component: SearchDropdown,
@@ -9,20 +20,11 @@ export default {
 const Template = (args) => <SearchDropdown {...args} />;
 
 export const Default = Template.bind({});
-const options = [
-  { label: 'Cherry', value: 'cherry', avatar: 'https://mui.com/static/images/avatar/1.jpg', subtitle: '@unigina123' },
-  { label: 'Grape', value: 'grape', avatar: 'https://mui.com/static/images/avatar/1.jpg', subtitle: '@unigina123' },
-  { label: 'Lemon', value: 'lemon', avatar: 'https://mui.com/static/images/avatar/1.jpg', subtitle: '@unigina123' },
-  { label: 'Orange', value: 'orange', avatar: 'https://mui.com/static/images/avatar/1.jpg', subtitle: '@unigina123' },
-  { label: 'Apple', value: 'apple', avatar: 'https://mui.com/static/images/avatar/1.jpg', subtitle: '@unigina123' },
-  { label: 'Pear', value: 'pear', avatar: 'https://mui.com/static/images/avatar/1.jpg', subtitle: '@unigina123' },
-  { label: 'Strawberry', value: 'strawberry', avatar: 'https://mui.com/static/images/avatar/1.jpg' },
-  { label: 'Watermelon', value: 'watermelon' },
-  { label: 'Kiwi', value: 'kiwi' },
-];
 Default.args = {
-  placeholder: 'look for a team member',
-  label: 'Select an option:',
-  multiple: false,
-  options,
+  label: 'City*',
+  className: 'mb-5',
+  placeholder: 'Select a company size',
+  options: companySizeOptions,
+  isSearchable: false,
+  icon: 'search-lg',
 };

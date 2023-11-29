@@ -1,4 +1,4 @@
-import { TextField, InputAdornment, Typography } from '@mui/material';
+import { TextField, InputAdornment, IconButton } from '@mui/material';
 import { AlertCircle } from 'public/icons/nowruz/alert-circle';
 import { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
@@ -18,6 +18,7 @@ export const Input: React.FC<InputProps> = ({
   prefix,
   color,
   register,
+  hints,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,12 +30,16 @@ export const Input: React.FC<InputProps> = ({
     else if (props.type === 'password' && showPassword && showEyeIcon) {
       setInputType('text');
       setEndIcon(
-        <Icon name="eye-off" color={variables.color_grey_500} fontSize={24} onClick={() => setShowPassword(false)} />,
+        <IconButton disableRipple className={css.iconBtn} onClick={() => setShowPassword(false)}>
+          <Icon name="eye-off" color={variables.color_grey_500} fontSize={24} />
+        </IconButton>,
       );
     } else if (props.type === 'password' && !showPassword && showEyeIcon) {
       setInputType('password');
       setEndIcon(
-        <Icon name="eye" color={variables.color_grey_500} fontSize={24} onClick={() => setShowPassword(true)} />,
+        <IconButton disableRipple className={css.iconBtn} onClick={() => setShowPassword(true)}>
+          <Icon name="eye" color={variables.color_grey_500} fontSize={24} />
+        </IconButton>,
       );
     } else setEndIcon('');
   }, [errors, showPassword, showEyeIcon]);
@@ -75,6 +80,7 @@ export const Input: React.FC<InputProps> = ({
               {prefix}
             </InputAdornment>
           ),
+          spellCheck: 'false',
         }}
         {...(register
           ? register(name, {
@@ -90,7 +96,12 @@ export const Input: React.FC<InputProps> = ({
             {e}
           </p>
         ))}
-
+      {hints &&
+        hints.map((hint, index) => (
+          <p key={index} className={`${css.hintMsg} ${css.msg}`}>
+            {hint.hide && hint.hint}
+          </p>
+        ))}
       {isValid && validMessage && <p className={`${css.successMsg} ${css.msg}`}>{validMessage}</p>}
     </div>
   );
