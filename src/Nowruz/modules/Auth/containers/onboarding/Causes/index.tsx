@@ -1,6 +1,5 @@
-import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
-import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
 
 import css from './causes.module.scss';
 import { useCauses } from './useCauses';
