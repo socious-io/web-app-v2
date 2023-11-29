@@ -27,7 +27,7 @@ export const ImageBio = () => {
       </div>
       <div className="mt-5 md:hidden">
         <Button
-          startIcon={<Icon name="upload-cloud-02" fontSize={20} color={variables.color_primary_700} />}
+          startIcon={<Icon name="upload-cloud-02" fontSize={20} color={variables.color_grey_600} />}
           color="secondary"
           variant="outlined"
           block
