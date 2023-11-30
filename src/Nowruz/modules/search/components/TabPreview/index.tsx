@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 
 import css from './tab-preview.module.scss';
 import { TabPreviewProps, Tab } from './TabPreview.types';
-export const TabPreview: React.FC<TabPreviewProps> = ({ tabs, onSelect }) => {
-  const [selectedTab, setSelectedTab] = useState<number | null>(null);
+
+export const TabPreview: React.FC<TabPreviewProps> = ({ tabs, onSelect, defaultTabIndex }) => {
+  const [selectedTab, setSelectedTab] = useState<number | null>(defaultTabIndex !== undefined ? defaultTabIndex : null);
 
   const onSelectTab = (tabIndex: number) => {
     onSelect(tabs[tabIndex]);

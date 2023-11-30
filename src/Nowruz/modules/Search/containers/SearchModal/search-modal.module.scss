@@ -1,0 +1,13 @@
+@import 'src/components/_primitives.scss';
+
+.tabsRow {
+  padding: 10px;
+  border-bottom: 1px solid $color-grey-200;
+  @media screen and (max-width: 600px) {
+    border-top: 1px solid $color-grey-200;
+  }
+}
+
+.searchInput {
+  border-bottom: 1px solid $color-grey-200;
+}

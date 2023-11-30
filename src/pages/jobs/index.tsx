@@ -9,6 +9,7 @@ import { ProfileCard } from 'src/components/templates/profile-card';
 import { TwoColumns } from 'src/components/templates/refactored/twoColumns/twoColumns';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { printWhen } from 'src/core/utils';
+import { SearchModal } from 'src/Nowruz/modules/Search/containers/SearchModal/indes';
 import { visibility } from 'src/store/reducers/menu.reducer';
 
 import css from './jobs.module.scss';
@@ -63,6 +64,7 @@ export const Jobs = (): JSX.Element => {
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity?.type === 'organizations')}
       </div>
       <>
+        <SearchModal />
         <div className={css.banner}>
           <div className={`block md:hidden ${css.menu}`}>
             <Avatar onClick={openSidebar} img={avatarImg} size="2.25rem" type={identity?.type || 'users'} />
