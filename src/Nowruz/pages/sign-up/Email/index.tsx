@@ -66,7 +66,9 @@ export const Email = () => {
       </div>
 
       <div className="w-1/2 items-center justify-center hidden md:block">
-        <div className={`${css.review} `}>{renderIntro()}</div>
+        <div className={`${css.review} `}>
+          <div className="px-8">{renderIntro()}</div>
+        </div>
       </div>
     </div>
   );

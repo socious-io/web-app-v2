@@ -17,7 +17,15 @@
 *::before:not(span),
 *::after {
   box-sizing: border-box;
-  font-family: 'Inter';
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   // color: var(--color-black-01);
 }
 div,

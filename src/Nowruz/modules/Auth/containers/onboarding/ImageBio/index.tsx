@@ -27,7 +27,7 @@ export const ImageBio = () => {
       </div>
       <div className="mt-5 md:hidden">
         <Button
-          startIcon={<Icon name="upload-cloud-02" fontSize={20} color={variables.color_grey_600} />}
+          startIcon={<Icon name="upload-cloud-02" fontSize={20} color={variables.color_grey_700} />}
           color="secondary"
           variant="outlined"
           block
@@ -49,7 +49,7 @@ export const ImageBio = () => {
         </div>
       )}
       <div className="my-5">
-        <Divider sx={{ bgcolor: variables.color_primary_300 }} />
+        <Divider sx={{ bgcolor: variables.color_grey_200 }} />
       </div>
       <Input
         id="headline"
