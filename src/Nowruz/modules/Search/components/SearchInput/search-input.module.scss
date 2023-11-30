@@ -1,0 +1,43 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  background-color: $color-white;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input {
+  box-shadow: none;
+  outline: none;
+  border: none;
+  margin-left: 8px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: $color-grey-900;
+}
+.input::placeholder {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: $color-grey-500;
+}
+.input:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.commandBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid $color-grey-100;
+  background-color: $color-grey-50;
+  color: $color-grey-600;
+  cursor: pointer;
+}
