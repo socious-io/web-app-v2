@@ -21,7 +21,10 @@ export async function search(payload: SearchReq, params: PaginateReq) {
       return data;
   }
 }
-
+export async function searchHistory(params: PaginateReq) {
+  const { data } = await post<PaginateRes>('search/history', { params });
+  return data;
+}
 export async function identities(): Promise<CurrentIdentity[]> {
   return (await get<CurrentIdentity[]>('identities')).data;
 }
