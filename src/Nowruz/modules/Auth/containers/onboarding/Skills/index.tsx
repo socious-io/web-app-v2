@@ -1,9 +1,10 @@
-import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
 import variables from 'src/components/_exports.module.scss';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
+import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
 
 import css from './skills.module.scss';
 import { useSkills } from './useSkills';
+
 export const Skills = () => {
   const { items, value, setValue, updateSelectedStep } = useSkills();
   console.log('itms', items);
