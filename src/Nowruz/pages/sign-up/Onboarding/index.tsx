@@ -47,7 +47,6 @@ export const Onboarding = () => {
       },
     },
   ];
-  console.log('type is', type);
   if (type === 'user')
     return (
       <UserProvider>

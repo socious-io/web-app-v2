@@ -7,5 +7,5 @@ export const steps = [
   { title: 'Email verification', desc: 'Please check your email', icon: Mail01 },
   { title: 'Choose a password', desc: 'Choose a secure password', icon: Passcode },
   { title: 'Your details', desc: 'Enter your name', icon: User01 },
-  { title: 'Congartulations', desc: 'Start making an impact', icon: Star02 },
+  { title: 'Congratulations', desc: 'Start making an impact', icon: Star02 },
 ];

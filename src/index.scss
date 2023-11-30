@@ -41,7 +41,7 @@ body {
 
 //shared container for all sign up pages
 .form-container {
-  width: 360px;
+  max-width: 360px;
   margin: auto;
 
   @media (max-width: 640px) {

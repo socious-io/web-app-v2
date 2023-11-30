@@ -12,7 +12,6 @@ import { useOrganizationLogo } from './useOrganizationLogo';
 export const OrganizationLogo = () => {
   const { updateBio, onUploadImage, image, isValidForm, bio, goNextPage, bioCounter, imageUrl, uploadError } =
     useOrganizationLogo();
-  console.log(imageUrl);
   return (
     <div className="flex flex-col items-stretch lg:pt-7 sm:pt-5 px-4">
       <div className={css.header}>
@@ -28,7 +27,7 @@ export const OrganizationLogo = () => {
       </div>
       <div className="mt-5 md:hidden">
         <Button
-          startIcon={<Icon name="upload-cloud-02" fontSize={20} color={variables.color_grey_600} />}
+          startIcon={<Icon name="upload-cloud-02" fontSize={20} color={variables.color_grey_700} />}
           color="secondary"
           variant="outlined"
           block
