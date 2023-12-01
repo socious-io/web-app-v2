@@ -61,17 +61,6 @@ export const useOrganizationContact = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { orgName, orgType, social_causes, bio, image, city, country, email, website, size, shortname } = state;
-    console.log({
-      name: orgName,
-      type: orgType.value,
-      size: size.value,
-      social_causes,
-      bio,
-      email,
-      website,
-      city,
-      country,
-    });
     try {
       const websiteUrl = state.website ? 'https://' + state.website : '';
       const response = await createOrganization(
@@ -128,14 +117,12 @@ export const useOrganizationContact = () => {
     }
   };
   const onSelectIndustry = (industry) => {
-    console.log('industry', industry);
     updateUser({ ...state, industry: industry.value });
   };
 
   const checkUsernameAvailability = async (shortname: string) => {
     const checkUsername = await preRegister({ shortname });
     if (checkUsername.shortname === null) {
-      console.log(checkUsername);
       setIsusernameValid(true);
       clearErrors('username');
       setIsShortnameValid(true);
@@ -163,11 +150,9 @@ export const useOrganizationContact = () => {
     } else if (!usernameConditionErrors && state.shortname) {
       debouncedCheckUsername(state.shortname);
       if (isUsernameAvailable) {
-        console.log('user name is ok');
         setIsusernameValid(true);
         clearErrors('username');
       } else {
-        console.log('Invalid username', state.shortname, isUsernameAvailable);
         setIsusernameValid(false);
         setError('username', {
           type: 'manual',
@@ -175,13 +160,10 @@ export const useOrganizationContact = () => {
         });
       }
     }
-    // if (state.shortname) {
-    //   debouncedCheckUsername(state.shortname);
-    // } else clearErrors('username');
+
   }, [state.shortname]);
 
   const onSelectCity = (location) => {
-    console.log(location);
     updateUser({ ...state, city: location.label, country: location.value });
   };
 
@@ -193,7 +175,6 @@ export const useOrganizationContact = () => {
   const updateUsername = (shortname: string) => updateUser({ ...state, shortname });
 
   const updateWebsite = (website: string) => {
-    console.log(errors);
     updateUser({ ...state, website });
   };
   const isFormValid =
