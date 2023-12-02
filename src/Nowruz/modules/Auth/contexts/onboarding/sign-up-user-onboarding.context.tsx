@@ -49,7 +49,7 @@ const reducer = (state, action) => {
       return state;
   }
 };
-console.log('init state for', type);
+
 export const UserContext = React.createContext(type === 'user' ? initialState : orgInitialState);
 
 export const UserProvider = ({ children }) => {

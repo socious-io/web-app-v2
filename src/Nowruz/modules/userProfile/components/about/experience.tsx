@@ -1,16 +1,21 @@
-import { Experience } from 'src/core/api';
+import { useSelector } from 'react-redux';
+import { CurrentIdentity, User } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { StepperCard } from 'src/Nowruz/modules/general/components/stepperCard';
+import { RootState } from 'src/store';
 
 import css from './about.module.scss';
 
-interface ExperienceProps {
-  items?: Experience[] | null;
-  myProfile: boolean;
-}
+export const Experiences = () => {
+  const user = useSelector<RootState, User | undefined>((state) => {
+    return state.profile.user;
+  });
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
+  const myProfile = currentIdentity?.id === user?.id;
 
-export const Experiences: React.FC<ExperienceProps> = ({ items, myProfile }) => {
   return (
     <div className="w-full flex flex-col gap-5">
       <div className={css.title}>Experience</div>
@@ -20,9 +25,9 @@ export const Experiences: React.FC<ExperienceProps> = ({ items, myProfile }) => 
         Add experience
       </Button>
 
-      {items && (
+      {user?.experiences && (
         <div className="md:pr-48 flex flex-col gap-5">
-          {items.map((item) => (
+          {user?.experiences.map((item) => (
             <StepperCard
               key={item.id}
               iconName="building-05"
