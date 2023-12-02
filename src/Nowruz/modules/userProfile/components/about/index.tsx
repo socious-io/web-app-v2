@@ -1,15 +1,12 @@
 import { Divider } from '@mui/material';
 import React from 'react';
 
-import { AboutProps } from './about.types';
 import { Experiences } from './experience';
 import { Skills } from './skills';
 import { Summary } from './summary';
 import { MainInfo } from '../mainInfo';
 
-export const About: React.FC<AboutProps> = (props) => {
-  const { user, myProfile } = props;
-
+export const About = () => {
   const testExperiences = [
     {
       id: '1',
@@ -59,13 +56,13 @@ export const About: React.FC<AboutProps> = (props) => {
   return (
     <div className="flex flex-col gap-8">
       <div className="w-full block md:hidden">
-        <MainInfo user={user} myProfile={myProfile} />
+        <MainInfo />
       </div>
-      <Summary description={''} myProfile={myProfile} />
+      <Summary />
       <Divider />
-      <Skills skills={user.skills} myProfile={myProfile} />
+      <Skills />
       <Divider />
-      <Experiences items={testExperiences} myProfile={myProfile} />
+      <Experiences />
     </div>
   );
 };
