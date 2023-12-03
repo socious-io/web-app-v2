@@ -6,6 +6,7 @@ import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDrop
 
 import css from './editInfo.module.scss';
 import { useEditInfo } from './useEditInfo';
+import { UpdateLanguages } from '../../components/updateLanguages';
 
 interface EditInfoModalProps {
   open: boolean;
@@ -25,6 +26,8 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
     setSocialCauses,
     handleSubmit,
     saveUser,
+    languages,
+    setLanguages,
   } = useEditInfo(handleClose);
   const modalContent = (
     <form className={css.editInfoModal}>
@@ -87,6 +90,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         id="summary"
         label="Summary"
         name="summary"
+        defaultValue={user?.mission}
         register={register}
         errors={errors['summary']?.message ? [errors['summary']?.message.toString()] : undefined}
       />
@@ -101,6 +105,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         setComponentValue={setSocialCauses}
         customHeight="118px"
       />
+      <UpdateLanguages languages={languages} setLanguages={setLanguages} />
     </form>
   );
 

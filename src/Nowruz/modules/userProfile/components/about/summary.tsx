@@ -25,7 +25,7 @@ export const Summary = () => {
           </div>
         )}
       </div>
-      <div>{user?.bio}</div>
+      <div>{user?.mission}</div>
     </div>
   );
 };

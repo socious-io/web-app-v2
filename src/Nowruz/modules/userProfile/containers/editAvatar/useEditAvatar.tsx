@@ -1,11 +1,10 @@
-import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
 import { Area } from 'react-easy-crop/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { UpdateProfileReq, User, identities, updateProfile, uploadMedia } from 'src/core/api';
-import { RootState } from 'src/store';
+import { User, identities, uploadMedia } from 'src/core/api';
+import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { setUser } from 'src/store/reducers/profile.reducer';
+import { updateUserProfile } from 'src/store/thunks/profile.thunks';
 
 export const useEditAvatar = (imageURL: string | undefined, closeModal: () => void) => {
   const user = useSelector<RootState, User | undefined>((state) => {
@@ -73,17 +72,13 @@ export const useEditAvatar = (imageURL: string | undefined, closeModal: () => vo
         formData.append('file', blob);
         const newImg = await uploadMedia(blob as File);
 
-        const profileReq = {
-          first_name: user?.first_name,
-          last_name: user?.last_name,
-          username: user?.username,
-          avatar: newImg.id,
+        const updatedUser = {
+          ...user,
+          avatar: newImg,
         };
 
-        const updatedUser = { ...user, avatar: newImg };
-        updateProfile(profileReq as UpdateProfileReq).then(async (resp) => {
+        store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
           await updateIdentityList();
-          dispatch(setUser(updatedUser));
           closeModal();
         });
       }
