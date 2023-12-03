@@ -16,7 +16,6 @@ export const useCity = () => {
   };
 
   const searchCities = async (searchText: string, cb) => {
-    console.log(searchText);
     try {
       if (searchText) {
         const response = await searchLocation(searchText);

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { changePasswordDirect } from 'src/core/api';
+import { passwordPattern } from 'src/core/regexs';
 import * as yup from 'yup';
 type Inputs = {
   password: string;
@@ -29,10 +30,10 @@ export const useChoosePassword = () => {
   const confirmPassword = watch('confirm');
   useEffect(() => {
     setIsFormValid(
-      !!password && password.length >= 8 && /^(?=.*[!@#$%^&*?])/.test(password) && password === confirmPassword,
+      !!password && password.length >= 8 && passwordPattern.test(password) && password === confirmPassword,
     );
     setIsPasswordLengthValid(!!(password && password.length >= 8));
-    setIsPasswordPatternValid(!!(password && /^(?=.*[!@#$%^&*?])/.test(password)));
+    setIsPasswordPatternValid(!!(password && passwordPattern.test(password)));
   }, [password, confirmPassword]);
   const onSubmit: SubmitHandler<Inputs> = async ({ password, confirm }) => {
     try {
