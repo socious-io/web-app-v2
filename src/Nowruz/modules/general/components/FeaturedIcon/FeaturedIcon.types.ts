@@ -4,4 +4,5 @@ export interface FeaturedIconProps {
   height?: string;
   className?: string;
   iconName?: string;
+  iconColor?: string;
 }

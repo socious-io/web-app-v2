@@ -17,7 +17,6 @@ import Steper from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { Welcome } from 'src/Nowruz/modules/Auth/containers/onboarding/Welcome';
 import { UserProvider } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
-import { AllowNotification } from 'src/Nowruz/pages/AllowNotification';
 import { logout } from 'src/pages/sidebar/sidebar.service';
 import { RootState } from 'src/store';
 
@@ -47,7 +46,6 @@ export const Onboarding = () => {
       },
     },
   ];
-  console.log('type is', type);
   if (type === 'user')
     return (
       <UserProvider>

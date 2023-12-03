@@ -13,9 +13,9 @@
 }
 
 .copy {
-  width: 100%;
-  padding-left: 32px;
-  margin-bottom: 32px;
+  position: fixed;
+  left: 32px;
+  bottom: 32px;
   @media screen and (max-width: 600px) {
     display: none;
   }
