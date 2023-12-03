@@ -1,5 +1,4 @@
 import { Divider } from '@mui/material';
-import React from 'react';
 
 import { Experiences } from './experience';
 import { Skills } from './skills';

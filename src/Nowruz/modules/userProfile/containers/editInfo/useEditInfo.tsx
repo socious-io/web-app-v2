@@ -3,14 +3,14 @@ import { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { MultiSelectItem } from 'src/Nowruz/modules/general/components/multiSelect/multiSelect.types';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { socialCausesToCategory } from 'src/core/adaptors';
-import { Location, UpdateProfileReq, User, identities, preRegister, searchLocation, updateProfile } from 'src/core/api';
+import { Location, User, identities, preRegister, searchLocation } from 'src/core/api';
 import { checkUsernameConditions } from 'src/core/utils';
-import { RootState } from 'src/store';
+import { MultiSelectItem } from 'src/Nowruz/modules/general/components/multiSelect/multiSelect.types';
+import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { setUser } from 'src/store/reducers/profile.reducer';
+import { updateUserProfile } from 'src/store/thunks/profile.thunks';
 import * as yup from 'yup';
 
 const schema = yup
@@ -25,18 +25,16 @@ const schema = yup
 
 export const useEditInfo = (closeModal: () => void) => {
   const dispatch = useDispatch();
-
-  const [isUsernameValid, setIsusernameValid] = useState(false);
-  const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
-
   const user = useSelector<RootState, User | undefined>((state) => {
     return state.profile.user;
   });
+
   const [cityVal, setCityVal] = useState(!user || !user.city ? null : { label: user.city });
   const [selectedCity, setSelectedCity] = useState(user?.city);
+  const [languages, setLanguages] = useState(user?.languages);
+  const [isUsernameValid, setIsusernameValid] = useState(false);
+  const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
   const isFormValid = selectedCity;
-
-  console.log('test log city ', selectedCity);
 
   const keyItems = Object.keys(SOCIAL_CAUSES);
   const socialCauseItems = keyItems.map((i) => {
@@ -119,17 +117,19 @@ export const useEditInfo = (closeModal: () => void) => {
   }
 
   const saveUser = () => {
-    const profileReq = {
+    const updatedUser = {
+      ...user,
       first_name: getValues().firstName.trim(),
       last_name: getValues().lastName.trim(),
       username: getValues().username,
+      mission: getValues().summary,
       city: selectedCity,
       social_causes: SocialCauses.map((item) => item.value),
+      languages: languages,
     };
-    const updatedUser = { ...user, ...profileReq };
-    updateProfile(profileReq as UpdateProfileReq).then(async (resp) => {
+
+    store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
       await updateIdentityList();
-      dispatch(setUser(updatedUser));
       closeModal();
     });
   };
@@ -148,5 +148,7 @@ export const useEditInfo = (closeModal: () => void) => {
     setSocialCauses,
     handleSubmit,
     saveUser,
+    languages,
+    setLanguages,
   };
 };

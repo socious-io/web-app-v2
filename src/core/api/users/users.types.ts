@@ -1,9 +1,9 @@
+import { AdditionalRes } from '../additionals/additionals.types';
 import { Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
 import { Identity } from '../site/site.types';
 import { LanguageCode, SDG, PaginateRes } from '../types';
-import { AdditionalRes } from '../additionals/additionals.types';
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
@@ -17,7 +17,7 @@ export interface UpdateProfileReq {
   username: string;
   bio?: string;
   mission?: string;
-  language?: string;
+  languages?: Language[];
   country?: string;
   city?: string;
   geoname_id?: number | null;
