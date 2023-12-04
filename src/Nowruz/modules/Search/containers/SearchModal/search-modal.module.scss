@@ -1,5 +1,18 @@
 @import 'src/components/_primitives.scss';
 
+.container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.modal {
+  @media (max-width: 640px) {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    border-radius: 0;
+  }
+}
 .tabsRow {
   padding: 10px;
   border-bottom: 1px solid $color-grey-200;
@@ -10,4 +23,38 @@
 
 .searchInput {
   border-bottom: 1px solid $color-grey-200;
+}
+.content {
+  height: 360px;
+  display: flex;
+  @media (max-width: 640px) {
+    height: 100%;
+  }
+}
+.footer {
+  border-top: 1px solid $color-grey-200;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  flex: 1;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  color: $color-grey-500;
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
+.footerButton {
+  display: inline-block;
+  padding: 6px;
+  border: 1px solid $color-grey-200;
+  border-radius: 8px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  color: $color-grey-500;
 }

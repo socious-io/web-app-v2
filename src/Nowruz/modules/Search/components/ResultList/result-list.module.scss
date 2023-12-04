@@ -1,0 +1,14 @@
+@import 'src/components/_primitives.scss';
+
+.rows {
+  cursor: pointer;
+  margin: 0 8px;
+  &:hover {
+    background-color: $color-grey-50;
+  }
+}
+
+.selected {
+  background-color: $color-grey-50;
+  border-radius: 8px;
+}

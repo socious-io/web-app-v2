@@ -7,6 +7,7 @@ import { PaginateReq, PaginateRes, SuccessRes } from '../types';
 import { UsersRes } from '../users/users.types';
 
 export async function search(payload: SearchReq, params: PaginateReq) {
+  console.log('qu', payload);
   const { data } = await post<PaginateRes>('search', payload, { params });
   switch (payload.type) {
     case 'organizations':
@@ -22,7 +23,7 @@ export async function search(payload: SearchReq, params: PaginateReq) {
   }
 }
 export async function searchHistory(params: PaginateReq) {
-  const { data } = await post<PaginateRes>('search/history', { params });
+  const { data } = await get<PaginateRes>('search/history', { params });
   return data;
 }
 export async function identities(): Promise<CurrentIdentity[]> {
