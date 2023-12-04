@@ -1,6 +1,6 @@
 interface SearchItem {
-  name: string;
+  title: string;
 }
-export interface ResultList {
+export interface ResultListProps {
   list: SearchItem[];
 }
