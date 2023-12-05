@@ -5,13 +5,24 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { socialCausesToCategory } from 'src/core/adaptors';
-import { Location, User, identities, preRegister, searchLocation } from 'src/core/api';
+import {
+  Language,
+  Location,
+  User,
+  addLanguage,
+  identities,
+  preRegister,
+  searchLocation,
+  updateLanguage,
+} from 'src/core/api';
 import { checkUsernameConditions } from 'src/core/utils';
 import { MultiSelectItem } from 'src/Nowruz/modules/general/components/multiSelect/multiSelect.types';
 import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { updateUserProfile } from 'src/store/thunks/profile.thunks';
 import * as yup from 'yup';
+
+import { Error, LanguageProps } from './editInfo.types';
 
 const schema = yup
   .object()
@@ -29,11 +40,19 @@ export const useEditInfo = (closeModal: () => void) => {
     return state.profile.user;
   });
 
+  const mapLanguageToItems = (languages: Language[]) => {
+    const mappedObj = languages.map((item) => {
+      return { id: item.id, name: item.name, level: item.level, isNew: false } as LanguageProps;
+    });
+    return mappedObj;
+  };
   const [cityVal, setCityVal] = useState(!user || !user.city ? null : { label: user.city });
   const [selectedCity, setSelectedCity] = useState(user?.city);
-  const [languages, setLanguages] = useState(user?.languages);
+  const [languages, setLanguages] = useState<LanguageProps[]>(mapLanguageToItems(user?.languages || []));
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
+  const [langErrors, setLangErrors] = useState<Error[]>([]);
+  const [causesErrors, setCausesErrors] = useState<string[]>([]);
   const isFormValid = selectedCity;
 
   const keyItems = Object.keys(SOCIAL_CAUSES);
@@ -91,6 +110,11 @@ export const useEditInfo = (closeModal: () => void) => {
     }
   }, [username, isUsernameAvailable]);
 
+  useEffect(() => {
+    if (!SocialCauses.length) setCausesErrors(['Please select atleast one cause']);
+    else setCausesErrors([]);
+  }, [SocialCauses]);
+
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
       label: `${city.name}, ${city.region_name}`,
@@ -117,6 +141,7 @@ export const useEditInfo = (closeModal: () => void) => {
   }
 
   const saveUser = () => {
+    if (langErrors.length || causesErrors.length) return;
     const updatedUser = {
       ...user,
       first_name: getValues().firstName.trim(),
@@ -125,10 +150,23 @@ export const useEditInfo = (closeModal: () => void) => {
       mission: getValues().summary,
       city: selectedCity,
       social_causes: SocialCauses.map((item) => item.value),
-      languages: languages,
     };
 
+    const addPromises: Promise<Language>[] = [];
+    const newLanguages = languages.filter((l) => l.isNew);
+    newLanguages.forEach((item) => {
+      if (item.name && item.level) addPromises.push(addLanguage({ name: item.name, level: item.level }));
+    });
+
+    const updatePromises: Promise<Language>[] = [];
+    const updatedLanguages = languages.filter((l) => !l.isNew);
+    updatedLanguages.forEach((item) => {
+      if (item.name && item.level) updatePromises.push(updateLanguage(item.id, { name: item.name, level: item.level }));
+    });
+
     store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
+      Promise.all(addPromises);
+      Promise.all(updatePromises);
       await updateIdentityList();
       closeModal();
     });
@@ -136,7 +174,6 @@ export const useEditInfo = (closeModal: () => void) => {
 
   return {
     register,
-    errors,
     user,
     isUsernameValid,
     searchCities,
@@ -150,5 +187,9 @@ export const useEditInfo = (closeModal: () => void) => {
     saveUser,
     languages,
     setLanguages,
+    errors,
+    langErrors,
+    setLangErrors,
+    causesErrors,
   };
 };
