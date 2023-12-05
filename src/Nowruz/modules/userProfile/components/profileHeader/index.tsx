@@ -3,12 +3,11 @@ import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import EditAvatarModal from 'src/Nowruz/modules/userProfile/containers/editAvatar';
+import { EditInfoModal } from 'src/Nowruz/modules/userProfile/containers/editInfo';
 
 import css from './profileHeader.module.scss';
 import { useProfileHeader } from './useProfileHeader';
-import EditAvatarModal from '../../containers/editAvatar';
-import { useEditAvatar } from '../../containers/editAvatar/useEditAvatar';
-import { EditInfoModal } from '../../containers/editInfo';
 
 export const ProfileHeader = () => {
   const {
@@ -22,7 +21,6 @@ export const ProfileHeader = () => {
     openEditAvatar,
     handleOpenEditAvatar,
     handleCloseEditAvatar,
-    imageURL,
   } = useProfileHeader();
 
   const coverImage = user?.cover_image;
@@ -37,7 +35,7 @@ export const ProfileHeader = () => {
           <IconButton
             aria-label="upload-banner"
             className={`${css.iconCamera} hidden md:block`}
-            onClick={handleOpenEditAvatar}
+            //onClick={}
           >
             <Icon name="camera-01" color="white" fontSize={20} className={css.camera} />
           </IconButton>
@@ -48,7 +46,7 @@ export const ProfileHeader = () => {
           style={{ backgroundImage: coverImage?.url ? `url(${coverImage?.url})` : 'linear-gradient(#ace0f9, #fff1eb)' }}
         ></div>
         <div className={`${css.avatar} flex flex-col md:flex-row`}>
-          <div className="w-24 md:w-40 h-24 md:h-40">
+          <div className="w-24 md:w-40 h-24 md:h-40 cursor-pointer" onClick={handleOpenEditAvatar}>
             <Avatar type="users" size="100%" img={profileImage?.url} iconSize={48} />
           </div>
           <div className={css.username}>
@@ -83,7 +81,7 @@ export const ProfileHeader = () => {
           )}
         </div>
       </div>
-      <EditAvatarModal open={openEditAvatar} handleClose={handleCloseEditAvatar} imageURL={imageURL} />
+      <EditAvatarModal open={openEditAvatar} handleClose={handleCloseEditAvatar} />
       <EditInfoModal open={openEditInfoModal} handleClose={closeEditInfoModal} />
     </>
   );

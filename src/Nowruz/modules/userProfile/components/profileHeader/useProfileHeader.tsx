@@ -18,7 +18,6 @@ export const useProfileHeader = () => {
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [openEditInfoModal, setOpenEditInfoModal] = useState(false);
   const [openEditAvatar, setOpenEditAvatar] = useState(false);
-  const [imageURL, setImageURL] = useState(user?.avatar?.url);
 
   useEffect(() => {
     const getConnectionsStatus = async () => {
@@ -38,13 +37,10 @@ export const useProfileHeader = () => {
   };
 
   const handleOpenEditAvatar = async () => {
-    const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
-    setImageURL(webPath);
     setOpenEditAvatar(true);
   };
 
   const handleCloseEditAvatar = () => {
-    setImageURL(user?.avatar?.url);
     setOpenEditAvatar(false);
   };
   return {
@@ -58,6 +54,5 @@ export const useProfileHeader = () => {
     openEditAvatar,
     handleOpenEditAvatar,
     handleCloseEditAvatar,
-    imageURL,
   };
 };
