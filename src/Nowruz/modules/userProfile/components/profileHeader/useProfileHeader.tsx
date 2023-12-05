@@ -1,7 +1,5 @@
-import { Camera } from '@capacitor/camera';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import async from 'react-select/dist/declarations/src/async/index';
 import { ConnectStatus, CurrentIdentity, User, connectionStatus } from 'src/core/api';
 import { RootState } from 'src/store';
 
