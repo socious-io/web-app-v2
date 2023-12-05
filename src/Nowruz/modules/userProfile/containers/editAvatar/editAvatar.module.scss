@@ -1,7 +1,10 @@
+@import 'src/components/_primitives.scss';
+
 .cropContainer {
   width: 100%;
   height: 560px;
   position: relative;
+  background-color: $color-grey-900;
   @media screen and (min-width: 600px) {
     width: 640px;
     height: 480px;

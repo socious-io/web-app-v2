@@ -1,3 +1,4 @@
+import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
 import { Area } from 'react-easy-crop/types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,10 +7,11 @@ import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { updateUserProfile } from 'src/store/thunks/profile.thunks';
 
-export const useEditAvatar = (imageURL: string | undefined, closeModal: () => void) => {
+export const useEditAvatar = (closeModal: () => void) => {
   const user = useSelector<RootState, User | undefined>((state) => {
     return state.profile.user;
   });
+  const [imageURL, setImageURL] = useState(user?.avatar?.url);
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -85,13 +87,33 @@ export const useEditAvatar = (imageURL: string | undefined, closeModal: () => vo
     }
   };
 
+  const handleChangePhoto = async () => {
+    const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
+    setImageURL(webPath);
+  };
+
+  const handleRemovePhoto = async () => {
+    setImageURL('');
+    const updatedUser = {
+      ...user,
+      avatar: undefined,
+    };
+
+    store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
+      await updateIdentityList();
+      closeModal();
+    });
+  };
   return {
     crop,
     setCrop,
     zoom,
     setZoom,
     onCropComplete,
-
+    imageURL,
     saveProfileImage,
+    handleChangePhoto,
+    uploadError,
+    handleRemovePhoto,
   };
 };
