@@ -28,6 +28,9 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
     saveUser,
     languages,
     setLanguages,
+    langErrors,
+    setLangErrors,
+    causesErrors,
   } = useEditInfo(handleClose);
   const modalContent = (
     <form className={css.editInfoModal}>
@@ -104,8 +107,15 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         componentValue={SocialCauses}
         setComponentValue={setSocialCauses}
         customHeight="118px"
+        popularLabel={false}
+        errors={causesErrors}
       />
-      <UpdateLanguages languages={languages} setLanguages={setLanguages} />
+      <UpdateLanguages
+        languages={languages}
+        setLanguages={setLanguages}
+        errors={langErrors}
+        setErrors={setLangErrors}
+      />
     </form>
   );
 

@@ -31,6 +31,8 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     chipBorderColor,
     chipBgColor,
     chipFontColor,
+    popularLabel = true,
+    errors,
   } = props;
   const [chipItems, setChipItems] = useState(items);
 
@@ -104,15 +106,24 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         )}
       />
       <div className={css.captionDiv}>
+        {errors &&
+          errors.map((e, index) => (
+            <p key={index} className={`${css.errorMsg}`}>
+              {e}
+            </p>
+          ))}
         <Typography variant="subtitle1" className={css.popularLabel}>
           {maxLabel}
         </Typography>
       </div>
-      <div className={css.popularDiv}>
-        <Typography variant="caption" className={css.popularLabel}>
-          Popular
-        </Typography>
-      </div>
+      {popularLabel && (
+        <div className={css.popularDiv}>
+          <Typography variant="caption" className={css.popularLabel}>
+            Popular
+          </Typography>
+        </div>
+      )}
+
       <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
         {chipItems?.map((i) => (
           <Chip
