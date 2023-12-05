@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { search, searchHistory } from 'src/core/api';
 
 const tabs = [
-  { label: 'Jobs', value: 'projects' },
+  // { label: 'Jobs', value: 'projects' },
   { label: 'Poeple', value: 'users' },
   { label: 'Organization', value: 'organizations' },
 ];
 export const useSearchModal = ({ open, onClose }) => {
   const [list, setList] = useState([]);
-  const [selectedTab, setSelectedTab] = useState('projects');
+  const [selectedTab, setSelectedTab] = useState('users');
   const [selectedItem, setSelectedItem] = useState();
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [showNoResult, setShowNoResult] = useState(false);
   useEffect(() => {
     fetchSearchHistory();
   }, []);
@@ -41,17 +41,19 @@ export const useSearchModal = ({ open, onClose }) => {
     console.log('historyyy', result);
   };
   const fetchSearchResult = async (q: string) => {
+    setShowNoResult(false);
     setSelectedItem(null);
     setSearchTerm(q);
     const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
     setList(searchIntoList(result.items));
+    if (q && result.items.length === 0) setShowNoResult(true);
   };
   const searchIntoList = (list) => {
     switch (selectedTab) {
       case 'users':
         return list.map((item) => ({
           title: `${item.first_name} ${item.last_name}`,
-          username: item.shortname,
+          username: item.username,
           image: item.image,
           isAvailable: item.open_to_work,
           id: item.id,
@@ -61,7 +63,7 @@ export const useSearchModal = ({ open, onClose }) => {
       case 'organizations':
         return list.map((item) => ({
           title: `${item.name}`,
-          username: item.username,
+          username: item.shortname,
           image: item.avatar,
           isAvailable: item.open_to_work,
           id: item.id,
@@ -80,5 +82,16 @@ export const useSearchModal = ({ open, onClose }) => {
         }));
     }
   };
-  return { tabs, setSelectedTab, fetchSearchResult, list, setSelectedItem, selectedItem, searchTerm, setSearchTerm };
+  return {
+    tabs,
+    setSelectedTab,
+    fetchSearchResult,
+    list,
+    setSelectedItem,
+    selectedItem,
+    searchTerm,
+    setSearchTerm,
+    selectedTab,
+    showNoResult,
+  };
 };

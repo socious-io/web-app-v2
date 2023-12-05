@@ -9,10 +9,21 @@ import { UserCard } from 'src/Nowruz/modules/Search/components/UserCard';
 
 import css from './search-modal.module.scss';
 import { useSearchModal } from './useSearchModal';
+import { ResultNotFound } from '../../components/ResultNotFound';
 export const SearchModal = ({ open, onClose }) => {
   const isMobile = window.innerWidth < 600;
   console.log('ismobile', isMobile);
-  const { tabs, setSelectedTab, fetchSearchResult, list, setSelectedItem, selectedItem, searchTerm } = useSearchModal({
+  const {
+    tabs,
+    setSelectedTab,
+    fetchSearchResult,
+    list,
+    setSelectedItem,
+    selectedItem,
+    searchTerm,
+    selectedTab,
+    showNoResult,
+  } = useSearchModal({
     open,
     onClose,
   });
@@ -43,6 +54,15 @@ export const SearchModal = ({ open, onClose }) => {
         <div className={css.content}>
           <ResultList list={list} onSelect={(item) => setSelectedItem(item)} />
           {selectedItem && !isMobile && <UserCard user={selectedItem} />}
+
+          {showNoResult && (
+            <ResultNotFound
+              name={`“${searchTerm}” did not match any jobs. Would you like to create a job?`}
+              onClick={() => console.log()}
+              buttonTitle={selectedTab === 'users' ? 'Go to network' : 'View jobs'}
+              message={selectedTab === 'users' ? 'No people found' : 'No organizations found'}
+            />
+          )}
         </div>
         <div className={css.footer}>
           to close

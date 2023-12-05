@@ -1,0 +1,42 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.icon {
+  cursor: pointer;
+  padding: 8px;
+  margin: 0 4px;
+  background-color: #eee;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #ddd;
+  }
+}
+
+.content {
+  flex: 1;
+  padding: 0 8px;
+}
+
+.primary {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #0056b3;
+}
+
+.secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border: 1px solid #545b62;
+}
+
+.success {
+  background-color: #28a745;
+  color: #fff;
+  border: 1px solid #218838;
+}
