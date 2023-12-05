@@ -42,6 +42,7 @@ export const useImageBio = () => {
         ['', null],
       ),
     ).then(() => {
+      localStorage.removeItem('registerFor');
       if (isMobile)
         navigate(`/sign-up/user/notification`, {
           state: {
