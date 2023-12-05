@@ -20,10 +20,7 @@ export const updateUserProfile = createAsyncThunk('profile/updateUserProfile', a
   if (user.social_causes) reqParam.social_causes = user.social_causes;
   if (user.skills) reqParam.skills = user.skills;
   if (user.mobile_country_code) reqParam.mobile_country_code = user.mobile_country_code;
-  if (user.languages)
-    reqParam.languages = user.languages.map((lang) => {
-      return { name: lang.name, level: lang.level };
-    });
+
   // if(user.certificates) reqParam.certificates=user.certificates
   // if(user.goals) reqParam.goals=user.goals
   // if(user.educations) reqParam.educations=user.educations
