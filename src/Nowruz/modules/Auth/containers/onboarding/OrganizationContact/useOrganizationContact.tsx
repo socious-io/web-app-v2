@@ -80,7 +80,7 @@ export const useOrganizationContact = () => {
           ['', null],
         ),
       );
-
+      localStorage.removeItem('registerFor');
       if (isMobile)
         navigate(`/sign-up/user/notification`, {
           state: {
@@ -160,7 +160,6 @@ export const useOrganizationContact = () => {
         });
       }
     }
-
   }, [state.shortname]);
 
   const onSelectCity = (location) => {
