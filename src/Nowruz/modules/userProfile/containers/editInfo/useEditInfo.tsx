@@ -8,10 +8,12 @@ import { socialCausesToCategory } from 'src/core/adaptors';
 import {
   Language,
   Location,
+  SuccessRes,
   User,
   addLanguage,
   identities,
   preRegister,
+  removeLanguage,
   searchLocation,
   updateLanguage,
 } from 'src/core/api';
@@ -164,9 +166,16 @@ export const useEditInfo = (closeModal: () => void) => {
       if (item.name && item.level) updatePromises.push(updateLanguage(item.id, { name: item.name, level: item.level }));
     });
 
+    const deletePromises: Promise<SuccessRes>[] = [];
+    const deletedLanguages = user?.languages?.filter((item) => !languages.map((l) => l.id).includes(item.id));
+    deletedLanguages?.forEach((item) => {
+      deletePromises.push(removeLanguage(item.id));
+    });
+
     store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
       Promise.all(addPromises);
       Promise.all(updatePromises);
+      Promise.all(deletePromises);
       await updateIdentityList();
       closeModal();
     });

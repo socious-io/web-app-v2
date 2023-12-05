@@ -17,7 +17,6 @@ export interface UpdateProfileReq {
   username: string;
   bio?: string;
   mission?: string;
-  languages?: Language[];
   country?: string;
   city?: string;
   geoname_id?: number | null;
