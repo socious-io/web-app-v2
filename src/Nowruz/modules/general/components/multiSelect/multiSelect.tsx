@@ -44,10 +44,12 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     );
   }
   function handleChange(val: MultiSelectItem[]) {
-    const lastItem = val[val.length - 1];
-    const newVal = items?.find((i) => i.label.toLowerCase() === lastItem.label.toLowerCase());
-    if (newVal) setComponentValue([...componentValue, newVal]);
-    else setChipItems(items?.filter((i) => !componentValue?.includes(i)));
+    if (val) {
+      const lastItem = val[val.length - 1];
+      const newVal = items?.find((i) => i.label.toLowerCase() === lastItem.label.toLowerCase());
+      if (newVal) setComponentValue([...componentValue, newVal]);
+      else setChipItems(items?.filter((i) => !componentValue?.includes(i)));
+    }
   }
 
   function add(value: string, label: string) {
