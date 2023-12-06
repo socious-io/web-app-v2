@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Languages } from 'src/constants/constants';
 import { LanguageReq } from 'src/core/api';
 
@@ -7,6 +8,7 @@ interface LanguageProps {
   items: LanguageReq[];
 }
 export const LanguageJSX: React.FC<LanguageProps> = (props) => {
+  const { t } = useTranslation();
   const mapCodeToLanguage = (langCode?: keyof typeof Languages | undefined) => {
     if (langCode && Languages[langCode]) {
       return Languages[langCode];
@@ -25,7 +27,7 @@ export const LanguageJSX: React.FC<LanguageProps> = (props) => {
             {mapCodeToLanguage(lang.name)}
           </Typography>
           <Typography variant="h5" className="text-Gray-light-mode-700">
-            {`(${lang.level})`}
+            {`(${t(lang.level)})`}
           </Typography>
         </div>
       ))}
