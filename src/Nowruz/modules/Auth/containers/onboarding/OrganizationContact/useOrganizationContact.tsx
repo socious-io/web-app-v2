@@ -37,7 +37,7 @@ const companySizeOptions = [
   { value: 'I', label: '10,001+ employees' },
 ];
 export const useOrganizationContact = () => {
-  const { state, updateUser } = useUser();
+  const { state, updateUser, reset } = useUser();
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const isMobile = isTouchDevice();
   const [isShortnameValid, setIsShortnameValid] = useState(false);
@@ -81,6 +81,7 @@ export const useOrganizationContact = () => {
         ),
       );
       localStorage.removeItem('registerFor');
+      reset();
       if (isMobile)
         navigate(`/sign-up/user/notification`, {
           state: {
