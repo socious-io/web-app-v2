@@ -142,7 +142,7 @@ export const useEditInfo = (closeModal: () => void) => {
     return identities().then((resp) => dispatch(setIdentityList(resp)));
   }
 
-  const saveUser = () => {
+  const saveUser = async () => {
     if (langErrors.length || causesErrors.length) return;
     const updatedUser = {
       ...user,
@@ -154,31 +154,26 @@ export const useEditInfo = (closeModal: () => void) => {
       social_causes: SocialCauses.map((item) => item.value),
     };
 
-    const addPromises: Promise<Language>[] = [];
+    const promises: Promise<any>[] = [];
     const newLanguages = languages.filter((l) => l.isNew);
     newLanguages.forEach((item) => {
-      if (item.name && item.level) addPromises.push(addLanguage({ name: item.name, level: item.level }));
+      if (item.name && item.level) promises.push(addLanguage({ name: item.name, level: item.level }));
     });
 
-    const updatePromises: Promise<Language>[] = [];
     const updatedLanguages = languages.filter((l) => !l.isNew);
     updatedLanguages.forEach((item) => {
-      if (item.name && item.level) updatePromises.push(updateLanguage(item.id, { name: item.name, level: item.level }));
+      if (item.name && item.level) promises.push(updateLanguage(item.id, { name: item.name, level: item.level }));
     });
 
-    const deletePromises: Promise<SuccessRes>[] = [];
     const deletedLanguages = user?.languages?.filter((item) => !languages.map((l) => l.id).includes(item.id));
     deletedLanguages?.forEach((item) => {
-      deletePromises.push(removeLanguage(item.id));
+      promises.push(removeLanguage(item.id));
     });
 
-    store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
-      Promise.all(addPromises);
-      Promise.all(updatePromises);
-      Promise.all(deletePromises);
-      await updateIdentityList();
-      closeModal();
-    });
+    await Promise.all(promises);
+    await store.dispatch(updateUserProfile(updatedUser as User));
+    await updateIdentityList();
+    closeModal();
   };
 
   return {

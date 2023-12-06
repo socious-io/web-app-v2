@@ -22,9 +22,9 @@ export const Modal: React.FC<ModalProps> = (props) => {
             <Icon name="x-close" fontSize={24} color={variables.color_grey_500} />
           </IconButton>
         </div>
-        <Divider />
+        <Divider className="w-full" />
         {content}
-        <Divider />
+        <Divider className="w-full" />
         {footer}
       </div>
     </Backdrop>
