@@ -31,6 +31,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
     langErrors,
     setLangErrors,
     causesErrors,
+    closeModal,
   } = useEditInfo(handleClose);
   const modalContent = (
     <form className={css.editInfoModal}>
@@ -124,7 +125,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(saveUser)}>
         Save
       </Button>
-      <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
+      <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={closeModal}>
         Cancel
       </Button>
     </div>
@@ -133,7 +134,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
   return (
     <Modal
       open={open}
-      handleClose={handleClose}
+      handleClose={closeModal}
       title="Edit profile photo"
       subTitle="Upload a square image for best results."
       content={modalContent}

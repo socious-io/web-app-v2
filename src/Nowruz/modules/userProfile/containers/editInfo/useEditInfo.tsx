@@ -36,7 +36,7 @@ const schema = yup
   })
   .required();
 
-export const useEditInfo = (closeModal: () => void) => {
+export const useEditInfo = (handleClose: () => void) => {
   const dispatch = useDispatch();
   const user = useSelector<RootState, User | undefined>((state) => {
     return state.profile.user;
@@ -87,6 +87,17 @@ export const useEditInfo = (closeModal: () => void) => {
   };
   const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
 
+  const resetState = () => {
+    setSocialCauses(socialCausesToCategory(user?.social_causes));
+    setCityVal(!user || !user.city ? null : { label: user.city });
+    setSelectedCity(user?.city);
+    setLanguages(mapLanguageToItems(user?.languages || []));
+    setIsusernameValid(false);
+    setIsusernameAvailable(false);
+    setLangErrors([]);
+    setCausesErrors([]);
+  };
+
   useEffect(() => {
     const usernameConditionErrors = checkUsernameConditions(username);
     clearErrors('username');
@@ -117,6 +128,10 @@ export const useEditInfo = (closeModal: () => void) => {
     else setCausesErrors([]);
   }, [SocialCauses]);
 
+  useEffect(() => {
+    resetState();
+  }, [user]);
+
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
       label: `${city.name}, ${city.region_name}`,
@@ -141,6 +156,11 @@ export const useEditInfo = (closeModal: () => void) => {
   async function updateIdentityList() {
     return identities().then((resp) => dispatch(setIdentityList(resp)));
   }
+
+  const closeModal = () => {
+    resetState();
+    handleClose();
+  };
 
   const saveUser = async () => {
     if (langErrors.length || causesErrors.length) return;
@@ -173,7 +193,7 @@ export const useEditInfo = (closeModal: () => void) => {
     await Promise.all(promises);
     await store.dispatch(updateUserProfile(updatedUser as User));
     await updateIdentityList();
-    closeModal();
+    handleClose();
   };
 
   return {
@@ -195,5 +215,6 @@ export const useEditInfo = (closeModal: () => void) => {
     langErrors,
     setLangErrors,
     causesErrors,
+    closeModal,
   };
 };
