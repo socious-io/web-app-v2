@@ -2,6 +2,7 @@ import { AdditionalRes } from '../additionals/additionals.types';
 import { Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
+import { Organization } from '../organizations/organizations.types';
 import { Identity } from '../site/site.types';
 import { LanguageCode, SDG, PaginateRes } from '../types';
 // -------------------- Requests ----------------------
@@ -49,6 +50,10 @@ export interface ExperienceReq {
   skills?: string[];
   start_at: string;
   end_at?: string;
+  jobCategoryId?: string;
+  country?: string;
+  city?: string;
+  employmentType?: 'ONE_OFF' | 'PART_TIME' | 'FULL_TIME';
 }
 
 export interface ChangePasswordReq {
@@ -112,13 +117,14 @@ export interface Language extends LanguageReq {
 
 export interface Experience extends ExperienceReq {
   id: string;
-  org: {
-    id: string;
-    name: string;
-    shortname: string;
-    bio?: string;
-    website?: string;
-  };
+  // org: {
+  //   id: string;
+  //   name: string;
+  //   shortname: string;
+  //   bio?: string;
+  //   website?: string;
+  // };
+  org: Organization;
   created_at: Date;
 }
 
