@@ -7,6 +7,7 @@ import { removeIdentityList } from 'src/store/reducers/identity.reducer';
 
 import HeaderNavBar from './components/headerNavBar';
 import { NavBar } from './components/navBar';
+import { SearchModal } from '../Search/containers/SearchModal';
 
 export const Layout = () => {
   const [open, setOpen] = useState(false);
@@ -24,8 +25,9 @@ export const Layout = () => {
         <div className="w-full fixed top-0 right-0 z-20 bg-Base-White ">
           <HeaderNavBar setOpen={setOpen} logout={logOut} />
         </div>
+        <SearchModal open={true} onClose={() => console.log} />
 
-        <div className="w-full mt-16 md:mt-[72px] z-10 ">
+        <div className="w-full h-[calc(100%-var(--menu-height))] md:h-[calc(100%-var(--desktop-nav-height))] overflow-x-hidden">
           <Outlet />
         </div>
       </div>

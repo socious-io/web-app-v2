@@ -1,5 +1,8 @@
 @import 'src/components/_primitives.scss';
 
+.container {
+  border-right: 1px solid $color-grey-200;;
+}
 .rows {
   cursor: pointer;
   margin: 0 8px;

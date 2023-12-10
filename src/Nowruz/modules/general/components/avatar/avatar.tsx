@@ -6,7 +6,19 @@ import css from './avatar.module.scss';
 import { AvatarProps } from './avatar.types';
 
 export const Avatar: React.FC<AvatarProps> = (props) => {
-  const { badge, customStyle = '', size = '3rem', onClick, type = 'users', img, iconName, iconSize, ...rest } = props;
+  const {
+    badge,
+    customStyle = '',
+    size = '3rem',
+    onClick,
+    type = 'users',
+    hasBorder = false,
+    isVerified = false,
+    img,
+    iconName,
+    iconSize,
+    ...rest
+  } = props;
 
   const [icon, setIcon] = useState('');
   useEffect(() => {
@@ -25,7 +37,7 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
     <div
       onClick={props.onClick}
       style={{ width: size, height: size, minWidth: size, minHeight: size }}
-      className={`${css.container} ${customStyle}`}
+      className={`${css.container} ${customStyle} ${hasBorder ? css.avatarBorder : ''}`}
     >
       <div onClick={props.onClick} style={style} className={css.imageContainer}>
         {img ? (
@@ -37,6 +49,11 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
       {badge && (
         <div className={css.badge} style={{ backgroundColor: badge.color, width: badge.width, height: badge.height }}>
           <img className={css.img} src={badge.image} alt="" />
+        </div>
+      )}
+      {isVerified && (
+        <div className={css.verifiedBadge}>
+          <img src="/icons/verified-blue.svg" />
         </div>
       )}
     </div>

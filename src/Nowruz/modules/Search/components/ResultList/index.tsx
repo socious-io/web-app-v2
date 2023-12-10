@@ -44,7 +44,7 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onSelect }) => {
     setSelectedRowIndex(index);
   };
   return (
-    <div className="h-full overflow-y-auto flex flex-col flex-1">
+    <div className="h-full overflow-y-auto flex flex-col flex-1 ">
       {list.map((item, index) => (
         <div
           ref={index === hoveredRowIndex ? selectedRef : null}

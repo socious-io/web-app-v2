@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLoaderData } from 'react-router-dom';
@@ -18,6 +19,7 @@ import { useJobsShared } from './jobs.shared';
 export const Jobs = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showSearch, setShowSearch] = useState(false);
   const { onMorePage, jobList, identity, goToJobDetail, showMorePageBtn } = useJobsShared();
   const avatarImg = identity?.meta?.avatar || identity?.meta?.image;
 
@@ -64,8 +66,8 @@ export const Jobs = (): JSX.Element => {
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity?.type === 'organizations')}
       </div>
       <>
-        <SearchModal open={true} onClose={() => console.log('closeModal')} />
-        <div className={css.banner}>
+        <SearchModal open={showSearch} onClose={() => setShowSearch(false)} />
+        <div className={css.banner} onClick={() => setShowSearch(true)}>
           <div className={`block md:hidden ${css.menu}`}>
             <Avatar onClick={openSidebar} img={avatarImg} size="2.25rem" type={identity?.type || 'users'} />
             <Search placeholder="Search Jobs" onValueChange={console.log} onEnter={onEnter} />
