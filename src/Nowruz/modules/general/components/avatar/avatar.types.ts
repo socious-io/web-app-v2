@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties } from 'react';
 
 export interface AvatarProps extends CSSProperties {
   size?: string;

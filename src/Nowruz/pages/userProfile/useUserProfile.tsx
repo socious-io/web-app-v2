@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
 import { Badges } from 'src/constants/constants';
-import { MissionsRes, User } from 'src/core/api';
+import { badges, MissionsRes, User } from 'src/core/api';
 import { About } from 'src/Nowruz/modules/userProfile/components/about';
 import { setUser, setBadges, setMissions } from 'src/store/reducers/profile.reducer';
 
