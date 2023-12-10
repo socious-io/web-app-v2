@@ -2,9 +2,8 @@ import { Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 
 import css from './stepperCard.module.scss';
 import { StepperCardProps } from './stepperCard.types';
@@ -60,14 +59,24 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
       <div className="relative flex flex-col w-full">
         <div className="absolute top-0 right-0 h-fit w-fit flex">
           {editable && (
-            <button className={css.action} onClick={handleEdit}>
-              <Icon name="pencil-01" fontSize={20} color={variables.color_grey_600} />
-            </button>
+            <IconButton
+              size="medium"
+              iconName="pencil-01"
+              iconSize={20}
+              iconColor={variables.color_grey_600}
+              customStyle={css.action}
+              onClick={handleEdit}
+            />
           )}
           {deletable && (
-            <button className={css.action} onClick={handleDelete}>
-              <Icon name="trash-01" fontSize={20} color={variables.color_grey_600} />
-            </button>
+            <IconButton
+              size="medium"
+              iconName="trash-01"
+              iconSize={20}
+              iconColor={variables.color_grey_600}
+              customStyle={css.action}
+              onClick={handleDelete}
+            />
           )}
         </div>
         <div className="block md:hidden mb-3">

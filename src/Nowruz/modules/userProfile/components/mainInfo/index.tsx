@@ -42,7 +42,12 @@ export const MainInfo = () => {
       <Impact point={user?.impact_points} myProfile={myProfile} />
       {user?.bio && bioJSX}
       {connectionJSX}
-      <ChipList items={socialCauses} />
+      <ChipList
+        items={socialCauses}
+        bgColor={variables.color_primary_50}
+        borderColor={variables.color_primary_200}
+        fontColor={variables.color_primary_700}
+      />
       <Location country={user?.country} city={user?.city} iconName={user?.country} />
       {user?.languages && <LanguageJSX items={user?.languages} />}
     </div>

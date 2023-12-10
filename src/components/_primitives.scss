@@ -44,7 +44,6 @@
   src: url('/fonts/Inter-Medium.woff2');
 }
 
-
 @font-face {
   font-family: Inter;
   font-weight: 600;
@@ -56,6 +55,7 @@ $color-primary-50: #f3f6f6;
 $color-primary-100: #e6eded;
 $color-primary-200: #ccdbda;
 $color-primary-300: #99b7b5;
+$color-primary-500: #336e6b;
 $color-primary-600: #004a46;
 $color-primary-700: #003b38;
 $color-primary-800: #002c2a;
@@ -89,3 +89,28 @@ $color-success-500: #12b76a;
 $color-success-600: #039855;
 
 $color-sail-100: #fbf7f5;
+
+// Nowruz Box Shadows
+$Focus-rings-brand: 0px 0px 0px 4px rgba(51, 110, 107, 0.24);
+$Focus-rings-brand-shadow-xs:
+  0px 0px 0px 4px rgba(51, 110, 107, 0.24),
+  0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+$Focus-rings-brand-shadow-sm:
+  0px 0px 0px 4px rgba(51, 110, 107, 0.24),
+  0px 1px 2px 0px rgba(16, 24, 40, 0.06),
+  0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+$Shadows-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+$Shadows-sm:
+  0px 1px 2px 0px rgba(16, 24, 40, 0.06),
+  0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+$Shadows-md:
+  0px 2px 4px -2px rgba(16, 24, 40, 0.06),
+  0px 4px 8px -2px rgba(16, 24, 40, 0.1);
+$Shadows-lg:
+  0px 4px 6px -2px rgba(16, 24, 40, 0.03),
+  0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+$Shadows-xl:
+  0px 8px 8px -4px rgba(16, 24, 40, 0.03),
+  0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+$Shadows-2xl: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
+$Shadows-3xl: 0px 32px 64px -12px rgba(16, 24, 40, 0.14);

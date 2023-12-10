@@ -8,8 +8,8 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
 
   return (
     <>
-      <div className="w-full h-10 md:h-12 bg-Base-White hover:bg-Gray-light-mode-50 md:bg-Brand-700 md:hover:bg-Brand-600 px-3 py-2 rounded-sm flex gap-2">
-        {iconName && <Icon name={iconName} fontSize={24} className="text-Gray-light-mode-500 md:text-Base-White" />}
+      <div className="w-full h-10 md:h-12 bg-Base-White hover:bg-Gray-light-mode-50 md:bg-Brand-700 md:hover:bg-Brand-600 px-3 py-2 rounded-sm flex gap-2 items-end">
+        {iconName && <Icon name={iconName} fontSize={24} className="text-Gray-light-mode-500 md:text-Brand-300" />}
         {menuOpen && (
           <>
             <Typography
@@ -19,7 +19,7 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
             >
               {label}
             </Typography>
-            {badgeIcon && menuOpen ? <div className=" mr-0 ml-auto">{badgeIcon}</div> : ''}
+            {badgeIcon && menuOpen ? <div className="mr-0 ml-auto cursor-pointer">{badgeIcon}</div> : ''}
           </>
         )}
       </div>
