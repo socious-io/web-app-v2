@@ -33,7 +33,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
             imgUrl={profileImage?.url}
             type="users"
             verified={false}
-            handleClick={handleOpenEditAvatar}
+            handleClick={myProfile ? handleOpenEditAvatar : undefined}
           />
           {myProfile && (
             <IconButton
