@@ -10,33 +10,27 @@ export const Chip: React.FC<ChipProbs> = ({
   startIcon,
   endIcon,
   theme = 'primary',
+  shape = 'round',
 }) => {
-  const getThemeClass = () => {
-    if (theme === 'primary') {
-      return styles.primary;
-    } else if (theme === 'secondary') {
-      return styles.secondary;
-    } else if (theme === 'success') {
-      return styles.success;
-    }
-  };
+  const chipClasses = `${styles.chip} ${theme ? styles[`${theme}-theme`] : ''} ${
+    shape === 'round' ? styles.round : styles.sharp
+  }`;
 
-  const chipClasses = `${styles.chip} ${getThemeClass()}`;
   return (
-    <div className={chipClasses}>
-      {startIcon && (
-        <div className={styles.icon} onClick={onStartIconClick}>
-          {startIcon}
-        </div>
-      )}
-      <div className={styles.content}>
-        <div className={styles.label}>{label}</div>
+    <div>
+      <div className={chipClasses}>
+        {startIcon && (
+          <div className={styles.startIcon} onClick={onStartIconClick}>
+            {startIcon}
+          </div>
+        )}
+        <div className={styles.content}>{label && <div className={styles.label}>{label}</div>}</div>
+        {endIcon && (
+          <div className={styles.endIcon} onClick={onEndIconClick}>
+            {endIcon}
+          </div>
+        )}
       </div>
-      {endIcon && (
-        <div className={styles.icon} onClick={onEndIconClick}>
-          {endIcon}
-        </div>
-      )}
     </div>
   );
 };

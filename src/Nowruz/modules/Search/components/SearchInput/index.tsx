@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 

@@ -1,5 +1,8 @@
 @import 'src/components/_primitives.scss';
 
+.container {
+  border-left: 1px solid $color-grey-200;;
+}
 .gradient {
   background: linear-gradient(to bottom, #a5c0ee 0%, #fbc5ec 100%);
   width: 100%;
@@ -33,4 +36,15 @@
   left: 50%;
   transform: translateX(-50%);
   max-width: calc(50% - 36px);
+}
+.dotIcon {
+  width: 6px;
+  height: 6px;
+  background-color: $color-success-500;
+  border-radius: 50%;
+}
+.buttons {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
 }

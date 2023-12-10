@@ -4,6 +4,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { SlideOut } from 'src/Nowruz/modules/general/components/slideOut';
+import { SearchModal } from 'src/Nowruz/modules/Search/containers/SearchModal';
 
 import css from './headerNavBar.module.scss';
 import { useHeaderNavBar } from './useHeaderNavBar';
