@@ -36,7 +36,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
           imgUrl={profileImage?.url}
           type="users"
           verified={false}
-          handleClick={handleOpenEditAvatar}
+          handleClick={myProfile ? handleOpenEditAvatar : undefined}
         />
         <div className={css.username}>
           <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
@@ -79,7 +79,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
               iconName="dots-vertical"
               iconColor={variables.color_grey_700}
               iconSize={20}
-              customStyle="w-9 h-10"
+              customStyle="w-9 h-10 !border !border-solid !border-Gray-light-mode-300"
             />
           </div>
         )}
