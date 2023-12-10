@@ -7,7 +7,6 @@ import { PaginateReq, PaginateRes, SuccessRes } from '../types';
 import { UsersRes } from '../users/users.types';
 
 export async function search(payload: SearchReq, params: PaginateReq) {
-  console.log('qu', payload);
   const { data } = await post<PaginateRes>('search', payload, { params });
   switch (payload.type) {
     case 'organizations':

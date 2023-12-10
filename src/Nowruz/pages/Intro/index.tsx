@@ -52,7 +52,6 @@ export const Intro = () => {
               selectedValue={selectedOnboarding}
               setSelectedValue={(value) => {
                 setSelectedOnboarding(value);
-                console.log(value);
               }}
             />
             <div className="mt-6">
@@ -76,7 +75,9 @@ export const Intro = () => {
       </div>
 
       <div className="w-1/2 items-center justify-center hidden md:block">
-        <div className={`${css.review} `}>{renderIntro()}</div>
+        <div className={`${css.review} `}>
+          <div className="px-8">{renderIntro()}</div>
+        </div>
       </div>
     </div>
   );

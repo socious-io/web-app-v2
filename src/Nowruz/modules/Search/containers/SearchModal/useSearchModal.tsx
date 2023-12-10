@@ -26,9 +26,11 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void }) =>
     setShowNoResult(false);
     setSelectedItem(null);
     setSearchTerm(q);
-    const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
-    setList(searchIntoList(result.items));
-    if (q && result.items.length === 0) setShowNoResult(true);
+    if (q.length) {
+      const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
+      setList(searchIntoList(result.items));
+      if (q && result.items.length === 0) setShowNoResult(true);
+    }
   };
   const searchIntoList = (list: Array<any>) => {
     switch (selectedTab) {
@@ -40,7 +42,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void }) =>
           isAvailable: item.open_to_work,
           id: item.id,
           type: selectedTab,
-          bio: 'item.bio',
+          bio: item.bio,
           isVerified: false,
         }));
       case 'organizations':
@@ -51,20 +53,20 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void }) =>
           isAvailable: item.open_to_work,
           id: item.id,
           type: selectedTab,
-          bio: 'item.bio',
+          bio: item.bio,
           isVerified: item.verified_impact,
         }));
-      case 'projects':
-        return list.map((item) => ({
-          title: `${item.title}`,
-          username: item.identity_meta.name,
-          image: item.avatar,
-          isAvailable: item.open_to_work,
-          id: item.id,
-          type: selectedTab,
-          bio: 'item.bio',
-          isVerified: false,
-        }));
+      // case 'projects':
+      //   return list.map((item) => ({
+      //     title: `${item.title}`,
+      //     username: item.identity_meta.name,
+      //     image: item.avatar,
+      //     isAvailable: item.open_to_work,
+      //     id: item.id,
+      //     type: selectedTab,
+      //     bio: item.bio,
+      //     isVerified: false,
+      //   }));
     }
   };
   return {

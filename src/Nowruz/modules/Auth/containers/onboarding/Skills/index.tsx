@@ -7,7 +7,6 @@ import { useSkills } from './useSkills';
 
 export const Skills = () => {
   const { items, value, setValue, updateSelectedStep } = useSkills();
-  console.log('itms', items);
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>

@@ -45,7 +45,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose }) => {
           <span>Search</span>
           <Icon name="x-close" fontSize={24} color={variables.color_grey_700} onClick={onClose} />
         </div>
-        <div className={css.container} onClick={() => console.log('clicked')}>
+        <div className={css.container}>
           <div className={css.tabsRow}>
             <TabPreview tabs={tabs} onSelect={(tab) => setSelectedTab(tab.value)} defaultTabIndex={0} />
           </div>

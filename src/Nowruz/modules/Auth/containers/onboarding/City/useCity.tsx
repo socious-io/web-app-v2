@@ -16,7 +16,6 @@ export const useCity = () => {
   };
 
   const searchCities = async (searchText: string, cb) => {
-    console.log(searchText);
     try {
       if (searchText) {
         const response = await searchLocation(searchText);
@@ -27,7 +26,7 @@ export const useCity = () => {
     }
   };
   const onSelectCity = (location) => {
-    updateUser({ ...state, city: location.label, country: location.value });
+    updateUser({ ...state, city: location.label, country: location.countryCode });
   };
   const isFormValid = state?.city;
   const value = state?.city === null ? null : { label: state.city };

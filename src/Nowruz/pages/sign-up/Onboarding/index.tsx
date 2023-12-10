@@ -17,7 +17,6 @@ import Steper from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { Welcome } from 'src/Nowruz/modules/Auth/containers/onboarding/Welcome';
 import { UserProvider } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
-import { AllowNotification } from 'src/Nowruz/pages/AllowNotification';
 import { logout } from 'src/pages/sidebar/sidebar.service';
 import { RootState } from 'src/store';
 
@@ -47,23 +46,23 @@ export const Onboarding = () => {
       },
     },
   ];
-  console.log('type is', type);
-  if (type === 'user')
+  if (type === 'organization')
     return (
       <UserProvider>
         <div className="flex flex-row justify-between py-4 px-8">
           <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} />
           <IconDropDown iconItems={items} type={type === 'user' ? 'users' : 'organizations'} accounts={accounts} />
         </div>
-        <div className="flex flex-col items-center pb-4 sb:h-screen">
+        <div className="flex flex-col items-center pb-4 ">
           <div className={css.container}>
             <Steper
               components={[
-                { Component: <Welcome />, skippable: false },
-                { Component: <Causes />, skippable: false },
-                { Component: <Skills />, skippable: false },
-                { Component: <City />, skippable: false },
-                { Component: <ImageBio />, skippable: false },
+                { Component: <OpWelcome />, skippable: false },
+                { Component: <CreateOrganization />, skippable: false },
+                { Component: <OrganizationType />, skippable: false },
+                { Component: <OrganizationCauses />, skippable: false },
+                { Component: <OrganizationLogo />, skippable: false },
+                { Component: <OrganizationContact />, skippable: false },
               ]}
             />
           </div>
@@ -76,16 +75,15 @@ export const Onboarding = () => {
         <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} />
         <IconDropDown iconItems={items} type={type === 'user' ? 'users' : 'organizations'} accounts={accounts} />
       </div>
-      <div className="flex flex-col items-center pb-4 ">
+      <div className="flex flex-col items-center pb-4 sb:h-screen">
         <div className={css.container}>
           <Steper
             components={[
-              { Component: <OpWelcome />, skippable: false },
-              { Component: <CreateOrganization />, skippable: false },
-              { Component: <OrganizationType />, skippable: false },
-              { Component: <OrganizationCauses />, skippable: false },
-              { Component: <OrganizationLogo />, skippable: false },
-              { Component: <OrganizationContact />, skippable: false },
+              { Component: <Welcome />, skippable: false },
+              { Component: <Causes />, skippable: false },
+              { Component: <Skills />, skippable: false },
+              { Component: <City />, skippable: false },
+              { Component: <ImageBio />, skippable: false },
             ]}
           />
         </div>
