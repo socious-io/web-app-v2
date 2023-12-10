@@ -30,7 +30,7 @@ const orgInitialState = {
   shortname: '',
   industry: '',
 };
-const type = localStorage.getItem('registerFor');
+let type = localStorage.getItem('registerFor');
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -45,15 +45,16 @@ const reducer = (state, action) => {
         ...state,
         ...filteredPayload,
       };
+    case 'RESET':
+      return initialState;
     default:
       return state;
   }
 };
-console.log('init state for', type);
-export const UserContext = React.createContext(type === 'user' ? initialState : orgInitialState);
+export const UserContext = React.createContext(type === 'organization' ? orgInitialState : initialState);
 
 export const UserProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, type === 'user' ? initialState : orgInitialState);
+  const [state, dispatch] = useReducer(reducer, type === 'organization' ? orgInitialState : initialState);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,8 +80,11 @@ export const useUser = () => {
   const { state, dispatch } = context;
 
   const updateUser = (updates) => {
-    console.log('new state', state);
     dispatch({ type: 'UPDATE_USER', payload: updates });
   };
-  return { updateUser, state };
+  const reset = () => {
+    type = 'user';
+    dispatch({ type: 'RESET' });
+  };
+  return { updateUser, reset, state };
 };

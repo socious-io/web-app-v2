@@ -30,7 +30,7 @@ export const useResultNotFound = () => {
   const onClick = (type: string) => {
     switch (type) {
       case 'users':
-        navigate('/');
+        navigate('/jobs');
         break;
       case 'organizations':
         navigate('/jobs');
