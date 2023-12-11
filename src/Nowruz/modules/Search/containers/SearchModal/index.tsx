@@ -5,13 +5,13 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { ResultList } from 'src/Nowruz/modules/Search/components/ResultList';
 import { SearchInput } from 'src/Nowruz/modules/Search/components/SearchInput';
-import { TabPreview } from 'src/Nowruz/modules/Search/components/TabPreview';
 import { UserCard } from 'src/Nowruz/modules/Search/components/UserCard';
 
 import css from './search-modal.module.scss';
 import { SearchModalProps } from './SearchModal.types';
 import { useSearchModal } from './useSearchModal';
 import { ResultNotFound } from '../../components/ResultNotFound';
+import { TabPreview } from '../../components/TabPreview';
 export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose }) => {
   const isMobile = window.innerWidth < 600;
   const {
