@@ -1,6 +1,6 @@
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
-import { TabPreview } from 'src/Nowruz/modules/search/components/TabPreview';
+import { TabPreview } from 'src/Nowruz/modules/Search/components/TabPreview';
 export default {
   title: 'Search/TabPreview',
   component: TabPreview,
