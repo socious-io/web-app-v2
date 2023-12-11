@@ -41,7 +41,7 @@ export const SignInForm = () => {
         <div className="flex flex-row">
           <Checkbox id="Keep_me_logged_in" label={'Keep me logged in'} value={keepLoggedIn} onChange={handleChange} />
           <div className="w-fit mr-0 ml-auto flex items-center">
-            <Link href="/forget-password/email" label="Forgot password" />
+            <Link href="/forget-password/email" label="Forgot password" customStyle="!font-semibold" />
           </div>
         </div>
 
@@ -70,7 +70,7 @@ export const SignInForm = () => {
         <Typography variant="caption" color={variables.color_grey_600}>
           Don't have an account?
         </Typography>
-        <Link label=" Sign up" href="/intro" />
+        <Link label=" Sign up" href="/intro" customStyle="!font-semibold" />
       </div>
     </>
   );
