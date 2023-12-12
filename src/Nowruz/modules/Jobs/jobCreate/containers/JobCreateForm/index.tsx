@@ -1,23 +1,47 @@
 import React from 'react';
+import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
+import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
+import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
-import { RadioGrop } from 'src/Nowruz/modules/general/components/RadioGroup';
+import { RadioGroup } from 'src/Nowruz/modules/general/components/RadioGroup';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 import css from './job-create-form.module.scss';
 import { useJobCreateForm } from './useJobCreateForm';
 import { JobCreateHeader } from '../../components/Header';
 export const JobCreateForm = () => {
-  const { register, handleSubmit, onSubmit, causesList, catagoriesList } = useJobCreateForm();
+  const {
+    register,
+    handleSubmit,
+    onSubmit,
+    causesList,
+    catagoriesList,
+    onSelectCause,
+    errors,
+    searchCities,
+    onSelectCity,
+  } = useJobCreateForm();
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
       <div className={css.infoDescription}>{description}</div>
     </div>
   );
+  const renderAmountFields = () => {
+    return (
+      <div className="flex justfy-center align-center">
+        <Input id="from" name="from" register={register} placeholder="0" className={css.priceInputs} />
+        <span className="mx-2">to</span>
+        <Input id="from" name="from" register={register} placeholder="0" className={css.priceInputs} />
+      </div>
+    );
+  };
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <JobCreateHeader
           onPreview={() => {
             console.log();
@@ -25,14 +49,15 @@ export const JobCreateForm = () => {
           onPublish={handleSubmit(onSubmit)}
         />
         <div className={css.row}>
-          {renderInfo('What is your job about?', 'Select a social cause')}{' '}
+          {renderInfo('What is your job about?', 'Select a social cause')}
           <div className={css.componentsContainer}>
             <SearchDropdown
               placeholder="Search a cause"
               icon="search-lg"
               options={causesList}
               isSearchable
-              onChange={(value) => console.log(value)}
+              onChange={(option) => onSelectCause(option.value)}
+              errors={errors['cause']?.message ? [errors['cause']?.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -45,6 +70,7 @@ export const JobCreateForm = () => {
               name="title"
               register={register}
               placeholder="e.g. Product Manager"
+              errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -56,6 +82,7 @@ export const JobCreateForm = () => {
               options={catagoriesList}
               isSearchable
               onChange={(value) => console.log(value)}
+              errors={errors['category']?.message ? [errors['category']?.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -65,17 +92,46 @@ export const JobCreateForm = () => {
             'Write a few sentences about the job, what the requirements are, and your organization culture',
           )}
           <div className={css.componentsContainer}>
-            <Input id="description" customHeight="128px" placeholder="Write a few sentences about the job" multiline />
+            <Input
+              name="description"
+              register={register}
+              customHeight="128px"
+              placeholder="Write a few sentences about the job"
+              multiline
+              errors={errors['description']?.message ? [errors['description']?.message.toString()] : undefined}
+            />
           </div>
         </div>
         <div className={css.row}>
           {renderInfo('Location', 'Job titles must describe one position')}
           <div className={css.componentsContainer}>
-            <RadioGrop
+            <RadioGroup
               items={[
                 { label: 'Anywhere', value: 'Anywhere' },
-                { label: 'Country / City', value: 'Country / City' },
-                { label: 'In my timezone', value: 'In my timezone' },
+                {
+                  label: 'Country / City',
+                  value: 'Country / City',
+                  children: (
+                    <div className={css.componentsContainer}>
+                      <SearchDropdown
+                        id="city"
+                        placeholder="Search for a city"
+                        cacheOptions
+                        isAsync
+                        loadOptions={searchCities}
+                        defaultOptions
+                        className="my-5"
+                        icon="search-lg"
+                        hasDropdownIcon={false}
+                        label="Location*"
+                        onChange={(value) => {
+                          onSelectCity(value);
+                        }}
+                      />
+                    </div>
+                  ),
+                },
+                // { label: 'In my timezone', value: 'In my timezone' },
               ]}
             />
           </div>
@@ -85,7 +141,7 @@ export const JobCreateForm = () => {
           <div className={css.componentsContainer}>
             <SearchDropdown
               placeholder="Select a preference"
-              options={catagoriesList}
+              options={PROJECT_REMOTE_PREFERENCES_V2}
               isSearchable
               onChange={(value) => console.log(value)}
             />
@@ -96,7 +152,7 @@ export const JobCreateForm = () => {
           <div className={css.componentsContainer}>
             <SearchDropdown
               placeholder="Select a Type"
-              options={catagoriesList}
+              options={PROJECT_TYPE_V2}
               isSearchable
               onChange={(value) => console.log(value)}
             />
@@ -106,8 +162,8 @@ export const JobCreateForm = () => {
           {renderInfo('Job length', 'How long is the job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
-              placeholder="Select a Type"
-              options={catagoriesList}
+              placeholder="Select a time period"
+              options={PROJECT_LENGTH_V2}
               isSearchable
               onChange={(value) => console.log(value)}
             />
@@ -116,29 +172,41 @@ export const JobCreateForm = () => {
         <div className={css.row}>
           {renderInfo('Payment type', 'Is it a paid or volunteer job?')}
           <div className={css.componentsContainer}>
-            <RadioGrop
-              items={[
-                { label: 'Paid', value: 'Paid' },
-                { label: 'Volunteer', value: 'Volunteer' },
-              ]}
-            />
+            <RadioGroup items={PROJECT_PAYMENT_TYPE} onChange={(item) => console.log(item)} />
           </div>
         </div>
         <div className={css.row}>
           {renderInfo('Payment terms / range', 'Specify the estimated payment range for this job.')}
           <div className={css.componentsContainer}>
-            <RadioGrop
+            <RadioGroup
               items={[
-                { label: 'Paid', value: 'Paid' },
-                { label: 'Volunteer', value: 'Volunteer' },
+                { label: 'Fixed', value: 'Fixed', children: renderAmountFields() },
+                { label: 'Hourly', value: 'HOURLY', children: renderAmountFields() },
               ]}
+              errors={['error']}
+            />
+          </div>
+        </div>
+        <div className={css.row}>
+          {renderInfo('Experience level', '')}
+          <div className={css.componentsContainer}>
+            <SearchDropdown
+              placeholder="Select a level"
+              options={EXPERIENCE_LEVEL_V2}
+              isSearchable
+              onChange={(value) => console.log(value)}
             />
           </div>
         </div>
         <div className={css.footer}>
-          <Button color="primary" onClick={handleSubmit(onSubmit)}>
-            Publish
-          </Button>
+          <div className="flex space-x-3 ">
+            <Button color="secondary" variant="outlined">
+              Preview
+            </Button>
+            <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)}>
+              Publish
+            </Button>
+          </div>
         </div>
       </form>
     </div>

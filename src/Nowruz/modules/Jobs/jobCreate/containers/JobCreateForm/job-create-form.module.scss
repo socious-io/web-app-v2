@@ -7,6 +7,7 @@
   display: flex;
   @media screen and (max-width: 600px) {
     justify-content: space-between;
+    flex-direction: column;
   }
 }
 .info {
@@ -37,7 +38,15 @@
     max-width: 100%;
   }
 }
-
+.priceInputs {
+  @media screen and (min-width: 600px) {
+    // max-width: 240px;
+    // max-width: 155px;
+  }
+}
 .footer {
-  
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+  padding-bottom: 64px;
 }
