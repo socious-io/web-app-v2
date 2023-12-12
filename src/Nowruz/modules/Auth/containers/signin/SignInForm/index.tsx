@@ -16,7 +16,7 @@ export const SignInForm = () => {
 
   return (
     <>
-      <form className="flex flex-col gap-6 my-8">
+      <form className="flex flex-col gap-6 my-8 ">
         <div className="flex flex-col gap-[20px]">
           <Input
             id="email"

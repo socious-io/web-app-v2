@@ -20,6 +20,8 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     chipBorderColor,
     chipBgColor,
     chipFontColor,
+    popularLabel = true,
+    errors,
     chipIconColor,
     displayDefaultBadges = true,
   } = props;
@@ -34,6 +36,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         .filter((item) => item.label.toLowerCase().includes(val.toLowerCase())),
     );
   }
+
   function handleChange(val: string[]) {
     const lastItem = val[val.length - 1];
     const newVal = items?.find(
@@ -103,15 +106,25 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         )}
       />
       <div className={css.captionDiv}>
+        {errors &&
+          errors.map((e, index) => (
+            <p key={index} className={`${css.errorMsg}`}>
+              {e}
+            </p>
+          ))}
         <Typography variant="subtitle1" className={css.popularLabel}>
           {maxLabel}
         </Typography>
       </div>
-      <div className={css.popularDiv}>
-        <Typography variant="caption" className={css.popularLabel}>
-          Popular
-        </Typography>
-      </div>
+
+      {popularLabel && (
+        <div className={css.popularDiv}>
+          <Typography variant="caption" className={css.popularLabel}>
+            Popular
+          </Typography>
+        </div>
+      )}
+
       {(displayDefaultBadges || searchVal) && (
         <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
           {chipItems?.map((i) => (
