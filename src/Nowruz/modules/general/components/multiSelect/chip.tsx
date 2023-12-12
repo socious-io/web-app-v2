@@ -11,7 +11,7 @@ const Chip: React.FC<CustomChipProps> = (props) => {
       style={{ borderColor: borderColor ? borderColor : '', backgroundColor: bgColor || '' }}
       onClick={() => onClick(label)}
     >
-      <span className={css.chipLabel} style={{ color: fontColor || '' }}>
+      <span className={`${css.chipLabel} !font-medium`} style={{ color: fontColor || '' }}>
         {label}
       </span>
       <div style={{ marginRight: 0, marginLeft: 'auto' }}>{icon}</div>

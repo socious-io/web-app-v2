@@ -45,7 +45,7 @@ export const useMyJobShared = () => {
   }
 
   async function updateArchivedJobList() {
-    const identityId = resolver.params.id;
+    const identityId = id;
     const payload = { identityId, page: archivedJobList.page + 1 };
     getArchivedJobs(payload)
       .then(({ items }) => ({
