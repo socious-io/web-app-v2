@@ -46,7 +46,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     );
     if (newVal) setComponentValue([...componentValue, newVal]);
     else setChipItems(items?.filter((i) => !componentValue?.includes(i)));
-
   }
 
   function add(value: string, label: string) {
@@ -126,7 +125,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         </div>
       )}
 
-      
       {(displayDefaultBadges || searchVal) && (
         <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
           {chipItems?.map((i) => (
@@ -144,7 +142,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
           ))}
         </div>
       )}
-
     </div>
   );
 };
