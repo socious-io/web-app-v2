@@ -20,10 +20,10 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     chipBorderColor,
     chipBgColor,
     chipFontColor,
-    popularLabel = true,
-    errors,
     chipIconColor,
+    popularLabel = true,
     displayDefaultBadges = true,
+    errors,
   } = props;
   const [chipItems, setChipItems] = useState(items);
   const [searchVal, setSearchVal] = useState('');
@@ -124,7 +124,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
           </Typography>
         </div>
       )}
-
       {(displayDefaultBadges || searchVal) && (
         <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
           {chipItems?.map((i) => (

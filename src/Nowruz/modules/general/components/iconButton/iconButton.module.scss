@@ -1,0 +1,26 @@
+@import 'src/components/_primitives.scss';
+
+.sm {
+  width: 36px;
+  height: 36px;
+}
+.md {
+  width: 40px;
+  height: 40px;
+}
+.lg {
+  width: 44px;
+  height: 44px;
+}
+.btn {
+  border: none;
+  background-color: transparent;
+  border-radius: 8px;
+}
+.btn:hover {
+  background-color: $color-primary-50;
+}
+.btn:focus {
+  background-color: $color-primary-50;
+  box-shadow: $Focus-rings-brand;
+}

@@ -1,3 +1,4 @@
+import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { StepperCard } from 'src/Nowruz/modules/general/components/stepperCard';
@@ -15,7 +16,7 @@ export const Experiences = () => {
         <div className={css.title}>Experience</div>
         {myProfile && (
           <Button variant="text" color="primary" className={css.addBtn} onClick={handleAdd}>
-            <Icon name="plus" fontSize={20} />
+            <Icon name="plus" fontSize={20} color={variables.color_primary_700} />
             Add experience
           </Button>
         )}

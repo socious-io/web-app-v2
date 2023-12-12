@@ -24,7 +24,7 @@ export const StatusDropDown: React.FC<StatusDropDownProps> = (props) => {
       <Button variant="outlined" className={css.statusButton} color="primary" onClick={() => setOpen(!open)}>
         <Dot size="small" color={variables.color_success_500} shadow shadowColor={variables.color_success_100} />
         Status
-        <Icon name="chevron-down" className="text-Gray-light-mode-700" fontSize={20} />
+        <Icon name="chevron-down" fontSize={20} color={variables.color_grey_700} />
       </Button>
 
       {open && (
