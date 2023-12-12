@@ -1,4 +1,5 @@
 import { OutlinedInputProps as DefaultProps } from '@mui/material';
+import { ReactNode } from 'react';
 
 export interface InputProps extends DefaultProps {
   id?: string;
@@ -12,4 +13,5 @@ export interface InputProps extends DefaultProps {
   customHeight?: string;
   register?: any;
   hints?: Array<{ hint: string; hide: boolean }>;
+  startIcon?: ReactNode;
 }
