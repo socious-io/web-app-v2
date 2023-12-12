@@ -11,7 +11,7 @@ import css from './search-modal.module.scss';
 import { SearchModalProps } from './SearchModal.types';
 import { useSearchModal } from './useSearchModal';
 import { ResultNotFound } from '../../components/ResultNotFound';
-import { TabPreview } from '../../components/TabPreview';
+import { TabPreview } from '../../components/TabBar';
 export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose }) => {
   const isMobile = window.innerWidth < 600;
   const {
