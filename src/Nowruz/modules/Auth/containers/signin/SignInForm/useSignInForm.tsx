@@ -59,7 +59,7 @@ export const useSignInForm = () => {
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(await identities()));
     const userProfile = await profile();
-    const userLandingPath = checkOnboardingMandatoryFields(userProfile) ? '/sign-up/user/welcome' : '/jobs';
+    const userLandingPath = checkOnboardingMandatoryFields(userProfile) ? '/sign-up/user/onboarding' : '/jobs';
     navigate(path ? path : userLandingPath);
     return loginResp;
   }
