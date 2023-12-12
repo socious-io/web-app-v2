@@ -876,34 +876,6 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
-          // {
-          //   path: 'welcome',
-          //   async lazy() {
-          //     const { Welcome } = await import('src/pages/sign-up/welcome/welcome');
-          //     return {
-          //       Component: Welcome,
-          //     };
-          //   },
-          // },
-          // {
-          //   path: 'onboarding',
-          //   async lazy() {
-          //     const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
-          //     return {
-          //       Component: Onboarding,
-          //     };
-          //   },
-          // },
-          // {
-          //   path: 'welcome',
-          //   async lazy() {
-          //     const { Welcome } = await import('src/Nowruz/modules/Auth/containers/onboarding/Welcome');
-          //     return {
-          //       Component: Welcome,
-          //     };
-          //   },
-          // },
-
           {
             path: 'onboarding',
             async lazy() {
