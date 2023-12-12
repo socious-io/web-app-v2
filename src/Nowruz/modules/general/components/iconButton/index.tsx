@@ -22,7 +22,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       onClick={handleClick}
       {...props}
     >
-      <Icon fontSize={iconSize} name={iconName} color={iconColor} />
+      <Icon fontSize={iconSize} name={iconName} color={iconColor} className="!cursor-pointer" />
     </MUIIconButton>
   );
 };

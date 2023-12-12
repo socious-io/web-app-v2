@@ -10,6 +10,7 @@ import css from '../about.module.scss';
 export const Experiences = () => {
   const { user, myProfile, openModal, experience, handleEdit, handleAdd, handleDelete, getStringDate, handleClose } =
     useExperience();
+  console.log('test experience', user?.experiences);
   return (
     <>
       <div className="w-full flex flex-col gap-5">
@@ -26,6 +27,7 @@ export const Experiences = () => {
               <StepperCard
                 key={item.id}
                 iconName="building-05"
+                img={item.org.image?.url}
                 title={item.title}
                 subtitle={item.org.name}
                 supprtingText={`${getStringDate(item.start_at)} - ${item.end_at ? getStringDate(item.end_at) : 'Now'}`}
