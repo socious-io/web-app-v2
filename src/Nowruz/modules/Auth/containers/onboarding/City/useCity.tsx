@@ -26,7 +26,7 @@ export const useCity = () => {
     }
   };
   const onSelectCity = (location) => {
-    updateUser({ ...state, city: location.label, country: location.value });
+    updateUser({ ...state, city: location.label, country: location.countryCode });
   };
   const isFormValid = state?.city;
   const value = state?.city === null ? null : { label: state.city };
