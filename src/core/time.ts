@@ -13,7 +13,7 @@ export function isoToStandard(value: string): string {
   }
 }
 
-const monthNames = [
+export const monthNames = [
   'January',
   'February',
   'March',

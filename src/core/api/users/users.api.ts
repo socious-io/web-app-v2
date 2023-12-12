@@ -15,6 +15,7 @@ import {
   DeleteUserReq,
   Badges,
   ImpactPoints,
+  ExperienceReq,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -73,11 +74,11 @@ export async function removeLanguage(id: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/languages/remove/${id}`, {})).data;
 }
 
-export async function addExperiences(payload: LanguageReq): Promise<Experience> {
+export async function addExperiences(payload: ExperienceReq): Promise<Experience> {
   return (await post<Experience>('user/experiences', payload)).data;
 }
 
-export async function updateExperiences(id: string, payload: LanguageReq): Promise<Experience> {
+export async function updateExperiences(id: string, payload: ExperienceReq): Promise<Experience> {
   return (await post<Experience>(`user/experiences/update/${id}`, payload)).data;
 }
 

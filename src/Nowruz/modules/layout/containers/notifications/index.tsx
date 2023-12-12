@@ -1,9 +1,9 @@
 import { Icon } from 'src/Nowruz/general/Icon';
+import { NotificationItem } from 'src/Nowruz/modules/layout/components/NotificationItem';
 
 import css from './notifications.module.scss';
 import { NotificationProps } from './notifications.type';
 import { useNotifications } from './useNotifications';
-import { NotificationItem } from '../../components/notificationItem';
 
 export const Notifications: React.FC<NotificationProps> = ({ handleClose, list }) => {
   const { mapTypeToRoute } = useNotifications();

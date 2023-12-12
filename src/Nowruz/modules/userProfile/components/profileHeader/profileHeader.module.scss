@@ -40,7 +40,6 @@
   display: flex;
   padding: 0 24px 0 24px;
   gap: 24px;
-  z-index: -1;
 }
 
 .username {
@@ -70,11 +69,13 @@
   justify-content: center;
   gap: 12px;
 }
-.iconBtn {
+.iconBtn,
+.iconBtn:hover {
   width: 40px;
   height: 40px;
   border-radius: 8px;
   border: solid 1px $color-grey-300;
+  background-color: black;
 }
 
 .actionDiv {
