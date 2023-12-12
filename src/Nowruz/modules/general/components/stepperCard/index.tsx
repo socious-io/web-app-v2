@@ -1,20 +1,56 @@
 import { Divider, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
-import { Icon } from 'src/Nowruz/general/Icon';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 
 import css from './stepperCard.module.scss';
 import { StepperCardProps } from './stepperCard.types';
 
 export const StepperCard: React.FC<StepperCardProps> = (props) => {
-  const { title, subtitle, iconName, supprtingText, editable, deletable, description, seeMore } = props;
+  const { title, subtitle, iconName, img, supprtingText, editable, deletable, description, handleEdit, handleDelete } =
+    props;
+  const [seeMore, setSeeMore] = useState(false);
+  const [showLess, setShowLess] = useState(false);
+  const [descriptionStr, setDescriptionStr] = useState(description);
+
+  const truncateString = () => {
+    const len = description?.length || 0;
+    const maxLen = isTouchDevice() ? 160 : 360;
+    if (description && len > maxLen) {
+      let truncated = description?.slice(0, maxLen);
+      if (truncated.charAt(truncated.length - 1) !== ' ') {
+        const idx = truncated.lastIndexOf(' ');
+        truncated = truncated.slice(0, idx);
+      }
+      setDescriptionStr(truncated.concat('...'));
+      setSeeMore(true);
+      setShowLess(false);
+    } else {
+      setDescriptionStr(description);
+      setSeeMore(false);
+      setShowLess(false);
+    }
+  };
+
+  const seeMoreClick = () => {
+    setDescriptionStr(description);
+    setSeeMore(false);
+    setShowLess(true);
+  };
+
+  const seeLessClick = () => {
+    truncateString();
+  };
+  useEffect(() => {
+    truncateString();
+  }, []);
 
   return (
     <div className="flex gap-3 h-full">
       <div className="hidden md:flex flex-col w-fit gap-1">
-        <Avatar iconName={iconName} type="users" />
+        <Avatar iconName={iconName} type="users" img={img || undefined} />
 
         <div className="w-1/2 flex-1 ">
           <Divider orientation="vertical" />
@@ -23,14 +59,24 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
       <div className="relative flex flex-col w-full">
         <div className="absolute top-0 right-0 h-fit w-fit flex">
           {editable && (
-            <button className={css.action}>
-              <Icon name="pencil-01" fontSize={20} color={variables.color_grey_600} />
-            </button>
+            <IconButton
+              size="medium"
+              iconName="pencil-01"
+              iconSize={20}
+              iconColor={variables.color_grey_600}
+              customStyle={css.action}
+              onClick={handleEdit}
+            />
           )}
           {deletable && (
-            <button className={css.action}>
-              <Icon name="trash-01" fontSize={20} color={variables.color_grey_600} />
-            </button>
+            <IconButton
+              size="medium"
+              iconName="trash-01"
+              iconSize={20}
+              iconColor={variables.color_grey_600}
+              customStyle={css.action}
+              onClick={handleDelete}
+            />
           )}
         </div>
         <div className="block md:hidden mb-3">
@@ -49,16 +95,19 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
         </div>
         <div className="mb-5">
           <Typography variant="h5" color={variables.color_grey_600}>
-            {description}
+            {descriptionStr}
           </Typography>
-        </div>
-        {seeMore && (
-          <div className="mb-5">
-            <Button variant="text" color="primary" className={css.seeMoreBtn}>
+          {seeMore && (
+            <span className={css.seeMoreBtn} onClick={seeMoreClick}>
               See more
-            </Button>
-          </div>
-        )}
+            </span>
+          )}
+          {showLess && (
+            <span className={css.seeMoreBtn} onClick={seeLessClick}>
+              Show less
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

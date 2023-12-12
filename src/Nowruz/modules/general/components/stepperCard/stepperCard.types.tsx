@@ -1,5 +1,6 @@
 export interface StepperCardProps {
   iconName?: string;
+  img?: string;
   title?: string;
   subtitle?: string;
   supprtingText?: string;
@@ -8,5 +9,6 @@ export interface StepperCardProps {
   deletable?: boolean;
   deleteFunc?: () => void;
   description?: string;
-  seeMore?: boolean;
+  handleEdit?: () => void;
+  handleDelete?: () => void;
 }

@@ -1,5 +1,6 @@
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
+import variables from 'src/components/_exports.module.scss';
 
 import css from './causes.module.scss';
 import { useOrganizationCauses } from './useOrganizationCauses';
@@ -23,6 +24,10 @@ export const OrganizationCauses = () => {
           componentValue={value}
           setComponentValue={setValue}
           customHeight="200px"
+          chipBorderColor={variables.color_primary_200}
+          chipBgColor={variables.color_primary_50}
+          chipFontColor={variables.color_primary_700}
+          chipIconColor={variables.color_primary_500}
         />
       </div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>

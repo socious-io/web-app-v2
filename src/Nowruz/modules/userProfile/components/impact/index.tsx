@@ -15,9 +15,9 @@ export const Impact: React.FC<ImpactProps> = (props) => {
         <Icon name="help-circle" fontSize={16} color={variables.color_grey_400} />
       </div>
       {myProfile && <div className={css.helperText}>Measure and track your impact</div>}
-      <div className="flex items-center">
-        <div className={css.pointNumber}>{point}</div>
-        <div className={css.pointUnit}>pts</div>
+      <div className="flex items-end">
+        <span className={css.pointNumber}>{point}</span>
+        <span className={css.pointUnit}>pts</span>
       </div>
       {myProfile && (
         <Button fullWidth variant="outlined" color="secondary" className={css.button}>

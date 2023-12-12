@@ -29,6 +29,7 @@ export const Skills = () => {
           chipFontColor={variables.color_grey_blue_700}
           chipBorderColor={variables.color_grey_200}
           chipBgColor={variables.color_grey_blue_50}
+          chipIconColor={variables.color_grey_blue_500}
         />
       )}
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>

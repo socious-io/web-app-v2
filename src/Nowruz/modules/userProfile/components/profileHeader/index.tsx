@@ -1,47 +1,67 @@
-import { IconButton } from '@mui/material';
+import { IconButton as MUIIconButton } from '@mui/material';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
+import EditAvatarModal from 'src/Nowruz/modules/userProfile/containers/editAvatar';
+import { EditInfoModal } from 'src/Nowruz/modules/userProfile/containers/editInfo';
 
+import DesktopHeader from './desktopHeader';
+import { MobileHeader } from './mobileHeader';
 import css from './profileHeader.module.scss';
-import { ProfileHeaderProps } from './profileHeader.types';
+import { useProfileHeader } from './useProfileHeader';
 
-export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
-  coverImage,
-  profileImage,
-  name,
-  username,
-  myProfile,
-  isLoggedIn,
-  connectStatus,
-}) => {
+export const ProfileHeader = () => {
+  const {
+    user,
+    myProfile,
+    isLoggedIn,
+    connectStatus,
+    openEditInfoModal,
+    closeEditInfoModal,
+    handleOpenEditInfoModal,
+    openEditAvatar,
+    handleOpenEditAvatar,
+    handleCloseEditAvatar,
+  } = useProfileHeader();
+
+  const coverImage = user?.cover_image;
+
   return (
-    <div className={`${css.container} h-[292px] md:h-[360px]`}>
-      {myProfile && (
-        <button aria-label="upload-banner" className={`${css.iconCamera} hidden md:block`}>
-          <Icon name="camera-01" color="white" fontSize={20} className={css.camera} />
-        </button>
-      )}
-      <div
-        className={`${css.banner} h-40 md:h-60`}
-        style={{ backgroundImage: coverImage?.url ? `url(${coverImage?.url})` : 'linear-gradient(#ace0f9, #fff1eb)' }}
-      ></div>
-      <div className={`${css.avatar} flex flex-col md:flex-row`}>
-        <div className="w-24 md:w-40 h-24 md:h-40">
-          <Avatar type="users" size="100%" img={profileImage?.url} />
-        </div>
-        <div className={css.username}>
-          <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
-          <div className="text-base font-normal text-Gray-light-mode-500">{username}</div>
-        </div>
+    <>
+      <div className={`${css.container} h-[336px] md:h-[360px] md:mb-12 mb-6`}>
         {myProfile && (
-          <div className={`${css.editBtn} right-4 md:right-8`}>
-            <Icon name="pencil-01" color={variables.color_grey_600} fontSize={20} />
-          </div>
+          <MUIIconButton
+            aria-label="upload-banner"
+            className={`${css.iconCamera} hidden md:block`}
+            //onClick={}
+          >
+            <Icon name="camera-01" color="white" fontSize={20} className={css.camera} />
+          </MUIIconButton>
         )}
+
+        <div
+          className={`${css.banner} h-40 md:h-60`}
+          style={{ backgroundImage: coverImage?.url ? `url(${coverImage?.url})` : 'linear-gradient(#ace0f9, #fff1eb)' }}
+        ></div>
+        <DesktopHeader
+          user={user}
+          myProfile={myProfile}
+          isLoggedIn={isLoggedIn}
+          connectStatus={connectStatus}
+          handleOpenEditInfoModal={handleOpenEditInfoModal}
+          handleOpenEditAvatar={handleOpenEditAvatar}
+        />
+        <MobileHeader
+          user={user}
+          myProfile={myProfile}
+          handleOpenEditInfoModal={handleOpenEditInfoModal}
+          handleOpenEditAvatar={handleOpenEditAvatar}
+        />
+      </div>
+      <div className="md:hidden">
         {!myProfile && (
-          <div className={`${css.actionDiv} right-4 md:right-8 w-full md:w-fit`}>
+          <div className={`${css.actionDiv} w-full mb-8 px-4`}>
             <Button color="primary" variant="outlined" style={{ flex: '1', height: '40px', fontSize: '14px' }}>
               <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
               Share
@@ -56,12 +76,18 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                 {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
               </Button>
             )}
-            <IconButton className={css.iconBtn}>
-              <Icon fontSize={20} name="dots-vertical" color={variables.color_grey_700} />
-            </IconButton>
+            <IconButton
+              size="small"
+              iconName="dots-vertical"
+              iconColor={variables.color_grey_700}
+              iconSize={20}
+              customStyle="w-9 h-10 !border !border-solid !border-Gray-light-mode-300"
+            />
           </div>
         )}
       </div>
-    </div>
+      <EditAvatarModal open={openEditAvatar} handleClose={handleCloseEditAvatar} />
+      <EditInfoModal open={openEditInfoModal} handleClose={closeEditInfoModal} />
+    </>
   );
 };

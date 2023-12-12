@@ -39,7 +39,6 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   label,
   required,
   errors,
-  onChange,
   isValid,
   type = 'checkBox',
   size = 'small',
