@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity, Notification } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
+import { CurrentIdentity } from 'src/core/api';
 import { Causes } from 'src/Nowruz/modules/Auth/containers/onboarding/Causes';
 import { City } from 'src/Nowruz/modules/Auth/containers/onboarding/City';
 import { CreateOrganization } from 'src/Nowruz/modules/Auth/containers/onboarding/CreateOrganization';
@@ -50,7 +49,7 @@ export const Onboarding = () => {
     return (
       <UserProvider>
         <div className="flex flex-row justify-between py-4 px-8">
-          <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} />
+          <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} alt="" />
           <IconDropDown iconItems={items} type={type === 'user' ? 'users' : 'organizations'} accounts={accounts} />
         </div>
         <div className="flex flex-col items-center pb-4 ">
