@@ -21,7 +21,8 @@ export interface OrganizationReq {
   cover_image?: string | any;
   mission?: string;
   culture?: string;
-  size: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'L';
+  size?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'L';
+  auto_member?: boolean;
 }
 
 export interface OrganizationsRes extends PaginateRes {
