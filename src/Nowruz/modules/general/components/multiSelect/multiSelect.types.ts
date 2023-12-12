@@ -29,9 +29,8 @@ export interface MultiSelectProps {
   chipBorderColor?: string;
   chipBgColor?: string;
   chipFontColor?: string;
-  popularLabel?: boolean;
-  errors?: string[];
   chipIconColor?: string;
+  popularLabel?: boolean;
   displayDefaultBadges?: boolean;
-
+  errors?: string[];
 }

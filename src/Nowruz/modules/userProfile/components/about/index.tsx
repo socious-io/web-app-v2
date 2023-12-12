@@ -1,6 +1,7 @@
 import { Divider } from '@mui/material';
 
-import { Experiences } from './experience';
+import { Certificates } from './certificates';
+import { Experiences } from './experience/experience';
 import { Skills } from './skills';
 import { Summary } from './summary';
 import { MainInfo } from '../mainInfo';
@@ -62,6 +63,7 @@ export const About = () => {
       <Skills />
       <Divider />
       <Experiences />
+      <Certificates />
     </div>
   );
 };
