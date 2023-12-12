@@ -27,7 +27,7 @@ export const Layout = () => {
         </div>
         <SearchModal open={true} onClose={() => console.log} />
 
-        <div className="w-full h-[calc(100%-var(--menu-height))] md:h-[calc(100%-var(--desktop-nav-height))] overflow-x-hidden">
+        <div className="w-full mt-16 md:mt-[72px]">
           <Outlet />
         </div>
       </div>

@@ -80,3 +80,14 @@
 .inputContainer:focus-within {
   box-shadow: 0px 0px 0px 4px $color-primary-100;
 }
+
+.errorMsg {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  margin-left: 0;
+  margin-right: auto;
+  margin-top: 6px;
+  color: $color-error-500;
+}

@@ -17,10 +17,10 @@ const CustomControl = ({ hasValue, icon, children, ...props }) => {
 const CustomOption = ({ innerProps, label, data, isSelected }) => (
   <div {...innerProps} className={css.option}>
     {isSelected && <Icon name="check" fontSize={20} color="#667085" />}
-    <>
+    <div className="ml-0 mr-auto flex gap-2">
       <span style={{ marginRight: '8px' }}>{data.icon}</span>
       {label}
-    </>
+    </div>
   </div>
 );
 const CustomSingleValue = ({ children, data, ...props }) => {
@@ -42,6 +42,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   icon,
   errors,
   id,
+
   ...props
 }) => {
   const selectRef = useRef(null);
