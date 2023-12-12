@@ -7,6 +7,7 @@ export interface AvatarProps extends CSSProperties {
   iconName?: string;
   onClick?: () => void;
   customStyle?: string;
+  iconCustomStyle?: string;
   badge?: { image: string; color: string; width?: string; height?: string };
   iconSize?: number;
 }

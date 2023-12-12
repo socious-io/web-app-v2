@@ -9,11 +9,10 @@ export const useSkills = () => {
 
   const { updateSelectedStep } = useContext(StepsContext);
   useEffect(() => {
-    if (items.length === 0)
-      skillsToCategoryAdaptor().then((data) => {
-        setValue(getOptionsFromValues(state.skills, data));
-        setItems(data);
-      });
+    skillsToCategoryAdaptor().then((data) => {
+      setValue(getOptionsFromValues(state.skills || [], data));
+      setItems(data);
+    });
   }, []);
 
   useEffect(() => {
