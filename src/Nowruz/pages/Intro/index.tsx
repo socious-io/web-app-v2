@@ -64,7 +64,7 @@ export const Intro = () => {
             <Typography variant="caption" className={css.signupTitle}>
               Already have an account?
             </Typography>
-            <Link href="/sign-in" label="Log in" />
+            <Link href="/sign-in" label="Log in" customStyle="!font-semibold" />
           </div>
         </div>
         <div className={css.copy}>

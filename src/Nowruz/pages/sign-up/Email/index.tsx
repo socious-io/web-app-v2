@@ -45,7 +45,7 @@ export const Email = () => {
             <Typography variant="caption" className={css.signupTitle}>
               Already have an account?
             </Typography>
-            <Link href="/sign-in" label="Log in" />
+            <Link href="/sign-in" label="Log in" customStyle="!font-semibold" />
           </div>
           <div className="text-center">
             <Typography variant="caption" className={css.signupTitle}>
