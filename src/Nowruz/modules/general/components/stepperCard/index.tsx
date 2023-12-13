@@ -12,7 +12,6 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
   const { title, subtitle, iconName, img, supprtingText, editable, deletable, description, handleEdit, handleDelete } =
     props;
   const [seeMore, setSeeMore] = useState(false);
-  const [showLess, setShowLess] = useState(false);
   const [descriptionStr, setDescriptionStr] = useState(description);
 
   const truncateString = () => {
@@ -26,23 +25,17 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
       }
       setDescriptionStr(truncated.concat('...'));
       setSeeMore(true);
-      setShowLess(false);
     } else {
       setDescriptionStr(description);
       setSeeMore(false);
-      setShowLess(false);
     }
   };
 
   const seeMoreClick = () => {
     setDescriptionStr(description);
     setSeeMore(false);
-    setShowLess(true);
   };
 
-  const seeLessClick = () => {
-    truncateString();
-  };
   useEffect(() => {
     truncateString();
   }, []);
@@ -100,11 +93,6 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
           {seeMore && (
             <span className={css.seeMoreBtn} onClick={seeMoreClick}>
               See more
-            </span>
-          )}
-          {showLess && (
-            <span className={css.seeMoreBtn} onClick={seeLessClick}>
-              Show less
             </span>
           )}
         </div>
