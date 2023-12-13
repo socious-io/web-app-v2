@@ -26,6 +26,7 @@ export const Experiences = () => {
               <StepperCard
                 key={item.id}
                 iconName="building-05"
+                img={item.org.image?.url}
                 title={item.title}
                 subtitle={item.org.name}
                 supprtingText={`${getStringDate(item.start_at)} - ${item.end_at ? getStringDate(item.end_at) : 'Now'}`}

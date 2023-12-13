@@ -14,15 +14,21 @@ const CustomControl = ({ hasValue, icon, children, ...props }) => {
     </components.Control>
   );
 };
-const CustomOption = ({ innerProps, label, data, isSelected }) => (
-  <div {...innerProps} className={css.option}>
-    {isSelected && <Icon name="check" fontSize={20} color="#667085" />}
-    <div className="ml-0 mr-auto flex gap-2">
-      <span style={{ marginRight: '8px' }}>{data.icon}</span>
-      {label}
+const CustomOption = ({ value, ...props }) => {
+  const { innerProps, label, data, ...rest } = props;
+  const selected = value.label === label;
+  return (
+    <div className="px-1.5">
+      <div {...innerProps} className={`${css.option} ${selected ? `${css.selecetdOption}` : ''}`}>
+        {selected && <Icon name="check" fontSize={20} color="#667085" />}
+        <div className="ml-0 mr-auto flex gap-2">
+          <span style={{ marginRight: '8px' }}>{data.icon}</span>
+          {label}
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 const CustomSingleValue = ({ children, data, ...props }) => {
   return (
     <components.SingleValue {...props}>
@@ -45,8 +51,8 @@ export const SearchDropdown: React.FC<SelectProps> = ({
 
   ...props
 }) => {
+  const selectedVal = props.value;
   const selectRef = useRef(null);
-
   const handleLabelClick = () => {
     if (selectRef.current) {
       selectRef.current.focus();
@@ -64,8 +70,9 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           id={id}
           ref={selectRef}
           options={options}
+          noOptionsMessage={() => null}
           components={{
-            Option: CustomOption,
+            Option: (props) => <CustomOption {...props} value={selectedVal} />,
             Control: (props) => <CustomControl {...props} icon={icon} />,
             DropdownIndicator: () => (
               <div className={css.dropdown}>
@@ -98,8 +105,9 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           id={id}
           ref={selectRef}
           options={options}
+          noOptionsMessage={() => null}
           components={{
-            Option: CustomOption,
+            Option: (props) => <CustomOption {...props} value={selectedVal} />,
             Control: (props) => <CustomControl {...props} icon={icon} />,
             DropdownIndicator: () => (
               <div className={css.dropdown}>
