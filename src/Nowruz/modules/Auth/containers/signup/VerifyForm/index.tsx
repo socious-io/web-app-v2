@@ -5,6 +5,7 @@ import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { OTP } from 'src/Nowruz/modules/general/components/otp/otp';
 
 import { useVerifyForm } from './useVerifyForm';
+import css from './verifyForm.module.scss';
 
 export const VerifyForm = () => {
   const { onSubmit, otpValue, setOtpValue, resendCode, isValid, loading } = useVerifyForm();
@@ -27,7 +28,7 @@ export const VerifyForm = () => {
           Didn’t receive the email?
         </Typography>
 
-        <Button color="primary" variant="text" onClick={resendCode}>
+        <Button color="primary" variant="text" onClick={resendCode} className={css.resend}>
           <Typography variant="subtitle2" color={variables.color_primary_700}>
             Click to resend
           </Typography>
@@ -36,4 +37,3 @@ export const VerifyForm = () => {
     </div>
   );
 };
-

@@ -4,8 +4,8 @@ import { StepsContext } from 'src/Nowruz/modules/Auth/containers/onboarding/Step
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 
 export const useCity = () => {
-  const [options, setOptions] = useState([]);
   const { state, updateUser } = useUser();
+  console.log('test user state', state);
   const { updateSelectedStep } = useContext(StepsContext);
   const [selectedOption, setSelectedOption] = useState();
   const cityToOption = (cities: Location[]) => {
@@ -31,7 +31,6 @@ export const useCity = () => {
   const isFormValid = state?.city;
   const value = state?.city === null ? null : { label: state.city };
   return {
-    options,
     onSelectCity,
     updateSelectedStep,
     isFormValid,

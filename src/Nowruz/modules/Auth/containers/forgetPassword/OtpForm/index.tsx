@@ -4,6 +4,7 @@ import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { OTP } from 'src/Nowruz/modules/general/components/otp/otp';
 
+import css from './otpForm.module.scss';
 import { useOtpForm } from './useOtpForm';
 
 export const OtpForm = () => {
@@ -26,7 +27,7 @@ export const OtpForm = () => {
         <Typography variant="caption" color={variables.color_grey_600}>
           Didn’t receive the email?
         </Typography>
-        <Button color="primary" variant="text" onClick={resendOtp}>
+        <Button color="primary" variant="text" onClick={resendOtp} customStyle={css.resend}>
           <Typography variant="subtitle2" color={variables.color_primary_700}>
             Click to resend
           </Typography>
