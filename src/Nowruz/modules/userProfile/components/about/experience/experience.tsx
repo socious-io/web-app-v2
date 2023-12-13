@@ -10,7 +10,6 @@ import css from '../about.module.scss';
 export const Experiences = () => {
   const { user, myProfile, openModal, experience, handleEdit, handleAdd, handleDelete, getStringDate, handleClose } =
     useExperience();
-  console.log('test experience', user?.experiences);
   return (
     <>
       <div className="w-full flex flex-col gap-5">

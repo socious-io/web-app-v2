@@ -293,7 +293,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
 
     let organizationId = orgId;
     if (!organizationId) {
-      organizationId = (await createOrganization({ name: orgName, email: 'org@socious.io', auto_member: false })).id;
+      organizationId = (await createOrganization({ name: orgName, email: 'org@socious.io' }, false)).id;
     }
     const startDate = new Date(Number(startYear), Number(startMonth), 15).toISOString();
 

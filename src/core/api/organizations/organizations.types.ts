@@ -22,7 +22,6 @@ export interface OrganizationReq {
   mission?: string;
   culture?: string;
   size?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'L';
-  auto_member?: boolean;
 }
 
 export interface OrganizationsRes extends PaginateRes {
