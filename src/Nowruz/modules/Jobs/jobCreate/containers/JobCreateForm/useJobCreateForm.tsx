@@ -1,8 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
-import { Location, searchLocation } from 'src/core/api';
+import { skillsToCategoryAdaptor } from 'src/core/adaptors';
+import { Location, searchLocation, skills } from 'src/core/api';
 import * as yup from 'yup';
 
 type Inputs = {
@@ -29,10 +31,14 @@ export const useJobCreateForm = () => {
     setValue,
     setError,
     clearErrors,
+    getValues,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
+  const [openPreview, setOpenPreview] = useState(false);
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
+  const [skills, setSkills] = useState<Array<{ label: string; value: string }>>([]);
   const { categories } = useLoaderData().jobCategories || {};
   const catagoriesList = categories.map((item) => ({ label: item.name, value: item.id }));
   const keytems = Object.keys(SOCIAL_CAUSES);
@@ -60,10 +66,21 @@ export const useJobCreateForm = () => {
       console.error('Error fetching city data:', error);
     }
   };
+  useEffect(() => {
+    skillsToCategoryAdaptor().then((data) => {
+      setSkills(data);
+    });
+  }, []);
+
   const onSelectCity = () => {};
   const onSubmit: SubmitHandler<Inputs> = async ({ title, cause, description }) => {
     console.log('submit');
     console.log(title, cause, description);
+  };
+  const onPreview = () => {
+    console.log('preview');
+    const allFormValues = getValues();
+    console.log(allFormValues);
   };
   return {
     register,
@@ -75,5 +92,11 @@ export const useJobCreateForm = () => {
     errors,
     searchCities,
     onSelectCity,
+    openPreview,
+    setOpenPreview,
+    openSuccessModal,
+    setOpenSuccessModal,
+    onPreview,
+    skills,
   };
 };

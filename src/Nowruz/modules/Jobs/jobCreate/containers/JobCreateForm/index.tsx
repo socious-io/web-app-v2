@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
+import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
+import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
 import { RadioGroup } from 'src/Nowruz/modules/general/components/RadioGroup';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 import css from './job-create-form.module.scss';
 import { useJobCreateForm } from './useJobCreateForm';
 import { JobCreateHeader } from '../../components/Header';
+import { JobPreviewModal } from '../../components/JobPreviewModal';
 export const JobCreateForm = () => {
   const {
     register,
@@ -23,6 +27,12 @@ export const JobCreateForm = () => {
     errors,
     searchCities,
     onSelectCity,
+    openPreview,
+    setOpenPreview,
+    openSuccessModal,
+    setOpenSuccessModal,
+    onPreview,
+    skills,
   } = useJobCreateForm();
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
@@ -42,12 +52,7 @@ export const JobCreateForm = () => {
   return (
     <div>
       <form>
-        <JobCreateHeader
-          onPreview={() => {
-            console.log();
-          }}
-          onPublish={handleSubmit(onSubmit)}
-        />
+        <JobCreateHeader onPreview={onPreview} onPublish={handleSubmit(onSubmit)} />
         <div className={css.row}>
           {renderInfo('What is your job about?', 'Select a social cause')}
           <div className={css.componentsContainer}>
@@ -198,9 +203,31 @@ export const JobCreateForm = () => {
             />
           </div>
         </div>
+        <div className={css.row}>
+          {renderInfo('Experience level', '')}
+          <div className={css.componentsContainer}>
+            <MultiSelect
+              id={'skills'}
+              searchTitle={'Select at least 1 skill*'}
+              max={20}
+              maxLabel={'Max. 20 skills'}
+              items={skills}
+              placeholder={'Search a skill'}
+              setComponentValue={() => {
+                console.log;
+              }}
+              customHeight="200px"
+              chipFontColor={variables.color_grey_blue_700}
+              chipBorderColor={variables.color_grey_200}
+              chipBgColor={variables.color_grey_blue_50}
+              chipIconColor={variables.color_grey_blue_500}
+              
+            />
+          </div>
+        </div>
         <div className={css.footer}>
           <div className="flex space-x-3 ">
-            <Button color="secondary" variant="outlined">
+            <Button color="secondary" variant="outlined" onClick={onPreview}>
               Preview
             </Button>
             <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)}>
@@ -209,6 +236,8 @@ export const JobCreateForm = () => {
           </div>
         </div>
       </form>
+      <JobPreviewModal open={openPreview} onClose={() => setOpenPreview(false)} />
+      <AlertModal open={openSuccessModal} onClose={() => setOpenSuccessModal(false)} message="asdf" title="asdf" />
     </div>
   );
 };
