@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
@@ -14,6 +14,7 @@ type Inputs = {
   category: string;
   paymentMin: number;
   paymentMax: number;
+  skills?: string[];
 };
 const schema = yup.object().shape({
   title: yup.string().min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters').required(),
@@ -22,6 +23,7 @@ const schema = yup.object().shape({
   category: yup.string().required(),
   paymentMin: yup.number().required().lessThan(yup.ref('paymentMax'), 'Max price must be higher than min price'),
   paymentMax: yup.number().required().moreThan(yup.ref('paymentMin'), 'Max price must be higher than min price'),
+  skills: yup.array().of(yup.string()),
 });
 
 export const useJobCreateForm = () => {
@@ -32,10 +34,12 @@ export const useJobCreateForm = () => {
     setError,
     clearErrors,
     getValues,
+    watch,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
+
   const [openPreview, setOpenPreview] = useState(false);
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [skills, setSkills] = useState<Array<{ label: string; value: string }>>([]);
@@ -74,7 +78,6 @@ export const useJobCreateForm = () => {
 
   const onSelectCity = () => {};
   const onSubmit: SubmitHandler<Inputs> = async ({ title, cause, description }) => {
-    console.log('submit');
     console.log(title, cause, description);
   };
   const onPreview = () => {
@@ -82,6 +85,12 @@ export const useJobCreateForm = () => {
     const allFormValues = getValues();
     console.log(allFormValues);
   };
+  const onSelectSkills = (skills) => {
+    console.log('set skills', skills);
+    setValue('skills', skills);
+  };
+  const selectedSkills = watch('skills');
+  console.log('skills', selectedSkills);
   return {
     register,
     handleSubmit,
@@ -98,5 +107,7 @@ export const useJobCreateForm = () => {
     setOpenSuccessModal,
     onPreview,
     skills,
+    onSelectSkills,
+    selectedSkills: selectedSkills || [],
   };
 };

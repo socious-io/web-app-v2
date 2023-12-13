@@ -33,7 +33,10 @@ export const JobCreateForm = () => {
     setOpenSuccessModal,
     onPreview,
     skills,
+    selectedSkills,
+    onSelectSkills,
   } = useJobCreateForm();
+  console.log('selected skills', selectedSkills);
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
@@ -204,24 +207,21 @@ export const JobCreateForm = () => {
           </div>
         </div>
         <div className={css.row}>
-          {renderInfo('Experience level', '')}
+          {renderInfo('Experience level', 'Please select at least 1 to 5 skills that are relevant to the job')}
           <div className={css.componentsContainer}>
             <MultiSelect
               id={'skills'}
-              searchTitle={'Select at least 1 skill*'}
               max={20}
-              maxLabel={'Max. 20 skills'}
               items={skills}
               placeholder={'Search a skill'}
-              setComponentValue={() => {
-                console.log;
-              }}
-              customHeight="200px"
+              componentValue={selectedSkills}
+              setComponentValue={onSelectSkills}
+              customHeight="134px"
               chipFontColor={variables.color_grey_blue_700}
               chipBorderColor={variables.color_grey_200}
               chipBgColor={variables.color_grey_blue_50}
               chipIconColor={variables.color_grey_blue_500}
-              
+              displayDefaultBadges={false}
             />
           </div>
         </div>
