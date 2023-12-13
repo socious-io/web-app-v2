@@ -9,7 +9,7 @@ export const JobInfoCard: React.FC<JobInfoCardProps> = ({ payload }) => {
   return (
     <div className={css.jobCard}>
       <div className={css.item}>
-        <img src="/icons/world.svg" className="mr-1.5" /> <span>{location}</span>
+        <Icon name="marker-pin-01" fontSize={20} className="mr-1.5" /> <span>{location}</span>
         <Icon name="mouse" fontSize={20} className="ml-4 mr-1.5" /> <span>{remotePreference}</span>
       </div>
       <div className={css.item}>

@@ -6,6 +6,7 @@ import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
+import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
@@ -35,8 +36,15 @@ export const JobCreateForm = () => {
     skills,
     selectedSkills,
     onSelectSkills,
+    onSelectPreference,
+    onSelectType,
+    onSelectPaymentType,
+    onSelectPaymentScheme,
+    onSelectCategory,
+    onSelectLength,
+    onSelectExperienceLevel,
+    previewModalProps,
   } = useJobCreateForm();
-  console.log('selected skills', selectedSkills);
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
@@ -46,14 +54,38 @@ export const JobCreateForm = () => {
   const renderAmountFields = () => {
     return (
       <div className="flex justfy-center align-center">
-        <Input id="from" name="from" register={register} placeholder="0" className={css.priceInputs} />
+        <Input
+          name="paymentMin"
+          register={register}
+          placeholder="0"
+          className={css.priceInputs}
+          prefix="$"
+          errors={errors['paymentMin']?.message ? [errors['paymentMin']?.message.toString()] : []}
+        />
         <span className="mx-2">to</span>
-        <Input id="from" name="from" register={register} placeholder="0" className={css.priceInputs} />
+        <Input
+          name="paymentMax"
+          register={register}
+          placeholder="0"
+          className={css.priceInputs}
+          prefix="$"
+          errors={errors['paymentMax']?.message ? [errors['paymentMax']?.message.toString()] : []}
+        />
       </div>
     );
   };
+  const renderCustomErrors = (errors: string[]) => {
+    return errors.map((e, index) => (
+      <p key={index} className={`${css.errorMsg} ${css.msg}`}>
+        {e}
+      </p>
+    ));
+  };
   return (
     <div>
+      <div className={css.back}>
+        <BackLink title="Back" />
+      </div>
       <form>
         <JobCreateHeader onPreview={onPreview} onPublish={handleSubmit(onSubmit)} />
         <div className={css.row}>
@@ -89,7 +121,7 @@ export const JobCreateForm = () => {
               placeholder="Select a category"
               options={catagoriesList}
               isSearchable
-              onChange={(value) => console.log(value)}
+              onChange={(option) => onSelectCategory(option.value)}
               errors={errors['category']?.message ? [errors['category']?.message.toString()] : undefined}
             />
           </div>
@@ -114,6 +146,8 @@ export const JobCreateForm = () => {
           {renderInfo('Location', 'Job titles must describe one position')}
           <div className={css.componentsContainer}>
             <RadioGroup
+              errors={errors.location?.choice?.message ? [errors.location?.choice?.message.toString()] : undefined}
+              onChange={onSelectCity}
               items={[
                 { label: 'Anywhere', value: 'Anywhere' },
                 {
@@ -139,6 +173,7 @@ export const JobCreateForm = () => {
                     </div>
                   ),
                 },
+                // errors={errors['']?.message ? [errors['description']?.message.toString()] : undefined}
                 // { label: 'In my timezone', value: 'In my timezone' },
               ]}
             />
@@ -151,7 +186,8 @@ export const JobCreateForm = () => {
               placeholder="Select a preference"
               options={PROJECT_REMOTE_PREFERENCES_V2}
               isSearchable
-              onChange={(value) => console.log(value)}
+              onChange={(option) => onSelectPreference(option.value)}
+              errors={errors['preference']?.message ? [errors['preference']?.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -162,7 +198,8 @@ export const JobCreateForm = () => {
               placeholder="Select a Type"
               options={PROJECT_TYPE_V2}
               isSearchable
-              onChange={(value) => console.log(value)}
+              onChange={(option) => onSelectType(option.value)}
+              errors={errors['type']?.message ? [errors['type']?.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -173,25 +210,31 @@ export const JobCreateForm = () => {
               placeholder="Select a time period"
               options={PROJECT_LENGTH_V2}
               isSearchable
-              onChange={(value) => console.log(value)}
+              onChange={(option) => onSelectLength(option.value)}
+              errors={errors['length']?.message ? [errors['length']?.message.toString()] : undefined}
             />
           </div>
         </div>
         <div className={css.row}>
           {renderInfo('Payment type', 'Is it a paid or volunteer job?')}
           <div className={css.componentsContainer}>
-            <RadioGroup items={PROJECT_PAYMENT_TYPE} onChange={(item) => console.log(item)} />
+            <RadioGroup
+              items={PROJECT_PAYMENT_TYPE}
+              errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
+              onChange={(option) => onSelectPaymentType(option.value)}
+            />
           </div>
         </div>
         <div className={css.row}>
           {renderInfo('Payment terms / range', 'Specify the estimated payment range for this job.')}
           <div className={css.componentsContainer}>
             <RadioGroup
+              onChange={(option) => onSelectPaymentScheme(option.value)}
               items={[
-                { label: 'Fixed', value: 'Fixed', children: renderAmountFields() },
+                { label: 'Fixed', value: 'FIXED', children: renderAmountFields() },
                 { label: 'Hourly', value: 'HOURLY', children: renderAmountFields() },
               ]}
-              errors={['error']}
+              errors={errors['paymentScheme']?.message ? [errors['paymentScheme']?.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -202,16 +245,17 @@ export const JobCreateForm = () => {
               placeholder="Select a level"
               options={EXPERIENCE_LEVEL_V2}
               isSearchable
-              onChange={(value) => console.log(value)}
+              onChange={(option) => onSelectExperienceLevel(option.value)}
+              errors={errors['experienceLevel']?.message ? [errors['experienceLevel']?.message.toString()] : undefined}
             />
           </div>
         </div>
         <div className={css.row}>
-          {renderInfo('Experience level', 'Please select at least 1 to 5 skills that are relevant to the job')}
+          {renderInfo('Skills', 'Please select at least 1 to 5 skills that are relevant to the job')}
           <div className={css.componentsContainer}>
             <MultiSelect
               id={'skills'}
-              max={20}
+              max={5}
               items={skills}
               placeholder={'Search a skill'}
               componentValue={selectedSkills}
@@ -236,8 +280,19 @@ export const JobCreateForm = () => {
           </div>
         </div>
       </form>
-      <JobPreviewModal open={openPreview} onClose={() => setOpenPreview(false)} />
-      <AlertModal open={openSuccessModal} onClose={() => setOpenSuccessModal(false)} message="asdf" title="asdf" />
+      <JobPreviewModal
+        company={previewModalProps?.company}
+        job={previewModalProps?.job}
+        open={openPreview}
+        onClose={() => setOpenPreview(false)}
+      />
+      <AlertModal
+        open={openSuccessModal}
+        onClose={() => setOpenSuccessModal(false)}
+        onSubmit={() => setOpenSuccessModal(false)}
+        message="This job has been published. Organization members will be able to edit this job and republish changes."
+        title="Job published"
+      />
     </div>
   );
 };
