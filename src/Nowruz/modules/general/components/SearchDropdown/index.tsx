@@ -16,11 +16,11 @@ const CustomControl = ({ hasValue, icon, children, ...props }) => {
 };
 const CustomOption = ({ value, ...props }) => {
   const { innerProps, label, data, ...rest } = props;
-  const selected = value.label === label;
+  // const selected = value.label === label;
   return (
     <div className="px-1.5">
-      <div {...innerProps} className={`${css.option} ${selected ? `${css.selecetdOption}` : ''}`}>
-        {selected && <Icon name="check" fontSize={20} color="#667085" />}
+      <div {...innerProps} className={`${css.option}`}>
+        {/* {selected && <Icon name="check" fontSize={20} color="#667085" />} */}
         <div className="ml-0 mr-auto flex gap-2">
           <span style={{ marginRight: '8px' }}>{data.icon}</span>
           {label}

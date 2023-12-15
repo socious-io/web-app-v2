@@ -7,7 +7,7 @@ import * as React from 'react';
 export const Calender = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker label="Basic date picker" onChange={(newValue) => console.log(newValue)} />
+      <DatePicker label="Select date" onChange={(newValue) => console.log(newValue['$d'])} />
     </LocalizationProvider>
   );
 };
