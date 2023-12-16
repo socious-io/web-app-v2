@@ -68,8 +68,10 @@ export function handleError(params?: ErrorHandlerParams) {
 http.interceptors.request.use(
   async function (config) {
     const { Authorization, CurrentIdentity } = await getAuthHeaders();
-    config.headers.set('Authorization', Authorization);
-    config.headers.set('Current-Identity', CurrentIdentity);
+    if (Authorization) {
+      config.headers.set('Authorization', Authorization);
+      config.headers.set('Current-Identity', CurrentIdentity);
+    }
     // Do something before request is sent
     return config;
   },
