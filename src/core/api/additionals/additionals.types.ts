@@ -1,4 +1,5 @@
 import { Media } from '../media/media.types';
+import { Organization } from '../organizations/organizations.types';
 export type AdditionalTypes = 'PORTFOLIO' | 'CERTIFICATE' | 'EDUCATION' | 'BENEFIT' | 'RECOMMENDATIONS';
 
 export interface EducationMeta {
@@ -9,8 +10,8 @@ export interface EducationMeta {
   end_year?: string;
   start_month?: string;
   start_year?: string;
-  school_id?: string;
-  school_name?: string;
+  school_id: string;
+  school_name: string;
 }
 
 export interface AdditionalReq {

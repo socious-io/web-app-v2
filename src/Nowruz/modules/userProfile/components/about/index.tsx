@@ -1,11 +1,11 @@
 import { Divider } from '@mui/material';
 
 import { Certificates } from './certificates';
+import { Educations } from './education/educations';
 import { Experiences } from './experience/experience';
 import { Skills } from './skills';
 import { Summary } from './summary';
 import { MainInfo } from '../mainInfo';
-import { Educations } from './educations';
 
 export const About = () => {
   return (
@@ -18,8 +18,8 @@ export const About = () => {
       <Skills />
       <Divider />
       <Experiences />
-      <Certificates />
       <Educations />
+      <Certificates />
     </div>
   );
 };
