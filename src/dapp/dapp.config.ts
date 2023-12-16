@@ -63,7 +63,7 @@ export const dappConfig: DappConfig = {
         {
           name: 'USDC',
           symbol: 'USDC',
-          address: '0xC12F6Ee5c853393105f29EF0310e61e6B494a70F'
+          address: '0xC12F6Ee5c853393105f29EF0310e61e6B494a70F',
         },
       ],
     },
@@ -145,13 +145,13 @@ export const dappConfig: DappConfig = {
           name: 'USDC',
           symbol: 'USDC',
           address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
-          decimals: 18
+          decimals: 18,
         },
         {
           name: 'Tether',
           symbol: 'USDT',
           address: '0x55d398326f99059fF775485246999027B3197955',
-          decimals: 18
+          decimals: 18,
         },
       ],
     },

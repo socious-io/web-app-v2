@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: row;
   column-gap: 1rem;
-  justify-content: flex-start;
   height: fit-content;
   border-radius: 12px;
   padding: 1rem;
@@ -18,7 +17,7 @@
   border: solid 1px $color-primary-200;
 }
 .selectedContainer {
-  border: solid 1px $color-primary-600;
+  border: solid 2px $color-primary-600;
   background-color: $color-primary-50;
 }
 .content {
@@ -30,7 +29,8 @@
   width: 2rem;
   height: 2rem;
   border-radius: 200px;
-  background-color: $color-primary-100;
+  background-color: $color-grey-100;
+  border: 1px solid rgba($color-grey-900, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,5 +63,33 @@
   justify-content: center;
 }
 .rbContainer {
-  width: 1rem;
+  padding: 0;
+  margin-left: auto;
+  margin-right: 0;
 }
+
+.title {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $color-grey-700;
+}
+.selectedTitle {
+  color: $color-primary-800;
+}
+.desc {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $color-grey-600;
+}
+.selectedDesc {
+  color: $color-primary-700;
+}
+//styleName: Text sm/Medium;

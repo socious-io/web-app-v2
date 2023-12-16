@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { forgetPassword, handleError } from 'src/core/api';
+import { forgetPassword } from 'src/core/api';
 import * as yup from 'yup';
 
 export const formModel = {
@@ -11,7 +11,12 @@ export const formModel = {
 export const schema = yup
   .object()
   .shape({
-    email: yup.string().trim().email('Enter a correct email').required('Enter a correct email'),
+    email: yup
+      .string()
+      .trim()
+      .email('Enter a correct email')
+      .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
+      .required('Enter a correct email'),
   })
   .required();
 
@@ -23,6 +28,7 @@ export const useEmailForm = () => {
     handleSubmit,
     formState: { errors, isValid },
     getValues,
+    setError,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -33,7 +39,12 @@ export const useEmailForm = () => {
 
     forgetPassword({ email })
       .then(() => navigate(`../otp?email=${email}`))
-      .catch(handleError({ section: 'FORGET_PASSWORD' }));
+      .catch(() => {
+        setError('email', {
+          type: 'manual',
+          message: 'Enter a correct email',
+        });
+      });
   };
 
   const onBack = () => {

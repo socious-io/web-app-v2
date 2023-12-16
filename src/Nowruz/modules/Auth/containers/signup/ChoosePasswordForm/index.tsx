@@ -11,11 +11,17 @@ export const ChoosePasswordForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='mt-8'>
-          <Input type="password" name="password" register={register} placeholder="Choose a password" />
+        <div className="mt-8">
+          <Input id="password" type="password" name="password" register={register} placeholder="Choose a password" />
         </div>
         <div className="mt-4">
-          <Input type="password" name="confirm" register={register} placeholder="Confirm password" />
+          <Input
+            id="confirm-password"
+            type="password"
+            name="confirm"
+            register={register}
+            placeholder="Confirm password"
+          />
         </div>
         <div>
           <div className={`${css.validation} mt-4`}>

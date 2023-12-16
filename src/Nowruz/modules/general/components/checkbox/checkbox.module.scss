@@ -12,11 +12,11 @@
   line-height: 20px;
   letter-spacing: 0em;
   color: $color-grey-700;
+  cursor: pointer;
+  margin-left: 8px;
 }
 
 .icon {
-  width: 1rem;
-  height: 1rem;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -26,15 +26,42 @@
 .iconNotChecked {
   border-color: $color_grey_300;
 }
-.checkboxContainer:hover .iconNotChecked {
+.iconChecked {
+  border-color: $color_grey_600;
+  background-color: $color-primary-50;
+}
+
+.circleIconNotChecked {
+  border: 1px solid $color-grey-300;
+  background-color: $color-white;
+}
+
+.circleIconChecked {
+  border: 1px solid $color-primary-600;
+  background-color: $color-primary-600;
+}
+
+.checkboxContainer:hover .iconChecked {
+  background-color: $color-primary-100;
+}
+.checkboxContainer:focus-within .iconChecked {
+  background-color: $color-primary-50;
+  box-shadow: 0px 0px 0px 4px $color-primary-100;
+}
+
+.checkboxContainer:hover .iconNotChecked,
+.checkboxContainer:hover .circleIconNotChecked {
   background-color: $color-primary-100;
   border-color: $color-primary-600;
 }
 
-.iconChecked {
-  border-color: $color_grey_300;
-  background-color: $color-primary-50;
+.checkboxContainer:focus-within .iconNotChecked,
+.checkboxContainer:focus-within .circleIconNotChecked {
+  background-color: $color-white;
+  border-color: $color-primary-300;
+  box-shadow: 0px 0px 0px 4px $color-primary-100;
 }
-.checkboxContainer:hover .iconChecked {
-  background-color: transparent;
+
+.checkboxContainer:focus-within .circleIconChecked {
+  box-shadow: 0px 0px 0px 4px $color-primary-100;
 }

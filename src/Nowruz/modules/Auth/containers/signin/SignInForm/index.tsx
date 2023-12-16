@@ -1,32 +1,25 @@
 import { Typography } from '@mui/material';
+import { Google } from 'public/icons/nowruz/google';
+import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
+import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import { useSignInForm } from './useSignInForm';
-
-// import { Google } from 'public/icons/nowruz/google';
 // import { LinkedIn } from 'public/icons/nowruz/linkedin';
 
 export const SignInForm = () => {
-  const {
-    register,
-    errors,
-    keepLoggedIn,
-    setKeepLoggedIn,
-    navigateToForgetPassword,
-    isValid,
-    handleSubmit,
-    onLogin,
-    navigateToSignUp,
-    getValues,
-  } = useSignInForm();
+  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin } = useSignInForm();
+  const navigate = useNavigate();
+
   return (
     <>
-      <form className="flex flex-col gap-6 my-8">
+      <form className="flex flex-col gap-6 my-8 ">
         <div className="flex flex-col gap-[20px]">
           <Input
+            id="email"
             autoComplete="Email"
             label="Email"
             name="email"
@@ -36,6 +29,7 @@ export const SignInForm = () => {
           />
           <Input
             autoComplete="current-password"
+            id="password"
             type="password"
             label="Password"
             name="password"
@@ -45,13 +39,9 @@ export const SignInForm = () => {
           />
         </div>
         <div className="flex flex-row">
-          <Checkbox label={'Keep me logged in'} value={keepLoggedIn} onChange={() => setKeepLoggedIn(!keepLoggedIn)} />
-          <div className="w-fit mr-0 ml-auto">
-            <Button color="primary" variant="text" onClick={navigateToForgetPassword}>
-              <Typography variant="subtitle2" color={variables.color_primary_700}>
-                Forgot password
-              </Typography>
-            </Button>
+          <Checkbox id="Keep_me_logged_in" label={'Keep me logged in'} value={keepLoggedIn} onChange={handleChange} />
+          <div className="w-fit mr-0 ml-auto flex items-center">
+            <Link href="/forget-password/email" label="Forgot password" customStyle="!font-semibold" />
           </div>
         </div>
 
@@ -59,10 +49,16 @@ export const SignInForm = () => {
           <Button color="primary" onClick={handleSubmit(onLogin)}>
             Continue
           </Button>
-          {/* <Button variant="outlined" color="secondary" className={css.button}>
-              <Google />
-              <div className={css.buttonTitle}>Continue with Google</div>
-            </Button>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => navigate('/oauth/google')}
+            style={{ display: 'flex', gap: '12px' }}
+          >
+            <Google />
+            Continue with Google
+          </Button>
+          {/*
             <Button variant="outlined" color="secondary" className={css.button}>
               <LinkedIn />
               <div className={css.buttonTitle}>Continue with LinkedIn</div>
@@ -74,12 +70,7 @@ export const SignInForm = () => {
         <Typography variant="caption" color={variables.color_grey_600}>
           Don't have an account?
         </Typography>
-
-        <Button color="primary" variant="text" onClick={navigateToSignUp}>
-          <Typography variant="subtitle2" color={variables.color_primary_700}>
-            Sign up
-          </Typography>
-        </Button>
+        <Link label=" Sign up" href="/intro" customStyle="!font-semibold" />
       </div>
     </>
   );

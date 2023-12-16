@@ -1,18 +1,28 @@
 import { Stepper as MUIStepper, Step, StepConnector, StepLabel, Typography, stepConnectorClasses } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
-import { isTouchDevice } from 'src/core/device-type-detector';
 
 import css from './stepper.module.scss';
 import { StepperProps } from './stepper.types';
 import { StepperIconWrapper } from './stepperIcon';
 
 export const Stepper: React.FC<StepperProps> = (props) => {
-  const isMobile = isTouchDevice();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const isMobile = windowWidth < 600;
   const { activeStep, orientation, steps } = props;
   const dir = orientation ? orientation : isMobile ? 'vertical' : 'horizontal';
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
 
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   const activeColor = variables.color_grey_700;
   const disabledColor = variables.color_grey_300;
 

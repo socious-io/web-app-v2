@@ -1,0 +1,72 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  padding: 20px;
+  background-color: $color-sail-100;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.titleDiv {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 4px;
+  gap: 8px;
+}
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: black;
+}
+.helperText {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: $color-grey-600;
+  margin-bottom: 8px;
+}
+
+.pointNumber {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 44px;
+  letter-spacing: -2%;
+  text-align: left;
+  color: $color-grey-900;
+}
+
+.pointUnit {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: $color-grey-600;
+}
+
+.button {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  gap: 8px;
+  display: flex;
+  padding: 10px 16px 10px 16px;
+  border-radius: 8px;
+  border-color: $color-grey-300;
+  background-color: white;
+  text-transform: none;
+  margin-top: 20px;
+}
+
+.button:hover {
+  background-color: white;
+  border-color: $color-grey-300;
+  background-color: $color-grey-50;
+}

@@ -10,6 +10,7 @@ export const UserDetails = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
+          id="first-name"
           autoComplete="first"
           label="First name*"
           name="firstName"
@@ -19,6 +20,7 @@ export const UserDetails = () => {
         />
         <div className="mt-4">
           <Input
+            id="last-name"
             label="Last name*"
             name="lastName"
             register={register}
@@ -28,12 +30,19 @@ export const UserDetails = () => {
         </div>
         <div className="mt-4">
           <Input
+            id="username"
             label="Username*"
             name="username"
             register={register}
             placeholder="Username"
             validMessage="Username available"
-            prefix="socious.io/"
+            hints={[
+              {
+                hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`,
+                hide: !isUsernameValid,
+              },
+            ]}
+            // prefix="socious.io/"
             isValid={isUsernameValid}
             errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}
           />

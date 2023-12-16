@@ -1,13 +1,14 @@
-import { Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { OTP } from 'src/Nowruz/modules/general/components/otp/otp';
 
 import { useVerifyForm } from './useVerifyForm';
+import css from './verifyForm.module.scss';
 
 export const VerifyForm = () => {
-  const { onSubmit, otpValue, setOtpValue, resendCode, isValid } = useVerifyForm();
+  const { onSubmit, otpValue, setOtpValue, resendCode, isValid, loading } = useVerifyForm();
 
   return (
     <div className="flex flex-col justify-center">
@@ -19,7 +20,7 @@ export const VerifyForm = () => {
       />
       <div className="mt-8">
         <Button disabled={!(otpValue.length === 6)} color="primary" block onClick={onSubmit}>
-          Verify email
+          {loading ? <CircularProgress size="32px" sx={{ color: variables.color_white }} /> : 'Verify email'}
         </Button>
       </div>
       <div className="flex flex-row items-center justify-center ">
@@ -27,7 +28,7 @@ export const VerifyForm = () => {
           Didn’t receive the email?
         </Typography>
 
-        <Button color="primary" variant="text" onClick={resendCode}>
+        <Button color="primary" variant="text" onClick={resendCode} className={css.resend}>
           <Typography variant="subtitle2" color={variables.color_primary_700}>
             Click to resend
           </Typography>

@@ -1,0 +1,117 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  width: 100%;
+  position: relative;
+}
+
+.banner {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -2;
+  //   background-image: linear-gradient(#ace0f9, #fff1eb);
+}
+
+.iconCamera {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  background-color: black;
+  opacity: 60%;
+  padding: 10px;
+  border-radius: 50%;
+  z-index: 10;
+  cursor: pointer;
+  box-shadow: $Shadows-xs;
+}
+
+.avatar {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding: 0 24px 0 24px;
+  gap: 24px;
+}
+
+.username {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.username h1 {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 38px;
+  color: $color-grey-900;
+}
+
+.username h6 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: $color-grey-600;
+}
+.editBtn {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.iconBtn,
+.iconBtn:hover {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: solid 1px $color-grey-300;
+  background-color: black;
+}
+
+.actionDiv {
+  margin-right: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.openToWork {
+  width: 153px;
+  height: 28px;
+  padding: 4px, 10px, 4px, 10px;
+  border: 1px solid $color-grey-300;
+  border-radius: 8px;
+  gap: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.openToWorkText {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  color: $color-grey-700;
+}
+
+.avatarMobile {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 24px 0 24px;
+  gap: 24px;
+}

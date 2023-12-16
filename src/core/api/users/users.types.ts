@@ -1,6 +1,8 @@
-import { Mission } from '../jobs/jobs.types';
+import { AdditionalRes } from '../additionals/additionals.types';
+import { Category, Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
+import { Organization } from '../organizations/organizations.types';
 import { Identity } from '../site/site.types';
 import { LanguageCode, SDG, PaginateRes } from '../types';
 // -------------------- Requests ----------------------
@@ -16,7 +18,6 @@ export interface UpdateProfileReq {
   username: string;
   bio?: string;
   mission?: string;
-  language?: string;
   country?: string;
   city?: string;
   geoname_id?: number | null;
@@ -49,6 +50,10 @@ export interface ExperienceReq {
   skills?: string[];
   start_at: string;
   end_at?: string;
+  job_category_id?: string;
+  country?: string;
+  city?: string;
+  employment_type?: 'ONE_OFF' | 'PART_TIME' | 'FULL_TIME';
 }
 
 export interface ChangePasswordReq {
@@ -99,6 +104,10 @@ export interface User {
   experiences?: Experience[] | null;
   created_at: Date;
   geoname_id?: string;
+  educations?: AdditionalRes[];
+  recommendations?: AdditionalRes[];
+  portfolios?: AdditionalRes[];
+  certificates?: AdditionalRes[];
 }
 
 export interface Language extends LanguageReq {
@@ -108,13 +117,8 @@ export interface Language extends LanguageReq {
 
 export interface Experience extends ExperienceReq {
   id: string;
-  org: {
-    id: string;
-    name: string;
-    shortname: string;
-    bio?: string;
-    website?: string;
-  };
+  org: Organization;
+  job_category: Category;
   created_at: Date;
 }
 

@@ -1,0 +1,26 @@
+@import 'src/components/_primitives.scss';
+
+.seeMoreBtn {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+  color: $color-primary-700;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.action {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.action:hover {
+  background-color: $color-grey-100;
+}

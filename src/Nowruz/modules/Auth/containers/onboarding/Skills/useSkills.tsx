@@ -10,7 +10,7 @@ export const useSkills = () => {
   const { updateSelectedStep } = useContext(StepsContext);
   useEffect(() => {
     skillsToCategoryAdaptor().then((data) => {
-      setValue(getOptionsFromValues(state.skills, data));
+      setValue(getOptionsFromValues(state.skills || [], data));
       setItems(data);
     });
   }, []);

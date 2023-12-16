@@ -24,7 +24,34 @@
     &:disabled {
       background-color: $color-primary-200;
       color: $color-white;
-      cursor: not-allowed;
+    }
+  }
+  &:global(.MuiButton-containedPrimary) {
+    &:hover {
+      background-color: $color-primary-700;
+      color: $color-white;
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    }
+    &:focus {
+      background-color: $color-primary-600;
+      color: $color-white;
+      box-shadow:
+        0px 0px 0px 4px rgba(230, 237, 237, 1),
+        0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    }
+  }
+  &:global(.MuiButton-outlinedPrimary) {
+    border: solid 1px $color-grey-300;
+    box-shadow: 0px 1px 2px 0px #1018280d;
+    color: $color-grey-700;
+    &:hover {
+      background-color: $color-grey-50;
+      color: $color-grey-800;
+    }
+    &:focus {
+      box-shadow:
+        0px 0px 0px 4px rgba(242, 244, 247, 1),
+        0px 1px 2px 0px rgba(16, 24, 40, 0.05);
     }
   }
 }

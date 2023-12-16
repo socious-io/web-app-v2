@@ -31,6 +31,7 @@ import {
   filterFollowings,
   getOrganizationMembers,
 } from 'src/core/api';
+import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
 import {
   getAwaitingReviewList,
@@ -48,6 +49,50 @@ import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
+
+  {
+    path: 'nowruz',
+    element: <NowruzLayout />,
+    children: [
+      {
+        path: 'test',
+        async lazy() {
+          const { Test } = await import('src/Nowruz/pages/test');
+          return {
+            Component: Test,
+          };
+        },
+      },
+      {
+        path: 'profile/users',
+        children: [
+          {
+            path: ':id',
+            children: [
+              {
+                path: 'view',
+                loader: async ({ params }) => {
+                  const user = await otherProfileByUsername(params.id);
+                  const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
+                  return {
+                    user,
+                    badges: userBadges,
+                    missions,
+                  };
+                },
+                async lazy() {
+                  const { UserProifle } = await import('src/Nowruz/pages/userProfile');
+                  return {
+                    Component: UserProifle,
+                  };
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 
   {
     children: [
@@ -823,44 +868,23 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
-            path: 'welcome',
+            path: 'notification',
             async lazy() {
-              const { Welcome } = await import('src/pages/sign-up/welcome/welcome');
+              const { AllowNotification } = await import('src/Nowruz/pages/AllowNotification');
               return {
-                Component: Welcome,
+                Component: AllowNotification,
               };
             },
           },
           {
             path: 'onboarding',
             async lazy() {
-              const { SignUpUserOnboarding } = await import(
-                'src/pages/sign-up/sign-up-user-onboarding/sign-up-user-complete.container'
-              );
+              const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
               return {
-                Component: SignUpUserOnboarding,
+                Component: Onboarding,
               };
             },
           },
-          // {
-          //   path: 'welcome',
-          //   async lazy() {
-          //     const { Welcome } = await import('src/Nowruz/modules/Auth/containers/onboarding/Welcome');
-          //     return {
-          //       Component: Welcome,
-          //     };
-          //   },
-          // },
-
-          // {
-          //   path: 'onboarding',
-          //   async lazy() {
-          //     const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
-          //     return {
-          //       Component: Onboarding,
-          //     };
-          //   },
-          // },
           {
             path: 'allow-notification',
             async lazy() {
@@ -959,7 +983,7 @@ export const blueprint: RouteObject[] = [
   {
     path: '/intro',
     async lazy() {
-      const { Intro } = await import('src/pages/intro/intro');
+      const { Intro } = await import('src/Nowruz/pages/Intro');
       return {
         Component: Intro,
       };
@@ -973,6 +997,20 @@ export const blueprint: RouteObject[] = [
         Component: SignIn,
       };
     },
+  },
+  {
+    path: '/oauth',
+    children: [
+      {
+        path: 'google',
+        async lazy() {
+          const { GoogleOauth2 } = await import('src/Nowruz/pages/oauth/google');
+          return {
+            Component: GoogleOauth2,
+          };
+        },
+      },
+    ],
   },
   {
     path: 'privacy-policy',

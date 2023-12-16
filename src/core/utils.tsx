@@ -47,3 +47,11 @@ export const removeValuesFromObject = (obj: any, valuesToRemove: Array<string | 
   }
   return obj;
 };
+
+export const checkUsernameConditions = (username: string) => {
+  if (!username) return;
+  if (!/^[a-z0-9._-]+$/.test(username)) return `Can contain lowercase letters, digits, '.', '_', and '-'.`;
+  if (username.startsWith('.') || username.startsWith('_')) return "Shouldn't start with a period or underscore.";
+  if (/[\._]{2,}/.test(username)) return 'No consecutive periods or underscores.';
+  if (username.length < 6 || username.length > 24) return 'Must be between 6 and 24 characters.';
+};

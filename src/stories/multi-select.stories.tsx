@@ -1,8 +1,8 @@
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
-import MultiSelect from 'src/Nowruz/general/multiSelect/multiSelect';
-import { MultiSelectItem } from 'src/Nowruz/general/multiSelect/multiSelect.types';
+import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
+import { MultiSelectItem } from 'src/Nowruz/modules/general/components/multiSelect/multiSelect.types';
 
 export default {
   title: 'Multi Select',
@@ -18,6 +18,7 @@ const Template: StoryFn = (args) => {
   return (
     <div style={{ width: '480px' }}>
       <MultiSelect
+        id="social causes"
         searchTitle={'Select at least 1 cause*'}
         max={5}
         maxLabel={'Max. 5 causes'}
