@@ -16,7 +16,7 @@ const CustomControl = ({ hasValue, icon, children, ...props }) => {
 };
 const CustomOption = ({ value, ...props }) => {
   const { innerProps, label, data, ...rest } = props;
-  const selected = value.label === label;
+  const selected = value && value.label ? value.label === label : false;
   return (
     <div className="px-1.5">
       <div {...innerProps} className={`${css.option} ${selected ? `${css.selecetdOption}` : ''}`}>
