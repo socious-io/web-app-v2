@@ -14,6 +14,7 @@ export const useAllowNotification = () => {
     onSkip();
   };
   const onSkip = () => {
+    localStorage.removeItem('registerFor');
     if (type === 'user') navigate(`/profile/users/${username}/view`);
     else if (type === 'organization') navigate(`/profile/organizations/${username}/view`);
     else navigate('/jobs');
