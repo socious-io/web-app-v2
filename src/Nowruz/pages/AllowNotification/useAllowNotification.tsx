@@ -15,7 +15,8 @@ export const useAllowNotification = () => {
   };
   const onSkip = () => {
     if (type === 'user') navigate(`/profile/users/${username}/view`);
-    else navigate(`/profile/organizations/${username}/view`);
+    else if (type === 'organization') navigate(`/profile/organizations/${username}/view`);
+    else navigate('/jobs');
   };
   const items = [
     {
