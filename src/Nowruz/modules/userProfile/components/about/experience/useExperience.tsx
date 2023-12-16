@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CurrentIdentity, Experience, User, otherProfileByUsername, removeExperiences } from 'src/core/api';
-import { monthNames } from 'src/core/time';
+import { monthShortNames } from 'src/core/time';
 import { RootState } from 'src/store';
 import { setUser } from 'src/store/reducers/profile.reducer';
 
@@ -41,7 +41,7 @@ export const useExperience = () => {
 
   const getStringDate = (date: string) => {
     const dateFormat = new Date(date);
-    const month = monthNames[dateFormat.getMonth()];
+    const month = monthShortNames[dateFormat.getMonth()];
     const year = dateFormat.getFullYear().toString();
     return `${month} ${year}`;
   };

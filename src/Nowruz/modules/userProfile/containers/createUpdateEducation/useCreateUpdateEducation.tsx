@@ -2,10 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrganization, Organization, otherProfileByUsername, search, User } from 'src/core/api';
+import { createOrganization, getOrganization, Organization, otherProfileByUsername, search, User } from 'src/core/api';
 import { createAdditional, updateAdditional } from 'src/core/api/additionals/additionals.api';
 import { AdditionalReq, AdditionalRes, EducationMeta } from 'src/core/api/additionals/additionals.types';
-import { monthNames } from 'src/core/time';
+import { monthNames, monthShortNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
@@ -66,18 +66,16 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
   };
 
   const initializeValues = () => {
-    setValue('schoolName', education?.title || '');
-    setValue('schoolId', education?.meta.school_id || '');
-    setValue('degree', education?.meta.degree || '');
-    setValue('field', education?.meta.field || '');
-    setValue('startMonth', education?.meta.start_date ? new Date(education.meta.start_date).getMonth().toString() : '');
-    setValue(
-      'startYear',
-      education?.meta.start_date ? new Date(education.meta.start_date).getFullYear().toString() : '',
-    );
-    setValue('endMonth', education?.meta.end_date ? new Date(education.meta.end_date).getMonth().toString() : '');
-    setValue('endYear', education?.meta.end_date ? new Date(education.meta.end_date).getFullYear().toString() : '');
-    setValue('grade', education?.meta.grade || '');
+    const meta = education ? (education.meta as EducationMeta) : null;
+    setValue('schoolName', meta?.school?.name || '');
+    setValue('schoolId', meta?.school?.id || '');
+    setValue('degree', meta?.degree || '');
+    setValue('field', meta?.field || '');
+    setValue('startMonth', meta?.start_month || '');
+    setValue('startYear', meta?.start_year || '');
+    setValue('endMonth', meta?.end_month || '');
+    setValue('endYear', meta?.end_year || '');
+    setValue('grade', meta?.grade || '');
     setValue('description', education?.description || '');
 
     //   setSchoolVal()
@@ -151,11 +149,11 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
     setSchoolVal({ value: newCompanyVal.value, label: newCompanyVal.label });
   };
   const onSelectStartMonth = (month: OptionType) => {
-    setValue('startMonth', month.value, { shouldValidate: true });
+    setValue('startMonth', monthShortNames[Number(month.value)], { shouldValidate: true });
     setStartMonth(month);
   };
   const onSelectEndMonth = (month: OptionType) => {
-    setValue('endMonth', month.value, { shouldValidate: true });
+    setValue('endMonth', monthShortNames[Number(month.value)], { shouldValidate: true });
     setEndMonth(month);
   };
   const onSelectStartYear = (year: OptionType) => {
@@ -175,8 +173,7 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
     if (!schId) {
       schId = (await createOrganization({ name: schoolName, email: 'org@socious.io' }, false)).id;
     }
-
-    let payloadMeta: EducationMeta = {
+    const payloadMeta: EducationMeta = {
       field: field,
       grade: grade,
       degree: degree,
@@ -184,11 +181,13 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
       end_year: endYear,
       start_month: startMonth,
       start_year: startYear,
-      school_id: schoolId,
+      school_id: schId,
       school_name: schoolName,
     };
 
-    payloadMeta = removedEmptyProps(payloadMeta);
+    // const sch = await getOrganization(schId);
+    // payloadMeta.school = sch;
+
     const payload: AdditionalReq = {
       type: 'EDUCATION',
       title: schoolName,
