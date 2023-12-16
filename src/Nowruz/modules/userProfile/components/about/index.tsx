@@ -5,6 +5,7 @@ import { Experiences } from './experience/experience';
 import { Skills } from './skills';
 import { Summary } from './summary';
 import { MainInfo } from '../mainInfo';
+import { Educations } from './educations';
 
 export const About = () => {
   return (
@@ -18,6 +19,7 @@ export const About = () => {
       <Divider />
       <Experiences />
       <Certificates />
+      <Educations />
     </div>
   );
 };
