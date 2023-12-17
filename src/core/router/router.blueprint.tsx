@@ -876,12 +876,23 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          // {
+          //   path: 'onboarding',
+          //   async lazy() {
+          //     const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
+          //     return {
+          //       Component: Onboarding,
+          //     };
+          //   },
+          // },
           {
             path: 'onboarding',
             async lazy() {
-              const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
+              const { SignUpUserOnboarding } = await import(
+                'src/pages/sign-up/sign-up-user-onboarding/sign-up-user-complete.container'
+              );
               return {
-                Component: Onboarding,
+                Component: SignUpUserOnboarding,
               };
             },
           },
