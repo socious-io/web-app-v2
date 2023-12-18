@@ -103,7 +103,7 @@ export const useOrganizationContact = () => {
   };
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
-      label: `${city.name}, ${city.region_name}`,
+      label: JSON.stringify({ label: `${city.name}, ${city.region_name}`, description: city.timezone_utc }),
       value: city.country_code,
     }));
   };
