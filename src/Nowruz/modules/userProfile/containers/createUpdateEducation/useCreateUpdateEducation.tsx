@@ -2,10 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrganization, getOrganization, Organization, otherProfileByUsername, search, User } from 'src/core/api';
-import { createAdditional, updateAdditional } from 'src/core/api/additionals/additionals.api';
+import { createOrganization, Organization, otherProfileByUsername, search, User } from 'src/core/api';
+import { createAdditional, removeAdditional, updateAdditional } from 'src/core/api/additionals/additionals.api';
 import { AdditionalReq, AdditionalRes, EducationMeta } from 'src/core/api/additionals/additionals.types';
-import { monthNames, monthShortNames } from 'src/core/time';
+import { monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
@@ -33,7 +33,11 @@ interface OptionType {
   label: string;
 }
 
-export const useCreateUpdateEducation = (handleClose: () => void, education?: AdditionalRes) => {
+export const useCreateUpdateEducation = (
+  handleClose: () => void,
+  education: AdditionalRes,
+  setEducation: (val: AdditionalRes) => void,
+) => {
   const user = useSelector<RootState, User | undefined>((state) => {
     return state.profile.user;
   });
@@ -67,8 +71,8 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
 
   const initializeValues = () => {
     const meta = education ? (education.meta as EducationMeta) : null;
-    setValue('schoolName', meta?.school?.name || '');
-    setValue('schoolId', meta?.school?.id || '');
+    setValue('schoolName', meta?.school_name || '');
+    setValue('schoolId', meta?.school_id || '');
     setValue('degree', meta?.degree || '');
     setValue('field', meta?.field || '');
     setValue('startMonth', meta?.start_month || '');
@@ -78,25 +82,21 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
     setValue('grade', meta?.grade || '');
     setValue('description', education?.description || '');
 
-    //   setSchoolVal()
-    // const [months, setMonths] = useState<OptionType[]>([]);
-    // const [years, setYears] = useState<OptionType[]>([]);
-    // const [startMonth, setStartMonth] = useState<OptionType>();
-    // const [startYear, setStartYear] = useState<OptionType>();
-    // const [endMonth, setEndMonth] = useState<OptionType>();
-    // const [endYear, setEndYear] = useState<OptionType>();
+    setSchoolVal({
+      value: meta?.school_id || '',
+      label: meta?.school_name || '',
+    });
 
-    //   setStartMonth({ value: (startMonthValue || '').toString(), label: startMonthLabel });
-    //   setStartYear({ value: startYear, label: startYear });
-    //   setEndMonth({ value: (endMonthValue || '').toString(), label: endMonthLabel });
-    //   setEndYear({ value: endYear, label: endYear });
-    //   setCurrentlyWorking(experience ? !experience?.end_at : false);
-
-    //   setCompanyVal({
-    //     value: experience?.org_id || '',
-    //     label: experience?.org.name || '',
-    //   });
-    //   setCityVal({ value: '', label: experience?.city || experience?.org.city || '' });
+    setStartMonth({
+      value: meta?.start_month || '',
+      label: meta?.start_month ? monthNames[Number(meta.start_month)] : '',
+    });
+    setStartYear({ value: meta?.start_year || '', label: meta?.start_year || '' });
+    setEndMonth({
+      value: meta?.end_month || '',
+      label: meta?.end_month ? monthNames[Number(meta.end_month)] : '',
+    });
+    setEndYear({ value: meta?.end_year || '', label: meta?.end_year || '' });
   };
 
   useEffect(() => {
@@ -104,6 +104,7 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
     getYearOptions();
     initializeValues();
   }, [education]);
+
   const {
     register,
     handleSubmit,
@@ -149,11 +150,11 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
     setSchoolVal({ value: newCompanyVal.value, label: newCompanyVal.label });
   };
   const onSelectStartMonth = (month: OptionType) => {
-    setValue('startMonth', monthShortNames[Number(month.value)], { shouldValidate: true });
+    setValue('startMonth', month.value, { shouldValidate: true });
     setStartMonth(month);
   };
   const onSelectEndMonth = (month: OptionType) => {
-    setValue('endMonth', monthShortNames[Number(month.value)], { shouldValidate: true });
+    setValue('endMonth', month.value, { shouldValidate: true });
     setEndMonth(month);
   };
   const onSelectStartYear = (year: OptionType) => {
@@ -163,6 +164,13 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
   const onSelectEndYear = (year: OptionType) => {
     setValue('endYear', year.value, { shouldValidate: true });
     setEndYear(year);
+  };
+
+  const onDelete = async () => {
+    if (education) await removeAdditional(education.id);
+    const updated = await otherProfileByUsername(user?.username || '');
+    dispatch(setUser(updated));
+    handleClose();
   };
 
   const onSave = async () => {
@@ -184,24 +192,31 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
       school_id: schId,
       school_name: schoolName,
     };
-
-    // const sch = await getOrganization(schId);
-    // payloadMeta.school = sch;
-
     const payload: AdditionalReq = {
       type: 'EDUCATION',
       title: schoolName,
       enabled: true,
-      meta: payloadMeta,
     };
 
     if (schoolId) {
       const sch = schools.find((i) => i.id === schoolId);
-      payload.image = sch?.image?.url;
+      payload.image = sch?.image?.id;
+      payloadMeta.school_city = sch?.city;
+      payloadMeta.school_image = sch?.image?.url;
     }
+
     if (description) payload.description = description;
-    if (education) await updateAdditional(education.identity_id, payload);
-    else await createAdditional(payload);
+    removedEmptyProps(payloadMeta);
+    removedEmptyProps(payload);
+    payload.meta = payloadMeta;
+
+    if (education) {
+      const res = await updateAdditional(education.id, payload);
+      setEducation(res);
+    } else {
+      const res = await createAdditional(payload);
+      setEducation(res);
+    }
     const updated = await otherProfileByUsername(user?.username || '');
     dispatch(setUser(updated));
     handleClose();
@@ -225,5 +240,6 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ad
     onSelectEndYear,
     handleSubmit,
     onSave,
+    onDelete,
   };
 };

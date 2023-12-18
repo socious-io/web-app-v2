@@ -1,5 +1,4 @@
 import { Media } from '../media/media.types';
-import { Organization } from '../organizations/organizations.types';
 export type AdditionalTypes = 'PORTFOLIO' | 'CERTIFICATE' | 'EDUCATION' | 'BENEFIT' | 'RECOMMENDATIONS';
 
 export interface EducationMeta {
@@ -12,6 +11,20 @@ export interface EducationMeta {
   start_year?: string;
   school_id: string;
   school_name: string;
+  school_city?: string;
+  school_image?: string;
+}
+export interface CertificateMeta {
+  issue_month?: string;
+  issue_year?: string;
+  expire_month?: string;
+  expire_year?: string;
+  organization_id: string;
+  organization_name: string;
+  organization_city?: string;
+  organization_image?: string;
+  credential_id?: string;
+  credential_url?: string;
 }
 
 export interface AdditionalReq {
@@ -22,7 +35,7 @@ export interface AdditionalReq {
   image?: string | any;
   sub_image?: string | any;
   ref_identity_id?: string | null;
-  meta?: EducationMeta | any | null;
+  meta?: EducationMeta | CertificateMeta | any | null;
   enabled: boolean | null;
 }
 

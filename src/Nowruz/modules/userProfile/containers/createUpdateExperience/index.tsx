@@ -49,7 +49,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="title"
-        label="Title"
+        label="Title*"
         required
         name="title"
         register={register}
@@ -57,7 +57,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
       />
       <SearchDropdown
-        required
         id="job-category"
         value={category}
         label="Job category"
@@ -90,7 +89,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
       />
 
       <SearchDropdown
-        required
         id="city"
         cacheOptions
         value={cityVal}
@@ -99,17 +97,16 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
-        label="Location*"
+        label="Location"
         onChange={(value) => {
           onSelectCity(value);
         }}
         errors={errors['city']?.message ? [errors['city']?.message.toString()] : undefined}
       />
       <SearchDropdown
-        required
         id="employment-type"
         value={employmentTypeVal}
-        label="Employment type"
+        label="Employment type*"
         options={employmentTypes}
         icon="search-lg"
         hasDropdownIcon={false}
@@ -128,7 +125,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
       />
       <div className="flex gap-4 items-end">
         <SearchDropdown
-          required
           id="start-month"
           value={startMonth}
           label="Start date*"
@@ -159,10 +155,9 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
       </div>
       <div className="flex gap-4 items-end">
         <SearchDropdown
-          required
           id="end-month"
           value={endMonth}
-          label="End date*"
+          label="End date"
           options={months}
           hasDropdownIcon
           onChange={(value) => {
@@ -175,7 +170,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           isDisabled={currentlyWorking}
         />
         <SearchDropdown
-          required
           id="end-year"
           value={endYear}
           options={years}
