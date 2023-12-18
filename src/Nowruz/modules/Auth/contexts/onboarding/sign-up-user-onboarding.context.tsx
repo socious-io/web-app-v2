@@ -33,6 +33,7 @@ const orgInitialState = {
 let type = localStorage.getItem('registerFor');
 
 const reducer = (state, action) => {
+  console.log('state', state);
   switch (action.type) {
     case 'UPDATE_USER':
       const filteredPayload = Object.keys(action.payload).reduce((filtered, key) => {
@@ -65,7 +66,7 @@ export const UserProvider = ({ children }) => {
         console.error(error);
       }
     };
-    if (type === 'user') fetchData();
+    if (type !== 'organization') fetchData();
   }, []);
   return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>;
 };

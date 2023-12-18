@@ -53,6 +53,7 @@
   line-height: 20px;
   color: $color-grey-600;
   margin-top: 8px;
+  margin-bottom: 120px;
 }
 .uploadButton {
   border-color: $color-grey-300;
@@ -81,6 +82,7 @@
 @media screen and (max-width: 600px) {
   .footer {
     border-top: 1px solid $color-grey-200;
+    background-color: white;
   }
 }
 .uploadDetailsText {
