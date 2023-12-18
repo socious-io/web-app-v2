@@ -2,18 +2,17 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CurrentIdentity, User, otherProfileByUsername } from 'src/core/api';
 import { removeAdditional } from 'src/core/api/additionals/additionals.api';
-import { AdditionalRes, EducationMeta } from 'src/core/api/additionals/additionals.types';
+import { AdditionalRes, CertificateMeta, EducationMeta } from 'src/core/api/additionals/additionals.types';
 import { monthShortNames } from 'src/core/time';
 import { RootState } from 'src/store';
 import { setUser } from 'src/store/reducers/profile.reducer';
 
-export const useEducation = () => {
+export const useCertificate = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [education, setEducation] = useState<AdditionalRes>();
+  const [certificate, setCertificate] = useState<AdditionalRes>();
   const user = useSelector<RootState, User | undefined>((state) => {
     return state.profile.user;
   });
-
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
@@ -21,18 +20,12 @@ export const useEducation = () => {
   const dispatch = useDispatch();
 
   const getDateText = (item: AdditionalRes) => {
-    const meta = item.meta as EducationMeta;
+    const meta = item.meta as CertificateMeta;
     let txt = '';
-    if (meta.start_month) txt = txt.concat(monthShortNames[Number(meta.start_month)]);
-    if (meta.start_year) txt = txt.concat(` ${meta.start_year} -`);
-    if (meta.end_month) txt = txt.concat(` ${monthShortNames[Number(meta.end_month)]}`);
-    if (meta.end_year) txt = txt.concat(` ${meta.end_year}`);
+    if (meta.issue_month) txt = txt.concat(monthShortNames[Number(meta.issue_month)]);
+    if (meta.issue_year) txt = txt.concat(` ${meta.issue_year}`);
+    if (txt) txt = 'Issued '.concat(txt);
     return txt;
-  };
-
-  const getDegree = (item: AdditionalRes) => {
-    const meta = item.meta as EducationMeta;
-    return `${meta.degree} in ${meta.field}`;
   };
 
   const getSchool = (item: AdditionalRes) => {
@@ -45,13 +38,13 @@ export const useEducation = () => {
     setOpenModal(false);
   };
 
-  const handleEdit = (ex: AdditionalRes) => {
-    setEducation(ex);
+  const handleEdit = (cert: AdditionalRes) => {
+    setCertificate(cert);
     setOpenModal(true);
   };
 
   const handleAdd = () => {
-    setEducation(undefined);
+    setCertificate(undefined);
     setOpenModal(true);
   };
 
@@ -71,9 +64,8 @@ export const useEducation = () => {
     handleAdd,
     handleEdit,
     handleDelete,
-    education,
-    getDegree,
+    certificate,
+    setCertificate,
     getSchool,
-    setEducation,
   };
 };

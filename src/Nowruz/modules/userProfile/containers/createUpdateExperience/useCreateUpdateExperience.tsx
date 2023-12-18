@@ -19,6 +19,7 @@ import {
   updateExperiences,
 } from 'src/core/api';
 import { monthNames } from 'src/core/time';
+import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
 import { setUser } from 'src/store/reducers/profile.reducer';
@@ -28,13 +29,13 @@ const schema = yup
   .object()
   .shape({
     title: yup.string().trim().required('Required'),
-    jobCategory: yup.string().required('Required'),
+    jobCategory: yup.string(),
     orgName: yup.string().required('Required'),
     orgId: yup.string(),
-    city: yup.string().required('Required'),
+    city: yup.string(),
     country: yup.string(),
-    employmentType: yup.string(),
-    startMonth: yup.string().required('Required'),
+    employmentType: yup.string().required('Required'),
+    startMonth: yup.string(),
     startYear: yup.string().required('Required'),
     endMonth: yup.string(),
     endYear: yup.string(),
@@ -131,7 +132,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
 
   const initializeValues = () => {
     setValue('title', experience?.title || '');
-    setValue('jobCategory', experience?.job_category.id || '');
+    setValue('jobCategory', experience?.job_category?.id || '');
     setValue('orgName', experience?.org.name || '');
     setValue('orgId', experience?.org.id || '');
     setValue('city', experience?.city || experience?.org.city || '');
@@ -297,7 +298,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     }
     const startDate = new Date(Number(startYear), Number(startMonth), 15).toISOString();
 
-    const payload: ExperienceReq = {
+    let payload: ExperienceReq = {
       org_id: organizationId,
       title,
       description,
@@ -311,6 +312,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       const endDate = new Date(Number(endYear), Number(endMonth), 3).toISOString();
       payload.end_at = endDate;
     }
+    payload = removedEmptyProps(payload);
     if (experience) await updateExperiences(experience.id, payload);
     else await addExperiences(payload);
     const updated = await otherProfileByUsername(user?.username || '');
