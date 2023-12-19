@@ -33,7 +33,6 @@ const orgInitialState = {
 let type = localStorage.getItem('registerFor');
 
 const reducer = (state, action) => {
-  console.log('state', state);
   switch (action.type) {
     case 'UPDATE_USER':
       const filteredPayload = Object.keys(action.payload).reduce((filtered, key) => {
