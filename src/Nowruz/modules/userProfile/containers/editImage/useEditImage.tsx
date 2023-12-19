@@ -12,7 +12,7 @@ export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') 
   const user = useSelector<RootState, User | undefined>((state) => {
     return state.profile.user;
   });
-  const [imageURL, setImageURL] = useState(user?.avatar?.url);
+  const [imageURL, setImageURL] = useState(type === 'avatar' ? user?.avatar?.url : user?.cover_image?.url);
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
