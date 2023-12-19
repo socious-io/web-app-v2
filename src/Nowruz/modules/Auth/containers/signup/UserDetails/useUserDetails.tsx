@@ -67,7 +67,7 @@ export const useUserDetails = () => {
     const checkUsername = await preRegister({ username });
     if (checkUsername.username === null) {
       setIsusernameAvailable(true);
-    }
+    } else setIsusernameAvailable(false);
   };
   const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
 
