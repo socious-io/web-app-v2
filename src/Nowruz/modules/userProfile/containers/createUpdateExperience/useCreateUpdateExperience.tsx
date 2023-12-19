@@ -83,6 +83,12 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
         label: experience.job_category.name || '',
         value: experience.job_category.id || '',
       });
+    } else {
+      setValue('jobCategory', '');
+      setCategory({
+        label: '',
+        value: '',
+      });
     }
   };
 
@@ -98,6 +104,11 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       setEmploymentTypeVal({
         label: PROJECT_TYPE.find((t) => t.value === experience.employment_type)?.title || '',
         value: experience.employment_type || '',
+      });
+    } else {
+      setEmploymentTypeVal({
+        label: '',
+        value: '',
       });
     }
   };
