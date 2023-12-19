@@ -16,6 +16,7 @@ export const useProfileHeader = () => {
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [openEditInfoModal, setOpenEditInfoModal] = useState(false);
   const [openEditAvatar, setOpenEditAvatar] = useState(false);
+  const [openEditHeader, setOpenEditHeader] = useState(false);
 
   useEffect(() => {
     const getConnectionsStatus = async () => {
@@ -41,6 +42,14 @@ export const useProfileHeader = () => {
   const handleCloseEditAvatar = () => {
     setOpenEditAvatar(false);
   };
+
+  const handleOpenEditHeader = async () => {
+    setOpenEditHeader(true);
+  };
+
+  const handleCloseEditHeader = () => {
+    setOpenEditHeader(false);
+  };
   return {
     user,
     myProfile,
@@ -52,5 +61,8 @@ export const useProfileHeader = () => {
     openEditAvatar,
     handleOpenEditAvatar,
     handleCloseEditAvatar,
+    openEditHeader,
+    handleOpenEditHeader,
+    handleCloseEditHeader,
   };
 };

@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { Area } from 'react-easy-crop/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, identities, uploadMedia } from 'src/core/api';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { updateUserProfile } from 'src/store/thunks/profile.thunks';
 
-export const useEditAvatar = (closeModal: () => void) => {
+export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') => {
   const user = useSelector<RootState, User | undefined>((state) => {
     return state.profile.user;
   });
@@ -61,11 +62,12 @@ export const useEditAvatar = (closeModal: () => void) => {
     return canvas.toDataURL('image/jpeg');
   };
 
-  const saveProfileImage = async () => {
+  const saveImage = async () => {
     const croppedImage = await getCroppedImg();
     if (croppedImage) {
       const blob = await fetch(croppedImage).then((resp) => resp.blob());
       const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
       if (blob.size > MAX_IMAGE_SIZE) {
         setUploadError(`Image should be less than 5MB`);
       } else {
@@ -74,10 +76,18 @@ export const useEditAvatar = (closeModal: () => void) => {
         formData.append('file', blob);
         const newImg = await uploadMedia(blob as File);
 
-        const updatedUser = {
-          ...user,
-          avatar: newImg,
-        };
+        let updatedUser = { ...user };
+        if (type === 'avatar') {
+          updatedUser = {
+            ...user,
+            avatar: newImg,
+          };
+        } else if (type === 'header') {
+          updatedUser = {
+            ...user,
+            cover_image: newImg,
+          };
+        }
 
         store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
           await updateIdentityList();
@@ -94,16 +104,41 @@ export const useEditAvatar = (closeModal: () => void) => {
 
   const handleRemovePhoto = async () => {
     setImageURL('');
-    const updatedUser = {
-      ...user,
-      avatar: undefined,
-    };
+
+    let updatedUser = { ...user };
+    if (type === 'avatar')
+      updatedUser = {
+        ...user,
+        avatar: undefined,
+      };
+    else if (type === 'header')
+      updatedUser = {
+        ...user,
+        cover_image: undefined,
+      };
 
     store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
       await updateIdentityList();
       closeModal();
     });
   };
+
+  const cropperSize =
+    type === 'avatar'
+      ? {
+          width: 500,
+          height: 500,
+        }
+      : isTouchDevice()
+      ? {
+          width: 550,
+          height: 165,
+        }
+      : {
+          width: 640,
+          height: 192,
+        };
+
   return {
     crop,
     setCrop,
@@ -111,9 +146,10 @@ export const useEditAvatar = (closeModal: () => void) => {
     setZoom,
     onCropComplete,
     imageURL,
-    saveProfileImage,
+    saveImage,
     handleChangePhoto,
     uploadError,
     handleRemovePhoto,
+    cropperSize,
   };
 };
