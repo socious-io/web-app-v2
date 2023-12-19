@@ -110,6 +110,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         customHeight="118px"
         popularLabel={false}
         errors={causesErrors}
+        displayDefaultBadges={false}
       />
       <UpdateLanguages
         languages={languages}

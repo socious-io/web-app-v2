@@ -21,7 +21,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     chipBgColor,
     chipFontColor,
     chipIconColor,
-    popularLabel = true,
     displayDefaultBadges = true,
     errors,
   } = props;
@@ -49,13 +48,13 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   }
 
   function add(value: string, label: string) {
-    setSearchVal('');
+    // setSearchVal('');
     const existed = componentValue.find((item) => item.value === value || item.label === label);
     if (!existed && componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
   }
 
   function remove(val: string) {
-    setSearchVal('');
+    // setSearchVal('');
     setComponentValue(componentValue?.filter((item) => item.label !== val));
   }
 
@@ -75,7 +74,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         clearIcon={false}
         options={[]}
         freeSolo
-        autoSelect
+        // autoSelect
         multiple
         renderTags={(value, props) =>
           value.map((option, index) => (
@@ -117,7 +116,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         </Typography>
       </div>
 
-      {popularLabel && (
+      {displayDefaultBadges && (
         <div className={css.popularDiv}>
           <Typography variant="caption" className={css.popularLabel}>
             Popular
