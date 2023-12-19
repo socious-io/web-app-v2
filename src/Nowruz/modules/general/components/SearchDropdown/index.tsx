@@ -41,7 +41,7 @@ const CustomSingleValue = ({ children, data, ...props }) => {
   return (
     <components.SingleValue {...props}>
       <div className="flex">
-        {labelValue}
+        <span className="overflow-hidden whitespace-no-wrap overflow-ellipsis">{labelValue}</span>
         {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
       </div>
     </components.SingleValue>
