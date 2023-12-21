@@ -25,7 +25,7 @@ export const EmailForm = () => {
           <Button color="primary" block onClick={handleSubmit(onSubmit)}>
             Continue
           </Button>
-          <Button
+          {/* <Button
             color="primary"
             variant="outlined"
             onClick={() => navigate('/oauth/google')}
@@ -33,7 +33,7 @@ export const EmailForm = () => {
           >
             <Google />
             Continue with Google
-          </Button>
+          </Button> */}
         </div>
       </form>
     </>

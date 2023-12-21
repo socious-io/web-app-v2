@@ -49,7 +49,7 @@ export const SignInForm = () => {
           <Button color="primary" onClick={handleSubmit(onLogin)}>
             Continue
           </Button>
-          <Button
+          {/* <Button
             color="primary"
             variant="outlined"
             onClick={() => navigate('/oauth/google')}
@@ -57,7 +57,7 @@ export const SignInForm = () => {
           >
             <Google />
             Continue with Google
-          </Button>
+          </Button> */}
           {/*
             <Button variant="outlined" color="secondary" className={css.button}>
               <LinkedIn />
