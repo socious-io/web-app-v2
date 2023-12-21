@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
@@ -9,10 +8,12 @@ import { Stepper } from 'src/Nowruz/modules/general/components/stepper/stepper';
 
 export const Congrats = () => {
   const navigate = useNavigate();
+
   const routeToNextPage = async () => {
     const path = await nonPermanentStorage.get('savedLocation');
     navigate(path ? path : '/sign-up/user/onboarding');
   };
+
   return (
     <div className="container mx-auto flex flex-col h-screen pb-16 md:pt-24 pt-12 px-4">
       <div className={` md:pt-24 form-container`}>
