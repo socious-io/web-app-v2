@@ -1,5 +1,5 @@
 import { Divider, IconButton, MenuItem, MenuList } from '@mui/material';
-import React, { createRef, useRef } from 'react';
+import React from 'react';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { IconListItem } from 'src/Nowruz/modules/general/components/avatarDropDown/iconListItem';
 import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
@@ -9,41 +9,65 @@ import { IconDropDownProps } from './iconDropDown.types';
 import { useIconDropDown } from './useIconDropDown';
 
 export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
-  const { size = '40px', type, img, iconName, customStyle, accounts = [], iconItems = [], customItems = [] } = props;
-  const { open, setOpen, switchAccount } = useIconDropDown();
+  const {
+    size = '40px',
+    type,
+    img,
+    iconName,
+    customStyle,
+    accounts = [],
+    iconItems = [],
+    customItems = [],
+    createItem = false,
+  } = props;
+  const currentAccount = accounts.find((a) => a.selected);
+  const otherAccounts = accounts.filter((a) => !a.selected);
+  const { open, handleOpen, handleClose, switchAccount, myProfile, handleClick } = useIconDropDown();
 
   return (
     <div className="flex flex-col items-end relative">
-      <IconButton
-        className={`${css.avatarBtn} ${open && `${css.avatarBtnOpen}`}`}
-        disableRipple
-        onClick={() => setOpen(!open)}
-      >
+      <IconButton className={`${css.avatarBtn} ${open && `${css.avatarBtnOpen}`}`} disableRipple onClick={handleClick}>
         <Avatar
           size={size}
           type={type}
           img={img}
           iconName={iconName}
-          onClick={() => setOpen(!open)}
-          iconCustomStyle="!cursor-pointer"
+          iconCustomStyle={myProfile ? '!cursor-pointer' : '!cursor-default'}
         />
       </IconButton>
       {open && (
-        <MenuList autoFocusItem className={`${css.menuList} ${customStyle}`}>
-          {accounts.map((a) => (
-            <MenuItem key={a.id} className={css.menuItem}>
+        <MenuList autoFocusItem className={`${css.menuList} ${customStyle}`} onMouseLeave={handleClose}>
+          <MenuItem key={currentAccount!.id} className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
+            <AvatarLabelGroup account={currentAccount!} handleClick={() => switchAccount(currentAccount!.id)} />
+          </MenuItem>
+          <Divider className="!m-0" />
+          {otherAccounts.map((a) => (
+            <MenuItem key={a.id} className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
               <AvatarLabelGroup account={a} handleClick={() => switchAccount(a.id)} />
             </MenuItem>
           ))}
+          {createItem && (
+            <MenuItem key="create-account" className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
+              <IconListItem
+                iconName="plus"
+                label={currentAccount?.type === 'users' ? 'Create an organization' : 'Create a talent profile'}
+                customIconClass="text-Brand-700"
+                customLabelClass={css.createLabel}
+              />
+            </MenuItem>
+          )}
           {iconItems.length ? <Divider className="!m-0" /> : ''}
           {iconItems.map((i) => (
-            <MenuItem key={i.label} className={css.menuItem}>
-              <IconListItem iconName={i.iconName} label={i.label} onClick={i.onClick} />
-            </MenuItem>
+            <>
+              <MenuItem key={i.label} className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
+                <IconListItem iconName={i.iconName} label={i.label} onClick={i.onClick} />
+              </MenuItem>
+              <Divider className="!m-0" />
+            </>
           ))}
           {customItems.length ? <Divider className="!m-0" /> : ''}
           {customItems.map((i) => (
-            <MenuItem sx={{ padding: '0' }} className={css.menuItem}>
+            <MenuItem sx={{ padding: '0' }} className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
               {i}
             </MenuItem>
           ))}

@@ -9,8 +9,6 @@ export interface AccountItem {
 
 export interface AvatarDropDownProps {
   buttonHeight?: string;
-  createOrg?: boolean;
   displayOtherAccounts?: boolean;
-  displaySetting?: boolean;
-  createOrgFunc?: () => void;
+  createAccountFunc?: () => void;
 }
