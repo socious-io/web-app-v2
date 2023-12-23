@@ -8,11 +8,18 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import { useSignInForm } from './useSignInForm';
+import { useCaptcha } from 'src/Nowruz/pages/captcha';
+import { useEffect } from 'react';
 // import { LinkedIn } from 'public/icons/nowruz/linkedin';
 
 export const SignInForm = () => {
   const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin } = useSignInForm();
   const navigate = useNavigate();
+  const { tried, required } = useCaptcha();
+
+  useEffect(() => {
+    if (required) navigate('/captcha');
+  }, [required]);
 
   return (
     <>
@@ -46,18 +53,27 @@ export const SignInForm = () => {
         </div>
 
         <div className="flex flex-col gap-4">
-          <Button color="primary" onClick={handleSubmit(onLogin)}>
+          <Button
+            color="primary"
+            onClick={() => {
+              tried();
+              handleSubmit(onLogin);
+            }}
+          >
             Continue
           </Button>
-          {/* <Button
+          <Button
             color="primary"
             variant="outlined"
-            onClick={() => navigate('/oauth/google')}
+            onClick={() => {
+              tried();
+              navigate('/oauth/google');
+            }}
             style={{ display: 'flex', gap: '12px' }}
           >
             <Google />
             Continue with Google
-          </Button> */}
+          </Button>
           {/*
             <Button variant="outlined" color="secondary" className={css.button}>
               <LinkedIn />
