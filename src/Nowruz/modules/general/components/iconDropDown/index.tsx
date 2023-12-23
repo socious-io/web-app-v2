@@ -37,17 +37,38 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
       </IconButton>
       {open && (
         <MenuList autoFocusItem className={`${css.menuList} ${customStyle}`} onMouseLeave={handleClose}>
-          <MenuItem key={currentAccount!.id} className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
-            <AvatarLabelGroup account={currentAccount!} handleClick={() => switchAccount(currentAccount!.id)} />
+          <MenuItem
+            key={currentAccount!.id}
+            className={css.menuItem}
+            onFocus={handleOpen}
+            onBlur={handleClose}
+            onMouseDown={handleClose}
+            onClick={handleClose}
+          >
+            <AvatarLabelGroup account={currentAccount!} />
           </MenuItem>
           <Divider className="!m-0" />
           {otherAccounts.map((a) => (
-            <MenuItem key={a.id} className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
-              <AvatarLabelGroup account={a} handleClick={() => switchAccount(a.id)} />
+            <MenuItem
+              key={a.id}
+              className={css.menuItem}
+              onFocus={handleOpen}
+              onBlur={handleClose}
+              onMouseDown={() => switchAccount(a.id)}
+              onClick={() => switchAccount(a.id)}
+            >
+              <AvatarLabelGroup account={a} />
             </MenuItem>
           ))}
           {createItem && (
-            <MenuItem key="create-account" className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
+            <MenuItem
+              key="create-account"
+              className={css.menuItem}
+              onFocus={handleOpen}
+              onBlur={handleClose}
+              onMouseDown={handleClose}
+              onClick={handleClose}
+            >
               <IconListItem
                 iconName="plus"
                 label={currentAccount?.type === 'users' ? 'Create an organization' : 'Create a talent profile'}
@@ -58,12 +79,17 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
           )}
           {iconItems.length ? <Divider className="!m-0" /> : ''}
           {iconItems.map((i) => (
-            <>
-              <MenuItem key={i.label} className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
-                <IconListItem iconName={i.iconName} label={i.label} onClick={i.onClick} />
-              </MenuItem>
-              <Divider className="!m-0" />
-            </>
+            <MenuItem
+              key={i.label}
+              className={css.menuItem}
+              onFocus={handleOpen}
+              onBlur={handleClose}
+              onMouseDown={i.onClick}
+              onClick={i.onClick}
+            >
+              <IconListItem iconName={i.iconName} label={i.label} />
+              <Divider className="!m-0 w-full" />
+            </MenuItem>
           ))}
           {customItems.length ? <Divider className="!m-0" /> : ''}
           {customItems.map((i) => (

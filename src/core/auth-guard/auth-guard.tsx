@@ -1,4 +1,5 @@
 import { SyntheticEvent, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Modal } from 'src/components/templates/modal/modal';
 
@@ -6,7 +7,6 @@ import css from './auth-guard.module.scss';
 import { AuthGuardProps } from './auth-guard.types';
 import { useAuth } from '../../hooks/use-auth';
 import { nonPermanentStorage } from '../storage/non-permanent';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   const { isLoggedIn } = useAuth();

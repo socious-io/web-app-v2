@@ -36,6 +36,8 @@
 .menuItem {
   padding: 0;
   background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 .menuItem:hover {
   background-color: $color-grey-50;
