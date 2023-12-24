@@ -49,7 +49,15 @@ import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
-
+  {
+    path: 'captcha',
+    async lazy() {
+      const { Captcha } = await import('src/Nowruz/pages/captcha');
+      return {
+        Component: Captcha,
+      };
+    },
+  },
   {
     path: 'nowruz',
     element: <NowruzLayout />,
