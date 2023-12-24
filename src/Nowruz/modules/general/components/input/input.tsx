@@ -19,6 +19,7 @@ export const Input: React.FC<InputProps> = ({
   color,
   register,
   hints,
+  startIcon,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -75,10 +76,14 @@ export const Input: React.FC<InputProps> = ({
             height: props.customHeight ? props.customHeight : '44px',
           },
           endAdornment: <InputAdornment position="end">{endIcon}</InputAdornment>,
-          startAdornment: prefix && (
+          startAdornment: prefix ? (
             <InputAdornment position="start" className={css.prefix}>
               {prefix}
             </InputAdornment>
+          ) : startIcon ? (
+            <InputAdornment position="start">{startIcon}</InputAdornment>
+          ) : (
+            ''
           ),
           spellCheck: 'false',
         }}
