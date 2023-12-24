@@ -1,5 +1,7 @@
 import React from 'react';
 
+import css from './dot.module.scss';
+
 interface DotProps {
   size: 'small' | 'medium' | 'large';
   color: string;
@@ -8,21 +10,9 @@ interface DotProps {
 }
 export const Dot: React.FC<DotProps> = (props) => {
   const { size, color, shadow, shadowColor } = props;
-  let divSize = 0;
-  switch (size) {
-    case 'small':
-      divSize = 2;
-      break;
-    case 'medium':
-      divSize = 2.5;
-      break;
-    case 'large':
-      divSize = 3;
-      break;
-  }
   return (
     <div
-      className={`w-${divSize} h-${divSize} rounded-xl`}
+      className={size === 'small' ? css.small : size === 'medium' ? css.medium : css.large}
       style={{ backgroundColor: color, boxShadow: shadow ? `0px 0px 0px 4px ${shadowColor}` : '' }}
     />
   );

@@ -20,10 +20,10 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     chipBorderColor,
     chipBgColor,
     chipFontColor,
-    popularLabel = true,
-    errors,
     chipIconColor,
+    popularLabel = true,
     displayDefaultBadges = true,
+    errors,
   } = props;
   const [chipItems, setChipItems] = useState(items);
   const [searchVal, setSearchVal] = useState('');
@@ -37,7 +37,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     );
   }
 
-  function handleChange(val: string[]) {
+  function handleChange(val: (MultiSelectItem | string)[]) {
     const lastItem = val[val.length - 1];
     const newVal = items?.find(
       (i) =>
@@ -49,18 +49,22 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   }
 
   function add(value: string, label: string) {
-    setSearchVal('');
+    // setSearchVal('');
     const existed = componentValue.find((item) => item.value === value || item.label === label);
     if (!existed && componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
   }
 
   function remove(val: string) {
-    setSearchVal('');
+    // setSearchVal('');
     setComponentValue(componentValue?.filter((item) => item.label !== val));
   }
 
   useEffect(() => {
-    setChipItems(items?.filter((i) => !componentValue.map((cv) => cv.value).includes(i.value)));
+    setChipItems(
+      items
+        ?.filter((i) => !componentValue.map((cv) => cv.value).includes(i.value))
+        .filter((item) => item.label.toLowerCase().includes(searchVal.toLowerCase())),
+    );
   }, [componentValue]);
 
   return (
@@ -75,7 +79,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         clearIcon={false}
         options={[]}
         freeSolo
-        autoSelect
+        // autoSelect
         multiple
         renderTags={(value, props) =>
           value.map((option, index) => (
@@ -100,6 +104,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
               label=""
               placeholder={componentValue?.length ? '' : placeholder}
               onChange={(e) => filterItems(e.target.value)}
+              value={searchVal}
               {...params}
             />
           </div>
@@ -124,7 +129,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
           </Typography>
         </div>
       )}
-
       {(displayDefaultBadges || searchVal) && (
         <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
           {chipItems?.map((i) => (

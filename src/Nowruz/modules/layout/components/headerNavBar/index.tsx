@@ -44,13 +44,14 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
       >
         <Icon fontSize={24} name="menu-02" color={variables.color_grey_500} />
       </div>
-      <div className="hidden md:block md:ml-20">
+      <div className="hidden md:block md:ml-20 w-[512px]">
         <Input
           id="search-input"
           name="search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search"
+          startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
         />
       </div>
       {userIsLoggedIn && (

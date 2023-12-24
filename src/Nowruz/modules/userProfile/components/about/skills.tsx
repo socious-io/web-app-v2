@@ -1,11 +1,10 @@
-import { IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
 import { skillsToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, User } from 'src/core/api';
-import { Icon } from 'src/Nowruz/general/Icon';
 import { ChipList } from 'src/Nowruz/modules/general/components/chipList';
+import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 import { EditSkills } from 'src/Nowruz/modules/userProfile/containers/editSkills';
 import { RootState } from 'src/store';
 
@@ -28,12 +27,22 @@ export const Skills = () => {
         <div className={css.title}>
           Skills
           {myProfile && (
-            <IconButton className={css.editBtn} onClick={() => setOpenEditModal(true)}>
-              <Icon name="pencil-01" color={variables.color_grey_600} fontSize={20} />
-            </IconButton>
+            <IconButton
+              size="medium"
+              iconName="pencil-01"
+              iconColor={variables.color_grey_600}
+              iconSize={20}
+              customStyle={css.editBtn}
+              onClick={() => setOpenEditModal(true)}
+            />
           )}
         </div>
-        <ChipList items={items} />
+        <ChipList
+          items={items}
+          bgColor={variables.color_grey_blue_50}
+          borderColor={variables.color_grey_blue_200}
+          fontColor={variables.color_grey_blue_700}
+        />
       </div>
       <EditSkills open={openEditModal} handleClose={() => setOpenEditModal(false)} />
     </>
