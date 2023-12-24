@@ -55,15 +55,6 @@ export const blueprint: RouteObject[] = [
     element: <NowruzLayout />,
     children: [
       {
-        path: 'test',
-        async lazy() {
-          const { Test } = await import('src/Nowruz/pages/test');
-          return {
-            Component: Test,
-          };
-        },
-      },
-      {
         path: 'profile/users',
         children: [
           {
