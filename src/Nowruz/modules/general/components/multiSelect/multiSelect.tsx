@@ -36,7 +36,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     );
   }
 
-  function handleChange(val: string[]) {
+  function handleChange(val: (MultiSelectItem | string)[]) {
     const lastItem = val[val.length - 1];
     const newVal = items?.find(
       (i) =>
@@ -48,13 +48,13 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   }
 
   function add(value: string, label: string) {
-    setSearchVal('');
+    // setSearchVal('');
     const existed = componentValue.find((item) => item.value === value || item.label === label);
     if (!existed && componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
   }
 
   function remove(val: string) {
-    setSearchVal('');
+    // setSearchVal('');
     setComponentValue(componentValue?.filter((item) => item.label !== val));
   }
 
@@ -100,6 +100,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
               variant="outlined"
               label=""
               placeholder={componentValue?.length ? '' : placeholder}
+              onChange={(e) => filterItems(e.target.value)}
               {...params}
               inputProps={{ ...params.inputProps, value: searchVal }}
               value={searchVal}
