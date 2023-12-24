@@ -1,5 +1,9 @@
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
-
+const options = [
+  { value: 'A', label: 'USDT', icon: <img width="20px" height="20px" src="/icons/star.svg" /> },
+  { value: 'B', label: 'BTC', icon: <img width="20px" height="20px" src="/icons/star.svg" /> },
+  { value: 'C', label: 'LGBT', icon: <img width="20px" height="20px" src="/icons/star.svg" /> },
+];
 export default { component: Input };
 export const Normal = {
   args: {
@@ -60,5 +64,17 @@ export const Success = {
     placeholder: 'Placeholder',
     isValid: true,
     validMessage: 'field value is valid',
+  },
+};
+export const DropDown = {
+  args: {
+    id: 'input-3',
+    name: 'inputName',
+    type: 'text',
+    label: 'Input Label',
+    required: false,
+    prefix: 'https://',
+    placeholder: 'Placeholder',
+    prefixDropdown: { options, placeholder: '$$$' },
   },
 };

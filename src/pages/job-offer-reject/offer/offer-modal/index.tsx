@@ -136,7 +136,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
             selectedItem={selectedCurrency}
             onSelectItem={onSelectCurrency}
           />,
-          true,
+          isPaidFiat,
         )}
         <Textarea
           register={form}
