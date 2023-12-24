@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
+import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 
 import css from './result-list.module.scss';
 import { ResultListProps } from './ResultList.types';
@@ -61,7 +62,20 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onSelect }) => {
           }`}
           onClick={() => onClickRow(item, index)}
         >
-          <AvatarLabelGroup account={{ name: item.title, id: item.id, username: item.username, type: item.type }} />
+          <AvatarLabelGroup
+            customStyle="w-auto"
+            account={{ name: item.title, id: item.id, username: item.username, type: item.type, img: item.image }}
+          />
+          {item.isAvailable && (
+            <div className={css.chip}>
+              <Chip
+                startIcon={<div className={css.dotIcon} />}
+                label={item.type === 'users' ? 'Available for work' : 'Hiring'}
+                theme="secondary"
+                shape="sharp"
+              />
+            </div>
+          )}
         </div>
       ))}
     </div>

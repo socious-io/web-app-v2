@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import css from './result-not-found.module.scss';
+
 export const useResultNotFound = () => {
   const navigate = useNavigate();
 
@@ -15,16 +17,32 @@ export const useResultNotFound = () => {
     }
     return title;
   };
+
   const generateMessage = (type: string, searchTerm: string) => {
-    let message = '';
+    let message = null;
+
     switch (type) {
       case 'users':
-        message = `Whoops! No results for '${searchTerm}'.Let's try different keywords.`;
+        message = (
+          <div className={css.message}>
+            Whoops! No results for '{searchTerm}'.
+            <br />
+            Let's try different keywords.
+          </div>
+        );
         break;
+
       case 'organizations':
-        message = `Whoops! No results for '${searchTerm}'.Let's try different keywords.`;
+        message = (
+          <div className={css.message}>
+            Whoops! No results for '{searchTerm}'.
+            <br />
+            Let's try different keywords.
+          </div>
+        );
         break;
     }
+
     return message;
   };
   const onClick = (type: string) => {

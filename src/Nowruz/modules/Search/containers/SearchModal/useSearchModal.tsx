@@ -5,8 +5,8 @@ import { Item } from './SearchModal.types';
 
 const tabs = [
   // { label: 'Jobs', value: 'projects' },
-  { label: 'Poeple', value: 'users' },
-  { label: 'Organization', value: 'organizations' },
+  { label: 'People', value: 'users' },
+  { label: 'Organizations', value: 'organizations' },
 ];
 
 export const useSearchModal = (props: { open: boolean; onClose: () => void }) => {
@@ -33,12 +33,13 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void }) =>
     }
   };
   const searchIntoList = (list: Array<any>) => {
+    console.log(list);
     switch (selectedTab) {
       case 'users':
         return list.map((item) => ({
           title: `${item.first_name} ${item.last_name}`,
           username: item.username,
-          image: item.image,
+          image: item.avatar?.url,
           isAvailable: item.open_to_work,
           id: item.id,
           type: selectedTab,
@@ -49,8 +50,8 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void }) =>
         return list.map((item) => ({
           title: `${item.name}`,
           username: item.shortname,
-          image: item.avatar,
-          isAvailable: item.open_to_work,
+          image: item.image?.url,
+          isAvailable: item.hiring,
           id: item.id,
           type: selectedTab,
           bio: item.bio,
