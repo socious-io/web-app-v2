@@ -14,7 +14,7 @@ export const ResultNotFound: React.FC<ResultNotFoundProps> = ({ type, searchTerm
         <Icon name="search-lg" fontSize={24} />
       </div>
       <div className={css.title}>{generateTextTitle(type)}</div>
-      <div className={css.message}>{generateMessage(type, searchTerm)}</div>
+      {generateMessage(type, searchTerm)}
       <Button color="primary" onClick={() => onClick(type)}>
         {generatButtonText(type)}
       </Button>

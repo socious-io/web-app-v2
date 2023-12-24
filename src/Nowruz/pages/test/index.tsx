@@ -5,7 +5,7 @@ export const Test = () => {
   return (
     <div className="h-[1200px]">
       Test
-      {/* <SearchModal open={true} onClose={() => console.log} /> */}
+      <SearchModal open={true} onClose={() => console.log} />
     </div>
   );
 };

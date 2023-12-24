@@ -9,18 +9,20 @@ import { useUserCard } from './useUserCard';
 export const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const { viewProfile } = useUserCard();
   return (
-    <div className={`h-full overflow-y-auto flex flex-col flex-1 text-center relative pb-6 ${css.container}`}>
+    <div className={`${css.container}`}>
       <div className={css.gradient} />
       <div className={css.avatar}>
         <Avatar hasBorder isVerified={user.isVerified} size="72px" type="users" img={user.image} iconSize={47} />
       </div>
       <div className="mt-12">
-        <Chip
-          startIcon={<div className={css.dotIcon} />}
-          label={user.type === 'users' ? 'Available for work' : 'Hiring'}
-          theme="secondary"
-          shape="sharp"
-        />
+        {user.isAvailable && (
+          <Chip
+            startIcon={<div className={css.dotIcon} />}
+            label={user.type === 'users' ? 'Available for work' : 'Hiring'}
+            theme="secondary"
+            shape="sharp"
+          />
+        )}
       </div>
       <div className="mt-4">
         <div className={css.title}>{user.title}</div>
