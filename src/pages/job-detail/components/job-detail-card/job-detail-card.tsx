@@ -27,6 +27,7 @@ export function JobDetailCard(props: JobDetailCardProps) {
   useEffect(() => {
     setIsSubmittedNow(false);
   }, [props.job.id]);
+
   const buttonJSX = (
     <Button disabled={props.job.applied || isSubmittedNow} onClick={onApply}>
       Apply now
@@ -94,9 +95,13 @@ export function JobDetailCard(props: JobDetailCardProps) {
           />
           <div className={css.jobTitle}>{props.job.title}</div>
           <Categories marginBottom="1rem" list={getCategories(props.job)} />
-          <AuthGuard>
+          {props.job?.other_party_id ? (
             <div className={css.btnContainer}>{printWhen(buttonJSX, props.userType === 'users')}</div>
-          </AuthGuard>
+          ) : (
+            <AuthGuard>
+              <div className={css.btnContainer}>{printWhen(buttonJSX, props.userType === 'users')}</div>
+            </AuthGuard>
+          )}
         </div>
       </Divider>
       {printWhen(socialCausesJSX, !!props.job.causes_tags)}
