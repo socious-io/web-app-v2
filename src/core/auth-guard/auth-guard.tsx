@@ -8,7 +8,7 @@ import { AuthGuardProps } from './auth-guard.types';
 import { useAuth } from '../../hooks/use-auth';
 import { nonPermanentStorage } from '../storage/non-permanent';
 
-export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
+export const AuthGuard = ({ children, redirectUrl }: AuthGuardProps): JSX.Element => {
   const { isLoggedIn } = useAuth();
   const [modalVisibility, setModalVisibility] = useState(false);
   const navigate = useNavigate();
@@ -21,7 +21,8 @@ export const AuthGuard = ({ children }: AuthGuardProps): JSX.Element => {
   }
 
   function saveCurrentRoute(): Promise<void> {
-    const path = location.pathname;
+    localStorage.setItem('registerFor', 'user');
+    const path = redirectUrl || location.pathname;
     return nonPermanentStorage.set({ key: 'savedLocation', value: path });
   }
 
