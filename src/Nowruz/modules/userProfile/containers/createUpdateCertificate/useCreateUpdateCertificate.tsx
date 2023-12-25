@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrganization, getOrganization, Organization, otherProfileByUsername, search, User } from 'src/core/api';
+import { createOrganization, Organization, otherProfileByUsername, search, User } from 'src/core/api';
 import { createAdditional, removeAdditional, updateAdditional } from 'src/core/api/additionals/additionals.api';
 import { AdditionalReq, AdditionalRes, CertificateMeta } from 'src/core/api/additionals/additionals.types';
 import { monthNames } from 'src/core/time';
@@ -52,6 +52,7 @@ export const useCreateUpdateCertificate = (
     formState: { errors },
     getValues,
     setValue,
+    reset,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -59,14 +60,15 @@ export const useCreateUpdateCertificate = (
 
   const dispatch = useDispatch();
 
-  const [orgVal, setOrgVal] = useState<OptionType>();
+
+  const [orgVal, setOrgVal] = useState<OptionType | null>();
   const [orgs, setOrgs] = useState<Organization[]>([]);
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
-  const [issueMonth, setIssueMonth] = useState<OptionType>();
-  const [issueYear, setIssueYear] = useState<OptionType>();
-  const [expMonth, setExpMonth] = useState<OptionType>();
-  const [expYear, setExpYear] = useState<OptionType>();
+  const [issueMonth, setIssueMonth] = useState<OptionType | null>();
+  const [issueYear, setIssueYear] = useState<OptionType | null>();
+  const [expMonth, setExpMonth] = useState<OptionType | null>();
+  const [expYear, setExpYear] = useState<OptionType | null>();
 
   const mapMonthNames = () => {
     const options = monthNames.map((m, index) => {
@@ -88,32 +90,49 @@ export const useCreateUpdateCertificate = (
 
   const initializeValues = () => {
     const meta = certificate ? (certificate.meta as CertificateMeta) : null;
-    setValue('name', certificate?.title || '');
-    setValue('orgId', meta?.organization_id || '');
-    setValue('orgName', meta?.organization_name || '');
-    setValue('issueMonth', meta?.issue_month || '');
-    setValue('issueYear', meta?.issue_year || '');
-    setValue('expireMonth', meta?.expire_month || '');
-    setValue('expireYear', meta?.expire_year || '');
-    setValue('description', certificate?.description || '');
-    setValue('credentialId', meta?.credential_id || '');
-    setValue('credentialUrl', meta?.credential_url || '');
 
-    setOrgVal({
-      value: meta?.organization_id || '',
-      label: meta?.organization_name || '',
-    });
+    let intialValue = {
+      name: certificate?.title || '',
+      orgId: meta?.organization_id || '',
+      orgName: meta?.organization_name || '',
+      issueMonth: meta?.issue_month || '',
+      issueYear: meta?.issue_year || '',
+      expireMonth: meta?.expire_month || '',
+      expireYear: meta?.expire_year || '',
+      description: certificate?.description || '',
+      credentialId: meta?.credential_id || '',
+      credentialUrl: meta?.credential_url || '',
+    };
 
-    setIssueMonth({
-      value: meta?.issue_month || '',
-      label: meta?.issue_month ? monthNames[Number(meta.issue_month)] : '',
-    });
-    setIssueYear({ value: meta?.issue_year || '', label: meta?.issue_year || '' });
-    setExpMonth({
-      value: meta?.expire_month || '',
-      label: meta?.expire_month ? monthNames[Number(meta.expire_month)] : '',
-    });
-    setExpYear({ value: meta?.expire_year || '', label: meta?.expire_year || '' });
+    reset(intialValue);
+
+    setOrgVal(
+      meta?.organization_name
+        ? {
+            value: meta?.organization_id || '',
+            label: meta?.organization_name,
+          }
+        : null,
+    );
+
+    setIssueMonth(
+      meta?.issue_month
+        ? {
+            value: meta.issue_month,
+            label: monthNames[Number(meta.issue_month)],
+          }
+        : null,
+    );
+    setIssueYear(meta?.issue_year ? { value: meta.issue_year, label: meta.issue_year } : null);
+    setExpMonth(
+      meta?.expire_month
+        ? {
+            value: meta.expire_month,
+            label: monthNames[Number(meta.expire_month)],
+          }
+        : null,
+    );
+    setExpYear(meta?.expire_year ? { value: meta?.expire_year, label: meta?.expire_year } : null);
   };
 
   useEffect(() => {

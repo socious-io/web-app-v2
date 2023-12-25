@@ -32,7 +32,7 @@ export const useEducation = () => {
 
   const getDegree = (item: AdditionalRes) => {
     const meta = item.meta as EducationMeta;
-    return `${meta.degree} in ${meta.field}`;
+    return `${meta.degree} ${meta.degree && meta.field ? 'in' : ''} ${meta.field}`;
   };
 
   const getSchool = (item: AdditionalRes) => {
