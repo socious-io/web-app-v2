@@ -28,15 +28,15 @@ import * as yup from 'yup';
 const schema = yup
   .object()
   .shape({
-    title: yup.string().trim().required('Required'),
+    title: yup.string().trim().required('Title is required'),
     jobCategory: yup.string(),
-    orgName: yup.string().required('Required'),
+    orgName: yup.string().required('Company is required'),
     orgId: yup.string(),
     city: yup.string(),
     country: yup.string(),
-    employmentType: yup.string().required('Required'),
+    employmentType: yup.string().required('Employment type is required'),
     startMonth: yup.string(),
-    startYear: yup.string().required('Required'),
+    startYear: yup.string().required('Start year is required'),
     endMonth: yup.string(),
     endYear: yup.string(),
     description: yup.string(),
@@ -97,7 +97,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     });
     setEmploymentTypes(types);
     if (experience) {
-
       const defaultEmpType = PROJECT_TYPE.find((t) => t.value === experience.employment_type)?.title || undefined;
       setEmploymentTypeVal(
         defaultEmpType
@@ -142,7 +141,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   });
 
   const initializeValues = () => {
-
     const initialVal = {
       title: experience?.title || '',
       jobCategory: experience?.job_category?.id || '',

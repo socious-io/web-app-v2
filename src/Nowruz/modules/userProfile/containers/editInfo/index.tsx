@@ -51,7 +51,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         name="lastName"
         register={register}
         defaultValue={user?.last_name}
-        errors={errors['firstName']?.message ? [errors['firstName']?.message.toString()] : undefined}
+        errors={errors['lastName']?.message ? [errors['lastName']?.message.toString()] : undefined}
       />
       <Input
         required
