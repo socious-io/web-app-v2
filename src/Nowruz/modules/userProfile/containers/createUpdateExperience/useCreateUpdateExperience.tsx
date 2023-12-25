@@ -97,6 +97,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     });
     setEmploymentTypes(types);
     if (experience) {
+
       const defaultEmpType = PROJECT_TYPE.find((t) => t.value === experience.employment_type)?.title || undefined;
       setEmploymentTypeVal(
         defaultEmpType
@@ -141,6 +142,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   });
 
   const initializeValues = () => {
+
     const initialVal = {
       title: experience?.title || '',
       jobCategory: experience?.job_category?.id || '',

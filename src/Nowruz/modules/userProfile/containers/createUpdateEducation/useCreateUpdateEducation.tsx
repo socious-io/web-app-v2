@@ -41,6 +41,7 @@ export const useCreateUpdateEducation = (
   const user = useSelector<RootState, User | undefined>((state) => {
     return state.profile.user;
   });
+
   const [schoolVal, setSchoolVal] = useState<OptionType | null>();
   const [schools, setSchools] = useState<Organization[]>([]);
   const [months, setMonths] = useState<OptionType[]>([]);
@@ -49,6 +50,7 @@ export const useCreateUpdateEducation = (
   const [startYear, setStartYear] = useState<OptionType | null>();
   const [endMonth, setEndMonth] = useState<OptionType | null>();
   const [endYear, setEndYear] = useState<OptionType | null>();
+
   const dispatch = useDispatch();
 
   const mapMonthNames = () => {
@@ -113,6 +115,7 @@ export const useCreateUpdateEducation = (
         : null,
     );
     setEndYear(meta?.end_year ? { value: meta?.end_year, label: meta?.end_year } : null);
+
   };
 
   useEffect(() => {
