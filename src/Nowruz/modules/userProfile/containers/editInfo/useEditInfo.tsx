@@ -8,6 +8,7 @@ import { socialCausesToCategory } from 'src/core/adaptors';
 import {
   Language,
   Location,
+  Organization,
   SuccessRes,
   User,
   addLanguage,
@@ -38,9 +39,9 @@ const schema = yup
 
 export const useEditInfo = (handleClose: () => void) => {
   const dispatch = useDispatch();
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
-  });
+  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
+  }) as User;
 
   const mapLanguageToItems = (languages: Language[]) => {
     const mappedObj = languages.map((item) => {

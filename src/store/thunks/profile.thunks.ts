@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { UpdateProfileReq, User, updateProfile } from 'src/core/api';
+import { Organization, OrganizationReq, UpdateProfileReq, User, updateOrganization, updateProfile } from 'src/core/api';
 
 export const updateUserProfile = createAsyncThunk('profile/updateUserProfile', async (user: User) => {
   const reqParam: UpdateProfileReq = {
@@ -21,10 +21,33 @@ export const updateUserProfile = createAsyncThunk('profile/updateUserProfile', a
   if (user.skills) reqParam.skills = user.skills;
   if (user.mobile_country_code) reqParam.mobile_country_code = user.mobile_country_code;
 
-  // if(user.certificates) reqParam.certificates=user.certificates
-  // if(user.goals) reqParam.goals=user.goals
-  // if(user.educations) reqParam.educations=user.educations
-
   const profile = await updateProfile(reqParam);
+  return profile;
+});
+
+export const updateOrgProfile = createAsyncThunk('profile/updateOrgProfile', async (org: Organization) => {
+  const reqParam: OrganizationReq = {
+    name: org.name || '',
+    shortname: org.shortname || '',
+    email: org.email,
+  };
+  if (org.bio) reqParam.bio = org.bio;
+  if (org.description) reqParam.description = org.description;
+  if (org.phone) reqParam.phone = org.phone;
+  if (org.type) reqParam.type = org.type;
+  if (org.country) reqParam.country = org.country;
+  if (org.city) reqParam.city = org.city;
+  if (org.geoname_id) reqParam.geoname_id = Number(org.geoname_id);
+  if (org.address) reqParam.address = org.address;
+  if (org.social_causes) reqParam.social_causes = org.social_causes;
+  if (org.website) reqParam.website = org.website;
+  if (org.mobile_country_code) reqParam.mobile_country_code = org.mobile_country_code;
+  if (org.image) reqParam.image = org.image.id;
+  if (org.cover_image) reqParam.cover_image = org.cover_image.id;
+  if (org.mission) reqParam.mission = org.mission;
+  if (org.culture) reqParam.culture = org.culture;
+  if (org.size) reqParam.size = org.size;
+
+  const profile = await updateOrganization(org.id, reqParam);
   return profile;
 });

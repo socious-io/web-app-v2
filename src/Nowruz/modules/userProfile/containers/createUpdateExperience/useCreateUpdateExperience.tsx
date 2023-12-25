@@ -22,7 +22,7 @@ import { monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
-import { setUser } from 'src/store/reducers/profile.reducer';
+import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 import * as yup from 'yup';
 
 const schema = yup
@@ -48,9 +48,9 @@ interface OptionType {
   label: string;
 }
 export const useCreateUpdateExperience = (handleClose: () => void, experience?: Experience) => {
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
-  });
+  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
+  }) as User;
   const dispatch = useDispatch();
   const [jobCategories, setJobCategories] = useState<OptionType[]>();
   const [category, setCategory] = useState<OptionType | null>();
@@ -332,7 +332,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     if (experience) await updateExperiences(experience.id, payload);
     else await addExperiences(payload);
     const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setUser(updated));
+    dispatch(setIdentity(updated));
+    dispatch(setIdentityType('users'));
     handleClose();
   };
 
@@ -340,7 +341,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     if (!experience) return;
     await removeExperiences(experience.id);
     const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setUser(updated));
+    dispatch(setIdentity(updated));
+    dispatch(setIdentityType('users'));
   };
   return {
     jobCategories,

@@ -30,6 +30,7 @@ import {
   impactPoints,
   filterFollowings,
   getOrganizationMembers,
+  getOrganizationByShortName,
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -83,6 +84,31 @@ export const blueprint: RouteObject[] = [
                   const { UserProifle } = await import('src/Nowruz/pages/userProfile');
                   return {
                     Component: UserProifle,
+                  };
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'profile/organizations',
+        children: [
+          {
+            path: ':id',
+            children: [
+              {
+                path: 'view',
+                loader: async ({ params }) => {
+                  const organization = await getOrganizationByShortName(params.id);
+                  return {
+                    organization,
+                  };
+                },
+                async lazy() {
+                  const { OrgProfile } = await import('src/Nowruz/pages/orgProfile');
+                  return {
+                    Component: OrgProfile,
                   };
                 },
               },
