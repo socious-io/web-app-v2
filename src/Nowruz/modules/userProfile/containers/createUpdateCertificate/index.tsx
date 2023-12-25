@@ -53,6 +53,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
       <SearchDropdown
         required
         id="organization"
+        placeholder="Search for organization"
         cacheOptions
         value={orgVal}
         isAsync
@@ -60,7 +61,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
         defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
-        label="School*"
+        label="Issuing organization*"
         onChange={(value) => {
           onSelectOrg(value);
         }}
@@ -150,6 +151,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
         multiline
         customHeight="130px"
         register={register}
+        placeholder="Enter a description..."
       />
     </div>
   );
