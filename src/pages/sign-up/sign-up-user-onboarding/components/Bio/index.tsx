@@ -13,7 +13,6 @@ import StepHeader from '../stepHeader';
 const Bio: React.FC = () => {
   const { state, updateUser } = useUser();
   const { updateSelectedStep } = useContext(StepsContext);
-  console.log(state);
 
   const setBio = (bio: string) => {
     if (bio.length <= 160) updateUser({ ...state, bio });
