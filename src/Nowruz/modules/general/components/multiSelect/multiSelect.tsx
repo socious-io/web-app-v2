@@ -4,7 +4,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 
 import Chip from './chip';
 import css from './multiSelect.module.scss';
-import { MultiSelectItem, MultiSelectProps } from './multiSelect.types';
+import { MultiSelectProps } from './multiSelect.types';
 
 const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   const {
@@ -21,7 +21,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     chipBgColor,
     chipFontColor,
     chipIconColor,
-    popularLabel = true,
     displayDefaultBadges = true,
     errors,
   } = props;
@@ -60,11 +59,8 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   }
 
   useEffect(() => {
-    setChipItems(
-      items
-        ?.filter((i) => !componentValue.map((cv) => cv.value).includes(i.value))
-        .filter((item) => item.label.toLowerCase().includes(searchVal.toLowerCase())),
-    );
+    setSearchVal('');
+    setChipItems(items?.filter((i) => !componentValue.map((cv) => cv.value).includes(i.value)));
   }, [componentValue]);
 
   return (
@@ -97,6 +93,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
           ))
         }
         disabled={componentValue?.length >= (max || 0)}
+        onInputChange={(e, newValue) => filterItems(newValue)}
         renderInput={(params) => (
           <div className={css.inputContainer}>
             <TextField
@@ -104,8 +101,9 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
               label=""
               placeholder={componentValue?.length ? '' : placeholder}
               onChange={(e) => filterItems(e.target.value)}
-              value={searchVal}
               {...params}
+              inputProps={{ ...params.inputProps, value: searchVal }}
+              value={searchVal}
             />
           </div>
         )}
@@ -122,7 +120,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         </Typography>
       </div>
 
-      {popularLabel && (
+      {displayDefaultBadges && (
         <div className={css.popularDiv}>
           <Typography variant="caption" className={css.popularLabel}>
             Popular
