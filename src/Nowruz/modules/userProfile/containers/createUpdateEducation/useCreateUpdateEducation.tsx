@@ -15,7 +15,7 @@ import * as yup from 'yup';
 const schema = yup
   .object()
   .shape({
-    schoolName: yup.string().required('Required'),
+    schoolName: yup.string().required('School is required'),
     schoolId: yup.string(),
     degree: yup.string(),
     field: yup.string(),
@@ -115,7 +115,6 @@ export const useCreateUpdateEducation = (
         : null,
     );
     setEndYear(meta?.end_year ? { value: meta?.end_year, label: meta?.end_year } : null);
-
   };
 
   useEffect(() => {
