@@ -3,6 +3,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 
 import { LanguageItem } from './languageItem';
+import css from './languageItem.module.scss';
 import { UseUpdateLanguage } from './useUpdateLanguage';
 import { UpdateLanguagesProps } from '../../containers/editInfo/editInfo.types';
 
@@ -28,12 +29,7 @@ export const UpdateLanguages: React.FC<UpdateLanguagesProps> = ({ languages, set
           errors={errors}
         />
       ))}
-      <Button
-        variant="text"
-        color="primary"
-        onClick={addNewLanguage}
-        customStyle="flex items-center justify-center gap-2 text-Brand-700"
-      >
+      <Button variant="text" color="primary" onClick={addNewLanguage} customStyle={css.addBtn}>
         <Icon fontSize={20} name="plus" className="text-Brand-700" />
         Add a lanaguage
       </Button>

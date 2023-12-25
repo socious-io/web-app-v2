@@ -1,6 +1,7 @@
-import { Typography } from '@mui/material';
+import { MenuItem, Typography } from '@mui/material';
 import { Icon } from 'src/Nowruz/general/Icon';
 
+import css from './linkItem.module.scss';
 import { LinkItemProps } from './linkItem.types';
 
 export const LinkItem: React.FC<LinkItemProps> = (props) => {
@@ -8,36 +9,27 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
 
   return (
     <>
-      <div className="w-full h-10 md:h-12 bg-Base-White hover:bg-Gray-light-mode-50 md:bg-Brand-700 md:hover:bg-Brand-600 px-3 py-2 rounded-sm flex gap-2 items-end">
-        {iconName && <Icon name={iconName} fontSize={24} className="text-Gray-light-mode-500 md:text-Brand-300" />}
+      <MenuItem className={css.container} tabIndex={1}>
+        {iconName && (
+          <Icon name={iconName} fontSize={24} className="text-Gray-light-mode-500 md:text-Brand-300 !cursor-pointer" />
+        )}
         {menuOpen && (
           <>
-            <Typography
-              variant="h4"
-              className="text-Gray-light-mode-700 hover:text-Base-Black md:text-Brand-100  md:hover:text-Base-White cursor-pointer"
-              onClick={navigateFunc}
-            >
+            <span className={css.itemLabel} onClick={navigateFunc}>
               {label}
-            </Typography>
+            </span>
             {badgeIcon && menuOpen ? <div className="mr-0 ml-auto cursor-pointer">{badgeIcon}</div> : ''}
           </>
         )}
-      </div>
+      </MenuItem>
       {menuOpen &&
         subMenuOpen &&
         children?.map((item) => (
-          <div
-            key={item.label}
-            className="w-full h-10 pr-3 pl-11 py-2 rounded-sm bg-Base-White hover:bg-Gray-light-mode-50 md:bg-Brand-700 md:hover:bg-Brand-600"
-          >
-            <Typography
-              variant="h4"
-              className="text-Gray-light-mode-700 hover:text-Base-Black md:text-Brand-100  md:hover:text-Base-White cursor-pointer"
-              onClick={item.navigateFunc}
-            >
+          <MenuItem key={item.label} className={`${css.container} pl-11`} tabIndex={1}>
+            <Typography variant="h4" className={css.itemLabel} onClick={item.navigateFunc}>
               {item.label}
             </Typography>
-          </div>
+          </MenuItem>
         ))}
     </>
   );

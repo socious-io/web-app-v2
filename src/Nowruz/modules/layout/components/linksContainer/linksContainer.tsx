@@ -1,3 +1,4 @@
+import { MenuList } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -23,11 +24,11 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
       </div>
       {userIsLoggedIn && (
         <div className="md:hidden w-full h-fit px-4">
-          <AvatarDropDown createOrg displayOtherAccounts />
+          <AvatarDropDown displayOtherAccounts />
         </div>
       )}
 
-      <div className="w-full flex flex-col gap-2 px-4 ">
+      <MenuList autoFocusItem className="w-full flex flex-col gap-2 px-4 ">
         {filteredMenu.map((item) =>
           item.children ? (
             <LinkItem
@@ -49,14 +50,14 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
                 subMenuOpen ? (
                   <Icon
                     name="chevron-up"
-                    className="text-Brand-300 "
+                    className="text-Brand-300 !cursor-pointer"
                     fontSize={20}
                     onClick={() => setSubMenuOpen(!subMenuOpen)}
                   />
                 ) : (
                   <Icon
                     name="chevron-down"
-                    className="text-Brand-300 "
+                    className="text-Brand-300 !cursor-pointer"
                     fontSize={20}
                     onClick={() => setSubMenuOpen(!subMenuOpen)}
                   />
@@ -76,7 +77,7 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
             />
           ),
         )}
-      </div>
+      </MenuList>
     </div>
   );
 };

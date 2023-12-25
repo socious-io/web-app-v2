@@ -15,8 +15,8 @@ import * as yup from 'yup';
 const schema = yup
   .object()
   .shape({
-    name: yup.string().required('Required'),
-    orgName: yup.string().required('Required'),
+    name: yup.string().required('Name is required'),
+    orgName: yup.string().required('Issuing organization is required'),
     orgId: yup.string(),
     issueMonth: yup.string(),
     issueYear: yup.string(),
@@ -59,7 +59,6 @@ export const useCreateUpdateCertificate = (
   });
 
   const dispatch = useDispatch();
-
 
   const [orgVal, setOrgVal] = useState<OptionType | null>();
   const [orgs, setOrgs] = useState<Organization[]>([]);

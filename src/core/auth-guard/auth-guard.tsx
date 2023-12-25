@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Modal } from 'src/components/templates/modal/modal';
