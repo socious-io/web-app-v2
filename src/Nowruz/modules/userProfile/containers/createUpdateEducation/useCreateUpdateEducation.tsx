@@ -41,14 +41,14 @@ export const useCreateUpdateEducation = (
   const user = useSelector<RootState, User | undefined>((state) => {
     return state.profile.user;
   });
-  const [schoolVal, setSchoolVal] = useState<OptionType>();
+  const [schoolVal, setSchoolVal] = useState<OptionType | null>();
   const [schools, setSchools] = useState<Organization[]>([]);
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
-  const [startMonth, setStartMonth] = useState<OptionType>();
-  const [startYear, setStartYear] = useState<OptionType>();
-  const [endMonth, setEndMonth] = useState<OptionType>();
-  const [endYear, setEndYear] = useState<OptionType>();
+  const [startMonth, setStartMonth] = useState<OptionType | null>();
+  const [startYear, setStartYear] = useState<OptionType | null>();
+  const [endMonth, setEndMonth] = useState<OptionType | null>();
+  const [endYear, setEndYear] = useState<OptionType | null>();
   const dispatch = useDispatch();
 
   const mapMonthNames = () => {
@@ -71,32 +71,48 @@ export const useCreateUpdateEducation = (
 
   const initializeValues = () => {
     const meta = education ? (education.meta as EducationMeta) : null;
-    setValue('schoolName', meta?.school_name || '');
-    setValue('schoolId', meta?.school_id || '');
-    setValue('degree', meta?.degree || '');
-    setValue('field', meta?.field || '');
-    setValue('startMonth', meta?.start_month || '');
-    setValue('startYear', meta?.start_year || '');
-    setValue('endMonth', meta?.end_month || '');
-    setValue('endYear', meta?.end_year || '');
-    setValue('grade', meta?.grade || '');
-    setValue('description', education?.description || '');
 
-    setSchoolVal({
-      value: meta?.school_id || '',
-      label: meta?.school_name || '',
-    });
+    const initialVal = {
+      schoolName: meta?.school_name || '',
+      schoolId: meta?.school_id || '',
+      degree: meta?.degree || '',
+      field: meta?.field || '',
+      startMonth: meta?.start_month || '',
+      startYear: meta?.start_year || '',
+      endMonth: meta?.end_month || '',
+      endYear: meta?.end_year || '',
+      grade: meta?.grade || '',
+      description: education?.description || '',
+    };
+    reset(initialVal);
 
-    setStartMonth({
-      value: meta?.start_month || '',
-      label: meta?.start_month ? monthNames[Number(meta.start_month)] : '',
-    });
-    setStartYear({ value: meta?.start_year || '', label: meta?.start_year || '' });
-    setEndMonth({
-      value: meta?.end_month || '',
-      label: meta?.end_month ? monthNames[Number(meta.end_month)] : '',
-    });
-    setEndYear({ value: meta?.end_year || '', label: meta?.end_year || '' });
+    setSchoolVal(
+      meta?.school_name
+        ? {
+            value: meta?.school_id || '',
+            label: meta?.school_name,
+          }
+        : null,
+    );
+
+    setStartMonth(
+      meta?.start_month
+        ? {
+            value: meta?.start_month,
+            label: monthNames[Number(meta.start_month)],
+          }
+        : null,
+    );
+    setStartYear(meta?.start_year ? { value: meta?.start_year, label: meta?.start_year } : null);
+    setEndMonth(
+      meta?.end_month
+        ? {
+            value: meta?.end_month,
+            label: monthNames[Number(meta.end_month)],
+          }
+        : null,
+    );
+    setEndYear(meta?.end_year ? { value: meta?.end_year, label: meta?.end_year } : null);
   };
 
   useEffect(() => {
@@ -111,6 +127,7 @@ export const useCreateUpdateEducation = (
     formState: { errors },
     getValues,
     setValue,
+    reset,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),

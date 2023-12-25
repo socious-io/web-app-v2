@@ -69,6 +69,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         className="flex-1"
         isSearchable
         errors={errors['jobCategory']?.message ? [errors['jobCategory']?.message.toString()] : undefined}
+        placeholder="Search for job category"
       />
       <SearchDropdown
         required
@@ -84,6 +85,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         onChange={(value) => {
           onSelectCompany(value);
         }}
+        placeholder="Search for company"
         noOptionsMessage={({ inputValue }) => inputValue}
         errors={errors['orgName']?.message ? [errors['orgName']?.message.toString()] : undefined}
       />
@@ -92,6 +94,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         id="city"
         cacheOptions
         value={cityVal}
+        placeholder="Search for city"
         isAsync
         loadOptions={searchCities}
         defaultOptions
@@ -106,6 +109,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
       <SearchDropdown
         id="employment-type"
         value={employmentTypeVal}
+        placeholder="Please select"
         label="Employment type*"
         options={employmentTypes}
         icon="search-lg"
@@ -191,6 +195,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         multiline
         customHeight="130px"
         register={register}
+        placeholder="e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints."
       />
     </div>
   );

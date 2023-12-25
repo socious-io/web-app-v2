@@ -44,7 +44,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <SearchDropdown
         required
-        id="school*"
+        id="school"
         cacheOptions
         value={schoolVal}
         isAsync
@@ -56,6 +56,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
         onChange={(value) => {
           onSelectSchool(value);
         }}
+        placeholder="Search for school"
         noOptionsMessage={({ inputValue }) => inputValue}
         errors={errors['schoolName']?.message ? [errors['schoolName']?.message.toString()] : undefined}
       />
@@ -152,6 +153,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
         multiline
         customHeight="130px"
         register={register}
+        placeholder="Enter a description..."
       />
     </div>
   );
