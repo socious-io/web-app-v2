@@ -17,3 +17,9 @@ Preview.args = {
   description: ' Welcome back! Please enter your details.',
   logo: <Logo width={48} height={48} />,
 };
+Preview.parameters = {
+  design: {
+    type: 'figma',
+    url: 'https://www.figma.com/file/sToYihTwJSFg3pLowAgKDv/DS-3.1-Web-App-Components?type=design&node-id=9-16411&mode=design&t=oH1dBWvVMCHM4czv-0',
+  },
+};
