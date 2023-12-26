@@ -1,3 +1,4 @@
+import { MenuList } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -18,17 +19,17 @@ export const Footer: React.FC<FooterProps> = ({ open, logout }) => {
   const userIsLoggedIn = !!currentIdentity;
 
   return (
-    <div className="flex flex-col  items-center w-full h-fit px-4 pb-6 gap-2 mb-0 mt-auto">
+    <MenuList className="flex flex-col  items-center w-full h-fit px-4 pb-6 gap-2 mb-0 mt-auto">
       {userIsLoggedIn && (
         <>
-          <LinkItem
+          {/* <LinkItem
             label="Help"
             navigateFunc={() => {
               navigate('/');
             }}
             iconName="help-circle"
             menuOpen={open}
-          />
+          /> */}
 
           <LinkItem
             label="Settings"
@@ -51,6 +52,6 @@ export const Footer: React.FC<FooterProps> = ({ open, logout }) => {
           menuOpen={open}
         />
       )}
-    </div>
+    </MenuList>
   );
 };

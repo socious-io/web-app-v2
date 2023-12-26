@@ -19,8 +19,6 @@ const Skills: React.FC = () => {
   }, []);
 
   const updateSocialCauses = (skills: Array<string>) => {
-    console.log(skills);
-
     updateUser({ ...state, skills });
   };
   function onSearch(value: string) {
