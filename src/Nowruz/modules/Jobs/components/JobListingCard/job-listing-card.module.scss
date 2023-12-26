@@ -5,11 +5,90 @@
   border-radius: 12px;
   border: 1px solid $color-grey-200;
 
-  .cardInfo {
+  .intro {
+    display: flex;
     padding: 24px;
 
     @media (max-width: 640px) {
+      flex-direction: column;
       padding: 20px;
+    }
+    .jobTitle {
+      font-size: 18px;
+      font-weight: 600;
+      color: $color-grey-900;
+    }
+    .subTitle {
+      font-size: 14px;
+      font-weight: 400;
+      color: $color-grey-500;
+    }
+    .orgTitle {
+      font-size: 14px;
+      font-weight: 400;
+      color: $color-grey-600;
+    }
+    .titleTime {
+      @media (min-width: 640px) {
+        margin-left: 16px;
+      }
+    }
+  }
+  .chips {
+    display: flex;
+    margin-left: 24px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    @media (max-width: 640px) {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+  }
+  .cardInfo {
+    border-bottom: solid 1px $color-grey-200;
+  }
+  .readMore {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: $color-primary-700;
+  }
+  .jobDescription {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: $color-grey-600;
+    margin-left: 24px;
+    margin-bottom: 24px;
+    @media (max-width: 640px) {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+  }
+  .features {
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    color: $color-grey-700;
+    margin-right: 16px;
+    margin-bottom: 12px;
+  }
+  .jobFeatures {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+    margin-bottom: 8px;
+    @media (max-width: 640px) {
+      margin-left: 20px;
+    }
+  }
+  .footer {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 24px;
+    padding-top: 20px;
+    @media (max-width: 640px) {
+      display: none;
     }
   }
 }
