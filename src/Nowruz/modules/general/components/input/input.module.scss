@@ -70,6 +70,7 @@
 
 .defaultColor:focus-within {
   fieldset {
+    border: 1px solid $color-primary-300 !important;
     box-shadow: 0px 0px 0px 4px $color-primary-100;
   }
 }
