@@ -47,3 +47,9 @@ Default.args = {
   placeHolderIcon: <Icon name="user-01" fontSize={20} color="gray" />,
   placeHolderText: 'Select team member',
 };
+Default.parameters = {
+  design: {
+    type: 'figma',
+    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-6056&mode=design&t=HPrsfldFRA5rFuj1-0',
+  },
+};

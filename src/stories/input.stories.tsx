@@ -1,6 +1,6 @@
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
-export default { component: Input };
+export default { title: 'General/Input', component: Input };
 export const Normal = {
   parameters: {
     design: {

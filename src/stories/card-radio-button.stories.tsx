@@ -34,6 +34,12 @@ const Template: StoryFn = (args) => {
 
 export const Defult = Template.bind({});
 Defult.args = { items: items };
+Defult.parameters = {
+  design: {
+    type: 'figma',
+    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=88-16392&mode=design&t=HPrsfldFRA5rFuj1-0',
+  },
+};
 
 const imgUrl = 'https://socious-new.s3.ap-northeast-1.amazonaws.com/f9d1522cb673fa3d64e4243bd423e2bc.jpg';
 const imageItems: CardRadioButtonItem[] = [
@@ -51,5 +57,5 @@ const imageItems: CardRadioButtonItem[] = [
   },
 ];
 
-export const Image = Template.bind({});
-Image.args = { items: imageItems, displayCkeckIcon: false };
+// export const Image = Template.bind({});
+// Image.args = { items: imageItems, displayCkeckIcon: false };
