@@ -5,18 +5,11 @@ import { Icon } from 'src/Nowruz/general/Icon';
 
 import css from './avatarDropDown.module.scss';
 import { AvatarDropDownProps } from './avatarDropDown.types';
-import { IconListItem } from './iconListItem';
 import { useAvatarDropDown } from './useVatarDropDown';
 import { AvatarLabelGroup } from '../avatarLabelGroup';
 
 export const AvatarDropDown: React.FC<AvatarDropDownProps> = (props) => {
-  const {
-    buttonHeight,
-    createOrg = false,
-    displayOtherAccounts = false,
-    displaySetting = false,
-    createOrgFunc,
-  } = props;
+  const { buttonHeight, displayOtherAccounts = false, createAccountFunc } = props;
   const { open, switchAccount, handleAvatarClick, selectedAccount, otherAccounts } = useAvatarDropDown();
   return (
     <div className={css.container}>
@@ -40,28 +33,16 @@ export const AvatarDropDown: React.FC<AvatarDropDownProps> = (props) => {
                   otherAccounts.map((a) => (
                     <AvatarLabelGroup key={a.id} account={a} handleClick={() => switchAccount(a.id)} />
                   ))}
-                {createOrg && (
-                  <div className="flex px-4 py-[10px] gap-2" onClick={createOrgFunc}>
-                    <Icon name="plus" fontSize={20} className="text-Brand-700" />
-                    <Typography variant="subtitle2" className="text-Gray (light mode)-900">
-                      Create an organization
-                    </Typography>
-                  </div>
-                )}
+
+                <div className="flex px-4 py-[10px] gap-2" onClick={createAccountFunc}>
+                  <Icon name="plus" fontSize={20} className="text-Brand-700" />
+                  <Typography variant="subtitle2" className="text-Brand-700">
+                    {selectedAccount.type === 'users' ? 'Create an organization' : 'Create a talent profile'}
+                  </Typography>
+                </div>
               </>
             )}
           </div>
-          <div className="w-full">
-            <Divider />
-          </div>
-          <div className="w-full flex flex-col py-1">
-            {displaySetting && <IconListItem iconName="settings-01" label="Settings" />}
-            <IconListItem iconName="help-circle" label="Support" />
-          </div>
-          <div className="w-full">
-            <Divider />
-          </div>
-          <IconListItem iconName="log-out-01" label="Log out" />
         </div>
       )}
     </div>

@@ -31,13 +31,17 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     openNotifPanel,
     setOpenNotifPanel,
     notifList,
+    navigateToProfile,
+    unreadNotif,
+    readNotifications,
   } = useHeaderNavBar();
 
   const [searchTerm, setSearchTerm] = useState('');
+
   return (
     <div className={`h-16 md:h-[72px] px-4 md:px-8 shadow-Shadows/shadow-sm md:[box-shadow:none] ${css.container}`}>
       <div
-        className="md:hidden w-10 h-10 p-2 rounded-default"
+        className="md:hidden w-10 h-10 p-2 rounded-default cursor-pointer"
         onClick={() => {
           setOpen(true);
         }}
@@ -55,14 +59,14 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
         />
       </div>
       {userIsLoggedIn && (
-        <div className="flex w-fit h-10 gap-2 md:gap-4 ">
+        <div className="flex w-fit h-10 gap-2 md:gap-4 items-center">
           <div className="flex gap-4 md:hidden mr-2">
             <Icon name="search-lg" fontSize={24} className="text-Gray-light-mode-500" />
           </div>
-          <div onClick={() => setOpenNotifPanel(true)}>
-            <NotifBellIcon unread />
+          <div onClick={readNotifications}>
+            <NotifBellIcon unread={unreadNotif} />
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:block h-full">
             <StatusDropDown
               type={userType}
               hiring={hiring}
@@ -79,9 +83,24 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
             img={image}
             accounts={accounts}
             iconItems={[
-              { iconName: 'help-circle', label: 'Support' },
+              { iconName: 'user-circle', label: 'View profile', onClick: navigateToProfile },
+              {
+                iconName: 'settings-01',
+                label: 'Settings',
+                onClick: () => {
+                  return;
+                },
+              },
+              // {
+              //   iconName: 'help-circle',
+              //   label: 'Support',
+              //   onClick: () => {
+              //     return;
+              //   },
+              // },
               { iconName: 'log-out-01', label: 'Log out', onClick: logout },
             ]}
+            createItem
           />
         </div>
       )}

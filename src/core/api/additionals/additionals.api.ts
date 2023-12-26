@@ -1,6 +1,6 @@
+import { AdditionalReq, AdditionalRes } from './additionals.types';
 import { post } from '../http';
 import { SuccessRes } from '../types';
-import { AdditionalReq, AdditionalRes } from './additionals.types';
 
 export async function createAdditional(payload: AdditionalReq): Promise<AdditionalRes> {
   return (await post<AdditionalRes>('additionals', payload)).data;

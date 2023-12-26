@@ -29,10 +29,10 @@ import { Error, LanguageProps } from './editInfo.types';
 const schema = yup
   .object()
   .shape({
-    username: yup.string().required('username is required'),
-    firstName: yup.string().required('first name is required'),
-    lastName: yup.string().required('last name is required'),
-    summary: yup.string().required('summary is required'),
+    username: yup.string().required('Username is required'),
+    firstName: yup.string().required('First name is required'),
+    lastName: yup.string().required('Last name is required'),
+    summary: yup.string().required('Summary is required'),
   })
   .required();
 
