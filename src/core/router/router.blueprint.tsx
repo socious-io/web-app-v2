@@ -99,6 +99,25 @@ export const blueprint: RouteObject[] = [
           },
         ],
       },
+      {
+        path: 'jobs',
+        children: [
+          {
+            path: 'list',
+            loader: async () => {
+              const requests = [jobCategoriesReq()];
+              const [jobCategories] = await Promise.all(requests);
+              return { jobCategories };
+            },
+            async lazy() {
+              const { JobsList } = await import('src/Nowruz/pages/jobs/List');
+              return {
+                Component: JobsList,
+              };
+            },
+          },
+        ],
+      },
     ],
   },
 
