@@ -14,7 +14,6 @@ export const Layout = () => {
   const navigate = useNavigate();
   const logOut = async () => {
     store.dispatch(removeIdentityList());
-
     logout().then(() => navigate('/sign-in'));
     setOpen(false);
     nonPermanentStorage.clear();

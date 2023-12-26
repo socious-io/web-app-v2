@@ -49,7 +49,6 @@ export const Jobs = (): JSX.Element => {
     },
   ];
   function openSidebar() {
-    console.log('open side');
     hapticsImpactLight();
     dispatch(visibility(true));
   }
