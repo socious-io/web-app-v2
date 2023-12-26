@@ -5,7 +5,6 @@ import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-use
 
 export const useCity = () => {
   const { state, updateUser } = useUser();
-  console.log('test user state', state);
   const { updateSelectedStep } = useContext(StepsContext);
   const [selectedOption, setSelectedOption] = useState();
   const cityToOption = (cities: Location[]) => {

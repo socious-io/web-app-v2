@@ -28,6 +28,8 @@ export const monthNames = [
   'December',
 ];
 
+export const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 export function getMonthName(value: string): string {
   const date = new Date(value);
   return monthNames[date.getMonth() + 1];
