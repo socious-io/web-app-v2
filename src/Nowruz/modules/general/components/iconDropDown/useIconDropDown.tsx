@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity, Organization, User, identities } from 'src/core/api';
+import { CurrentIdentity, OrgMeta, Organization, User, UserMeta, identities } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
@@ -22,7 +22,15 @@ export const useIconDropDown = () => {
     await nonPermanentStorage.set({ key: 'identity', value: accountId });
     identities()
       .then((resp) => dispatch(setIdentityList(resp)))
-      .then(() => navigate('/jobs'))
+      .then((resp) => {
+        console.log('test log resp', resp);
+        const current = resp.payload.find((item) => item.id === accountId);
+        const path =
+          current?.type === 'users'
+            ? `profile/users/${(current.meta as UserMeta).username}/view`
+            : `profile/organizations/${(current?.meta as OrgMeta).shortname}/view`;
+        navigate(path);
+      })
       .then(() => setOpen(false));
   };
 
