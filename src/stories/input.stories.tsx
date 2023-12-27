@@ -1,7 +1,13 @@
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
-export default { component: Input };
+export default { title: 'General/Input', component: Input };
 export const Normal = {
+  parameters: {
+    design: {
+      type: 'figspec',
+      url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
+    },
+  },
   args: {
     id: 'input-1',
     name: 'inputName',
@@ -12,6 +18,12 @@ export const Normal = {
   },
 };
 export const MultiLine = {
+  parameters: {
+    design: {
+      type: 'figspec',
+      url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
+    },
+  },
   args: {
     id: 'input-5',
     name: 'inputName',
@@ -25,6 +37,12 @@ export const MultiLine = {
   },
 };
 export const Error = {
+  parameters: {
+    design: {
+      type: 'figspec',
+      url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
+    },
+  },
   args: {
     id: 'input-2',
     name: 'inputName',
@@ -39,6 +57,12 @@ export const Error = {
 };
 
 export const Prefix = {
+  parameters: {
+    design: {
+      type: 'figspec',
+      url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
+    },
+  },
   args: {
     id: 'input-3',
     name: 'inputName',
@@ -51,6 +75,12 @@ export const Prefix = {
 };
 
 export const Success = {
+  parameters: {
+    design: {
+      type: 'figspec',
+      url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
+    },
+  },
   args: {
     id: 'input-4',
     name: 'inputName',
