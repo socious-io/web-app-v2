@@ -31,3 +31,9 @@ const Template: StoryFn = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {};
+Default.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/T0ZAkJOmRIvG3EmQgpgO0B/Socious-Web-App-3.1?type=design&node-id=1209-139550&mode=design&t=3LRoEJuLxlz7ZWPR-0',
+  },
+};
