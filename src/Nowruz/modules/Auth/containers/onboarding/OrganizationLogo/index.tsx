@@ -48,7 +48,7 @@ export const OrganizationLogo = () => {
         </div>
       )}
       <div className="my-5">
-        <Divider sx={{ bgcolor: variables.color_primary_300 }} />
+        <Divider sx={{ bgcolor: variables.color_grey_200 }} />
       </div>
       <Input
         id="bio"
