@@ -11,7 +11,7 @@ const account: AccountItem = {
   id: '1',
   type: 'users',
   name: 'first last',
-  username: '@username',
+  username: 'username',
   img: '',
   selected: true,
 };
@@ -24,9 +24,21 @@ export const WithImage = Template.bind({});
 WithImage.args = {
   account: { id: '2', img: imgUrl, type: 'users', name: 'first last', username: '@username' },
 };
+WithImage.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/oDpGb8I9Eg0DFJSkkvXrrH/DS-3.1-Avatars?type=design&node-id=5919-5676&mode=design&t=cYVUM15bghSf6Lio-0',
+  },
+};
 
 export const UserAvatar = Template.bind({});
 UserAvatar.args = { account: { id: '3', type: 'users', name: 'first last', username: '@username' } };
+UserAvatar.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/oDpGb8I9Eg0DFJSkkvXrrH/DS-3.1-Avatars?type=design&node-id=5919-5676&mode=design&t=cYVUM15bghSf6Lio-0',
+  },
+};
 
 export const OrgAvatar = Template.bind({});
 OrgAvatar.args = {
@@ -35,5 +47,11 @@ OrgAvatar.args = {
     type: 'organizations',
     name: 'first last',
     username: '@username',
+  },
+};
+OrgAvatar.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/oDpGb8I9Eg0DFJSkkvXrrH/DS-3.1-Avatars?type=design&node-id=5919-5676&mode=design&t=cYVUM15bghSf6Lio-0',
   },
 };

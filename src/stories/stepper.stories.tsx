@@ -26,6 +26,18 @@ const Template: StoryFn = (args) => {
 
 export const Desktop = Template.bind({});
 Desktop.args = { orientation: 'horizontal', steps: steps };
+Desktop.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/sToYihTwJSFg3pLowAgKDv/DS-3.1-Web-App-Components?type=design&node-id=255-84142&mode=design&t=zFxXEtC2u98hFoPX-0',
+  },
+};
 
 export const Mobile = Template.bind({});
 Mobile.args = { orientation: 'vertical', steps: steps };
+Mobile.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/sToYihTwJSFg3pLowAgKDv/DS-3.1-Web-App-Components?type=design&node-id=255-84142&mode=design&t=zFxXEtC2u98hFoPX-0',
+  },
+};

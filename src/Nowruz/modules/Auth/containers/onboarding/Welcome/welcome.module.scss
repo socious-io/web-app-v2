@@ -5,6 +5,9 @@
   margin-bottom: 48px;
   margin-top: 32px;
   text-align: center;
+  @media (max-width: 600px) {
+    margin-bottom: 100px;
+  }
 }
 
 .title {
@@ -24,4 +27,17 @@
   line-height: 24px;
   text-align: center;
   margin-bottom: 32px;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  padding-bottom: 40px;
+  padding-right: 16px;
+  padding-left: 16px;
+  @media (min-width: 600px) {
+    position: static;
+  }
 }
