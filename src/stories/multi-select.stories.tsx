@@ -5,7 +5,7 @@ import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multi
 import { MultiSelectItem } from 'src/Nowruz/modules/general/components/multiSelect/multiSelect.types';
 
 export default {
-  title: 'Multi Select',
+  title: 'General/MultiSelect',
   component: MultiSelect,
 } as const;
 
@@ -35,3 +35,20 @@ const Template: StoryFn = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {};
+Default.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/T0ZAkJOmRIvG3EmQgpgO0B/Socious-Web-App-3.1?type=design&node-id=860-141985&mode=design&t=3LRoEJuLxlz7ZWPR-0',
+  },
+};
+
+export const NoPopularOptions = Template.bind({});
+NoPopularOptions.args = {
+  displayDefaultBadges: false,
+};
+NoPopularOptions.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-13988&mode=design&t=xAEPMBI9khmCKPlS-4',
+  },
+};
