@@ -8,7 +8,7 @@ export const Defalult = {
   },
   parameters: {
     design: {
-      type: 'figma',
+      type: 'figspec',
       url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=9-9&mode=design&t=QNnkRyE8ghaX23ze-0',
     },
   },

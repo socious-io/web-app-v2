@@ -16,7 +16,7 @@ export const Default = Template.bind({});
 Default.args = {};
 Default.parameters = {
   design: {
-    type: 'figma',
+    type: 'figspec',
     url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-16047&mode=design&t=Z83ef6k4TdQ1SFF8-0',
   },
 };

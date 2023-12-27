@@ -31,7 +31,7 @@ Default.args = {
 
 Default.parameters = {
   design: {
-    type: 'figma',
+    type: 'figspec',
     url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-6056&mode=design&t=HPrsfldFRA5rFuj1-0',
   },
 };

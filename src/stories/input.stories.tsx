@@ -4,7 +4,7 @@ export default { title: 'General/Input', component: Input };
 export const Normal = {
   parameters: {
     design: {
-      type: 'figma',
+      type: 'figspec',
       url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
     },
   },
@@ -20,7 +20,7 @@ export const Normal = {
 export const MultiLine = {
   parameters: {
     design: {
-      type: 'figma',
+      type: 'figspec',
       url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
     },
   },
@@ -39,7 +39,7 @@ export const MultiLine = {
 export const Error = {
   parameters: {
     design: {
-      type: 'figma',
+      type: 'figspec',
       url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
     },
   },
@@ -59,7 +59,7 @@ export const Error = {
 export const Prefix = {
   parameters: {
     design: {
-      type: 'figma',
+      type: 'figspec',
       url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
     },
   },
@@ -77,7 +77,7 @@ export const Prefix = {
 export const Success = {
   parameters: {
     design: {
-      type: 'figma',
+      type: 'figspec',
       url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=16-12826&mode=design&t=qVheijfSIbPaOZ5X-0',
     },
   },

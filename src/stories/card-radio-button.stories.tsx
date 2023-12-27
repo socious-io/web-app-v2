@@ -27,7 +27,7 @@ const Template: StoryFn = (args) => {
   const [selectedValue, setSelectedValue] = useState('');
   return (
     <div style={{ width: '370px' }}>
-      <CardRadioButton items={items} selectedValue={selectedValue} setSelectedValue={setSelectedValue} {...args} />;
+      <CardRadioButton items={items} selectedValue={selectedValue} setSelectedValue={setSelectedValue} {...args} />
     </div>
   );
 };
@@ -36,7 +36,7 @@ export const Defult = Template.bind({});
 Defult.args = { items: items };
 Defult.parameters = {
   design: {
-    type: 'figma',
+    type: 'figspec',
     url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=88-16392&mode=design&t=HPrsfldFRA5rFuj1-0',
   },
 };
