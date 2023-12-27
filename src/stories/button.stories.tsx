@@ -15,19 +15,19 @@ Primary.args = {
 };
 Primary.parameters = {
   design: {
-    type: 'figma',
-    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=0-1&mode=design&t=9MBoaKYeI3B5liQo-0',
+    type: 'figspec',
+    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=1-525&mode=design&t=mtH2nhnFP8TKzTWZ-0',
   },
 };
 export const PrimaryDisabled = Template.bind({});
-Primary.args = {
+PrimaryDisabled.args = {
   color: 'primary',
   disabled: true,
 };
 PrimaryDisabled.parameters = {
   design: {
-    type: 'figma',
-    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=0-1&mode=design&t=9MBoaKYeI3B5liQo-0',
+    type: 'figspec',
+    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=1-525&mode=design&t=mtH2nhnFP8TKzTWZ-0',
   },
 };
 
@@ -40,7 +40,7 @@ Icon.args = {
 };
 Icon.parameters = {
   design: {
-    type: 'figma',
-    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=0-1&mode=design&t=9MBoaKYeI3B5liQo-0',
+    type: 'figspec',
+    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=1-525&mode=design&t=mtH2nhnFP8TKzTWZ-0',
   },
 };

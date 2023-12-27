@@ -19,7 +19,7 @@ Preview.args = {
 };
 Preview.parameters = {
   design: {
-    type: 'figma',
-    url: 'https://www.figma.com/file/sToYihTwJSFg3pLowAgKDv/DS-3.1-Web-App-Components?type=design&node-id=9-16411&mode=design&t=oH1dBWvVMCHM4czv-0',
+    type: 'figspec',
+    url: 'https://www.figma.com/file/sToYihTwJSFg3pLowAgKDv/DS-3.1-Web-App-Components?type=design&node-id=9-16539&mode=design&t=4jZgE3vOBFytxgYX-4',
   },
 };

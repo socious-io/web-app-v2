@@ -26,7 +26,7 @@ WithImage.args = {
 };
 WithImage.parameters = {
   design: {
-    type: 'figma',
+    type: 'figspec',
     url: 'https://www.figma.com/file/oDpGb8I9Eg0DFJSkkvXrrH/DS-3.1-Avatars?type=design&node-id=5919-5676&mode=design&t=cYVUM15bghSf6Lio-0',
   },
 };
@@ -35,7 +35,7 @@ export const UserAvatar = Template.bind({});
 UserAvatar.args = { account: { id: '3', type: 'users', name: 'first last', username: '@username' } };
 UserAvatar.parameters = {
   design: {
-    type: 'figma',
+    type: 'figspec',
     url: 'https://www.figma.com/file/oDpGb8I9Eg0DFJSkkvXrrH/DS-3.1-Avatars?type=design&node-id=5919-5676&mode=design&t=cYVUM15bghSf6Lio-0',
   },
 };
@@ -51,7 +51,7 @@ OrgAvatar.args = {
 };
 OrgAvatar.parameters = {
   design: {
-    type: 'figma',
+    type: 'figspec',
     url: 'https://www.figma.com/file/oDpGb8I9Eg0DFJSkkvXrrH/DS-3.1-Avatars?type=design&node-id=5919-5676&mode=design&t=cYVUM15bghSf6Lio-0',
   },
 };
