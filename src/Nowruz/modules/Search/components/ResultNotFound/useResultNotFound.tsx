@@ -62,7 +62,7 @@ export const useResultNotFound = () => {
         text = 'Go to communities';
         break;
       case 'organizations':
-        text = 'Go to jobs';
+        text = 'Go to communities';
         break;
     }
     return text;
