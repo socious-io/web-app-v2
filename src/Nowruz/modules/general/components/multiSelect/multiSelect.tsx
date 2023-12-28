@@ -4,7 +4,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 
 import Chip from './chip';
 import css from './multiSelect.module.scss';
-import { MultiSelectItem, MultiSelectProps } from './multiSelect.types';
+import { MultiSelectProps } from './multiSelect.types';
 
 const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   const {
@@ -21,7 +21,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     chipBgColor,
     chipFontColor,
     chipIconColor,
-    popularLabel = true,
     displayDefaultBadges = true,
     errors,
   } = props;
@@ -37,7 +36,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     );
   }
 
-  function handleChange(val: string[]) {
+  function handleChange(val: (MultiSelectItem | string)[]) {
     const lastItem = val[val.length - 1];
     const newVal = items?.find(
       (i) =>
@@ -49,17 +48,18 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   }
 
   function add(value: string, label: string) {
-    setSearchVal('');
+    // setSearchVal('');
     const existed = componentValue.find((item) => item.value === value || item.label === label);
     if (!existed && componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
   }
 
   function remove(val: string) {
-    setSearchVal('');
+    // setSearchVal('');
     setComponentValue(componentValue?.filter((item) => item.label !== val));
   }
 
   useEffect(() => {
+    setSearchVal('');
     setChipItems(items?.filter((i) => !componentValue.map((cv) => cv.value).includes(i.value)));
   }, [componentValue]);
 
@@ -75,7 +75,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         clearIcon={false}
         options={[]}
         freeSolo
-        autoSelect
+        // autoSelect
         multiple
         renderTags={(value, props) =>
           value.map((option, index) => (
@@ -93,6 +93,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
           ))
         }
         disabled={componentValue?.length >= (max || 0)}
+        onInputChange={(e, newValue) => filterItems(newValue)}
         renderInput={(params) => (
           <div className={css.inputContainer}>
             <TextField
@@ -101,6 +102,8 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
               placeholder={componentValue?.length ? '' : placeholder}
               onChange={(e) => filterItems(e.target.value)}
               {...params}
+              inputProps={{ ...params.inputProps, value: searchVal }}
+              value={searchVal}
             />
           </div>
         )}
@@ -117,7 +120,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         </Typography>
       </div>
 
-      {popularLabel && (
+      {displayDefaultBadges && (
         <div className={css.popularDiv}>
           <Typography variant="caption" className={css.popularLabel}>
             Popular

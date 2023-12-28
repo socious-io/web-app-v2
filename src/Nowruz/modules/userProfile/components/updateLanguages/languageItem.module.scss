@@ -1,0 +1,14 @@
+@import 'src/components/_primitives.scss';
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: $color-primary-700;
+}
+
+.addBtn:focus {
+  outline: 5px auto Highlight;
+  outline: 5px auto -webkit-focus-ring-color;
+}

@@ -38,7 +38,7 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
 
   useEffect(() => {
     truncateString();
-  }, []);
+  }, [description]);
 
   return (
     <div className="flex gap-3 h-full">

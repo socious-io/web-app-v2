@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, identities } from 'src/core/api';
 import store, { RootState } from 'src/store';
@@ -13,6 +13,10 @@ export const useEditSummary = (handleClose: () => void) => {
   const [summary, setSummary] = useState(user?.mission);
   const [error, setError] = useState('');
   const [letterCount, setLetterCount] = useState(user?.mission?.length);
+
+  useEffect(() => {
+    setSummary(user?.mission);
+  }, [user?.mission]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

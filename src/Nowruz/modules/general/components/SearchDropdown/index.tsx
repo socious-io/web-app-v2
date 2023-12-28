@@ -16,28 +16,45 @@ const CustomControl = ({ hasValue, icon, children, ...props }) => {
 };
 const CustomOption = ({ value, ...props }) => {
   const { innerProps, label, data, ...rest } = props;
-  // const selected = value.label === label;
+  const labelValue = handleMultiValueAsync(label).isObject ? handleMultiValueAsync(label).label : label;
+  const descriptionValue =
+    (handleMultiValueAsync(label).isObject ? handleMultiValueAsync(label).description : data.description) || '';
+  const selected = value && value.label ? value.label === label : false;
   return (
     <div className="px-1.5">
       <div {...innerProps} className={`${css.option}`}>
         {/* {selected && <Icon name="check" fontSize={20} color="#667085" />} */}
         <div className="ml-0 mr-auto flex gap-2">
           <span style={{ marginRight: '8px' }}>{data.icon}</span>
-          {label}
+          {labelValue} {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
         </div>
       </div>
     </div>
   );
 };
 const CustomSingleValue = ({ children, data, ...props }) => {
+  console.log('new value', handleMultiValueAsync(children));
+  const labelValue = handleMultiValueAsync(children).isObject ? handleMultiValueAsync(children).label : children;
+  const descriptionValue = handleMultiValueAsync(children).isObject
+    ? handleMultiValueAsync(children).description
+    : data.description;
   return (
     <components.SingleValue {...props}>
       <div className="flex">
-        {children}
-        {data.description && <div className={css.description}>{data.description}</div>}
+        <span className="overflow-hidden whitespace-no-wrap overflow-ellipsis">{labelValue}</span>
+        {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
       </div>
     </components.SingleValue>
   );
+};
+// React select in async mode doesn't send extra data to the CustomSingleValue.Doing this cause only accessed label and using label
+// string to pass the data. Please refactor this if find better solution.
+const handleMultiValueAsync = (value: string) => {
+  try {
+    return { ...JSON.parse(value), isObject: true };
+  } catch (e) {
+    return { isObject: false };
+  }
 };
 export const SearchDropdown: React.FC<SelectProps> = ({
   isAsync,

@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { Icon } from 'src/Nowruz/general/Icon';
 import { CountryFlag } from 'src/Nowruz/modules/general/components/countryFlag';
 
 export interface LocationProps {
@@ -26,7 +27,8 @@ export const Location: React.FC<LocationProps> = (props) => {
         Location
       </Typography>
       <div className="flex gap-2 items-center">
-        <CountryFlag countryCode={country || ''} />
+        {/* <CountryFlag countryCode={country || ''} /> */}
+        <Icon fontSize={20} name="marker-pin-02" className="text-Gray-light-mode-700" />
         <Typography variant="h6" className="text-Gray-light-mode-700">
           {address}
         </Typography>

@@ -10,7 +10,7 @@
 
 .msg {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 20px;
   letter-spacing: 0em;
   text-align: left;
@@ -71,6 +71,7 @@
 
 .defaultColor:focus-within {
   fieldset {
+    border: 1px solid $color-primary-300 !important;
     box-shadow: 0px 0px 0px 4px $color-primary-100;
   }
 }

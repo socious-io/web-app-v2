@@ -49,7 +49,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="title"
-        label="Title"
+        label="Title*"
         required
         name="title"
         register={register}
@@ -57,7 +57,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
       />
       <SearchDropdown
-        required
         id="job-category"
         value={category}
         label="Job category"
@@ -70,6 +69,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         className="flex-1"
         isSearchable
         errors={errors['jobCategory']?.message ? [errors['jobCategory']?.message.toString()] : undefined}
+        placeholder="Search for job category"
       />
       <SearchDropdown
         required
@@ -85,31 +85,32 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         onChange={(value) => {
           onSelectCompany(value);
         }}
+        placeholder="Search for company"
         noOptionsMessage={({ inputValue }) => inputValue}
         errors={errors['orgName']?.message ? [errors['orgName']?.message.toString()] : undefined}
       />
 
       <SearchDropdown
-        required
         id="city"
         cacheOptions
         value={cityVal}
+        placeholder="Search for city"
         isAsync
         loadOptions={searchCities}
         defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
-        label="Location*"
+        label="Location"
         onChange={(value) => {
           onSelectCity(value);
         }}
         errors={errors['city']?.message ? [errors['city']?.message.toString()] : undefined}
       />
       <SearchDropdown
-        required
         id="employment-type"
         value={employmentTypeVal}
-        label="Employment type"
+        placeholder="Please select"
+        label="Employment type*"
         options={employmentTypes}
         icon="search-lg"
         hasDropdownIcon={false}
@@ -128,7 +129,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
       />
       <div className="flex gap-4 items-end">
         <SearchDropdown
-          required
           id="start-month"
           value={startMonth}
           label="Start date*"
@@ -159,10 +159,9 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
       </div>
       <div className="flex gap-4 items-end">
         <SearchDropdown
-          required
           id="end-month"
           value={endMonth}
-          label="End date*"
+          label="End date"
           options={months}
           hasDropdownIcon
           onChange={(value) => {
@@ -175,7 +174,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           isDisabled={currentlyWorking}
         />
         <SearchDropdown
-          required
           id="end-year"
           value={endYear}
           options={years}
@@ -197,6 +195,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         multiline
         customHeight="130px"
         register={register}
+        placeholder="e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints."
       />
     </div>
   );

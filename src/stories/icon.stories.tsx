@@ -16,3 +16,9 @@ IconComponent.args = {
   fontSize: 48,
   color: 'red',
 };
+IconComponent.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/S1ci8UfKAlphHYlzEwlHSC/DS-3.1-Line-Icons?type=design&node-id=204-8084&mode=design&t=8MiS5kkaK7i8VB3J-4',
+  },
+};
