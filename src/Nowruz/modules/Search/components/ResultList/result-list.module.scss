@@ -1,0 +1,28 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  border-right: 1px solid $color-grey-200;
+}
+.rows {
+  cursor: pointer;
+  margin: 0 8px;
+  display: flex;
+  justify-content: flex-start;
+  &:hover {
+    background-color: $color-grey-50;
+  }
+}
+
+.selected {
+  background-color: $color-grey-50;
+  border-radius: 8px;
+}
+.chip {
+  margin-top: 8px;
+  .dotIcon {
+    width: 6px;
+    height: 6px;
+    background-color: $color-success-500;
+    border-radius: 50%;
+  }
+}

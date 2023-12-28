@@ -15,7 +15,7 @@ export const JobListingCard = ({ job }) => {
   const [skills, setSkills] = useState([]);
   const renderJobFeatures = (iconName: string, feature: string) => {
     return (
-      <div className='flex'>
+      <div className="flex">
         <Icon name={iconName} fontSize={20} className="mr-1.5" /> {feature}
       </div>
     );
@@ -48,7 +48,7 @@ export const JobListingCard = ({ job }) => {
               ))}
               {skills.map(({ label }) => (
                 <div className="mr-2">
-                  <Chip label={label} fontSize="14px" />
+                  <Chip label={label} fontSize="14px" theme="grey_blue" />
                 </div>
               ))}
             </div>
