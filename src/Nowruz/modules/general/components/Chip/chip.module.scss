@@ -1,0 +1,47 @@
+@import 'src/components/_primitives.scss';
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 0px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.startIcon {
+  margin-right: 4px;
+}
+.endIcon {
+  margin-left: 4px;
+}
+.content {
+  flex: 1;
+}
+
+.primary-theme {
+  background-color: $color-primary-50;
+  color: $color-primary-700;
+  border: 1px solid $color-primary-200;
+}
+
+.secondary-theme {
+  background-color: $color-white;
+  color: $color-grey-700;
+  border: 1px solid $color-grey-300;
+  box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
+}
+
+.round {
+  border-radius: 16px;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.sharp {
+  border-radius: 6px;
+  padding-right: 6px;
+  padding-left: 6px;
+}
