@@ -65,7 +65,6 @@ export const Jobs = (): JSX.Element => {
         {printWhen(<CardMenu title="Jobs" list={jobsMenuListOrg} />, identity?.type === 'organizations')}
       </div>
       <>
-        <SearchModal open={showSearch} onClose={() => setShowSearch(false)} />
         <div className={css.banner} onClick={() => setShowSearch(true)}>
           <div className={`block md:hidden ${css.menu}`}>
             <Avatar onClick={openSidebar} img={avatarImg} size="2.25rem" type={identity?.type || 'users'} />
