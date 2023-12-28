@@ -25,6 +25,8 @@ dist-ssr
 .DS_Store
 .env
 *.orig
+.env.production
+.env.development
 
 cypress/videos/
 cypress/screenshots/
