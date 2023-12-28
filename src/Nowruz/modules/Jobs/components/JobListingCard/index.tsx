@@ -15,7 +15,7 @@ export const JobListingCard = ({ job }) => {
   const [skills, setSkills] = useState([]);
   const renderJobFeatures = (iconName: string, feature: string) => {
     return (
-      <div className={css.features}>
+      <div className='flex'>
         <Icon name={iconName} fontSize={20} className="mr-1.5" /> {feature}
       </div>
     );
@@ -54,40 +54,25 @@ export const JobListingCard = ({ job }) => {
             </div>
             <div className={css.jobDescription}>{job.description}</div>
             <div className={css.jobFeatures}>
-              <div className="flex flex-col md:flex-row ">
-                <div className="flex">
-                  {/* {renderJobFeatures('marker-pin-01', job.identity_meta?.city ? job.identity_meta?.city : 'Anywhere')} */}
-                  {renderJobFeatures('marker-pin-01', 'Anywhere')}
-
-                  {renderJobFeatures(
-                    'mouse',
-                    PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === job.remote_preference)?.label,
-                  )}
-                </div>
-                <div className="flex">
-                  {renderJobFeatures(
-                    'calendar',
-                    PROJECT_TYPE_V2.find((level) => level.value === job.project_type)?.label,
-                  )}
-                  {renderJobFeatures(
-                    'hourglass-03',
-                    PROJECT_LENGTH_V2.find((level) => level.value === job.project_length)?.label,
-                  )}
-                </div>
-                <div>
-                  {renderJobFeatures(
-                    'target-02',
-                    EXPERIENCE_LEVEL_V2.find((level) => level.value === job.experience_level)?.label,
-                  )}
-                </div>
-              </div>
-              <div className="flex">
-                {renderJobFeatures(
-                  'currency-dollar-circle',
-                  ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
-                )}
-                {renderJobFeatures('cryptocurrency-01', 'Crypto OK')}
-              </div>
+              {renderJobFeatures('marker-pin-01', job.identity_meta?.city ? job.identity_meta?.city : 'Anywhere')}
+              {renderJobFeatures(
+                'mouse',
+                PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === job.remote_preference)?.label,
+              )}
+              {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === job.project_type)?.label)}
+              {renderJobFeatures(
+                'hourglass-03',
+                PROJECT_LENGTH_V2.find((level) => level.value === job.project_length)?.label,
+              )}
+              {renderJobFeatures(
+                'target-02',
+                EXPERIENCE_LEVEL_V2.find((level) => level.value === job.experience_level)?.label,
+              )}
+              {renderJobFeatures(
+                'currency-dollar-circle',
+                ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
+              )}
+              {renderJobFeatures('cryptocurrency-01', 'Crypto OK')}
             </div>
           </div>
         </div>

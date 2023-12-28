@@ -65,22 +65,18 @@
       margin-bottom: 20px;
     }
   }
-  .features {
-    display: flex;
-    font-size: 16px;
-    font-weight: 500;
-    color: $color-grey-700;
-    margin-right: 16px;
-    margin-bottom: 12px;
-  }
   .jobFeatures {
-    display: flex;
-    flex-direction: column;
-    margin-left: 24px;
-    margin-bottom: 8px;
+    margin: 24px;
     @media (max-width: 640px) {
-      margin-left: 20px;
+      margin: 20px;
     }
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 12px 16px;
+    align-self: stretch;
+    flex-wrap: wrap;
   }
   .footer {
     display: flex;
