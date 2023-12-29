@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
@@ -13,10 +14,11 @@ import { Link } from 'src/Nowruz/modules/general/components/link';
 import css from './job-listing-card.module.scss';
 export const JobListingCard = ({ job }) => {
   const [skills, setSkills] = useState([]);
-  const renderJobFeatures = (iconName: string, feature: string) => {
+  const renderJobFeatures = (iconName: string, feature: string, subtitle?: string) => {
     return (
-      <div className="flex">
-        <Icon name={iconName} fontSize={20} className="mr-1.5" /> {feature}
+      <div className={css.features}>
+        <Icon name={iconName} fontSize={20} className="mr-1.5" color={variables.color_grey_500} /> {feature}
+        <span className={css.featureSubtitle}>{subtitle}</span>
       </div>
     );
   };
@@ -42,19 +44,15 @@ export const JobListingCard = ({ job }) => {
           <div className={css.info}>
             <div className={css.chips}>
               {socialCausesToCategory(job.causes_tags).map(({ label }) => (
-                <div className="mr-2">
-                  <Chip label={label} fontSize="14px" />
-                </div>
+                <Chip label={label} fontSize="14px" />
               ))}
               {skills.map(({ label }) => (
-                <div className="mr-2">
-                  <Chip label={label} fontSize="14px" theme="grey_blue" />
-                </div>
+                <Chip label={label} fontSize="14px" theme="grey_blue" />
               ))}
             </div>
             <div className={css.jobDescription}>{job.description}</div>
             <div className={css.jobFeatures}>
-              {renderJobFeatures('marker-pin-01', job.identity_meta?.city ? job.identity_meta?.city : 'Anywhere')}
+              {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}
               {renderJobFeatures(
                 'mouse',
                 PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === job.remote_preference)?.label,
@@ -68,11 +66,13 @@ export const JobListingCard = ({ job }) => {
                 'target-02',
                 EXPERIENCE_LEVEL_V2.find((level) => level.value === job.experience_level)?.label,
               )}
-              {renderJobFeatures(
-                'currency-dollar-circle',
-                ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
-              )}
-              {renderJobFeatures('cryptocurrency-01', 'Crypto OK')}
+              {job.payment_range_lower &&
+                renderJobFeatures(
+                  'currency-dollar-circle',
+                  ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
+                  '(Fixed-price)',
+                )}
+              {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
             </div>
           </div>
         </div>
