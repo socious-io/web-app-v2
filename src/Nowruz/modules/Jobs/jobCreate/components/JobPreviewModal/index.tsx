@@ -10,6 +10,7 @@ import css from './preview-modal.module.scss';
 import { JobInfoCard } from '../JobInfoCard';
 export const JobPreviewModal: React.FC<JobPreviewModalProps> = ({ open, onClose, company, job }) => {
   const isMobile = window.innerWidth < 600;
+  console.log(job);
   return (
     <Modal open={open} onClose={onClose} className={css.container}>
       <div className={css.content}>
@@ -20,7 +21,7 @@ export const JobPreviewModal: React.FC<JobPreviewModalProps> = ({ open, onClose,
         <div className={css.body}>
           <div className={css.intro}>
             <Avatar type="organizations" size="72px" img={company?.image} />
-            <div className={css.jobTitle}>Product Designer</div>
+            <div className={css.jobTitle}>{job?.title}</div>
             <div className={css.subTitle}>{company?.name} . Just now</div>
             <div className={`${css.subTitle} mt-4`}>{company?.description}</div>
           </div>
@@ -31,7 +32,10 @@ export const JobPreviewModal: React.FC<JobPreviewModalProps> = ({ open, onClose,
                 <ExpandableText text={job?.description} isMarkdown />
               </div>
             </div>
-            <JobInfoCard payload={job} />
+            <div>
+              <div className={`${css.descriptionTitle} mb-6`}>About this job</div>
+              <JobInfoCard payload={job} />
+            </div>
           </div>
         </div>
         <div className={css.footer}>

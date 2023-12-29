@@ -151,9 +151,12 @@ export const useJobCreateForm = () => {
     });
   }, []);
 
-  const onSelectCity = (location) => {
-    if (location.countryCode !== undefined)
-      setValue('location', { city: location.lable, country: location.countryCode });
+  const onSelectCity = (location: { label: string; country: string }) => {
+    setValue('location', { city: location.label, country: location.country });
+    // console.log('value', location);
+    // if (location.country !== undefined) {
+    //   console.log('inside', location.label);
+    // }
   };
   const onSubmit: SubmitHandler<Inputs> = async ({
     title,
@@ -188,12 +191,11 @@ export const useJobCreateForm = () => {
         remote_preference: preference,
         skills: skills.map((item) => item.value),
         status: 'ACTIVE',
-        title: title,
-        ...locationResult,
+        title,
+        // ...locationResult,
       });
       setOpenSuccessModal(true);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
   const onPreview = () => {
     const { name, description, image } = currentIdentity?.meta;
@@ -209,6 +211,7 @@ export const useJobCreateForm = () => {
       type,
       preference,
     } = getValues();
+    console.log('location', getValues());
     const previewModalPayload = {
       company: { name, description, image },
       job: {

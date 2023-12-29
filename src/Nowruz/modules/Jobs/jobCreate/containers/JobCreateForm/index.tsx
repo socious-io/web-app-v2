@@ -62,7 +62,7 @@ export const JobCreateForm = () => {
           prefix="$"
           errors={errors['paymentMin']?.message ? [errors['paymentMin']?.message.toString()] : []}
         />
-        <span className="mx-2">to</span>
+        <div className="flex items-center mx-2">to</div>
         <Input
           name="paymentMax"
           register={register}
@@ -183,7 +183,7 @@ export const JobCreateForm = () => {
           {renderInfo('Remote preference', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
-              placeholder="Select a preference"
+              placeholder="Please select"
               options={PROJECT_REMOTE_PREFERENCES_V2}
               isSearchable
               onChange={(option) => onSelectPreference(option.value)}
@@ -192,10 +192,10 @@ export const JobCreateForm = () => {
           </div>
         </div>
         <div className={css.row}>
-          {renderInfo('Job type', '')}
+          {renderInfo('Job type', 'is it a full time job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
-              placeholder="Select a Type"
+              placeholder="Please select"
               options={PROJECT_TYPE_V2}
               isSearchable
               onChange={(option) => onSelectType(option.value)}
@@ -207,7 +207,7 @@ export const JobCreateForm = () => {
           {renderInfo('Job length', 'How long is the job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
-              placeholder="Select a time period"
+              placeholder="Please select"
               options={PROJECT_LENGTH_V2}
               isSearchable
               onChange={(option) => onSelectLength(option.value)}
@@ -219,7 +219,7 @@ export const JobCreateForm = () => {
           {renderInfo('Payment type', 'Is it a paid or volunteer job?')}
           <div className={css.componentsContainer}>
             <RadioGroup
-              items={PROJECT_PAYMENT_TYPE}
+              items={PROJECT_PAYMENT_TYPE.reverse()}
               errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
               onChange={(option) => onSelectPaymentType(option.value)}
             />
@@ -242,7 +242,7 @@ export const JobCreateForm = () => {
           {renderInfo('Experience level', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
-              placeholder="Select a level"
+              placeholder="Please select"
               options={EXPERIENCE_LEVEL_V2}
               isSearchable
               onChange={(option) => onSelectExperienceLevel(option.value)}
@@ -275,7 +275,7 @@ export const JobCreateForm = () => {
               Preview
             </Button>
             <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)}>
-              Publish
+              Publish job
             </Button>
           </div>
         </div>
