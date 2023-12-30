@@ -151,7 +151,6 @@ export const blueprint: RouteObject[] = [
       },
     ],
   },
-
   {
     children: [
       {
