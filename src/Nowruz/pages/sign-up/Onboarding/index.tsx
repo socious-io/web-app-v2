@@ -19,7 +19,7 @@ import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDow
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
 import { logout } from 'src/pages/sidebar/sidebar.service';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { setUser } from 'src/store/reducers/profile.reducer';
+import { setIdentity } from 'src/store/reducers/profile.reducer';
 
 import css from './onboarding.module.scss';
 
@@ -37,7 +37,7 @@ export const Onboarding = () => {
     username: (primary?.meta as UserMeta).username || (primary?.meta as OrgMeta).shortname || '',
     email: (primary?.meta as UserMeta).email || (primary?.meta as OrgMeta).email,
   };
-  dispatch(setUser(user));
+  dispatch(setIdentity(user));
 
   const type = localStorage.getItem('registerFor');
 
