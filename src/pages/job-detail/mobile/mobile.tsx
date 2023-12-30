@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Header } from 'src/components/atoms/header/header';
 import { SureModal } from 'src/components/templates/sure-modal';
@@ -16,23 +17,12 @@ import { skillsToCategory, socialCausesToCategory } from '../../../core/adaptors
 import { printWhen } from '../../../core/utils';
 import { getCategories } from '../job-detail.services';
 import { useJobDetailShared } from '../job-detail.shared';
-import { getJobStructuresData } from '../job-details.jobStructuredData';
 
 export const Mobile = (): JSX.Element => {
+  const uri = useLocation();
   const { navigate, job, identity, location, screeningQuestions } = useJobDetailShared();
   const { isLoggedIn } = useAuth();
   const [openExternalModal, setOpenExternalModal] = useState(false);
-
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.setAttribute('type', 'application/ld+json');
-    script.textContent = getJobStructuresData(job);
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
 
   function onApply() {
     if (job?.other_party_id) setOpenExternalModal(true);
@@ -40,11 +30,19 @@ export const Mobile = (): JSX.Element => {
   }
 
   const buttonJSX = (
-    <AuthGuard>
-      <Button disabled={job.applied} onClick={onApply}>
-        Apply now
-      </Button>
-    </AuthGuard>
+    <>
+      {job?.other_party_id ? (
+        <Button disabled={job.applied} onClick={onApply}>
+          Apply now
+        </Button>
+      ) : (
+        <AuthGuard redirectUrl={`${uri.pathname}/apply`}>
+          <Button disabled={job.applied} onClick={onApply}>
+            Apply now
+          </Button>
+        </AuthGuard>
+      )}
+    </>
   );
 
   const applicationSubmittedJSX = (

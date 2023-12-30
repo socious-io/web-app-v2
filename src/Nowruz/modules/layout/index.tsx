@@ -7,13 +7,13 @@ import { removeIdentityList } from 'src/store/reducers/identity.reducer';
 
 import HeaderNavBar from './components/headerNavBar';
 import { NavBar } from './components/navBar';
+import { SearchModal } from '../Search/containers/SearchModal';
 
 export const Layout = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const logOut = async () => {
     store.dispatch(removeIdentityList());
-
     logout().then(() => navigate('/sign-in'));
     setOpen(false);
     nonPermanentStorage.clear();
@@ -24,7 +24,6 @@ export const Layout = () => {
         <div className="w-full fixed top-0 right-0 z-20 bg-Base-White ">
           <HeaderNavBar setOpen={setOpen} logout={logOut} />
         </div>
-
         <div className="w-full mt-16 md:mt-[72px]">
           <Outlet />
         </div>

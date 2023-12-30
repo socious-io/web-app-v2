@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { AuthRes, User, devices, identities, login, newDevice, profile } from 'src/core/api';
@@ -14,6 +14,7 @@ import {
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { useCaptcha } from 'src/Nowruz/pages/captcha';
 import * as yup from 'yup';
 
 const schema = yup
@@ -42,6 +43,12 @@ export const useSignInForm = () => {
     mode: 'all',
     resolver: yupResolver(schema),
   });
+
+  const { tried, required } = useCaptcha();
+
+  useEffect(() => {
+    if (required) navigate('/captcha');
+  }, [required]);
 
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
 
@@ -110,6 +117,7 @@ export const useSignInForm = () => {
 
   async function onLogin() {
     const formValues = { email: getValues().email.trim(), password: getValues().password };
+    tried();
     login(formValues)
       .then(onLoginSucceed)
       .then(registerPushNotifications)
@@ -137,5 +145,6 @@ export const useSignInForm = () => {
     setKeepLoggedIn,
     handleChange,
     registerPushNotifications,
+    tried,
   };
 };

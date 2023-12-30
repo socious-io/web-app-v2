@@ -65,7 +65,7 @@ export const UserProvider = ({ children }) => {
         console.error(error);
       }
     };
-    if (type === 'user') fetchData();
+    if (type !== 'organization') fetchData();
   }, []);
   return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>;
 };

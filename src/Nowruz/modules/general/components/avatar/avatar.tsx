@@ -12,6 +12,8 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
     size = '3rem',
     onClick,
     type = 'users',
+    hasBorder = false,
+    isVerified = false,
     img,
     iconName,
     iconSize,
@@ -36,11 +38,11 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
     <div
       onClick={props.onClick}
       style={{ width: size, height: size, minWidth: size, minHeight: size }}
-      className={`${css.container} ${customStyle}`}
+      className={`${css.container} ${customStyle} ${hasBorder ? css.avatarBorder : ''}`}
     >
       <div onClick={props.onClick} style={style} className={css.imageContainer}>
         {img ? (
-          <img className={`${css.img} ${iconCustomStyle}`} src={img} alt="" width={size} height={size} />
+          <img className={`${css.img} ${iconCustomStyle}`} src={img} alt="" />
         ) : (
           <Icon
             name={icon}
@@ -53,6 +55,11 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
       {badge && (
         <div className={css.badge} style={{ backgroundColor: badge.color, width: badge.width, height: badge.height }}>
           <img className={css.img} src={badge.image} alt="" />
+        </div>
+      )}
+      {isVerified && (
+        <div className={css.verifiedBadge}>
+          <img src="/icons/verified-blue.svg" />
         </div>
       )}
     </div>

@@ -10,4 +10,6 @@ export interface AvatarProps extends CSSProperties {
   iconCustomStyle?: string;
   badge?: { image: string; color: string; width?: string; height?: string };
   iconSize?: number;
+  hasBorder?: boolean;
+  isVerified?: boolean;
 }

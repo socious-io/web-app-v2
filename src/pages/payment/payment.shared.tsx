@@ -121,11 +121,11 @@ export const usePaymentShared = () => {
   }
 
   const checkList = [
-    { title: 'Total assignement', price: assignment_total },
-    { title: ' Socious commision', price: commision },
+    { title: 'Total assignment', price: assignment_total },
+    { title: 'Socious fee', price: commision },
   ];
 
-  if (stripe_fee > 0) checkList.push({ title: ' Stripe commision', price: stripe_fee });
+  if (stripe_fee > 0) checkList.push({ title: 'Stripe fee', price: stripe_fee }); 
 
   return {
     offer,

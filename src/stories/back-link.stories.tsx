@@ -16,3 +16,9 @@ export const Preview = Template.bind({});
 Preview.args = {
   title: 'Jobs',
 };
+Preview.parameters = {
+  design: {
+    type: 'figspec',
+    url: 'https://www.figma.com/file/ZDDmg4Vg3c6qAG7CrZzwEm/DS-3.1-Shared-Components?type=design&node-id=1-1190&mode=design&t=mtH2nhnFP8TKzTWZ-4',
+  },
+};

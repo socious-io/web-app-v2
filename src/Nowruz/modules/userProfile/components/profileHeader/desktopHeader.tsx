@@ -26,7 +26,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
 }) => {
   const profileImage = user?.avatar;
   const name = `${user?.first_name} ${user?.last_name}`;
-  const username = user?.username;
+  const username = `@${user?.username}`;
 
   return (
     <div className="hidden md:block">

@@ -49,20 +49,19 @@ import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
-
+  {
+    path: 'captcha',
+    async lazy() {
+      const { Captcha } = await import('src/Nowruz/pages/captcha');
+      return {
+        Component: Captcha,
+      };
+    },
+  },
   {
     path: 'nowruz',
     element: <NowruzLayout />,
     children: [
-      {
-        path: 'test',
-        async lazy() {
-          const { Test } = await import('src/Nowruz/pages/test');
-          return {
-            Component: Test,
-          };
-        },
-      },
       {
         path: 'profile/users',
         children: [
@@ -105,6 +104,19 @@ export const blueprint: RouteObject[] = [
               const { CreateJob } = await import('src/Nowruz/pages/jobs/Create');
               return {
                 Component: CreateJob,
+              };
+            },
+          },
+          {
+            path: 'list',
+            loader: async () => {
+              const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
+              return { data };
+            },
+            async lazy() {
+              const { JobsList } = await import('src/Nowruz/pages/jobs/List');
+              return {
+                Component: JobsList,
               };
             },
           },
@@ -887,6 +899,15 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
+            path: 'welcome',
+            async lazy() {
+              const { Welcome } = await import('src/pages/sign-up/welcome/welcome');
+              return {
+                Component: Welcome,
+              };
+            },
+          },
+          {
             path: 'notification',
             async lazy() {
               const { AllowNotification } = await import('src/Nowruz/pages/AllowNotification');
@@ -904,6 +925,17 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          // {
+          //   path: 'onboarding',
+          //   async lazy() {
+          //     const { SignUpUserOnboarding } = await import(
+          //       'src/pages/sign-up/sign-up-user-onboarding/sign-up-user-complete.container'
+          //     );
+          //     return {
+          //       Component: SignUpUserOnboarding,
+          //     };
+          //   },
+          // },
           {
             path: 'allow-notification',
             async lazy() {

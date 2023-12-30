@@ -12,4 +12,5 @@ export interface IconDropDownProps {
   customItems?: ReactNode[]; // any other custom component to de displayed in the menu
   size?: string; // the width of the manu
   customStyle?: string;
+  createItem?: boolean;
 }

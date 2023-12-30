@@ -1,5 +1,4 @@
 import { Typography } from '@mui/material';
-import React from 'react';
 import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
 import { socialCausesToCategory } from 'src/core/adaptors';
