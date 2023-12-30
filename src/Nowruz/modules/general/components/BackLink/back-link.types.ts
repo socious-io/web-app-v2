@@ -4,4 +4,5 @@ export interface BackLinkProps extends TypographyProps {
   title: string;
   onBack?: () => void;
   block?: boolean;
+  customStyle?: string;
 }

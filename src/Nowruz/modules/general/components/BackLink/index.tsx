@@ -7,7 +7,7 @@ import css from './index.module.scss';
 
 export const BackLink: React.FC<BackLinkProps> = (props) => {
   const navigate = useNavigate();
-  const { onBack, title, block = false } = props;
+  const { onBack, title, block = false, customStyle } = props;
   const onClick = () => {
     if (onBack) {
       onBack();
@@ -22,9 +22,9 @@ export const BackLink: React.FC<BackLinkProps> = (props) => {
       variant="text"
       startIcon={<img height={24} src="/icons/arrow-left.svg" />}
       onClick={onClick}
-      block
+      block={block}
       fullWidth
-      className={css.textButton}
+      className={`${css.textButton} ${customStyle}`}
     >
       {title}
     </Button>

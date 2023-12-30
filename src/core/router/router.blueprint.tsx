@@ -30,7 +30,8 @@ import {
   impactPoints,
   filterFollowings,
   getOrganizationMembers,
-  getOrganizationByShortName,
+  getOrganizationByShortName
+  identities
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -113,6 +114,34 @@ export const blueprint: RouteObject[] = [
                 },
               },
             ],
+        path: 'jobs',
+        children: [
+          {
+            path: 'create',
+            loader: async () => {
+              const requests = [jobCategoriesReq()];
+              const [jobCategories] = await Promise.all(requests);
+              return { jobCategories };
+            },
+            async lazy() {
+              const { CreateJob } = await import('src/Nowruz/pages/jobs/Create');
+              return {
+                Component: CreateJob,
+              };
+            },
+          },
+          {
+            path: 'list',
+            loader: async () => {
+              const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
+              return { data };
+            },
+            async lazy() {
+              const { JobsList } = await import('src/Nowruz/pages/jobs/List');
+              return {
+                Component: JobsList,
+              };
+            },
           },
         ],
       },
@@ -912,6 +941,10 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'onboarding',
+            loader: async () => {
+              const resp = await identities();
+              return resp;
+            },
             async lazy() {
               const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
               return {
