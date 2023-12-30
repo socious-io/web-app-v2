@@ -30,6 +30,7 @@ import {
   impactPoints,
   filterFollowings,
   getOrganizationMembers,
+  identities,
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -918,6 +919,10 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'onboarding',
+            loader: async () => {
+              const resp = await identities();
+              return resp;
+            },
             async lazy() {
               const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
               return {
