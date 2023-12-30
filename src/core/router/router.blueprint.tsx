@@ -30,8 +30,8 @@ import {
   impactPoints,
   filterFollowings,
   getOrganizationMembers,
-  getOrganizationByShortName
-  identities
+  getOrganizationByShortName,
+  identities,
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -114,6 +114,10 @@ export const blueprint: RouteObject[] = [
                 },
               },
             ],
+          },
+        ],
+      },
+      {
         path: 'jobs',
         children: [
           {
