@@ -30,7 +30,7 @@ import {
   impactPoints,
   filterFollowings,
   getOrganizationMembers,
-  getOrganizationByShortName
+  getOrganizationByShortName,
   identities
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
