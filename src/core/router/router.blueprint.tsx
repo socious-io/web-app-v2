@@ -94,6 +94,20 @@ export const blueprint: RouteObject[] = [
         path: 'jobs',
         children: [
           {
+            path: 'create',
+            loader: async () => {
+              const requests = [jobCategoriesReq()];
+              const [jobCategories] = await Promise.all(requests);
+              return { jobCategories };
+            },
+            async lazy() {
+              const { CreateJob } = await import('src/Nowruz/pages/jobs/Create');
+              return {
+                Component: CreateJob,
+              };
+            },
+          },
+          {
             path: 'list',
             loader: async () => {
               const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });

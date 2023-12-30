@@ -68,7 +68,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
 
   ...props
 }) => {
-  const selectedVal = props.value;
+  const selectedVal = props.value || '';
   const selectRef = useRef(null);
   const handleLabelClick = () => {
     if (selectRef.current) {
