@@ -35,8 +35,7 @@ export const useIconDropDown = () => {
   };
 
   const handleClick = () => {
-    if (myProfile) setOpen(!open);
-    return;
+    setOpen(!open);
   };
 
   const handleOpen = () => {

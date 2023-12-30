@@ -5,6 +5,7 @@ import { RootState } from 'src/store';
 import { Certificates } from './certificate/certificates';
 import { Educations } from './education/educations';
 import { Experiences } from './experience/experience';
+import { Recommendation } from './recommendaion/recommendation';
 import { Skills } from './skills';
 import { Summary } from './summary';
 import { MainInfo } from '../mainInfo';
@@ -29,6 +30,8 @@ export const About = () => {
           <Certificates />
         </>
       )}
+
+      {identityType === 'organizations' && <Recommendation />}
     </div>
   );
 };
