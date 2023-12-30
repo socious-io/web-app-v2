@@ -8,4 +8,5 @@ export interface ChipProbs {
   onEndIconClick?: () => void;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
+  fontSize?: string;
 }
