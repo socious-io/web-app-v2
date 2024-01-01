@@ -6,62 +6,48 @@ import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multi
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 import css from './editInfo.module.scss';
-import { useEditInfo } from './useEditInfo';
-import { UpdateLanguages } from '../../components/updateLanguages';
+import { EditInfoOrgProps } from './editInfoOrg.types';
+import { useEditInfoOrg } from './useEditInfoOrg';
 
-interface EditInfoModalProps {
-  open: boolean;
-  handleClose: () => void;
-}
-export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose }) => {
+export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose }) => {
   const {
+    org,
     register,
+    handleSubmit,
     errors,
-    user,
     isUsernameValid,
     searchCities,
     onSelectCity,
-    cityVal,
-    socialCauseItems,
-    SocialCauses,
+    city,
+    socialCauses,
     setSocialCauses,
-    handleSubmit,
-    saveUser,
-    languages,
-    setLanguages,
-    langErrors,
-    setLangErrors,
-    causesErrors,
+    socialCauseItems,
+    searchIndustries,
+    onSelectIndustry,
+    industry,
+    saveOrg,
     closeModal,
-  } = useEditInfo(handleClose);
+  } = useEditInfoOrg(handleClose);
   const modalContent = (
     <form className={css.editInfoModal}>
       <Input
         required
-        id="first-name"
-        label="First name"
-        name="firstName"
-        defaultValue={user?.first_name}
+        id="name"
+        label="Organization name"
+        name="name"
+        defaultValue={org.name}
         register={register}
-        errors={errors['firstName']?.message ? [errors['firstName']?.message.toString()] : undefined}
+        errors={errors['name']?.message ? [errors['name']?.message.toString()] : undefined}
       />
-      <Input
-        required
-        id="last-name"
-        label="Last name"
-        name="lastName"
-        register={register}
-        defaultValue={user?.last_name}
-        errors={errors['lastName']?.message ? [errors['lastName']?.message.toString()] : undefined}
-      />
+
       <Input
         required
         id="username"
-        defaultValue={user?.username}
+        defaultValue={org.shortname}
         label="Username*"
         name="username"
         register={register}
-        validMessage="Username available"
+        validMessage="This username is available"
         hints={[
           {
             hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`,
@@ -76,7 +62,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         required
         id="location"
         cacheOptions
-        value={cityVal}
+        value={city}
         isAsync
         loadOptions={searchCities}
         defaultOptions
@@ -88,6 +74,22 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
           onSelectCity(value);
         }}
       />
+      <SearchDropdown
+        required
+        id="industry"
+        cacheOptions
+        value={industry}
+        isAsync
+        loadOptions={searchIndustries}
+        defaultOptions
+        className="my-5"
+        icon="search-lg"
+        hasDropdownIcon={false}
+        label="Industry*"
+        onChange={(value) => {
+          onSelectIndustry(value);
+        }}
+      />
       <Input
         required
         multiline
@@ -95,7 +97,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         id="summary"
         label="Summary"
         name="summary"
-        defaultValue={user?.mission}
+        defaultValue={org?.mission}
         register={register}
         errors={errors['summary']?.message ? [errors['summary']?.message.toString()] : undefined}
       />
@@ -106,25 +108,19 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         maxLabel={'Max. 5 causes'}
         items={socialCauseItems.slice(0, 30)}
         placeholder={'Type a social cause'}
-        componentValue={SocialCauses}
+        componentValue={socialCauses}
         setComponentValue={setSocialCauses}
         customHeight="118px"
         popularLabel={false}
-        errors={causesErrors}
+        errors={errors['socialCauses']?.message ? [errors['socialCauses']?.message.toString()] : undefined}
         displayDefaultBadges={false}
-      />
-      <UpdateLanguages
-        languages={languages}
-        setLanguages={setLanguages}
-        errors={langErrors}
-        setErrors={setLangErrors}
       />
     </form>
   );
 
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
-      <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(saveUser)}>
+      <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(saveOrg)}>
         Save
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={closeModal}>
