@@ -23,7 +23,6 @@ export const useIconDropDown = () => {
     identities()
       .then((resp) => dispatch(setIdentityList(resp)))
       .then((resp) => {
-        console.log('test log resp', resp);
         const current = resp.payload.find((item) => item.id === accountId);
         const path =
           current?.type === 'users'
