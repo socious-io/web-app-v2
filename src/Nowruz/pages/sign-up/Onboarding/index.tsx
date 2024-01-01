@@ -68,7 +68,7 @@ export const Onboarding = () => {
       <UserProvider>
         <div className="flex flex-row justify-between py-4 px-8">
           <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} alt="" />
-          <IconDropDown iconItems={items} type="organizations" accounts={accounts} />
+          <IconDropDown iconItems={items} type="users" accounts={accounts} />
         </div>
         <div className="flex flex-col items-center pb-4 ">
           <div className={css.container}>
