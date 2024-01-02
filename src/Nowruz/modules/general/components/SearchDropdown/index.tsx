@@ -33,7 +33,6 @@ const CustomOption = ({ value, ...props }) => {
   );
 };
 const CustomSingleValue = ({ children, data, ...props }) => {
-  console.log('new value', handleMultiValueAsync(children));
   const labelValue = handleMultiValueAsync(children).isObject ? handleMultiValueAsync(children).label : children;
   const descriptionValue = handleMultiValueAsync(children).isObject
     ? handleMultiValueAsync(children).description

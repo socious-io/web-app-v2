@@ -1,14 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { debounce } from 'lodash';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { socialCausesToCategory } from 'src/core/adaptors';
-import { Location, Organization, User, getIndustries, preRegister, searchLocation } from 'src/core/api';
+import { Location, Organization, User, getIndustries, identities, preRegister, searchLocation } from 'src/core/api';
 import { checkUsernameConditions } from 'src/core/utils';
-import { MultiSelectItem } from 'src/Nowruz/modules/general/components/multiSelect/multiSelect.types';
-import { RootState } from 'src/store';
+import store, { RootState } from 'src/store';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { updateOrgProfile } from 'src/store/thunks/profile.thunks';
 import * as yup from 'yup';
 
 const schema = yup
@@ -17,32 +18,40 @@ const schema = yup
     name: yup.string().required('Organization name is required'),
     username: yup.string().required('Username is required'),
     city: yup.object().shape({
-      label: yup.string(),
-      value: yup.string().required('City is required'),
+      label: yup.string().required('City is required'),
+      value: yup.string(),
     }),
     country: yup.string(),
     industry: yup.object().shape({
-      label: yup.string(),
-      value: yup.string().required('Industry is required'),
+      label: yup.string().required('Industry is required'),
+      value: yup.string(),
     }),
     summary: yup.string().required('Summary is required'),
-    socialCauses: yup.array().of(yup.string()).min(1, 'Select at least one social cause'),
+    socialCauses: yup
+      .array()
+      .of(
+        yup.object().shape({
+          label: yup.string(),
+          value: yup.string(),
+        }),
+      )
+      .min(1, 'Select at least one social cause'),
   })
   .required();
 
 export const useEditInfoOrg = (handleClose: () => void) => {
+  const dispatch = useDispatch();
   const org = useSelector<RootState, User | Organization | undefined>((state) => {
     return state.profile.identity;
   }) as Organization;
 
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
+  const [letterCount, setLetterCount] = useState(org.mission?.length);
   const keyItems = Object.keys(SOCIAL_CAUSES);
   const socialCauseItems = keyItems.map((i) => {
     return { value: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
   });
-
-  const [socialCauses, setSocialCauses] = useState<MultiSelectItem[]>(socialCausesToCategory(org?.social_causes));
 
   const {
     register,
@@ -53,16 +62,18 @@ export const useEditInfoOrg = (handleClose: () => void) => {
     clearErrors,
     watch,
     setValue,
+    reset,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
     defaultValues: {
       name: org.name,
       username: org.shortname,
-      city: { label: org.city, value: '' },
+      city: { label: org.city, value: org.city },
       country: org.country,
       summary: org.mission,
-      socialCauses: org.social_causes,
+      industry: { label: org.industry, value: org.industry },
+      socialCauses: socialCausesToCategory(org?.social_causes),
     },
   });
 
@@ -101,12 +112,28 @@ export const useEditInfoOrg = (handleClose: () => void) => {
   }, [username, isUsernameAvailable]);
 
   useEffect(() => {
-    setValue(
-      'socialCauses',
-      socialCauses.map((item) => item.value),
-      { shouldValidate: true },
-    );
-  }, [socialCauses]);
+    reset({
+      name: org.name,
+      username: org.shortname,
+      city: { label: org.city, value: org.city },
+      country: org.country,
+      summary: org.mission,
+      industry: { label: org.industry, value: org.industry },
+      socialCauses: socialCausesToCategory(org?.social_causes),
+    });
+  }, [org]);
+
+  const handleChangeSummary = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (value.length <= 2600) {
+      setValue('summary', value, { shouldValidate: true });
+      setLetterCount(value.length);
+    } else
+      setError('summary', {
+        type: 'manual',
+        message: 'Too long',
+      });
+  };
 
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
@@ -145,13 +172,33 @@ export const useEditInfoOrg = (handleClose: () => void) => {
   const onSelectIndustry = (industry) => {
     setValue('industry', { value: industry.label, label: industry.label }, { shouldValidate: true });
   };
+  async function updateIdentityList() {
+    return identities().then((resp) => dispatch(setIdentityList(resp)));
+  }
 
-  const saveOrg = () => {
-    return;
+  const saveOrg = async () => {
+    const updatedOrg = {
+      ...org,
+      name: getValues().name.trim(),
+      username: getValues().username,
+      city: getValues().city.label,
+      country: getValues().country,
+      mission: getValues().summary,
+      social_causes: getValues().socialCauses?.map((item) => item.value),
+      industry: getValues().industry.label,
+    };
+    await store.dispatch(updateOrgProfile(updatedOrg as Organization));
+    await updateIdentityList();
+    handleClose();
   };
 
   const closeModal = () => {
     handleClose();
+    reset();
+  };
+
+  const changeSocialCauses = (newVal) => {
+    setValue('socialCauses', newVal, { shouldValidate: true });
   };
 
   return {
@@ -163,13 +210,16 @@ export const useEditInfoOrg = (handleClose: () => void) => {
     searchCities,
     onSelectCity,
     city: getValues().city,
-    socialCauses,
-    setSocialCauses,
+    socialCauses: getValues().socialCauses,
+    changeSocialCauses,
     socialCauseItems,
     searchIndustries,
     onSelectIndustry,
     industry: getValues().industry,
     saveOrg,
     closeModal,
+    summary: getValues().summary,
+    handleChangeSummary,
+    letterCount,
   };
 };

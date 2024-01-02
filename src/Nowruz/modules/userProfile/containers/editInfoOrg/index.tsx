@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import React from 'react';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
@@ -20,20 +21,24 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
     onSelectCity,
     city,
     socialCauses,
-    setSocialCauses,
+    // setSocialCauses,
+    changeSocialCauses,
     socialCauseItems,
     searchIndustries,
     onSelectIndustry,
     industry,
     saveOrg,
     closeModal,
+    summary,
+    handleChangeSummary,
+    letterCount,
   } = useEditInfoOrg(handleClose);
   const modalContent = (
     <form className={css.editInfoModal}>
       <Input
         required
         id="name"
-        label="Organization name"
+        label="Organization name*"
         name="name"
         defaultValue={org.name}
         register={register}
@@ -73,6 +78,7 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
         onChange={(value) => {
           onSelectCity(value);
         }}
+        errors={errors['city']?.label?.message ? [errors['city'].label.message.toString()] : undefined}
       />
       <SearchDropdown
         required
@@ -89,18 +95,25 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
         onChange={(value) => {
           onSelectIndustry(value);
         }}
+        errors={errors['industry']?.label?.message ? [errors['industry'].label.message.toString()] : undefined}
       />
-      <Input
-        required
-        multiline
-        customHeight="92px"
-        id="summary"
-        label="Summary"
-        name="summary"
-        defaultValue={org?.mission}
-        register={register}
-        errors={errors['summary']?.message ? [errors['summary']?.message.toString()] : undefined}
-      />
+      <div className="w-full h-full flex flex-col gap-[6px]">
+        <Input
+          required
+          multiline
+          customHeight="92px"
+          id="summary*"
+          label="Summary"
+          name="summary"
+          defaultValue={org?.mission}
+          value={summary}
+          onChange={handleChangeSummary}
+          errors={errors['summary']?.message ? [errors['summary']?.message.toString()] : undefined}
+        />
+        <Typography variant="caption" className="text-Gray-light-mode-600 mr-0 ml-auto">
+          {`${letterCount}/2600`}
+        </Typography>
+      </div>
       <MultiSelect
         id={'social-causes'}
         searchTitle={'Social causes*'}
@@ -109,7 +122,7 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
         items={socialCauseItems.slice(0, 30)}
         placeholder={'Type a social cause'}
         componentValue={socialCauses}
-        setComponentValue={setSocialCauses}
+        setComponentValue={changeSocialCauses} //{setSocialCauses}
         customHeight="118px"
         popularLabel={false}
         errors={errors['socialCauses']?.message ? [errors['socialCauses']?.message.toString()] : undefined}
