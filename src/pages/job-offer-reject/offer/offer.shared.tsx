@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 import { Item } from 'src/components/molecules/input-modal/input-modal.types';
 import { ControlPrimitiveValue } from 'src/core/form/useForm/useForm.types';
 import Dapp from 'src/dapp';
-import { useChainId } from 'wagmi';
 
 import { findTokenRate } from './offer.services';
 
 export const useOfferShared = () => {
   const { web3 } = Dapp.useWeb3();
-  const chainId = useChainId();
   const [openModal, setOpenModal] = useState(false);
   const [tokens, setTokens] = useState<Item[]>([]);
   const [selectedToken, setSelectedToken] = useState<{ address: string; symbol?: string }>();
@@ -18,7 +16,8 @@ export const useOfferShared = () => {
   useEffect(() => {
     const getTokens = async () => {
       if (web3) {
-        const selectedNetwork = Dapp.NETWORKS.filter((n) => n.chain.id === chainId)[0];
+        const chainId = await web3.eth.getChainId();
+        const selectedNetwork = Dapp.NETWORKS.filter((n) => n.chain.chainId === chainId)[0];
         const mapTokens = selectedNetwork.tokens.map((token) => {
           return {
             value: token.address,
@@ -32,7 +31,7 @@ export const useOfferShared = () => {
       }
     };
     getTokens();
-  }, [web3, chainId]);
+  }, [web3]);
 
   function onSelectTokens({ value, subtitle }: Item) {
     setSelectedToken({ address: value, symbol: subtitle });

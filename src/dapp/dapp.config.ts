@@ -1,54 +1,37 @@
-import { DappConfig } from './dapp.types';
-import { bsc, bscTestnet, polygon, polygonMumbai, Chain } from 'wagmi/chains';
+import { DappConfig, Chain } from './dapp.types';
 
 export const milkomeda: Chain = {
-  id: 2001,
+  chainId: BigInt(2001),
   name: 'Milkomeda',
-  network: 'Milkomeda',
-  nativeCurrency: {
-    name: 'MILKADA',
-    symbol: 'MILKADA',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://rpc-mainnet-cardano-evm.c1.milkomeda.com/'],
-    },
-    public: {
-      http: ['https://rpc-mainnet-cardano-evm.c1.milkomeda.com/'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Explorer',
-      url: 'https://explorer-mainnet-cardano-evm.c1.milkomeda.com/',
-    },
-  },
+  currency: 'MILKADA',
+  rpcUrl: 'https://rpc-mainnet-cardano-evm.c1.milkomeda.com/',
+  explorerUrl: 'https://explorer-mainnet-cardano-evm.c1.milkomeda.com/',
 };
 
 export const milkomedaTestnet: Chain = {
-  id: 200101,
+  chainId: BigInt(200101),
   name: 'Milkomeda Testnet',
-  network: 'Milkomeda',
-  nativeCurrency: {
-    name: 'MILKTADA',
-    symbol: 'MILKTADA',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://rpc-devnet-cardano-evm.c1.milkomeda.com'],
-    },
-    public: {
-      http: ['https://rpc-devnet-cardano-evm.c1.milkomeda.com'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Explorer',
-      url: 'https://explorer-devnet-cardano-evm.c1.milkomeda.com',
-    },
-  },
+  currency: 'MILKTADA',
+  rpcUrl: 'https://rpc-devnet-cardano-evm.c1.milkomeda.com',
+  explorerUrl: 'https://explorer-devnet-cardano-evm.c1.milkomeda.com',
+  testnet: true,
+};
+
+export const bscTestnet: Chain = {
+  chainId: BigInt(97),
+  name: 'BNB Smart Chain Testnet',
+  currency: 'BNB',
+  rpcUrl: 'https://data-seed-prebsc-2-s2.binance.org:8545/',
+  explorerUrl: 'https://testnet.bscscan.com',
+  testnet: true,
+};
+
+export const bsc: Chain = {
+  chainId: BigInt(56),
+  name: 'BNB Smart Chain',
+  currency: 'BNB',
+  rpcUrl: 'https://bsc-dataseed1.defibit.io',
+  explorerUrl: 'https://bscscan.com',
   testnet: true,
 };
 
@@ -83,17 +66,6 @@ export const dappConfig: DappConfig = {
           symbol: 'USDT',
           address: '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd',
           decimals: 18,
-        },
-      ],
-    },
-    {
-      chain: polygonMumbai,
-      escrow: '0x6141408AdB801e6C657Db14b9b1410B3a4a07935',
-      tokens: [
-        {
-          name: 'USDC',
-          symbol: 'USDC',
-          address: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
         },
       ],
     },
@@ -155,7 +127,7 @@ export const dappConfig: DappConfig = {
         },
       ],
     },
-    {
+    /* {
       chain: polygon,
       escrow: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
       tokens: [
@@ -175,7 +147,7 @@ export const dappConfig: DappConfig = {
           address: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
         },
       ],
-    },
+    }, */
   ],
 
   abis: {

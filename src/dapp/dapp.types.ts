@@ -1,6 +1,14 @@
-import { Chain } from 'wagmi/chains';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
+
+export type Chain = {
+  rpcUrl: string;
+  explorerUrl: string;
+  currency: string;
+  name: string;
+  chainId: bigint;
+  testnet?: boolean;
+};
 
 export interface Token {
   name: string;

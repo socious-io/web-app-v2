@@ -1,3 +1,4 @@
+// THIS script has been depricate and no where imported
 import { Connector, Address, ConnectorData } from 'wagmi';
 import { Chain } from 'wagmi/chains';
 

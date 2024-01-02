@@ -7,14 +7,12 @@ import { getMonthName } from 'src/core/time';
 import Dapp from 'src/dapp';
 import store from 'src/store';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
-import { useAccount } from 'wagmi';
 
 import { confirmPayment, getCreditCardInfo } from './payment.service';
 import { Resolver } from './payment.types';
 
 export const usePaymentShared = () => {
-  const { web3 } = Dapp.useWeb3();
-  const { address: account, isConnected } = useAccount();
+  const { web3, account, isConnected } = Dapp.useWeb3();
   const { offer, cardInfo } = useLoaderData() as Resolver;
   const [process, setProcess] = useState(false);
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
@@ -125,7 +123,7 @@ export const usePaymentShared = () => {
     { title: 'Socious fee', price: commision },
   ];
 
-  if (stripe_fee > 0) checkList.push({ title: 'Stripe fee', price: stripe_fee }); 
+  if (stripe_fee > 0) checkList.push({ title: 'Stripe fee', price: stripe_fee });
 
   return {
     offer,
