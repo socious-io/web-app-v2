@@ -23,7 +23,7 @@
 
 .primary-theme {
   background-color: $color-primary-50;
-  color: $color-primary-700;
+  color: $color-primary-700 !important;
   border: 1px solid $color-primary-200;
 }
 
@@ -33,7 +33,12 @@
   border: 1px solid $color-grey-300;
   box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
 }
-
+.grey_blue-theme {
+  background-color: $color-grey-blue-50;
+  color: $color-grey-blue-700;
+  border: 1px solid $color-grey-blue-200;
+  box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
+}
 .round {
   border-radius: 16px;
   padding-right: 8px;

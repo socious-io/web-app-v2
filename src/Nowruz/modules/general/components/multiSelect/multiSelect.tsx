@@ -1,5 +1,5 @@
 import { Autocomplete, TextField, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Icon } from 'src/Nowruz/general/Icon';
 
 import Chip from './chip';
@@ -26,6 +26,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   } = props;
   const [chipItems, setChipItems] = useState(items);
   const [searchVal, setSearchVal] = useState('');
+  const inputRef = useRef();
 
   function filterItems(val: string) {
     setSearchVal(val);
@@ -48,13 +49,12 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   }
 
   function add(value: string, label: string) {
-    // setSearchVal('');
     const existed = componentValue.find((item) => item.value === value || item.label === label);
     if (!existed && componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
+    inputRef.current.focus();
   }
 
   function remove(val: string) {
-    // setSearchVal('');
     setComponentValue(componentValue?.filter((item) => item.label !== val));
   }
 
@@ -75,7 +75,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         clearIcon={false}
         options={[]}
         freeSolo
-        // autoSelect
         multiple
         renderTags={(value, props) =>
           value.map((option, index) => (
@@ -94,19 +93,22 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         }
         disabled={componentValue?.length >= (max || 0)}
         onInputChange={(e, newValue) => filterItems(newValue)}
-        renderInput={(params) => (
-          <div className={css.inputContainer}>
-            <TextField
-              variant="outlined"
-              label=""
-              placeholder={componentValue?.length ? '' : placeholder}
-              onChange={(e) => filterItems(e.target.value)}
-              {...params}
-              inputProps={{ ...params.inputProps, value: searchVal }}
-              value={searchVal}
-            />
-          </div>
-        )}
+        renderInput={(params) => {
+          return (
+            <div className={css.inputContainer}>
+              <TextField
+                variant="outlined"
+                label=""
+                placeholder={componentValue?.length ? '' : placeholder}
+                onChange={(e) => filterItems(e.target.value)}
+                {...params}
+                inputProps={{ ...params.inputProps, value: searchVal, tabIndex: 0 }}
+                inputRef={inputRef}
+                value={searchVal}
+              />
+            </div>
+          );
+        }}
       />
       <div className={css.captionDiv}>
         {errors &&

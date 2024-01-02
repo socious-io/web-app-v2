@@ -82,9 +82,10 @@ export const useHeaderNavBar = () => {
 
   const navigateToProfile = () => {
     const username = (currentIdentity?.meta as UserMeta).username || (currentIdentity?.meta as OrgMeta).shortname;
+    const type = currentIdentity?.type;
     if (username) {
-      const path = `profile/users/${username}/view`;
-      navigate(path);
+      if (type === 'users') navigate(`profile/users/${username}/view`);
+      else navigate(`profile/organizations/${username}/view`);
     }
   };
 

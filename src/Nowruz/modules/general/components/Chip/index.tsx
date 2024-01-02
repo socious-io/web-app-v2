@@ -11,6 +11,7 @@ export const Chip: React.FC<ChipProbs> = ({
   endIcon,
   theme = 'primary',
   shape = 'round',
+  fontSize = '12px',
 }) => {
   const chipClasses = `${styles.chip} ${theme ? styles[`${theme}-theme`] : ''} ${
     shape === 'round' ? styles.round : styles.sharp
@@ -24,7 +25,13 @@ export const Chip: React.FC<ChipProbs> = ({
             {startIcon}
           </div>
         )}
-        <div className={styles.content}>{label && <div className={styles.label}>{label}</div>}</div>
+        <div className={styles.content}>
+          {label && (
+            <span className={styles.label} style={{ fontSize }}>
+              {label}
+            </span>
+          )}
+        </div>
         {endIcon && (
           <div className={styles.endIcon} onClick={onEndIconClick}>
             {endIcon}

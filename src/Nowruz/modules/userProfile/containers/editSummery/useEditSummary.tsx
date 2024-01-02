@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { User, identities } from 'src/core/api';
+import { Organization, User, identities } from 'src/core/api';
 import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { updateUserProfile } from 'src/store/thunks/profile.thunks';
 
 export const useEditSummary = (handleClose: () => void) => {
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
-  });
+  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
+  }) as User;
   const dispatch = useDispatch();
   const [summary, setSummary] = useState(user?.mission);
   const [error, setError] = useState('');

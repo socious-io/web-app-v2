@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity } from 'src/core/api';
+import { useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { CurrentIdentity, OrgMeta, UserMeta } from 'src/core/api';
 import { Causes } from 'src/Nowruz/modules/Auth/containers/onboarding/Causes';
 import { City } from 'src/Nowruz/modules/Auth/containers/onboarding/City';
 import { CreateOrganization } from 'src/Nowruz/modules/Auth/containers/onboarding/CreateOrganization';
@@ -15,23 +15,41 @@ import { Skills } from 'src/Nowruz/modules/Auth/containers/onboarding/Skills';
 import Steper from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { Welcome } from 'src/Nowruz/modules/Auth/containers/onboarding/Welcome';
 import { UserProvider } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
+import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
 import { logout } from 'src/pages/sidebar/sidebar.service';
-import { RootState } from 'src/store';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { setIdentity } from 'src/store/reducers/profile.reducer';
 
 import css from './onboarding.module.scss';
 
 export const Onboarding = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const identities = useSelector<RootState, CurrentIdentity[]>((state) => {
-    return state.identity.entities;
-  });
+  const identities = useLoaderData() as CurrentIdentity[];
+  dispatch(setIdentityList(identities));
+
   const primary = identities.find((i) => i.primary);
+
+  const user = {
+    id: primary?.id,
+    username: (primary?.meta as UserMeta).username || (primary?.meta as OrgMeta).shortname || '',
+    email: (primary?.meta as UserMeta).email || (primary?.meta as OrgMeta).email,
+  };
+  dispatch(setIdentity(user));
+
   const type = localStorage.getItem('registerFor');
 
-  const accounts = [
-    { id: '1', type: 'users', name: primary?.meta.name, username: primary?.meta.username, img: primary?.meta.avatar },
+  const accounts: AccountItem[] = [
+    {
+      id: primary?.id || '',
+      type: 'users',
+      name: primary?.meta.name || '',
+      username: (primary?.meta as UserMeta).username || (primary?.meta as OrgMeta).shortname,
+      img: (primary?.meta as UserMeta).avatar || (primary?.meta as OrgMeta).image,
+      selected: true,
+    },
   ];
   const isMobile = window.innerWidth < 600;
   const items = [
@@ -50,7 +68,7 @@ export const Onboarding = () => {
       <UserProvider>
         <div className="flex flex-row justify-between py-4 px-8">
           <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} alt="" />
-          <IconDropDown iconItems={items} type={type === 'user' ? 'users' : 'organizations'} accounts={accounts} />
+          <IconDropDown iconItems={items} type="users" accounts={accounts} />
         </div>
         <div className="flex flex-col items-center pb-4 ">
           <div className={css.container}>
@@ -72,7 +90,7 @@ export const Onboarding = () => {
     <UserProvider>
       <div className="flex flex-row justify-between py-4 px-8">
         <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} />
-        <IconDropDown iconItems={items} type={type === 'user' ? 'users' : 'organizations'} accounts={accounts} />
+        <IconDropDown iconItems={items} type="users" accounts={accounts} />
       </div>
       <div className="flex flex-col items-center pb-4 sb:h-screen">
         <div className={css.container}>

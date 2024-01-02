@@ -1,4 +1,5 @@
 import { Media } from '../media/media.types';
+import { User } from '../users/users.types';
 export type AdditionalTypes = 'PORTFOLIO' | 'CERTIFICATE' | 'EDUCATION' | 'BENEFIT' | 'RECOMMENDATIONS';
 
 export interface EducationMeta {
@@ -27,6 +28,13 @@ export interface CertificateMeta {
   credential_url?: string;
 }
 
+export interface RecommendationMeta {
+  recommeder: User;
+  description: string;
+  date: string;
+  status: 'pending' | 'approved' | 'rejected';
+}
+
 export interface AdditionalReq {
   type: AdditionalTypes;
   title: string;
@@ -35,7 +43,7 @@ export interface AdditionalReq {
   image?: string | any;
   sub_image?: string | any;
   ref_identity_id?: string | null;
-  meta?: EducationMeta | CertificateMeta | any | null;
+  meta?: EducationMeta | CertificateMeta | RecommendationMeta | any | null;
   enabled: boolean | null;
 }
 
