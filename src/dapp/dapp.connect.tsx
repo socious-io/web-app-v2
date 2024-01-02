@@ -13,19 +13,12 @@ const chains = NETWORKS.map((n) => n.chain);
 const projectId = dappConfig.walletConnetProjectId;
 
 const metadata = {
-  name: 'Web3Modal',
-  description: 'Web3Modal Example',
-  url: 'https://web3modal.com',
+  name: 'Socious',
+  description: 'Socious Dapp',
+  url: 'https://socious.io',
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
 };
 
-const mainnet = {
-  chainId: 1,
-  name: 'Ethereum',
-  currency: 'ETH',
-  explorerUrl: 'https://etherscan.io',
-  rpcUrl: 'https://cloudflare-eth.com',
-};
 
 createWeb3Modal({
   ethersConfig: defaultConfig({ metadata }),
