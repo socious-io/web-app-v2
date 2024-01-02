@@ -30,7 +30,7 @@ export const allowance = async (web3: Web3, token: string, amount: number, decim
   const chainId = await web3.eth.getChainId();
   const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === chainId)[0];
 
-  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined;
+  const gasPrice = selectedNetwork.chain.chainId === 56 ? 5000000000 : undefined;
 
   const approved = await erc20Contract.methods
     .approve(selectedNetwork.escrow, allowanceAmount)
@@ -47,9 +47,9 @@ export const balance = async (web3: Web3, token: string) => {
 
 export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
   const chainId = await web3.eth.getChainId();
-  const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
+  const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === chainId)[0];
   const escrowContract = new web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
-  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined;
+  const gasPrice = selectedNetwork.chain.chainId === 56 ? 5000000000 : undefined;
   const result = await escrowContract.methods.withdrawn(escrowId).send({ from: web3.eth.defaultAccount, gasPrice });
 
   return result.transactionHash;
@@ -57,17 +57,6 @@ export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
 
 export const escrow = async (params: EscrowParams) => {
   const chainId = await params.web3.eth.getChainId();
-  console.log(chainId, '***********');
-  for (const net of NETWORKS) {
-    console.log(
-      net.chain.chainId,
-      ' ----------------------- ',
-      chainId,
-      ' -----------  ',
-      BigInt(net.chain.chainId) === chainId,
-    );
-  }
-
   const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === chainId)[0];
   let token = params.token;
   if (!token) token = selectedNetwork.tokens[0].address;
