@@ -30,6 +30,7 @@ import {
   impactPoints,
   filterFollowings,
   getOrganizationMembers,
+  getOrganizationByShortName,
   identities,
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -92,6 +93,31 @@ export const blueprint: RouteObject[] = [
         ],
       },
       {
+        path: 'profile/organizations',
+        children: [
+          {
+            path: ':id',
+            children: [
+              {
+                path: 'view',
+                loader: async ({ params }) => {
+                  const organization = await getOrganizationByShortName(params.id);
+                  return {
+                    organization,
+                  };
+                },
+                async lazy() {
+                  const { OrgProfile } = await import('src/Nowruz/pages/orgProfile');
+                  return {
+                    Component: OrgProfile,
+                  };
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
         path: 'jobs',
         children: [
           {
@@ -125,7 +151,6 @@ export const blueprint: RouteObject[] = [
       },
     ],
   },
-
   {
     children: [
       {

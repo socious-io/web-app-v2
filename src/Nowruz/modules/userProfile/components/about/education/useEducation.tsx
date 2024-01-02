@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CurrentIdentity, User, otherProfileByUsername } from 'src/core/api';
+import { CurrentIdentity, Organization, User, otherProfileByUsername } from 'src/core/api';
 import { removeAdditional } from 'src/core/api/additionals/additionals.api';
 import { AdditionalRes, EducationMeta } from 'src/core/api/additionals/additionals.types';
 import { monthShortNames } from 'src/core/time';
 import { RootState } from 'src/store';
-import { setUser } from 'src/store/reducers/profile.reducer';
+import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 
 export const useEducation = () => {
   const [openModal, setOpenModal] = useState(false);
   const [education, setEducation] = useState<AdditionalRes>();
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
-  });
+  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
+  }) as User;
 
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -59,7 +59,8 @@ export const useEducation = () => {
     await removeAdditional(id);
 
     const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setUser(updated));
+    dispatch(setIdentity(updated));
+    dispatch(setIdentityType('users'));
   };
 
   return {

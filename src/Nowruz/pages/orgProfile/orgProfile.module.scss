@@ -1,0 +1,30 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+}
+
+.leftCol {
+  flex: 1;
+  gap: 24px;
+}
+.rightCol {
+  flex: 3;
+}
+
+.textMd {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.textSM {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+}

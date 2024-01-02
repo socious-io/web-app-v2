@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Badge, Mission, User } from 'src/core/api';
+import { Badge, Mission, Organization, User } from 'src/core/api';
 
-import { updateUserProfile } from '../thunks/profile.thunks';
+import { updateOrgProfile, updateUserProfile } from '../thunks/profile.thunks';
 
 const initState = {
-  user: undefined,
+  identity: undefined,
+  type: 'users',
   profileReq: undefined,
   badges: [],
   missions: [],
@@ -14,15 +15,19 @@ const initState = {
 export const profileSlice = createSlice({
   name: 'profile',
   initialState: initState as {
-    user: User | undefined;
+    identity: User | Organization | undefined;
+    type: 'users' | 'organizations';
     badges: Badge[];
     missions: Mission[];
     status: string;
     error: any;
   },
   reducers: {
-    setUser: (state, action) => {
-      state.user = action.payload;
+    setIdentity: (state, action) => {
+      state.identity = action.payload;
+    },
+    setIdentityType: (state, action) => {
+      state.type = action.payload;
     },
     setBadges: (state, action) => {
       state.badges = action.payload;
@@ -38,13 +43,26 @@ export const profileSlice = createSlice({
       })
       .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.user = action.payload;
+        state.identity = action.payload;
+        state.type = 'users';
       })
       .addCase(updateUserProfile.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(updateOrgProfile.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateOrgProfile.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.identity = action.payload;
+        state.type = 'organizations';
+      })
+      .addCase(updateOrgProfile.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
 
-export const { setUser, setBadges, setMissions } = profileSlice.actions;
+export const { setIdentity, setIdentityType, setBadges, setMissions } = profileSlice.actions;

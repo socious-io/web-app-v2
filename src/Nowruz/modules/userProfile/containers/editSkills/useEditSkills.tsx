@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
-import { User, identities } from 'src/core/api';
+import { Organization, User, identities } from 'src/core/api';
 import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { updateUserProfile } from 'src/store/thunks/profile.thunks';
 
 export const useEditSkills = (handleClose: () => void) => {
   const dispatch = useDispatch();
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
-  });
+  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
+  }) as User;
   const [skills, setSkills] = useState<{ value: string; label: string }[]>([]);
   const [skillItems, setSkillItems] = useState<{ value: string; label: string }[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
