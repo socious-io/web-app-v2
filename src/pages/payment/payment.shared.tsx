@@ -12,7 +12,7 @@ import { confirmPayment, getCreditCardInfo } from './payment.service';
 import { Resolver } from './payment.types';
 
 export const usePaymentShared = () => {
-  const { web3, account, isConnected } = Dapp.useWeb3();
+  const { chainId, signer, account, isConnected } = Dapp.useWeb3();
   const { offer, cardInfo } = useLoaderData() as Resolver;
   const [process, setProcess] = useState(false);
   const [selectedCard, setSelectedCard] = useState(cardInfo?.items[0]?.id);
@@ -57,7 +57,7 @@ export const usePaymentShared = () => {
 
   async function proceedCryptoPayment() {
     // FIXME: please handle this errors in a proper way
-    if (!web3) throw new Error('Not allow web3 is not connected');
+    if (!signer || !chainId) throw new Error('Wallet is not connected');
     if (!contributor) throw new Error('Contributor wallet is not connected');
 
     setProcess(true);
@@ -66,7 +66,8 @@ export const usePaymentShared = () => {
     try {
       // put escrow on smart contract
       const result = await Dapp.escrow({
-        web3,
+        signer,
+        chainId,
         totalAmount: total_price,
         escrowAmount: assignment_total,
         contributor,

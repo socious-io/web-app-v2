@@ -1,7 +1,7 @@
 import { DappConfig, Chain } from './dapp.types';
 
 export const milkomeda: Chain = {
-  chainId: BigInt(2001),
+  chainId: 2001,
   name: 'Milkomeda',
   currency: 'MILKADA',
   rpcUrl: 'https://rpc-mainnet-cardano-evm.c1.milkomeda.com/',
@@ -9,7 +9,7 @@ export const milkomeda: Chain = {
 };
 
 export const milkomedaTestnet: Chain = {
-  chainId: BigInt(200101),
+  chainId: 200101,
   name: 'Milkomeda Testnet',
   currency: 'MILKTADA',
   rpcUrl: 'https://rpc-devnet-cardano-evm.c1.milkomeda.com',
@@ -18,7 +18,7 @@ export const milkomedaTestnet: Chain = {
 };
 
 export const bscTestnet: Chain = {
-  chainId: BigInt(97),
+  chainId: 97,
   name: 'BNB Smart Chain Testnet',
   currency: 'BNB',
   rpcUrl: 'https://data-seed-prebsc-2-s2.binance.org:8545/',
@@ -27,7 +27,7 @@ export const bscTestnet: Chain = {
 };
 
 export const bsc: Chain = {
-  chainId: BigInt(56),
+  chainId: 56,
   name: 'BNB Smart Chain',
   currency: 'BNB',
   rpcUrl: 'https://bsc-dataseed1.defibit.io',

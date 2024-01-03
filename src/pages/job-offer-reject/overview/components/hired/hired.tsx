@@ -20,7 +20,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
   const navigate = useNavigate();
   const { hiredList, endHiredList: endHiredListDefault, onDone } = props;
   const [endHiredList, setEndHiredList] = useState(endHiredListDefault);
-  const { web3 } = Dapp.useWeb3();
+  const { signer, chainId, isConnected } = Dapp.useWeb3();
   const [process, setProcess] = useState(false);
   const resolver = useLoaderData() as Loader;
   const { offerOverview, jobOverview } = resolver || {};
@@ -48,9 +48,9 @@ export const Hired = (props: HiredProps): JSX.Element => {
       setProcess(false);
       return;
     }
-    if (web3 && escrowId) {
+    if (isConnected && escrowId && signer && chainId) {
       try {
-        await Dapp.withdrawnEscrow(web3, escrowId);
+        await Dapp.withdrawnEscrow({ signer, chainId, escrowId });
         confirmMission(id).then(onDone);
       } catch (err: any) {
         dialog.confirm({
