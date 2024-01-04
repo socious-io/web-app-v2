@@ -3,13 +3,15 @@ import { dappConfig } from './dapp.config';
 import { NETWORKS } from './dapp.connect';
 import { Contract, parseUnits } from 'ethers';
 
+const gasPrice = parseUnits('5', 'gwei')
+
 export const allowance = async (params: AllowanceParams) => {
   const contract = new Contract(params.token, dappConfig.abis.token, params.signer);
   const decimals = params.decimals ||  await contract.decimals();
   const amount = parseUnits(`${params.amount}`, decimals);
   const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === params.chainId)[0];
 
-  const tx = await contract.approve(selectedNetwork.escrow, amount);
+  const tx = await contract.approve(selectedNetwork.escrow, amount, {gasPrice});
   await tx.wait();
   return { tx, amount, decimals };
 };
@@ -39,6 +41,7 @@ export const escrow = async (params: EscrowParams) => {
     parseUnits(`${params.escrowAmount}`, approved.decimals),
     params.verifiedOrg,
     token,
+    {gasPrice}
   );
 
   await tx.wait();
@@ -52,7 +55,7 @@ export const escrow = async (params: EscrowParams) => {
 export const withdrawnEscrow = async (params: WithdrawnParams) => {
   const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === params.chainId)[0];
   const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
-  const tx = await contract.withdrawn(params.escrowId);
+  const tx = await contract.withdrawn(params.escrowId, {gasPrice});
 
   await tx.wait();
 
