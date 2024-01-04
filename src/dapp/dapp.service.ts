@@ -5,7 +5,7 @@ import { Contract, parseUnits } from 'ethers';
 
 export const allowance = async (params: AllowanceParams) => {
   const contract = new Contract(params.token, dappConfig.abis.token, params.signer);
-  const decimals = await contract.decimals();
+  const decimals = params.decimals ||  await contract.decimals();
   const amount = parseUnits(`${params.amount}`, decimals);
   const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === params.chainId)[0];
 
@@ -23,7 +23,7 @@ export const escrow = async (params: EscrowParams) => {
   if (!tokenConfig) throw new Error("Offered token is not exists on this network you'd selected!");
 
   // First need allowance to verify that transaction is possible for smart contract
-  const approved = await allowance({ chainId, signer, token, amount: params.totalAmount });
+  const approved = await allowance({ chainId, signer, token, amount: params.totalAmount, decimals: tokenConfig.decimals });
 
   const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
 

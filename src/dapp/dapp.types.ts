@@ -50,6 +50,7 @@ export interface AllowanceParams {
   chainId: number;
   token: string;
   amount: number;
+  decimals?: number;
 }
 
 export interface EscrowActionEventData {
