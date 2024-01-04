@@ -1,10 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CurrentIdentity, Identity, OrgMeta, UserMeta, notifications, Notification } from 'src/core/api';
+import { useNavigate } from 'react-router-dom';
+import {
+  CurrentIdentity,
+  Identity,
+  OrgMeta,
+  UserMeta,
+  notifications,
+  Notification,
+  readAllNotifications,
+} from 'src/core/api';
 import { openToVolunteer as openToVolunteerApi, openToWork as openToWorkApi, hiring as hiringApi } from 'src/core/api';
 import { RootState } from 'src/store';
 
 export const useHeaderNavBar = () => {
+  const navigate = useNavigate();
   const identities = useSelector<RootState, Identity[]>((state) => {
     return state.identity.entities;
   });
@@ -21,9 +31,12 @@ export const useHeaderNavBar = () => {
   const [image, setImage] = useState('');
   const [openNotifPanel, setOpenNotifPanel] = useState(false);
   const [notifList, setNotifList] = useState<Notification[]>();
+  const [unreadNotif, setUnreadNotif] = useState(false);
   const getNotification = async () => {
     const res = await notifications({ page: 1, limit: 50 });
     setNotifList(res.items);
+    const unread = res.items.find((notif) => !notif.read_at);
+    if (unread) setUnreadNotif(true);
   };
 
   useEffect(() => {
@@ -67,6 +80,20 @@ export const useHeaderNavBar = () => {
     setHiring(res);
   };
 
+  const navigateToProfile = () => {
+    const username = (currentIdentity?.meta as UserMeta).username || (currentIdentity?.meta as OrgMeta).shortname;
+    const type = currentIdentity?.type;
+    if (username) {
+      if (type === 'users') navigate(`profile/users/${username}/view`);
+      else navigate(`profile/organizations/${username}/view`);
+    }
+  };
+
+  const readNotifications = async () => {
+    setOpenNotifPanel(true);
+    setUnreadNotif(false);
+    await readAllNotifications();
+  };
   return {
     userIsLoggedIn,
     userType,
@@ -81,5 +108,8 @@ export const useHeaderNavBar = () => {
     openNotifPanel,
     setOpenNotifPanel,
     notifList,
+    navigateToProfile,
+    unreadNotif,
+    readNotifications,
   };
 };

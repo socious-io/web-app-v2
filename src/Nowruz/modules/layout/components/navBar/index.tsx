@@ -16,6 +16,9 @@ export const NavBar: React.FC<NavBarProps> = ({ open, setOpen, logout }) => {
       } h-full bg-Base-White md:bg-Brand-700 flex`}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={() => setOpen(false)}
+      tabIndex={1}
     >
       <div className="flex flex-col w-full h-full">
         <LinksContainer open={open} />

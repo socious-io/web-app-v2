@@ -11,7 +11,7 @@ import { useSignInForm } from './useSignInForm';
 // import { LinkedIn } from 'public/icons/nowruz/linkedin';
 
 export const SignInForm = () => {
-  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin } = useSignInForm();
+  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried } = useSignInForm();
   const navigate = useNavigate();
 
   return (
@@ -49,15 +49,18 @@ export const SignInForm = () => {
           <Button color="primary" onClick={handleSubmit(onLogin)}>
             Continue
           </Button>
-          {/* <Button
+          <Button
             color="primary"
             variant="outlined"
-            onClick={() => navigate('/oauth/google')}
+            onClick={() => {
+              tried();
+              navigate('/oauth/google');
+            }}
             style={{ display: 'flex', gap: '12px' }}
           >
             <Google />
             Continue with Google
-          </Button> */}
+          </Button>
           {/*
             <Button variant="outlined" color="secondary" className={css.button}>
               <LinkedIn />

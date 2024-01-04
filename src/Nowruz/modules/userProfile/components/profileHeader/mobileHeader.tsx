@@ -1,28 +1,31 @@
 import variables from 'src/components/_exports.module.scss';
-import { ConnectStatus, User } from 'src/core/api';
-import { Icon } from 'src/Nowruz/general/Icon';
+import { Organization, User } from 'src/core/api';
 import { AvatarProfile } from 'src/Nowruz/modules/general/components/avatarProfile';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 
 import css from './profileHeader.module.scss';
 
 interface MobileHeaderProps {
-  user: User | undefined;
+  identity: User | Organization | undefined;
   myProfile: boolean;
   handleOpenEditInfoModal: () => void;
   handleOpenEditAvatar: () => void;
+  type: 'users' | 'organizations';
 }
 export const MobileHeader: React.FC<MobileHeaderProps> = ({
-  user,
+  identity,
   myProfile,
   handleOpenEditInfoModal,
   handleOpenEditAvatar,
+  type,
 }) => {
-  const profileImage = user?.avatar;
-  const name = `${user?.first_name} ${user?.last_name}`;
-  const username = user?.username;
+  const profileImage = type === 'users' ? (identity as User).avatar : (identity as Organization).image;
+  const name =
+    type === 'users'
+      ? `${(identity as User).first_name} ${(identity as User).last_name}`
+      : (identity as Organization).name;
+  const username = type === 'users' ? `@${(identity as User).username}` : `@${(identity as Organization).shortname}`;
 
   return (
     <div className="block md:hidden">
@@ -31,7 +34,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
           <AvatarProfile
             size="medium"
             imgUrl={profileImage?.url}
-            type="users"
+            type={type}
             verified={false}
             handleClick={myProfile ? handleOpenEditAvatar : undefined}
           />
@@ -46,10 +49,10 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
             />
           )}
         </div>
-        {user?.open_to_work && (
-          <div className={css.openToWork}>
+        {type === 'users' && (identity as User).open_to_work && (
+          <div className={css.status}>
             <Dot color={variables.color_success_500} size="small" shadow={false} />
-            <span className={css.openToWorkText}>Available for work</span>
+            <span className={css.statusText}>Available for work</span>
           </div>
         )}
         <div className={css.username}>

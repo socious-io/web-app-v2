@@ -11,7 +11,11 @@ export async function getNotification(id: string): Promise<Notification> {
 }
 
 export async function readAllNotifications(): Promise<SuccessRes> {
-  return (await get<SuccessRes>(`notifications/read/all`)).data;
+  return (await post<SuccessRes>(`notifications/read/all`, {})).data;
+}
+
+export async function readNotifications(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`notifications/read/${id}`, {})).data;
 }
 
 export async function notificationSettings(): Promise<NotificationsSettings> {

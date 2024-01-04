@@ -1,82 +1,51 @@
-import { switchNetwork } from '@wagmi/core';
-import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum';
-import { Web3Modal, Web3Button } from '@web3modal/react';
 import React, { useState, useEffect } from 'react';
 import { config } from 'src/config';
-import { configureChains, createClient, WagmiConfig, useAccount, Connector, Address, ConnectorData } from 'wagmi';
-import { Chain } from 'wagmi/chains';
-import Web3 from 'web3';
+import { createWeb3Modal, defaultConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/ethers/react';
+import { BrowserProvider, JsonRpcSigner } from 'ethers';
 
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
-import FlintWallet from './wallets/flint';
 
 export const NETWORKS: Network[] = config.dappENV === 'mainet' ? dappConfig.mainet : dappConfig.testnet;
 
-const chains: Chain[] = NETWORKS.map((n) => n.chain);
+const chains = NETWORKS.map((n) => n.chain);
 
 const projectId = dappConfig.walletConnetProjectId;
 
-const chainConf = configureChains(chains, [w3mProvider({ projectId })]);
+const metadata = {
+  name: 'Socious',
+  description: 'Socious Dapp',
+  url: 'https://socious.io',
+  icons: ['https://avatars.githubusercontent.com/u/37784886'],
+};
 
-const connectors = [...w3mConnectors({ projectId, version: 2, chains }), new FlintWallet({ chains, options: {} })];
-
-const wagmiClient = createClient({
-  autoConnect: true,
-  connectors,
-  provider: chainConf.provider,
+createWeb3Modal({
+  ethersConfig: defaultConfig({ metadata }),
+  chains,
+  projectId,
 });
 
-const ethereumClient = new EthereumClient(wagmiClient, chains);
-
 export const useWeb3 = () => {
-  const [web3, setWeb3] = useState<Web3 | null>(null);
-  const [provider, setProvider] = useState(null);
-  const { address: account, isConnected, connector } = useAccount();
+  const [provider, setProvier] = useState<BrowserProvider | undefined>();
+  const { address, isConnected, chainId } = useWeb3ModalAccount();
+  const [signer, setSigner] = useState<JsonRpcSigner | undefined>();
+  const { walletProvider } = useWeb3ModalProvider();
 
   useEffect(() => {
-    async function init() {
-      if (!isConnected || !connector || !account) {
-        setWeb3(null);
-        setProvider(null);
-        return;
-      }
-
-      const provider = await connector.getProvider();
-      const web3Instance = new Web3(provider);
-
-      if (!web3Instance) throw Error('Provider is not valid');
-
-      web3Instance.defaultAccount = account;
-      web3Instance.eth.defaultAccount = account;
-
-      setWeb3(web3Instance);
-      setProvider(provider);
-      const chainId = await web3Instance.eth.getChainId();
-      const selectedNetwork = NETWORKS.find((n) => n.chain.id === chainId);
-      if (!selectedNetwork) await switchNetwork({ chainId: chains[0].id });
+    if (isConnected && walletProvider) {
+      const ethers = new BrowserProvider(walletProvider);
+      setProvier(ethers);
+      ethers.getSigner().then((s) => setSigner(s));
     }
+  }, [address, isConnected, walletProvider]);
 
-    init();
-  }, [isConnected, connector, account]);
-
-  return { web3, provider };
+  return { account: address, provider, isConnected, signer, chainId };
 };
 
 export const Connect: React.FC = () => {
   return (
     <>
-      <WagmiConfig client={wagmiClient}>
-        <Web3Button />
-      </WagmiConfig>
-
-      <Web3Modal
-        walletImages={{
-          flint: '/icons/crypto/Flint.svg',
-        }}
-        projectId={dappConfig.walletConnetProjectId}
-        ethereumClient={ethereumClient}
-      />
+      <w3m-button />
     </>
   );
 };

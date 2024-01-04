@@ -35,7 +35,7 @@ export const Mobile = (): JSX.Element => {
   const memoizedFormState = useMemo(() => formModel(isPaidType, isPaidFiat, initialForm), [paymentMode]);
   const form = useForm(memoizedFormState);
   const formIsInvalid = !form.isValid || !paymentType || !paymentScheme;
-  const { tokens, openModal, setOpenModal, selectedToken, onSelectTokens, equivalentUSD, web3 } = useOfferShared();
+  const { tokens, openModal, setOpenModal, selectedToken, onSelectTokens, equivalentUSD, isConnected } = useOfferShared();
 
   async function onSubmit() {
     const payload: OfferPayload = {
@@ -105,7 +105,7 @@ export const Mobile = (): JSX.Element => {
               USD equivalent: <span>{equivalentUSD(form.controls.assignmentTotal.value)}</span>
             </div>
           </div>,
-          isPaidCrypto && !!web3,
+          isPaidCrypto && isConnected,
         )}
         {printWhen(
           <Input register={form} name="assignmentTotal" label="Assignment total (USD)" placeholder="amount" />,

@@ -1,5 +1,5 @@
 import variables from 'src/components/_exports.module.scss';
-import { ConnectStatus, User } from 'src/core/api';
+import { ConnectStatus, Organization, User } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AvatarProfile } from 'src/Nowruz/modules/general/components/avatarProfile';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -9,7 +9,8 @@ import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 import css from './profileHeader.module.scss';
 
 interface DesktopHeaderProps {
-  user: User | undefined;
+  identity: User | Organization | undefined;
+  type: 'users' | 'organizations';
   myProfile: boolean;
   isLoggedIn: boolean;
   connectStatus: ConnectStatus | undefined;
@@ -17,16 +18,20 @@ interface DesktopHeaderProps {
   handleOpenEditAvatar: () => void;
 }
 export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
-  user,
+  identity,
   myProfile,
   isLoggedIn,
   connectStatus,
   handleOpenEditInfoModal,
   handleOpenEditAvatar,
+  type,
 }) => {
-  const profileImage = user?.avatar;
-  const name = `${user?.first_name} ${user?.last_name}`;
-  const username = user?.username;
+  const profileImage = type === 'users' ? (identity as User).avatar : (identity as Organization).image;
+  const name =
+    type === 'users'
+      ? `${(identity as User).first_name} ${(identity as User).last_name}`
+      : (identity as Organization).name;
+  const username = type === 'users' ? `@${(identity as User).username}` : `@${(identity as Organization).shortname}`;
 
   return (
     <div className="hidden md:block">
@@ -34,7 +39,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
         <AvatarProfile
           size="large"
           imgUrl={profileImage?.url}
-          type="users"
+          type={type}
           verified={false}
           handleClick={myProfile ? handleOpenEditAvatar : undefined}
         />
@@ -42,10 +47,16 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
           <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
           <div className="text-base font-normal text-Gray-light-mode-500">{username}</div>
         </div>
-        {user?.open_to_work && (
-          <div className={css.openToWork}>
+        {type === 'users' && (identity as User).open_to_work && (
+          <div className={css.status}>
             <Dot color={variables.color_success_500} size="small" shadow={false} />
-            <span className={css.openToWorkText}>Available for work</span>
+            <span className={css.statusText}>Available for work</span>
+          </div>
+        )}
+        {type === 'organizations' && (identity as Organization).hiring && (
+          <div className={css.status}>
+            <Dot color={variables.color_success_500} size="small" shadow={false} />
+            <span className={css.statusText}>Hiring</span>
           </div>
         )}
         {myProfile && (

@@ -19,6 +19,10 @@
   cursor: pointer;
 }
 
+.chip:focus {
+  box-shadow: $Focus-rings-gray;
+}
+
 .chipLabel {
   color: $color-primary-700;
   font-size: 14px;

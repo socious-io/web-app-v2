@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
-import { CurrentIdentity, User } from 'src/core/api';
+import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 import { EditSummary } from 'src/Nowruz/modules/userProfile/containers/editSummery';
 import { RootState } from 'src/store';
@@ -9,13 +9,13 @@ import { RootState } from 'src/store';
 import css from './about.module.scss';
 
 export const Summary = () => {
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
+  const identity = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
   });
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
-  const myProfile = currentIdentity?.id === user?.id;
+  const myProfile = currentIdentity?.id === identity?.id;
   const [openEditModal, setOpenEditModal] = useState(false);
 
   return (
@@ -34,7 +34,7 @@ export const Summary = () => {
             />
           )}
         </div>
-        <div>{user?.mission}</div>
+        <div>{identity?.mission}</div>
       </div>
       <EditSummary open={openEditModal} handleClose={() => setOpenEditModal(false)} />
     </>

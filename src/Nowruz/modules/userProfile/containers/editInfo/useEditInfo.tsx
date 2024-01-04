@@ -8,6 +8,7 @@ import { socialCausesToCategory } from 'src/core/adaptors';
 import {
   Language,
   Location,
+  Organization,
   SuccessRes,
   User,
   addLanguage,
@@ -29,18 +30,18 @@ import { Error, LanguageProps } from './editInfo.types';
 const schema = yup
   .object()
   .shape({
-    username: yup.string().required('username is required'),
-    firstName: yup.string().required('first name is required'),
-    lastName: yup.string().required('last name is required'),
-    summary: yup.string().required('summary is required'),
+    username: yup.string().required('Username is required'),
+    firstName: yup.string().required('First name is required'),
+    lastName: yup.string().required('Last name is required'),
+    summary: yup.string().required('Summary is required'),
   })
   .required();
 
 export const useEditInfo = (handleClose: () => void) => {
   const dispatch = useDispatch();
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
-  });
+  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
+  }) as User;
 
   const mapLanguageToItems = (languages: Language[]) => {
     const mappedObj = languages.map((item) => {

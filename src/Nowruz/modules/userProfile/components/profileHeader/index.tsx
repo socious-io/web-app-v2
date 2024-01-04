@@ -3,17 +3,18 @@ import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
-import EditAvatarModal from 'src/Nowruz/modules/userProfile/containers/editAvatar';
 import { EditInfoModal } from 'src/Nowruz/modules/userProfile/containers/editInfo';
 
 import DesktopHeader from './desktopHeader';
 import { MobileHeader } from './mobileHeader';
 import css from './profileHeader.module.scss';
 import { useProfileHeader } from './useProfileHeader';
+import { EditImageModal } from '../../containers/editImage';
 
 export const ProfileHeader = () => {
   const {
-    user,
+    identity,
+    identityType,
     myProfile,
     isLoggedIn,
     connectStatus,
@@ -23,37 +24,38 @@ export const ProfileHeader = () => {
     openEditAvatar,
     handleOpenEditAvatar,
     handleCloseEditAvatar,
+    openEditHeader,
+    handleOpenEditHeader,
+    handleCloseEditHeader,
   } = useProfileHeader();
 
-  const coverImage = user?.cover_image;
+  const coverImage = identity?.cover_image;
 
   return (
     <>
       <div className={`${css.container} h-[336px] md:h-[360px] md:mb-12 mb-6`}>
         {myProfile && (
-          <MUIIconButton
-            aria-label="upload-banner"
-            className={`${css.iconCamera} hidden md:block`}
-            //onClick={}
-          >
+          <MUIIconButton aria-label="upload-banner" className={`${css.iconCamera}`} onClick={handleOpenEditHeader}>
             <Icon name="camera-01" color="white" fontSize={20} className={css.camera} />
           </MUIIconButton>
         )}
 
         <div
-          className={`${css.banner} h-40 md:h-60`}
+          className={`${css.banner} h-40 md:h-60 bg-no-repeat bg-cover`}
           style={{ backgroundImage: coverImage?.url ? `url(${coverImage?.url})` : 'linear-gradient(#ace0f9, #fff1eb)' }}
         ></div>
         <DesktopHeader
-          user={user}
+          identity={identity}
           myProfile={myProfile}
           isLoggedIn={isLoggedIn}
           connectStatus={connectStatus}
           handleOpenEditInfoModal={handleOpenEditInfoModal}
           handleOpenEditAvatar={handleOpenEditAvatar}
+          type={identityType}
         />
         <MobileHeader
-          user={user}
+          identity={identity}
+          type={identityType}
           myProfile={myProfile}
           handleOpenEditInfoModal={handleOpenEditInfoModal}
           handleOpenEditAvatar={handleOpenEditAvatar}
@@ -86,7 +88,8 @@ export const ProfileHeader = () => {
           </div>
         )}
       </div>
-      <EditAvatarModal open={openEditAvatar} handleClose={handleCloseEditAvatar} />
+      <EditImageModal open={openEditAvatar} handleClose={handleCloseEditAvatar} type="avatar" />
+      <EditImageModal open={openEditHeader} handleClose={handleCloseEditHeader} type="header" />
       <EditInfoModal open={openEditInfoModal} handleClose={closeEditInfoModal} />
     </>
   );
