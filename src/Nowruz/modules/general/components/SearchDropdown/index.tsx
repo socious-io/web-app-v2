@@ -77,7 +77,13 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   return (
     <div className={`${css.container} ${className}`}>
       <div className={css.labelContainer}>
-        <label htmlFor={id} className={css.label} onClick={handleLabelClick} aria-describedby={id} id="searchDropdown">
+        <label
+          htmlFor={id}
+          className={css.label}
+          onClick={handleLabelClick}
+          aria-describedby={id}
+          id={`searchDropdown-${id}`}
+        >
           {label}
         </label>
       </div>
@@ -115,7 +121,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
             indicatorSeparator: () => ({ display: 'none' }),
           }}
           {...props}
-          aria-labelledby="searchDropdown"
+          aria-labelledby={`searchDropdown-${id}`}
         />
       ) : (
         <Select
