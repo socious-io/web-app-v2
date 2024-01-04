@@ -6,7 +6,7 @@ import Dapp from 'src/dapp';
 import { findTokenRate } from './offer.services';
 
 export const useOfferShared = () => {
-  const { web3 } = Dapp.useWeb3();
+  const { isConnected, chainId } = Dapp.useWeb3();
   const [openModal, setOpenModal] = useState(false);
   const [tokens, setTokens] = useState<Item[]>([]);
   const [selectedToken, setSelectedToken] = useState<{ address: string; symbol?: string }>();
@@ -15,8 +15,7 @@ export const useOfferShared = () => {
 
   useEffect(() => {
     const getTokens = async () => {
-      if (web3) {
-        const chainId = await web3.eth.getChainId();
+      if (isConnected) {
         const selectedNetwork = Dapp.NETWORKS.filter((n) => n.chain.chainId === chainId)[0];
         const mapTokens = selectedNetwork.tokens.map((token) => {
           return {
@@ -31,7 +30,7 @@ export const useOfferShared = () => {
       }
     };
     getTokens();
-  }, [web3]);
+  }, [isConnected]);
 
   function onSelectTokens({ value, subtitle }: Item) {
     setSelectedToken({ address: value, symbol: subtitle });
@@ -57,6 +56,6 @@ export const useOfferShared = () => {
     onSelectTokens,
     onSelectCurrency,
     equivalentUSD,
-    web3,
+    isConnected,
   };
 };

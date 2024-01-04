@@ -38,7 +38,7 @@ export const Hired = (props: HiredProps): JSX.Element => {
     store.dispatch(showSpinner());
     setProcess(true);
 
-    if (!web3 && escrowId) {
+    if (!isConnected && escrowId) {
       dialog.confirm({
         title: 'Connect your wallet',
         message: `Please connect your wallet before confirm the job`,
