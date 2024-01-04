@@ -1,21 +1,19 @@
 import { Divider } from '@mui/material';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { showSpinner } from 'src/store/reducers/spinner.reducer';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
 
 import { Certificates } from './certificate/certificates';
 import { Educations } from './education/educations';
 import { Experiences } from './experience/experience';
+import { Recommendation } from './recommendaion/recommendation';
 import { Skills } from './skills';
 import { Summary } from './summary';
 import { MainInfo } from '../mainInfo';
 
 export const About = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(showSpinner());
-  }, []);
-
+  const identityType = useSelector<RootState, 'users' | 'organizations'>((state) => {
+    return state.profile.type;
+  });
   return (
     <div className="flex flex-col gap-8">
       <div className="w-full block md:hidden">
@@ -23,11 +21,17 @@ export const About = () => {
       </div>
       <Summary />
       <Divider />
-      <Skills />
-      <Divider />
-      <Experiences />
-      <Educations />
-      <Certificates />
+      {identityType === 'users' && (
+        <>
+          <Skills />
+          <Divider />
+          <Experiences />
+          <Educations />
+          <Certificates />
+        </>
+      )}
+
+      {identityType === 'organizations' && <Recommendation />}
     </div>
   );
 };

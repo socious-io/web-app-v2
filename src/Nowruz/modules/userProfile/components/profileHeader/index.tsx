@@ -13,7 +13,8 @@ import { EditImageModal } from '../../containers/editImage';
 
 export const ProfileHeader = () => {
   const {
-    user,
+    identity,
+    identityType,
     myProfile,
     isLoggedIn,
     connectStatus,
@@ -28,7 +29,7 @@ export const ProfileHeader = () => {
     handleCloseEditHeader,
   } = useProfileHeader();
 
-  const coverImage = user?.cover_image;
+  const coverImage = identity?.cover_image;
 
   return (
     <>
@@ -44,15 +45,17 @@ export const ProfileHeader = () => {
           style={{ backgroundImage: coverImage?.url ? `url(${coverImage?.url})` : 'linear-gradient(#ace0f9, #fff1eb)' }}
         ></div>
         <DesktopHeader
-          user={user}
+          identity={identity}
           myProfile={myProfile}
           isLoggedIn={isLoggedIn}
           connectStatus={connectStatus}
           handleOpenEditInfoModal={handleOpenEditInfoModal}
           handleOpenEditAvatar={handleOpenEditAvatar}
+          type={identityType}
         />
         <MobileHeader
-          user={user}
+          identity={identity}
+          type={identityType}
           myProfile={myProfile}
           handleOpenEditInfoModal={handleOpenEditInfoModal}
           handleOpenEditAvatar={handleOpenEditAvatar}

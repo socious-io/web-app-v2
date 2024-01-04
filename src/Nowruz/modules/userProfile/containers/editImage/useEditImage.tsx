@@ -2,17 +2,26 @@ import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
 import { Area } from 'react-easy-crop/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { User, identities, uploadMedia } from 'src/core/api';
+import { Organization, PostMediaUploadRes, User, identities, uploadMedia } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { updateUserProfile } from 'src/store/thunks/profile.thunks';
+import { updateUserProfile, updateOrgProfile } from 'src/store/thunks/profile.thunks';
 
 export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') => {
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
+  const identity = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
   });
-  const [imageURL, setImageURL] = useState(type === 'avatar' ? user?.avatar?.url : user?.cover_image?.url);
+  const identityType = useSelector<RootState, 'users' | 'organizations'>((state) => {
+    return state.profile.type;
+  });
+  const [imageURL, setImageURL] = useState(
+    type === 'avatar'
+      ? identityType === 'users'
+        ? (identity as User).avatar?.url
+        : (identity as Organization).image?.url
+      : identity?.cover_image?.url,
+  );
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -62,6 +71,42 @@ export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') 
     return canvas.toDataURL('image/jpeg');
   };
 
+  const updateProfileWithNewImage = async (image: PostMediaUploadRes | undefined) => {
+    let updatedUser = { ...identity };
+    if (identityType === 'users') {
+      if (type === 'avatar') {
+        updatedUser = {
+          ...identity,
+          avatar: image,
+        };
+      } else if (type === 'header') {
+        updatedUser = {
+          ...identity,
+          cover_image: image,
+        };
+      }
+      store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
+        await updateIdentityList();
+        closeModal();
+      });
+    } else {
+      if (type === 'avatar') {
+        updatedUser = {
+          ...identity,
+          image: image,
+        };
+      } else if (type === 'header') {
+        updatedUser = {
+          ...identity,
+          cover_image: image,
+        };
+      }
+      store.dispatch(updateOrgProfile(updatedUser as Organization)).then(async () => {
+        await updateIdentityList();
+        closeModal();
+      });
+    }
+  };
   const saveImage = async () => {
     const croppedImage = await getCroppedImg();
     if (croppedImage) {
@@ -75,24 +120,7 @@ export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') 
         const formData = new FormData();
         formData.append('file', blob);
         const newImg = await uploadMedia(blob as File);
-
-        let updatedUser = { ...user };
-        if (type === 'avatar') {
-          updatedUser = {
-            ...user,
-            avatar: newImg,
-          };
-        } else if (type === 'header') {
-          updatedUser = {
-            ...user,
-            cover_image: newImg,
-          };
-        }
-
-        store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
-          await updateIdentityList();
-          closeModal();
-        });
+        updateProfileWithNewImage(newImg);
       }
     }
   };
@@ -104,23 +132,7 @@ export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') 
 
   const handleRemovePhoto = async () => {
     setImageURL('');
-
-    let updatedUser = { ...user };
-    if (type === 'avatar')
-      updatedUser = {
-        ...user,
-        avatar: undefined,
-      };
-    else if (type === 'header')
-      updatedUser = {
-        ...user,
-        cover_image: undefined,
-      };
-
-    store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
-      await updateIdentityList();
-      closeModal();
-    });
+    updateProfileWithNewImage(undefined);
   };
 
   const cropperSize =

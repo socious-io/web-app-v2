@@ -2,10 +2,10 @@ import { Typography } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Languages } from 'src/constants/constants';
-import { LanguageReq } from 'src/core/api';
+import { Language } from 'src/core/api';
 
 interface LanguageProps {
-  items: LanguageReq[];
+  items: Language[];
 }
 export const LanguageJSX: React.FC<LanguageProps> = (props) => {
   const { t } = useTranslation();

@@ -19,7 +19,7 @@ import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDow
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
 import { logout } from 'src/pages/sidebar/sidebar.service';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { setUser } from 'src/store/reducers/profile.reducer';
+import { setIdentity } from 'src/store/reducers/profile.reducer';
 
 import css from './onboarding.module.scss';
 
@@ -37,7 +37,7 @@ export const Onboarding = () => {
     username: (primary?.meta as UserMeta).username || (primary?.meta as OrgMeta).shortname || '',
     email: (primary?.meta as UserMeta).email || (primary?.meta as OrgMeta).email,
   };
-  dispatch(setUser(user));
+  dispatch(setIdentity(user));
 
   const type = localStorage.getItem('registerFor');
 
@@ -68,7 +68,7 @@ export const Onboarding = () => {
       <UserProvider>
         <div className="flex flex-row justify-between py-4 px-8">
           <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} alt="" />
-          <IconDropDown iconItems={items} type="organizations" accounts={accounts} />
+          <IconDropDown iconItems={items} type="users" accounts={accounts} />
         </div>
         <div className="flex flex-col items-center pb-4 ">
           <div className={css.container}>

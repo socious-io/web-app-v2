@@ -9,7 +9,7 @@ import { monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
-import { setUser } from 'src/store/reducers/profile.reducer';
+import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 import * as yup from 'yup';
 
 const schema = yup
@@ -43,9 +43,9 @@ export const useCreateUpdateCertificate = (
   certificate: AdditionalRes,
   setCertificate: (val: AdditionalRes) => void,
 ) => {
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
-  });
+  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
+  }) as User;
   const {
     register,
     handleSubmit,
@@ -90,7 +90,7 @@ export const useCreateUpdateCertificate = (
   const initializeValues = () => {
     const meta = certificate ? (certificate.meta as CertificateMeta) : null;
 
-    let intialValue = {
+    const intialValue = {
       name: certificate?.title || '',
       orgId: meta?.organization_id || '',
       orgName: meta?.organization_name || '',
@@ -245,14 +245,16 @@ export const useCreateUpdateCertificate = (
       setCertificate(res);
     }
     const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setUser(updated));
+    dispatch(setIdentity(updated));
+    dispatch(setIdentityType('users'));
     handleClose();
   };
 
   const onDelete = async () => {
     if (certificate) await removeAdditional(certificate.id);
     const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setUser(updated));
+    dispatch(setIdentity(updated));
+    dispatch(setIdentityType('users'));
     handleClose();
   };
 

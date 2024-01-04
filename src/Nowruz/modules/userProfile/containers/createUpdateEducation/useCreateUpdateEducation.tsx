@@ -9,7 +9,7 @@ import { monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
-import { setUser } from 'src/store/reducers/profile.reducer';
+import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 import * as yup from 'yup';
 
 const schema = yup
@@ -38,9 +38,9 @@ export const useCreateUpdateEducation = (
   education: AdditionalRes,
   setEducation: (val: AdditionalRes) => void,
 ) => {
-  const user = useSelector<RootState, User | undefined>((state) => {
-    return state.profile.user;
-  });
+  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+    return state.profile.identity;
+  }) as User;
 
   const [schoolVal, setSchoolVal] = useState<OptionType | null>();
   const [schools, setSchools] = useState<Organization[]>([]);
@@ -188,7 +188,8 @@ export const useCreateUpdateEducation = (
   const onDelete = async () => {
     if (education) await removeAdditional(education.id);
     const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setUser(updated));
+    dispatch(setIdentity(updated));
+    dispatch(setIdentityType('users'));
     handleClose();
   };
 
@@ -237,7 +238,8 @@ export const useCreateUpdateEducation = (
       setEducation(res);
     }
     const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setUser(updated));
+    dispatch(setIdentity(updated));
+    dispatch(setIdentityType('users'));
     handleClose();
   };
 
