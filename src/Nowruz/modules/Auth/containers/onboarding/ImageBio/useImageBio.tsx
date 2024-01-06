@@ -33,15 +33,16 @@ export const useImageBio = () => {
 
   const updateProfile = () => {
     const avatarImage = state.avatar ? { avatar: image.id } : {};
-    updateProfileApi(
-      removeValuesFromObject(
-        {
-          ...state,
-          ...avatarImage,
-        },
-        ['', null],
-      ),
-    ).then(() => {
+    const updatedObj = removeValuesFromObject(
+      {
+        ...state,
+        ...avatarImage,
+      },
+      ['', null],
+    );
+
+    delete updatedObj.cityLabel;
+    updateProfileApi(updatedObj).then(() => {
       if (isMobile)
         navigate(`/sign-up/user/notification`, {
           state: {

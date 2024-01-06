@@ -60,10 +60,11 @@ export const useOrganizationContact = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { orgName, orgType, social_causes, bio, image, city, country, email, website, size, shortname } = state;
+    const { orgName, orgType, social_causes, bio, image, city, country, email, website, size, shortname, industry } =
+      state;
     try {
       const websiteUrl = state.website ? 'https://' + state.website : '';
-      const response = await createOrganization(
+      await createOrganization(
         removeValuesFromObject(
           {
             name: orgName,
@@ -76,6 +77,7 @@ export const useOrganizationContact = () => {
             city,
             country,
             shortname: shortname.toLowerCase(),
+            industry,
           },
           ['', null],
         ),
@@ -105,6 +107,7 @@ export const useOrganizationContact = () => {
     return cities.map((city) => ({
       label: JSON.stringify({ label: `${city.name}, ${city.country_name}`, description: city.timezone_utc }),
       value: city.country_code,
+      city: city.name,
     }));
   };
   const searchIndustries = async (searchText: string, cb) => {
@@ -164,7 +167,7 @@ export const useOrganizationContact = () => {
   }, [state.shortname]);
 
   const onSelectCity = (location) => {
-    updateUser({ ...state, city: location.label, country: location.value });
+    updateUser({ ...state, city: location.city, country: location.value, cityLabel: location.label });
   };
 
   const onSelectSize = (size) => {
@@ -179,6 +182,8 @@ export const useOrganizationContact = () => {
   };
   const isFormValid =
     state.city !== '' && state.size !== null && state.emali !== '' && state.industry !== '' && state.shortname !== '';
+
+  const cityValue = state?.cityLabel ? { label: state.cityLabel } : state?.city ? { label: state.city } : null;
   return {
     register,
     handleSubmit,
@@ -199,7 +204,7 @@ export const useOrganizationContact = () => {
     searchIndustries,
     onSelectIndustry,
     industry: state.industry,
-    city: state.city,
+    cityValue,
     email: state.email,
     username: state.shortname,
     website: state.website,
