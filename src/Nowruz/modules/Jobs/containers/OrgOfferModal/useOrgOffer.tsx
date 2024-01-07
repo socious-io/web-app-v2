@@ -5,7 +5,6 @@ import { PaymentService, ProjectPaymentSchemeType, ProjectPaymentType, offerByAp
 import { OfferPayload } from 'src/core/types';
 import { removeValuesFromObject } from 'src/core/utils';
 import Dapp from 'src/dapp';
-import { useChainId } from 'wagmi';
 import * as yup from 'yup';
 
 type Inputs = {
@@ -27,8 +26,7 @@ const schema = yup.object().shape({
   description: yup.string().required(),
 });
 export const useOrgOffer = (applicantId: string) => {
-  const { web3 } = Dapp.useWeb3();
-  const chainId = useChainId();
+  const { chainId, isConnected } = Dapp.useWeb3();
   const [tokens, setTokens] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState<string>();
   const {
@@ -48,8 +46,8 @@ export const useOrgOffer = (applicantId: string) => {
   });
   useEffect(() => {
     const getTokens = async () => {
-      if (web3) {
-        const selectedNetwork = Dapp.NETWORKS.filter((n) => n.chain.id === chainId)[0];
+      if (isConnected) {
+        const selectedNetwork = Dapp.NETWORKS.filter((n) => n.chain.chainId === chainId)[0];
         const mapTokens = selectedNetwork.tokens.map((token) => {
           return {
             value: token.address,
@@ -62,7 +60,7 @@ export const useOrgOffer = (applicantId: string) => {
       }
     };
     getTokens();
-  }, [web3, chainId]);
+  }, [isConnected, chainId]);
   const onSelectPaymentType = (paymentType: ProjectPaymentType) => {
     setValue('paymentType', paymentType);
   };

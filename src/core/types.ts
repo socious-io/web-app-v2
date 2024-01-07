@@ -1,7 +1,3 @@
-import { AbiItem } from 'web3-utils';
-
-import { JobItems, PostItems } from '../pages/search/search.types';
-
 export type UserType = 'users' | 'organizations';
 
 export type LoginReq = {
@@ -382,7 +378,6 @@ export type Offer = {
   project_id: string;
   escrow: {
     address: string;
-    abi: AbiItem[];
   };
   payment_mode: 'FIAT' | 'CRYPTO';
   crypto_currency_address: string;
