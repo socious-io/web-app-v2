@@ -20,7 +20,7 @@ export const BackLink: React.FC<BackLinkProps> = (props) => {
     <Button
       color="secondary"
       variant="text"
-      startIcon={<img height={24} src="/icons/arrow-left.svg" />}
+      startIcon={<img height={24} src="/icons/arrow-left.svg" alt="back-button-icon" />}
       onClick={onClick}
       block={block}
       fullWidth

@@ -30,3 +30,4 @@ cypress/videos/
 cypress/screenshots/
 cypress.env.json
 storybook-static
+node_modules/.package-lock.json
