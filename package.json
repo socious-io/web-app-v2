@@ -76,6 +76,7 @@
     "@babel/core": "^7.20.7",
     "@capacitor/assets": "^2.0.4",
     "@capacitor/cli": "^4.6.1",
+    "@storybook/addon-a11y": "^7.6.7",
     "@storybook/addon-essentials": "^7.5.0",
     "@storybook/addon-interactions": "^7.5.0",
     "@storybook/addon-links": "^7.5.0",
