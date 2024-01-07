@@ -22,8 +22,8 @@ const CustomOption = ({ value, ...props }) => {
   const selected = value && value.label ? value.label === label : false;
   return (
     <div className="px-1.5">
-      <div {...innerProps} className={`${css.option} ${selected ? `${css.selecetdOption}` : ''}`}>
-        {selected && <Icon name="check" fontSize={20} color="#667085" />}
+      <div {...innerProps} className={`${css.option}`}>
+        {/* {selected && <Icon name="check" fontSize={20} color="#667085" />} */}
         <div className="ml-0 mr-auto flex gap-2">
           <span style={{ marginRight: '8px' }}>{data.icon}</span>
           {labelValue} {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
