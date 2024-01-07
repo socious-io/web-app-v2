@@ -83,12 +83,18 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
                 'target-02',
                 EXPERIENCE_LEVEL_V2.find((level) => level.value === job.experience_level)?.label,
               )}
-              {job.payment_range_lower &&
+              {job.payment_scheme === 'FIXED' &&
                 renderJobFeatures(
                   'currency-dollar-circle',
                   ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
                   '(Fixed-price)',
                 )}
+              {job.payment_scheme === 'HOURLY' &&
+                renderJobFeatures(
+                  'currency-dollar-circle',
+                  ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
+                )}
+
               {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
             </div>
           </div>
