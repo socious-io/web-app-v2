@@ -22,7 +22,7 @@ export const OrganizationContact = () => {
     isShortnameValid,
     searchIndustries,
     onSelectIndustry,
-    city,
+    cityValue,
     industry,
     email,
     username,
@@ -49,14 +49,19 @@ export const OrganizationContact = () => {
         <div className="mt-5">
           <Input
             id="username"
-            label="Your organization Socious address*"
+            label="Choose your organization’s username*"
             name="username"
             value={username}
             onChange={(e) => updateUsername(e.target.value)}
             register={register}
             placeholder="organization"
             validMessage="Username available"
-            hints={[{ hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`, hide: !isShortnameValid }]}
+            hints={[
+              {
+                hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`,
+                hide: !isShortnameValid,
+              },
+            ]}
             // prefix="socious.io/"
             isValid={isUsernameValid}
             errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}
@@ -73,7 +78,7 @@ export const OrganizationContact = () => {
           icon="search-lg"
           hasDropdownIcon={false}
           label="City*"
-          value={city === '' ? null : { label: city }}
+          value={cityValue}
           onChange={(value) => onSelectCity(value)}
         />
         <SearchDropdown

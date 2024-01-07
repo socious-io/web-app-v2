@@ -31,6 +31,7 @@ export const Desktop = (): JSX.Element => {
   const [applicantDetail, setApplicantDetail] = useState<ApplicantResp>();
   const [updatedApplicantList, setUpdatedApplicantList] = useState<Loader>(resolver);
   const { isLoggedIn } = useAuth();
+
   async function onOfferClick(id: string) {
     const result = await applicant(id);
     if (Object.keys(result)?.length) {

@@ -40,7 +40,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
     onSelectTokens,
     onSelectCurrency,
     equivalentUSD,
-    web3,
+    isConnected,
   } = useOfferShared();
 
   async function onSubmit() {
@@ -116,7 +116,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
               USD equivalent: <span>{equivalentUSD(form.controls.assignmentTotal.value)}</span>
             </div>
           </div>,
-          isPaidCrypto && !!web3,
+          isPaidCrypto && isConnected,
         )}
         {printWhen(
           <InputModal

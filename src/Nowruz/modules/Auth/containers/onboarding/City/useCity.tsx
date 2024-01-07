@@ -9,8 +9,9 @@ export const useCity = () => {
   const [selectedOption, setSelectedOption] = useState();
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
-      label: `${city.name}, ${city.region_name}`,
+      label: JSON.stringify({ label: `${city.name}, ${city.country_name}`, description: city.timezone_utc }),
       countryCode: city.country_code,
+      city: city.name,
     }));
   };
 
@@ -25,10 +26,10 @@ export const useCity = () => {
     }
   };
   const onSelectCity = (location) => {
-    updateUser({ ...state, city: location.label, country: location.countryCode });
+    updateUser({ ...state, city: location.city, country: location.countryCode, cityLabel: location.label });
   };
   const isFormValid = state?.city;
-  const value = state?.city === null ? null : { label: state.city };
+  const value = state?.cityLabel ? { label: state.cityLabel } : state?.city ? { label: state.city } : null;
   return {
     onSelectCity,
     updateSelectedStep,

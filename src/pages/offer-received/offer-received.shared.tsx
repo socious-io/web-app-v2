@@ -5,7 +5,6 @@ import { acceptOffer, rejectOffer, updateWallet } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
 import { useForm } from 'src/core/form';
 import Dapp from 'src/dapp';
-import { useAccount } from 'wagmi';
 
 import { findTokenRate, getStripeLink, getSrtipeProfile, formModel } from './offer-received.services';
 import { Resolver } from './offer-received.types';
@@ -17,7 +16,7 @@ export const useOfferReceivedShared = () => {
   const { wallet_address } = recipient?.meta || {};
   const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
   const isPaid = payment_type === 'PAID';
-  const { address: account, isConnected } = useAccount();
+  const { account, isConnected } = Dapp.useWeb3();
   const [status, setStatus] = useState<StatusKeys>(offer?.status as StatusKeys);
   const [tokenRate, setTokenRate] = useState(1);
 
