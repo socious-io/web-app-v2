@@ -95,7 +95,6 @@ export const Desktop = (): JSX.Element => {
     ...NetworkMenuList,
     { label: 'Team', icon: '/icons/team.svg', link: () => navigate(`/team/${identity.id}`) },
   ];
-
   return (
     <>
       <div className={css.status}>
