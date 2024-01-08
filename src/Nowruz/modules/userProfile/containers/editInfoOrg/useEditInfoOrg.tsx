@@ -80,36 +80,30 @@ export const useEditInfoOrg = (handleClose: () => void) => {
   const username = watch('username');
   const checkUsernameAvailability = async (username: string) => {
     const checkUsername = await preRegister({ username });
-      setIsusernameAvailable(checkUsername.username === null);
-      setIsusernameAvailable(true);
-    }
+    setIsusernameAvailable(checkUsername.username === null);
   };
   const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
 
   useEffect(() => {
-// Use a descriptive variable name for clarity
-const hasUsernameConditionErrors = !!usernameConditionErrors;
-
-// Handle username condition errors concisely
-if (hasUsernameConditionErrors) {
-  setIsusernameValid(false);
-  setError('username', { type: 'manual', message: usernameConditionErrors });
-  return; 
-}
-
-if (username) {
-  debouncedCheckUsername(username);
-  setIsusernameValid(isUsernameAvailable);
-  if (isUsernameAvailable) {
-    clearErrors('username');
-  } else {
-    setError('username', { type: 'manual', message: 'Username is not available' });
-  }
-} else {
-  // Handle the case of an empty username (optional, depending on requirements)
-  setIsusernameValid(false); // Or consider setting to true if empty is allowed
-  setError('username', { type: 'manual', message: 'Username is required' });
-}
+    const usernameConditionErrors = checkUsernameConditions(username);
+    const hasUsernameConditionErrors = !!usernameConditionErrors;
+    if (hasUsernameConditionErrors) {
+      setIsusernameValid(false);
+      setError('username', { type: 'manual', message: usernameConditionErrors });
+      return;
+    }
+    if (username) {
+      debouncedCheckUsername(username);
+      setIsusernameValid(isUsernameAvailable);
+      if (isUsernameAvailable) {
+        clearErrors('username');
+      } else {
+        setError('username', { type: 'manual', message: 'Username is not available' });
+      }
+    } else {
+      setIsusernameValid(false);
+      setError('username', { type: 'manual', message: 'Username is required' });
+    }
   }, [username, isUsernameAvailable]);
 
   useEffect(() => {
