@@ -87,28 +87,29 @@ export const useEditInfoOrg = (handleClose: () => void) => {
   const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
 
   useEffect(() => {
-    const usernameConditionErrors = checkUsernameConditions(username);
+// Use a descriptive variable name for clarity
+const hasUsernameConditionErrors = !!usernameConditionErrors;
+
+// Handle username condition errors concisely
+if (hasUsernameConditionErrors) {
+  setIsusernameValid(false);
+  setError('username', { type: 'manual', message: usernameConditionErrors });
+  return; 
+}
+
+if (username) {
+  debouncedCheckUsername(username);
+  setIsusernameValid(isUsernameAvailable);
+  if (isUsernameAvailable) {
     clearErrors('username');
-    setIsusernameValid(false);
-    if (usernameConditionErrors) {
-      setIsusernameValid(false);
-      setError('username', {
-        type: 'manual',
-        message: usernameConditionErrors,
-      });
-    } else if (!usernameConditionErrors && username) {
-      debouncedCheckUsername(username);
-      if (isUsernameAvailable) {
-        setIsusernameValid(true);
-        clearErrors('username');
-      } else {
-        setIsusernameValid(false);
-        setError('username', {
-          type: 'manual',
-          message: 'Username is not available',
-        });
-      }
-    }
+  } else {
+    setError('username', { type: 'manual', message: 'Username is not available' });
+  }
+} else {
+  // Handle the case of an empty username (optional, depending on requirements)
+  setIsusernameValid(false); // Or consider setting to true if empty is allowed
+  setError('username', { type: 'manual', message: 'Username is required' });
+}
   }, [username, isUsernameAvailable]);
 
   useEffect(() => {
