@@ -101,7 +101,7 @@ export function setupInterceptors(store: Store) {
     },
     async function (error) {
       store.dispatch(hideSpinner());
-      if (error.response.status === 401 && !error.config.url.includes('auth')) {
+      if (error?.response?.status === 401 && !error.config.url.includes('auth')) {
         try {
           await refreshToken();
           return http.request(error.config);

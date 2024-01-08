@@ -238,7 +238,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
       value: city.id,
-      label: `${city.name}, ${city.region_name}`,
+      label: JSON.stringify({ label: `${city.name}, ${city.country_name}`, description: city.timezone_utc }),
+      city: city.name,
       countryCode: city.country_code,
     }));
   };
@@ -254,7 +255,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     }
   };
   const onSelectCity = (location) => {
-    setValue('city', location.label, { shouldValidate: true });
+    setValue('city', location.city, { shouldValidate: true });
     setValue('country', location.countryCode, { shouldValidate: true });
     setCityVal({ value: location.value, label: location.label });
   };

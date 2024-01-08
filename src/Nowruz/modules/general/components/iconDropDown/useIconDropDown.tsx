@@ -24,11 +24,13 @@ export const useIconDropDown = () => {
       .then((resp) => dispatch(setIdentityList(resp)))
       .then((resp) => {
         const current = resp.payload.find((item) => item.id === accountId);
-        const path =
+
+        const type =
           current?.type === 'users'
-            ? `profile/users/${(current.meta as UserMeta).username}/view`
-            : `profile/organizations/${(current?.meta as OrgMeta).shortname}/view`;
-        navigate(path);
+            ? `users/${(current.meta as UserMeta).username}`
+            : `organizations/${(current?.meta as OrgMeta).shortname}`;
+
+        navigate(`profile/${type}/view`);
       })
       .then(() => setOpen(false));
   };
