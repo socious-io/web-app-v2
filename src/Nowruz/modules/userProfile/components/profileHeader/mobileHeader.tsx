@@ -1,5 +1,7 @@
+import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Organization, User } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { AvatarProfile } from 'src/Nowruz/modules/general/components/avatarProfile';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
@@ -20,13 +22,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
   handleOpenEditAvatar,
   type,
 }) => {
-  const profileImage = type === 'users' ? (identity as User).avatar : (identity as Organization).image;
-  const name =
-    type === 'users'
-      ? `${(identity as User).first_name} ${(identity as User).last_name}`
-      : (identity as Organization).name;
-  const username = type === 'users' ? `@${(identity as User).username}` : `@${(identity as Organization).shortname}`;
-
+  const { profileImage, name, username } = getIdentityMeta(identity);
   return (
     <div className="block md:hidden">
       <div className={css.avatarMobile}>
