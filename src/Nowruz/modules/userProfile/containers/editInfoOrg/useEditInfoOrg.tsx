@@ -80,7 +80,7 @@ export const useEditInfoOrg = (handleClose: () => void) => {
   const username = watch('username');
   const checkUsernameAvailability = async (username: string) => {
     const checkUsername = await preRegister({ username });
-    if (checkUsername.username === null) {
+      setIsusernameAvailable(checkUsername.username === null);
       setIsusernameAvailable(true);
     }
   };
