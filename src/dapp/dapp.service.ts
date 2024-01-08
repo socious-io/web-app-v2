@@ -5,7 +5,7 @@ import { Contract, parseUnits } from 'ethers';
 
 export const allowance = async (params: AllowanceParams) => {
   const contract = new Contract(params.token, dappConfig.abis.token, params.signer);
-  const decimals = params.decimals ||  await contract.decimals();
+  const decimals = params.decimals || (await contract.decimals());
   const amount = parseUnits(`${params.amount}`, decimals);
   const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === params.chainId)[0];
 
@@ -23,15 +23,22 @@ export const escrow = async (params: EscrowParams) => {
   if (!tokenConfig) throw new Error("Offered token is not exists on this network you'd selected!");
 
   // First need allowance to verify that transaction is possible for smart contract
-  const approved = await allowance({ chainId, signer, token, amount: params.totalAmount, decimals: tokenConfig.decimals });
+  const approved = await allowance({
+    chainId,
+    signer,
+    token,
+    amount: params.totalAmount,
+    decimals: tokenConfig.decimals,
+  });
 
   const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
 
-  const event = new Promise<EscrowActionEventData>((resolve, reject) => {
+  // TODO right way is getting events but on huge network it wont works properly with current version
+  /* const event = new Promise<EscrowActionEventData>((resolve, reject) => {
     contract.once('EscrowAction', (id: BigInt, fee: BigInt, amount: BigInt, org, jobId, token) => {
       resolve({ id: id.toString(), fee: fee.toString(), amount: amount.toString(), org, jobId, token }); // Resolve with event data
     });
-  });
+  }); */
 
   const tx = await contract.newEscrow(
     params.contributor,
@@ -43,9 +50,12 @@ export const escrow = async (params: EscrowParams) => {
 
   await tx.wait();
 
+  const length: bigint = await contract.escrowHistoryLength();
+
   return {
     txHash: tx.hash,
-    ...(await event),
+    id: (length - BigInt(1)).toString(),
+    token,
   };
 };
 
