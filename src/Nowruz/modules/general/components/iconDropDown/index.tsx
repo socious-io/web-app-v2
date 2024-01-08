@@ -26,7 +26,12 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
 
   return (
     <div className="flex flex-col items-end relative">
-      <IconButton className={`${css.avatarBtn} ${open && `${css.avatarBtnOpen}`}`} disableRipple onClick={handleClick}>
+      <IconButton
+        className={`${css.avatarBtn} ${open && `${css.avatarBtnOpen}`}`}
+        disableRipple
+        onClick={handleClick}
+        aria-label="icon-button"
+      >
         <Avatar
           size={size}
           type={type}

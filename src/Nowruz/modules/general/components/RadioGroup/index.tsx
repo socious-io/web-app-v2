@@ -7,12 +7,21 @@ import React, { useState } from 'react';
 
 import css from './radio-group.module.scss';
 import { RadioGroupProps } from './RadioGroup.types';
-export const RadioGroup: React.FC<RadioGroupProps> = ({ row, items, id, name, label, errors, onChange }) => {
+export const RadioGroup: React.FC<RadioGroupProps> = ({
+  row,
+  items,
+  id,
+  name,
+  label,
+  errors,
+  onChange,
+  defaultValue,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<null | number>();
   return (
     <FormControl>
       <FormLabel id={id}>{label}</FormLabel>
-      <RG row={row} aria-labelledby={label} name={name}>
+      <RG row={row} aria-labelledby={label} name={name} defaultValue={defaultValue}>
         {items.map((item, index) => (
           <div onClick={() => setSelectedIndex(index)}>
             <FormControlLabel

@@ -22,8 +22,8 @@ const CustomOption = ({ value, ...props }) => {
   const selected = value && value.label ? value.label === label : false;
   return (
     <div className="px-1.5">
-      <div {...innerProps} className={`${css.option} ${selected ? `${css.selecetdOption}` : ''}`}>
-        {selected && <Icon name="check" fontSize={20} color="#667085" />}
+      <div {...innerProps} className={`${css.option}`}>
+        {/* {selected && <Icon name="check" fontSize={20} color="#667085" />} */}
         <div className="ml-0 mr-auto flex gap-2">
           <span style={{ marginRight: '8px' }}>{data.icon}</span>
           {labelValue} {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
@@ -77,7 +77,13 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   return (
     <div className={`${css.container} ${className}`}>
       <div className={css.labelContainer}>
-        <label htmlFor={id} className={css.label} onClick={handleLabelClick} aria-describedby={id}>
+        <label
+          htmlFor={id}
+          className={css.label}
+          onClick={handleLabelClick}
+          aria-describedby={id}
+          id={`searchDropdown-${id}`}
+        >
           {label}
         </label>
       </div>
@@ -115,6 +121,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
             indicatorSeparator: () => ({ display: 'none' }),
           }}
           {...props}
+          aria-labelledby={`searchDropdown-${id}`}
         />
       ) : (
         <Select
@@ -150,6 +157,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
             indicatorSeparator: () => ({ display: 'none' }),
           }}
           {...props}
+          aria-labelledby="searchDropdown"
         />
       )}
       {errors &&
