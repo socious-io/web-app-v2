@@ -16,6 +16,7 @@ export const Summary = () => {
     return state.identity.entities.find((identity) => identity.current);
   });
   const myProfile = currentIdentity?.id === identity?.id;
+  const type = currentIdentity?.type;
   const [openEditModal, setOpenEditModal] = useState(false);
 
   return (
@@ -36,7 +37,7 @@ export const Summary = () => {
         </div>
         <div>{identity?.mission}</div>
       </div>
-      <EditSummary open={openEditModal} handleClose={() => setOpenEditModal(false)} />
+      <EditSummary open={openEditModal} handleClose={() => setOpenEditModal(false)} type={type} />
     </>
   );
 };
