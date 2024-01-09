@@ -5,6 +5,7 @@ const initialState = {
   bio: '',
   city: '',
   country: '',
+  cityLabel: '',
   first_name: '',
   last_name: '',
   mission: '',
@@ -24,6 +25,7 @@ const orgInitialState = {
   image: '',
   city: '',
   country: '',
+  cityLabel: '',
   email: '',
   website: '',
   size: null,
@@ -41,6 +43,7 @@ const reducer = (state, action) => {
         }
         return filtered;
       }, {});
+
       return {
         ...state,
         ...filteredPayload,

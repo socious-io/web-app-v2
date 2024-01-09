@@ -9,4 +9,5 @@ export interface RadioGroupProps {
   label?: string;
   errors?: string[];
   onChange?: (item: Item) => void;
+  preselectIndex?: number;
 }

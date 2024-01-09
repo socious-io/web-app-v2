@@ -10,6 +10,7 @@ import { MobileHeader } from './mobileHeader';
 import css from './profileHeader.module.scss';
 import { useProfileHeader } from './useProfileHeader';
 import { EditImageModal } from '../../containers/editImage';
+import { EditInfoOrgModal } from '../../containers/editInfoOrg';
 
 export const ProfileHeader = () => {
   const {
@@ -27,6 +28,8 @@ export const ProfileHeader = () => {
     openEditHeader,
     handleOpenEditHeader,
     handleCloseEditHeader,
+    openEditInfoOrgModal,
+    closeEditInfoOrgModal,
   } = useProfileHeader();
 
   const coverImage = identity?.cover_image;
@@ -91,6 +94,7 @@ export const ProfileHeader = () => {
       <EditImageModal open={openEditAvatar} handleClose={handleCloseEditAvatar} type="avatar" />
       <EditImageModal open={openEditHeader} handleClose={handleCloseEditHeader} type="header" />
       <EditInfoModal open={openEditInfoModal} handleClose={closeEditInfoModal} />
+      <EditInfoOrgModal open={openEditInfoOrgModal} handleClose={closeEditInfoOrgModal} />
     </>
   );
 };

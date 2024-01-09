@@ -3,6 +3,7 @@ import { AlertCircle } from 'public/icons/nowruz/alert-circle';
 import React, { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { InputDropdown } from 'src/Nowruz/modules/general/components/input/InputDropdown';
 
 import css from './input.module.scss';
 import { InputProps } from './input.types';

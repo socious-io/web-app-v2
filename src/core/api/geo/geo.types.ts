@@ -35,6 +35,9 @@ export interface Location {
   region_iso: string;
   subregion_name: string | null;
   subregion_iso: string | null;
+  country_name: string;
+  timezone: string | null;
+  timezone_utc: string | null;
 }
 
 export interface LocationRes extends PaginateRes {

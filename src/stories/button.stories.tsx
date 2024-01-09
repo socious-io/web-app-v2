@@ -35,8 +35,8 @@ export const Icon = Template.bind({});
 Icon.args = {
   color: 'primary',
   variant: 'outlined',
-  startIcon: <img src="/icons/chevron-left.svg" width="15px" height="15px" />,
-  endIcon: <img src="/icons/eye-black.svg" width="15px" height="15px" />,
+  startIcon: <img src="/icons/chevron-left.svg" width="15px" height="15px" alt="icon-left" />,
+  endIcon: <img src="/icons/eye-black.svg" width="15px" height="15px" alt="icon-right" />,
 };
 Icon.parameters = {
   design: {

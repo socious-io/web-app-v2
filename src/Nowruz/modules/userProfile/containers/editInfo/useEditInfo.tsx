@@ -9,7 +9,6 @@ import {
   Language,
   Location,
   Organization,
-  SuccessRes,
   User,
   addLanguage,
   identities,
@@ -49,8 +48,9 @@ export const useEditInfo = (handleClose: () => void) => {
     });
     return mappedObj;
   };
-  const [cityVal, setCityVal] = useState(!user || !user.city ? null : { label: user.city });
+  const [cityVal, setCityVal] = useState(!user || !user.city ? null : { label: `${user.city}, ${user.country}` });
   const [selectedCity, setSelectedCity] = useState(user?.city);
+  const [selectedCountry, setSelectedCountry] = useState(user?.country);
   const [languages, setLanguages] = useState<LanguageProps[]>(mapLanguageToItems(user?.languages || []));
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
@@ -90,8 +90,9 @@ export const useEditInfo = (handleClose: () => void) => {
 
   const resetState = () => {
     setSocialCauses(socialCausesToCategory(user?.social_causes));
-    setCityVal(!user || !user.city ? null : { label: user.city });
+    setCityVal(!user || !user.city ? null : { label: `${user.city}, ${user.country}` });
     setSelectedCity(user?.city);
+    setSelectedCountry(user?.country);
     setLanguages(mapLanguageToItems(user?.languages || []));
     setIsusernameValid(false);
     setIsusernameAvailable(false);
@@ -135,8 +136,9 @@ export const useEditInfo = (handleClose: () => void) => {
 
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
-      label: `${city.name}, ${city.region_name}`,
+      label: JSON.stringify({ label: `${city.name}, ${city.country_name}`, description: city.timezone_utc }),
       countryCode: city.country_code,
+      city: city.name,
     }));
   };
 
@@ -151,7 +153,8 @@ export const useEditInfo = (handleClose: () => void) => {
     }
   };
   const onSelectCity = (location) => {
-    setSelectedCity(location.label);
+    setSelectedCity(location.city);
+    setSelectedCountry(location.countryCode);
     setCityVal({ label: location.label });
   };
   async function updateIdentityList() {
@@ -172,6 +175,7 @@ export const useEditInfo = (handleClose: () => void) => {
       username: getValues().username,
       mission: getValues().summary,
       city: selectedCity,
+      country: selectedCountry,
       social_causes: SocialCauses.map((item) => item.value),
     };
 

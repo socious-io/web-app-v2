@@ -1,86 +1,70 @@
-import Web3 from 'web3';
-
+import { AllowanceParams, EscrowActionEventData, EscrowParams, WithdrawnParams } from './dapp.types';
 import { dappConfig } from './dapp.config';
 import { NETWORKS } from './dapp.connect';
-import { EscrowParams } from './dapp.types';
+import { Contract, parseUnits } from 'ethers';
 
-const makeAmount = async (web3: Web3, token: string, amount: number, decimals?: number): Promise<string> => {
-  if (!decimals) {
-    const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
-    decimals = await erc20Contract.methods.decimals().call();
-    if (!decimals) decimals = 18;
-  }
+export const allowance = async (params: AllowanceParams) => {
+  const contract = new Contract(params.token, dappConfig.abis.token, params.signer);
+  const decimals = params.decimals || (await contract.decimals());
+  const amount = parseUnits(`${params.amount}`, decimals);
+  const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === params.chainId)[0];
 
-  const parts = amount.toString().split('.');
-  let fraction = parts[1] || '0';
-  while (fraction.length < decimals) {
-    fraction += '0';
-  }
-  const units = (parts[0] || '0') + fraction;
-  return units;
-
-  // return web3.utils.toBN(amount*100).mul(web3.utils.toBN(Math.pow(10, decimals-2))).toString();
-};
-
-export const allowance = async (web3: Web3, token: string, amount: number, decimals?: number) => {
-  // TODO: we may configure this fee ratio later
-  const allowanceAmount = await makeAmount(web3, token, amount, decimals);
-  const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
-
-  const chainId = await web3.eth.getChainId();
-  const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
-
-  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined;
-
-  const approved = await erc20Contract.methods
-    .approve(selectedNetwork.escrow, allowanceAmount)
-    .send({ from: web3.eth.defaultAccount, gasPrice });
-
-  if (!approved) throw new Error('Allowance not approved for escorw');
-};
-
-export const balance = async (web3: Web3, token: string) => {
-  const erc20Contract = new web3.eth.Contract(dappConfig.abis.token, token);
-  const result = await erc20Contract.methods.balanceOf(web3.eth.defaultAccount);
-  return web3.utils.fromWei(result);
-};
-
-export const withdrawnEscrow = async (web3: Web3, escrowId: string) => {
-  const chainId = await web3.eth.getChainId();
-  const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
-  const escrowContract = new web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
-  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined;
-  const result = await escrowContract.methods.withdrawn(escrowId).send({ from: web3.eth.defaultAccount, gasPrice });
-
-  return result.transactionHash;
+  const tx = await contract.approve(selectedNetwork.escrow, amount);
+  await tx.wait();
+  return { tx, amount, decimals };
 };
 
 export const escrow = async (params: EscrowParams) => {
-  const chainId = await params.web3.eth.getChainId();
-  const selectedNetwork = NETWORKS.filter((n) => n.chain.id === chainId)[0];
+  const { chainId, signer } = params;
+  const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === chainId)[0];
   let token = params.token;
   if (!token) token = selectedNetwork.tokens[0].address;
   const tokenConfig = selectedNetwork.tokens.find((t) => t.address === token);
   if (!tokenConfig) throw new Error("Offered token is not exists on this network you'd selected!");
-  // First need allowance to verify that transaction is possible for smart contract
-  await allowance(params.web3, token, params.totalAmount, tokenConfig?.decimals);
-  const escrowContract = new params.web3.eth.Contract(dappConfig.abis.escrow, selectedNetwork.escrow);
-  const gasPrice = selectedNetwork.chain.id === 56 ? 5000000000 : undefined;
-  const result = await escrowContract.methods
-    .newEscrow(
-      params.contributor,
-      params.projectId,
-      await makeAmount(params.web3, token, params.escrowAmount, tokenConfig?.decimals),
-      params.verifiedOrg,
-      token,
-    )
-    .send({ from: params.web3.eth.defaultAccount, gasPrice });
 
-  // Need to share <txHash> to backend on Payment API to verify and create Escrow on BE side too
-  const txHash = result.transactionHash;
+  // First need allowance to verify that transaction is possible for smart contract
+  const approved = await allowance({
+    chainId,
+    signer,
+    token,
+    amount: params.totalAmount,
+    decimals: tokenConfig.decimals,
+  });
+
+  const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
+
+  // TODO right way is getting events but on huge network it wont works properly with current version
+  /* const event = new Promise<EscrowActionEventData>((resolve, reject) => {
+    contract.once('EscrowAction', (id: BigInt, fee: BigInt, amount: BigInt, org, jobId, token) => {
+      resolve({ id: id.toString(), fee: fee.toString(), amount: amount.toString(), org, jobId, token }); // Resolve with event data
+    });
+  }); */
+
+  const tx = await contract.newEscrow(
+    params.contributor,
+    params.projectId,
+    parseUnits(`${params.escrowAmount}`, approved.decimals),
+    params.verifiedOrg,
+    token,
+  );
+
+  await tx.wait();
+
+  const length: bigint = await contract.escrowHistoryLength();
+
   return {
-    // Escrow Action will trigger right after success Escrow
-    ...result.events.EscrowAction.returnValues,
-    txHash,
+    txHash: tx.hash,
+    id: (length - BigInt(1)).toString(),
+    token,
   };
+};
+
+export const withdrawnEscrow = async (params: WithdrawnParams) => {
+  const selectedNetwork = NETWORKS.filter((n) => n.chain.chainId === params.chainId)[0];
+  const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
+  const tx = await contract.withdrawn(params.escrowId);
+
+  await tx.wait();
+
+  return tx.hash;
 };
