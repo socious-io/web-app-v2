@@ -147,6 +147,20 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          {
+            path: ':id',
+            loader: async ({ params }) => {
+              if (params.id) {
+                const requests = [job(params.id), jobQuestions(params.id)];
+                const [jobDetail, screeningQuestions] = await Promise.all(requests);
+                return { jobDetail, screeningQuestions };
+              }
+            },
+            async lazy() {
+              const { JobDetail } = await import('src/Nowruz/pages/jobs/detail');
+              return { Component: JobDetail };
+            },
+          },
         ],
       },
     ],

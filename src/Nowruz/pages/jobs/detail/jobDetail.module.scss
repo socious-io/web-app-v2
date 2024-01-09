@@ -1,0 +1,22 @@
+.container {
+  width: 100%;
+  padding: 32px 0px 48px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  @media (max-width: 640px) {
+    padding-bottom: 64px;
+  }
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 0px 32px;
+  @media (max-width: 640px) {
+    padding: 0px 16px;
+    gap: 24px;
+  }
+}

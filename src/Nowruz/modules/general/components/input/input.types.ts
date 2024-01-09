@@ -14,4 +14,5 @@ export interface InputProps extends DefaultProps {
   register?: any;
   hints?: Array<{ hint: string; hide: boolean }>;
   startIcon?: ReactNode;
+  postfix?: string | ReactNode;
 }

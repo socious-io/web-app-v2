@@ -1,6 +1,6 @@
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import { AlertCircle } from 'public/icons/nowruz/alert-circle';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 
@@ -20,6 +20,7 @@ export const Input: React.FC<InputProps> = ({
   register,
   hints,
   startIcon,
+  postfix,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,6 +57,16 @@ export const Input: React.FC<InputProps> = ({
     return val;
   };
 
+  const endAdornmentJSX = (
+    <>
+      {endIcon && <InputAdornment position="end">{endIcon}</InputAdornment>}
+      {postfix && (
+        <InputAdornment position="start" className={css.postfix}>
+          {postfix}
+        </InputAdornment>
+      )}
+    </>
+  );
   return (
     <div>
       {label && (
@@ -75,7 +86,8 @@ export const Input: React.FC<InputProps> = ({
           style: {
             height: props.customHeight ? props.customHeight : '44px',
           },
-          endAdornment: <InputAdornment position="end">{endIcon}</InputAdornment>,
+          endAdornment: endAdornmentJSX,
+
           startAdornment: prefix ? (
             <InputAdornment position="start" className={css.prefix}>
               {prefix}
