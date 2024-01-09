@@ -30,3 +30,17 @@
 .addBtn:hover {
   background-color: none;
 }
+
+.mission {
+  p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    color: $color-grey-600;
+  }
+  .seeMoreBtn {
+    color: $color-primary-700;
+    font-weight: 500;
+    margin-left: 0.5rem;
+  }
+}

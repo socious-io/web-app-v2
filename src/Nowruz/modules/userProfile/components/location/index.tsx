@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { Icon } from 'src/Nowruz/general/Icon';
 import { CountryFlag } from 'src/Nowruz/modules/general/components/countryFlag';
 
 export interface LocationProps {
@@ -10,7 +9,7 @@ export interface LocationProps {
   iconName?: string;
 }
 export const Location: React.FC<LocationProps> = (props) => {
-  const { country, city, iconName } = props;
+  const { country, city } = props;
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
       return COUNTRIES_DICT[shortname];
@@ -27,8 +26,7 @@ export const Location: React.FC<LocationProps> = (props) => {
         Location
       </Typography>
       <div className="flex gap-2 items-center">
-        {/* <CountryFlag countryCode={country || ''} /> */}
-        <Icon fontSize={20} name="marker-pin-02" className="text-Gray-light-mode-700" />
+        <CountryFlag countryCode={country || ''} />
         <Typography variant="h6" className="text-Gray-light-mode-700">
           {address}
         </Typography>
