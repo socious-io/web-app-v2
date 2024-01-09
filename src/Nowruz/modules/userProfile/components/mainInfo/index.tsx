@@ -11,11 +11,13 @@ import css from './mainInfo.module.scss';
 import { Impact } from '../impact';
 import { LanguageJSX } from '../languages';
 import { Location } from '../location';
+import { Website } from '../website';
 
 export const MainInfo = () => {
   const identity = useSelector<RootState, User | Organization | undefined>((state) => {
     return state.profile.identity;
   });
+
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
@@ -25,9 +27,7 @@ export const MainInfo = () => {
   const socialCauses = socialCausesToCategory(identity?.social_causes).map((item) => item.label);
   const bioJSX = (
     <div>
-      <Typography className={css.textMd} color={variables.color_gray_700}>
-        {identity?.bio}
-      </Typography>
+      <Typography className={css.textMd}>{identity?.bio}</Typography>
     </div>
   );
 
@@ -49,7 +49,8 @@ export const MainInfo = () => {
         fontColor={variables.color_primary_700}
       />
       <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
-      {type === 'users' && (identity as User).languages && <LanguageJSX items={(identity as User).languages} />}
+      {type === 'users' && (identity as User).languages && <LanguageJSX items={(identity as User).languages || []} />}
+      {(identity as Organization).website && <Website website={(identity as Organization).website ?? ''} />}
     </div>
   );
 };
