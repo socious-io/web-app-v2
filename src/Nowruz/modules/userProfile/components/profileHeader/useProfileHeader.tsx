@@ -18,6 +18,7 @@ export const useProfileHeader = () => {
 
   const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [openEditInfoModal, setOpenEditInfoModal] = useState(false);
+  const [openEditInfoOrgModal, setOpenEditInfoOrgModal] = useState(false);
   const [openEditAvatar, setOpenEditAvatar] = useState(false);
   const [openEditHeader, setOpenEditHeader] = useState(false);
 
@@ -34,8 +35,12 @@ export const useProfileHeader = () => {
   const closeEditInfoModal = () => {
     setOpenEditInfoModal(false);
   };
+  const closeEditInfoOrgModal = () => {
+    setOpenEditInfoOrgModal(false);
+  };
   const handleOpenEditInfoModal = () => {
-    setOpenEditInfoModal(true);
+    if (identityType === 'users') setOpenEditInfoModal(true);
+    else if (identityType === 'organizations') setOpenEditInfoOrgModal(true);
   };
 
   const handleOpenEditAvatar = async () => {
@@ -68,5 +73,7 @@ export const useProfileHeader = () => {
     openEditHeader,
     handleOpenEditHeader,
     handleCloseEditHeader,
+    openEditInfoOrgModal,
+    closeEditInfoOrgModal,
   };
 };

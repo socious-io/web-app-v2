@@ -47,6 +47,7 @@ export const updateOrgProfile = createAsyncThunk('profile/updateOrgProfile', asy
   if (org.mission) reqParam.mission = org.mission;
   if (org.culture) reqParam.culture = org.culture;
   if (org.size) reqParam.size = org.size;
+  if (org.industry) reqParam.industry = org.industry;
 
   const profile = await updateOrganization(org.id, reqParam);
   return profile;

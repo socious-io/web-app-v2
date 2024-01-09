@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import React from 'react';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
@@ -6,62 +7,52 @@ import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multi
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 import css from './editInfo.module.scss';
-import { useEditInfo } from './useEditInfo';
-import { UpdateLanguages } from '../../components/updateLanguages';
+import { EditInfoOrgProps } from './editInfoOrg.types';
+import { useEditInfoOrg } from './useEditInfoOrg';
 
-interface EditInfoModalProps {
-  open: boolean;
-  handleClose: () => void;
-}
-export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose }) => {
+export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose }) => {
   const {
+    org,
     register,
+    handleSubmit,
     errors,
-    user,
     isUsernameValid,
     searchCities,
     onSelectCity,
-    cityVal,
+    city,
+    socialCauses,
+    // setSocialCauses,
+    changeSocialCauses,
     socialCauseItems,
-    SocialCauses,
-    setSocialCauses,
-    handleSubmit,
-    saveUser,
-    languages,
-    setLanguages,
-    langErrors,
-    setLangErrors,
-    causesErrors,
+    searchIndustries,
+    onSelectIndustry,
+    industry,
+    saveOrg,
     closeModal,
-  } = useEditInfo(handleClose);
+    summary,
+    handleChangeSummary,
+    letterCount,
+  } = useEditInfoOrg(handleClose);
   const modalContent = (
     <form className={css.editInfoModal}>
       <Input
         required
-        id="first-name"
-        label="First name"
-        name="firstName"
-        defaultValue={user?.first_name}
+        id="name"
+        label="Organization name*"
+        name="name"
+        defaultValue={org.name}
         register={register}
-        errors={errors['firstName']?.message ? [errors['firstName']?.message.toString()] : undefined}
+        errors={errors['name']?.message ? [errors['name']?.message.toString()] : undefined}
       />
-      <Input
-        required
-        id="last-name"
-        label="Last name"
-        name="lastName"
-        register={register}
-        defaultValue={user?.last_name}
-        errors={errors['lastName']?.message ? [errors['lastName']?.message.toString()] : undefined}
-      />
+
       <Input
         required
         id="username"
-        defaultValue={user?.username}
+        defaultValue={org.shortname}
         label="Username*"
         name="username"
         register={register}
-        validMessage="Username available"
+        validMessage="This username is available"
         hints={[
           {
             hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`,
@@ -76,7 +67,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         required
         id="location"
         cacheOptions
-        value={cityVal}
+        value={city}
         isAsync
         loadOptions={searchCities}
         defaultOptions
@@ -87,18 +78,42 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         onChange={(value) => {
           onSelectCity(value);
         }}
+        errors={errors['city']?.label?.message ? [errors['city'].label.message.toString()] : undefined}
       />
-      <Input
+      <SearchDropdown
         required
-        multiline
-        customHeight="92px"
-        id="summary"
-        label="Summary"
-        name="summary"
-        defaultValue={user?.mission}
-        register={register}
-        errors={errors['summary']?.message ? [errors['summary']?.message.toString()] : undefined}
+        id="industry"
+        cacheOptions
+        value={industry}
+        isAsync
+        loadOptions={searchIndustries}
+        defaultOptions
+        className="my-5"
+        icon="search-lg"
+        hasDropdownIcon={false}
+        label="Industry*"
+        onChange={(value) => {
+          onSelectIndustry(value);
+        }}
+        errors={errors['industry']?.label?.message ? [errors['industry'].label.message.toString()] : undefined}
       />
+      <div className="w-full h-full flex flex-col gap-[6px]">
+        <Input
+          required
+          multiline
+          customHeight="92px"
+          id="summary*"
+          label="Summary"
+          name="summary"
+          defaultValue={org?.mission}
+          value={summary}
+          onChange={handleChangeSummary}
+          errors={errors['summary']?.message ? [errors['summary']?.message.toString()] : undefined}
+        />
+        <Typography variant="caption" className="text-Gray-light-mode-600 mr-0 ml-auto">
+          {`${letterCount}/2600`}
+        </Typography>
+      </div>
       <MultiSelect
         id={'social-causes'}
         searchTitle={'Social causes*'}
@@ -106,25 +121,19 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         maxLabel={'Max. 5 causes'}
         items={socialCauseItems.slice(0, 30)}
         placeholder={'Type a social cause'}
-        componentValue={SocialCauses}
-        setComponentValue={setSocialCauses}
+        componentValue={socialCauses}
+        setComponentValue={changeSocialCauses} //{setSocialCauses}
         customHeight="118px"
         popularLabel={false}
-        errors={causesErrors}
+        errors={errors['socialCauses']?.message ? [errors['socialCauses']?.message.toString()] : undefined}
         displayDefaultBadges={false}
-      />
-      <UpdateLanguages
-        languages={languages}
-        setLanguages={setLanguages}
-        errors={langErrors}
-        setErrors={setLangErrors}
       />
     </form>
   );
 
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
-      <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(saveUser)}>
+      <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(saveOrg)}>
         Save
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={closeModal}>

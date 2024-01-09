@@ -1,3 +1,5 @@
+import { Organization, User } from './api';
+
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
   if (value) {
     return fn(params);
@@ -54,4 +56,27 @@ export const checkUsernameConditions = (username: string) => {
   if (username.startsWith('.') || username.startsWith('_')) return "Shouldn't start with a period or underscore.";
   if (/[\._]{2,}/.test(username)) return 'No consecutive periods or underscores.';
   if (username.length < 6 || username.length > 24) return 'Must be between 6 and 24 characters.';
+};
+
+export const getIdentityMeta = (identity: User | Organization | undefined) => {
+  if (!identity)
+    return {
+      username: '',
+      name: '',
+      profileImage: undefined,
+    };
+  if ('first_name' in identity) {
+    const user = identity as User;
+    return {
+      username: `@${user.username}`,
+      name: `${user.first_name} ${user.last_name}`,
+      profileImage: user.avatar,
+    };
+  }
+  const org = identity as Organization;
+  return {
+    username: `@${org.shortname}`,
+    name: org.name,
+    profileImage: org.image,
+  };
 };
