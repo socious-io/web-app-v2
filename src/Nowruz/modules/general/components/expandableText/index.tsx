@@ -1,44 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
+import { convertMarkdownToJSX } from 'src/core/convert-md-to-jsx';
+import { printWhen } from 'src/core/utils';
 
 import css from './expandableText.module.scss';
 import { ExpandableTextProps } from './expandableText.types';
 
-export const ExpandableText: React.FC<ExpandableTextProps> = ({ text, maxLenght, seeMore = true, customStyle }) => {
-  const [displaySeeMore, setDisplaySeeMore] = useState(seeMore);
-  const [textStr, setTextStr] = useState(text);
+export const ExpandableText: React.FC<ExpandableTextProps> = ({
+  text,
+  expectedLength = 200,
+  clickableUrls = true,
+  isMarkdown = false,
+}) => {
+  const [maintext, setMainText] = useState(text);
+  const expect = text.slice(0, expectedLength);
+  const viewMoreCondition = expect.length < text.length;
+  const [shouldViewMore, setShouldViewMore] = useState(viewMoreCondition);
 
-  const truncateString = () => {
-    const len = text?.length || 0;
-    if (len > maxLenght) {
-      let truncated = textStr?.slice(0, maxLenght);
-      if (truncated.charAt(truncated.length - 1) !== ' ') {
-        const idx = truncated.lastIndexOf(' ');
-        truncated = truncated.slice(0, idx);
-      }
-      setTextStr(truncated.concat('...'));
-      if (seeMore) setDisplaySeeMore(true);
-    } else {
-      setTextStr(text);
-      setDisplaySeeMore(false);
-    }
-  };
-
-  const seeMoreClick = () => {
-    setTextStr(text);
-    setDisplaySeeMore(false);
+  const toggleExpect = (): void => {
+    setMainText(text);
+    setShouldViewMore(!shouldViewMore);
   };
 
   useEffect(() => {
-    truncateString();
+    setShouldViewMore(viewMoreCondition);
+    setMainText(expect);
   }, [text]);
+
+  const renderText = () => {
+    if (clickableUrls && !isMarkdown) {
+      return <TextClickableURLs text={maintext} />;
+    } else if (isMarkdown) {
+      return convertMarkdownToJSX(maintext);
+    }
+    return maintext;
+  };
+
   return (
-    <>
-      <span className={`whitespace-pre-wrap ${customStyle}`}>{textStr}</span>
-      {displaySeeMore && (
-        <button className={css.seeMoreBtn} onClick={seeMoreClick}>
-          Read more
-        </button>
+    <div className={css.expect}>
+      {renderText()}
+      {printWhen(<>... </>, maintext.length < text.length)}
+      {printWhen(
+        <span className={css.expect__seeMore} onClick={toggleExpect}>
+          See more
+        </span>,
+        shouldViewMore,
       )}
-    </>
+    </div>
   );
 };

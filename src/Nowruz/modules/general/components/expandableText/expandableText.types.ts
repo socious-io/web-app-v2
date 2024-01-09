@@ -1,6 +1,6 @@
 export interface ExpandableTextProps {
   text: string;
-  maxLenght: number;
-  seeMore?: boolean;
-  customStyle?: string;
+  expectedLength?: number;
+  clickableUrls?: boolean;
+  isMarkdown?: boolean;
 }

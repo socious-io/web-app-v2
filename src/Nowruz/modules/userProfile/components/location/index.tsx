@@ -28,7 +28,7 @@ export const Location: React.FC<LocationProps> = (props) => {
       </Typography>
       <div className="flex gap-2 items-center">
         {/* <CountryFlag countryCode={country || ''} /> */}
-        <Icon fontSize={20} name="marker-pin-02" className="text-Gray-light-mode-700" />
+        <Icon fontSize={20} name="marker-pin-01" className="text-Gray-light-mode-700" />
         <Typography variant="h6" className="text-Gray-light-mode-700">
           {address}
         </Typography>
