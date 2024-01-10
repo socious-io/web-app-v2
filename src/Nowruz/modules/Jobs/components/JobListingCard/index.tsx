@@ -44,10 +44,10 @@ export const JobListingCard = ({ job }) => {
           <div className={css.info}>
             <div className={css.chips}>
               {socialCausesToCategory(job.causes_tags).map(({ label }) => (
-                <Chip label={label} fontSize="14px" />
+                <Chip label={label} size="md" />
               ))}
               {skills.map(({ label }) => (
-                <Chip label={label} fontSize="14px" theme="grey_blue" />
+                <Chip label={label} size="md" theme="grey_blue" />
               ))}
             </div>
             <div className={css.jobDescription}>{job.description}</div>

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
+import { Icon } from 'src/Nowruz/general/Icon';
 import { ChipList } from 'src/Nowruz/modules/general/components/chipList';
 import { Link } from 'src/Nowruz/modules/general/components/link';
 import { RootState } from 'src/store';
@@ -23,6 +24,10 @@ export const MainInfo = () => {
   });
   const myProfile = currentIdentity?.id === identity?.id;
   const type = currentIdentity?.type;
+  const org = identity as Organization;
+  const user = identity as User;
+
+  console.log('test log org', org);
 
   const socialCauses = socialCausesToCategory(identity?.social_causes).map((item) => item.label);
   const bioJSX = (
@@ -30,6 +35,22 @@ export const MainInfo = () => {
       <Typography className={css.textMd}>{identity?.bio}</Typography>
     </div>
   );
+
+  const renderData = (title: string, iconName: string, value: string) => {
+    return (
+      <div className="flex flex-col gap-2">
+        <Typography variant="subtitle1" className="text-Gray-light-mode-600">
+          {title}
+        </Typography>
+        <div className="flex gap-2">
+          <Icon name={iconName} fontSize={20} color={variables.color_grey_500} />
+          <Typography variant="h6" className="text-Gray-light-mode-700">
+            {value}
+          </Typography>
+        </div>
+      </div>
+    );
+  };
 
   const connectionJSX = (
     <div className="flex gap-2">
@@ -49,8 +70,10 @@ export const MainInfo = () => {
         fontColor={variables.color_primary_700}
       />
       <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
-      {type === 'users' && (identity as User).languages && <LanguageJSX items={(identity as User).languages || []} />}
-      {(identity as Organization).website && <Website website={(identity as Organization).website ?? ''} />}
+      {type === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
+      {org.industry && renderData('Industry', 'globe-04', org.industry)}
+      {org.size && renderData('Size', 'users-01', org.size)}
+      {org.website && <Website website={org.website ?? ''} />}
     </div>
   );
 };
