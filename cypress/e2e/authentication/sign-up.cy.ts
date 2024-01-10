@@ -13,10 +13,29 @@ describe('Sign up', () => {
         });
     });
 
-    cy.intercept('GET', `${Cypress.env('api_server')}/auth/otp/confirm?email=*`, {
-      statusCode: 200,
-      body: { message: 'success' },
+    cy.intercept('GET', `${Cypress.env('api_server')}/auth/otp/confirm*`, (req) => {
+      console.log('Intercepted OTP request:', req);
+      const url = new URL(req.url);
+      const code = url.searchParams.get('code');
+      const email = url.searchParams.get('email');
+
+      if (code === '111111') {
+        req.reply({
+          statusCode: 200,
+          body: { message: 'OTP verified successfully' },
+      });
+      } else {
+        req.reply({
+          statusCode: 400,
+          body: { message: 'Invalid OTP' },
+        });
+      }
     });
+
+    // cy.intercept('GET', `${Cypress.env('api_server')}/auth/otp/confirm?email=*`, {
+    //   statusCode: 200,
+    //   body: { message: 'success' },
+    // });
   });
 
   it('it should check sign up process', () => {
