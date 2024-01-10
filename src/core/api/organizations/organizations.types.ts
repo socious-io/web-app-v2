@@ -21,6 +21,7 @@ export interface OrganizationReq {
   cover_image?: string | any;
   mission?: string;
   culture?: string;
+  industry?: string;
   size?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'L';
 }
 
@@ -53,6 +54,7 @@ export interface Organization extends OrganizationReq {
   hiring: boolean;
   recommendations?: AdditionalRes[];
   benefits?: AdditionalRes[];
+  industry?: string;
   created_at: Date;
   updated_at: Date;
 }

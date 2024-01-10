@@ -9,9 +9,10 @@ import { useEditSummary } from './useEditSummary';
 interface EditSummaryProps {
   open: boolean;
   handleClose: () => void;
+  type?: 'users' | 'organizations';
 }
-export const EditSummary: React.FC<EditSummaryProps> = ({ open, handleClose }) => {
-  const { error, summary, handleChange, letterCount, closeModal, onSave } = useEditSummary(handleClose);
+export const EditSummary: React.FC<EditSummaryProps> = ({ open, handleClose, type = 'users' }) => {
+  const { error, summary, handleChange, letterCount, closeModal, onSave } = useEditSummary(handleClose, type);
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-[6px]">
       <Input

@@ -70,43 +70,20 @@ export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') 
 
     return canvas.toDataURL('image/jpeg');
   };
+  function updateIdentityImage(image: PostMediaUploadRes | undefined) {
+    const updatedUser = { ...identity };
+    const imageProperty = type === 'avatar' ? (identityType === 'users' ? 'avatar' : 'image') : 'cover_image';
+    updatedUser[imageProperty] = image;
+    const dispatchAction =
+      identityType === 'users'
+        ? store.dispatch(updateUserProfile(updatedUser as User))
+        : store.dispatch(updateOrgProfile(updatedUser as Organization));
+    dispatchAction.then(async () => {
+      await updateIdentityList();
+      closeModal();
+    });
+  }
 
-  const updateProfileWithNewImage = async (image: PostMediaUploadRes | undefined) => {
-    let updatedUser = { ...identity };
-    if (identityType === 'users') {
-      if (type === 'avatar') {
-        updatedUser = {
-          ...identity,
-          avatar: image,
-        };
-      } else if (type === 'header') {
-        updatedUser = {
-          ...identity,
-          cover_image: image,
-        };
-      }
-      store.dispatch(updateUserProfile(updatedUser as User)).then(async () => {
-        await updateIdentityList();
-        closeModal();
-      });
-    } else {
-      if (type === 'avatar') {
-        updatedUser = {
-          ...identity,
-          image: image,
-        };
-      } else if (type === 'header') {
-        updatedUser = {
-          ...identity,
-          cover_image: image,
-        };
-      }
-      store.dispatch(updateOrgProfile(updatedUser as Organization)).then(async () => {
-        await updateIdentityList();
-        closeModal();
-      });
-    }
-  };
   const saveImage = async () => {
     const croppedImage = await getCroppedImg();
     if (croppedImage) {
@@ -120,7 +97,7 @@ export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') 
         const formData = new FormData();
         formData.append('file', blob);
         const newImg = await uploadMedia(blob as File);
-        updateProfileWithNewImage(newImg);
+        updateIdentityImage(newImg);
       }
     }
   };
@@ -132,7 +109,7 @@ export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') 
 
   const handleRemovePhoto = async () => {
     setImageURL('');
-    updateProfileWithNewImage(undefined);
+    updateIdentityImage(undefined);
   };
 
   const cropperSize =
@@ -142,14 +119,14 @@ export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') 
           height: 500,
         }
       : isTouchDevice()
-      ? {
-          width: 550,
-          height: 165,
-        }
-      : {
-          width: 640,
-          height: 192,
-        };
+        ? {
+            width: 550,
+            height: 165,
+          }
+        : {
+            width: 640,
+            height: 192,
+          };
 
   return {
     crop,

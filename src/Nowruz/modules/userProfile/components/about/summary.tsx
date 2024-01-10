@@ -23,6 +23,7 @@ export const Summary = () => {
   } = useSeeMore(identity?.mission ?? '');
 
   const myProfile = currentIdentity?.id === identity?.id;
+  const type = currentIdentity?.type;
   const [openEditModal, setOpenEditModal] = useState(false);
 
   return (
@@ -52,7 +53,7 @@ export const Summary = () => {
           </p>
         </div>
       </div>
-      <EditSummary open={openEditModal} handleClose={() => setOpenEditModal(false)} />
+      <EditSummary open={openEditModal} handleClose={() => setOpenEditModal(false)} type={type} />
     </>
   );
 };
