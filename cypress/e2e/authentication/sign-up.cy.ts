@@ -46,17 +46,36 @@ describe('Sign up', () => {
 
     // Click submit
     cy.contains('button', 'Continue').click();
+
     // Wait for the register API call to complete
     cy.wait(3000);
 
     cy.url().should('include', '/sign-up/user/verification');
 
+    // Type in 1 on each input field
     cy.get('input[type="tel"]').each(($input) => {
       cy.wrap($input).type('1');
     });
+
+    // Click on the Verify email button
     cy.contains('button', 'Verify email').click();
 
-    cy.url().should('include', '/sign-up/user/complete');
+    // check whether we are on the password setting page
+    cy.url().should('include', '/sign-up/user/password');
+
+    // Enter password
+    cy.get('input[name=password]').type('Socious1234!');
+
+    // Confirm password
+    cy.get('input[name=confirm]').type('Socious1234!');
+
+    // Click continue
+    cy.contains('button', 'Continue').click();
+
+     // Wait for the API call to complete
+    cy.wait(3000);
+
+
   });
 
   it('it should checks if emal already exists', () => {
