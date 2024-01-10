@@ -22,17 +22,17 @@ describe('Sign up', () => {
   it('it should check sign up process', () => {
     cy.visit(`${Cypress.env('app_url')}/sign-up/user/email`);
 
-    // Fill in the username
-    cy.get('input[name=email]').type(Cypress.env('email'));
+    // Fill in the random email address
+    cy.get('input[name=email]').type(`${Date.now()}@gmail.com`);
 
     // Click submit
     cy.contains('button', 'Continue').click();
     // Wait for the register API call to complete
-    cy.wait(2000);
+    cy.wait(3000);
 
     cy.url().should('include', '/sign-up/user/verification');
 
-    cy.get('input[type="number"]').each(($input) => {
+    cy.get('input[type="tel"]').each(($input) => {
       cy.wrap($input).type('1');
     });
     cy.contains('button', 'Verify email').click();
