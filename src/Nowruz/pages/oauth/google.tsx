@@ -55,7 +55,6 @@ export const GoogleOauth2 = () => {
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(await identities()));
     const userProfile = await profile();
-    //console.log(await determineUserLandingPath(userProfile, path));
     navigate(await determineUserLandingPath(userProfile, path));
     return loginResp;
   }
