@@ -22,13 +22,40 @@ export const GoogleOauth2 = () => {
     });
   };
 
+  const hasUserParticularsMandatoryFields = (profile: User) => {
+    const particularsFields: (keyof User)[] = ['first_name', 'last_name', 'username'];
+
+    return particularsFields.some((field) => {
+      const value = profile[field];
+      return value === null || value === '';
+    });
+  };
+
+  async function determineUserLandingPath(userProfile: User, path?: string | null | undefined) {
+    const isParticularsIncomplete = hasUserParticularsMandatoryFields(userProfile);
+    const isOnboardingIncomplete = checkOnboardingMandatoryFields(userProfile);
+
+    if (isParticularsIncomplete) {
+      return '/sign-up/user/complete';
+    }
+    // Use provided path if both particulars and onboarding are complete
+    if (path) {
+      return path;
+    }
+    // Handle onboarding if particulars are complete
+    if (isOnboardingIncomplete) {
+      return '/sign-up/user/onboarding';
+    }
+    // Default to jobs page if no path and both processes are complete
+    return '/jobs';
+  }
+
   async function onLoginSucceed(loginResp: AuthRes) {
     await setAuthParams(loginResp, true);
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(await identities()));
     const userProfile = await profile();
-    const userLandingPath = checkOnboardingMandatoryFields(userProfile) ? '/sign-up/user/complete' : '/jobs';
-    navigate(path ? path : userLandingPath);
+    navigate(await determineUserLandingPath(userProfile, path));
     return loginResp;
   }
 
