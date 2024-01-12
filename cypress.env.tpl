@@ -1,7 +1,7 @@
 // create cypress.env.json with these values
 {
-    "api_server": "http://localhost:8888/api/v1/",
+    "api_server": "https://dev.socious.io/api/v2/",
     "app_url":"http://localhost:3000",
     "email":"your login email",
-    "password":"your login password" 
+    "password":"your login password"
 }

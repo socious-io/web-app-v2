@@ -1,5 +1,10 @@
 describe('Sign up', () => {
   beforeEach(() => {
+    cy.intercept('GET', `${Cypress.env('api_server')}/auth/preregister*`, {
+      statusCode: 200,
+      body: { message: 'success' },
+    });
+
     // Mock the register API call
     cy.intercept('POST', `${Cypress.env('api_server')}/auth/register`, (req) => {
       if (req.body.email === 'existingEmail@test.com')
