@@ -1,10 +1,5 @@
 describe('Sign up', () => {
   beforeEach(() => {
-    cy.intercept('GET', `${Cypress.env('api_server')}/auth/preregister*`, {
-      statusCode: 200,
-      body: { message: 'success' },
-    });
-
     // Mock the register API call
     cy.intercept('POST', `${Cypress.env('api_server')}/auth/register`, (req) => {
       if (req.body.email === 'existingEmail@test.com')
@@ -37,10 +32,15 @@ describe('Sign up', () => {
       }
     });
 
-    // cy.intercept('GET', `${Cypress.env('api_server')}/auth/otp/confirm?email=*`, {
-    //   statusCode: 200,
-    //   body: { message: 'success' },
-    // });
+    cy.intercept('POST', `${Cypress.env('api_server')}/user/change-password-direct*`, {
+      statusCode: 200,
+      body: { message: 'success' },
+    });
+
+    cy.intercept('POST', `${Cypress.env('api_server')}/user/update/profile*`, {
+      statusCode: 200,
+      body: { message: 'success' },
+    });
   });
 
   it('it should check sign up process', () => {
@@ -80,7 +80,20 @@ describe('Sign up', () => {
      // Wait for the API call to complete
     cy.wait(3000);
 
+    // Type first name
+    cy.get('input[name=firstName]').type('Umaya');
 
+    // Type last name
+    cy.get('input[name=lastName]').type('Nigina');
+
+     // Type last name
+    cy.get('input[name=username]').type('umayanigina');
+
+     // Click on Continue
+    cy.contains('button', 'Continue').click();
+
+     // Wait for the API call to complete
+    cy.wait(3000);
   });
 
   it('it should checks if emal already exists', () => {
