@@ -45,6 +45,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
     onSave,
     onDelete,
   } = useCreateUpdateExperience(handleClose, experience);
+
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
@@ -53,7 +54,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         required
         name="title"
         register={register}
-        placeholder="What is your title?"
+        placeholder="Enter job title"
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
       />
       <SearchDropdown
@@ -143,7 +144,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           errors={errors['startMonth']?.message ? [errors['startMonth']?.message.toString()] : undefined}
         />
         <SearchDropdown
-          required
           id="start-year"
           value={startYear}
           options={years}
@@ -225,6 +225,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
       open={open}
       handleClose={handleClose}
       title={experience ? 'Edit experience' : 'Add experience'}
+      subTitle={experience ? '' : 'Share where you’ve worked on your profile.'}
       content={contentJSX}
       footer={modalFooterJsx}
     />

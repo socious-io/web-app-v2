@@ -120,12 +120,13 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
 
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
-    const start = currentYear - 40;
+    const start = currentYear - 30;
     const options: OptionType[] = [];
-    for (let i = start; i <= currentYear; i++) {
+    for (let i = currentYear; i >= start; i--) {
       const year = i.toString();
       options.push({ value: year, label: year });
     }
+
     setYears(options);
   };
   const {
