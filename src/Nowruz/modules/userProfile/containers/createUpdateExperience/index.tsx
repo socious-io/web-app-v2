@@ -128,7 +128,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         checked={currentlyWorking}
         onChange={handleCheckWorking}
       />
-      <div className="flex gap-4 items-end">
+      <div className="flex gap-4 items-start">
         <SearchDropdown
           id="start-month"
           value={startMonth}
@@ -151,6 +151,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           onChange={(value) => {
             onSelectStartYear(value);
           }}
+          label="&nbsp;"
           className="flex-1"
           placeholder="Year"
           isSearchable

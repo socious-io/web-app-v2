@@ -35,10 +35,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
     letterCount,
     bio,
     handleChangeBio,
-    isUsernameAvailable,
   } = useEditInfo(handleClose);
-  console.log('test log error', errors);
-  console.log('test log isUsernameAvailable', isUsernameAvailable);
   const modalContent = (
     <form className={css.editInfoModal}>
       <Input
