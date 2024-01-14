@@ -5,6 +5,7 @@ import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { skillsToCategoryAdaptor, socialCausesToCategory } from 'src/core/adaptors';
+import { Job } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
@@ -12,9 +13,19 @@ import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import css from './job-listing-card.module.scss';
-export const JobListingCard = ({ job }) => {
-  const [skills, setSkills] = useState([]);
-  const renderJobFeatures = (iconName: string, feature: string, subtitle?: string) => {
+
+interface JobListingCardProps {
+  job: Job;
+}
+export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
+  const [skills, setSkills] = useState<
+    {
+      value: string;
+      label: string;
+    }[]
+  >([]);
+  const renderJobFeatures = (iconName: string, feature?: string, subtitle?: string) => {
+    if (!feature) return;
     return (
       <div className={css.features}>
         <Icon name={iconName} fontSize={20} className="mr-1.5" color={variables.color_grey_500} /> {feature}
@@ -22,7 +33,13 @@ export const JobListingCard = ({ job }) => {
       </div>
     );
   };
-  const getOptionsFromValues = (values, options) => options.filter((option) => values.includes(option.value));
+  const getOptionsFromValues = (
+    values: string[],
+    options: {
+      value: string;
+      label: string;
+    }[],
+  ) => options.filter((option) => values.includes(option.value));
   useEffect(() => {
     skillsToCategoryAdaptor().then((data) => {
       setSkills(getOptionsFromValues(job.skills || [], data));
@@ -44,10 +61,10 @@ export const JobListingCard = ({ job }) => {
           <div className={css.info}>
             <div className={css.chips}>
               {socialCausesToCategory(job.causes_tags).map(({ label }) => (
-                <Chip label={label} size="md" />
+                <Chip label={label} theme="primary" shape="round" size="md" />
               ))}
               {skills.map(({ label }) => (
-                <Chip label={label} size="md" theme="grey_blue" />
+                <Chip label={label} theme="grey_blue" shape="round" size="md" />
               ))}
             </div>
             <div className={css.jobDescription}>{job.description}</div>
@@ -66,12 +83,18 @@ export const JobListingCard = ({ job }) => {
                 'target-02',
                 EXPERIENCE_LEVEL_V2.find((level) => level.value === job.experience_level)?.label,
               )}
-              {job.payment_range_lower &&
+              {job.payment_scheme === 'FIXED' &&
                 renderJobFeatures(
                   'currency-dollar-circle',
                   ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
                   '(Fixed-price)',
                 )}
+              {job.payment_scheme === 'HOURLY' &&
+                renderJobFeatures(
+                  'currency-dollar-circle',
+                  ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
+                )}
+
               {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
             </div>
           </div>
