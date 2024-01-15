@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { Job } from 'src/core/api';
+import { QuestionsRes } from 'src/core/types';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 import css from './jobDetailAbout.module.scss';
+import { ApplyModal } from '../applyModal';
 
-interface JobDetailAboutProps {
-  job: Job;
-}
+export const JobDetailAbout = () => {
+  const { jobDetail } = useLoaderData() as {
+    jobDetail: Job;
+    screeningQuestions: QuestionsRes;
+  };
 
-export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ job }) => {
+  const [openApply, setOpenApply] = useState(false);
   const url = window.location.href;
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
@@ -41,43 +46,52 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ job }) => {
   const detailJSX = (
     <div className="flex flex-col gap-4">
       <div className="flex gap-4">
-        {renderJobFeatures('marker-pin-01', job?.city ? job.city : 'Anywhere')}
+        {renderJobFeatures('marker-pin-01', jobDetail?.city ? jobDetail.city : 'Anywhere')}
         {renderJobFeatures(
           'mouse',
-          PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === job.remote_preference)?.label,
+          PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === jobDetail.remote_preference)?.label,
         )}
       </div>
 
       <div className="flex gap-4">
-        {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === job.project_type)?.label)}
+        {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === jobDetail.project_type)?.label)}
         {renderJobFeatures(
           'hourglass-03',
-          PROJECT_LENGTH_V3.find((level) => level.value === job.project_length)?.label,
+          PROJECT_LENGTH_V3.find((level) => level.value === jobDetail.project_length)?.label,
         )}
       </div>
-      {renderJobFeatures('target-02', EXPERIENCE_LEVEL_V2.find((level) => level.value === job.experience_level)?.label)}
-      {job.payment_scheme === 'FIXED'
+      {renderJobFeatures(
+        'target-02',
+        EXPERIENCE_LEVEL_V2.find((level) => level.value === jobDetail.experience_level)?.label,
+      )}
+      {jobDetail.payment_scheme === 'FIXED'
         ? renderJobFeatures(
             'currency-dollar-circle',
-            ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
+            ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
             '(Fixed-price)',
           )
-        : renderJobFeatures('currency-dollar-circle', ` ${job.payment_range_lower}~${job.payment_range_higher} USD`)}
+        : renderJobFeatures(
+            'currency-dollar-circle',
+            ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
+          )}
     </div>
   );
   return (
-    <div className={css.container}>
-      <span className={css.title}>About this job</span>
-      <div className="hidden md:block">{detailJSX}</div>
+    <>
+      <div className={css.container}>
+        <span className={css.title}>About this job</span>
+        <div className="hidden md:block">{detailJSX}</div>
 
-      <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
-      <Button variant="contained" color="primary" customStyle="hidden md:block">
-        Apply now
-      </Button>
-      <div className="md:hidden flex flex-col gap-5 p-5 border border-solid border-Gray-light-mode-200 rounded-default">
-        {detailJSX}
-        <Input id="copy-url" value={url} postfix={inputJSX} />
+        <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
+        <Button variant="contained" color="primary" customStyle="hidden md:block" onClick={() => setOpenApply(true)}>
+          Apply now
+        </Button>
+        <div className="md:hidden flex flex-col gap-5 p-5 border border-solid border-Gray-light-mode-200 rounded-default">
+          {detailJSX}
+          <Input id="copy-url" value={url} postfix={inputJSX} />
+        </div>
       </div>
-    </div>
+      <ApplyModal open={openApply} handleClose={() => setOpenApply(false)} />
+    </>
   );
 };

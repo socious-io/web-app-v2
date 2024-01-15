@@ -80,7 +80,7 @@ export const useSignInForm = () => {
       console.log('User did not grant permission to use push notification');
       throw Error;
     }
-    console.log('granted');
+
     return getToken().catch((e: Error) => {
       console.log('error accrued during retrieving token', e);
       return '';

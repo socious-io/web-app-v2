@@ -14,7 +14,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
       {open && (
         <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
           <div className={`md:rounded-xl flex flex-col m-auto bg-Base-White z-30 ${css.container}`}>
-            <div className="w-full flex gap-4 relative px-6 pt-6">
+            <div className="w-full flex gap-4 px-6 pt-6 relative top-0">
               {icon}
               <div className="flex-1 flex flex-col gap-1 justify-center items-start pb-5">
                 <h1 className={css.title}>{title}</h1>
@@ -25,7 +25,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               </IconButton>
             </div>
             <Divider className="w-full" />
-            {content}
+            <div className="w-full overflow-y-auto">{content}</div>
             <Divider className="w-full" />
             {footer}
           </div>
