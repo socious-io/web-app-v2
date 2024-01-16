@@ -47,6 +47,13 @@ export interface AuthRes {
   access_token: string;
   refresh_token: string;
   token_type: 'Bearer';
+}
+
+export interface GoogleAuthRes {
+  error?: string;
+  access_token: string;
+  refresh_token: string;
+  token_type: 'Bearer';
   registered?: boolean;
 }
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { config } from 'src/config';
-import { AuthRes, User, googleOauth, identities, profile } from 'src/core/api';
+import { GoogleAuthRes, User, googleOauth, identities, profile } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
@@ -50,7 +50,7 @@ export const GoogleOauth2 = () => {
     return '/jobs';
   }
 
-  async function onLoginSucceed(loginResp: AuthRes) {
+  async function onLoginSucceed(loginResp: GoogleAuthRes) {
     await setAuthParams(loginResp, true);
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(await identities()));
