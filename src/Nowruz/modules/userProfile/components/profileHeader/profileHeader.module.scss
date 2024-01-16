@@ -58,6 +58,14 @@
   line-height: 24px;
   color: $color-grey-600;
 }
+
+.profileState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .editBtn {
   position: absolute;
   top: 50%;

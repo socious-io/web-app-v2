@@ -46,27 +46,30 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
           handleClick={myProfile ? handleOpenEditAvatar : undefined}
         />
         <div className={css.username}>
-          <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
+          <div className={css.profileState}>
+            <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
+            {type === 'users' && (identity as User).open_to_work && (
+              <Chip
+                label="Available for work"
+                size="lg"
+                theme="secondary"
+                startIcon={<Dot color={variables.color_success_500} size="small" shadow={false} />}
+                shape="sharp"
+              />
+            )}
+            {type === 'organizations' && (identity as Organization).hiring && (
+              <Chip
+                label="Hiring"
+                size="lg"
+                theme="secondary"
+                startIcon={<Dot color={variables.color_success_500} size="small" shadow={false} />}
+                shape="sharp"
+              />
+            )}
+          </div>
           <div className="text-base font-normal text-Gray-light-mode-500">{username}</div>
         </div>
-        {type === 'users' && (identity as User).open_to_work && (
-          <Chip
-            label="Available for work"
-            size="lg"
-            theme="secondary"
-            startIcon={<Dot color={variables.color_success_500} size="small" shadow={false} />}
-            shape="sharp"
-          />
-        )}
-        {type === 'organizations' && (identity as Organization).hiring && (
-          <Chip
-            label="Hiring"
-            size="lg"
-            theme="secondary"
-            startIcon={<Dot color={variables.color_success_500} size="small" shadow={false} />}
-            shape="sharp"
-          />
-        )}
+
         {myProfile && (
           <IconButton
             size="medium"
@@ -79,7 +82,11 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
         )}
         {!myProfile && (
           <div className={`${css.actionDiv} right-8 w-fit`}>
-            <Button color="primary" variant="outlined" style={{ flex: '1', height: '40px', fontSize: '14px' }}>
+            <Button
+              color="primary"
+              variant="outlined"
+              style={{ flex: '1', height: '40px', fontSize: '14px', gap: '6px' }}
+            >
               <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
               Share
             </Button>
