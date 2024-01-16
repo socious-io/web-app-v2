@@ -49,11 +49,7 @@ export interface AuthRes {
   token_type: 'Bearer';
 }
 
-export interface GoogleAuthRes {
-  error?: string;
-  access_token: string;
-  refresh_token: string;
-  token_type: 'Bearer';
+export interface GoogleAuthRes extends AuthRes {
   registered?: boolean;
 }
 
