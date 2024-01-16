@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { debounce } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { identities, preRegister, updateProfile, UserMeta } from 'src/core/api';
+import { User, identities, preRegister, profile, updateProfile } from 'src/core/api';
 import { checkUsernameConditions } from 'src/core/utils';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
@@ -22,8 +22,14 @@ const schema = yup.object().shape({
 export const useUserDetails = () => {
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
+  const currentProfile = useRef<User>({} as User);
+
+  const getProfile = async () => {
+    const userProfile = await profile();
+    currentProfile.current = userProfile;
+  };
+
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -37,6 +43,8 @@ export const useUserDetails = () => {
   const username = watch('username');
   const firstName = watch('firstName');
   const lastName = watch('lastName');
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const usernameConditionErrors = checkUsernameConditions(username);
@@ -63,6 +71,10 @@ export const useUserDetails = () => {
     }
   }, [username, isUsernameAvailable]);
 
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   const checkUsernameAvailability = async (username: string) => {
     const checkUsername = await preRegister({ username });
     if (checkUsername.username === null) {
@@ -84,5 +96,5 @@ export const useUserDetails = () => {
   };
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
-  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid };
+  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid, currentProfile };
 };
