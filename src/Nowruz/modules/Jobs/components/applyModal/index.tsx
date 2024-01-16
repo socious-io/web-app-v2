@@ -54,7 +54,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
       <Typography variant="h4" className="text-Gray-light-mode-700">
         Link
       </Typography>
-      <div className="flex gap-4">
+      <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1">
           <Input
             id="link-name"
@@ -80,6 +80,13 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
     </div>
   );
   return (
-    <Modal open={open} handleClose={handleClose} title="Apply to job" content={contentJSX} footer={modalFooterJsx} />
+    <Modal
+      open={open}
+      handleClose={handleClose}
+      title="Apply to job"
+      content={contentJSX}
+      footer={modalFooterJsx}
+      mobileFullHeight={false}
+    />
   );
 };

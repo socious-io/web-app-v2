@@ -11,7 +11,6 @@ const schema = yup
   .object()
   .shape({
     coverLetter: yup.string().required('Required'),
-    // attachment: yup.string(),
     linkName: yup.string().required('Required'),
     linkUrl: yup
       .string()
@@ -66,6 +65,7 @@ export const useApplyModal = (handleClose: () => void) => {
     payload = removedEmptyProps(payload);
 
     await applyJob(jobDetail.id, payload);
+    window.location.reload();
     handleClose();
   };
 

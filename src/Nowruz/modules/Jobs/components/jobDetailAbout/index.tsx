@@ -83,9 +83,11 @@ export const JobDetailAbout = () => {
         <div className="hidden md:block">{detailJSX}</div>
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
-        <Button variant="contained" color="primary" customStyle="hidden md:block" onClick={() => setOpenApply(true)}>
-          Apply now
-        </Button>
+        {!jobDetail.applied && (
+          <Button variant="contained" color="primary" customStyle="hidden md:block" onClick={() => setOpenApply(true)}>
+            Apply now
+          </Button>
+        )}
         <div className="md:hidden flex flex-col gap-5 p-5 border border-solid border-Gray-light-mode-200 rounded-default">
           {detailJSX}
           <Input id="copy-url" value={url} postfix={inputJSX} />
