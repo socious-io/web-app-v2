@@ -3,8 +3,8 @@ import { debounce } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { User, identities, preRegister, profile, updateProfile } from 'src/core/api';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { User, identities, preRegister, updateProfile } from 'src/core/api';
 import { checkUsernameConditions } from 'src/core/utils';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
@@ -22,12 +22,9 @@ const schema = yup.object().shape({
 export const useUserDetails = () => {
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
-  const currentProfile = useRef<User>({} as User);
-
-  const getProfile = async () => {
-    const userProfile = await profile();
-    currentProfile.current = userProfile;
-  };
+  const dispatch = useDispatch();
+  const resolver = useLoaderData() as { currentProfile: User };
+  const currentProfile = useRef<User>(resolver.currentProfile);
 
   const navigate = useNavigate();
   const {
@@ -43,8 +40,6 @@ export const useUserDetails = () => {
   const username = watch('username');
   const firstName = watch('firstName');
   const lastName = watch('lastName');
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const usernameConditionErrors = checkUsernameConditions(username);
@@ -70,10 +65,6 @@ export const useUserDetails = () => {
       }
     }
   }, [username, isUsernameAvailable]);
-
-  useEffect(() => {
-    getProfile();
-  }, []);
 
   const checkUsernameAvailability = async (username: string) => {
     const checkUsername = await preRegister({ username });

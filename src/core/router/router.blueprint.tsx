@@ -917,6 +917,12 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'complete',
+            loader: async () => {
+              const currentProfile = await profile();
+              return {
+                currentProfile,
+              };
+            },
             async lazy() {
               const { Details } = await import('src/Nowruz/pages/sign-up/Details');
               return {
