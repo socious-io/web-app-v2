@@ -80,34 +80,29 @@ export const useEditInfoOrg = (handleClose: () => void) => {
   const username = watch('username');
   const checkUsernameAvailability = async (username: string) => {
     const checkUsername = await preRegister({ username });
-    if (checkUsername.username === null) {
-      setIsusernameAvailable(true);
-    }
+    setIsusernameAvailable(checkUsername.username === null);
   };
   const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
 
   useEffect(() => {
     const usernameConditionErrors = checkUsernameConditions(username);
-    clearErrors('username');
-    setIsusernameValid(false);
-    if (usernameConditionErrors) {
+    const hasUsernameConditionErrors = !!usernameConditionErrors;
+    if (hasUsernameConditionErrors) {
       setIsusernameValid(false);
-      setError('username', {
-        type: 'manual',
-        message: usernameConditionErrors,
-      });
-    } else if (!usernameConditionErrors && username) {
+      setError('username', { type: 'manual', message: usernameConditionErrors });
+      return;
+    }
+    if (username) {
       debouncedCheckUsername(username);
+      setIsusernameValid(isUsernameAvailable);
       if (isUsernameAvailable) {
-        setIsusernameValid(true);
         clearErrors('username');
       } else {
-        setIsusernameValid(false);
-        setError('username', {
-          type: 'manual',
-          message: 'Username is not available',
-        });
+        setError('username', { type: 'manual', message: 'Username is not available' });
       }
+    } else {
+      setIsusernameValid(false);
+      setError('username', { type: 'manual', message: 'Username is required' });
     }
   }, [username, isUsernameAvailable]);
 

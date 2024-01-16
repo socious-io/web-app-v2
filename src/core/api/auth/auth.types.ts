@@ -49,6 +49,10 @@ export interface AuthRes {
   token_type: 'Bearer';
 }
 
+export interface GoogleAuthRes extends AuthRes {
+  registered?: boolean;
+}
+
 export interface PreRegisterRes {
   email?: 'EXISTS' | null;
   username?: 'EXISTS' | null;

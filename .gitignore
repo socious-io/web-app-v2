@@ -24,6 +24,8 @@ dist-ssr
 *.sw?
 .DS_Store
 .env
+.env.development
+.env.production
 *.orig
 
 cypress/videos/

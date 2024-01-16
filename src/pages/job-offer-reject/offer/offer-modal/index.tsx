@@ -64,6 +64,7 @@ export const OfferModal: React.FC<OfferModalProps> = ({ open, onClose, applicant
       open={open}
       onClose={onClose}
       buttons={[{ children: 'Send offer', disabled: formIsInvalid, onClick: onSubmit }]}
+      zIndex={1}
     >
       <div className={css.form}>
         <RadioGroup

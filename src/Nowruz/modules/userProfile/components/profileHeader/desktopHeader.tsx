@@ -1,10 +1,10 @@
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { ConnectStatus, Organization, User } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AvatarProfile } from 'src/Nowruz/modules/general/components/avatarProfile';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 
@@ -28,7 +28,12 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
   handleOpenEditAvatar,
   type,
 }) => {
-  const { profileImage, name, username } = getIdentityMeta(identity);
+  const profileImage = type === 'users' ? (identity as User).avatar : (identity as Organization).image;
+  const name =
+    type === 'users'
+      ? `${(identity as User).first_name} ${(identity as User).last_name}`
+      : (identity as Organization).name;
+  const username = type === 'users' ? `@${(identity as User).username}` : `@${(identity as Organization).shortname}`;
 
   return (
     <div className="hidden md:block">
@@ -45,16 +50,22 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
           <div className="text-base font-normal text-Gray-light-mode-500">{username}</div>
         </div>
         {type === 'users' && (identity as User).open_to_work && (
-          <div className={css.status}>
-            <Dot color={variables.color_success_500} size="small" shadow={false} />
-            <span className={css.statusText}>Available for work</span>
-          </div>
+          <Chip
+            label="Available for work"
+            size="lg"
+            theme="secondary"
+            startIcon={<Dot color={variables.color_success_500} size="small" shadow={false} />}
+            shape="sharp"
+          />
         )}
         {type === 'organizations' && (identity as Organization).hiring && (
-          <div className={css.status}>
-            <Dot color={variables.color_success_500} size="small" shadow={false} />
-            <span className={css.statusText}>Hiring</span>
-          </div>
+          <Chip
+            label="Hiring"
+            size="lg"
+            theme="secondary"
+            startIcon={<Dot color={variables.color_success_500} size="small" shadow={false} />}
+            shape="sharp"
+          />
         )}
         {myProfile && (
           <IconButton
