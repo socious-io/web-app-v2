@@ -7,7 +7,7 @@ export default {
   component: Chip,
 } as Meta;
 
-const Template: Story = (args) => <Chip {...args} />;
+const Template: Story = (args) => <Chip size="md" {...args} />;
 
 export const PrimaryChip = Template.bind({});
 PrimaryChip.args = {

@@ -147,7 +147,7 @@ export const blueprint: RouteObject[] = [
             path: 'list',
             loader: async () => {
               const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
-              return { data };
+              return data;
             },
             async lazy() {
               const { JobsList } = await import('src/Nowruz/pages/jobs/List');
@@ -917,6 +917,12 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'complete',
+            loader: async () => {
+              const currentProfile = await profile();
+              return {
+                currentProfile,
+              };
+            },
             async lazy() {
               const { Details } = await import('src/Nowruz/pages/sign-up/Details');
               return {

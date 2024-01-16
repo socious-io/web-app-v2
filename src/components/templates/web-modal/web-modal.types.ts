@@ -9,4 +9,5 @@ export interface WebModalProps extends ModalProps {
   className?: string;
   headerClassName?: string;
   footerClassName?: string;
+  zIndex?: number;
 }

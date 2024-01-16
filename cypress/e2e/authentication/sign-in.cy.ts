@@ -34,7 +34,7 @@ describe('Sign in', () => {
     cy.get('input[name=password]').type(Cypress.env('password'));
 
     // Click submit
-    cy.contains('button', 'Sign in').click();
+    cy.contains('button', 'Continue').click();
 
     // wait for router to switch page
     cy.wait(3000);

@@ -7,7 +7,6 @@ import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer
 export const useOrgProfile = () => {
   const dispatch = useDispatch();
   const { organization } = useLoaderData() as { organization: Organization };
-
   dispatch(setIdentity(organization));
   dispatch(setIdentityType('organizations'));
 

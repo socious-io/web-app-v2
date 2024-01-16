@@ -1,4 +1,3 @@
-import React from 'react';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 import { MainInfo } from 'src/Nowruz/modules/userProfile/components/mainInfo';
 import { ProfileHeader } from 'src/Nowruz/modules/userProfile/components/profileHeader';

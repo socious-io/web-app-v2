@@ -1,11 +1,12 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { JobsRes } from 'src/core/api';
 import { JobsListing } from 'src/Nowruz/modules/Jobs/modules/JobListing';
 
 import css from './list.module.scss';
 
 export const JobsList = () => {
-  const { data } = useLoaderData();
+  const data = useLoaderData() as JobsRes;
 
   return (
     <div className={css.container}>

@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { debounce } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { identities, preRegister, updateProfile, UserMeta } from 'src/core/api';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { User, identities, preRegister, updateProfile } from 'src/core/api';
 import { checkUsernameConditions } from 'src/core/utils';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
@@ -22,8 +22,11 @@ const schema = yup.object().shape({
 export const useUserDetails = () => {
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const resolver = useLoaderData() as { currentProfile: User };
+  const currentProfile = useRef<User>(resolver.currentProfile);
+
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -84,5 +87,5 @@ export const useUserDetails = () => {
   };
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
-  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid };
+  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid, currentProfile };
 };
