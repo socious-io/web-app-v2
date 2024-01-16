@@ -47,6 +47,7 @@ export interface AuthRes {
   access_token: string;
   refresh_token: string;
   token_type: 'Bearer';
+  registered?: boolean;
 }
 
 export interface PreRegisterRes {

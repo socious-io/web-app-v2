@@ -31,11 +31,11 @@ export const GoogleOauth2 = () => {
     });
   };
 
-  async function determineUserLandingPath(userProfile: User, path?: string | null | undefined) {
+  async function determineUserLandingPath(userProfile: User, path?: string | null | undefined, registered?: boolean) {
     const isParticularsIncomplete = hasUserParticularsMandatoryFields(userProfile);
     const isOnboardingIncomplete = checkOnboardingMandatoryFields(userProfile);
 
-    if (isParticularsIncomplete) {
+    if (registered || isParticularsIncomplete) {
       return '/sign-up/user/complete';
     }
     // Use provided path if both particulars and onboarding are complete
@@ -55,7 +55,8 @@ export const GoogleOauth2 = () => {
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(await identities()));
     const userProfile = await profile();
-    navigate(await determineUserLandingPath(userProfile, path));
+    const registered = (loginResp.registered ??= false);
+    navigate(await determineUserLandingPath(userProfile, path, registered));
     return loginResp;
   }
 
