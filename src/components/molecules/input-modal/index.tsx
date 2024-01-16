@@ -38,7 +38,7 @@ export const InputModal: React.FC<InputModalProps> = ({
         <img src={`/icons/crypto/${selectedItem}.svg`} width={24} height={24} />
         {selectedItem}
       </div>
-      <Modal open={open} onClose={onClose} className={css.content} zIndex={5}>
+      <Modal open={open} onClose={onClose} className={css.content}>
         <div className={css.modal}>
           <div className={css.modal__header}>
             <span></span>
