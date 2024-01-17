@@ -82,11 +82,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
         )}
         {!myProfile && (
           <div className={`${css.actionDiv} right-8 w-fit`}>
-            <Button
-              color="primary"
-              variant="outlined"
-              style={{ flex: '1', height: '40px', fontSize: '14px', gap: '6px' }}
-            >
+            <Button color="primary" variant="outlined" className={css.shareButton}>
               <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
               Share
             </Button>
