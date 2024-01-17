@@ -68,7 +68,7 @@ export const MainInfo = () => {
         borderColor={variables.color_primary_200}
         fontColor={variables.color_primary_700}
       />
-      <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
+      {identity?.country && <Location country={identity.country} city={identity?.city} iconName={identity?.country} />}
       {type === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
       {org.industry && renderData('Industry', 'globe-04', org.industry)}
       {size && renderData('Size', 'users-01', size)}

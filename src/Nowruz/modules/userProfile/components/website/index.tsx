@@ -7,9 +7,9 @@ import { Link } from 'src/Nowruz/modules/general/components/link';
 import css from './website.module.scss';
 
 export interface WebsiteProps {
-  website: string;
+  websiteUrl: string;
 }
-export const Website: React.FC<WebsiteProps> = ({ website }) => {
+export const Website: React.FC<WebsiteProps> = ({ websiteUrl }) => {
   return (
     <div className="flex flex-col gap-2">
       <Typography variant="subtitle1" className="text-Gray-light-mode-600">
