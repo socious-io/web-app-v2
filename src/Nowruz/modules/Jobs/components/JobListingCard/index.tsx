@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
-import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
+import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { skillsToCategoryAdaptor, socialCausesToCategory } from 'src/core/adaptors';
 import { Job } from 'src/core/api';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
@@ -45,8 +47,12 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
       setSkills(getOptionsFromValues(job.skills || [], data));
     });
   }, []);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (isTouchDevice()) navigate(`/nowruz/jobs/${job.id}`);
+  };
   return (
-    <div className={css.container}>
+    <div className={`${css.container} cursor-pointer md:cursor-default`} onClick={handleClick}>
       <div className={css.cardInfo}>
         <div>
           <div className={css.intro}>
@@ -54,7 +60,8 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
             <div className={css.titleTime}>
               <div className={css.jobTitle}>{job.title}</div>
               <div className={css.subTitle}>
-                <span className={css.orgTitle}>{job.identity_meta?.name}</span> . {toRelativeTime(job.updated_at)}
+                <span className={css.orgTitle}>{job.identity_meta?.name}</span> .{' '}
+                {toRelativeTime(job.updated_at?.toString() || '')}
               </div>
             </div>
           </div>
@@ -77,7 +84,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
               {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === job.project_type)?.label)}
               {renderJobFeatures(
                 'hourglass-03',
-                PROJECT_LENGTH_V2.find((level) => level.value === job.project_length)?.label,
+                PROJECT_LENGTH_V3.find((level) => level.value === job.project_length)?.label,
               )}
               {renderJobFeatures(
                 'target-02',
@@ -101,7 +108,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
         </div>
       </div>
       <div className={css.footer}>
-        <Link href="" label={`Read more`} customStyle={css.readMore} />
+        <Link href={`/nowruz/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
       </div>
     </div>
   );

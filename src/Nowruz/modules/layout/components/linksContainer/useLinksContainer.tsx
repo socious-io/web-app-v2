@@ -32,7 +32,7 @@ export const useLinksContainer = () => {
     },
     {
       label: 'Jobs',
-      route: '/jobs',
+      route: '/nowruz/jobs/list',
       iconName: 'briefcase-01',
       public: true,
       children: [

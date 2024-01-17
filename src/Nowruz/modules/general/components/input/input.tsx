@@ -1,6 +1,6 @@
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import { AlertCircle } from 'public/icons/nowruz/alert-circle';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { InputDropdown } from 'src/Nowruz/modules/general/components/input/InputDropdown';
@@ -21,8 +21,7 @@ export const Input: React.FC<InputProps> = ({
   register,
   hints,
   startIcon,
-  prefixDropdown,
-  postfixDropdown,
+  postfix,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -58,11 +57,17 @@ export const Input: React.FC<InputProps> = ({
       else setshowEyeIcon(false);
     return val;
   };
-  const renderEndAdornment = () => {
-    if (endIcon) return <InputAdornment position="end">{endIcon}</InputAdornment>;
-    if (postfixDropdown) return <InputDropdown {...postfixDropdown} />;
-    return null;
-  };
+
+  const endAdornmentJSX = (
+    <>
+      {endIcon && <InputAdornment position="end">{endIcon}</InputAdornment>}
+      {postfix && (
+        <InputAdornment position="start" className={css.postfix}>
+          {postfix}
+        </InputAdornment>
+      )}
+    </>
+  );
   return (
     <div>
       {label && (
@@ -82,7 +87,8 @@ export const Input: React.FC<InputProps> = ({
           style: {
             height: props.customHeight ? props.customHeight : '44px',
           },
-          endAdornment: renderEndAdornment(),
+          endAdornment: endAdornmentJSX,
+
           startAdornment: prefix ? (
             <InputAdornment position="start" className={css.prefix}>
               {prefix}

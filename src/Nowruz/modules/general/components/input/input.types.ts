@@ -20,6 +20,5 @@ export interface InputProps extends DefaultProps {
   register?: any;
   hints?: Array<{ hint: string; hide: boolean }>;
   startIcon?: ReactNode;
-  prefixDropdown?: DropdownProps;
-  postfixDropdown?: DropdownProps;
+  postfix?: string | ReactNode;
 }

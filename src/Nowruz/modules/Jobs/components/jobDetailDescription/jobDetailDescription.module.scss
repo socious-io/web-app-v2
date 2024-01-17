@@ -1,0 +1,19 @@
+@import 'src/components/_primitives.scss';
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  @media (max-width: 640px) {
+    gap: 20px;
+  }
+}
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  color: $color-grey-900;
+}
+.container * {
+  color: $color-grey-600;
+}
