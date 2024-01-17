@@ -26,7 +26,6 @@ export const MainInfo = () => {
   const type = currentIdentity?.type;
   const org = identity as Organization;
   const user = identity as User;
-
   const socialCauses = socialCausesToCategory(identity?.social_causes).map((item) => item.label);
   const bioJSX = (
     <div>

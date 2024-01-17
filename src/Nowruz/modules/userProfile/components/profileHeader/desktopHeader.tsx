@@ -1,6 +1,7 @@
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { ConnectStatus, Organization, User } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AvatarProfile } from 'src/Nowruz/modules/general/components/avatarProfile';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -9,7 +10,6 @@ import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 
 import css from './profileHeader.module.scss';
-import { getIdentityMeta } from 'src/core/utils';
 
 interface DesktopHeaderProps {
   identity: User | Organization | undefined;
@@ -30,7 +30,6 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
   type,
 }) => {
   const { username, name, profileImage } = getIdentityMeta(identity);
-
   return (
     <div className="hidden md:block">
       <div className={css.avatar}>

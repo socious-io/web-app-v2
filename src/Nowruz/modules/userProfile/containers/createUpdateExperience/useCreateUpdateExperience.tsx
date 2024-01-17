@@ -28,15 +28,20 @@ import * as yup from 'yup';
 const schema = yup
   .object()
   .shape({
-    title: yup.string().trim().required('Title is required'),
+    title: yup
+      .string()
+      .trim()
+      .required('Required')
+      .min(2, 'Must be 2-50 characters')
+      .max(50, 'Must be 2-50 characters'),
     jobCategory: yup.string(),
-    orgName: yup.string().required('Company is required'),
+    orgName: yup.string().required('Required').min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
     orgId: yup.string(),
     city: yup.string(),
     country: yup.string(),
-    employmentType: yup.string().required('Employment type is required'),
+    employmentType: yup.string().required('Required'),
     startMonth: yup.string(),
-    startYear: yup.string().required('Start year is required'),
+    startYear: yup.string().required('Required'),
     endMonth: yup.string(),
     endYear: yup.string(),
     description: yup.string(),
