@@ -12,7 +12,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
   return (
     <>
       {open && (
-        <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, width: '100%' }} open={open}>
+        <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, width: '100vw' }} open={open}>
           <div
             className={`md:rounded-xl flex flex-col m-auto bg-Base-White z-30 w-full ${
               mobileFullHeight ? 'h-full max-h-full' : 'mt-20 rounded-t-2xl h-[calc(100%-80px)] max-h-[calc(100%-80px)]'

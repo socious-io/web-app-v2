@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
-import { Job } from 'src/core/api';
+import { CurrentIdentity, Job } from 'src/core/api';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { QuestionsRes } from 'src/core/types';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { AuthGuard } from 'src/Nowruz/modules/authGuard';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
+import { RootState } from 'src/store';
 
 import css from './jobDetailAbout.module.scss';
 import { ApplyModal } from '../applyModal';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { AuthGuard } from 'src/Nowruz/modules/authGuard/components/authGuard';
 
 export const JobDetailAbout = () => {
   const { jobDetail } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
   };
+
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
 
   const [openApply, setOpenApply] = useState(false);
   const url = window.location.href;
@@ -29,8 +35,7 @@ export const JobDetailAbout = () => {
 
   useEffect(() => {
     nonPermanentStorage.get('openApplyModal').then((res) => {
-      console.log('test log result', res);
-      if (res) setOpenApply(true);
+      if (currentIdentity && res && !jobDetail.applied) setOpenApply(true);
       nonPermanentStorage.remove('openApplyModal');
     });
   }, []);
@@ -93,11 +98,16 @@ export const JobDetailAbout = () => {
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
         {!jobDetail.applied && (
-          // <AuthGuard>
-          <Button variant="contained" color="primary" customStyle="hidden md:block" onClick={() => setOpenApply(true)}>
-            Apply now
-          </Button>
-          // </AuthGuard>
+          <AuthGuard>
+            <Button
+              variant="contained"
+              color="primary"
+              customStyle="hidden md:block w-full"
+              onClick={() => setOpenApply(true)}
+            >
+              Apply now
+            </Button>
+          </AuthGuard>
         )}
         <div className="md:hidden flex flex-col gap-5 p-5 border border-solid border-Gray-light-mode-200 rounded-default">
           {detailJSX}
