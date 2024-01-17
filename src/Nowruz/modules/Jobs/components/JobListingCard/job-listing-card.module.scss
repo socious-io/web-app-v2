@@ -8,6 +8,7 @@
   .intro {
     display: flex;
     padding: 24px;
+    gap: 16px;
 
     @media (max-width: 640px) {
       flex-direction: column;
@@ -28,16 +29,10 @@
       font-weight: 400;
       color: $color-grey-600;
     }
-    .titleTime {
-      @media (min-width: 640px) {
-        margin-left: 16px;
-      }
-    }
   }
   .chips {
     display: flex;
-    margin-left: 24px;
-    margin-bottom: 24px;
+    margin: 0 24px 24px 24px;
     display: flex;
     align-items: flex-start;
     align-content: flex-start;
@@ -45,8 +40,7 @@
     align-self: stretch;
     flex-wrap: wrap;
     @media (max-width: 640px) {
-      margin-left: 20px;
-      margin-bottom: 20px;
+      margin: 0 20px 20px 20px;
     }
   }
   .cardInfo {
@@ -59,21 +53,14 @@
     color: $color-primary-700;
   }
   .jobDescription {
-    font-size: 16px;
-    font-weight: 400;
+    margin: 0px 24px 24px 24px;
+    @media (max-width: 640px) {
+      margin: 0px 20px 20px 20px;
+    }
+  }
+  .jobDescription * {
     line-height: 24px;
     color: $color-grey-600;
-    margin-left: 24px;
-    margin-bottom: 24px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    -webkit-line-clamp: 2;
-    text-overflow: ellipsis;
-    @media (max-width: 640px) {
-      margin-left: 20px;
-      margin-bottom: 20px;
-    }
   }
   .jobFeatures {
     margin: 24px;

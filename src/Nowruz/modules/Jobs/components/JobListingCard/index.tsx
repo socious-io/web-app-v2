@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
+import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
@@ -57,7 +58,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
         <div>
           <div className={css.intro}>
             <Avatar type="organizations" size="56px" img={job.identity_meta?.image} />
-            <div className={css.titleTime}>
+            <div>
               <div className={css.jobTitle}>{job.title}</div>
               <div className={css.subTitle}>
                 <span className={css.orgTitle}>{job.identity_meta?.name}</span> .{' '}
@@ -74,7 +75,9 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
                 <Chip label={label} theme="grey_blue" shape="round" size="md" />
               ))}
             </div>
-            <div className={css.jobDescription}>{job.description}</div>
+            <div className={css.jobDescription}>
+              <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.description} />
+            </div>
             <div className={css.jobFeatures}>
               {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}
               {renderJobFeatures(
