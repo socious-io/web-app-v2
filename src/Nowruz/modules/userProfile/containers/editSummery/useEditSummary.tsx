@@ -1,22 +1,23 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Organization, User, identities } from 'src/core/api';
 import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { updateUserProfile } from 'src/store/thunks/profile.thunks';
+import { setIdentity } from 'src/store/reducers/profile.reducer';
+import { updateOrgProfile, updateUserProfile } from 'src/store/thunks/profile.thunks';
 
-export const useEditSummary = (handleClose: () => void) => {
-  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+export const useEditSummary = (handleClose: () => void, type: 'users' | 'organizations') => {
+  const identity = useSelector<RootState, User | Organization | undefined>((state) => {
     return state.profile.identity;
-  }) as User;
+  });
   const dispatch = useDispatch();
-  const [summary, setSummary] = useState(user?.mission);
+  const [summary, setSummary] = useState(identity?.mission);
   const [error, setError] = useState('');
-  const [letterCount, setLetterCount] = useState(user?.mission?.length);
+  const [letterCount, setLetterCount] = useState(identity?.mission?.length);
 
   useEffect(() => {
-    setSummary(user?.mission);
-  }, [user?.mission]);
+    setSummary(identity?.mission);
+  }, [identity]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -24,7 +25,7 @@ export const useEditSummary = (handleClose: () => void) => {
       setError('required');
       setLetterCount(0);
       setSummary(value);
-    } else if (value.length < 2600) {
+    } else if (value.length <= 2600) {
       setSummary(value);
       setError('');
       setLetterCount(value.length);
@@ -32,22 +33,25 @@ export const useEditSummary = (handleClose: () => void) => {
   };
 
   const closeModal = () => {
-    setSummary(user?.mission);
+    setSummary(identity?.mission);
     setError('');
-    setLetterCount(user?.mission?.length);
+    setLetterCount(identity?.mission?.length);
     handleClose();
   };
 
   const onSave = async () => {
     if (error) return;
-    const updatedUser = {
-      ...user,
+
+    const updatedIdentity = {
+      ...identity,
       mission: summary,
     };
-    await store.dispatch(updateUserProfile(updatedUser as User));
+    await dispatch(setIdentity(updatedIdentity));
+    if (type === 'users') await store.dispatch(updateUserProfile(updatedIdentity as User));
+    else if (type === 'organizations') await store.dispatch(updateOrgProfile(updatedIdentity as Organization));
     const resp = await identities();
     dispatch(setIdentityList(resp));
-    closeModal();
+    handleClose();
   };
   return { summary, error, handleChange, letterCount, closeModal, onSave };
 };

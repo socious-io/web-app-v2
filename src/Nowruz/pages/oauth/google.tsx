@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { config } from 'src/config';
-import { AuthRes, User, googleOauth, identities, profile } from 'src/core/api';
+import { GoogleAuthRes, User, googleOauth, identities, profile } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
@@ -22,13 +22,41 @@ export const GoogleOauth2 = () => {
     });
   };
 
-  async function onLoginSucceed(loginResp: AuthRes) {
+  const hasUserParticularsMandatoryFields = (profile: User) => {
+    const particularsFields: (keyof User)[] = ['first_name', 'last_name', 'username'];
+
+    return particularsFields.some((field) => {
+      const value = profile[field];
+      return value === null || value === '';
+    });
+  };
+
+  async function determineUserLandingPath(userProfile: User, path?: string | null | undefined, registered?: boolean) {
+    const isParticularsIncomplete = hasUserParticularsMandatoryFields(userProfile);
+    const isOnboardingIncomplete = checkOnboardingMandatoryFields(userProfile);
+
+    if (registered || isParticularsIncomplete) {
+      return '/sign-up/user/complete';
+    }
+    // Use provided path if both particulars and onboarding are complete
+    if (path) {
+      return path;
+    }
+    // Handle onboarding if particulars are complete
+    if (isOnboardingIncomplete) {
+      return '/sign-up/user/onboarding';
+    }
+    // Default to jobs page if no path and both processes are complete
+    return '/jobs';
+  }
+
+  async function onLoginSucceed(loginResp: GoogleAuthRes) {
     await setAuthParams(loginResp, true);
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(await identities()));
     const userProfile = await profile();
-    const userLandingPath = checkOnboardingMandatoryFields(userProfile) ? '/sign-up/user/complete' : '/jobs';
-    navigate(path ? path : userLandingPath);
+    const registered = (loginResp.registered ??= false);
+    navigate(await determineUserLandingPath(userProfile, path, registered));
     return loginResp;
   }
 

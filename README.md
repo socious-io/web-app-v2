@@ -26,6 +26,7 @@ Solution: That’s why we built Socious to provide a new path for these purpose-
 - **React Hook Form**: Efficient and flexible library for handling forms in React.
 - **Vite**: Used for build tooling, optimizing the development experience.
 - **Storybook**: UI testing and documentation tool that facilitates the development of isolated React components, allowing for easier testing and review, as well as serving as a living documentation of components.
+- **React-router**: Our router package
 
 ---
 # Guidance on how to contribute
@@ -101,4 +102,3 @@ Prerequisite: `Android Studio`
 ```bash
 npm run open:android
 ```
-

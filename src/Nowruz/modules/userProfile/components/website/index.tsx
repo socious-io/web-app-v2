@@ -1,21 +1,27 @@
 import { Typography } from '@mui/material';
 import React from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
-interface WebsiteProps {
-  websiteUrl?: string;
+import { Link } from 'src/Nowruz/modules/general/components/link';
+
+import css from './website.module.scss';
+
+export interface WebsiteProps {
+  website: string;
 }
-export const Website: React.FC<WebsiteProps> = ({ websiteUrl }) => {
+export const Website: React.FC<WebsiteProps> = ({ website }) => {
   return (
     <div className="flex flex-col gap-2">
       <Typography variant="subtitle1" className="text-Gray-light-mode-600">
         Website
       </Typography>
-      <a className="flex gap-2 items-center cursor-pointer" href={websiteUrl} target="_blank" rel="noreferrer">
-        <Typography variant="h4" className="text-Brand-700">
-          {websiteUrl}
+
+      <div className="flex gap-2 items-center">
+        <Typography variant="h6">
+          <Link href={website} label={website} color={variables.color_primary_700} customStyle={css.link} />
         </Typography>
-        <Icon fontSize={20} name="arrow-up-right" className="text-Brand-700" />
-      </a>
+        <Icon name="arrow-up-right" fontSize={20} color={variables.color_primary_700} />
+      </div>
     </div>
   );
 };

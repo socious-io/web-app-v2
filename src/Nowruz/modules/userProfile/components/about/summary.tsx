@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
+import { useSeeMore } from 'src/Nowruz/modules/general/utils';
 import { EditSummary } from 'src/Nowruz/modules/userProfile/containers/editSummery';
 import { RootState } from 'src/store';
 
@@ -15,7 +16,14 @@ export const Summary = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
+
+  const {
+    data: { seeMore, copyProccessed },
+    operations: { handleSeeMore },
+  } = useSeeMore(identity?.mission ?? '');
+
   const myProfile = currentIdentity?.id === identity?.id;
+  const type = currentIdentity?.type;
   const [openEditModal, setOpenEditModal] = useState(false);
 
   return (
@@ -34,9 +42,18 @@ export const Summary = () => {
             />
           )}
         </div>
-        <div>{identity?.mission}</div>
+        <div className={css.mission}>
+          <p>
+            {copyProccessed}
+            {seeMore && (
+              <span className={css.seeMoreBtn} onClick={handleSeeMore}>
+                see more
+              </span>
+            )}
+          </p>
+        </div>
       </div>
-      <EditSummary open={openEditModal} handleClose={() => setOpenEditModal(false)} />
+      <EditSummary open={openEditModal} handleClose={() => setOpenEditModal(false)} type={type} />
     </>
   );
 };

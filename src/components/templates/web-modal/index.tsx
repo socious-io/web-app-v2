@@ -15,9 +15,10 @@ export const WebModal: React.FC<WebModalProps> = ({
   className = '',
   headerClassName = '',
   footerClassName = '',
+  zIndex,
 }) => {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} zIndex={zIndex}>
       <div className={`${css.container} ${className}`}>
         <div className={`${css.header} ${headerClassName}`}>
           <div onClick={onBack} className={css.icon}>
