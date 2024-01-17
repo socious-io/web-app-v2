@@ -9,6 +9,7 @@ import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 
 import css from './profileHeader.module.scss';
+import { getIdentityMeta } from 'src/core/utils';
 
 interface DesktopHeaderProps {
   identity: User | Organization | undefined;
@@ -28,12 +29,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
   handleOpenEditAvatar,
   type,
 }) => {
-  const profileImage = type === 'users' ? (identity as User).avatar : (identity as Organization).image;
-  const name =
-    type === 'users'
-      ? `${(identity as User).first_name} ${(identity as User).last_name}`
-      : (identity as Organization).name;
-  const username = type === 'users' ? `@${(identity as User).username}` : `@${(identity as Organization).shortname}`;
+  const { username, name, profileImage } = getIdentityMeta(identity);
 
   return (
     <div className="hidden md:block">
