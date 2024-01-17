@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
@@ -12,6 +12,8 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 import css from './jobDetailAbout.module.scss';
 import { ApplyModal } from '../applyModal';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { AuthGuard } from 'src/Nowruz/modules/authGuard/components/authGuard';
 
 export const JobDetailAbout = () => {
   const { jobDetail } = useLoaderData() as {
@@ -25,6 +27,13 @@ export const JobDetailAbout = () => {
     navigator.clipboard.writeText(url);
   };
 
+  useEffect(() => {
+    nonPermanentStorage.get('openApplyModal').then((res) => {
+      console.log('test log result', res);
+      if (res) setOpenApply(true);
+      nonPermanentStorage.remove('openApplyModal');
+    });
+  }, []);
   const inputJSX = (
     <button id="copy-button" className={css.copyBtn} onClick={handleCopy}>
       <Icon name="copy-01" fontSize={20} className="text-Gray-light-mode-700" />
@@ -84,9 +93,11 @@ export const JobDetailAbout = () => {
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
         {!jobDetail.applied && (
+          // <AuthGuard>
           <Button variant="contained" color="primary" customStyle="hidden md:block" onClick={() => setOpenApply(true)}>
             Apply now
           </Button>
+          // </AuthGuard>
         )}
         <div className="md:hidden flex flex-col gap-5 p-5 border border-solid border-Gray-light-mode-200 rounded-default">
           {detailJSX}

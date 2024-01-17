@@ -1,5 +1,5 @@
 import { Divider } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Job } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
@@ -10,6 +10,8 @@ import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 
 import css from './jobDetailHeader.module.scss';
 import { ApplyModal } from '../applyModal';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { AuthGuard } from 'src/Nowruz/modules/authGuard/components/authGuard';
 
 interface JobDetailHeaderProps {
   job: Job;
@@ -18,6 +20,13 @@ interface JobDetailHeaderProps {
 export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job }) => {
   const navigate = useNavigate();
   const [openApply, setOpenApply] = useState(false);
+  useEffect(() => {
+    nonPermanentStorage.get('openApplyModal').then((res) => {
+      console.log('test log result', res);
+      if (res) setOpenApply(true);
+      nonPermanentStorage.remove('openApplyModal');
+    });
+  }, []);
   return (
     <>
       <div className={css.container}>
@@ -37,9 +46,11 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job }) => {
           </div>
           <span className={css.subtitle}>{job.identity_meta.mission}</span>
           {!job.applied && (
+            // <AuthGuard>
             <Button color="primary" variant="contained" customStyle="md:hidden" onClick={() => setOpenApply(true)}>
               Apply now
             </Button>
+            // </AuthGuard> */}
           )}
           <Divider />
         </div>

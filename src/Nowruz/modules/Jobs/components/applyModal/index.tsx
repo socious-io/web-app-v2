@@ -79,6 +79,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
       <ApplyModalQuestions answers={answers} setAnswers={setAnswers} questionErrors={questionErrors} />
     </div>
   );
+
   return (
     <Modal
       open={open}
