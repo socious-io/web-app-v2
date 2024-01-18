@@ -33,7 +33,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity }) => {
           {identity.country && (
             <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
           )}
-          {'website' in identity && identity.website && <Website websiteUrl={identity?.website} />}
+          {'website' in identity && identity.website && <Website url={identity?.website} />}
         </div>
       </div>
     </div>
