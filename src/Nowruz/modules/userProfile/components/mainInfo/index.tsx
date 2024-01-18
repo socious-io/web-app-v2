@@ -13,6 +13,7 @@ import { Impact } from '../impact';
 import { LanguageJSX } from '../languages';
 import { Location } from '../location';
 import { Website } from '../website';
+import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 
 export const MainInfo = () => {
   const identity = useSelector<RootState, User | Organization | undefined>((state) => {
@@ -26,7 +27,7 @@ export const MainInfo = () => {
   const type = currentIdentity?.type;
   const org = identity as Organization;
   const user = identity as User;
-
+  const size = ORGANIZATION_SIZE.find((sizes) => sizes.value === org.size)?.label.split(' ')[0];
   const socialCauses = socialCausesToCategory(identity?.social_causes).map((item) => item.label);
   const bioJSX = (
     <div>
@@ -70,7 +71,7 @@ export const MainInfo = () => {
       <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
       {type === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
       {org.industry && renderData('Industry', 'globe-04', org.industry)}
-      {org.size && renderData('Size', 'users-01', org.size)}
+      {size && renderData('Size', 'users-01', size)}
       {org.website && <Website website={org.website ?? ''} />}
     </div>
   );
