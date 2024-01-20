@@ -21,15 +21,13 @@ export const useEditSummary = (handleClose: () => void, type: 'users' | 'organiz
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+    setSummary(value);
+    setLetterCount(value.length);
     if (!value) {
       setError('required');
-      setLetterCount(0);
-      setSummary(value);
-    } else if (value.length <= 2600) {
-      setSummary(value);
-      setError('');
-      setLetterCount(value.length);
-    } else setError('Too long');
+    } else if (value.length > 2600) {
+      setError('Too long');
+    } else setError('');
   };
 
   const closeModal = () => {
