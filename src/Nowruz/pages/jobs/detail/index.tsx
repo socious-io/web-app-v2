@@ -26,7 +26,7 @@ export const JobDetail = () => {
     <div className={css.container}>
       <JobDetailHeader job={jobDetail} />
       <div className="flex flex-col md:flex-row-reverse gap-8 md:gap-16">
-        <div className="md:mr-16">
+        <div className="md:mr-16 flex flex-1 max-w-fit">
           <JobDetailAbout job={jobDetail} />
         </div>
         <div className={css.content}>
