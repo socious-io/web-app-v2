@@ -1,5 +1,6 @@
 import { Divider, Typography } from '@mui/material';
 import React from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FileUploader } from 'src/Nowruz/modules/general/components/fileUploader';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
@@ -10,8 +11,17 @@ import { useApplyModal } from './useApplyModal';
 import ApplyModalQuestions from '../applyModalQuestions';
 
 export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => {
-  const { register, errors, setAttachments, answers, setAnswers, questionErrors, handleSubmit, apply } =
-    useApplyModal(handleClose);
+  const {
+    register,
+    errors,
+    setAttachments,
+    answers,
+    setAnswers,
+    questionErrors,
+    handleSubmit,
+    apply,
+    screeningQuestions,
+  } = useApplyModal(handleClose);
 
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
@@ -24,11 +34,16 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
     </div>
   );
 
+  const renderTitle = (title: string) => {
+    return (
+      <Typography variant="h4" color={variables.color_grey_700}>
+        {title}
+      </Typography>
+    );
+  };
   const contentJSX = (
     <div className="w-full py-6 px-4 md:p-6 flex flex-col gap-4">
-      <Typography variant="h4" className="text-Gray-light-mode-700">
-        Cover letter
-      </Typography>
+      {renderTitle('Cover letter')}
       <Input
         id="cover-letter"
         label="Message*"
@@ -39,9 +54,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
         customHeight="118px"
       />
       <Divider />
-      <Typography variant="h4" className="text-Gray-light-mode-700">
-        Resume
-      </Typography>
+      {renderTitle('Resume')}
 
       <FileUploader
         fileTypes={['DOC', 'DOCX', 'PDF']}
@@ -51,14 +64,13 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
       />
 
       <Divider />
-      <Typography variant="h4" className="text-Gray-light-mode-700">
-        Link
-      </Typography>
+      {renderTitle('Link')}
+
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1">
           <Input
             id="link-name"
-            label="Link name*"
+            label="Link name"
             name="linkName"
             errors={errors['linkName']?.message ? [errors['linkName']?.message.toString()] : undefined}
             register={register}
@@ -67,16 +79,23 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
         <div className="flex-1">
           <Input
             id="url"
-            label="URL*"
+            label="URL"
             name="linkUrl"
             errors={errors['linkUrl']?.message ? [errors['linkUrl']?.message.toString()] : undefined}
             register={register}
             prefix="https://"
+            placeholder="www.example.com"
           />
         </div>
       </div>
-      <Divider />
-      <ApplyModalQuestions answers={answers} setAnswers={setAnswers} questionErrors={questionErrors} />
+      {screeningQuestions.questions.length ? (
+        <>
+          <Divider />
+          <ApplyModalQuestions answers={answers} setAnswers={setAnswers} questionErrors={questionErrors} />
+        </>
+      ) : (
+        ''
+      )}
     </div>
   );
   return (

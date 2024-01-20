@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import React from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 
 import css from './fileUploader.module.scss';
@@ -24,24 +25,24 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
     <>
       <div {...getRootProps()} className={`${css.container} ${customStyle}`}>
         <input {...getInputProps()} />
-        <Icon name="upload-cloud-02" fontSize={20} className="text-Gray-light-mode-600" />
+        <Icon name="upload-cloud-02" fontSize={20} color={variables.color_grey_600} />
         <div className="flex">
-          <Typography variant="subtitle2" className="text-Brand-700">
+          <Typography variant="subtitle2" color={variables.color_primary_700} className="700 mr-1">
             Click to upload
           </Typography>
-          <Typography variant="caption" className="text-Gray-light-mode-600">
+          <Typography variant="caption" color={variables.color_grey_600}>
             or drag and drop
           </Typography>
         </div>
         <p className={css.subtitle}>{getSubtitle()}</p>
       </div>
       {error && (
-        <Typography variant="caption" className="text-Error-600">
+        <Typography variant="caption" color={variables.color_error_600}>
           {error}
         </Typography>
       )}
       {fileName && (
-        <Typography variant="caption" className="text-Gray-light-mode-600">
+        <Typography variant="caption" color={variables.color_grey_600}>
           {fileName}
         </Typography>
       )}
