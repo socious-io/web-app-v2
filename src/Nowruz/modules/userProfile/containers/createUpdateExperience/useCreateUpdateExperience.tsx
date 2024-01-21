@@ -34,16 +34,43 @@ const schema = yup
       .required('Required')
       .min(2, 'Must be 2-50 characters')
       .max(50, 'Must be 2-50 characters'),
-    jobCategory: yup.string(),
-    orgName: yup.string().required('Required').min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
-    orgId: yup.string(),
-    city: yup.string(),
+    org: yup.object().shape({
+      label: yup.string().required('Required').min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
+      value: yup.string(),
+    }),
+    city: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
+
     country: yup.string(),
-    employmentType: yup.string().required('Required'),
-    startMonth: yup.string(),
-    startYear: yup.string().required('Required'),
-    endMonth: yup.string(),
-    endYear: yup.string(),
+    employmentType: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
+    jobCategory: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
+    volunteer: yup.boolean(),
+    startMonth: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
+    startYear: yup.object().shape({
+      label: yup.string().required('Required'),
+      value: yup.string(),
+    }),
+    currentlyWorking: yup.boolean(),
+
+    endMonth: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
+    endYear: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
     description: yup.string(),
   })
   .required();
@@ -58,20 +85,11 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   }) as User;
   const dispatch = useDispatch();
   const [jobCategories, setJobCategories] = useState<OptionType[]>();
-  const [category, setCategory] = useState<OptionType | null>();
-  const [companyVal, setCompanyVal] = useState<OptionType | null>();
-  const [cityVal, setCityVal] = useState<OptionType | null>();
   const [employmentTypes, setEmploymentTypes] = useState<OptionType[]>();
-  const [employmentTypeVal, setEmploymentTypeVal] = useState<OptionType | null>();
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
-
-  const [startMonth, setStartMonth] = useState<OptionType | null>();
-  const [startYear, setStartYear] = useState<OptionType | null>();
-  const [endMonth, setEndMonth] = useState<OptionType | null>();
-  const [endYear, setEndYear] = useState<OptionType | null>();
-  const [currentlyWorking, setCurrentlyWorking] = useState(false);
   const [companies, setCompanies] = useState<Organization[]>();
+  const [dateError, setDateError] = useState('');
 
   const getJobCategories = async () => {
     const res = await jobCategoriesApi();
@@ -82,15 +100,12 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       };
     });
     setJobCategories(options);
-    if (experience) {
-      setValue('jobCategory', experience.job_category.id || '');
-      setCategory({
-        label: experience.job_category.name || '',
-        value: experience.job_category.id || '',
+    if (experience)
+      setValue('jobCategory', {
+        value: experience.job_category_id,
+        label: options.find((item) => item.value === experience.job_category_id)?.label,
       });
-    } else {
-      setCategory(null);
-    }
+    else setValue('jobCategory', { label: '', value: '' });
   };
 
   const mapEmploymentTypes = () => {
@@ -101,19 +116,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       };
     });
     setEmploymentTypes(types);
-    if (experience) {
-      const defaultEmpType = PROJECT_TYPE.find((t) => t.value === experience.employment_type)?.title || undefined;
-      setEmploymentTypeVal(
-        defaultEmpType
-          ? {
-              label: defaultEmpType,
-              value: experience.employment_type || '',
-            }
-          : null,
-      );
-    } else {
-      setEmploymentTypeVal(null);
-    }
   };
 
   const mapMonthNames = () => {
@@ -141,53 +143,75 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     getValues,
     setValue,
     reset,
+    watch,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
   });
 
   const initializeValues = () => {
+    const startDate = experience?.start_at ? new Date(experience.start_at) : undefined;
+    const endDate = experience?.end_at ? new Date(experience.end_at) : undefined;
+
+    const empTypeLabel = experience
+      ? PROJECT_TYPE.find((t) => t.value === experience.employment_type)?.title
+      : undefined;
+
     const initialVal = {
       title: experience?.title || '',
-      jobCategory: experience?.job_category?.id || '',
+      jobCategories: {
+        label: experience?.job_category?.name || '',
+        value: experience?.job_category?.id || '',
+      },
       orgName: experience?.org.name || '',
       orgId: experience?.org.id || '',
-      city: experience?.city || experience?.org.city || '',
+      city: { value: '', label: experience?.city || experience?.org.city || '' },
       country: experience?.country || '',
-      employmentType: experience?.employment_type || '',
-      startMonth: experience?.start_at ? new Date(experience.start_at).getMonth().toString() : '',
-      startYear: experience?.start_at ? new Date(experience.start_at).getFullYear().toString() : '',
-      endMonth: experience?.end_at ? new Date(experience.end_at).getMonth().toString() : '',
-      endYear: experience?.end_at ? new Date(experience.end_at).getFullYear().toString() : '',
+      startMonth: {
+        label: startDate ? monthNames[startDate.getMonth()] : '',
+        value: startDate ? startDate.getMonth() : '',
+      },
+      startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
+      endMonth: { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth() : '' },
+      endYear: { label: endDate?.getFullYear() || '', value: endDate?.getFullYear() || '' },
       description: experience?.description || '',
+      currentlyWorking: experience ? !experience?.end_at : false,
+      org: {
+        value: experience?.org_id || '',
+        label: experience?.org.name || '',
+      },
+      employmentType: { value: experience?.employment_type || '', label: empTypeLabel },
     };
     reset(initialVal);
-
-    const startDate = experience?.start_at ? new Date(experience.start_at) : new Date();
-    const startMonthValue = experience?.start_at ? startDate.getMonth() : undefined;
-    const startYear = experience?.start_at ? startDate.getFullYear().toString() : undefined;
-
-    const endDate = experience?.end_at ? new Date(experience.end_at) : new Date();
-    const endMonthValue = experience?.end_at ? endDate.getMonth() : undefined;
-    const endYear = experience?.end_at ? endDate.getFullYear().toString() : undefined;
-
-    setStartMonth(startMonthValue ? { value: startMonthValue.toString(), label: monthNames[startMonthValue] } : null);
-    setStartYear(startYear ? { value: startYear, label: startYear } : null);
-    setEndMonth(endMonthValue ? { value: endMonthValue.toString(), label: monthNames[endMonthValue] } : null);
-    setEndYear(endYear ? { value: endYear, label: endYear } : null);
-    setCurrentlyWorking(experience ? !experience?.end_at : false);
-
-    setCompanyVal(
-      experience
-        ? {
-            value: experience?.org_id || '',
-            label: experience?.org.name || '',
-          }
-        : null,
-    );
-    const defaultCity = experience?.city || experience?.org.city || undefined;
-    setCityVal(defaultCity ? { value: '', label: defaultCity } : null);
   };
+
+  const startMonth = watch('startMonth');
+  const endMonth = watch('endMonth');
+  const startYear = watch('startYear');
+  const endYear = watch('endYear');
+  const currentlyWorking = watch('currentlyWorking');
+
+  const validateDates = () => {
+    if (!currentlyWorking && !endYear?.label) {
+      return 'Select currently working or enter end year';
+    }
+    if (!startYear?.label) return;
+    const start = new Date(Number(startYear?.label), Number(startMonth?.value || 0), 2);
+    let end = new Date();
+    if (!currentlyWorking) {
+      if (!endYear?.label) return;
+      end = new Date(Number(endYear?.label), Number(endMonth?.value || 0), 2);
+    }
+    if (end < start) return 'Start date cannot be later than end date';
+    return;
+  };
+
+  useEffect(() => {
+    const msg = validateDates();
+    if (msg) {
+      setDateError(msg);
+    } else setDateError('');
+  }, [startMonth, startYear, endMonth, endYear, currentlyWorking]);
 
   useEffect(() => {
     getJobCategories();
@@ -198,8 +222,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   }, [experience]);
 
   const onChangeCategory = (newCategory: OptionType) => {
-    setValue('jobCategory', newCategory.value, { shouldValidate: true });
-    setCategory(newCategory);
+    setValue('jobCategory', newCategory, { shouldValidate: true });
   };
   const orgToOption = (orgs: Organization[], searchText: string) => {
     let options: OptionType[] = [];
@@ -231,14 +254,10 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   };
 
   const onSelectCompany = (newCompanyVal: OptionType) => {
-    setValue('orgId', newCompanyVal.value, { shouldValidate: true });
-    setValue('orgName', newCompanyVal.label, { shouldValidate: true });
-    setCompanyVal({ value: newCompanyVal.value, label: newCompanyVal.label });
-
+    setValue('org', newCompanyVal, { shouldValidate: true });
     const org = companies?.find((item) => item.id === newCompanyVal.value);
-    setValue('city', org?.city || '');
+    setValue('city', { value: org?.city || '', label: org?.city || '' });
     setValue('country', org?.country || '', { shouldValidate: true });
-    setCityVal(org?.city ? { value: '', label: org.city } : null);
   };
 
   const cityToOption = (cities: Location[]) => {
@@ -261,47 +280,43 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     }
   };
   const onSelectCity = (location) => {
-    setValue('city', location.city, { shouldValidate: true });
+    setValue('city', { value: location.city, label: location.city }, { shouldValidate: true });
     setValue('country', location.countryCode, { shouldValidate: true });
-    setCityVal({ value: location.value, label: location.label });
   };
 
   const onSelectEmplymentType = (newType: OptionType) => {
-    setValue('employmentType', newType.value, { shouldValidate: true });
-    setEmploymentTypeVal(newType);
+    setValue('employmentType', newType, { shouldValidate: true });
   };
 
   const onSelectStartMonth = (month: OptionType) => {
-    setValue('startMonth', month.value, { shouldValidate: true });
-    setStartMonth(month);
+    setValue('startMonth', month, { shouldValidate: true });
   };
   const onSelectEndMonth = (month: OptionType) => {
-    setValue('endMonth', month.value, { shouldValidate: true });
-    setEndMonth(month);
+    setValue('endMonth', month, { shouldValidate: true });
   };
   const onSelectStartYear = (year: OptionType) => {
-    setValue('startYear', year.value, { shouldValidate: true });
-    setStartYear(year);
+    setValue('startYear', year, { shouldValidate: true });
   };
   const onSelectEndYear = (year: OptionType) => {
-    setValue('endYear', year.value, { shouldValidate: true });
-    setEndYear(year);
+    setValue('endYear', year, { shouldValidate: true });
   };
 
-  const handleCheckWorking = () => {
-    const value = !currentlyWorking;
-    setCurrentlyWorking(!currentlyWorking);
+  const handleCheckWorking = (value: boolean) => {
+    setValue('currentlyWorking', value, { shouldValidate: true });
+
     if (value) {
-      setValue('endMonth', undefined);
-      setValue('endYear', undefined);
-      setEndMonth({ label: '', value: '' });
-      setEndYear({ label: '', value: '' });
+      setValue('endMonth', { label: '', value: '' });
+      setValue('endYear', { label: '', value: '' });
     }
   };
 
+  const handleCheckVolunteer = (value: boolean) => {
+    setValue('volunteer', value, { shouldValidate: true });
+  };
   const onSave = async () => {
+    if (dateError) return;
     const {
-      orgId,
+      org,
       title,
       description,
       startYear,
@@ -312,29 +327,32 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       country,
       city,
       employmentType,
-      orgName,
+      currentlyWorking,
+      volunteer,
     } = getValues();
 
-    let organizationId = orgId;
+    let organizationId = org.value;
     if (!organizationId) {
-      organizationId = (await createOrganization({ name: orgName, email: 'org@socious.io' }, false)).id;
+      organizationId = (await createOrganization({ name: org.label, email: 'org@socious.io' }, false)).id;
     }
-    const startDate = new Date(Number(startYear), Number(startMonth), 15).toISOString();
+
+    const startDate = new Date(Number(startYear.value), Number(startMonth.value || 0), 2).toISOString();
 
     let payload: ExperienceReq = {
       org_id: organizationId,
       title,
       description,
       start_at: startDate,
-      job_category_id: jobCategory,
+      job_category_id: jobCategory.value,
       country,
-      city,
-      employment_type: employmentType,
+      city: city.label,
     };
-    if (!currentlyWorking) {
-      const endDate = new Date(Number(endYear), Number(endMonth), 3).toISOString();
+    if (employmentType.value) payload.employment_type = employmentType.value;
+    if (!currentlyWorking && endYear.value) {
+      const endDate = new Date(Number(endYear.value), Number(endMonth.value || 0), 2).toISOString();
       payload.end_at = endDate;
     }
+
     payload = removedEmptyProps(payload);
     if (experience) await updateExperiences(experience.id, payload);
     else await addExperiences(payload);
@@ -350,36 +368,40 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     const updated = await otherProfileByUsername(user?.username || '');
     dispatch(setIdentity(updated));
     dispatch(setIdentityType('users'));
+    handleClose();
   };
   return {
     jobCategories,
     register,
     handleSubmit,
     errors,
-    category,
+    category: getValues().jobCategory,
     onChangeCategory,
-    companyVal,
+    companyVal: getValues().org,
     searchCompanies,
     onSelectCompany,
-    cityVal,
+    cityVal: getValues().city,
     searchCities,
     onSelectCity,
-    employmentTypeVal,
+    employmentTypeVal: getValues().employmentType,
     employmentTypes,
     onSelectEmplymentType,
     years,
     months,
-    startMonth,
-    startYear,
-    endMonth,
-    endYear,
+    startMonth: getValues().startMonth,
+    startYear: getValues().startYear,
+    endMonth: getValues().endMonth,
+    endYear: getValues().endYear,
     onSelectStartMonth,
     onSelectStartYear,
     onSelectEndMonth,
     onSelectEndYear,
-    currentlyWorking,
+    currentlyWorking: getValues().currentlyWorking,
+    volunteer: getValues().volunteer,
     handleCheckWorking,
+    handleCheckVolunteer,
     onSave,
     onDelete,
+    dateError,
   };
 };
