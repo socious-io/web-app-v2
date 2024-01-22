@@ -62,6 +62,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
             name="linkName"
             errors={errors['linkName']?.message ? [errors['linkName']?.message.toString()] : undefined}
             register={register}
+            placeholder="eg. Portfolio"
           />
         </div>
         <div className="flex-1">
@@ -72,6 +73,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
             errors={errors['linkUrl']?.message ? [errors['linkUrl']?.message.toString()] : undefined}
             register={register}
             prefix="https://"
+            placeholder="www.example.com"
           />
         </div>
       </div>
