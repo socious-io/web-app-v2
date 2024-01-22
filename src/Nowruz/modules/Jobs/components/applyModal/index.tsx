@@ -74,6 +74,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
             name="linkName"
             errors={errors['linkName']?.message ? [errors['linkName']?.message.toString()] : undefined}
             register={register}
+            placeholder="eg. Portfolio"
           />
         </div>
         <div className="flex-1">
@@ -98,6 +99,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
       )}
     </div>
   );
+
   return (
     <Modal
       open={open}
