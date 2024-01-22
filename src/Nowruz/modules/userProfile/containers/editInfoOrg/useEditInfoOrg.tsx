@@ -3,6 +3,7 @@ import { debounce } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { Location, Organization, User, getIndustries, identities, preRegister, searchLocation } from 'src/core/api';
@@ -15,18 +16,22 @@ import * as yup from 'yup';
 const schema = yup
   .object()
   .shape({
-    name: yup.string().required('Organization name is required'),
-    username: yup.string().required('Username is required'),
+    name: yup.string().required('Required'),
+    username: yup.string().required('Required'),
     city: yup.object().shape({
-      label: yup.string().required('City is required'),
+      label: yup.string().required('Required'),
       value: yup.string(),
     }),
     country: yup.string(),
     industry: yup.object().shape({
-      label: yup.string().required('Industry is required'),
+      label: yup.string().required('Required'),
       value: yup.string(),
     }),
-    summary: yup.string().required('Summary is required'),
+    size: yup.object().shape({
+      label: yup.string().required('Required'),
+      value: yup.string(),
+    }),
+    summary: yup.string().required('Required'),
     socialCauses: yup
       .array()
       .of(
@@ -73,6 +78,9 @@ export const useEditInfoOrg = (handleClose: () => void) => {
       country: org.country,
       summary: org.mission,
       industry: { label: org.industry, value: org.industry },
+      size: org.size
+        ? { label: ORGANIZATION_SIZE.find((item) => item.value === org.size)?.label, value: org.size }
+        : { label: '', value: '' },
       socialCauses: socialCausesToCategory(org?.social_causes),
     },
   });
@@ -114,6 +122,9 @@ export const useEditInfoOrg = (handleClose: () => void) => {
       country: org.country,
       summary: org.mission,
       industry: { label: org.industry, value: org.industry },
+      size: org.size
+        ? { label: ORGANIZATION_SIZE.find((item) => item.value === org.size)?.label, value: org.size }
+        : { label: '', value: '' },
       socialCauses: socialCausesToCategory(org?.social_causes),
     });
   }, [org]);
@@ -171,16 +182,21 @@ export const useEditInfoOrg = (handleClose: () => void) => {
     return identities().then((resp) => dispatch(setIdentityList(resp)));
   }
 
+  const onSelectSize = (orgSize) => {
+    setValue('size', { value: orgSize.value, label: orgSize.label }, { shouldValidate: true });
+  };
   const saveOrg = async () => {
+    const { name, username, city, country, summary, socialCauses, industry, size } = getValues();
     const updatedOrg = {
       ...org,
-      name: getValues().name.trim(),
-      username: getValues().username,
-      city: getValues().city.label,
-      country: getValues().country,
-      mission: getValues().summary,
-      social_causes: getValues().socialCauses?.map((item) => item.value),
-      industry: getValues().industry.label,
+      name: name.trim(),
+      username: username,
+      city: city.label,
+      country: country,
+      mission: summary,
+      social_causes: socialCauses?.map((item) => item.value),
+      industry: industry.label,
+      size: size.value,
     };
     await store.dispatch(updateOrgProfile(updatedOrg as Organization));
     await updateIdentityList();
@@ -216,5 +232,8 @@ export const useEditInfoOrg = (handleClose: () => void) => {
     summary: getValues().summary,
     handleChangeSummary,
     letterCount,
+    size: getValues().size,
+    sizeOptions: ORGANIZATION_SIZE,
+    onSelectSize,
   };
 };
