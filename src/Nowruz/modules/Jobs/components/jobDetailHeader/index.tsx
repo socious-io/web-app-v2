@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, Job } from 'src/core/api';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { AuthGuard } from 'src/Nowruz/modules/authGuard';
@@ -10,6 +11,7 @@ import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
+import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 import { RootState } from 'src/store';
 
 import css from './jobDetailHeader.module.scss';
@@ -48,7 +50,10 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job }) => {
             {job.causes_tags?.map((tag) => <Chip key={tag} label={tag} theme="primary" shape="round" size="lg" />)}
             {job.skills?.map((s) => <Chip key={s} label={s} theme="grey_blue" shape="round" size="lg" />)}
           </div>
-          <span className={css.subtitle}>{job.identity_meta.mission}</span>
+
+          <span className={css.subtitle}>
+            <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.identity_meta.mission} />
+          </span>
           {!job.applied && (
             <AuthGuard>
               <Button
