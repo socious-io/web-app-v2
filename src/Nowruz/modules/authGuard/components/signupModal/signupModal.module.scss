@@ -1,0 +1,12 @@
+@import 'src/components/_primitives.scss';
+
+.signupBtn {
+  color: $color-primary-700;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+.signupBtn:focus {
+  outline: 5px auto Highlight;
+  outline: 5px auto -webkit-focus-ring-color;
+}
