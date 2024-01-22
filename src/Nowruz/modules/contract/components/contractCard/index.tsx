@@ -6,8 +6,8 @@ import { Icon } from 'src/Nowruz/general/Icon';
 
 import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
-import { Avatar } from '../../general/components/avatar/avatar';
-import { Chip } from '../../general/components/Chip';
+import { Avatar } from '../../../general/components/avatar/avatar';
+import { Chip } from '../../../general/components/Chip';
 
 export const ContractCard: React.FC<ContractCardProps> = ({ offer, type }) => {
   const name = type === 'users' ? offer.recipient.meta.name : offer.offerer.meta.name;

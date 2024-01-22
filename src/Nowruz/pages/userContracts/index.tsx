@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContractCard } from 'src/Nowruz/modules/contract/contractCard';
+import { ContractCard } from 'src/Nowruz/modules/contract/components/contractCard';
 
 import { useUserConttracts } from './useUserContracts';
 
