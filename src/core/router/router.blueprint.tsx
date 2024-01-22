@@ -32,6 +32,7 @@ import {
   getOrganizationMembers,
   getOrganizationByShortName,
   identities,
+  userOffers,
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -171,6 +172,19 @@ export const blueprint: RouteObject[] = [
             },
           },
         ],
+      },
+      {
+        path: 'user/contracts',
+        loader: async () => {
+          const offers = await userOffers({ page: 1, limit: 5 });
+          return offers;
+        },
+        async lazy() {
+          const { UserContracts } = await import('src/Nowruz/pages/userContracts');
+          return {
+            Component: UserContracts,
+          };
+        },
       },
     ],
   },
