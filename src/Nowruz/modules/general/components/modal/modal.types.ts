@@ -8,4 +8,5 @@ export interface ModalProps {
   subTitle?: string;
   content: ReactNode;
   footer?: ReactNode;
+  mobileFullHeight?: boolean;
 }

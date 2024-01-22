@@ -42,7 +42,7 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
       {printWhen(<>... </>, maintext.length < text.length)}
       {printWhen(
         <span className={css.expect__seeMore} onClick={toggleExpect}>
-          See more
+          see more
         </span>,
         shouldViewMore,
       )}

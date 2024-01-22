@@ -10,4 +10,5 @@ export interface RadioGroupProps {
   errors?: string[];
   onChange?: (item: Item) => void;
   preselectIndex?: number;
+  defaultValue?: string | number;
 }

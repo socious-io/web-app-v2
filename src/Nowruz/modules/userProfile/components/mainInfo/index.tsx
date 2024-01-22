@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
+import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -13,7 +14,6 @@ import { Impact } from '../impact';
 import { LanguageJSX } from '../languages';
 import { Location } from '../location';
 import { Website } from '../website';
-import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 
 export const MainInfo = () => {
   const identity = useSelector<RootState, User | Organization | undefined>((state) => {
@@ -72,7 +72,7 @@ export const MainInfo = () => {
       {type === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
       {org.industry && renderData('Industry', 'globe-04', org.industry)}
       {size && renderData('Size', 'users-01', size)}
-      {org.website && <Website website={org.website ?? ''} />}
+      {org.website && <Website url={org.website ?? ''} />}
     </div>
   );
 };
