@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { TextClickableURLs } from 'src/components/atoms/text-clickable-urls';
 import { convertMarkdownToJSX } from 'src/core/convert-md-to-jsx';
 import { printWhen } from 'src/core/utils';
 
-import css from './expandable-text.module.scss';
-import { ExpandableTextProps } from './expandable-text.types';
-import { TextClickableURLs } from '../text-clickable-urls';
+import css from './expandableText.module.scss';
+import { ExpandableTextProps } from './expandableText.types';
 
 export const ExpandableText: React.FC<ExpandableTextProps> = ({
   text,

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { TextClickableUrlsProps } from './text-clickable-urls';
 import css from './text-clickable-urls.module.scss';
 

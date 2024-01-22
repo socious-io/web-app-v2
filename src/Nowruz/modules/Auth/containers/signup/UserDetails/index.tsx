@@ -5,7 +5,7 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { useUserDetails } from './useUserDetails';
 export const UserDetails = () => {
   const { register, handleSubmit, onSubmit, errors, isUsernameValid, isFormValid, currentProfile } = useUserDetails();
-  const { last_name, first_name, username } = currentProfile.current;
+  const { last_name, first_name } = currentProfile.current;
 
   return (
     <>
@@ -46,7 +46,6 @@ export const UserDetails = () => {
               },
             ]}
             // prefix="socious.io/"
-            defaultValue={username}
             isValid={isUsernameValid}
             errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}
           />

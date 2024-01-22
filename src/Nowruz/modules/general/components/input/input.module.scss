@@ -93,7 +93,11 @@
   border-right: solid 1px $color-grey-300;
   padding-right: 14px;
 }
-
+.postfix {
+  min-height: 44px;
+  border-left: solid 1px $color-grey-300;
+  padding-left: 14px;
+}
 .labelContainer {
   margin-bottom: 6px;
 }
