@@ -21,7 +21,6 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
     onSelectCity,
     city,
     socialCauses,
-    // setSocialCauses,
     changeSocialCauses,
     socialCauseItems,
     searchIndustries,
@@ -32,6 +31,9 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
     summary,
     handleChangeSummary,
     letterCount,
+    size,
+    sizeOptions,
+    onSelectSize,
   } = useEditInfoOrg(handleClose);
   const modalContent = (
     <form className={css.editInfoModal}>
@@ -96,6 +98,20 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
           onSelectIndustry(value);
         }}
         errors={errors['industry']?.label?.message ? [errors['industry'].label.message.toString()] : undefined}
+      />
+      <SearchDropdown
+        required
+        id="organization-size"
+        label="Organization size*"
+        value={size}
+        options={sizeOptions}
+        className="flex-1"
+        hasDropdownIcon
+        onChange={(value) => {
+          onSelectSize(value);
+        }}
+        isSearchable
+        errors={errors['size']?.label?.message ? [errors['size'].label.message.toString()] : undefined}
       />
       <div className="w-full h-full flex flex-col gap-[6px]">
         <Input
