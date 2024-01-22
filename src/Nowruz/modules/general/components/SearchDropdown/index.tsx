@@ -23,7 +23,7 @@ const CustomOption = ({ value, ...props }) => {
   return (
     <div className="px-1.5">
       <div {...innerProps} className={`${css.option}`}>
-        {/* {selected && <Icon name="check" fontSize={20} color="#667085" />} */}
+        {selected && <Icon name="check" fontSize={20} color="#667085" />}
         <div className="ml-0 mr-auto flex gap-2">
           <span style={{ marginRight: '8px' }}>{data.icon}</span>
           {labelValue} {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
@@ -49,6 +49,9 @@ const CustomSingleValue = ({ children, data, ...props }) => {
 // React select in async mode doesn't send extra data to the CustomSingleValue.Doing this cause only accessed label and using label
 // string to pass the data. Please refactor this if find better solution.
 const handleMultiValueAsync = (value: string) => {
+  if (/^\d+$/.test(value)) {
+    return { isObject: false };
+  }
   try {
     return { ...JSON.parse(value), isObject: true };
   } catch (e) {

@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
+import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -26,7 +27,7 @@ export const MainInfo = () => {
   const type = currentIdentity?.type;
   const org = identity as Organization;
   const user = identity as User;
-
+  const size = ORGANIZATION_SIZE.find((sizes) => sizes.value === org.size)?.label.split(' ')[0];
   const socialCauses = socialCausesToCategory(identity?.social_causes).map((item) => item.label);
   const bioJSX = (
     <div>
@@ -67,11 +68,11 @@ export const MainInfo = () => {
         borderColor={variables.color_primary_200}
         fontColor={variables.color_primary_700}
       />
-      <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
+      {identity?.country && <Location country={identity.country} city={identity?.city} iconName={identity?.country} />}
       {type === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
       {org.industry && renderData('Industry', 'globe-04', org.industry)}
-      {org.size && renderData('Size', 'users-01', org.size)}
-      {org.website && <Website website={org.website ?? ''} />}
+      {size && renderData('Size', 'users-01', size)}
+      {org.website && <Website url={org.website ?? ''} />}
     </div>
   );
 };

@@ -4,13 +4,13 @@ import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDrop
 
 import css from './contact.module.scss';
 import { useOrganizationContact } from './useOrganizationContact';
+import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 export const OrganizationContact = () => {
   const {
     register,
     handleSubmit,
     errors,
     onSubmit,
-    companySizeOptions,
     searchCities,
     updateWebsite,
     updateEmail,
@@ -99,7 +99,7 @@ export const OrganizationContact = () => {
           className="mb-5"
           label="Organization size*"
           placeholder="Select a company size"
-          options={companySizeOptions}
+          options={ORGANIZATION_SIZE}
           isSearchable={false}
           onChange={(value) => onSelectSize(value)}
         />

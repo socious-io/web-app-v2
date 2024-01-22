@@ -31,7 +31,7 @@ export const UpdateLanguages: React.FC<UpdateLanguagesProps> = ({ languages, set
       ))}
       <Button variant="text" color="primary" onClick={addNewLanguage} customStyle={css.addBtn}>
         <Icon fontSize={20} name="plus" className="text-Brand-700" />
-        Add a lanaguage
+        Add a language
       </Button>
     </div>
   );

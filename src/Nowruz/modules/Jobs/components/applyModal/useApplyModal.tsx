@@ -11,14 +11,20 @@ const schema = yup
   .object()
   .shape({
     coverLetter: yup.string().required('Required'),
-    linkName: yup.string().required('Required'),
+    linkName: yup.string().test('linkNameRequired', 'Enter link name', function (value) {
+      const linkUrl = this.parent.linkUrl;
+      if (linkUrl && linkUrl.trim().length > 0) {
+        return !!value && value.trim().length > 0;
+      }
+      return true;
+    }),
     linkUrl: yup
       .string()
+      .notRequired()
       .matches(
         /^(?!https?:\/\/|ftp:\/\/)[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        'Enter correct url!',
-      )
-      .required('Required'),
+        { message: 'Enter correct URL!', excludeEmptyString: true },
+      ),
   })
   .required();
 
@@ -55,7 +61,7 @@ export const useApplyModal = (handleClose: () => void) => {
     const { coverLetter, linkName, linkUrl } = getValues();
     let payload = {
       cover_letter: coverLetter,
-      cv_link: 'https://' + linkUrl,
+      cv_link: linkUrl ? 'https://' + linkUrl : '',
       cv_name: linkName,
       share_contact_info: true,
       attachment: attachments[0],
@@ -79,5 +85,6 @@ export const useApplyModal = (handleClose: () => void) => {
     questionErrors,
     setQuestionErrors,
     apply,
+    screeningQuestions,
   };
 };

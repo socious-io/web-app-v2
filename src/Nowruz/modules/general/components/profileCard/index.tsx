@@ -30,8 +30,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity }) => {
               <Chip key={item} label={item} theme="primary" shape="round" size="md" />
             ))}
           </div>
-          <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
-          {website && <Website website={website} />}
+          {identity.country && (
+            <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
+          )}
+          {website && <Website url={website} />}
         </div>
       </div>
     </div>

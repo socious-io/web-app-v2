@@ -43,7 +43,7 @@ export const EditImageModal: React.FC<EditImageModalProps> = ({ open, handleClos
           customStyle="md:ml-0 md:mr-auto text-Error-700"
           onClick={handleRemovePhoto}
         >
-          Remove Photo
+          Delete Photo
         </Button>
       </div>
     </div>

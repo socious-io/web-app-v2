@@ -39,7 +39,8 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
     handleSubmit,
     onSave,
     onDelete,
-  } = useCreateUpdateEducation(handleClose, education, setEducation);
+    dateError,
+  } = useCreateUpdateEducation(handleClose, setEducation, education);
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <SearchDropdown
@@ -58,7 +59,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
         }}
         placeholder="Search for school"
         noOptionsMessage={({ inputValue }) => inputValue}
-        errors={errors['schoolName']?.message ? [errors['schoolName']?.message.toString()] : undefined}
+        errors={errors['school']?.label?.message ? [errors['school']?.label.message.toString()] : undefined}
       />
       <Input
         id="degree"
@@ -76,7 +77,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
         placeholder="Specialities"
         errors={errors['field']?.message ? [errors['field']?.message.toString()] : undefined}
       />
-      <div className="flex gap-4 items-end">
+      <div className="flex gap-4 items-start">
         <SearchDropdown
           required
           id="start-month"
@@ -90,11 +91,12 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['startMonth']?.message ? [errors['startMonth']?.message.toString()] : undefined}
+          errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label.message.toString()] : undefined}
         />
         <SearchDropdown
           required
           id="start-year"
+          label="&nbsp;"
           value={startYear}
           options={years}
           hasDropdownIcon
@@ -104,10 +106,10 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['startYear']?.message ? [errors['startYear']?.message.toString()] : undefined}
+          errors={errors['startYear']?.label?.message ? [errors['startYear']?.label.message.toString()] : undefined}
         />
       </div>
-      <div className="flex gap-4 items-end">
+      <div className="flex gap-4 items-start">
         <SearchDropdown
           required
           id="end-month"
@@ -121,11 +123,12 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           placeholder="Month"
           className="flex-1"
           isSearchable
-          errors={errors['endMonth']?.message ? [errors['endMonth']?.message.toString()] : undefined}
+          errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label.message.toString()] : undefined}
         />
         <SearchDropdown
           required
           id="end-year"
+          label="&nbsp;"
           value={endYear}
           options={years}
           hasDropdownIcon
@@ -135,7 +138,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
+          errors={dateError ? [dateError] : undefined}
         />
       </div>
       <Input

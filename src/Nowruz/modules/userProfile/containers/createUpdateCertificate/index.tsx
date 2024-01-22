@@ -1,3 +1,4 @@
+import React from 'react';
 import { AdditionalRes } from 'src/core/api/additionals/additionals.types';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
@@ -43,7 +44,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="name"
-        label="Name"
+        label="Name*"
         required
         name="name"
         register={register}

@@ -12,6 +12,7 @@ import { toRelativeTime } from 'src/core/relative-time';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
+import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import css from './job-listing-card.module.scss';
@@ -57,7 +58,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
         <div>
           <div className={css.intro}>
             <Avatar type="organizations" size="56px" img={job.identity_meta?.image} />
-            <div className={css.titleTime}>
+            <div>
               <div className={css.jobTitle}>{job.title}</div>
               <div className={css.subTitle}>
                 <span className={css.orgTitle}>{job.identity_meta?.name}</span> .{' '}
@@ -74,7 +75,9 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
                 <Chip label={label} theme="grey_blue" shape="round" size="md" />
               ))}
             </div>
-            <div className={css.jobDescription}>{job.description}</div>
+            <div className={css.jobDescription}>
+              <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.description} />
+            </div>
             <div className={css.jobFeatures}>
               {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}
               {renderJobFeatures(
