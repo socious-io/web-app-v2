@@ -25,9 +25,8 @@ export const useEditSummary = (handleClose: () => void, type: 'users' | 'organiz
     setLetterCount(value.length);
     if (!value) {
       setError('required');
-    } else if (value.length > 2600) {
-      setError('Too long');
-    } else setError('');
+    } else if (value.length > 2600) setError('Too long');
+    else setError('');
   };
 
   const closeModal = () => {

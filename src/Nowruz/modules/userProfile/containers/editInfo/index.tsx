@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import React from 'react';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
@@ -18,28 +19,29 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
     register,
     errors,
     user,
-    isUsernameValid,
     searchCities,
     onSelectCity,
-    cityVal,
+    city,
     socialCauseItems,
-    SocialCauses,
-    setSocialCauses,
+    socialCauses,
+    changeSocialCauses,
     handleSubmit,
     saveUser,
     languages,
     setLanguages,
     langErrors,
     setLangErrors,
-    causesErrors,
     closeModal,
+    letterCount,
+    bio,
+    handleChangeBio,
   } = useEditInfo(handleClose);
   const modalContent = (
     <form className={css.editInfoModal}>
       <Input
         required
         id="first-name"
-        label="First name"
+        label="First name*"
         name="firstName"
         defaultValue={user?.first_name}
         register={register}
@@ -48,7 +50,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
       <Input
         required
         id="last-name"
-        label="Last name"
+        label="Last name*"
         name="lastName"
         register={register}
         defaultValue={user?.last_name}
@@ -65,18 +67,18 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         hints={[
           {
             hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`,
-            hide: !isUsernameValid,
+            hide: !!errors['username'],
           },
         ]}
         prefix="socious.io/"
-        isValid={isUsernameValid}
+        isValid={!errors['username']}
         errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}
       />
       <SearchDropdown
         required
         id="location"
         cacheOptions
-        value={cityVal}
+        value={city}
         isAsync
         loadOptions={searchCities}
         defaultOptions
@@ -88,17 +90,23 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
           onSelectCity(value);
         }}
       />
-      <Input
-        required
-        multiline
-        customHeight="92px"
-        id="summary"
-        label="Summary"
-        name="summary"
-        defaultValue={user?.mission}
-        register={register}
-        errors={errors['summary']?.message ? [errors['summary']?.message.toString()] : undefined}
-      />
+      <div className="flex flex-col gap-[6px]">
+        <Input
+          required
+          multiline
+          customHeight="92px"
+          id="bio"
+          label="Headline*"
+          name="bio"
+          defaultValue={user?.bio}
+          value={bio}
+          onChange={handleChangeBio}
+          errors={errors['bio']?.message ? [errors['bio']?.message.toString()] : undefined}
+        />
+        <Typography variant="caption" className="text-Gray-light-mode-600 mr-0 ml-auto">
+          {`${letterCount}/160`}
+        </Typography>
+      </div>
       <MultiSelect
         id={'social-causes'}
         searchTitle={'Social causes*'}
@@ -106,11 +114,11 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         maxLabel={'Max. 5 causes'}
         items={socialCauseItems.slice(0, 30)}
         placeholder={'Type a social cause'}
-        componentValue={SocialCauses}
-        setComponentValue={setSocialCauses}
+        componentValue={socialCauses}
+        setComponentValue={changeSocialCauses}
         customHeight="118px"
         popularLabel={false}
-        errors={causesErrors}
+        errors={errors['socialCauses']?.message ? [errors['socialCauses']?.message.toString()] : undefined}
         displayDefaultBadges={false}
       />
       <UpdateLanguages
