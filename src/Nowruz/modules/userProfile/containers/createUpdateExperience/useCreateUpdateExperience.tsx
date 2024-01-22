@@ -45,7 +45,7 @@ const schema = yup
 
     country: yup.string(),
     employmentType: yup.object().shape({
-      label: yup.string(),
+      label: yup.string().required('Required'),
       value: yup.string(),
     }),
     jobCategory: yup.object().shape({
