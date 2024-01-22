@@ -25,6 +25,7 @@ export const EditSummary: React.FC<EditSummaryProps> = ({ open, handleClose, typ
         onChange={handleChange}
         multiline
         customHeight="168px"
+        maxRows={7}
       />
       <Typography variant="caption" className="text-Gray-light-mode-600 mr-0 ml-auto">
         {`${letterCount}/2600`}
