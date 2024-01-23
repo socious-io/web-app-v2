@@ -1,6 +1,6 @@
-import { Offer } from 'src/core/api';
+import { Mission, Offer } from 'src/core/api';
 
 export interface ContractCardProps {
   offer: Offer;
-  type: 'users' | 'organizations';
+  mission?: Mission;
 }
