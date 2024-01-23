@@ -183,7 +183,7 @@ export const blueprint: RouteObject[] = [
         async lazy() {
           const { Contracts } = await import('src/Nowruz/pages/contracts');
           return {
-            Component: Contracts,
+            Component: Protect(Contracts),
           };
         },
       },
