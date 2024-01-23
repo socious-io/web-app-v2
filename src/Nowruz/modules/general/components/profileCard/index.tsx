@@ -11,7 +11,7 @@ interface ProfileCardProps {
   identity?: User | Organization;
 }
 const ProfileCard: React.FC<ProfileCardProps> = ({ identity }) => {
-  const { name, profileImage, type } = getIdentityMeta(identity);
+  const { name, profileImage, type, website } = getIdentityMeta(identity);
   if (!identity) return;
   return (
     <div className="flex flex-col gap-5 md:gap-6">
@@ -25,7 +25,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity }) => {
           coverImageUrl={identity.cover_image?.url}
         />
         <div className="flex flex-col gap-5 md:gap-6 p-5 md:p-6">
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {identity.social_causes?.map((item) => (
               <Chip key={item} label={item} theme="primary" shape="round" size="md" />
             ))}
@@ -33,7 +33,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity }) => {
           {identity.country && (
             <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
           )}
-          {'website' in identity && identity.website && <Website url={identity?.website} />}
+          {website && <Website url={website} />}
         </div>
       </div>
     </div>

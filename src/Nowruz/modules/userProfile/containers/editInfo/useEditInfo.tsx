@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { debounce } from 'lodash';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
@@ -18,23 +18,12 @@ import {
   updateLanguage,
 } from 'src/core/api';
 import { checkUsernameConditions } from 'src/core/utils';
-import { MultiSelectItem } from 'src/Nowruz/modules/general/components/multiSelect/multiSelect.types';
 import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { updateUserProfile } from 'src/store/thunks/profile.thunks';
 import * as yup from 'yup';
 
 import { Error, LanguageProps } from './editInfo.types';
-
-const schema = yup
-  .object()
-  .shape({
-    username: yup.string().required('Username is required'),
-    firstName: yup.string().required('First name is required'),
-    lastName: yup.string().required('Last name is required'),
-    summary: yup.string().required('Summary is required'),
-  })
-  .required();
 
 export const useEditInfo = (handleClose: () => void) => {
   const dispatch = useDispatch();
@@ -48,97 +37,141 @@ export const useEditInfo = (handleClose: () => void) => {
     });
     return mappedObj;
   };
-  const [cityVal, setCityVal] = useState(!user || !user.city ? null : { label: `${user.city}, ${user.country}` });
-  const [selectedCity, setSelectedCity] = useState(user?.city);
-  const [selectedCountry, setSelectedCountry] = useState(user?.country);
+
   const [languages, setLanguages] = useState<LanguageProps[]>(mapLanguageToItems(user?.languages || []));
   const [isUsernameValid, setIsusernameValid] = useState(false);
+  const [usernameValidError, setusernameValidError] = useState('');
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
   const [langErrors, setLangErrors] = useState<Error[]>([]);
-  const [causesErrors, setCausesErrors] = useState<string[]>([]);
-  const isFormValid = selectedCity;
 
   const keyItems = Object.keys(SOCIAL_CAUSES);
   const socialCauseItems = keyItems.map((i) => {
     return { value: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
   });
 
-  const [SocialCauses, setSocialCauses] = useState<MultiSelectItem[]>(socialCausesToCategory(user?.social_causes));
+  const [letterCount, setLetterCount] = useState(user?.bio?.length || 0);
+
+  const checkUsernameAvailability = async (username: string) => {
+    const checkUsername = await preRegister({ username });
+    setIsusernameAvailable(checkUsername.username === null);
+  };
+
+  const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
+
+  const schema = yup
+    .object()
+    .shape({
+      username: yup
+        .string()
+        .required('Username is required')
+        .test('checkUsernameValidity', usernameValidError, function (value) {
+          return isUsernameValid;
+        })
+        .test('checkUsernameAvailabality', 'Username is not available', function (value) {
+          return isUsernameAvailable;
+        }),
+
+      firstName: yup.string().required('First name is required'),
+      lastName: yup.string().required('Last name is required'),
+      city: yup.object().shape({
+        label: yup.string().required('City is required'),
+        value: yup.string(),
+      }),
+      country: yup.string(),
+      bio: yup.string().required('Headline is required'),
+      socialCauses: yup
+        .array()
+        .of(
+          yup.object().shape({
+            label: yup.string(),
+            value: yup.string(),
+          }),
+        )
+        .min(1, 'Select at least one social cause'),
+    })
+    .required();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     getValues,
     setError,
     clearErrors,
     watch,
+    setValue,
+    reset,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
+    defaultValues: {
+      firstName: user.first_name,
+      lastName: user.last_name,
+      username: user.username,
+      city: { label: user.city, value: user.city },
+      country: user.country,
+      bio: user.bio,
+      socialCauses: socialCausesToCategory(user?.social_causes),
+    },
   });
 
   const username = watch('username');
-
-  const checkUsernameAvailability = async (username: string) => {
-    const checkUsername = await preRegister({ username });
-    if (checkUsername.username === null) {
-      setIsusernameAvailable(true);
-    }
-  };
-  const debouncedCheckUsername = debounce(checkUsernameAvailability, 800);
-
-  const resetState = () => {
-    setSocialCauses(socialCausesToCategory(user?.social_causes));
-    setCityVal(!user || !user.city ? null : { label: `${user.city}, ${user.country}` });
-    setSelectedCity(user?.city);
-    setSelectedCountry(user?.country);
-    setLanguages(mapLanguageToItems(user?.languages || []));
-    setIsusernameValid(false);
-    setIsusernameAvailable(false);
-    setLangErrors([]);
-    setCausesErrors([]);
-  };
-
   useEffect(() => {
-    const usernameConditionErrors = checkUsernameConditions(username);
-    clearErrors('username');
-    setIsusernameValid(false);
-    if (usernameConditionErrors) {
-      setIsusernameValid(false);
-      setError('username', {
-        type: 'manual',
-        message: usernameConditionErrors,
-      });
-    } else if (!usernameConditionErrors && username) {
-      debouncedCheckUsername(username);
-      if (isUsernameAvailable) {
+    if (username) {
+      if (username === user.username) {
+        setusernameValidError('');
         setIsusernameValid(true);
-        clearErrors('username');
+        setIsusernameAvailable(true);
       } else {
-        setIsusernameValid(false);
-        setError('username', {
-          type: 'manual',
-          message: 'Username is not available',
-        });
+        debouncedCheckUsername(username);
+        const checkResult = checkUsernameConditions(username);
+        setusernameValidError(checkResult || '');
+        setIsusernameValid(!checkResult);
       }
     }
-  }, [username, isUsernameAvailable]);
+  }, [username]);
 
   useEffect(() => {
-    if (!SocialCauses.length) setCausesErrors(['Please select atleast one cause']);
-    else setCausesErrors([]);
-  }, [SocialCauses]);
+    if (isUsernameAvailable) {
+      clearErrors('username');
+    } else {
+      setError('username', { type: 'manual', message: 'Username is not available' });
+    }
+  }, [isUsernameAvailable]);
+
+  const resetState = () => {
+    reset({
+      firstName: user.first_name,
+      lastName: user.last_name,
+      username: user.username,
+      city: { label: user.city, value: user.city },
+      country: user.country,
+      bio: user.bio,
+      socialCauses: socialCausesToCategory(user?.social_causes),
+    });
+  };
 
   useEffect(() => {
     resetState();
   }, [user]);
 
+  const handleChangeBio = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (value.length <= 160) {
+      setValue('bio', value, { shouldValidate: true });
+      setLetterCount(value.length);
+    } else
+      setError('bio', {
+        type: 'manual',
+        message: 'Too long',
+      });
+  };
+
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
-      label: JSON.stringify({ label: `${city.name}, ${city.country_name}`, description: city.timezone_utc }),
+      value: city.id,
+      label: `${city.name}, ${city.region_name}`,
       countryCode: city.country_code,
-      city: city.name,
     }));
   };
 
@@ -153,10 +186,10 @@ export const useEditInfo = (handleClose: () => void) => {
     }
   };
   const onSelectCity = (location) => {
-    setSelectedCity(location.city);
-    setSelectedCountry(location.countryCode);
-    setCityVal({ label: location.label });
+    setValue('city', { value: location.label, label: location.label }, { shouldValidate: true });
+    setValue('country', location.countryCode, { shouldValidate: true });
   };
+
   async function updateIdentityList() {
     return identities().then((resp) => dispatch(setIdentityList(resp)));
   }
@@ -167,16 +200,16 @@ export const useEditInfo = (handleClose: () => void) => {
   };
 
   const saveUser = async () => {
-    if (langErrors.length || causesErrors.length) return;
+    if (langErrors.length) return;
     const updatedUser = {
       ...user,
       first_name: getValues().firstName.trim(),
       last_name: getValues().lastName.trim(),
       username: getValues().username,
-      mission: getValues().summary,
-      city: selectedCity,
-      country: selectedCountry,
-      social_causes: SocialCauses.map((item) => item.value),
+      bio: getValues().bio,
+      city: getValues().city.label,
+      country: getValues().country,
+      social_causes: getValues().socialCauses?.map((item) => item.value),
     };
 
     const promises: Promise<any>[] = [];
@@ -201,17 +234,19 @@ export const useEditInfo = (handleClose: () => void) => {
     handleClose();
   };
 
+  const changeSocialCauses = (newVal) => {
+    setValue('socialCauses', newVal, { shouldValidate: true });
+  };
   return {
     register,
     user,
     isUsernameValid,
     searchCities,
     onSelectCity,
-    cityVal,
-    isFormValid,
+    city: getValues().city,
     socialCauseItems,
-    SocialCauses,
-    setSocialCauses,
+    socialCauses: getValues().socialCauses,
+    changeSocialCauses,
     handleSubmit,
     saveUser,
     languages,
@@ -219,7 +254,10 @@ export const useEditInfo = (handleClose: () => void) => {
     errors,
     langErrors,
     setLangErrors,
-    causesErrors,
     closeModal,
+    letterCount,
+    bio: getValues().bio,
+    handleChangeBio,
+    isUsernameAvailable,
   };
 };

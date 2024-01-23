@@ -64,3 +64,36 @@
 .sharp {
   border-radius: 6px;
 }
+
+.primary-transparent {
+  background-color: transparent;
+  color: $color-primary-600;
+  border: 1.5px solid $color-primary-600;
+}
+
+.secondary-transparent {
+  background-color: transparent;
+  color: $color-grey-600;
+  border: 1.5px solid $color-grey-600;
+}
+.grey_blue-transparent {
+  background-color: transparent;
+  color: $color-grey-blue-600;
+  border: 1.5px solid $color-grey-blue-600;
+}
+.error-transparent {
+  background-color: transparent;
+  color: $color-error-600;
+  border: 1.5px solid $color-error-600;
+}
+.warning-transparent {
+  background-color: transparent;
+  color: $color-warning-600;
+  border: 1.5px solid $color-warning-600;
+}
+
+.success-transparent {
+  background-color: transparent;
+  color: $color-success-600;
+  border: 1.5px solid $color-success-600;
+}

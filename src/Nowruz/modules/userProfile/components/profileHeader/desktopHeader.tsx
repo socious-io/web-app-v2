@@ -1,6 +1,7 @@
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { ConnectStatus, Organization, User } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AvatarProfile } from 'src/Nowruz/modules/general/components/avatarProfile';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -28,13 +29,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
   handleOpenEditAvatar,
   type,
 }) => {
-  const profileImage = type === 'users' ? (identity as User).avatar : (identity as Organization).image;
-  const name =
-    type === 'users'
-      ? `${(identity as User).first_name} ${(identity as User).last_name}`
-      : (identity as Organization).name;
-  const username = type === 'users' ? `@${(identity as User).username}` : `@${(identity as Organization).shortname}`;
-
+  const { username, name, profileImage } = getIdentityMeta(identity);
   return (
     <div className="hidden md:block">
       <div className={css.avatar}>

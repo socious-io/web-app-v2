@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
@@ -13,6 +12,7 @@ import { toRelativeTime } from 'src/core/relative-time';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
+import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import css from './job-listing-card.module.scss';

@@ -1,6 +1,7 @@
 @import 'src/components/_primitives.scss';
 
 .container {
+  max-width: fit-content;
   width: fit-content;
   display: flex;
   flex-direction: column;
@@ -32,11 +33,11 @@
 }
 
 .description {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
   letter-spacing: 0em;
-  color: $color-grey-700;
+  color: $color-grey-600;
 }
 
 .copyBtn {
