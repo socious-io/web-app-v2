@@ -1,6 +1,6 @@
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
-import { setApplicantStatusLabel } from 'src/constants/APPLICANT_STATUS';
+import { getApplicantStatusLabel, getOrganizationStatusLabel } from 'src/constants/CONTRACTS_STATUS';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Icon } from 'src/Nowruz/general/Icon';
 
@@ -10,10 +10,11 @@ import { Avatar } from '../../../general/components/avatar/avatar';
 import { Chip } from '../../../general/components/Chip';
 
 export const ContractCard: React.FC<ContractCardProps> = ({ offer, type }) => {
-  const name = type === 'users' ? offer.recipient.meta.name : offer.offerer.meta.name;
-  const profileImageUrl = type === 'users' ? offer.recipient.meta.avatar : offer.offerer.meta.image;
-
-  const { theme, startIcon } = useContractCard(offer);
+  const name = type === 'users' ? offer.offerer.meta.name : offer.recipient.meta.name;
+  const profileImageUrl = type === 'users' ? offer.offerer.meta?.image : offer.recipient.meta?.avatar;
+  const statusLabel =
+    type === 'users' ? getApplicantStatusLabel(offer.status) : getOrganizationStatusLabel(offer.status);
+  const { theme, icon } = useContractCard(offer, type);
 
   return (
     <div className="flex flex-col gap-5 border border-solid border-Gray-light-mode-200 rounded-default py-5 px-6">
@@ -31,14 +32,7 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, type }) => {
         <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{`${offer.assignment_total} ${offer.currency}`}</span>
         <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`(Fixed-price)`}</span>
         <div className="mr-0 ml-auto">
-          <Chip
-            label={setApplicantStatusLabel(offer.status)}
-            startIcon={startIcon}
-            theme={theme}
-            shape="round"
-            size="sm"
-            transparent
-          />
+          <Chip label={statusLabel} startIcon={icon} theme={theme} shape="round" size="sm" transparent />
         </div>
       </div>
     </div>
