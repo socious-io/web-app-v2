@@ -176,9 +176,9 @@ export const blueprint: RouteObject[] = [
       {
         path: 'contracts',
         loader: async () => {
-          const requests = [userOffers({ page: 1, limit: 5 }), identities()];
-          const [offers, currentIdentities] = await Promise.all(requests);
-          return { offers, currentIdentities };
+          const requests = [userOffers({ page: 1, limit: 5 }), userMissions()];
+          const [offers, missions] = await Promise.all(requests);
+          return { offers, missions };
         },
         async lazy() {
           const { Contracts } = await import('src/Nowruz/pages/contracts');

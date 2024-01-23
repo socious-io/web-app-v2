@@ -1,47 +1,96 @@
+import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
-import { Offer } from 'src/core/api';
+import { CurrentIdentity, Mission, Offer } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { Dot } from 'src/Nowruz/modules/general/components/dot';
+import { RootState } from 'src/store';
 
-export const useContractCard = (offer: Offer, type: 'users' | 'organizations') => {
-  const StartIcon = () => {
-    if (type === 'users') {
-      switch (offer.status) {
-        case 'APPROVED':
-          return (
-            <Icon name="check-circle" fontSize={12} color={variables.$color_success_600} className="text-Success-600" />
-          );
-        case 'PENDING':
-          return <Icon name="clock" fontSize={12} color={variables.$color_grey_700} className="text-Warning-600" />;
-        default:
-          return <Icon name="click" fontSize={12} color={variables.$color_primary_600} className="text-Brand-600" />;
-      }
-    } else {
-      switch (offer.status) {
-        case 'APPROVED':
-          return <Icon name="clock" fontSize={12} color={variables.$color_warning_600} className="text-Warning-600" />;
-        case 'PENDING':
-          return <Icon name="arrow-up" fontSize={12} color={variables.$color_warning_600} className="text-grey-700" />;
-        default:
-          return <Icon name="click" fontSize={12} color={variables.$color_primary_600} className="text-Brand-600" />;
-      }
+export const useContractCard = (offer: Offer, mission?: Mission) => {
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
+
+  const type = identity?.type;
+
+  const name = type === 'users' ? offer.recipient.meta.name : offer.offerer.meta.name;
+  const profileImageUrl = type === 'users' ? offer.recipient.meta.avatar : offer.offerer.meta.image;
+  const currencyIconName = offer.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle';
+
+  const BadgeData = () => {
+    switch (offer.status) {
+      case 'PENDING':
+        if (type === 'users')
+          return {
+            label: 'Offer received',
+            theme: 'warning',
+            icon: <Dot size="small" color={variables.color_warning_600} shadow={false} />,
+          };
+        return {
+          label: 'Offer sent',
+          theme: 'secondary',
+          icon: <Icon fontSize={12} name="arrow-up" className="text-Gray-light-mode-600" />,
+        };
+      case 'APPROVED':
+        if (type === 'users')
+          return {
+            label: 'Awaiting confirmation',
+            theme: 'warning',
+            icon: <Icon fontSize={12} name="clock" className="text-Warning-600" />,
+          };
+        return {
+          label: 'Payment required',
+          theme: 'warning',
+          icon: <Icon fontSize={12} name="alert-circle" className="text-Warning-600" />,
+        };
+      case 'HIRED':
+        if (mission?.status === 'ACTIVE')
+          return {
+            label: 'Ongoing',
+            theme: 'success',
+            icon: <Dot size="small" color={variables.color_success_700} shadow={false} />,
+          };
+        else if (mission?.status === 'COMPLETE')
+          return {
+            label: 'Awaiting confirmation',
+            theme: 'warning',
+            icon: <Icon fontSize={12} name="clock" className="text-Warning-600" />,
+          };
+        else if (mission?.status === 'CANCELED')
+          return {
+            label: 'Canceled',
+            theme: 'secondary',
+            icon: <></>,
+          };
+        else if (mission?.status === 'KICKED_OUT')
+          return {
+            label: 'Kicked out',
+            theme: 'secondary',
+            icon: <></>,
+          };
+        else return;
+      case 'CLOSED':
+        if (mission?.status === 'CONFIRMED')
+          return {
+            label: 'Completed',
+            theme: 'success',
+            icon: <Icon name="check-circle" fontSize={12} className="text-Success-600" />,
+          };
+        else return;
+      case 'CANCELED':
+        return {
+          label: 'Canceled',
+          theme: 'secondary',
+          icon: <></>,
+        };
+      case 'WITHDRAWN':
+        return {
+          label: 'Withdrawn',
+          theme: 'secondary',
+          icon: <></>,
+        };
     }
   };
 
-  const BadgeTheme = () => {
-    const statusColorMap = {
-      APPROVED: 'primary',
-      PENDING: type === 'users' ? 'warning' : 'secondary',
-      CANCELED: 'secondary',
-      CLOSED: 'secondary',
-      HIRED: 'secondary',
-      KICK_OUT: 'secondary',
-      WITHDRAWN: 'secondary',
-    };
-
-    return statusColorMap[offer.status];
-  };
-
-  const theme = BadgeTheme();
-  const icon = StartIcon();
-  return { theme, icon };
+  const badge = BadgeData();
+  return { badge, type, name, profileImageUrl, currencyIconName };
 };
