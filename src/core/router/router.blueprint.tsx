@@ -136,7 +136,7 @@ export const blueprint: RouteObject[] = [
               const [jobCategories] = await Promise.all(requests);
               return { jobCategories };
             },
-            async lazy() {
+            async lazy() {              
               const { CreateJob } = await import('src/Nowruz/pages/jobs/Create');
               return {
                 Component: CreateJob,
@@ -1167,6 +1167,17 @@ function DefaultRoute(): JSX.Element {
 }
 
 function ErrorBoundary() {
+  const flag = 'refreshed';
+  let refreshed = localStorage.getItem(flag);
+  
+  if (!refreshed) {
+    localStorage.setItem(flag, 'true');
+    window.location.reload();
+    return <></>;
+  }
+
+  localStorage.removeItem(flag);
+
   const error: any = useRouteError();
   if (error?.response?.status === 401) return <Navigate to="/intro" />;
   console.log(error);
