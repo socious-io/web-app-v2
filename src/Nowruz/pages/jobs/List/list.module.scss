@@ -22,6 +22,9 @@
       color: $color-grey-600;
     }
   }
+  .headerOverwrite {
+    border-bottom: 0 !important;
+  }
   .list {
     margin-top: 24px;
     width: 720px;
