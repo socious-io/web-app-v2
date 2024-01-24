@@ -92,7 +92,7 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
           </Typography>
           {seeMore && (
             <span className={css.seeMoreBtn} onClick={seeMoreClick}>
-              See more
+              see more
             </span>
           )}
         </div>

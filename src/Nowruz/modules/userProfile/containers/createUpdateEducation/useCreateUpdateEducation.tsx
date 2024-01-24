@@ -15,14 +15,28 @@ import * as yup from 'yup';
 const schema = yup
   .object()
   .shape({
-    schoolName: yup.string().required('School is required'),
-    schoolId: yup.string(),
+    school: yup.object().shape({
+      label: yup.string().required('Required'),
+      value: yup.string(),
+    }),
     degree: yup.string(),
     field: yup.string(),
-    startMonth: yup.string(),
-    startYear: yup.string(),
-    endMonth: yup.string(),
-    endYear: yup.string(),
+    startMonth: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
+    startYear: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
+    endMonth: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
+    endYear: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
     grade: yup.string(),
     description: yup.string(),
   })
@@ -35,22 +49,17 @@ interface OptionType {
 
 export const useCreateUpdateEducation = (
   handleClose: () => void,
-  education: AdditionalRes,
   setEducation: (val: AdditionalRes) => void,
+  education?: AdditionalRes,
 ) => {
   const user = useSelector<RootState, User | Organization | undefined>((state) => {
     return state.profile.identity;
   }) as User;
 
-  const [schoolVal, setSchoolVal] = useState<OptionType | null>();
   const [schools, setSchools] = useState<Organization[]>([]);
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
-  const [startMonth, setStartMonth] = useState<OptionType | null>();
-  const [startYear, setStartYear] = useState<OptionType | null>();
-  const [endMonth, setEndMonth] = useState<OptionType | null>();
-  const [endYear, setEndYear] = useState<OptionType | null>();
-
+  const [dateError, setDateError] = useState('');
   const dispatch = useDispatch();
 
   const mapMonthNames = () => {
@@ -75,46 +84,20 @@ export const useCreateUpdateEducation = (
     const meta = education ? (education.meta as EducationMeta) : null;
 
     const initialVal = {
-      schoolName: meta?.school_name || '',
-      schoolId: meta?.school_id || '',
+      school: { label: meta?.school_name || '', value: meta?.school_id || '' },
       degree: meta?.degree || '',
       field: meta?.field || '',
-      startMonth: meta?.start_month || '',
-      startYear: meta?.start_year || '',
-      endMonth: meta?.end_month || '',
-      endYear: meta?.end_year || '',
+      startMonth: {
+        label: meta?.start_month ? monthNames[Number(meta.start_month)] : '',
+        value: meta?.start_month || '',
+      },
+      startYear: { label: meta?.start_year || '', value: meta?.start_year || '' },
+      endMonth: { label: meta?.end_month ? monthNames[Number(meta.end_month)] : '', value: meta?.end_month || '' },
+      endYear: { label: meta?.end_year || '', value: meta?.end_year || '' },
       grade: meta?.grade || '',
       description: education?.description || '',
     };
     reset(initialVal);
-
-    setSchoolVal(
-      meta?.school_name
-        ? {
-            value: meta?.school_id || '',
-            label: meta?.school_name,
-          }
-        : null,
-    );
-
-    setStartMonth(
-      meta?.start_month
-        ? {
-            value: meta?.start_month,
-            label: monthNames[Number(meta.start_month)],
-          }
-        : null,
-    );
-    setStartYear(meta?.start_year ? { value: meta?.start_year, label: meta?.start_year } : null);
-    setEndMonth(
-      meta?.end_month
-        ? {
-            value: meta?.end_month,
-            label: monthNames[Number(meta.end_month)],
-          }
-        : null,
-    );
-    setEndYear(meta?.end_year ? { value: meta?.end_year, label: meta?.end_year } : null);
   };
 
   useEffect(() => {
@@ -130,10 +113,31 @@ export const useCreateUpdateEducation = (
     getValues,
     setValue,
     reset,
+    watch,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
   });
+
+  const startMonth = watch('startMonth');
+  const endMonth = watch('endMonth');
+  const startYear = watch('startYear');
+  const endYear = watch('endYear');
+
+  const validateDates = () => {
+    if (!startYear?.label) return;
+    const start = new Date(Number(startYear?.label), Number(startMonth?.value || 0), 2);
+    const end = endYear?.label ? new Date(Number(endYear?.label), Number(endMonth?.value || 0), 2) : undefined;
+    if (end && end < start) return 'Start date cannot be later than end date';
+    return;
+  };
+
+  useEffect(() => {
+    const msg = validateDates();
+    if (msg) {
+      setDateError(msg);
+    } else setDateError('');
+  }, [startMonth, startYear, endMonth, endYear]);
 
   const schoolToOption = (schoolList: Organization[], searchText: string) => {
     let options: OptionType[] = [];
@@ -164,25 +168,19 @@ export const useCreateUpdateEducation = (
   };
 
   const onSelectSchool = (newCompanyVal: OptionType) => {
-    setValue('schoolId', newCompanyVal.value, { shouldValidate: true });
-    setValue('schoolName', newCompanyVal.label, { shouldValidate: true });
-    setSchoolVal({ value: newCompanyVal.value, label: newCompanyVal.label });
+    setValue('school', newCompanyVal, { shouldValidate: true });
   };
   const onSelectStartMonth = (month: OptionType) => {
-    setValue('startMonth', month.value, { shouldValidate: true });
-    setStartMonth(month);
+    setValue('startMonth', month, { shouldValidate: true });
   };
   const onSelectEndMonth = (month: OptionType) => {
-    setValue('endMonth', month.value, { shouldValidate: true });
-    setEndMonth(month);
+    setValue('endMonth', month, { shouldValidate: true });
   };
   const onSelectStartYear = (year: OptionType) => {
-    setValue('startYear', year.value, { shouldValidate: true });
-    setStartYear(year);
+    setValue('startYear', year, { shouldValidate: true });
   };
   const onSelectEndYear = (year: OptionType) => {
-    setValue('endYear', year.value, { shouldValidate: true });
-    setEndYear(year);
+    setValue('endYear', year, { shouldValidate: true });
   };
 
   const onDelete = async () => {
@@ -194,32 +192,32 @@ export const useCreateUpdateEducation = (
   };
 
   const onSave = async () => {
-    const { schoolName, schoolId, degree, field, startMonth, startYear, endMonth, endYear, grade, description } =
-      getValues();
+    if (dateError) return;
+    const { school, degree, field, startMonth, startYear, endMonth, endYear, grade, description } = getValues();
 
-    let schId = schoolId;
+    let schId = school.value;
     if (!schId) {
-      schId = (await createOrganization({ name: schoolName, email: 'org@socious.io' }, false)).id;
+      schId = (await createOrganization({ name: school.label, email: 'org@socious.io' }, false)).id;
     }
     const payloadMeta: EducationMeta = {
       field: field,
       grade: grade,
       degree: degree,
-      end_month: endMonth,
-      end_year: endYear,
-      start_month: startMonth,
-      start_year: startYear,
+      end_month: endMonth.value,
+      end_year: endYear.value,
+      start_month: startMonth.value,
+      start_year: startYear.value,
       school_id: schId,
-      school_name: schoolName,
+      school_name: school.label,
     };
     const payload: AdditionalReq = {
       type: 'EDUCATION',
-      title: schoolName,
+      title: school.label,
       enabled: true,
     };
 
-    if (schoolId) {
-      const sch = schools.find((i) => i.id === schoolId);
+    if (school.value) {
+      const sch = schools.find((i) => i.id === school.value);
       payload.image = sch?.image?.id;
       payloadMeta.school_city = sch?.city;
       payloadMeta.school_image = sch?.image?.url;
@@ -244,17 +242,17 @@ export const useCreateUpdateEducation = (
   };
 
   return {
-    schoolVal,
+    schoolVal: getValues().school,
     searchSchools,
     onSelectSchool,
     errors,
     register,
     months,
     years,
-    startMonth,
-    startYear,
-    endMonth,
-    endYear,
+    startMonth: getValues().startMonth,
+    startYear: getValues().startYear,
+    endMonth: getValues().endMonth,
+    endYear: getValues().endYear,
     onSelectStartMonth,
     onSelectStartYear,
     onSelectEndMonth,
@@ -262,5 +260,6 @@ export const useCreateUpdateEducation = (
     handleSubmit,
     onSave,
     onDelete,
+    dateError,
   };
 };

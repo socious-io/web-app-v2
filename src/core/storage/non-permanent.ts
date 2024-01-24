@@ -36,6 +36,13 @@ async function get(key: string): Promise<string | null | undefined> {
   }
 }
 
+async function remove(key: string) {
+  if (isNative) {
+    await Preferences.remove({ key });
+  } else {
+    Cookies.remove(key);
+  }
+}
 async function clear() {
   if (isNative) {
     return Preferences.clear();
@@ -44,4 +51,4 @@ async function clear() {
   }
 }
 
-export const nonPermanentStorage = { set, get, clear };
+export const nonPermanentStorage = { set, get, clear, remove };

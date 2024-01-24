@@ -7,7 +7,6 @@ import { removeIdentityList } from 'src/store/reducers/identity.reducer';
 
 import HeaderNavBar from './components/headerNavBar';
 import { NavBar } from './components/navBar';
-import { SearchModal } from '../Search/containers/SearchModal';
 
 export const Layout = () => {
   const [open, setOpen] = useState(false);

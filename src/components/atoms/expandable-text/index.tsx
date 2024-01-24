@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { convertMarkdownToJSX } from 'src/core/convert-md-to-jsx';
 import { printWhen } from 'src/core/utils';
 
