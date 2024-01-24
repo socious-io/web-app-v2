@@ -4,10 +4,8 @@ import { ContractCard } from 'src/Nowruz/modules/contract/components/contractCar
 
 export const useContracts = () => {
   const { offers, missions } = useLoaderData() as { offers: OffersRes; missions: MissionsRes };
-  // return { offers: offers.items, missions: missions.items };
-
   const contentJSX = (items: Offer[]) => (
-    <div className="flex flex-col md:gap-5 w-full max-w-[640px]">
+    <div className="flex flex-col gap-6 md:gap-5 w-full max-w-[640px]">
       {items?.map((item: Offer) => (
         <ContractCard key={item.id} offer={item} mission={missions.items.find((m) => m.offer.id === item.id)} />
       ))}

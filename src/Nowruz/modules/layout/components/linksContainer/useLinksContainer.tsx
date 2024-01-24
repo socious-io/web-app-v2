@@ -42,7 +42,7 @@ export const useLinksContainer = () => {
     },
     {
       label: 'Contracts',
-      route: '/',
+      route: '/nowruz/contracts',
       iconName: 'file-02',
       public: false,
     },

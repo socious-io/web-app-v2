@@ -1,0 +1,15 @@
+.btn {
+  width: 40px;
+  height: 40px;
+  margin: 15px 15px auto auto;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.btn:focus {
+  outline: 5px auto Highlight;
+  outline: 5px auto -webkit-focus-ring-color;
+}
