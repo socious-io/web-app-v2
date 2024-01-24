@@ -1167,6 +1167,17 @@ function DefaultRoute(): JSX.Element {
 }
 
 function ErrorBoundary() {
+  const flag = 'refreshed';
+  let refreshed = localStorage.getItem(flag);
+
+  if (!refreshed) {
+    localStorage.setItem(flag, 'true');
+    window.location.reload();
+    return <></>;
+  }
+
+  localStorage.removeItem(flag);
+
   const error: any = useRouteError();
   if (error?.response?.status === 401) return <Navigate to="/intro" />;
   console.log(error);
