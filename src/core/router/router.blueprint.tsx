@@ -176,7 +176,7 @@ export const blueprint: RouteObject[] = [
       {
         path: 'contracts',
         loader: async () => {
-          const requests = [userOffers({ page: 1, limit: 5 }), userMissions()];
+          const requests = [userOffers({ page: 1, limit: 50 }), userMissions()];
           const [offers, missions] = await Promise.all(requests);
           return { offers, missions };
         },

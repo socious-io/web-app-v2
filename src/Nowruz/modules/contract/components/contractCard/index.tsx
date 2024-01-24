@@ -9,6 +9,7 @@ import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
 import { AcceptOffer } from '../acceptOffer';
+import { CompleteJob } from '../completeJob';
 
 export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) => {
   const {
@@ -18,9 +19,11 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
     profileImageUrl,
     currencyIconName,
     openAcceptModal,
-    handleCloseAcceptModal,
-    handleOpenAcceptModal,
     offerVal,
+    missionVal,
+    openCompleteModal,
+    handleOpenModal,
+    handleCloseModal,
   } = useContractCard(offer, mission);
 
   return (
@@ -28,7 +31,7 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
       <div
         tabIndex={0}
         className="flex flex-col gap-5 border border-solid border-Gray-light-mode-200 rounded-default py-5 px-6 cursor-pointer"
-        onClick={handleOpenAcceptModal}
+        onClick={handleOpenModal}
       >
         <div className="flex gap-4 ">
           <Avatar size="56px" type={type || 'users'} img={profileImageUrl} />
@@ -57,8 +60,11 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
           </div>
         </div>
       </div>
-      <Overlay open={openAcceptModal} onClose={handleCloseAcceptModal}>
+      <Overlay open={openAcceptModal} onClose={handleCloseModal}>
         <AcceptOffer offer={offerVal} />
+      </Overlay>
+      <Overlay open={openCompleteModal} onClose={handleCloseModal}>
+        <CompleteJob offer={offerVal} mission={missionVal} />
       </Overlay>
     </>
   );

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Offer, acceptOffer, rejectOffer } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
 
 import { AcceptOfferDetail } from '../acceptOfferDetail';
 
 export const useAcceptOffer = (offer: Offer) => {
-  const { name, profileImage } = getIdentityMeta(offer.applicant?.user);
+  const name = offer.offerer.meta.name;
+  const profileImage = offer.offerer.meta.image;
+
   const [accepted, setAccepted] = useState(offer.status === 'APPROVED');
   const [declined, setDeclined] = useState(offer.status === 'WITHDRAWN');
   const tabs = [
@@ -21,5 +22,5 @@ export const useAcceptOffer = (offer: Offer) => {
     await rejectOffer(offer.id);
     setDeclined(true);
   };
-  return { avatarUrl: profileImage?.url, name, tabs, accepted, handleAccept, declined, handleDecline };
+  return { profileImage, name, tabs, accepted, handleAccept, declined, handleDecline };
 };

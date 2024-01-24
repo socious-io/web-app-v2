@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
@@ -11,17 +10,15 @@ import { AcceotOfferProps } from './acceptOffer.types';
 import { useAcceptOffer } from './useAcceptOffer';
 
 export const AcceptOffer: React.FC<AcceotOfferProps> = ({ offer }) => {
-  const { avatarUrl, name, tabs, accepted, declined, handleAccept, handleDecline } = useAcceptOffer(offer);
+  const { profileImage, name, tabs, accepted, declined, handleAccept, handleDecline } = useAcceptOffer(offer);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-6 ">
-          <Avatar size="72px" type="organizations" img={avatarUrl} />
+          <Avatar size="72px" type="organizations" img={profileImage} />
           <div className="flex flex-col">
             <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">{offer.project.title}</span>
-            <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{`${name} . ${toRelativeTime(
-              offer.created_at.toString(),
-            )}`}</span>
+            <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{name}</span>
           </div>
         </div>
         <div className="flex gap-3">
