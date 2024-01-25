@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
+import { Navigate, useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
@@ -19,7 +19,11 @@ import { RootState } from 'src/store';
 import css from './jobDetailAbout.module.scss';
 import { ApplyModal } from '../applyModal';
 
-export const JobDetailAbout = () => {
+interface JobDetailAboutProps {
+  isUser: boolean;
+}
+
+export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true }) => {
   const { jobDetail } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
@@ -34,6 +38,8 @@ export const JobDetailAbout = () => {
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
   };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     nonPermanentStorage.get('openApplyModal').then((res) => {
@@ -121,7 +127,7 @@ export const JobDetailAbout = () => {
         <div className="hidden md:block">{detailJSX}</div>
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
-        {!jobDetail.applied && (
+        {!jobDetail.applied && isUser && (
           <AuthGuard>
             <Button
               variant="contained"
@@ -130,6 +136,18 @@ export const JobDetailAbout = () => {
               onClick={() => setOpenApply(true)}
             >
               Apply now
+            </Button>
+          </AuthGuard>
+        )}
+        {!isUser && (
+          <AuthGuard>
+            <Button
+              variant="contained"
+              color="error"
+              customStyle="hidden md:block w-full"
+              onClick={() => navigate(`/nowruz/jobs/list`)}
+            >
+              Close
             </Button>
           </AuthGuard>
         )}

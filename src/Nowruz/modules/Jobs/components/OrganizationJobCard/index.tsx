@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Applicant, Job, jobApplicants } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import { isoToStandard } from 'src/core/time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
@@ -30,10 +29,10 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
 
   const navigate = useNavigate();
   const handleClick = () => {
-    if (isTouchDevice()) navigate(`/nowruz/jobs/${job.id}`);
+    navigate(`/nowruz/jobs/${job.id}`);
   };
   return (
-    <div className={`${css.container} cursor-pointer md:cursor-default`} onClick={handleClick}>
+    <div className={`${css.container} cursor-pointer`} onClick={handleClick}>
       <div className={css.cardInfo}>
         <div>
           <div className={css.intro}>

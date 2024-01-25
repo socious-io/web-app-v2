@@ -175,7 +175,7 @@ export const blueprint: RouteObject[] = [
             },
             async lazy() {
               const { JobDetail } = await import('src/Nowruz/pages/jobs/detail');
-              return { Component: JobDetail };
+              return { Component: Protect(JobDetail) };
             },
           },
         ],

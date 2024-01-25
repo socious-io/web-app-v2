@@ -19,9 +19,10 @@ import { ApplyModal } from '../applyModal';
 
 interface JobDetailHeaderProps {
   job: Job;
+  isUser: boolean;
 }
 
-export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job }) => {
+export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser }) => {
   const navigate = useNavigate();
   const [openApply, setOpenApply] = useState(false);
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -66,7 +67,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job }) => {
               </Button>
             </AuthGuard>
           )}
-          <Divider />
+          {isUser && <Divider />}
         </div>
       </div>
       <ApplyModal open={openApply} handleClose={() => setOpenApply(false)} />
