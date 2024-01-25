@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mission, Offer, completeMission } from 'src/core/api';
+import { Mission, Offer, cancelMission, completeMission } from 'src/core/api';
 
 import { AcceptOfferDetail } from '../acceptOfferDetail';
 
@@ -16,8 +16,8 @@ export const useCompleteJob = (offer: Offer, mission: Mission) => {
   ];
 
   const handleStop = async () => {
-    // await completeMission(mission.id);
-    // setCompleted(true);
+    await cancelMission(mission.id);
+    setStopped(true);
   };
   const handleComplete = async () => {
     await completeMission(mission.id);
