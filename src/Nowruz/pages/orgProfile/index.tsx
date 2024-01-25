@@ -7,6 +7,7 @@ import { useOrgProfile } from './useOrgProfile';
 
 export const OrgProfile = () => {
   const { tabs } = useOrgProfile();
+
   return (
     <div className="w-full">
       <ProfileHeader />

@@ -12,10 +12,11 @@ export const Chip: React.FC<ChipProbs> = ({
   theme = 'primary',
   shape = 'round',
   size = 'md',
+  transparent = false,
 }) => {
   const chipClasses = `${styles[`chip-${size}`]} ${styles[`${theme}-theme`]} ${
     shape === 'round' ? styles.round : styles.sharp
-  }`;
+  } ${transparent ? styles[`${theme}-transparent`] : ''}`;
 
   return (
     <div className={chipClasses}>
