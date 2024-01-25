@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mission, Offer } from 'src/core/api';
+import { Mission, Offer, completeMission } from 'src/core/api';
 
 import { AcceptOfferDetail } from '../acceptOfferDetail';
 
@@ -16,12 +16,12 @@ export const useCompleteJob = (offer: Offer, mission: Mission) => {
   ];
 
   const handleStop = async () => {
-    //  await acceptOffer(offer.id);
-    // setStopped(true);
+    // await completeMission(mission.id);
+    // setCompleted(true);
   };
   const handleComplete = async () => {
-    // await rejectOffer(offer.id);
-    // setCompleted(true)
+    await completeMission(mission.id);
+    setCompleted(true);
   };
   return { profileImage, name, tabs, stopped, completed, handleComplete, handleStop };
 };

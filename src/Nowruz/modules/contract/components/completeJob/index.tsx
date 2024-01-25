@@ -52,7 +52,7 @@ export const CompleteJob: React.FC<CompleteJobProps> = ({ offer, mission }) => {
             theme="warning"
             iconName="alert-circle"
             title="Completion submitted"
-            subtitle="Awaiting confirmation from Ocean Protection"
+            subtitle={`Awaiting confirmation from ${name}`}
           />
         )}
         <HorizontalTabs tabs={tabs} leftAligned={false} containerCustomStyle="gap-0" />
