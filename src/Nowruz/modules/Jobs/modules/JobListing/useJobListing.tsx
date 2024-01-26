@@ -4,14 +4,12 @@ import { JobsRes, jobs } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const useJobListing = () => {
-  const { userJobs } = useLoaderData() as {
-    activeJobs: JobsRes;
-    archivedJobs: JobsRes;
-    userJobs: JobsRes;
-  };
+  const data = useLoaderData() as JobsRes;
+
+  console.log(data);
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
-  const [jobsList, setJobsList] = useState(userJobs.items);
+  const [jobsList, setJobsList] = useState(data.items);
   const [page, setPage] = useState(1);
 
   const fetchMore = async (page: number) => {
@@ -23,5 +21,5 @@ export const useJobListing = () => {
   useEffect(() => {
     fetchMore(page);
   }, [page]);
-  return { page, setPage, jobsList, total: userJobs.total_count, PER_PAGE, isMobile };
+  return { page, setPage, jobsList, total: data.total_count, PER_PAGE, isMobile };
 };
