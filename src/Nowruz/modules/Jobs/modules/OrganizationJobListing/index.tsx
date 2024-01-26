@@ -1,4 +1,5 @@
-import React from 'react';
+import { CircularProgress } from '@mui/material';
+import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 
@@ -7,10 +8,15 @@ import { useOrganizationJobListing } from './useOrganizationJobListing';
 import { OrganizationJobCard } from '../../components/OrganizationJobCard';
 
 export const OrganizationJobListing = () => {
-  const { page, setPage, total, PER_PAGE, jobsList, isMobile } = useOrganizationJobListing();
+  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading } = useOrganizationJobListing();
 
   return (
     <div className={css.container}>
+      {loading && (
+        <div className={css.loader}>
+          <CircularProgress size="32px" sx={{ color: variables.color_primary_700 }} />
+        </div>
+      )}
       {jobsList.map((job) => (
         <div className="mt-6">
           <OrganizationJobCard job={job} />

@@ -12,12 +12,9 @@ export const JobsList = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity: CurrentIdentity) => identity.current);
   });
-  const isUser = currentIdentity?.type === 'users';
-  const { userJobs } = useLoaderData() as {
-    activeJobs: JobsRes;
-    archivedJobs: JobsRes;
-    userJobs: JobsRes;
-  };
+  const isUser = currentIdentity?.type === 'users' || !currentIdentity;
+
+  const userJobs = useLoaderData() as JobsRes;
 
   const headerClass = `${css.header} ${!isUser && css.headerOverwrite}`;
 

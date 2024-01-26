@@ -147,20 +147,13 @@ export const blueprint: RouteObject[] = [
           {
             path: 'list',
             loader: async () => {
-              const currentIdentity = await identities();
-              const activeIdentity = currentIdentity.find((identity) => identity.current);
-              const requests = [
-                jobs({ identity_id: activeIdentity?.id, page: 1, status: 'ACTIVE' }),
-                jobs({ identity_id: activeIdentity?.id, page: 1, status: 'EXPIRE' }),
-                jobs({ page: 1, status: 'ACTIVE', limit: 5 }),
-              ];
-              const [activeJobs, archivedJobs, userJobs] = await Promise.all(requests);
-              return { activeJobs, archivedJobs, userJobs };
+              const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
+              return data;
             },
             async lazy() {
               const { JobsList } = await import('src/Nowruz/pages/jobs/List');
               return {
-                Component: Protect(JobsList),
+                Component: JobsList,
               };
             },
           },
@@ -175,7 +168,7 @@ export const blueprint: RouteObject[] = [
             },
             async lazy() {
               const { JobDetail } = await import('src/Nowruz/pages/jobs/detail');
-              return { Component: Protect(JobDetail) };
+              return { Component: JobDetail };
             },
           },
         ],

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
@@ -140,16 +140,14 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
           </AuthGuard>
         )}
         {!isUser && (
-          <AuthGuard>
-            <Button
-              variant="contained"
-              color="error"
-              customStyle="hidden md:block w-full"
-              onClick={() => navigate(`/nowruz/jobs/list`)}
-            >
-              Close
-            </Button>
-          </AuthGuard>
+          <Button
+            variant="contained"
+            color="error"
+            customStyle="hidden md:block w-full"
+            onClick={() => navigate(`/nowruz/jobs/list`)}
+          >
+            Close
+          </Button>
         )}
         <div className="md:hidden flex flex-col gap-5 p-5 border border-solid border-Gray-light-mode-200 rounded-default">
           {detailJSX}

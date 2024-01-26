@@ -19,7 +19,7 @@ export const JobDetail = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity: CurrentIdentity) => identity.current);
   });
-  const isUser = currentIdentity?.type === 'users';
+  const isUser = currentIdentity?.type === 'users' || !currentIdentity;
   const { jobDetail } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
@@ -39,7 +39,7 @@ export const JobDetail = () => {
         </div>
       )}
       <div className="md:mr-16">
-        <JobDetailAbout />
+        <JobDetailAbout isUser={isUser} />
       </div>
       <div className={css.content}>
         {jobDetail.applied && (
