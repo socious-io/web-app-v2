@@ -22,7 +22,6 @@ export const useOrganizationJobListing = () => {
 
   const PER_PAGE = 5;
   const isMobile = isTouchDevice();
-
   const [page, setPage] = useState(1);
 
   const fetchMore = async (page: number) => {

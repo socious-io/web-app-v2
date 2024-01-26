@@ -5,8 +5,6 @@ import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const useJobListing = () => {
   const data = useLoaderData() as JobsRes;
-
-  console.log(data);
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
   const [jobsList, setJobsList] = useState(data.items);
