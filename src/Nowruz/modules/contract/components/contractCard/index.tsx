@@ -60,6 +60,7 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
           </div>
         </div>
       </div>
+
       <Overlay open={openAcceptModal} onClose={handleCloseModal}>
         <AcceptOffer offer={offerVal} />
       </Overlay>

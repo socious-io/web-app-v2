@@ -117,6 +117,7 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
   };
 
   const badge = BadgeData();
+
   return {
     badge,
     type,
