@@ -17,12 +17,18 @@ export const AlertModal: React.FC<AlertModalProps> = ({
   closeButtonLabel = 'Close',
   submitButton = false,
   submitButtonLabel,
+  customIcon,
 }) => {
   return (
     <Modal open={open} onClose={onClose} className={css.modal}>
       <div className={css.container}>
         <div className="flex justify-between">
-          <img className={css.image} src={customImage || '/icons/success-tick.svg'} />
+          {customIcon ? (
+            customIcon
+          ) : (
+            <img className={css.image} src={customImage || '/icons/success-tick.svg'} alt="" />
+          )}
+
           <Icon
             name="x-close"
             fontSize={24}

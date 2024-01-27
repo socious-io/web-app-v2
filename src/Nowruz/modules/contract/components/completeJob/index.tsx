@@ -4,6 +4,7 @@ import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 
 import { useCompleteJob } from './useCompleteJob';
@@ -67,7 +68,7 @@ export const CompleteJob: React.FC<CompleteJobProps> = ({ offer, mission }) => {
         onSubmit={handleComplete}
         message="Once Ocean Protection confirms the job completion, you will receive your payment."
         title="Submit job completion?"
-        customImage="/icons/nowruz/alert-circle.svg"
+        customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />}
         closeButtn={true}
         closeButtonLabel="Cancel"
         submitButton={true}
