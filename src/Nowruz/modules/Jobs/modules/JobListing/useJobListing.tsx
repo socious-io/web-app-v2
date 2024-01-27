@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
 import { useLoaderData } from 'react-router-dom';
 import { JobsRes, jobs } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';

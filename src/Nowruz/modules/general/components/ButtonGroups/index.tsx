@@ -1,30 +1,30 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import css from './buttonGroups.module.scss';
 import { ButtonGroupsProps } from './buttonGroups.types';
 
 export const ButtonGroups: React.FC<ButtonGroupsProps> = (props) => {
-  const { tabs } = props;
+  const { buttons } = props;
   const [active, setActive] = useState(0);
-  const [content, setContent] = useState<ReactNode>();
-  useEffect(() => {
-    setContent(tabs[active].content);
-  }, [active]);
+
+  const handleClick = async (index: number) => {
+    await buttons[index].handleClick();
+    setActive(index);
+  };
 
   return (
     <>
       <div className={css.tabs}>
-        {tabs.map((tab, index) => (
-          <div
-            key={tab.label}
+        {buttons.map((btn, index) => (
+          <button
+            key={btn.label}
             className={`${css.tab} ${index === active ? css.active : ''}`}
-            onClick={() => setActive(index)}
+            onClick={() => handleClick(index)}
           >
-            {tab.label}
-          </div>
+            {btn.label}
+          </button>
         ))}
       </div>
-      <div className={`w-full h-full ${css.content}`}>{content}</div>
     </>
   );
 };

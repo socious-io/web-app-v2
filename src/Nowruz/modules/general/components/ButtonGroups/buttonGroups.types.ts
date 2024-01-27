@@ -1,10 +1,8 @@
-import { ReactNode } from 'react';
-
 export type ButtonGroupItem = {
   label: string;
-  content: ReactNode;
+  handleClick: () => Promise<void>;
 };
 
 export interface ButtonGroupsProps {
-  tabs: ButtonGroupItem[];
+  buttons: ButtonGroupItem[];
 }
