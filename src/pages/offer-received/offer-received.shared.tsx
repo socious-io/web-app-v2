@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLoaderData, useLocation } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { StatusKeys } from 'src/constants/APPLICANT_STATUS';
 import { acceptOffer, rejectOffer, updateWallet } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
@@ -73,11 +73,10 @@ export const useWalletShared = () => {
   const form = useForm(formModel);
   const [stripeLink, setStripeLink] = useState('');
   const [stripeProfile, setStripeProfile] = useState(null);
-  const location = useLocation();
 
   async function onSelectCountry(value: string) {
     try {
-      const result = await getStripeLink(value, location.pathname, offer.currency === 'JPY');
+      const result = await getStripeLink(value, window.location.href, offer.currency === 'JPY');
       const {
         link: { url },
       } = result;
