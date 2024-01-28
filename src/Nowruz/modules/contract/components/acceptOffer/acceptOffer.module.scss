@@ -1,0 +1,21 @@
+@import 'src/components/_primitives.scss';
+
+.acceptAlert {
+  display: flex;
+  gap: 1rem;
+  border-radius: $radius-xl;
+  padding: 1rem;
+  align-items: center;
+  border: 1px solid $color-primary-300;
+  background-color: $color-primary-25;
+}
+
+.declineAlert {
+  display: flex;
+  gap: 1rem;
+  border-radius: $radius-xl;
+  padding: 1rem;
+  align-items: center;
+  border: 1px solid $color-error-300;
+  background-color: $color-error-100;
+}

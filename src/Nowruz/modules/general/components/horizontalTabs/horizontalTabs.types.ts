@@ -7,4 +7,6 @@ export type HorizontalTabsItem = {
 
 export interface HorizontalTabsProps {
   tabs: HorizontalTabsItem[];
+  leftAligned?: boolean;
+  containerCustomStyle?: string;
 }

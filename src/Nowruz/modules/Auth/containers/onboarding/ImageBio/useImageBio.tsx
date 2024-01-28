@@ -2,8 +2,7 @@ import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity, uploadMedia } from 'src/core/api';
-import { updateProfile as updateProfileApi } from 'src/core/api';
+import { CurrentIdentity, profile, uploadMedia, updateProfile as updateProfileApi } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
@@ -31,7 +30,7 @@ export const useImageBio = () => {
     updateUser({ ...state, avatar: null });
   };
 
-  const updateProfile = () => {
+  const updateProfile = async () => {
     const avatarImage = state.avatar ? { avatar: image.id } : {};
     const updatedObj = removeValuesFromObject(
       {
@@ -42,15 +41,28 @@ export const useImageBio = () => {
     );
 
     delete updatedObj.cityLabel;
-    updateProfileApi(updatedObj).then(() => {
-      if (isMobile)
-        navigate(`/sign-up/user/notification`, {
-          state: {
-            username: currentIdentity.meta?.username,
-          },
-        });
-      else navigate(`/profile/users/${currentIdentity.meta?.username}/view`);
-    });
+    /* 
+      Note: this is just make sure fix miss use state for updating profile and this going to make issue when
+      registered for ORG want to complete onboarding for signed up user
+    */
+
+    if (!updatedObj.username) {
+      const p = await profile();
+      updatedObj.username = p.username;
+      updatedObj.first_name = p.first_name;
+      updatedObj.last_name = p.last_name;
+    }
+
+    await updateProfileApi(updatedObj);
+    if (isMobile) {
+      navigate(`/sign-up/user/notification`, {
+        state: {
+          username: currentIdentity.meta?.username,
+        },
+      });
+    } else {
+      navigate(`/profile/users/${currentIdentity.meta?.username}/view`);
+    }
   };
 
   const updateBio = (bio: string) => {
