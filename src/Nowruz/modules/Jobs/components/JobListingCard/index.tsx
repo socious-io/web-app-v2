@@ -93,17 +93,29 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
                 'target-02',
                 EXPERIENCE_LEVEL_V2.find((level) => level.value === job.experience_level)?.label,
               )}
-              {job.payment_scheme === 'FIXED' &&
+              {job.payment_type === 'PAID' &&
+                job.payment_scheme === 'FIXED' &&
                 renderJobFeatures(
                   'currency-dollar-circle',
                   ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
                   '(Fixed-price)',
                 )}
-              {job.payment_scheme === 'HOURLY' &&
+              {job.payment_type === 'PAID' &&
+                job.payment_scheme === 'HOURLY' &&
                 renderJobFeatures(
                   'currency-dollar-circle',
                   ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
                 )}
+              {job.payment_type === 'VOLUNTEER' &&
+                job.payment_scheme === 'HOURLY' &&
+                renderJobFeatures('heart', 'Volunteer')}
+
+              {job.payment_type === 'VOLUNTEER' &&
+                job.payment_scheme === 'HOURLY' &&
+                renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs/week`)}
+              {job.payment_type === 'VOLUNTEER' &&
+                job.payment_scheme === 'FIXED' &&
+                renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs`)}
 
               {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
             </div>

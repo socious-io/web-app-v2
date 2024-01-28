@@ -90,34 +90,48 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
   };
 
   const detailJSX = (
-    <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-2 gap-4">
-        {renderJobLocation()}
-        {renderJobFeatures(
-          'mouse',
-          PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === jobDetail.remote_preference)?.label,
-        )}
-        {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === jobDetail.project_type)?.label)}
-        {renderJobFeatures(
-          'hourglass-03',
-          PROJECT_LENGTH_V3.find((level) => level.value === jobDetail.project_length)?.label,
-        )}
-      </div>
+    <div className="flex flex-row flex-wrap gap-4">
+      {renderJobLocation()}
+      {renderJobFeatures(
+        'mouse',
+        PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === jobDetail.remote_preference)?.label,
+      )}
+      {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === jobDetail.project_type)?.label)}
+      {renderJobFeatures(
+        'hourglass-03',
+        PROJECT_LENGTH_V3.find((level) => level.value === jobDetail.project_length)?.label,
+      )}
 
       {renderJobFeatures(
         'target-02',
         EXPERIENCE_LEVEL_V2.find((level) => level.value === jobDetail.experience_level)?.label,
       )}
-      {jobDetail.payment_scheme === 'FIXED'
-        ? renderJobFeatures(
-            'currency-dollar-circle',
-            ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
-            '(Fixed-price)',
-          )
-        : renderJobFeatures(
-            'currency-dollar-circle',
-            ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
-          )}
+      {jobDetail.payment_type === 'PAID' &&
+        jobDetail.payment_scheme === 'FIXED' &&
+        renderJobFeatures(
+          'currency-dollar-circle',
+          ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
+          '(Fixed-price)',
+        )}
+      {jobDetail.payment_type === 'PAID' &&
+        jobDetail.payment_scheme === 'HOURLY' &&
+        renderJobFeatures(
+          'currency-dollar-circle',
+          ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
+        )}
+      {jobDetail.payment_type === 'VOLUNTEER' &&
+        jobDetail.payment_scheme === 'HOURLY' &&
+        renderJobFeatures('heart', 'Volunteer')}
+
+      {jobDetail.payment_type === 'VOLUNTEER' &&
+        jobDetail.payment_scheme === 'HOURLY' &&
+        renderJobFeatures(
+          'clock',
+          ` ${jobDetail.commitment_hours_lower}~${jobDetail.commitment_hours_higher} hrs/week`,
+        )}
+      {jobDetail.payment_type === 'VOLUNTEER' &&
+        jobDetail.payment_scheme === 'FIXED' &&
+        renderJobFeatures('clock', ` ${jobDetail.commitment_hours_lower}~${jobDetail.commitment_hours_higher} hrs`)}
     </div>
   );
   return (
