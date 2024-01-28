@@ -76,7 +76,7 @@ export const useUserDetails = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async ({ firstName, lastName, username }) => {
     try {
-      updateProfile({ username: username.toLowerCase(), first_name: firstName, last_name: lastName });
+      await updateProfile({ username: username.toLowerCase(), first_name: firstName, last_name: lastName });
       const currentIdentities = await identities();
 
       dispatch(setIdentityList(currentIdentities));
