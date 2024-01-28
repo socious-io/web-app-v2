@@ -145,7 +145,7 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
-            path: 'list',
+            path: '',
             loader: async () => {
               const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
               return data;

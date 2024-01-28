@@ -144,7 +144,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
             variant="contained"
             color="error"
             customStyle="hidden md:block w-full"
-            onClick={() => navigate(`/nowruz/jobs/list`)}
+            onClick={() => navigate(`/nowruz/jobs`)}
           >
             Close
           </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
@@ -44,7 +44,18 @@ export const JobCreateForm = () => {
     onSelectLength,
     onSelectExperienceLevel,
     previewModalProps,
+    isDirty,
+    isValid,
+    onChangePaymentMax,
+    onChangePaymentMin,
+    paymentMin,
+    paymentMax,
+    paymentTypeOptions,
+    paymentType,
+    paymentScheme,
+    handleCloseSuccessModal,
   } = useJobCreateForm();
+
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
@@ -56,20 +67,53 @@ export const JobCreateForm = () => {
       <div className="flex justfy-center align-center">
         <Input
           name="paymentMin"
-          register={register}
+          // register={register}
+          value={paymentMin}
+          onChange={(e) => onChangePaymentMin(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
           prefix="$"
-          errors={errors['paymentMin']?.message ? [errors['paymentMin']?.message.toString()] : []}
+          errors={errors['paymentMin']?.message ? [errors['paymentMin']?.message.toString()] : undefined}
         />
         <div className="flex items-center mx-2">to</div>
         <Input
           name="paymentMax"
-          register={register}
+          // register={register}
+          value={paymentMax}
+          onChange={(e) => onChangePaymentMax(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
           prefix="$"
-          errors={errors['paymentMax']?.message ? [errors['paymentMax']?.message.toString()] : []}
+          errors={errors['paymentMax']?.message ? [errors['paymentMax']?.message.toString()] : undefined}
+        />
+      </div>
+    );
+  };
+  const renderHoursFields = () => {
+    return (
+      <div className="flex justfy-center align-center">
+        <Input
+          name="commitmentHoursLower"
+          register={register}
+          postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
+          placeholder="0"
+          className={css.priceInputs}
+          errors={
+            errors['commitmentHoursLower']?.message ? [errors['commitmentHoursLower']?.message.toString()] : undefined
+          }
+          noBorderPostfix
+        />
+        <div className="flex items-center mx-2">to</div>
+        <Input
+          name="commitmentHoursHigher"
+          register={register}
+          placeholder="0"
+          className={css.priceInputs}
+          postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
+          errors={
+            errors['commitmentHoursHigher']?.message ? [errors['commitmentHoursHigher']?.message.toString()] : undefined
+          }
+          noBorderPostfix
         />
       </div>
     );
@@ -87,7 +131,7 @@ export const JobCreateForm = () => {
         <BackLink title="Back" />
       </div>
       <form>
-        <JobCreateHeader onPreview={onPreview} onPublish={handleSubmit(onSubmit)} />
+        <JobCreateHeader onPreview={onPreview} onPublish={handleSubmit(onSubmit)} isValid={isValid} isDirty={isDirty} />
         <div className={css.row}>
           {renderInfo('What is your job about?', 'Select a social cause')}
           <div className={css.componentsContainer}>
@@ -219,25 +263,44 @@ export const JobCreateForm = () => {
           {renderInfo('Payment type', 'Is it a paid or volunteer job?')}
           <div className={css.componentsContainer}>
             <RadioGroup
-              items={PROJECT_PAYMENT_TYPE.reverse()}
+              items={paymentTypeOptions}
               errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
               onChange={(option) => onSelectPaymentType(option.value)}
             />
           </div>
         </div>
-        <div className={css.row}>
-          {renderInfo('Payment terms / range', 'Specify the estimated payment range for this job.')}
-          <div className={css.componentsContainer}>
-            <RadioGroup
-              onChange={(option) => onSelectPaymentScheme(option.value)}
-              items={[
-                { label: 'Fixed', value: 'FIXED', children: renderAmountFields() },
-                { label: 'Hourly', value: 'HOURLY', children: renderAmountFields() },
-              ]}
-              errors={errors['paymentScheme']?.message ? [errors['paymentScheme']?.message.toString()] : undefined}
-            />
+        {paymentType === 'PAID' && (
+          <div className={css.row}>
+            {renderInfo('Payment terms / range', 'Specify the estimated payment range for this job.')}
+
+            <div className={css.componentsContainer}>
+              <RadioGroup
+                onChange={(option) => onSelectPaymentScheme(option.value)}
+                items={[
+                  { label: 'Fixed', value: 'FIXED', children: renderAmountFields() },
+                  { label: 'Hourly', value: 'HOURLY', children: renderAmountFields() },
+                ]}
+                errors={errors['paymentScheme']?.message ? [errors['paymentScheme']?.message.toString()] : undefined}
+              />
+            </div>
           </div>
-        </div>
+        )}
+        {paymentType === 'VOLUNTEER' && (
+          <div className={css.row}>
+            {renderInfo('Commitment', 'Do you also offer payment in Crypto?')}
+
+            <div className={css.componentsContainer}>
+              <RadioGroup
+                onChange={(option) => onSelectPaymentScheme(option.value)}
+                items={[
+                  { label: 'Fixed', value: 'FIXED', children: renderHoursFields() },
+                  { label: 'Hourly', value: 'HOURLY', children: renderHoursFields() },
+                ]}
+                errors={errors['paymentScheme']?.message ? [errors['paymentScheme']?.message.toString()] : undefined}
+              />
+            </div>
+          </div>
+        )}
         <div className={css.row}>
           {renderInfo('Experience level', '')}
           <div className={css.componentsContainer}>
@@ -271,7 +334,7 @@ export const JobCreateForm = () => {
         </div>
         <div className={css.footer}>
           <div className="flex space-x-3 ">
-            <Button color="secondary" variant="outlined" onClick={onPreview}>
+            <Button color="secondary" variant="outlined" onClick={onPreview} disabled={!isValid || !isDirty}>
               Preview
             </Button>
             <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)}>
@@ -288,8 +351,8 @@ export const JobCreateForm = () => {
       />
       <AlertModal
         open={openSuccessModal}
-        onClose={() => setOpenSuccessModal(false)}
-        onSubmit={() => setOpenSuccessModal(false)}
+        onClose={handleCloseSuccessModal}
+        onSubmit={handleCloseSuccessModal}
         message="This job has been published. Organization members will be able to edit this job and republish changes."
         title="Job published"
       />
