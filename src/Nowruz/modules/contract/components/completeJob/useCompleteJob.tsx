@@ -9,6 +9,7 @@ export const useCompleteJob = (offer: Offer, mission: Mission) => {
 
   const [stopped, setStopped] = useState(mission.status === 'CANCELED');
   const [completed, setCompleted] = useState(mission.status === 'COMPLETE');
+  const [openAlert, setOpenAlert] = useState(false);
 
   const tabs = [
     { label: 'Details', content: <AcceptOfferDetail offer={offer} /> },
@@ -20,8 +21,9 @@ export const useCompleteJob = (offer: Offer, mission: Mission) => {
     setStopped(true);
   };
   const handleComplete = async () => {
+    setOpenAlert(false);
     await completeMission(mission.id);
     setCompleted(true);
   };
-  return { profileImage, name, tabs, stopped, completed, handleComplete, handleStop };
+  return { profileImage, name, tabs, stopped, completed, handleComplete, handleStop, openAlert, setOpenAlert };
 };
