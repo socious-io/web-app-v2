@@ -60,7 +60,7 @@ export const useWalletShared = () => {
 
   async function onSelectCountry(value: string) {
     try {
-      const result = await getStripeLink({ country: value });
+      const result = await getStripeLink({ country: value, redirect_url: window.location.href });
       const {
         link: { url },
       } = result;
