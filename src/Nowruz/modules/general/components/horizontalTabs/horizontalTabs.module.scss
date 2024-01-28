@@ -18,6 +18,8 @@
   letter-spacing: 0em;
   color: $color-grey-500;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
 .tabActive {
   border-bottom: 2px solid $color-primary-700;

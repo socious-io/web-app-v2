@@ -1,0 +1,9 @@
+.ongoingAlert {
+  display: flex;
+  gap: 1rem;
+  border-radius: $radius-xl;
+  padding: 1rem;
+  align-items: center;
+  border: 1px solid $color-primary-300;
+  background-color: $color-primary-25;
+}

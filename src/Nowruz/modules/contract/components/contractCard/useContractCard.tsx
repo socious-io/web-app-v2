@@ -1,23 +1,28 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
-import { CurrentIdentity, Mission, Offer } from 'src/core/api';
+import { CurrentIdentity, getOffer, Mission, Offer, userMissions } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
 
 export const useContractCard = (offer: Offer, mission?: Mission) => {
+  const [openAcceptModal, setOpenAcceptModal] = useState(false);
+  const [openCompleteModal, setOpenCompleteModal] = useState(false);
+  const [offerVal, setOfferVal] = useState(offer);
+  const [missionVal, setMissionVal] = useState(mission);
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
   const type = identity?.type;
 
-  const name = type === 'users' ? offer.recipient.meta.name : offer.offerer.meta.name;
-  const profileImageUrl = type === 'users' ? offer.recipient.meta.avatar : offer.offerer.meta.image;
-  const currencyIconName = offer.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle';
+  const name = type === 'users' ? offerVal.offerer.meta.name : offerVal.recipient.meta.name;
+  const profileImageUrl = type === 'users' ? offerVal.offerer.meta.image : offerVal.recipient.meta.avatar;
+  const currencyIconName = offerVal.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle';
 
   const BadgeData = () => {
-    switch (offer.status) {
+    switch (offerVal.status) {
       case 'PENDING':
         if (type === 'users')
           return {
@@ -43,37 +48,37 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
           icon: <Icon fontSize={12} name="alert-circle" className="text-Warning-600" />,
         };
       case 'HIRED':
-        if (mission?.status === 'ACTIVE')
+        if (missionVal?.status === 'ACTIVE')
           return {
             label: 'Ongoing',
             theme: 'success',
             icon: <Dot size="small" color={variables.color_success_700} shadow={false} />,
           };
-        else if (mission?.status === 'COMPLETE')
+        return;
+      case 'CLOSED':
+        if (missionVal?.status === 'CONFIRMED')
+          return {
+            label: 'Completed',
+            theme: 'success',
+            icon: <Icon name="check-circle" fontSize={12} className="text-Success-600" />,
+          };
+        else if (missionVal?.status === 'COMPLETE')
           return {
             label: 'Awaiting confirmation',
             theme: 'warning',
             icon: <Icon fontSize={12} name="clock" className="text-Warning-600" />,
           };
-        else if (mission?.status === 'CANCELED')
+        else if (missionVal?.status === 'CANCELED')
           return {
             label: 'Canceled',
             theme: 'secondary',
             icon: <></>,
           };
-        else if (mission?.status === 'KICKED_OUT')
+        else if (missionVal?.status === 'KICKED_OUT')
           return {
             label: 'Kicked out',
             theme: 'secondary',
             icon: <></>,
-          };
-        else return;
-      case 'CLOSED':
-        if (mission?.status === 'CONFIRMED')
-          return {
-            label: 'Completed',
-            theme: 'success',
-            icon: <Icon name="check-circle" fontSize={12} className="text-Success-600" />,
           };
         else return;
       case 'CANCELED':
@@ -90,7 +95,39 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
         };
     }
   };
+  const handleOpenModal = () => {
+    if (identity?.type === 'users' && offerVal.status === 'PENDING') {
+      setOpenAcceptModal(true);
+      return;
+    }
+
+    if (offerVal.status === 'HIRED' && missionVal?.status === 'ACTIVE' && identity?.type === 'users') {
+      setOpenCompleteModal(true);
+      return;
+    }
+  };
+
+  const handleCloseModal = async () => {
+    const offerRes = await getOffer(offer.id);
+    const missionRes = await userMissions();
+    setOfferVal(offerRes);
+    setMissionVal(missionRes.items.find((item) => item.offer.id === offer.id));
+    setOpenAcceptModal(false);
+    setOpenCompleteModal(false);
+  };
 
   const badge = BadgeData();
-  return { badge, type, name, profileImageUrl, currencyIconName };
+  return {
+    badge,
+    type,
+    name,
+    profileImageUrl,
+    currencyIconName,
+    openAcceptModal,
+    openCompleteModal,
+    handleOpenModal,
+    handleCloseModal,
+    offerVal,
+    missionVal,
+  };
 };
