@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useLocation } from 'react-router-dom';
 import { CurrentIdentity, getOrganization, Job, Organization, QuestionsRes } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
@@ -19,13 +19,15 @@ export const JobDetail = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity: CurrentIdentity) => identity.current);
   });
+  const location = useLocation();
+
   const isUser = currentIdentity?.type === 'users' || !currentIdentity;
   const { jobDetail } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
   };
   const [organization, setOrganization] = useState<Organization>();
-  const { tabs } = useJobDetailTabs(jobDetail, isUser);
+  const { tabs } = useJobDetailTabs(jobDetail, isUser, location?.state?.applicants ?? []);
 
   useEffect(() => {
     getOrganization(jobDetail.identity_meta.id).then((res) => setOrganization(res));
