@@ -23,7 +23,7 @@ export const AuthGuard = ({ children, redirectUrl }: AuthGuardProps): JSX.Elemen
   function saveCurrentRoute(): Promise<void> {
     localStorage.setItem('registerFor', 'user');
     const path = redirectUrl || location.pathname;
-    return nonPermanentStorage.set({ key: 'savedLocation', value: path });
+    return nonPermanentStorage.set({ key: 'savedLocation', value: `${path}${location.search}` });
   }
 
   async function navigateToLogin() {

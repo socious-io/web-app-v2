@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { User, identities, preRegister, updateProfile } from 'src/core/api';
+import { dialog } from 'src/core/dialog/dialog';
 import { checkUsernameConditions } from 'src/core/utils';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
@@ -82,9 +83,11 @@ export const useUserDetails = () => {
       dispatch(setIdentityList(currentIdentities));
       navigate('../congrats');
     } catch (error) {
-      console.log(error);
+      dialog.alert({title: 'error', message: error.message});
+      return;
     }
   };
+  
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
   return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid, currentProfile };
