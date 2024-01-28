@@ -71,7 +71,7 @@ export const useOrganizationContact = () => {
           ['', null],
         ),
       );
-
+      localStorage.removeItem('registerFor');
       reset();
       if (isMobile)
         navigate(`/sign-up/user/notification`, {

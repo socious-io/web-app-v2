@@ -64,9 +64,12 @@ export const useSignInForm = () => {
   async function onLoginSucceed(loginResp: AuthRes) {
     await setAuthParams(loginResp, keepLoggedIn);
     const path = await nonPermanentStorage.get('savedLocation');
-    store.dispatch(setIdentityList(await identities()));
+    const ids = await identities();
+    store.dispatch(setIdentityList(ids));
     const userProfile = await profile();
-    const userLandingPath = checkOnboardingMandatoryFields(userProfile) ? '/sign-up/user/onboarding' : '/jobs';
+    // checking ids if less than 2 it means didn't registered for org and can be skip
+    const userLandingPath =
+      checkOnboardingMandatoryFields(userProfile) && ids.length < 2 ? '/sign-up/user/onboarding' : '/jobs';
     navigate(path ? path : userLandingPath);
     return loginResp;
   }
