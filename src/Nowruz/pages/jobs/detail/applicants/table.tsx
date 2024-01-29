@@ -85,17 +85,17 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
           );
         },
       },
-      {
-        id: 'experience',
-        header: <p className="text-xs">Experience</p>,
-        cell: function render() {
-          return (
-            <div className="flex justify-center items-center">
-              <p className="text-Gray-light-mode-600 font-medium leading-5 text-sm"></p>
-            </div>
-          );
-        },
-      },
+      // {
+      //   id: 'experience',
+      //   header: <p className="text-xs">Experience</p>,
+      //   cell: function render() {
+      //     return (
+      //       <div className="flex justify-center items-center">
+      //         <p className="text-Gray-light-mode-600 font-medium leading-5 text-sm"></p>
+      //       </div>
+      //     );
+      //   },
+      // },
       {
         id: 'actions',
         accessorKey: 'id',
@@ -152,11 +152,11 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
       case 'timezone':
         styleClass = 'w-1/12';
         break;
-      case 'experience':
-        styleClass = 'w-1/12';
-        break;
+      // case 'experience':
+      //   styleClass = 'w-1/12';
+      //   break;
       case 'actions':
-        styleClass = 'w-1/12';
+        styleClass = 'w-2/12';
         break;
       default:
         break;
