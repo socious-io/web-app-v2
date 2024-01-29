@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CurrentIdentity, Job, JobsRes, jobs } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { ButtonGroupItem } from 'src/Nowruz/modules/general/components/ButtonGroups/buttonGroups.types';
 import { RootState } from 'src/store';
 
 export const useOrganizationJobListing = () => {
@@ -31,6 +32,17 @@ export const useOrganizationJobListing = () => {
     else setJobsList([...active.items, ...archived.items]);
   };
 
+  const filterArchived = async (page: number) => {
+    const archived = await jobs({ identity_id: currentIdentity?.id, page, status: 'EXPIRE' });
+    if (isMobile && page > 1) setJobsList([...archived.items]);
+    else setJobsList([...archived.items]);
+  };
+
+  const filterButtons: ButtonGroupItem[] = [
+    { label: 'View all', handleClick: () => fetchMore(page) },
+    { label: 'Archived', handleClick: () => filterArchived(page) },
+  ];
+
   useEffect(() => {
     fetchMore(page);
   }, [page]);
@@ -43,6 +55,7 @@ export const useOrganizationJobListing = () => {
   }, [currentIdentity]);
 
   return {
+    filterButtons,
     page,
     setPage,
     jobsList,

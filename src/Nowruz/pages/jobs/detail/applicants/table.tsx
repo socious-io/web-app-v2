@@ -1,14 +1,20 @@
 import { useReactTable, flexRender, getCoreRowModel, ColumnDef, Cell } from '@tanstack/react-table';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Applicant } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
+
+import { ApplicantDetails } from './applicant';
+import { useApplicantAction } from './useApplicantAction';
 
 interface TableProps {
   applicants: Array<Applicant>;
 }
 
 export const Table: React.FC<TableProps> = ({ applicants }) => {
+  const { open, setOpen, applicant, onClickName } = useApplicantAction(applicants);
+
   const columns = useMemo<ColumnDef<Applicant>[]>(
     () => [
       {
@@ -17,7 +23,10 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
         accessorKey: 'user',
         cell: function render({ getValue }) {
           return (
-            <div className="flex flex-row justify-start items-center gap-2">
+            <div
+              className="flex flex-row justify-start items-center gap-2 cursor-pointer"
+              onClick={() => onClickName(getValue().id)}
+            >
               <Avatar size="40px" type="users" img={getValue().avatar} />
               <div className="flex flex-col justify-start">
                 <p className="text-Gray-light-mode-900 leading-6 font-medium">{getValue().name}</p>
@@ -39,17 +48,17 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
           );
         },
       },
-      {
-        id: 'points',
-        header: <p className="text-xs">Impact points</p>,
-        cell: function render() {
-          return (
-            <div className="flex justify-center items-center">
-              <p className="text-Gray-light-mode-900 text-2xl font-bold">0</p>
-            </div>
-          );
-        },
-      },
+      // {
+      //   id: 'points',
+      //   header: <p className="text-xs">Impact points</p>,
+      //   cell: function render() {
+      //     return (
+      //       <div className="flex justify-center items-center">
+      //         <p className="text-Gray-light-mode-900 text-2xl font-bold">0</p>
+      //       </div>
+      //     );
+      //   },
+      // },
       {
         id: 'location',
         header: <p className="text-xs">Location</p>,
@@ -79,7 +88,7 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
           const offsetTimezone = (offset / 60) * -1;
           const utc = offsetTimezone > 0 ? `UTC +${offsetTimezone}` : `UTC -${offsetTimezone}`;
           return (
-            <div className="flex flex-row justify-center items-center">
+            <div className="flex flex-row justify-start items-center">
               <p className="text-Gray-light-mode-600 font-medium leading-5 text-sm">{utc}</p>
             </div>
           );
@@ -143,14 +152,14 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
       case 'applied':
         styleClass = 'w-1/12';
         break;
-      case 'points':
-        styleClass = 'w-1/12';
-        break;
+      // case 'points':
+      //   styleClass = 'w-1/12';
+      //   break;
       case 'location':
         styleClass = 'w-3/12';
         break;
       case 'timezone':
-        styleClass = 'w-1/12';
+        styleClass = 'w-2/12';
         break;
       // case 'experience':
       //   styleClass = 'w-1/12';
@@ -168,16 +177,16 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
   return (
     <div className="border-Gray-light-mode-200 border-solid border-b rounded-lg">
       <div className="py-2.5 px-4 flex">
-        <div
+        {/* <div
           onClick={() => {
             console.log();
           }}
           className="py-2.5 px-4 border-Gray-light-mode-200 border-solid border-b rounded-lg"
         >
           Reject
-        </div>
+        </div> */}
       </div>
-      <table>
+      <table className="w-full">
         <thead className="border-Gray-light-mode-200 border-solid border-b border-t-0 border-l-0 border-r-0">
           {table.getHeaderGroups().map((headerGroup) => {
             return (
@@ -215,7 +224,7 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
         </tbody>
       </table>
       <div className="py-2.5 px-4 flex justify-end gap-3">
-        <div
+        {/* <div
           onClick={() => {
             console.log();
           }}
@@ -230,8 +239,11 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
           className="py-2.5 px-4 border-Gray-light-mode-200 border-solid border-b rounded-lg"
         >
           Next
-        </div>
+        </div> */}
       </div>
+      <Overlay open={open} onClose={() => setOpen(false)}>
+        <ApplicantDetails applicant={applicant} />
+      </Overlay>
     </div>
   );
 };
