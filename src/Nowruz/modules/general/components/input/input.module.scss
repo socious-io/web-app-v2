@@ -99,6 +99,11 @@
   border-left: solid 1px $color-grey-300;
   padding-left: 14px;
 }
+.postfix-no-border {
+  border: none;
+  min-height: 44px;
+  padding-left: 14px;
+}
 .labelContainer {
   margin-bottom: 6px;
 }

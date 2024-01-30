@@ -21,4 +21,5 @@ export interface InputProps extends DefaultProps {
   hints?: Array<{ hint: string; hide: boolean }>;
   startIcon?: ReactNode;
   postfix?: string | ReactNode;
+  noBorderPostfix?: boolean;
 }
