@@ -1,12 +1,8 @@
-import { MissionStatus, Offer } from 'src/core/api';
+import { Offer } from 'src/core/api';
 
 import { ContractDetailTab } from '../contractDetailTab';
 
-export const useContractDetailsSlider = (
-  offer: Offer,
-  missionStatus?: MissionStatus,
-  type?: 'users' | 'organizations',
-) => {
+export const useContractDetailsSlider = (offer: Offer) => {
   const name = offer.offerer.meta.name;
   const profileImage = offer.offerer.meta.image;
   const tabs = [

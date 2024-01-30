@@ -5,6 +5,7 @@ import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage
 export const useAcceptOffer = (offer: Offer) => {
   const [displayMessage, setDisplayMessage] = useState(false);
   const [message, setMessage] = useState<ReactNode>();
+  const name = offer.offerer.meta.name;
 
   const handleAccept = async () => {
     await acceptOffer(offer.id);
@@ -14,7 +15,7 @@ export const useAcceptOffer = (offer: Offer) => {
         theme="primary"
         iconName="check-circle"
         title="You have accepted this offer"
-        subtitle="We are just waiting for the final confirmation from Ocean Protection to start the job."
+        subtitle={`We are just waiting for the final confirmation from ${name} to start the job.`}
       />,
     );
   };

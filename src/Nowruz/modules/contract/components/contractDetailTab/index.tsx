@@ -1,4 +1,5 @@
 import React from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Offer } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -10,7 +11,7 @@ export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ offer }) =
   const renderDetailItems = (iconName: string, title: string, subtitle?: string) => {
     return (
       <div className="flex gap-1.5">
-        <Icon name={iconName} fontSize={20} className="text-Gray-light-mode-500" />
+        <Icon name={iconName} fontSize={20} color={variables.color_grey_500} />
         <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{title}</span>
         {subtitle && <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{subtitle}</span>}
       </div>
@@ -29,6 +30,12 @@ export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ offer }) =
               offer.assignment_total.toString(),
               '(fixed-price)',
             )}
+          {offer.project.payment_type === 'VOLUNTEER' && (
+            <div className="flex gap-1.5">
+              <img src="/icons/nowruz/red-heart.svg" alt="" />
+              <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Volunteer</span>
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -81,7 +81,12 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
             theme: 'secondary',
             icon: <></>,
           };
-        else return;
+        else
+          return {
+            label: 'Closed',
+            theme: 'secondary',
+            icon: <></>,
+          };
       case 'CANCELED':
         return {
           label: 'Canceled',
