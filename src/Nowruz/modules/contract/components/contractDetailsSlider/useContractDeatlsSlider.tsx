@@ -15,6 +15,7 @@ import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon
 import { RootState } from 'src/store';
 
 import { ContractDetailTab } from '../contractDetailTab';
+import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 
 export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -99,7 +100,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
             theme="primary"
             iconName="check-circle"
             title="Your job has been confirmed"
-            subtitle="Once you have finished your work please click on complete button."
+            subtitle="Once you have finished your work please click on <b>complete</b> button."
           />
         );
         setAllStates(true, alertMsg, true, 'Complete', true, 'Stop', handleOpenCompleteConfirm, handleStop);
@@ -119,7 +120,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
             theme="warning"
             iconName="alert-circle"
             title="Completion submitted"
-            subtitle={`Awaiting confirmation from ${name}`}
+            subtitle={`Awaiting confirmation from <b>${name}</b>`}
           />
         );
         setAllStates(true, alertMsg, false, '', false, '');
