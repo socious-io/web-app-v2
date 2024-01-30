@@ -10,6 +10,7 @@ import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
 import { AcceptOffer } from '../acceptOffer';
 import { CompleteJob } from '../completeJob';
+import { ContractDetailsDefault } from '../contractDetailsDefault';
 
 export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) => {
   const {
@@ -22,6 +23,7 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
     offerVal,
     missionVal,
     openCompleteModal,
+    openDefaultModal,
     handleOpenModal,
     handleCloseModal,
   } = useContractCard(offer, mission);
@@ -66,6 +68,9 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
       </Overlay>
       <Overlay open={openCompleteModal} onClose={handleCloseModal}>
         <CompleteJob offer={offerVal} mission={missionVal} />
+      </Overlay>
+      <Overlay open={openDefaultModal} onClose={handleCloseModal}>
+        <ContractDetailsDefault offer={offerVal} />
       </Overlay>
     </>
   );

@@ -9,6 +9,7 @@ import { RootState } from 'src/store';
 export const useContractCard = (offer: Offer, mission?: Mission) => {
   const [openAcceptModal, setOpenAcceptModal] = useState(false);
   const [openCompleteModal, setOpenCompleteModal] = useState(false);
+  const [openDefaultModal, setOpenDefaultModal] = useState(false);
   const [offerVal, setOfferVal] = useState(offer);
   const [missionVal, setMissionVal] = useState(mission);
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -80,7 +81,12 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
             theme: 'secondary',
             icon: <></>,
           };
-        else return;
+        else
+          return {
+            label: 'Closed',
+            theme: 'secondary',
+            icon: <></>,
+          };
       case 'CANCELED':
         return {
           label: 'Canceled',
@@ -105,6 +111,8 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
       setOpenCompleteModal(true);
       return;
     }
+
+    setOpenDefaultModal(true);
   };
 
   const handleCloseModal = async () => {
@@ -114,6 +122,7 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     setMissionVal(missionRes.items.find((item) => item.offer.id === offer.id));
     setOpenAcceptModal(false);
     setOpenCompleteModal(false);
+    setOpenDefaultModal(false);
   };
 
   const badge = BadgeData();
@@ -126,6 +135,7 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     currencyIconName,
     openAcceptModal,
     openCompleteModal,
+    openDefaultModal,
     handleOpenModal,
     handleCloseModal,
     offerVal,
