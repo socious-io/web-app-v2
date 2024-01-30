@@ -36,7 +36,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job }) => {
   return (
     <>
       <div className={css.container}>
-        <BackLink title="Back to jobs" onBack={() => navigate('/nowruz/jobs/list')} customStyle="w-fit" />
+        <BackLink title="Back to jobs" onBack={() => navigate('/nowruz/jobs')} customStyle="w-fit" />
         <Avatar size="72px" type="organizations" img={job.identity_meta.image} hasBorder isVerified={false} />
         <div className="w-full flex flex-col gap-4">
           <div className="flex flex-col">

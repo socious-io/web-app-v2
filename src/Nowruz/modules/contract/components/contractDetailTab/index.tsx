@@ -3,10 +3,10 @@ import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Offer } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 
-interface AcceptOfferDetailProps {
+interface ContractDetailTabProps {
   offer: Offer;
 }
-export const AcceptOfferDetail: React.FC<AcceptOfferDetailProps> = ({ offer }) => {
+export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ offer }) => {
   const renderDetailItems = (iconName: string, title: string, subtitle?: string) => {
     return (
       <div className="flex gap-1.5">

@@ -1,26 +1,27 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Offer, acceptOffer, rejectOffer } from 'src/core/api';
-
-import { AcceptOfferDetail } from '../acceptOfferDetail';
+import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 
 export const useAcceptOffer = (offer: Offer) => {
-  const name = offer.offerer.meta.name;
-  const profileImage = offer.offerer.meta.image;
-
-  const [accepted, setAccepted] = useState(offer.status === 'APPROVED');
-  const [declined, setDeclined] = useState(offer.status === 'WITHDRAWN');
-  const tabs = [
-    { label: 'Details', content: <AcceptOfferDetail offer={offer} /> },
-    { label: 'Activity', content: <div /> },
-  ];
+  const [displayMessage, setDisplayMessage] = useState(false);
+  const [message, setMessage] = useState<ReactNode>();
 
   const handleAccept = async () => {
     await acceptOffer(offer.id);
-    setAccepted(true);
+    setDisplayMessage(true);
+    setMessage(
+      <AlertMessage
+        theme="primary"
+        iconName="check-circle"
+        title="You have accepted this offer"
+        subtitle="We are just waiting for the final confirmation from Ocean Protection to start the job."
+      />,
+    );
   };
   const handleDecline = async () => {
     await rejectOffer(offer.id);
-    setDeclined(true);
+    setDisplayMessage(true);
+    setMessage(<AlertMessage theme="gray" iconName="check-circle" title="" subtitle="You have declined this offer" />);
   };
-  return { profileImage, name, tabs, accepted, handleAccept, declined, handleDecline };
+  return { handleAccept, handleDecline, displayMessage, message };
 };
