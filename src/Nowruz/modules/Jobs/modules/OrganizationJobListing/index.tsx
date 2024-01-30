@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Skeleton } from '@mui/material';
 import variables from 'src/components/_exports.module.scss';
 import { ButtonGroups } from 'src/Nowruz/modules/general/components/ButtonGroups';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
@@ -15,8 +15,10 @@ export const OrganizationJobListing = () => {
     <div className={css.container}>
       <ButtonGroups buttons={filterButtons} />
       {loading && (
-        <div className={css.loader}>
-          <CircularProgress size="32px" sx={{ color: variables.color_primary_700 }} />
+        <div className="flex flex-col gap-4 w-full py-4 mt-6">
+          <Skeleton variant="rectangular" className="w-6/6" height={150} />
+          <Skeleton variant="rectangular" className="w-6/6" height={150} />
+          <Skeleton variant="rectangular" className="w-6/6" height={150} />
         </div>
       )}
       {jobsList.map((job) => (
