@@ -1,5 +1,4 @@
-import { CircularProgress, Skeleton } from '@mui/material';
-import variables from 'src/components/_exports.module.scss';
+import { Skeleton } from '@mui/material';
 import { ButtonGroups } from 'src/Nowruz/modules/general/components/ButtonGroups';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/Nowruz/modules/general/components/paginationMobile';
@@ -16,9 +15,9 @@ export const OrganizationJobListing = () => {
       <ButtonGroups buttons={filterButtons} />
       {loading && (
         <div className="flex flex-col gap-4 w-full py-4 mt-6">
-          <Skeleton variant="rectangular" className="w-6/6" height={150} />
-          <Skeleton variant="rectangular" className="w-6/6" height={150} />
-          <Skeleton variant="rectangular" className="w-6/6" height={150} />
+          <Skeleton variant="rounded" className="w-6/6" height={150} />
+          <Skeleton variant="rounded" className="w-6/6" height={150} />
+          <Skeleton variant="rounded" className="w-6/6" height={150} />
         </div>
       )}
       {jobsList.map((job) => (
