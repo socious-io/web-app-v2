@@ -7,9 +7,7 @@ import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
 
 export const useContractCard = (offer: Offer, mission?: Mission) => {
-  const [openAcceptModal, setOpenAcceptModal] = useState(false);
-  const [openCompleteModal, setOpenCompleteModal] = useState(false);
-  const [openDefaultModal, setOpenDefaultModal] = useState(false);
+  const [openOverlayModal, setOpenOverlayModal] = useState(false);
   const [offerVal, setOfferVal] = useState(offer);
   const [missionVal, setMissionVal] = useState(mission);
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -96,28 +94,16 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
         };
     }
   };
-  const handleOpenModal = () => {
-    if (identity?.type === 'users' && offerVal.status === 'PENDING') {
-      setOpenAcceptModal(true);
-      return;
-    }
-
-    if (offerVal.status === 'HIRED' && missionVal?.status === 'ACTIVE' && identity?.type === 'users') {
-      setOpenCompleteModal(true);
-      return;
-    }
-
-    setOpenDefaultModal(true);
-  };
 
   const handleCloseModal = async () => {
     const offerRes = await getOffer(offer.id);
     const missionRes = await userMissions();
     setOfferVal(offerRes);
     setMissionVal(missionRes.items.find((item) => item.offer.id === offer.id));
-    setOpenAcceptModal(false);
-    setOpenCompleteModal(false);
-    setOpenDefaultModal(false);
+    setOpenOverlayModal(false);
+    // setOpenAcceptModal(false);
+    // setOpenCompleteModal(false);
+    // setOpenDefaultModal(false);
   };
 
   const badge = BadgeData();
@@ -128,12 +114,10 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     name,
     profileImageUrl,
     currencyIconName,
-    openAcceptModal,
-    openCompleteModal,
-    openDefaultModal,
-    handleOpenModal,
     handleCloseModal,
     offerVal,
     missionVal,
+    openOverlayModal,
+    setOpenOverlayModal,
   };
 };
