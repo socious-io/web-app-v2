@@ -1,0 +1,112 @@
+@import 'src/components/_primitives.scss';
+
+.chip-sm {
+  height: 22px;
+  padding: 2px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0em;
+}
+
+.chip-md {
+  height: 24px;
+  padding: 2px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+}
+
+.chip-lg {
+  height: 28px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+}
+
+.primary-theme {
+  background-color: $color-primary-50;
+  color: $color-primary-700 !important;
+  border: 1.5px solid $color-primary-200;
+}
+
+.secondary-theme {
+  background-color: $color-white;
+  color: $color-grey-700;
+  border: 1.5px solid $color-grey-300;
+  box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
+}
+
+.success-theme {
+  background-color: $color-white;
+  color: $color-success-500 !important;
+  border: 1.5px solid $color-success-500;
+}
+
+.error-theme {
+  background-color: $color-white;
+  color: $color-error-500 !important;
+  border: 1.5px solid $color-error-500;
+}
+
+.grey_blue-theme {
+  background-color: $color-grey-blue-50;
+  color: $color-grey-blue-700;
+  border: 1.5px solid $color-grey-blue-200;
+  box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
+}
+.round {
+  border-radius: 16px;
+}
+
+.sharp {
+  border-radius: 6px;
+}
+
+.primary-transparent {
+  background-color: transparent;
+  color: $color-primary-600;
+  border: 1.5px solid $color-primary-600;
+}
+
+.secondary-transparent {
+  background-color: transparent;
+  color: $color-grey-600;
+  border: 1.5px solid $color-grey-600;
+}
+.grey_blue-transparent {
+  background-color: transparent;
+  color: $color-grey-blue-600;
+  border: 1.5px solid $color-grey-blue-600;
+}
+.error-transparent {
+  background-color: transparent;
+  color: $color-error-600;
+  border: 1.5px solid $color-error-600;
+}
+.warning-transparent {
+  background-color: transparent;
+  color: $color-warning-600;
+  border: 1.5px solid $color-warning-600;
+}
+
+.success-transparent {
+  background-color: transparent;
+  color: $color-success-600;
+  border: 1.5px solid $color-success-600;
+}

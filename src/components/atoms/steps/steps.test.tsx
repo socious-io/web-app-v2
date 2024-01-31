@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import { Steps } from './steps';
 
 describe('Steps', () => {
@@ -15,7 +16,7 @@ describe('Steps', () => {
     expect(steps[1]).toHaveClass('active');
   });
 
-  test('should set execute onStepClick ', async () => {
+  test('should set execute onStepClick', async () => {
     const user = userEvent.setup();
     const stepClick = jest.fn();
 

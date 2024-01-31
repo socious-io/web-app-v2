@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
-import { Header } from 'src/components/atoms/header/header';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Button } from 'src/components/atoms/button/button';
-import { UnfollowModal } from '../unfollow-modal';
+import { Header } from 'src/components/atoms/header/header';
 import { printWhen } from 'src/core/utils';
-import { useFollowingsShared } from '../followings.shared';
+
 import css from './mobile.module.scss';
+import { useFollowingsShared } from '../followings.shared';
+import { UnfollowModal } from '../unfollow-modal';
+import { useNavigate } from 'react-router-dom';
 
 export const Mobile: React.FC = () => {
   const navigate = useNavigate();
@@ -48,14 +49,14 @@ export const Mobile: React.FC = () => {
         <div className={css.seeMore} onClick={loadMore}>
           See more
         </div>,
-        followings?.total_count > followings?.items.length
+        followings?.total_count > followings?.items.length,
       )}
     </>
   );
 
   return (
     <div>
-      <Header onBack={() => navigate({ to: '/network' })} paddingTop={'var(--safe-area)'} title="Following" />
+      <Header onBack={() => navigate('/network')} paddingTop={'var(--safe-area)'} title="Following" />
       {followings?.total_count ? followingsListJSX : <div className={css.noFollowing}>No Following</div>}
       <UnfollowModal
         open={!!selectedUser.id}

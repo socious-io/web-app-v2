@@ -1,5 +1,5 @@
 import css from './impact-bar.module.scss';
-import {ImpactBarProps} from './impact-bar.types';
+import { ImpactBarProps } from './impact-bar.types';
 
 export const ImpactBar = (props: ImpactBarProps): JSX.Element => {
   return (

@@ -1,8 +1,9 @@
+import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { Input } from 'src/components/atoms/input/input';
-import { Button } from 'src/components/atoms/button/button';
-import { usePasswordShared } from '../password.shared';
+
 import css from './desktop.module.scss';
+import { usePasswordShared } from '../password.shared';
 
 export const Desktop: React.FC = () => {
   const { backToPerviousPage, form, formIsValid, onChangePassword } = usePasswordShared();

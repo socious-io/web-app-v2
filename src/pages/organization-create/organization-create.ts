@@ -1,13 +1,7 @@
-import { createOrgWizardSlice } from '../../store/reducers/createOrgWizard.reducer';
-import { post } from '../../core/http';
-import { CreateOrgWizard } from '../../store/reducers/createOrgWizard.reducer';
-import { AddOrganizationPayload } from './organization-create.types';
+import { OrganizationReq } from 'src/core/api';
+import { CreateOrgWizard } from 'src/store/reducers/createOrgWizard.reducer';
 
-export async function addOrganization(payload: AddOrganizationPayload) {
-  return post('/orgs', payload).then(({ data }) => data);
-}
-
-export function wizardFormToPayloadAdaptor(wizardForm: CreateOrgWizard): AddOrganizationPayload {
+export function wizardFormToPayloadAdaptor(wizardForm: CreateOrgWizard): OrganizationReq {
   const optionalProps: Record<string, keyof CreateOrgWizard> = {
     phone: 'phoneNumber',
     mission: 'mission',

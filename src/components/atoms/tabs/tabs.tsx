@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import css from './tabs.module.scss';
 import { TabsProps } from './tabs.types';
 

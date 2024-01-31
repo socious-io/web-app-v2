@@ -1,10 +1,10 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from 'react';
 
 export type RadioProps = {
-    label: string;
-    name: string;
-    id: string;
-    checked?: boolean;
-    value: string;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
+  label: string;
+  name: string;
+  id: string;
+  checked?: boolean;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};

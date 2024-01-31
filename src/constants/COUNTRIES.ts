@@ -1,5 +1,6 @@
-import { DropdownItem } from './../components/atoms/dropdown-v2/dropdown.types';
 import { getAllISOCodes } from 'iso-country-currency';
+
+import { DropdownItem } from './../components/atoms/dropdown-v2/dropdown.types';
 
 export const COUNTRIES: DropdownItem[] = getAllISOCodes().map((country) => {
   return {

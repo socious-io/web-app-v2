@@ -1,15 +1,17 @@
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { resumeInitialState } from '../apply.services';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Input } from 'src/components/atoms/input/input';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
-import { Header } from 'src/components/atoms/header/header';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { Header } from 'src/components/atoms/header/header';
+import { Input } from 'src/components/atoms/input/input';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { Divider } from 'src/components/templates/divider/divider';
 import { printWhen } from 'src/core/utils';
-import { useApplyShared } from '../apply.shared';
+
 import css from './mobile.module.scss';
+import { resumeInitialState } from '../apply.services';
+import { useApplyShared } from '../apply.shared';
 
 export const Mobile = (): JSX.Element => {
   const {
@@ -24,6 +26,7 @@ export const Mobile = (): JSX.Element => {
     createTextQuestion,
     createRadioQuestion,
   } = useApplyShared();
+  const navigate = useNavigate();
 
   const renderQuestions = () => {
     return (
@@ -46,7 +49,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.uploadedResume}>
       <img src="/icons/attachment-black.svg" />
       {resume?.file && (
-        <a href={URL.createObjectURL(resume.file)} target="_blank">
+        <a href={URL.createObjectURL(resume.file)} target="_blank" rel="noreferrer">
           {resume.name}
         </a>
       )}
@@ -69,7 +72,7 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Header onBack={() => history.back()} height="var(--safe-area)" title="Apply" />
+      <Header onBack={() => navigate(-1)} height="var(--safe-area)" title="Apply" />
       <div className={css.main}>
         <Divider>
           <ProfileView

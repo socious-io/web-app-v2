@@ -1,4 +1,5 @@
 import { ButtonProps } from 'src/components/atoms/button/button.types';
+
 import { ModalProps } from '../modal/modal.types';
 
 export interface WebModalProps extends ModalProps {
@@ -8,4 +9,5 @@ export interface WebModalProps extends ModalProps {
   className?: string;
   headerClassName?: string;
   footerClassName?: string;
+  zIndex?: number;
 }

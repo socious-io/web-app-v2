@@ -1,9 +1,10 @@
 import { Card } from 'src/components/atoms/card/card';
-import { SelectCard } from 'src/components/molecules/select-card';
 import { Link } from 'src/components/atoms/link/link';
+import { SelectCard } from 'src/components/molecules/select-card';
 import { printWhen } from 'src/core/utils';
-import { PaymentMethodsProps } from './payment-methods.types';
+
 import css from './payment-methods.module.scss';
+import { PaymentMethodsProps } from './payment-methods.types';
 
 export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   crypto_method,
@@ -24,10 +25,10 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
           {added_cards.map((card) => (
             <div className={css['connect__card']} key={card.id}>
               <SelectCard
-                name={card.holder_name}
+                name={card.meta.brand}
                 id={card.id}
                 value={card.id}
-                text={`**** ${card.numbers}`}
+                text={`**** ${card.meta.last4}`}
                 checked={card.id === selectedCard}
                 imageProps={{ src: '/icons/debit.svg', width: 18, height: 18 }}
                 onChange={(value) => onSelectCard?.(value as string)}
@@ -40,7 +41,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
             </div>
           ))}
         </div>,
-        !!added_cards.length
+        !!added_cards.length,
       )}
       <div className={css['connect__text']}>
         All payments in Socious are done with cryptocurrencies or credit card. By connecting a wallet, you agree to

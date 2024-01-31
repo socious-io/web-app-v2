@@ -1,21 +1,22 @@
-import { useNavigate } from '@tanstack/react-location';
 import { CSSProperties } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIdentities } from '../../../core/api';
-import { IdentityReq } from '../../../core/types';
-import { setIdentityList } from '../../../store/reducers/identity.reducer';
-import { visibility } from '../../../store/reducers/menu.reducer';
-import { RootState } from '../../../store/store';
+import { useNavigate } from 'react-router-dom';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { useAuth } from 'src/hooks/use-auth';
+
+import css from './mobile.module.scss';
+import { AccountsModel } from './mobile.types';
 import { Avatar } from '../../../components/atoms/avatar/avatar';
 import { Button } from '../../../components/atoms/button/button';
 import { ProfileView } from '../../../components/molecules/profile-view/profile-view';
-import { setIdentityHeader, logout } from '../sidebar.service';
-import css from './mobile.module.scss';
-import { AccountsModel } from './mobile.types';
-import { printWhen } from '../../../core/utils';
+import { identities } from '../../../core/api';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { useAuth } from 'src/hooks/use-auth';
+import { IdentityReq } from '../../../core/types';
+import { printWhen } from '../../../core/utils';
+import { RootState } from '../../../store';
+import { setIdentityList } from '../../../store/reducers/identity.reducer';
+import { visibility } from '../../../store/reducers/menu.reducer';
+import { setIdentityHeader, logout } from '../sidebar.service';
 
 export const Mobile = () => {
   const dispatch = useDispatch();
@@ -53,24 +54,24 @@ export const Mobile = () => {
   const switchAccount = async (id: string) => {
     hapticsImpactLight();
     await setIdentityHeader(id);
-    getIdentities()
+    identities()
       .then((resp) => dispatch(setIdentityList(resp)))
-      .then(() => navigate({ to: '/jobs' }))
+      .then(() => navigate('/jobs'))
       .then(closeSidebar);
   };
 
   const navigateToCreateOrg = () => {
     hapticsImpactLight();
-    navigate({ to: `/organization/create/intro` });
+    navigate(`/organization/create/intro`);
     closeSidebar();
   };
 
   function navigateToProfile() {
     hapticsImpactLight();
     if (identity.type === 'users') {
-      navigate({ to: `/profile/users/${identity.meta.username}/view` });
+      navigate(`/profile/users/${identity.meta.username}/view`);
     } else {
-      navigate({ to: `/profile/organizations/${identity.meta.shortname}/view` });
+      navigate(`/profile/organizations/${identity.meta.shortname}/view`);
     }
     closeSidebar();
   }
@@ -78,7 +79,7 @@ export const Mobile = () => {
   function navigateToSignIn() {
     hapticsImpactLight();
     logout()
-      .then(() => navigate({ to: '/sign-in' }))
+      .then(() => navigate('/sign-in'))
       .then(closeSidebar)
       .then(() => nonPermanentStorage.clear());
   }
@@ -110,37 +111,37 @@ export const Mobile = () => {
 
   function navigateToTeam() {
     hapticsImpactLight();
-    navigate({ to: `/team/${identity.id}` });
+    navigate(`/team/${identity.id}`);
     closeSidebar();
   }
 
   function navigateToConnections() {
     hapticsImpactLight();
-    navigate({ to: '/network/connections' });
+    navigate('/network/connections');
     closeSidebar();
   }
 
   function navigateToFollowing() {
     hapticsImpactLight();
-    navigate({ to: '/network/followings' });
+    navigate('/network/followings');
     closeSidebar();
   }
 
   function navigateToCreatedJobs() {
     hapticsImpactLight();
-    navigate({ to: `/m/jobs/created/${identity.id}` });
+    navigate(`/jobs/created/${identity.id}`);
     closeSidebar();
   }
 
   const navigateToRoute = (route: string) => {
     hapticsImpactLight();
-    navigate({ to: `../${route}` });
+    navigate(`../${route}`);
     closeSidebar();
   };
 
   function navigateToAppliedApplications() {
     hapticsImpactLight();
-    navigate({ to: `/m/jobs/applied/${identity.id}` });
+    navigate(`/jobs/applied/${identity.id}`);
     closeSidebar();
   }
 
@@ -262,14 +263,14 @@ export const Mobile = () => {
             <div className={css.title}>Organization</div>
             {networkOrgJSX}
           </div>,
-          identity?.type === 'organizations' && isLoggedIn
+          identity?.type === 'organizations' && isLoggedIn,
         )}
         {printWhen(
           <div className={css.items}>
             <div className={css.title}>Network</div>
             {networkUserJSX}
           </div>,
-          identity?.type === 'users' && isLoggedIn
+          identity?.type === 'users' && isLoggedIn,
         )}
         <div className={css.items}>
           {printWhen(<div className={css.title}>Jobs</div>, isLoggedIn)}
@@ -293,14 +294,14 @@ export const Mobile = () => {
               <img src="/icons/key-black.svg" width={22} height={22} />
               <span>Change password</span>
             </div>,
-            isLoggedIn
+            isLoggedIn,
           )}
           {printWhen(
             <div className={css.row} onClick={() => navigateToRoute('delete-profile/delete')}>
               <img src="/icons/delete-account-black.svg" />
               <span>Delete Account</span>
             </div>,
-            isLoggedIn
+            isLoggedIn,
           )}
         </div>
         {printWhen(
@@ -310,7 +311,7 @@ export const Mobile = () => {
               <span>Log out</span>
             </div>
           </div>,
-          isLoggedIn
+          isLoggedIn,
         )}
         {printWhen(
           <div className={css.items}>
@@ -319,7 +320,7 @@ export const Mobile = () => {
               <span>Log in</span>
             </div>
           </div>,
-          !isLoggedIn
+          !isLoggedIn,
         )}
       </div>
     </div>

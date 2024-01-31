@@ -1,25 +1,21 @@
-import css from './desktop.module.scss';
-import { Input } from '../../../../components/atoms/input/input';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import { Divider } from '../../../../components/templates/divider/divider';
-import { Card } from '../../../../components/atoms/card/card';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Button } from '../../../../components/atoms/button/button';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
 import { useState } from 'react';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { formModel } from '../profile.form';
-import { getCityList } from 'src/pages/job-create/info/info.services';
-import { citiesToCategories } from 'src/core/adaptors';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
 import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
-import { formIsInvalid } from '../profile.services';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { Input } from 'src/components/atoms/input/input';
+import { Steps } from 'src/components/atoms/steps/steps';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Divider } from 'src/components/templates/divider/divider';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { citiesToCategories } from 'src/core/adaptors';
+import { cities as getCities } from 'src/core/api';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
+import { formModel } from 'src/pages/organization-create/profile/profile.form';
+import { formIsInvalid } from 'src/pages/organization-create/profile/profile.services';
 
-const sharedProps: Record<string, string> = {
-  className: css.input,
-  variant: 'outline',
-};
+import css from './desktop.module.scss';
 
 export const Desktop = (): JSX.Element => {
   const { updateField, profileForm, formState, navigateToSocialCauses, navigateToMission } =
@@ -32,7 +28,7 @@ export const Desktop = (): JSX.Element => {
   });
 
   function updateCityList(countryCode: string) {
-    getCityList(countryCode)
+    getCities(countryCode)
       .then(({ items }) => citiesToCategories(items))
       .then(setCities);
   }
@@ -95,7 +91,7 @@ export const Desktop = (): JSX.Element => {
                 placeholder="city"
                 name="city"
                 value={formState.city}
-                onValueChange={(options) => updateField('geoname_id', options.id)}
+                onValueChange={(options) => updateField('geoname_id', options.id!)}
                 list={cities}
               />
               <Input register={profileForm} name="address" optional label="Address" placeholder="Address" />

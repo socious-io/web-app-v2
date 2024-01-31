@@ -1,26 +1,28 @@
-import { Outlet, useNavigate, useRouter } from '@tanstack/react-location';
-import { hapticsImpactLight } from '../../../core/haptic/haptic';
-import css from './menu-touch.module.scss';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, menuList } from 'src/components/templates/menu-cursor/menu-cursor.services';
 import { IdentityReq } from 'src/core/types';
-import { Menu, menuList } from '../menu-cursor/menu-cursor.services';
+import { Sidebar } from 'src/pages/sidebar/sidebar';
+import { RootState } from 'src/store/store';
+
+import css from './menu-touch.module.scss';
+import { hapticsImpactLight } from '../../../core/haptic/haptic';
 
 export const MenuTouch = (): JSX.Element => {
   const navigate = useNavigate();
-  const { state } = useRouter();
+  const location = useLocation();
 
   const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
   function isActive(route: string): boolean {
-    return state.location.pathname === route;
+    return location.pathname === route;
   }
 
   function onMenuClick(item: Menu) {
     return () => {
-      navigate({ to: item.link });
+      navigate(item.link);
       hapticsImpactLight();
     };
   }
@@ -35,6 +37,7 @@ export const MenuTouch = (): JSX.Element => {
 
   return (
     <div className={css.container}>
+      <Sidebar />
       <div className={css.body}>
         <Outlet />
       </div>

@@ -1,9 +1,9 @@
-import { CommentModel } from 'src/pages/feed/post-detail/post-detail.types';
+import { Comment } from 'src/core/api';
 
 export type CommentProps = {
   onLike: (postId: string, id: string) => void;
   onLikeRemove: (postId: string, id: string) => void;
-  list: CommentModel[];
+  list: Comment[];
   onMorePageClick: () => void;
   showSeeMore: boolean;
 };

@@ -1,0 +1,40 @@
+.container {
+  padding: 1rem 1.5rem;
+}
+
+.title {
+  //@todo: use variable for font
+  font-family: 'Inter';
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.sub-title {
+  //@todo: use variable for color
+  color: #808289;
+  font-size: 1rem;
+}
+.search {
+  padding: 0.625rem 1.5rem;
+  background: var(--color-off-white-01);
+  border-bottom: 1px solid var(--color-gray-03);
+}
+.tags {
+  padding: 1.5rem;
+  background: var(--color-off-white-01);
+  overflow-y: scroll;
+  max-height: 380px;
+
+  &__title {
+    //@todo: use variable for font
+    font-family: 'Work Sans';
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    font-weight: 600;
+  }
+}
+.buttons {
+  padding: 1rem 1rem 3rem 1rem;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,56 @@
+@import 'src/components/_primitives.scss';
+.container {
+  display: flex;
+  gap: 1rem;
+  border-radius: $radius-xl;
+  padding: 1rem;
+  align-items: center;
+}
+
+//'primary' | 'secondary' | 'error' | 'warning' | 'success';
+.container-primary {
+  border: 1px solid $color-primary-300;
+  background-color: $color-primary-25;
+}
+.container-gray {
+  border: 1px solid $color-grey-300;
+  background-color: $color-grey-25;
+}
+.container-error {
+  border: 1px solid $color-error-300;
+  background-color: $color-error-25;
+}
+.container-warning {
+  border: 1px solid $color-warning-300;
+  background-color: $color-warning-25;
+}
+.container-success {
+  border: 1px solid $color-success-300;
+  background-color: $color-success-25;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.title-primary {
+  color: $color-primary-700;
+}
+.title-gray {
+  color: $color-grey-700;
+}
+.title-error {
+  color: $color-error-700;
+}
+.title-warning {
+  color: $color-warning-700;
+}
+.title-success {
+  color: $color-success-700;
+}

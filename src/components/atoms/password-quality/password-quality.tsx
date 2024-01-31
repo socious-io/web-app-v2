@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import css from './password-quality.module.scss';
 import { validatorsRecord } from './password-quality.services';
 import { PasswordQualityProps, Validator } from './password-quality.types';

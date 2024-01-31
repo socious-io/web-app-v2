@@ -1,6 +1,6 @@
 declare global {
-    interface Window {
-        ethereum: any
-        evmproviders: any
-    }
+  interface Window {
+    ethereum: any;
+    evmproviders: any;
   }
+}

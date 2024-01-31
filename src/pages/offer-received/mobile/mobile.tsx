@@ -1,21 +1,27 @@
-import Dapp from 'src/dapp';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Button } from 'src/components/atoms/button/button';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Typography } from 'src/components/atoms/typography/typography';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { BankAccounts } from 'src/components/templates/bank-accounts';
 import { Divider } from 'src/components/templates/divider/divider';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { PaymentMethods } from 'src/components/templates/payment-methods';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { translatePaymentTerms } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { translatePaymentType } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { translateRemotePreferences } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { printWhen } from 'src/core/utils';
-import { useOfferReceivedShared } from '../offer-received.shared';
+import Dapp from 'src/dapp';
+
 import css from './mobile.module.scss';
+import { useOfferReceivedShared, useWalletShared } from '../offer-received.shared';
 
 export const Mobile = (): JSX.Element => {
-  const { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD } = useOfferReceivedShared();
+  const { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD } =
+    useOfferReceivedShared();
+  const { form, stripeProfile, stripeLink, onSelectCountry } = useWalletShared();
 
   const offeredMessageBoxJSX = (
     <div className={css.congratulations}>
@@ -54,7 +60,7 @@ export const Mobile = (): JSX.Element => {
 
   const buttonsJSX = (
     <div className={css.btnContainer}>
-      <Button onClick={onAccept(offer.id)} disabled={!account && isPaidCrypto}>
+      <Button onClick={onAccept(offer.id)} disabled={(!account && isPaidCrypto) || (!stripeProfile && !isPaidCrypto)}>
         Accept offer
       </Button>
       <Button onClick={onDeclined(offer.id)} color="white">
@@ -89,7 +95,8 @@ export const Mobile = (): JSX.Element => {
               <div className={css.detailItem}>
                 <div className={css.detailItemLabel}>Job total</div>
                 <div className={css.detailItemValue}>
-                  {offer.assignment_total}<span>{unit}</span>
+                  {offer.assignment_total}
+                  <span>{unit}</span>
                   {printWhen(<span className={css.detailItemValue_small}> = {equivalentUSD()} USD</span>, isPaidCrypto)}
                 </div>
               </div>
@@ -126,12 +133,12 @@ export const Mobile = (): JSX.Element => {
               <Divider title="Resume">
                 <div className={css.uploadedResume}>
                   <img src="/icons/attachment-black.svg" />
-                  <a href={media.url} target="_blank">
+                  <a href={media.url} target="_blank" rel="noreferrer">
                     {media.filename}
                   </a>
                 </div>
               </Divider>,
-              !!media.url
+              !!media.url,
             )}
             {/* <Divider title="Contact Info">
               <Typography>
@@ -150,7 +157,22 @@ export const Mobile = (): JSX.Element => {
           <div className={css.wallet}>
             <PaymentMethods crypto_method={<Dapp.Connect />} />
           </div>,
-          isPaidCrypto
+          isPaidCrypto,
+        )}
+        {printWhen(
+          <Dropdown
+            register={form}
+            name="country"
+            label="Country"
+            placeholder="country"
+            list={COUNTRIES}
+            onValueChange={(selected) => onSelectCountry(selected.value as string)}
+          />,
+          !isPaidCrypto && !stripeProfile,
+        )}
+        {printWhen(
+          <BankAccounts accounts={stripeProfile} isDisabled={!stripeLink} bankAccountLink={stripeLink} />,
+          !isPaidCrypto,
         )}
         {printWhen(buttonsJSX, status === 'PENDING')}
       </div>

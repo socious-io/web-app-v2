@@ -1,8 +1,9 @@
-import { Modal } from 'src/components/templates/modal/modal';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Button } from 'src/components/atoms/button/button';
-import { ConnectModalProps } from './connect-modal.types';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Modal } from 'src/components/templates/modal/modal';
+
 import css from './connect-modal.module.scss';
+import { ConnectModalProps } from './connect-modal.types';
 
 export const ConnectModal: React.FC<ConnectModalProps> = ({ open, onClose, onSend, onMessage }) => {
   return (

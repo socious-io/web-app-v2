@@ -1,6 +1,7 @@
+import { CSSProperties } from 'react';
+
 import css from './button.module.scss';
 import { ButtonProps } from './button.types';
-import { CSSProperties } from 'react';
 import { hapticsImpactLight } from '../../../core/haptic/haptic';
 
 const colorStyle: Record<NonNullable<ButtonProps['color']>, CSSProperties> = {
@@ -14,9 +15,13 @@ const colorStyle: Record<NonNullable<ButtonProps['color']>, CSSProperties> = {
     border: 0,
     color: 'var(--color-white)',
   },
+  primary: {
+    backgroundColor: 'var(--color-primary-blue)',
+    border: 0,
+    color: 'var(--color-white)',
+  },
   white: {},
 };
-
 const sizeStyle: Record<NonNullable<ButtonProps['size']>, CSSProperties> = {
   s: {
     height: '2.25rem',

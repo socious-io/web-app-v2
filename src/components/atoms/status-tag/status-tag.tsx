@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+
 import css from './status-tag.module.scss';
 import { StatusTagProps } from './status-tag.types';
 
@@ -18,7 +19,7 @@ export const StatusTag = (props: StatusTagProps): JSX.Element => {
     red: {
       color: 'white',
       backgroundColor: '#DF3030',
-    }
+    },
   };
 
   return (

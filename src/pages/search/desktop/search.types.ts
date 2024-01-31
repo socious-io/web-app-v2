@@ -1,3 +1,4 @@
+import { MediaMeta } from 'src/core/api';
 import { Pagination } from 'src/core/types';
 
 export type SearchProps = {
@@ -31,12 +32,7 @@ export interface PostItems {
   likes: number;
   created_at: string;
   identity_meta: IdentityMetaObj;
-  media: Media[];
-}
-
-export interface Media {
-  id: string;
-  url: string;
+  media: MediaMeta[];
 }
 
 export interface IdentityMetaObj {

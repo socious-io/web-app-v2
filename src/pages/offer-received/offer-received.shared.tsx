@@ -1,36 +1,36 @@
 import { useEffect, useState } from 'react';
-import Dapp from 'src/dapp';
-import { useMatch } from '@tanstack/react-location';
-import { useAccount } from 'wagmi';
-import { Resolver } from './offer-received.types';
+import { useLoaderData } from 'react-router-dom';
 import { StatusKeys } from 'src/constants/APPLICANT_STATUS';
-import { endpoint } from 'src/core/endpoints';
+import { acceptOffer, rejectOffer, updateWallet } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
-import { findTokenRate } from './offer-received.services';
+import { useForm } from 'src/core/form';
+import Dapp from 'src/dapp';
+
+import { findTokenRate, getStripeLink, getSrtipeProfile, formModel } from './offer-received.services';
+import { Resolver } from './offer-received.types';
 
 export const useOfferReceivedShared = () => {
-  const { offer, media } = useMatch().ownData as Resolver;
+  const { offer, media } = useLoaderData() as Resolver;
   const { project, payment_mode, recipient } = offer;
   const { payment_type } = project || {};
   const { wallet_address } = recipient?.meta || {};
   const isPaidCrypto = payment_type === 'PAID' && payment_mode === 'CRYPTO';
-  const { address: account, isConnected } = useAccount();
+  const isPaid = payment_type === 'PAID';
+  const { account, isConnected } = Dapp.useWeb3();
   const [status, setStatus] = useState<StatusKeys>(offer?.status as StatusKeys);
   const [tokenRate, setTokenRate] = useState(1);
 
-  let unit = "$";
+  let unit = offer.currency === 'JPY' ? '¥' : '$';
   if (offer.crypto_currency_address) {
-    Dapp.NETWORKS.map(n => {
-      const token = n.tokens.filter(t => offer.crypto_currency_address === t.address)[0];
+    Dapp.NETWORKS.map((n) => {
+      const token = n.tokens.filter((t) => offer.crypto_currency_address === t.address)[0];
       if (token) unit = token.symbol;
     });
   }
 
   useEffect(() => {
     if (isConnected && account && (!wallet_address || String(wallet_address) !== account)) {
-      endpoint.post.user['{user_id}/update_wallet']({
-        wallet_address: account,
-      });
+      updateWallet({ wallet_address: account });
     }
   }, [isConnected, account]);
 
@@ -44,7 +44,7 @@ export const useOfferReceivedShared = () => {
 
   function onAccept(id: string) {
     return () =>
-      endpoint.post.offers['{offer_id}/approve'](id).then(() => {
+      acceptOffer(id).then(() => {
         dialog.alert({ title: 'Offer accepted', message: 'You have successfully accepted the offer' }).then(() => {
           setStatus('APPROVED');
         });
@@ -53,7 +53,7 @@ export const useOfferReceivedShared = () => {
 
   function onDeclined(id: string) {
     return () => {
-      endpoint.post.offers['{offer_id}/withdrawn'](id).then(() => {
+      rejectOffer(id).then(() => {
         dialog.alert({ title: 'Offer declined', message: 'You have successfully declined the offer' }).then(() => {
           setStatus('WITHRAWN');
         });
@@ -62,8 +62,44 @@ export const useOfferReceivedShared = () => {
   }
 
   function equivalentUSD() {
-    return Math.round((offer.assignment_total * tokenRate) * 100) / 100;
+    return Math.round(offer.assignment_total * tokenRate * 100) / 100;
   }
 
-  return { offer, media, status, account, isPaidCrypto, unit, onAccept, onDeclined, equivalentUSD };
+  return { offer, media, status, account, isPaidCrypto, isPaid, unit, onAccept, onDeclined, equivalentUSD };
+};
+
+export const useWalletShared = () => {
+  const { offer } = useLoaderData() as Resolver;
+  const form = useForm(formModel);
+  const [stripeLink, setStripeLink] = useState('');
+  const [stripeProfile, setStripeProfile] = useState(null);
+
+  async function onSelectCountry(value: string) {
+    try {
+      const result = await getStripeLink(value, window.location.href, offer.currency === 'JPY');
+      const {
+        link: { url },
+      } = result;
+      setStripeLink(url);
+    } catch (err: any) {
+      dialog.alert({
+        message: err?.response?.data.error || err?.message,
+        title: 'Failed',
+      });
+    }
+  }
+
+  useEffect(() => {
+    getSrtipeProfile(offer.currency === 'JPY').then((r) => {
+      const { data } = r?.external_accounts || {};
+      if (data?.length > 0) setStripeProfile(data);
+    });
+  }, []);
+
+  return {
+    form,
+    stripeLink,
+    stripeProfile,
+    onSelectCountry,
+  };
 };

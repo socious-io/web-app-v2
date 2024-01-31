@@ -12,7 +12,11 @@ export const requestPermissions = async () => {
 
 export const getToken = async (): Promise<string> => {
   return FirebaseMessaging.getToken()
-    .then(({ token }) => token)
+    .then(({ token }) => {
+      console.log('token', token);
+
+      return token;
+    })
     .catch(() => '');
 };
 

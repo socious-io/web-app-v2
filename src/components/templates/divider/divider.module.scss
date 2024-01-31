@@ -7,6 +7,7 @@
   height: 1.5rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   font-size: var(--font-size-m);
   font-weight: 600;
   margin-bottom: 1rem;
@@ -21,6 +22,9 @@
     font-size: 1.25rem;
     color: var(--color-gray-03);
     font-weight: 600;
-    font-family: 'Hahmlet';
+    font-family: 'Inter';
   }
+}
+.icon {
+  cursor: pointer;
 }

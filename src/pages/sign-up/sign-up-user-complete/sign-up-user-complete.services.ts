@@ -1,9 +1,8 @@
-import { post } from '../../../core/http';
-import { RegisterPayload } from './sign-up-user-complete.types';
+import { register, changePasswordDirect as changePasswordDirectApi, RegisterReq } from 'src/core/api';
 
-export function registerUser(payload: RegisterPayload) {
-  return post('auth/register', payload);
+export function registerUser(payload: RegisterReq) {
+  return register(payload);
 }
 export function changePasswordDirect(password: string) {
-  return post('user/change-password-direct', { password }).then(({ data }) => data);
+  return changePasswordDirectApi({ password });
 }

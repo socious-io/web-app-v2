@@ -1,14 +1,14 @@
-import { minLength, required } from '../../core/form';
-import { email } from '../../core/form/customValidators/customValidators';
-import { FormModel } from '../../core/form/useForm/useForm.types';
+import * as yup from 'yup';
 
-export const formModel: FormModel = {
-  email: {
-    initialValue: '',
-    validators: [required(), email()],
-  },
-  password: {
-    initialValue: '',
-    validators: [required(), minLength(6, 'Incorrect password')],
-  },
+export const formModel = {
+  email: '',
+  password: '',
 };
+
+export const schema = yup
+  .object()
+  .shape({
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+  })
+  .required();

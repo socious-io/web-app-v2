@@ -1,52 +1,52 @@
 .container {
-    display: flex;
-    overflow-x: scroll;
-    gap: 1rem;
-    align-items: center;
+  display: flex;
+  overflow-x: scroll;
+  gap: 1rem;
+  align-items: center;
 }
 
 .item {
-    display: flex;
-    flex-direction: column;
-    position: static;
-    font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: static;
+  font-size: 1rem;
 }
 
 .item span {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .active {
-    background-color: var(--color-primary-01);
-    padding: 0.5rem 2rem;
-    border-radius: 1.25rem;
+  background-color: var(--color-primary-01);
+  padding: 0.5rem 2rem;
+  border-radius: 1.25rem;
 }
 
 .active span {
-    font-size: 1rem;
-    color: #ffffff;
+  font-size: 1rem;
+  color: #ffffff;
 }
 
 .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.25rem;
-    width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: max-content;
 }
 
 .menuList {
-    background-color: #ffffff;
-    position: absolute;
-    z-index: 27;
-    margin-top: 39px;
-    border: 1px solid var(--border-gray-01);
-    min-width: 120px;
-    text-align: center;
-    border-radius: 0.5rem;
+  background-color: #ffffff;
+  position: absolute;
+  z-index: 27;
+  margin-top: 39px;
+  border: 1px solid var(--border-gray-01);
+  min-width: 120px;
+  text-align: center;
+  border-radius: 0.5rem;
 }
 
 .menuItem {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-gray-01);
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-gray-01);
 }

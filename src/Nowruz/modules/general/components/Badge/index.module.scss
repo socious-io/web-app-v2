@@ -1,0 +1,16 @@
+@import 'src/components/_primitives.scss';
+
+.content {
+  width: 30px;
+  height: 22px;
+  border: solid 1px $color-primary-200;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-primary-50;
+  color: $color-primary-700;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}

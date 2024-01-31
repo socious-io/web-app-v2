@@ -22,3 +22,28 @@ export const toRelativeTime = (date: string) => {
     return moment(timestamp).startOf('day').fromNow();
   }
 };
+
+// output looks like this 14 May
+export const convertTimeToMonth = (timeStr: string) => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const dt = new Date(timeStr);
+  const day = dt.getUTCDate();
+  const monthName = months[dt.getUTCMonth()];
+
+  const result = `${day} ${monthName}`;
+  return result;
+};

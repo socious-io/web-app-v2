@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { printWhen } from 'src/core/utils';
+
 import css from './dropdown.module.scss';
 import { DropdownProps } from './dropdown.types';
 import { Items } from './items/items';
-import { printWhen } from 'src/core/utils';
 
 const initialState = { isListOpen: false, headerTitle: '' };
 

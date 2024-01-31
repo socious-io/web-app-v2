@@ -1,7 +1,8 @@
+import { CSSProperties } from 'react';
 import { printWhen } from 'src/core/utils';
+
 import css from './two-column-cursor.module.scss';
 import { TwoColumnCursorProps } from './two-column-cursor.types';
-import { CSSProperties } from 'react';
 
 export const TwoColumnCursor = (props: TwoColumnCursorProps): JSX.Element => {
   const { children, ...rest } = props;

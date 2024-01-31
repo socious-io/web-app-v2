@@ -1,0 +1,56 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  border-left: 1px solid $color-grey-200;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: center;
+  position: relative;
+  padding-bottom: 6px;
+}
+.gradient {
+  background: linear-gradient(to bottom, #a5c0ee 0%, #fbc5ec 100%);
+  width: 100%;
+  min-height: 112px;
+}
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: $color-grey-900;
+  margin-top: 16px;
+  margin-bottom: 2px;
+}
+.username {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin-bottom: 16px;
+}
+.bio {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 16px;
+}
+.avatar {
+  position: absolute;
+  top: 76px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(50% - 36px);
+}
+.dotIcon {
+  width: 6px;
+  height: 6px;
+  background-color: $color-success-500;
+  border-radius: 50%;
+}
+.buttons {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}

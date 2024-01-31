@@ -1,5 +1,6 @@
 import { Card } from 'src/components/atoms/card/card';
 import { PaymentDetail } from 'src/components/molecules/payment-detail';
+
 import css from './payment-summary-card.module.scss';
 import { PaymentSummaryCardProps } from './payment-summary-card.types';
 

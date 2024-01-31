@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import css from './type-selector.module.scss';
 import { TypeSelectorProps } from './type-selector.types';
 

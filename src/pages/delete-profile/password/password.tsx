@@ -1,44 +1,43 @@
-import { useNavigate } from '@tanstack/react-location';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from '../../../core/types';
-import { RootState } from '../../../store/store';
-import { Button } from '../../../components/atoms/button/button';
-import { Input } from '../../../components/atoms/input/input';
-import { deleteAccount, login } from '../delete-profile.service';
-import css from './password.module.scss';
-import { useForm } from '../../../core/form';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+import { Input } from 'src/components/atoms/input/input';
+import { CurrentIdentity, handleError } from 'src/core/api';
+import { useForm } from 'src/core/form';
+import { RootState } from 'src/store';
+
 import { formModel } from './password.form';
-import { handleError } from '../../../core/http';
+import css from './password.module.scss';
+import { deleteAccount, login } from '../delete-profile.service';
 
 export const Password = () => {
   const navigate = useNavigate();
   const form = useForm(formModel);
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
-  const email = identity.meta.email;
+  const email = identity?.meta.email;
 
   const backToPerviousPage = () => {
-    navigate({ to: '../delete' });
+    navigate('../delete');
   };
 
   const deleteMyAccount = () => {
-    login(email, form.controls.password.value)
+    login(email!, form.controls.password.value)
       .then((resp) => {
-        if (resp.message === 'success') {
+        if (resp.access_token) {
           deleteAccount().then((resp) => {
             if (resp.message === 'success') {
-              navigate({ to: `../confirm?email=${email}` });
+              navigate(`../confirm?email=${email}`);
             }
           });
         }
       })
-      .catch(handleError({message: 'Not matched password'}));
+      .catch(handleError({ message: 'Not matched password' }));
   };
 
   const cancel = () => {
-    navigate({ to: '../../jobs' });
+    navigate('../../jobs');
   };
 
   return (

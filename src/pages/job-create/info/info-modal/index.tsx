@@ -1,39 +1,42 @@
 import { useState } from 'react';
-import { useMatch } from '@tanstack/react-location';
 import { useDispatch } from 'react-redux';
-import { WebModal } from 'src/components/templates/web-modal';
+import { useLoaderData } from 'react-router-dom';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { ScreenerModal } from '../../screener-questions/screener-modal';
+import { Divider } from 'src/components/templates/divider/divider';
+import { WebModal } from 'src/components/templates/web-modal';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
+import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
-import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
+import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
+import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { jobCategoriesToDropdown } from 'src/core/adaptors';
+import { JobReq } from 'src/core/api';
+import { CategoriesResp, CreatePostPayload } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
+import { useInfoShared } from 'src/pages/job-create/info//info.shared';
+import { createPost } from 'src/pages/job-create/info/info.services';
+import { ScreenerModal } from 'src/pages/job-create/screener-questions/screener-modal';
 import { setPostPaymentScheme, setPostPaymentType } from 'src/store/reducers/createPostWizard.reducer';
 import { setQuestionProjectIds } from 'src/store/reducers/createQuestionWizard.reducer';
-import { printWhen } from 'src/core/utils';
-import { InfoModalProps } from './info-modal.types';
-import { CategoriesResp, CreatePostPayload } from 'src/core/types';
-import { createPost } from '../info.services';
-import { useInfoShared } from '../info.shared';
+
 import css from './info-modal.module.scss';
+import { InfoModalProps } from './info-modal.types';
 
 export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onBack, onOpen }) => {
   const dispatch = useDispatch();
   const { formState, form, updateCityList, cities, errors, rangeLabel } = useInfoShared();
-  const { categories } = (useMatch().ownData.jobCategories as CategoriesResp) || {};
+  const { categories } = (useLoaderData().jobCategories as CategoriesResp) || {};
   const categoriesList = jobCategoriesToDropdown(categories);
+
   const [openScreenerModal, setOpenScreenerModal] = useState(false);
 
   function createJob(payload: CreatePostPayload) {
-    createPost(payload).then((resp) => {
+    createPost(payload as JobReq).then((resp) => {
       dispatch(setQuestionProjectIds({ project_id: resp.id, identity_id: resp.identity_id }));
       onClose();
       setOpenScreenerModal(true);
@@ -179,11 +182,11 @@ export const InfoModal: React.FC<InfoModalProps> = ({ open, onClose, onDone, onB
                     </div>
                     {printWhen(
                       errorsJSX,
-                      !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher)
+                      !!errors.length && (!!formState.payment_range_lower || !!formState.payment_range_higher),
                     )}
                     {printWhen(
                       <span className={css.info}>Prices will be shown in USD ($)</span>,
-                      formState.payment_type === 'PAID'
+                      formState.payment_type === 'PAID',
                     )}
                   </div>
                 </div>

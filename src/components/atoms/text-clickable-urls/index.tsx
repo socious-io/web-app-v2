@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { TextClickableUrlsProps } from './text-clickable-urls';
 import css from './text-clickable-urls.module.scss';
 
@@ -16,6 +18,7 @@ export const TextClickableURLs: React.FC<TextClickableUrlsProps> = ({ text }) =>
             href={includesProtocols.test(word) ? word : `https://${word}`}
             target="_blank"
             className={css.link}
+            rel="noreferrer"
           >
             {' '}
             {word}

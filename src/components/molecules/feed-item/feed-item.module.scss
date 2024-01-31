@@ -1,41 +1,41 @@
 .img {
-    display: flex;
-    justify-content: center;
-    margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
 }
 
 .img img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .text {
-    margin: 0.875rem 0;
-    word-wrap: break-word;
+  margin: 0.875rem 0;
+  word-wrap: break-word;
 }
 
 .header {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .info {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .date {
-    color: var(--color-gray-01);
+  color: var(--color-gray-01);
 }
 
 .icon {
-    cursor: pointer;
+  cursor: pointer;
 }

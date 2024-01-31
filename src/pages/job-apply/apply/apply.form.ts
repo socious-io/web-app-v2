@@ -1,8 +1,9 @@
+import { QuestionsRes } from 'src/core/types';
+
 import { noEmptyString } from './../../../core/form/customValidators/customValidators';
 import { required } from '../../../core/form';
 import { website } from '../../../core/form/customValidators/customValidators';
 import { FormModel } from '../../../core/form/useForm/useForm.types';
-import { QuestionsRes } from 'src/core/types';
 
 export function generateFormModel(questions: QuestionsRes['questions']): FormModel {
   const obj = {

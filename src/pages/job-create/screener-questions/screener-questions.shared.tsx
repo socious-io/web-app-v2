@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'src/store/store';
-import { CreateQuestionWizard, setAddChoices, setChoices } from 'src/store/reducers/createQuestionWizard.reducer';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'src/core/form';
+import { RootState } from 'src/store';
+import { CreateQuestionWizard, setAddChoices, setChoices } from 'src/store/reducers/createQuestionWizard.reducer';
+
 import { formModel } from './screener-questions.form';
 import { updateForm } from './screener-questions.service';
 

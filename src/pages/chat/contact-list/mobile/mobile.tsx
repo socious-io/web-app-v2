@@ -1,14 +1,14 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
 import { Fab } from 'src/components/atoms/fab/fab';
 import { Header } from 'src/components/atoms/header/header';
-import { CreateChatModal } from '../create-chat-modal';
 import { ContactList } from 'src/components/organisms/contact-list/contact-list';
 import { HeaderStaticMobile } from 'src/components/templates/header-static-mobile/header-static-mobile';
-import { useContactListShared } from '../contact-list.shared';
+import { CurrentIdentity, OrgMeta, UserMeta } from 'src/core/api';
+import { useContactListShared } from 'src/pages/chat/contact-list/contact-list.shared';
+import { CreateChatModal } from 'src/pages/chat/contact-list/create-chat-modal';
+import { RootState } from 'src/store';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -22,24 +22,33 @@ export const Mobile = (): JSX.Element => {
     userList,
     onCreateChat,
   } = useContactListShared();
-  const identity = useSelector<RootState, IdentityReq>((state) => {
-    return state.identity.entities.find((identity) => identity.current) as IdentityReq;
+  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
   });
 
   return (
     <>
       <HeaderStaticMobile>
         <Header
-          onBack={() => navigate({ to: '/jobs' })}
+          onBack={() => navigate('/jobs')}
           border="0"
           height="auto"
           title="Chats"
-          right={<Avatar size="2rem" type="users" img={identity.meta.image} />}
+          right={
+            identity && (
+              <Avatar
+                size="2rem"
+                type="users"
+                img={(identity.meta as UserMeta).avatar || (identity.meta as OrgMeta).image || ''}
+              />
+            )
+          }
         />
+
         <ContactList
           height="calc(var(--window-height) - var(--safe-area) + 1.5rem)"
           onScroll={onScroll}
-          onContactClick={(contact) => navigate({ to: contact.id })}
+          onContactClick={(contact) => navigate(contact.id)}
           list={chats}
           onSearch={onSearch}
         />

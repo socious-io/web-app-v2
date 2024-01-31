@@ -1,8 +1,9 @@
 import { Button } from 'src/components/atoms/button/button';
-import { Modal } from '../modal/modal';
-import { WebModalProps } from './web-modal.types';
 import { printWhen } from 'src/core/utils';
+
 import css from './web-modal.module.scss';
+import { WebModalProps } from './web-modal.types';
+import { Modal } from '../modal/modal';
 
 export const WebModal: React.FC<WebModalProps> = ({
   open,
@@ -14,9 +15,10 @@ export const WebModal: React.FC<WebModalProps> = ({
   className = '',
   headerClassName = '',
   footerClassName = '',
+  zIndex,
 }) => {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} zIndex={zIndex}>
       <div className={`${css.container} ${className}`}>
         <div className={`${css.header} ${headerClassName}`}>
           <div onClick={onBack} className={css.icon}>
@@ -30,11 +32,9 @@ export const WebModal: React.FC<WebModalProps> = ({
         {children}
         {printWhen(
           <div className={`${css.bottom} ${footerClassName}`}>
-            {buttons?.map((btn, index) => (
-              <Button key={index} {...btn} />
-            ))}
+            {buttons?.map((btn, index) => <Button key={index} {...btn} />)}
           </div>,
-          !!buttons?.length
+          !!buttons?.length,
         )}
       </div>
     </Modal>

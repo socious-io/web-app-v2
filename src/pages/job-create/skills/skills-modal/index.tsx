@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { WebModal } from 'src/components/templates/web-modal';
-import { Search } from 'src/components/atoms/search/search';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { SkillsModalProps } from './skills-modal.types';
-import { setPostSkills } from 'src/store/reducers/createPostWizard.reducer';
+import { Search } from 'src/components/atoms/search/search';
+import { WebModal } from 'src/components/templates/web-modal';
 import { InfoModal } from 'src/pages/job-create/info/info-modal';
-import { useSkillsShared } from '../skills.shared';
+import { setPostSkills } from 'src/store/reducers/createPostWizard.reducer';
+
 import css from './skills-modal.module.scss';
+import { SkillsModalProps } from './skills-modal.types';
+import { useSkillsShared } from '../skills.shared';
 
 export const SkillsModal: React.FC<SkillsModalProps> = ({ open, onClose, onDone, onBack, onOpen }) => {
   const dispatch = useDispatch();

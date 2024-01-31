@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, Middleware } from '@reduxjs/toolkit';
 
 export type CreatePostWizard = {
   title: string;
@@ -95,7 +95,11 @@ export const createPostWizardSlice = createSlice({
     setMaxRange: (state, action) => {
       state.payment_range_higher = action.payload;
     },
+    setInitPostWizard: (state, action) => {
+      return action.payload;
+    },
     resetCreatePostWizard: () => {
+      console.log('reset');
       return initialState;
     },
   },
@@ -120,4 +124,5 @@ export const {
   setMinRange,
   setMaxRange,
   resetCreatePostWizard,
+  setInitPostWizard,
 } = createPostWizardSlice.actions;

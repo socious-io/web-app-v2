@@ -1,0 +1,44 @@
+.container {
+  height: 13rem;
+  padding: 1rem;
+  padding-top: 3.75rem;
+  background-image: url('/images/feed-page-header.png');
+  background-size: cover;
+  background-position: 30%;
+  background-color: var(--color-gray-04);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(0deg, transparent, 50%, rgba(black, 0.35));
+  }
+}
+
+.menu {
+  position: relative;
+  margin-bottom: 1.625rem;
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  grid-template-rows: 2.25rem;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  position: relative;
+  font-size: var(--font-size-xl);
+  color: #ffffff;
+  font-weight: 600;
+  font-family: 'Inter';
+}
+
+.tagline {
+  position: relative;
+  color: #d4d2d0;
+  font-size: var(--font-size-m);
+}

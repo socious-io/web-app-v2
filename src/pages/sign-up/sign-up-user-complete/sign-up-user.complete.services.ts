@@ -1,5 +1,5 @@
-import { Validator } from '../../../components/atoms/password-quality/password-quality.types';
-import { post } from '../../../core/http';
+import { Validator } from 'src/components/atoms/password-quality/password-quality.types';
+import { updateProfile as updateProfileApi } from 'src/core/api';
 
 export function updateProfile(payload: { username: string; firstName: string; lastName: string }) {
   const adopted = {
@@ -7,7 +7,7 @@ export function updateProfile(payload: { username: string; firstName: string; la
     first_name: payload.firstName,
     last_name: payload.lastName,
   };
-  return post('/user/update/profile', adopted);
+  return updateProfileApi(adopted);
 }
 
 export const passwordQualityValidators: Validator[] = [

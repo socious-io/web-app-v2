@@ -1,0 +1,19 @@
+.expect {
+  word-wrap: break-word;
+
+  :where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+    all: revert;
+  }
+
+  :where(a) {
+    text-decoration: none;
+    color: var(--color-primary-01);
+  }
+
+  &__seeMore {
+    white-space: nowrap;
+    color: var(--color-primary-01);
+    font-weight: 600;
+    cursor: pointer;
+  }
+}

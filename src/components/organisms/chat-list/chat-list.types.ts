@@ -1,5 +1,6 @@
-import { Message } from '../../atoms/message/message.types';
 import { CSSProperties } from 'react';
+
+import { Message } from '../../atoms/message/message.types';
 
 export interface ChatListProps extends CSSProperties {
   list: Message[];

@@ -1,0 +1,26 @@
+@import 'src/components/_primitives.scss';
+
+.iconDiv {
+  width: 40px;
+  height: 40px;
+  border: solid 1px $color-grey-200;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-grey-200;
+}
+
+.titleDivHorizontal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleDivVertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}

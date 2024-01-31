@@ -1,10 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { Header } from 'src/components/atoms/header/header';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
-import { useNavigate } from '@tanstack/react-location';
 import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
-import { useMyJobShared } from '../my-jobs.shared';
+
 import css from './mobile.module.scss';
+import { useMyJobShared } from '../my-jobs.shared';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export const Mobile = (): JSX.Element => {
             <div className={css.listContainer}>
               <JobCardList
                 list={awaitingList.items}
-                onItemClick={(id) => navigate({ to: `/jobs/received-offer/${id}/m` })}
+                onItemClick={(id) => navigate(`/jobs/received-offer/${id}`)}
                 totalCount={awaitingList.total_count}
                 onSeeMoreClick={updateAwaitingList}
               />
@@ -69,7 +70,7 @@ export const Mobile = (): JSX.Element => {
             <div className={css.listContainer}>
               <JobCardList
                 list={onGoingList.items}
-                onItemClick={(id) => navigate({ to: `/jobs/applied/complete-mission/${id}` })}
+                onItemClick={(id) => navigate(`/jobs/applied/complete-mission/${id}`)}
                 totalCount={onGoingList.total_count}
                 onSeeMoreClick={updateOnGoingList}
               />
@@ -93,9 +94,17 @@ export const Mobile = (): JSX.Element => {
 
   return (
     <div className={css.container}>
-      <Header onBack={() => navigate({ to: '/jobs' })} border="0" paddingTop={'var(--safe-area)'} title="My Jobs" />
+      <Header onBack={() => navigate('/jobs')} border="0" paddingTop={'var(--safe-area)'} title="My Jobs" />
       <div className={css.tabContainer}>
-        <Tabs tabs={tabs} onClick={(name) => navigate({ to: '.', search: { tab: name } })} />
+        <Tabs
+          tabs={tabs}
+          onClick={(name) =>
+            navigate({
+              pathname: '.',
+              search: `?tab=${name}`,
+            })
+          }
+        />
       </div>
     </div>
   );

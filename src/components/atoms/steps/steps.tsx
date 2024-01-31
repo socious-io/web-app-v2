@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import css from './steps.module.scss';
 import { StepsProps } from './steps.types';
 

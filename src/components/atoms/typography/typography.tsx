@@ -1,5 +1,6 @@
-import css from './typography.module.scss';
 import { CSSProperties } from 'react';
+
+import css from './typography.module.scss';
 import { TypeList, TypographyProps } from './typography.types';
 
 export const Typography = (props: TypographyProps): JSX.Element => {
@@ -14,8 +15,8 @@ export const Typography = (props: TypographyProps): JSX.Element => {
   };
 
   const typeList: TypeList = {
-    heading: { fontFamily: 'Hahmlet', fontWeight: 600 },
-    body: { fontFamily: 'Work Sans' },
+    heading: { fontFamily: 'Inter', fontWeight: 600 },
+    body: { fontFamily: 'Inter' },
   };
 
   const styles: CSSProperties = {

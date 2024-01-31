@@ -1,5 +1,5 @@
 import css from './job-history-item-donation.module.scss';
-import {JobHistoryItemDonationProps as Props} from './job-history-item-donation.types';
+import { JobHistoryItemDonationProps as Props } from './job-history-item-donation.types';
 // import OrganizationIcon from '/asset/icons/Base.svg';
 
 export const JobHistoryItemDonation = (props: Props): JSX.Element => {

@@ -1,0 +1,108 @@
+.sidebar {
+  display: grid;
+  gap: 1rem;
+  position: sticky;
+  top: 2.5rem;
+}
+
+.container {
+  //   background-color: #ffffff;
+  border: 1px solid var(--color-gray-04);
+  overflow: hidden;
+}
+
+.header {
+  display: grid;
+  position: relative;
+  grid-template-rows: 8rem 6rem;
+
+  .close {
+    position: absolute;
+    width: 2.25rem;
+    height: 2.25rem;
+    top: 2rem;
+    justify-content: center;
+    align-items: center;
+    right: 2rem;
+    z-index: 2;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid var(--border-gray-01);
+  }
+
+  .cover {
+    height: 8rem;
+    background-size: cover;
+    position: relative;
+    background-color: var(--color-primary-01);
+  }
+
+  .avatarContainer {
+    position: absolute;
+    left: 1rem;
+    top: 5rem;
+  }
+
+  .menu {
+    padding: 1rem;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    background: white;
+  }
+
+  .btnContainer {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.message {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid #e4e6ed;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.userConnections {
+  display: flex;
+  gap: 0.5rem;
+  > div {
+    color: var(--color-gray-02);
+  }
+}
+
+.bio,
+.mission,
+.culture,
+.contactData {
+  font-size: var(--font-size-s2);
+}
+
+.mission,
+.bio,
+.culture {
+  white-space: pre-line;
+  color: var(--color-gray-01);
+}
+
+.name {
+  font-size: var(--font-size-l);
+  font-weight: 600;
+}
+
+.hireStatus {
+  display: flex;
+  justify-content: space-between;
+}

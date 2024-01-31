@@ -1,14 +1,14 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { Button } from '../../../components/atoms/button/button';
 import css from './confirm.module.scss';
+import { Button } from '../../../components/atoms/button/button';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Confirm = () => {
   const navigate = useNavigate();
-  const queryParam = useMatch().search;
-  const email = queryParam.email;
+  const queryParam = new URLSearchParams(location.search);
+  const email = queryParam.get('email');
 
   const joinNow = () => {
-    navigate({ to: '/sign-up/user/email' });
+    navigate('/sign-up/user/email');
   };
 
   return (

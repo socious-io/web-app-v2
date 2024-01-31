@@ -1,20 +1,21 @@
-import { useNavigate } from '@tanstack/react-location';
-import { Button } from '../../../components/atoms/button/button';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'src/components/atoms/button/button';
+
 import css from './delete.module.scss';
 
 export const Delete = () => {
   const navigate = useNavigate();
 
   const backToPerviousPage = () => {
-    navigate({ to: '../../jobs' });
+    navigate('/jobs');
   };
 
   const navigateToPassword = () => {
-    navigate({ to: '../password' });
+    navigate('../password');
   };
 
   const cancel = () => {
-    navigate({ to: '../../jobs' });
+    navigate('/jobs');
   };
 
   return (
@@ -28,8 +29,8 @@ export const Delete = () => {
         <div className={css.content}>
           <span className={css.title}>Are you sure? </span>
           <span className={css.text}>
-            Deleting your account will erase all your existing activity on Socious, including connections you've made, and
-            jobs you've contributed to.
+            Deleting your account will erase all your existing activity on Socious, including connections you've made,
+            and jobs you've contributed to.
           </span>
           <br />
           <span>This action is irreversible.</span>

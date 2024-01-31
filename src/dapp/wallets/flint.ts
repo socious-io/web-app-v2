@@ -1,5 +1,6 @@
-import { Chain } from 'wagmi/chains';
+// THIS script has been depricate and no where imported
 import { Connector, Address, ConnectorData } from 'wagmi';
+import { Chain } from 'wagmi/chains';
 
 export default class extends Connector {
   id = 'flint';
@@ -55,8 +56,8 @@ export default class extends Connector {
       window.open(`https://flint-wallet.app.link/browse?dappUrl=${window.global.location.href}`, '_blank');
       throw new Error('Flint provider could not be found');
     }
-    await provider.request({ method: "eth_requestAccounts" });
-    return provider
+    await provider.request({ method: 'eth_requestAccounts' });
+    return provider;
   }
 
   async disconnect() {}

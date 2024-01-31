@@ -1,4 +1,5 @@
 import { ClickAwayListener, Menu, MenuItem, Typography } from '@mui/material';
+
 import { PopoverProps } from './popover.types';
 
 export const Popover = (props: PopoverProps) => (

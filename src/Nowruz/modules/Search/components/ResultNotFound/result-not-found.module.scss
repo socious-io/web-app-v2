@@ -1,0 +1,40 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  padding-top: 24px;
+}
+.icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid $color-grey-200;
+  padding: 12px;
+  box-shadow: 0px 1px 2px 0px color(display-p3 0.0627 0.0941 0.1569 / 0.05);
+}
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  margin-top: 16px;
+  color: $color-grey-900;
+}
+
+.message {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  color: $color-grey-600;
+  margin-top: 4px;
+  margin-bottom: 24px;
+  max-width: 352px;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    margin: 24px;
+  }
+}

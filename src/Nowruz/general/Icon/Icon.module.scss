@@ -1,0 +1,9 @@
+@import 'src/components/_primitives.scss';
+
+.icon-container {
+  font-family: fontastic !important;
+  line-height: initial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

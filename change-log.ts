@@ -1,5 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
-console.log('evn: ',defineConfig );
+console.log('evn: ', defineConfig);
 
 export default defineConfig(({ command, mode }) => {
   // Load env file based on `mode` in the current working directory.

@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import store from 'src/store/store';
-import { WebModal } from 'src/components/templates/web-modal';
-import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
+import { ButtonProps } from 'src/components/atoms/button/button.types';
+import { Input } from 'src/components/atoms/input/input';
 import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Toggle } from 'src/components/atoms/toggle';
-import { Input } from 'src/components/atoms/input/input';
-import { CreatedModal } from '../created/created-modal';
+import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
 import { AlertModal } from 'src/components/organisms/alert-modal';
+import { WebModal } from 'src/components/templates/web-modal';
+import { CreateQuestionPayload } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
+import store from 'src/store';
+import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
 import {
   resetCreatedQuestion,
   resetQuestions,
@@ -17,14 +20,12 @@ import {
   setQuestionType,
   setRequiredQuestion,
 } from 'src/store/reducers/createQuestionWizard.reducer';
-import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
-import { printWhen } from 'src/core/utils';
-import { ButtonProps } from 'src/components/atoms/button/button.types';
+
+import css from './screener-modal.module.scss';
 import { ScreenerModalProps } from './screener-modal.types';
-import { CreateQuestionPayload } from 'src/core/types';
+import { CreatedModal } from '../created/created-modal';
 import { QUESTION_TYPE, createQuestion } from '../screener-questions.service';
 import { useScreenerQuestionsShared } from '../screener-questions.shared';
-import css from './screener-modal.module.scss';
 
 export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onDone, onOpen }) => {
   const { navigate, dispatch, formState, form, question, onAddChoice, onRemoveChoice, onReset, isDisabledAddQuestion } =
@@ -42,7 +43,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
     store.dispatch(resetCreatePostWizard());
     setOpenAlertModal(false);
     onDone();
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
   }
 
   function submitWithQuestions() {
@@ -113,7 +114,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
             </div>
           ))}
         </div>,
-        formState.add_choices > 0
+        formState.add_choices > 0,
       )}
     </>
   );
@@ -154,7 +155,7 @@ export const ScreenerModal: React.FC<ScreenerModalProps> = ({ open, onClose, onD
                 <img src="/icons/add-circle.svg" />
                 Add question
               </div>,
-              !formState.add_question
+              !formState.add_question,
             )}
             {printWhen(addQuestionsJSX, formState.add_question)}
             {printWhen(multipleChoiceJSX, formState.question_type === 'MULTIPLE')}

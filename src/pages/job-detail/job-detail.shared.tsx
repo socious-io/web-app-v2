@@ -1,13 +1,14 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
 import { useSelector } from 'react-redux';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
-import { Resolver } from './job-detail.types';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store';
+
+import { Resolver } from './job-detail.types';
 
 export const useJobDetailShared = () => {
   const navigate = useNavigate();
-  const { jobDetail: job, screeningQuestions } = useMatch().data as Resolver;
+  const { jobDetail: job, screeningQuestions } = useLoaderData();
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
@@ -18,7 +19,7 @@ export const useJobDetailShared = () => {
   }
 
   const location = `${job.identity_meta.city}, ${getCountryName(
-    job.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined
+    job.identity_meta.country as keyof typeof COUNTRIES_DICT | undefined,
   )}`;
 
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {

@@ -1,32 +1,32 @@
 .container {
-    padding: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .header {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .content {
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 1rem;
+  }
 
-    .header {
-        font-size: 18px;
-        font-weight: 600;
+  .btn {
+    margin: auto;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--color-primary-01);
+
+    &__disabled {
+      pointer-events: none;
     }
-
-    .content {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .btn {
-        margin: auto;
-    }
-
-    .link {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        color: var(--color-primary-01);
-
-        &__disabled  {
-            pointer-events: none;
-        }
-    }
+  }
 }

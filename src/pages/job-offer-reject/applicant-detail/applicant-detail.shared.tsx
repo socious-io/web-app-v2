@@ -1,13 +1,14 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { rejectApplicant } from 'src/core/api';
+
 import { Resolver } from './applicant-detail.types';
-import { rejectApplicant } from '../job-offer-reject.services';
 
 export const useApplicantDetailShared = () => {
   const navigate = useNavigate();
-  const { screeningQuestions, applicantDetail } = useMatch().ownData as Resolver;
+  const { screeningQuestions, applicantDetail } = useLoaderData() as Resolver;
 
   function navigateToOverview() {
-    navigate({ to: '..' });
+    navigate('..');
   }
 
   function onReject(id: string) {

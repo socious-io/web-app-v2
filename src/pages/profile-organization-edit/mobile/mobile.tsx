@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
-import { Header } from '../../../components/atoms/header-v2/header';
-import { Input } from '../../../components/atoms/input/input';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import css from './mobile.module.scss';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Input } from 'src/components/atoms/input/input';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { Category } from 'src/components/molecules/category/category';
-import { useProfileOrganizationEditShared } from '../profile-organization-edit.shared';
-import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
+import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { useProfileOrganizationEditShared } from 'src/pages/profile-organization-edit/profile-organization-edit.shared';
+
+import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const { onSave, onAvatarEdit, onCoverEdit, avatarImage, coverImage, updateCityList, form, cities, organization } =
@@ -44,7 +45,13 @@ export const Mobile = (): JSX.Element => {
           </div>
         </div>
         <div className={css.formContainer}>
-          <Dropdown name="type" register={form} label="Organization type" list={ORGANIZATION_TYPE} />
+          <Dropdown
+            name="type"
+            register={form}
+            label="Organization type"
+            list={ORGANIZATION_TYPE}
+            defaultValue={ORGANIZATION_TYPE.find((type) => type.id === form.controls.type['value'])?.label || ''}
+          />
           <Input label="Name" register={form} name="name" placeholder="name" />
           <Textarea label="bio" register={form} name="bio" placeholder="bio" />
           <Category
@@ -62,6 +69,7 @@ export const Mobile = (): JSX.Element => {
             list={COUNTRIES}
             placeholder="country"
             onValueChange={onCountryUpdate}
+            defaultValue={COUNTRIES.find((item) => item.id === form.controls.country['value'])?.label || ''}
           />
           <Dropdown
             register={form}
@@ -70,12 +78,19 @@ export const Mobile = (): JSX.Element => {
             list={cities}
             placeholder="city"
             onValueChange={(option) => form.controls.geoname_id.setValue(option.id)}
+            defaultValue={form.controls.city['value']?.toString()}
           />
           <Input label="Address" register={form} name="address" placeholder="address" />
           <div>
             <div className={css.label}>Phone</div>
             <div className={css.phoneContainer}>
-              <Dropdown register={form} name="mobile_country_code" placeholder="+1" list={COUNTRY_CODES} />
+              <Dropdown
+                register={form}
+                name="mobile_country_code"
+                placeholder="+1"
+                list={COUNTRY_CODES}
+                defaultValue={form.controls.mobile_country_code.value?.toString()}
+              />
               <Input register={form} name="phone" placeholder="phone" />
             </div>
           </div>

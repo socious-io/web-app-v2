@@ -1,15 +1,16 @@
-import { useNavigate } from '@tanstack/react-location';
-import Dapp from 'src/dapp';
-import { Header } from 'src/components/atoms/header-v2/header';
 import { Button } from 'src/components/atoms/button/button';
+import { Header } from 'src/components/atoms/header-v2/header';
 import { JobDescrioptionCard } from 'src/components/templates/job-description-card';
-import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
 import { PaymentMethods } from 'src/components/templates/payment-methods';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
+import { PaymentSummaryCard } from 'src/components/templates/payment-summary-card';
 import { Sticky } from 'src/components/templates/sticky';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { printWhen } from 'src/core/utils';
-import { usePaymentShared } from '../payment.shared';
+import Dapp from 'src/dapp';
+
 import css from './mobile.module.scss';
+import { usePaymentShared } from '../payment.shared';
+import { useNavigate } from 'react-router-dom';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const Mobile = (): JSX.Element => {
     offer,
     assignment_total,
     unit,
-    commision,
+    checkList,
     total_price,
     start_date,
     cards,
@@ -77,15 +78,7 @@ export const Mobile = (): JSX.Element => {
             unit={unit}
           />
           <div className={css['container__spacer']}>
-            <PaymentSummaryCard
-              title="Payment summary"
-              unit={unit}
-              list={[
-                { title: 'Total assignement', price: assignment_total },
-                { title: ' Socious commision', price: commision },
-              ]}
-              total_price={total_price}
-            />
+            <PaymentSummaryCard title="Payment summary" unit={unit} list={checkList} total_price={total_price} />
           </div>
           <PaymentMethods
             crypto_method={
@@ -104,7 +97,7 @@ export const Mobile = (): JSX.Element => {
               <Button
                 color="white"
                 disabled={isPaidCrypto || cards?.items?.length >= 3}
-                onClick={() => navigate({ to: 'add-card' })}
+                onClick={() => navigate('add-card')}
               >
                 <>
                   <img src="/icons/debit.svg" width={18} height={18} />

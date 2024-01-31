@@ -1,23 +1,20 @@
-import { useNavigate } from '@tanstack/react-location';
-import { formModel } from './sign-in.form';
-import { setAuthCookies } from './sign-in.services';
-import { LoginResp } from 'src/core/types';
-import { getIdentities } from 'src/core/api';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import store from 'src/store/store';
-import { endpoint } from 'src/core/endpoints';
-import { handleError } from 'src/core/http';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { LoginPayload } from './sign-in.types';
-import { useForm } from 'src/core/form';
+import { Capacitor } from '@capacitor/core';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { User, profile, identities, AuthRes, LoginReq, login, handleError, devices, newDevice } from 'src/core/api';
+import { setAuthParams } from 'src/core/api/auth/auth.service';
 import {
   addNotificationReceivedListener,
   getDeliveredNotifications,
   getToken,
   requestPermissions,
-} from '../../core/pushNotification';
-import { Capacitor } from '@capacitor/core';
+} from 'src/core/pushNotification';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import store from 'src/store';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+
+import { schema } from './sign-in.form';
 
 const addListeners = () => {
   addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
@@ -37,9 +34,24 @@ const getFCMToken = async (response: Awaited<ReturnType<typeof requestPermission
 };
 
 const saveToken = async (token: string) => {
-  console.log('FCMToken: ', token);
   if (!token) {
     return;
+  }
+  const getDeviceTokens = await devices();
+  const isTokenExisting = getDeviceTokens.some((device) => device.token === token);
+  const determinePlatform = () => {
+    const platform = Capacitor.getPlatform();
+    return platform === 'android' ? 'ANDROID' : 'IOS';
+  };
+
+  if (!isTokenExisting) {
+    newDevice({
+      token,
+      meta: {
+        os: determinePlatform(),
+      },
+    });
+    localStorage.setItem('fcm', token);
   }
 };
 
@@ -51,25 +63,42 @@ function registerPushNotifications() {
 
 export const useSignInShared = () => {
   const navigate = useNavigate();
-  const form = useForm(formModel);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    getValues,
+  } = useForm({
+    mode: 'all',
+    resolver: yupResolver(schema),
+  });
 
-  async function onLoginSucceed(loginResp: LoginResp) {
-    await setAuthCookies(loginResp);
-    const resp = await getIdentities();
+  async function onLoginSucceed(loginResp: AuthRes) {
+    await setAuthParams(loginResp);
     const path = await nonPermanentStorage.get('savedLocation');
-    store.dispatch(setIdentityList(resp));
-    navigate({ to: path ? path : '/jobs', replace: true });
+    store.dispatch(setIdentityList(await identities()));
+    const userProfile = await profile();
+    const userLandingPath = checkOnboardingMandatoryFields(userProfile) ? '/sign-up/user/welcome' : '/jobs';
+    navigate(path ? path : userLandingPath);
     return loginResp;
   }
 
+  const checkOnboardingMandatoryFields = (profile: User) => {
+    const mandatoryFields: (keyof User)[] = ['country', 'city', 'social_causes', 'skills'];
+
+    return mandatoryFields.some((field) => {
+      const value = profile[field];
+      return value === null || value === '' || (Array.isArray(value) && value.length === 0);
+    });
+  };
+
   async function onLogin() {
-    const formValues = getFormValues(form) as LoginPayload;
-    endpoint.post.auth
-      .login(formValues)
+    const formValues = getValues() as LoginReq;
+    login(formValues)
       .then(onLoginSucceed)
       .then(registerPushNotifications)
       .catch(handleError({ title: 'Login Failed' }));
   }
 
-  return { onLogin, form, navigate };
+  return { onLogin, navigate, register, handleSubmit, errors, isValid };
 };

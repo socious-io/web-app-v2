@@ -1,8 +1,9 @@
+import { Button } from 'src/components/atoms/button/button';
 import { Card } from 'src/components/atoms/card/card';
 import { Otp as OtpCom } from 'src/components/atoms/otp/otp';
-import { Button } from 'src/components/atoms/button/button';
-import { useOtpShared } from '../otp.shared';
+
 import css from './desktop.module.scss';
+import { useOtpShared } from '../otp.shared';
 
 export const Desktop: React.FC = () => {
   const { backToPerviousPage, otpValue, setOtpValue, submit, onResendOtp } = useOtpShared();

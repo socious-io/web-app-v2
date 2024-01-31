@@ -1,0 +1,18 @@
+@import 'src/components/_primitives.scss';
+
+.resend {
+  color: $color-primary-700;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-decoration: none;
+  text-transform: none;
+}
+.resend:hover {
+  background-color: transparent;
+}
+
+.resend:focus {
+  outline: 5px auto Highlight;
+  outline: 5px auto -webkit-focus-ring-color;
+}

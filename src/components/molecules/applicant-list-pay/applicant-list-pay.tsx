@@ -1,9 +1,10 @@
+import Dapp from 'src/dapp';
+
+import css from './applicant-list-pay.module.scss';
+import { Applicant, ApplicantListPayProps } from './applicant-list-pay.types';
 import { printWhen } from '../../../core/utils';
 import { StatusTag } from '../../atoms/status-tag/status-tag';
 import { ProfileView } from '../profile-view/profile-view';
-import css from './applicant-list-pay.module.scss';
-import { Applicant, ApplicantListPayProps } from './applicant-list-pay.types';
-import Dapp from 'src/dapp';
 
 const statuses = {
   CONFIRMED: {
@@ -32,6 +33,18 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
     <div onClick={() => props.onFeedback?.(id, status)} className={css.footerItem}>
       <img src="/icons/user-accept-blue.svg" />
       <div className={css.footerLabel}>Give feedback</div>
+    </div>
+  );
+
+  const reHireBtn = (applicant: Applicant) => (
+    <div
+      onClick={() => {
+        props.onRehire && props.onRehire(applicant.id);
+      }}
+      className={css.footerItem}
+    >
+      <img src="/icons/rehire.svg" width={'25px'} />
+      <div className={css.footerLabel}>Hire again</div>
     </div>
   );
 
@@ -72,10 +85,18 @@ export const ApplicantListPay = (props: ApplicantListPayProps): JSX.Element => {
             <div className={css.footerItem}>
               <Dapp.Connect />
             </div>,
-            props.isPaidCrypto
+            ((props.isPaidCrypto || applicant.payment?.service == 'CRYPTO') && props.confirmable) ||
+              applicant.status === 'COMPLETE',
           )}
-          {printWhen(confirmBtn(applicant.id, applicant.payment?.meta?.id), props.confirmable || applicant.status === 'COMPLETE')}
-          {printWhen(feedbackBtn(applicant.id, applicant.status), !!props?.onFeedback && applicant?.user_feedback === null)}
+          {printWhen(
+            confirmBtn(applicant.id, applicant.payment?.meta?.id),
+            props.confirmable || applicant.status === 'COMPLETE',
+          )}
+          {printWhen(
+            feedbackBtn(applicant.id, applicant.status),
+            applicant.showFeedback && !!props?.onFeedback && applicant?.user_feedback === null,
+          )}
+          {printWhen(reHireBtn(applicant), props.onRehire !== undefined)}
           <div className={css.footerItem} onClick={() => props.onMessageClick?.(applicant.user_id)}>
             <img src="/icons/message-blue.svg" />
             <div className={css.footerLabel}>Message</div>

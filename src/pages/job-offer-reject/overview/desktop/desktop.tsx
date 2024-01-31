@@ -1,25 +1,30 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { ProfileCard } from 'src/components/templates/profile-card';
+import { useLoaderData, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Card } from 'src/components/atoms/card/card';
-import { Applicants } from '../components/applicants/applicants';
+import { BackLink } from 'src/components/molecules/back-link';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { applicant, rejectApplicant } from 'src/core/api';
+import { convertTimeToMonth, toRelativeTime } from 'src/core/relative-time';
+import { ApplicantResp } from 'src/core/types';
+import { printWhen } from 'src/core/utils';
+import { useAuth } from 'src/hooks/use-auth';
+
+import css from './desktop.module.scss';
+import { jobOfferRejectLoader } from '../../job-offer-reject.services';
+import { Loader } from '../../job-offer-reject.types';
 import { OfferModal } from '../../offer/offer-modal';
+import { Applicants } from '../components/applicants/applicants';
 import { Hired } from '../components/hired/hired';
 import { Offered } from '../components/offered/offered';
 import { Overview } from '../components/overview/overview';
-import { printWhen } from 'src/core/utils';
-import { Loader } from '../../job-offer-reject.types';
-import { ApplicantResp } from 'src/core/types';
-import { getApplicantDetail, jobOfferRejectLoader, rejectApplicant } from '../../job-offer-reject.services';
-import css from './desktop.module.scss';
-import { useAuth } from 'src/hooks/use-auth';
 
 export const Desktop = (): JSX.Element => {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const resolver = useMatch().ownData as Loader;
-  const { id } = useMatch().params || {};
-  const tab = useMatch()?.search?.tab as string;
+  const resolver = useLoaderData() as Loader;
+  const { id } = useParams() || {};
+  const tab = searchParams.get('tab');
   const defaultTab = tab || 'Overview';
   const [selectedTab, setSelectedTab] = useState(defaultTab);
   const [openOfferModal, setOpenOfferModal] = useState(false);
@@ -28,7 +33,7 @@ export const Desktop = (): JSX.Element => {
   const { isLoggedIn } = useAuth();
 
   async function onOfferClick(id: string) {
-    const result = await getApplicantDetail(id);
+    const result = await applicant(id);
     if (Object.keys(result)?.length) {
       setApplicantDetail(result);
       setOpenOfferModal(true);
@@ -53,6 +58,7 @@ export const Desktop = (): JSX.Element => {
         <Overview
           questions={updatedApplicantList.screeningQuestions.questions}
           data={updatedApplicantList.jobOverview}
+          updateApplicantList={updateApplicantList}
         />
       ),
       default: true,
@@ -103,6 +109,7 @@ export const Desktop = (): JSX.Element => {
     <>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
+          <BackLink title="Jobs" onBack={() => navigate('/jobs')} />
           <ProfileCard />
           <Card className={css.tabs}>
             {tabs.map((tab) => (
@@ -110,7 +117,10 @@ export const Desktop = (): JSX.Element => {
                 key={tab.name}
                 onClick={() => {
                   setSelectedTab(tab.name);
-                  navigate({ to: '.', search: { tab: tab.name }, replace: true });
+                  navigate({
+                    pathname: '.',
+                    search: `?tab=${tab.name}`,
+                  });
                 }}
                 className={selectedTab === tab.name ? css.selected : css.item}
               >
@@ -120,7 +130,14 @@ export const Desktop = (): JSX.Element => {
           </Card>
         </div>
         <div className={css.rightContainer}>
-          <Card className={css.selectedTab}>{selectedTabName}</Card>
+          {updatedApplicantList.jobOverview.status === 'EXPIRE' ? (
+            <Card className={css.archivedBox}>
+              <img className={css.archivedBoxImage} src="/icons/archived.svg" /> job was archived on
+              {` ${convertTimeToMonth(updatedApplicantList.jobOverview.expires_at)}`}
+            </Card>
+          ) : (
+            <Card className={css.selectedTab}>{selectedTabName}</Card>
+          )}
           <Card>{renderedTab}</Card>
         </div>
       </TwoColumnCursor>
@@ -131,7 +148,7 @@ export const Desktop = (): JSX.Element => {
           applicantDetail={applicantDetail as ApplicantResp}
           onDone={updateApplicantList}
         />,
-        applicantDetail !== undefined
+        applicantDetail !== undefined,
       )}
     </>
   );

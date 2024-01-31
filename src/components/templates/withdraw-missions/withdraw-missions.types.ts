@@ -1,12 +1,12 @@
 export interface WithdrawMissionsProps {
   mission_name: string;
-  escrow: { mission_id: string; release_id: string; released_at: string };
+  escrow: { release_id?: string; released_at?: Date };
   amount: number;
   total: number;
   fee: number;
   onClickWithdraw: () => void;
   service?: 'STRIPE' | 'CRYPTO';
-  unit?: string;
+  currency?: string;
   disbaledWithdraw?: boolean;
   disableText?: string;
 }

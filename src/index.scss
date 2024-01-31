@@ -2,6 +2,21 @@
 // @import url(https://fonts.googleapis.com/css?family=Hahmlet:700|Work+Sans:bold);
 @import './components/primitives';
 @import './components/reset';
+@import './styles/icons.scss';
+@import './styles/tailwind.scss';
+
+@layer base {
+  @font-face {
+    font-family: Inter;
+    src: url('/fonts/Inter-Regular.woff2');
+  }
+
+  @font-face {
+    font-family: Inter;
+    font-weight: 600;
+    src: url('/fonts/Inter-SemiBold.woff2');
+  }
+}
 
 pwa-action-sheet {
   position: fixed;
@@ -10,26 +25,26 @@ pwa-action-sheet {
   width: 100vw;
 }
 
-@font-face {
-  font-family: Work Sans;
-  //   src: url('/fonts/Inter-Medium.woff2');
-  src: url('/fonts/Inter-Regular.woff2');
-}
-
-@font-face {
-  font-family: Work Sans;
-  font-weight: 600;
-  src: url('/fonts/Inter-SemiBold.woff2');
-}
-
 html,
 body {
   ::-webkit-scrollbar {
-    width: 4px;
+    @media screen and (min-width: 600px) {
+      width: 4px;
+    }
   }
 
   ::-webkit-scrollbar-thumb {
     background-color: var(--color-gray-03);
     border-radius: 12px;
+  }
+}
+
+//shared container for all sign up pages
+.form-container {
+  width: 360px;
+  margin: auto;
+
+  @media (max-width: 640px) {
+    width: 100%;
   }
 }

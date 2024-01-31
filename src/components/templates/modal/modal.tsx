@@ -1,7 +1,8 @@
-import css from './modal.module.scss';
 import { CSSProperties, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useScrollLock } from 'src/hooks/use-scroll-lock';
+
+import css from './modal.module.scss';
 import { ModalProps } from './modal.types';
 
 const modalPlaceholder = document.querySelector('#modal-placeholder') as HTMLDivElement;

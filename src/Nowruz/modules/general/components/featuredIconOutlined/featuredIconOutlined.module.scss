@@ -1,0 +1,98 @@
+@import 'src/components/_primitives.scss';
+.outline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outer-sm {
+  height: 34px;
+  width: 34px;
+  border-radius: 24px;
+}
+
+.inner-sm {
+  height: 24px;
+  width: 24px;
+  border-radius: 24px;
+}
+
+.outer-md {
+  height: 38px;
+  width: 38px;
+  border-radius: 24px;
+}
+
+.inner-md {
+  height: 28px;
+  width: 28px;
+  border-radius: 24px;
+}
+.outer-lg {
+  height: 42px;
+  width: 42px;
+  border-radius: 24px;
+}
+
+.inner-lg {
+  height: 32px;
+  width: 32px;
+  border-radius: 24px;
+}
+.outer-xl {
+  height: 46px;
+  width: 46px;
+  border-radius: 24px;
+}
+
+.inner-xl {
+  height: 36px;
+  width: 36px;
+  border-radius: 24px;
+}
+.primary-outer {
+  border: 2px solid rgba($color-primary-600, 0.1);
+}
+.primary-inner {
+  border: 2px solid rgba($color-primary-600, 0.3);
+}
+.gray-outer {
+  border: 2px solid rgba($color-grey-600, 0.1);
+}
+.gray-inner {
+  border: 2px solid rgba($color-grey-600, 0.3);
+}
+.error-outer {
+  border: 2px solid rgba($color-error-600, 0.1);
+}
+.error-inner {
+  border: 2px solid rgba($color-error-600, 0.3);
+}
+.warning-outer {
+  border: 2px solid rgba($color-warning-600, 0.1);
+}
+.warning-inner {
+  border: 2px solid rgba($color-warning-600, 0.3);
+}
+.success-outer {
+  border: 2px solid rgba($color-success-600, 0.1);
+}
+.success-inner {
+  border: 2px solid rgba($color-success-600, 0.3);
+}
+
+.icon-color-primary {
+  color: $color-primary-600;
+}
+.icon-color-gray {
+  color: $color-grey-600;
+}
+.icon-color-error {
+  color: $color-error-600;
+}
+.icon-color-warning {
+  color: $color-warning-600;
+}
+.icon-color-success {
+  color: $color-success-600;
+}

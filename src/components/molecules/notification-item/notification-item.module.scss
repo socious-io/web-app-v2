@@ -1,27 +1,27 @@
 .container {
-    background-color: #ffffff;
-    padding: 0.5rem var(--font-size-m);
-    display: flex;
-    gap: var(--font-size-s);
-    border-bottom: 1px solid #f0f1f5;
-    cursor: pointer;
+  background-color: #ffffff;
+  padding: 0.5rem var(--font-size-m);
+  display: flex;
+  gap: var(--font-size-s);
+  border-bottom: 1px solid #f0f1f5;
+  cursor: pointer;
 }
 
 .info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .textName {
-    color: var(--color-black-01);
-    font-size: var(--font-size-s2);
-    font-weight: 600;
-    margin-right: 0.18rem;
+  color: var(--color-black-01);
+  font-size: var(--font-size-s2);
+  font-weight: 600;
+  margin-right: 0.18rem;
 }
 
 .date {
-    color: var(--color-gray-01);
-    font-size: var(--font-size-s2);
-    font-weight: 400;
+  color: var(--color-gray-01);
+  font-size: var(--font-size-s2);
+  font-weight: 400;
 }

@@ -1,12 +1,13 @@
+import { useEffect, useState } from 'react';
+import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
+import { Search } from 'src/components/atoms/search/search';
 import { CardSlideUp } from 'src/components/templates/card-slide-up/card-slide-up';
+import { Modal } from 'src/components/templates/modal/modal';
+import { isTouchDevice } from 'src/core/device-type-detector';
+import { printWhen } from 'src/core/utils';
+
 import css from './category.module.scss';
 import { CategoryItem, CategoryProps } from './category.types';
-import { useState } from 'react';
-import { printWhen } from 'src/core/utils';
-import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
-import { isTouchDevice } from 'src/core/device-type-detector';
-import { Modal } from 'src/components/templates/modal/modal';
-import { Search } from 'src/components/atoms/search/search';
 
 function translate(selected: string | number, list: CategoryProps['list']): string {
   const translation = list.find((item) => item.value === selected);
@@ -21,8 +22,12 @@ export const Category = (props: CategoryProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState<Array<CategoryItem>>(props.list);
   const [selected, setSelected] = useState<Array<string | number>>(
-    (props.register.controls[props.name].value as []) || []
+    (props.register.controls[props.name].value as []) || [],
   );
+
+  useEffect(() => {
+    setList(props.list);
+  }, [props.list]);
 
   function onChange(list: string[]) {
     props.register.controls[props.name].setValue(list);

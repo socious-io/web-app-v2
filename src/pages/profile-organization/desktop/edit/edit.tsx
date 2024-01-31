@@ -1,24 +1,25 @@
-import { Header } from 'src/components/atoms/header-v2/header';
-import css from './edit.module.scss';
-import { Modal } from 'src/components/templates/modal/modal';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
-import { Category } from 'src/components/molecules/category/category';
-import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
 import { useEffect, useRef, useState } from 'react';
-import { Input } from 'src/components/atoms/input/input';
-import { EditProps } from './edit.types';
-import { useProfileOrganizationEditShared } from 'src/pages/profile-organization-edit/profile-organization-edit.shared';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
-import { endpoint } from 'src/core/endpoints';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Input } from 'src/components/atoms/input/input';
 import { Popover } from 'src/components/atoms/popover/popover';
 import { PopoverProps } from 'src/components/atoms/popover/popover.types';
-import { removedEmptyProps } from 'src/core/utils';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Category } from 'src/components/molecules/category/category';
+import { Modal } from 'src/components/templates/modal/modal';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
 import { ORGANIZATION_TYPE } from 'src/constants/ORGANIZATION_TYPE';
+import { socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { OrganizationReq, updateOrganization } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
+import { getFormValues } from 'src/core/form/customValidators/formValues';
+import { removedEmptyProps } from 'src/core/utils';
+import { useProfileOrganizationEditShared } from 'src/pages/profile-organization-edit/profile-organization-edit.shared';
+
+import css from './edit.module.scss';
+import { EditProps } from './edit.types';
 
 export const EditOrganization = (props: EditProps): JSX.Element => {
   const {
@@ -59,7 +60,7 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
   function onSaveDesktop() {
     if (form.isValid) {
       const payload = removedEmptyProps(getFormValues(form));
-      endpoint.post.organizations['orgs/update/{org_id}'](organization.id, payload).then(async (resp) => {
+      updateOrganization(organization.id, payload as OrganizationReq).then(async (resp) => {
         await updateIdentityList();
         props?.updateOrganization(resp);
         props.onClose();
@@ -107,7 +108,13 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
             </div>
           </div>
           <div className={css.formContainer}>
-            <Dropdown name="type" register={form} label="Organization type" list={ORGANIZATION_TYPE} />
+            <Dropdown
+              name="type"
+              register={form}
+              label="Organization type"
+              list={ORGANIZATION_TYPE}
+              defaultValue={ORGANIZATION_TYPE.find((type) => type.id === form.controls.type['value'])?.label || ''}
+            />
             <Input label="Name" register={form} name="name" placeholder="name" />
             <Textarea label="bio" register={form} name="bio" placeholder="bio" />
             <Category
@@ -125,6 +132,7 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
               list={COUNTRIES}
               placeholder="country"
               onValueChange={onCountryUpdate}
+              defaultValue={COUNTRIES.find((item) => item.id === form.controls.country['value'])?.label || ''}
             />
             <Dropdown
               register={form}
@@ -133,12 +141,19 @@ export const EditOrganization = (props: EditProps): JSX.Element => {
               list={cities}
               placeholder="city"
               onValueChange={(option) => form.controls.geoname_id.setValue(option.id)}
+              defaultValue={form.controls.city['value']?.toString()}
             />
             <Input label="Address" register={form} name="address" placeholder="address" />
             <div>
               <div className={css.label}>Phone</div>
               <div className={css.phoneContainer}>
-                <Dropdown register={form} name="mobile_country_code" placeholder="+1" list={COUNTRY_CODES} />
+                <Dropdown
+                  register={form}
+                  name="mobile_country_code"
+                  placeholder="+1"
+                  list={COUNTRY_CODES}
+                  defaultValue={form.controls.mobile_country_code.value?.toString()}
+                />
                 <Input register={form} name="phone" placeholder="phone" />
               </div>
             </div>

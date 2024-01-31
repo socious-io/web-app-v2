@@ -1,9 +1,7 @@
 import css from './bottom-static-touch.module.scss';
 import { BottomStaticTouchProps } from './bottom-static-touch.types';
 
-export const BottomStaticTouch = (
-  props: BottomStaticTouchProps
-): JSX.Element => {
+export const BottomStaticTouch = (props: BottomStaticTouchProps): JSX.Element => {
   const [topContent, bottomContent] = props.children;
 
   return (

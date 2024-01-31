@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Input } from '../../components/atoms/input/input';
-import { Otp } from '../../components/atoms/otp/otp';
+
 import css from './sign-up.module.scss';
 import { SignUpProps } from './sign-up.types';
+import { Input } from '../../components/atoms/input/input';
+import { Otp } from '../../components/atoms/otp/otp';
 
 export const SignUp = (props: SignUpProps): JSX.Element => {
   const [value, setValue] = useState('');

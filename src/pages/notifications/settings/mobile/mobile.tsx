@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { Header } from 'src/components/atoms/header/header';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import { Toggle } from 'src/components/atoms/toggle';
 import { Button } from 'src/components/atoms/button/button';
+import { Header } from 'src/components/atoms/header/header';
+import { Toggle } from 'src/components/atoms/toggle';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { printWhen } from 'src/core/utils';
+import { useSettingsShared } from 'src/pages/notifications/settings/settings.shared';
 import translate from 'src/translations';
-import { useSettingsShared } from '../settings.shared';
+
 import css from './mobile.module.scss';
 
 export const Mobile: React.FC = () => {
@@ -25,17 +26,17 @@ export const Mobile: React.FC = () => {
 
   const turnedOffMessageBoxJSX = (
     <div className={css.turnedOffMessageBox}>
-      <img src="/icons/info.svg" height={18} width={18} />
+      <img src="/icons/info.svg" height={18} width={18} alt="" />
       <div className={css.turnedOffMessage}>
         We recommend you turn on all notifications to stay up to date with the latest activity on Socious.
       </div>
-      <img src="/icons/close-white.svg" height={16} width={16} onClick={() => setCloseAlert(true)} />
+      <img src="/icons/close-white.svg" height={16} width={16} onClick={() => setCloseAlert(true)} alt="" />
     </div>
   );
 
   return (
     <TopFixedMobile>
-      <Header title="Notification settings" onBack={() => navigate({ to: '/notifications' })} />
+      <Header title="Notification settings" onBack={() => navigate('/notifications')} />
       <>
         {printWhen(turnedOffMessageBoxJSX, !allowedNotifications && !closeAlert)}
         <div className={css.notification_all}>
@@ -55,7 +56,7 @@ export const Mobile: React.FC = () => {
                         <Toggle
                           name="app"
                           checked={
-                            payload[setting.type]?.in_app != undefined ? payload[setting.type].in_app : setting.in_app
+                            payload[setting.type]?.in_app !== undefined ? payload[setting.type].in_app : setting.in_app
                           }
                           onChange={(checked) => onChange(checked, setting.type, 'in_app')}
                         />
@@ -66,14 +67,14 @@ export const Mobile: React.FC = () => {
                           <Toggle
                             name="email"
                             checked={
-                              payload[setting.type]?.email != undefined ? payload[setting.type].email : setting.email
+                              payload[setting.type]?.email !== undefined ? payload[setting.type].email : setting.email
                             }
                             onChange={(checked) => onChange(checked, setting.type, 'email')}
                           />
                         </div>
                         <span className={css.notification__subtitle}>
                           To manage your email notification settings, please{' '}
-                          <a href={settingsGuide} className={css.notification__link} target="_blank">
+                          <a href={settingsGuide} className={css.notification__link} target="_blank" rel="noreferrer">
                             click here
                           </a>
                         </span>
@@ -82,7 +83,9 @@ export const Mobile: React.FC = () => {
                         Push
                         <Toggle
                           name="push"
-                          checked={payload[setting.type]?.push != undefined ? payload[setting.type].push : setting.push}
+                          checked={
+                            payload[setting.type]?.push !== undefined ? payload[setting.type].push : setting.push
+                          }
                           onChange={(checked) => onChange(checked, setting.type, 'push')}
                         />
                       </div>
@@ -96,7 +99,7 @@ export const Mobile: React.FC = () => {
               </Button>
             </div>
           </>,
-          !!settings.length && allowedNotifications
+          !!settings.length && allowedNotifications,
         )}
       </>
     </TopFixedMobile>

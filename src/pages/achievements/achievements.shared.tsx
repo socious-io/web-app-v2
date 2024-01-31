@@ -1,20 +1,22 @@
 import { useState } from 'react';
-import { evaluateTier } from './mobile/achievements.service';
-import { useMatch } from '@tanstack/react-location';
-import { Loader } from './achievements.types';
-import { Header } from './components/header/header';
-import { ImpactCategoryList } from 'src/components/organisms/impact-category-list/impact-category-list';
+import { useLoaderData } from 'react-router-dom';
 import { Tabs } from 'src/components/atoms/tabs/tabs';
 import { Tab } from 'src/components/atoms/tabs/tabs.types';
-import { JobHistoryList } from 'src/components/organisms/job-history-list/job-history-list';
-import { Tier } from './components/tier/tier';
 import { JobHistoryItemProps } from 'src/components/molecules/job-history-item/job-history-item.types';
-import { Endpoints } from 'src/core/endpoints/index.types';
+import { ImpactCategoryList } from 'src/components/organisms/impact-category-list/impact-category-list';
+import { JobHistoryList } from 'src/components/organisms/job-history-list/job-history-list';
+import { Badge, Badges, ImpactPoints, OrgMeta } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
 
+import { Header } from './components/header/header';
+import { Tier } from './components/tier/tier';
+import { evaluateTier } from './mobile/achievements.service';
+
 export const useAchievementsShared = () => {
-  const { badges, impactPointHistory } = useMatch().ownData as Loader;
-  const activeList = badges.badges.map((badge) => badge.social_cause_category);
+  console.log('DDDDDDDDD', useLoaderData());
+  const { badges, impactPointHistory } = useLoaderData() as { badges: Badges; impactPointHistory: ImpactPoints };
+
+  const activeList = badges.badges.map((badge: Badge) => badge.social_cause_category);
   const points = badges.badges.reduce((prev, curr) => prev + curr.total_points, 0);
   const tier = evaluateTier(points);
   const [showClaimPointsSlide, setShowClaimPointsSlide] = useState(false);
@@ -29,21 +31,18 @@ export const useAchievementsShared = () => {
     />
   );
 
-  function adoptUserBadgeToJobHistoryComp(
-    impactPointHistory: Awaited<ReturnType<Endpoints['get']['users']['user/impact-points']>>
-  ): JobHistoryItemProps[] {
-    return impactPointHistory.items.map((item) => {
-      return {
-        jobTitle: item?.project?.title,
-        date: isoToStandard(item.created_at),
-        total: item.total_points,
-        organizationName: item.organization.meta.name,
-        dataStart: isoToStandard(item.mission.created_at),
-        dataEnd: isoToStandard(item.created_at),
-        avatarUrl: item.organization.meta.image,
-      };
-    });
-  }
+  const adoptUserBadgeToJobHistoryComp: JobHistoryItemProps[] = impactPointHistory.items.map((item) => {
+    const meta = item.organization?.meta as OrgMeta;
+    return {
+      jobTitle: item?.project?.title,
+      date: isoToStandard(item.created_at.toString()),
+      total: item.total_points.toString(),
+      organizationName: meta?.name,
+      dataStart: item?.mission ? isoToStandard(item?.mission.created_at?.toString()) : '',
+      dataEnd: item.created_at ? isoToStandard(item.created_at?.toString()) : '',
+      avatarUrl: meta?.image,
+    };
+  });
 
   const tabs: Tab[] = [
     {
@@ -60,7 +59,7 @@ export const useAchievementsShared = () => {
       name: 'History',
       content: (
         <div style={{ padding: '2rem 0rem' }}>
-          <JobHistoryList data={adoptUserBadgeToJobHistoryComp(impactPointHistory)} />
+          <JobHistoryList data={adoptUserBadgeToJobHistoryComp} />
         </div>
       ),
       default: true,

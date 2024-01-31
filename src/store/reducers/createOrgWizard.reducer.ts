@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { OrganizationType, SocialCauses } from 'src/core/api';
 
 export type CreateOrgWizard = {
-  type: string;
-  socialCauses: string[];
+  type?: OrganizationType;
+  socialCauses: SocialCauses[];
   organizationName: string;
   bio: string;
   organizationEmail: string;
@@ -20,7 +21,6 @@ export type CreateOrgWizard = {
 };
 
 const initialState: CreateOrgWizard = {
-  type: '',
   socialCauses: [],
   mission: '',
   culture: '',

@@ -1,4 +1,4 @@
 export interface StickyProps {
-    children: React.ReactNode;
-    containerClassName?: string;
+  children: React.ReactNode;
+  containerClassName?: string;
 }

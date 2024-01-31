@@ -1,26 +1,29 @@
-import { useMatch } from '@tanstack/react-location';
-import { useEffect } from 'react';
-import { Header } from '../../../components/atoms/header-v2/header';
-import { Input } from '../../../components/atoms/input/input';
-import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
-import css from './mobile.module.scss';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { useEffect, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { Header } from 'src/components/atoms/header-v2/header';
+import { Input } from 'src/components/atoms/input/input';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Category } from 'src/components/molecules/category/category';
+import { TopFixedMobile } from 'src/components/templates/top-fixed-mobile/top-fixed-mobile';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
 import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
-import { Category } from 'src/components/molecules/category/category';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { ProfileReq } from 'src/pages/profile-organization/profile-organization.types';
+import { User } from 'src/core/api';
+
+import css from './mobile.module.scss';
 import { useProfileUserEditShared } from '../profile-user-edit.shared';
 
 export const Mobile = (): JSX.Element => {
-  const user = useMatch().data.user as ProfileReq;
+  const user = useLoaderData() as User;
+  const [skills, setSkills] = useState<{ value: string; label: string }[]>([]);
 
   const { onCoverEdit, onAvatarEdit, onSave, onCountryUpdate, updateCityList, coverImage, avatarImage, cities, form } =
     useProfileUserEditShared();
 
   useEffect(() => {
-    updateCityList(user.country);
+    updateCityList(user.country || '');
+    skillsToCategoryAdaptor().then((data) => setSkills(data));
   }, []);
 
   return (
@@ -54,13 +57,7 @@ export const Mobile = (): JSX.Element => {
             list={socialCausesToCategoryAdaptor()}
             placeholder="Social causes"
           />
-          <Category
-            register={form}
-            name="skills"
-            label="Skills"
-            list={skillsToCategoryAdaptor()}
-            placeholder="skills"
-          />
+          <Category register={form} name="skills" label="Skills" list={skills} placeholder="skills" />
           <Textarea register={form} label="Address" name="address" placeholder="address" />
           <Dropdown
             register={form}
@@ -69,6 +66,7 @@ export const Mobile = (): JSX.Element => {
             list={COUNTRIES}
             placeholder="country"
             onValueChange={onCountryUpdate}
+            defaultValue={COUNTRIES.find((item) => item.id === form.controls.country['value'])?.label || ''}
           />
           <Dropdown
             register={form}
@@ -77,11 +75,18 @@ export const Mobile = (): JSX.Element => {
             list={cities}
             placeholder="city"
             onValueChange={(option) => form.controls.geoname_id.setValue(option.id)}
+            defaultValue={form.controls.city['value']?.toString()}
           />
           <div>
             <div className={css.label}>Phone</div>
             <div className={css.phoneContainer}>
-              <Dropdown register={form} name="mobile_country_code" placeholder="+1" list={COUNTRY_CODES} />
+              <Dropdown
+                register={form}
+                name="mobile_country_code"
+                placeholder="+1"
+                list={COUNTRY_CODES}
+                defaultValue={form.controls.mobile_country_code.value?.toString()}
+              />
               <Input register={form} name="phone" placeholder="phone" />
             </div>
           </div>

@@ -1,42 +1,39 @@
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { Accordion } from '../../../../../components/atoms/accordion/accordion';
-import { ApplicantListHire } from '../../../../../components/molecules/applicant-list-hire/applicant-list-hire';
-import { endpoint } from '../../../../../core/endpoints';
+import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import { Accordion } from 'src/components/atoms/accordion/accordion';
+import { ApplicantListHire } from 'src/components/molecules/applicant-list-hire/applicant-list-hire';
+import { cancelOffer, hireOffer } from 'src/core/api';
+import { IdentityReq } from 'src/core/types';
+import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
+import { RootState } from 'src/store';
+
 import css from './offered.module.scss';
 import { jobToApplicantListAdaptor } from './offered.services';
 import { OfferedProps } from './offered.types';
-import { Loader } from 'src/pages/job-offer-reject/job-offer-reject.types';
-import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const Offered = (props: OfferedProps): JSX.Element => {
+  const currentIdentity = useSelector<RootState, IdentityReq | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
   const navigate = useNavigate();
-  const resolver = useMatch().ownData as Loader;
+  const resolver = useLoaderData() as Loader;
   const {
     jobOverview: { payment_type },
   } = resolver;
-
   async function onHire(offerId: string) {
     if (payment_type === 'PAID' && !props.approved.items[0]?.escrow) {
-      if (isTouchDevice()) {
-        navigate({ to: `/payment/${offerId}` });
-      } else {
-        navigate({ to: `/d/payment/${offerId}` });
-      }
+      navigate(`/payment/${offerId}`);
     } else {
-      endpoint.post.offers['{offer_id}/hire'](offerId).then(() => history.back());
+      hireOffer(offerId).then(() => navigate(`/jobs/created/${currentIdentity?.id}`));
     }
   }
 
   async function onReject(offerId: string) {
-    return endpoint.post.offers['{offer_id}/cancel'](offerId).then(() => history.back());
+    cancelOffer(offerId).then(() => navigate(`/jobs/created/${currentIdentity?.id}`));
   }
 
   function onMessageClick(id: string) {
-    if (isTouchDevice()) {
-      navigate({ to: `/chats/new/${id}` });
-    } else {
-      navigate({ to: `/d/chats/new/${id}` });
-    }
+    navigate(`/chats/new/${id}`);
   }
 
   return (

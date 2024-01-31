@@ -1,19 +1,20 @@
-import css from './mobile.module.scss';
 import { useState } from 'react';
-import { COUNTRIES } from '../../../../constants/COUNTRIES';
-import { Button } from '../../../../components/atoms/button/button';
-import { Input } from '../../../../components/atoms/input/input';
-import { Steps } from '../../../../components/atoms/steps/steps';
-import { Textarea } from '../../../../components/atoms/textarea/textarea';
-import { Divider } from '../../../../components/templates/divider/divider';
-import { formIsInvalid } from '../profile.services';
-import { formModel } from '../profile.form';
-import { Checkbox } from '../../../../components/atoms/checkbox/checkbox';
-import { Dropdown } from '../../../../components/atoms/dropdown-v2/dropdown';
-import { getCityList } from '../../../job-create/info/info.services';
-import { citiesToCategories } from '../../../../core/adaptors';
-import { DropdownItem } from '../../../../components/atoms/dropdown-v2/dropdown.types';
-import { useOrganizationCreateShared } from '../../organization-create.shared';
+import { Button } from 'src/components/atoms/button/button';
+import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
+import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
+import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
+import { Input } from 'src/components/atoms/input/input';
+import { Steps } from 'src/components/atoms/steps/steps';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Divider } from 'src/components/templates/divider/divider';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { citiesToCategories } from 'src/core/adaptors';
+import { cities as getCities } from 'src/core/api';
+import { useOrganizationCreateShared } from 'src/pages/organization-create/organization-create.shared';
+import { formModel } from 'src/pages/organization-create/profile/profile.form';
+import { formIsInvalid } from 'src/pages/organization-create/profile/profile.services';
+
+import css from './mobile.module.scss';
 
 export const Mobile = (): JSX.Element => {
   const { updateField, profileForm, formState, navigateToSocialCauses, navigateToMission } =
@@ -26,7 +27,7 @@ export const Mobile = (): JSX.Element => {
   });
 
   function updateCityList(countryCode: string) {
-    getCityList(countryCode)
+    getCities(countryCode)
       .then(({ items }) => citiesToCategories(items))
       .then(setCities);
   }
@@ -35,7 +36,7 @@ export const Mobile = (): JSX.Element => {
     <div className={css.container}>
       <div className={css.header}>
         <div className={css.chevron} onClick={navigateToSocialCauses}>
-          <img height={24} src="/icons/chevron-left.svg" />
+          <img height={24} src="/icons/chevron-left.svg" alt="" />
         </div>
         <div className={css.stepsContainer}>
           <Steps clickable={false} length={6} current={3} />
@@ -83,7 +84,7 @@ export const Mobile = (): JSX.Element => {
               placeholder="city"
               name="city"
               value={formState.city}
-              onValueChange={(options) => updateField('geoname_id', options.id)}
+              onValueChange={(options) => updateField('geoname_id', options.id!)}
               list={cities}
             />
             <Input register={profileForm} name="address" optional label="Address" placeholder="Address" />

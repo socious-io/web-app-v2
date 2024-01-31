@@ -1,0 +1,28 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  height: 100%;
+  width: 400px;
+  margin-right: 0;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $Shadows-xl;
+  border: 1px solid $color-grey-200;
+  background-color: white;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
+}
+
+.header {
+  width: 100%;
+  height: 72px;
+}
+.content {
+  padding: 0 24px;
+  overflow-y: auto;
+  @media screen and (max-width: 600px) {
+    padding: 0 16px;
+  }
+}

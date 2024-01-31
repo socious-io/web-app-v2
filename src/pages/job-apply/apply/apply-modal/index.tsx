@@ -1,18 +1,19 @@
-import { WebModal } from 'src/components/templates/web-modal';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { Divider } from 'src/components/templates/divider/divider';
-import { Input } from 'src/components/atoms/input/input';
 import { Button } from 'src/components/atoms/button/button';
 import { Checkbox } from 'src/components/atoms/checkbox/checkbox';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { Input } from 'src/components/atoms/input/input';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
+import { Divider } from 'src/components/templates/divider/divider';
 import { ModalProps } from 'src/components/templates/modal/modal.types';
+import { WebModal } from 'src/components/templates/web-modal';
 import { printWhen } from 'src/core/utils';
+
+import css from './apply-modal.module.scss';
 import { resumeInitialState } from '../apply.services';
 import { useApplyShared } from '../apply.shared';
-import css from './apply-modal.module.scss';
 
-export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClose, data }) => {
+export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClose, data, onSubmittedNow }) => {
   const {
     questions,
     resume,
@@ -23,7 +24,7 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
     onSubmit,
     createTextQuestion,
     createRadioQuestion,
-  } = useApplyShared(data);
+  } = useApplyShared(data, onSubmittedNow);
 
   const renderQuestions = () => {
     return (
@@ -46,7 +47,7 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
     <div className={css.uploadedResume}>
       <img src="/icons/attachment-black.svg" />
       {resume?.file && (
-        <a href={URL.createObjectURL(resume.file)} target="_blank">
+        <a href={URL.createObjectURL(resume.file)} target="_blank" rel="noreferrer">
           {resume.name}
         </a>
       )}
@@ -77,7 +78,16 @@ export const ApplyModal: React.FC<Omit<ModalProps, 'children'>> = ({ open, onClo
       header="Apply"
       open={open}
       onClose={onModalClose}
-      buttons={[{ children: ' Submit application', disabled: !form.isValid, onClick: onSubmit }]}
+      buttons={[
+        {
+          children: ' Submit application',
+          disabled: !form.isValid,
+          onClick: () => {
+            onSubmit();
+            onModalClose();
+          },
+        },
+      ]}
     >
       <div className={css.main}>
         <Divider>

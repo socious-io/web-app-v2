@@ -1,23 +1,25 @@
 import { useState } from 'react';
-import { useMatch, useNavigate } from '@tanstack/react-location';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
-import { Card } from 'src/components/atoms/card/card';
-import { Button } from 'src/components/atoms/button/button';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
-import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
-import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
-import { ProfileCard } from 'src/components/templates/profile-card';
-import { SocialCausesModal } from 'src/pages/job-create/social-causes/social-causes-modal';
-import { printWhen } from 'src/core/utils';
-import { getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
-import { useMyJobShared } from '../my-job.shared';
-import { MyJobs } from '../my-jobs.types';
-import css from './desktop.module.scss';
-import { useAuth } from 'src/hooks/use-auth';
+import { Button } from 'src/components/atoms/button/button';
+import { Card } from 'src/components/atoms/card/card';
 import { BackLink } from 'src/components/molecules/back-link';
+import { CardMenu } from 'src/components/molecules/card-menu/card-menu';
+import { JobCardList } from 'src/components/organisms/job-card-list/job-card-list';
+import { ProfileCard } from 'src/components/templates/profile-card';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
+import { printWhen } from 'src/core/utils';
+import { useAuth } from 'src/hooks/use-auth';
+import { SocialCausesModal } from 'src/pages/job-create/social-causes/social-causes-modal';
+
+import css from './desktop.module.scss';
+import { useMyJobShared } from '../my-job.shared';
+import { getActiveJobs, jobListToJobCardListAdaptor } from '../my-jobs.services';
+import { MyJobs } from '../my-jobs.types';
 
 export const Desktop: React.FC = () => {
-  const resolver = useMatch();
+  const { id } = useParams();
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
   const {
@@ -41,8 +43,8 @@ export const Desktop: React.FC = () => {
   const [onGoingTitleUpdate, setOnGoingTitleUpdate] = useState(onGoingTitle);
 
   const NetworkMenuList = [
-    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate({ to: '/network/connections' }) },
-    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate({ to: '/network/followings' }) },
+    { label: 'Connections', icon: '/icons/connection.svg', link: () => navigate('/network/connections') },
+    { label: 'Following', icon: '/icons/followers.svg', link: () => navigate('/network/followings') },
   ];
 
   const JobsMenuList = [
@@ -51,7 +53,7 @@ export const Desktop: React.FC = () => {
   ];
 
   async function onCreateJob() {
-    const identityId = resolver.params.id;
+    const identityId = id;
     const payload = { identityId, page: 1 };
     getActiveJobs(payload).then((data) => {
       setActiveJobList({ ...data, items: jobListToJobCardListAdaptor(data.items) });
@@ -76,7 +78,7 @@ export const Desktop: React.FC = () => {
                 onSeeMoreClick={updateActiveJobList}
               />
             </div>,
-            !!activeJobList.items.length
+            !!activeJobList.items.length,
           )}
         </Accordion>
         <Accordion id="drafts" title={draftTitle} no_border>
@@ -89,7 +91,7 @@ export const Desktop: React.FC = () => {
                 onSeeMoreClick={updateDraftJobList}
               />
             </div>,
-            !!draftJobList.items.length
+            !!draftJobList.items.length,
           )}
         </Accordion>
       </Card>
@@ -108,7 +110,7 @@ export const Desktop: React.FC = () => {
               onSeeMoreClick={updateArchivedJobList}
             />
           </div>,
-          !!archivedJobList.items.length
+          !!archivedJobList.items.length,
         )}
       </Accordion>
     </Card>
@@ -118,7 +120,7 @@ export const Desktop: React.FC = () => {
     <>
       <TwoColumnCursor visibleSidebar={isLoggedIn}>
         <div className={css.leftContainer}>
-          <BackLink title="Jobs" onBack={() => navigate({ to: '/jobs' })} />
+          <BackLink title="Jobs" onBack={() => navigate('/jobs')} />
           <ProfileCard />
           <CardMenu title="Network" list={NetworkMenuList} />
           <CardMenu title="My Jobs" list={JobsMenuList} />

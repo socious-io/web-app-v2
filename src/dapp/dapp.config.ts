@@ -1,54 +1,37 @@
-import { DappConfig } from './dapp.types';
-import { polygon, polygonMumbai, Chain } from 'wagmi/chains';
+import { DappConfig, Chain } from './dapp.types';
 
 export const milkomeda: Chain = {
-  id: 2001,
+  chainId: 2001,
   name: 'Milkomeda',
-  network: 'Milkomeda',
-  nativeCurrency: {
-    name: 'MILKADA',
-    symbol: 'MILKADA',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://rpc-mainnet-cardano-evm.c1.milkomeda.com/'],
-    },
-    public: {
-      http: ['https://rpc-mainnet-cardano-evm.c1.milkomeda.com/'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Explorer',
-      url: 'https://explorer-mainnet-cardano-evm.c1.milkomeda.com/',
-    },
-  },
+  currency: 'MILKADA',
+  rpcUrl: 'https://rpc-mainnet-cardano-evm.c1.milkomeda.com/',
+  explorerUrl: 'https://explorer-mainnet-cardano-evm.c1.milkomeda.com/',
 };
 
 export const milkomedaTestnet: Chain = {
-  id: 200101,
+  chainId: 200101,
   name: 'Milkomeda Testnet',
-  network: 'Milkomeda',
-  nativeCurrency: {
-    name: 'MILKTADA',
-    symbol: 'MILKTADA',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://rpc-devnet-cardano-evm.c1.milkomeda.com'],
-    },
-    public: {
-      http: ['https://rpc-devnet-cardano-evm.c1.milkomeda.com'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Explorer',
-      url: 'https://explorer-devnet-cardano-evm.c1.milkomeda.com',
-    },
-  },
+  currency: 'MILKTADA',
+  rpcUrl: 'https://rpc-devnet-cardano-evm.c1.milkomeda.com',
+  explorerUrl: 'https://explorer-devnet-cardano-evm.c1.milkomeda.com',
+  testnet: true,
+};
+
+export const bscTestnet: Chain = {
+  chainId: 97,
+  name: 'BNB Smart Chain Testnet',
+  currency: 'BNB',
+  rpcUrl: 'https://data-seed-prebsc-2-s2.binance.org:8545/',
+  explorerUrl: 'https://testnet.bscscan.com',
+  testnet: true,
+};
+
+export const bsc: Chain = {
+  chainId: 56,
+  name: 'BNB Smart Chain',
+  currency: 'BNB',
+  rpcUrl: 'https://bsc-dataseed1.defibit.io',
+  explorerUrl: 'https://bscscan.com',
   testnet: true,
 };
 
@@ -57,8 +40,8 @@ export const dappConfig: DappConfig = {
   testnet: [
     {
       chain: milkomedaTestnet,
-      escrow: '0xe8ac987C84d3D7A087c33Ff8B841301a1A1616Df',
-      logic: '0xcAEbEF2ba539fAd27440671033eE383dfEB44061',
+      escrow: '0xAC87EDb9209E9637549c43fA9Ca267b4d4577959',
+      logic: '0xAC87EDb9209E9637549c43fA9Ca267b4d4577959',
       tokens: [
         {
           name: 'USDC',
@@ -68,13 +51,21 @@ export const dappConfig: DappConfig = {
       ],
     },
     {
-      chain: polygonMumbai,
-      escrow: '0xF2B4BCc3F1687288a8c0c06Ee720350CA09dfb23',
+      chain: bscTestnet,
+      escrow: '0xE6b7fdf37b4D297d7E4BcB055Df06AF5DDbf82Ce',
+      logic: '0xE6b7fdf37b4D297d7E4BcB055Df06AF5DDbf82Ce',
       tokens: [
         {
           name: 'USDC',
           symbol: 'USDC',
-          address: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
+          address: '0x082A2027DC16F42d6e69bE8FA13C94C17c910EbE',
+          decimals: 18,
+        },
+        {
+          name: 'Tether',
+          symbol: 'USDT',
+          address: '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd',
+          decimals: 18,
         },
       ],
     },
@@ -82,8 +73,8 @@ export const dappConfig: DappConfig = {
   mainet: [
     {
       chain: milkomeda,
-      logic: '0x71F80cbF7de3894c4014284F3D241A825f2B0dF3',
-      escrow: '0xF2B4BCc3F1687288a8c0c06Ee720350CA09dfb23',
+      logic: '0xA9D4e4351ca77e5a47673f13DD4d0745dE175B38',
+      escrow: '0xA9D4e4351ca77e5a47673f13DD4d0745dE175B38',
       tokens: [
         {
           name: 'USD Coin',
@@ -118,6 +109,25 @@ export const dappConfig: DappConfig = {
       ],
     },
     {
+      chain: bsc,
+      escrow: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
+      logic: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
+      tokens: [
+        {
+          name: 'USDC',
+          symbol: 'USDC',
+          address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+          decimals: 18,
+        },
+        {
+          name: 'Tether',
+          symbol: 'USDT',
+          address: '0x55d398326f99059fF775485246999027B3197955',
+          decimals: 18,
+        },
+      ],
+    },
+    /* {
       chain: polygon,
       escrow: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
       tokens: [
@@ -137,7 +147,7 @@ export const dappConfig: DappConfig = {
           address: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
         },
       ],
-    },
+    }, */
   ],
 
   abis: {
@@ -238,60 +248,6 @@ export const dappConfig: DappConfig = {
       {
         inputs: [
           {
-            internalType: 'address',
-            name: '_organization',
-            type: 'address',
-          },
-          {
-            internalType: 'address',
-            name: '_contributor',
-            type: 'address',
-          },
-          {
-            internalType: 'string',
-            name: '_jobId',
-            type: 'string',
-          },
-          {
-            internalType: 'uint256',
-            name: '_amount',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: '_fee',
-            type: 'uint256',
-          },
-          {
-            internalType: 'bool',
-            name: '_verifiedOrg',
-            type: 'bool',
-          },
-          {
-            internalType: 'enum Escrow.EscrowStatus',
-            name: '_status',
-            type: 'uint8',
-          },
-          {
-            internalType: 'contract IERC20',
-            name: '_token',
-            type: 'address',
-          },
-        ],
-        name: 'addEscrowData',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
             internalType: 'contract IERC20',
             name: '_token',
             type: 'address',
@@ -368,6 +324,19 @@ export const dappConfig: DappConfig = {
       {
         inputs: [],
         name: 'renounceOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_address',
+            type: 'address',
+          },
+        ],
+        name: 'setBeneficiary',
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
@@ -487,11 +456,6 @@ export const dappConfig: DappConfig = {
         type: 'function',
       },
       {
-        inputs: [],
-        stateMutability: 'nonpayable',
-        type: 'constructor',
-      },
-      {
         inputs: [
           {
             internalType: 'uint256',
@@ -502,6 +466,24 @@ export const dappConfig: DappConfig = {
         name: 'withdrawn',
         outputs: [],
         stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+      },
+      {
+        inputs: [],
+        name: 'beneficiaryAddress',
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
         type: 'function',
       },
       {
@@ -572,6 +554,19 @@ export const dappConfig: DappConfig = {
             internalType: 'contract IERC20',
             name: 'token',
             type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'escrowHistoryLength',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
           },
         ],
         stateMutability: 'view',
@@ -739,12 +734,12 @@ export const dappConfig: DappConfig = {
       },
       {
         inputs: [],
-        name: 'getTokens',
+        name: 'owner',
         outputs: [
           {
-            internalType: 'contract IERC20[]',
+            internalType: 'address',
             name: '',
-            type: 'address[]',
+            type: 'address',
           },
         ],
         stateMutability: 'view',
@@ -752,12 +747,12 @@ export const dappConfig: DappConfig = {
       },
       {
         inputs: [],
-        name: 'owner',
+        name: 'tokensLength',
         outputs: [
           {
-            internalType: 'address',
+            internalType: 'uint256',
             name: '',
-            type: 'address',
+            type: 'uint256',
           },
         ],
         stateMutability: 'view',

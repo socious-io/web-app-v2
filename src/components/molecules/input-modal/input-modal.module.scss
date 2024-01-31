@@ -55,7 +55,9 @@ $color-gray-light-1: #808289;
 }
 
 .items {
-  max-height: 300px;
+  @media screen and (min-width: 600px) {
+    max-height: 300px;
+  }
   overflow-y: auto;
 }
 

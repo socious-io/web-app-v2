@@ -1,12 +1,20 @@
+import { logout as logoutApi, removeDevice } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { Cookie } from '../../core/storage';
-import { get, post } from '../../core/http';
+import store from 'src/store';
+import { removeIdentityList } from 'src/store/reducers/identity.reducer';
 
 export async function logout() {
   //   Cookie.flush();
-  return post(`/auth/logout`, {}).then(({ data }) => data);
+  store.dispatch(removeIdentityList());
+  removeFcmToken();
+  return logoutApi();
 }
 
 export async function setIdentityHeader(accountId: string) {
   await nonPermanentStorage.set({ key: 'identity', value: accountId });
+}
+
+async function removeFcmToken() {
+  const fcm = localStorage.getItem('fcm');
+  if (fcm) await removeDevice(fcm);
 }

@@ -1,13 +1,14 @@
-import { useNavigate } from '@tanstack/react-location';
 import { useDispatch, useSelector } from 'react-redux';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store/store';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/components/atoms/button/button';
 import { CategoriesClickable } from 'src/components/atoms/categories-clickable/categories-clickable';
 import { Search } from 'src/components/atoms/search/search';
+import { IdentityReq } from 'src/core/types';
+import { RootState } from 'src/store';
 import { resetCreatePostWizard, setPostCausesTags } from 'src/store/reducers/createPostWizard.reducer';
-import { useSocialCausesShared } from '../social-causes.shared';
+
 import css from './mobile.module.scss';
+import { useSocialCausesShared } from '../social-causes.shared';
 
 export const Mobile = (): JSX.Element => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export const Mobile = (): JSX.Element => {
   });
 
   function onBack() {
-    navigate({ to: `/m/jobs/created/${identity.meta.id}` });
+    navigate(`/jobs/created/${identity.meta.id}`);
     dispatch(resetCreatePostWizard());
   }
 
@@ -54,7 +55,7 @@ export const Mobile = (): JSX.Element => {
       </div>
 
       <div className={css.bottom}>
-        <Button disabled={!isValid} onClick={() => navigate({ to: '../skills' })}>
+        <Button disabled={!isValid} onClick={() => navigate('../skills')}>
           Continue
         </Button>
       </div>

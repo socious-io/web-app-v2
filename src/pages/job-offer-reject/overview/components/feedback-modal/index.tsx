@@ -1,9 +1,10 @@
-import { Textarea } from 'src/components/atoms/textarea/textarea';
-import { Modal } from 'src/components/templates/modal/modal';
 import { Button } from 'src/components/atoms/button/button';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
 import { RadioGroup } from 'src/components/molecules/radio-group/radio-group';
-import { FeedbackModalProps } from './feedback-modal.types';
+import { Modal } from 'src/components/templates/modal/modal';
+
 import css from './feedback-modal.module.scss';
+import { FeedbackModalProps } from './feedback-modal.types';
 
 export const FeedbackModal: React.FC<FeedbackModalProps> = ({
   open,
@@ -46,11 +47,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
             />
           </div>
         </div>
-        <div className={css.footer}>
-          {buttons?.map((button, index) => (
-            <Button key={index} {...button} />
-          ))}
-        </div>
+        <div className={css.footer}>{buttons?.map((button, index) => <Button key={index} {...button} />)}</div>
       </>
     </Modal>
   );

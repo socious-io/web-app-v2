@@ -1,19 +1,22 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
-import { Card } from 'src/components/atoms/card/card';
-import { BackLink } from 'src/components/molecules/back-link';
-import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { Avatar } from 'src/components/atoms/avatar/avatar';
+import { Card } from 'src/components/atoms/card/card';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
+import { BackLink } from 'src/components/molecules/back-link';
 import { Modal } from 'src/components/templates/modal/modal';
+import { TwoColumnCursor } from 'src/components/templates/two-column-cursor/two-column-cursor';
 import { printWhen } from 'src/core/utils';
-import { connectionListAdaptor, receivedRequestsAdaptor, sentRequestsAdaptor } from '../connections.service';
-import { useConnectionsShared } from '../connections.shared';
-import css from './desktop.module.scss';
 import { useAuth } from 'src/hooks/use-auth';
+import {
+  connectionListAdaptor,
+  receivedRequestsAdaptor,
+  sentRequestsAdaptor,
+} from 'src/pages/network/connections/connections.service';
+import { useConnectionsShared } from 'src/pages/network/connections/connections.shared';
+
+import css from './desktop.module.scss';
 
 export const Desktop: React.FC = () => {
-  const navigate = useNavigate();
   const {
     currentId,
     connectionList,
@@ -78,7 +81,7 @@ export const Desktop: React.FC = () => {
         <div className={css.seeMore} onClick={() => loadMore('connections')}>
           See more
         </div>,
-        connectionList?.total_count > connectionList?.items.length
+        connectionList?.total_count > connectionList?.items.length,
       )}
     </>
   );
@@ -110,7 +113,7 @@ export const Desktop: React.FC = () => {
         <div className={css.seeMore} onClick={() => loadMore('sent')}>
           See more
         </div>,
-        sentRequestsList?.total_count > sentRequestsList?.items.length
+        sentRequestsList?.total_count > sentRequestsList?.items.length,
       )}
     </>
   );
@@ -149,7 +152,7 @@ export const Desktop: React.FC = () => {
         <div className={css.seeMore} onClick={() => loadMore('received')}>
           See more
         </div>,
-        receivedRequestsList?.total_count > receivedRequestsList?.items.length
+        receivedRequestsList?.total_count > receivedRequestsList?.items.length,
       )}
     </>
   );

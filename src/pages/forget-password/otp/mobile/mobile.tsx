@@ -1,7 +1,8 @@
 import { Button } from 'src/components/atoms/button/button';
 import { Otp as OtpCom } from 'src/components/atoms/otp/otp';
-import { useOtpShared } from '../otp.shared';
+
 import css from './mobile.module.scss';
+import { useOtpShared } from '../otp.shared';
 
 export const Mobile = () => {
   const { backToPerviousPage, otpValue, setOtpValue, submit, onResendOtp } = useOtpShared();

@@ -1,5 +1,6 @@
-import css from './chat-box.module.scss';
 import { CSSProperties } from 'react';
+
+import css from './chat-box.module.scss';
 import { ChatBoxProps } from './chat-box.types';
 
 export const ChatBox = (props: ChatBoxProps): JSX.Element => {

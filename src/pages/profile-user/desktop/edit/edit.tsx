@@ -1,18 +1,19 @@
-import { Header } from 'src/components/atoms/header-v2/header';
-import css from './edit.module.scss';
-import { Modal } from 'src/components/templates/modal/modal';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { useEffect, useRef, useState } from 'react';
 import { Dropdown } from 'src/components/atoms/dropdown-v2/dropdown';
-import { COUNTRIES } from 'src/constants/COUNTRIES';
-import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
-import { Category } from 'src/components/molecules/category/category';
-import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { useRef, useState } from 'react';
-import { useProfileUserEditShared } from 'src/pages/profile-user-edit/profile-user-edit.shared';
+import { Header } from 'src/components/atoms/header-v2/header';
 import { Input } from 'src/components/atoms/input/input';
-import { EditProps } from './edit.types';
 import { Popover } from 'src/components/atoms/popover/popover';
 import { PopoverProps } from 'src/components/atoms/popover/popover.types';
+import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { Category } from 'src/components/molecules/category/category';
+import { Modal } from 'src/components/templates/modal/modal';
+import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { COUNTRY_CODES } from 'src/constants/COUNTRY_CODE';
+import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { useProfileUserEditShared } from 'src/pages/profile-user-edit/profile-user-edit.shared';
+
+import css from './edit.module.scss';
+import { EditProps } from './edit.types';
 
 export const Edit = (props: EditProps): JSX.Element => {
   const [coverLetterMenuOpen, setCoverLetterMenu] = useState(false);
@@ -32,6 +33,14 @@ export const Edit = (props: EditProps): JSX.Element => {
     { id: 1, label: 'Upload image', cb: onAvatarEdit.desktop('upload') },
     { id: 2, label: 'Remove image', cb: onAvatarEdit.desktop('remove') },
   ];
+
+  const [skills, setSkills] = useState<{ value: string; label: string }[]>([]);
+
+  useEffect(() => {
+    skillsToCategoryAdaptor().then((data) => {
+      setSkills(data);
+    });
+  }, []);
 
   return (
     <Modal height={props.height} width={props.width} open={props.open} onClose={props.onClose}>
@@ -84,13 +93,7 @@ export const Edit = (props: EditProps): JSX.Element => {
               list={socialCausesToCategoryAdaptor()}
               placeholder="Social causes"
             />
-            <Category
-              register={form}
-              name="skills"
-              label="Skills"
-              list={skillsToCategoryAdaptor()}
-              placeholder="skills"
-            />
+            <Category register={form} name="skills" label="Skills" list={skills} placeholder="skills" />
             <Textarea register={form} label="Address" name="address" placeholder="address" />
             <Dropdown
               register={form}
@@ -99,6 +102,7 @@ export const Edit = (props: EditProps): JSX.Element => {
               list={COUNTRIES}
               placeholder="country"
               onValueChange={onCountryUpdate}
+              defaultValue={COUNTRIES.find((item) => item.id === form.controls.country['value'])?.label || ''}
             />
             <Dropdown
               register={form}
@@ -107,11 +111,18 @@ export const Edit = (props: EditProps): JSX.Element => {
               list={cities}
               placeholder="city"
               onValueChange={(option) => form.controls.geoname_id.setValue(option.id)}
+              defaultValue={form.controls.city['value']?.toString()}
             />
             <div>
               <div className={css.label}>Phone</div>
               <div className={css.phoneContainer}>
-                <Dropdown register={form} name="mobile_country_code" placeholder="+1" list={COUNTRY_CODES} />
+                <Dropdown
+                  register={form}
+                  name="mobile_country_code"
+                  placeholder="+1"
+                  list={COUNTRY_CODES}
+                  defaultValue={form.controls.mobile_country_code.value?.toString()}
+                />
                 <Input register={form} name="phone" placeholder="phone" />
               </div>
             </div>

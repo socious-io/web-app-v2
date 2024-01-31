@@ -1,8 +1,9 @@
-import { Modal } from 'src/components/templates/modal/modal';
 import { Search } from 'src/components/atoms/search/search';
 import { ProfileView } from 'src/components/molecules/profile-view/profile-view';
-import { AddMemberModalProps } from './add-member-modal.types';
+import { Modal } from 'src/components/templates/modal/modal';
+
 import css from './add-member-modal.module.scss';
+import { AddMemberModalProps } from './add-member-modal.types';
 
 export const AddMemberModal: React.FC<AddMemberModalProps> = ({
   open,

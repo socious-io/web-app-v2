@@ -1,15 +1,16 @@
-import { get, post } from 'src/core/http';
-import { QuestionsRes } from 'src/core/types';
-import { ApplyApplicationPayload, Resume } from './apply.types';
-import { getFormValues } from 'src/core/form/customValidators/formValues';
 import { RadioGroupProps } from 'src/components/molecules/radio-group/radio-group.types';
+import { applyJob, jobQuestions, uploadMedia } from 'src/core/api';
+import { getFormValues } from 'src/core/form/customValidators/formValues';
+import { QuestionsRes } from 'src/core/types';
+
+import { ApplyApplicationPayload, Resume } from './apply.types';
 
 export async function getScreeningQuestions(id: string): Promise<QuestionsRes> {
-  return get(`projects/${id}/questions`).then(({ data }) => data);
+  return jobQuestions(id);
 }
 
 export async function applyApplication(id: string, payload: ApplyApplicationPayload): Promise<unknown> {
-  return post(`/projects/${id}/applicants`, payload);
+  return applyJob(id, payload);
 }
 
 export const convertOptionsToRadioGroup = (options: null | string[], id: string): RadioGroupProps['list'] => {
@@ -19,12 +20,7 @@ export const convertOptionsToRadioGroup = (options: null | string[], id: string)
 };
 
 async function uploadResume(file: File): Promise<{ id: string }> {
-  const formData = new FormData();
-  formData.append('file', file);
-  const header = {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  };
-  return post('/media/upload', formData, header).then(({ data }) => data);
+  return uploadMedia(file);
 }
 
 export function generatePayload(form) {
@@ -46,7 +42,7 @@ export function generatePayload(form) {
       }
       return prev;
     },
-    { answers: [] }
+    { answers: [] },
   );
   return formatted;
 }

@@ -1,4 +1,4 @@
-import {Badge} from './impact-badge.types';
+import { Badge } from './impact-badge.types';
 
 // export const SDG = {
 //   HEALTH: 'HEALTH',

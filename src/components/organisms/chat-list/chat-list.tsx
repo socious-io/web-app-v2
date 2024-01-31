@@ -1,8 +1,9 @@
+import InfiniteScroll from 'react-infinite-scroller';
 import { toRelativeTime } from 'src/core/relative-time';
-import { Message } from '../../atoms/message/message';
+
 import css from './chat-list.module.scss';
 import { ChatListProps } from './chat-list.types';
-import InfiniteScroll from 'react-infinite-scroller';
+import { Message } from '../../atoms/message/message';
 
 export const ChatList = (props: ChatListProps): JSX.Element => {
   const { list, loadMore = console.log, hasMore = false } = props;

@@ -1,7 +1,8 @@
-import css from './spinner.module.scss';
 import { LinearProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
+
+import css from './spinner.module.scss';
+import { RootState } from '../../../store';
 
 export function Spinner(): JSX.Element {
   const spinnerVisibility = useSelector<RootState>((state) => state.spinner);

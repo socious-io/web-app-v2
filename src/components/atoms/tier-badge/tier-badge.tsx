@@ -1,4 +1,5 @@
 import { printWhen } from 'src/core/utils';
+
 import css from './tier-badge.module.scss';
 import { TierBadgeProps } from './tier-badge.types';
 

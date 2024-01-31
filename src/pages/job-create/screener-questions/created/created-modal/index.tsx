@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-location';
-import store from 'src/store/store';
-import { WebModal } from 'src/components/templates/web-modal';
+import { useNavigate } from 'react-router-dom';
 import { Accordion } from 'src/components/atoms/accordion/accordion';
 import { AlertModal } from 'src/components/organisms/alert-modal';
-import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
+import { WebModal } from 'src/components/templates/web-modal';
+import store from 'src/store';
 import { resetCreatePostWizard } from 'src/store/reducers/createPostWizard.reducer';
+import { resetCreatedQuestion } from 'src/store/reducers/createQuestionWizard.reducer';
+
+import css from './created-modal.module.scss';
 import { CreatedModalProps } from './created-modal.types';
 import { useCreatedShared } from '../created.shared';
-import css from './created-modal.module.scss';
 
 export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBack, onDone }) => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const CreatedModal: React.FC<CreatedModalProps> = ({ open, onClose, onBac
     store.dispatch(resetCreatePostWizard());
     setOpenAlertModal(false);
     onDone();
-    navigate({ to: '/jobs' });
+    navigate('/jobs');
   }
 
   return (

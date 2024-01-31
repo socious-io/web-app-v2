@@ -29,7 +29,7 @@
 .organizationName {
   color: var(--color-black-01);
   font-size: 0.875rem;
-  font-family: sans-serif;
+  font-family: Inter;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -50,17 +50,17 @@
   justify-content: flex-end;
   color: var(--color-success-01);
   font-size: var(--font-size-xl);
-  font-family: sans-serif;
+  font-family: Inter;
 }
 
 .total {
   font-size: 0.875rem;
   color: var(--color-gray-01);
-  font-family: sans-serif;
+  font-family: Inter;
 }
 
 .duration {
   font-size: 0.875rem;
   color: var(--color-gray-01);
-  font-family: sans-serif;
+  font-family: Inter;
 }

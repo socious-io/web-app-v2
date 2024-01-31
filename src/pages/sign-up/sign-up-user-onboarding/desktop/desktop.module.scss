@@ -1,0 +1,13 @@
+.container {
+  background: var(--color-off-white-01);
+  min-height: var(--window-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 5rem 0;
+
+  @media screen and (max-width: 600px) {
+    padding: 0;
+  }
+}

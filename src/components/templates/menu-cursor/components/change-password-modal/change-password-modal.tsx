@@ -1,12 +1,13 @@
 import { Button } from 'src/components/atoms/button/button';
-import css from './change-password-modal.module.scss';
 import { Header } from 'src/components/atoms/header-v2/header';
 import { Input } from 'src/components/atoms/input/input';
 import { Modal } from 'src/components/templates/modal/modal';
+import { dialog } from 'src/core/dialog/dialog';
 import { printWhen } from 'src/core/utils';
 import { useChangePasswordShared } from 'src/pages/change-password/change-password.shared';
+
+import css from './change-password-modal.module.scss';
 import { ChangePasswordModalProps } from './change-password-types';
-import { dialog } from 'src/core/dialog/dialog';
 
 export const ChangePasswordModal = (props: ChangePasswordModalProps): JSX.Element => {
   const { form, notMatchingPasswords, formIsValid, onSubmitDesktop } = useChangePasswordShared();

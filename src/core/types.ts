@@ -1,6 +1,3 @@
-import { AbiItem } from 'web3-utils';
-import { JobItems, PostItems } from '../pages/search/search.types';
-
 export type UserType = 'users' | 'organizations';
 
 export type LoginReq = {
@@ -274,6 +271,7 @@ export type MissionsResp = Pagination<
     offer: {
       total_hours: number;
       assignment_total: number;
+      currency: string;
     };
     payment?: {
       meta: {
@@ -306,6 +304,8 @@ export type MissionsResp = Pagination<
     amount: number;
     total: number;
     fee: number;
+    payout: number;
+    app_fee: number;
   }[]
 >;
 
@@ -354,6 +354,7 @@ export type Offer = {
   offer_message: string;
   assignment_total: number;
   due_date: string;
+  currency?: 'USD' | 'JPY';
   status: 'HIRED' | 'CLOSED' | 'APPROVED' | 'HIRED';
   project: {
     description: string;
@@ -377,13 +378,13 @@ export type Offer = {
   project_id: string;
   escrow: {
     address: string;
-    abi: AbiItem[];
   };
   payment_mode: 'FIAT' | 'CRYPTO';
   crypto_currency_address: string;
   amount: number;
   total: number;
   fee: number;
+  stripe_fee: number;
 };
 
 export type GetOffer = Pagination<Offer[]>;
@@ -400,6 +401,7 @@ export type OfferPayload = {
   total_hours: string;
   payment_mode: string;
   crypto_currency_address?: string;
+  currency?: string;
 };
 
 export type CreatePostPayload = {
@@ -439,15 +441,11 @@ export type NotificationSettingsRes = {
 
 export type CardItems = {
   id: string;
-  identity_id: string;
-  holder_name: string;
-  numbers: string;
-  exp_month: number;
-  exp_year: number;
-  cvc: string;
-  brand: null;
-  created_at: string;
-  updated_at: string;
+  meta: {
+    last4: string;
+    brand: string;
+  };
+  brand: string;
 };
 
 export type CardInfoResp = Pagination<CardItems[]>;
@@ -501,3 +499,43 @@ export type MemberIdentity = {
 export type Error = { error: string };
 
 export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
+
+export type Profile = {
+  address: string;
+  avatar: null | string;
+  bio: string;
+  city: string;
+  country: string;
+  cover_image: null | string;
+  created_at: string;
+  experiences: null | string;
+  first_name: string;
+  followers: number;
+  followings: number;
+  geoname_id: null | string;
+  id: string;
+  impact_points: number;
+  languages: null | string;
+  last_name: string;
+  mission: null | string;
+  mobile_country_code: string;
+  phone: string;
+  proofspace_connect_id: null | string;
+  reported: boolean;
+  skills: string[];
+  social_causes: string[];
+  username: string;
+  wallet_address: null | string;
+};
+export type FcmListResp = Array<{ meta: { os: 'ANDROID' | 'IOS' }; user_id: string; token: string }>;
+export type CreateFcmPayload = { meta: { os: 'ANDROID' | 'IOS' }; token: string };
+export type Question = {
+  created_at: string;
+  id: string;
+  old_id: number;
+  options: null | string[];
+  project_id: string;
+  question: string;
+  required: boolean;
+  updated_at: string;
+};

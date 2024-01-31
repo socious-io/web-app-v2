@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+
 import css from './search.module.scss';
 import { SearchProps } from './search.types';
 

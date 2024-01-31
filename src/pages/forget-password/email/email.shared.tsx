@@ -1,8 +1,8 @@
-import { useNavigate } from '@tanstack/react-location';
+import { useNavigate } from 'react-router-dom';
+import { handleError, forgetPassword } from 'src/core/api';
 import { useForm } from 'src/core/form';
+
 import { formModel } from './email.form';
-import { handleError } from 'src/core/http';
-import { forgetPassword } from '../forget-password.service';
 
 export const useEmailShared = () => {
   const navigate = useNavigate();
@@ -10,17 +10,13 @@ export const useEmailShared = () => {
 
   const navigateToOtp = () => {
     const email = form.controls.email.value as string;
-    forgetPassword(email)
-      .then((resp) => {
-        if (resp.message === 'success') {
-          navigate({ to: `../otp?email=${email}` });
-        }
-      })
+    forgetPassword({ email })
+      .then(() => navigate(`../otp?email=${email}`))
       .catch(handleError({ section: 'FORGET_PASSWORD' }));
   };
 
   const backToPerviousPage = () => {
-    navigate({ to: '/sign-in' });
+    navigate('/sign-in');
   };
 
   return { backToPerviousPage, form, navigateToOtp };

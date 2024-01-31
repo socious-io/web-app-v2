@@ -1,6 +1,7 @@
-import css from './alert-confirm.module.scss';
 import { ConfirmOptions } from '@capacitor/dialog';
 import { Button } from 'src/components/atoms/button/button';
+
+import css from './alert-confirm.module.scss';
 
 export type AlertConfirmProps = {
   options: ConfirmOptions;
