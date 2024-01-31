@@ -6,6 +6,7 @@ import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontal
 
 import { ContractDetailsSliderProps } from './contractDetailsSlider.types';
 import { useContractDetailsSlider } from './useContractDeatlsSlider';
+import { PaymentFiat } from '../paymentFiat';
 
 export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ offer, mission }) => {
   const {
@@ -26,6 +27,8 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
     alertIcon,
     alertTitle,
     alertMessage,
+    openPaymentModal,
+    setOpenPaymentModal,
   } = useContractDetailsSlider(offer, mission);
   return (
     <>
@@ -70,6 +73,12 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
         closeButtonLabel="Cancel"
         submitButton={true}
         submitButtonLabel="Confirm"
+      />
+      <PaymentFiat
+        amount={offer.assignment_total}
+        currency={offer.currency}
+        open={openPaymentModal}
+        handleClose={() => setOpenPaymentModal(false)}
       />
     </>
   );
