@@ -7,7 +7,9 @@ import {
   Offer,
   acceptOffer,
   cancelMission,
+  cancelOffer,
   completeMission,
+  dropMission,
   rejectOffer,
 } from 'src/core/api';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
@@ -129,7 +131,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
       }
     }
     if (type === 'organizations') {
-      if (offerStatus === 'APPROVED') {
+      if (offerStatus === 'APPROVED' && offer.assignment_total) {
         const alertMsg = (
           <AlertMessage
             theme="warning"
@@ -138,7 +140,42 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
             subtitle={`${name} has accepted your offer. Proceed to payment to start this job.`}
           />
         );
-        setAllStates(true, alertMsg, true, 'Proceed to payment', true, 'Withdraw', handleOpenPaymentModal);
+        setAllStates(
+          true,
+          alertMsg,
+          true,
+          'Proceed to payment',
+          true,
+          'Withdraw',
+          handleOpenPaymentModal,
+          withdrawOfferByOP,
+        );
+        return;
+      }
+      if (offerStatus === 'HIRED' && offer.assignment_total) {
+        const alertMsg = (
+          <AlertMessage
+            theme="primary"
+            iconName="alert-circle"
+            title="Payment was done successfully"
+            subtitle={`${name} can now start the job`}
+          />
+        );
+        setAllStates(true, alertMsg, false, '', true, 'Stop', undefined, handleStopByOP);
+        return;
+      }
+      if (offerStatus === 'CLOSED' && missionStatus === 'KICKED_OUT') {
+        const alertMsg = (
+          <AlertMessage theme="gray" iconName="alert-circle" title="You have stopped this contract" subtitle="" />
+        );
+        setAllStates(true, alertMsg, false, '', false, '');
+        return;
+      }
+      if (offerStatus === 'CANCELED') {
+        const alertMsg = (
+          <AlertMessage theme="gray" iconName="alert-circle" title="You have canceled this offer" subtitle="" />
+        );
+        setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
     }
@@ -185,9 +222,29 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     setOpenPaymentModal(true);
   };
 
+  const handleClosePaymentModal = (paymentSuccess: boolean) => {
+    if (paymentSuccess) {
+      setOfferStatus('HIRED');
+      setmissionStatus('ACTIVE');
+    }
+    setOpenPaymentModal(false);
+  };
+  const handleStopByOP = async () => {
+    await dropMission(mission.id);
+    setOfferStatus('CLOSED');
+    setmissionStatus('KICKED_OUT');
+  };
+
+  const withdrawOfferByOP = async () => {
+    await cancelOffer(offer.id);
+    setOfferStatus('CANCELED');
+    setmissionStatus(undefined);
+  };
+
   return {
     name,
     profileImage,
+    type,
     tabs,
     displayMessage,
     message,
@@ -205,5 +262,6 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     alertMessage,
     openPaymentModal,
     setOpenPaymentModal,
+    handleClosePaymentModal,
   };
 };

@@ -1,11 +1,7 @@
-// import { CardsRes } from 'src/core/api';
-
 export interface PaymentFiatProps {
+  offerId: string;
   open: boolean;
-  handleClose: () => void;
+  handleClose: (paymentSuccess: boolean) => void;
   amount: number;
   currency: string;
-  // setCardsList: (list: CardsRes) => void;
-
-  //  currency?: string;
 }

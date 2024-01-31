@@ -1,12 +1,13 @@
 import { ReactNode } from 'react';
 
 export interface ModalProps {
+  children?: ReactNode;
   open: boolean;
-  handleClose: () => void;
+  handleClose: (a?: any) => void;
   icon?: ReactNode;
   title?: string;
   subTitle?: string;
-  content: ReactNode;
+  content?: ReactNode;
   footer?: ReactNode;
   mobileFullHeight?: boolean;
 }

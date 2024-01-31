@@ -11,8 +11,8 @@ export const PaymentSummary: React.FC<PaymentSummaryProps> = ({ offerAmount, cur
   const sociousFees = Math.round(offerAmount * 2) / 100;
   const stripeFees = Math.round(offerAmount * 3.6) / 100;
   const total = offerAmount + sociousFees + stripeFees;
+  const symbol = currency === 'JPY' ? '¥' : '$';
   const renderItems = (title: string, value: number) => {
-    // const currencyIconName = offer.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle';
     return (
       <div className="flex justify-between">
         <Typography variant="caption" className="text-Gray-light-mode-700">
@@ -20,7 +20,7 @@ export const PaymentSummary: React.FC<PaymentSummaryProps> = ({ offerAmount, cur
         </Typography>
         <Typography variant="h6" className="text-Gray-light-mode-700">
           {/* <Icon name={currencyIconName} fontSize={} */}
-          {`${value} ${currency}`}
+          {`${symbol}${value.toLocaleString()} ${currency}`}
         </Typography>
       </div>
     );
@@ -39,10 +39,7 @@ export const PaymentSummary: React.FC<PaymentSummaryProps> = ({ offerAmount, cur
         <Typography variant="caption" className="text-Gray-light-mode-700">
           Total payment
         </Typography>
-        <span className={css.sum}>
-          {/* <Icon name={currencyIconName} fontSize={} */}
-          {`${total} ${currency}`}
-        </span>
+        <span className={css.sum}>{`${symbol}${total.toLocaleString()} ${currency}`}</span>
       </div>
     </div>
   );
