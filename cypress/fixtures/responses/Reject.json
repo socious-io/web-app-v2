@@ -1,0 +1,12 @@
+{
+  "reject": [
+    {
+      "project_id": "008dc9e3-a043-43f4-b80e-cc429d399db7",
+      "payment_rate": null,
+      "offer_rate": null,
+      "offer_message": null,
+      "status": "REJECTED",
+      "payment_type": null
+    }
+  ]
+}
