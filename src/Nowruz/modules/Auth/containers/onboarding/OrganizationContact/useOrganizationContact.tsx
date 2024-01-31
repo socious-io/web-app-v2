@@ -5,16 +5,13 @@ import { useContext, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createOrganization, getIndustries, Location, preRegister, searchLocation, identities } from 'src/core/api';
+import { createOrganization, getIndustries, Location, preRegister, searchLocation } from 'src/core/api';
 import { CurrentIdentity, uploadMedia } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { checkUsernameConditions, removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
-
-import { useDispatch } from 'react-redux';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 type Inputs = {
   email: string;
@@ -52,8 +49,8 @@ export const useOrganizationContact = () => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { orgName, orgType, social_causes, bio, image, city, country, email, website, size, shortname, industry } = state;
-    const dispatch = useDispatch();
+    const { orgName, orgType, social_causes, bio, image, city, country, email, website, size, shortname, industry } =
+      state;
     try {
       const websiteUrl = state.website ? 'https://' + state.website : '';
       await createOrganization(
@@ -76,8 +73,6 @@ export const useOrganizationContact = () => {
       );
       localStorage.removeItem('registerFor');
       reset();
-      const new_identities = await identities();
-      dispatch(setIdentityList(new_identities));
       if (isMobile)
         navigate(`/sign-up/user/notification`, {
           state: {
