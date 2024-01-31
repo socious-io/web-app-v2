@@ -196,7 +196,7 @@ export type LanguageLevel = 'BASIC' | 'CONVERSANT' | 'PROFICIENT' | 'FLUENT' | '
 
 export type MissionStatus = 'ACTIVE' | 'COMPLETE' | 'CONFIRMED' | 'CANCELED' | 'KICKED_OUT';
 
-export type OfferStatus = 'PENDING' | 'WITHDRAWN' | 'APPROVED' | 'HIRED' | 'CLOSED' | 'CANCELED' | 'KICK_OUT';
+export type OfferStatus = 'PENDING' | 'WITHDRAWN' | 'APPROVED' | 'HIRED' | 'CLOSED' | 'CANCELED';
 
 export type ConnectStatus = 'PENDING' | 'CONNECTED' | 'BLOCKED';
 

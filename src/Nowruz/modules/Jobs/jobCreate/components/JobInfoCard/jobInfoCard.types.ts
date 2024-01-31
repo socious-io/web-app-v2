@@ -1,14 +1,21 @@
-interface Payload {
-  location: string;
+export interface JobPayload {
+  title: string;
+  description: string;
   remotePreference: string;
-  experienceLevel: string;
-  jobType: string;
-  jobLength: string;
-  minPayment: string | number;
-  maxPayment: string | number;
-  paymentType: string;
   isCryptoPayment: boolean;
+  jobLength: string;
+  jobType: string;
+  // location: string;
+  country: string;
+  city: string;
+  maxPayment: string | number;
+  minPayment: string | number;
+  paymentType: string;
+  experienceLevel: string;
+  socialCause: string;
+  skills: string[];
+  mission: string;
 }
 export interface JobInfoCardProps {
-  payload: Payload;
+  payload: JobPayload;
 }

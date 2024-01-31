@@ -19,9 +19,10 @@ import { ApplyModal } from '../applyModal';
 
 interface JobDetailHeaderProps {
   job: Job;
+  isUser: boolean;
 }
 
-export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job }) => {
+export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser }) => {
   const navigate = useNavigate();
   const [openApply, setOpenApply] = useState(false);
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -36,7 +37,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job }) => {
   return (
     <>
       <div className={css.container}>
-        <BackLink title="Back to jobs" onBack={() => navigate('/nowruz/jobs/list')} customStyle="w-fit" />
+        <BackLink title="Back to jobs" onBack={() => navigate('/nowruz/jobs')} customStyle="w-fit" />
         <Avatar size="72px" type="organizations" img={job.identity_meta.image} hasBorder isVerified={false} />
         <div className="w-full flex flex-col gap-4">
           <div className="flex flex-col">
@@ -66,7 +67,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job }) => {
               </Button>
             </AuthGuard>
           )}
-          <Divider />
+          {isUser && <Divider />}
         </div>
       </div>
       <ApplyModal open={openApply} handleClose={() => setOpenApply(false)} />
