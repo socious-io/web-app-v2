@@ -23,6 +23,7 @@ export const Input: React.FC<InputProps> = ({
   startIcon,
   postfix,
   noBorderPostfix = false,
+  postfixDropdown,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -66,6 +67,12 @@ export const Input: React.FC<InputProps> = ({
         <InputAdornment position="start" className={noBorderPostfix ? css['postfix-no-border'] : css.postfix}>
           {postfix}
         </InputAdornment>
+      )}
+      {postfixDropdown && (
+        <InputDropdown
+          options={postfixDropdown.options}
+          onChange={(option) => postfixDropdown.onChange(option.value)}
+        />
       )}
     </>
   );

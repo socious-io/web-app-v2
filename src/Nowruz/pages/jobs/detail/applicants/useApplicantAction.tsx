@@ -10,6 +10,7 @@ export const useApplicantAction = (applicants: Array<Applicant>) => {
   const [openAlert, setOpenAlert] = useState(false);
   const [offer, setOffer] = useState(false);
   const [applicant, setApplicant] = useState({} as Applicant);
+  const [success, setSuccess] = useState<boolean>(false);
   const currentSelectedId = useRef<string>();
 
   const navigate = useNavigate();
@@ -192,6 +193,15 @@ export const useApplicantAction = (applicants: Array<Applicant>) => {
     return styleClass;
   };
 
+  const onSuccess = () => {
+    setSuccess(true);
+  };
+
+  const handleCloseSuccess = () => {
+    setSuccess(false);
+    navigate('..');
+  };
+
   return {
     open,
     setOpen,
@@ -207,5 +217,8 @@ export const useApplicantAction = (applicants: Array<Applicant>) => {
     setOffer,
     onReject,
     onOffer,
+    onSuccess,
+    handleCloseSuccess,
+    success,
   };
 };

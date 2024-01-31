@@ -4,5 +4,6 @@ export interface OrgOfferModalProps {
   applicant: Applicant;
   onClose: () => void;
   open: boolean;
+  onSuccess: () => void;
 }
 // applicant

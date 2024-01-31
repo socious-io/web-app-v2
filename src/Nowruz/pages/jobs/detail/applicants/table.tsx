@@ -14,8 +14,21 @@ interface TableProps {
 }
 
 export const Table: React.FC<TableProps> = ({ applicants }) => {
-  const { open, setOpen, applicant, columns, extractCellId, openAlert, setOpenAlert, handleReject, offer, setOffer } =
-    useApplicantAction(applicants);
+  const {
+    open,
+    setOpen,
+    applicant,
+    columns,
+    extractCellId,
+    openAlert,
+    setOpenAlert,
+    handleReject,
+    offer,
+    setOffer,
+    onSuccess,
+    handleCloseSuccess,
+    success,
+  } = useApplicantAction(applicants);
 
   const table = useReactTable({
     data: applicants,
@@ -106,7 +119,21 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
         submitButtonTheme="error"
         submitButtonLabel="Reject"
       />
-      <OrgOfferModal onClose={() => setOffer(false)} open={offer} applicant={applicant} />
+      {offer && (
+        <OrgOfferModal onClose={() => setOffer(false)} open={offer} applicant={applicant} onSuccess={onSuccess} />
+      )}
+      {success && (
+        <AlertModal
+          open={success}
+          onClose={handleCloseSuccess}
+          message={`Congratulations! You have successfully sent an offer to ${applicant.user.name}`}
+          title="Offer sent"
+          customIcon={<FeaturedIcon iconName="check-circle" size="md" theme="success" type="light-circle-outlined" />}
+          closeButtn={true}
+          closeButtonLabel="Close"
+          submitButton={false}
+        />
+      )}
     </div>
   );
 };

@@ -29,6 +29,9 @@ export const Cards: React.FC<CardsProps> = ({ applicants }) => {
     onClickName,
     onReject,
     onOffer,
+    onSuccess,
+    handleCloseSuccess,
+    success,
   } = useApplicantAction(applicants);
   return (
     <div className="flex flex-col gap-4">
@@ -83,7 +86,21 @@ export const Cards: React.FC<CardsProps> = ({ applicants }) => {
         submitButtonTheme="error"
         submitButtonLabel="Reject"
       />
-      <OrgOfferModal onClose={() => setOffer(false)} open={offer} applicant={applicant} />
+      {offer && (
+        <OrgOfferModal onClose={() => setOffer(false)} open={offer} applicant={applicant} onSuccess={onSuccess} />
+      )}
+      {success && (
+        <AlertModal
+          open={success}
+          onClose={handleCloseSuccess}
+          message={`Congratulations! You have successfully sent an offer to ${applicant.user.name}`}
+          title="Offer sent"
+          customIcon={<FeaturedIcon iconName="check-circle" size="md" theme="success" type="light-circle-outlined" />}
+          closeButtn={true}
+          closeButtonLabel="Close"
+          submitButton={false}
+        />
+      )}
     </div>
   );
 };
