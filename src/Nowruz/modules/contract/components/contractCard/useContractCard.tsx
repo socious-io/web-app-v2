@@ -20,8 +20,35 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
 
   const name = type === 'users' ? offerVal.offerer.meta.name : offerVal.recipient.meta.name;
   const profileImageUrl = type === 'users' ? offerVal.offerer.meta.image : offerVal.recipient.meta.avatar;
-  const currencyIconName = offerVal.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle';
 
+  // We might delete currency icon later (we accept only USD or JPY at the moment)
+  const currencyIconName = (() => {
+    switch (offerVal.currency) {
+      case 'JPY':
+        return 'currency-yen-circle';
+      case 'USD':
+        return 'currency-dollar-circle';
+    }
+  })();
+
+  // Format the amount depending of the currency
+  const formatCurrency = (() => {
+    switch (offerVal.currency) {
+      case 'JPY':
+         return new Intl.NumberFormat('ja-JP', {
+          useGrouping: true,
+          maximumFractionDigits: 0, // Japanese Yen typically doesn't use decimal places
+        }).format(offerVal.assignment_total);
+      case 'USD':
+          return new Intl.NumberFormat('ja-JP', {
+           useGrouping: true,
+           maximumFractionDigits: 2,
+         }).format(offerVal.assignment_total);
+      default:
+        return offerVal.assignment_total
+    }
+  })();
+  
   const BadgeData = () => {
     switch (offerVal.status) {
       case 'PENDING':
@@ -133,6 +160,7 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     name,
     profileImageUrl,
     currencyIconName,
+    formatCurrency,
     openAcceptModal,
     openCompleteModal,
     openDefaultModal,

@@ -19,6 +19,7 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
     name,
     profileImageUrl,
     currencyIconName,
+    formatCurrency,
     openAcceptModal,
     offerVal,
     missionVal,
@@ -39,15 +40,14 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
           <Avatar size="56px" type={type || 'users'} img={profileImageUrl} />
           <div className="flex flex-col">
             <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">{offerVal.project.title}</span>
-            <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`${name} . ${toRelativeTime(
-              offerVal.created_at.toString(),
-            )}`}</span>
+            <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`${name}・${toRelativeTime( offerVal.created_at.toString(), )}`}</span>
+
           </div>
         </div>
         <div className="flex flex-col gap-5 md:flex-row">
           <div className="flex gap-2 items-center">
             <Icon name={currencyIconName} fontSize={20} color={variables.color_grey_500} />
-            <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{`${offerVal.assignment_total} ${offerVal.currency}`}</span>
+            <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{formatCurrency} {`${offerVal.currency}`}</span>
             <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`(Fixed-price)`}</span>
           </div>
           <div className="md:mr-0 md:ml-auto w-fit">
