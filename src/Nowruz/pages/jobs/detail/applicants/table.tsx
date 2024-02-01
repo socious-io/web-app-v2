@@ -1,7 +1,10 @@
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { Applicant } from 'src/core/api';
+import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
+import { EmptyState } from 'src/Nowruz/modules/general/components/EmptyState';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 import { OrgOfferModal } from 'src/Nowruz/modules/Jobs/containers/OrgOfferModal';
@@ -36,7 +39,7 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  return (
+  return applicants.length ? (
     <div className="border-Gray-light-mode-200 border-solid border-b rounded-lg">
       <div className="py-2.5 px-4 flex">
         {/* <div
@@ -135,5 +138,10 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
         />
       )}
     </div>
+  ) : (
+    <EmptyState
+      icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
+      message="No applicants yet"
+    />
   );
 };

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, Job, JobsRes, jobs } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { ButtonGroupItem } from 'src/Nowruz/modules/general/components/ButtonGroups/buttonGroups.types';
@@ -12,6 +13,8 @@ export const useOrganizationJobListing = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
+
+  const navigate = useNavigate();
 
   const getJobsData = async () => {
     const active: JobsRes = await jobs({ identity_id: currentIdentity?.id, page: 1, status: 'ACTIVE' });
@@ -43,6 +46,10 @@ export const useOrganizationJobListing = () => {
     { label: 'Archived', handleClick: () => filterArchived(page) },
   ];
 
+  const navigateToCreateJob = () => {
+    navigate('./create');
+  };
+
   useEffect(() => {
     fetchMore(page);
   }, [page]);
@@ -63,5 +70,6 @@ export const useOrganizationJobListing = () => {
     PER_PAGE,
     isMobile,
     loading,
+    navigateToCreateJob,
   };
 };
