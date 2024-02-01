@@ -33,19 +33,17 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
 
   // Format the amount depending of the currency
   const formatCurrency = (() => {
+    const options = { useGrouping: true };
+  
     switch (offerVal.currency) {
       case 'JPY':
-         return new Intl.NumberFormat('ja-JP', {
-          useGrouping: true,
-          maximumFractionDigits: 0, // Japanese Yen typically doesn't use decimal places
-        }).format(offerVal.assignment_total);
+        return new Intl.NumberFormat('ja-JP', { ...options, maximumFractionDigits: 0 }) // Japanese Yen typically doesn't use decimal places
+          .format(offerVal.assignment_total);
       case 'USD':
-          return new Intl.NumberFormat('ja-JP', {
-           useGrouping: true,
-           maximumFractionDigits: 2,
-         }).format(offerVal.assignment_total);
+        return new Intl.NumberFormat('en-US', { ...options, maximumFractionDigits: 2 })
+          .format(offerVal.assignment_total);
       default:
-        return offerVal.assignment_total
+        return offerVal.assignment_total.toString(); // Ensure the default case returns a string for consistency
     }
   })();
   
