@@ -5,6 +5,7 @@ import { toRelativeTime } from 'src/core/relative-time';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { EmptyState } from 'src/Nowruz/modules/general/components/EmptyState';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 import { OrgOfferModal } from 'src/Nowruz/modules/Jobs/containers/OrgOfferModal';
@@ -33,7 +34,7 @@ export const Cards: React.FC<CardsProps> = ({ applicants }) => {
     handleCloseSuccess,
     success,
   } = useApplicantAction(applicants);
-  return (
+  return applicants.length ? (
     <div className="flex flex-col gap-4">
       {applicants.map((applicant) => (
         <div key={applicant.id} className="border border-solid border-Gray-light-mode-200 rounded-lg">
@@ -102,5 +103,10 @@ export const Cards: React.FC<CardsProps> = ({ applicants }) => {
         />
       )}
     </div>
+  ) : (
+    <EmptyState
+      icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
+      message="No applicants yet"
+    />
   );
 };
