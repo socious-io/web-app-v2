@@ -107,7 +107,12 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
         </div> */}
       </div>
       <Overlay open={open} onClose={() => setOpen(false)}>
-        <ApplicantDetails applicant={applicant} />
+        <ApplicantDetails
+          applicant={applicant}
+          openOffer={() => setOffer(true)}
+          openReject={() => setOpenAlert(true)}
+          closeDetails={() => setOpen(false)}
+        />
       </Overlay>
       <AlertModal
         open={openAlert}

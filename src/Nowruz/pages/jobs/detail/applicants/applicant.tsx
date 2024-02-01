@@ -8,14 +8,22 @@ import { useApplicant } from './useApplicant';
 
 interface ApplicantDetailsProps {
   applicant: Applicant;
+  openOffer: () => void;
+  openReject: () => void;
+  closeDetails: () => void;
 }
 
-export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({ applicant }) => {
+export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
+  applicant,
+  openOffer,
+  openReject,
+  closeDetails,
+}) => {
   const {
     data: { seeMore, copyProccessed },
     operations: { handleSeeMore },
   } = useSeeMore(applicant?.cover_letter ?? '');
-  const { handleHire, handleReject, handleViewProfile, handleClickResume } = useApplicant(applicant);
+  const { handleViewProfile, handleClickResume } = useApplicant(applicant);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-4">
@@ -27,7 +35,15 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({ applicant })
           </div>
         </div>
         <div className="flex gap-3">
-          <Button variant="outlined" color="secondary" fullWidth onClick={handleReject}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            onClick={() => {
+              openReject();
+              closeDetails();
+            }}
+          >
             Reject
           </Button>
 
@@ -36,7 +52,14 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({ applicant })
           </Button>
         </div>
 
-        <Button variant="contained" color="primary" onClick={handleHire}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            openOffer();
+            closeDetails();
+          }}
+        >
           Hire
         </Button>
 
@@ -52,10 +75,12 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({ applicant })
               )}
             </p>
           </div>
-          <div className="flex flex-col gap-1 cursor-pointer">
-            <p className="text-sm font-medium text-Gray-light-mode-700">Resume</p>
-            <p onClick={handleClickResume}>{applicant.attachment?.filename}</p>
-          </div>
+          {applicant.attachment?.filename && (
+            <div className="flex flex-col gap-1 cursor-pointer">
+              <p className="text-sm font-medium text-Gray-light-mode-700">Resume</p>
+              <p onClick={handleClickResume}>{applicant.attachment?.filename}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

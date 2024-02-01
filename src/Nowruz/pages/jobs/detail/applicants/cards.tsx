@@ -72,7 +72,12 @@ export const Cards: React.FC<CardsProps> = ({ applicants }) => {
         </div>
       ))}
       <Overlay open={open} onClose={() => setOpen(false)}>
-        <ApplicantDetails applicant={applicant} />
+        <ApplicantDetails
+          applicant={applicant}
+          openOffer={() => setOffer(true)}
+          openReject={() => setOpenAlert(true)}
+          closeDetails={() => setOpen(false)}
+        />
       </Overlay>
       <AlertModal
         open={openAlert}

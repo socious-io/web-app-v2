@@ -1,19 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import { Applicant } from 'src/core/api';
 
 export const useApplicant = (applicant: Applicant) => {
-  const handleHire = () => {
-    console.log('Hire');
-  };
-  const handleReject = () => {
-    console.log('Reject');
-  };
-
+  const navigate = useNavigate();
   const handleViewProfile = () => {
-    console.log('View');
+    navigate(`/nowruz/profile/users/${applicant.user.username}/view`);
   };
 
   const handleClickResume = () => {
     window.open(applicant.attachment?.url, '_blank', 'rel=noopener noreferrer');
   };
-  return { handleHire, handleReject, handleViewProfile, handleClickResume };
+  return { handleViewProfile, handleClickResume };
 };
