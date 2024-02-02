@@ -1,20 +1,28 @@
-import { CircularProgress } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import variables from 'src/components/_exports.module.scss';
+import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { ButtonGroups } from 'src/Nowruz/modules/general/components/ButtonGroups';
+import { EmptyState } from 'src/Nowruz/modules/general/components/EmptyState';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
+import { PaginationMobile } from 'src/Nowruz/modules/general/components/paginationMobile';
 
 import css from './organization-job-listing.module.css';
 import { useOrganizationJobListing } from './useOrganizationJobListing';
 import { OrganizationJobCard } from '../../components/OrganizationJobCard';
 
 export const OrganizationJobListing = () => {
-  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading } = useOrganizationJobListing();
+  const { filterButtons, page, setPage, total, PER_PAGE, jobsList, loading, navigateToCreateJob } =
+    useOrganizationJobListing();
 
   return (
     <div className={css.container}>
+      <ButtonGroups buttons={filterButtons} />
       {loading && (
-        <div className={css.loader}>
-          <CircularProgress size="32px" sx={{ color: variables.color_primary_700 }} />
+        <div className="flex flex-col gap-4 w-full py-4 mt-6">
+          <Skeleton variant="rounded" className="w-6/6" height={150} />
+          <Skeleton variant="rounded" className="w-6/6" height={150} />
+          <Skeleton variant="rounded" className="w-6/6" height={150} />
         </div>
       )}
       {jobsList.map((job) => (
@@ -22,16 +30,34 @@ export const OrganizationJobListing = () => {
           <OrganizationJobCard job={job} />
         </div>
       ))}
-      {!isMobile && (
-        <div className="mt-11 bt-">
+      {jobsList.length === 0 && !loading && (
+        <EmptyState
+          icon={<Icon name="search-lg" fontSize={24} color={variables.color_grey_700} />}
+          message="No jobs found"
+          button={
+            <Button
+              startIcon={<Icon name="plus" color={variables.color_white} />}
+              color="primary"
+              variant="contained"
+              onClick={navigateToCreateJob}
+            >
+              Create job
+            </Button>
+          }
+        />
+      )}
+      {jobsList.length === 0 && !loading && (
+        <div className="mt-11 hidden md:block">
           <Pagination count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)} onChange={(e, p) => setPage(p)} />
         </div>
       )}
-      {isMobile && (
-        <div className="mt-5 flex items-center justify-center">
-          <Button color="primary" variant="text" onClick={() => setPage(page + 1)}>
-            See more
-          </Button>
+      {jobsList.length === 0 && !loading && (
+        <div className="mt-11 block md:hidden">
+          <PaginationMobile
+            page={page}
+            count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)}
+            handleChange={setPage}
+          />
         </div>
       )}
     </div>

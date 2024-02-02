@@ -6,11 +6,12 @@ import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
-import { CurrentIdentity, Job } from 'src/core/api';
+import { closeJob, CurrentIdentity, Job } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { QuestionsRes } from 'src/core/types';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AuthGuard } from 'src/Nowruz/modules/authGuard';
+import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { CountryFlag } from 'src/Nowruz/modules/general/components/countryFlag';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
@@ -18,6 +19,7 @@ import { RootState } from 'src/store';
 
 import css from './jobDetailAbout.module.scss';
 import { ApplyModal } from '../applyModal';
+import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 
 interface JobDetailAboutProps {
   isUser: boolean;
@@ -34,12 +36,20 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
   });
 
   const [openApply, setOpenApply] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
   const url = window.location.href;
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
   };
 
   const navigate = useNavigate();
+
+  const onClose = async () => {
+    const response = await closeJob(jobDetail.id);
+    if (response) {
+      navigate('..');
+    }
+  };
 
   useEffect(() => {
     nonPermanentStorage.get('openApplyModal').then((res) => {
@@ -139,12 +149,12 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
             </Button>
           </AuthGuard>
         )}
-        {!isUser && (
+        {!isUser && jobDetail.status === 'ACTIVE' && (
           <Button
             variant="contained"
             color="error"
             customStyle="hidden md:block w-full"
-            onClick={() => navigate(`/nowruz/jobs`)}
+            onClick={() => setOpenAlert(true)}
           >
             Close
           </Button>
@@ -155,6 +165,19 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
         </div>
       </div>
       <ApplyModal open={openApply} handleClose={() => setOpenApply(false)} />
+      <AlertModal
+        open={openAlert}
+        onClose={() => setOpenAlert(false)}
+        onSubmit={onClose}
+        message="Are you sure you want to close this job?It will be archived"
+        title="Close job"
+        customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />}
+        closeButtn={true}
+        closeButtonLabel="Cancel"
+        submitButton={true}
+        submitButtonTheme="error"
+        submitButtonLabel="Close job"
+      />
     </>
   );
 };

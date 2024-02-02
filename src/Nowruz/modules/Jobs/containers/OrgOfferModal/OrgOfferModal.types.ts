@@ -1,6 +1,9 @@
+import { Applicant } from 'src/core/api';
+
 export interface OrgOfferModalProps {
-  applicant: { applicantId: string; applicantName: string };
+  applicant: Applicant;
   onClose: () => void;
   open: boolean;
+  onSuccess: () => void;
 }
 // applicant
