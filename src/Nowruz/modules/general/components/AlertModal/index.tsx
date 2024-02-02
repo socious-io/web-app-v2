@@ -16,6 +16,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
   closeButtn = true,
   closeButtonLabel = 'Close',
   submitButton = false,
+  submitButtonTheme = 'primary',
   submitButtonLabel,
   customIcon,
 }) => {
@@ -46,7 +47,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
             </Button>
           )}
           {submitButton && (
-            <Button color="primary" variant="contained" onClick={onSubmit} fullWidth>
+            <Button color={submitButtonTheme} variant="contained" onClick={onSubmit} fullWidth>
               {submitButtonLabel}
             </Button>
           )}

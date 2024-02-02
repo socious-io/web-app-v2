@@ -11,5 +11,6 @@ export interface AlertModalProps {
   closeButtn?: boolean;
   closeButtonLabel?: string;
   submitButton?: boolean;
+  submitButtonTheme?: 'error' | 'primary' | 'secondary';
   submitButtonLabel?: string;
 }
