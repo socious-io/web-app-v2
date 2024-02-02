@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import {
   Applicant,
   PaymentService,
@@ -9,7 +8,6 @@ import {
   ProjectPaymentType,
   offerByApplicant,
 } from 'src/core/api';
-import { OfferPayload } from 'src/core/types';
 import { removeValuesFromObject } from 'src/core/utils';
 import Dapp from 'src/dapp';
 import * as yup from 'yup';
@@ -28,15 +26,15 @@ const schema = yup.object().shape({
   paymentType: yup.string(),
   paymentTerm: yup.string(),
   paymentMethod: yup.string(),
-  hours: yup.string().required('Total hours is required'),
-  total: yup.number().min(22),
-  description: yup.string().required(),
+  hours: yup.number().required('Total hours is required').min(1),
+  total: yup.number().min(22).required('Offer amount is required'),
+  description: yup.string().required('Description is required'),
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
   const { chainId, isConnected } = Dapp.useWeb3();
   const [tokens, setTokens] = useState([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<string>();
-  const navigate = useNavigate();
+  const [selected, setSelected] = useState<string>();
+
   const {
     register,
     handleSubmit,
@@ -80,14 +78,17 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
   const isCrypto = watch('paymentMethod') === 'CRYPTO';
   const isNonPaid = watch('paymentTerm') === 'FIXED' && watch('paymentType') === 'VOLUNTEER';
 
+  console.log(tokens);
+  console.log(selected);
+
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
     const payload = {
       payment_mode: paymentMethod,
       assignment_total: total.toString(),
       offer_message: description,
       total_hours: hours.toString(),
-      crypto_currency_address: isCrypto ? tokens[0]?.value || tokens[0]?.address : undefined,
-      currency: selectedCurrency,
+      crypto_currency_address: isCrypto ? selected : undefined,
+      currency: isCrypto ? tokens?.find((token) => token?.address === selected)?.label || '' : selected,
     };
 
     await offerByApplicant(applicant.id, removeValuesFromObject(payload, [undefined]));
@@ -113,6 +114,6 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     isCrypto,
     isNonPaid,
     paymentMethodOptions,
-    setSelectedCurrency,
+    setSelected,
   };
 };
