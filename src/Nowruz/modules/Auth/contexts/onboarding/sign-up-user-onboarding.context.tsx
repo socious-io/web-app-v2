@@ -79,7 +79,6 @@ export const useUser = () => {
   if (context === undefined) {
     throw new Error('must be used within a provider');
   }
-
   const { state, dispatch } = context;
 
   const updateUser = (updates) => {

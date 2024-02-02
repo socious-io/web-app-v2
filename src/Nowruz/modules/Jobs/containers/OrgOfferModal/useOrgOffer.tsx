@@ -1,7 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { PaymentService, ProjectPaymentSchemeType, ProjectPaymentType, offerByApplicant } from 'src/core/api';
+import { useNavigate } from 'react-router-dom';
+import {
+  Applicant,
+  PaymentService,
+  ProjectPaymentSchemeType,
+  ProjectPaymentType,
+  offerByApplicant,
+} from 'src/core/api';
 import { OfferPayload } from 'src/core/types';
 import { removeValuesFromObject } from 'src/core/utils';
 import Dapp from 'src/dapp';
@@ -22,25 +29,25 @@ const schema = yup.object().shape({
   paymentTerm: yup.string(),
   paymentMethod: yup.string(),
   hours: yup.string().required('Total hours is required'),
-  total: yup.string(),
+  total: yup.number().min(22),
   description: yup.string().required(),
 });
-export const useOrgOffer = (applicantId: string) => {
+export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
   const { chainId, isConnected } = Dapp.useWeb3();
   const [tokens, setTokens] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState<string>();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     setValue,
-    getValues,
     watch,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
     defaultValues: {
       paymentType: 'PAID',
-      paymentMethod: 'CRYPTO',
+      paymentMethod: 'FIAT' as 'STRIPE',
       paymentTerm: 'FIXED',
     },
   });
@@ -55,7 +62,7 @@ export const useOrgOffer = (applicantId: string) => {
             address: token.address,
           };
         });
-        console.log('mapTokens333', selectedNetwork);
+
         setTokens(mapTokens);
       }
     };
@@ -71,25 +78,21 @@ export const useOrgOffer = (applicantId: string) => {
     setValue('paymentMethod', paymentMethod);
   };
   const isCrypto = watch('paymentMethod') === 'CRYPTO';
-  const onSubmit: SubmitHandler<Inputs> = async ({
-    paymentMethod,
-    total,
-    description,
-    hours,
-    paymentTerm,
-    paymentType,
-  }) => {
+  const isNonPaid = watch('paymentTerm') === 'FIXED' && watch('paymentType') === 'VOLUNTEER';
+
+  const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
     const payload = {
       payment_mode: paymentMethod,
-      assignment_total: total,
+      assignment_total: total.toString(),
       offer_message: description,
       total_hours: hours.toString(),
-      crypto_currency_address: isCrypto ? selectedCurrency?.address : undefined,
-      currency: selectedCurrency.label,
+      crypto_currency_address: isCrypto ? tokens[0]?.value || tokens[0]?.address : undefined,
+      currency: selectedCurrency,
     };
-    console.log('ID ID', payload);
-    offerByApplicant(applicantId, removeValuesFromObject(payload, [undefined]));
-    console.log(payload);
+
+    await offerByApplicant(applicant.id, removeValuesFromObject(payload, [undefined]));
+    onSuccess();
+    onClose();
   };
 
   const paymentMethodOptions = isCrypto
@@ -108,6 +111,7 @@ export const useOrgOffer = (applicantId: string) => {
     onSelectPaymentTerm,
     onSelectPaymentMethod,
     isCrypto,
+    isNonPaid,
     paymentMethodOptions,
     setSelectedCurrency,
   };

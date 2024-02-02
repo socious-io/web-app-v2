@@ -6,6 +6,7 @@ type Option = { value: string; label: string; icon?: ReactNode };
 interface DropdownProps extends Props {
   options: Option[];
   minWidth?: string;
+  onChange?: (currency: string) => void;
 }
 export interface InputProps extends DefaultProps {
   id?: string;
@@ -20,6 +21,7 @@ export interface InputProps extends DefaultProps {
   register?: any;
   hints?: Array<{ hint: string; hide: boolean }>;
   startIcon?: ReactNode;
-  prefixDropdown?: DropdownProps;
+  postfix?: string | ReactNode;
   postfixDropdown?: DropdownProps;
+  noBorderPostfix?: boolean;
 }

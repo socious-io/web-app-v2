@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
 import { useLoaderData } from 'react-router-dom';
 import { JobsRes, jobs } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const useJobListing = () => {
   const data = useLoaderData() as JobsRes;
+
+  console.log(data);
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
   const [jobsList, setJobsList] = useState(data.items);

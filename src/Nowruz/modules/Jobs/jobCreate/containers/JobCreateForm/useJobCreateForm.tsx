@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Navigate, useLoaderData, useNavigate } from 'react-router-dom';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
@@ -10,7 +10,7 @@ import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREF
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
-import { CurrentIdentity } from 'src/core/api';
+import { CurrentIdentity, OrgMeta } from 'src/core/api';
 import {
   ProjectLengthType,
   ProjectPaymentSchemeType,
@@ -22,6 +22,7 @@ import {
   searchLocation,
   skills,
 } from 'src/core/api';
+import { removedEmptyProps } from 'src/core/utils';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
@@ -38,6 +39,8 @@ type Inputs = {
   category: string;
   paymentMin: number;
   paymentMax: number;
+  commitmentHoursLower: number;
+  commitmentHoursHigher: number;
   skills: Array<{ label: string; value: string }>;
   preference: ProjectRemotePreferenceType;
   type: ProjectType;
@@ -54,8 +57,8 @@ const schema = yup.object().shape({
   category: yup.string().required(),
   experienceLevel: yup.number().required('experience level is a required field'),
   length: yup.string().required('job length is a required field'),
-  paymentMin: yup.number().required().lessThan(yup.ref('paymentMax'), 'Max price must be higher than min price'),
-  paymentMax: yup.number().required().moreThan(yup.ref('paymentMin'), 'Max price must be higher than min price'),
+  paymentMin: yup.number().lessThan(yup.ref('paymentMax'), 'Max price must be higher than min price'),
+  paymentMax: yup.number().moreThan(yup.ref('paymentMin'), 'Max price must be higher than min price'),
   skills: yup
     .array()
     .of(
@@ -85,13 +88,17 @@ export const useJobCreateForm = () => {
     setValue,
     getValues,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
+    trigger,
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
+    mode: 'all',
   });
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
+
+  const navigate = useNavigate();
   const [openPreview, setOpenPreview] = useState(false);
   const [previewModalProps, setPreviewModalProps] = useState<any>();
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
@@ -103,30 +110,31 @@ export const useJobCreateForm = () => {
     return { value: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
   });
   const selectedSkills = watch('skills');
+  const paymentTypeOptions = PROJECT_PAYMENT_TYPE.slice().reverse();
 
   const onSelectLength = (length: ProjectLengthType) => {
-    setValue('length', length);
+    setValue('length', length, { shouldValidate: true });
   };
   const onSelectCause = (cause: SocialCauses) => {
-    setValue('cause', cause);
+    setValue('cause', cause, { shouldValidate: true });
   };
   const onSelectCategory = (category: string) => {
-    setValue('category', category);
+    setValue('category', category, { shouldValidate: true });
   };
   const onSelectType = (type: ProjectType) => {
-    setValue('type', type);
+    setValue('type', type, { shouldValidate: true });
   };
   const onSelectPaymentScheme = (paymentScheme: ProjectPaymentSchemeType) => {
-    setValue('paymentScheme', paymentScheme);
+    setValue('paymentScheme', paymentScheme, { shouldValidate: true });
   };
   const onSelectPreference = (preference: ProjectRemotePreferenceType) => {
-    setValue('preference', preference);
+    setValue('preference', preference, { shouldValidate: true });
   };
   const onSelectPaymentType = (paymentType: ProjectPaymentType) => {
-    setValue('paymentType', paymentType);
+    setValue('paymentType', paymentType, { shouldValidate: true });
   };
   const onSelectExperienceLevel = (experienceLevel: number) => {
-    setValue('experienceLevel', experienceLevel);
+    setValue('experienceLevel', experienceLevel, { shouldValidate: true });
   };
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
@@ -152,8 +160,8 @@ export const useJobCreateForm = () => {
   }, []);
 
   const onSelectCity = (location: { label: string; country: string }) => {
-    setValue('location', { city: location.label, country: location.country });
-    // console.log('value', location);
+    setValue('location', { city: location.label, country: location.country }, { shouldValidate: true });
+
     // if (location.country !== undefined) {
     //   console.log('inside', location.label);
     // }
@@ -173,32 +181,40 @@ export const useJobCreateForm = () => {
     type,
     location,
     skills,
+    commitmentHoursLower,
+    commitmentHoursHigher,
   }) => {
     const locationResult = location?.city ? location : {};
+    let jobPayload = {
+      causes_tags: [cause],
+      description,
+      experience_level: experienceLevel,
+      job_category_id: category,
+      payment_currency: 'USD',
+      payment_range_higher: paymentMax ? paymentMax.toString() : '',
+      payment_range_lower: paymentMin ? paymentMin.toString() : '',
+      payment_scheme: paymentScheme,
+      payment_type: paymentType,
+      project_length: length,
+      project_type: type,
+      remote_preference: preference,
+      skills: skills.map((item) => item.value),
+      status: 'ACTIVE',
+      title,
+      commitment_hours_lower: commitmentHoursLower ? commitmentHoursLower.toString() : '',
+      commitment_hours_higher: commitmentHoursHigher ? commitmentHoursHigher.toString() : '',
+      // ...locationResult,
+    };
     try {
-      const result = await createJob({
-        causes_tags: [cause],
-        description,
-        experience_level: experienceLevel,
-        job_category_id: category,
-        payment_currency: 'USD',
-        payment_range_higher: paymentMax.toString(),
-        payment_range_lower: paymentMin.toString(),
-        payment_scheme: paymentScheme,
-        payment_type: paymentType,
-        project_length: length,
-        project_type: type,
-        remote_preference: preference,
-        skills: skills.map((item) => item.value),
-        status: 'ACTIVE',
-        title,
-        // ...locationResult,
-      });
+      jobPayload = removedEmptyProps(jobPayload);
+      await createJob(jobPayload);
+
       setOpenSuccessModal(true);
     } catch (error) {}
   };
   const onPreview = () => {
-    const { name, description, image } = currentIdentity?.meta;
+    const { name, description, image, mission } = currentIdentity?.meta as OrgMeta;
+
     const {
       title,
       description: jobDescription,
@@ -210,10 +226,12 @@ export const useJobCreateForm = () => {
       length,
       type,
       preference,
+      cause,
+      skills,
     } = getValues();
     console.log('location', getValues());
     const previewModalPayload = {
-      company: { name, description, image },
+      company: { name, description, image, mission },
       job: {
         title,
         description: jobDescription,
@@ -221,18 +239,34 @@ export const useJobCreateForm = () => {
         isCryptoPayment: true,
         jobLength: PROJECT_LENGTH_V2.find((level) => level.value === length)?.label,
         jobType: PROJECT_TYPE_V2.find((level) => level.value === type)?.label,
-        location: location?.city ? location?.city : 'Anywhere',
+        city: location?.city || 'Anywhere',
+        country: location?.country,
+        // location: location?.city ? location?.city : 'Anywhere',
         maxPayment: paymentMax,
         minPayment: paymentMin,
         paymentType: PROJECT_PAYMENT_TYPE.find((level) => level.value === paymentType)?.label,
         experienceLevel: EXPERIENCE_LEVEL_V2.find((level) => level.value === experienceLevel)?.label,
+        socialCause: cause ? SOCIAL_CAUSES[cause].label : '',
+        skills: skills ? skills.map((item) => item.label) : [],
       },
     };
     setPreviewModalProps(previewModalPayload);
     setOpenPreview(true);
   };
   const onSelectSkills = (skills) => {
-    setValue('skills', skills);
+    setValue('skills', skills, { shouldValidate: true });
+  };
+  const onChangePaymentMin = (value: string) => {
+    setValue('paymentMin', value, { shouldValidate: true });
+    trigger('paymentMax');
+  };
+  const onChangePaymentMax = (value: string) => {
+    setValue('paymentMax', value, { shouldValidate: true });
+    trigger('paymentMin');
+  };
+
+  const handleCloseSuccessModal = () => {
+    navigate('/nowruz/jobs');
   };
   return {
     register,
@@ -260,5 +294,15 @@ export const useJobCreateForm = () => {
     onSelectLength,
     onSelectExperienceLevel,
     previewModalProps,
+    isDirty,
+    isValid,
+    onChangePaymentMax,
+    onChangePaymentMin,
+    paymentMin: getValues().paymentMin,
+    paymentMax: getValues().paymentMax,
+    paymentTypeOptions,
+    paymentType: getValues().paymentType,
+    paymentScheme: getValues().paymentScheme,
+    handleCloseSuccessModal,
   };
 };

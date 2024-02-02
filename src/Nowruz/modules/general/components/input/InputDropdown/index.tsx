@@ -17,7 +17,6 @@ export const InputDropdown: React.FC<InputDropdownProps> = ({
   ...props
 }) => {
   const CustomControl = ({ hasValue, icon, children, ...props }) => {
-    console.log(props.selectProps?.value?.icon);
     return (
       <components.Control {...props}>
         {<Icon className={css.startIcon} name={icon} fontSize={20} color="#667085" />}

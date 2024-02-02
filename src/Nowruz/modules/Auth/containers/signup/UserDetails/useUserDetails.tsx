@@ -1,10 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { debounce } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { identities, preRegister, updateProfile, UserMeta } from 'src/core/api';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { User, identities, preRegister, updateProfile } from 'src/core/api';
+import { dialog } from 'src/core/dialog/dialog';
 import { checkUsernameConditions } from 'src/core/utils';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
@@ -22,8 +23,11 @@ const schema = yup.object().shape({
 export const useUserDetails = () => {
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const resolver = useLoaderData() as { currentProfile: User };
+  const currentProfile = useRef<User>(resolver.currentProfile);
+
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -73,16 +77,18 @@ export const useUserDetails = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async ({ firstName, lastName, username }) => {
     try {
-      updateProfile({ username: username.toLowerCase(), first_name: firstName, last_name: lastName });
+      await updateProfile({ username: username.toLowerCase(), first_name: firstName, last_name: lastName });
       const currentIdentities = await identities();
 
       dispatch(setIdentityList(currentIdentities));
       navigate('../congrats');
     } catch (error) {
-      console.log(error);
+      dialog.alert({title: 'error', message: error.message});
+      return;
     }
   };
+  
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
-  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid };
+  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid, currentProfile };
 };

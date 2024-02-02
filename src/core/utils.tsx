@@ -64,6 +64,8 @@ export const getIdentityMeta = (identity: User | Organization | undefined) => {
       username: '',
       name: '',
       profileImage: undefined,
+      type: undefined,
+      website: undefined,
     };
   if ('first_name' in identity) {
     const user = identity as User;
@@ -71,6 +73,8 @@ export const getIdentityMeta = (identity: User | Organization | undefined) => {
       username: `@${user.username}`,
       name: `${user.first_name} ${user.last_name}`,
       profileImage: user.avatar,
+      type: 'users',
+      website: undefined,
     };
   }
   const org = identity as Organization;
@@ -78,5 +82,7 @@ export const getIdentityMeta = (identity: User | Organization | undefined) => {
     username: `@${org.shortname}`,
     name: org.name,
     profileImage: org.image,
+    type: 'organizations',
+    website: org.website,
   };
 };

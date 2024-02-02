@@ -117,3 +117,12 @@ div,
 label {
   color: var(--color-black-01);
 }
+
+/* WalletConnect Modal */
+w3m-modal {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  z-index: 5;
+  top: 30%;
+}

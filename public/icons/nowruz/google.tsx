@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { SvgProps } from './svg.types';
 
 export const Google: React.FC<SvgProps> = ({ width, height }) => {

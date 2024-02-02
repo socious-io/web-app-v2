@@ -4,6 +4,7 @@ import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 
 import css from './pagination.module.scss';
+
 export const Pagination: React.FC<PaginationProps> = (props) => {
   return (
     <div className="relative">

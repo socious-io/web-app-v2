@@ -32,6 +32,7 @@ import {
   getOrganizationMembers,
   getOrganizationByShortName,
   identities,
+  userOffers,
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -144,7 +145,7 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
-            path: 'list',
+            path: '',
             loader: async () => {
               const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
               return data;
@@ -156,7 +157,35 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          {
+            path: ':id',
+            loader: async ({ params }) => {
+              if (params.id) {
+                const requests = [job(params.id), jobQuestions(params.id)];
+                const [jobDetail, screeningQuestions] = await Promise.all(requests);
+                return { jobDetail, screeningQuestions };
+              }
+            },
+            async lazy() {
+              const { JobDetail } = await import('src/Nowruz/pages/jobs/detail');
+              return { Component: JobDetail };
+            },
+          },
         ],
+      },
+      {
+        path: 'contracts',
+        loader: async () => {
+          const requests = [userOffers({ page: 1, limit: 5 }), userMissions()];
+          const [offers, missions] = await Promise.all(requests);
+          return { offers, missions };
+        },
+        async lazy() {
+          const { Contracts } = await import('src/Nowruz/pages/contracts');
+          return {
+            Component: Protect(Contracts),
+          };
+        },
       },
     ],
   },
@@ -917,6 +946,12 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'complete',
+            loader: async () => {
+              const currentProfile = await profile();
+              return {
+                currentProfile,
+              };
+            },
             async lazy() {
               const { Details } = await import('src/Nowruz/pages/sign-up/Details');
               return {
@@ -1147,6 +1182,17 @@ function DefaultRoute(): JSX.Element {
 }
 
 function ErrorBoundary() {
+  const flag = 'refreshed';
+  let refreshed = localStorage.getItem(flag);
+
+  if (!refreshed) {
+    localStorage.setItem(flag, 'true');
+    window.location.reload();
+    return <></>;
+  }
+
+  localStorage.removeItem(flag);
+
   const error: any = useRouteError();
   if (error?.response?.status === 401) return <Navigate to="/intro" />;
   console.log(error);

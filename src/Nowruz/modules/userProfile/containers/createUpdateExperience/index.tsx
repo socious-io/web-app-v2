@@ -44,7 +44,11 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
     handleSubmit,
     onSave,
     onDelete,
+    dateError,
+    volunteer,
+    handleCheckVolunteer,
   } = useCreateUpdateExperience(handleClose, experience);
+
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
@@ -53,7 +57,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         required
         name="title"
         register={register}
-        placeholder="What is your title?"
+        placeholder="Enter job title"
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
       />
       <SearchDropdown
@@ -68,7 +72,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         }}
         className="flex-1"
         isSearchable
-        errors={errors['jobCategory']?.message ? [errors['jobCategory']?.message.toString()] : undefined}
+        errors={errors['jobCategory']?.label?.message ? [errors['jobCategory']?.label.message.toString()] : undefined}
         placeholder="Search for job category"
       />
       <SearchDropdown
@@ -87,7 +91,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         }}
         placeholder="Search for company"
         noOptionsMessage={({ inputValue }) => inputValue}
-        errors={errors['orgName']?.message ? [errors['orgName']?.message.toString()] : undefined}
+        errors={errors['org']?.label?.message ? [errors['org']?.label?.message.toString()] : undefined}
       />
 
       <SearchDropdown
@@ -104,8 +108,18 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         onChange={(value) => {
           onSelectCity(value);
         }}
-        errors={errors['city']?.message ? [errors['city']?.message.toString()] : undefined}
+        errors={errors['city']?.label?.message ? [errors['city']?.label?.message.toString()] : undefined}
       />
+      <div className="flex flex-col gap-2">
+        <p className="text-sm font-medium leading-5 text-Gray-light-mode-700">Volunteer experience?</p>
+        <Checkbox
+          id="volunteer-experience"
+          label={'Yes'}
+          checked={volunteer}
+          onChange={(e) => handleCheckVolunteer(e.target.checked)}
+          value
+        />
+      </div>
       <SearchDropdown
         id="employment-type"
         value={employmentTypeVal}
@@ -119,15 +133,18 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         }}
         className="flex-1"
         isSearchable
-        errors={errors['employmentType']?.message ? [errors['employmentType']?.message.toString()] : undefined}
+        errors={
+          errors['employmentType']?.label?.message ? [errors['employmentType']?.label?.message.toString()] : undefined
+        }
       />
       <Checkbox
         id="currently-working"
         label={'I am currently working in this role'}
         checked={currentlyWorking}
-        onChange={handleCheckWorking}
+        onChange={(e) => handleCheckWorking(e.target.checked)}
+        value
       />
-      <div className="flex gap-4 items-end">
+      <div className="flex gap-4 items-start">
         <SearchDropdown
           id="start-month"
           value={startMonth}
@@ -140,10 +157,9 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['startMonth']?.message ? [errors['startMonth']?.message.toString()] : undefined}
+          errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label?.message.toString()] : undefined}
         />
         <SearchDropdown
-          required
           id="start-year"
           value={startYear}
           options={years}
@@ -151,13 +167,14 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           onChange={(value) => {
             onSelectStartYear(value);
           }}
+          label="&nbsp;"
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['startYear']?.message ? [errors['startYear']?.message.toString()] : undefined}
+          errors={errors['startYear']?.label?.message ? [errors['startYear']?.label?.message.toString()] : undefined}
         />
       </div>
-      <div className="flex gap-4 items-end">
+      <div className="flex gap-4 items-start">
         <SearchDropdown
           id="end-month"
           value={endMonth}
@@ -170,11 +187,12 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           placeholder="Month"
           className="flex-1"
           isSearchable
-          errors={errors['endMonth']?.message ? [errors['endMonth']?.message.toString()] : undefined}
+          errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label?.message.toString()] : undefined}
           isDisabled={currentlyWorking}
         />
         <SearchDropdown
           id="end-year"
+          label="&nbsp;"
           value={endYear}
           options={years}
           hasDropdownIcon
@@ -184,7 +202,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
+          errors={dateError ? [dateError] : undefined} //{errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
           isDisabled={currentlyWorking}
         />
       </div>
@@ -225,6 +243,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
       open={open}
       handleClose={handleClose}
       title={experience ? 'Edit experience' : 'Add experience'}
+      subTitle={experience ? '' : 'Share where you’ve worked on your profile.'}
       content={contentJSX}
       footer={modalFooterJsx}
     />

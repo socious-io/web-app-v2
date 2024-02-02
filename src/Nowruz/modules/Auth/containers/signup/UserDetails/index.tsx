@@ -4,7 +4,8 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 import { useUserDetails } from './useUserDetails';
 export const UserDetails = () => {
-  const { register, handleSubmit, onSubmit, errors, isUsernameValid, isFormValid } = useUserDetails();
+  const { register, handleSubmit, onSubmit, errors, isUsernameValid, isFormValid, currentProfile } = useUserDetails();
+  const { last_name, first_name } = currentProfile.current;
 
   return (
     <>
@@ -14,6 +15,7 @@ export const UserDetails = () => {
           autoComplete="first"
           label="First name*"
           name="firstName"
+          defaultValue={first_name}
           register={register}
           placeholder="Your first name"
           errors={errors['firstName']?.message ? [errors['firstName']?.message.toString()] : undefined}
@@ -23,6 +25,7 @@ export const UserDetails = () => {
             id="last-name"
             label="Last name*"
             name="lastName"
+            defaultValue={last_name}
             register={register}
             placeholder="Your last name"
             errors={errors['lastName']?.message ? [errors['lastName']?.message.toString()] : undefined}
