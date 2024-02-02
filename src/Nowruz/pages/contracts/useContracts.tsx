@@ -10,6 +10,7 @@ export const useContracts = () => {
   const PER_PAGE = 5;
   const itemsCount = offers.total_count;
   const pageCount = Math.floor(itemsCount / PER_PAGE) + (itemsCount % PER_PAGE && 1);
+
   const fetchMore = async (page: number) => {
     const res = await userOffers({ page, limit: 5 });
     setOfferList(res.items);
