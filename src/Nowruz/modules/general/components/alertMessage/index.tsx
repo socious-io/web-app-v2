@@ -1,4 +1,5 @@
 import React from 'react';
+import { convertMarkdownToJSX } from 'src/core/convert-md-to-jsx';
 
 import css from './alertMessage.module.scss';
 import { AlertMessageProps } from './alertMessage.types';
@@ -10,7 +11,7 @@ export const AlertMessage: React.FC<AlertMessageProps> = ({ theme, iconName, tit
       <FeaturedIconOutlined iconName={iconName} size="md" theme={theme} />
       <div className="flex flex-col gap-1">
         <span className={`${css.title} ${css[`title-${theme}`]}`}>{title}</span>
-        <span className={`${css.subtitle} ${css[`title-${theme}`]}`}>{subtitle}</span>
+        <span className={`${css.subtitle} ${css[`title-${theme}`]}`}>{convertMarkdownToJSX(subtitle)}</span>
       </div>
     </div>
   );

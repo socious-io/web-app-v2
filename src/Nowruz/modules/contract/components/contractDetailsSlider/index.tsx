@@ -1,53 +1,89 @@
 import React from 'react';
+import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 
 import { ContractDetailsSliderProps } from './contractDetailsSlider.types';
 import { useContractDetailsSlider } from './useContractDetailsSlider';
+import { PaymentFiat } from '../paymentFiat';
 
-export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({
-  offer,
-  displayMessage,
-  messageComponent,
-  displayPrimaryButton,
-  displaySecondaryButton,
-  primaryButtonAction,
-  primaryButtonLabel,
-  secondaryButtonAction,
-  secondaryButtonLabel,
-}) => {
-  const { profileImage, name, tabs } = useContractDetailsSlider(offer);
+export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ offer, mission }) => {
+  const {
+    name,
+    profileImage,
+    type,
+    tabs,
+    displayMessage,
+    message,
+    displayPrimaryButton,
+    primaryButtonLabel,
+    primaryButtonAction,
+    displaySecondaryButton,
+    secondaryButtonLabel,
+    secondaryButtonAction,
+    openAlert,
+    setOpenAlert,
+    handleAlertSubmit,
+    alertIcon,
+    alertTitle,
+    alertMessage,
+    openPaymentModal,
+    setOpenPaymentModal,
+    handleClosePaymentModal,
+  } = useContractDetailsSlider(offer, mission);
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-6 ">
-          <Avatar size="72px" type="organizations" img={profileImage} />
-          <div className="flex flex-col">
-            <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">{offer.project.title}</span>
-            <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{name}</span>
+    <>
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6 ">
+            <Avatar size="72px" type="organizations" img={profileImage} />
+            <div className="flex flex-col">
+              <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">{offer.project.title}</span>
+              <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{name}</span>
+            </div>
           </div>
-        </div>
-        <div className="flex gap-3">
-          {displaySecondaryButton && (
-            <Button variant="outlined" color="secondary" fullWidth onClick={secondaryButtonAction}>
-              {secondaryButtonLabel}
+          <div className="flex gap-3">
+            <Button variant="outlined" color="secondary" fullWidth>
+              Message
+            </Button>
+            {displaySecondaryButton && (
+              <Button variant="outlined" color="secondary" fullWidth onClick={secondaryButtonAction}>
+                {secondaryButtonLabel}
+              </Button>
+            )}
+          </div>
+          {displayPrimaryButton && (
+            <Button variant="contained" color="primary" onClick={primaryButtonAction}>
+              {primaryButtonLabel}
             </Button>
           )}
+          {displayMessage && message}
 
-          <Button variant="outlined" color="secondary" fullWidth>
-            Message
-          </Button>
+          <HorizontalTabs tabs={tabs} leftAligned={false} containerCustomStyle="gap-0" />
         </div>
-        {displayPrimaryButton && (
-          <Button variant="contained" color="primary" onClick={primaryButtonAction}>
-            {primaryButtonLabel}
-          </Button>
-        )}
-        {displayMessage && messageComponent}
-
-        <HorizontalTabs tabs={tabs} leftAligned={false} containerCustomStyle="gap-0" />
       </div>
-    </div>
+      <AlertModal
+        open={openAlert}
+        onClose={() => setOpenAlert(false)}
+        onSubmit={handleAlertSubmit}
+        message={alertMessage}
+        title={alertTitle}
+        customIcon={alertIcon}
+        closeButtn={true}
+        closeButtonLabel="Cancel"
+        submitButton={true}
+        submitButtonLabel="Confirm"
+      />
+      {type === 'organizations' && offer.status === 'APPROVED' && (
+        <PaymentFiat
+          offerId={offer.id}
+          amount={offer.assignment_total}
+          currency={offer.currency}
+          open={openPaymentModal}
+          handleClose={handleClosePaymentModal}
+        />
+      )}
+    </>
   );
 };

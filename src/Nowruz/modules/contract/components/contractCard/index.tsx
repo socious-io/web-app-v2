@@ -8,9 +8,7 @@ import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 
 import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
-import { AcceptOffer } from '../acceptOffer';
-import { CompleteJob } from '../completeJob';
-import { ContractDetailsDefault } from '../contractDetailsDefault';
+import { ContractDetailsSlider } from '../contractDetailsSlider';
 
 export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) => {
   const {
@@ -23,9 +21,8 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
     openAcceptModal,
     offerVal,
     missionVal,
-    openCompleteModal,
-    openDefaultModal,
-    handleOpenModal,
+    openOverlayModal,
+    setOpenOverlayModal,
     handleCloseModal,
   } = useContractCard(offer, mission);
 
@@ -34,7 +31,7 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
       <div
         tabIndex={0}
         className="flex flex-col gap-5 border border-solid border-Gray-light-mode-200 rounded-default py-5 px-6 cursor-pointer"
-        onClick={handleOpenModal}
+        onClick={() => setOpenOverlayModal(true)}
       >
         <div className="flex gap-4 ">
           <Avatar size="56px" type={type || 'users'} img={profileImageUrl} />
@@ -63,14 +60,8 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
         </div>
       </div>
 
-      <Overlay open={openAcceptModal} onClose={handleCloseModal}>
-        <AcceptOffer offer={offerVal} />
-      </Overlay>
-      <Overlay open={openCompleteModal} onClose={handleCloseModal}>
-        <CompleteJob offer={offerVal} mission={missionVal} />
-      </Overlay>
-      <Overlay open={openDefaultModal} onClose={handleCloseModal}>
-        <ContractDetailsDefault offer={offerVal} />
+      <Overlay open={openOverlayModal} onClose={handleCloseModal}>
+        <ContractDetailsSlider offer={offerVal} mission={missionVal} />
       </Overlay>
     </>
   );
