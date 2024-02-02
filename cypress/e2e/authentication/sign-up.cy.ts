@@ -1,6 +1,14 @@
 describe('Sign up', () => {
   beforeEach(() => {
     // Mock the register API call
+    cy.intercept('GET', `${Cypress.env('api_server')}/identities*`, {
+      statusCode: 401,
+      body: { message: 'unauthorized' },
+    });
+    cy.intercept('POST', `${Cypress.env('api_server')}/auth/preregister*`, {
+      statusCode: 200,
+      body: { message: 'success' },
+    });
     cy.intercept('POST', `${Cypress.env('api_server')}/auth/register`, (req) => {
       if (req.body.email === 'existingEmail@test.com')
         req.reply({
