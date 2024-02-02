@@ -6,11 +6,13 @@ import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontal
 
 import { ContractDetailsSliderProps } from './contractDetailsSlider.types';
 import { useContractDetailsSlider } from './useContractDetailsSlider';
+import { PaymentFiat } from '../paymentFiat';
 
 export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ offer, mission }) => {
   const {
     name,
     profileImage,
+    type,
     tabs,
     displayMessage,
     message,
@@ -26,6 +28,9 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
     alertIcon,
     alertTitle,
     alertMessage,
+    openPaymentModal,
+    setOpenPaymentModal,
+    handleClosePaymentModal,
   } = useContractDetailsSlider(offer, mission);
   return (
     <>
@@ -39,15 +44,14 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
             </div>
           </div>
           <div className="flex gap-3">
+            <Button variant="outlined" color="secondary" fullWidth>
+              Message
+            </Button>
             {displaySecondaryButton && (
               <Button variant="outlined" color="secondary" fullWidth onClick={secondaryButtonAction}>
                 {secondaryButtonLabel}
               </Button>
             )}
-
-            <Button variant="outlined" color="secondary" fullWidth>
-              Message
-            </Button>
           </div>
           {displayPrimaryButton && (
             <Button variant="contained" color="primary" onClick={primaryButtonAction}>
@@ -71,6 +75,15 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
         submitButton={true}
         submitButtonLabel="Confirm"
       />
+      {type === 'organizations' && offer.status === 'APPROVED' && (
+        <PaymentFiat
+          offerId={offer.id}
+          amount={offer.assignment_total}
+          currency={offer.currency}
+          open={openPaymentModal}
+          handleClose={handleClosePaymentModal}
+        />
+      )}
     </>
   );
 };

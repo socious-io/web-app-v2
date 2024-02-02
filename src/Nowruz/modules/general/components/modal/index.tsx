@@ -7,7 +7,7 @@ import css from './modal.module.scss';
 import { ModalProps } from './modal.types';
 
 export const Modal: React.FC<ModalProps> = (props) => {
-  const { open, handleClose, icon, title, subTitle, content, footer, mobileFullHeight = true } = props;
+  const { open, handleClose, icon, title, subTitle, content, footer, mobileFullHeight = true, children } = props;
 
   return (
     <>
@@ -29,7 +29,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
               </IconButton>
             </div>
             <Divider className="w-full" />
-            <div className="w-full overflow-y-auto">{content}</div>
+            <div className="w-full overflow-y-auto">{content || children}</div>
             <Divider className="w-full" />
             {footer}
           </div>

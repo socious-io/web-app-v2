@@ -7,7 +7,9 @@ import {
   Offer,
   acceptOffer,
   cancelMission,
+  cancelOffer,
   completeMission,
+  dropMission,
   rejectOffer,
 } from 'src/core/api';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
@@ -15,7 +17,6 @@ import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon
 import { RootState } from 'src/store';
 
 import { ContractDetailTab } from '../contractDetailTab';
-import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 
 export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -23,8 +24,9 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   });
 
   const type = identity?.type;
-  const name = offer.offerer.meta.name;
-  const profileImage = offer.offerer.meta.image;
+  const name = type === 'users' ? offer.offerer.meta.name : offer.recipient.meta.name;
+  const profileImage = type === 'users' ? offer.offerer.meta.image : offer.recipient.meta.avatar;
+
   const tabs = [
     { label: 'Details', content: <ContractDetailTab offer={offer} /> },
     { label: 'Activity', content: <div /> },
@@ -45,6 +47,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const [alertMessage, setAlertMessage] = useState('');
   const [alertTitle, setAlertTitle] = useState('');
   const [alertIcon, setAlertIcon] = useState<ReactNode>();
+  const [openPaymentModal, setOpenPaymentModal] = useState(false);
 
   const setAllStates = (
     displayMsg: boolean,
@@ -127,6 +130,55 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
         return;
       }
     }
+    if (type === 'organizations') {
+      if (offerStatus === 'APPROVED' && offer.assignment_total) {
+        const alertMsg = (
+          <AlertMessage
+            theme="warning"
+            iconName="alert-circle"
+            title="Payment required"
+            subtitle={`${name} has accepted your offer. Proceed to payment to start this job.`}
+          />
+        );
+        setAllStates(
+          true,
+          alertMsg,
+          true,
+          'Proceed to payment',
+          true,
+          'Withdraw',
+          handleOpenPaymentModal,
+          withdrawOfferByOP,
+        );
+        return;
+      }
+      if (offerStatus === 'HIRED' && offer.assignment_total) {
+        const alertMsg = (
+          <AlertMessage
+            theme="primary"
+            iconName="alert-circle"
+            title="Payment was done successfully"
+            subtitle={`${name} can now start the job`}
+          />
+        );
+        setAllStates(true, alertMsg, false, '', true, 'Stop', undefined, handleStopByOP);
+        return;
+      }
+      if (offerStatus === 'CLOSED' && missionStatus === 'KICKED_OUT') {
+        const alertMsg = (
+          <AlertMessage theme="gray" iconName="alert-circle" title="You have stopped this contract" subtitle="" />
+        );
+        setAllStates(true, alertMsg, false, '', false, '');
+        return;
+      }
+      if (offerStatus === 'CANCELED') {
+        const alertMsg = (
+          <AlertMessage theme="gray" iconName="alert-circle" title="You have canceled this offer" subtitle="" />
+        );
+        setAllStates(true, alertMsg, false, '', false, '');
+        return;
+      }
+    }
 
     setAllStates(false, null, false, '', false, '');
   };
@@ -166,9 +218,33 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     setOpenAlert(false);
   };
 
+  const handleOpenPaymentModal = () => {
+    setOpenPaymentModal(true);
+  };
+
+  const handleClosePaymentModal = (paymentSuccess: boolean) => {
+    if (paymentSuccess) {
+      setOfferStatus('HIRED');
+      setmissionStatus('ACTIVE');
+    }
+    setOpenPaymentModal(false);
+  };
+  const handleStopByOP = async () => {
+    await dropMission(mission.id);
+    setOfferStatus('CLOSED');
+    setmissionStatus('KICKED_OUT');
+  };
+
+  const withdrawOfferByOP = async () => {
+    await cancelOffer(offer.id);
+    setOfferStatus('CANCELED');
+    setmissionStatus(undefined);
+  };
+
   return {
     name,
     profileImage,
+    type,
     tabs,
     displayMessage,
     message,
@@ -184,5 +260,8 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     alertIcon,
     alertTitle,
     alertMessage,
+    openPaymentModal,
+    setOpenPaymentModal,
+    handleClosePaymentModal,
   };
 };
