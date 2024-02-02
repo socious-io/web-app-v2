@@ -106,9 +106,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
                   'currency-dollar-circle',
                   ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
                 )}
-              {job.payment_type === 'VOLUNTEER' &&
-                job.payment_scheme === 'HOURLY' &&
-                renderJobFeatures('heart', 'Volunteer')}
+              {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
 
               {job.payment_type === 'VOLUNTEER' &&
                 job.payment_scheme === 'HOURLY' &&
