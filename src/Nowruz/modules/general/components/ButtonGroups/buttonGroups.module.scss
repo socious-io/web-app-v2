@@ -14,7 +14,6 @@
   transition: background-color 0.2s ease-in-out;
   &:first-child {
     border-radius: 0.5rem 0 0 0.5rem;
-    border-right: 0;
   }
   &:last-child {
     border-radius: 0 0.5rem 0.5rem 0;

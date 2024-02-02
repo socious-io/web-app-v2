@@ -5,7 +5,7 @@ import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 
 import { ContractDetailsSliderProps } from './contractDetailsSlider.types';
-import { useContractDetailsSlider } from './useContractDeatlsSlider';
+import { useContractDetailsSlider } from './useContractDetailsSlider';
 
 export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ offer, mission }) => {
   const {
