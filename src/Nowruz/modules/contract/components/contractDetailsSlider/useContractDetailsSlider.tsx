@@ -24,9 +24,9 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   });
 
   const type = identity?.type;
-
   const name = type === 'users' ? offer.offerer.meta.name : offer.recipient.meta.name;
   const profileImage = type === 'users' ? offer.offerer.meta.image : offer.recipient.meta.avatar;
+
   const tabs = [
     { label: 'Details', content: <ContractDetailTab offer={offer} /> },
     { label: 'Activity', content: <div /> },
