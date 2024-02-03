@@ -10,6 +10,8 @@ import {
   cancelMission,
   cancelOffer,
   completeMission,
+  confirmMission,
+  contestMission,
   dropMission,
   getOffer,
   rejectOffer,
@@ -36,7 +38,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   ];
 
   const [offerStatus, setOfferStatus] = useState(offer.status);
-  const [missionStatus, setmissionStatus] = useState<MissionStatus | undefined>(mission?.status);
+  const [missionStatus, setmissionStatus] = useState<MissionStatus | 'INACTIVE' | undefined>(mission?.status);
   const [displayMessage, setDisplayMessage] = useState(false);
   const [message, setMessage] = useState<ReactNode>();
   const [displayPrimaryButton, setDisplayPrimaryButton] = useState(false);
@@ -229,6 +231,40 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
         setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
+      if (offerStatus === 'CLOSED' && missionStatus === 'COMPLETE') {
+        const alertMsg = (
+          <AlertMessage
+            theme="warning"
+            iconName="alert-circle"
+            title="Awaiting confirmation"
+            subtitle={`<b>${name}</b> has marked this job completed. Confirm so they can receive payment.`}
+          />
+        );
+        setAllStates(
+          true,
+          alertMsg,
+          true,
+          'Confirm completion',
+          true,
+          'Contest',
+          handleConfirmCompletion,
+          handleContest,
+        );
+        return;
+      }
+
+      if (offerStatus === 'CLOSED' && missionStatus === 'INACTIVE') {
+        const alertMsg = (
+          <AlertMessage
+            theme="primary"
+            iconName="info-circle"
+            title="Job completed"
+            subtitle={`Completed on ${offer.updated_at}`}
+          />
+        );
+        setAllStates(true, alertMsg, false, '', false, '', undefined, undefined);
+        return;
+      }
     }
 
     setAllStates(false, null, false, '', false, '');
@@ -301,6 +337,28 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     await cancelOffer(offer.id);
     setOfferStatus('CANCELED');
     setmissionStatus(undefined);
+  };
+
+  const onConfirm = async () => {
+    if (!mission) return;
+    await confirmMission(mission.id);
+    setOfferStatus('CLOSED');
+    //setmissionStatus(''); TODO: What will be the mission status
+    setmissionStatus('INACTIVE');
+  };
+
+  const handleConfirmCompletion = async () => {
+    setAlertTitle('Confirm completion');
+    setAlertIcon(<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />);
+    setAlertMessage(`Do you want to job completion?`);
+    setHandleAlertSubmit(() => onConfirm);
+    setOpenAlert(true);
+  };
+
+  const handleContest = async () => {
+    if (!mission) return;
+    await contestMission(mission.id);
+    //setmissionStatus(''); TODO: What will be status for offer and mission, Do we need confirmation modal?
   };
 
   return {
