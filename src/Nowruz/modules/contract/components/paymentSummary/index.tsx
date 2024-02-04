@@ -11,8 +11,8 @@ export interface PaymentSummaryProps {
   currency: string;
 }
 export const PaymentSummary: React.FC<PaymentSummaryProps> = ({ amount, sociousFee, stripeFee, total, currency }) => {
-  const sociousPercent = Math.round((sociousFee / amount) * 100) / 100;
-  const stripePercent = Math.round((stripeFee / amount) * 100) / 100;
+  const sociousPercent = Math.trunc((sociousFee / amount) * 1000) / 10;
+  const stripePercent = Math.trunc((stripeFee / amount) * 1000) / 10;
   const symbol = currency === 'JPY' ? '¥' : '$';
   const renderItems = (title: string, value: number) => {
     return (

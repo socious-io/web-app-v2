@@ -6,7 +6,7 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
   const [cardOptionList, setCardOptionList] = useState<CardRadioButtonItem[]>([]);
   const [cardList, setCardList] = useState<Card[]>([]);
   const [selectedCardId, setSelectedCardId] = useState('');
-  const [process, setProcess] = useState(false);
+  const [paymentDisabled, setPaymentDisabled] = useState(!selectedCardId);
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -32,9 +32,13 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
     setCardOptionList(options);
   }, [cardList]);
 
+  useEffect(() => {
+    setPaymentDisabled(!selectedCardId);
+  }, [selectedCardId]);
+
   const proceedFiatPayment = async () => {
     if (!offerId) return;
-    setProcess(true);
+    setPaymentDisabled(true);
     try {
       await payByOffer(offerId, {
         service: 'STRIPE',
@@ -48,7 +52,7 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
       setOpenErrorModal(true);
     }
 
-    setProcess(false);
+    setPaymentDisabled(false);
   };
 
   return {
@@ -56,7 +60,7 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
     selectedCardId,
     setSelectedCardId,
     proceedFiatPayment,
-    process,
+    paymentDisabled,
     errorMessage,
     openErrorModal,
     setOpenErrorModal,
