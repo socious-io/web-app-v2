@@ -1,4 +1,6 @@
 import React from 'react';
+import PaymentCrypto from 'src/Nowruz/modules/contract/components/PaymentCrypto';
+import { PaymentFiat } from 'src/Nowruz/modules/contract/components/paymentFiat';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -6,7 +8,6 @@ import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontal
 
 import { ContractDetailsSliderProps } from './contractDetailsSlider.types';
 import { useContractDetailsSlider } from './useContractDetailsSlider';
-import { PaymentFiat } from '../paymentFiat';
 
 export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ offer, mission }) => {
   const {
@@ -31,6 +32,7 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
     openPaymentModal,
     setOpenPaymentModal,
     handleClosePaymentModal,
+    paymentOffer,
   } = useContractDetailsSlider(offer, mission);
   return (
     <>
@@ -75,14 +77,11 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
         submitButton={true}
         submitButtonLabel="Confirm"
       />
-      {type === 'organizations' && offer.status === 'APPROVED' && (
-        <PaymentFiat
-          offerId={offer.id}
-          amount={offer.assignment_total}
-          currency={offer.currency}
-          open={openPaymentModal}
-          handleClose={handleClosePaymentModal}
-        />
+      {type === 'organizations' && offer.status === 'APPROVED' && offer.payment_mode === 'FIAT' && (
+        <PaymentFiat offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
+      )}
+      {type === 'organizations' && offer.status === 'APPROVED' && offer.payment_mode === 'CRYPTO' && (
+        <PaymentCrypto offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
       )}
     </>
   );

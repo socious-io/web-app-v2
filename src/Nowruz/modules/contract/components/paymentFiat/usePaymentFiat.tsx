@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Card, cards, hireOffer, payByOffer } from 'src/core/api';
 import { CardRadioButtonItem } from 'src/Nowruz/modules/general/components/cardRadioButton/cardRadioButton.types';
 
-export const usePaymentFiat = (offerId: string, handleCloseModal: (paymentSuccess: boolean) => void) => {
+export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => void, offerId?: string) => {
   const [cardOptionList, setCardOptionList] = useState<CardRadioButtonItem[]>([]);
   const [cardList, setCardList] = useState<Card[]>([]);
   const [selectedCardId, setSelectedCardId] = useState('');
@@ -33,6 +33,7 @@ export const usePaymentFiat = (offerId: string, handleCloseModal: (paymentSucces
   }, [cardList]);
 
   const proceedFiatPayment = async () => {
+    if (!offerId) return;
     setProcess(true);
     try {
       await payByOffer(offerId, {

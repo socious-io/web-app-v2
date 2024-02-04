@@ -10,6 +10,7 @@ import {
   cancelOffer,
   completeMission,
   dropMission,
+  getOffer,
   rejectOffer,
 } from 'src/core/api';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
@@ -48,6 +49,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const [alertTitle, setAlertTitle] = useState('');
   const [alertIcon, setAlertIcon] = useState<ReactNode>();
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
+  const [paymentOffer, setPaymentOffer] = useState<Offer>();
 
   const setAllStates = (
     displayMsg: boolean,
@@ -218,7 +220,10 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     setOpenAlert(false);
   };
 
-  const handleOpenPaymentModal = () => {
+  const handleOpenPaymentModal = async () => {
+    const res = await getOffer(offer.id);
+    setPaymentOffer(res);
+
     setOpenPaymentModal(true);
   };
 
@@ -263,5 +268,6 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     openPaymentModal,
     setOpenPaymentModal,
     handleClosePaymentModal,
+    paymentOffer,
   };
 };
