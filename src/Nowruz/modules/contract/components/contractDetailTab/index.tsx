@@ -2,16 +2,28 @@ import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Offer } from 'src/core/api';
+import dapp from 'src/dapp';
 import { Icon } from 'src/Nowruz/general/Icon';
 
 interface ContractDetailTabProps {
   offer: Offer;
 }
 export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ offer }) => {
+  let unit = offer.currency;
+
+  if (offer.crypto_currency_address) {
+    dapp.NETWORKS.map((n) => {
+      const token = n.tokens.filter((t) => offer.crypto_currency_address === t.address)[0];
+      if (token) unit = token.symbol;
+    });
+  }
+
+  const cuttencyIcon =
+    offer.payment_mode === 'CRYPTO' ? '' : offer.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle';
   const renderDetailItems = (iconName: string, title: string, subtitle?: string) => {
     return (
       <div className="flex gap-1.5">
-        <Icon name={iconName} fontSize={20} color={variables.color_grey_500} />
+        {iconName && <Icon name={iconName} fontSize={20} color={variables.color_grey_500} />}
         <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{title}</span>
         {subtitle && <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{subtitle}</span>}
       </div>
@@ -25,11 +37,7 @@ export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ offer }) =
           {offer.due_date && renderDetailItems('calendar-check-01', `Due ${offer.due_date || ''}`)}
           {offer.total_hours && renderDetailItems('clock', `${offer.total_hours} hours`)}
           {offer.assignment_total &&
-            renderDetailItems(
-              offer.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle',
-              offer.assignment_total.toString(),
-              '(fixed-price)',
-            )}
+            renderDetailItems(cuttencyIcon, `${offer.assignment_total.toString()} ${unit}`, '(fixed-price)')}
           {offer.project.payment_type === 'VOLUNTEER' && (
             <div className="flex gap-1.5">
               <img src="/icons/nowruz/red-heart.svg" alt="" />
