@@ -82,9 +82,9 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
         handleClose={() => handleClose(false)}
         mobileFullHeight={false}
       />
-      {openAddCardModal && (
+      {openAddCardModal && offer && (
         <AddCardModal
-          currency={currency}
+          currency={offer.currency}
           open={openAddCardModal}
           handleClose={() => setOpenAddCardModal(false)}
           setCardsList={setCardList}
