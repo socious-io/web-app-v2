@@ -16,6 +16,7 @@ import {
   getOffer,
   rejectOffer,
 } from 'src/core/api';
+import { isoToStandard } from 'src/core/time';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { getSrtipeProfile } from 'src/pages/offer-received/offer-received.services';
@@ -38,7 +39,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   ];
 
   const [offerStatus, setOfferStatus] = useState(offer.status);
-  const [missionStatus, setmissionStatus] = useState<MissionStatus | 'INACTIVE' | undefined>(mission?.status);
+  const [missionStatus, setmissionStatus] = useState<MissionStatus | undefined>(mission?.status);
   const [displayMessage, setDisplayMessage] = useState(false);
   const [message, setMessage] = useState<ReactNode>();
   const [displayPrimaryButton, setDisplayPrimaryButton] = useState(false);
@@ -253,16 +254,16 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
         return;
       }
 
-      if (offerStatus === 'CLOSED' && missionStatus === 'INACTIVE') {
+      if (offerStatus === 'CLOSED' && missionStatus === 'CONFIRMED') {
         const alertMsg = (
           <AlertMessage
             theme="primary"
             iconName="info-circle"
             title="Job completed"
-            subtitle={`Completed on ${offer.updated_at}`}
+            subtitle={`Completed on ${isoToStandard(mission.updated_at.toString())}`}
           />
         );
-        setAllStates(true, alertMsg, false, '', false, '', undefined, undefined);
+        setAllStates(true, alertMsg, false, '', true, 'Review', undefined, undefined);
         return;
       }
     }
@@ -343,8 +344,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     if (!mission) return;
     await confirmMission(mission.id);
     setOfferStatus('CLOSED');
-    //setmissionStatus(''); TODO: What will be the mission status
-    setmissionStatus('INACTIVE');
+    setmissionStatus('CONFIRMED');
   };
 
   const handleConfirmCompletion = async () => {
@@ -358,7 +358,6 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const handleContest = async () => {
     if (!mission) return;
     await contestMission(mission.id);
-    //setmissionStatus(''); TODO: What will be status for offer and mission, Do we need confirmation modal?
   };
 
   return {
