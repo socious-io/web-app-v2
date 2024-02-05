@@ -166,6 +166,10 @@ export interface Applicant {
 
 export interface Offer extends OfferReq {
   id: string;
+  project_id: string;
+  recipient_id: string;
+  offerer_id: string;
+  applicant_id: string;
   status: OfferStatus;
   job_category: Category;
   project: Job;
@@ -175,6 +179,12 @@ export interface Offer extends OfferReq {
   applicant?: Applicant;
   created_at: Date;
   updated_at: Date;
+  amount?: number;
+  fee?: number;
+  stripe_fee?: number;
+  total?: number;
+  payout?: number;
+  app_fee?: number;
 }
 
 export interface Mission {
