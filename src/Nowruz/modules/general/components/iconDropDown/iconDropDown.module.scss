@@ -1,20 +1,18 @@
 @import 'src/components/_primitives.scss';
 
-.avatarBtn,
-.avatarBtn:hover {
+.avatarBtn {
   background-color: transparent;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding: 0;
 }
+.avatarBtnOpen,
 .avatarBtn:focus {
-  border: solid 4px #e6eded;
+  box-shadow: 0 0 0 4px $color-primary-100;
 }
 
-.avatarBtnOpen {
-  border: solid 4px #e6eded;
-}
 .menuList {
   display: flex;
   flex-direction: column;
@@ -24,7 +22,7 @@
   max-height: 384px;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: white;
+  background-color: $color-white;
   border: solid 1px $color-grey-200;
   border-radius: 8px;
   box-shadow:
