@@ -1,14 +1,20 @@
 import { Typography } from '@mui/material';
+import { Google } from 'public/icons/nowruz/google';
 import { Logo } from 'public/icons/nowruz/logo';
+import { useNavigate } from 'react-router-dom';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/Nowruz/modules/Auth/containers/ServiceIntro';
 import { EmailForm } from 'src/Nowruz/modules/Auth/containers/signup/EmailForm';
 import { reviews } from 'src/Nowruz/modules/Auth/statics/intro';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import css from './email.module.scss';
+import { useCaptcha } from '../../captcha';
 export const Email = () => {
   const type = localStorage.getItem('registerFor');
+  const { tried } = useCaptcha();
+  const navigate = useNavigate();
 
   const renderIntro = () => {
     if (type === 'user')
@@ -40,6 +46,18 @@ export const Email = () => {
           />
           <div className="mt-7">
             <EmailForm />
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={() => {
+                tried();
+                navigate('/oauth/google');
+              }}
+              className="flex w-full gap-4 normal-case text-base mt-4"
+            >
+              <Google />
+              Continue with Google
+            </Button>
           </div>
           <div className="my-5 text-center">
             <Typography variant="caption" className={css.signupTitle}>
