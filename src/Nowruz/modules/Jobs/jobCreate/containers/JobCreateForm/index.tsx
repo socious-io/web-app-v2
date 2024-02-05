@@ -2,7 +2,6 @@ import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
-import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
@@ -31,7 +30,6 @@ export const JobCreateForm = () => {
     openPreview,
     setOpenPreview,
     openSuccessModal,
-    setOpenSuccessModal,
     onPreview,
     skills,
     selectedSkills,
@@ -54,6 +52,10 @@ export const JobCreateForm = () => {
     paymentType,
     paymentScheme,
     handleCloseSuccessModal,
+    onChangeCommitHoursMin,
+    onChangeCommitHoursMax,
+    commitmentHoursHigher,
+    commitmentHoursLower,
   } = useJobCreateForm();
 
   const renderInfo = (title: string, description: string) => (
@@ -67,7 +69,6 @@ export const JobCreateForm = () => {
       <div className="flex justfy-center align-center">
         <Input
           name="paymentMin"
-          // register={register}
           value={paymentMin}
           onChange={(e) => onChangePaymentMin(e.target.value)}
           placeholder="0"
@@ -78,7 +79,6 @@ export const JobCreateForm = () => {
         <div className="flex items-center mx-2">to</div>
         <Input
           name="paymentMax"
-          // register={register}
           value={paymentMax}
           onChange={(e) => onChangePaymentMax(e.target.value)}
           placeholder="0"
@@ -94,7 +94,8 @@ export const JobCreateForm = () => {
       <div className="flex justfy-center align-center">
         <Input
           name="commitmentHoursLower"
-          register={register}
+          value={commitmentHoursLower}
+          onChange={(e) => onChangeCommitHoursMin(e.target.value)}
           postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
           placeholder="0"
           className={css.priceInputs}
@@ -106,7 +107,8 @@ export const JobCreateForm = () => {
         <div className="flex items-center mx-2">to</div>
         <Input
           name="commitmentHoursHigher"
-          register={register}
+          value={commitmentHoursHigher}
+          onChange={(e) => onChangeCommitHoursMax(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
           postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
@@ -118,13 +120,7 @@ export const JobCreateForm = () => {
       </div>
     );
   };
-  const renderCustomErrors = (errors: string[]) => {
-    return errors.map((e, index) => (
-      <p key={index} className={`${css.errorMsg} ${css.msg}`}>
-        {e}
-      </p>
-    ));
-  };
+
   return (
     <div>
       <div className={css.back}>
@@ -217,8 +213,6 @@ export const JobCreateForm = () => {
                     </div>
                   ),
                 },
-                // errors={errors['']?.message ? [errors['description']?.message.toString()] : undefined}
-                // { label: 'In my timezone', value: 'In my timezone' },
               ]}
             />
           </div>
@@ -236,7 +230,7 @@ export const JobCreateForm = () => {
           </div>
         </div>
         <div className={css.row}>
-          {renderInfo('Job type', 'is it a full time job?')}
+          {renderInfo('Job type', 'Is it a full time job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
               placeholder="Please select"
@@ -329,6 +323,7 @@ export const JobCreateForm = () => {
               chipBgColor={variables.color_grey_blue_50}
               chipIconColor={variables.color_grey_blue_500}
               displayDefaultBadges={false}
+              errors={errors['skills']?.message ? [errors['skills']?.message.toString()] : undefined}
             />
           </div>
         </div>
