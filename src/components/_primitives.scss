@@ -1,3 +1,4 @@
+// V2 //
 :root {
   --color-primary-01: #004a46;
   --color-secondary-02: rgba(47, 134, 71, 1);
@@ -50,7 +51,16 @@
   src: url('/fonts/Inter-SemiBold.woff2');
 }
 
-//Nowruz Colors
+// NOWRUZ FOUNDATIONS //
+
+// Colors //
+
+// Base
+$color-white: #fff;
+$color-black: #000;
+$color-transparent: rgba(255,255,255,0);
+
+// Brand
 $color-primary-25: #f9fbfb;
 $color-primary-50: #f3f6f6;
 $color-primary-100: #e6eded;
@@ -60,9 +70,10 @@ $color-primary-500: #336e6b;
 $color-primary-600: #004a46;
 $color-primary-700: #003b38;
 $color-primary-800: #002c2a;
+$color-primary-900: #001e1c;
+$color-primary-950: #001615;
 
-$color-white: #ffffff;
-
+// Grey (light mode)
 $color-grey-25: #fcfcfd;
 $color-grey-50: #f9fafb;
 $color-grey-100: #f2f4f7;
@@ -74,88 +85,192 @@ $color-grey-600: #475467;
 $color-grey-700: #344054;
 $color-grey-800: #1d2939;
 $color-grey-900: #101828;
+$color-grey-950: #0c111d;
 
-$color-grey-blue-50: #f8f9fc;
-$color-grey-blue-200: #d5d9eb;
-$color-grey-blue-500: #4e5ba6;
-$color-grey-blue-600: #3e4784;
-$color-grey-blue-700: #363f72;
+// Burgundy
+$color-burgundy-25: #fdfafb;
+$color-burgundy-50: #fbf5f6;
+$color-burgundy-100: #f7ebed;
+$color-burgundy-200: #efd6da;
+$color-burgundy-300: #dfacb5;
+$color-burgundy-400: #d08390;
+$color-burgundy-500: #c0596b;
+$color-burgundy-600: #b03046;
+$color-burgundy-700: #8d2638;
+$color-burgundy-800: #6a1d2a;
+$color-burgundy-900: #46131c;
+$color-burgundy-950: #350e15;
 
+// Sail
+$color-sail-25: #fefdfd;
+$color-sail-50: #fdfbfa;
+$color-sail-100: #fbf7f5;
+$color-sail-200: #f7f0ec;
+$color-sail-300: #f3e8e2;
+$color-sail-400: #efe1d9;
+$color-sail-500: #ebd9cf;
+$color-sail-600: #bcaea6;
+$color-sail-700: #8d827c;
+$color-sail-800: #5e5753;
+$color-sail-900: #2f2b29;
+$color-sail-950: #181615;
+
+// Error
 $color-error-25: #fffbfa;
 $color-error-50: #fef3f2;
 $color-error-100: #fee4e2;
 $color-error-200: #fecdca;
 $color-error-300: #fda29b;
+$color-error-400: #f97066;
 $color-error-500: #f04438;
 $color-error-600: #d92d20;
 $color-error-700: #b42318;
+$color-error-800: #912018;
+$color-error-900: #7a271a;
+$color-error-950: #55160c;
 
-$color-success-25: #f6fef9;
-$color-success-50: #ecfdf3;
-$color-success-100: #d1fadf;
-$color-success-300: #75e0a7;
-$color-success-500: #12b76a;
-$color-success-600: #039855;
-$color-success-700: #067647;
-
-$color-sail-100: #fbf7f5;
-
+// Warning
 $color-warning-25: #fffcf5;
 $color-warning-50: #fffaeb;
 $color-warning-100: #fef0c7;
+$color-warning-200: #fedf89;
 $color-warning-300: #fec84b;
+$color-warning-400: #fdb022;
+$color-warning-500: #f79009;
 $color-warning-600: #dc6803;
 $color-warning-700: #b54708;
+$color-warning-800: #93370d;
+$color-warning-900: #7a2e0e;
+$color-warning-950: #4e1d09;
 
-$color-burgundy-600: #b03046;
+// Success
+$color-success-25: #f6fef9;
+$color-success-50: #ecfdf3;
+$color-success-100: #dcfae6;
+$color-success-200: #abefc6;
+$color-success-300: #75e0a7;
+$color-success-400: #47cd89;
+$color-success-500: #17b26a;
+$color-success-600: #079455;
+$color-success-700: #067647;
+$color-success-800: #085d3a;
+$color-success-900: #074d31;
+$color-success-950: #053321;
 
-// Nowruz Box Shadows
-$Focus-rings-brand: 0px 0px 0px 4px rgba(51, 110, 107, 0.24);
-$Focus-rings-brand-shadow-xs:
+// Grey blue
+$color-grey-blue-25: #fcfcfd;
+$color-grey-blue-50: #f8f9fc;
+$color-grey-blue-100: #eaecf5;
+$color-grey-blue-200: #d5d9eb;
+$color-grey-blue-300: #b3b8db;
+$color-grey-blue-400: #717bbc;
+$color-grey-blue-500: #4e5ba6;
+$color-grey-blue-600: #3e4784;
+$color-grey-blue-700: #363f72;
+$color-grey-blue-800: #293056;
+$color-grey-blue-900: #101323;
+$color-grey-blue-950: #0d0f1c;
+
+// Fonts
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem; // "base" is often considered the default font size
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 1.875rem;
+$font-size-4xl: 2.25rem;
+$font-size-5xl: 3rem;
+$font-size-6xl: 3.75rem;
+$font-size-7xl: 4.5rem;
+
+// Focus
+$focus-ring-brand: 0px 0px 0px 4px rgba(51, 110, 107, 0.24);
+$focus-ring-brand-shadow-xs:
   0px 0px 0px 4px rgba(51, 110, 107, 0.24),
   0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-$Focus-rings-brand-shadow-sm:
+$focus-ring-brand-shadow-sm:
   0px 0px 0px 4px rgba(51, 110, 107, 0.24),
   0px 1px 2px 0px rgba(16, 24, 40, 0.06),
   0px 1px 3px 0px rgba(16, 24, 40, 0.1);
-$Focus-rings-gray: 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
-$Focus-rings-gray-shadow-xs:
+$focus-ring-gray: 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
+$focus-ring-gray-shadow-xs:
   0px 0px 0px 4px rgba(152, 162, 179, 0.14),
   0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-$Focus-rings-gray-shadow-sm:
+$focus-ring-gray-shadow-sm:
   0px 0px 0px 4px rgba(152, 162, 179, 0.14),
   0px 1px 2px 0px rgba(16, 24, 40, 0.06),
   0px 1px 3px 0px rgba(16, 24, 40, 0.1);
-$Focus-rings-gray-secondary: 0px 0px 0px 4px rgba(152, 162, 179, 0.2);
-$Focus-rings-error: 0px 0px 0px 4px rgba(240, 68, 56, 0.24);
-$Focus-rings-error-shadow-xs:
+$focus-ring-gray-secondary: 0px 0px 0px 4px rgba(152, 162, 179, 0.2);
+$focus-ring-error: 0px 0px 0px 4px rgba(240, 68, 56, 0.24);
+$focus-ring-error-shadow-xs:
   0px 0px 0px 4px rgba(240, 68, 56, 0.24),
   0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-$Shadows-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-$Shadows-sm:
+
+// Shadows
+$shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+$shadow-sm:
   0px 1px 2px 0px rgba(16, 24, 40, 0.06),
   0px 1px 3px 0px rgba(16, 24, 40, 0.1);
-$Shadows-md:
+$shadow-md:
   0px 2px 4px -2px rgba(16, 24, 40, 0.06),
   0px 4px 8px -2px rgba(16, 24, 40, 0.1);
-$Shadows-lg:
+$shadow-lg:
   0px 4px 6px -2px rgba(16, 24, 40, 0.03),
   0px 12px 16px -4px rgba(16, 24, 40, 0.08);
-$Shadows-xl:
+$shadow-xl:
   0px 8px 8px -4px rgba(16, 24, 40, 0.03),
   0px 20px 24px -4px rgba(16, 24, 40, 0.08);
-$Shadows-2xl: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
-$Shadows-3xl: 0px 32px 64px -12px rgba(16, 24, 40, 0.14);
+$shadow-2xl: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
+$shadow-3xl: 0px 32px 64px -12px rgba(16, 24, 40, 0.14);
 
-//Nowruz border radius
+// Radius
 $radius-none: 0;
-$radius-xxs: 0.125rem;
-$radius-xs: 0.25rem;
-$radius-sm: 0.375rem;
-$radius-default: 0.5rem;
-$radius-lg: 0.625rem;
-$radius-xl: 0.75rem;
-$radius-2xl: 1rem;
-$radius-3xl: 1.25rem;
-$radius-4xl: 1.5rem;
+$radius-xxs: 2px;
+$radius-xs: 4px;
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 10px;
+$radius-xl: 12px;
+$radius-2xl: 16px;
+$radius-3xl: 20px;
+$radius-4xl: 24px;
 $radius-full: 9999px;
+
+// Spacing
+$spacing-none: 0;
+$spacing-xxs: 2px;
+$spacing-xs: 4px;
+$spacing-sm: 6px;
+$spacing-md: 8px;
+$spacing-lg: 12px;
+$spacing-xl: 16px;
+$spacing-2xl: 20px;
+$spacing-3xl: 24px;
+$spacing-4xl: 32px;
+$spacing-5xl: 40px;
+$spacing-6xl: 48px;
+$spacing-7xl: 64px;
+$spacing-8xl: 80px;
+$spacing-9xl: 96px;
+$spacing-10xl: 128px;
+$spacing-11xl: 160px;
+
+// Widths
+$width-xxs: 320px;
+$width-xs: 384px;
+$width-sm: 480px;
+$width-md: 560px;
+$width-lg: 640px;
+$width-xl: 768px;
+$width-2xl: 1024px;
+$width-3xl: 1280px;
+$width-4xl: 1440px;
+$width-5xl: 1600px;
+$width-6xl: 1920px;
+$paragraph-max-width: 720px;
+
+// Containers
+$container-padding-mobile: 16px;
+$container-padding-desktop: 32px;
+$container-max-width-desktop: 1280px;
