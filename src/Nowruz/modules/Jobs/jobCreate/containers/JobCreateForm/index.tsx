@@ -334,9 +334,9 @@ export const JobCreateForm = () => {
         </div>
         <div className={css.footer}>
           <div className="flex space-x-3 ">
-            <Button color="secondary" variant="outlined" onClick={onPreview} disabled={!isValid || !isDirty}>
+            {/* <Button color="secondary" variant="outlined" onClick={onPreview} disabled={!isValid || !isDirty}>
               Preview
-            </Button>
+            </Button> */}
             <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)}>
               Publish job
             </Button>

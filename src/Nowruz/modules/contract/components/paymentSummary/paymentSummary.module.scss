@@ -1,6 +1,7 @@
 @import 'src/components/_primitives.scss';
 
 .container {
+  width: 100%;
   padding: 20px 16px 24px 16px;
   border: 1px solid $color-grey-200;
   border-radius: 8px;

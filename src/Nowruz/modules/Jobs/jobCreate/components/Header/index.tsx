@@ -18,7 +18,7 @@ export const JobCreateHeader: React.FC<JobCreateHeaderProps> = ({ onPublish, onP
           <h2 className={css.description}>Tell us more about your job</h2>
         </div>
         <div className="flex space-x-3 mt-4 sm:mt-0">
-          <Button
+          {/* <Button
             color="secondary"
             variant="outlined"
             onClick={onPreview}
@@ -26,7 +26,7 @@ export const JobCreateHeader: React.FC<JobCreateHeaderProps> = ({ onPublish, onP
             disabled={!isValid || !isDirty}
           >
             Preview
-          </Button>
+          </Button> */}
           <Button color="primary" variant="contained" onClick={onPublish} block={isMobile}>
             Publish
           </Button>
