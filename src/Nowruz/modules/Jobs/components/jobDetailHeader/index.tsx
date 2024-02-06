@@ -53,7 +53,11 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser })
           </div>
 
           <span className={css.subtitle}>
-            <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.identity_meta.mission} />
+            <ExpandableText
+              isMarkdown
+              expectedLength={isTouchDevice() ? 85 : 175}
+              text={job.identity_meta.mission || ''}
+            />
           </span>
           {!job.applied && (
             <AuthGuard>
