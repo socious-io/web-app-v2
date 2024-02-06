@@ -1,0 +1,49 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid $color-grey-200;
+  border-radius: 8px;
+  padding: 16px;
+}
+.row {
+  display: flex;
+  @media screen and (max-width: 600px) {
+    justify-content: space-between;
+    flex-direction: column;
+  }
+}
+
+.info {
+  width: 280px;
+  margin-right: 32px;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+}
+.infoTitle {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: $color-grey-700;
+}
+.infoDescription {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: $color-grey-600;
+}
+.infoError {
+  color: $color-error-500;
+}
+
+.componentsContainer {
+  width: 512px;
+  @media screen and (max-width: 600px) {
+    max-width: 100%;
+  }
+}

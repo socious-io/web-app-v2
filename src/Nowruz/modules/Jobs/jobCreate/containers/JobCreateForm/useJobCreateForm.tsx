@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { Navigate, useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
@@ -10,7 +10,7 @@ import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREF
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
-import { CurrentIdentity, OrgMeta } from 'src/core/api';
+import { CurrentIdentity, Location, OrgMeta, QuestionReq, addQuestionJob } from 'src/core/api';
 import {
   ProjectLengthType,
   ProjectPaymentSchemeType,
@@ -20,13 +20,11 @@ import {
   SocialCauses,
   createJob,
   searchLocation,
-  skills,
 } from 'src/core/api';
-import { removedEmptyProps } from 'src/core/utils';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
-type Location =
+type LocationInput =
   | {
       city: string;
       country: string;
@@ -45,20 +43,26 @@ type Inputs = {
   preference: ProjectRemotePreferenceType;
   type: ProjectType;
   length: ProjectLengthType;
-  location?: Location;
+  location?: LocationInput;
   paymentType: ProjectPaymentType;
   paymentScheme: ProjectPaymentSchemeType;
   experienceLevel: number;
 };
 const schema = yup.object().shape({
   title: yup.string().min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters').required(),
-  cause: yup.string().required(),
-  description: yup.string().required(),
-  category: yup.string().required(),
-  experienceLevel: yup.number().required('experience level is a required field'),
-  length: yup.string().required('job length is a required field'),
+  cause: yup.string().required('Required'),
+  description: yup.string().required('Required'),
+  category: yup.string().required('Required'),
+  experienceLevel: yup.number().required('Required'),
+  length: yup.string().required('Required'),
   paymentMin: yup.number().lessThan(yup.ref('paymentMax'), 'Max price must be higher than min price'),
   paymentMax: yup.number().moreThan(yup.ref('paymentMin'), 'Max price must be higher than min price'),
+  commitmentHoursLower: yup
+    .number()
+    .lessThan(yup.ref('commitmentHoursHigher'), 'Max hours must be higher than min hours'),
+  commitmentHoursHigher: yup
+    .number()
+    .moreThan(yup.ref('commitmentHoursLower'), 'Max hours must be higher than min hours'),
   skills: yup
     .array()
     .of(
@@ -67,18 +71,18 @@ const schema = yup.object().shape({
         value: yup.string(),
       }),
     )
-    .required('Skills are required'),
-  preference: yup.string().required(),
-  paymentType: yup.string().required('payment type is a required field'),
-  type: yup.string().required(),
-  paymentScheme: yup.string().required('payment terms  is a required field'),
+    .required('Required'),
+  preference: yup.string().required('Required'),
+  paymentType: yup.string().required('Required'),
+  type: yup.string().required('Required'),
+  paymentScheme: yup.string().required('Required'),
   location: yup
     .object()
     .shape({
       city: yup.string(),
       country: yup.string(),
     })
-    .required(),
+    .required('Required'),
 });
 
 export const useJobCreateForm = () => {
@@ -104,6 +108,8 @@ export const useJobCreateForm = () => {
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [skills, setSkills] = useState<Array<{ label: string; value: string }>>([]);
   const { categories } = useLoaderData().jobCategories || {};
+  const [questions, setQuestions] = useState<QuestionReq[]>([]);
+  const [openCreateQuestion, setOpenCreateQuestion] = useState(false);
   const catagoriesList = categories.map((item) => ({ label: item.name, value: item.id }));
   const keytems = Object.keys(SOCIAL_CAUSES);
   const causesList = keytems.map((i) => {
@@ -138,8 +144,11 @@ export const useJobCreateForm = () => {
   };
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
-      label: `${city.name}, ${city.region_name}`,
+      // label: `${city.name}, ${city.region_name}`,
+      // countryCode: city.country_code,
+      label: JSON.stringify({ label: `${city.name}, ${city.country_name}`, description: city.timezone_utc }),
       countryCode: city.country_code,
+      city: city.name,
     }));
   };
 
@@ -159,12 +168,13 @@ export const useJobCreateForm = () => {
     });
   }, []);
 
-  const onSelectCity = (location: { label: string; country: string }) => {
-    setValue('location', { city: location.label, country: location.country }, { shouldValidate: true });
+  const onSelectCity = (location) => {
+    setValue('location', { city: location.city, country: location.countryCode }, { shouldValidate: true });
+  };
 
-    // if (location.country !== undefined) {
-    //   console.log('inside', location.label);
-    // }
+  const addQuestion = (q: QuestionReq) => {
+    setQuestions(questions.concat(q));
+    setOpenCreateQuestion(false);
   };
   const onSubmit: SubmitHandler<Inputs> = async ({
     title,
@@ -203,12 +213,15 @@ export const useJobCreateForm = () => {
       title,
       commitment_hours_lower: commitmentHoursLower ? commitmentHoursLower.toString() : '',
       commitment_hours_higher: commitmentHoursHigher ? commitmentHoursHigher.toString() : '',
-      // ...locationResult,
+      ...locationResult,
     };
     try {
-      jobPayload = removedEmptyProps(jobPayload);
-      await createJob(jobPayload);
-
+      const res = await createJob(jobPayload);
+      const requests = [];
+      questions.forEach((q) => {
+        requests.push(addQuestionJob(res.id, q));
+      });
+      await Promise.all(requests);
       setOpenSuccessModal(true);
     } catch (error) {}
   };
@@ -264,9 +277,23 @@ export const useJobCreateForm = () => {
     setValue('paymentMax', value, { shouldValidate: true });
     trigger('paymentMin');
   };
+  const onChangeCommitHoursMin = (value: string) => {
+    setValue('commitmentHoursLower', Number(value), { shouldValidate: true });
+    trigger('commitmentHoursHigher');
+  };
+  const onChangeCommitHoursMax = (value: string) => {
+    setValue('commitmentHoursHigher', Number(value), { shouldValidate: true });
+    trigger('commitmentHoursLower');
+  };
 
   const handleCloseSuccessModal = () => {
     navigate('/nowruz/jobs');
+  };
+
+  const deleteQuestion = (index: number) => {
+    const q = [...questions];
+    q.splice(index, 1);
+    setQuestions(q);
   };
   return {
     register,
@@ -304,5 +331,14 @@ export const useJobCreateForm = () => {
     paymentType: getValues().paymentType,
     paymentScheme: getValues().paymentScheme,
     handleCloseSuccessModal,
+    onChangeCommitHoursMin,
+    onChangeCommitHoursMax,
+    commitmentHoursHigher: getValues().commitmentHoursHigher,
+    commitmentHoursLower: getValues().commitmentHoursLower,
+    questions,
+    addQuestion,
+    openCreateQuestion,
+    setOpenCreateQuestion,
+    deleteQuestion,
   };
 };
