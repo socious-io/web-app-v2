@@ -14,12 +14,12 @@ import { AuthGuard } from 'src/Nowruz/modules/authGuard';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { CountryFlag } from 'src/Nowruz/modules/general/components/countryFlag';
+import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { RootState } from 'src/store';
 
 import css from './jobDetailAbout.module.scss';
 import { ApplyModal } from '../applyModal';
-import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 
 interface JobDetailAboutProps {
   isUser: boolean;

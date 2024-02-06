@@ -10,7 +10,7 @@ import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREF
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
-import { CurrentIdentity, Location, OrgMeta } from 'src/core/api';
+import { CurrentIdentity, Location, OrgMeta, QuestionReq, addQuestionJob } from 'src/core/api';
 import {
   ProjectLengthType,
   ProjectPaymentSchemeType,
@@ -21,7 +21,6 @@ import {
   createJob,
   searchLocation,
 } from 'src/core/api';
-import { removedEmptyProps } from 'src/core/utils';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
@@ -109,6 +108,8 @@ export const useJobCreateForm = () => {
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [skills, setSkills] = useState<Array<{ label: string; value: string }>>([]);
   const { categories } = useLoaderData().jobCategories || {};
+  const [questions, setQuestions] = useState<QuestionReq[]>([]);
+  const [openCreateQuestion, setOpenCreateQuestion] = useState(false);
   const catagoriesList = categories.map((item) => ({ label: item.name, value: item.id }));
   const keytems = Object.keys(SOCIAL_CAUSES);
   const causesList = keytems.map((i) => {
@@ -168,12 +169,12 @@ export const useJobCreateForm = () => {
   }, []);
 
   const onSelectCity = (location) => {
-    console.log('test log location', location);
     setValue('location', { city: location.city, country: location.countryCode }, { shouldValidate: true });
+  };
 
-    // if (location.country !== undefined) {
-    //   console.log('inside', location.label);
-    // }
+  const addQuestion = (q: QuestionReq) => {
+    setQuestions(questions.concat(q));
+    setOpenCreateQuestion(false);
   };
   const onSubmit: SubmitHandler<Inputs> = async ({
     title,
@@ -215,8 +216,12 @@ export const useJobCreateForm = () => {
       ...locationResult,
     };
     try {
-      await createJob(jobPayload);
-
+      const res = await createJob(jobPayload);
+      const requests = [];
+      questions.forEach((q) => {
+        requests.push(addQuestionJob(res.id, q));
+      });
+      await Promise.all(requests);
       setOpenSuccessModal(true);
     } catch (error) {}
   };
@@ -284,6 +289,12 @@ export const useJobCreateForm = () => {
   const handleCloseSuccessModal = () => {
     navigate('/nowruz/jobs');
   };
+
+  const deleteQuestion = (index: number) => {
+    const q = [...questions];
+    q.splice(index, 1);
+    setQuestions(q);
+  };
   return {
     register,
     handleSubmit,
@@ -324,5 +335,10 @@ export const useJobCreateForm = () => {
     onChangeCommitHoursMax,
     commitmentHoursHigher: getValues().commitmentHoursHigher,
     commitmentHoursLower: getValues().commitmentHoursLower,
+    questions,
+    addQuestion,
+    openCreateQuestion,
+    setOpenCreateQuestion,
+    deleteQuestion,
   };
 };
