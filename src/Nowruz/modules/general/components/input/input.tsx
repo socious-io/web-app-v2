@@ -1,6 +1,6 @@
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import { AlertCircle } from 'public/icons/nowruz/alert-circle';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { InputDropdown } from 'src/Nowruz/modules/general/components/input/InputDropdown';
@@ -24,6 +24,7 @@ export const Input: React.FC<InputProps> = ({
   postfix,
   noBorderPostfix = false,
   postfixDropdown,
+  onEnter,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -61,6 +62,13 @@ export const Input: React.FC<InputProps> = ({
     return val;
   };
 
+  const handleKeydown = (e: ChangeEvent<unknown>) => {
+    const value = (e.target as HTMLInputElement)?.value;
+    if ('key' in e && e.key === 'Enter') {
+      onEnter?.(value);
+    }
+  };
+
   const endAdornmentJSX = (
     <>
       {endIcon && <InputAdornment position="end">{endIcon}</InputAdornment>}
@@ -92,6 +100,7 @@ export const Input: React.FC<InputProps> = ({
         variant="outlined"
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
+        onKeyDown={handleKeydown}
         InputProps={{
           style: {
             height: props.customHeight ? props.customHeight : '44px',

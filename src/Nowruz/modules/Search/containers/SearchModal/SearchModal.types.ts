@@ -1,6 +1,7 @@
 export interface SearchModalProps {
   onClose: () => void;
   open: boolean;
+  searchText?: string;
 }
 export interface Item {
   title: string;

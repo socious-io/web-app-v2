@@ -34,9 +34,11 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     navigateToProfile,
     unreadNotif,
     readNotifications,
+    openSearchModal,
+    setOpenSearchModal,
+    searchTerm,
+    setSearchTerm,
   } = useHeaderNavBar();
-
-  const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <div className={`h-16 md:h-[72px] px-4 md:px-8 shadow-Shadows/shadow-sm md:[box-shadow:none] ${css.container}`}>
@@ -54,6 +56,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           name="search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onEnter={setOpenSearchModal}
           placeholder="Search"
           startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
         />
@@ -109,6 +112,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
         open={openNotifPanel}
         handleClose={() => setOpenNotifPanel(false)}
       />
+      <SearchModal open={openSearchModal} onClose={() => setOpenSearchModal(false)} searchText={searchTerm} />
     </div>
   );
 };

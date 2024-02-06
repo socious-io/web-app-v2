@@ -48,7 +48,9 @@ export const Search = () => {
   } = useSearchShared();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  console.log(useSearchParams());
   const query = getRouterFilters();
+  console.log('query', query);
   const [showFiltersModal, setShowFiltersModal] = useState(false);
   const [showAllFilters, setShowAllFilters] = useState(false);
   function onListItemClick(type: PayloadModel['type']) {
