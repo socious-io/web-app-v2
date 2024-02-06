@@ -26,8 +26,16 @@ const schema = yup.object().shape({
   paymentType: yup.string(),
   paymentTerm: yup.string(),
   paymentMethod: yup.string(),
-  hours: yup.number().required('Total hours is required').min(1),
-  total: yup.number().min(22).required('Offer amount is required'),
+  hours: yup.number().positive().min(1).required('Total hours is required'),
+  total: yup
+    .number()
+    .positive()
+    .required('Offer amount is required')
+    .when('paymentMethod', (method) => {
+      if (method.includes('FIAT')) {
+        return yup.number().min(22, 'Fiat payment minimum is 22');
+      }
+    }),
   description: yup.string().required('Description is required'),
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
@@ -76,10 +84,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     setValue('paymentMethod', paymentMethod);
   };
   const isCrypto = watch('paymentMethod') === 'CRYPTO';
-  const isNonPaid = watch('paymentTerm') === 'FIXED' && watch('paymentType') === 'VOLUNTEER';
-
-  console.log(tokens);
-  console.log(selected);
+  const isNonPaid = watch('paymentType') === 'VOLUNTEER';
 
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
     const payload = {
@@ -88,7 +93,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
       offer_message: description,
       total_hours: hours.toString(),
       crypto_currency_address: isCrypto ? selected : undefined,
-      currency: isCrypto ? tokens?.find((token) => token?.address === selected)?.label || '' : selected,
+      currency: isCrypto ? undefined : selected,
     };
 
     await offerByApplicant(applicant.id, removeValuesFromObject(payload, [undefined]));

@@ -28,7 +28,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
   } = useOrgOffer(applicant, onClose, onSuccess);
 
   const paymentMode = [...PROJECT_PAYMENT_MODE].reverse();
-  //const paymentType = [...PROJECT_PAYMENT_TYPE].reverse();
+  const paymentType = [...PROJECT_PAYMENT_TYPE].reverse();
   const paymentScheme = [...PROJECT_PAYMENT_SCHEME].reverse();
 
   const renderfieldInfo = (title: string, description: string) => {
@@ -65,8 +65,8 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                 {renderfieldInfo('Payment type', 'Is it a paid or volunteer job?')}
 
                 <RadioGroup
-                  defaultValue={PROJECT_PAYMENT_TYPE[0].value}
-                  items={PROJECT_PAYMENT_TYPE}
+                  defaultValue={paymentType[0].value}
+                  items={paymentType}
                   errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
                   onChange={(type) => onSelectPaymentType(type.value)}
                 />
@@ -90,6 +90,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                   postfix={<p>hours</p>}
                   noBorderPostfix
                   errors={errors['hours']?.message ? [errors['hours']?.message.toString()] : undefined}
+                  className="text-right"
                 />
               </div>
               {!isNonPaid && (
