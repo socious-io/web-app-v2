@@ -35,7 +35,8 @@ export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ offer }) =
       {(offer.due_date || offer.total_hours || offer.assignment_total) && (
         <div className="flex flex-col p-5 gap-5 border border-solid border-Gray-light-mode-200 rounded-default">
           {offer.due_date && renderDetailItems('calendar-check-01', `Due ${offer.due_date || ''}`)}
-          {offer.total_hours && renderDetailItems('clock', `${offer.total_hours} hours`)}
+          {offer.total_hours &&
+            renderDetailItems('clock', `${offer.total_hours} ${offer.total_hours === 1 ? 'hour' : 'hours'}`)}
           {offer.assignment_total &&
             renderDetailItems(cuttencyIcon, `${offer.assignment_total.toString()} ${unit}`, '(fixed-price)')}
           {offer.project.payment_type === 'VOLUNTEER' && (

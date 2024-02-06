@@ -14,6 +14,7 @@ export const PaymentSummary: React.FC<PaymentSummaryProps> = ({ amount, sociousF
   const sociousPercent = Math.trunc((sociousFee / amount) * 1000) / 10;
   const stripePercent = Math.trunc((stripeFee / amount) * 1000) / 10;
   const symbol = currency === 'JPY' ? '¥' : currency === 'USD' ? '$' : '';
+
   const renderItems = (title: string, value: number) => {
     return (
       <div className="flex justify-between">
