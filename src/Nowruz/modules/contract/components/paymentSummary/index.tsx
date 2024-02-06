@@ -13,7 +13,8 @@ export interface PaymentSummaryProps {
 export const PaymentSummary: React.FC<PaymentSummaryProps> = ({ amount, sociousFee, stripeFee, total, currency }) => {
   const sociousPercent = Math.trunc((sociousFee / amount) * 1000) / 10;
   const stripePercent = Math.trunc((stripeFee / amount) * 1000) / 10;
-  const symbol = currency === 'JPY' ? '¥' : '$';
+  const symbol = currency === 'JPY' ? '¥' : currency === 'USD' ? '$' : '';
+
   const renderItems = (title: string, value: number) => {
     return (
       <div className="flex justify-between">
@@ -31,9 +32,9 @@ export const PaymentSummary: React.FC<PaymentSummaryProps> = ({ amount, sociousF
       <h1 className={css.title}>Payment summary</h1>
       <Divider />
       <div className="flex flex-col gap-2">
-        {renderItems('Job payment', amount)}
-        {renderItems(`Socious commission (${sociousPercent}%)`, sociousFee)}
-        {renderItems(`Stripe fees (${stripePercent}%)`, stripeFee)}
+        {amount ? renderItems('Job payment', amount) : ''}
+        {sociousFee ? renderItems(`Socious commission (${sociousPercent}%)`, sociousFee) : ''}
+        {stripeFee ? renderItems(`Stripe fees (${stripePercent}%)`, stripeFee) : ''}
       </div>
       <Divider />
       <div className="flex justify-between">

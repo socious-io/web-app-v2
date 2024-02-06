@@ -4,6 +4,7 @@ import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
+import { ConnectButton } from 'src/Nowruz/modules/wallet/components/connectButton';
 
 import { PaymentCryptoProps } from './paymentCrypto.types';
 import { usePaymentCrypto } from './usePaymentCrypto';
@@ -18,6 +19,7 @@ export const PaymentCrypto: React.FC<PaymentCryptoProps> = ({ open, handleClose,
     setOpenErrorModal,
     isConnected,
     openConnect,
+    unit,
   } = usePaymentCrypto(handleClose, offer);
 
   const footerJsx = (
@@ -39,16 +41,9 @@ export const PaymentCrypto: React.FC<PaymentCryptoProps> = ({ open, handleClose,
 
   const contentJsx = (
     <div className="w-full p-4 md:p-6 flex flex-col items-center gap-5">
-      {/* <Dapp.Connect /> */}
-      {isConnected ? (
-        <Dapp.Connect />
-      ) : (
-        <Button variant="text" color="primary" onClick={() => openConnect()}>
-          Connect wallet
-        </Button>
-      )}
+      {isConnected ? <Dapp.Connect /> : <ConnectButton handleClick={() => openConnect()} />}
       <PaymentSummary
-        currency={offer?.currency || ''}
+        currency={unit}
         amount={offer?.amount || 0}
         sociousFee={offer?.fee || 0}
         stripeFee={offer?.stripe_fee || 0}

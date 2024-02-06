@@ -10,6 +10,15 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
 
   const { wallet_address: contributor } = offer?.recipient?.meta || {};
 
+  let unit = offer?.currency || '';
+
+  if (offer?.crypto_currency_address) {
+    dapp.NETWORKS.map((n) => {
+      const token = n.tokens.filter((t) => offer.crypto_currency_address === t.address)[0];
+      if (token) unit = token.symbol;
+    });
+  }
+
   useEffect(() => {
     setDisabledPayment(!offer || !isConnected);
   }, [isConnected, offer]);
@@ -67,5 +76,6 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
     setOpenErrorModal,
     isConnected,
     openConnect: open,
+    unit,
   };
 };
