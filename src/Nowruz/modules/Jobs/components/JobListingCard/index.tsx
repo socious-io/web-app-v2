@@ -52,6 +52,9 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
   const handleClick = () => {
     if (isTouchDevice()) navigate(`/nowruz/jobs/${job.id}`);
   };
+  const handleTitleClick = () => {
+    navigate(`/nowruz/jobs/${job.id}`);
+  };
   return (
     <div className={`${css.container} cursor-pointer md:cursor-default`} onClick={handleClick}>
       <div className={css.cardInfo}>
@@ -59,7 +62,9 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
           <div className={css.intro}>
             <Avatar type="organizations" size="56px" img={job.identity_meta?.image} />
             <div>
-              <div className={css.jobTitle}>{job.title}</div>
+              <button className={css.jobTitle} onClick={handleTitleClick}>
+                {job.title}
+              </button>
               <div className={css.subTitle}>
                 <span className={css.orgTitle}>{job.identity_meta?.name}</span> .{' '}
                 {toRelativeTime(job.updated_at?.toString() || '')}
