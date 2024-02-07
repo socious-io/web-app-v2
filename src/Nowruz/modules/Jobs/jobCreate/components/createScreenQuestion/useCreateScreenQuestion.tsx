@@ -13,7 +13,11 @@ const schema = yup
   })
   .required();
 
-export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) => {
+export const useCreateScreenQuestion = (
+  defaultValue?: QuestionReq,
+  addQuestion?: (q: QuestionReq) => void,
+  editedQuestion?: (q: QuestionReq) => void,
+) => {
   const [options, setOptions] = useState<string[]>([]);
   const [optionError, setOptionError] = useState('');
   const [newOption, setNewOption] = useState('');
@@ -27,8 +31,9 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
     mode: 'all',
     resolver: yupResolver(schema),
     defaultValues: {
-      type: 'Text',
-      isRequired: false,
+      type: defaultValue?.options ? 'Multi-choice' : 'Text',
+      questionText: defaultValue?.question || '',
+      isRequired: defaultValue?.required || false,
     },
   });
 
@@ -67,7 +72,7 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
     setValue('isRequired', value === 'yes', { shouldValidate: true });
   };
 
-  const handleAddQuestion = () => {
+  const onSubmit = () => {
     const { questionText, isRequired, type } = getValues();
     if (type === 'Multi-choice' && options.length < 2) {
       setOptionError('Please add at least two options');
@@ -76,7 +81,8 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
     setOptionError('');
     const q = { question: questionText, required: isRequired };
     if (options.length) q.options = options;
-    addQuestion(q);
+    if (defaultValue) editedQuestion(q);
+    else addQuestion(q);
   };
   return {
     register,
@@ -86,6 +92,7 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
     options,
     setOptions,
     type: getValues().type,
+    isRequired: getValues().isRequired,
     onAddOption,
     onDeleteOption,
     requireOptions,
@@ -93,7 +100,7 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
     newOption,
     setNewOption,
     handleSubmit,
-    handleAddQuestion,
+    onSubmit,
     optionError,
     isValid,
     isDirty,

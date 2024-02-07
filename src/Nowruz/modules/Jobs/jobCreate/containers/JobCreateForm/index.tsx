@@ -64,6 +64,9 @@ export const JobCreateForm = () => {
     openCreateQuestion,
     setOpenCreateQuestion,
     deleteQuestion,
+    openEditQuestionForm,
+    handleEditQuestion,
+    editedQuestion,
   } = useJobCreateForm();
 
   const renderInfo = (title: string, description: string) => (
@@ -345,10 +348,21 @@ export const JobCreateForm = () => {
               </Button>
             )}
             {openCreateQuestion && (
-              <CreateScreenQuestion addQuestion={addQuestion} cancel={() => setOpenCreateQuestion(false)} />
+              <CreateScreenQuestion
+                editedQuestion={editedQuestion}
+                addQuestion={addQuestion}
+                cancel={() => setOpenCreateQuestion(false)}
+                editQuestion={handleEditQuestion}
+              />
             )}
             {questions.map((q, index) => (
-              <ScreenQuestion key={index} index={index} question={q} handleDelete={deleteQuestion} />
+              <ScreenQuestion
+                key={index}
+                index={index}
+                question={q}
+                handleDelete={deleteQuestion}
+                handleEdit={openEditQuestionForm}
+              />
             ))}
           </div>
         </div>
