@@ -26,6 +26,8 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({ addQ
     handleSubmit,
     handleAddQuestion,
     optionError,
+    isValid,
+    isDirty,
   } = useCreateScreenQuestion(addQuestion);
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
@@ -40,6 +42,7 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({ addQ
         <div className={css.componentsContainer}>
           <RadioGroup
             items={questionTypes}
+            defaultValue="Text"
             errors={errors['type']?.message ? [errors['type']?.message.toString()] : undefined}
             onChange={(option) => onSelectQuestionType(option.value.toString())}
           />
@@ -91,13 +94,19 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({ addQ
         <div className={css.componentsContainer}>
           <RadioGroup
             items={requireOptions}
+            defaultValue="no"
             errors={errors['isRequired']?.message ? [errors['isRequired']?.message.toString()] : undefined}
             onChange={(option) => onSelectRequired(option.value.toString())}
           />
         </div>
       </div>
       <div className={`${css.row} md:justify-start gap-2 md:flex-row-reverse`}>
-        <Button variant="contained" color="primary" onClick={handleSubmit(handleAddQuestion)}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit(handleAddQuestion)}
+          disabled={!isValid || !isDirty || optionError}
+        >
           Add question
         </Button>
         <Button variant="outlined" color="secondary" onClick={cancel}>

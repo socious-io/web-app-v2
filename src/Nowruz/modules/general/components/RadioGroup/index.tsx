@@ -18,7 +18,6 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   defaultValue,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<null | number>();
-
   return (
     <FormControl>
       <FormLabel id={id}>{label}</FormLabel>

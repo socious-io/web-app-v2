@@ -20,7 +20,7 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     getValues,
     setValue,
   } = useForm({
@@ -30,15 +30,16 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
 
   const questionTypes = [
     { label: 'Text', value: 'Text' },
-    { label: 'Multi-choice', value: 'Multi-choice' },
+    { label: 'Multiple choices', value: 'Multi-choice' },
   ];
   const requireOptions = [
-    { label: 'yes', value: 'yes' },
-    { label: 'no', value: 'no' },
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' },
   ];
 
   const onSelectQuestionType = (value: string) => {
     setValue('type', value, { shouldValidate: true });
+    setOptionError(value === 'Multi-choice' && options.length < 2 ? 'Please add at least two options' : '');
   };
 
   const onAddOption = () => {
@@ -49,6 +50,7 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
     const optionList = [...options].concat(newOption);
     setOptionError(optionList.length < 2 ? 'Please add at least two options' : '');
     setOptions(optionList);
+    setNewOption('');
   };
 
   const onDeleteOption = (index: number) => {
@@ -68,7 +70,8 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
       return;
     }
     setOptionError('');
-    const q = { question: questionText, required: isRequired, options: options };
+    const q = { question: questionText, required: isRequired };
+    if (options.length) q.options = options;
     addQuestion(q);
   };
   return {
@@ -88,5 +91,7 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
     handleSubmit,
     handleAddQuestion,
     optionError,
+    isValid,
+    isDirty,
   };
 };
