@@ -265,7 +265,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const handleOpenCompleteConfirm = () => {
     setAlertTitle('Submit job completion?');
     setAlertIcon(<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />);
-    setAlertMessage('Once Ocean Protection confirms the job completion, you will receive your payment.');
+    setAlertMessage(`Once ${name} confirms the job completion, you will receive your payment.`);
     setHandleAlertSubmit(() => handleComplete);
     setOpenAlert(true);
   };

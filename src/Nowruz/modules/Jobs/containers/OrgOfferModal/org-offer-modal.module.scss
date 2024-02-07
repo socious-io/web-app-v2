@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2 !important;
+  z-index: 25 !important;
   @media screen and (max-width: 600px) {
     flex-direction: column;
     justify-content: flex-end;
@@ -28,11 +28,11 @@
   padding: 24px;
   border-bottom: 1px solid $color-grey-200;
   .title {
-    font-size: 18px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 28px;
-    color: $color-grey-900;
+    line-height: 1.75rem;
+    color: $color-grey-700;
   }
   .subtitle {
     font-size: 14px;

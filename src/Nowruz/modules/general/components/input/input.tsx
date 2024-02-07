@@ -30,6 +30,7 @@ export const Input: React.FC<InputProps> = ({
   const [endIcon, setEndIcon] = useState<React.ReactNode>('');
   const [inputType, setInputType] = useState(props.type || 'text');
   const [showEyeIcon, setshowEyeIcon] = useState(false);
+
   useEffect(() => {
     if (errors) setEndIcon(<AlertCircle width={14} height={14} stroke={`${variables.color_error_600}`} />);
     else if (props.type === 'password' && showPassword && showEyeIcon) {
@@ -70,6 +71,7 @@ export const Input: React.FC<InputProps> = ({
       )}
       {postfixDropdown && (
         <InputDropdown
+          defaultValue={postfixDropdown.options[0]}
           options={postfixDropdown.options}
           onChange={(option) => postfixDropdown.onChange(option.value)}
         />

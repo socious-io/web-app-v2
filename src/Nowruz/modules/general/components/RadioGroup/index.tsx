@@ -18,23 +18,26 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   defaultValue,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<null | number>();
+
   return (
     <FormControl>
       <FormLabel id={id}>{label}</FormLabel>
       <RG row={row} aria-labelledby={label} name={name} defaultValue={defaultValue}>
         {items.map((item, index) => (
-          <div onClick={() => setSelectedIndex(index)}>
+          <>
             <FormControlLabel
               value={item.value}
               control={<Radio />}
               label={<span className={css.optionsText}>{item.label}</span>}
               disabled={item.disabled !== undefined ? item.disabled : false}
               onClick={() => {
+                setSelectedIndex(index);
                 onChange && onChange(item);
               }}
+              sx={{ width: 'fit-content' }}
             />
             {selectedIndex === index && item.children}
-          </div>
+          </>
         ))}
       </RG>
       {errors &&

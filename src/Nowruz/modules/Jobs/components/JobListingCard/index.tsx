@@ -76,7 +76,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
               ))}
             </div>
             <div className={css.jobDescription}>
-              <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.description} />
+              <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.description || ''} />
             </div>
             <div className={css.jobFeatures}>
               {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}

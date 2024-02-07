@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
 import { CurrentIdentity, getOffer, Mission, Offer, userMissions } from 'src/core/api';
-import { getOfferCurrencyUnit } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
@@ -19,8 +18,33 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
 
   const name = type === 'users' ? offerVal.offerer.meta.name : offerVal.recipient.meta.name;
   const profileImageUrl = type === 'users' ? offerVal.offerer.meta.image : offerVal.recipient.meta.avatar;
-  const currencyIconName = offerVal.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle';
-  const unit = getOfferCurrencyUnit(offerVal);
+
+  // We might delete currency icon later (we accept only USD or JPY at the moment)
+  const currencyIconName = (() => {
+    switch (offerVal.currency) {
+      case 'JPY':
+        return 'currency-yen-circle';
+      case 'USD':
+        return 'currency-dollar-circle';
+    }
+  })();
+
+  // Format the amount depending of the currency
+  const formatCurrency = (() => {
+    const options = { useGrouping: true };
+
+    switch (offerVal.currency) {
+      case 'JPY':
+        return new Intl.NumberFormat('ja-JP', { ...options, maximumFractionDigits: 0 }) // Japanese Yen typically doesn't use decimal places
+          .format(offerVal.assignment_total);
+      case 'USD':
+        return new Intl.NumberFormat('en-US', { ...options, maximumFractionDigits: 2 }).format(
+          offerVal.assignment_total,
+        );
+      default:
+        return offerVal.assignment_total.toString(); // Ensure the default case returns a string for consistency
+    }
+  })();
 
   const BadgeData = () => {
     switch (offerVal.status) {
@@ -118,11 +142,11 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     name,
     profileImageUrl,
     currencyIconName,
+    formatCurrency,
     handleCloseModal,
     offerVal,
     missionVal,
     openOverlayModal,
     setOpenOverlayModal,
-    unit,
   };
 };

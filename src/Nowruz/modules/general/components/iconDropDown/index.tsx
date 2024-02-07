@@ -37,7 +37,7 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
           type={type}
           img={img}
           iconName={iconName}
-          iconCustomStyle={myProfile ? '!cursor-pointer' : '!cursor-default'}
+          iconCustomStyle={'!cursor-pointer'}
         />
       </IconButton>
       {open && (

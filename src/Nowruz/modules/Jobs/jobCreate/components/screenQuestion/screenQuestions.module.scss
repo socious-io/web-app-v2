@@ -1,0 +1,14 @@
+@import 'src/components/_primitives.scss';
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: $color-grey-700;
+}
+.subtitile {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: $color-grey-600;
+}

@@ -2,9 +2,9 @@ import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
-import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
+import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -12,11 +12,13 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
 import { RadioGroup } from 'src/Nowruz/modules/general/components/RadioGroup';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
+import { CreateScreenQuestion } from 'src/Nowruz/modules/Jobs/jobCreate/components/createScreenQuestion';
+import { JobCreateHeader } from 'src/Nowruz/modules/Jobs/jobCreate/components/Header';
+import { JobPreviewModal } from 'src/Nowruz/modules/Jobs/jobCreate/components/JobPreviewModal';
+import { ScreenQuestion } from 'src/Nowruz/modules/Jobs/jobCreate/components/screenQuestion';
 
 import css from './job-create-form.module.scss';
 import { useJobCreateForm } from './useJobCreateForm';
-import { JobCreateHeader } from '../../components/Header';
-import { JobPreviewModal } from '../../components/JobPreviewModal';
 export const JobCreateForm = () => {
   const {
     register,
@@ -31,7 +33,6 @@ export const JobCreateForm = () => {
     openPreview,
     setOpenPreview,
     openSuccessModal,
-    setOpenSuccessModal,
     onPreview,
     skills,
     selectedSkills,
@@ -54,6 +55,15 @@ export const JobCreateForm = () => {
     paymentType,
     paymentScheme,
     handleCloseSuccessModal,
+    onChangeCommitHoursMin,
+    onChangeCommitHoursMax,
+    commitmentHoursHigher,
+    commitmentHoursLower,
+    questions,
+    addQuestion,
+    openCreateQuestion,
+    setOpenCreateQuestion,
+    deleteQuestion,
   } = useJobCreateForm();
 
   const renderInfo = (title: string, description: string) => (
@@ -67,7 +77,6 @@ export const JobCreateForm = () => {
       <div className="flex justfy-center align-center">
         <Input
           name="paymentMin"
-          // register={register}
           value={paymentMin}
           onChange={(e) => onChangePaymentMin(e.target.value)}
           placeholder="0"
@@ -78,7 +87,6 @@ export const JobCreateForm = () => {
         <div className="flex items-center mx-2">to</div>
         <Input
           name="paymentMax"
-          // register={register}
           value={paymentMax}
           onChange={(e) => onChangePaymentMax(e.target.value)}
           placeholder="0"
@@ -94,7 +102,8 @@ export const JobCreateForm = () => {
       <div className="flex justfy-center align-center">
         <Input
           name="commitmentHoursLower"
-          register={register}
+          value={commitmentHoursLower}
+          onChange={(e) => onChangeCommitHoursMin(e.target.value)}
           postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
           placeholder="0"
           className={css.priceInputs}
@@ -106,7 +115,8 @@ export const JobCreateForm = () => {
         <div className="flex items-center mx-2">to</div>
         <Input
           name="commitmentHoursHigher"
-          register={register}
+          value={commitmentHoursHigher}
+          onChange={(e) => onChangeCommitHoursMax(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
           postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
@@ -118,13 +128,7 @@ export const JobCreateForm = () => {
       </div>
     );
   };
-  const renderCustomErrors = (errors: string[]) => {
-    return errors.map((e, index) => (
-      <p key={index} className={`${css.errorMsg} ${css.msg}`}>
-        {e}
-      </p>
-    ));
-  };
+
   return (
     <div>
       <div className={css.back}>
@@ -217,8 +221,6 @@ export const JobCreateForm = () => {
                     </div>
                   ),
                 },
-                // errors={errors['']?.message ? [errors['description']?.message.toString()] : undefined}
-                // { label: 'In my timezone', value: 'In my timezone' },
               ]}
             />
           </div>
@@ -236,7 +238,7 @@ export const JobCreateForm = () => {
           </div>
         </div>
         <div className={css.row}>
-          {renderInfo('Job type', 'is it a full time job?')}
+          {renderInfo('Job type', 'Is it a full time job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
               placeholder="Please select"
@@ -329,7 +331,25 @@ export const JobCreateForm = () => {
               chipBgColor={variables.color_grey_blue_50}
               chipIconColor={variables.color_grey_blue_500}
               displayDefaultBadges={false}
+              errors={errors['skills']?.message ? [errors['skills']?.message.toString()] : undefined}
             />
+          </div>
+        </div>
+        <div className={css.row}>
+          {renderInfo('Screener questions', 'Add up to 5 screener questions')}
+          <div className={css.componentsContainer}>
+            {!openCreateQuestion && (
+              <Button variant="text" color="secondary" onClick={() => setOpenCreateQuestion(true)}>
+                <Icon name="plus" fontSize={20} color={variables.color_grey_600} />
+                Add question
+              </Button>
+            )}
+            {openCreateQuestion && (
+              <CreateScreenQuestion addQuestion={addQuestion} cancel={() => setOpenCreateQuestion(false)} />
+            )}
+            {questions.map((q, index) => (
+              <ScreenQuestion key={index} index={index} question={q} handleDelete={deleteQuestion} />
+            ))}
           </div>
         </div>
         <div className={css.footer}>

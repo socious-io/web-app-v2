@@ -2,6 +2,10 @@
 .default {
   text-align: center;
   font-family: Inter;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
   &:global(.MuiButton-root) {
     text-transform: none;
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);

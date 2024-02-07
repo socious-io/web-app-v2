@@ -13,7 +13,7 @@ export const JobDetailDescription: React.FC<JobDetailDescriptionProps> = ({ jobD
     <div className={css.container}>
       <h2 className={css.title}>Job description</h2>
       <div className={css.expandable}>
-        <ExpandableText text={jobDescription} expectedLength={maxLenght} isMarkdown />
+        <ExpandableText text={jobDescription || ''} expectedLength={maxLenght} isMarkdown />
       </div>
     </div>
   );
