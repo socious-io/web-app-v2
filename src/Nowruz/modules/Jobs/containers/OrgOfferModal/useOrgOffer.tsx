@@ -32,20 +32,16 @@ const schema = yup.object().shape({
     .typeError('Total hours is required')
     .min(1, 'Hours needs to be more than 0')
     .required('Total hours is required'),
-  total: yup.string().when(['paymentType', 'paymentMethod'], (paymentType, paymentMethod) => {
-    if (paymentType.includes('PAID')) {
-      if (paymentMethod === 'FIAT') {
-        return yup
-          .number()
-          .typeError('Offer amount is required')
-          .positive('Offer amount should be positive value')
-          .min(22, 'Offer amount for Fiat minimum of 22')
-          .required('Offer amount is required');
-      } else {
-        return yup.number().typeError('Offer amount is required').required('Offer amount is required');
-      }
+  total: yup.string().when(['paymentMethod'], (paymentMethod) => {
+    if (paymentMethod.includes('FIAT')) {
+      return yup
+        .number()
+        .typeError('Offer amount is required')
+        .positive('Offer amount should be positive value')
+        .min(22, 'Offer amount for Fiat minimum of 22')
+        .required('Offer amount is required');
     } else {
-      return yup.string().nullable();
+      return yup.number().typeError('Offer amount is required').required('Offer amount is required');
     }
   }),
   description: yup.string().required('Description is required'),
@@ -59,6 +55,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     register,
     handleSubmit,
     setValue,
+    clearErrors,
     watch,
     formState: { errors },
   } = useForm<Inputs>({
@@ -100,6 +97,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
   const isNonPaid = watch('paymentType') === 'VOLUNTEER';
 
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
+    if (isNonPaid) clearErrors('total');
     const payload = {
       payment_mode: paymentMethod,
       assignment_total: total.toString(),
