@@ -26,6 +26,10 @@ export const useCreateScreenQuestion = (addQuestion: (q: QuestionReq) => void) =
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
+    defaultValues: {
+      type: 'Text',
+      isRequired: false,
+    },
   });
 
   const questionTypes = [
