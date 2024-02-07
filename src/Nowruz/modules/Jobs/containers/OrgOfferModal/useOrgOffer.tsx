@@ -32,16 +32,16 @@ const schema = yup.object().shape({
     .typeError('Total hours is required')
     .min(1, 'Hours needs to be more than 0')
     .required('Total hours is required'),
-  total: yup.string().when(['paymentMethod'], (paymentMethod) => {
-    if (paymentMethod.includes('FIAT')) {
+  total: yup.number().when(['paymentType'], (paymentType) => {
+    if (paymentType.includes('PAID')) {
       return yup
         .number()
         .typeError('Offer amount is required')
         .positive('Offer amount should be positive value')
-        .min(22, 'Offer amount for Fiat minimum of 22')
+        .min(1)
         .required('Offer amount is required');
     } else {
-      return yup.number().typeError('Offer amount is required').required('Offer amount is required');
+      return yup.string().nullable().notRequired();
     }
   }),
   description: yup.string().required('Description is required'),
@@ -55,7 +55,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     register,
     handleSubmit,
     setValue,
-    clearErrors,
+    setError,
     watch,
     formState: { errors },
   } = useForm<Inputs>({
@@ -97,10 +97,18 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
   const isNonPaid = watch('paymentType') === 'VOLUNTEER';
 
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
-    if (isNonPaid) clearErrors('total');
+    let netTotal = total;
+    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && total < 22) {
+      setError('total', {
+        message: 'Offer amount on Fiat should have a minimum value of 22',
+      });
+    }
+    if (isNonPaid) {
+      netTotal = 0;
+    }
     const payload = {
       payment_mode: paymentMethod,
-      assignment_total: total.toString(),
+      assignment_total: netTotal.toString(),
       offer_message: description,
       total_hours: hours.toString(),
       crypto_currency_address: isCrypto ? selected : undefined,
