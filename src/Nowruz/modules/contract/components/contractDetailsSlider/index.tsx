@@ -10,6 +10,7 @@ import { ContractDetailsSliderProps } from './contractDetailsSlider.types';
 import { useContractDetailsSlider } from './useContractDetailsSlider';
 import AddCardModalUser from '../addCardModalUser';
 import { SelectBankAccountUser } from '../selectBankAccountUser';
+import { WalletModal } from '../walletModal';
 
 export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ offer, mission }) => {
   const {
@@ -41,6 +42,8 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
     openSelectCardModal,
     setOpenSelectCardModal,
     stripeAccounts,
+    openWalletModal,
+    setOpenWalletModal,
   } = useContractDetailsSlider(offer, mission);
   return (
     <>
@@ -73,18 +76,20 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
           <HorizontalTabs tabs={tabs} leftAligned={false} containerCustomStyle="gap-0" />
         </div>
       </div>
-      <AlertModal
-        open={openAlert}
-        onClose={() => setOpenAlert(false)}
-        onSubmit={handleAlertSubmit}
-        message={alertMessage}
-        title={alertTitle}
-        customIcon={alertIcon}
-        closeButtn={true}
-        closeButtonLabel="Cancel"
-        submitButton={true}
-        submitButtonLabel="Confirm"
-      />
+      {openAlert && (
+        <AlertModal
+          open={openAlert}
+          onClose={() => setOpenAlert(false)}
+          onSubmit={handleAlertSubmit}
+          message={alertMessage}
+          title={alertTitle}
+          customIcon={alertIcon}
+          closeButtn={true}
+          closeButtonLabel="Cancel"
+          submitButton={true}
+          submitButtonLabel="Confirm"
+        />
+      )}
       {type === 'organizations' && offer.status === 'APPROVED' && offer.payment_mode === 'FIAT' && (
         <PaymentFiat offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
       )}
@@ -99,6 +104,13 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
           open={openSelectCardModal}
           handleClose={() => setOpenSelectCardModal(false)}
           accounts={stripeAccounts}
+          handleAccept={handleAcceptOffer}
+        />
+      )}
+      {openWalletModal && (
+        <WalletModal
+          open={openWalletModal}
+          handleClose={() => setOpenWalletModal(false)}
           handleAccept={handleAcceptOffer}
         />
       )}

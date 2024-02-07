@@ -19,6 +19,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
     children,
     headerDivider = true,
     footerDivider = true,
+    customStyle,
   } = props;
 
   return (
@@ -28,7 +29,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
           <div
             className={`md:rounded-xl flex flex-col m-auto bg-Base-White z-30 w-full ${
               mobileFullHeight ? 'h-full max-h-full' : 'mt-20 rounded-t-2xl h-[calc(100%-80px)] max-h-[calc(100%-80px)]'
-            } ${css.container}`}
+            } ${css.container} ${customStyle}`}
           >
             <div className="w-full flex gap-4 px-6 pt-6 relative top-0">
               {icon}

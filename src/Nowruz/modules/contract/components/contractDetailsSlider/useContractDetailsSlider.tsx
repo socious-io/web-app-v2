@@ -16,10 +16,10 @@ import {
 } from 'src/core/api';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { getSrtipeProfile } from 'src/pages/offer-received/offer-received.services';
 import { RootState } from 'src/store';
 
 import { ContractDetailTab } from '../contractDetailTab';
-import { getSrtipeProfile } from 'src/pages/offer-received/offer-received.services';
 
 export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -56,6 +56,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const [stripeAccounts, setStripeAccounts] = useState<StripeAccount[]>([]);
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const [openSelectCardModal, setOpenSelectCardModal] = useState(false);
+  const [openWalletModal, setOpenWalletModal] = useState(false);
 
   const setAllStates = (
     displayMsg: boolean,
@@ -79,7 +80,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     // setDisplayPrimaryButton(primaryBtnDisabled);
   };
 
-  const inititalizeAccepOffer = async () => {
+  const initializeAcceptOfferFiat = async () => {
     await getSrtipeProfile({ is_jp: offer.currency === 'JPY' }).then((r) => {
       const { data } = r?.external_accounts || {};
       if (data?.length > 0) {
@@ -106,6 +107,16 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
         setAllStates(true, alertMsg, true, 'Accept', true, 'Decline', openSelectBankAccount, handleDecline);
       }
     });
+  };
+
+  const initializeAcceptOfferCrypto = async () => {
+    setPrimaryButtonDisabled(false);
+    setAllStates(false, null, true, 'Accept', true, 'Decline', () => setOpenWalletModal(true), handleDecline);
+  };
+
+  const inititalizeAccepOffer = async () => {
+    if (offer.payment_mode === 'FIAT') await initializeAcceptOfferFiat();
+    else if (offer.payment_mode === 'CRYPTO') initializeAcceptOfferCrypto();
   };
   const inititalize = async () => {
     if (type === 'users') {
@@ -232,10 +243,13 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   };
 
   const handleAcceptOffer = async () => {
-    await acceptOffer(offer.id);
-    setOfferStatus('APPROVED');
-    setmissionStatus(undefined);
-    setOpenSelectCardModal(false);
+    try {
+      await acceptOffer(offer.id);
+      setOfferStatus('APPROVED');
+      setmissionStatus(undefined);
+      setOpenSelectCardModal(false);
+      setOpenWalletModal(false);
+    } catch (error) {}
   };
   const handleDecline = async () => {
     await rejectOffer(offer.id);
@@ -320,5 +334,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     openSelectCardModal,
     setOpenSelectCardModal,
     stripeAccounts,
+    openWalletModal,
+    setOpenWalletModal,
   };
 };

@@ -12,4 +12,5 @@ export interface ModalProps {
   mobileFullHeight?: boolean;
   headerDivider?: boolean;
   footerDivider?: boolean;
+  customStyle?: string;
 }
