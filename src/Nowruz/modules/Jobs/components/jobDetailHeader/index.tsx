@@ -52,13 +52,13 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser })
             {job.skills?.map((s) => <Chip key={s} label={s} theme="grey_blue" shape="round" size="lg" />)}
           </div>
 
-          <span className={css.subtitle}>
+          {/* <span className={css.subtitle}>
             <ExpandableText
               isMarkdown
               expectedLength={isTouchDevice() ? 85 : 175}
               text={job.identity_meta.mission || ''}
             />
-          </span>
+          </span> */}
           {!job.applied && (
             <AuthGuard>
               <Button
