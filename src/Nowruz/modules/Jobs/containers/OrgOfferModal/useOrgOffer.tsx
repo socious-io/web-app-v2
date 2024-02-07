@@ -26,16 +26,28 @@ const schema = yup.object().shape({
   paymentType: yup.string(),
   paymentTerm: yup.string(),
   paymentMethod: yup.string(),
-  hours: yup.number().positive().min(1).required('Total hours is required'),
-  total: yup
+  hours: yup
     .number()
     .positive()
-    .required('Offer amount is required')
-    .when('paymentMethod', (method) => {
-      if (method.includes('FIAT')) {
-        return yup.number().min(22, 'Fiat payment minimum is 22');
+    .typeError('Total hours is required')
+    .min(1, 'Hours needs to be more than 0')
+    .required('Total hours is required'),
+  total: yup.string().when(['paymentType', 'paymentMethod'], (paymentType, paymentMethod) => {
+    if (paymentType.includes('PAID')) {
+      if (paymentMethod === 'FIAT') {
+        return yup
+          .number()
+          .typeError('Offer amount is required')
+          .positive('Offer amount should be positive value')
+          .min(22, 'Offer amount for Fiat minimum of 22')
+          .required('Offer amount is required');
+      } else {
+        return yup.number().typeError('Offer amount is required').required('Offer amount is required');
       }
-    }),
+    } else {
+      return yup.string().nullable();
+    }
+  }),
   description: yup.string().required('Description is required'),
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
@@ -74,6 +86,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     };
     getTokens();
   }, [isConnected, chainId]);
+
   const onSelectPaymentType = (paymentType: ProjectPaymentType) => {
     setValue('paymentType', paymentType);
   };
