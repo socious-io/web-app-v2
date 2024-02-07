@@ -5,6 +5,7 @@ import {
   Mission,
   MissionStatus,
   Offer,
+  StripeAccount,
   acceptOffer,
   cancelMission,
   cancelOffer,
@@ -18,6 +19,7 @@ import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon
 import { RootState } from 'src/store';
 
 import { ContractDetailTab } from '../contractDetailTab';
+import { getSrtipeProfile } from 'src/pages/offer-received/offer-received.services';
 
 export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -50,6 +52,10 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const [alertIcon, setAlertIcon] = useState<ReactNode>();
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [paymentOffer, setPaymentOffer] = useState<Offer>();
+  const [primaryButtonDisabled, setPrimaryButtonDisabled] = useState(false);
+  const [stripeAccounts, setStripeAccounts] = useState<StripeAccount[]>([]);
+  const [openAddCardModal, setOpenAddCardModal] = useState(false);
+  const [openSelectCardModal, setOpenSelectCardModal] = useState(false);
 
   const setAllStates = (
     displayMsg: boolean,
@@ -60,6 +66,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     secondaryBtnLabel: string,
     primaryBtnAction?: () => void,
     secondaryBtnAction?: () => void,
+    // primaryBtnDisabled = false,
   ) => {
     setDisplayMessage(displayMsg);
     setMessage(msg);
@@ -69,12 +76,43 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     setDisplaySecondaryButton(displaySecondaryBtn);
     setSecondaryButtonLabel(secondaryBtnLabel);
     setSecondaryButtonAction(() => secondaryBtnAction);
+    // setDisplayPrimaryButton(primaryBtnDisabled);
   };
 
-  const inititalize = () => {
+  const inititalizeAccepOffer = async () => {
+    await getSrtipeProfile({ is_jp: offer.currency === 'JPY' }).then((r) => {
+      const { data } = r?.external_accounts || {};
+      if (data?.length > 0) {
+        setStripeAccounts(data);
+        setPrimaryButtonDisabled(false);
+        setAllStates(false, null, true, 'Accept', true, 'Decline', openSelectBankAccount, handleDecline);
+      } else {
+        setPrimaryButtonDisabled(true);
+        const alertMsg = (
+          <AlertMessage
+            theme="warning"
+            iconName="check-circle"
+            title="Bank account required"
+            subtitle="To accept this offer you need add a payout account"
+          >
+            <button
+              className="cursor-pointer border-none underline text-sm leading-5 font-semibold text-Warning-700"
+              onClick={() => setOpenAddCardModal(true)}
+            >
+              Add a payout account
+            </button>
+          </AlertMessage>
+        );
+        setAllStates(true, alertMsg, true, 'Accept', true, 'Decline', openSelectBankAccount, handleDecline);
+      }
+    });
+  };
+  const inititalize = async () => {
     if (type === 'users') {
       if (offerStatus === 'PENDING') {
-        setAllStates(false, null, true, 'Accept', true, 'Decline', handleAccept, handleDecline);
+        setPrimaryButtonDisabled(true);
+        setAllStates(false, null, true, 'Accept', true, 'Decline', undefined, handleDecline);
+        await inititalizeAccepOffer();
         return;
       }
 
@@ -189,10 +227,15 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     inititalize();
   }, [offerStatus, missionStatus]);
 
-  const handleAccept = async () => {
+  const openSelectBankAccount = () => {
+    setOpenSelectCardModal(true);
+  };
+
+  const handleAcceptOffer = async () => {
     await acceptOffer(offer.id);
     setOfferStatus('APPROVED');
     setmissionStatus(undefined);
+    setOpenSelectCardModal(false);
   };
   const handleDecline = async () => {
     await rejectOffer(offer.id);
@@ -269,5 +312,13 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     setOpenPaymentModal,
     handleClosePaymentModal,
     paymentOffer,
+    primaryButtonDisabled,
+    setPrimaryButtonDisabled,
+    openAddCardModal,
+    setOpenAddCardModal,
+    handleAcceptOffer,
+    openSelectCardModal,
+    setOpenSelectCardModal,
+    stripeAccounts,
   };
 };

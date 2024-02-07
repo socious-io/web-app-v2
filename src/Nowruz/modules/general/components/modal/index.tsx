@@ -7,7 +7,19 @@ import css from './modal.module.scss';
 import { ModalProps } from './modal.types';
 
 export const Modal: React.FC<ModalProps> = (props) => {
-  const { open, handleClose, icon, title, subTitle, content, footer, mobileFullHeight = true, children } = props;
+  const {
+    open,
+    handleClose,
+    icon,
+    title,
+    subTitle,
+    content,
+    footer,
+    mobileFullHeight = true,
+    children,
+    headerDivider = true,
+    footerDivider = true,
+  } = props;
 
   return (
     <>
@@ -28,9 +40,9 @@ export const Modal: React.FC<ModalProps> = (props) => {
                 <Icon name="x-close" fontSize={24} color={variables.color_grey_500} />
               </IconButton>
             </div>
-            <Divider className="w-full" />
+            {headerDivider && <Divider className="w-full" />}
             <div className="w-full overflow-y-auto">{content || children}</div>
-            <Divider className="w-full" />
+            {footerDivider && <Divider className="w-full" />}
             {footer}
           </div>
         </Backdrop>

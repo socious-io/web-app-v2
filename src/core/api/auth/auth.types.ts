@@ -68,6 +68,24 @@ export interface StripeLinkRes {
   };
 }
 
+export interface StripeAccount {
+  id: string;
+  object: string;
+  account: string;
+  account_holder_name: string;
+  account_holder_type: null;
+  account_type: string;
+  available_payout_methods: string[];
+  bank_name: string;
+  country: string;
+  currency: string;
+  default_for_currency: boolean;
+  fingerprint: string;
+  last4: string;
+  routing_number: string;
+  status: string;
+}
+
 export interface StripeProfileRes {
   mui: string;
   id: string;
@@ -93,23 +111,7 @@ export interface StripeProfileRes {
   email: null;
   external_accounts: {
     object: string;
-    data: {
-      id: string;
-      object: string;
-      account: string;
-      account_holder_name: string;
-      account_holder_type: null;
-      account_type: string;
-      available_payout_methods: string[];
-      bank_name: string;
-      country: string;
-      currency: string;
-      default_for_currency: boolean;
-      fingerprint: string;
-      last4: string;
-      routing_number: string;
-      status: string;
-    }[];
+    data: StripeAccount[];
     has_more: boolean;
     total_count: number;
     url: string;
