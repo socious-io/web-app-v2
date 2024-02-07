@@ -1,4 +1,6 @@
-import { Organization, User } from './api';
+import dapp from 'src/dapp';
+
+import { Offer, Organization, User } from './api';
 
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
   if (value) {
@@ -85,4 +87,16 @@ export const getIdentityMeta = (identity: User | Organization | undefined) => {
     type: 'organizations',
     website: org.website,
   };
+};
+
+export const getOfferCurrencyUnit = (offer: Offer) => {
+  let unit = offer.currency;
+
+  if (offer.crypto_currency_address) {
+    dapp.NETWORKS.map((n) => {
+      const token = n.tokens.filter((t) => offer.crypto_currency_address === t.address)[0];
+      if (token) unit = token.symbol;
+    });
+  }
+  return unit;
 };

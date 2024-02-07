@@ -22,8 +22,8 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
     openOverlayModal,
     setOpenOverlayModal,
     handleCloseModal,
+    unit,
   } = useContractCard(offer, mission);
-
   return (
     <>
       <div
@@ -43,7 +43,7 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
         <div className="flex flex-col gap-5 md:flex-row">
           <div className="flex gap-2 items-center">
             <Icon name={currencyIconName} fontSize={20} color={variables.color_grey_500} />
-            <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{`${offerVal.assignment_total} ${offerVal.currency}`}</span>
+            <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{`${offerVal.assignment_total} ${unit}`}</span>
             <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`(Fixed-price)`}</span>
           </div>
           <div className="md:mr-0 md:ml-auto w-fit">

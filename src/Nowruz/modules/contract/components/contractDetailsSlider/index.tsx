@@ -112,6 +112,7 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
           open={openWalletModal}
           handleClose={() => setOpenWalletModal(false)}
           handleAccept={handleAcceptOffer}
+          walletAddress={offer.recipient?.meta.wallet_address}
         />
       )}
     </>

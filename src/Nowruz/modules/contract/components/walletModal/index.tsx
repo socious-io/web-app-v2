@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { updateWallet } from 'src/core/api';
 import Dapp from 'src/dapp';
 import dapp from 'src/dapp';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -8,8 +9,15 @@ import { ConnectButton } from 'src/Nowruz/modules/wallet/components/connectButto
 
 import { WalletModalProps } from './walletModal.types';
 
-export const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, handleAccept }) => {
-  const { isConnected, open: openConnect } = dapp.useWeb3();
+export const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, handleAccept, walletAddress }) => {
+  const { isConnected, open: openConnect, account } = dapp.useWeb3();
+
+  useEffect(() => {
+    if (isConnected && account && (!walletAddress || String(walletAddress) !== account)) {
+      updateWallet({ wallet_address: account });
+    }
+  }, [isConnected, account]);
+
   return (
     <Modal
       open={open}

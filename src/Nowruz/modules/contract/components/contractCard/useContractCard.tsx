@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
 import { CurrentIdentity, getOffer, Mission, Offer, userMissions } from 'src/core/api';
+import { getOfferCurrencyUnit } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
@@ -19,6 +20,7 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
   const name = type === 'users' ? offerVal.offerer.meta.name : offerVal.recipient.meta.name;
   const profileImageUrl = type === 'users' ? offerVal.offerer.meta.image : offerVal.recipient.meta.avatar;
   const currencyIconName = offerVal.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle';
+  const unit = getOfferCurrencyUnit(offerVal);
 
   const BadgeData = () => {
     switch (offerVal.status) {
@@ -106,9 +108,6 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     setOfferVal(offerRes);
     setMissionVal(missionRes.items.find((item) => item.offer.id === offer.id));
     setOpenOverlayModal(false);
-    // setOpenAcceptModal(false);
-    // setOpenCompleteModal(false);
-    // setOpenDefaultModal(false);
   };
 
   const badge = BadgeData();
@@ -124,5 +123,6 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     missionVal,
     openOverlayModal,
     setOpenOverlayModal,
+    unit,
   };
 };
