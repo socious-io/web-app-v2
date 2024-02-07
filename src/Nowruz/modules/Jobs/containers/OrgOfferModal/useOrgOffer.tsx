@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import {
   Applicant,
   PaymentService,
@@ -9,7 +8,6 @@ import {
   ProjectPaymentType,
   offerByApplicant,
 } from 'src/core/api';
-import { OfferPayload } from 'src/core/types';
 import { removeValuesFromObject } from 'src/core/utils';
 import Dapp from 'src/dapp';
 import * as yup from 'yup';
@@ -28,19 +26,36 @@ const schema = yup.object().shape({
   paymentType: yup.string(),
   paymentTerm: yup.string(),
   paymentMethod: yup.string(),
-  hours: yup.string().required('Total hours is required'),
-  total: yup.number().min(22),
-  description: yup.string().required(),
+  hours: yup
+    .number()
+    .positive()
+    .typeError('Total hours is required')
+    .min(1, 'Hours needs to be more than 0')
+    .required('Total hours is required'),
+  total: yup.number().when(['paymentType'], (paymentType) => {
+    if (paymentType.includes('PAID')) {
+      return yup
+        .number()
+        .typeError('Offer amount is required')
+        .positive('Offer amount should be positive value')
+        .min(1)
+        .required('Offer amount is required');
+    } else {
+      return yup.string().nullable().notRequired();
+    }
+  }),
+  description: yup.string().required('Description is required'),
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
   const { chainId, isConnected } = Dapp.useWeb3();
   const [tokens, setTokens] = useState([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<string>();
-  const navigate = useNavigate();
+  const [selected, setSelected] = useState<string>();
+
   const {
     register,
     handleSubmit,
     setValue,
+    setError,
     watch,
     formState: { errors },
   } = useForm<Inputs>({
@@ -68,6 +83,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     };
     getTokens();
   }, [isConnected, chainId]);
+
   const onSelectPaymentType = (paymentType: ProjectPaymentType) => {
     setValue('paymentType', paymentType);
   };
@@ -78,16 +94,25 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     setValue('paymentMethod', paymentMethod);
   };
   const isCrypto = watch('paymentMethod') === 'CRYPTO';
-  const isNonPaid = watch('paymentTerm') === 'FIXED' && watch('paymentType') === 'VOLUNTEER';
+  const isNonPaid = watch('paymentType') === 'VOLUNTEER';
 
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
+    let netTotal = total;
+    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && total < 22) {
+      setError('total', {
+        message: 'Offer amount on Fiat should have a minimum value of 22',
+      });
+    }
+    if (isNonPaid) {
+      netTotal = 0;
+    }
     const payload = {
       payment_mode: paymentMethod,
-      assignment_total: total.toString(),
+      assignment_total: netTotal.toString(),
       offer_message: description,
       total_hours: hours.toString(),
-      crypto_currency_address: isCrypto ? tokens[0]?.value || tokens[0]?.address : undefined,
-      currency: selectedCurrency,
+      crypto_currency_address: isCrypto ? selected : undefined,
+      currency: isCrypto ? undefined : selected,
     };
 
     await offerByApplicant(applicant.id, removeValuesFromObject(payload, [undefined]));
@@ -113,6 +138,6 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     isCrypto,
     isNonPaid,
     paymentMethodOptions,
-    setSelectedCurrency,
+    setSelected,
   };
 };
