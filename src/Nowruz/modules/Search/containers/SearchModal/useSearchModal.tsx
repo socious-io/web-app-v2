@@ -9,7 +9,7 @@ const tabs = [
   { label: 'Organizations', value: 'organizations' },
 ];
 
-export const useSearchModal = (props: { open: boolean; onClose: () => void; searchText?: string }) => {
+export const useSearchModal = (props: { open: boolean; onClose: () => void; setSearchText: (s: string) => void }) => {
   const [list, setList] = useState<Array<Item>>([]);
   const [selectedTab, setSelectedTab] = useState('projects');
   const [selectedItem, setSelectedItem] = useState<null | Item>();
@@ -23,17 +23,11 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; sear
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTab]);
 
-  useEffect(() => {
-    if (props.searchText) {
-      setSearchTerm(props.searchText);
-      fetchSearchResult(props.searchText);
-    }
-  }, [props.searchText]);
-
   const fetchSearchResult = async (q: string) => {
     setShowNoResult(false);
     setSelectedItem(null);
     setSearchTerm(q);
+    props.setSearchText(q);
     if (q.length) {
       const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
       setList(searchIntoList(result.items));

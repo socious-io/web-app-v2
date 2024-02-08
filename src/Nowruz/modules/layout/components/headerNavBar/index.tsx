@@ -56,7 +56,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           name="search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onEnter={setOpenSearchModal}
+          onClick={setOpenSearchModal}
           placeholder="Search"
           startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
         />
@@ -94,13 +94,6 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
                   return;
                 },
               },
-              // {
-              //   iconName: 'help-circle',
-              //   label: 'Support',
-              //   onClick: () => {
-              //     return;
-              //   },
-              // },
               { iconName: 'log-out-01', label: 'Log out', onClick: logout },
             ]}
             createItem
@@ -112,7 +105,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
         open={openNotifPanel}
         handleClose={() => setOpenNotifPanel(false)}
       />
-      <SearchModal open={openSearchModal} onClose={() => setOpenSearchModal(false)} searchText={searchTerm} />
+      <SearchModal open={openSearchModal} onClose={() => setOpenSearchModal(false)} setSearchText={setSearchTerm} />
     </div>
   );
 };

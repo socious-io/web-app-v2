@@ -2,33 +2,20 @@ import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Modal } from 'src/components/templates/modal/modal';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { EmptyState } from 'src/Nowruz/modules/general/components/EmptyState';
 import { ResultList } from 'src/Nowruz/modules/Search/components/ResultList';
 import { SearchInput } from 'src/Nowruz/modules/Search/components/SearchInput';
-import { UserCard } from 'src/Nowruz/modules/Search/components/UserCard';
 
 import css from './search-modal.module.scss';
 import { SearchModalProps } from './SearchModal.types';
 import { useSearchModal } from './useSearchModal';
-import { ResultNotFound } from '../../components/ResultNotFound';
 import { TabPreview } from '../../components/TabBar';
-import { EmptyState } from 'src/Nowruz/modules/general/components/EmptyState';
-import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
-export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, searchText }) => {
+export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSearchText }) => {
   const isMobile = window.innerWidth < 600;
-  const {
-    tabs,
-    setSelectedTab,
-    fetchSearchResult,
-    list,
-    setSelectedItem,
-    selectedItem,
-    searchTerm,
-    selectedTab,
-    showNoResult,
-  } = useSearchModal({
+  const { tabs, setSelectedTab, fetchSearchResult, list, selectedItem, searchTerm, showNoResult } = useSearchModal({
     open,
     onClose,
-    searchText,
+    setSearchText,
   });
   const width = isMobile ? '100%' : '760px';
   return (
@@ -59,8 +46,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, searchT
             />
           </div>
           <div className={css.content}>
-            {!!list?.length && <ResultList list={list} onSelect={(item) => setSelectedItem(item)} />}
-            {selectedItem && !isMobile && <UserCard user={selectedItem} />}
+            {!!list?.length && <ResultList list={list} onClose={onClose} />}
             {showNoResult && (
               <EmptyState
                 icon={<Icon name="search-lg" fontSize={24} color={variables.color_grey_700} />}
