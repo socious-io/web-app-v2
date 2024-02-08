@@ -16,6 +16,7 @@ import { RootState } from 'src/store';
 
 import css from './jobDetailHeader.module.scss';
 import { ApplyModal } from '../applyModal';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 
 interface JobDetailHeaderProps {
   job: Job;
@@ -34,6 +35,9 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser })
       nonPermanentStorage.remove('openApplyModal');
     });
   }, []);
+
+  const socialCauses = socialCausesToCategory(job.causes_tags).map((item) => item.label);
+  const skills = skillsToCategory(job.skills).map((item) => item.label);
   return (
     <>
       <div className={css.container}>
@@ -48,8 +52,8 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser })
             </div>
           </div>
           <div className="flex gap-2 flex-wrap">
-            {job.causes_tags?.map((tag) => <Chip key={tag} label={tag} theme="primary" shape="round" size="lg" />)}
-            {job.skills?.map((s) => <Chip key={s} label={s} theme="grey_blue" shape="round" size="lg" />)}
+            {socialCauses?.map((tag) => <Chip key={tag} label={tag} theme="primary" shape="round" size="lg" />)}
+            {skills?.map((s) => <Chip key={s} label={s} theme="grey_blue" shape="round" size="lg" />)}
           </div>
 
           {/* <span className={css.subtitle}>
