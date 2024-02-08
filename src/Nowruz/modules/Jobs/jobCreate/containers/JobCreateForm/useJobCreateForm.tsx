@@ -109,6 +109,8 @@ export const useJobCreateForm = () => {
   const [skills, setSkills] = useState<Array<{ label: string; value: string }>>([]);
   const { categories } = useLoaderData().jobCategories || {};
   const [questions, setQuestions] = useState<QuestionReq[]>([]);
+  const [editedQuestion, setEditedQuestion] = useState<QuestionReq>();
+  const [editedQuestionIndex, setEditedQuestionIndex] = useState();
   const [openCreateQuestion, setOpenCreateQuestion] = useState(false);
   const catagoriesList = categories.map((item) => ({ label: item.name, value: item.id }));
   const keytems = Object.keys(SOCIAL_CAUSES);
@@ -295,6 +297,22 @@ export const useJobCreateForm = () => {
     q.splice(index, 1);
     setQuestions(q);
   };
+
+  const openEditQuestionForm = (index: number) => {
+    setEditedQuestion(questions[index]);
+    setEditedQuestionIndex(index);
+    setOpenCreateQuestion(true);
+  };
+
+  const handleEditQuestion = (editedQ: QuestionReq) => {
+    const q = [...questions];
+    q[editedQuestionIndex] = editedQ;
+    setQuestions(q);
+    setEditedQuestion(undefined);
+    setEditedQuestionIndex(undefined);
+    setOpenCreateQuestion(false);
+  };
+
   return {
     register,
     handleSubmit,
@@ -340,5 +358,8 @@ export const useJobCreateForm = () => {
     openCreateQuestion,
     setOpenCreateQuestion,
     deleteQuestion,
+    openEditQuestionForm,
+    handleEditQuestion,
+    editedQuestion,
   };
 };

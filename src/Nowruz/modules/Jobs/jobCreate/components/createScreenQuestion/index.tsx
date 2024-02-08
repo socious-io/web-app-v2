@@ -9,13 +9,19 @@ import { CreateScreenQuestionProps } from './createScreenQuestion.types';
 import css from './createScreenQuestions.module.scss';
 import { useCreateScreenQuestion } from './useCreateScreenQuestion';
 
-export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({ addQuestion, cancel }) => {
+export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({
+  addQuestion,
+  editQuestion,
+  cancel,
+  editedQuestion,
+}) => {
   const {
     questionTypes,
     errors,
     onSelectQuestionType,
     register,
     type,
+    isRequired,
     options,
     onAddOption,
     requireOptions,
@@ -24,15 +30,18 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({ addQ
     newOption,
     setNewOption,
     handleSubmit,
-    handleAddQuestion,
+    onSubmit,
     optionError,
-  } = useCreateScreenQuestion(addQuestion);
+    isValid,
+  } = useCreateScreenQuestion(editedQuestion, addQuestion, editQuestion);
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
       <div className={css.infoDescription}>{description}</div>
     </div>
   );
+
+  console.log('test log isvalid', isValid, optionError);
   return (
     <div className={css.container}>
       <div className={css.row}>
@@ -40,6 +49,7 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({ addQ
         <div className={css.componentsContainer}>
           <RadioGroup
             items={questionTypes}
+            defaultValue={type}
             errors={errors['type']?.message ? [errors['type']?.message.toString()] : undefined}
             onChange={(option) => onSelectQuestionType(option.value.toString())}
           />
@@ -91,14 +101,15 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({ addQ
         <div className={css.componentsContainer}>
           <RadioGroup
             items={requireOptions}
+            defaultValue={isRequired ? 'yes' : 'no'}
             errors={errors['isRequired']?.message ? [errors['isRequired']?.message.toString()] : undefined}
             onChange={(option) => onSelectRequired(option.value.toString())}
           />
         </div>
       </div>
       <div className={`${css.row} md:justify-start gap-2 md:flex-row-reverse`}>
-        <Button variant="contained" color="primary" onClick={handleSubmit(handleAddQuestion)}>
-          Add question
+        <Button variant="contained" color="primary" onClick={handleSubmit(onSubmit)} disabled={!isValid || optionError}>
+          {editedQuestion ? 'Edit question' : 'Add question'}
         </Button>
         <Button variant="outlined" color="secondary" onClick={cancel}>
           Cancel
