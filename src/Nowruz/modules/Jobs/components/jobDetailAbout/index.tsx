@@ -149,7 +149,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
     <>
       <div className={css.container}>
         <span className={css.title}>About this job</span>
-        {!isTouchDevice() && <div className="hidden md:block">{detailJSX}</div>}
+        <div className="hidden md:block">{detailJSX}</div>
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
         {!jobDetail.applied && isUser && (
