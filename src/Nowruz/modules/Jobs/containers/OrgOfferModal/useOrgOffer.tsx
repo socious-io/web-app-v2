@@ -38,7 +38,6 @@ const schema = yup.object().shape({
         .number()
         .typeError('Offer amount is required')
         .positive('Offer amount should be positive value')
-        .min(1)
         .required('Offer amount is required');
     } else {
       return yup.string().nullable().notRequired();
