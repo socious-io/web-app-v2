@@ -16,7 +16,7 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
   const [applicants, setApplicants] = useState([] as Applicant[]);
   const isActive = job.status === 'ACTIVE';
   const startIcon = isActive ? <div className={css.dotIcon} /> : <></>;
-  const label = isActive ? 'Active' : 'Stopped';
+  const label = isActive ? 'Active' : 'Closed';
   const theme = isActive ? 'success' : 'error';
   const applicantsLabel = job.applicants === 1 ? 'applicant' : 'applicants';
 
