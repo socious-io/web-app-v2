@@ -13,18 +13,18 @@ export const ButtonGroups: React.FC<ButtonGroupsProps> = (props) => {
   };
 
   return (
-    <>
-      <div className={css.tabs}>
-        {buttons.map((btn, index) => (
-          <button
-            key={btn.label}
-            className={`${css.tab} ${index === active ? css.active : ''}`}
-            onClick={() => handleClick(index)}
-          >
-            {btn.label}
-          </button>
-        ))}
-      </div>
-    </>
+    <div className={css.tabs}>
+      {buttons.map((btn, index) => (
+        <button
+          key={btn.label}
+          className={`${css.tab} ${index === active ? css.active : ''} ${
+            buttons.length === 2 && index === 0 && css.divider
+          }`}
+          onClick={() => handleClick(index)}
+        >
+          {btn.label}
+        </button>
+      ))}
+    </div>
   );
 };

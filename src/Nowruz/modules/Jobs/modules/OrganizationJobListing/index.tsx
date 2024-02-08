@@ -31,20 +31,22 @@ export const OrganizationJobListing = () => {
         </div>
       ))}
       {jobsList.length === 0 && !loading && (
-        <EmptyState
-          icon={<Icon name="search-lg" fontSize={24} color={variables.color_grey_700} />}
-          message="No jobs found"
-          button={
-            <Button
-              startIcon={<Icon name="plus" color={variables.color_white} />}
-              color="primary"
-              variant="contained"
-              onClick={navigateToCreateJob}
-            >
-              Create job
-            </Button>
-          }
-        />
+        <div className="mt-6">
+          <EmptyState
+            icon={<Icon name="search-lg" fontSize={24} color={variables.color_grey_700} />}
+            message="No jobs found"
+            button={
+              <Button
+                startIcon={<Icon name="plus" color={variables.color_white} />}
+                color="primary"
+                variant="contained"
+                onClick={navigateToCreateJob}
+              >
+                Create job
+              </Button>
+            }
+          />
+        </div>
       )}
       {jobsList.length === 0 && !loading && (
         <div className="mt-11 hidden md:block">
