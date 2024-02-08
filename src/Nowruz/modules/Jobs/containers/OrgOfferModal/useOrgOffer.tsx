@@ -97,14 +97,32 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
 
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
     let netTotal = total;
+
+    if (isNonPaid) {
+      netTotal = 0;
+    }
+
+    if (!isNonPaid && !selected) {
+      setError('total', {
+        message: 'Offer currency is required',
+      });
+      return;
+    }
+
+    if (isCrypto && selected && ['USD', 'JPY'].includes(selected)) {
+      setError('total', {
+        message: 'Offer currency is incorrect',
+      });
+      return;
+    }
+
     if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && total < 22) {
       setError('total', {
         message: 'Offer amount on Fiat should have a minimum value of 22',
       });
+      return;
     }
-    if (isNonPaid) {
-      netTotal = 0;
-    }
+
     const payload = {
       payment_mode: paymentMethod,
       assignment_total: netTotal.toString(),
