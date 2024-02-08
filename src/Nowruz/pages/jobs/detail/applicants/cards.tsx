@@ -35,7 +35,7 @@ export const Cards: React.FC<CardsProps> = ({ applicants }) => {
     success,
   } = useApplicantAction(applicants);
   return applicants.length ? (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 mx-4">
       {applicants.map((applicant) => (
         <div key={applicant.id} className="border border-solid border-Gray-light-mode-200 rounded-lg">
           <div

@@ -7,6 +7,7 @@ import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { closeJob, CurrentIdentity, Job } from 'src/core/api';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { QuestionsRes } from 'src/core/types';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -148,7 +149,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
     <>
       <div className={css.container}>
         <span className={css.title}>About this job</span>
-        <div className="hidden md:block">{detailJSX}</div>
+        {!isTouchDevice() && <div className="hidden md:block">{detailJSX}</div>}
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
         {!jobDetail.applied && isUser && (
