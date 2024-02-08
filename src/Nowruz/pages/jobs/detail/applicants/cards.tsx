@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Applicant } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
@@ -15,9 +15,11 @@ import { useApplicantAction } from './useApplicantAction';
 
 interface CardsProps {
   applicants: Array<Applicant>;
+  currentTab: string;
+  onRefetch: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Cards: React.FC<CardsProps> = ({ applicants }) => {
+export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch }) => {
   const {
     open,
     setOpen,
@@ -33,9 +35,9 @@ export const Cards: React.FC<CardsProps> = ({ applicants }) => {
     onSuccess,
     handleCloseSuccess,
     success,
-  } = useApplicantAction(applicants);
+  } = useApplicantAction(applicants, onRefetch);
   return applicants.length ? (
-    <div className="flex flex-col gap-4 mx-4">
+    <div className="flex flex-col gap-4 md:hidden">
       {applicants.map((applicant) => (
         <div key={applicant.id} className="border border-solid border-Gray-light-mode-200 rounded-lg">
           <div
@@ -109,9 +111,11 @@ export const Cards: React.FC<CardsProps> = ({ applicants }) => {
       )}
     </div>
   ) : (
-    <EmptyState
-      icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
-      message="No applicants yet"
-    />
+    <div className="block md:hidden">
+      <EmptyState
+        icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
+        message={`No ${currentTab} yet`}
+      />
+    </div>
   );
 };

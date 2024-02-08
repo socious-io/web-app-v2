@@ -27,7 +27,7 @@ export const JobDetail = () => {
     screeningQuestions: QuestionsRes;
   };
   const [organization, setOrganization] = useState<Organization>();
-  const { tabs } = useJobDetailTabs(jobDetail, isUser, location?.state?.applicants ?? []);
+  const { tabs } = useJobDetailTabs(jobDetail, isUser);
 
   useEffect(() => {
     getOrganization(jobDetail.identity_meta.id).then((res) => setOrganization(res));
