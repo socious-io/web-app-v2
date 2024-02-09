@@ -92,7 +92,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                   noBorderPostfix
                   onKeyDown={preventArrow}
                   errors={errors['hours']?.message ? [errors['hours']?.message.toString()] : undefined}
-                  className="text-right"
+                  inputProps={{ style: { textAlign: 'right' } }}
                 />
               </div>
               {!isNonPaid && (
