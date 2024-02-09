@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   Applicant,
@@ -95,6 +95,12 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
   const isCrypto = watch('paymentMethod') === 'CRYPTO';
   const isNonPaid = watch('paymentType') === 'VOLUNTEER';
 
+  const preventArrow = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
     let netTotal = total;
 
@@ -163,5 +169,6 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     isNonPaid,
     paymentMethodOptions,
     setSelected,
+    preventArrow,
   };
 };
