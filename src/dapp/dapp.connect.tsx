@@ -1,7 +1,13 @@
+import {
+  createWeb3Modal,
+  defaultConfig,
+  useWeb3Modal,
+  useWeb3ModalAccount,
+  useWeb3ModalProvider,
+} from '@web3modal/ethers/react';
+import { BrowserProvider, JsonRpcSigner } from 'ethers';
 import React, { useState, useEffect } from 'react';
 import { config } from 'src/config';
-import { createWeb3Modal, defaultConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/ethers/react';
-import { BrowserProvider, JsonRpcSigner } from 'ethers';
 
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
@@ -28,6 +34,7 @@ createWeb3Modal({
 export const useWeb3 = () => {
   const [provider, setProvier] = useState<BrowserProvider | undefined>();
   const { address, isConnected, chainId } = useWeb3ModalAccount();
+  const { open, close } = useWeb3Modal();
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>();
   const { walletProvider } = useWeb3ModalProvider();
 
@@ -39,7 +46,7 @@ export const useWeb3 = () => {
     }
   }, [address, isConnected, walletProvider]);
 
-  return { account: address, provider, isConnected, signer, chainId };
+  return { account: address, provider, isConnected, signer, chainId, open, close };
 };
 
 export const Connect: React.FC = () => {

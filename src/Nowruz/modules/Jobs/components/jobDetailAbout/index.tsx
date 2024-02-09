@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
-import { CurrentIdentity, Job } from 'src/core/api';
+import { closeJob, CurrentIdentity, Job } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { QuestionsRes } from 'src/core/types';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AuthGuard } from 'src/Nowruz/modules/authGuard';
+import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { CountryFlag } from 'src/Nowruz/modules/general/components/countryFlag';
+import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { RootState } from 'src/store';
 
 import css from './jobDetailAbout.module.scss';
 import { ApplyModal } from '../applyModal';
 
-export const JobDetailAbout = () => {
+interface JobDetailAboutProps {
+  isUser: boolean;
+}
+
+export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true }) => {
   const { jobDetail } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
@@ -30,9 +36,19 @@ export const JobDetailAbout = () => {
   });
 
   const [openApply, setOpenApply] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
   const url = window.location.href;
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
+  };
+
+  const navigate = useNavigate();
+
+  const onClose = async () => {
+    const response = await closeJob(jobDetail.id);
+    if (response) {
+      navigate('..');
+    }
   };
 
   useEffect(() => {
@@ -84,34 +100,48 @@ export const JobDetailAbout = () => {
   };
 
   const detailJSX = (
-    <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-2 gap-4">
-        {renderJobLocation()}
-        {renderJobFeatures(
-          'mouse',
-          PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === jobDetail.remote_preference)?.label,
-        )}
-        {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === jobDetail.project_type)?.label)}
-        {renderJobFeatures(
-          'hourglass-03',
-          PROJECT_LENGTH_V3.find((level) => level.value === jobDetail.project_length)?.label,
-        )}
-      </div>
+    <div className="flex flex-row flex-wrap gap-4">
+      {renderJobLocation()}
+      {renderJobFeatures(
+        'mouse',
+        PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === jobDetail.remote_preference)?.label,
+      )}
+      {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === jobDetail.project_type)?.label)}
+      {renderJobFeatures(
+        'hourglass-03',
+        PROJECT_LENGTH_V3.find((level) => level.value === jobDetail.project_length)?.label,
+      )}
 
       {renderJobFeatures(
         'target-02',
         EXPERIENCE_LEVEL_V2.find((level) => level.value === jobDetail.experience_level)?.label,
       )}
-      {jobDetail.payment_scheme === 'FIXED'
-        ? renderJobFeatures(
-            'currency-dollar-circle',
-            ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
-            '(Fixed-price)',
-          )
-        : renderJobFeatures(
-            'currency-dollar-circle',
-            ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
-          )}
+      {jobDetail.payment_type === 'PAID' &&
+        jobDetail.payment_scheme === 'FIXED' &&
+        renderJobFeatures(
+          'currency-dollar-circle',
+          ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
+          '(Fixed-price)',
+        )}
+      {jobDetail.payment_type === 'PAID' &&
+        jobDetail.payment_scheme === 'HOURLY' &&
+        renderJobFeatures(
+          'currency-dollar-circle',
+          ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
+        )}
+      {jobDetail.payment_type === 'VOLUNTEER' &&
+        jobDetail.payment_scheme === 'HOURLY' &&
+        renderJobFeatures('heart', 'Volunteer')}
+
+      {jobDetail.payment_type === 'VOLUNTEER' &&
+        jobDetail.payment_scheme === 'HOURLY' &&
+        renderJobFeatures(
+          'clock',
+          ` ${jobDetail.commitment_hours_lower}~${jobDetail.commitment_hours_higher} hrs/week`,
+        )}
+      {jobDetail.payment_type === 'VOLUNTEER' &&
+        jobDetail.payment_scheme === 'FIXED' &&
+        renderJobFeatures('clock', ` ${jobDetail.commitment_hours_lower}~${jobDetail.commitment_hours_higher} hrs`)}
     </div>
   );
   return (
@@ -121,7 +151,7 @@ export const JobDetailAbout = () => {
         <div className="hidden md:block">{detailJSX}</div>
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
-        {!jobDetail.applied && (
+        {!jobDetail.applied && isUser && (
           <AuthGuard>
             <Button
               variant="contained"
@@ -133,12 +163,35 @@ export const JobDetailAbout = () => {
             </Button>
           </AuthGuard>
         )}
+        {!isUser && jobDetail.status === 'ACTIVE' && (
+          <Button
+            variant="contained"
+            color="error"
+            customStyle="hidden md:block w-full"
+            onClick={() => setOpenAlert(true)}
+          >
+            Close
+          </Button>
+        )}
         <div className="md:hidden flex flex-col gap-5 p-5 border border-solid border-Gray-light-mode-200 rounded-default">
           {detailJSX}
           <Input id="copy-url" value={url} postfix={inputJSX} />
         </div>
       </div>
       <ApplyModal open={openApply} handleClose={() => setOpenApply(false)} />
+      <AlertModal
+        open={openAlert}
+        onClose={() => setOpenAlert(false)}
+        onSubmit={onClose}
+        message="Are you sure you want to close this job?It will be archived"
+        title="Close job"
+        customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />}
+        closeButtn={true}
+        closeButtonLabel="Cancel"
+        submitButton={true}
+        submitButtonTheme="error"
+        submitButtonLabel="Close job"
+      />
     </>
   );
 };

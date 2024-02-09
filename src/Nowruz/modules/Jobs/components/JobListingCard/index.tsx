@@ -52,6 +52,9 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
   const handleClick = () => {
     if (isTouchDevice()) navigate(`/nowruz/jobs/${job.id}`);
   };
+  const handleTitleClick = () => {
+    navigate(`/nowruz/jobs/${job.id}`);
+  };
   return (
     <div className={`${css.container} cursor-pointer md:cursor-default`} onClick={handleClick}>
       <div className={css.cardInfo}>
@@ -59,7 +62,9 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
           <div className={css.intro}>
             <Avatar type="organizations" size="56px" img={job.identity_meta?.image} />
             <div>
-              <div className={css.jobTitle}>{job.title}</div>
+              <button className={css.jobTitle} onClick={handleTitleClick}>
+                {job.title}
+              </button>
               <div className={css.subTitle}>
                 <span className={css.orgTitle}>{job.identity_meta?.name}</span> .{' '}
                 {toRelativeTime(job.updated_at?.toString() || '')}
@@ -76,7 +81,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
               ))}
             </div>
             <div className={css.jobDescription}>
-              <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.description} />
+              <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.description || ''} />
             </div>
             <div className={css.jobFeatures}>
               {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}
@@ -93,17 +98,27 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
                 'target-02',
                 EXPERIENCE_LEVEL_V2.find((level) => level.value === job.experience_level)?.label,
               )}
-              {job.payment_scheme === 'FIXED' &&
+              {job.payment_type === 'PAID' &&
+                job.payment_scheme === 'FIXED' &&
                 renderJobFeatures(
                   'currency-dollar-circle',
                   ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
                   '(Fixed-price)',
                 )}
-              {job.payment_scheme === 'HOURLY' &&
+              {job.payment_type === 'PAID' &&
+                job.payment_scheme === 'HOURLY' &&
                 renderJobFeatures(
                   'currency-dollar-circle',
                   ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
                 )}
+              {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
+
+              {job.payment_type === 'VOLUNTEER' &&
+                job.payment_scheme === 'HOURLY' &&
+                renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs/week`)}
+              {job.payment_type === 'VOLUNTEER' &&
+                job.payment_scheme === 'FIXED' &&
+                renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs`)}
 
               {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
             </div>

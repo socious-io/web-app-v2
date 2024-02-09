@@ -1,0 +1,24 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  width: 100%;
+  padding: 20px 16px 24px 16px;
+  border: 1px solid $color-grey-200;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  color: $color-grey-900;
+}
+.sum {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  color: $color-grey-700;
+}

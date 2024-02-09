@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
-import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
+import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -12,11 +12,13 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import MultiSelect from 'src/Nowruz/modules/general/components/multiSelect/multiSelect';
 import { RadioGroup } from 'src/Nowruz/modules/general/components/RadioGroup';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
+import { CreateScreenQuestion } from 'src/Nowruz/modules/Jobs/jobCreate/components/createScreenQuestion';
+import { JobCreateHeader } from 'src/Nowruz/modules/Jobs/jobCreate/components/Header';
+import { JobPreviewModal } from 'src/Nowruz/modules/Jobs/jobCreate/components/JobPreviewModal';
+import { ScreenQuestion } from 'src/Nowruz/modules/Jobs/jobCreate/components/screenQuestion';
 
 import css from './job-create-form.module.scss';
 import { useJobCreateForm } from './useJobCreateForm';
-import { JobCreateHeader } from '../../components/Header';
-import { JobPreviewModal } from '../../components/JobPreviewModal';
 export const JobCreateForm = () => {
   const {
     register,
@@ -31,7 +33,6 @@ export const JobCreateForm = () => {
     openPreview,
     setOpenPreview,
     openSuccessModal,
-    setOpenSuccessModal,
     onPreview,
     skills,
     selectedSkills,
@@ -44,7 +45,30 @@ export const JobCreateForm = () => {
     onSelectLength,
     onSelectExperienceLevel,
     previewModalProps,
+    isDirty,
+    isValid,
+    onChangePaymentMax,
+    onChangePaymentMin,
+    paymentMin,
+    paymentMax,
+    paymentTypeOptions,
+    paymentType,
+    paymentScheme,
+    handleCloseSuccessModal,
+    onChangeCommitHoursMin,
+    onChangeCommitHoursMax,
+    commitmentHoursHigher,
+    commitmentHoursLower,
+    questions,
+    addQuestion,
+    openCreateQuestion,
+    setOpenCreateQuestion,
+    deleteQuestion,
+    openEditQuestionForm,
+    handleEditQuestion,
+    editedQuestion,
   } = useJobCreateForm();
+
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
@@ -56,38 +80,65 @@ export const JobCreateForm = () => {
       <div className="flex justfy-center align-center">
         <Input
           name="paymentMin"
-          register={register}
+          value={paymentMin}
+          onChange={(e) => onChangePaymentMin(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
           prefix="$"
-          errors={errors['paymentMin']?.message ? [errors['paymentMin']?.message.toString()] : []}
+          errors={errors['paymentMin']?.message ? [errors['paymentMin']?.message.toString()] : undefined}
         />
         <div className="flex items-center mx-2">to</div>
         <Input
           name="paymentMax"
-          register={register}
+          value={paymentMax}
+          onChange={(e) => onChangePaymentMax(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
           prefix="$"
-          errors={errors['paymentMax']?.message ? [errors['paymentMax']?.message.toString()] : []}
+          errors={errors['paymentMax']?.message ? [errors['paymentMax']?.message.toString()] : undefined}
         />
       </div>
     );
   };
-  const renderCustomErrors = (errors: string[]) => {
-    return errors.map((e, index) => (
-      <p key={index} className={`${css.errorMsg} ${css.msg}`}>
-        {e}
-      </p>
-    ));
+  const renderHoursFields = () => {
+    return (
+      <div className="flex justfy-center align-center">
+        <Input
+          name="commitmentHoursLower"
+          value={commitmentHoursLower}
+          onChange={(e) => onChangeCommitHoursMin(e.target.value)}
+          postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
+          placeholder="0"
+          className={css.priceInputs}
+          errors={
+            errors['commitmentHoursLower']?.message ? [errors['commitmentHoursLower']?.message.toString()] : undefined
+          }
+          noBorderPostfix
+        />
+        <div className="flex items-center mx-2">to</div>
+        <Input
+          name="commitmentHoursHigher"
+          value={commitmentHoursHigher}
+          onChange={(e) => onChangeCommitHoursMax(e.target.value)}
+          placeholder="0"
+          className={css.priceInputs}
+          postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
+          errors={
+            errors['commitmentHoursHigher']?.message ? [errors['commitmentHoursHigher']?.message.toString()] : undefined
+          }
+          noBorderPostfix
+        />
+      </div>
+    );
   };
+
   return (
     <div>
       <div className={css.back}>
         <BackLink title="Back" />
       </div>
       <form>
-        <JobCreateHeader onPreview={onPreview} onPublish={handleSubmit(onSubmit)} />
+        <JobCreateHeader onPreview={onPreview} onPublish={handleSubmit(onSubmit)} isValid={isValid} isDirty={isDirty} />
         <div className={css.row}>
           {renderInfo('What is your job about?', 'Select a social cause')}
           <div className={css.componentsContainer}>
@@ -173,8 +224,6 @@ export const JobCreateForm = () => {
                     </div>
                   ),
                 },
-                // errors={errors['']?.message ? [errors['description']?.message.toString()] : undefined}
-                // { label: 'In my timezone', value: 'In my timezone' },
               ]}
             />
           </div>
@@ -192,7 +241,7 @@ export const JobCreateForm = () => {
           </div>
         </div>
         <div className={css.row}>
-          {renderInfo('Job type', 'is it a full time job?')}
+          {renderInfo('Job type', 'Is it a full time job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
               placeholder="Please select"
@@ -219,25 +268,44 @@ export const JobCreateForm = () => {
           {renderInfo('Payment type', 'Is it a paid or volunteer job?')}
           <div className={css.componentsContainer}>
             <RadioGroup
-              items={PROJECT_PAYMENT_TYPE.reverse()}
+              items={paymentTypeOptions}
               errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
               onChange={(option) => onSelectPaymentType(option.value)}
             />
           </div>
         </div>
-        <div className={css.row}>
-          {renderInfo('Payment terms / range', 'Specify the estimated payment range for this job.')}
-          <div className={css.componentsContainer}>
-            <RadioGroup
-              onChange={(option) => onSelectPaymentScheme(option.value)}
-              items={[
-                { label: 'Fixed', value: 'FIXED', children: renderAmountFields() },
-                { label: 'Hourly', value: 'HOURLY', children: renderAmountFields() },
-              ]}
-              errors={errors['paymentScheme']?.message ? [errors['paymentScheme']?.message.toString()] : undefined}
-            />
+        {paymentType === 'PAID' && (
+          <div className={css.row}>
+            {renderInfo('Payment terms / range', 'Specify the estimated payment range for this job.')}
+
+            <div className={css.componentsContainer}>
+              <RadioGroup
+                onChange={(option) => onSelectPaymentScheme(option.value)}
+                items={[
+                  { label: 'Fixed', value: 'FIXED', children: renderAmountFields() },
+                  { label: 'Hourly', value: 'HOURLY', children: renderAmountFields() },
+                ]}
+                errors={errors['paymentScheme']?.message ? [errors['paymentScheme']?.message.toString()] : undefined}
+              />
+            </div>
           </div>
-        </div>
+        )}
+        {paymentType === 'VOLUNTEER' && (
+          <div className={css.row}>
+            {renderInfo('Commitment', 'Do you also offer payment in Crypto?')}
+
+            <div className={css.componentsContainer}>
+              <RadioGroup
+                onChange={(option) => onSelectPaymentScheme(option.value)}
+                items={[
+                  { label: 'Fixed', value: 'FIXED', children: renderHoursFields() },
+                  { label: 'Hourly', value: 'HOURLY', children: renderHoursFields() },
+                ]}
+                errors={errors['paymentScheme']?.message ? [errors['paymentScheme']?.message.toString()] : undefined}
+              />
+            </div>
+          </div>
+        )}
         <div className={css.row}>
           {renderInfo('Experience level', '')}
           <div className={css.componentsContainer}>
@@ -266,14 +334,43 @@ export const JobCreateForm = () => {
               chipBgColor={variables.color_grey_blue_50}
               chipIconColor={variables.color_grey_blue_500}
               displayDefaultBadges={false}
+              errors={errors['skills']?.message ? [errors['skills']?.message.toString()] : undefined}
             />
+          </div>
+        </div>
+        <div className={css.row}>
+          {renderInfo('Screener questions', 'Add up to 5 screener questions')}
+          <div className={css.componentsContainer}>
+            {!openCreateQuestion && (
+              <Button variant="text" color="secondary" onClick={() => setOpenCreateQuestion(true)}>
+                <Icon name="plus" fontSize={20} color={variables.color_grey_600} />
+                Add question
+              </Button>
+            )}
+            {openCreateQuestion && (
+              <CreateScreenQuestion
+                editedQuestion={editedQuestion}
+                addQuestion={addQuestion}
+                cancel={() => setOpenCreateQuestion(false)}
+                editQuestion={handleEditQuestion}
+              />
+            )}
+            {questions.map((q, index) => (
+              <ScreenQuestion
+                key={index}
+                index={index}
+                question={q}
+                handleDelete={deleteQuestion}
+                handleEdit={openEditQuestionForm}
+              />
+            ))}
           </div>
         </div>
         <div className={css.footer}>
           <div className="flex space-x-3 ">
-            <Button color="secondary" variant="outlined" onClick={onPreview}>
+            {/* <Button color="secondary" variant="outlined" onClick={onPreview} disabled={!isValid || !isDirty}>
               Preview
-            </Button>
+            </Button> */}
             <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)}>
               Publish job
             </Button>
@@ -288,8 +385,8 @@ export const JobCreateForm = () => {
       />
       <AlertModal
         open={openSuccessModal}
-        onClose={() => setOpenSuccessModal(false)}
-        onSubmit={() => setOpenSuccessModal(false)}
+        onClose={handleCloseSuccessModal}
+        onSubmit={handleCloseSuccessModal}
         message="This job has been published. Organization members will be able to edit this job and republish changes."
         title="Job published"
       />

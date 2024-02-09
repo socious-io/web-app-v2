@@ -7,6 +7,7 @@ import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
 import translate from 'src/translations';
 
 import { refreshToken } from './auth/auth.service';
+import { removedEmptyProps } from '../utils';
 
 export const http = axios.create({
   baseURL: config.baseURL,
@@ -25,7 +26,8 @@ export async function getAuthHeaders(): Promise<{ Authorization: string; Current
 }
 
 export async function post<T>(uri: string, payload: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
-  return http.post<T>(uri, payload, config);
+  const payload_removed_empty = removedEmptyProps(payload);
+  return http.post<T>(uri, payload_removed_empty, config);
 }
 
 export async function get<T>(uri: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {

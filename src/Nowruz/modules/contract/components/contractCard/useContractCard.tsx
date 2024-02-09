@@ -7,8 +7,7 @@ import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
 
 export const useContractCard = (offer: Offer, mission?: Mission) => {
-  const [openAcceptModal, setOpenAcceptModal] = useState(false);
-  const [openCompleteModal, setOpenCompleteModal] = useState(false);
+  const [openOverlayModal, setOpenOverlayModal] = useState(false);
   const [offerVal, setOfferVal] = useState(offer);
   const [missionVal, setMissionVal] = useState(mission);
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -19,7 +18,33 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
 
   const name = type === 'users' ? offerVal.offerer.meta.name : offerVal.recipient.meta.name;
   const profileImageUrl = type === 'users' ? offerVal.offerer.meta.image : offerVal.recipient.meta.avatar;
-  const currencyIconName = offerVal.currency === 'JPY' ? 'currency-yen-circle' : 'currency-dollar-circle';
+
+  // We might delete currency icon later (we accept only USD or JPY at the moment)
+  const currencyIconName = (() => {
+    switch (offerVal.currency) {
+      case 'JPY':
+        return 'currency-yen-circle';
+      case 'USD':
+        return 'currency-dollar-circle';
+    }
+  })();
+
+  // Format the amount depending of the currency
+  const formatCurrency = (() => {
+    const options = { useGrouping: true };
+
+    switch (offerVal.currency) {
+      case 'JPY':
+        return new Intl.NumberFormat('ja-JP', { ...options, maximumFractionDigits: 0 }) // Japanese Yen typically doesn't use decimal places
+          .format(offerVal.assignment_total);
+      case 'USD':
+        return new Intl.NumberFormat('en-US', { ...options, maximumFractionDigits: 2 }).format(
+          offerVal.assignment_total,
+        );
+      default:
+        return offerVal.assignment_total.toString(); // Ensure the default case returns a string for consistency
+    }
+  })();
 
   const BadgeData = () => {
     switch (offerVal.status) {
@@ -80,7 +105,12 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
             theme: 'secondary',
             icon: <></>,
           };
-        else return;
+        else
+          return {
+            label: 'Closed',
+            theme: 'secondary',
+            icon: <></>,
+          };
       case 'CANCELED':
         return {
           label: 'Canceled',
@@ -95,39 +125,31 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
         };
     }
   };
-  const handleOpenModal = () => {
-    if (identity?.type === 'users' && offerVal.status === 'PENDING') {
-      setOpenAcceptModal(true);
-      return;
-    }
-
-    if (offerVal.status === 'HIRED' && missionVal?.status === 'ACTIVE' && identity?.type === 'users') {
-      setOpenCompleteModal(true);
-      return;
-    }
-  };
 
   const handleCloseModal = async () => {
     const offerRes = await getOffer(offer.id);
     const missionRes = await userMissions();
     setOfferVal(offerRes);
     setMissionVal(missionRes.items.find((item) => item.offer.id === offer.id));
-    setOpenAcceptModal(false);
-    setOpenCompleteModal(false);
+    setOpenOverlayModal(false);
+    // setOpenAcceptModal(false);
+    // setOpenCompleteModal(false);
+    // setOpenDefaultModal(false);
   };
 
   const badge = BadgeData();
+
   return {
     badge,
     type,
     name,
     profileImageUrl,
     currencyIconName,
-    openAcceptModal,
-    openCompleteModal,
-    handleOpenModal,
+    formatCurrency,
     handleCloseModal,
     offerVal,
     missionVal,
+    openOverlayModal,
+    setOpenOverlayModal,
   };
 };

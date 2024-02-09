@@ -36,8 +36,8 @@ export const useLinksContainer = () => {
       iconName: 'briefcase-01',
       public: true,
       children: [
-        { label: 'Find work', route: '/' },
-        { label: 'Saved jobs', route: '/' },
+        { label: 'Find work', route: '/', public: true },
+        { label: 'Saved jobs', route: '/', public: false },
       ],
     },
     {
@@ -67,6 +67,15 @@ export const useLinksContainer = () => {
     },
   ];
   const filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
+
+  // filter menu childs for public items if user is not logged in
+  if (!userIsLoggedIn) {
+    filteredMenu.forEach(element => {
+      if (element.children) {
+        element.children = element.children.filter(item => item.public)
+      }
+    });
+  }
 
   return { filteredMenu, userIsLoggedIn };
 };

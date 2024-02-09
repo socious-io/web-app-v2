@@ -1,8 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { PaymentService, ProjectPaymentSchemeType, ProjectPaymentType, offerByApplicant } from 'src/core/api';
-import { OfferPayload } from 'src/core/types';
+import {
+  Applicant,
+  PaymentService,
+  ProjectPaymentSchemeType,
+  ProjectPaymentType,
+  offerByApplicant,
+} from 'src/core/api';
 import { removeValuesFromObject } from 'src/core/utils';
 import Dapp from 'src/dapp';
 import * as yup from 'yup';
@@ -21,26 +26,43 @@ const schema = yup.object().shape({
   paymentType: yup.string(),
   paymentTerm: yup.string(),
   paymentMethod: yup.string(),
-  hours: yup.string().required('Total hours is required'),
-  total: yup.string(),
-  description: yup.string().required(),
+  hours: yup
+    .number()
+    .positive()
+    .typeError('Total hours is required')
+    .min(1, 'Hours needs to be more than 0')
+    .required('Total hours is required'),
+  total: yup.number().when(['paymentType'], (paymentType) => {
+    if (paymentType.includes('PAID')) {
+      return yup
+        .number()
+        .typeError('Offer amount is required')
+        .positive('Offer amount should be positive value')
+        .min(1)
+        .required('Offer amount is required');
+    } else {
+      return yup.string().nullable().notRequired();
+    }
+  }),
+  description: yup.string().required('Description is required'),
 });
-export const useOrgOffer = (applicantId: string) => {
+export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
   const { chainId, isConnected } = Dapp.useWeb3();
   const [tokens, setTokens] = useState([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<string>();
+  const [selected, setSelected] = useState<string>();
+
   const {
     register,
     handleSubmit,
     setValue,
-    getValues,
+    setError,
     watch,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
     defaultValues: {
       paymentType: 'PAID',
-      paymentMethod: 'CRYPTO',
+      paymentMethod: 'FIAT' as 'STRIPE',
       paymentTerm: 'FIXED',
     },
   });
@@ -55,12 +77,13 @@ export const useOrgOffer = (applicantId: string) => {
             address: token.address,
           };
         });
-        console.log('mapTokens333', selectedNetwork);
+
         setTokens(mapTokens);
       }
     };
     getTokens();
   }, [isConnected, chainId]);
+
   const onSelectPaymentType = (paymentType: ProjectPaymentType) => {
     setValue('paymentType', paymentType);
   };
@@ -71,25 +94,30 @@ export const useOrgOffer = (applicantId: string) => {
     setValue('paymentMethod', paymentMethod);
   };
   const isCrypto = watch('paymentMethod') === 'CRYPTO';
-  const onSubmit: SubmitHandler<Inputs> = async ({
-    paymentMethod,
-    total,
-    description,
-    hours,
-    paymentTerm,
-    paymentType,
-  }) => {
+  const isNonPaid = watch('paymentType') === 'VOLUNTEER';
+
+  const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
+    let netTotal = total;
+    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && total < 22) {
+      setError('total', {
+        message: 'Offer amount on Fiat should have a minimum value of 22',
+      });
+    }
+    if (isNonPaid) {
+      netTotal = 0;
+    }
     const payload = {
       payment_mode: paymentMethod,
-      assignment_total: total,
+      assignment_total: netTotal.toString(),
       offer_message: description,
       total_hours: hours.toString(),
-      crypto_currency_address: isCrypto ? selectedCurrency?.address : undefined,
-      currency: selectedCurrency.label,
+      crypto_currency_address: isCrypto ? selected : undefined,
+      currency: isCrypto ? undefined : selected,
     };
-    console.log('ID ID', payload);
-    offerByApplicant(applicantId, removeValuesFromObject(payload, [undefined]));
-    console.log(payload);
+
+    await offerByApplicant(applicant.id, removeValuesFromObject(payload, [undefined]));
+    onSuccess();
+    onClose();
   };
 
   const paymentMethodOptions = isCrypto
@@ -108,7 +136,8 @@ export const useOrgOffer = (applicantId: string) => {
     onSelectPaymentTerm,
     onSelectPaymentMethod,
     isCrypto,
+    isNonPaid,
     paymentMethodOptions,
-    setSelectedCurrency,
+    setSelected,
   };
 };

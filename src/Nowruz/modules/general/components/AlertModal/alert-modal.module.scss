@@ -16,6 +16,8 @@
   background-color: white;
   padding: 24px;
   border-radius: 12px;
+  word-wrap: break-word;
+  overflow-y: auto;
   @media screen and (max-width: 600px) {
     width: 100%;
     padding: 16px;

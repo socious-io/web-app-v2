@@ -5,14 +5,11 @@ import { ButtonGroupItem } from 'src/Nowruz/modules/general/components/ButtonGro
 
 export const useContracts = () => {
   const { offers, missions } = useLoaderData() as { offers: OffersRes; missions: MissionsRes };
-  console.log('test log offers', offers);
   const [page, setPage] = useState(offers.page);
   const [offerList, setOfferList] = useState(offers.items);
   const PER_PAGE = 5;
   const itemsCount = offers.total_count;
   const pageCount = Math.floor(itemsCount / PER_PAGE) + (itemsCount % PER_PAGE && 1);
-  console.log('test log offers.items.length', offers.items.length);
-
   const fetchMore = async (page: number) => {
     const res = await userOffers({ page, limit: 5 });
     setOfferList(res.items);

@@ -8,8 +8,7 @@ import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 
 import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
-import { AcceptOffer } from '../acceptOffer';
-import { CompleteJob } from '../completeJob';
+import { ContractDetailsSlider } from '../contractDetailsSlider';
 
 export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) => {
   const {
@@ -18,11 +17,12 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
     name,
     profileImageUrl,
     currencyIconName,
+    formatCurrency,
     openAcceptModal,
     offerVal,
     missionVal,
-    openCompleteModal,
-    handleOpenModal,
+    openOverlayModal,
+    setOpenOverlayModal,
     handleCloseModal,
   } = useContractCard(offer, mission);
 
@@ -31,21 +31,20 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
       <div
         tabIndex={0}
         className="flex flex-col gap-5 border border-solid border-Gray-light-mode-200 rounded-default py-5 px-6 cursor-pointer"
-        onClick={handleOpenModal}
+        onClick={() => setOpenOverlayModal(true)}
       >
         <div className="flex gap-4 ">
           <Avatar size="56px" type={type || 'users'} img={profileImageUrl} />
           <div className="flex flex-col">
             <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">{offerVal.project.title}</span>
-            <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`${name} . ${toRelativeTime(
-              offerVal.created_at.toString(),
-            )}`}</span>
+            <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`${name}・${toRelativeTime( offerVal.created_at.toString(), )}`}</span>
+
           </div>
         </div>
         <div className="flex flex-col gap-5 md:flex-row">
           <div className="flex gap-2 items-center">
             <Icon name={currencyIconName} fontSize={20} color={variables.color_grey_500} />
-            <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{`${offerVal.assignment_total} ${offerVal.currency}`}</span>
+            <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{formatCurrency} {`${offerVal.currency}`}</span>
             <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`(Fixed-price)`}</span>
           </div>
           <div className="md:mr-0 md:ml-auto w-fit">
@@ -60,11 +59,9 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
           </div>
         </div>
       </div>
-      <Overlay open={openAcceptModal} onClose={handleCloseModal}>
-        <AcceptOffer offer={offerVal} />
-      </Overlay>
-      <Overlay open={openCompleteModal} onClose={handleCloseModal}>
-        <CompleteJob offer={offerVal} mission={missionVal} />
+
+      <Overlay open={openOverlayModal} onClose={handleCloseModal}>
+        <ContractDetailsSlider offer={offerVal} mission={missionVal} />
       </Overlay>
     </>
   );
