@@ -59,7 +59,7 @@ export const JobDetail = () => {
   );
 
   const organizationJSX = () => (
-    <div className="px-8">
+    <div className="md:px-8">
       <HorizontalTabs tabs={tabs} />
     </div>
   );

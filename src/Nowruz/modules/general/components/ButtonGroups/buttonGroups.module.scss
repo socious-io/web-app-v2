@@ -25,10 +25,13 @@
   }
 }
 
+.divider {
+  border-right: 1px solid $color-grey-300 !important;
+}
+
 .active {
   background-color: $color-grey-50;
   color: $color-grey-800;
-  
 }
 
 .content {
