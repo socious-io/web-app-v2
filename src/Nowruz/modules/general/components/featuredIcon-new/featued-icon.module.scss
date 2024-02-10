@@ -120,3 +120,26 @@
   background-color: $color-success-600;
   border-color: $color-success-700;
 }
+
+.modern {
+  background-color: $color-white;
+  border: 1px solid $color-grey-200;
+}
+
+.modern-xs {
+  border-radius: 4px;
+}
+
+.modern-sm {
+  border-radius: 6px;
+}
+.modern-md {
+  border-radius: 8px;
+}
+
+.modern-lg {
+  border-radius: 10px;
+}
+.modern-xl {
+  border-radius: 12px;
+}

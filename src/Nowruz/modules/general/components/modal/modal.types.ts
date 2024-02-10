@@ -10,4 +10,7 @@ export interface ModalProps {
   content?: ReactNode;
   footer?: ReactNode;
   mobileFullHeight?: boolean;
+  headerDivider?: boolean;
+  footerDivider?: boolean;
+  customStyle?: string;
 }
