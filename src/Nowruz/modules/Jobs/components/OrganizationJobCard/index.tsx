@@ -33,7 +33,7 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
 
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/nowruz/jobs/${job.id}`, { state: { applicants } });
+    navigate(`/nowruz/jobs/${job.id}`);
   };
   return (
     <div className={`${css.container} cursor-pointer`} onClick={handleClick}>

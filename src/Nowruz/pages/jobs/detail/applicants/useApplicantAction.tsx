@@ -1,19 +1,16 @@
 import { Cell, ColumnDef } from '@tanstack/react-table';
 import { useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Applicant, rejectApplicant } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 
-export const useApplicantAction = (applicants: Array<Applicant>) => {
+export const useApplicantAction = (applicants: Array<Applicant>, onRefetch) => {
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [offer, setOffer] = useState(false);
   const [applicant, setApplicant] = useState({} as Applicant);
   const [success, setSuccess] = useState<boolean>(false);
   const currentSelectedId = useRef<string>();
-
-  const navigate = useNavigate();
 
   const onClickName = (id: string) => {
     const details = applicants.find((applicant) => applicant.user.id === id);
@@ -33,9 +30,10 @@ export const useApplicantAction = (applicants: Array<Applicant>) => {
   };
 
   const handleReject = async () => {
+    setOpenAlert(false);
     if (currentSelectedId.current) {
       const response = await rejectApplicant(currentSelectedId?.current);
-      if (response.status === 'REJECTED') navigate('..');
+      if (response.status === 'REJECTED') onRefetch(true);
     }
   };
 
@@ -198,8 +196,8 @@ export const useApplicantAction = (applicants: Array<Applicant>) => {
   };
 
   const handleCloseSuccess = () => {
+    onRefetch(true);
     setSuccess(false);
-    navigate('..');
   };
 
   return {
