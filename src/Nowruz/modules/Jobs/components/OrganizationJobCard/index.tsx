@@ -2,7 +2,6 @@ import { Skeleton } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Applicant, Job, jobApplicants } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import { isoToStandard } from 'src/core/time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
@@ -17,7 +16,7 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
   const [applicants, setApplicants] = useState([] as Applicant[]);
   const isActive = job.status === 'ACTIVE';
   const startIcon = isActive ? <div className={css.dotIcon} /> : <></>;
-  const label = isActive ? 'Active' : 'Stopped';
+  const label = isActive ? 'Active' : 'Closed';
   const theme = isActive ? 'success' : 'error';
   const applicantsLabel = job.applicants === 1 ? 'applicant' : 'applicants';
 
@@ -34,7 +33,7 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
 
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/nowruz/jobs/${job.id}`, { state: { applicants } });
+    navigate(`/nowruz/jobs/${job.id}`);
   };
   return (
     <div className={`${css.container} cursor-pointer`} onClick={handleClick}>

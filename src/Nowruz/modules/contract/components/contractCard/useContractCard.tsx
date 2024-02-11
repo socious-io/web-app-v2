@@ -132,9 +132,6 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     setOfferVal(offerRes);
     setMissionVal(missionRes.items.find((item) => item.offer.id === offer.id));
     setOpenOverlayModal(false);
-    // setOpenAcceptModal(false);
-    // setOpenCompleteModal(false);
-    // setOpenDefaultModal(false);
   };
 
   const badge = BadgeData();

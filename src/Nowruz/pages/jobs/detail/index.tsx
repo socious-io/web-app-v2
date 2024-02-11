@@ -27,7 +27,7 @@ export const JobDetail = () => {
     screeningQuestions: QuestionsRes;
   };
   const [organization, setOrganization] = useState<Organization>();
-  const { tabs } = useJobDetailTabs(jobDetail, isUser, location?.state?.applicants ?? []);
+  const { tabs } = useJobDetailTabs(jobDetail, isUser);
 
   useEffect(() => {
     getOrganization(jobDetail.identity_meta.id).then((res) => setOrganization(res));
@@ -59,7 +59,7 @@ export const JobDetail = () => {
   );
 
   const organizationJSX = () => (
-    <div className="px-8">
+    <div className="md:px-8">
       <HorizontalTabs tabs={tabs} />
     </div>
   );

@@ -1,5 +1,5 @@
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Applicant } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -14,9 +14,11 @@ import { useApplicantAction } from './useApplicantAction';
 
 interface TableProps {
   applicants: Array<Applicant>;
+  currentTab: string;
+  onRefetch: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Table: React.FC<TableProps> = ({ applicants }) => {
+export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch }) => {
   const {
     open,
     setOpen,
@@ -31,7 +33,7 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
     onSuccess,
     handleCloseSuccess,
     success,
-  } = useApplicantAction(applicants);
+  } = useApplicantAction(applicants, onRefetch);
 
   const table = useReactTable({
     data: applicants,
@@ -40,7 +42,7 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
   });
 
   return applicants.length ? (
-    <div className="border-Gray-light-mode-200 border-solid border-b rounded-lg">
+    <div className="hidden md:block border-Gray-light-mode-200 border-solid border-b rounded-lg">
       <div className="py-2.5 px-4 flex">
         {/* <div
           onClick={() => {
@@ -144,9 +146,11 @@ export const Table: React.FC<TableProps> = ({ applicants }) => {
       )}
     </div>
   ) : (
-    <EmptyState
-      icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
-      message="No applicants yet"
-    />
+    <div className="hidden md:block">
+      <EmptyState
+        icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
+        message={`No ${currentTab} yet`}
+      />
+    </div>
   );
 };

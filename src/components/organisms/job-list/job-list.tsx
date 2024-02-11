@@ -26,7 +26,9 @@ export const JobList = (props: JobListProps): JSX.Element => {
   }
 
   const location = (job: JobListProps['data'][0]) =>
-    `${job.city}, ${getCountryName(job.country as keyof typeof COUNTRIES_DICT | undefined)}`;
+    `${job.city || job.identity_meta.city}, ${getCountryName(
+      (job.country || job.identity_meta.country) as keyof typeof COUNTRIES_DICT | undefined,
+    )}`;
 
   const seeMoreJSX = (
     <div className={css.seeMore} onClick={() => onMorePageClick()}>

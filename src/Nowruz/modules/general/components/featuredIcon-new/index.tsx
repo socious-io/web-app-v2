@@ -20,11 +20,13 @@ export const FeaturedIcon: React.FC<FeaturedIconProps> = ({ type, theme, size, i
               ? variables.color_success_600
               : variables.color_warning_600;
   }
+  if (type === 'modern') iconColor = variables.color_grey_700;
   return (
     <div
       className={`${css.container} ${css[`container-${size}`]} ${css[type]} ${css[`container-${type}-${theme}`]} ${
         css[`container-${type}-${size}`]
-      }`}
+      } ${type === 'modern' ? `${css.modern} ${css[`modern-${size}`]}` : ''}    
+      `}
     >
       <Icon name={iconName} fontSize={iconSize} color={iconColor} />
     </div>

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface AlertMessageProps {
   theme: 'primary' | 'gray' | 'error' | 'warning' | 'success';
   iconName: string;
@@ -11,4 +13,5 @@ export interface AlertMessageProps {
   secondaryButton?: boolean;
   secondaryButtonLabel?: string;
   secondaryButtonAction?: () => void;
+  children?: ReactNode;
 }
