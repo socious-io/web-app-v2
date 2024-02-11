@@ -34,6 +34,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     navigateToProfile,
     unreadNotif,
     readNotifications,
+    navigateToSettings
   } = useHeaderNavBar();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -87,9 +88,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
               {
                 iconName: 'settings-01',
                 label: 'Settings',
-                onClick: () => {
-                  return;
-                },
+                onClick: navigateToSettings
               },
               // {
               //   iconName: 'help-circle',
