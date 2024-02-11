@@ -26,8 +26,7 @@ export async function getAuthHeaders(): Promise<{ Authorization: string; Current
 }
 
 export async function post<T>(uri: string, payload: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
-  const payload_removed_empty = removedEmptyProps(payload);
-  return http.post<T>(uri, payload_removed_empty, config);
+  return http.post<T>(uri, removedEmptyProps(payload), config);
 }
 
 export async function get<T>(uri: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {

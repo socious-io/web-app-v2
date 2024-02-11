@@ -19,13 +19,16 @@ export const debounce = (func: Function, delay: number) => {
   };
 };
 
-export const removedEmptyProps = (obj: Record<string | number, unknown>) =>
-  Object.entries(obj).reduce((prev, [key, value]) => {
+export const removedEmptyProps = (obj: Record<string | number, unknown> | unknown) => {
+  if (!obj) return obj;
+  if (obj instanceof FormData) return obj;
+  return Object.entries(obj).reduce((prev, [key, value]) => {
     if (value) {
       Object.assign(prev, { [key]: value });
     }
     return prev;
   }, {});
+};
 
 export const removeEmptyArrays = (obj: null | undefined | Record<string | number, unknown>) => {
   if (!obj) {
