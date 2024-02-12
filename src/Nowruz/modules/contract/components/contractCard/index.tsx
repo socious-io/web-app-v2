@@ -4,25 +4,13 @@ import { toRelativeTime } from 'src/core/relative-time';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
-import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 
 import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
-import { ContractDetailsSlider } from '../contractDetailsSlider';
 
-export const ContractCard: React.FC<ContractCardProps> = ({ offer }) => {
-  const {
-    type,
-    badge,
-    name,
-    profileImageUrl,
-    currencyIconName,
-    formatCurrency,
-    offerVal,
-    openOverlayModal,
-    handleOpenOverlayModal,
-    handleCloseModal,
-  } = useContractCard(offer);
+export const ContractCard: React.FC<ContractCardProps> = ({ offer, setOpenOverlay }) => {
+  const { type, badge, name, profileImageUrl, currencyIconName, formatCurrency, offerVal, handleOpenOverlayModal } =
+    useContractCard(offer, setOpenOverlay);
   return (
     <>
       <div
@@ -59,10 +47,6 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer }) => {
           </div>
         </div>
       </div>
-
-      <Overlay open={openOverlayModal} onClose={handleCloseModal}>
-        <ContractDetailsSlider />
-      </Overlay>
     </>
   );
 };

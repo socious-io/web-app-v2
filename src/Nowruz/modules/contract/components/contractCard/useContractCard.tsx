@@ -7,12 +7,11 @@ import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
 import { setSelected } from 'src/store/reducers/contracts.reducer';
 
-export const useContractCard = (offer: Offer) => {
+export const useContractCard = (offer: Offer, setOpenOverlay: (val: boolean) => void) => {
   const mission = useSelector<RootState, Mission[]>((state) => {
     return state.contracts.missions;
   }).find((m) => m.offer.id === offer.id);
 
-  const [openOverlayModal, setOpenOverlayModal] = useState(false);
   const [offerVal, setOfferVal] = useState(offer);
   const [missionVal, setMissionVal] = useState(mission);
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -138,13 +137,9 @@ export const useContractCard = (offer: Offer) => {
     }
   };
 
-  const handleCloseModal = async () => {
-    setOpenOverlayModal(false);
-  };
-
   const handleOpenOverlayModal = async () => {
     dispatch(setSelected(offer.id));
-    setOpenOverlayModal(true);
+    setOpenOverlay(true);
   };
 
   const badge = BadgeData();
@@ -156,9 +151,7 @@ export const useContractCard = (offer: Offer) => {
     profileImageUrl,
     currencyIconName,
     formatCurrency,
-    handleCloseModal,
     offerVal,
-    openOverlayModal,
     handleOpenOverlayModal,
   };
 };

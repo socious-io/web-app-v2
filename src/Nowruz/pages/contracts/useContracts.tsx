@@ -17,6 +17,7 @@ export const useContracts = () => {
     return state.contracts.page;
   });
   const [page, setPage] = useState(currentPage);
+  const [openOverlayModal, setOpenOverlayModal] = useState(false);
   const PER_PAGE = 5;
   const pageCount = Math.floor(itemsCount / PER_PAGE) + (itemsCount % PER_PAGE && 1);
   const fetchMore = async (page: number) => {
@@ -49,5 +50,7 @@ export const useContracts = () => {
     setPage,
     page,
     offerList,
+    openOverlayModal,
+    setOpenOverlayModal,
   };
 };
