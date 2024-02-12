@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { convertMarkdownToJSX } from 'src/core/convert-md-to-jsx';
 
 import css from './alertMessage.module.scss';
