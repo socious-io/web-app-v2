@@ -59,6 +59,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           onClick={setOpenSearchModal}
           placeholder="Search"
           startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
+          autoComplete="off"
         />
       </div>
       {userIsLoggedIn && (

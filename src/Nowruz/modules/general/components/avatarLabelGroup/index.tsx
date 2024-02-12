@@ -19,7 +19,7 @@ export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = (props) => {
           {account.name}
         </Typography>
         <Typography variant="caption" color={variables.color_grey_600}>
-          {`@${account.username}`}
+          {account.type === 'users' ? `@${account.username}` : `${account.username}`}
         </Typography>
       </div>
     </div>
