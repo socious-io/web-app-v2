@@ -33,7 +33,7 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
     onSuccess,
     handleCloseSuccess,
     success,
-  } = useApplicantAction(applicants, onRefetch);
+  } = useApplicantAction(applicants, currentTab, onRefetch);
 
   const table = useReactTable({
     data: applicants,

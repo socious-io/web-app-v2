@@ -63,7 +63,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser })
               text={job.identity_meta.mission || ''}
             />
           </span> */}
-          {!job.applied && (
+          {!job.applied && isUser && (
             <AuthGuard>
               <Button
                 color="primary"

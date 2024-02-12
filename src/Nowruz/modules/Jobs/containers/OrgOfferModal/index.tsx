@@ -25,6 +25,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
     isNonPaid,
     paymentMethodOptions,
     setSelected,
+    preventArrow,
   } = useOrgOffer(applicant, onClose, onSuccess);
 
   const paymentMode = [...PROJECT_PAYMENT_MODE].reverse();
@@ -89,8 +90,9 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                   type="number"
                   postfix={<p>hours</p>}
                   noBorderPostfix
+                  onKeyDown={preventArrow}
                   errors={errors['hours']?.message ? [errors['hours']?.message.toString()] : undefined}
-                  className="text-right"
+                  inputProps={{ style: { textAlign: 'right' } }}
                 />
               </div>
               {!isNonPaid && (
@@ -121,6 +123,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                       register={register}
                       type="number"
                       placeholder={'0'}
+                      onKeyDown={preventArrow}
                       errors={errors['total']?.message ? [errors['total']?.message.toString()] : undefined}
                       postfixDropdown={{
                         options: paymentMethodOptions,

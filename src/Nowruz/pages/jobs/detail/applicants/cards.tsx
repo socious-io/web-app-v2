@@ -35,9 +35,9 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
     onSuccess,
     handleCloseSuccess,
     success,
-  } = useApplicantAction(applicants, onRefetch);
+  } = useApplicantAction(applicants, currentTab, onRefetch);
   return applicants.length ? (
-    <div className="flex flex-col gap-4 md:hidden">
+    <div className="flex flex-col gap-4 px-4 md:hidden">
       {applicants.map((applicant) => (
         <div key={applicant.id} className="border border-solid border-Gray-light-mode-200 rounded-lg">
           <div
@@ -57,15 +57,20 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
             <p className="text-Gray-light-mode-600 font-medium leading-5 text-sm">{`${applicant.user.city}, ${applicant.user.country}`}</p>
           </div>
           <div className="flex flex-row border-Gray-light-mode-200 border-solid border-b-0 border-t-1 border-l-0 border-r-0">
+            {currentTab === 'applicants' && (
+              <div
+                className="w-1/2 border-Gray-light-mode-200 border-solid border-b-0 border-t-0 border-l-0 border-r text-center"
+                onClick={() => onReject(applicant.id)}
+              >
+                <p className="py-2.5 px-4 text-Gray-light-mode-700 font-semibold leading-5 text-sm cursor-pointer">
+                  Reject
+                </p>
+              </div>
+            )}
             <div
-              className="w-1/2 border-Gray-light-mode-200 border-solid border-b-0 border-t-0 border-l-0 border-r text-center"
-              onClick={() => onReject(applicant.id)}
+              className={currentTab === 'applicants' ? `w-1/2 text-center` : `w-full text-center`}
+              onClick={() => onOffer(applicant.id)}
             >
-              <p className="py-2.5 px-4 text-Gray-light-mode-700 font-semibold leading-5 text-sm cursor-pointer">
-                Reject
-              </p>
-            </div>
-            <div className="w-1/2 text-center" onClick={() => onOffer(applicant.id)}>
               <p className="py-2.5 px-4 text-Gray-light-mode-700 font-semibold leading-5 text-sm cursor-pointer">
                 Hire
               </p>
@@ -111,7 +116,7 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
       )}
     </div>
   ) : (
-    <div className="block md:hidden">
+    <div className="block px-4 md:hidden">
       <EmptyState
         icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
         message={`No ${currentTab} yet`}
