@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Card, cards, hireOffer, payByOffer } from 'src/core/api';
 import { CardRadioButtonItem } from 'src/Nowruz/modules/general/components/cardRadioButton/cardRadioButton.types';
+import store from 'src/store';
+import { getMissions } from 'src/store/thunks/contracts.thunk';
 
 export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => void, offerId?: string) => {
   const [cardOptionList, setCardOptionList] = useState<CardRadioButtonItem[]>([]);
@@ -10,6 +12,7 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
   const getCards = async () => {
     const res = await cards({});
     setCardList(res.items);
@@ -45,6 +48,7 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
         source: selectedCardId,
       });
       await hireOffer(offerId);
+      await store.dispatch(getMissions());
       handleCloseModal(true);
     } catch (err: any) {
       handleCloseModal(false);

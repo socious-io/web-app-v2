@@ -10,7 +10,7 @@ import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
 import { ContractDetailsSlider } from '../contractDetailsSlider';
 
-export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) => {
+export const ContractCard: React.FC<ContractCardProps> = ({ offer }) => {
   const {
     type,
     badge,
@@ -18,19 +18,17 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
     profileImageUrl,
     currencyIconName,
     formatCurrency,
-    openAcceptModal,
     offerVal,
-    missionVal,
     openOverlayModal,
-    setOpenOverlayModal,
+    handleOpenOverlayModal,
     handleCloseModal,
-  } = useContractCard(offer, mission);
+  } = useContractCard(offer);
   return (
     <>
       <div
         tabIndex={0}
         className="flex flex-col gap-5 border border-solid border-Gray-light-mode-200 rounded-default py-5 px-6 cursor-pointer"
-        onClick={() => setOpenOverlayModal(true)}
+        onClick={handleOpenOverlayModal}
       >
         <div className="flex gap-4 ">
           <Avatar size="56px" type={type || 'users'} img={profileImageUrl} />
@@ -63,7 +61,7 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
       </div>
 
       <Overlay open={openOverlayModal} onClose={handleCloseModal}>
-        <ContractDetailsSlider offer={offerVal} mission={missionVal} />
+        <ContractDetailsSlider />
       </Overlay>
     </>
   );
