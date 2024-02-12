@@ -10,10 +10,13 @@ import {
   cancelMission,
   cancelOffer,
   completeMission,
+  confirmMission,
+  contestMission,
   dropMission,
   getOffer,
   rejectOffer,
 } from 'src/core/api';
+import { isoToStandard } from 'src/core/time';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { getSrtipeProfile } from 'src/pages/offer-received/offer-received.services';
@@ -234,6 +237,40 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
         setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
+      if (offerStatus === 'CLOSED' && missionStatus === 'COMPLETE') {
+        const alertMsg = (
+          <AlertMessage
+            theme="warning"
+            iconName="alert-circle"
+            title="Awaiting confirmation"
+            subtitle={`<b>${name}</b> has marked this job completed. Confirm so they can receive payment.`}
+          />
+        );
+        setAllStates(
+          true,
+          alertMsg,
+          true,
+          'Confirm completion',
+          true,
+          'Contest',
+          handleConfirmCompletion,
+          handleContest,
+        );
+        return;
+      }
+
+      if (offerStatus === 'CLOSED' && missionStatus === 'CONFIRMED') {
+        const alertMsg = (
+          <AlertMessage
+            theme="primary"
+            iconName="info-circle"
+            title="Job completed"
+            subtitle={`Completed on ${isoToStandard(mission.updated_at.toString())}`}
+          />
+        );
+        setAllStates(true, alertMsg, false, '', true, 'Review', undefined, undefined);
+        return;
+      }
     }
 
     setAllStates(false, null, false, '', false, '');
@@ -306,6 +343,27 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     await cancelOffer(offer.id);
     setOfferStatus('CANCELED');
     setmissionStatus(undefined);
+  };
+
+  const onConfirm = async () => {
+    if (!mission) return;
+    setOpenAlert(false);
+    await confirmMission(mission.id);
+    setOfferStatus('CLOSED');
+    setmissionStatus('CONFIRMED');
+  };
+
+  const handleConfirmCompletion = async () => {
+    setAlertTitle('Confirm completion');
+    setAlertIcon(<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />);
+    setAlertMessage(`Do you want to job completion?`);
+    setHandleAlertSubmit(() => onConfirm);
+    setOpenAlert(true);
+  };
+
+  const handleContest = async () => {
+    if (!mission) return;
+    await contestMission(mission.id);
   };
 
   return {
