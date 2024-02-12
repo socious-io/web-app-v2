@@ -92,7 +92,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
         const alertMsg = (
           <AlertMessage
             theme="warning"
-            iconName="check-circle"
+            iconName="alert-circle"
             title="Bank account required"
             subtitle="To accept this offer you need add a payout account"
           >
@@ -115,6 +115,11 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   };
 
   const inititalizeAccepOffer = async () => {
+    if (offer.project.payment_type === 'VOLUNTEER') {
+      setPrimaryButtonDisabled(false);
+      setAllStates(false, null, true, 'Accept', true, 'Decline', handleAcceptOffer, handleDecline);
+      return;
+    }
     if (offer.payment_mode === 'FIAT') await initializeAcceptOfferFiat();
     else if (offer.payment_mode === 'CRYPTO') initializeAcceptOfferCrypto();
   };
