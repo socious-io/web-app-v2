@@ -115,6 +115,13 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
       return;
     }
 
+    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && total < 22) {
+      setError('total', {
+        message: 'Offer amount on Fiat should have a minimum value of 22',
+      });
+      return;
+    }
+
     if (isCrypto && selected && ['USD', 'JPY'].includes(selected)) {
       setError('total', {
         message: 'Offer currency is incorrect',
@@ -125,13 +132,6 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     if (!isCrypto && selected && !['USD', 'JPY'].includes(selected)) {
       setError('total', {
         message: 'Offer currency is incorrect',
-      });
-      return;
-    }
-
-    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && total < 22) {
-      setError('total', {
-        message: 'Offer amount on Fiat should have a minimum value of 22',
       });
       return;
     }
