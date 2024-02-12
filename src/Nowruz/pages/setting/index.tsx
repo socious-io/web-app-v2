@@ -33,7 +33,7 @@ export const Setting = () =>{
     return (
 
         <div className="p-4">
-          <h2>Setting</h2>
+          <h2 className="gap-5 text-3xl">Setting</h2>
           <Tabs tabs={tabs} alignLeft={true} />
         </div>
     )
