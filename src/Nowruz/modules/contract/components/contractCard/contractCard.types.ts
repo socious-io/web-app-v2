@@ -1,6 +1,5 @@
-import { Mission, Offer } from 'src/core/api';
+import { Offer } from 'src/core/api';
 
 export interface ContractCardProps {
   offer: Offer;
-  mission?: Mission;
 }
