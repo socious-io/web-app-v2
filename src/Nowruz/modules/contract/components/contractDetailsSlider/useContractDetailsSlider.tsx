@@ -342,6 +342,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
 
   const onConfirm = async () => {
     if (!mission) return;
+    setOpenAlert(false);
     await confirmMission(mission.id);
     setOfferStatus('CLOSED');
     setmissionStatus('CONFIRMED');
