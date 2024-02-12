@@ -173,6 +173,31 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
+            path: 'created',
+            async lazy() {
+              const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
+              return {
+                Component: CreatedList,
+              };
+            },
+          },
+          {
+            path: 'created/:id',
+            loader: async ({ params }) => {
+              if (params.id) {
+                const requests = [job(params.id), jobQuestions(params.id)];
+                const [jobDetail, screeningQuestions] = await Promise.all(requests);
+                return { jobDetail, screeningQuestions };
+              }
+            },
+            async lazy() {
+              const { CreatedDetail } = await import('src/Nowruz/pages/jobs/detail/Created');
+              return {
+                Component: CreatedDetail,
+              };
+            },
+          },
+          {
             path: ':id',
             loader: async ({ params }) => {
               if (params.id) {

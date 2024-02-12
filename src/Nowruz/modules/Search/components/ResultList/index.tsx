@@ -24,7 +24,7 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
         break;
     }
     onClose();
-    navigate(path);
+    navigate(path, { state: { source: 'search' } });
   };
 
   return (
