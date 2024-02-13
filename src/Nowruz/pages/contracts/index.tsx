@@ -8,7 +8,7 @@ import css from './contracts.module.scss';
 import { useContracts } from './useContracts';
 
 export const Contracts = () => {
-  const { filterButtons, pageCount, setPage, offerList, missions, page } = useContracts();
+  const { filterButtons, pageCount, setPage, offerList, page } = useContracts();
 
   return (
     <div className={css.container}>
@@ -22,9 +22,7 @@ export const Contracts = () => {
 
       <ButtonGroups buttons={filterButtons} />
       <div className="flex flex-col gap-6 md:gap-5 w-full max-w-[640px] mt-8">
-        {offerList?.map((item: Offer) => (
-          <ContractCard key={item.id} offer={item} mission={missions.items.find((m) => m.offer.id === item.id)} />
-        ))}
+        {offerList?.map((item: Offer) => <ContractCard key={item.id} offer={item} />)}
       </div>
       <div className="mt-11 hidden md:block">
         <Pagination count={pageCount} onChange={(e, p) => setPage(p)} />
