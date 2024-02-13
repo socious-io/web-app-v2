@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export type HorizontalTabsItem = {
-  label: string;
+  label: ReactNode;
   content: ReactNode;
 };
 

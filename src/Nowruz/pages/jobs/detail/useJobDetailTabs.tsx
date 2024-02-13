@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Applicant, Job, jobApplicants } from 'src/core/api';
+import Badge from 'src/Nowruz/modules/general/components/Badge';
 import { JobDetailAbout } from 'src/Nowruz/modules/Jobs/components/jobDetailAbout';
 import { JobDetailDescription } from 'src/Nowruz/modules/Jobs/components/jobDetailDescription';
 
@@ -10,6 +11,7 @@ import css from './jobDetail.module.scss';
 export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
   const [applicants, setApplicants] = useState([] as Applicant[]);
   const [rejected, setRejected] = useState([] as Applicant[]);
+  const [offered, setOffered] = useState([] as Applicant[]);
   const [refetch, setRefetch] = useState(false);
 
   const overviewJSX = () => {
@@ -39,15 +41,36 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
 
   const tabs = useMemo(() => {
     return [
-      { label: 'Overview', content: overviewJSX() },
-      { label: 'Applicants', content: applicantsJSX(applicants, 'applicants') },
+      {
+        label: 'Overview',
+        content: overviewJSX(),
+      },
+      {
+        label: (
+          <>
+            Applicants
+            {!!applicants.length && (
+              <div className="ml-2 hidden md:block">
+                <Badge content={applicants.length.toString()} />
+              </div>
+            )}
+          </>
+        ),
+        content: applicantsJSX(applicants, 'applicants'),
+      },
+      { label: 'Offered', content: applicantsJSX(offered, 'offered') },
       { label: 'Rejected', content: applicantsJSX(rejected, 'rejected') },
     ];
-  }, [applicants, applicantsJSX, rejected]);
+  }, [applicants, applicantsJSX, offered, rejected]);
 
   const getApplicants = useCallback(async () => {
     const data = await jobApplicants(jobDetail.id, { page: 1, status: 'PENDING', limit: 100 });
     setApplicants(data.items);
+  }, [jobDetail.id]);
+
+  const getOffered = useCallback(async () => {
+    const data = await jobApplicants(jobDetail.id, { page: 1, status: 'OFFERED', limit: 100 });
+    setOffered(data.items);
   }, [jobDetail.id]);
 
   const getRejected = useCallback(async () => {
@@ -59,8 +82,9 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
     if (jobDetail.id || refetch === true) {
       getApplicants();
       getRejected();
+      getOffered();
     }
-  }, [getApplicants, getRejected, jobDetail, refetch]);
+  }, [getApplicants, getOffered, getRejected, jobDetail, refetch]);
 
   return {
     tabs,

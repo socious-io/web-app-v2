@@ -10,6 +10,7 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
   const [offer, setOffer] = useState(false);
   const [applicant, setApplicant] = useState({} as Applicant);
   const [success, setSuccess] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState(currentTab);
   const currentSelectedId = useRef<string>();
 
   const onClickName = (id: string) => {
@@ -138,7 +139,7 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
         cell: function render({ getValue }) {
           return (
             <div className="flex justify-center items-center gap-3">
-              {currentTab === 'applicants' && (
+              {['applicants'].includes(currentTab) && (
                 <p
                   onClick={() => onReject(getValue())}
                   className="text-Gray-light-mode-600 font-semibold leading-5 text-sm cursor-pointer"
@@ -150,14 +151,14 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
                 onClick={() => onOffer(getValue())}
                 className="text-Gray-light-mode-700 font-semibold leading-5 text-sm cursor-pointer"
               >
-                Hire
+                {currentTab === 'offered' ? 'Re-hire' : 'Hire'}
               </p>
             </div>
           );
         },
       },
     ],
-    [],
+    [currentTab],
   );
 
   const extractCellId = (cell: Cell<Applicant, unknown>) => {
