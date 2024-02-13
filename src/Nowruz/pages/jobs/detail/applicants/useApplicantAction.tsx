@@ -10,7 +10,6 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
   const [offer, setOffer] = useState(false);
   const [applicant, setApplicant] = useState({} as Applicant);
   const [success, setSuccess] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState(currentTab);
   const currentSelectedId = useRef<string>();
 
   const onClickName = (id: string) => {
