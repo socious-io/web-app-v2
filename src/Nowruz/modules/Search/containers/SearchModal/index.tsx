@@ -22,7 +22,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
     <Modal
       width={width}
       // height="516px"
-      zIndex={50}
+      zIndex={51}
       onClose={() => {
         onClose();
       }}
