@@ -357,7 +357,7 @@ export const useContractDetailsSlider = () => {
     setOpenAlert(false);
     dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
     dispatch(updateMissionStatus({ id: mission?.id, status: 'CONFIRMED' }));
-    await confirmMission(mission.id);
+    confirmMission(mission.id);
   };
 
   const handleConfirmCompletion = async () => {
