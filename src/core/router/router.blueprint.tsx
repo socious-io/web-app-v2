@@ -177,7 +177,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
               return {
-                Component: CreatedList,
+                Component: Protect(CreatedList),
               };
             },
           },
@@ -193,7 +193,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { CreatedDetail } = await import('src/Nowruz/pages/jobs/detail/Created');
               return {
-                Component: CreatedDetail,
+                Component: Protect(CreatedDetail),
               };
             },
           },
