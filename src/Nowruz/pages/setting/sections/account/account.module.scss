@@ -40,3 +40,11 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.modalStyle {
+    @apply p-6 ;
+    #modal-box {
+        z-index: 9999;
+    }
+    
+}

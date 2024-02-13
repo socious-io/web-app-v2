@@ -45,8 +45,9 @@ const Account = () => {
   
     return(
         <>
-            <div className="container">
-                <div className="flex flex-row w-full pt-8">
+           <div className='hidden'>
+                <div className={css.borderSection}>
+                <div className="flex flex-row w-full pt-8 items-center">
                     <h2 className="grow css.title">Account Information</h2>
                     <div className="flex gap-4">
                         <div>
@@ -57,86 +58,96 @@ const Account = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div className={css.borderSection}>
-                <div className='grid grid-cols-3 gap-4'>
-                    <label>Name</label>
-                    <div className='flex gap-4'>
-                        <Input
-                        id="name"
-                        type='text'
-                        value={user?.meta.name}
-                        onChange={(e) => console.log(e.target.value)}
-                        />
-                        <Input
-                        id="name"
-                        type='text'
-                        onChange={(e) => console.log(e.target.value)}
-                        className='col-span-2'
-                        />
+                </div>
+
+                <div className={css.borderSection}>
+                    <div className='grid grid-cols-5 gap-4'>
+                        <label>Name</label>
+                        <div>
+                            <Input
+                            id="name"
+                            type='text'
+                            value={user?.meta.name}
+                            onChange={(e) => console.log(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <Input
+                            id="name"
+                            type='text'
+                            onChange={(e) => console.log(e.target.value)}
+                            />
+                        </div>
+                        
                     </div>
                 </div>
-            </div>
-            <div className={css.borderSection}>
-                <div className='grid grid-cols-3 gap4'>
-                    <label>Email Address</label>
-                    <Input
-                    id="email"
-                    prefix={<img height={48} src="/icons/email.svg" alt="email-green-icon"/>}
-                    type='email'
-                    value={user?.meta?.email}
-                    onChange={(e) => console.log(e.target.value)}
-                    className='col-span-2'
-                    />
+                <div className={css.borderSection}>
+                    <div className='grid grid-cols-5 gap-4'>
+                        <label>Email Address</label>
+                        <div className="col-span-2">
+                            <Input
+                            id="email"
+                            type='email'
+                            value={user?.meta?.email}
+                            onChange={(e) => console.log(e.target.value)}
+                            />
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div className={css.borderSection}>
-                <div className='grid grid-cols-3 gap-4'>
-                    <label>Username</label>
-                    <Input
-                    id="username"
-                    prefix="socious.io/"
-                    value={user?.meta.username}
-                    onChange={(e) => console.log(e.target.value)}
-                    className='col-span-2'
-                    />
+                <div className={css.borderSection}>
+                    <div className='grid grid-cols-5 gap-4'>
+                        <label>Username</label>
+                        <div className="col-span-2">
+                            <Input
+                            id="username"
+                            prefix="socious.io/"
+                            value={user?.meta.username}
+                            onChange={(e) => console.log(e.target.value)}
+                            />
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div className={css.borderSection}>
-                <div className='grid grid-cols-3 gap-4'>
-                    <label>Role</label>
-                    <Input
-                    id="role"
-                    onChange={(e) => console.log(e.target.value)}
-                    className='col-span-2'
-                    />
-                </div> 
-            </div>
-            <div className={css.borderSection}>
-                <div className='grid grid-cols-3 items-center'>
-                    <label>City</label>
-                    <SearchDropdown
-                        id="location"
-                        value={user?.meta.city}
-                        isAsync
-                        loadOptions={user?.meta.onSelectCity}
-                        defaultOptions
-                        icon="search-lg"
-                        hasDropdownIcon={false}
-                        onChange={(value) => {
-                        onSelectCity(value);
-                        }}
-                    />
+                <div className={css.borderSection}>
+                    <div className='grid grid-cols-5 gap-4'>
+                        <label>Role</label>
+                        <div className="col-span-2">
+                            <Input
+                            id="role"
+                            onChange={(e) => console.log(e.target.value)}
+                            />
+                        </div>
+                    </div> 
+                </div>
+                <div className={css.borderSection}>
+                    <div className="grid grid-cols-5 gap-4">
+
+                            <label >City</label>
+                        <div className="col-span-2 ...">
+                            <SearchDropdown
+                                    id="location"
+                                    value={user?.meta.city}
+                                    isAsync
+                                    loadOptions={user?.meta.onSelectCity}
+                                    defaultOptions
+                                    icon="search-lg"
+                                    hasDropdownIcon={false}
+                                    onChange={(value) => {
+                                    onSelectCity(value);
+                                    }}
+                                />
+                        </div>
+                    </div>
                     
-                </div> 
-            </div>
+                </div>
+           </div>
+
+
             <div className='text-Error-700 text-sm py-5 cursor-pointer' onClick={()=>  setModalVisibility(true)}>
                 Close your Account
             </div>
             <Modal width="35rem" maxWidth="80vw" 
             open={modalVisibility} onClose={() => setModalVisibility(false)}
-            className='p-6'
+            className={css.modalStyle} zIndex={50}
             >
                 <div>
                     <div className={css.modalHeader}>
