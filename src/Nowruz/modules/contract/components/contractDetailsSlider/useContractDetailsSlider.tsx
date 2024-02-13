@@ -251,7 +251,7 @@ export const useContractDetailsSlider = () => {
         setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
-      if (offerStatus === 'CLOSED' && missionStatus === 'COMPLETE') {
+      if (offer?.status === 'CLOSED' && mission?.status === 'COMPLETE') {
         const alertMsg = (
           <AlertMessage
             theme="warning"
@@ -273,7 +273,7 @@ export const useContractDetailsSlider = () => {
         return;
       }
 
-      if (offerStatus === 'CLOSED' && missionStatus === 'CONFIRMED') {
+      if (offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED') {
         const alertMsg = (
           <AlertMessage
             theme="primary"
@@ -355,9 +355,9 @@ export const useContractDetailsSlider = () => {
   const onConfirm = async () => {
     if (!mission) return;
     setOpenAlert(false);
+    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
+    dispatch(updateMissionStatus({ id: mission?.id, status: 'CONFIRMED' }));
     await confirmMission(mission.id);
-    setOfferStatus('CLOSED');
-    setmissionStatus('CONFIRMED');
   };
 
   const handleConfirmCompletion = async () => {
