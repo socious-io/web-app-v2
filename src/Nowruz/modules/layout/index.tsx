@@ -23,7 +23,7 @@ export const Layout = () => {
         <div className="w-full fixed top-0 right-0 z-20 bg-Base-White ">
           <HeaderNavBar setOpen={setOpen} logout={logOut} />
         </div>
-        <div className="w-full mt-16 md:mt-[72px]">
+        <div className="w-full h-full mt-16 md:mt-[72px]">
           <Outlet />
         </div>
       </div>

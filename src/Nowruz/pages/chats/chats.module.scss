@@ -1,0 +1,12 @@
+@import 'src/components/_primitives.scss';
+.summary {
+  width: 360px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-right: solid 1px $color-grey-200;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
+}
