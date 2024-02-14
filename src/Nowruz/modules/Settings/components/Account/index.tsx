@@ -1,9 +1,9 @@
-import { Button } from 'src/components/atoms/button/button';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
-import { Modal } from 'src/components/templates/modal/modal';
+import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 
-import { useRef, useState,FormEvent } from 'react';
+import { useState } from 'react';
 import css from './account.module.scss';
 import {
     User,Organization,identities
@@ -11,8 +11,7 @@ import {
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 import { useSelector } from 'react-redux';
-import store, { RootState } from 'src/store';
-import { Textarea } from 'src/components/atoms/textarea/textarea';
+import { RootState } from 'src/store';
 import { deleteAccount } from 'src/pages/delete-profile/delete-profile.service';
 
 
@@ -20,22 +19,17 @@ import { deleteAccount } from 'src/pages/delete-profile/delete-profile.service';
 const Account = () => {
 
     const identities = useSelector<RootState, CurrentIdentity[]>((state) => {
-        console.log('state',state.identity.entities)
         return state.identity.entities;
     });
-    const primary = identities.find((i) => i.primary);
-    console.log(primary);
-    
 
     const user = useSelector<RootState, User | Organization | undefined>((state) => {
-        console.log('user',state.identity.entities.find((i)=> i.current === true))
         return state.identity.entities.find((i)=> i.current === true)
     }) as User;
 
     const [modalVisibility, setModalVisibility] = useState(false);
+
     let reasonbody = "";
     const onChangeTextHandler = (e:any) =>{
-        console.log('value', e.target.value);
         reasonbody = e.target.value
     }
     const closeAccount = () => {
@@ -51,10 +45,10 @@ const Account = () => {
                     <h2 className="grow css.title">Account Information</h2>
                     <div className="flex gap-4">
                         <div>
-                            <Button color="white" className={css.cancelBtn}>Cancel</Button>
+                            <Button color="info">Cancel</Button>
                         </div>
                         <div>
-                            <Button className={css.saveBtn}>Save</Button>
+                            <Button color='primary'>Save</Button>
                         </div>
                     </div>
                 </div>
@@ -141,23 +135,14 @@ const Account = () => {
                 </div>
            </div>
 
-
             <div className='text-Error-700 text-sm py-5 cursor-pointer' onClick={()=>  setModalVisibility(true)}>
                 Close your Account
             </div>
-            <Modal width="35rem" maxWidth="80vw" 
-            open={modalVisibility} onClose={() => setModalVisibility(false)}
-            className={css.modalStyle} zIndex={50}
-            >
-                <div>
-                    <div className={css.modalHeader}>
-                        <div>
-                            <FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />
-                        </div>
-                        <div onClick={() => setModalVisibility(false)}>
-                            <img src="/icons/close-black.svg" />
-                        </div>
-                    </div>
+            <Modal customStyle={css.modalStyle}
+            open={modalVisibility}
+            handleClose={() => setModalVisibility(!modalVisibility)} headerDivider={false} footerDivider={false}
+            icon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" /> }>
+                <div className='p-6'>
                     <div className='text-lg font-semibold pt-5 mb-5'>Close account?</div>
                     <div className='text-sm font-normal text-Gray-light-mode-600'>
                         Closing your account will erase all your existing activity on Socious, 
@@ -167,12 +152,18 @@ const Account = () => {
                         </p>
                     </div>
                     <div className='mt-5'>
-                        <Textarea rows="8" label='Reason (optional)' onChange={onChangeTextHandler} placeholder="Please let us know why you are closing your account." />
-                        
+                        {/* <Textarea rows="8" label='Reason (optional)' onChange={onChangeTextHandler} placeholder="Please let us know why you are closing your account." /> */}
+                        <Input
+                        multiline
+                        label='Reason (optional)'
+                        customHeight="160px"
+                        onChange={onChangeTextHandler}
+                        placeholder='Please let us know why you are closing your account.'
+                        />
                     </div>
                     <div className='flex mt-8 justify-end gap-2'>
-                        <Button onClick={()=>{ setModalVisibility(false);}} color="white" className={css.cancelBtn}>cancel</Button>
-                        <Button onClick={() => closeAccount()} color="white" className='bg-Error-600 text-Base-White rounded-default px-4 py-2 w-auto'>
+                        <Button onClick={()=>{ setModalVisibility(false);}} color="info">cancel</Button>
+                        <Button onClick={() => closeAccount()} color="error">
                             Permanently delete my account
                         </Button>
                     </div>

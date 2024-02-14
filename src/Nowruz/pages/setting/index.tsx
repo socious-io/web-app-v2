@@ -1,6 +1,6 @@
 import { Tabs } from "src/components/atoms/tabs/tabs";
 import { Tab } from "src/components/atoms/tabs/tabs.types";
-import Account from "src/Nowruz/pages/setting/sections/account/account"
+import Account from "../../modules/Settings/components/Account/index";
 export const Setting = () =>{
     const tabs: Tab[] = [
         {
