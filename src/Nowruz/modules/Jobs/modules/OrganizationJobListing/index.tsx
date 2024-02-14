@@ -48,12 +48,12 @@ export const OrganizationJobListing = () => {
           />
         </div>
       )}
-      {jobsList.length === 0 && !loading && (
+      {jobsList.length > 0 && !loading && (
         <div className="mt-11 hidden md:block">
           <Pagination count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)} onChange={(e, p) => setPage(p)} />
         </div>
       )}
-      {jobsList.length === 0 && !loading && (
+      {jobsList.length > 0 && !loading && (
         <div className="mt-11 block md:hidden">
           <PaginationMobile
             page={page}
