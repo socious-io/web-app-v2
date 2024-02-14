@@ -1,6 +1,7 @@
 import { Tabs } from "src/components/atoms/tabs/tabs";
 import { Tab } from "src/components/atoms/tabs/tabs.types";
 import Account from "src/Nowruz/pages/setting/sections/account/account"
+import Password from "./sections/password/password";
 export const Setting = () =>{
     const tabs: Tab[] = [
         {
@@ -10,7 +11,7 @@ export const Setting = () =>{
         },
         {
           name: 'Password',
-          content: <h1>Password</h1>,
+          content: <Password/>,
           default: false,
         },
         {
