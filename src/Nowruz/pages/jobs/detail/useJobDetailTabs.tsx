@@ -80,9 +80,9 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
 
   useEffect(() => {
     if (jobDetail.id || refetch === true) {
-      getApplicants();
-      getRejected();
-      getOffered();
+      Promise.all([getApplicants(), getOffered(), getRejected()]).then(() => {
+        setRefetch(false);
+      });
     }
   }, [getApplicants, getOffered, getRejected, jobDetail, refetch]);
 
