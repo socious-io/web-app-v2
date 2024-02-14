@@ -13,34 +13,39 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
   const navigate = useNavigate();
 
   const onClickRow = (item: Item) => {
+    console.log(item);
     let path = '';
     switch (item.type) {
       case 'projects':
         path = `/nowruz/jobs/${item.id}`;
         break;
-
+      case 'organizations':
+        path = `/nowruz/profile/organizations/${item.username}/view`;
+        break;
       default:
-        path = `/nowruz/jobs/${item.id}`;
+        path = `/nowruz/profile/users/${item.username}/view`;
         break;
     }
     onClose();
-    navigate(path, { state: { source: 'search' } });
+    navigate(path);
   };
 
   return (
-    <div className="h-full overflow-y-auto flex flex-col flex-1 ">
+    <div className="h-full w-full overflow-y-auto flex flex-col ">
       {list.map((item, index) => (
-        <div
-          ref={index === hoveredRowIndex ? selectedRef : null}
-          className={`${css.rows} ${selectedRowIndex === index ? css.selected : ''}  ${
-            hoveredRowIndex === index ? css.selected : ''
-          }`}
-          onClick={() => onClickRow(item as Item)}
-        >
-          <AvatarLabelGroup
-            customStyle="w-auto"
-            account={{ name: item.title, id: item.id, username: item.username, type: item.type, img: item.image }}
-          />
+        <div className="flex flex-row items-start">
+          <div
+            ref={index === hoveredRowIndex ? selectedRef : null}
+            className={`${css.rows} ${selectedRowIndex === index ? css.selected : ''}  ${
+              hoveredRowIndex === index ? css.selected : ''
+            }`}
+            onClick={() => onClickRow(item as Item)}
+          >
+            <AvatarLabelGroup
+              customStyle="w-auto"
+              account={{ name: item.title, id: item.id, username: item.username, type: item.type, img: item.image }}
+            />
+          </div>
           {item.isAvailable && (
             <div className={css.chip}>
               <Chip
