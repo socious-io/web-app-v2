@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { toRelativeTime } from 'src/core/relative-time';
 import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
