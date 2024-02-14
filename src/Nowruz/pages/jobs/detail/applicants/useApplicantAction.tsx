@@ -19,6 +19,7 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
   };
 
   const onReject = (id: string) => {
+    if (!id) return;
     currentSelectedId.current = id;
     setOpenAlert(true);
   };
@@ -30,11 +31,10 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
   };
 
   const handleReject = async () => {
+    if (!currentSelectedId.current) return;
     setOpenAlert(false);
-    if (currentSelectedId.current) {
-      const response = await rejectApplicant(currentSelectedId?.current);
-      if (response.status === 'REJECTED') onRefetch(true);
-    }
+    await rejectApplicant(currentSelectedId?.current);
+    onRefetch(true);
   };
 
   const columns = useMemo<ColumnDef<Applicant>[]>(
