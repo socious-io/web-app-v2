@@ -9,10 +9,13 @@ import {
   cancelMission,
   cancelOffer,
   completeMission,
+  confirmMission,
+  contestMission,
   dropMission,
   getOffer,
   rejectOffer,
 } from 'src/core/api';
+import { isoToStandard } from 'src/core/time';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { getSrtipeProfile } from 'src/pages/offer-received/offer-received.services';
@@ -106,7 +109,7 @@ export const useContractDetailsSlider = () => {
         const alertMsg = (
           <AlertMessage
             theme="warning"
-            iconName="check-circle"
+            iconName="alert-circle"
             title="Bank account required"
             subtitle="To accept this offer you need add a payout account"
           >
@@ -129,6 +132,11 @@ export const useContractDetailsSlider = () => {
   };
 
   const inititalizeAccepOffer = async () => {
+    if (offer.project.payment_type === 'VOLUNTEER') {
+      setPrimaryButtonDisabled(false);
+      setAllStates(false, null, true, 'Accept', true, 'Decline', handleAcceptOffer, handleDecline);
+      return;
+    }
     if (offer.payment_mode === 'FIAT') await initializeAcceptOfferFiat();
     else if (offer.payment_mode === 'CRYPTO') initializeAcceptOfferCrypto();
   };
@@ -243,6 +251,40 @@ export const useContractDetailsSlider = () => {
         setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
+      if (offer?.status === 'CLOSED' && mission?.status === 'COMPLETE') {
+        const alertMsg = (
+          <AlertMessage
+            theme="warning"
+            iconName="alert-circle"
+            title="Awaiting confirmation"
+            subtitle={`<b>${name}</b> has marked this job completed. Confirm so they can receive payment.`}
+          />
+        );
+        setAllStates(
+          true,
+          alertMsg,
+          true,
+          'Confirm completion',
+          true,
+          'Contest',
+          handleConfirmCompletion,
+          handleContest,
+        );
+        return;
+      }
+
+      if (offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED') {
+        const alertMsg = (
+          <AlertMessage
+            theme="primary"
+            iconName="info-circle"
+            title="Job completed"
+            subtitle={`Completed on ${isoToStandard(mission.updated_at.toString())}`}
+          />
+        );
+        setAllStates(true, alertMsg, false, '', true, 'Review', undefined, undefined);
+        return;
+      }
     }
 
     setAllStates(false, null, false, '', false, '');
@@ -308,6 +350,27 @@ export const useContractDetailsSlider = () => {
   const withdrawOfferByOP = async () => {
     dispatch(updateOfferStatus({ id: offer?.id, status: 'CANCELED' }));
     cancelOffer(offer.id);
+  };
+
+  const onConfirm = async () => {
+    if (!mission) return;
+    setOpenAlert(false);
+    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
+    dispatch(updateMissionStatus({ id: mission?.id, status: 'CONFIRMED' }));
+    confirmMission(mission.id);
+  };
+
+  const handleConfirmCompletion = async () => {
+    setAlertTitle('Confirm completion');
+    setAlertIcon(<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />);
+    setAlertMessage(`Do you want to job completion?`);
+    setHandleAlertSubmit(() => onConfirm);
+    setOpenAlert(true);
+  };
+
+  const handleContest = async () => {
+    if (!mission) return;
+    await contestMission(mission.id);
   };
 
   return {

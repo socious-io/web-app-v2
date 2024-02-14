@@ -53,7 +53,7 @@ export const Email = () => {
                 tried();
                 navigate('/oauth/google');
               }}
-              className="flex w-full gap-4 normal-case text-base mt-4"
+              style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '12px' }}
             >
               <Google />
               Continue with Google

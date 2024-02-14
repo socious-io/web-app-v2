@@ -71,7 +71,6 @@ export const Input: React.FC<InputProps> = ({
       )}
       {postfixDropdown && (
         <InputDropdown
-          defaultValue={postfixDropdown.options[0]}
           options={postfixDropdown.options}
           onChange={(option) => postfixDropdown.onChange(option.value)}
         />
