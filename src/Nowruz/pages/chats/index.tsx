@@ -40,7 +40,12 @@ export const Chats = () => {
         />
       </div>
       {chats.map((item) => (
-        <SummaryCard key={item.id} chat={item} handleSelect={handleSelectChat} />
+        <SummaryCard
+          key={item.id}
+          chat={item}
+          handleSelect={handleSelectChat}
+          isSelected={item.id === selectedChat?.id}
+        />
       ))}
     </div>
   );

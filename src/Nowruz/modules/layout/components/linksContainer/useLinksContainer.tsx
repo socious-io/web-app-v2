@@ -54,7 +54,7 @@ export const useLinksContainer = () => {
     },
     {
       label: 'Messages',
-      route: '/chats',
+      route: '/nowruz/chats',
       iconName: 'message-square-01',
       public: false,
       badgeIcon: unread ? <Badge content={unread.toString()} /> : '',
@@ -70,9 +70,9 @@ export const useLinksContainer = () => {
 
   // filter menu childs for public items if user is not logged in
   if (!userIsLoggedIn) {
-    filteredMenu.forEach(element => {
+    filteredMenu.forEach((element) => {
       if (element.children) {
-        element.children = element.children.filter(item => item.public)
+        element.children = element.children.filter((item) => item.public);
       }
     });
   }

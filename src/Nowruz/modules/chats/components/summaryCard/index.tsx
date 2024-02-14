@@ -8,7 +8,7 @@ import { useSeeMore } from 'src/Nowruz/modules/general/utils';
 
 import { SummaryCardProps } from './summaryCard.types';
 
-export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect }) => {
+export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, isSelected }) => {
   const {
     data: { copyProccessed },
   } = useSeeMore(chat.last_message?.text || '', 85);
@@ -21,7 +21,10 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect }) 
     username: chat.participants[0].identity_meta.username || chat.participants[0].identity_meta.shortname || '',
   };
   return (
-    <div className="flex flex-col gap-4 p-4 w-full cursor-pointer" onClick={() => handleSelect(chat.id)}>
+    <div
+      className={`flex flex-col gap-4 p-4 w-full cursor-pointer ${isSelected ? 'bg-Gray-light-mode-50' : ''}`}
+      onClick={() => handleSelect(chat.id)}
+    >
       <div className="w-full flex justify-between items-start">
         <div className="flex items-center justify-start gap-3">
           <Dot size="small" color={chat.unread_count ? variables.color_primary_600 : 'transparent'} shadow={false} />
