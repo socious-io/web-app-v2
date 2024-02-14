@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { search } from 'src/core/api';
 
 import { Item } from './SearchModal.types';
+import { useNavigate } from 'react-router-dom';
 
 const tabs = [
   { label: 'Jobs', value: 'projects' },
@@ -15,6 +16,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
   const [selectedItem, setSelectedItem] = useState<null | Item>();
   const [searchTerm, setSearchTerm] = useState('');
   const [showNoResult, setShowNoResult] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setList([]);
@@ -34,6 +36,12 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
       if (q && result.items.length === 0) setShowNoResult(true);
     }
   };
+
+  const navigateFullSearch = () => {
+    props.onClose();
+    navigate(`/nowruz/search?q=${searchTerm}&type=${selectedTab}&page=1`);
+  };
+
   const searchIntoList = (list: Array<Item>) => {
     if (!list.length) return undefined;
     switch (selectedTab) {
@@ -83,5 +91,6 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     setSearchTerm,
     selectedTab,
     showNoResult,
+    navigateFullSearch,
   };
 };

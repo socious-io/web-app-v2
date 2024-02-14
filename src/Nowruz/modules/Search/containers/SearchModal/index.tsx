@@ -12,11 +12,12 @@ import { useSearchModal } from './useSearchModal';
 import { TabPreview } from '../../components/TabBar';
 export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSearchText }) => {
   const isMobile = window.innerWidth < 600;
-  const { tabs, setSelectedTab, fetchSearchResult, list, selectedItem, searchTerm, showNoResult } = useSearchModal({
-    open,
-    onClose,
-    setSearchText,
-  });
+  const { tabs, setSelectedTab, fetchSearchResult, list, selectedItem, searchTerm, showNoResult, navigateFullSearch } =
+    useSearchModal({
+      open,
+      onClose,
+      setSearchText,
+    });
   const width = isMobile ? '100%' : '760px';
   return (
     <Modal
@@ -56,7 +57,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
           </div>
           {!!list?.length && (
             <div className={`${css.footer} ${selectedItem ? css.footerSelecteItem : ''}`}>
-              <div className={css.showResults}>See all results</div>
+              <div className={css.showResults} onClick={navigateFullSearch}>
+                See all results
+              </div>
             </div>
           )}
         </div>

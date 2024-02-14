@@ -222,6 +222,26 @@ export const blueprint: RouteObject[] = [
           };
         },
       },
+      {
+        path: 'search',
+        children: [
+          {
+            path: '',
+            async lazy() {
+              const { Search } = await import('src/Nowruz/pages/search');
+              return {
+                Component: Search,
+              };
+            },
+            loader: async ({ request }) => {
+              const url = new URL(request.url);
+              const q = url.searchParams.get('q');
+              const data = await search({ filter: {}, q: q as string, type: 'projects' });
+              return data;
+            },
+          },
+        ],
+      },
     ],
   },
   {
