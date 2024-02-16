@@ -35,6 +35,7 @@ import {
   userOffers,
   getRequestedVerifyExperiences,
 } from 'src/core/api';
+import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
 import {
@@ -236,7 +237,15 @@ export const blueprint: RouteObject[] = [
             loader: async ({ request }) => {
               const url = new URL(request.url);
               const q = url.searchParams.get('q');
-              const data = await search({ filter: {}, q: q as string, type: 'projects' });
+              const type = url.searchParams.get('type') ?? 'projects';
+              const body = {
+                filter: {},
+                type,
+              };
+              if (q?.trim()) {
+                Object.assign(body, { q: q });
+              }
+              const data = await searchReq(body, { limit: 20, page: 1 });
               return data;
             },
           },

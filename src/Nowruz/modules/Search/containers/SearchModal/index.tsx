@@ -43,6 +43,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
             <SearchInput
               value={searchTerm}
               onChange={fetchSearchResult}
+              onEnter={navigateFullSearch}
               placeholder="Search jobs, people, organizations"
             />
           </div>
