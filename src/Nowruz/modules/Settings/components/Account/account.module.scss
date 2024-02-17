@@ -42,7 +42,9 @@
 }
 
 .modalStyle {
-    @apply p-6 ;
+    width:35rem;
+    max-width:80vw;
+    // @apply p-6 ;
     #modal-box {
         z-index: 9999;
     }
