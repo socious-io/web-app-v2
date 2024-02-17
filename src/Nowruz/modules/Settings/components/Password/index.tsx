@@ -85,7 +85,7 @@ const Password = () =>{
                 {/* {!isPasswordMatch && 'popo'} */}
                 <div className="grid grid-cols-1 gap-4 place-items-end pt-8">
                     <div className='flex gap-4'>
-                        <Button color="primary" onClick={()=> reset()}>Cancel</Button>
+                        <Button color="info" onClick={()=> reset()}>Cancel</Button>
                     
                         <Button disabled={!isFormValid} color="primary" block onClick={handleSubmit(onSubmit)}>Update Password</Button>
                     </div>
