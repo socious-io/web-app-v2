@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLoaderData, useSearchParams } from 'react-router-dom';
-import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'src/core/api';
+import { JobsRes, OrganizationsRes, UsersRes } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
-export const useSearchListing = () => {
+export const useSearch = () => {
   const data = useLoaderData() as JobsRes | UsersRes | OrganizationsRes;
   const [searchParams] = useSearchParams();
   const type = searchParams.get('type');
@@ -12,11 +12,12 @@ export const useSearchListing = () => {
 
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
-  const [searchList, setSearchList] = useState<Array<Job | User | Organization>>([]);
+  const [searchResult, setSearchResult] = useState<JobsRes | UsersRes | OrganizationsRes>({});
   const [page, setPage] = useState(1);
 
   const fetchMore = async (page: number) => {
     const body = {
+      //filter: { skills: ['BLOCKCHAIN_DEVELOPMENT', 'PLUTUS'] },
       filter: {},
       type,
     };
@@ -25,18 +26,28 @@ export const useSearchListing = () => {
     }
     const data = await searchReq(body, { limit: 20, page });
 
-    if (isMobile && page > 1) setSearchList([...searchList, ...data.items]);
-    else setSearchList(data?.items);
+    if (isMobile && page > 1) setSearchResult({ ...searchResult, ...data });
+    else setSearchResult(data);
   };
+
   useEffect(() => {
     fetchMore(page);
   }, [page]);
 
   useEffect(() => {
     if (data.items.length) {
-      setSearchList(data.items);
+      setSearchResult(data);
     }
   }, [data]);
 
-  return { page, setPage, searchList, total: data.total_count, PER_PAGE, isMobile, type };
+  return {
+    page,
+    setPage,
+    searchResult,
+    total: searchResult.total_count ?? data.total_count,
+    PER_PAGE,
+    isMobile,
+    type,
+    q,
+  };
 };
