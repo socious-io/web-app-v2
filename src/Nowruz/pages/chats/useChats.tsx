@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useSearchParams } from 'react-router-dom';
 import {
   Chat,
   ChatsRes,
@@ -16,6 +16,9 @@ import { RootState } from 'src/store';
 
 export const useChats = () => {
   const { summary } = useLoaderData() as { summary: ChatsRes };
+  const [searchParams] = useSearchParams();
+
+  const participantId = searchParams.get('participantId') || '';
   const [chats, setChats] = useState<Chat[]>(summary.items);
   const [count, setCount] = useState(summary.total_count);
   const [chatParams, setChatParams] = useState({ page: 1, filter: '' });
@@ -27,6 +30,25 @@ export const useChats = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
+  const openChatWithParticipantId = async (id: string) => {
+    let chat = chats.find((item) => item.participants.map((p) => p.identity_meta.id).includes(id));
+    if (!chat) {
+      const created = await createChat({
+        name: 'nameless',
+        type: 'CHAT',
+        participants: [id],
+      });
+      chat = (await filterChats({ id: created.id })).items[0];
+      setChats([chat].concat(chats));
+    }
+    setSelectedChat(chat);
+    setOpenNewChat(false);
+    setOpenDetails(true);
+  };
+
+  useEffect(() => {
+    if (participantId) openChatWithParticipantId(participantId);
+  }, [participantId]);
 
   const handleSelectChat = (id: string) => {
     setOpenNewChat(false);

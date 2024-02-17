@@ -188,7 +188,7 @@ export const blueprint: RouteObject[] = [
         },
       },
       {
-        path: 'chats',
+        path: 'chats/*',
         loader: async () => {
           const summary = await chats({ page: 1 });
           return { summary };

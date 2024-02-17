@@ -64,7 +64,7 @@ export const ChatDetails: React.FC<ChatDetailsProps> = ({ chat, setOpenDetails, 
           ))}
         </InfiniteScroll>
 
-        {sorted?.length ? <SendMessage onSend={onSend} /> : ''}
+        <SendMessage onSend={onSend} />
       </div>
     </div>
   );

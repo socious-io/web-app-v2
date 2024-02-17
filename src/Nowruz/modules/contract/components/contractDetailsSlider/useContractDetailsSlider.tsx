@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   CurrentIdentity,
   Mission,
@@ -28,7 +29,7 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
-
+  const navigate = useNavigate();
   const type = identity?.type;
   const name = type === 'users' ? offer.offerer.meta.name : offer.recipient.meta.name;
   const profileImage = type === 'users' ? offer.offerer.meta.image : offer.recipient.meta.avatar;
@@ -366,6 +367,10 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     await contestMission(mission.id);
   };
 
+  const redirectToChat = () => {
+    const participantId = type === 'users' ? offer.offerer.meta.id : offer.recipient.meta.id;
+    navigate(`../chats?participantId=${participantId}`);
+  };
   return {
     name,
     profileImage,
@@ -399,5 +404,6 @@ export const useContractDetailsSlider = (offer: Offer, mission?: Mission) => {
     stripeAccounts,
     openWalletModal,
     setOpenWalletModal,
+    redirectToChat,
   };
 };

@@ -44,6 +44,7 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
     stripeAccounts,
     openWalletModal,
     setOpenWalletModal,
+    redirectToChat,
   } = useContractDetailsSlider(offer, mission);
   return (
     <>
@@ -57,7 +58,7 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
             </div>
           </div>
           <div className="flex gap-3">
-            <Button variant="outlined" color="secondary" fullWidth>
+            <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat}>
               Message
             </Button>
             {displaySecondaryButton && (
