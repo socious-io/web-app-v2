@@ -20,6 +20,7 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
     name: chat.participants[0].identity_meta.name || '',
     username: chat.participants[0].identity_meta.username || chat.participants[0].identity_meta.shortname || '',
   };
+
   return (
     <div
       className={`flex flex-col gap-4 p-4 w-full cursor-pointer ${isSelected ? 'bg-Gray-light-mode-50' : ''}`}
@@ -27,7 +28,11 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
     >
       <div className="w-full flex justify-between items-start">
         <div className="flex items-center justify-start gap-3">
-          <Dot size="small" color={chat.unread_count ? variables.color_primary_600 : 'transparent'} shadow={false} />
+          <Dot
+            size="small"
+            color={Number(chat.unread_count) ? variables.color_primary_600 : 'transparent'}
+            shadow={false}
+          />
           <AvatarLabelGroup account={account} customStyle="!w-fit !p-0" />
         </div>
         <Typography variant="caption" color={variables.color_grey_600}>

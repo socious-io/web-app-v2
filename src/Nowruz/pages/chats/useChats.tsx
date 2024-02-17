@@ -9,7 +9,9 @@ import {
   createChatMessage,
   chats as chatsApi,
   filterChats,
+  Message,
 } from 'src/core/api';
+import { socket } from 'src/core/socket';
 import { RootState } from 'src/store';
 
 export const useChats = () => {
@@ -20,6 +22,7 @@ export const useChats = () => {
   const [selectedChat, setSelectedChat] = useState<Chat>();
   const [openDetails, setOpenDetails] = useState(false);
   const [openNewChat, setOpenNewChat] = useState(false);
+  const [justReceived, setJustReceived] = useState<Message | null>(null);
 
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -51,6 +54,29 @@ export const useChats = () => {
       setChatParams(payload);
     });
   };
+
+  socket?.on('chat', (data) => {
+    const receiver = chats.filter((l) => l.id === data.chat_id);
+    if (!receiver || data.identity_id === currentIdentity!.id) return;
+    const chatIndex = chats.findIndex((item) => item.id === data.chat_id);
+    let chatsVal = [...chats];
+    if (chatIndex > -1) {
+      const chat = chats[chatIndex];
+      const newChatItem: Chat = {
+        ...chat,
+        updated_at: data.updated_at,
+        last_message: data,
+        message_count: chat.message_count + 1,
+        unread_count: selectedChat?.id === data.chat_id ? '0' : (Number(chat.unread_count) + 1).toString(),
+      };
+      chatsVal.splice(chatIndex, 1);
+      chatsVal = [newChatItem].concat(chatsVal);
+
+      setChats(chatsVal);
+      if (data.chat_id === selectedChat?.id) setJustReceived(data);
+      else setJustReceived(null);
+    }
+  });
   return {
     count,
     chats,
@@ -62,5 +88,6 @@ export const useChats = () => {
     setOpenNewChat,
     handleNewChat,
     loadMore,
+    justReceived,
   };
 };

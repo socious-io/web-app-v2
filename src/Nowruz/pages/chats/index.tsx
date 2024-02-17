@@ -22,6 +22,7 @@ export const Chats = () => {
     setOpenNewChat,
     handleNewChat,
     loadMore,
+    justReceived,
   } = useChats();
   const summaryJSX = (
     <div className={css.summary}>
@@ -81,7 +82,7 @@ export const Chats = () => {
             {openNewChat ? (
               <NewChat handleClose={() => setOpenNewChat(false)} onSend={handleNewChat} />
             ) : openDetails ? (
-              <ChatDetails chat={selectedChat} setOpenDetails={setOpenDetails} />
+              <ChatDetails chat={selectedChat} setOpenDetails={setOpenDetails} newSocketMessage={justReceived} />
             ) : (
               ''
             )}

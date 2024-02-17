@@ -39,12 +39,6 @@ export const useChatDetails = (id?: string) => {
     setMessages(msgList);
   };
 
-  socket?.on('chat', (data) => {
-    const msg = messages?.filter((m) => m.id === data.id);
-    if (msg.length) return;
-    setMessages([...messages, data]);
-  });
-
   const loadMore = async () => {
     if (hasMore)
       chatMessages(id, { page: page + 1 }).then((resp) => {
@@ -58,5 +52,5 @@ export const useChatDetails = (id?: string) => {
         }
       });
   };
-  return { messages, onSend, account, loadMore, hasMore, page };
+  return { messages, setMessages, onSend, account, loadMore, hasMore, page };
 };

@@ -10,8 +10,8 @@ import { ChatDetailsProps } from './chatDetails.types';
 import { useChatDetails } from './useChatDetails';
 import ChatDetailItem from '../chatDetailItem';
 
-export const ChatDetails: React.FC<ChatDetailsProps> = ({ chat, setOpenDetails }) => {
-  const { messages, onSend, account, loadMore, hasMore, page } = useChatDetails(chat?.id);
+export const ChatDetails: React.FC<ChatDetailsProps> = ({ chat, setOpenDetails, newSocketMessage }) => {
+  const { messages, onSend, account, loadMore, hasMore, page, setMessages } = useChatDetails(chat?.id);
   const { name, profileImage, type } = getIdentityMeta(chat?.participants[0].identity_meta);
   const sorted = messages?.sort((a, b) => (new Date(a.created_at) > new Date(b.created_at) ? 1 : -1));
 
@@ -21,6 +21,12 @@ export const ChatDetails: React.FC<ChatDetailsProps> = ({ chat, setOpenDetails }
       if (messageBody) messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
     }
   }, [messages]);
+
+  useEffect(() => {
+    if (newSocketMessage && !messages.find((item) => item.id === newSocketMessage.id)) {
+      setMessages([...messages, newSocketMessage]);
+    }
+  }, [newSocketMessage]);
 
   return (
     <div className="flex flex-col w-full h-full">
