@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CurrentIdentity, Message, chatMessages, createChatMessage } from 'src/core/api';
-import { socket } from 'src/core/socket';
+import { Chat, CurrentIdentity, Message, chatMessages, createChatMessage } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
-export const useChatDetails = (id?: string) => {
+export const useChatDetails = (chat?: Chat) => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
   const [messages, setMessages] = useState<Message[]>([]);
-  const { profileImage, type, name, username } = getIdentityMeta(currentIdentity);
+
   const [page, setPage] = useState(1);
   const [hasMore, sethasMore] = useState(true);
+  const id = chat?.id || '';
+  const participant = chat?.participants[0];
+
   const account = {
-    id,
-    img: profileImage,
-    type,
-    name,
-    username,
+    id: participant?.identity_meta.id,
+    img: participant?.identity_meta.image || participant?.identity_meta.avatar || '',
+    type: 'shortname' in participant?.identity_meta ? 'organizations' : 'users',
+    name: participant?.identity_meta.name,
+    username: participant?.identity_meta.username || participant?.identity_meta.shortname || '',
   };
   const getMessages = async () => {
     if (id) {

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import variables from 'src/components/_exports.module.scss';
-import { getIdentityMeta } from 'src/core/utils';
 import { SendMessage } from 'src/Nowruz/modules/chats/components/sendMessage';
 import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
@@ -11,8 +10,8 @@ import { useChatDetails } from './useChatDetails';
 import ChatDetailItem from '../chatDetailItem';
 
 export const ChatDetails: React.FC<ChatDetailsProps> = ({ chat, setOpenDetails, newSocketMessage }) => {
-  const { messages, onSend, account, loadMore, hasMore, page, setMessages } = useChatDetails(chat?.id);
-  const { name, profileImage, type } = getIdentityMeta(chat?.participants[0].identity_meta);
+  const { messages, onSend, account, loadMore, hasMore, page, setMessages } = useChatDetails(chat);
+
   const sorted = messages?.sort((a, b) => (new Date(a.created_at) > new Date(b.created_at) ? 1 : -1));
 
   useEffect(() => {
@@ -57,9 +56,9 @@ export const ChatDetails: React.FC<ChatDetailsProps> = ({ chat, setOpenDetails, 
             <ChatDetailItem
               key={item.id}
               message={item}
-              senderAvatar={profileImage || ''}
-              senderType={type}
-              senderName={name}
+              senderAvatar={account.img}
+              senderType={account.type}
+              senderName={account.name}
             />
           ))}
         </InfiniteScroll>
