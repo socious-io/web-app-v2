@@ -1,4 +1,5 @@
 import React from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import variables from 'src/components/_exports.module.scss';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { ChatDetails } from 'src/Nowruz/modules/chats/components/chatDetails';
@@ -20,6 +21,7 @@ export const Chats = () => {
     openNewChat,
     setOpenNewChat,
     handleNewChat,
+    loadMore,
   } = useChats();
   const summaryJSX = (
     <div className={css.summary}>
@@ -39,14 +41,23 @@ export const Chats = () => {
           handleClick={() => setOpenNewChat(true)}
         />
       </div>
-      {chats.map((item) => (
-        <SummaryCard
-          key={item.id}
-          chat={item}
-          handleSelect={handleSelectChat}
-          isSelected={item.id === selectedChat?.id}
-        />
-      ))}
+      <InfiniteScroll
+        initialLoad={false}
+        threshold={800}
+        useWindow={false}
+        pageStart={1}
+        loadMore={loadMore}
+        hasMore={true}
+      >
+        {chats.map((item) => (
+          <SummaryCard
+            key={item.id}
+            chat={item}
+            handleSelect={handleSelectChat}
+            isSelected={item.id === selectedChat?.id}
+          />
+        ))}
+      </InfiniteScroll>
     </div>
   );
   return (

@@ -5,18 +5,18 @@ import {
   Chat,
   ChatsRes,
   CurrentIdentity,
-  FollowingRes,
   createChat,
   createChatMessage,
   chats as chatsApi,
+  filterChats,
 } from 'src/core/api';
 import { RootState } from 'src/store';
 
 export const useChats = () => {
-  const { summary, followings } = useLoaderData() as { summary: ChatsRes; followings: FollowingRes };
+  const { summary } = useLoaderData() as { summary: ChatsRes };
   const [chats, setChats] = useState<Chat[]>(summary.items);
   const [count, setCount] = useState(summary.total_count);
-
+  const [chatParams, setChatParams] = useState({ page: 1, filter: '' });
   const [selectedChat, setSelectedChat] = useState<Chat>();
   const [openDetails, setOpenDetails] = useState(false);
   const [openNewChat, setOpenNewChat] = useState(false);
@@ -37,11 +37,20 @@ export const useChats = () => {
     await createChatMessage(chatRes.id, { text });
     const chatList = await chatsApi({ page: 1 });
     setChats(chatList.items);
+    setCount(chatList.items.length);
     setSelectedChat(chatRes);
     setOpenNewChat(false);
     setOpenDetails(true);
   };
 
+  const loadMore = async (page: number) => {
+    const payload = { ...chatParams, page: chatParams.page + 1 };
+    filterChats(payload).then((resp) => {
+      const newList = resp.items;
+      setChats([...chats, ...newList]);
+      setChatParams(payload);
+    });
+  };
   return {
     count,
     chats,
@@ -52,5 +61,6 @@ export const useChats = () => {
     openNewChat,
     setOpenNewChat,
     handleNewChat,
+    loadMore,
   };
 };

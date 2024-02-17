@@ -1,28 +1,27 @@
-import { Typography } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { CurrentIdentity, Message } from 'src/core/api';
-import { IdentityReq } from 'src/core/types';
-import { RootState } from 'src/store';
-import variables from 'src/components/_exports.module.scss';
+import { CurrentIdentity } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
-import css from './chatDetailItem.module.scss';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { RootState } from 'src/store';
 
-interface ChatDetailItemProps {
-  message: Message;
-  senderAvatar?: string;
-  senderName?: string;
-  senderType?: 'users' | 'organizations';
-}
-export const ChatDetailItem: React.FC<ChatDetailItemProps> = ({ message, senderAvatar, senderName, senderType }) => {
+import css from './chatDetailItem.module.scss';
+import { ChatDetailItemProps } from './chatDetailItem.types';
+
+export const ChatDetailItem: React.FC<ChatDetailItemProps> = ({
+  message,
+  senderAvatar,
+  senderName,
+  senderType,
+  className,
+}) => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
   const isMine = message.identity_id === currentIdentity?.id;
   return (
-    <div className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex ${isMine ? 'justify-end' : 'justify-start'} ${className}`}>
       {isMine ? (
         <div className="flex flex-col gap-1.5 items-end">
           <div className="flex justify-between items-center gap-2">

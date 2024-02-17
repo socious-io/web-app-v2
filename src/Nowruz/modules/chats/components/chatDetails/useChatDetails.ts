@@ -11,6 +11,8 @@ export const useChatDetails = (id?: string) => {
   });
   const [messages, setMessages] = useState<Message[]>([]);
   const { profileImage, type, name, username } = getIdentityMeta(currentIdentity);
+  const [page, setPage] = useState(1);
+  const [hasMore, sethasMore] = useState(true);
   const account = {
     id,
     img: profileImage,
@@ -20,6 +22,8 @@ export const useChatDetails = (id?: string) => {
   };
   const getMessages = async () => {
     if (id) {
+      setPage(1);
+      sethasMore(true);
       const res = await chatMessages(id, { page: 1 });
       setMessages(res.items);
     }
@@ -40,5 +44,19 @@ export const useChatDetails = (id?: string) => {
     if (msg.length) return;
     setMessages([...messages, data]);
   });
-  return { messages, onSend, account };
+
+  const loadMore = async () => {
+    if (hasMore)
+      chatMessages(id, { page: page + 1 }).then((resp) => {
+        const newList = resp.items;
+        if (newList.length) {
+          setMessages([...messages, ...newList]);
+
+          setPage(page + 1);
+        } else {
+          sethasMore(false);
+        }
+      });
+  };
+  return { messages, onSend, account, loadMore, hasMore, page };
 };

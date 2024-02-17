@@ -190,9 +190,8 @@ export const blueprint: RouteObject[] = [
       {
         path: 'chats',
         loader: async () => {
-          const requests = [chats({ page: 1 }), getFollowings({ page: 1 })];
-          const [summary, followings] = await Promise.all(requests);
-          return { summary, followings };
+          const summary = await chats({ page: 1 });
+          return { summary };
         },
         async lazy() {
           const { Chats } = await import('src/Nowruz/pages/chats');
