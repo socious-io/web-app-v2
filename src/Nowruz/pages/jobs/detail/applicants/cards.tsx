@@ -72,7 +72,7 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
               onClick={() => onOffer(applicant.id)}
             >
               <p className="py-2.5 px-4 text-Gray-light-mode-700 font-semibold leading-5 text-sm cursor-pointer">
-                Hire
+                {currentTab === 'offered' ? 'Re-hire' : 'Hire'}
               </p>
             </div>
           </div>

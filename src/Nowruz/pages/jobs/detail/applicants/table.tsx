@@ -61,7 +61,6 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
                 {headerGroup.headers.map((header) => {
                   return (
                     <th id={header.id} key={header.id} className="px-6 py-3 bg-Gray-light-mode-50 align-middle">
-                      {' '}
                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   );

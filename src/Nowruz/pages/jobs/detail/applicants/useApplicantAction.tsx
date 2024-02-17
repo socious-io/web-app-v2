@@ -19,6 +19,7 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
   };
 
   const onReject = (id: string) => {
+    if (!id) return;
     currentSelectedId.current = id;
     setOpenAlert(true);
   };
@@ -30,11 +31,10 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
   };
 
   const handleReject = async () => {
+    if (!currentSelectedId.current) return;
     setOpenAlert(false);
-    if (currentSelectedId.current) {
-      const response = await rejectApplicant(currentSelectedId?.current);
-      if (response.status === 'REJECTED') onRefetch(true);
-    }
+    await rejectApplicant(currentSelectedId?.current);
+    onRefetch(true);
   };
 
   const columns = useMemo<ColumnDef<Applicant>[]>(
@@ -138,7 +138,7 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
         cell: function render({ getValue }) {
           return (
             <div className="flex justify-center items-center gap-3">
-              {currentTab === 'applicants' && (
+              {['applicants'].includes(currentTab) && (
                 <p
                   onClick={() => onReject(getValue())}
                   className="text-Gray-light-mode-600 font-semibold leading-5 text-sm cursor-pointer"
@@ -150,14 +150,14 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
                 onClick={() => onOffer(getValue())}
                 className="text-Gray-light-mode-700 font-semibold leading-5 text-sm cursor-pointer"
               >
-                Hire
+                {currentTab === 'offered' ? 'Re-hire' : 'Hire'}
               </p>
             </div>
           );
         },
       },
     ],
-    [],
+    [currentTab],
   );
 
   const extractCellId = (cell: Cell<Applicant, unknown>) => {
