@@ -19,7 +19,9 @@ export interface ChatsRes extends PaginateRes {
 export interface MessagesRes extends PaginateRes {
   items: Message[];
 }
-
+export interface ChatCountRes {
+  count: string;
+}
 export interface Chat {
   id: string;
   name: string;

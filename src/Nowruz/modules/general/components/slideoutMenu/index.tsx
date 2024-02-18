@@ -22,20 +22,18 @@ export const Overlay: React.FC<OverlayProps> = ({ open, onClose, children }) => 
     };
   }, [ref]);
   return (
-    <>
-      <Slide direction="left" in={open} mountOnEnter unmountOnExit>
-        <div ref={ref} className={css.container}>
-          <div className={css.header}>
-            <div className="hidden md:flex">
-              <CloseButton handleClose={onClose} />
-            </div>
-            <div className="flex md:hidden  mt-6 ml-4 mr-auto mb-auto">
-              <BackLink title="Back" onBack={onClose} customStyle="!w-fit" />
-            </div>
+    <Slide direction="left" in={open} mountOnEnter unmountOnExit>
+      <div ref={ref} className={css.container}>
+        <div className={css.header}>
+          <div className="hidden md:flex">
+            <CloseButton handleClose={onClose} />
           </div>
-          <div className={css.content}>{children}</div>
+          <div className="flex md:hidden  mt-6 ml-4 mr-auto mb-auto">
+            <BackLink title="Back" onBack={onClose} customStyle="!w-fit" />
+          </div>
         </div>
-      </Slide>
-    </>
+        <div className={css.content}>{children}</div>
+      </div>
+    </Slide>
   );
 };

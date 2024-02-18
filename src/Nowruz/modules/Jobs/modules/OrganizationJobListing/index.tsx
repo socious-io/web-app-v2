@@ -25,11 +25,13 @@ export const OrganizationJobListing = () => {
           <Skeleton variant="rounded" className="w-6/6" height={150} />
         </div>
       )}
-      {jobsList.map((job) => (
-        <div className="mt-6">
-          <OrganizationJobCard job={job} />
-        </div>
-      ))}
+
+      {!loading &&
+        jobsList.map((job) => (
+          <div className="mt-6">
+            <OrganizationJobCard job={job} />
+          </div>
+        ))}
       {jobsList.length === 0 && !loading && (
         <div className="mt-6">
           <EmptyState
@@ -48,12 +50,12 @@ export const OrganizationJobListing = () => {
           />
         </div>
       )}
-      {jobsList.length > 0 && !loading && (
+      {jobsList.length > 0 && (
         <div className="mt-11 hidden md:block">
           <Pagination count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)} onChange={(e, p) => setPage(p)} />
         </div>
       )}
-      {jobsList.length > 0 && !loading && (
+      {jobsList.length > 0 && (
         <div className="mt-11 block md:hidden">
           <PaginationMobile
             page={page}

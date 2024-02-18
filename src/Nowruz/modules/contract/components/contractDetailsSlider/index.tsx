@@ -90,12 +90,18 @@ export const ContractDetailsSlider: React.FC = () => {
           submitButtonLabel="Confirm"
         />
       )}
-      {type === 'organizations' && offer?.status === 'APPROVED' && offer?.payment_mode === 'FIAT' && (
-        <PaymentFiat offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
-      )}
-      {type === 'organizations' && offer?.status === 'APPROVED' && offer?.payment_mode === 'CRYPTO' && (
-        <PaymentCrypto offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
-      )}
+      {openPaymentModal &&
+        type === 'organizations' &&
+        offer?.status === 'APPROVED' &&
+        offer?.payment_mode === 'FIAT' && (
+          <PaymentFiat offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
+        )}
+      {openPaymentModal &&
+        type === 'organizations' &&
+        offer?.status === 'APPROVED' &&
+        offer?.payment_mode === 'CRYPTO' && (
+          <PaymentCrypto offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
+        )}
       {openAddCardModal && (
         <AddCardModalUser offer={offer} open={openAddCardModal} handleClose={() => setOpenAddCardModal(false)} />
       )}

@@ -330,7 +330,6 @@ export const useContractDetailsSlider = () => {
   const handleOpenPaymentModal = async () => {
     const res = await getOffer(offer.id);
     setPaymentOffer(res);
-
     setOpenPaymentModal(true);
   };
 
