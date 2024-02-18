@@ -47,11 +47,6 @@ export const CredentialList = () => {
       ];
     return (
         <>
-            <div className='flex justify-end gap-3'>
-                <Button color='white' size="m" className="w-20">Revoke</Button>
-                <Button color='white' size="m" className="w-20">Delete</Button>
-            </div>
-
             <div className={css.tableCereditList}>
                 <table>
                     <thead className='border border-Gray-light-mode-200'>
@@ -101,10 +96,10 @@ export const CredentialList = () => {
                                 {item.created_at}
                             </td>
                             <td>
-                                <Icon name="copy-02" fontSize={20} className="text-Gray-light-mode-600"  onClick={() =>  navigator.clipboard.writeText('test text')}/>
+                                <Icon name="check" fontSize={20} className="text-Gray-light-mode-600"  onClick={() =>  navigator.clipboard.writeText('test text')}/>
                             </td>
                             <td>
-                                <Icon name="trash-01" fontSize={20} className="text-Gray-light-mode-600" />
+                                <Icon name="x-close" fontSize={20} className="text-Gray-light-mode-600" />
                             </td>
                         </tr>
                     ))}
