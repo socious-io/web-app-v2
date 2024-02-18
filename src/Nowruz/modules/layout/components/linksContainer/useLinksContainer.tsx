@@ -68,7 +68,7 @@ export const useLinksContainer = () => {
     {
       label: 'Credentials',
       route: '/nowruz/credentials',
-      iconName: '/icons/verified.svg',
+      iconName: 'shield-tick',
       public: false,
       only: 'organizations',
     },
