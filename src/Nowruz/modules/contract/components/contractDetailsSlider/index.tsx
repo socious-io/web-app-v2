@@ -45,6 +45,7 @@ export const ContractDetailsSlider: React.FC = () => {
     setOpenWalletModal,
     offer,
     redirectToChat,
+    disableMessageButton,
   } = useContractDetailsSlider();
 
   return (
@@ -59,7 +60,13 @@ export const ContractDetailsSlider: React.FC = () => {
             </div>
           </div>
           <div className="flex gap-3">
-            <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              fullWidth
+              onClick={redirectToChat}
+              disabled={disableMessageButton}
+            >
               Message
             </Button>
             {displaySecondaryButton && (

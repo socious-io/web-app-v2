@@ -11,8 +11,10 @@ import {
   cancelOffer,
   completeMission,
   confirmMission,
+  connectionStatus,
   contestMission,
   dropMission,
+  findChat,
   getOffer,
   rejectOffer,
 } from 'src/core/api';
@@ -42,8 +44,24 @@ export const useContractDetailsSlider = () => {
     return state.contracts.missions.find((item) => item.offer.id === selectedOfferId);
   });
 
+  const checkMessageButtonStatus = async () => {
+    if (type === 'organizations') {
+      setDisableMessageButton(false);
+      return;
+    }
+    const orgId = offer?.organization.id;
+    const chat = await findChat({ participants: [orgId] });
+    if (chat.items.length) {
+      setDisableMessageButton(false);
+      return;
+    }
+    const res = (await connectionStatus(offer?.organization.id)).connect;
+    setDisableMessageButton(!res);
+  };
+
   useEffect(() => {
     inititalize();
+    checkMessageButtonStatus();
   }, [offer, mission]);
 
   const type = identity?.type;
@@ -76,6 +94,7 @@ export const useContractDetailsSlider = () => {
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const [openSelectCardModal, setOpenSelectCardModal] = useState(false);
   const [openWalletModal, setOpenWalletModal] = useState(false);
+  const [disableMessageButton, setDisableMessageButton] = useState(true);
 
   const setAllStates = (
     displayMsg: boolean,
@@ -415,5 +434,6 @@ export const useContractDetailsSlider = () => {
     redirectToChat,
     offer,
     mission,
+    disableMessageButton,
   };
 };

@@ -10,6 +10,7 @@ import {
   chats as chatsApi,
   filterChats,
   Message,
+  findChat,
 } from 'src/core/api';
 import { socket } from 'src/core/socket';
 import { RootState } from 'src/store';
@@ -33,12 +34,15 @@ export const useChats = () => {
   const openChatWithParticipantId = async (id: string) => {
     let chat = chats.find((item) => item.participants.map((p) => p.identity_meta.id).includes(id));
     if (!chat) {
-      const created = await createChat({
-        name: 'nameless',
-        type: 'CHAT',
-        participants: [id],
-      });
-      chat = (await filterChats({ id: created.id })).items[0];
+      chat = (await findChat({ participants: [id] })).items[0];
+      if (!chat) {
+        chat = await createChat({
+          name: 'nameless',
+          type: 'CHAT',
+          participants: [id],
+        });
+      }
+
       setChats([chat].concat(chats));
     }
     setSelectedChat(chat);
