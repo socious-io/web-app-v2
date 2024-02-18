@@ -68,6 +68,7 @@ export const useContractDetailsSlider = () => {
   const [alertTitle, setAlertTitle] = useState('');
   const [alertIcon, setAlertIcon] = useState<ReactNode>();
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
   const [paymentOffer, setPaymentOffer] = useState<Offer>();
   const [primaryButtonDisabled, setPrimaryButtonDisabled] = useState(false);
   const [stripeAccounts, setStripeAccounts] = useState<StripeAccount[]>([]);
@@ -282,7 +283,7 @@ export const useContractDetailsSlider = () => {
             subtitle={`Completed on ${isoToStandard(mission.updated_at.toString())}`}
           />
         );
-        setAllStates(true, alertMsg, false, '', true, 'Review', undefined, undefined);
+        setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handelOpenReviewModal);
         return;
       }
     }
@@ -347,6 +348,11 @@ export const useContractDetailsSlider = () => {
     dropMission(mission.id);
   };
 
+  const handelOpenReviewModal = () => {
+    setOpenReviewModal(true);
+  };
+
+
   const withdrawOfferByOP = async () => {
     dispatch(updateOfferStatus({ id: offer?.id, status: 'CANCELED' }));
     cancelOffer(offer.id);
@@ -408,5 +414,7 @@ export const useContractDetailsSlider = () => {
     setOpenWalletModal,
     offer,
     mission,
+    openReviewModal,
+    handelOpenReviewModal
   };
 };
