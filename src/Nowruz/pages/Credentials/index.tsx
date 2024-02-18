@@ -1,10 +1,13 @@
-import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 
 import css from './credentials.module.scss';
-import { useCredentials } from './useCredentials';
+import { useCredentialsList } from './useCredentialsList';
 
 export const Credentials = () => {
-  const { credentials } = useCredentials();
+  const { tabs } = useCredentialsList();
+
+
   return (
     <>
       <div className={css.container}>
@@ -13,29 +16,15 @@ export const Credentials = () => {
             <h1 className={css.title}>Credentials</h1>
             <h2 className={css.subtitle}>Here all credentials issued or requested</h2>
           </div>
-          <div className={css.right}></div>
+          <div className={css.right}>
+            <Button color='primary' startIcon={<img src='/icons/plus.svg' alt='plus' style={{ width: '20px' }}/>}>
+              Issue a Credential
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-col">
-          {credentials.map((item) => (
-            <div
-              tabIndex={0}
-              className="flex flex-col gap-5 border border-solid border-Gray-light-mode-200 rounded-default py-5 px-6 cursor-pointer"
-            >
-              <div className="flex gap-4 ">
-                <Avatar size="56px" type={'users'} img={item.avatar?.url} />
-                <div className="flex flex-col">
-                  <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">
-                    {item.user.first_name} {item.user.last_name}
-                  </span>
-                  <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">@{item.user.username}</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-semibold text-lg leading-5 text-Gray-light-mode-900">{item.status}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+
+        <HorizontalTabs tabs={tabs} />
+        
       </div>
     </>
   );
