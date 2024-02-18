@@ -33,6 +33,7 @@ import {
   getOrganizationByShortName,
   identities,
   userOffers,
+  getRequestedVerifyExperiences,
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -127,6 +128,21 @@ export const blueprint: RouteObject[] = [
             ],
           },
         ],
+      },
+      {
+        path: 'credentials',
+        loader: async () => {
+          return {
+            credentials: (await getRequestedVerifyExperiences({page: 1, limit: 10})).items,
+          };
+        },
+        async lazy() {
+          const { Credentials } = await import('src/Nowruz/pages/Credentials');
+          return {
+            Component: Credentials,
+          };
+        },
+        
       },
       {
         path: 'jobs',

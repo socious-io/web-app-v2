@@ -120,6 +120,7 @@ export interface Experience extends ExperienceReq {
   org: Organization;
   job_category: Category;
   created_at: Date;
+  credential?: Credential;
 }
 
 export interface Badge {
@@ -144,4 +145,14 @@ export interface ImpactPoint {
 
 export interface ImpactPoints extends PaginateRes {
   items: ImpactPoint[];
+}
+
+export interface Credential {
+  id: string;
+  status: 'PENDING' | 'APPROVED' | 'SENT' | 'CLAIMED' | 'REJECTED';
+  message?: string;
+  connection_id?: string;
+  connection_url?: string;
+  created_at: Date;
+  updated_at: Date;
 }
