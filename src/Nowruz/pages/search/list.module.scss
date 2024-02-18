@@ -6,6 +6,24 @@
   @media (max-width: 640px) {
     padding: 32px 16px 64px 16px;
   }
+  .headerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 720px;
+    @media (max-width: 640px) {
+      flex-direction: column;
+      width: 100%;
+    }
+    .filterButton {
+      text-transform: none;
+      border-radius: 8px;
+      gap: 0.5rem;
+      @media (max-width: 640px) {
+        width: 100%;
+      }
+    }
+  }
   .header {
     padding-bottom: 20px;
     display: flex;
@@ -13,7 +31,7 @@
     justify-content: space-between;
     @media (max-width: 640px) {
       flex-direction: column;
-      gap: 20px;
+      gap: 4px;
     }
     .title {
       font-size: 30px;
