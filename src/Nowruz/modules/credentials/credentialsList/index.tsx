@@ -1,5 +1,5 @@
 import { Icon } from 'src/Nowruz/general/Icon';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
+import variables from 'src/components/_exports.module.scss';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 
@@ -48,11 +48,11 @@ export const CredentialList = () => {
                 </td>
                 <td>Experience</td>
                 <td>
-                  {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" color="PENDING" />}
-                  {item.status === 'APPROVED' && <CreditStatus icon="check" label="Approved" color="APPROVED" />}
-                  {item.status === 'SENT' && <CreditStatus icon="check" label="Sent" color="SENT" />}
-                  {item.status === 'REJECTED' && <CreditStatus icon="x-close" label="Rejected" color="REJECTED" />}
-                  {item.status === 'CLAIMED' && <CreditStatus icon="check" label="Claimed" color="CLAIMED" />}
+                  {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" color={variables.color_grey_500} />}
+                  {item.status === 'APPROVED' && <CreditStatus icon="check" label="Approved" color={variables.color_success_500} />}
+                  {item.status === 'SENT' && <CreditStatus icon="check" label="Sent" color={variables.color_primary_500} />}
+                  {item.status === 'REJECTED' && <CreditStatus icon="x-close" label="Rejected" color={variables.color_error_500} />}
+                  {item.status === 'CLAIMED' && <CreditStatus icon="check" label="Claimed" color={variables.color_primary_500} />}
                 </td>
                 <td>{item.created_at.toString()}</td>
                 <td>
