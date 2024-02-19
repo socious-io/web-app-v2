@@ -14,11 +14,10 @@ export const useChatDetails = (chat?: Chat) => {
   const [hasMore, sethasMore] = useState(true);
   const id = chat?.id || '';
   const participant = chat?.participants[0];
-
   const account = {
     id: participant?.identity_meta.id,
     img: participant?.identity_meta.image || participant?.identity_meta.avatar || '',
-    type: 'shortname' in participant?.identity_meta ? 'organizations' : 'users',
+    type: participant?.identity_type,
     name: participant?.identity_meta.name,
     username: participant?.identity_meta.username || participant?.identity_meta.shortname || '',
   };

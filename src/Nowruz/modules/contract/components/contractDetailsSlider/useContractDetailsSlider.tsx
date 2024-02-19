@@ -49,12 +49,7 @@ export const useContractDetailsSlider = () => {
       setDisableMessageButton(false);
       return;
     }
-    const orgId = offer?.organization.id;
-    const chat = await findChat({ participants: [orgId] });
-    if (chat.items.length) {
-      setDisableMessageButton(false);
-      return;
-    }
+
     const res = (await connectionStatus(offer?.organization.id)).connect;
     setDisableMessageButton(!res);
   };
