@@ -8,6 +8,7 @@ import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontal
 
 import { useContractDetailsSlider } from './useContractDetailsSlider';
 import AddCardModalUser from '../addCardModalUser';
+import { ReviewModal } from '../reviewModal';
 import { SelectBankAccountUser } from '../selectBankAccountUser';
 import { WalletModal } from '../walletModal';
 
@@ -33,6 +34,8 @@ export const ContractDetailsSlider: React.FC = () => {
     alertMessage,
     openPaymentModal,
     handleClosePaymentModal,
+    openReviewModal, 
+    setOpenReviewModal,
     paymentOffer,
     primaryButtonDisabled,
     openAddCardModal,
@@ -115,6 +118,14 @@ export const ContractDetailsSlider: React.FC = () => {
           walletAddress={offer?.recipient?.meta.wallet_address}
         />
       )}
+      {
+        openReviewModal && (
+          <ReviewModal 
+            open={openReviewModal}
+            handleClose={() => setOpenReviewModal(false)}
+          />
+        )
+      }
     </>
   );
 };
