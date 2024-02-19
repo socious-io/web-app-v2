@@ -48,11 +48,21 @@ export const CredentialList = () => {
                 </td>
                 <td>Experience</td>
                 <td>
-                  {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" color={variables.color_grey_500} />}
-                  {item.status === 'APPROVED' && <CreditStatus icon="check" label="Approved" color={variables.color_success_500} />}
-                  {item.status === 'SENT' && <CreditStatus icon="check" label="Sent" color={variables.color_primary_500} />}
-                  {item.status === 'REJECTED' && <CreditStatus icon="x-close" label="Rejected" color={variables.color_error_500} />}
-                  {item.status === 'CLAIMED' && <CreditStatus icon="check" label="Claimed" color={variables.color_primary_500} />}
+                  {item.status === 'PENDING' && (
+                    <CreditStatus icon="clock" label="Pending" color={variables.color_grey_500} />
+                  )}
+                  {item.status === 'APPROVED' && (
+                    <CreditStatus icon="check" label="Approved" color={variables.color_primary_500} />
+                  )}
+                  {item.status === 'SENT' && (
+                    <CreditStatus icon="check" label="Sent" color={variables.color_success_500} />
+                  )}
+                  {item.status === 'REJECTED' && (
+                    <CreditStatus icon="x-close" label="Rejected" color={variables.color_error_500} />
+                  )}
+                  {item.status === 'CLAIMED' && (
+                    <CreditStatus icon="check" label="Claimed" color={variables.color_success_500} />
+                  )}
                 </td>
                 <td>{item.created_at.toString()}</td>
                 <td>

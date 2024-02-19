@@ -6,7 +6,7 @@ import { statusType } from './status.types';
 export const CreditStatus = (props: statusType) => {
   return (
     <>
-      <div className={css.status} style={{'borderColor': props.color}}>
+      <div className={css.status} style={{ borderColor: props.color, color: props.color }}>
         <Icon name={props.icon} color={props.color} />
         <span className="pl-2">{props.label}</span>
       </div>

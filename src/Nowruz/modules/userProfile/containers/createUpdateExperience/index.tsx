@@ -14,7 +14,12 @@ interface CreateUpdateExperienceProps {
   experience?: Experience;
   readonly?: boolean;
 }
-export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ open, handleClose, experience, readonly }) => {
+export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
+  open,
+  handleClose,
+  experience,
+  readonly,
+}) => {
   const {
     jobCategories,
     category,

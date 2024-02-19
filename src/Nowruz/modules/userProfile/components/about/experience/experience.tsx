@@ -75,8 +75,24 @@ export const Experiences = () => {
                     Claim
                   </Button>
                 )}
-                {myProfile && item.credential?.status === 'REJECTED' && <p>rejected from {item.org.name}</p>}
-                {myProfile && item.credential?.status === 'SENT' && <p>VC sent</p>}
+                {myProfile && item.credential?.status === 'REJECTED' && (
+                  <div
+                    className={css.status}
+                    style={{ borderColor: variables.color_error_500, color: variables.color_error_500 }}
+                  >
+                    <Icon name="x-close" color={variables.color_error_500} />
+                    <span>rejected from {item.org.name}</span>
+                  </div>
+                )}
+                {myProfile && item.credential?.status === 'SENT' && (
+                  <div
+                    className={css.status}
+                    style={{ borderColor: variables.color_success_500, color: variables.color_success_500 }}
+                  >
+                    <Icon name="check" color={variables.color_success_500} />
+                    <span>credentials has been sent</span>
+                  </div>
+                )}
               </>
             ))}
           </div>
