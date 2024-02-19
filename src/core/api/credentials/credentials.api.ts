@@ -13,6 +13,10 @@ export async function approveVerifyExperience(verifyRequestId: string): Promise<
   return (await post<CredentialExperienceRes>(`/credentials/experiences/${verifyRequestId}/approve`, {})).data;
 }
 
+export async function rejectVerifyExperience(verifyRequestId: string): Promise<CredentialExperienceRes> {
+  return (await post<CredentialExperienceRes>(`/credentials/experiences/${verifyRequestId}/reject`, {})).data;
+}
+
 export async function claimExperienceVC(verifyRequestId: string): Promise<ClaimVCRes> {
   return (await post<ClaimVCRes>(`/credentials/experiences/${verifyRequestId}/claim`, {})).data;
 }

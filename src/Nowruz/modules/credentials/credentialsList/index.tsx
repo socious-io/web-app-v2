@@ -1,114 +1,105 @@
-import { Button } from 'src/components/atoms/button/button';
-import { CredentialExperienceRes } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
-import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 
-import css from "./credentialsList.module.scss";
+import css from './credentialsList.module.scss';
 import { CreditStatus } from '../creditStatus';
-
-// import { useCredentialsList } from './useCredentialsList';
+import { useCredentialsList } from './useCredentialsList';
+import { CreateUpdateExperience } from 'src/Nowruz/modules/userProfile/containers/createUpdateExperience';
+import { useState } from 'react';
+import { CredentialExperienceRes, Experience } from 'src/core/api';
 
 export const CredentialList = () => {
-    //   const { credentials } = useCredentialsList();
+  const { credentialsList, total, setPage, onApprove, onReject, onDetails, setOpenModal, openModal, experience } =
+    useCredentialsList();
 
-    const credentials: CredentialExperienceRes[][] = [
-        {
-          id: '1',
-          status: 'PENDING',
-          experience: "Experience",
-          user: {first_name:'Umaya',last_name:'Ninja',username:"unijina123"},
-          org: "Organization",
-          avatar: "Media",
-          created_at: "Date",
-          updated_at: "Date"
-        },
-        {
-          id: '2',
-          status: 'PENDING',
-          experience: "Experience",
-          user: {first_name:'Umaya',last_name:'Ninja',username:"unijina123"},
-          org: "Organization",
-          avatar: "Media",
-          created_at: "Date",
-          updated_at: "Date"
-        },
-        {
-          id: '3',
-          status: 'PENDING',
-          experience: "Experience",
-          user: {first_name:'Umaya',last_name:'Ninja',username:"unijina123"},
-          org: "Organization",
-          avatar: "Media",
-          created_at: "Date",
-          updated_at: "Date"
-        }
-      ];
-    return (
-        <>
-            <div className={css.tableCereditList}>
-                <table>
-                    <thead className='border border-Gray-light-mode-200'>
-                        <tr className='text-xs font-medium text-Gray-light-mode-600'>
-                            <th className='flex gap-1 items-center'>
-                                <Checkbox type='checkBox' size='small' id='credentialID'/>
-                                <span>Credential ID</span>
-                            </th>
-                            <th>Recipent</th>
-                            <th>Credential Type</th>
-                            <th className='flex items-center'>
-                                Status
-                                <Icon name='arrow-down'/>
-                            </th>
-                            <th>Created DATE</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {credentials.map((item) => ( 
-                        <tr className='text-sm font-normal text-left'>
-                            <td className=''>
-                                <div className='flex gap-1 items-center'>
-                                    <Checkbox type='checkBox' size='small' id='credentialID'/>
-                                    <span>
-                                        {item.id}
-                                    </span>
-                                </div>
-                            </td>
-                            <td className='flex justify-start items-center'>
-                                <Avatar size="40px" type={'users'} img={item.avatar?.url} />
-                                <div className="flex flex-col ml-3">
-                                    <span className="leading-7 text-Gray-light-mode-900">
-                                        {item.user.first_name} {item.user.last_name}
-                                    </span>
-                                    <span className="text-sm font-medium leading-5 text-Gray-light-mode-600">@{item.user.username}</span>
-                                </div>
-                            </td>
-                            <td>
-                                {item.org}
-                            </td>
-                            <td>
-                                <CreditStatus icon="clock" label='Pending'/>
-                            </td>
-                            <td>
-                                {item.created_at}
-                            </td>
-                            <td>
-                                <Icon name="check" fontSize={20} className="text-Gray-light-mode-600"  onClick={() =>  navigator.clipboard.writeText('test text')}/>
-                            </td>
-                            <td>
-                                <Icon name="x-close" fontSize={20} className="text-Gray-light-mode-600" />
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className={css.paginationBox}> 
-                <Pagination count={15} onChange={(e, p) => setPage(p)} />
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className={css.tableCereditList}>
+        <table>
+          <thead className="border border-Gray-light-mode-200">
+            <tr className="text-xs font-medium text-Gray-light-mode-600">
+              <th>Name</th>
+              <th>Credential Type</th>
+              <th className="flex items-center">
+                Status
+                <Icon name="arrow-down" />
+              </th>
+              <th>Created DATE</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {credentialsList.map((item) => (
+              <tr className="text-sm font-normal text-left">
+                <td className="flex justify-start items-center">
+                  <Avatar size="40px" type={'users'} img={item.avatar?.url} />
+                  <div className="flex flex-col ml-3">
+                    <span className="leading-7 text-Gray-light-mode-900">
+                      {item.user.first_name} {item.user.last_name}
+                    </span>
+                    <span className="text-sm font-medium leading-5 text-Gray-light-mode-600">
+                      @{item.user.username}
+                    </span>
+                  </div>
+                </td>
+                <td>Experience</td>
+                <td>
+                  {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" color="gray" />}
+                  {item.status === 'APPROVED' && <CreditStatus icon="check" label="Approved" color="green" />}
+                  {item.status === 'SENT' && <CreditStatus icon="check" label="Sent" color="green" />}
+                  {item.status === 'REJECTED' && <CreditStatus icon="x-close" label="Rejected" color="red" />}
+                  {item.status === 'CLAIMED' && <CreditStatus icon="check" label="Claimed" color="green" />}
+                </td>
+                <td>{item.created_at.toString()}</td>
+                <td>
+                  <Icon
+                    name="eye"
+                    fontSize={20}
+                    className="text-Gray-light-mode-600"
+                    onClick={() => onDetails(item)}
+                    cursor="pointer"
+                  />
+                </td>
+                <td>
+                  {item.status === 'PENDING' && (
+                    <Icon
+                      name="check"
+                      fontSize={20}
+                      className="text-Gray-light-mode-600"
+                      onClick={() => onApprove(item.id)}
+                      cursor="pointer"
+                    />
+                  )}
+                </td>
+                <td>
+                  {item.status === 'PENDING' && (
+                    <Icon
+                      name="x-close"
+                      fontSize={20}
+                      className="text-Gray-light-mode-600"
+                      onClick={() => onReject(item.id)}
+                      cursor="pointer"
+                    />
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className={css.paginationBox}>
+        <Pagination count={total} onChange={(e, p) => setPage(p)} />
+      </div>
+      <CreateUpdateExperience
+        open={openModal}
+        handleClose={() => setOpenModal(false)}
+        experience={experience}
+        readonly={true}
+      />
+    </>
+  );
 };

@@ -12,8 +12,9 @@ interface CreateUpdateExperienceProps {
   open: boolean;
   handleClose: () => void;
   experience?: Experience;
+  readonly?: boolean;
 }
-export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ open, handleClose, experience }) => {
+export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ open, handleClose, experience, readonly }) => {
   const {
     jobCategories,
     category,
@@ -59,6 +60,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         register={register}
         placeholder="Enter job title"
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
+        disabled={readonly}
       />
       <SearchDropdown
         id="job-category"
@@ -74,6 +76,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         isSearchable
         errors={errors['jobCategory']?.label?.message ? [errors['jobCategory']?.label.message.toString()] : undefined}
         placeholder="Search for job category"
+        isDisabled={readonly}
       />
       <SearchDropdown
         required
@@ -92,6 +95,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         placeholder="Search for company"
         noOptionsMessage={({ inputValue }) => inputValue}
         errors={errors['org']?.label?.message ? [errors['org']?.label?.message.toString()] : undefined}
+        isDisabled={readonly}
       />
 
       <SearchDropdown
@@ -109,6 +113,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           onSelectCity(value);
         }}
         errors={errors['city']?.label?.message ? [errors['city']?.label?.message.toString()] : undefined}
+        isDisabled={readonly}
       />
       <div className="flex flex-col gap-2">
         <p className="text-sm font-medium leading-5 text-Gray-light-mode-700">Volunteer experience?</p>
@@ -118,6 +123,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           checked={volunteer}
           onChange={(e) => handleCheckVolunteer(e.target.checked)}
           value
+          disabled={readonly}
         />
       </div>
       <SearchDropdown
@@ -136,6 +142,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         errors={
           errors['employmentType']?.label?.message ? [errors['employmentType']?.label?.message.toString()] : undefined
         }
+        isDisabled={readonly}
       />
       <Checkbox
         id="currently-working"
@@ -143,6 +150,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         checked={currentlyWorking}
         onChange={(e) => handleCheckWorking(e.target.checked)}
         value
+        disabled={readonly}
       />
       <div className="flex gap-4 items-start">
         <SearchDropdown
@@ -158,6 +166,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           placeholder="Month"
           isSearchable
           errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label?.message.toString()] : undefined}
+          isDisabled={readonly}
         />
         <SearchDropdown
           id="start-year"
@@ -172,6 +181,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           placeholder="Year"
           isSearchable
           errors={errors['startYear']?.label?.message ? [errors['startYear']?.label?.message.toString()] : undefined}
+          isDisabled={readonly}
         />
       </div>
       <div className="flex gap-4 items-start">
@@ -188,7 +198,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           className="flex-1"
           isSearchable
           errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label?.message.toString()] : undefined}
-          isDisabled={currentlyWorking}
+          isDisabled={currentlyWorking || readonly}
         />
         <SearchDropdown
           id="end-year"
@@ -203,7 +213,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
           placeholder="Year"
           isSearchable
           errors={dateError ? [dateError] : undefined} //{errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
-          isDisabled={currentlyWorking}
+          isDisabled={currentlyWorking || readonly}
         />
       </div>
       <Input
@@ -214,6 +224,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
         customHeight="130px"
         register={register}
         placeholder="e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints."
+        disabled={readonly}
       />
     </div>
   );
@@ -245,7 +256,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({ 
       title={experience ? 'Edit experience' : 'Add experience'}
       subTitle={experience ? '' : 'Share where you’ve worked on your profile.'}
       content={contentJSX}
-      footer={modalFooterJsx}
+      footer={readonly ? <></> : modalFooterJsx}
     />
   );
 };

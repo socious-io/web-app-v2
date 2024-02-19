@@ -133,7 +133,7 @@ export const blueprint: RouteObject[] = [
         path: 'credentials',
         loader: async () => {
           return {
-            credentials: (await getRequestedVerifyExperiences({page: 1, limit: 10})).items,
+            credentials: (await getRequestedVerifyExperiences({page: 1, limit: 10})),
           };
         },
         async lazy() {
