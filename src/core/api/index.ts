@@ -36,3 +36,6 @@ export * from './media/media.types';
 
 export * from './geo/geo.api';
 export * from './geo/geo.types';
+
+export * from './credentials/credentials.api';
+export * from './credentials/credentials.types';
