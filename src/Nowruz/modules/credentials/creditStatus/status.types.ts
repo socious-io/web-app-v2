@@ -1,5 +1,6 @@
 export interface statusType {
   icon: string;
   label: string;
-  color: 'gray' | 'red' | 'green';
+  color: PENDING | APPROVED| SENT | REJECTED | CLAIMED;
 }
+
