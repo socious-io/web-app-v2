@@ -61,16 +61,6 @@ export const useSearch = () => {
 
   const onApply = async (filterRaw: FilterReq) => {
     setFilter(filterRaw);
-    const body = {
-      filter: filterRaw ? filterNeeded(filterRaw) : {},
-      type,
-    } as any;
-    if (q?.trim()) {
-      Object.assign(body, { q });
-    }
-    console.log(JSON.stringify(body));
-    const data = await searchReq(body, { limit: 20, page: 1 });
-    setSearchResult(data);
     handleCloseOrApplyFilter();
   };
 
@@ -92,11 +82,12 @@ export const useSearch = () => {
 
   useEffect(() => {
     fetchMore(page);
-  }, [page]);
+  }, [page, filter]);
 
   useEffect(() => {
     if (data.items.length) {
       setSearchResult(data);
+      setFilter({});
     }
   }, [data]);
 
