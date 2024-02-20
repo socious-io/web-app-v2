@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CurrentIdentity, chats } from 'src/core/api';
+import { CurrentIdentity, unreadCounts } from 'src/core/api';
 import Badge from 'src/Nowruz/modules/general/components/Badge';
 import { RootState } from 'src/store';
 
@@ -12,11 +12,8 @@ export const useLinksContainer = () => {
   const [unread, setUnread] = useState(0);
 
   const unreadMessagesCount = async () => {
-    const unreadCount = (await chats({ limit: 1000 })).items.reduce(
-      (partialSum, a) => partialSum + Number(a.unread_count),
-      0,
-    );
-    setUnread(unreadCount);
+    const unreadCount = await unreadCounts();
+    setUnread(Number(unreadCount.count));
   };
 
   useEffect(() => {

@@ -49,8 +49,6 @@ import { receivedOfferLoader } from 'src/pages/offer-received/offer-received.ser
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { search } from 'src/pages/search/desktop/search.services';
-import store, { RootState } from 'src/store';
-import { getContracts } from 'src/store/thunks/contracts.thunk';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
@@ -86,11 +84,12 @@ export const blueprint: RouteObject[] = [
                 path: 'view',
                 loader: async ({ params }) => {
                   const user = await otherProfileByUsername(params.id);
-                  const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
+                  // Keep this, it might be needed in the future
+                  // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
                   return {
                     user,
-                    badges: userBadges,
-                    missions,
+                    // badges: userBadges,
+                    // missions,
                   };
                 },
                 async lazy() {
@@ -133,7 +132,7 @@ export const blueprint: RouteObject[] = [
         path: 'credentials',
         loader: async () => {
           return {
-            credentials: (await getRequestedVerifyExperiences({page: 1, limit: 10})),
+            credentials: await getRequestedVerifyExperiences({ page: 1, limit: 10 }),
           };
         },
         async lazy() {
@@ -142,7 +141,6 @@ export const blueprint: RouteObject[] = [
             Component: Credentials,
           };
         },
-        
       },
       {
         path: 'jobs',
@@ -192,13 +190,6 @@ export const blueprint: RouteObject[] = [
       },
       {
         path: 'contracts',
-        loader: async () => {
-          // const requests = [userOffers({ page: 1, limit: 5 }), userMissions()];
-          // const [offers, missions] = await Promise.all(requests);
-          // return { offers, missions };
-          store.dispatch(getContracts({ page: 1, limit: 5 }));
-          return null;
-        },
         async lazy() {
           const { Contracts } = await import('src/Nowruz/pages/contracts');
           return {

@@ -2,7 +2,6 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   CurrentIdentity,
-  Mission,
   Offer,
   StripeAccount,
   acceptOffer,
@@ -20,7 +19,7 @@ import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { getSrtipeProfile } from 'src/pages/offer-received/offer-received.services';
 import { RootState } from 'src/store';
-import { updateMissionStatus, updateOfferStatus } from 'src/store/reducers/contracts.reducer';
+import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
 import { ContractDetailTab } from '../contractDetailTab';
 
@@ -32,21 +31,17 @@ export const useContractDetailsSlider = () => {
   const selectedOfferId = useSelector<RootState, string | undefined>((state) => {
     return state.contracts.selectedOfferId;
   });
-  const offer = useSelector<RootState, Offer | undefined>((state) => {
+  const offer = useSelector<RootState, Offer>((state) => {
     return state.contracts.offers.find((item) => item.id === selectedOfferId);
-  });
-
-  const mission = useSelector<RootState, Mission | undefined>((state) => {
-    return state.contracts.missions.find((item) => item.offer.id === selectedOfferId);
   });
 
   useEffect(() => {
     inititalize();
-  }, [offer, mission]);
+  }, [offer]);
 
   const type = identity?.type;
-  const name = type === 'users' ? offer?.offerer.meta.name : offer?.recipient.meta.name;
-  const profileImage = type === 'users' ? offer?.offerer.meta.image : offer?.recipient.meta.avatar;
+  const name = type === 'users' ? offer.offerer.meta.name : offer.recipient.meta.name;
+  const profileImage = type === 'users' ? offer.offerer.meta.image : offer.recipient.meta.avatar;
 
   const tabs = [
     { label: 'Details', content: <ContractDetailTab offer={offer} /> },
@@ -85,7 +80,6 @@ export const useContractDetailsSlider = () => {
     secondaryBtnLabel: string,
     primaryBtnAction?: () => void,
     secondaryBtnAction?: () => void,
-    // primaryBtnDisabled = false,
   ) => {
     setDisplayMessage(displayMsg);
     setMessage(msg);
@@ -95,7 +89,6 @@ export const useContractDetailsSlider = () => {
     setDisplaySecondaryButton(displaySecondaryBtn);
     setSecondaryButtonLabel(secondaryBtnLabel);
     setSecondaryButtonAction(() => secondaryBtnAction);
-    // setDisplayPrimaryButton(primaryBtnDisabled);
   };
 
   const initializeAcceptOfferFiat = async () => {
@@ -143,14 +136,14 @@ export const useContractDetailsSlider = () => {
   };
   const inititalize = async () => {
     if (type === 'users') {
-      if (offer?.status === 'PENDING') {
+      if (offer.status === 'PENDING') {
         setPrimaryButtonDisabled(true);
         setAllStates(false, null, true, 'Accept', true, 'Decline', undefined, handleDecline);
         await inititalizeAccepOffer();
         return;
       }
 
-      if (offer?.status === 'APPROVED') {
+      if (offer.status === 'APPROVED') {
         const alertMsg = (
           <AlertMessage
             theme="primary"
@@ -162,7 +155,7 @@ export const useContractDetailsSlider = () => {
         setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
-      if (offer?.status === 'WITHDRAWN') {
+      if (offer.status === 'WITHDRAWN') {
         const alertMsg = (
           <AlertMessage theme="gray" iconName="check-circle" title="" subtitle="You have declined this offer" />
         );
@@ -171,7 +164,7 @@ export const useContractDetailsSlider = () => {
         return;
       }
 
-      if (offer?.status === 'HIRED' && mission?.status === 'ACTIVE') {
+      if (offer.status === 'HIRED' && offer.mission?.status === 'ACTIVE') {
         const alertMsg = (
           <AlertMessage
             theme="primary"
@@ -184,14 +177,14 @@ export const useContractDetailsSlider = () => {
         return;
       }
 
-      if (offer?.status === 'CLOSED' && mission?.status === 'CANCELED') {
+      if (offer.status === 'CLOSED' && offer.mission?.status === 'CANCELED') {
         const alertMsg = (
           <AlertMessage theme="gray" iconName="check-circle" title="" subtitle="You have canceled this contract" />
         );
         setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
-      if (offer?.status === 'CLOSED' && mission?.status === 'COMPLETE') {
+      if (offer.status === 'CLOSED' && offer.mission?.status === 'COMPLETE') {
         const alertMsg = (
           <AlertMessage
             theme="warning"
@@ -205,7 +198,7 @@ export const useContractDetailsSlider = () => {
       }
     }
     if (type === 'organizations') {
-      if (offer?.status === 'APPROVED' && offer.assignment_total) {
+      if (offer.status === 'APPROVED' && offer.assignment_total) {
         const alertMsg = (
           <AlertMessage
             theme="warning"
@@ -226,7 +219,7 @@ export const useContractDetailsSlider = () => {
         );
         return;
       }
-      if (offer?.status === 'HIRED' && offer.assignment_total) {
+      if (offer.status === 'HIRED' && offer.assignment_total) {
         const alertMsg = (
           <AlertMessage
             theme="primary"
@@ -238,21 +231,21 @@ export const useContractDetailsSlider = () => {
         setAllStates(true, alertMsg, false, '', true, 'Stop', undefined, handleStopByOP);
         return;
       }
-      if (offer?.status === 'CLOSED' && mission?.status === 'KICKED_OUT') {
+      if (offer.status === 'CLOSED' && offer.mission?.status === 'KICKED_OUT') {
         const alertMsg = (
           <AlertMessage theme="gray" iconName="alert-circle" title="You have stopped this contract" subtitle="" />
         );
         setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
-      if (offer?.status === 'CANCELED') {
+      if (offer.status === 'CANCELED') {
         const alertMsg = (
           <AlertMessage theme="gray" iconName="alert-circle" title="You have canceled this offer" subtitle="" />
         );
         setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
-      if (offer?.status === 'CLOSED' && mission?.status === 'COMPLETE') {
+      if (offer.status === 'CLOSED' && offer.mission?.status === 'COMPLETE') {
         const alertMsg = (
           <AlertMessage
             theme="warning"
@@ -274,13 +267,13 @@ export const useContractDetailsSlider = () => {
         return;
       }
 
-      if (offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED') {
+      if (offer.status === 'CLOSED' && offer.mission?.status === 'CONFIRMED') {
         const alertMsg = (
           <AlertMessage
             theme="primary"
             iconName="info-circle"
             title="Job completed"
-            subtitle={`Completed on ${isoToStandard(mission.updated_at.toString())}`}
+            subtitle={`Completed on ${isoToStandard(offer.mission.updated_at.toString())}`}
           />
         );
         setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
@@ -297,81 +290,75 @@ export const useContractDetailsSlider = () => {
 
   const handleAcceptOffer = async () => {
     try {
-      dispatch(updateOfferStatus({ id: offer?.id, status: 'APPROVED' }));
+      dispatch(updateStatus({ id: offer.id, offerStatus: 'APPROVED' }));
       acceptOffer(offer.id);
       setOpenSelectCardModal(false);
       setOpenWalletModal(false);
     } catch (error) {}
   };
   const handleDecline = async () => {
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'WITHDRAWN' }));
+    dispatch(updateStatus({ id: offer.id, offerStatus: 'WITHDRAWN' }));
     rejectOffer(offer.id);
   };
 
   const handleStop = async () => {
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
-    dispatch(updateMissionStatus({ id: mission?.id, status: 'CANCELED' }));
-    cancelMission(mission.id);
+    dispatch(updateStatus({ id: offer.id, offerStatus: 'CLOSED', missionStatus: 'CANCELED' }));
+    if (offer.mission) cancelMission(offer.mission.id);
   };
   const handleOpenCompleteConfirm = () => {
     setAlertTitle('Submit job completion?');
     setAlertIcon(<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />);
     setAlertMessage(`Once ${name} confirms the job completion, you will receive your payment.`);
-    setHandleAlertSubmit(() => handleComplete);
+    setHandleAlertSubmit(() => handleComplete());
     setOpenAlert(true);
   };
   const handleComplete = async () => {
     setOpenAlert(false);
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
-    dispatch(updateMissionStatus({ id: mission?.id, status: 'COMPLETE' }));
-    completeMission(mission.id);
+    dispatch(updateStatus({ id: offer.id, offerStatus: 'CLOSED', missionStatus: 'COMPLETE' }));
+    if (offer.mission) completeMission(offer.mission.id);
     setOpenAlert(false);
   };
 
   const handleOpenPaymentModal = async () => {
     const res = await getOffer(offer.id);
     setPaymentOffer(res);
-
     setOpenPaymentModal(true);
   };
 
   const handleClosePaymentModal = (paymentSuccess: boolean) => {
     if (paymentSuccess) {
-      dispatch(updateOfferStatus({ id: offer?.id, status: 'HIRED' }));
-      dispatch(updateMissionStatus({ id: mission?.id, status: 'ACTIVE' }));
+      dispatch(updateStatus({ id: offer.id, offerStatus: 'HIRED', missionStatus: 'ACTIVE' }));
     }
     setOpenPaymentModal(false);
   };
   const handleStopByOP = async () => {
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
-    dispatch(updateMissionStatus({ id: mission?.id, status: 'KICKED_OUT' }));
-    dropMission(mission.id);
+    dispatch(updateStatus({ id: offer.id, offerStatus: 'CLOSED', missionStatus: 'KICKED_OUT' }));
+    if (offer.mission) dropMission(offer.mission.id);
   };
 
   const withdrawOfferByOP = async () => {
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CANCELED' }));
+    dispatch(updateStatus({ id: offer.id, offerStatus: 'CANCELED' }));
     cancelOffer(offer.id);
   };
 
   const onConfirm = async () => {
-    if (!mission) return;
+    if (!offer.mission) return;
     setOpenAlert(false);
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
-    dispatch(updateMissionStatus({ id: mission?.id, status: 'CONFIRMED' }));
-    confirmMission(mission.id);
+    dispatch(updateStatus({ id: offer.id, offerStatus: 'CLOSED', missionStatus: 'CONFIRMED' }));
+    confirmMission(offer.mission.id);
   };
 
   const handleConfirmCompletion = async () => {
     setAlertTitle('Confirm completion');
     setAlertIcon(<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />);
     setAlertMessage(`Do you want to job completion?`);
-    setHandleAlertSubmit(() => onConfirm);
+    setHandleAlertSubmit(() => onConfirm());
     setOpenAlert(true);
   };
 
   const handleContest = async () => {
-    if (!mission) return;
-    await contestMission(mission.id);
+    if (!offer.mission) return;
+    await contestMission(offer.mission.id);
   };
 
   const handleReview = () => {
@@ -414,6 +401,5 @@ export const useContractDetailsSlider = () => {
     openWalletModal,
     setOpenWalletModal,
     offer,
-    mission,
   };
 };

@@ -1,4 +1,14 @@
-import { Chat, chatIdRes, ChatReq, ChatsRes, Message, MessageReq, MessagesRes, ParticipantRes } from './chats.types';
+import {
+  Chat,
+  ChatCountRes,
+  chatIdRes,
+  ChatReq,
+  ChatsRes,
+  Message,
+  MessageReq,
+  MessagesRes,
+  ParticipantRes,
+} from './chats.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq, FilterReq } from '../types';
 
@@ -39,4 +49,8 @@ export async function findChat(payload: { participants: string[] }): Promise<cha
 
 export async function filterChats(params: FilterReq): Promise<ChatsRes> {
   return (await get<ChatsRes>('chats/summary', { params })).data;
+}
+
+export async function unreadCounts(): Promise<ChatCountRes> {
+  return (await get<ChatCountRes>('/chats/unreads/counts')).data;
 }

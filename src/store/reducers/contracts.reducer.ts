@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Mission, Offer } from 'src/core/api';
+import { Offer } from 'src/core/api';
 
-import { getContracts, getMissions } from '../thunks/contracts.thunk';
+import { getContracts } from '../thunks/contracts.thunk';
 
 interface ContractsState {
-  missions: Mission[];
   offers: Offer[];
   page: number;
   limit: number;
@@ -14,7 +13,6 @@ interface ContractsState {
   selectedOfferId?: string;
 }
 const initialState = {
-  missions: [],
   offers: [],
   page: 1,
   limit: 5,
@@ -30,13 +28,11 @@ export const contractsSlice = createSlice({
       state.selectedOfferId = action.payload;
     },
 
-    updateOfferStatus: (state, action) => {
+    updateStatus: (state, action) => {
       const idx = state.offers.findIndex((item) => item.id === action.payload.id);
-      state.offers[idx].status = action.payload.status;
-    },
-    updateMissionStatus: (state, action) => {
-      const idx = state.missions.findIndex((item) => item.id === action.payload.id);
-      state.missions[idx].status = action.payload.status;
+      state.offers[idx].status = action.payload.offerStatus;
+      if (action.payload.missionStatus)
+        state.offers[idx].mission = { ...state.offers[idx].mission, status: action.payload.missionStatus };
     },
   },
   extraReducers: (builder) => {
@@ -46,7 +42,6 @@ export const contractsSlice = createSlice({
         state.error = '';
       })
       .addCase(getContracts.fulfilled, (state, action) => {
-        state.missions = action.payload.missions;
         state.offers = action.payload.offers;
         state.page = action.payload.page;
         state.limit = action.payload.limit;
@@ -57,21 +52,8 @@ export const contractsSlice = createSlice({
       .addCase(getContracts.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || '';
-      })
-      .addCase(getMissions.pending, (state) => {
-        state.status = 'loading';
-        state.error = '';
-      })
-      .addCase(getMissions.fulfilled, (state, action) => {
-        state.missions = action.payload.missions;
-        state.status = 'succeeded';
-        state.error = '';
-      })
-      .addCase(getMissions.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message || '';
       });
   },
 });
 
-export const { setSelected, updateOfferStatus, updateMissionStatus } = contractsSlice.actions;
+export const { setSelected, updateStatus } = contractsSlice.actions;
