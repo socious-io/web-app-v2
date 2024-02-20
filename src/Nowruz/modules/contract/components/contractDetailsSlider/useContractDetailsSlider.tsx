@@ -63,6 +63,7 @@ export const useContractDetailsSlider = () => {
   const [alertTitle, setAlertTitle] = useState('');
   const [alertIcon, setAlertIcon] = useState<ReactNode>();
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
   const [paymentOffer, setPaymentOffer] = useState<Offer>();
   const [primaryButtonDisabled, setPrimaryButtonDisabled] = useState(false);
   const [stripeAccounts, setStripeAccounts] = useState<StripeAccount[]>([]);
@@ -275,7 +276,7 @@ export const useContractDetailsSlider = () => {
             subtitle={`Completed on ${isoToStandard(offer.mission.updated_at.toString())}`}
           />
         );
-        setAllStates(true, alertMsg, false, '', true, 'Review', undefined, undefined);
+        setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
         return;
       }
     }
@@ -360,6 +361,10 @@ export const useContractDetailsSlider = () => {
     await contestMission(offer.mission.id);
   };
 
+  const handleReview = () => {
+    setOpenReviewModal(true);
+  };
+
   return {
     name,
     profileImage,
@@ -382,6 +387,8 @@ export const useContractDetailsSlider = () => {
     openPaymentModal,
     setOpenPaymentModal,
     handleClosePaymentModal,
+    openReviewModal, 
+    setOpenReviewModal,
     paymentOffer,
     primaryButtonDisabled,
     setPrimaryButtonDisabled,

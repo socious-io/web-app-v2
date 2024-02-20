@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { socialCausesToCategory } from 'src/core/adaptors';
@@ -7,12 +7,15 @@ import { CurrentIdentity, Organization } from 'src/core/api';
 import { hapticsImpactLight } from 'src/core/haptic/haptic';
 import { ConnectStatus } from 'src/core/types';
 import { RootState } from 'src/store';
-
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import { identities } from 'src/core/api';
 import { getConnectStatus, hiringCall, sendRequestConnection } from './profileOrg.services';
 import { Resolver } from './profileOrg.types';
 
 export const useProfileOrg = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const resolver = useLoaderData() as Resolver;
   const [organization, setOrganization] = useState<Organization>(resolver.user);
   const socialCauses = socialCausesToCategory(resolver.user?.social_causes);
@@ -35,6 +38,13 @@ export const useProfileOrg = () => {
       setConnectStatus(res?.connect?.status);
     };
     getConnectionsStatus();
+  }, []);
+
+  async function updateIdentityList() {
+    dispatch(setIdentityList(await identities()));
+  }
+  useEffect(() => {
+    updateIdentityList()
   }, []);
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
