@@ -36,9 +36,11 @@ export const Contracts = () => {
           <PaginationMobile page={page} count={pageCount} handleChange={setPage} />
         </div>
       </div>
-      <Overlay open={openOverlayModal} onClose={() => setOpenOverlayModal(false)}>
-        <ContractDetailsSlider />
-      </Overlay>
+      {openOverlayModal && (
+        <Overlay open={openOverlayModal} onClose={() => setOpenOverlayModal(false)}>
+          <ContractDetailsSlider />
+        </Overlay>
+      )}
     </>
   );
 };

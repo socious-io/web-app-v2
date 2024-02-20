@@ -74,10 +74,10 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
           <div className={css.info}>
             <div className={css.chips}>
               {socialCausesToCategory(job.causes_tags).map(({ label }) => (
-                <Chip label={label} theme="primary" shape="round" size="md" />
+                <Chip key={label} label={label} theme="primary" shape="round" size="md" />
               ))}
               {skills.map(({ label }) => (
-                <Chip label={label} theme="grey_blue" shape="round" size="md" />
+                <Chip key={label} label={label} theme="grey_blue" shape="round" size="md" />
               ))}
             </div>
             <div className={css.jobDescription}>

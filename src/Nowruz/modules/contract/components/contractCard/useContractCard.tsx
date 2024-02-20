@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
-import { CurrentIdentity, Mission, Offer } from 'src/core/api';
+import { CurrentIdentity, Offer } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
 import { setSelected } from 'src/store/reducers/contracts.reducer';
 
 export const useContractCard = (offer: Offer, setOpenOverlay: (val: boolean) => void) => {
-  const mission = useSelector<RootState, Mission[]>((state) => {
-    return state.contracts.missions;
-  }).find((m) => m.offer.id === offer.id);
-
   const [offerVal, setOfferVal] = useState(offer);
-  const [missionVal, setMissionVal] = useState(mission);
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
@@ -27,8 +22,7 @@ export const useContractCard = (offer: Offer, setOpenOverlay: (val: boolean) => 
 
   useEffect(() => {
     setOfferVal(offer);
-    setMissionVal(mission);
-  }, [offer, mission]);
+  }, [offer]);
 
   // We might delete currency icon later (we accept only USD or JPY at the moment)
   const currencyIconName = (() => {
@@ -84,7 +78,7 @@ export const useContractCard = (offer: Offer, setOpenOverlay: (val: boolean) => 
           icon: <Icon fontSize={12} name="alert-circle" className="text-Warning-600" />,
         };
       case 'HIRED':
-        if (missionVal?.status === 'ACTIVE')
+        if (offerVal.mission?.status === 'ACTIVE')
           return {
             label: 'Ongoing',
             theme: 'success',
@@ -92,25 +86,25 @@ export const useContractCard = (offer: Offer, setOpenOverlay: (val: boolean) => 
           };
         return;
       case 'CLOSED':
-        if (missionVal?.status === 'CONFIRMED')
+        if (offerVal.mission?.status === 'CONFIRMED')
           return {
             label: 'Completed',
             theme: 'success',
             icon: <Icon name="check-circle" fontSize={12} className="text-Success-600" />,
           };
-        else if (missionVal?.status === 'COMPLETE')
+        else if (offerVal.mission?.status === 'COMPLETE')
           return {
             label: 'Awaiting confirmation',
             theme: 'warning',
             icon: <Icon fontSize={12} name="clock" className="text-Warning-600" />,
           };
-        else if (missionVal?.status === 'CANCELED')
+        else if (offerVal.mission?.status === 'CANCELED')
           return {
             label: 'Canceled',
             theme: 'secondary',
             icon: <></>,
           };
-        else if (missionVal?.status === 'KICKED_OUT')
+        else if (offerVal.mission?.status === 'KICKED_OUT')
           return {
             label: 'Kicked out',
             theme: 'secondary',
