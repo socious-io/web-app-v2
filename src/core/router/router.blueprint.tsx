@@ -32,7 +32,6 @@ import {
   getOrganizationMembers,
   getOrganizationByShortName,
   identities,
-  userOffers,
 } from 'src/core/api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
@@ -177,9 +176,6 @@ export const blueprint: RouteObject[] = [
       {
         path: 'contracts',
         loader: async () => {
-          // const requests = [userOffers({ page: 1, limit: 5 }), userMissions()];
-          // const [offers, missions] = await Promise.all(requests);
-          // return { offers, missions };
           store.dispatch(getContracts({ page: 1, limit: 5 }));
           return null;
         },
@@ -187,6 +183,24 @@ export const blueprint: RouteObject[] = [
           const { Contracts } = await import('src/Nowruz/pages/contracts');
           return {
             Component: Protect(Contracts),
+          };
+        },
+      },
+      {
+        path: 'wallet',
+        loader: async () => {
+          const requests = [
+            userPaidMissions({ page: 1, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' }),
+            stripeProfile({}),
+            stripeProfile({ is_jp: true }),
+          ];
+          const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
+          return { missionsList, stripeProfileRes, jpStripeProfileRes };
+        },
+        async lazy() {
+          const { Wallet } = await import('src/Nowruz/pages/wallet');
+          return {
+            Component: Protect(Wallet),
           };
         },
       },

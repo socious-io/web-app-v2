@@ -1,0 +1,23 @@
+@import 'src/components/_primitives.scss';
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid $color-grey-200;
+  padding: 16px 0 16px 0;
+  span {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    color: $color-grey-600;
+  }
+}
+
+.row {
+  height: 72px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $color-grey-200;
+  padding: 16px 0 16px 0;
+}

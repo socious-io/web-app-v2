@@ -1,0 +1,18 @@
+@import 'src/components/_primitives.scss';
+
+.header {
+  height: 44px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: $color-grey-600;
+  border-bottom: 1px solid $color-grey-200;
+}
+.row {
+  height: 72px;
+  border-bottom: 1px solid $color-grey-200;
+  .cell {
+    height: 72px;
+    vertical-align: middle;
+  }
+}
