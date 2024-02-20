@@ -4,13 +4,15 @@ import { useEffect } from 'react';
 import { useContext, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createOrganization, getIndustries, Location, preRegister, searchLocation } from 'src/core/api';
+import { createOrganization, getIndustries, Location, preRegister, searchLocation,identities } from 'src/core/api';
 import { CurrentIdentity, uploadMedia } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { checkUsernameConditions, removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { RootState } from 'src/store';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
 
 type Inputs = {
@@ -47,11 +49,13 @@ export const useOrganizationContact = () => {
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
+  const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { orgName, orgType, social_causes, bio, image, city, country, email, website, size, shortname, industry } =
       state;
     try {
+      const new_identities = await identities();
       const websiteUrl = state.website ? 'https://' + state.website : '';
       await createOrganization(
         removeValuesFromObject(
@@ -73,12 +77,16 @@ export const useOrganizationContact = () => {
       );
       localStorage.removeItem('registerFor');
       reset();
-      if (isMobile)
+      dispatch(setIdentityList(new_identities));
+      if (isMobile) {
+        dispatch(setIdentityList(new_identities));
         navigate(`/sign-up/user/notification`, {
           state: {
             username: shortname,
           },
         });
+      }
+
       else navigate(`/profile/organizations/${shortname}/view`);
     } catch (error) {}
   };
