@@ -274,7 +274,7 @@ export const useContractDetailsSlider = () => {
         return;
       }
 
-      if (offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED') {
+      if (offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED' && mission.org_feedback === null) {
         const alertMsg = (
           <AlertMessage
             theme="primary"
@@ -284,6 +284,13 @@ export const useContractDetailsSlider = () => {
           />
         );
         setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
+        return;
+      }
+      if(offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED' && mission.org_feedback !== null) {
+        const alertMsg = (
+          <AlertMessage theme="gray" iconName="alert-circle" title="you have reviewed this Contract" subtitle="" />
+        );
+        setAllStates(true, alertMsg, false, '', false, '');
         return;
       }
     }
