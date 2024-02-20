@@ -31,11 +31,11 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     }));
   };
 
-  const searchCities = async (searchText: string) => {
+  const searchCities = async (searchText: string, cb) => {
     try {
       if (searchText) {
         const response = await searchLocation(searchText);
-        cityToOption(response.items);
+        cb(cityToOption(response.items));
       }
     } catch (error) {
       console.error('Error fetching city data:', error);
