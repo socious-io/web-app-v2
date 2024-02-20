@@ -19,7 +19,7 @@ const Password = () =>{
             </div>
             <form id='passwordForm' onSubmit={handleSubmit(onSubmit)}>
                 <div className={css.borderSection}>
-                    <div className='grid grid-cols-5 gap-4'>
+                    <div className='grid grid-cols-1 lg:grid-cols-5 gap-4'>
                         <label>Password</label>
                         <div className='col-span-2'>
                             <Input
@@ -34,7 +34,7 @@ const Password = () =>{
                     </div>
                 </div>
                 <div className={css.borderSection}>
-                    <div className='grid grid-cols-5 gap-4'>
+                    <div className='grid grid-cols-1 lg:grid-cols-5 gap-4'>
                         <label>Confirm Password</label>
                         <div className='col-span-2'>
                             <Input id="password" type="password" name="password" register={register} placeholder="password" />
@@ -43,7 +43,7 @@ const Password = () =>{
                     </div>
                 </div>
                 <div className={css.borderSection}>
-                    <div className='grid grid-cols-5 gap-4'>
+                    <div className='grid grid-cols-1 lg:grid-cols-5  gap-4 '>
                         <label>Confirm New Password</label>
                         <div className='col-span-2'>
                             <Input
@@ -82,7 +82,6 @@ const Password = () =>{
                         Password match
                     </div>
                 </div>
-                {/* {!isPasswordMatch && 'popo'} */}
                 <div className="grid grid-cols-1 gap-4 place-items-end pt-8">
                     <div className='flex gap-4'>
                         <Button color="info" onClick={()=> reset()}>Cancel</Button>
@@ -93,7 +92,7 @@ const Password = () =>{
             </form>
         </>
 
-    )
-}
+    );
+};
 
 export default Password;

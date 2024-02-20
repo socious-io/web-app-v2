@@ -7,8 +7,6 @@ import * as yup from 'yup';
 
 import { Inputs } from "./password.type";
 
-
-
 const schema = yup.object().shape({
     current_password: yup.string().required(),
     password: yup.string().required(),
