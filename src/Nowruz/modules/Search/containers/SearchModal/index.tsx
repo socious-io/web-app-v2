@@ -10,14 +10,24 @@ import css from './search-modal.module.scss';
 import { SearchModalProps } from './SearchModal.types';
 import { useSearchModal } from './useSearchModal';
 import { TabPreview } from '../../components/TabBar';
+import { ResultNotFound } from '../../components/ResultNotFound';
 export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSearchText }) => {
   const isMobile = window.innerWidth < 600;
-  const { tabs, setSelectedTab, fetchSearchResult, list, selectedItem, searchTerm, showNoResult, navigateFullSearch } =
-    useSearchModal({
-      open,
-      onClose,
-      setSearchText,
-    });
+  const {
+    tabs,
+    setSelectedTab,
+    fetchSearchResult,
+    list,
+    selectedItem,
+    searchTerm,
+    showNoResult,
+    navigateFullSearch,
+    selectedTab,
+  } = useSearchModal({
+    open,
+    onClose,
+    setSearchText,
+  });
   const width = isMobile ? '100%' : '760px';
   return (
     <Modal
@@ -49,12 +59,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
           </div>
           <div className={css.content}>
             {!!list?.length && <ResultList list={list} onClose={onClose} />}
-            {showNoResult && (
-              <EmptyState
-                icon={<Icon name="search-lg" fontSize={24} color={variables.color_grey_700} />}
-                message="No records found"
-              />
-            )}
+            {showNoResult && <ResultNotFound type={selectedTab} searchTerm={searchTerm} onClose={onClose} />}
           </div>
           {!!list?.length && (
             <div className={`${css.footer} ${selectedItem ? css.footerSelecteItem : ''}`}>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { search } from 'src/core/api';
 
 import { Item } from './SearchModal.types';
-import { useNavigate } from 'react-router-dom';
 
 const tabs = [
   { label: 'Jobs', value: 'projects' },
