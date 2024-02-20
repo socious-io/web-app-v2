@@ -65,14 +65,24 @@ export const useLinksContainer = () => {
       iconName: 'wallet-04',
       public: false,
     },
+    {
+      label: 'Credentials',
+      route: '/nowruz/credentials',
+      iconName: 'shield-tick',
+      public: false,
+      only: 'organizations',
+    },
   ];
-  const filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
+  let filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
+
+  // filter menu for role items
+  filteredMenu = filteredMenu.filter((item) => !item.only || item.only === currentIdentity?.type);
 
   // filter menu childs for public items if user is not logged in
   if (!userIsLoggedIn) {
-    filteredMenu.forEach(element => {
+    filteredMenu.forEach((element) => {
       if (element.children) {
-        element.children = element.children.filter(item => item.public)
+        element.children = element.children.filter((item) => item.public);
       }
     });
   }

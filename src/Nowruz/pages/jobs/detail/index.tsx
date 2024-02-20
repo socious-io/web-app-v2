@@ -19,7 +19,6 @@ export const JobDetail = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity: CurrentIdentity) => identity.current);
   });
-  const location = useLocation();
 
   const isUser = currentIdentity?.type === 'users' || !currentIdentity;
   const { jobDetail } = useLoaderData() as {

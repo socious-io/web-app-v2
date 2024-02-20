@@ -6,13 +6,13 @@ import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 
-import { ContractDetailsSliderProps } from './contractDetailsSlider.types';
 import { useContractDetailsSlider } from './useContractDetailsSlider';
 import AddCardModalUser from '../addCardModalUser';
+import { ReviewModal } from '../reviewModal';
 import { SelectBankAccountUser } from '../selectBankAccountUser';
 import { WalletModal } from '../walletModal';
 
-export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ offer, mission }) => {
+export const ContractDetailsSlider: React.FC = () => {
   const {
     name,
     profileImage,
@@ -34,6 +34,8 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
     alertMessage,
     openPaymentModal,
     handleClosePaymentModal,
+    openReviewModal, 
+    setOpenReviewModal,
     paymentOffer,
     primaryButtonDisabled,
     openAddCardModal,
@@ -44,7 +46,8 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
     stripeAccounts,
     openWalletModal,
     setOpenWalletModal,
-  } = useContractDetailsSlider(offer, mission);
+    offer,
+  } = useContractDetailsSlider();
   return (
     <>
       <div className="flex flex-col gap-5">
@@ -52,7 +55,7 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
           <div className="flex flex-col gap-6 ">
             <Avatar size="72px" type="organizations" img={profileImage} />
             <div className="flex flex-col">
-              <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">{offer.project.title}</span>
+              <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">{offer?.project.title}</span>
               <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{name}</span>
             </div>
           </div>
@@ -90,10 +93,10 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
           submitButtonLabel="Confirm"
         />
       )}
-      {type === 'organizations' && offer.status === 'APPROVED' && offer.payment_mode === 'FIAT' && (
+      {type === 'organizations' && offer?.status === 'APPROVED' && offer?.payment_mode === 'FIAT' && (
         <PaymentFiat offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
       )}
-      {type === 'organizations' && offer.status === 'APPROVED' && offer.payment_mode === 'CRYPTO' && (
+      {type === 'organizations' && offer?.status === 'APPROVED' && offer?.payment_mode === 'CRYPTO' && (
         <PaymentCrypto offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
       )}
       {openAddCardModal && (
@@ -112,9 +115,17 @@ export const ContractDetailsSlider: React.FC<ContractDetailsSliderProps> = ({ of
           open={openWalletModal}
           handleClose={() => setOpenWalletModal(false)}
           handleAccept={handleAcceptOffer}
-          walletAddress={offer.recipient?.meta.wallet_address}
+          walletAddress={offer?.recipient?.meta.wallet_address}
         />
       )}
+      {
+        openReviewModal && (
+          <ReviewModal 
+            open={openReviewModal}
+            handleClose={() => setOpenReviewModal(false)}
+          />
+        )
+      }
     </>
   );
 };

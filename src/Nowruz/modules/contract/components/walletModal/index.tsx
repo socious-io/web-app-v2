@@ -31,7 +31,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, han
         <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">Connect a wallet</div>
         <div className="flex flex-col gap-1.5">
           <div className="font-medium text-sm leading-5 text-Gray-light-mode-700 ">
-            To accept this offer your need to connect your wallet
+            To accept this offer you need to connect your wallet
           </div>
           {isConnected ? <Dapp.Connect /> : <ConnectButton handleClick={() => openConnect()} />}
         </div>

@@ -16,6 +16,18 @@
     font-weight: 600;
     src: url('/fonts/Inter-SemiBold.woff2');
   }
+
+  input[name='hours']::-webkit-inner-spin-button,
+  input[name='hours']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[name='total']::-webkit-inner-spin-button,
+  input[name='total']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 pwa-action-sheet {

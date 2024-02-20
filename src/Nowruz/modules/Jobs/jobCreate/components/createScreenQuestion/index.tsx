@@ -41,7 +41,6 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({
     </div>
   );
 
-  console.log('test log isvalid', isValid, optionError);
   return (
     <div className={css.container}>
       <div className={css.row}>

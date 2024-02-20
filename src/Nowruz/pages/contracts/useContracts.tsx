@@ -1,18 +1,27 @@
 import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { MissionsRes, OffersRes, userOffers } from 'src/core/api';
+import { useSelector } from 'react-redux';
+import { Offer } from 'src/core/api';
 import { ButtonGroupItem } from 'src/Nowruz/modules/general/components/ButtonGroups/buttonGroups.types';
+import store, { RootState } from 'src/store';
+import { getContracts } from 'src/store/thunks/contracts.thunk';
 
 export const useContracts = () => {
-  const { offers, missions } = useLoaderData() as { offers: OffersRes; missions: MissionsRes };
-  const [page, setPage] = useState(offers.page);
-  const [offerList, setOfferList] = useState(offers.items);
+  const offerList = useSelector<RootState, Offer[]>((state) => {
+    return state.contracts.offers;
+  });
+  const itemsCount = useSelector<RootState, number>((state) => {
+    return state.contracts.totalCount;
+  });
+
+  const currentPage = useSelector<RootState, number>((state) => {
+    return state.contracts.page;
+  });
+  const [page, setPage] = useState(currentPage);
+  const [openOverlayModal, setOpenOverlayModal] = useState(false);
   const PER_PAGE = 5;
-  const itemsCount = offers.total_count;
   const pageCount = Math.floor(itemsCount / PER_PAGE) + (itemsCount % PER_PAGE && 1);
   const fetchMore = async (page: number) => {
-    const res = await userOffers({ page, limit: 5 });
-    setOfferList(res.items);
+    await store.dispatch(getContracts({ page, limit: PER_PAGE }));
   };
 
   const filterOngoing = async () => {
@@ -41,6 +50,7 @@ export const useContracts = () => {
     setPage,
     page,
     offerList,
-    missions,
+    openOverlayModal,
+    setOpenOverlayModal,
   };
 };

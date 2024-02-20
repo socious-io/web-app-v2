@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { chatSlice } from './reducers/chat.reducer';
+import { contractsSlice } from './reducers/contracts.reducer';
 import { createOrgWizardSlice } from './reducers/createOrgWizard.reducer';
 import { createPostWizardSlice } from './reducers/createPostWizard.reducer';
 import { createQuestionWizardSlice } from './reducers/createQuestionWizard.reducer';
@@ -21,6 +22,7 @@ const store = configureStore({
     spinner: spinnerSlice.reducer,
     modal: modalsSlice.reducer,
     profile: profileSlice.reducer,
+    contracts: contractsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
