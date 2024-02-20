@@ -1,4 +1,3 @@
-import React from 'react';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 
@@ -6,7 +5,7 @@ import css from './desktopTransactions.module.scss';
 import { useTransactions } from './useTransactions';
 
 export const DesktopTransactions = () => {
-  const { list, headers, setPage, PER_PAGE, total } = useTransactions();
+  const { list, headers, setPage, PER_PAGE, total, navigateToDetails } = useTransactions();
 
   return (
     <div className="flex flex-col gap-6">
@@ -20,7 +19,7 @@ export const DesktopTransactions = () => {
           ))}
         </tr>
         {list.map((item) => (
-          <tr key={item.id} className={css.row}>
+          <tr key={item.transactionId} className={css.row} onClick={() => navigateToDetails(item.missionId)}>
             <td className={css.cell}>
               <div className="flex gap-3 items-center">
                 <Avatar size="40px" type={item.userType} img={item.profileImage} />

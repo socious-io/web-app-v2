@@ -11,8 +11,12 @@
 .row {
   height: 72px;
   border-bottom: 1px solid $color-grey-200;
+  cursor: pointer;
   .cell {
     height: 72px;
     vertical-align: middle;
   }
+}
+.row:hover {
+  background-color: $color-grey-50;
 }

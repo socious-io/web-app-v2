@@ -1,5 +1,4 @@
 export interface PaymentDataType {
-  id: string;
   profileImage?: string;
   name: string;
   date: string;
@@ -7,4 +6,6 @@ export interface PaymentDataType {
   currency: string;
   amount: string;
   userType: 'users' | 'organizations';
+  missionId: string;
+  transactionId: string;
 }

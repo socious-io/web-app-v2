@@ -204,21 +204,40 @@ export const blueprint: RouteObject[] = [
       },
       {
         path: 'wallet',
-        loader: async () => {
-          const requests = [
-            userPaidMissions({ page: 1, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' }),
-            stripeProfile({}),
-            stripeProfile({ is_jp: true }),
-          ];
-          const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
-          return { missionsList, stripeProfileRes, jpStripeProfileRes };
-        },
-        async lazy() {
-          const { Wallet } = await import('src/Nowruz/pages/wallet');
-          return {
-            Component: Protect(Wallet),
-          };
-        },
+
+        children: [
+          {
+            path: '',
+            loader: async () => {
+              const requests = [
+                userPaidMissions({ page: 1, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' }),
+                stripeProfile({}),
+                stripeProfile({ is_jp: true }),
+              ];
+              const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
+              return { missionsList, stripeProfileRes, jpStripeProfileRes };
+            },
+            async lazy() {
+              const { Wallet } = await import('src/Nowruz/pages/wallet');
+              return {
+                Component: Protect(Wallet),
+              };
+            },
+          },
+          {
+            path: ':id',
+            loader: async ({ params }) => {
+              if (params.id) {
+                const mission = await getMission(params.id);
+                return { mission };
+              }
+            },
+            async lazy() {
+              const { TransactionDetails } = await import('src/Nowruz/pages/wallet/transactionDeatils');
+              return { Component: TransactionDetails };
+            },
+          },
+        ],
       },
     ],
   },

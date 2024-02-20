@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
-import { CurrentIdentity, Mission, MissionsRes, StripeProfileRes, payments, userPaidMissions } from 'src/core/api';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { CurrentIdentity, Mission, MissionsRes, StripeProfileRes, userPaidMissions } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { RootState } from 'src/store';
 
@@ -17,22 +17,23 @@ export const useTransactions = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
-  console.log('test log currentIdentity', currentIdentity);
   const type = currentIdentity?.type;
   const PER_PAGE = 10;
+  const navigate = useNavigate();
 
   const mapDataToColumns = (missions: Mission[]) => {
     const result: PaymentDataType[] = missions.map((item) => {
       const symbol = item.offer.currency === 'JPY' ? '¥' : item.offer.currency === 'USD' ? '$' : '';
       return {
-        id: item.id,
         name: type === 'users' ? item.organization.name : item.assignee.meta.name,
         profileImage: type === 'users' ? item.organization.image : item.assignee.meta.avatar,
         userType: type === 'users' ? 'organizations' : 'users',
-        amount: type === 'users' ? `${symbol}${item.amount}` : `${symbol}${item.amount}`,
-        date: toRelativeTime(item.created_at.toString()),
+        amount: type === 'users' ? `${symbol}${item.payment.amount}` : `${symbol}${item.amount}`,
+        date: toRelativeTime(item.payment.created_at.toString()),
         currency: item.offer.currency,
         type: '', //type === 'users' ? 'Payment received' : 'Payment sent',
+        missionId: item.id,
+        transactionId: item.escrow.id,
       };
     });
     return result;
@@ -54,5 +55,9 @@ export const useTransactions = () => {
     loadMore();
   }, [page]);
 
-  return { list, headers, page, setPage, PER_PAGE, total };
+  const navigateToDetails = (id: string) => {
+    navigate(`/nowruz/wallet/${id}`);
+  };
+
+  return { list, headers, page, setPage, PER_PAGE, total, navigateToDetails };
 };

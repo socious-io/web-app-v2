@@ -1,4 +1,3 @@
-import React from 'react';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { PaginationMobile } from 'src/Nowruz/modules/general/components/paginationMobile';
 
@@ -6,8 +5,9 @@ import css from './mobileTransaction.module.scss';
 import { useTransactions } from './useTransactions';
 
 export const MobileTransactions = () => {
-  const { list, setPage, page, PER_PAGE, total } = useTransactions();
+  const { list, setPage, page, PER_PAGE, total, navigateToDetails } = useTransactions();
   const renderTableRow = (
+    missionId: string,
     name: string,
     date: string,
     amount: string,
@@ -15,7 +15,7 @@ export const MobileTransactions = () => {
     avatar?: string,
   ) => {
     return (
-      <div className={css.row}>
+      <div className={css.row} onClick={() => navigateToDetails(missionId)}>
         <div className="flex gap-3">
           <Avatar size="40px" type={avatarType} img={avatar} />
           <div className="flex flex-col">
@@ -34,7 +34,9 @@ export const MobileTransactions = () => {
           <span>Transaction</span>
           <span>Amount</span>
         </div>
-        {list.map((item) => renderTableRow(item.name, item.date, item.amount, item.userType, item.profileImage))}
+        {list.map((item) =>
+          renderTableRow(item.missionId, item.name, item.date, item.amount, item.userType, item.profileImage),
+        )}
       </div>
       <PaginationMobile
         page={page}
