@@ -67,15 +67,6 @@ export const blueprint: RouteObject[] = [
     element: <NowruzLayout />,
     children: [
       {
-        path: 'test',
-        async lazy() {
-          const { Test } = await import('src/Nowruz/pages/test');
-          return {
-            Component: Test,
-          };
-        },
-      },
-      {
         path: 'profile/users',
         children: [
           {
@@ -175,6 +166,10 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'created',
+            loader: async () => {
+              const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
+              return data;
+            },
             async lazy() {
               const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
               return {
