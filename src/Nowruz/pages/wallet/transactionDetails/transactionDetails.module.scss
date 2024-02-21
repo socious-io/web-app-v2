@@ -20,3 +20,12 @@
   align-items: center;
   justify-content: space-between;
 }
+.withdrawModal {
+  max-width: 480px;
+  height: fit-content;
+  border-radius: 12px;
+  @media screen and (max-width: 600px) {
+    margin: auto 16px 80px 16px;
+    height: fit-content;
+  }
+}
