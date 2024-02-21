@@ -1,6 +1,8 @@
 import i18next from 'i18next';
 import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
+import store from 'src/store';
+import { setSkills } from 'src/store/reducers/skills.reducer';
 
 import { skills } from './api';
 import { CategoriesResp, Cities } from './types';
@@ -18,8 +20,12 @@ export function socialCausesToDropdownAdaptor() {
 }
 
 export async function skillsToCategoryAdaptor() {
-  const skillList = await skills({ limit: 500 });
-  return skillList.items.map((item) => {
+  let skillList = store.getState().skills.items;
+  if (!skillList.length) {
+    skillList = (await skills({ limit: 500 })).items;
+    await store.dispatch(setSkills(skillList));
+  }
+  return skillList.map((item) => {
     return {
       value: item.name,
       label: i18next.t(item.name),

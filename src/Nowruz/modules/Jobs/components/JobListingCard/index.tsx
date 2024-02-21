@@ -44,10 +44,11 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
     }[],
   ) => options.filter((option) => values.includes(option.value));
   useEffect(() => {
-    skillsToCategoryAdaptor().then((data) => {
-      setSkills(getOptionsFromValues(job.skills || [], data));
-    });
-  }, []);
+    if (job.skills)
+      skillsToCategoryAdaptor().then((data) => {
+        setSkills(getOptionsFromValues(job.skills || [], data));
+      });
+  }, [job]);
   const navigate = useNavigate();
   const handleClick = () => {
     if (isTouchDevice()) navigate(`/nowruz/jobs/${job.id}`);
@@ -74,10 +75,10 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
           <div className={css.info}>
             <div className={css.chips}>
               {socialCausesToCategory(job.causes_tags).map(({ label }) => (
-                <Chip label={label} theme="primary" shape="round" size="md" />
+                <Chip key={label} label={label} theme="primary" shape="round" size="md" />
               ))}
               {skills.map(({ label }) => (
-                <Chip label={label} theme="grey_blue" shape="round" size="md" />
+                <Chip key={label} label={label} theme="grey_blue" shape="round" size="md" />
               ))}
             </div>
             <div className={css.jobDescription}>

@@ -32,6 +32,8 @@ export const useHeaderNavBar = () => {
   const [openNotifPanel, setOpenNotifPanel] = useState(false);
   const [notifList, setNotifList] = useState<Notification[]>();
   const [unreadNotif, setUnreadNotif] = useState(false);
+  const [openSearchModal, setOpenSearchModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const getNotification = async () => {
     const res = await notifications({ page: 1, limit: 50 });
     setNotifList(res.items);
@@ -94,6 +96,7 @@ export const useHeaderNavBar = () => {
     setUnreadNotif(false);
     await readAllNotifications();
   };
+
   return {
     userIsLoggedIn,
     userType,
@@ -111,5 +114,9 @@ export const useHeaderNavBar = () => {
     navigateToProfile,
     unreadNotif,
     readNotifications,
+    openSearchModal,
+    setOpenSearchModal,
+    searchTerm,
+    setSearchTerm,
   };
 };

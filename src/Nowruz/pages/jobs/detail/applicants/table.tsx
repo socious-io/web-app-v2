@@ -131,7 +131,7 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
       {offer && (
         <OrgOfferModal onClose={() => setOffer(false)} open={offer} applicant={applicant} onSuccess={onSuccess} />
       )}
-      {success && (
+      {success && applicant && (
         <AlertModal
           open={success}
           onClose={handleCloseSuccess}

@@ -9,6 +9,7 @@ import { identitySlice } from './reducers/identity.reducer';
 import { menuSlice } from './reducers/menu.reducer';
 import { modalsSlice } from './reducers/modal.reducer';
 import { profileSlice } from './reducers/profile.reducer';
+import { skillsSlice } from './reducers/skills.reducer';
 import { spinnerSlice } from './reducers/spinner.reducer';
 
 const store = configureStore({
@@ -23,6 +24,7 @@ const store = configureStore({
     modal: modalsSlice.reducer,
     profile: profileSlice.reducer,
     contracts: contractsSlice.reducer,
+    skills: skillsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({

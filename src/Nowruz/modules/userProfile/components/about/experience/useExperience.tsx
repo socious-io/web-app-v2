@@ -5,12 +5,14 @@ import {
   Experience,
   Organization,
   User,
+  claimExperienceVC,
   otherProfileByUsername,
   removeExperiences,
 } from 'src/core/api';
 import { monthShortNames } from 'src/core/time';
 import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
+import { requestVerifyExperience } from 'src/core/api';
 
 export const useExperience = () => {
   const user = useSelector<RootState, User | Organization | undefined>((state) => {
@@ -23,6 +25,7 @@ export const useExperience = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const [experience, setExperience] = useState<Experience>();
+  const [disabledClaims, setDisabledClaims] = useState<{ [key: string]: boolean }>({});
 
   const dispatch = useDispatch();
 
@@ -54,5 +57,35 @@ export const useExperience = () => {
     return `${month} ${year}`;
   };
 
-  return { user, myProfile, openModal, experience, handleEdit, handleAdd, handleDelete, getStringDate, handleClose };
+  const handleRequestVerify = (id: string) => async () => {
+    await requestVerifyExperience(id);
+    const updated = await otherProfileByUsername(user?.username || '');
+    dispatch(setIdentity(updated));
+    dispatch(setIdentityType('users'));
+  };
+
+  const handleClaimVC = (id: string) => async () => {
+    setDisabledClaims((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
+
+    const { url } = await claimExperienceVC(id);
+    window.open(url, '_blank');
+  };
+
+  return {
+    user,
+    myProfile,
+    openModal,
+    experience,
+    handleEdit,
+    handleAdd,
+    handleDelete,
+    getStringDate,
+    handleClose,
+    handleRequestVerify,
+    handleClaimVC,
+    disabledClaims,
+  };
 };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CurrentIdentity, chats } from 'src/core/api';
+import { CurrentIdentity, unreadCounts } from 'src/core/api';
 import Badge from 'src/Nowruz/modules/general/components/Badge';
 import { RootState } from 'src/store';
 
@@ -12,11 +12,8 @@ export const useLinksContainer = () => {
   const [unread, setUnread] = useState(0);
 
   const unreadMessagesCount = async () => {
-    const unreadCount = (await chats({ limit: 1000 })).items.reduce(
-      (partialSum, a) => partialSum + Number(a.unread_count),
-      0,
-    );
-    setUnread(unreadCount);
+    const unreadCount = await unreadCounts();
+    setUnread(Number(unreadCount.count));
   };
 
   useEffect(() => {
@@ -32,7 +29,7 @@ export const useLinksContainer = () => {
     },
     {
       label: 'Jobs',
-      route: '/nowruz/jobs',
+      route: currentIdentity?.type === 'users' ? '/nowruz/jobs' : '/nowruz/jobs/created',
       iconName: 'briefcase-01',
       public: true,
       children: [
@@ -65,8 +62,18 @@ export const useLinksContainer = () => {
       iconName: 'wallet-04',
       public: false,
     },
+    {
+      label: 'Credentials',
+      route: '/nowruz/credentials',
+      iconName: 'shield-tick',
+      public: false,
+      only: 'organizations',
+    },
   ];
-  const filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
+  let filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
+
+  // filter menu for role items
+  filteredMenu = filteredMenu.filter((item) => !item.only || item.only === currentIdentity?.type);
 
   // filter menu childs for public items if user is not logged in
   if (!userIsLoggedIn) {
