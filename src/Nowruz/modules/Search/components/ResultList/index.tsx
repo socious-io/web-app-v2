@@ -13,7 +13,6 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
   const navigate = useNavigate();
 
   const onClickRow = (item: Item) => {
-    console.log(item);
     let path = '';
     switch (item.type) {
       case 'projects':

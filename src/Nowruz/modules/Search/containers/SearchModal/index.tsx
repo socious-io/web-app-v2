@@ -2,15 +2,15 @@ import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Modal } from 'src/components/templates/modal/modal';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { EmptyState } from 'src/Nowruz/modules/general/components/EmptyState';
 import { ResultList } from 'src/Nowruz/modules/Search/components/ResultList';
 import { SearchInput } from 'src/Nowruz/modules/Search/components/SearchInput';
 
 import css from './search-modal.module.scss';
 import { SearchModalProps } from './SearchModal.types';
 import { useSearchModal } from './useSearchModal';
-import { TabPreview } from '../../components/TabBar';
 import { ResultNotFound } from '../../components/ResultNotFound';
+import { TabPreview } from '../../components/TabBar';
+
 export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSearchText }) => {
   const isMobile = window.innerWidth < 600;
   const {
@@ -59,7 +59,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
           </div>
           <div className={css.content}>
             {!!list?.length && <ResultList list={list} onClose={onClose} />}
-            {showNoResult && <ResultNotFound type={selectedTab} searchTerm={searchTerm} onClose={onClose} />}
+            {showNoResult && !list?.length && (
+              <ResultNotFound type={selectedTab} searchTerm={searchTerm} onClose={onClose} />
+            )}
           </div>
           {!!list?.length && (
             <div className={`${css.footer} ${selectedItem ? css.footerSelecteItem : ''}`}>
