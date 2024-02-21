@@ -33,8 +33,8 @@ export async function getChatParticipantsById(id: string): Promise<ParticipantRe
   return (await get<ParticipantRes>(`chats/${id}/participants`)).data;
 }
 
-export async function findChat(payload: { participants: string[] }): Promise<chatIdRes> {
-  return (await post<chatIdRes>('chats/find', payload)).data;
+export async function findChat(payload: { participants: string[] }): Promise<ChatsRes> {
+  return (await post<ChatsRes>('chats/find', payload)).data;
 }
 
 export async function filterChats(params: FilterReq): Promise<ChatsRes> {
