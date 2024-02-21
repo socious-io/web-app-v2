@@ -20,16 +20,22 @@ export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: 
     name: participant?.identity_meta.name,
     username: participant?.identity_meta.username || participant?.identity_meta.shortname || '',
   };
+
+  const updateUnreadCount = () => {
+    const chatList = [...chats];
+    const index = chatList.findIndex((item) => item.id === selectedChatId);
+    let unread = Number(chatList[index].unread_count);
+    unread = unread > 10 ? unread - 10 : 0;
+    chatList[index].unread_count = unread.toString();
+    setChats(chatList);
+  };
   const getMessages = async () => {
     if (selectedChatId) {
       setPage(1);
       sethasMore(true);
       const res = await chatMessages(selectedChatId, { page: 1 });
       setMessages(res.items);
-      const chatList = [...chats];
-      const index = chatList.findIndex((item) => item.id === selectedChatId);
-      chatList[index].unread_count = '0';
-      setChats(chatList);
+      updateUnreadCount();
     }
   };
   useEffect(() => {
@@ -49,8 +55,8 @@ export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: 
         const newList = resp.items;
         if (newList.length) {
           setMessages([...messages, ...newList]);
-
           setPage(page + 1);
+          updateUnreadCount();
         } else {
           sethasMore(false);
         }
