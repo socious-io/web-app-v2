@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   CurrentIdentity,
   Offer,
@@ -9,8 +10,10 @@ import {
   cancelOffer,
   completeMission,
   confirmMission,
+  connectionStatus,
   contestMission,
   dropMission,
+  findChat,
   getOffer,
   rejectOffer,
 } from 'src/core/api';
@@ -28,6 +31,7 @@ export const useContractDetailsSlider = () => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
+  const navigate = useNavigate();
   const selectedOfferId = useSelector<RootState, string | undefined>((state) => {
     return state.contracts.selectedOfferId;
   });
@@ -35,8 +39,19 @@ export const useContractDetailsSlider = () => {
     return state.contracts.offers.find((item) => item.id === selectedOfferId);
   });
 
+  const checkMessageButtonStatus = async () => {
+    if (type === 'organizations') {
+      setDisableMessageButton(false);
+      return;
+    }
+
+    const res = (await connectionStatus(offer?.organization.id)).connect;
+    setDisableMessageButton(!res);
+  };
+
   useEffect(() => {
     inititalize();
+    checkMessageButtonStatus();
   }, [offer]);
 
   const type = identity?.type;
@@ -70,6 +85,7 @@ export const useContractDetailsSlider = () => {
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const [openSelectCardModal, setOpenSelectCardModal] = useState(false);
   const [openWalletModal, setOpenWalletModal] = useState(false);
+  const [disableMessageButton, setDisableMessageButton] = useState(true);
 
   const setAllStates = (
     displayMsg: boolean,
@@ -365,6 +381,10 @@ export const useContractDetailsSlider = () => {
     setOpenReviewModal(true);
   };
 
+  const redirectToChat = () => {
+    const participantId = type === 'users' ? offer.offerer.meta.id : offer.recipient.meta.id;
+    navigate(`../chats?participantId=${participantId}`);
+  };
   return {
     name,
     profileImage,
@@ -387,7 +407,7 @@ export const useContractDetailsSlider = () => {
     openPaymentModal,
     setOpenPaymentModal,
     handleClosePaymentModal,
-    openReviewModal, 
+    openReviewModal,
     setOpenReviewModal,
     paymentOffer,
     primaryButtonDisabled,
@@ -400,6 +420,8 @@ export const useContractDetailsSlider = () => {
     stripeAccounts,
     openWalletModal,
     setOpenWalletModal,
+    redirectToChat,
     offer,
+    disableMessageButton,
   };
 };

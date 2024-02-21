@@ -47,7 +47,10 @@ export const ContractDetailsSlider: React.FC = () => {
     openWalletModal,
     setOpenWalletModal,
     offer,
+    redirectToChat,
+    disableMessageButton,
   } = useContractDetailsSlider();
+
   return (
     <>
       <div className="flex flex-col gap-5">
@@ -60,9 +63,17 @@ export const ContractDetailsSlider: React.FC = () => {
             </div>
           </div>
           <div className="flex gap-3">
-            <Button variant="outlined" color="secondary" fullWidth>
-              Message
-            </Button>
+            {!disableMessageButton && (
+              <Button
+                variant="outlined"
+                color="secondary"
+                fullWidth
+                onClick={redirectToChat}
+                disabled={disableMessageButton}
+              >
+                Message
+              </Button>
+            )}
             {displaySecondaryButton && (
               <Button variant="outlined" color="secondary" fullWidth onClick={secondaryButtonAction}>
                 {secondaryButtonLabel}

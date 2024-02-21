@@ -6,4 +6,5 @@ export interface SelectProps extends Props {
   errors?: string[];
   icon?: string;
   hasDropdownIcon?: boolean;
+  border?: boolean;
 }

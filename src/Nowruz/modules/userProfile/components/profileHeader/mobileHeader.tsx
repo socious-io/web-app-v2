@@ -29,7 +29,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
         <div className="flex w-full items-end">
           <AvatarProfile
             size="medium"
-            imgUrl={profileImage?.url}
+            imgUrl={profileImage}
             type={type}
             verified={false}
             handleClick={myProfile ? handleOpenEditAvatar : undefined}
