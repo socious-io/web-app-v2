@@ -39,8 +39,19 @@ export const useContractDetailsSlider = () => {
     return state.contracts.offers.find((item) => item.id === selectedOfferId);
   });
 
+  const checkMessageButtonStatus = async () => {
+    if (type === 'organizations') {
+      setDisableMessageButton(false);
+      return;
+    }
+
+    const res = (await connectionStatus(offer?.organization.id)).connect;
+    setDisableMessageButton(!res);
+  };
+
   useEffect(() => {
     inititalize();
+    checkMessageButtonStatus();
   }, [offer]);
 
   const type = identity?.type;
