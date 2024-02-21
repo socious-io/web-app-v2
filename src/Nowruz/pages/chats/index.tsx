@@ -27,6 +27,7 @@ export const Chats = () => {
     justReceived,
     openError,
     setOpenError,
+    setChats,
   } = useChats();
   const summaryJSX = (
     <div className={css.summary}>
@@ -72,7 +73,13 @@ export const Chats = () => {
           openNewChat ? (
             <NewChat handleClose={() => setOpenNewChat(false)} onSend={handleNewChat} />
           ) : openDetails ? (
-            <ChatDetails chat={selectedChat} setOpenDetails={setOpenDetails} newSocketMessage={justReceived} />
+            <ChatDetails
+              selectedChatId={selectedChat?.id || ''}
+              chats={chats}
+              setChats={setChats}
+              setOpenDetails={setOpenDetails}
+              newSocketMessage={justReceived}
+            />
           ) : (
             summaryJSX
           )
@@ -87,7 +94,13 @@ export const Chats = () => {
               {openNewChat ? (
                 <NewChat handleClose={() => setOpenNewChat(false)} onSend={handleNewChat} />
               ) : openDetails ? (
-                <ChatDetails chat={selectedChat} setOpenDetails={setOpenDetails} newSocketMessage={justReceived} />
+                <ChatDetails
+                  selectedChatId={selectedChat?.id || ''}
+                  chats={chats}
+                  setChats={setChats}
+                  setOpenDetails={setOpenDetails}
+                  newSocketMessage={justReceived}
+                />
               ) : (
                 ''
               )}

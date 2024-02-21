@@ -21,7 +21,7 @@ export const ChatDetailItem: React.FC<ChatDetailItemProps> = ({
 
   const isMine = message.identity_id === currentIdentity?.id;
   return (
-    <div className={`flex mb-4 ${isMine ? 'justify-end' : 'justify-start'} ${className}`}>
+    <div className={`flex mb-4   ${isMine ? 'justify-end' : 'justify-start'} ${className}`}>
       {isMine ? (
         <div className="flex flex-col gap-1.5 items-end">
           <div className="flex justify-between items-center gap-2">

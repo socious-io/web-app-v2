@@ -9,8 +9,18 @@ import { ChatDetailsProps } from './chatDetails.types';
 import { useChatDetails } from './useChatDetails';
 import ChatDetailItem from '../chatDetailItem';
 
-export const ChatDetails: React.FC<ChatDetailsProps> = ({ chat, setOpenDetails, newSocketMessage }) => {
-  const { messages, onSend, account, loadMore, hasMore, page, setMessages } = useChatDetails(chat);
+export const ChatDetails: React.FC<ChatDetailsProps> = ({
+  selectedChatId,
+  chats,
+  setOpenDetails,
+  newSocketMessage,
+  setChats,
+}) => {
+  const { messages, onSend, account, loadMore, hasMore, page, setMessages } = useChatDetails(
+    selectedChatId,
+    chats,
+    setChats,
+  );
 
   const sorted = messages?.sort((a, b) => (new Date(a.created_at) > new Date(b.created_at) ? 1 : -1));
 

@@ -17,7 +17,8 @@ import {
 } from 'src/core/api';
 import { socket } from 'src/core/socket';
 import { getIdentityMeta } from 'src/core/utils';
-import { RootState } from 'src/store';
+import store, { RootState } from 'src/store';
+import { getUnreadCount } from 'src/store/thunks/chat.thunk';
 
 export const useChats = () => {
   const { summary } = useLoaderData() as { summary: ChatsRes };
@@ -25,7 +26,6 @@ export const useChats = () => {
 
   const participantId = searchParams.get('participantId') || '';
   const [chats, setChats] = useState<Chat[]>(summary.items);
-  const [count, setCount] = useState(summary.total_count);
   const [chatParams, setChatParams] = useState({ page: 1, filter: '' });
   const [selectedChat, setSelectedChat] = useState<Chat>();
   const [openDetails, setOpenDetails] = useState(false);
@@ -36,6 +36,10 @@ export const useChats = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
+  const count = useSelector<RootState, string>((state) => {
+    return state.chat.unreadCount;
+  });
+
   const openChatWithParticipantId = async (id: string) => {
     let chat = chats.find((item) => item.participants.map((p) => p.identity_meta.id).includes(id));
     if (!chat) {
@@ -80,6 +84,10 @@ export const useChats = () => {
     if (participantId) openChatWithParticipantId(participantId);
   }, [participantId]);
 
+  useEffect(() => {
+    store.dispatch(getUnreadCount());
+  }, [chats]);
+
   const handleSelectChat = (id: string) => {
     setOpenNewChat(false);
     setOpenDetails(true);
@@ -101,7 +109,6 @@ export const useChats = () => {
       await createChatMessage(chatRes.id, { text });
       const chatList = await chatsApi({ page: 1 });
       setChats(chatList.items);
-      setCount(chatList.items.length);
       setSelectedChat(chatRes);
       setOpenNewChat(false);
       setOpenDetails(true);
@@ -155,5 +162,6 @@ export const useChats = () => {
     justReceived,
     openError,
     setOpenError,
+    setChats,
   };
 };

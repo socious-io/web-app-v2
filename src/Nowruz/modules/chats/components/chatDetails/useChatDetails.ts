@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Chat, CurrentIdentity, Message, chatMessages, createChatMessage } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
-export const useChatDetails = (chat?: Chat) => {
+export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: (val: Chat[]) => void) => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
@@ -12,7 +11,7 @@ export const useChatDetails = (chat?: Chat) => {
 
   const [page, setPage] = useState(1);
   const [hasMore, sethasMore] = useState(true);
-  const id = chat?.id || '';
+  const chat = chats.find((item) => item.id === selectedChatId);
   const participant = chat?.participants[0];
   const account = {
     id: participant?.identity_meta.id,
@@ -22,27 +21,31 @@ export const useChatDetails = (chat?: Chat) => {
     username: participant?.identity_meta.username || participant?.identity_meta.shortname || '',
   };
   const getMessages = async () => {
-    if (id) {
+    if (selectedChatId) {
       setPage(1);
       sethasMore(true);
-      const res = await chatMessages(id, { page: 1 });
+      const res = await chatMessages(selectedChatId, { page: 1 });
       setMessages(res.items);
+      const chatList = [...chats];
+      const index = chatList.findIndex((item) => item.id === selectedChatId);
+      chatList[index].unread_count = '0';
+      setChats(chatList);
     }
   };
   useEffect(() => {
     getMessages();
-  }, [id]);
+  }, [selectedChatId]);
 
   const onSend = async (message: string) => {
-    if (!id || !currentIdentity) return;
-    const resp = await createChatMessage(id, { text: message });
+    if (!selectedChatId || !currentIdentity) return;
+    const resp = await createChatMessage(selectedChatId, { text: message });
     const msgList = (messages ? [...messages] : []).concat(resp);
     setMessages(msgList);
   };
 
   const loadMore = async () => {
     if (hasMore)
-      chatMessages(id, { page: page + 1 }).then((resp) => {
+      chatMessages(selectedChatId, { page: page + 1 }).then((resp) => {
         const newList = resp.items;
         if (newList.length) {
           setMessages([...messages, ...newList]);
