@@ -16,9 +16,9 @@ export const useTransactionDetailes = () => {
   const handleBack = () => {
     navigate('/nowruz/wallet');
   };
-  const name = currentIdType === 'users' ? mission.organization.name : mission.assignee.meta.name;
-  const avatar = currentIdType === 'users' ? mission.organization.image : mission.assignee.meta.avatar;
-  const email = currentIdType === 'users' ? mission.organization.email : mission.assignee.meta.email;
+  const name = currentIdType === 'users' ? mission.assigner.meta.name : mission.assignee.meta.name;
+  const avatar = currentIdType === 'users' ? mission.assigner.meta.image : mission.assignee.meta.avatar;
+  const email = currentIdType === 'users' ? mission.assigner.meta.email : mission.assignee.meta.email;
   const avatarType = currentIdType === 'users' ? 'organizations' : 'users';
   const date = toRelativeTime(mission.payment.created_at.toString());
   const amount = mission.payment.amount;

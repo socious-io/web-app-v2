@@ -22,11 +22,12 @@ export const useTransactions = () => {
   const navigate = useNavigate();
 
   const mapDataToColumns = (missions: Mission[]) => {
+    console.log('test log missions', missions);
     const result: PaymentDataType[] = missions.map((item) => {
       const symbol = item.offer.currency === 'JPY' ? '¥' : item.offer.currency === 'USD' ? '$' : '';
       return {
-        name: type === 'users' ? item.organization.name : item.assignee.meta.name,
-        profileImage: type === 'users' ? item.organization.image : item.assignee.meta.avatar,
+        name: type === 'users' ? item.assigner.meta.name : item.assignee.meta.name,
+        profileImage: type === 'users' ? item.assigner.meta.image : item.assignee.meta.avatar,
         userType: type === 'users' ? 'organizations' : 'users',
         amount: type === 'users' ? `${symbol}${item.payment.amount}` : `${symbol}${item.amount}`,
         date: toRelativeTime(item.payment.created_at.toString()),
