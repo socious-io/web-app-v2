@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLoaderData } from 'react-router-dom';
 import { JobsRes, jobs } from 'src/core/api';
 import { IdentityReq } from 'src/core/types';
 import { RootState } from 'src/store';
-
+import {jobsPageLoader} from './jobs.loader';
 interface Loader {
   data: JobsRes;
 }
@@ -18,7 +18,9 @@ export const useJobsShared = () => {
   const identity = useSelector<RootState, IdentityReq | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current) as IdentityReq;
   });
-
+  useEffect(() => {
+    jobsPageLoader();
+  }, []);
   function onMorePage() {
     jobs({ page: page + 1, status: 'ACTIVE' }).then((resp) => {
       setPage((v) => v + 1);
