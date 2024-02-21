@@ -79,7 +79,6 @@ export const useOrganizationContact = () => {
       reset();
       dispatch(setIdentityList(new_identities));
       if (isMobile) {
-        dispatch(setIdentityList(new_identities));
         navigate(`/sign-up/user/notification`, {
           state: {
             username: shortname,
