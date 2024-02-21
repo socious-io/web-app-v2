@@ -56,7 +56,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           name="search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onClick={setOpenSearchModal}
+          onClick={() => setOpenSearchModal(true)}
           placeholder="Search"
           startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
           autoComplete="off"
@@ -64,7 +64,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
       </div>
       {userIsLoggedIn && (
         <div className="flex w-fit h-10 gap-2 md:gap-4 items-center">
-          <div className="flex gap-4 md:hidden mr-2">
+          <div className="flex gap-4 md:hidden mr-2" onClick={() => setOpenSearchModal(true)}>
             <Icon name="search-lg" fontSize={24} className="text-Gray-light-mode-500" />
           </div>
           <div onClick={readNotifications}>
