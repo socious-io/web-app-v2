@@ -3,6 +3,7 @@ import { useLoaderData, useSearchParams } from 'react-router-dom';
 import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { removeValuesFromObject } from 'src/core/utils';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
 import { JobListingCard } from 'src/Nowruz/modules/Jobs/components/JobListingCard';
 
@@ -20,7 +21,7 @@ export const useSearch = () => {
   const type = searchParams.get('type');
   const q = searchParams.get('q');
 
-  const PER_PAGE = 20;
+  const PER_PAGE = 10;
   const isMobile = isTouchDevice();
   const [searchResult, setSearchResult] = useState({} as JobsRes | UsersRes | OrganizationsRes);
   const [page, setPage] = useState(1);
@@ -39,14 +40,13 @@ export const useSearch = () => {
 
   const fetchMore = async (page: number) => {
     const body = {
-      filter: filter ? filterNeeded(filter) : {},
+      filter: filter ? removeValuesFromObject(filterNeeded(filter), ['', null, undefined]) : {},
       type,
     } as any;
     if (q?.trim()) {
       Object.assign(body, { q });
     }
-    const data = await searchReq(body, { limit: 20, page });
-
+    const data = await searchReq(body, { limit: 10, page });
     if (isMobile && page > 1) setSearchResult({ ...searchResult, ...data });
     else setSearchResult(data);
   };

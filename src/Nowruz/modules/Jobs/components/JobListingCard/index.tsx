@@ -44,10 +44,11 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
     }[],
   ) => options.filter((option) => values.includes(option.value));
   useEffect(() => {
-    skillsToCategoryAdaptor().then((data) => {
-      setSkills(getOptionsFromValues(job.skills || [], data));
-    });
-  }, []);
+    if (job.skills)
+      skillsToCategoryAdaptor().then((data) => {
+        setSkills(getOptionsFromValues(job.skills || [], data));
+      });
+  }, [job]);
   const navigate = useNavigate();
   const handleClick = () => {
     if (isTouchDevice()) navigate(`/nowruz/jobs/${job.id}`);

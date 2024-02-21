@@ -245,7 +245,7 @@ export const blueprint: RouteObject[] = [
               if (q?.trim()) {
                 Object.assign(body, { q: q });
               }
-              const data = await searchReq(body, { limit: 20, page: 1 });
+              const data = await searchReq(body, { limit: 10, page: 1 });
               return data;
             },
           },
