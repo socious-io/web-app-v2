@@ -11,7 +11,7 @@ import { SummaryCardProps } from './summaryCard.types';
 export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, isSelected }) => {
   const {
     data: { copyProccessed },
-  } = useSeeMore(chat.last_message?.text || '', 85);
+  } = useSeeMore(chat.last_message?.text || '', 50);
 
   const account = {
     id: chat.participants[0].identity_meta.id,
@@ -42,7 +42,7 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
       <div className="pl-5">
         <Typography variant="caption" color={variables.color_grey_600}>
           {copyProccessed}
-        </Typography>{' '}
+        </Typography>
       </div>
     </div>
   );

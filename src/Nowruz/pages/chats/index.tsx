@@ -34,9 +34,9 @@ export const Chats = () => {
       <div className="w-full py-5 px-6 flex justify-between items-center">
         <div className="flex gap-2">
           <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">Messages</span>
-          <div className="py-0.5 px-1.5 border rounded-sm border-solid border-Gray-light-mode-300 flex items-center justify-center font-medium text-xs leading-[18px] text-Gray-light-mode-700">
+          {/* <div className="py-0.5 px-1.5 border rounded-sm border-solid border-Gray-light-mode-300 flex items-center justify-center font-medium text-xs leading-[18px] text-Gray-light-mode-700">
             {count}
-          </div>
+          </div> */}
         </div>
         <IconButton
           iconColor={variables.color_grey_700}
@@ -54,6 +54,7 @@ export const Chats = () => {
         pageStart={1}
         loadMore={loadMore}
         hasMore={true}
+        className="w-full"
       >
         {chats.map((item) => (
           <SummaryCard
