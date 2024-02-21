@@ -35,6 +35,7 @@ import {
   userOffers,
   getRequestedVerifyExperiences,
 } from 'src/core/api';
+import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
 import {
@@ -173,6 +174,31 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
+            path: 'created',
+            async lazy() {
+              const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
+              return {
+                Component: Protect(CreatedList),
+              };
+            },
+          },
+          {
+            path: 'created/:id',
+            loader: async ({ params }) => {
+              if (params.id) {
+                const requests = [job(params.id), jobQuestions(params.id)];
+                const [jobDetail, screeningQuestions] = await Promise.all(requests);
+                return { jobDetail, screeningQuestions };
+              }
+            },
+            async lazy() {
+              const { CreatedDetail } = await import('src/Nowruz/pages/jobs/detail/Created');
+              return {
+                Component: Protect(CreatedDetail),
+              };
+            },
+          },
+          {
             path: ':id',
             loader: async ({ params }) => {
               if (params.id) {
@@ -196,6 +222,34 @@ export const blueprint: RouteObject[] = [
             Component: Protect(Contracts),
           };
         },
+      },
+      {
+        path: 'search',
+        children: [
+          {
+            path: '',
+            async lazy() {
+              const { Search } = await import('src/Nowruz/pages/search');
+              return {
+                Component: Search,
+              };
+            },
+            loader: async ({ request }) => {
+              const url = new URL(request.url);
+              const q = url.searchParams.get('q');
+              const type = url.searchParams.get('type') ?? 'projects';
+              const body = {
+                filter: {},
+                type,
+              };
+              if (q?.trim()) {
+                Object.assign(body, { q: q });
+              }
+              const data = await searchReq(body, { limit: 10, page: 1 });
+              return data;
+            },
+          },
+        ],
       },
     ],
   },
