@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
 import { About } from 'src/Nowruz/modules/userProfile/components/about';
+import { Reviews } from 'src/Nowruz/modules/userProfile/components/reviews'; 
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 
 export const useUserProfile = () => {
@@ -16,7 +17,7 @@ export const useUserProfile = () => {
   const tabs = [
     { label: 'About', content: <About /> },
     { label: 'Services', content: <div /> },
-    { label: 'Reviews', content: <div /> },
+    { label: 'Reviews', content: <Reviews/> },
   ];
 
   return { tabs };
