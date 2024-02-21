@@ -29,7 +29,7 @@ export const useLinksContainer = () => {
     },
     {
       label: 'Jobs',
-      route: '/nowruz/jobs',
+      route: currentIdentity?.type === 'users' ? '/nowruz/jobs' : '/nowruz/jobs/created',
       iconName: 'briefcase-01',
       public: true,
       children: [

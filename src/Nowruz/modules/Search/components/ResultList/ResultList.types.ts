@@ -3,4 +3,5 @@ interface SearchItem {
 }
 export interface ResultListProps {
   list: SearchItem[];
+  onClose: () => void;
 }
