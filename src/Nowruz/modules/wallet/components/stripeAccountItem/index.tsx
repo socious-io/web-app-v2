@@ -18,7 +18,7 @@ export const StripeAccountItem: React.FC<StripeAccountItemProps> = ({ bankName, 
           <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{accountNumber}</span>
         </div>
       </div>
-      <div className="flex">
+      {/* <div className="flex">
         <IconButton
           size="medium"
           iconName="trash-01"
@@ -33,7 +33,7 @@ export const StripeAccountItem: React.FC<StripeAccountItemProps> = ({ bankName, 
           iconColor={variables.color_grey_600}
           //handleClick
         />
-      </div>
+      </div> */}
     </div>
   );
 };

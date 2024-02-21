@@ -16,10 +16,12 @@ export const Assets = () => {
       <div className="w-full flex flex-col gap-8">
         <div className="flex justify-between items-center">
           <div className="text-lg font-semibold leading-7 text-Gray-light-mode-900">Payout account</div>
-          <Button variant="text" color="secondary" onClick={() => setOpenAddAccount(true)}>
-            <Icon name="plus" fontSize={20} className="text-Gray-light-mode-600" />
-            Add account
-          </Button>
+          {!stripeAccounts.length && (
+            <Button variant="text" color="secondary" onClick={() => setOpenAddAccount(true)}>
+              <Icon name="plus" fontSize={20} className="text-Gray-light-mode-600" />
+              Add account
+            </Button>
+          )}
         </div>
         {stripeAccounts.map((item) => (
           <StripeAccountItem key={item.id} bankName={item.bank_name} accountNumber={item.account} />
