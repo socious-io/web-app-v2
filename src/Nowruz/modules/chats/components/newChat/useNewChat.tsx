@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { filterFollowings } from 'src/core/api';
+import { useEffect, useState } from 'react';
+import { connectionStatus, filterFollowings } from 'src/core/api';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 
 export const useNewChat = () => {
@@ -9,8 +9,9 @@ export const useNewChat = () => {
     try {
       if (searchText) {
         const res = await filterFollowings({ name: searchText });
+        const items = res.items.filter((i) => i.mutual && i.following);
         cb(
-          res.items.map((i) => {
+          items.map((i) => {
             const img = i.identity_meta.image || i.identity_meta.avatar || '';
             const type = i.identity_type;
             return {
@@ -33,5 +34,6 @@ export const useNewChat = () => {
   const onSelect = (value) => {
     setselectedContact(value);
   };
+
   return { searchFollowings, onSelect, selectedContact };
 };

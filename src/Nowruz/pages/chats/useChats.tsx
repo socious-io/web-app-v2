@@ -31,6 +31,7 @@ export const useChats = () => {
   const [openDetails, setOpenDetails] = useState(false);
   const [openNewChat, setOpenNewChat] = useState(false);
   const [justReceived, setJustReceived] = useState<Message | null>(null);
+  const [openError, setOpenError] = useState(false);
 
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -87,14 +88,26 @@ export const useChats = () => {
 
   const handleNewChat = async (receiverId: string, text: string) => {
     if (!receiverId || !currentIdentity) return;
-    const chatRes = await createChat({ name: 'nameless', type: 'CHAT', participants: [receiverId] });
-    await createChatMessage(chatRes.id, { text });
-    const chatList = await chatsApi({ page: 1 });
-    setChats(chatList.items);
-    setCount(chatList.items.length);
-    setSelectedChat(chatRes);
-    setOpenNewChat(false);
-    setOpenDetails(true);
+    const foundChat = chats.find((item) => item.participants[0].identity_meta.id === receiverId);
+    if (foundChat) {
+      await createChatMessage(foundChat.id, { text });
+      setSelectedChat(foundChat);
+      setOpenNewChat(false);
+      setOpenDetails(true);
+      return;
+    }
+    try {
+      const chatRes = await createChat({ name: 'nameless', type: 'CHAT', participants: [receiverId] });
+      await createChatMessage(chatRes.id, { text });
+      const chatList = await chatsApi({ page: 1 });
+      setChats(chatList.items);
+      setCount(chatList.items.length);
+      setSelectedChat(chatRes);
+      setOpenNewChat(false);
+      setOpenDetails(true);
+    } catch (e) {
+      setOpenError(true);
+    }
   };
 
   const loadMore = async (page: number) => {
@@ -140,5 +153,7 @@ export const useChats = () => {
     handleNewChat,
     loadMore,
     justReceived,
+    openError,
+    setOpenError,
   };
 };
