@@ -100,25 +100,20 @@ export const blueprint: RouteObject[] = [
                   };
                 },
               },
+              {
+                path: 'impact',
+                loader: async () => {
+                  const [userBadges, impactPointHistory] = await Promise.all([badges(), impactPoints()]);
+                  return { badges: userBadges, impactPointHistory };
+                },
+                async lazy() {
+                  const { Impact } = await import('src/Nowruz/pages/impact');
+                  return {
+                    Component: Impact,
+                  };
+                },
+              },
             ],
-          },
-          {
-            path: 'impact',
-            loader: async () => {
-              // Keep this, it might be needed in the future
-              // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
-              return {
-                //,
-                // badges: userBadges,
-                // missions,
-              };
-            },
-            async lazy() {
-              const { Impact } = await import('src/Nowruz/pages/impact');
-              return {
-                Component: Protect(Impact),
-              };
-            },
           },
         ],
       },

@@ -1,17 +1,24 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
+import { CurrentIdentity, UserMeta } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { RootState } from 'src/store';
 
 import css from './impact.module.scss';
 import { ImpactProps } from './impact.types';
 
 export const Impact: React.FC<ImpactProps> = (props) => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
+  const user = currentIdentity?.meta as UserMeta;
   const { point = 0, myProfile } = props;
   const navigate = useNavigate();
   const navigateToImpact = () => {
-    navigate('/nowruz/profile/users/impact');
+    navigate(`/nowruz/profile/users/${user.username}/impact`);
   };
 
   return (
