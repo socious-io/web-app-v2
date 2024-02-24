@@ -13,7 +13,6 @@ export const useTransactions = () => {
     stripeProfileRes: StripeProfileRes;
     jpStripeProfileRes: StripeProfileRes;
   };
-
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
@@ -22,7 +21,6 @@ export const useTransactions = () => {
   const navigate = useNavigate();
 
   const mapDataToColumns = (missions: Mission[]) => {
-    console.log('test log missions', missions);
     const result: PaymentDataType[] = missions.map((item) => {
       const symbol = item.offer.currency === 'JPY' ? '¥' : item.offer.currency === 'USD' ? '$' : '';
       return {
@@ -43,7 +41,7 @@ export const useTransactions = () => {
   const [list, setList] = useState<PaymentDataType[]>(mapDataToColumns(missionsList.items));
   const [page, setPage] = useState(missionsList.page);
   const [total, setTotal] = useState(missionsList.total_count);
-  const headers = ['Transaction', 'Date', 'Type', 'Currency', 'Amount'];
+  const headers = ['Transaction', 'Date', 'Currency', 'Amount'];
 
   const loadMore = async () => {
     const res = await userPaidMissions({ page: page, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' });

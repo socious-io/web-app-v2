@@ -1,4 +1,3 @@
-import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -7,7 +6,7 @@ import css from './transactionDetails.module.scss';
 import { useTransactionDetailes } from './useTransactionDetails';
 
 export const TransactionDetails = () => {
-  const { handleBack, name, avatar, avatarType, date, amount, transactionId, email } = useTransactionDetailes();
+  const { handleBack, name, avatar, avatarType, date, amount, transactionId, email, symbol } = useTransactionDetailes();
   const renderItems = (title: string, subtitles: string[]) => {
     return (
       <div className="flex flex-col">
@@ -29,9 +28,8 @@ export const TransactionDetails = () => {
           <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">Transaction details</span>
           {/* <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">Payment received</span> */}
         </div>
-        <Button variant="outlined" color="secondary">
-          <Icon name="arrow-down" fontSize={20} className="text-Gray-light-mode-700" />
-          Download
+        <Button variant="contained" color="primary">
+          Withdraw
         </Button>
       </div>
       <div className="flex flex-col">
@@ -40,12 +38,12 @@ export const TransactionDetails = () => {
             <Avatar size="40px" type={avatarType} img={avatar} />
             {renderItems(name, [date])}
           </div>
-          <span className=" hidden md:flex text-sm font-medium leading-5 text-Gray-light-mode-900">{amount}</span>
+          <span className=" hidden md:flex text-sm font-medium leading-5 text-Gray-light-mode-900">{`${symbol}${amount}`}</span>
         </div>
         <div className={`${css.bordered} flex md:!hidden`}>
           <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">{amount}</span>
         </div>
-        <div className={css.bordered}>{renderItems('Paid to', [''])}</div>
+        <div className={css.bordered}>{renderItems('Paid to', [name])}</div>
         <div className={css.bordered}>{renderItems('Transaction ID', [transactionId])}</div>
         <div className={css.bordered}>{renderItems('Contact information', [name, email])}</div>
       </div>

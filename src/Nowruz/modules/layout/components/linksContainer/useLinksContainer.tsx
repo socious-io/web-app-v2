@@ -54,7 +54,7 @@ export const useLinksContainer = () => {
       route: '/chats',
       iconName: 'message-square-01',
       public: false,
-      badgeIcon: unread ? <Badge content={unread.toString()} /> : '',
+      // badgeIcon: unread ? <Badge content={unread.toString()} /> : '',
     },
     {
       label: 'Wallet',

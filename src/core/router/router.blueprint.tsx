@@ -32,7 +32,6 @@ import {
   getOrganizationMembers,
   getOrganizationByShortName,
   identities,
-  userOffers,
   getRequestedVerifyExperiences,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
@@ -254,7 +253,7 @@ export const blueprint: RouteObject[] = [
               }
             },
             async lazy() {
-              const { TransactionDetails } = await import('src/Nowruz/pages/wallet/transactionDeatils');
+              const { TransactionDetails } = await import('src/Nowruz/pages/wallet/transactionDetails');
               return { Component: TransactionDetails };
             },
           },

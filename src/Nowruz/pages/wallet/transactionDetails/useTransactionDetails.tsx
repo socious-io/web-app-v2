@@ -23,6 +23,7 @@ export const useTransactionDetailes = () => {
   const date = toRelativeTime(mission.payment.created_at.toString());
   const amount = mission.payment.amount;
   const transactionId = mission.escrow.id;
+  const symbol = mission.offer.currency === 'JPY' ? '¥' : mission.offer.currency === 'USD' ? '$' : '';
 
-  return { handleBack, name, avatar, avatarType, date, amount, transactionId, email };
+  return { handleBack, name, avatar, avatarType, date, amount, transactionId, email, symbol };
 };
