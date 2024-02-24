@@ -1,0 +1,35 @@
+@import 'src/components/_primitives.scss';
+
+.tabContainer {
+  display: flex;
+  gap: 8px;
+  border: solid 1px $color-grey-200;
+  border-radius: 8px;
+  background-color: $color-grey-50;
+  height: 44px;
+  padding: 4px;
+  width: 100%;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+.tab {
+  height: 100%;
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: $color-grey-500;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+}
+.tabActive {
+  background-color: $color-white;
+  box-shadow: $shadow-sm;
+  color: $color-primary-700;
+}
