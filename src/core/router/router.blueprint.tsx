@@ -260,6 +260,19 @@ export const blueprint: RouteObject[] = [
         ],
       },
       {
+        path: 'chats/*',
+        loader: async () => {
+          const summary = await chats({ page: 1 });
+          return { summary };
+        },
+        async lazy() {
+          const { Chats } = await import('src/Nowruz/pages/chats');
+          return {
+            Component: Protect(Chats),
+          };
+        },
+      },
+      {
         path: 'search',
         children: [
           {

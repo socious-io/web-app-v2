@@ -35,7 +35,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
       <div className={css.avatar}>
         <AvatarProfile
           size="large"
-          imgUrl={profileImage?.url}
+          imgUrl={profileImage}
           type={type}
           verified={false}
           handleClick={myProfile ? handleOpenEditAvatar : undefined}

@@ -190,7 +190,7 @@ export const useEditInfoOrg = (handleClose: () => void) => {
     const updatedOrg = {
       ...org,
       name: name.trim(),
-      username: username,
+      shortname: username,
       city: city.label,
       country: country,
       mission: summary,
