@@ -9,19 +9,22 @@ import { Chip } from '../Chip';
 
 interface ProfileCardProps {
   identity?: User | Organization;
+  labelShown?: boolean;
 }
-const ProfileCard: React.FC<ProfileCardProps> = ({ identity }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true }) => {
   const { name, profileImage, type, website } = getIdentityMeta(identity);
   if (!identity) return;
   return (
     <div className="flex flex-col gap-5 md:gap-6">
-      <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">{`About ${name}`}</span>
+      {labelShown && (
+        <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">{`About ${name}`}</span>
+      )}
       <div className="flex flex-col border border-solid border-Gray-light-mode-200 rounded-xl">
         <ProfileCardHeader
           name={name}
           type={type}
           bio={identity.bio || ''}
-          profileImageUrl={profileImage?.url}
+          profileImageUrl={profileImage}
           coverImageUrl={identity.cover_image?.url}
         />
         <div className="flex flex-col gap-5 md:gap-6 p-5 md:p-6">

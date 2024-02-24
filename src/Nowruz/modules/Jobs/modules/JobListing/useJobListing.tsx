@@ -1,25 +1,53 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
-import { JobsRes, jobs } from 'src/core/api';
+import { Job, JobsRes, Skill, jobs, skills } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { useIsMount } from 'src/Nowruz/modules/general/components/useIsMount';
+import { RootState } from 'src/store';
+import { setSkills } from 'src/store/reducers/skills.reducer';
 
 export const useJobListing = () => {
-  const data = useLoaderData() as JobsRes;
-
-  console.log(data);
-  const PER_PAGE = 10;
+  const loaderData = useLoaderData() as JobsRes;
+  const skillList = useSelector<RootState, Skill[]>((state) => {
+    return state.skills.items;
+  });
+  const dispatch = useDispatch();
+  const PER_PAGE = 5;
   const isMobile = isTouchDevice();
-  const [jobsList, setJobsList] = useState(data.items);
+  const [jobsList, setJobsList] = useState<Job[]>(loaderData.items);
+  const [totalCount, setTotalCount] = useState(loaderData.total_count);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const isMount = useIsMount();
 
-  const fetchMore = async (page: number) => {
-    const data = await jobs({ page: page, status: 'ACTIVE', limit: 5 });
-
-    if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
-    else setJobsList(data.items);
+  const loadPage = async () => {
+    setLoading(true);
+    try {
+      await Promise.all([fetchMore(), getSkills()]);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
+
+  const fetchMore = async () => {
+    if (!isMount) {
+      const data = await jobs({ page: page, status: 'ACTIVE', limit: 5 });
+      setTotalCount(data.total_count);
+      if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
+      else setJobsList(data.items);
+    }
+  };
+
+  const getSkills = async () => {
+    if (skillList.length) return;
+    const res = await skills({ limit: 500 });
+    await dispatch(setSkills(res.items));
+  };
+
   useEffect(() => {
-    fetchMore(page);
+    loadPage();
   }, [page]);
-  return { page, setPage, jobsList, total: data.total_count, PER_PAGE, isMobile };
+  return { page, setPage, jobsList, total: totalCount, PER_PAGE, isMobile, skillList, loading };
 };

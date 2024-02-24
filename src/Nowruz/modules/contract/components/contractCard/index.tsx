@@ -4,33 +4,20 @@ import { toRelativeTime } from 'src/core/relative-time';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
-import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 
 import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
-import { ContractDetailsSlider } from '../contractDetailsSlider';
 
-export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) => {
-  const {
-    type,
-    badge,
-    name,
-    profileImageUrl,
-    currencyIconName,
-    formatCurrency,
-    openAcceptModal,
-    offerVal,
-    missionVal,
-    openOverlayModal,
-    setOpenOverlayModal,
-    handleCloseModal,
-  } = useContractCard(offer, mission);
+export const ContractCard: React.FC<ContractCardProps> = ({ offer, setOpenOverlay }) => {
+  const { type, badge, name, profileImageUrl, currencyIconName, formatCurrency, offerVal, handleOpenOverlayModal } =
+    useContractCard(offer, setOpenOverlay);
+
   return (
     <>
       <div
         tabIndex={0}
         className="flex flex-col gap-5 border border-solid border-Gray-light-mode-200 rounded-default py-5 px-6 cursor-pointer"
-        onClick={() => setOpenOverlayModal(true)}
+        onClick={handleOpenOverlayModal}
       >
         <div className="flex gap-4 ">
           <Avatar size="56px" type={type || 'users'} img={profileImageUrl} />
@@ -61,10 +48,6 @@ export const ContractCard: React.FC<ContractCardProps> = ({ offer, mission }) =>
           </div>
         </div>
       </div>
-
-      <Overlay open={openOverlayModal} onClose={handleCloseModal}>
-        <ContractDetailsSlider offer={offerVal} mission={missionVal} />
-      </Overlay>
     </>
   );
 };

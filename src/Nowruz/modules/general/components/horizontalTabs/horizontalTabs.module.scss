@@ -5,6 +5,9 @@
   gap: 8px;
   border-bottom: solid 1px $color-grey-200;
   height: 36px;
+  width: 100%;
+  overflow: scroll;
+  scrollbar-width: none;
 }
 
 .tab {

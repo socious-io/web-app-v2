@@ -45,3 +45,9 @@
     cursor: pointer;
   }
 }
+
+.status {
+  border: 1px solid #d0d5dd;
+  width: 30%;
+  @apply rounded-2xl flex items-center justify-center py-1 px-1 text-xs font-medium;
+}

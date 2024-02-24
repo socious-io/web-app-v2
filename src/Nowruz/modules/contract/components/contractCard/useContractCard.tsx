@@ -1,15 +1,14 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
-import { CurrentIdentity, getOffer, Mission, Offer, userMissions } from 'src/core/api';
+import { CurrentIdentity, Offer } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
+import { setSelected } from 'src/store/reducers/contracts.reducer';
 
-export const useContractCard = (offer: Offer, mission?: Mission) => {
-  const [openOverlayModal, setOpenOverlayModal] = useState(false);
+export const useContractCard = (offer: Offer, setOpenOverlay: (val: boolean) => void) => {
   const [offerVal, setOfferVal] = useState(offer);
-  const [missionVal, setMissionVal] = useState(mission);
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
@@ -18,6 +17,12 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
 
   const name = type === 'users' ? offerVal.offerer.meta.name : offerVal.recipient.meta.name;
   const profileImageUrl = type === 'users' ? offerVal.offerer.meta.image : offerVal.recipient.meta.avatar;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setOfferVal(offer);
+  }, [offer]);
 
   // We might delete currency icon later (we accept only USD or JPY at the moment)
   const currencyIconName = (() => {
@@ -73,7 +78,7 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
           icon: <Icon fontSize={12} name="alert-circle" className="text-Warning-600" />,
         };
       case 'HIRED':
-        if (missionVal?.status === 'ACTIVE')
+        if (offerVal.mission?.status === 'ACTIVE')
           return {
             label: 'Ongoing',
             theme: 'success',
@@ -81,25 +86,25 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
           };
         return;
       case 'CLOSED':
-        if (missionVal?.status === 'CONFIRMED')
+        if (offerVal.mission?.status === 'CONFIRMED')
           return {
             label: 'Completed',
             theme: 'success',
             icon: <Icon name="check-circle" fontSize={12} className="text-Success-600" />,
           };
-        else if (missionVal?.status === 'COMPLETE')
+        else if (offerVal.mission?.status === 'COMPLETE')
           return {
             label: 'Awaiting confirmation',
             theme: 'warning',
             icon: <Icon fontSize={12} name="clock" className="text-Warning-600" />,
           };
-        else if (missionVal?.status === 'CANCELED')
+        else if (offerVal.mission?.status === 'CANCELED')
           return {
             label: 'Canceled',
             theme: 'secondary',
             icon: <></>,
           };
-        else if (missionVal?.status === 'KICKED_OUT')
+        else if (offerVal.mission?.status === 'KICKED_OUT')
           return {
             label: 'Kicked out',
             theme: 'secondary',
@@ -126,12 +131,9 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     }
   };
 
-  const handleCloseModal = async () => {
-    const offerRes = await getOffer(offer.id);
-    const missionRes = await userMissions();
-    setOfferVal(offerRes);
-    setMissionVal(missionRes.items.find((item) => item.offer.id === offer.id));
-    setOpenOverlayModal(false);
+  const handleOpenOverlayModal = async () => {
+    dispatch(setSelected(offer.id));
+    setOpenOverlay(true);
   };
 
   const badge = BadgeData();
@@ -143,10 +145,7 @@ export const useContractCard = (offer: Offer, mission?: Mission) => {
     profileImageUrl,
     currencyIconName,
     formatCurrency,
-    handleCloseModal,
     offerVal,
-    missionVal,
-    openOverlayModal,
-    setOpenOverlayModal,
+    handleOpenOverlayModal,
   };
 };

@@ -1,4 +1,4 @@
-import { Organization, User } from './api';
+import { Identity, OrgMeta, Organization, User, UserMeta } from './api';
 
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
   if (value) {
@@ -19,13 +19,16 @@ export const debounce = (func: Function, delay: number) => {
   };
 };
 
-export const removedEmptyProps = (obj: Record<string | number, unknown>) =>
-  Object.entries(obj).reduce((prev, [key, value]) => {
+export const removedEmptyProps = (obj: Record<string | number, unknown> | unknown) => {
+  if (!obj) return obj;
+  if (obj instanceof FormData) return obj;
+  return Object.entries(obj).reduce((prev, [key, value]) => {
     if (value) {
       Object.assign(prev, { [key]: value });
     }
     return prev;
   }, {});
+};
 
 export const removeEmptyArrays = (obj: null | undefined | Record<string | number, unknown>) => {
   if (!obj) {
@@ -58,7 +61,7 @@ export const checkUsernameConditions = (username: string) => {
   if (username.length < 6 || username.length > 24) return 'Must be between 6 and 24 characters.';
 };
 
-export const getIdentityMeta = (identity: User | Organization | undefined) => {
+export const getIdentityMeta = (identity: User | Organization | Identity | undefined) => {
   if (!identity)
     return {
       username: '',
@@ -67,21 +70,47 @@ export const getIdentityMeta = (identity: User | Organization | undefined) => {
       type: undefined,
       website: undefined,
     };
+  // if type of identity is 'Identity'
+  if ('meta' in identity) {
+    // 'organizations' | 'users';
+    if (identity.type === 'users') {
+      const user = identity.meta as UserMeta;
+      return {
+        username: `@${user.username}`,
+        name: user.name,
+        profileImage: user.avatar,
+        type: identity.type,
+        website: undefined,
+      };
+    }
+    const org = identity.meta as OrgMeta;
+    return {
+      username: `@${org.shortname}`,
+      name: org.name,
+      profileImage: org.image,
+      type: identity.type,
+      website: undefined,
+    };
+  }
+
+  // if identity type is 'User'
   if ('first_name' in identity) {
     const user = identity as User;
     return {
       username: `@${user.username}`,
       name: `${user.first_name} ${user.last_name}`,
-      profileImage: user.avatar,
+      profileImage: user.avatar?.url || '',
       type: 'users',
       website: undefined,
     };
   }
+
+  // if identity type is 'Organization'
   const org = identity as Organization;
   return {
     username: `@${org.shortname}`,
     name: org.name,
-    profileImage: org.image,
+    profileImage: org.image?.url || '',
     type: 'organizations',
     website: org.website,
   };

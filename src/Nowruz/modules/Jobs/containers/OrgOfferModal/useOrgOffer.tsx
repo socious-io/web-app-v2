@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   Applicant,
@@ -38,7 +38,6 @@ const schema = yup.object().shape({
         .number()
         .typeError('Offer amount is required')
         .positive('Offer amount should be positive value')
-        .min(1)
         .required('Offer amount is required');
     } else {
       return yup.string().nullable().notRequired();
@@ -96,16 +95,47 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
   const isCrypto = watch('paymentMethod') === 'CRYPTO';
   const isNonPaid = watch('paymentType') === 'VOLUNTEER';
 
+  const preventArrow = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
     let netTotal = total;
+
+    if (isNonPaid) {
+      netTotal = 0;
+    }
+
+    if (!isNonPaid && !selected) {
+      setError('total', {
+        message: 'Offer currency is required',
+      });
+      return;
+    }
+
     if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && total < 22) {
       setError('total', {
         message: 'Offer amount on Fiat should have a minimum value of 22',
       });
+      return;
     }
-    if (isNonPaid) {
-      netTotal = 0;
+
+    if (isCrypto && selected && ['USD', 'JPY'].includes(selected)) {
+      setError('total', {
+        message: 'Offer currency is incorrect',
+      });
+      return;
     }
+
+    if (!isCrypto && selected && !['USD', 'JPY'].includes(selected)) {
+      setError('total', {
+        message: 'Offer currency is incorrect',
+      });
+      return;
+    }
+
     const payload = {
       payment_mode: paymentMethod,
       assignment_total: netTotal.toString(),
@@ -139,5 +169,6 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     isNonPaid,
     paymentMethodOptions,
     setSelected,
+    preventArrow,
   };
 };

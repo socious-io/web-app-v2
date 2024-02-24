@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { updateWallet } from 'src/core/api';
 import Dapp from 'src/dapp';
-import dapp from 'src/dapp';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
@@ -10,7 +9,7 @@ import { ConnectButton } from 'src/Nowruz/modules/wallet/components/connectButto
 import { WalletModalProps } from './walletModal.types';
 
 export const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, handleAccept, walletAddress }) => {
-  const { isConnected, open: openConnect, account } = dapp.useWeb3();
+  const { isConnected, open: openConnect, account } = Dapp.useWeb3();
 
   useEffect(() => {
     if (isConnected && account && (!walletAddress || String(walletAddress) !== account)) {
@@ -31,7 +30,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, han
         <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">Connect a wallet</div>
         <div className="flex flex-col gap-1.5">
           <div className="font-medium text-sm leading-5 text-Gray-light-mode-700 ">
-            To accept this offer your need to connect your wallet
+            To accept this offer you need to connect your wallet
           </div>
           {isConnected ? <Dapp.Connect /> : <ConnectButton handleClick={() => openConnect()} />}
         </div>

@@ -6,7 +6,7 @@ import css from './result-not-found.module.scss';
 import { ResultNotFoundProps } from './ResultNotFound.types';
 import { useResultNotFound } from './useResultNotFound';
 
-export const ResultNotFound: React.FC<ResultNotFoundProps> = ({ type, searchTerm }) => {
+export const ResultNotFound: React.FC<ResultNotFoundProps> = ({ type, searchTerm, onClose }) => {
   const { generateMessage, generateTextTitle, onClick, generatButtonText } = useResultNotFound();
   return (
     <div className={css.container}>
@@ -15,9 +15,17 @@ export const ResultNotFound: React.FC<ResultNotFoundProps> = ({ type, searchTerm
       </div>
       <div className={css.title}>{generateTextTitle(type)}</div>
       {generateMessage(type, searchTerm)}
-      <Button color="primary" onClick={() => onClick(type)}>
-        {generatButtonText(type)}
-      </Button>
+      {type === 'projects' && (
+        <Button
+          color="primary"
+          onClick={() => {
+            onClose();
+            onClick(type);
+          }}
+        >
+          {generatButtonText(type)}
+        </Button>
+      )}
     </div>
   );
 };

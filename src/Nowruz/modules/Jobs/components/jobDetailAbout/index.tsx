@@ -163,7 +163,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
             </Button>
           </AuthGuard>
         )}
-        {!isUser && jobDetail.status === 'ACTIVE' && (
+        {!isUser && jobDetail.status === 'ACTIVE' && currentIdentity?.id === jobDetail.identity_meta.id && (
           <Button
             variant="contained"
             color="error"

@@ -67,7 +67,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   icon,
   errors,
   id,
-
+  border = true,
   ...props
 }) => {
   const selectedVal = props.value || '';
@@ -117,8 +117,8 @@ export const SearchDropdown: React.FC<SelectProps> = ({
             control: (provided: any, state: any) => ({
               ...provided,
               '&:hover': '',
-              border: state.isFocused ? '1px solid #99B7B5' : '1px solid #D0D5DD',
-              boxShadow: state.isFocused ? ' 0px 0px 0px 4px #E6EDED;' : null,
+              border: !border ? 'none' : state.isFocused ? '1px solid #99B7B5' : '1px solid #D0D5DD',
+              boxShadow: !border ? null : state.isFocused ? ' 0px 0px 0px 4px #E6EDED;' : null,
               borderRadius: '8px',
             }),
             indicatorSeparator: () => ({ display: 'none' }),
@@ -153,8 +153,8 @@ export const SearchDropdown: React.FC<SelectProps> = ({
             control: (provided: any, state: any) => ({
               ...provided,
               '&:hover': '',
-              border: state.isFocused ? '1px solid #99B7B5' : '1px solid #D0D5DD',
-              boxShadow: state.isFocused ? ' 0px 0px 0px 4px #E6EDED;' : null,
+              border: !border ? 'none' : state.isFocused ? '1px solid #99B7B5' : '1px solid #D0D5DD',
+              boxShadow: !border ? null : state.isFocused ? ' 0px 0px 0px 4px #E6EDED;' : null,
               borderRadius: '8px',
             }),
             indicatorSeparator: () => ({ display: 'none' }),

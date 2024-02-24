@@ -10,6 +10,7 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
   const getCards = async () => {
     const res = await cards({});
     setCardList(res.items);
