@@ -3,6 +3,7 @@ import { PaginationMobile } from 'src/Nowruz/modules/general/components/paginati
 
 import css from './mobileTransaction.module.scss';
 import { useTransactions } from './useTransactions';
+import { EmptyTransactions } from '../emptyTransactions';
 
 export const MobileTransactions = () => {
   const { list, setPage, page, PER_PAGE, total, navigateToDetails } = useTransactions();
@@ -29,20 +30,26 @@ export const MobileTransactions = () => {
   };
   return (
     <div className="flex flex-col gap-6 pb-12">
-      <div className="flex flex-col">
-        <div className={css.header}>
-          <span>Transaction</span>
-          <span>Amount</span>
-        </div>
-        {list.map((item) =>
-          renderTableRow(item.missionId, item.name, item.date, item.amount, item.userType, item.profileImage),
-        )}
-      </div>
-      <PaginationMobile
-        page={page}
-        count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)}
-        handleChange={setPage}
-      />
+      {list.length ? (
+        <>
+          <div className="flex flex-col">
+            <div className={css.header}>
+              <span>Transaction</span>
+              <span>Amount</span>
+            </div>
+            {list.map((item) =>
+              renderTableRow(item.missionId, item.name, item.date, item.amount, item.userType, item.profileImage),
+            )}
+          </div>
+          <PaginationMobile
+            page={page}
+            count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)}
+            handleChange={setPage}
+          />
+        </>
+      ) : (
+        <EmptyTransactions />
+      )}
     </div>
   );
 };

@@ -24,7 +24,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true }
           name={name}
           type={type}
           bio={identity.bio || ''}
-          profileImageUrl={profileImage?.url}
+          profileImageUrl={profileImage}
           coverImageUrl={identity.cover_image?.url}
         />
         <div className="flex flex-col gap-5 md:gap-6 p-5 md:p-6">

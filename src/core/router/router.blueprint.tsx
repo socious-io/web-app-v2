@@ -32,7 +32,6 @@ import {
   getOrganizationMembers,
   getOrganizationByShortName,
   identities,
-  userOffers,
   getRequestedVerifyExperiences,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
@@ -260,6 +259,19 @@ export const blueprint: RouteObject[] = [
             },
           },
         ],
+      },
+      {
+        path: 'chats/*',
+        loader: async () => {
+          const summary = await chats({ page: 1 });
+          return { summary };
+        },
+        async lazy() {
+          const { Chats } = await import('src/Nowruz/pages/chats');
+          return {
+            Component: Protect(Chats),
+          };
+        },
       },
       {
         path: 'search',

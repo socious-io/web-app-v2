@@ -1,16 +1,17 @@
-import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { Modal } from 'src/Nowruz/modules/general/components/modal';
 
 import css from './transactionDetails.module.scss';
 import { useTransactionDetailes } from './useTransactionDetails';
+
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
-import { Modal } from 'src/Nowruz/modules/general/components/modal';
-import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 
 export const TransactionDetails = () => {
   const { handleBack, detail, isUser, isDisablePayout, openWithdraw, setOpenWithdraw } = useTransactionDetailes();
+
   const renderItems = (title: string, subtitles: string[]) => {
     return (
       <div className="flex flex-col">
@@ -46,12 +47,11 @@ export const TransactionDetails = () => {
           </div>
           {isUser && (
             <Button
-              variant="outlined"
-              color="secondary"
+              variant="contained"
+              color="primary"
               disabled={isDisablePayout()}
               onClick={() => setOpenWithdraw(true)}
             >
-              <Icon name="arrow-down" fontSize={20} className="text-Gray-light-mode-700" />
               Withdraw
             </Button>
           )}
@@ -63,11 +63,11 @@ export const TransactionDetails = () => {
               {renderItems(detail.name, [detail.date])}
             </div>
             <span className=" hidden md:flex text-sm font-medium leading-5 text-Gray-light-mode-900">
-              {detail.amount}
+              {`${detail.symbol}${detail.amount}`}
             </span>
           </div>
           <div className={`${css.bordered} flex md:!hidden`}>
-            <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">{detail.amount}</span>
+            <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">{`${detail.symbol}${detail.amount}`}</span>
           </div>
           <div className={css.bordered}>{renderItems('Paid to', [detail.name])}</div>
           <div className={css.bordered}>{renderItems('Transaction ID', [detail.transactionId])}</div>

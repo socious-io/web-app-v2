@@ -38,6 +38,7 @@ export const useTransactionDetailes = () => {
     date: toRelativeTime(mission.payment.created_at.toString()),
     amount: mission.payment.amount,
     transactionId: mission.escrow.id,
+    symbol : mission.offer.currency === 'JPY' ? '¥' : mission.offer.currency === 'USD' ? '$' : '';
   };
 
   function isDisablePayout() {

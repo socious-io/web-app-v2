@@ -1,19 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { CurrentIdentity, unreadCounts } from 'src/core/api';
+import { CurrentIdentity } from 'src/core/api';
 import Badge from 'src/Nowruz/modules/general/components/Badge';
-import { RootState } from 'src/store';
+import store, { RootState } from 'src/store';
+import { getUnreadCount } from 'src/store/thunks/chat.thunk';
 
 export const useLinksContainer = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
   const userIsLoggedIn = !!currentIdentity;
-  const [unread, setUnread] = useState(0);
+  const unread = useSelector<RootState, string>((state) => {
+    return state.chat.unreadCount;
+  });
 
   const unreadMessagesCount = async () => {
-    const unreadCount = await unreadCounts();
-    setUnread(Number(unreadCount.count));
+    await store.dispatch(getUnreadCount());
   };
 
   useEffect(() => {
@@ -51,10 +53,10 @@ export const useLinksContainer = () => {
     },
     {
       label: 'Messages',
-      route: '/chats',
+      route: '/nowruz/chats',
       iconName: 'message-square-01',
       public: false,
-      badgeIcon: unread ? <Badge content={unread.toString()} /> : '',
+      // badgeIcon: unread ? <Badge content={unread.toString()} /> : '',
     },
     {
       label: 'Wallet',
