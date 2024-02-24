@@ -8,10 +8,5 @@ export async function getMedia(id: string): Promise<PostMediaUploadRes> {
 export async function uploadMedia(file: File): Promise<PostMediaUploadRes> {
   const formData = new FormData();
   formData.append('file', file);
-  const header = {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  };
-  return (await post<PostMediaUploadRes>('/media/upload', formData, header)).data;
+  return (await post<PostMediaUploadRes>('/media/upload', formData)).data;
 }

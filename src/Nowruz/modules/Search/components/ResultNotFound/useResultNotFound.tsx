@@ -14,6 +14,9 @@ export const useResultNotFound = () => {
       case 'organizations':
         title = 'No organizations found';
         break;
+      case 'projects':
+        title = 'No jobs found';
+        break;
     }
     return title;
   };
@@ -21,50 +24,22 @@ export const useResultNotFound = () => {
   const generateMessage = (type: string, searchTerm: string) => {
     let message = null;
 
-    switch (type) {
-      case 'users':
-        message = (
-          <div className={css.message}>
-            Whoops! No results for '{searchTerm}'.
-            <br />
-            Let's try different keywords.
-          </div>
-        );
-        break;
-
-      case 'organizations':
-        message = (
-          <div className={css.message}>
-            Whoops! No results for '{searchTerm}'.
-            <br />
-            Let's try different keywords.
-          </div>
-        );
-        break;
-    }
+    message = (
+      <div className={css.message}>
+        Whoops! No results for '{searchTerm}'.
+        <br />
+        Let's try different keywords.
+      </div>
+    );
 
     return message;
   };
   const onClick = (type: string) => {
-    switch (type) {
-      case 'users':
-        navigate('/jobs');
-        break;
-      case 'organizations':
-        navigate('/jobs');
-        break;
-    }
+    navigate('/nowruz/jobs');
   };
   const generatButtonText = (type: string) => {
     let text = '';
-    switch (type) {
-      case 'users':
-        text = 'Go to communities';
-        break;
-      case 'organizations':
-        text = 'Go to communities';
-        break;
-    }
+    text = 'View jobs';
     return text;
   };
   return { generateMessage, generateTextTitle, onClick, generatButtonText };

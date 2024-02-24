@@ -185,6 +185,7 @@ export interface Offer extends OfferReq {
   total?: number;
   payout?: number;
   app_fee?: number;
+  mission?: Mission;
 }
 
 export interface Mission {

@@ -33,7 +33,9 @@ import {
   getOrganizationByShortName,
   identities,
   userOffers,
+  getRequestedVerifyExperiences,
 } from 'src/core/api';
+import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/pages/fall-back/fall-back';
 import {
@@ -48,7 +50,6 @@ import { receivedOfferLoader } from 'src/pages/offer-received/offer-received.ser
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { search } from 'src/pages/search/desktop/search.services';
-import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
@@ -84,11 +85,12 @@ export const blueprint: RouteObject[] = [
                 path: 'view',
                 loader: async ({ params }) => {
                   const user = await otherProfileByUsername(params.id);
-                  const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
+                  // Keep this, it might be needed in the future
+                  // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
                   return {
                     user,
-                    badges: userBadges,
-                    missions,
+                    // badges: userBadges,
+                    // missions,
                   };
                 },
                 async lazy() {
@@ -128,6 +130,20 @@ export const blueprint: RouteObject[] = [
         ],
       },
       {
+        path: 'credentials',
+        loader: async () => {
+          return {
+            credentials: await getRequestedVerifyExperiences({ page: 1, limit: 10 }),
+          };
+        },
+        async lazy() {
+          const { Credentials } = await import('src/Nowruz/pages/Credentials');
+          return {
+            Component: Credentials,
+          };
+        },
+      },
+      {
         path: 'jobs',
         children: [
           {
@@ -158,6 +174,31 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
+            path: 'created',
+            async lazy() {
+              const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
+              return {
+                Component: Protect(CreatedList),
+              };
+            },
+          },
+          {
+            path: 'created/:id',
+            loader: async ({ params }) => {
+              if (params.id) {
+                const requests = [job(params.id), jobQuestions(params.id)];
+                const [jobDetail, screeningQuestions] = await Promise.all(requests);
+                return { jobDetail, screeningQuestions };
+              }
+            },
+            async lazy() {
+              const { CreatedDetail } = await import('src/Nowruz/pages/jobs/detail/Created');
+              return {
+                Component: Protect(CreatedDetail),
+              };
+            },
+          },
+          {
             path: ':id',
             loader: async ({ params }) => {
               if (params.id) {
@@ -184,17 +225,53 @@ export const blueprint: RouteObject[] = [
       },
       {
         path: 'contracts',
-        loader: async () => {
-          const requests = [userOffers({ page: 1, limit: 5 }), userMissions()];
-          const [offers, missions] = await Promise.all(requests);
-          return { offers, missions };
-        },
         async lazy() {
           const { Contracts } = await import('src/Nowruz/pages/contracts');
           return {
             Component: Protect(Contracts),
           };
         },
+      },
+      {
+        path: 'chats/*',
+        loader: async () => {
+          const summary = await chats({ page: 1 });
+          return { summary };
+        },
+        async lazy() {
+          const { Chats } = await import('src/Nowruz/pages/chats');
+          return {
+            Component: Protect(Chats),
+          };
+        },
+      },
+      {
+        path: 'search',
+        children: [
+          {
+            path: '',
+            async lazy() {
+              const { Search } = await import('src/Nowruz/pages/search');
+              return {
+                Component: Search,
+              };
+            },
+            loader: async ({ request }) => {
+              const url = new URL(request.url);
+              const q = url.searchParams.get('q');
+              const type = url.searchParams.get('type') ?? 'projects';
+              const body = {
+                filter: {},
+                type,
+              };
+              if (q?.trim()) {
+                Object.assign(body, { q: q });
+              }
+              const data = await searchReq(body, { limit: 10, page: 1 });
+              return data;
+            },
+          },
+        ],
       },
     ],
   },
