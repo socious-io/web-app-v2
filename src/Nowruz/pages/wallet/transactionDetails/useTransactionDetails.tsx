@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { CurrentIdentity, Mission, StripeProfileRes } from 'src/core/api';
+import { CurrentIdentity, Mission, StripeProfileRes, payoutByMission } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { RootState } from 'src/store';
 
@@ -17,7 +17,6 @@ export const useTransactionDetailes = () => {
   if (jpStripeProfileRes?.external_accounts?.data.length > 0)
     accounts.push(...jpStripeProfileRes?.external_accounts.data);
 
-  console.log('test log mission', mission);
   const navigate = useNavigate();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
@@ -25,6 +24,11 @@ export const useTransactionDetailes = () => {
   const isUser = currentIdentity?.type === 'users';
 
   const [openWithdraw, setOpenWithdraw] = useState(false);
+  const [disablePayout, setDisablePayout] = useState(true);
+
+  useEffect(() => {
+    checkDisablePayout();
+  }, []);
 
   const handleBack = () => {
     navigate('/nowruz/wallet');
@@ -38,16 +42,26 @@ export const useTransactionDetailes = () => {
     date: toRelativeTime(mission.payment.created_at.toString()),
     amount: mission.payment.amount,
     transactionId: mission.escrow.id,
-    symbol : mission.offer.currency === 'JPY' ? '¥' : mission.offer.currency === 'USD' ? '$' : '';
+    symbol: mission.offer.currency === 'JPY' ? '¥' : mission.offer.currency === 'USD' ? '$' : '',
   };
 
-  function isDisablePayout() {
+  function checkDisablePayout() {
     const currentDate = Number(new Date());
     const createdDate = Number(mission.escrow?.created_at);
     const diffTime = Math.abs(currentDate - createdDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return !accounts?.length || mission.escrow?.release_id != null || diffDays < 5;
+    setDisablePayout(!accounts?.length || mission.escrow?.release_id != null || diffDays < 5);
   }
 
-  return { handleBack, detail, isUser, isDisablePayout, openWithdraw, setOpenWithdraw };
+  const withdrawFund = async () => {
+    try {
+      await payoutByMission(mission.id);
+      setDisablePayout(true);
+      setOpenWithdraw(false);
+    } catch {
+      console.log('error');
+    }
+  };
+
+  return { handleBack, detail, isUser, disablePayout, openWithdraw, setOpenWithdraw, accounts, withdrawFund };
 };

@@ -7,10 +7,9 @@ import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import css from './transactionDetails.module.scss';
 import { useTransactionDetailes } from './useTransactionDetails';
 
-import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
-
 export const TransactionDetails = () => {
-  const { handleBack, detail, isUser, isDisablePayout, openWithdraw, setOpenWithdraw } = useTransactionDetailes();
+  const { handleBack, detail, isUser, disablePayout, openWithdraw, setOpenWithdraw, accounts, withdrawFund } =
+    useTransactionDetailes();
 
   const renderItems = (title: string, subtitles: string[]) => {
     return (
@@ -27,8 +26,8 @@ export const TransactionDetails = () => {
 
   const footerJSX = (
     <div className="w-full flex flex-col p-4 gap-3 md:flex-row-reverse md:p-6">
-      <Button variant="contained" color="primary" fullWidth>
-        Continue
+      <Button variant="contained" color="primary" fullWidth onClick={withdrawFund}>
+        Withdraw
       </Button>
       <Button variant="outlined" color="secondary" fullWidth onClick={() => setOpenWithdraw(false)}>
         Cancel
@@ -46,12 +45,7 @@ export const TransactionDetails = () => {
             {/* <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">Payment received</span> */}
           </div>
           {isUser && (
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={isDisablePayout()}
-              onClick={() => setOpenWithdraw(true)}
-            >
+            <Button variant="contained" color="primary" disabled={disablePayout} onClick={() => setOpenWithdraw(true)}>
               Withdraw
             </Button>
           )}
@@ -75,19 +69,6 @@ export const TransactionDetails = () => {
         </div>
       </div>
       {openWithdraw && (
-        // <AlertModal
-        //   open={openWithdraw}
-        //   onClose={() => setOpenWithdraw(false)}
-        //   onSubmit={handleAlertSubmit}
-        //   message={alertMessage}
-        //   title='Withdraw funds'
-        //   subtitle
-        //   customIcon={alertIcon}
-        //   closeButtn={true}
-        //   closeButtonLabel="Cancel"
-        //   submitButton={true}
-        //   submitButtonLabel="Confirm"
-        // />
         <Modal
           open={openWithdraw}
           handleClose={() => setOpenWithdraw(false)}
@@ -95,12 +76,27 @@ export const TransactionDetails = () => {
           title=""
           mobileFullHeight={false}
           footer={footerJSX}
-          // children,
           headerDivider={false}
           footerDivider={false}
-          customStyle={css.withdrawModal}
+          customStyle="max-w-[480px]"
         >
-          <div className="pt-4 px-4 md:px-6">Test</div>
+          <div className="pt-4 px-4 md:px-6 flex flex-col gap-5 ">
+            <span className={css.modalTitle}>Withdraw</span>
+            <div className="flex flex-col gap-1.5">
+              <span className={css.modalRowTitles}>Amount</span>
+              <span className={css.modalAmount}>{`${detail.symbol}${detail.amount}`}</span>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <span className={css.modalRowTitles}>Transfer to</span>
+              <div className={css.withdrawAccount}>
+                <img src="/icons/bank.svg" alt="" />
+                <div className="flex flex-col">
+                  <span className={css.modalRowTitles}>{accounts[0].bank_name}</span>
+                  <span className={css.modalSubtitles}>{accounts[0].account}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </Modal>
       )}
     </>
