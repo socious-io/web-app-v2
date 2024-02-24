@@ -15,17 +15,12 @@ const schema = yup.object().shape({
         .string()
         .required('Content is required'),
 });
-export const useReviewModal = () => {
-    const [selectedValue, setSelectedValue] = useState('');
+export const useReviewModal = (handleClose) => {
+
+    const [selectedValue, setSelectedValue] = useState('satisfactory');
     const cardOptionList: CardRadioButtonItem[] = [
-        {
-            title: '👍  Satisfactory',
-            value: 'satisfactory',
-        },
-        {
-            title: '👎  Unsatisfactory',
-            value: 'unsatisfactory',
-        },
+        { value: 'satisfactory', title: 'Satisfactory', img: <img src="/icons/thumbs-up.svg" /> },
+        { value: 'unsatisfactory', title: 'Unsatisfactory', img: <img src="/icons/thumbs-down.svg" /> },
     ];
     const {
         register,
@@ -35,23 +30,33 @@ export const useReviewModal = () => {
         resolver: yupResolver(schema),
     });
 
-
+    const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+        return state.identity.entities.find((identity) => identity.current);
+      });
     const selectedOfferId = useSelector<RootState, string | undefined>((state) => {
         return state.contracts.selectedOfferId;
     });
+    const offer = useSelector<RootState, Offer | undefined>((state) => {
+        return state.contracts.offers.find((item) => item.id === selectedOfferId);
+    });
+    const type = identity?.type;
+    const name = type === 'users' ? offer?.offerer.meta.name : offer?.recipient.meta.name;
 
     const mission = useSelector<RootState, Mission | undefined>((state) => {
         return state.contracts.missions.find((item) => item.offer.id === selectedOfferId);
     });
 
-
     const onSubmit: SubmitHandler<Inputs> = async ({ content }) => {
         if (selectedValue === 'satisfactory') {
-            feedbackMission(mission.id, content);
+            feedbackMission(mission.id, content).then(()=>{
+                handleClose(true);
+            });
         } else {
-            contestMission(mission.id, content);
+            contestMission(mission.id, content).then(()=>{
+                handleClose(true);
+            });
         }
     };
 
-    return { register, handleSubmit, errors, onSubmit, selectedValue, setSelectedValue, cardOptionList };
+    return { register, handleSubmit, errors, onSubmit, selectedValue, setSelectedValue, cardOptionList, name };
 };

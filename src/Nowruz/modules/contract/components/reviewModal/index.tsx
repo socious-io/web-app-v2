@@ -9,7 +9,7 @@ import { useReviewModal } from './useReviewModal';
 
 export const ReviewModal = ({ open, handleClose }) => {
 
-    const { register, errors, onSubmit, handleSubmit, selectedValue, setSelectedValue, cardOptionList } = useReviewModal();
+    const { register, errors, onSubmit, handleSubmit, selectedValue, setSelectedValue, cardOptionList,name } = useReviewModal(handleClose);
 
     return (
         <Modal
@@ -24,7 +24,7 @@ export const ReviewModal = ({ open, handleClose }) => {
                     <div className='pt-6 px-6'>
                         <div className='mb-5'>
                             <h2 className='text-Gray-light-mode-700 font-semibold text-sm'>Review</h2>
-                            <p className='text-sm font-normal text-Gray-light-mode-600 mb-1'>Share your experience working with [NAME] for this job.</p>
+                            <p className='text-sm font-normal text-Gray-light-mode-600 mb-1'>Share your experience working with {name} for this job.</p>
                             <Input
                                 required
                                 multiline
@@ -46,8 +46,8 @@ export const ReviewModal = ({ open, handleClose }) => {
                         </div>
                     </div>
                     <div className={css.footer}>
-                        <Button variant="outlined" color="secondary" fullWidth onClick={handleClose}>cancel</Button>
-                        <Button color='primary' className='w-full' onClick={handleSubmit(onSubmit)}>submit</Button>
+                        <Button variant="outlined" color="secondary" fullWidth onClick={handleClose}>Cancel</Button>
+                        <Button color="primary" fullWidth onClick={handleSubmit(onSubmit)}>Submit</Button>
                     </div>
                 </form>
             </div>

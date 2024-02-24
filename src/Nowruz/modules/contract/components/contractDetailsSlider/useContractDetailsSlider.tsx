@@ -288,7 +288,7 @@ export const useContractDetailsSlider = () => {
       }
       if(offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED' && mission.org_feedback !== null) {
         const alertMsg = (
-          <AlertMessage theme="gray" iconName="alert-circle" title="you have reviewed this Contract" subtitle="" />
+          <AlertMessage theme="gray" iconName="alert-circle" title="Reviewed" subtitle="you have reviewed this Contract" />
         );
         setAllStates(true, alertMsg, false, '', false, '');
         return;
