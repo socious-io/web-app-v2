@@ -9,7 +9,7 @@ export const DesktopTransactions = () => {
   const { list, headers, setPage, PER_PAGE, total, navigateToDetails } = useTransactions();
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 h-full">
       <div className="text-lg font-semibold leading-7 text-Gray-light-mode-900">Transactions history</div>
       {list.length ? (
         <>
