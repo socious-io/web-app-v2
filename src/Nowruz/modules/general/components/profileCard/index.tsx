@@ -6,6 +6,7 @@ import { Website } from 'src/Nowruz/modules/userProfile/components/website';
 
 import { ProfileCardHeader } from './profileCardHeader';
 import { Chip } from '../Chip';
+import { socialCausesToCategory } from 'src/core/adaptors';
 
 interface ProfileCardProps {
   identity?: User | Organization;
@@ -29,8 +30,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true }
         />
         <div className="flex flex-col gap-5 md:gap-6 p-5 md:p-6">
           <div className="flex gap-2 flex-wrap">
-            {identity.social_causes?.map((item) => (
-              <Chip key={item} label={item} theme="primary" shape="round" size="md" />
+            {socialCausesToCategory(identity.social_causes).map((item) => (
+              <Chip key={item.value} label={item.label} theme="primary" shape="round" size="md" />
             ))}
           </div>
           {identity.country && (
