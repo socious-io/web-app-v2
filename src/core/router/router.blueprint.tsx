@@ -214,7 +214,7 @@ export const blueprint: RouteObject[] = [
         ],
       },
       {
-        path: 'Setting',
+        path: 'Settings',
         async lazy() {
           const { Setting } = await import('src/Nowruz/pages/setting/index');
           return {
