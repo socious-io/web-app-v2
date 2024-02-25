@@ -19,6 +19,7 @@ export const JobDetail = () => {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
   };
+
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
