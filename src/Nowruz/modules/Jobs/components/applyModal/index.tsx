@@ -28,7 +28,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(apply)}>
         Submit
       </Button>
-      <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
+      <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={() => handleClose(false)}>
         Cancel
       </Button>
     </div>
@@ -103,7 +103,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
   return (
     <Modal
       open={open}
-      handleClose={handleClose}
+      handleClose={() => handleClose(false)}
       title="Apply to job"
       content={contentJSX}
       footer={modalFooterJsx}

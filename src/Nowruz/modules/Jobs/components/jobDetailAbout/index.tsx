@@ -23,9 +23,11 @@ import { ApplyModal } from '../applyModal';
 
 interface JobDetailAboutProps {
   isUser: boolean;
+  applied?: boolean;
+  setJustApplied?: (val: boolean) => void;
 }
 
-export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true }) => {
+export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, setJustApplied, applied }) => {
   const { jobDetail } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
@@ -42,6 +44,10 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
     navigator.clipboard.writeText(url);
   };
 
+  const handleCloseApplyModal = (applied: boolean) => {
+    setOpenApply(false);
+    if (setJustApplied) setJustApplied(applied);
+  };
   const navigate = useNavigate();
 
   const onClose = async () => {
@@ -151,7 +157,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
         <div className="hidden md:block">{detailJSX}</div>
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
-        {!jobDetail.applied && currentIdentity?.type === 'users' && (
+        {!applied && currentIdentity?.type === 'users' && (
           <AuthGuard>
             <Button
               variant="contained"
@@ -178,7 +184,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
           <Input id="copy-url" value={url} postfix={inputJSX} />
         </div>
       </div>
-      <ApplyModal open={openApply} handleClose={() => setOpenApply(false)} />
+      <ApplyModal open={openApply} handleClose={handleCloseApplyModal} />
       <AlertModal
         open={openAlert}
         onClose={() => setOpenAlert(false)}

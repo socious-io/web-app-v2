@@ -28,7 +28,7 @@ const schema = yup
   })
   .required();
 
-export const useApplyModal = (handleClose: () => void) => {
+export const useApplyModal = (handleClose: (applied: boolean) => void) => {
   const { jobDetail, screeningQuestions } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
@@ -71,8 +71,7 @@ export const useApplyModal = (handleClose: () => void) => {
     payload = removedEmptyProps(payload);
 
     await applyJob(jobDetail.id, payload);
-    window.location.reload();
-    handleClose();
+    handleClose(true);
   };
 
   return {
