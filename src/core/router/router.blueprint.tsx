@@ -90,6 +90,19 @@ export const blueprint: RouteObject[] = [
                   };
                 },
               },
+              {
+                path: 'impact',
+                loader: async () => {
+                  const [userBadges, impactPointHistory] = await Promise.all([badges(), impactPoints()]);
+                  return { badges: userBadges, impactPointHistory };
+                },
+                async lazy() {
+                  const { Impact } = await import('src/Nowruz/pages/impact');
+                  return {
+                    Component: Impact,
+                  };
+                },
+              },
             ],
           },
         ],

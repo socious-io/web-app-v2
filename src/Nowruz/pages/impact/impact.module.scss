@@ -1,0 +1,19 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  padding: 32px;
+
+  .header {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 24px;
+
+    .title {
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 38px;
+      color: $color-grey-900;
+    }
+  }
+}
