@@ -10,7 +10,7 @@ export const CreatedList = () => {
   const navigate = useNavigate();
 
   const navigateToCreateJob = () => {
-    navigate('./create');
+    navigate('../create');
   };
   const headerClass = `${css.header}`;
 
