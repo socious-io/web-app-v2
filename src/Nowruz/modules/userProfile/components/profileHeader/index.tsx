@@ -67,10 +67,10 @@ export const ProfileHeader = () => {
       <div className="md:hidden">
         {!myProfile && (
           <div className={`${css.actionDiv} w-full mb-8 px-4`}>
-            <Button color="primary" variant="outlined" style={{ flex: '1', height: '40px', fontSize: '14px' }}>
+            {/* <Button color="primary" variant="outlined" style={{ flex: '1', height: '40px', fontSize: '14px' }}>
               <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
               Share
-            </Button>
+            </Button> */}
             {isLoggedIn && connectStatus !== 'CONNECTED' && (
               <Button
                 disabled={connectStatus === 'PENDING'}
@@ -81,13 +81,13 @@ export const ProfileHeader = () => {
                 {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
               </Button>
             )}
-            <IconButton
+            {/* <IconButton
               size="small"
               iconName="dots-vertical"
               iconColor={variables.color_grey_700}
               iconSize={20}
               customStyle="w-9 h-10 !border !border-solid !border-Gray-light-mode-300"
-            />
+            /> */}
           </div>
         )}
       </div>
