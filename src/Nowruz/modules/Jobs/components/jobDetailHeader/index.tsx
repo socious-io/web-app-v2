@@ -18,12 +18,11 @@ import { ApplyModal } from '../applyModal';
 
 interface JobDetailHeaderProps {
   job: Job;
-  isUser: boolean;
   applied?: boolean;
   setJustApplied?: (applied: boolean) => void;
 }
 
-export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser, applied, setJustApplied }) => {
+export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, setJustApplied }) => {
   const navigate = useNavigate();
   const [openApply, setOpenApply] = useState(false);
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -48,7 +47,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser, a
       <div className={css.container}>
         <BackLink
           title="Back to jobs"
-          onBack={() => navigate(isUser ? '/nowruz/jobs' : '/nowruz/jobs/created')}
+          onBack={() => navigate(currentIdentity?.type === 'organizations' ? '/nowruz/jobs/created' : '/nowruz/jobs')}
           customStyle="w-fit"
         />
         <Avatar size="72px" type="organizations" img={job.identity_meta.image} hasBorder isVerified={false} />
@@ -72,7 +71,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser, a
               text={job.identity_meta.mission || ''}
             />
           </span> */}
-          {!applied && isUser && (
+          {!applied && currentIdentity?.type !== 'organizations' && (
             <AuthGuard>
               <Button
                 color="primary"
@@ -84,7 +83,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser, a
               </Button>
             </AuthGuard>
           )}
-          {isUser && <Divider />}
+          {currentIdentity?.type === 'users' && <Divider />}
         </div>
       </div>
       <ApplyModal open={openApply} handleClose={handleCloseApplyModal} />

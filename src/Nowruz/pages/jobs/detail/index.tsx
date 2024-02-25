@@ -89,12 +89,7 @@ export const JobDetail = () => {
 
   return (
     <div className={css.container}>
-      <JobDetailHeader
-        job={jobDetail}
-        isUser={true}
-        applied={justApplied || beforeApplied}
-        setJustApplied={setJustApplied}
-      />
+      <JobDetailHeader job={jobDetail} applied={justApplied || beforeApplied} setJustApplied={setJustApplied} />
       {userJSX()}
     </div>
   );
