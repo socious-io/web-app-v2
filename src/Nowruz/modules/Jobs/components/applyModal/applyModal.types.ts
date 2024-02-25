@@ -1,4 +1,4 @@
 export interface ApplyModalProps {
   open: boolean;
-  handleClose: () => void;
+  handleClose: (applied: boolean) => void;
 }

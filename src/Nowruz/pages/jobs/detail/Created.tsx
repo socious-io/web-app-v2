@@ -22,7 +22,7 @@ export const CreatedDetail = () => {
 
   return (
     <div className={css.container}>
-      <JobDetailHeader job={jobDetail} isUser={false} />
+      <JobDetailHeader job={jobDetail} />
       {organizationJSX()}
     </div>
   );
