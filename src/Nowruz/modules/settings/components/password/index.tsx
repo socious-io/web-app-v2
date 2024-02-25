@@ -1,11 +1,10 @@
 import { usePassword } from './usePassword';
-import { Button } from "src/Nowruz/modules/general/components/Button/index"
+import { Button } from "src/Nowruz/modules/general/components/Button/index";
 import css from "./password.module.scss";
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 
 const Password = () =>{
-    const { register, handleSubmit, errors, onSubmit, isFormValid,
-        isPasswordLengthValid, isPasswordPatternValid, reset,isPasswordMatch } = usePassword();
+    const { register, handleSubmit, errors, onSubmit, isFormValid, reset } = usePassword();
 
     return (
         <>
@@ -13,7 +12,7 @@ const Password = () =>{
                 <div className="w-full pt-8 items-center">
                     <h2 className="grow css.title">Password</h2>
                     <p className='text-sm font-normal text-Gray-light-mode-600 pt-1'>
-                    If you have signed up via Google, please log out and use “forgot password” to reset your password. 
+                    If you have signed up via Google, please log out and use “forgot password” to reset your password.
                     </p>
                 </div>
             </div>
@@ -31,6 +30,7 @@ const Password = () =>{
                                 placeholder="New password"
                             />
                         </div>
+                        <p>{errors.current_password?.message}</p>
                     </div>
                 </div>
                 <div className={css.borderSection}>
@@ -39,7 +39,7 @@ const Password = () =>{
                         <div className='col-span-2'>
                             <Input id="password" type="password" name="password" register={register} placeholder="password" />
                         </div>
-                        
+                        <p>{errors.password?.message}</p>
                     </div>
                 </div>
                 <div className={css.borderSection}>
@@ -50,14 +50,16 @@ const Password = () =>{
                                 autoComplete="confirm"
                                 register={register}
                                 name="confirm"
+                                id="confirm"
                                 type="password"
                                 placeholder="Confirm new password"
                             />
                         </div>
+                        <p>{errors.confirm?.message}</p>
                     </div>
                 </div>
                 <div>
-                    <div className={`${css.validation} mt-4`}>
+                    {/* <div className={`${css.validation} mt-4`}>
                         <img
                         className="mr-1"
                         src={isPasswordLengthValid ? '/icons/green-check.svg' : '/icons/grey-check.svg'}
@@ -80,12 +82,12 @@ const Password = () =>{
                         alt="check"
                         />
                         Password match
-                    </div>
+                    </div> */}
                 </div>
                 <div className="grid grid-cols-1 gap-4 place-items-end pt-8">
                     <div className='flex gap-4'>
                         <Button color="info" onClick={()=> reset()}>Cancel</Button>
-                    
+
                         <Button disabled={!isFormValid} color="primary" block onClick={handleSubmit(onSubmit)}>Update Password</Button>
                     </div>
                 </div>

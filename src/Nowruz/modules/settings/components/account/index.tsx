@@ -18,9 +18,8 @@ const Account = () => {
 
     const onChangeTextHandler = (e:AnyAction) => {
         reasonbody = e.target.value;
-        console.log('gt',reasonbody);
     };
-    
+
     const closeAccount = () => {
         deleteAccount(reasonbody);
     };
@@ -30,7 +29,7 @@ const Account = () => {
             <div className='hidden'>
                 <div className={css.borderSection}>
                     <div className="flex flex-row w-full pt-8 items-center">
-                        <h2 className="grow css.title">Account Information</h2>
+                        <h2 className={css.title}>Account Information</h2>
                         <div className="flex gap-4">
                             <div>
                                 <Button color="info">Cancel</Button>
@@ -67,9 +66,7 @@ const Account = () => {
                         <label>Username</label>
                         <div className="col-span-2">
                             <Input
-                                id="username"
-                                prefix="socious.io/"
-                                onChange={(e) => console.log(e.target.value)}
+                                id="username" prefix="socious.io/"
                             />
                         </div>
                     </div>
