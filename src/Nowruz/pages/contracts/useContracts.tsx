@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Offer } from 'src/core/api';
+import { Contract, CurrentIdentity } from 'src/core/api';
 import { ButtonGroupItem } from 'src/Nowruz/modules/general/components/ButtonGroups/buttonGroups.types';
 import store, { RootState } from 'src/store';
 import { getContracts } from 'src/store/thunks/contracts.thunk';
 
 export const useContracts = () => {
-  const offerList = useSelector<RootState, Offer[]>((state) => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
+  const contractList = useSelector<RootState, Contract[]>((state) => {
     return state.contracts.offers;
   });
   const itemsCount = useSelector<RootState, number>((state) => {
@@ -21,7 +24,8 @@ export const useContracts = () => {
   const PER_PAGE = 5;
   const pageCount = Math.floor(itemsCount / PER_PAGE) + (itemsCount % PER_PAGE && 1);
   const fetchMore = async (page: number) => {
-    await store.dispatch(getContracts({ page, limit: PER_PAGE }));
+    if (currentIdentity)
+      await store.dispatch(getContracts({ page, limit: PER_PAGE, identityType: currentIdentity.type }));
   };
 
   const filterOngoing = async () => {
@@ -49,7 +53,7 @@ export const useContracts = () => {
     pageCount,
     setPage,
     page,
-    offerList,
+    contractList,
     openOverlayModal,
     setOpenOverlayModal,
   };

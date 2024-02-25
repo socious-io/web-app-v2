@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Offer } from 'src/core/api';
+import { Contract } from 'src/core/api';
 
-import { getContracts } from '../thunks/contracts.thunk';
+import { getContractStatus, getContracts } from '../thunks/contracts.thunk';
 
 interface ContractsState {
-  offers: Offer[];
+  offers: Contract[];
   page: number;
   limit: number;
   totalCount: number;
   error: string;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+
   selectedOfferId?: string;
 }
 const initialState = {
@@ -31,6 +32,12 @@ export const contractsSlice = createSlice({
     updateStatus: (state, action) => {
       const idx = state.offers.findIndex((item) => item.id === action.payload.id);
       state.offers[idx].status = action.payload.offerStatus;
+      state.offers[idx].contractStatus = getContractStatus(
+        action.payload.type,
+        action.payload.paymentType,
+        action.payload.offerStatus,
+        action.payload.missionStatus,
+      );
       if (action.payload.missionStatus)
         state.offers[idx].mission = { ...state.offers[idx].mission, status: action.payload.missionStatus };
     },
