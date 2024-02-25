@@ -3,4 +3,6 @@ export interface SearchInputProps {
   placeholder: string;
   value: string;
   onEnter: () => void;
+  open: boolean;
+  onEscape: () => void;
 }

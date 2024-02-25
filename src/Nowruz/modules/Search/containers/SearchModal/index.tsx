@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Modal } from 'src/components/templates/modal/modal';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -29,6 +29,15 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
     setSearchText,
   });
   const width = isMobile ? '100%' : '760px';
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (open && inputRef.current) {
+      inputRef?.current.focus;
+    }
+  }, [open]);
+
   return (
     <Modal
       width={width}
@@ -54,7 +63,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
               value={searchTerm}
               onChange={fetchSearchResult}
               onEnter={navigateFullSearch}
+              onEscape={onClose}
               placeholder="Search jobs, people, organizations"
+              open={open}
             />
           </div>
           <div className={css.content}>

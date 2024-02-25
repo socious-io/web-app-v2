@@ -54,6 +54,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       ...(causes.length > 0 && { causes_tags: causes.map((cause) => cause.value) }),
       ...(country && { country: [country] }),
       ...(city && { city: [city] }),
+      ...(cityLabel && { label: cityLabel || {} }),
     };
     onApply(filter);
   };
@@ -70,9 +71,11 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     if (filter.causes_tags?.length) {
       setCauses(getOptionsFromValues(filter.causes_tags || [], causesItems));
     }
-    if (filter.label?.countryCode) {
+    if (filter.label) {
       setCityLabel(filter.label);
     }
+
+    console.log(filter.label);
   }, [causesItems, filter.causes_tags, filter.label, filter.skills, skillItems, type]);
 
   return {
