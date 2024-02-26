@@ -1,5 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
@@ -10,7 +11,6 @@ import { deleteAccount } from 'src/pages/delete-profile/delete-profile.service';
 import css from './account.module.scss';
 
 
-
 const Account = () => {
 
     const [modalVisibility, setModalVisibility] = useState(false);
@@ -18,11 +18,10 @@ const Account = () => {
 
     const onChangeTextHandler = (e:AnyAction) => {
         reasonbody = e.target.value;
-        console.log('gt',reasonbody);
     };
-    
+    const navigate = useNavigate();
     const closeAccount = () => {
-        deleteAccount(reasonbody);
+        deleteAccount(reasonbody).then(() => navigate('/sign-in'));
     };
 
     return (
@@ -125,7 +124,7 @@ const Account = () => {
                         />
                     </div>
                     <div className='flex mt-8 justify-end gap-2'>
-                        <Button onClick={() => { setModalVisibility(false); }} color="info">cancel</Button>
+                        <Button onClick={() => { setModalVisibility(false); }} color="info">Cancel</Button>
                         <Button onClick={() => closeAccount()} color="error">
                             Permanently delete my account
                         </Button>
