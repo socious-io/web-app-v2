@@ -20,15 +20,14 @@ interface StatusDropDownProps {
 export const StatusDropDown: React.FC<StatusDropDownProps> = (props) => {
   const [open, setOpen] = useState(false);
   const { type, openToWork, openToVolunteer, hiring, handleHiring, handleOpenToVolunteer, handleOpenToWork } = props;
- // handle click outside to close menu
- const newRef = useRef(null);
- useEffect(() => {
-   document.addEventListener("mousedown", handleOutsideClick);
-   return () => { document.removeEventListener("mousedown", handleOutsideClick) };
- });
- const handleOutsideClick = (e) => {
-   if (newRef.current && !newRef.current.contains(e.target)) { if (open) { setOpen(!open); } }
- };
+  const newRef = useRef(null);
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => { document.removeEventListener("mousedown", handleOutsideClick) };
+  });
+  const handleOutsideClick = (e) => {
+    if (newRef.current && !newRef.current.contains(e.target)) { if (open) { setOpen(!open); } }
+  };
   return (
     <div className="w-full h-full flex flex-col items-end relative group" ref={newRef}>
       <Button variant="outlined" className={css.statusButton} color="primary" 
