@@ -1,4 +1,5 @@
 .header,
+.headerLeft,
 .tabItem {
   list-style: none;
   margin: 0;
@@ -16,10 +17,28 @@
   z-index: 1;
   background: #fff;
 }
+
+.headerLeft {
+  height: 3.5em;
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  border-bottom: 1px solid #c3c8d9;
+  color: var(--color-primary-01);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+}
+
 .tabItem {
   flex: 1 1 100%;
   display: flex;
   justify-content: center;
+}
+
+.tabItemLeft {
+  @apply flex;
 }
 
 .tabLabel {

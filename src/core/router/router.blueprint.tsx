@@ -222,6 +222,15 @@ export const blueprint: RouteObject[] = [
         ],
       },
       {
+        path: 'Settings',
+        async lazy() {
+          const { Setting } = await import('src/Nowruz/pages/setting/index');
+          return {
+            Component: Setting,
+          };
+        },
+      },
+      {
         path: 'contracts',
         async lazy() {
           const { Contracts } = await import('src/Nowruz/pages/contracts');

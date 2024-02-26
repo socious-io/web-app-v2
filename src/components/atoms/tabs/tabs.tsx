@@ -3,7 +3,7 @@ import { useState } from 'react';
 import css from './tabs.module.scss';
 import { TabsProps } from './tabs.types';
 
-export const Tabs = ({ tabs, onClick }: TabsProps): JSX.Element => {
+export const Tabs = ({ tabs, onClick, alignLeft }: TabsProps): JSX.Element => {
   const initialIndex = tabs.findIndex((tab) => tab.default);
   const [selectedIndex, setSelectedIndex] = useState<number>(initialIndex);
 
@@ -19,12 +19,15 @@ export const Tabs = ({ tabs, onClick }: TabsProps): JSX.Element => {
 
   const tab = tabs[selectedIndex];
 
+  const headerClass = alignLeft ? css.headerLeft : css.header
+  const itemClass = alignLeft ? css.tabItemLeft : css.tabItem
+
   return (
     <>
-      <ul className={css.header}>
+      <ul className={headerClass}>
         {tabs.map((tab) => (
           <li
-            className={css.tabItem}
+            className={itemClass}
             key={tab.name}
             onClick={() => {
               onTabChange(tab.name)();
