@@ -1,4 +1,4 @@
-export interface ServiceIntro {
+export interface ServiceIntroProps {
   review: string;
   avatar: string;
   name: string;

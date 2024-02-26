@@ -55,7 +55,7 @@ export const useTransactions = () => {
   }, [page]);
 
   const navigateToDetails = (id: string) => {
-    navigate(`/nowruz/wallet/${id}`);
+    navigate(`/wallet/${id}`);
   };
 
   return { list, headers, page, setPage, PER_PAGE, total, navigateToDetails };

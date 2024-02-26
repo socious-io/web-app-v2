@@ -39,7 +39,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
 
   const navigateFullSearch = () => {
     props.onClose();
-    navigate(`/nowruz/search?q=${searchTerm}&type=${selectedTab}&page=1`);
+    navigate(`/search?q=${searchTerm}&type=${selectedTab}&page=1`);
   };
 
   const searchIntoList = (list: Array<Item>) => {

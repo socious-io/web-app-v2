@@ -8,13 +8,17 @@ import { LinksContainerProps } from './linksContainer.types';
 import { useLinksContainer } from './useLinksContainer';
 import { LinkItem } from '../linkItem/LinkItem';
 
-export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
+export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen }) => {
   const { filteredMenu, userIsLoggedIn } = useLinksContainer();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const navigateFunction = (route: string) => {
+    setOpen(false);
+    navigate(route);
+  };
   return (
     <div className="flex flex-col justify-start items-center w-full h-fit pt-8 gap-6">
-      <div className="w-full h-fit py-0 pl-6 pr-5">
+      <div className="w-full h-fit py-0 pl-6 pr-5 cursor-pointer" onClick={() => navigateFunction('/jobs')}>
         <img
           className="hidden md:block"
           src={open ? '/icons/nowruz/logo-white.svg' : '/icons/nowruz/logoMark-white.svg'}
@@ -34,13 +38,13 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
             <LinkItem
               key={item.label}
               label={item.label}
-              navigateFunc={() => navigate(item.route)}
+              navigateFunc={() => navigateFunction(item.route)}
               iconName={item.iconName}
               children={item.children.map((ch) => {
                 return {
                   label: ch.label,
                   navigateFunc: () => {
-                    navigate(ch.route);
+                    navigateFunction(ch.route);
                   },
                 };
               })}
@@ -69,7 +73,7 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
               key={item.label}
               label={item.label}
               navigateFunc={() => {
-                navigate(item.route);
+                navigateFunction(item.route);
               }}
               iconName={item.iconName}
               menuOpen={open}

@@ -14,7 +14,7 @@ export const useTransactionDetailes = () => {
   const currentIdType = currentIdentity?.type;
 
   const handleBack = () => {
-    navigate('/nowruz/wallet');
+    navigate('/wallet');
   };
   const name = currentIdType === 'users' ? mission.assigner.meta.name : mission.assignee.meta.name;
   const avatar = currentIdType === 'users' ? mission.assigner.meta.image : mission.assignee.meta.avatar;
