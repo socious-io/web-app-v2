@@ -16,6 +16,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     return { opacity: '0.5' };
   }
 
+  const enterInput = (e: any) => {
+    if (e.key === 'Enter') {
+      props.onSend();
+    }
+  };
+
   return (
     <div className={`${css.container} ${props.className}`}>
       {/* <Avatar size="2rem" img={props.img} type="users" /> */}
@@ -26,6 +32,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         placeholder="Write a message"
         variant="outline"
         disabled={props.disabled}
+        onKeyDown={((e) => enterInput(e))}
       />
       <div style={setStyle()} onClick={props.onSend} className={css.sendIcon}>
         <img src="/icons/send-blue.svg" />
