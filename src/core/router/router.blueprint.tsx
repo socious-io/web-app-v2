@@ -265,8 +265,9 @@ export const blueprint: RouteObject[] = [
             path: ':id',
             loader: async ({ params }) => {
               if (params.id) {
-                const mission = await getMission(params.id);
-                return { mission };
+                const requests = [getMission(params.id), stripeProfile({}), stripeProfile({ is_jp: true })];
+                const [mission, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
+                return { mission, stripeProfileRes, jpStripeProfileRes };
               }
             },
             async lazy() {
