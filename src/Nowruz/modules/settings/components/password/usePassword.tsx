@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { changePassword } from 'src/core/api';
 import * as yup from 'yup';
@@ -14,12 +13,11 @@ const schema = yup.object().shape({
 });
 
 export const usePassword = () => {
-    const [isFormValid, setIsFormValid] = useState(false);
     const {
         watch,
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isValid },
         reset,
     } = useForm<Inputs>({
         mode: "all",
@@ -27,18 +25,6 @@ export const usePassword = () => {
     });
     const current_password = watch('current_password');
     const password = watch('password');
-    const confirm = watch('confirm');
-    useEffect(() => {
-      schema
-        .validate({current_password, password, confirm}, { abortEarly: false })
-        .then((responseData) => {
-          setIsFormValid(true);
-      })
-        .catch((err) => {
-          setIsFormValid(false);
-      });
-    }, [password, confirm, current_password]);
-
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
           await changePassword({ current_password, password });
@@ -46,5 +32,5 @@ export const usePassword = () => {
 
         } catch (error) { console.log(error); }
       };
-    return { register, handleSubmit, errors, onSubmit,reset,isFormValid };
+    return { register, handleSubmit, errors, onSubmit,reset,isFormValid: isValid };
 };
