@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity } from 'src/core/api';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { RootState } from 'src/store';
 
 import { LinkItem } from '../linkItem/LinkItem';
@@ -15,7 +16,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
   const navigate = useNavigate();
   const navigateFunction = (route: string) => {
     navigate(route);
-    setOpen(false);
+    if (isTouchDevice()) setOpen(false);
   };
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);

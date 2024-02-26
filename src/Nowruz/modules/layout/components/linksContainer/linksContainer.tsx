@@ -1,6 +1,7 @@
 import { MenuList } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AvatarDropDown } from 'src/Nowruz/modules/general/components/avatarDropDown';
 
@@ -13,8 +14,8 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   const navigateFunction = (route: string) => {
-    setOpen(false);
     navigate(route);
+    if (isTouchDevice()) setOpen(false);
   };
   return (
     <div className="flex flex-col justify-start items-center w-full h-fit pt-8 gap-6">

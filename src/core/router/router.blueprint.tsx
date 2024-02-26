@@ -205,8 +205,7 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
-            path: 'wallet',
-
+            path: 'payments',
             children: [
               {
                 path: '',

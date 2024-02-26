@@ -63,7 +63,7 @@ export const useLinksContainer = () => {
     },
     {
       label: 'Payments',
-      route: '/wallet',
+      route: '/payments',
       iconName: 'wallet-04',
       public: false,
     },
