@@ -13,11 +13,7 @@ export const useUserProfile = () => {
   // dispatch(setMissions(resolver.missions));
   // dispatch(setBadges(resolver.badges));
 
-  const tabs = [
-    { label: 'About', content: <About /> },
-    { label: 'Services', content: <div /> },
-    { label: 'Reviews', content: <div /> },
-  ];
+  const tabs = [{ label: 'About', content: <About /> }];
 
   return { tabs };
 };

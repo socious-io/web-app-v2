@@ -74,8 +74,6 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     if (filter.label) {
       setCityLabel(filter.label);
     }
-
-    console.log(filter.label);
   }, [causesItems, filter.causes_tags, filter.label, filter.skills, skillItems, type]);
 
   return {
