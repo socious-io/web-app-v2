@@ -31,9 +31,9 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
         <textarea
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={((e) => enterInput(e))}
           className={css.inputMessage}
           placeholder="Send a message"
-          onKeyDown={((e) => enterInput(e))}
         />
 
         <Button
