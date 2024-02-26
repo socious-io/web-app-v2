@@ -21,7 +21,7 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
   };
 
   const enterInput = (e: any) => {
-    if (e.key === 'Enter') {
+    if (e.keyCode === 13) {
       handleSendMessage();
     }
   };
