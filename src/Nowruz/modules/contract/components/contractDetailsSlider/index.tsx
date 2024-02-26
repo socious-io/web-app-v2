@@ -34,7 +34,7 @@ export const ContractDetailsSlider: React.FC = () => {
     alertMessage,
     openPaymentModal,
     handleClosePaymentModal,
-    openReviewModal, 
+    openReviewModal,
     setOpenReviewModal,
     paymentOffer,
     primaryButtonDisabled,
@@ -46,7 +46,7 @@ export const ContractDetailsSlider: React.FC = () => {
     stripeAccounts,
     openWalletModal,
     setOpenWalletModal,
-    offer,
+    contract,
     redirectToChat,
     disableMessageButton,
   } = useContractDetailsSlider();
@@ -58,7 +58,9 @@ export const ContractDetailsSlider: React.FC = () => {
           <div className="flex flex-col gap-6 ">
             <Avatar size="72px" type="organizations" img={profileImage} />
             <div className="flex flex-col">
-              <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">{offer?.project.title}</span>
+              <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">
+                {contract.project.title}
+              </span>
               <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{name}</span>
             </div>
           </div>
@@ -106,18 +108,18 @@ export const ContractDetailsSlider: React.FC = () => {
       )}
       {openPaymentModal &&
         type === 'organizations' &&
-        offer?.status === 'APPROVED' &&
-        offer?.payment_mode === 'FIAT' && (
+        contract.status === 'APPROVED' &&
+        contract.payment_mode === 'FIAT' && (
           <PaymentFiat offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
         )}
       {openPaymentModal &&
         type === 'organizations' &&
-        offer?.status === 'APPROVED' &&
-        offer?.payment_mode === 'CRYPTO' && (
+        contract.status === 'APPROVED' &&
+        contract.payment_mode === 'CRYPTO' && (
           <PaymentCrypto offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
         )}
       {openAddCardModal && (
-        <AddCardModalUser offer={offer} open={openAddCardModal} handleClose={() => setOpenAddCardModal(false)} />
+        <AddCardModalUser offer={contract} open={openAddCardModal} handleClose={() => setOpenAddCardModal(false)} />
       )}
       {openSelectCardModal && (
         <SelectBankAccountUser
@@ -132,17 +134,10 @@ export const ContractDetailsSlider: React.FC = () => {
           open={openWalletModal}
           handleClose={() => setOpenWalletModal(false)}
           handleAccept={handleAcceptOffer}
-          walletAddress={offer?.recipient?.meta.wallet_address}
+          walletAddress={contract.recipient?.meta.wallet_address}
         />
       )}
-      {
-        openReviewModal && (
-          <ReviewModal 
-            open={openReviewModal}
-            handleClose={() => setOpenReviewModal(false)}
-          />
-        )
-      }
+      {openReviewModal && <ReviewModal open={openReviewModal} handleClose={() => setOpenReviewModal(false)} />}
     </>
   );
 };

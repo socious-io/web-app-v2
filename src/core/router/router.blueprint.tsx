@@ -32,7 +32,6 @@ import {
   getOrganizationMembers,
   getOrganizationByShortName,
   identities,
-  userOffers,
   getRequestedVerifyExperiences,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
@@ -67,15 +66,6 @@ export const blueprint: RouteObject[] = [
     element: <NowruzLayout />,
     children: [
       {
-        path: 'test',
-        async lazy() {
-          const { Test } = await import('src/Nowruz/pages/test');
-          return {
-            Component: Test,
-          };
-        },
-      },
-      {
         path: 'profile/users',
         children: [
           {
@@ -97,6 +87,19 @@ export const blueprint: RouteObject[] = [
                   const { UserProifle } = await import('src/Nowruz/pages/userProfile');
                   return {
                     Component: UserProifle,
+                  };
+                },
+              },
+              {
+                path: 'impact',
+                loader: async () => {
+                  const [userBadges, impactPointHistory] = await Promise.all([badges(), impactPoints()]);
+                  return { badges: userBadges, impactPointHistory };
+                },
+                async lazy() {
+                  const { Impact } = await import('src/Nowruz/pages/impact');
+                  return {
+                    Component: Impact,
                   };
                 },
               },
@@ -175,6 +178,10 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'created',
+            loader: async () => {
+              const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
+              return data;
+            },
             async lazy() {
               const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
               return {
@@ -231,6 +238,43 @@ export const blueprint: RouteObject[] = [
             Component: Protect(Contracts),
           };
         },
+      },
+      {
+        path: 'wallet',
+
+        children: [
+          {
+            path: '',
+            loader: async () => {
+              const requests = [
+                userPaidMissions({ page: 1, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' }),
+                stripeProfile({}),
+                stripeProfile({ is_jp: true }),
+              ];
+              const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
+              return { missionsList, stripeProfileRes, jpStripeProfileRes };
+            },
+            async lazy() {
+              const { Wallet } = await import('src/Nowruz/pages/wallet');
+              return {
+                Component: Protect(Wallet),
+              };
+            },
+          },
+          {
+            path: ':id',
+            loader: async ({ params }) => {
+              if (params.id) {
+                const mission = await getMission(params.id);
+                return { mission };
+              }
+            },
+            async lazy() {
+              const { TransactionDetails } = await import('src/Nowruz/pages/wallet/transactionDetails');
+              return { Component: TransactionDetails };
+            },
+          },
+        ],
       },
       {
         path: 'chats/*',

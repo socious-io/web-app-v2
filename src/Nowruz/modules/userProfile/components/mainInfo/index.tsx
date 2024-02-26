@@ -20,11 +20,14 @@ export const MainInfo = () => {
     return state.profile.identity;
   });
 
+  const profileType = useSelector<RootState, 'users' | 'organizations'>((state) => {
+    return state.profile.type;
+  });
+
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
   const myProfile = currentIdentity?.id === identity?.id;
-  const type = currentIdentity?.type;
   const org = identity as Organization;
   const user = identity as User;
   const size = ORGANIZATION_SIZE.find((sizes) => sizes.value === org.size)?.label.split(' ')[0];
@@ -59,7 +62,7 @@ export const MainInfo = () => {
   );
   return (
     <div className="flex flex-col gap-6">
-      {type === 'users' && <Impact point={identity?.impact_points} myProfile={myProfile} />}
+      {profileType === 'users' && <Impact point={identity?.impact_points} myProfile={myProfile} />}
       {identity?.bio && bioJSX}
       {connectionJSX}
       <ChipList
@@ -69,7 +72,7 @@ export const MainInfo = () => {
         fontColor={variables.color_primary_700}
       />
       {identity?.country && <Location country={identity.country} city={identity?.city} iconName={identity?.country} />}
-      {type === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
+      {profileType === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
       {org.industry && renderData('Industry', 'globe-04', org.industry)}
       {size && renderData('Size', 'users-01', size)}
       {org.website && <Website url={org.website ?? ''} />}

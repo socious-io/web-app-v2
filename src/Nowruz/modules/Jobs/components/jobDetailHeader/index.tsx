@@ -2,8 +2,8 @@ import { Divider } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Job } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { AuthGuard } from 'src/Nowruz/modules/authGuard';
@@ -11,19 +11,18 @@ import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
-import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 import { RootState } from 'src/store';
 
 import css from './jobDetailHeader.module.scss';
 import { ApplyModal } from '../applyModal';
-import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 
 interface JobDetailHeaderProps {
   job: Job;
-  isUser: boolean;
+  applied?: boolean;
+  setJustApplied?: (applied: boolean) => void;
 }
 
-export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser }) => {
+export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, setJustApplied }) => {
   const navigate = useNavigate();
   const [openApply, setOpenApply] = useState(false);
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -38,12 +37,17 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser })
 
   const socialCauses = socialCausesToCategory(job.causes_tags).map((item) => item.label);
   const skills = skillsToCategory(job.skills).map((item) => item.label);
+
+  const handleCloseApplyModal = (applied: boolean) => {
+    if (setJustApplied) setJustApplied(applied);
+    setOpenApply(false);
+  };
   return (
     <>
       <div className={css.container}>
         <BackLink
           title="Back to jobs"
-          onBack={() => navigate(isUser ? '/nowruz/jobs' : '/nowruz/jobs/created')}
+          onBack={() => navigate(currentIdentity?.type === 'organizations' ? '/nowruz/jobs/created' : '/nowruz/jobs')}
           customStyle="w-fit"
         />
         <Avatar size="72px" type="organizations" img={job.identity_meta.image} hasBorder isVerified={false} />
@@ -67,7 +71,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser })
               text={job.identity_meta.mission || ''}
             />
           </span> */}
-          {!job.applied && isUser && (
+          {!applied && currentIdentity?.type !== 'organizations' && (
             <AuthGuard>
               <Button
                 color="primary"
@@ -79,10 +83,10 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, isUser })
               </Button>
             </AuthGuard>
           )}
-          {isUser && <Divider />}
+          {currentIdentity?.type === 'users' && <Divider />}
         </div>
       </div>
-      <ApplyModal open={openApply} handleClose={() => setOpenApply(false)} />
+      <ApplyModal open={openApply} handleClose={handleCloseApplyModal} />
     </>
   );
 };
