@@ -33,7 +33,11 @@ export const JobsListing = () => {
       )}
       {!isMobile && (
         <div className="mt-11">
-          <Pagination count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)} onChange={(e, p) => setPage(p)} />
+          <Pagination
+            page={page}
+            count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)}
+            onChange={(e, p) => setPage(p)}
+          />
         </div>
       )}
       {isMobile && (

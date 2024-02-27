@@ -17,7 +17,8 @@ export const useJobListing = () => {
   const isMobile = isTouchDevice();
   const [jobsList, setJobsList] = useState<Job[]>(loaderData.items);
   const [totalCount, setTotalCount] = useState(loaderData.total_count);
-  const [page, setPage] = useState(1);
+  const pageNumber = Number(loaderData.page);
+  const [page, setPage] = useState(pageNumber);
   const [loading, setLoading] = useState(true);
   const isMount = useIsMount();
 
@@ -48,6 +49,7 @@ export const useJobListing = () => {
 
   useEffect(() => {
     loadPage();
+    localStorage.setItem('page', page.toString());
   }, [page]);
   return { page, setPage, jobsList, total: totalCount, PER_PAGE, isMobile, skillList, loading };
 };

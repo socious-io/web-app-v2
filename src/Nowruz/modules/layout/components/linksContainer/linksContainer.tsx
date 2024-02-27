@@ -14,6 +14,7 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   const navigateFunction = (route: string) => {
+    localStorage.removeItem('page');
     navigate(route);
     if (isTouchDevice()) setOpen(false);
   };
