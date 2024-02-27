@@ -283,14 +283,12 @@ export const useContractDetailsSlider = () => {
             subtitle={`Completed on ${isoToStandard(mission.updated_at.toString())}`}
           />
         );
-        setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
+        setAllStates(true, alertMsg, false, '', true, 'Review', undefined , handleReview);
         return;
       }
       if(offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED' && mission.org_feedback !== null) {
-        const alertMsg = (
-          <AlertMessage theme="gray" iconName="alert-circle" title="Reviewed" subtitle="you have reviewed this Contract" />
-        );
-        setAllStates(true, alertMsg, false, '', false, '');
+        
+        setAllStates(true, '', false, '', false, '');
         return;
       }
     }
@@ -384,6 +382,7 @@ export const useContractDetailsSlider = () => {
   const handleReview = () => {
     setOpenReviewModal(true);
   };
+
 
   return {
     name,

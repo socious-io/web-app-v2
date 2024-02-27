@@ -18,6 +18,7 @@ const schema = yup.object().shape({
 export const useReviewModal = (handleClose) => {
 
     const [selectedValue, setSelectedValue] = useState('satisfactory');
+    const [openSuccessModal, setOpenSuccessModal] = useState(false);
     const cardOptionList: CardRadioButtonItem[] = [
         { value: 'satisfactory', title: 'Satisfactory', img: <img src="/icons/thumbs-up.svg" /> },
         { value: 'unsatisfactory', title: 'Unsatisfactory', img: <img src="/icons/thumbs-down.svg" /> },
@@ -48,15 +49,22 @@ export const useReviewModal = (handleClose) => {
 
     const onSubmit: SubmitHandler<Inputs> = async ({ content }) => {
         if (selectedValue === 'satisfactory') {
-            feedbackMission(mission.id, content).then(()=>{
-                handleClose(true);
-            });
+            try {
+                await feedbackMission(mission.id, content);
+                setOpenSuccessModal(true);
+            } catch (error) { console.log(error); }
+            
         } else {
-            contestMission(mission.id, content).then(()=>{
-                handleClose(true);
-            });
+            try {
+                await contestMission(mission.id, content);
+                setOpenSuccessModal(true);
+            } catch (error) { console.log(error); }
         }
     };
+    const handleCloseSuccessModal = () => {
+        setOpenSuccessModal(false);
+    };
 
-    return { register, handleSubmit, errors, onSubmit, selectedValue, setSelectedValue, cardOptionList, name };
+
+    return { register, handleSubmit, errors, onSubmit, selectedValue, setSelectedValue, cardOptionList,name,openSuccessModal,handleCloseSuccessModal };
 };
