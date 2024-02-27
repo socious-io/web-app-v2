@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import { useNavigate } from 'react-router-dom';
 import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
@@ -6,7 +7,8 @@ import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import css from './result-list.module.scss';
 import { ResultListProps } from './ResultList.types';
 import { Item } from '../../containers/SearchModal/SearchModal.types';
-export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
+export const ResultList: React.FC<ResultListProps> = ({ list, onClose,loadMore = console.log, hasMore = false }) => {
+
   const selectedRef = useRef(null);
   const [selectedRowIndex] = useState(null);
   const [hoveredRowIndex] = useState<null | number>(null);
@@ -31,6 +33,17 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
 
   return (
     <div className="h-full w-full overflow-y-auto flex flex-col ">
+      <InfiniteScroll
+        pageStart={1}
+        loadMore={loadMore}
+        hasMore={hasMore}
+        loader={
+          <div className="loader" key={0}>
+            Loading ...
+          </div>
+        }
+        useWindow={false}
+      >
       {list.map((item, index) => (
         <div className="flex flex-row items-start">
           <div
@@ -58,6 +71,8 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
           </div>
         </div>
       ))}
+
+      </InfiniteScroll>
     </div>
   );
 };
