@@ -9,13 +9,13 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
 
   return (
     <>
-      <MenuItem className={css.container} tabIndex={1}>
+      <MenuItem disableRipple className={css.container} tabIndex={1} onClick={navigateFunc}>
         {iconName && (
-          <Icon name={iconName} fontSize={24} className="text-Gray-light-mode-500 md:text-Brand-300 !cursor-pointer" />
+          <Icon name={iconName} fontSize={23} className="text-Gray-light-mode-500 md:text-Brand-300 !cursor-pointer" />
         )}
         {menuOpen && (
           <>
-            <span className={css.itemLabel} onClick={navigateFunc}>
+            <span className={css.itemLabel}>
               {label}
             </span>
             {badgeIcon && menuOpen ? <div className="mr-0 ml-auto cursor-pointer">{badgeIcon}</div> : ''}
@@ -25,7 +25,7 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
       {menuOpen &&
         subMenuOpen &&
         children?.map((item) => (
-          <MenuItem key={item.label} className={`${css.container} pl-11`} tabIndex={1}>
+          <MenuItem disableRipple key={item.label} className={`${css.container} pl-11`} tabIndex={1}>
             <Typography variant="h4" className={css.itemLabel} onClick={item.navigateFunc}>
               {item.label}
             </Typography>

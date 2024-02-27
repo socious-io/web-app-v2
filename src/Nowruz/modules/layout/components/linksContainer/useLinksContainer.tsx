@@ -23,17 +23,20 @@ export const useLinksContainer = () => {
   }, [userIsLoggedIn]);
 
   const menu = [
+    /* Not available
     {
       label: 'Dashboard',
       route: '/',
       iconName: 'home-line',
       public: false,
     },
+    */
     {
       label: 'Jobs',
       route: !userIsLoggedIn || currentIdentity?.type === 'users' ? '/nowruz/jobs' : '/nowruz/jobs/created',
       iconName: 'briefcase-01',
       public: true,
+      /* Not available
       children:
         !userIsLoggedIn || currentIdentity?.type === 'users'
           ? [
@@ -41,6 +44,7 @@ export const useLinksContainer = () => {
               //{ label: 'Saved jobs', route: '/', public: false },
             ]
           : undefined,
+      */
     },
     {
       label: 'Contracts',
@@ -48,12 +52,14 @@ export const useLinksContainer = () => {
       iconName: 'file-02',
       public: false,
     },
+    /* Not available
     {
       label: 'Communities',
       route: '/',
       iconName: 'users-01',
       public: false,
     },
+    */
     {
       label: 'Messages',
       route: '/nowruz/chats',
@@ -62,7 +68,7 @@ export const useLinksContainer = () => {
       // badgeIcon: unread ? <Badge content={unread.toString()} /> : '',
     },
     {
-      label: 'Wallet',
+      label: 'Payments',
       route: '/nowruz/wallet',
       iconName: 'wallet-04',
       public: false,

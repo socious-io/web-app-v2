@@ -34,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout }) => {
           <LinkItem
             label="Settings"
             navigateFunc={() => {
-              navigate('/');
+              navigate('/nowruz/settings');
             }}
             iconName="settings-01"
             menuOpen={open}
