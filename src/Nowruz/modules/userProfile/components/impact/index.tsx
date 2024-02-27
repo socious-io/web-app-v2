@@ -29,7 +29,7 @@ export const Impact: React.FC<ImpactProps> = (props) => {
       </div>
       {myProfile && <div className={css.helperText}>Measure and track your impact</div>}
       <div className="flex items-end">
-        <span className={css.pointNumber}>{point}</span>
+        <span className={css.pointNumber}>{Math.round(point)}</span>
         <span className={css.pointUnit}>pts</span>
       </div>
       {myProfile && (

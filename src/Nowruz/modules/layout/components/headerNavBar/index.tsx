@@ -35,6 +35,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     navigateToProfile,
     unreadNotif,
     readNotifications,
+    navigateToSettings,
     openSearchModal,
     setOpenSearchModal,
     searchTerm,
@@ -92,9 +93,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
               {
                 iconName: 'settings-01',
                 label: 'Settings',
-                onClick: () => {
-                  return;
-                },
+                onClick: navigateToSettings
               },
               { iconName: 'log-out-01', label: 'Log out', onClick: logout },
             ]}

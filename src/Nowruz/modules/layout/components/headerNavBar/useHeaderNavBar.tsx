@@ -91,6 +91,10 @@ export const useHeaderNavBar = () => {
     }
   };
 
+  const navigateToSettings =() => {
+    navigate('/nowruz/settings');
+  };
+
   const readNotifications = async () => {
     setOpenNotifPanel(true);
     setUnreadNotif(false);
@@ -114,6 +118,7 @@ export const useHeaderNavBar = () => {
     navigateToProfile,
     unreadNotif,
     readNotifications,
+    navigateToSettings,
     openSearchModal,
     setOpenSearchModal,
     searchTerm,
