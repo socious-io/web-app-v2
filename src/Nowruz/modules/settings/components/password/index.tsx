@@ -15,8 +15,7 @@ const Password = () =>{
                 <div className="w-full py-8 items-center">
                     <h2 className="grow css.title text-lg font-semibold">Password</h2>
                     <p className='text-sm font-normal text-Gray-light-mode-600 pt-1'>
-                    If you have signed up via Google, please log out and use “forgot password” to reset your password.
-                    </p>
+                    Please enter your current password to change your password. If you have signed up via Google, please log out and use “forgot password” to reset your password.                     </p>
                 </div>
             </div>
             <form id='passwordForm' onSubmit={handleSubmit(onSubmit)}>
@@ -33,7 +32,7 @@ const Password = () =>{
                 
                 <div className={css.borderSection}>
                     <div className='grid grid-cols-1 lg:grid-cols-5 gap-4'>
-                        <label>Password</label>
+                        <label>Current password</label>
                         <div className='col-span-2'>
                             <Input
                                 id='current_password'
@@ -49,7 +48,7 @@ const Password = () =>{
                 </div>
                 <div className={css.borderSection}>
                     <div className='grid grid-cols-1 lg:grid-cols-5 gap-4'>
-                        <label>Confirm Password</label>
+                        <label>New password</label>
                         <div className='col-span-2'>
                             <div>
                             <Input id="password" type="password" name="password" register={register} placeholder="password" />
@@ -80,7 +79,7 @@ const Password = () =>{
                 </div>
                 <div className={css.borderSection}>
                     <div className='grid grid-cols-1 lg:grid-cols-5  gap-4 '>
-                        <label>Confirm New Password</label>
+                        <label>Confirm new password</label>
                         <div className='col-span-2'>
                             <div>
                                 <Input
