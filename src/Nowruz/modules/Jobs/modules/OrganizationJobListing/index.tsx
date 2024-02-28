@@ -52,7 +52,7 @@ export const OrganizationJobListing = () => {
       )}
       {jobsList.length > 0 && (
         <div className="mt-11 hidden md:block">
-          <Pagination count={Math.ceil(total / PER_PAGE)} onChange={(e, p) => setPage(p)} />
+          <Pagination page={page} count={Math.ceil(total / PER_PAGE)} onChange={(e, p) => setPage(p)} />
         </div>
       )}
       {jobsList.length > 0 && (
