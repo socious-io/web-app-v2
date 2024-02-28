@@ -23,17 +23,21 @@ export const useLinksContainer = () => {
   }, [userIsLoggedIn]);
 
   const menu = [
-    // {
-    //   label: 'Dashboard',
-    //   route: '/',
-    //   iconName: 'home-line',
-    //   public: false,
-    // },
+    /* Not available
+    {
+      label: 'Dashboard',
+      route: '/',
+      iconName: 'home-line',
+      public: false,
+    },
+    */
+
     {
       label: 'Jobs',
       route: !userIsLoggedIn || currentIdentity?.type === 'users' ? '/jobs' : '/jobs/created',
       iconName: 'briefcase-01',
       public: true,
+
       // children:
       //   !userIsLoggedIn || currentIdentity?.type === 'users'
       //     ? [
@@ -48,12 +52,16 @@ export const useLinksContainer = () => {
       iconName: 'file-02',
       public: false,
     },
-    // {
-    //   label: 'Communities',
-    //   route: '/',
-    //   iconName: 'users-01',
-    //   public: false,
-    // },
+
+    /* Not available
+    {
+      label: 'Communities',
+      route: '/',
+      iconName: 'users-01',
+      public: false,
+    },
+    */
+
     {
       label: 'Messages',
       route: '/chats',

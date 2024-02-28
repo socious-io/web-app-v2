@@ -34,7 +34,7 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
         </div>
       )}
 
-      <MenuList autoFocusItem className="w-full flex flex-col gap-2 px-4 ">
+      <MenuList autoFocusItem className="w-full flex flex-col gap-2 px-4 py-0 items-center self-stretch">
         {filteredMenu.map((item) =>
           item.children ? (
             <LinkItem
