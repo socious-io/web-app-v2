@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { contestMission, feedbackMission } from 'src/core/api';
 import { Mission } from 'src/core/api';
 import { CardRadioButtonItem } from 'src/Nowruz/modules/general/components/cardRadioButton/cardRadioButton.types';
@@ -16,7 +17,6 @@ const schema = yup.object().shape({
         .required('Content is required'),
 });
 export const useReviewModal = (handleClose) => {
-
     const [selectedValue, setSelectedValue] = useState('satisfactory');
     const [openSuccessModal, setOpenSuccessModal] = useState(false);
     const cardOptionList: CardRadioButtonItem[] = [
@@ -52,7 +52,7 @@ export const useReviewModal = (handleClose) => {
             try {
                 await feedbackMission(mission.id, content);
                 setOpenSuccessModal(true);
-            } catch (error) { console.log(error); }
+            } catch (error) { console.log('error'); }
             
         } else {
             try {
@@ -62,6 +62,7 @@ export const useReviewModal = (handleClose) => {
         }
     };
     const handleCloseSuccessModal = () => {
+        handleClose(true);
         setOpenSuccessModal(false);
     };
 

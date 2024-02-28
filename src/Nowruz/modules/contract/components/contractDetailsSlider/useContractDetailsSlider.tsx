@@ -274,7 +274,7 @@ export const useContractDetailsSlider = () => {
         return;
       }
 
-      if (offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED' && mission.org_feedback === null) {
+      if (offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED' && Object.keys(mission.org_feedback).length<=0 ) {
         const alertMsg = (
           <AlertMessage
             theme="primary"
@@ -285,14 +285,13 @@ export const useContractDetailsSlider = () => {
         );
         setAllStates(true, alertMsg, false, '', true, 'Review', undefined , handleReview);
         return;
-      }
-      if(offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED' && mission.org_feedback !== null) {
+      } 
+      if(offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED' && Object.keys(mission.org_feedback).length>0) {
         
         setAllStates(true, '', false, '', false, '');
         return;
       }
     }
-
     setAllStates(false, null, false, '', false, '');
   };
 
