@@ -39,7 +39,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
         <LinkItem
           label="Settings"
           navigateFunc={() => {
-            navigateFunction('/');
+            navigateFunction('/settings');
           }}
           iconName="settings-01"
           menuOpen={open}
