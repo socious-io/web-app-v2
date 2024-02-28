@@ -96,7 +96,7 @@ export const useSearch = () => {
     } else {
       id = item.shortname;
     }
-    navigate(`/nowruz/profile/${type}/${id}/view`);
+    navigate(`/profile/${type}/${id}/view`);
   };
 
   const card = useCallback(

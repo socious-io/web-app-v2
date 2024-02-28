@@ -51,7 +51,7 @@ export const useNotifications = () => {
         path = `/feeds/${notifRefId}`;
         break;
       case 'APPLICATION':
-        path = `/nowruz/jobs/created/${notifRefId}`;
+        path = `/jobs/created/${notifRefId}`;
         break;
       case 'OFFER':
         path = `/jobs/received-offer/${notifRefId}`;
@@ -69,7 +69,7 @@ export const useNotifications = () => {
       case 'ASSIGNEE_CANCELED':
       case 'ASSIGNER_CANCELED':
       case 'ASSIGNER_CONFIRMED':
-        path = `/nowruz/contracts`;
+        path = `/contracts`;
         break;
       // case 'ASSIGNEE_CANCELED':
       //   path = `/jobs/created/${notifRefId}/overview?tab=Offered`;
