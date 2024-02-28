@@ -15,6 +15,7 @@ interface FooterProps extends LinksContainerProps {
 export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
   const navigate = useNavigate();
   const navigateFunction = (route: string) => {
+    localStorage.removeItem('page');
     navigate(route);
     if (isTouchDevice()) setOpen(false);
   };

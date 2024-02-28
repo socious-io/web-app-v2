@@ -138,19 +138,6 @@ export const blueprint: RouteObject[] = [
                 },
               },
               {
-                path: '',
-                loader: async () => {
-                  const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
-                  return data;
-                },
-                async lazy() {
-                  const { JobsList } = await import('src/Nowruz/pages/jobs/List');
-                  return {
-                    Component: JobsList,
-                  };
-                },
-              },
-              {
                 path: 'created',
                 loader: async () => {
                   const data = await jobs({ page: 1, status: 'ACTIVE', limit: 5 });
@@ -176,6 +163,20 @@ export const blueprint: RouteObject[] = [
                   const { CreatedDetail } = await import('src/Nowruz/pages/jobs/detail/Created');
                   return {
                     Component: Protect(CreatedDetail),
+                  };
+                },
+              },
+              {
+                path: '',
+                loader: async () => {
+                  const page = Number(localStorage.getItem('page') || 1);
+                  const data = await jobs({ page, status: 'ACTIVE', limit: 5 });
+                  return data;
+                },
+                async lazy() {
+                  const { JobsList } = await import('src/Nowruz/pages/jobs/List');
+                  return {
+                    Component: JobsList,
                   };
                 },
               },
