@@ -2,7 +2,6 @@ import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { ConnectStatus, Organization, User } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
-import { Icon } from 'src/Nowruz/general/Icon';
 import { AvatarProfile } from 'src/Nowruz/modules/general/components/avatarProfile';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';

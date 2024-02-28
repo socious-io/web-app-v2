@@ -27,8 +27,8 @@ export const identitySlice = createSlice({
           'avatar' in identity.meta
             ? identity.meta.avatar || ''
             : 'image' in identity.meta
-            ? identity.meta.image || ''
-            : '';
+              ? identity.meta.image || ''
+              : '';
       } else state.avatarImage = '';
     },
     removeIdentityList: () => {

@@ -15,13 +15,13 @@ import {
   badges,
   impactPoints,
   getOrganizationByShortName,
-  identities,
   getRequestedVerifyExperiences,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
 import FallBack from 'src/Nowruz/pages/fallback/fallback';
-import { RootState } from 'src/store';
+import store, { RootState } from 'src/store';
+import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
@@ -375,8 +375,8 @@ export const blueprint: RouteObject[] = [
           {
             path: 'onboarding',
             loader: async () => {
-              const resp = await identities();
-              return resp;
+              await store.dispatch(currentIdentities());
+              return null;
             },
             async lazy() {
               const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
