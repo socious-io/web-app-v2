@@ -56,6 +56,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
   const handleTitleClick = () => {
     navigate(`/jobs/${job.id}`);
   };
+
   return (
     <div className={`${css.container} cursor-pointer md:cursor-default`} onClick={handleClick}>
       <div className={css.cardInfo}>
@@ -115,11 +116,9 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
               {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
 
               {job.payment_type === 'VOLUNTEER' &&
-                job.payment_scheme === 'HOURLY' &&
+                job.commitment_hours_lower &&
+                job.commitment_hours_higher &&
                 renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs/week`)}
-              {job.payment_type === 'VOLUNTEER' &&
-                job.payment_scheme === 'FIXED' &&
-                renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs`)}
 
               {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
             </div>
