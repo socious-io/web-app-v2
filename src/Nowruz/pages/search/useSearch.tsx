@@ -28,7 +28,7 @@ export const useSearch = () => {
   const [page, setPage] = useState(1);
   const [sliderFilterOpen, setSliderFilterOpen] = useState(false);
   const [filter, setFilter] = useState<FilterReq>({} as FilterReq);
-  const [countryName, setCountryName] = useState<string | undefined>();
+  const [countryName, setCountryName] = useState<string | undefined>('');
 
   const navigate = useNavigate();
 
@@ -122,6 +122,7 @@ export const useSearch = () => {
     if (data.items.length) {
       setSearchResult(data);
       setFilter({});
+      setCountryName('');
     }
   }, [data]);
 
