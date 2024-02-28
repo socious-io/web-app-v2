@@ -51,7 +51,7 @@ export const useNotifications = () => {
         path = `/feeds/${notifRefId}`;
         break;
       case 'APPLICATION':
-        path = `/jobs/created/${notifRefId}/overview?tab=Applicants`;
+        path = `/jobs/created/${notifRefId}`;
         break;
       case 'OFFER':
         path = `/jobs/received-offer/${notifRefId}`;
@@ -66,17 +66,20 @@ export const useNotifications = () => {
         path = `/jobs/applied/${notifRefId}?tab=Hired`;
         break;
       case 'PROJECT_COMPLETE':
-        path = `/jobs/created/${notifRefId}/overview?tab=Hired`;
-        break;
       case 'ASSIGNEE_CANCELED':
-        path = `/jobs/created/${notifRefId}/overview?tab=Offered`;
-        break;
       case 'ASSIGNER_CANCELED':
-        path = `/jobs/applied/${notifRefId}?tab=Applied`;
-        break;
       case 'ASSIGNER_CONFIRMED':
-        path = `/jobs/applied/${notifRefId}?tab=Hired`;
+        path = `/contracts`;
         break;
+      // case 'ASSIGNEE_CANCELED':
+      //   path = `/jobs/created/${notifRefId}/overview?tab=Offered`;
+      //   break;
+      // case 'ASSIGNER_CANCELED':
+      //   path = `/jobs/applied/${notifRefId}?tab=Applied`;
+      //   break;
+      // case 'ASSIGNER_CONFIRMED':
+      //   path = `/jobs/applied/${notifRefId}?tab=Hired`;
+      //   break;
       case 'CONNECT':
         path = `/profile/${notifIdentityType}/${username}/view`;
         break;

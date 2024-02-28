@@ -16,13 +16,13 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
     let path = '';
     switch (item.type) {
       case 'projects':
-        path = `/nowruz/jobs/${item.id}`;
+        path = `/jobs/${item.id}`;
         break;
       case 'organizations':
-        path = `/nowruz/profile/organizations/${item.username}/view`;
+        path = `/profile/organizations/${item.username}/view`;
         break;
       default:
-        path = `/nowruz/profile/users/${item.username}/view`;
+        path = `/profile/users/${item.username}/view`;
         break;
     }
     onClose();
@@ -41,20 +41,21 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
             onClick={() => onClickRow(item as Item)}
           >
             <AvatarLabelGroup
+              removeFull={true}
               customStyle="w-auto"
               account={{ name: item.title, id: item.id, username: item.username, type: item.type, img: item.image }}
             />
+            {item.isAvailable && (
+              <div className={css.chip}>
+                <Chip
+                  startIcon={<div className={css.dotIcon} />}
+                  label={item.type === 'users' ? 'Available for work' : 'Hiring'}
+                  theme="secondary"
+                  shape="sharp"
+                />
+              </div>
+            )}
           </div>
-          {item.isAvailable && (
-            <div className={css.chip}>
-              <Chip
-                startIcon={<div className={css.dotIcon} />}
-                label={item.type === 'users' ? 'Available for work' : 'Hiring'}
-                theme="secondary"
-                shape="sharp"
-              />
-            </div>
-          )}
         </div>
       ))}
     </div>

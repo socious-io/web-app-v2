@@ -77,10 +77,10 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
         )}
         {!myProfile && (
           <div className={`${css.actionDiv} right-8 w-fit`}>
-            <Button color="primary" variant="outlined" className={css.shareButton}>
+            {/* <Button color="primary" variant="outlined" className={css.shareButton}>
               <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
               Share
-            </Button>
+            </Button> */}
             {isLoggedIn && connectStatus !== 'CONNECTED' && (
               <Button
                 disabled={connectStatus === 'PENDING'}
@@ -91,13 +91,13 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
                 {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
               </Button>
             )}
-            <IconButton
+            {/* <IconButton
               size="small"
               iconName="dots-vertical"
               iconColor={variables.color_grey_700}
               iconSize={20}
               customStyle="w-9 h-10 !border !border-solid !border-Gray-light-mode-300"
-            />
+            /> */}
           </div>
         )}
       </div>

@@ -52,16 +52,12 @@ export const OrganizationJobListing = () => {
       )}
       {jobsList.length > 0 && (
         <div className="mt-11 hidden md:block">
-          <Pagination count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)} onChange={(e, p) => setPage(p)} />
+          <Pagination page={page} count={Math.ceil(total / PER_PAGE)} onChange={(e, p) => setPage(p)} />
         </div>
       )}
       {jobsList.length > 0 && (
         <div className="mt-11 block md:hidden">
-          <PaginationMobile
-            page={page}
-            count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)}
-            handleChange={setPage}
-          />
+          <PaginationMobile page={page} count={Math.ceil(total / PER_PAGE)} handleChange={setPage} />
         </div>
       )}
     </div>

@@ -1,3 +1,4 @@
+import { Offer } from 'src/core/types';
 import { AdditionalRes } from '../additionals/additionals.types';
 import { Category, Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
@@ -141,6 +142,7 @@ export interface ImpactPoint {
   created_at: Date;
   total_points: number;
   organization: Identity;
+  offer: Offer;
 }
 
 export interface ImpactPoints extends PaginateRes {

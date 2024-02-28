@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useLoaderData, useSearchParams } from 'react-router-dom';
+import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { isTouchDevice } from 'src/core/device-type-detector';
@@ -27,6 +28,17 @@ export const useSearch = () => {
   const [page, setPage] = useState(1);
   const [sliderFilterOpen, setSliderFilterOpen] = useState(false);
   const [filter, setFilter] = useState<FilterReq>({} as FilterReq);
+  const [countryName, setCountryName] = useState('');
+
+  const navigate = useNavigate();
+
+  function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
+    if (shortname && COUNTRIES_DICT[shortname]) {
+      return COUNTRIES_DICT[shortname];
+    } else {
+      return shortname;
+    }
+  }
 
   const filterNeeded = (filter: FilterReq) => {
     const propertyName = type === 'projects' ? 'causes_tags' : 'social_causes';
@@ -61,6 +73,9 @@ export const useSearch = () => {
 
   const onApply = async (filterRaw: FilterReq) => {
     setFilter(filterRaw);
+    if (filterRaw.country) {
+      setCountryName(getCountryName(filterRaw?.country));
+    }
     handleCloseOrApplyFilter();
   };
 
@@ -70,10 +85,28 @@ export const useSearch = () => {
     return 'organization';
   }, [type]);
 
+  const isUser = (item: Organization | User): item is User => {
+    return (item as User).username !== undefined;
+  };
+
+  const handleNavigate = (item: Organization | User) => {
+    let id = '';
+    if (isUser(item)) {
+      id = item.username;
+    } else {
+      id = item.shortname;
+    }
+    navigate(`/profile/${type}/${id}/view`);
+  };
+
   const card = useCallback(
     (item: Job | Organization | User) => {
       if (type && ['users', 'organizations'].includes(type)) {
-        return <ProfileCard identity={item as User | Organization} labelShown={false} />;
+        return (
+          <div onClick={() => handleNavigate(item as Organization | User)} className="cursor-pointer">
+            <ProfileCard identity={item as User | Organization} labelShown={false} />
+          </div>
+        );
       }
       return <JobListingCard job={item as Job} />;
     },
@@ -101,6 +134,7 @@ export const useSearch = () => {
       q,
       sliderFilterOpen,
       filter,
+      countryName,
     },
     operations: {
       setPage,
@@ -108,6 +142,7 @@ export const useSearch = () => {
       handleCloseOrApplyFilter,
       onApply,
       onClose,
+      getCountryName,
     },
   };
 };

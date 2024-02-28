@@ -36,7 +36,8 @@ export const useOrganizationJobListing = () => {
 
   const PER_PAGE = 5;
   const isMobile = isTouchDevice();
-  const [page, setPage] = useState(1);
+  const pageNumber = Number(loaderData.page);
+  const [page, setPage] = useState(pageNumber);
 
   const filterButtons: ButtonGroupItem[] = [
     {
@@ -60,6 +61,7 @@ export const useOrganizationJobListing = () => {
   };
 
   useEffect(() => {
+    localStorage.setItem('page', page.toString());
     getJobsData();
   }, [page, filter]);
 

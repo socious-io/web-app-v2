@@ -10,7 +10,7 @@ import css from './list.module.scss';
 
 export const Search = () => {
   const {
-    data: { page, searchResult, total, PER_PAGE, readableType, q, sliderFilterOpen, filter },
+    data: { page, searchResult, total, PER_PAGE, readableType, q, sliderFilterOpen, filter, countryName },
     operations: { setPage, card, handleCloseOrApplyFilter, onApply, onClose },
   } = useSearch();
 
@@ -20,7 +20,7 @@ export const Search = () => {
       <div className={css.headerContainer}>
         <div className={headerClass}>
           <h1 className={css.title}>{`Search for ${q}`}</h1>
-          <h2 className={css.subtitle}>{`${total} ${readableType} found`}</h2>
+          <h2 className={css.subtitle}>{`${total} ${readableType} found ${countryName ? `in ${countryName}` : ``}`}</h2>
         </div>
         <div>
           <Button color="secondary" variant="outlined" className={css.filterButton} onClick={handleCloseOrApplyFilter}>

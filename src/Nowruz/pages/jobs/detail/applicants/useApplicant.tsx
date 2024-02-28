@@ -4,7 +4,7 @@ import { Applicant } from 'src/core/api';
 export const useApplicant = (applicant: Applicant) => {
   const navigate = useNavigate();
   const handleViewProfile = () => {
-    navigate(`/nowruz/profile/users/${applicant.user.username}/view`);
+    navigate(`/profile/users/${applicant.user.username}/view`);
   };
 
   const handleClickResume = () => {

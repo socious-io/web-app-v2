@@ -23,9 +23,11 @@ import { ApplyModal } from '../applyModal';
 
 interface JobDetailAboutProps {
   isUser: boolean;
+  applied?: boolean;
+  setJustApplied?: (val: boolean) => void;
 }
 
-export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true }) => {
+export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, setJustApplied, applied }) => {
   const { jobDetail } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
@@ -42,6 +44,10 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
     navigator.clipboard.writeText(url);
   };
 
+  const handleCloseApplyModal = (applied: boolean) => {
+    setOpenApply(false);
+    if (setJustApplied) setJustApplied(applied);
+  };
   const navigate = useNavigate();
 
   const onClose = async () => {
@@ -117,31 +123,21 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
         EXPERIENCE_LEVEL_V2.find((level) => level.value === jobDetail.experience_level)?.label,
       )}
       {jobDetail.payment_type === 'PAID' &&
-        jobDetail.payment_scheme === 'FIXED' &&
         renderJobFeatures(
           'currency-dollar-circle',
           ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
           '(Fixed-price)',
         )}
-      {jobDetail.payment_type === 'PAID' &&
-        jobDetail.payment_scheme === 'HOURLY' &&
-        renderJobFeatures(
-          'currency-dollar-circle',
-          ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
-        )}
-      {jobDetail.payment_type === 'VOLUNTEER' &&
-        jobDetail.payment_scheme === 'HOURLY' &&
-        renderJobFeatures('heart', 'Volunteer')}
+
+      {jobDetail.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
 
       {jobDetail.payment_type === 'VOLUNTEER' &&
-        jobDetail.payment_scheme === 'HOURLY' &&
+        jobDetail.commitment_hours_lower &&
+        jobDetail.commitment_hours_higher &&
         renderJobFeatures(
           'clock',
           ` ${jobDetail.commitment_hours_lower}~${jobDetail.commitment_hours_higher} hrs/week`,
         )}
-      {jobDetail.payment_type === 'VOLUNTEER' &&
-        jobDetail.payment_scheme === 'FIXED' &&
-        renderJobFeatures('clock', ` ${jobDetail.commitment_hours_lower}~${jobDetail.commitment_hours_higher} hrs`)}
     </div>
   );
   return (
@@ -151,7 +147,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
         <div className="hidden md:block">{detailJSX}</div>
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
-        {!jobDetail.applied && isUser && (
+        {!applied && currentIdentity?.type !== 'organizations' && (
           <AuthGuard>
             <Button
               variant="contained"
@@ -178,7 +174,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true })
           <Input id="copy-url" value={url} postfix={inputJSX} />
         </div>
       </div>
-      <ApplyModal open={openApply} handleClose={() => setOpenApply(false)} />
+      <ApplyModal open={openApply} handleClose={handleCloseApplyModal} />
       <AlertModal
         open={openAlert}
         onClose={() => setOpenAlert(false)}

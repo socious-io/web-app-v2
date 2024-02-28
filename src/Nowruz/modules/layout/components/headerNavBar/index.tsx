@@ -11,6 +11,7 @@ import { useHeaderNavBar } from './useHeaderNavBar';
 import { Notifications } from '../../containers/notifications';
 import NotifBellIcon from '../notifBellIcon';
 import { StatusDropDown } from '../statusDropDown';
+import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 
 interface HeaderNavBarProps {
   setOpen: (val: boolean) => void;
@@ -100,11 +101,14 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           />
         </div>
       )}
-      <SlideOut
+      {/* <SlideOut
         component={<Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />}
         open={openNotifPanel}
         handleClose={() => setOpenNotifPanel(false)}
-      />
+      /> */}
+      <Overlay open={openNotifPanel} onClose={() => setOpenNotifPanel(false)} title="Notifications">
+        <Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />
+      </Overlay>
       <SearchModal open={openSearchModal} onClose={() => setOpenSearchModal(false)} setSearchText={setSearchTerm} />
     </div>
   );
