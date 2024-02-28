@@ -25,7 +25,6 @@ export const Impact: React.FC<ImpactProps> = (props) => {
     <div className={css.container}>
       <div className={css.titleDiv}>
         <div className={css.title}>Impact points</div>
-        <Icon name="help-circle" fontSize={16} color={variables.color_grey_400} />
       </div>
       {myProfile && <div className={css.helperText}>Measure and track your impact</div>}
       <div className="flex items-end">
