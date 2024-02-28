@@ -31,7 +31,7 @@ export const useTransactionDetailes = () => {
   }, []);
 
   const handleBack = () => {
-    navigate('/nowruz/wallet');
+    navigate('/wallet');
   };
 
   const detail = {

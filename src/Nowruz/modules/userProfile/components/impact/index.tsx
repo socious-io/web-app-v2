@@ -18,7 +18,7 @@ export const Impact: React.FC<ImpactProps> = (props) => {
   const { point = 0, myProfile } = props;
   const navigate = useNavigate();
   const navigateToImpact = () => {
-    navigate(`/nowruz/profile/users/${user.username}/impact`);
+    navigate(`/profile/users/${user.username}/impact`);
   };
 
   return (
