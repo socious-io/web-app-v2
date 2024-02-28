@@ -49,6 +49,7 @@ import { receivedOfferLoader } from 'src/pages/offer-received/offer-received.ser
 import { getCreditCardInfo, getCreditCardInfoById } from 'src/pages/payment/payment.service';
 import { profileOrganizationPageLoader } from 'src/pages/profile-organization/profile-organization.loader';
 import { search } from 'src/pages/search/desktop/search.services';
+import { RootState } from 'src/store';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
