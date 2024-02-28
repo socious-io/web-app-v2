@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { forgetPassword, handleError, otpConfirm } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
-import { dialog } from 'src/core/dialog/dialog';
 
 export const useOtpForm = () => {
   const navigate = useNavigate();

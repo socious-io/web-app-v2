@@ -1,10 +1,10 @@
 import { Modal } from '@mui/material';
 import React from 'react';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
+import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 
 import { JobPreviewModalProps } from './JobPreviewModal.types';
 import css from './preview-modal.module.scss';

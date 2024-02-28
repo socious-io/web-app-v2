@@ -35,7 +35,7 @@ export const useResultNotFound = () => {
     return message;
   };
   const onClick = (type: string) => {
-    navigate('/nowruz/jobs');
+    navigate('/jobs');
   };
   const generatButtonText = (type: string) => {
     let text = '';

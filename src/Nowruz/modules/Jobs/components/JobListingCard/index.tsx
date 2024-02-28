@@ -51,11 +51,12 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
   }, [job]);
   const navigate = useNavigate();
   const handleClick = () => {
-    if (isTouchDevice()) navigate(`/nowruz/jobs/${job.id}`);
+    if (isTouchDevice()) navigate(`/jobs/${job.id}`);
   };
   const handleTitleClick = () => {
-    navigate(`/nowruz/jobs/${job.id}`);
+    navigate(`/jobs/${job.id}`);
   };
+
   return (
     <div className={`${css.container} cursor-pointer md:cursor-default`} onClick={handleClick}>
       <div className={css.cardInfo}>
@@ -115,11 +116,9 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
               {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
 
               {job.payment_type === 'VOLUNTEER' &&
-                job.payment_scheme === 'HOURLY' &&
+                job.commitment_hours_lower &&
+                job.commitment_hours_higher &&
                 renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs/week`)}
-              {job.payment_type === 'VOLUNTEER' &&
-                job.payment_scheme === 'FIXED' &&
-                renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs`)}
 
               {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
             </div>
@@ -127,7 +126,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
         </div>
       </div>
       <div className={css.footer}>
-        <Link href={`/nowruz/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
+        <Link href={`/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
       </div>
     </div>
   );

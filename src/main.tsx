@@ -2,12 +2,12 @@ import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import ReactDOM from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
+import { init } from 'src/core/datadog';
 
 import App from './App';
 import './index.scss';
-import FallBack from './pages/fall-back/fall-back';
-import { logError } from './pages/fall-back/fall-back.services';
-import { init } from 'src/core/datadog';
+import FallBack from './Nowruz/pages/fallback/fallback';
+import { logError } from './Nowruz/pages/fallback/fallback.services';
 
 const VERSION = '7.0.0';
 init(VERSION);

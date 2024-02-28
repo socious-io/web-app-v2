@@ -31,27 +31,28 @@ export const useLinksContainer = () => {
       public: false,
     },
     */
+
     {
       label: 'Jobs',
-      route: !userIsLoggedIn || currentIdentity?.type === 'users' ? '/nowruz/jobs' : '/nowruz/jobs/created',
+      route: !userIsLoggedIn || currentIdentity?.type === 'users' ? '/jobs' : '/jobs/created',
       iconName: 'briefcase-01',
       public: true,
-      /* Not available
-      children:
-        !userIsLoggedIn || currentIdentity?.type === 'users'
-          ? [
-              { label: 'Find work', route: '/nowruz/jobs', public: true },
-              //{ label: 'Saved jobs', route: '/', public: false },
-            ]
-          : undefined,
-      */
+
+      // children:
+      //   !userIsLoggedIn || currentIdentity?.type === 'users'
+      //     ? [
+      //         { label: 'Find work', route: '/jobs', public: true },
+      //         //{ label: 'Saved jobs', route: '/', public: false },
+      //       ]
+      //     : undefined,
     },
     {
       label: 'Contracts',
-      route: '/nowruz/contracts',
+      route: '/contracts',
       iconName: 'file-02',
       public: false,
     },
+
     /* Not available
     {
       label: 'Communities',
@@ -60,22 +61,23 @@ export const useLinksContainer = () => {
       public: false,
     },
     */
+
     {
       label: 'Messages',
-      route: '/nowruz/chats',
+      route: '/chats',
       iconName: 'message-square-01',
       public: false,
       // badgeIcon: unread ? <Badge content={unread.toString()} /> : '',
     },
     {
       label: 'Payments',
-      route: '/nowruz/wallet',
+      route: '/payments',
       iconName: 'wallet-04',
       public: false,
     },
     {
       label: 'Credentials',
-      route: '/nowruz/credentials',
+      route: '/credentials',
       iconName: 'shield-tick',
       public: false,
       only: 'organizations',

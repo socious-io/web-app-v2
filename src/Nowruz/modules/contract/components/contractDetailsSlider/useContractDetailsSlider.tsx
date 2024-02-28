@@ -17,11 +17,11 @@ import {
   getOffer,
   hireOffer,
   rejectOffer,
+  stripeProfile,
 } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
-import { getSrtipeProfile } from 'src/pages/offer-received/offer-received.services';
 import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
@@ -109,7 +109,7 @@ export const useContractDetailsSlider = () => {
   };
 
   const initializeAcceptOfferFiat = async () => {
-    await getSrtipeProfile({ is_jp: contract.currency === 'JPY' }).then((r) => {
+    await stripeProfile({ is_jp: contract.currency === 'JPY' }).then((r) => {
       const { data } = r?.external_accounts || {};
 
       if (data?.length > 0) {
