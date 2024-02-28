@@ -283,6 +283,15 @@ export const blueprint: RouteObject[] = [
               },
             ],
           },
+          {
+            path: 'settings',
+            async lazy() {
+              const { Setting } = await import('src/Nowruz/pages/setting/index');
+              return {
+                Component: Setting,
+              };
+            },
+          },
         ],
       },
     ],
