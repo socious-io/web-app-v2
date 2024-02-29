@@ -1,23 +1,22 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
-import { skillsToCategoryAdaptor } from 'src/core/adaptors';
-import { CurrentIdentity, Location, OrgMeta, QuestionReq, addQuestionJob } from 'src/core/api';
+import { skillsToCategory, skillsToCategoryAdaptor } from 'src/core/adaptors';
 import {
-  ProjectLengthType,
-  ProjectPaymentSchemeType,
-  ProjectPaymentType,
-  ProjectRemotePreferenceType,
-  ProjectType,
-  SocialCauses,
+  CurrentIdentity,
+  Job,
+  Location,
+  OrgMeta,
+  QuestionReq,
+  addQuestionJob,
   createJob,
   searchLocation,
 } from 'src/core/api';
@@ -30,31 +29,54 @@ type LocationInput =
       country: string;
     }
   | undefined;
+
+interface OptionType {
+  value: string;
+  label: string;
+}
+
+interface OptionNumber {
+  value: number;
+  label: string;
+}
+
 type Inputs = {
   title: string;
-  cause: SocialCauses;
+  cause: OptionType;
   description: string;
-  category: string;
+  category: OptionType;
   paymentMin: number;
   paymentMax: number;
   commitmentHoursLower: number;
   commitmentHoursHigher: number;
   skills: Array<{ label: string; value: string }>;
-  preference: ProjectRemotePreferenceType;
-  type: ProjectType;
-  length: ProjectLengthType;
+  preference: OptionType;
+  type: OptionType;
+  length: OptionType;
   location?: LocationInput;
-  paymentType: ProjectPaymentType;
-  paymentScheme: ProjectPaymentSchemeType;
-  experienceLevel: number;
+  paymentType: string;
+  paymentScheme: string;
+  experienceLevel: OptionNumber;
 };
 const schema = yup.object().shape({
   title: yup.string().min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters').required(),
-  cause: yup.string().required('Required'),
+  cause: yup.object().shape({
+    label: yup.string().required(),
+    value: yup.string().required(),
+  }),
   description: yup.string().required('Required'),
-  category: yup.string().required('Required'),
-  experienceLevel: yup.number().required('Required'),
-  length: yup.string().required('Required'),
+  category: yup.object().shape({
+    label: yup.string().required(),
+    value: yup.string().required(),
+  }),
+  experienceLevel: yup.object().shape({
+    label: yup.string().required(),
+    value: yup.number().required(),
+  }),
+  length: yup.object().shape({
+    label: yup.string().required(),
+    value: yup.string().required(),
+  }),
   paymentMin: yup.number().lessThan(yup.ref('paymentMax'), 'Max price must be higher than min price'),
   paymentMax: yup.number().moreThan(yup.ref('paymentMin'), 'Max price must be higher than min price'),
   commitmentHoursLower: yup
@@ -72,9 +94,15 @@ const schema = yup.object().shape({
       }),
     )
     .required('Required'),
-  preference: yup.string().required('Required'),
+  preference: yup.object().shape({
+    label: yup.string(),
+    value: yup.string(),
+  }),
   paymentType: yup.string().required('Required'),
-  type: yup.string().required('Required'),
+  type: yup.object().shape({
+    label: yup.string().required(),
+    value: yup.string().required(),
+  }),
   paymentScheme: yup.string().required('Required'),
   location: yup
     .object()
@@ -86,6 +114,8 @@ const schema = yup.object().shape({
 });
 
 export const useJobCreateForm = () => {
+  const { categories } = useLoaderData().jobCategories || {};
+  const jobDetail = useLoaderData().jobDetail as Job;
   const {
     register,
     handleSubmit,
@@ -94,6 +124,7 @@ export const useJobCreateForm = () => {
     watch,
     formState: { errors, isDirty, isValid },
     trigger,
+    reset,
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -101,13 +132,14 @@ export const useJobCreateForm = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
-
+  const location = useLocation();
+  const [isEdit] = useState<boolean>(location.pathname.includes('jobs/edit') ?? false);
   const navigate = useNavigate();
   const [openPreview, setOpenPreview] = useState(false);
   const [previewModalProps, setPreviewModalProps] = useState<any>();
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [skills, setSkills] = useState<Array<{ label: string; value: string }>>([]);
-  const { categories } = useLoaderData().jobCategories || {};
+
   const [questions, setQuestions] = useState<QuestionReq[]>([]);
   const [editedQuestion, setEditedQuestion] = useState<QuestionReq>();
   const [editedQuestionIndex, setEditedQuestionIndex] = useState();
@@ -117,31 +149,31 @@ export const useJobCreateForm = () => {
   const causesList = keytems.map((i) => {
     return { value: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
   });
-  const selectedSkills = watch('skills');
+  let selectedSkills = watch('skills');
   const paymentTypeOptions = PROJECT_PAYMENT_TYPE.slice().reverse();
 
-  const onSelectLength = (length: ProjectLengthType) => {
+  const onSelectLength = (length: OptionType) => {
     setValue('length', length, { shouldValidate: true });
   };
-  const onSelectCause = (cause: SocialCauses) => {
+  const onSelectCause = (cause: OptionType) => {
     setValue('cause', cause, { shouldValidate: true });
   };
-  const onSelectCategory = (category: string) => {
+  const onSelectCategory = (category: OptionType) => {
     setValue('category', category, { shouldValidate: true });
   };
-  const onSelectType = (type: ProjectType) => {
+  const onSelectType = (type: OptionType) => {
     setValue('type', type, { shouldValidate: true });
   };
-  const onSelectPaymentScheme = (paymentScheme: ProjectPaymentSchemeType) => {
+  const onSelectPaymentScheme = (paymentScheme: string) => {
     setValue('paymentScheme', paymentScheme, { shouldValidate: true });
   };
-  const onSelectPreference = (preference: ProjectRemotePreferenceType) => {
+  const onSelectPreference = (preference: OptionType) => {
     setValue('preference', preference, { shouldValidate: true });
   };
-  const onSelectPaymentType = (paymentType: ProjectPaymentType) => {
+  const onSelectPaymentType = (paymentType: string) => {
     setValue('paymentType', paymentType, { shouldValidate: true });
   };
-  const onSelectExperienceLevel = (experienceLevel: number) => {
+  const onSelectExperienceLevel = (experienceLevel: OptionNumber) => {
     setValue('experienceLevel', experienceLevel, { shouldValidate: true });
   };
   const cityToOption = (cities: Location[]) => {
@@ -198,18 +230,18 @@ export const useJobCreateForm = () => {
   }) => {
     const locationResult = location?.city ? location : {};
     let jobPayload = {
-      causes_tags: [cause],
+      causes_tags: [cause.value],
       description,
-      experience_level: experienceLevel,
-      job_category_id: category,
+      experience_level: experienceLevel.value,
+      job_category_id: category.value,
       payment_currency: 'USD',
       payment_range_higher: paymentMax ? paymentMax.toString() : '',
       payment_range_lower: paymentMin ? paymentMin.toString() : '',
       payment_scheme: paymentScheme,
       payment_type: paymentType,
-      project_length: length,
-      project_type: type,
-      remote_preference: preference,
+      project_length: length.value,
+      project_type: type.value,
+      remote_preference: preference.value,
       skills: skills.map((item) => item.value),
       status: 'ACTIVE',
       title,
@@ -242,7 +274,7 @@ export const useJobCreateForm = () => {
       cause,
       skills,
     } = getValues();
-    console.log('location', getValues());
+
     const previewModalPayload = {
       company: { name, description, image, mission },
       job: {
@@ -266,7 +298,7 @@ export const useJobCreateForm = () => {
     setPreviewModalProps(previewModalPayload);
     setOpenPreview(true);
   };
-  const onSelectSkills = (skills) => {
+  const onSelectSkills = (skills: Array<OptionType>) => {
     setValue('skills', skills, { shouldValidate: true });
   };
   const onChangePaymentMin = (value: string) => {
@@ -310,6 +342,52 @@ export const useJobCreateForm = () => {
     setEditedQuestionIndex(undefined);
     setOpenCreateQuestion(false);
   };
+
+  const initializeValues = useCallback(
+    (job: Job) => {
+      const preferences = PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === job.remote_preference)?.label;
+      const initialVal = {
+        title: job?.title || '',
+        cause: {
+          label: SOCIAL_CAUSES[job?.causes_tags?.[0]].label || '',
+          value: job?.causes_tags?.[0] || '',
+        },
+        category: {
+          label: job?.job_category?.name || '',
+          value: job?.job_category?.id || '',
+        },
+        description: job.description,
+        preference: { label: preferences, value: job.remote_preference },
+        type: {
+          label: PROJECT_TYPE_V2.find((type) => type.value === job?.project_type)?.label,
+          value: job?.project_type || '',
+        },
+        length: {
+          label: PROJECT_LENGTH_V2.find((length) => length.value === job?.project_length)?.label,
+          value: job?.project_length || '',
+        },
+        experienceLevel: {
+          label: EXPERIENCE_LEVEL_V2.find((experience) => experience.value === job?.experience_level)?.label,
+          value: job?.experience_level,
+        },
+        skills: skillsToCategory(job?.skills),
+        paymentType: job?.payment_type,
+        paymentScheme: job?.payment_scheme,
+        location: !job?.city
+          ? { city: 'Anywhere', country: 'Anywhere' }
+          : { city: 'Country / City', country: 'Country / City' },
+      };
+      reset(initialVal);
+    },
+    [reset],
+  );
+
+  useEffect(() => {
+    if (jobDetail && isEdit) {
+      console.log(jobDetail);
+      initializeValues(jobDetail);
+    }
+  }, [jobDetail, isEdit, initializeValues]);
 
   return {
     register,
@@ -359,5 +437,13 @@ export const useJobCreateForm = () => {
     openEditQuestionForm,
     handleEditQuestion,
     editedQuestion,
+    isEdit,
+    cause: getValues().cause,
+    category: getValues().category,
+    preference: getValues().preference,
+    type: getValues().type,
+    length: getValues().length,
+    experienceLevel: getValues().experienceLevel,
+    location: getValues().location,
   };
 };

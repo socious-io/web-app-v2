@@ -159,6 +159,22 @@ export const blueprint: RouteObject[] = [
                 },
               },
               {
+                path: 'edit/:id',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const requests = [jobCategoriesReq(), job(params.id)];
+                    const [jobCategories, jobDetail] = await Promise.all(requests);
+                    return { jobCategories, jobDetail };
+                  }
+                },
+                async lazy() {
+                  const { EditJob } = await import('src/Nowruz/pages/jobs/Edit');
+                  return {
+                    Component: EditJob,
+                  };
+                },
+              },
+              {
                 path: 'created',
                 loader: async () => {
                   const page = Number(localStorage.getItem('page') || 1);

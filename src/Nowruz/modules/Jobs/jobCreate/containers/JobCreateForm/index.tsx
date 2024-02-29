@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
@@ -67,7 +67,17 @@ export const JobCreateForm = () => {
     openEditQuestionForm,
     handleEditQuestion,
     editedQuestion,
+    isEdit,
+    cause,
+    category,
+    preference,
+    type,
+    length,
+    experienceLevel,
+    location,
   } = useJobCreateForm();
+
+  console.log(location);
 
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
@@ -138,16 +148,24 @@ export const JobCreateForm = () => {
         <BackLink title="Back" />
       </div>
       <form>
-        <JobCreateHeader onPreview={onPreview} onPublish={handleSubmit(onSubmit)} isValid={isValid} isDirty={isDirty} />
+        <JobCreateHeader
+          onPreview={onPreview}
+          onPublish={handleSubmit(onSubmit)}
+          isValid={isValid}
+          isDirty={isDirty}
+          isEdit={isEdit}
+        />
         <div className={css.row}>
           {renderInfo('What is your job about?', 'Select a social cause')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="cause"
+              value={cause}
               placeholder="Search a cause"
               icon="search-lg"
               options={causesList}
               isSearchable
-              onChange={(option) => onSelectCause(option.value)}
+              onChange={(option) => onSelectCause(option)}
               errors={errors['cause']?.message ? [errors['cause']?.message.toString()] : undefined}
             />
           </div>
@@ -169,10 +187,12 @@ export const JobCreateForm = () => {
           {renderInfo('Job category', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              name="category"
+              value={category}
               placeholder="Select a category"
               options={catagoriesList}
               isSearchable
-              onChange={(option) => onSelectCategory(option.value)}
+              onChange={(option) => onSelectCategory(option)}
               errors={errors['category']?.message ? [errors['category']?.message.toString()] : undefined}
             />
           </div>
@@ -199,6 +219,7 @@ export const JobCreateForm = () => {
             <RadioGroup
               errors={errors.location?.choice?.message ? [errors.location?.choice?.message.toString()] : undefined}
               onChange={onSelectCity}
+              defaultValue={location?.city}
               items={[
                 { label: 'Anywhere', value: 'Anywhere' },
                 {
@@ -233,9 +254,10 @@ export const JobCreateForm = () => {
           <div className={css.componentsContainer}>
             <SearchDropdown
               placeholder="Please select"
+              value={preference}
               options={PROJECT_REMOTE_PREFERENCES_V2}
               isSearchable
-              onChange={(option) => onSelectPreference(option.value)}
+              onChange={(option) => onSelectPreference(option)}
               errors={errors['preference']?.message ? [errors['preference']?.message.toString()] : undefined}
             />
           </div>
@@ -244,10 +266,11 @@ export const JobCreateForm = () => {
           {renderInfo('Job type', 'Is it a full time job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              value={type}
               placeholder="Please select"
               options={PROJECT_TYPE_V2}
               isSearchable
-              onChange={(option) => onSelectType(option.value)}
+              onChange={(option) => onSelectType(option)}
               errors={errors['type']?.message ? [errors['type']?.message.toString()] : undefined}
             />
           </div>
@@ -257,34 +280,51 @@ export const JobCreateForm = () => {
           <div className={css.componentsContainer}>
             <SearchDropdown
               placeholder="Please select"
+              value={length}
               options={PROJECT_LENGTH_V2}
               isSearchable
-              onChange={(option) => onSelectLength(option.value)}
+              onChange={(option) => onSelectLength(option)}
               errors={errors['length']?.message ? [errors['length']?.message.toString()] : undefined}
             />
           </div>
         </div>
-        <div className={css.row}>
-          {renderInfo('Payment type', 'Is it a paid or volunteer job?')}
-          <div className={css.componentsContainer}>
-            <RadioGroup
-              items={paymentTypeOptions}
-              errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
-              onChange={(option) => onSelectPaymentType(option.value)}
-            />
+        {paymentType && (
+          <div className={css.row}>
+            {renderInfo('Payment type', 'Is it a paid or volunteer job?')}
+            <div className={css.componentsContainer}>
+              <RadioGroup
+                items={paymentTypeOptions}
+                defaultValue={paymentType}
+                errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
+                onChange={(option) => onSelectPaymentType(option.value)}
+              />
+            </div>
           </div>
-        </div>
+        )}
+        {!paymentType && (
+          <div className={css.row}>
+            {renderInfo('Payment type', 'Is it a paid or volunteer job?')}
+            <div className={css.componentsContainer}>
+              <RadioGroup
+                items={paymentTypeOptions}
+                errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
+                onChange={(option) => onSelectPaymentType(option.value.toString())}
+              />
+            </div>
+          </div>
+        )}
         {paymentType === 'PAID' && (
           <div className={css.row}>
             {renderInfo('Payment terms / range', 'Specify the estimated payment range for this job.')}
 
             <div className={css.componentsContainer}>
               <RadioGroup
-                onChange={(option) => onSelectPaymentScheme(option.value)}
+                onChange={(option) => onSelectPaymentScheme(option.value.toString())}
                 items={[
                   { label: 'Fixed', value: 'FIXED', children: renderAmountFields() },
                   { label: 'Hourly', value: 'HOURLY', children: renderAmountFields() },
                 ]}
+                defaultValue={paymentScheme}
                 errors={errors['paymentScheme']?.message ? [errors['paymentScheme']?.message.toString()] : undefined}
               />
             </div>
@@ -310,10 +350,11 @@ export const JobCreateForm = () => {
           {renderInfo('Experience level', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              value={experienceLevel}
               placeholder="Please select"
               options={EXPERIENCE_LEVEL_V2}
               isSearchable
-              onChange={(option) => onSelectExperienceLevel(option.value)}
+              onChange={(option) => onSelectExperienceLevel(option)}
               errors={errors['experienceLevel']?.message ? [errors['experienceLevel']?.message.toString()] : undefined}
             />
           </div>
@@ -372,7 +413,7 @@ export const JobCreateForm = () => {
               Preview
             </Button> */}
             <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)}>
-              Publish job
+              Publish
             </Button>
           </div>
         </div>
