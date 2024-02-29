@@ -28,7 +28,7 @@ export const useSearch = () => {
   const [page, setPage] = useState(1);
   const [sliderFilterOpen, setSliderFilterOpen] = useState(false);
   const [filter, setFilter] = useState<FilterReq>({} as FilterReq);
-  const [countryName, setCountryName] = useState('');
+  const [countryName, setCountryName] = useState<string | undefined>('');
 
   const navigate = useNavigate();
 
@@ -73,8 +73,9 @@ export const useSearch = () => {
 
   const onApply = async (filterRaw: FilterReq) => {
     setFilter(filterRaw);
-    if (filterRaw.country) {
-      setCountryName(getCountryName(filterRaw?.country));
+    if (filterRaw.label && filterRaw.country) {
+      const label = `${filterRaw.label.label}, ${getCountryName(filterRaw.country)}`;
+      setCountryName(label);
     }
     handleCloseOrApplyFilter();
   };
@@ -96,7 +97,7 @@ export const useSearch = () => {
     } else {
       id = item.shortname;
     }
-    navigate(`/nowruz/profile/${type}/${id}/view`);
+    navigate(`/profile/${type}/${id}/view`);
   };
 
   const card = useCallback(
@@ -121,6 +122,7 @@ export const useSearch = () => {
     if (data.items.length) {
       setSearchResult(data);
       setFilter({});
+      setCountryName('');
     }
   }, [data]);
 

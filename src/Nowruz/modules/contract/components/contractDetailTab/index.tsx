@@ -1,9 +1,9 @@
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
-import { ExpandableText } from 'src/components/atoms/expandable-text';
 import { Contract } from 'src/core/api';
 import dapp from 'src/dapp';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 
 interface ContractDetailTabProps {
   contract: Contract;

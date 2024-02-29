@@ -1,6 +1,7 @@
 import { MenuList } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AvatarDropDown } from 'src/Nowruz/modules/general/components/avatarDropDown';
 
@@ -8,13 +9,18 @@ import { LinksContainerProps } from './linksContainer.types';
 import { useLinksContainer } from './useLinksContainer';
 import { LinkItem } from '../linkItem/LinkItem';
 
-export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
+export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen }) => {
   const { filteredMenu, userIsLoggedIn } = useLinksContainer();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const navigateFunction = (route: string) => {
+    localStorage.removeItem('page');
+    navigate(route);
+    if (isTouchDevice()) setOpen(false);
+  };
   return (
     <div className="flex flex-col justify-start items-center w-full h-fit pt-8 gap-6">
-      <div className="w-full h-fit py-0 pl-6 pr-5">
+      <div className="w-full h-fit py-0 pl-6 pr-5 cursor-pointer" onClick={() => navigateFunction('/jobs')}>
         <img
           className="hidden md:block"
           src={open ? '/icons/nowruz/logo-white.svg' : '/icons/nowruz/logoMark-white.svg'}
@@ -28,19 +34,19 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
         </div>
       )}
 
-      <MenuList autoFocusItem className="w-full flex flex-col gap-2 px-4 ">
+      <MenuList autoFocusItem className="w-full flex flex-col gap-2 px-4 py-0 items-center self-stretch">
         {filteredMenu.map((item) =>
           item.children ? (
             <LinkItem
               key={item.label}
               label={item.label}
-              navigateFunc={() => navigate(item.route)}
+              navigateFunc={() => navigateFunction(item.route)}
               iconName={item.iconName}
               children={item.children.map((ch) => {
                 return {
                   label: ch.label,
                   navigateFunc: () => {
-                    navigate(ch.route);
+                    navigateFunction(ch.route);
                   },
                 };
               })}
@@ -69,7 +75,7 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open }) => {
               key={item.label}
               label={item.label}
               navigateFunc={() => {
-                navigate(item.route);
+                navigateFunction(item.route);
               }}
               iconName={item.iconName}
               menuOpen={open}

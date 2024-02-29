@@ -123,31 +123,21 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
         EXPERIENCE_LEVEL_V2.find((level) => level.value === jobDetail.experience_level)?.label,
       )}
       {jobDetail.payment_type === 'PAID' &&
-        jobDetail.payment_scheme === 'FIXED' &&
         renderJobFeatures(
           'currency-dollar-circle',
           ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
           '(Fixed-price)',
         )}
-      {jobDetail.payment_type === 'PAID' &&
-        jobDetail.payment_scheme === 'HOURLY' &&
-        renderJobFeatures(
-          'currency-dollar-circle',
-          ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
-        )}
-      {jobDetail.payment_type === 'VOLUNTEER' &&
-        jobDetail.payment_scheme === 'HOURLY' &&
-        renderJobFeatures('heart', 'Volunteer')}
+
+      {jobDetail.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
 
       {jobDetail.payment_type === 'VOLUNTEER' &&
-        jobDetail.payment_scheme === 'HOURLY' &&
+        jobDetail.commitment_hours_lower &&
+        jobDetail.commitment_hours_higher &&
         renderJobFeatures(
           'clock',
           ` ${jobDetail.commitment_hours_lower}~${jobDetail.commitment_hours_higher} hrs/week`,
         )}
-      {jobDetail.payment_type === 'VOLUNTEER' &&
-        jobDetail.payment_scheme === 'FIXED' &&
-        renderJobFeatures('clock', ` ${jobDetail.commitment_hours_lower}~${jobDetail.commitment_hours_higher} hrs`)}
     </div>
   );
   return (

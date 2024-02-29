@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import variables from 'src/components/_exports.module.scss';
-import { Modal } from 'src/components/templates/modal/modal';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { ResultList } from 'src/Nowruz/modules/Search/components/ResultList';
 import { SearchInput } from 'src/Nowruz/modules/Search/components/SearchInput';
@@ -8,6 +7,7 @@ import { SearchInput } from 'src/Nowruz/modules/Search/components/SearchInput';
 import css from './search-modal.module.scss';
 import { SearchModalProps } from './SearchModal.types';
 import { useSearchModal } from './useSearchModal';
+import { Modal } from '../../components/Modal/modal';
 import { ResultNotFound } from '../../components/ResultNotFound';
 import { TabPreview } from '../../components/TabBar';
 

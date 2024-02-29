@@ -24,7 +24,7 @@ export const Impact = () => {
       <div className={css.header}>
         <BackLink
           title="Back to my profile"
-          onBack={() => navigate(`/nowruz/profile/users/${user.username}/view`)}
+          onBack={() => navigate(`/profile/users/${user.username}/view`)}
           customStyle="w-fit"
         />
         <h1 className={css.title}>My impact</h1>

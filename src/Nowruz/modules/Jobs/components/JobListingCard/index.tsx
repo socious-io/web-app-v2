@@ -51,11 +51,12 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
   }, [job]);
   const navigate = useNavigate();
   const handleClick = () => {
-    if (isTouchDevice()) navigate(`/nowruz/jobs/${job.id}`);
+    if (isTouchDevice()) navigate(`/jobs/${job.id}`);
   };
   const handleTitleClick = () => {
-    navigate(`/nowruz/jobs/${job.id}`);
+    navigate(`/jobs/${job.id}`);
   };
+
   return (
     <div className={`${css.jobCard} cursor-pointer md:cursor-default`} onClick={handleClick}>
       <div className={css.cardHeader}>
@@ -124,7 +125,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
             </div>
       </div>
       <div className={css.cardFooter}>
-        <Link href={`/nowruz/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
+        <Link href={`/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
       </div>
     </div>
   );

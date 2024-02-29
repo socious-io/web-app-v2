@@ -7,48 +7,37 @@ import * as yup from 'yup';
 
 import { Inputs } from "./password.type";
 
-const schema = yup.object().shape({
-    current_password: yup.string().required(),
-    password: yup.string().required(),
-    confirm: yup.string().required(),
-});
 
+const schema = yup.object().shape({
+    current_password: yup.string().required('Current password is required'),
+    password: yup.string().required('Password is required').notOneOf([yup.ref('current_password'),null],'cantMach').min(8,'Minimum 8 characters').matches(passwordPattern, 'Password complexity is week'),
+    confirm: yup.string().required('Confirm password is required').oneOf([yup.ref('password')], 'Passwords must match')
+});
 export const usePassword = () => {
     const [isPasswordLengthValid, setIsPasswordLengthValid] = useState(false);
     const [isPasswordPatternValid, setIsPasswordPatternValid] = useState(false);
-    const [isFormValid, setIsFormValid] = useState(false);
-    const [isPasswordMatch, setPasswordMatch] = useState(true);
+
     const {
         watch,
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isValid },
         reset,
     } = useForm<Inputs>({
+        mode: "all",
         resolver: yupResolver(schema),
     });
     const current_password = watch('current_password');
     const password = watch('password');
-    const confirmPassword = watch('confirm');
-    useEffect(() => {
-        setIsFormValid(
-            !!password && password.length >= 8 && passwordPattern.test(password) && (password === confirmPassword),
-        );
-        setIsPasswordLengthValid(!!(password && password.length >= 8));
-        setIsPasswordPatternValid(!!(password && passwordPattern.test(password)));
-        setPasswordMatch(password === confirmPassword);
-    }, [password, confirmPassword]);
-
-    const onSubmit: SubmitHandler<Inputs> = async (data) => {        
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
           await changePassword({ current_password, password });
           reset();
-          
         } catch (error) { console.log(error); }
       };
-
-    return { register, handleSubmit, errors, onSubmit,reset,isPasswordMatch ,isFormValid ,isPasswordLengthValid,isPasswordPatternValid };
+      useEffect(() => {
+        setIsPasswordLengthValid(!!(password && password.length >= 8));
+        setIsPasswordPatternValid(!!(password && passwordPattern.test(password)));
+      }, [password]);
+    return { register, handleSubmit, errors, onSubmit,reset,isFormValid: isValid,isPasswordLengthValid,isPasswordPatternValid };
 };
-
-
-
