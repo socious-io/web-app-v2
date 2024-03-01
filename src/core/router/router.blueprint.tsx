@@ -89,6 +89,23 @@ export const blueprint: RouteObject[] = [
                 children: [
                   {
                     path: 'view',
+
+                    loader: async ({ params }) => {
+                      const organization = await getOrganizationByShortName(params.id!);
+                      return {
+                        organization,
+                      };
+                    },
+                    async lazy() {
+                      const { OrgProfile } = await import('src/Nowruz/pages/orgProfile');
+                      return {
+                        Component: OrgProfile,
+                      };
+                    },
+                  },
+                  {
+                    path: 'jobs',
+
                     loader: async ({ params }) => {
                       const organization = await getOrganizationByShortName(params.id!);
                       return {
