@@ -79,8 +79,6 @@ export const JobCreateForm = () => {
     jobLocation,
   } = useJobCreateForm();
 
-  console.log(jobLocation);
-
   const renderInfo = (title: string, description: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
