@@ -35,7 +35,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
               }}
               sx={{ width: 'fit-content' }}
             />
-            {selectedIndex === index && item.children}
+            {(selectedIndex === index || item.value === defaultValue) && item.children}
           </>
         ))}
       </RG>

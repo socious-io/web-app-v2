@@ -19,6 +19,7 @@ import {
   addQuestionJob,
   createJob,
   searchLocation,
+  updateJob,
 } from 'src/core/api';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
@@ -27,6 +28,7 @@ type LocationInput =
   | {
       city: string;
       country: string;
+      label: string;
     }
   | undefined;
 
@@ -57,6 +59,7 @@ type Inputs = {
   paymentType: string;
   paymentScheme: string;
   experienceLevel: OptionNumber;
+  jobLocation: string;
 };
 const schema = yup.object().shape({
   title: yup.string().min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters').required(),
@@ -109,8 +112,10 @@ const schema = yup.object().shape({
     .shape({
       city: yup.string(),
       country: yup.string(),
+      label: yup.string(),
     })
     .required('Required'),
+  jobLocation: yup.string().required('Required'),
 });
 
 export const useJobCreateForm = () => {
@@ -176,6 +181,11 @@ export const useJobCreateForm = () => {
   const onSelectExperienceLevel = (experienceLevel: OptionNumber) => {
     setValue('experienceLevel', experienceLevel, { shouldValidate: true });
   };
+
+  const onSelectJobLocation = (jobLocation: string) => {
+    setValue('jobLocation', jobLocation);
+  };
+
   const cityToOption = (cities: Location[]) => {
     return cities.map((city) => ({
       // label: `${city.name}, ${city.region_name}`,
@@ -203,7 +213,11 @@ export const useJobCreateForm = () => {
   }, []);
 
   const onSelectCity = (location) => {
-    setValue('location', { city: location.city, country: location.countryCode }, { shouldValidate: true });
+    setValue(
+      'location',
+      { city: location.city, country: location.countryCode, label: `${location.city}, ${location.countryCode}` },
+      { shouldValidate: true },
+    );
   };
 
   const addQuestion = (q: QuestionReq) => {
@@ -228,11 +242,11 @@ export const useJobCreateForm = () => {
     commitmentHoursLower,
     commitmentHoursHigher,
   }) => {
-    const locationResult = location?.city ? location : {};
-    let jobPayload = {
+    const locationResult = location?.city !== 'Anywhere' ? { city: location?.city, country: location?.country } : {};
+    const jobPayload = {
       causes_tags: [cause.value],
       description,
-      experience_level: experienceLevel.value,
+      experience_level: experienceLevel.value.toString(),
       job_category_id: category.value,
       payment_currency: 'USD',
       payment_range_higher: paymentMax ? paymentMax.toString() : '',
@@ -249,6 +263,7 @@ export const useJobCreateForm = () => {
       commitment_hours_higher: commitmentHoursHigher ? commitmentHoursHigher.toString() : '',
       ...locationResult,
     };
+
     try {
       const res = await createJob(jobPayload);
       questions.forEach(async (q) => {
@@ -302,11 +317,11 @@ export const useJobCreateForm = () => {
     setValue('skills', skills, { shouldValidate: true });
   };
   const onChangePaymentMin = (value: string) => {
-    setValue('paymentMin', value, { shouldValidate: true });
+    setValue('paymentMin', Number(value), { shouldValidate: true });
     trigger('paymentMax');
   };
   const onChangePaymentMax = (value: string) => {
-    setValue('paymentMax', value, { shouldValidate: true });
+    setValue('paymentMax', Number(value), { shouldValidate: true });
     trigger('paymentMin');
   };
   const onChangeCommitHoursMin = (value: string) => {
@@ -373,9 +388,12 @@ export const useJobCreateForm = () => {
         skills: skillsToCategory(job?.skills),
         paymentType: job?.payment_type,
         paymentScheme: job?.payment_scheme,
-        location: !job?.city
-          ? { city: 'Anywhere', country: 'Anywhere' }
-          : { city: 'Country / City', country: 'Country / City' },
+        location: job?.city ? { city: job.city, country: job.country, label: `${job.city}, ${job.country}` } : {},
+        paymentMin: Number(job?.payment_range_lower) || 0,
+        paymentMax: Number(job?.payment_range_higher) || 0,
+        jobLocation: job.city ? 'Country / City' : 'Anywhere',
+        // commitmentHoursLower: Number(job?.commitment_hours_lower) || 0,
+        // commitmentHoursHigher: Number(job?.commitment_hours_higher) || 0,
       };
       reset(initialVal);
     },
@@ -384,10 +402,12 @@ export const useJobCreateForm = () => {
 
   useEffect(() => {
     if (jobDetail && isEdit) {
-      console.log(jobDetail);
+      if (jobDetail.city) {
+        //setValue('location', { city: jobDetail.city, country: jobDetail.country }, { shouldValidate: true });
+      }
       initializeValues(jobDetail);
     }
-  }, [jobDetail, isEdit, initializeValues]);
+  }, [jobDetail, isEdit, initializeValues, setValue]);
 
   return {
     register,
@@ -445,5 +465,7 @@ export const useJobCreateForm = () => {
     length: getValues().length,
     experienceLevel: getValues().experienceLevel,
     location: getValues().location,
+    onSelectJobLocation,
+    jobLocation: getValues().jobLocation,
   };
 };
