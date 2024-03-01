@@ -250,7 +250,7 @@ export const JobCreateForm = () => {
                 onChange={(option) => onSelectJobLocation(option.value.toString())}
               />
             )}
-            {!jobLocation && jobLocation === 'Anywhere' && (
+            {!jobLocation && (
               <RadioGroup
                 errors={errors.location?.choice?.message ? [errors.location?.choice?.message.toString()] : undefined}
                 items={[
