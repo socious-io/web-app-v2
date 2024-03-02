@@ -98,7 +98,7 @@ export const useHeaderNavBar = () => {
   };
 
   const navigateToSettings = () => {
-    navigate('/nowruz/settings');
+    navigate('/settings');
   };
 
   const readNotifications = async () => {
