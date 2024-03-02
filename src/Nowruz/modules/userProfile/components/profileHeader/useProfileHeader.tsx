@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ConnectStatus, CurrentIdentity, Organization, User, connectionStatus } from 'src/core/api';
+import { StepsContext } from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { RootState } from 'src/store';
 
 export const useProfileHeader = () => {
@@ -22,6 +23,8 @@ export const useProfileHeader = () => {
   const [openEditAvatar, setOpenEditAvatar] = useState(false);
   const [openEditHeader, setOpenEditHeader] = useState(false);
 
+  const { updateSelectedStep } = useContext(StepsContext);
+
   useEffect(() => {
     const getConnectionsStatus = async () => {
       if (identity) {
@@ -30,6 +33,7 @@ export const useProfileHeader = () => {
       }
     };
     getConnectionsStatus();
+    updateSelectedStep(0);
   }, []);
 
   const closeEditInfoModal = () => {
