@@ -63,7 +63,7 @@ export const TransactionDetails = () => {
           <div className={`${css.bordered} flex md:!hidden`}>
             <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">{`${detail.symbol}${detail.amount}`}</span>
           </div>
-          <div className={css.bordered}>{renderItems('Paid to', [detail.name])}</div>
+          {/* <div className={css.bordered}>{renderItems('Paid to', [detail.name])}</div> */}
           <div className={css.bordered}>{renderItems('Transaction ID', [detail.transactionId])}</div>
           <div className={css.bordered}>{renderItems('Contact information', [detail.name, detail.email])}</div>
         </div>
