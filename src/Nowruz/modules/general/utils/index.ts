@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
-export const useSeeMore = (copy: string) => {
+export const useSeeMore = (copy: string, expectedLenght?: number) => {
   const [seeMore, setSeeMore] = useState(false);
   const [copyProccessed, setCopyProccessed] = useState(copy);
 
   const truncateString = () => {
     const len = copy?.length || 0;
-    const maxLen = isTouchDevice() ? 160 : 360;
+    const maxLen = expectedLenght || (isTouchDevice() ? 160 : 360);
 
     if (copy && len <= maxLen) {
       setCopyProccessed(copy);

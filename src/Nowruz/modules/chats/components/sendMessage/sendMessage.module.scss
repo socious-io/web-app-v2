@@ -1,0 +1,26 @@
+@import 'src/components/_primitives.scss';
+
+.sendBox {
+  width: 100%;
+  height: fit-content;
+  position: relative;
+  padding: 12px 96px 12px 14px;
+  border: 1px solid $color-grey-300;
+  border-radius: 8px;
+}
+.sendBox:focus-within {
+  box-shadow: 0px 0px 0px 4px $color-primary-100;
+}
+
+.inputMessage {
+  height: 140px;
+  width: 100%;
+  border: none;
+}
+.inputMessage::placeholder {
+  color: $color-grey-900;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}

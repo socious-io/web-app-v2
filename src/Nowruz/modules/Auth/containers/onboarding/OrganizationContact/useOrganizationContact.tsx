@@ -1,16 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { debounce } from 'lodash';
 import { useEffect } from 'react';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createOrganization, getIndustries, Location, preRegister, searchLocation } from 'src/core/api';
-import { CurrentIdentity, uploadMedia } from 'src/core/api';
+import { createOrganization, getIndustries, Location, preRegister, searchLocation, identities } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { checkUsernameConditions, removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
-import { RootState } from 'src/store';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
 
 type Inputs = {
@@ -31,10 +30,7 @@ export const useOrganizationContact = () => {
   const isMobile = isTouchDevice();
   const [isShortnameValid, setIsShortnameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
-  const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
-    const current = state.identity.entities.find((identity) => identity.current);
-    return current as CurrentIdentity;
-  });
+
   const navigate = useNavigate();
   const {
     register,
@@ -47,10 +43,10 @@ export const useOrganizationContact = () => {
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
+  const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { orgName, orgType, social_causes, bio, image, city, country, email, website, size, shortname, industry } =
-      state;
+    const { orgName, orgType, social_causes, bio, city, country, email, size, shortname, industry } = state;
     try {
       const websiteUrl = state.website ? 'https://' + state.website : '';
       await createOrganization(
@@ -73,13 +69,17 @@ export const useOrganizationContact = () => {
       );
       localStorage.removeItem('registerFor');
       reset();
-      if (isMobile)
+
+      const new_identities = await identities();
+      await dispatch(setIdentityList(new_identities));
+
+      if (isMobile) {
         navigate(`/sign-up/user/notification`, {
           state: {
             username: shortname,
           },
         });
-      else navigate(`/profile/organizations/${shortname}/view`);
+      } else navigate(`/profile/organizations/${shortname}/view`);
     } catch (error) {}
   };
   const searchCities = async (searchText: string, cb) => {

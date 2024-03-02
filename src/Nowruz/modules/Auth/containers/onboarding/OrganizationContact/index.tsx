@@ -1,10 +1,10 @@
+import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 import css from './contact.module.scss';
 import { useOrganizationContact } from './useOrganizationContact';
-import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 export const OrganizationContact = () => {
   const {
     register,

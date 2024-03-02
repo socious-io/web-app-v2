@@ -5,4 +5,5 @@ export interface AvatarLabelGroupProps {
   customStyle?: string;
   handleClick?: () => void;
   avatarSize?: string;
+  removeFull?: boolean;
 }

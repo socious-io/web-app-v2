@@ -9,6 +9,7 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
   return (
     <div className="relative">
       <MUIPagination
+        page={props.page}
         shape="rounded"
         sx={{
           '.MuiPagination-ul': {

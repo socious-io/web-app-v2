@@ -79,15 +79,14 @@ export const useUserDetails = () => {
     try {
       await updateProfile({ username: username.toLowerCase(), first_name: firstName, last_name: lastName });
       const currentIdentities = await identities();
-
       dispatch(setIdentityList(currentIdentities));
       navigate('../congrats');
     } catch (error) {
-      dialog.alert({title: 'error', message: error.message});
+      dialog.alert({ title: 'error', message: error.message });
       return;
     }
   };
-  
+
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
   return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid, currentProfile };

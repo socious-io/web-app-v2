@@ -1,3 +1,4 @@
+import { Offer } from 'src/core/types';
 import { AdditionalRes } from '../additionals/additionals.types';
 import { Category, Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
@@ -120,6 +121,7 @@ export interface Experience extends ExperienceReq {
   org: Organization;
   job_category: Category;
   created_at: Date;
+  credential?: Credential;
 }
 
 export interface Badge {
@@ -140,8 +142,19 @@ export interface ImpactPoint {
   created_at: Date;
   total_points: number;
   organization: Identity;
+  offer: Offer;
 }
 
 export interface ImpactPoints extends PaginateRes {
   items: ImpactPoint[];
+}
+
+export interface Credential {
+  id: string;
+  status: 'PENDING' | 'APPROVED' | 'SENT' | 'CLAIMED' | 'REJECTED';
+  message?: string;
+  connection_id?: string;
+  connection_url?: string;
+  created_at: Date;
+  updated_at: Date;
 }

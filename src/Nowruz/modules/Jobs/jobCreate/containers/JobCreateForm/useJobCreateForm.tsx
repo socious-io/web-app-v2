@@ -289,7 +289,7 @@ export const useJobCreateForm = () => {
   };
 
   const handleCloseSuccessModal = () => {
-    navigate('/nowruz/jobs');
+    navigate('/jobs/created');
   };
 
   const deleteQuestion = (index: number) => {

@@ -1,0 +1,46 @@
+@import 'src/components/_primitives.scss';
+
+.header {
+  height: 60px;
+  border-bottom: solid 1px $color-grey-200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 38px;
+  color: $color-grey-900;
+}
+
+.bordered {
+  border-bottom: 1px solid $color-grey-200;
+  height: 72px;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.withdrawAccount {
+  padding: 16px;
+  border: 1px solid $color-grey-300;
+  border-radius: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.modalTitle {
+  @apply text-lg font-semibold leading-5 text-Gray-light-mode-900;
+}
+
+.modalRowTitles {
+  @apply text-sm font-medium leading-5 text-Gray-light-mode-700;
+}
+
+.modalSubtitles {
+  @apply text-sm font-normal leading-5 text-Gray-light-mode-600;
+}
+
+.modalAmount {
+  @apply text-2xl font-semibold leading-8 text-Gray-light-mode-900;
+}
