@@ -92,8 +92,10 @@ export const blueprint: RouteObject[] = [
 
                     loader: async ({ params }) => {
                       const organization = await getOrganizationByShortName(params.id!);
+                      const orgJobs = await jobs({ page: 0, status: 'ACTIVE', limit: 2, identity_id: organization.id });
                       return {
                         organization,
+                        orgJobs,
                       };
                     },
                     async lazy() {
@@ -108,8 +110,10 @@ export const blueprint: RouteObject[] = [
 
                     loader: async ({ params }) => {
                       const organization = await getOrganizationByShortName(params.id!);
+                      const orgJobs = await jobs({ page: 0, status: 'ACTIVE', limit: 2, identity_id: organization.id });
                       return {
                         organization,
+                        orgJobs,
                       };
                     },
                     async lazy() {

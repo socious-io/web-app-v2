@@ -15,7 +15,7 @@ export const HorizontalTabs: React.FC<HorizontalTabsProps> = (props) => {
 
   useEffect(() => {
     setContent(tabs[active].content);
-  }, [activeIndex, active, tabs]);
+  }, [active, tabs]);
 
   return (
     <div className={`w-full h-full flex flex-col gap-8 ${containerCustomStyle}`}>

@@ -1,0 +1,21 @@
+@import 'src/components/_primitives.scss';
+
+.organizationJobs {
+  .jobListing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1.5rem;
+    width: 100%;
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+    }
+
+    .jobItem {
+      width: 50%;
+      @media screen and (max-width: 600px) {
+        width: 100%;
+      }
+    }
+  }
+}
