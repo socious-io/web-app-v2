@@ -9,4 +9,5 @@ export interface HorizontalTabsProps {
   tabs: HorizontalTabsItem[];
   leftAligned?: boolean;
   containerCustomStyle?: string;
+  activeIndex?: number;
 }
