@@ -18,7 +18,7 @@ export const Website: React.FC<WebsiteProps> = ({ url }) => {
 
       <div className="flex gap-2 items-center">
         <Typography variant="h6">
-          <Link href={url} label={url} color={variables.color_primary_700} customStyle={css.link} />
+          <Link href={url} label={url} color={variables.color_primary_700} customStyle={css.link} target="_blank" />
         </Typography>
         <Icon name="arrow-up-right" fontSize={20} color={variables.color_primary_700} />
       </div>
