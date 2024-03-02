@@ -32,7 +32,16 @@ export const ContractCard: React.FC<ContractCardProps> = ({ contract, setOpenOve
         </div>
         <div className="flex flex-col gap-5 md:flex-row">
           <div className="flex gap-2 items-center">
-            <Icon name={currencyIconName} fontSize={20} color={variables.color_grey_500} />
+            {contractVal?.currency && ['USD', 'JPY'].includes(contractVal?.currency) ? (
+              <Icon name={currencyIconName} fontSize={20} color={variables.color_grey_500} />
+            ) : (
+              <img
+                src={`/icons/crypto/${contractVal?.currency?.toString()}.svg`}
+                width={20}
+                alt={`${contractVal?.currency.toString()}`}
+              />
+            )}
+
             <span className="font-medium text-base leading-6 text-Gray-light-mode-700">
               {formatCurrency} {`${contractVal.currency}`}
             </span>
