@@ -55,7 +55,7 @@ export const useTransactions = () => {
   }, [page]);
 
   const navigateToDetails = (id: string) => {
-    navigate(`/wallet/${id}`);
+    navigate(`/payments/${id}`);
   };
 
   return { list, headers, page, setPage, PER_PAGE, total, navigateToDetails };

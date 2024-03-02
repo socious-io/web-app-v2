@@ -31,7 +31,7 @@ export const useTransactionDetailes = () => {
   }, []);
 
   const handleBack = () => {
-    navigate('/wallet');
+    navigate('/payments');
   };
 
   const detail = {
