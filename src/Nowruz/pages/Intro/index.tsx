@@ -1,23 +1,28 @@
 import { Typography } from '@mui/material';
 import { Logo } from 'public/icons/nowruz/logo';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/Nowruz/modules/Auth/containers/ServiceIntro';
 import { reviews, onboardingOptons } from 'src/Nowruz/modules/Auth/statics/intro';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { CardRadioButton } from 'src/Nowruz/modules/general/components/cardRadioButton/cardRadioButton';
 import { Link } from 'src/Nowruz/modules/general/components/link';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
 
 import css from './intro.module.scss';
 
 export const Intro = () => {
+  const status = useSelector((state: RootState) => state.identity.status);
   const [selectedOnboarding, setSelectedOnboarding] = useState<'user' | 'organization'>('user');
   const navigate = useNavigate();
+
   const navigateToOnboarding = () => {
     localStorage.setItem('registerFor', selectedOnboarding);
     navigate('/sign-up/user/email');
   };
+
   const renderIntro = () => {
     if (selectedOnboarding === 'user')
       return (
@@ -37,6 +42,11 @@ export const Intro = () => {
       />
     );
   };
+
+  if (status === 'loading') return <div></div>;
+
+  if (status === 'succeeded') return <Navigate to="/jobs" />;
+
   return (
     <div className="flex h-screen px-4 sm:p-0">
       <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
