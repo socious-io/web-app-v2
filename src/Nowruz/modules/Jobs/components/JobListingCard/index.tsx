@@ -31,8 +31,8 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
     if (!feature) return;
     return (
       <div className={css.features}>
-        <Icon name={iconName} fontSize={20} className="mr-1.5" color={variables.color_grey_500} /> {feature}
-        <span className={css.featureSubtitle}>{subtitle}</span>
+        <Icon name={iconName} fontSize={18} color={variables.color_grey_500} /> {feature}
+        {subtitle && <span className={css.featureSubtitle}>{subtitle}</span>}
       </div>
     );
   };
@@ -58,22 +58,21 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
   };
 
   return (
-    <div className={`${css.container} cursor-pointer md:cursor-default`} onClick={handleClick}>
-      <div className={css.cardInfo}>
-        <div>
-          <div className={css.intro}>
-            <Avatar type="organizations" size="56px" img={job.identity_meta?.image} />
-            <div>
-              <button className={css.jobTitle} onClick={handleTitleClick}>
+    <div className={`${css.jobCard} cursor-pointer md:cursor-default`} onClick={handleClick}>
+      <div className={css.cardHeader}>
+        <div className={css.orgInfo}>
+            <Avatar type="organizations" size="56px" img={job.identity_meta?.image} iconSize={32} />
+            <div className={css.jobHeading}>
+              <a className={css.jobTitle} onClick={handleTitleClick}>
                 {job.title}
-              </button>
+              </a>
               <div className={css.subTitle}>
-                <span className={css.orgTitle}>{job.identity_meta?.name}</span> .{' '}
-                {toRelativeTime(job.updated_at?.toString() || '')}
+                <span className={css.orgTitle}>{job.identity_meta?.name}{'\u30FB'}{toRelativeTime(job.updated_at?.toString() || '')}</span>
               </div>
             </div>
-          </div>
-          <div className={css.info}>
+        </div>
+      </div>
+      <div className={css.cardInfo}>
             <div className={css.chips}>
               {socialCausesToCategory(job.causes_tags).map(({ label }) => (
                 <Chip key={label} label={label} theme="primary" shape="round" size="md" />
@@ -83,7 +82,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
               ))}
             </div>
             <div className={css.jobDescription}>
-              <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.description || ''} />
+              <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.description || ''} seeMoreButton={false} />
             </div>
             <div className={css.jobFeatures}>
               {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}
@@ -116,16 +115,16 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
               {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
 
               {job.payment_type === 'VOLUNTEER' &&
-                job.commitment_hours_lower &&
-                job.commitment_hours_higher &&
+                job.payment_scheme === 'HOURLY' && job.commitment_hours_lower && job.commitment_hours_higher &&
                 renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs/week`)}
+              {job.payment_type === 'VOLUNTEER' &&
+                job.payment_scheme === 'FIXED' && job.commitment_hours_lower && job.commitment_hours_higher &&
+                renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs`)}
 
               {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
             </div>
-          </div>
-        </div>
       </div>
-      <div className={css.footer}>
+      <div className={css.cardFooter}>
         <Link href={`/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
       </div>
     </div>
