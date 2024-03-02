@@ -47,7 +47,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
       <div className={css.container}>
         <BackLink
           title="Back to jobs"
-          onBack={() => navigate(currentIdentity?.type === 'organizations' ? '/nowruz/jobs/created' : '/nowruz/jobs')}
+          onBack={() => navigate(currentIdentity?.type === 'organizations' ? '/jobs/created' : '/jobs')}
           customStyle="w-fit"
         />
         <Avatar size="72px" type="organizations" img={job.identity_meta.image} hasBorder isVerified={false} />

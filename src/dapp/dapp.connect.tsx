@@ -39,10 +39,24 @@ export const useWeb3 = () => {
   const { walletProvider } = useWeb3ModalProvider();
 
   useEffect(() => {
+    const checkNetwork = async (ethers: BrowserProvider) => {
+      const net = await ethers.getNetwork();
+      const selectd = chains.filter((c) => BigInt(c.chainId) === net.chainId);
+      if (selectd.length < 1) {
+        try {
+          await ethers.send('wallet_switchEthereumChain', [{ chainId: `0x${chains[0].chainId.toString(16)}` }]);
+        } catch (err: any) {
+          if (err.code === 4902) {
+            await ethers.send('wallet_addEthereumChain', [chains[0]]);
+          }
+        }
+      }
+    };
     if (isConnected && walletProvider) {
       const ethers = new BrowserProvider(walletProvider);
       setProvier(ethers);
       ethers.getSigner().then((s) => setSigner(s));
+      checkNetwork(ethers);
     }
   }, [address, isConnected, walletProvider]);
 

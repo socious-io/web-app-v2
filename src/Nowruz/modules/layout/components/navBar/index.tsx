@@ -1,3 +1,4 @@
+import React from 'react';
 import { Icon } from 'src/Nowruz/general/Icon';
 
 import { Footer } from '../footer/footer';
@@ -21,8 +22,8 @@ export const NavBar: React.FC<NavBarProps> = ({ open, setOpen, logout }) => {
       tabIndex={1}
     >
       <div className="flex flex-col w-full h-full">
-        <LinksContainer open={open} />
-        <Footer open={open} logout={logout} />
+        <LinksContainer open={open} setOpen={setOpen} />
+        <Footer open={open} setOpen={setOpen} logout={logout} />
       </div>
       <div className="w-fit h-full md:hidden bg-Gray-light-mode-900 opacity-70 p-4 ">
         <Icon name="x-close" fontSize={12} className="text-Base-White cursor-pointer" onClick={() => setOpen(false)} />

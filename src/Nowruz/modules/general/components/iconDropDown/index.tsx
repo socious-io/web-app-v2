@@ -22,7 +22,8 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
   } = props;
   const currentAccount = accounts.find((a) => a.selected);
   const otherAccounts = accounts.filter((a) => !a.selected);
-  const { open, handleOpen, handleClose, switchAccount, myProfile, handleClick } = useIconDropDown();
+  const { open, handleOpen, handleClose, switchAccount, myProfile, handleClick, navigateToOnboarding } =
+    useIconDropDown();
 
   return (
     <div className="flex flex-col items-end relative">
@@ -32,13 +33,7 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
         onClick={handleClick}
         aria-label="icon-button"
       >
-        <Avatar
-          size={size}
-          type={type}
-          img={img}
-          iconName={iconName}
-          iconCustomStyle={'!cursor-pointer'}
-        />
+        <Avatar size={size} type={type} img={img} iconName={iconName} iconCustomStyle={'!cursor-pointer'} />
       </IconButton>
       {open && (
         <MenuList autoFocusItem className={`${css.menuList} ${customStyle}`} onMouseLeave={handleClose}>
@@ -71,8 +66,8 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
               className={css.menuItem}
               onFocus={handleOpen}
               onBlur={handleClose}
-              onMouseDown={handleClose}
-              onClick={handleClose}
+              onMouseDown={navigateToOnboarding}
+              onClick={navigateToOnboarding}
             >
               <IconListItem
                 iconName="plus"

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
+import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { isTouchDevice } from 'src/core/device-type-detector';
@@ -27,8 +28,17 @@ export const useSearch = () => {
   const [page, setPage] = useState(1);
   const [sliderFilterOpen, setSliderFilterOpen] = useState(false);
   const [filter, setFilter] = useState<FilterReq>({} as FilterReq);
+  const [countryName, setCountryName] = useState<string | undefined>('');
 
   const navigate = useNavigate();
+
+  function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
+    if (shortname && COUNTRIES_DICT[shortname]) {
+      return COUNTRIES_DICT[shortname];
+    } else {
+      return shortname;
+    }
+  }
 
   const filterNeeded = (filter: FilterReq) => {
     const propertyName = type === 'projects' ? 'causes_tags' : 'social_causes';
@@ -62,8 +72,11 @@ export const useSearch = () => {
   };
 
   const onApply = async (filterRaw: FilterReq) => {
-    console.log(filterRaw);
     setFilter(filterRaw);
+    if (filterRaw.label && filterRaw.country) {
+      const label = `${filterRaw.label.label}, ${getCountryName(filterRaw.country)}`;
+      setCountryName(label);
+    }
     handleCloseOrApplyFilter();
   };
 
@@ -84,7 +97,7 @@ export const useSearch = () => {
     } else {
       id = item.shortname;
     }
-    navigate(`/nowruz/profile/${type}/${id}/view`);
+    navigate(`/profile/${type}/${id}/view`);
   };
 
   const card = useCallback(
@@ -109,6 +122,7 @@ export const useSearch = () => {
     if (data.items.length) {
       setSearchResult(data);
       setFilter({});
+      setCountryName('');
     }
   }, [data]);
 
@@ -122,6 +136,7 @@ export const useSearch = () => {
       q,
       sliderFilterOpen,
       filter,
+      countryName,
     },
     operations: {
       setPage,
@@ -129,6 +144,7 @@ export const useSearch = () => {
       handleCloseOrApplyFilter,
       onApply,
       onClose,
+      getCountryName,
     },
   };
 };

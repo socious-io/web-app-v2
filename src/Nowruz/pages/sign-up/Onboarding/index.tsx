@@ -1,7 +1,7 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import { CurrentIdentity, OrgMeta, UserMeta } from 'src/core/api';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { CurrentIdentity, identities, logout, OrgMeta, UserMeta } from 'src/core/api';
 import { Causes } from 'src/Nowruz/modules/Auth/containers/onboarding/Causes';
 import { City } from 'src/Nowruz/modules/Auth/containers/onboarding/City';
 import { CreateOrganization } from 'src/Nowruz/modules/Auth/containers/onboarding/CreateOrganization';
@@ -17,7 +17,7 @@ import { Welcome } from 'src/Nowruz/modules/Auth/containers/onboarding/Welcome';
 import { UserProvider } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
-import { logout } from 'src/pages/sidebar/sidebar.service';
+import { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { setIdentity } from 'src/store/reducers/profile.reducer';
 
@@ -26,18 +26,23 @@ import css from './onboarding.module.scss';
 export const Onboarding = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const primary = useSelector<RootState, CurrentIdentity | undefined>((state) => {
+    return state.identity.entities.find((identity) => identity.current);
+  });
 
-  const identities = useLoaderData() as CurrentIdentity[];
-  dispatch(setIdentityList(identities));
+  useEffect(() => {
+    identities().then(async (resp) => {
+      await dispatch(setIdentityList(resp));
+      const user = {
+        id: primary?.id,
+        username: (primary?.meta as UserMeta).username || (primary?.meta as OrgMeta).shortname || '',
+        email: (primary?.meta as UserMeta).email || (primary?.meta as OrgMeta).email,
+      };
+      await dispatch(setIdentity(user));
+    });
+  }, []);
 
-  const primary = identities.find((i) => i.primary);
-
-  const user = {
-    id: primary?.id,
-    username: (primary?.meta as UserMeta).username || (primary?.meta as OrgMeta).shortname || '',
-    email: (primary?.meta as UserMeta).email || (primary?.meta as OrgMeta).email,
-  };
-  dispatch(setIdentity(user));
+  //const primary = identities.find((i) => i.primary);
 
   const type = localStorage.getItem('registerFor');
 

@@ -18,13 +18,13 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose,loadMore =
     let path = '';
     switch (item.type) {
       case 'projects':
-        path = `/nowruz/jobs/${item.id}`;
+        path = `/jobs/${item.id}`;
         break;
       case 'organizations':
-        path = `/nowruz/profile/organizations/${item.username}/view`;
+        path = `/profile/organizations/${item.username}/view`;
         break;
       default:
-        path = `/nowruz/profile/users/${item.username}/view`;
+        path = `/profile/users/${item.username}/view`;
         break;
     }
     onClose();
