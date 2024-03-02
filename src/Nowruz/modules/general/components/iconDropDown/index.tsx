@@ -1,6 +1,5 @@
 import { Divider, IconButton, MenuItem, MenuList } from '@mui/material';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { IconListItem } from 'src/Nowruz/modules/general/components/avatarDropDown/iconListItem';
 import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
@@ -23,13 +22,9 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
   } = props;
   const currentAccount = accounts.find((a) => a.selected);
   const otherAccounts = accounts.filter((a) => !a.selected);
-  const { open, handleOpen, handleClose, switchAccount, myProfile, handleClick } = useIconDropDown();
-  const navigate = useNavigate();
-  const navigateToOnborading = () => {
-    const registerFor = 'organization';
-    localStorage.setItem('registerFor', registerFor);
-    navigate('/sign-up/user/onboarding');
-  };
+  const { open, handleOpen, handleClose, switchAccount, myProfile, handleClick, navigateToOnboarding } =
+    useIconDropDown();
+
   return (
     <div className="flex flex-col items-end relative">
       <IconButton
@@ -65,18 +60,18 @@ export const IconDropDown: React.FC<IconDropDownProps> = (props) => {
               <AvatarLabelGroup account={a} />
             </MenuItem>
           ))}
-          {createItem && currentAccount?.type === 'users' && (
+          {createItem && (
             <MenuItem
               key="create-account"
               className={css.menuItem}
               onFocus={handleOpen}
               onBlur={handleClose}
-              onMouseDown={navigateToOnborading}
-              onClick={navigateToOnborading}
+              onMouseDown={navigateToOnboarding}
+              onClick={navigateToOnboarding}
             >
               <IconListItem
                 iconName="plus"
-                label={'Create an organization'}
+                label={currentAccount?.type === 'users' ? 'Create an organization' : 'Create a talent profile'}
                 customIconClass="text-Brand-700"
                 customLabelClass={css.createLabel}
               />
