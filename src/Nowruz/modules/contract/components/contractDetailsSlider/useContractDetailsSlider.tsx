@@ -14,7 +14,6 @@ import {
   connectionStatus,
   contestMission,
   dropMission,
-  getMission,
   getOffer,
   hireOffer,
   rejectOffer,
@@ -154,9 +153,6 @@ export const useContractDetailsSlider = () => {
     else if (contract.payment_mode === 'CRYPTO') initializeAcceptOfferCrypto();
   };
   const inititalize = async () => {
-    // const mission = await getMission(contract.mission?.id);
-    // await updateMissionFeedback(mission.org_feedback);
-
     let alertMsg = null;
     switch (contract.contractStatus) {
       case 'Offer sent':
@@ -340,6 +336,7 @@ export const useContractDetailsSlider = () => {
               subtitle={`Completed on ${isoToStandard(contract.mission.updated_at.toString())}`}
             />
           );
+
           if (!contract.org_feedback) {
             setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
           } else setAllStates(true, alertMsg, false, '', false, '');
