@@ -32,8 +32,6 @@ export const JobDetail = () => {
     getOrganization(jobDetail.identity_meta.id).then((res) => setOrganization(res));
   }, []);
 
-  useEffect(() => {}, [justApplied, beforeApplied]);
-
   const userJSX = () => (
     <div className="flex flex-col md:flex-row-reverse gap-8 md:gap-16">
       <div className="flex px-4 md:hidden">
