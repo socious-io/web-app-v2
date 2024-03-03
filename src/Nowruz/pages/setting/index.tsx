@@ -50,7 +50,7 @@ export const Setting = () => {
       <div className="container">
         <div className="col-12">
         <div className="p-4">
-          <h2 className="gap-5 text-3xl mb-6">Setting</h2>
+          <h2 className="gap-5 text-3xl mb-6">Settings</h2>
 
        
             <div className="block lg:hidden">
