@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { HorizontalTabs } from "src/Nowruz/modules/general/components/horizontalTabs";
 import { SearchDropdown } from "src/Nowruz/modules/general/components/SearchDropdown";
 import Account from "src/Nowruz/modules/settings/components/account/";
+import Notification from "src/Nowruz/modules/settings/components/notification";
 import Password from "src/Nowruz/modules/settings/components/password";
-
 
 export const Setting = () => {
   const tabs = [
@@ -17,21 +17,14 @@ export const Setting = () => {
       content: <Password />
     },
     {
-      label: 'Team',
-      content: <h1>Team</h1>
-    },
-    {
-      label: 'Working Prefrences',
-      content: <h1>Working</h1>
-    },
-    {
       label: 'Notification',
-      content: <h1>Notif</h1>
+      content: <Notification/>
     },
   ];
   const items: any[] = [
     { label: 'Account', value: 'Account' },
     { label: 'Password', value: 'Password' },
+    { label: 'Notification', value: 'Notification' },
   ];
 
   const [content, setContent] = useState<ReactNode>();
@@ -43,6 +36,8 @@ export const Setting = () => {
       return setContent(<Account />);
     if (value.value === 'Password')
       return setContent(<Password />);
+    if (value.value === 'Notification')
+      return setContent(<Notification />);
   };
 
   useEffect(() => {
