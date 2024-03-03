@@ -42,14 +42,19 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
     if (setJustApplied) setJustApplied(applied);
     setOpenApply(false);
   };
+
+  const getBackLink = () => {
+    if (localStorage.getItem('navigateToSearch') === 'true') {
+      const searchTerm = localStorage.getItem('searchTerm');
+      const type = localStorage.getItem('type');
+      return `/search?q=${searchTerm}&type=${type}&page=1`;
+    }
+    return currentIdentity?.type === 'organizations' ? '/jobs/created' : '/jobs';
+  };
   return (
     <>
       <div className={css.container}>
-        <BackLink
-          title="Back to jobs"
-          onBack={() => navigate(currentIdentity?.type === 'organizations' ? '/jobs/created' : '/jobs')}
-          customStyle="w-fit"
-        />
+        <BackLink title="Back to jobs" onBack={() => navigate(getBackLink())} customStyle="w-fit" />
         <Avatar size="72px" type="organizations" img={job.identity_meta.image} hasBorder isVerified={false} />
         <div className="w-full flex flex-col gap-4">
           <div className="flex flex-col">
