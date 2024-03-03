@@ -1,98 +1,53 @@
 import { useEffect, useState } from "react";
-import { notificationSettings } from "src/core/api";
+import { notificationSettings, updateNotificationSettings } from "src/core/api";
+
+// import { Payload } from "./payload.type";
 
 export const useNotification = () => {
-    const [allowNotif, setAllowNotif] = useState(false);
-    const settings = 
-        [
-          {
-            "type": "FOLLOWED",
-            "in_app": true,
-            "email": false,
-            "push": true
-          },
-          {
-            "type": "APPLICATION",
-            "email": true,
-            "in_app": true,
-            "push": true
-          }
-        ];
+      
+        useEffect(() => {
+          notificationSettings().then(e => {
+            setGenerateSettings(e.settings);
+            setAllChekced(e.settings.every((setting) => setting.in_app && setting.email && setting.push));
+          });
+        }, []);
 
+        // const [payload, setPayload] = useState<Payload>({} as Payload);
+        const settings = [];
+        const [generateSettings, setGenerateSettings] = useState(settings);
+        const notAllow = generateSettings.every((setting) => setting.in_app && setting.email && setting.push);
+        const [allChecked, setAllChekced] = useState(!notAllow);
 
-    // Likes 
-    const [likePush, setLikePush] = useState(false);
-    const [likeInapp, setLikeInapp] = useState(false);
-    const [likeEmail, setLikeEmail] = useState(false);
-    // Comments 
-
-    const [commentPush, setCommentPush] = useState(false);
-    const [commentInapp, setCommentInapp] = useState(false);
-    const [commentEmail, setCommentEmail] = useState(false);
-
-    // Tags 
-
-
-    const [tagsPush, setTagsPush] = useState(false);
-    const [tagsInapp, setTagsInapp] = useState(false);
-    const [tagsEmail, setTagsEmail] = useState(false);
-
-    // Reminder 
-
-    const [remindersPush, setRemindersPush] = useState(false);
-    const [remindersInapp, setRemindersInapp] = useState(false);
-    const [remindersEmail, setRemindersEmail] = useState(false);
-
-
-    
-
-
-
-    useEffect(() => {
-        // console.log('notifValues',notifValues);
-        handleAllowAll();
-    }, []);
-
-    const handleAllowAll = () => {
-        setAllowNotif(current => !current);
-        if (allowNotif) {
-
-            setLikePush(true);
-            setLikeInapp(true);
-            setLikeEmail(true);
-
-            setCommentPush(true);
-            setCommentInapp(true);
-            setCommentEmail(true);
-
-            setTagsPush(true);
-            setTagsInapp(true);
-            setTagsEmail(true);
-
-            setRemindersPush(true);
-            setRemindersInapp(true);
-            setRemindersEmail(true);
-            
-        } else {
-            setLikePush(false);
-            setLikeInapp(false);
-            setLikeEmail(false);
-
-            setCommentPush(false);
-            setCommentInapp(false);
-            setCommentEmail(false);
-
-            setTagsPush(false);
-            setTagsInapp(false);
-            setTagsEmail(false);
-
-            setRemindersPush(false);
-            setRemindersInapp(false);
-            setRemindersEmail(false);
+        function onChange(checked: boolean, type: NotificationType, key: string) {
+            const t = generateSettings.map(x => { if (x.type === type) { x[key] = !checked; return x } else { return x } });
+            setGenerateSettings(t);
+            // setPayload({ ...payload, [type]: { ...payload[type], [key]: checked } });
+            onConfirm();
         }
-        
-    };
+        async function onConfirm() {
+            // const payloadRes =
+            //   payload &&
+            //   Object.entries(payload).map(([key, obj]) => {
+            //     const defaultValueOfKey = generateSettings.find((setting) => setting.type === key);
+            //     return {
+            //       type: key,
+            //       in_app: obj.in_app !== undefined ? obj.in_app : (defaultValueOfKey?.in_app as boolean),
+            //       email: obj.email !== undefined ? obj.email : (defaultValueOfKey?.email as boolean),
+            //       push: obj.push !== undefined ? obj.push : (defaultValueOfKey?.push as boolean),
+            //     };
+            //   });
+            // const keys = new Set(payloadRes.map((d) => d.type));
+            // const merged = [...generateSettings.filter((setting) => !keys.has(setting.type)), ...payloadRes];
+            updateNotificationSettings({ settings: generateSettings } as NotificationsSettings);
+        }
 
-    return{allowNotif, handleAllowAll,settings,likePush,likeInapp,likeEmail,commentPush,commentInapp,commentEmail,tagsPush,tagsInapp,tagsEmail,remindersPush,remindersInapp,remindersEmail};
+        function onAllowNotifications() {
+            setAllChekced(!allChecked);
+            const t = generateSettings.map(x => { x.in_app = !allChecked; x.email = !allChecked; x.push = !allChecked; return x });
+            setGenerateSettings(t);
+            onConfirm();
+        }
+
+    return{allChecked,generateSettings,onAllowNotifications,onConfirm,onChange};
     
 };

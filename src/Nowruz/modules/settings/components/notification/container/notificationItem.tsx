@@ -1,44 +1,38 @@
 import { ToggleButton } from "src/Nowruz/modules/general/components/toggleButton"
 
-import css from "./toggleSettings.module.scss";
+import css from "./notificationItem.module.scss";
 
 interface notificationDetailsProps {
-    title: string;
-    content: string;
     type: string;
     push: boolean;
     inApp: boolean;
     email: boolean;
     changeToggleValue: () => void;
-    
   }
 
-export const ToggleSettings:React.FC<notificationDetailsProps> = ({title,content,type,push,inApp,email,changeToggleValue}) => {
+export const NotificationItem:React.FC<notificationDetailsProps> = ({type,push,inApp,email,changePushValue,changeInAppValue,changeEmailValue}) => {
     return (
         <>
             <div className={css.borderSection}>
                 <div className='grid grid-cols-1 lg:grid-cols-5 gap-4'>
                     <div>
-                        <label>{title}</label>
-                        <p>
-                            {content}
-                        </p>
+                        <label>{type}</label>
                     </div>
                     <div className='col-span-2'>
                         <div className={css.item}>
-                            <ToggleButton checked={push} size="small" onChange={changeToggleValue}/>
+                            <ToggleButton checked={push} size="small" onChange={changePushValue}/>
                             <div className="flex flex-col">
                                 <p className={css.title}>Push</p>
                             </div>
                         </div>
                         <div className={css.item}>
-                            <ToggleButton checked={inApp} size="small" onChange={changeToggleValue}/>
+                            <ToggleButton checked={inApp} size="small" onChange={changeInAppValue}/>
                             <div className="flex flex-col">
                                 <p className={css.title}>in-app</p>
                             </div>
                         </div>
                         <div className={css.item}>
-                            <ToggleButton checked={email} size="small" onChange={changeToggleValue}/>
+                            <ToggleButton checked={email} size="small" onChange={changeEmailValue}/>
                             <div className="flex flex-col">
                                 <p className={css.title}>Email</p>
                             </div>
@@ -47,5 +41,5 @@ export const ToggleSettings:React.FC<notificationDetailsProps> = ({title,content
                 </div>
             </div> 
         </>
-    )
-}
+    );
+};
