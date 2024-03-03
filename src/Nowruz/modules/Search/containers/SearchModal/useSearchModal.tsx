@@ -12,6 +12,7 @@ const tabs = [
 
 export const useSearchModal = (props: { open: boolean; onClose: () => void; setSearchText: (s: string) => void }) => {
   const [list, setList] = useState<Array<Item>>([]);
+  const [hasMoreSearchResult, setHasMoreSearchResult] = useState(false);
   const [selectedTab, setSelectedTab] = useState('projects');
   const [selectedItem, setSelectedItem] = useState<null | Item>();
   const [searchTerm, setSearchTerm] = useState('');
@@ -26,6 +27,8 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
   }, [selectedTab]);
 
   const fetchSearchResult = async (q: string) => {
+    setList([]);
+    setHasMoreSearchResult(false);
     setShowNoResult(false);
     setSelectedItem(null);
     setSearchTerm(q);
@@ -33,8 +36,15 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     if (q.length) {
       const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
       setList(searchIntoList(result.items));
+      setHasMoreSearchResult(result.page * result.limit < result.total_count);
       if (q && result.items.length === 0) setShowNoResult(true);
     }
+  };
+
+  const loadMoreSearchResult = async (p: number) => {
+    const result = await search({ type: selectedTab, q: searchTerm, filter: {} }, { page: p, limit: 20 });
+    setList([...list, ...searchIntoList(result.items)]);
+    setHasMoreSearchResult(result.page * result.limit < result.total_count);
   };
 
   const navigateFullSearch = () => {
@@ -98,5 +108,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     selectedTab,
     showNoResult,
     navigateFullSearch,
+    loadMoreSearchResult,
+    hasMoreSearchResult
   };
 };

@@ -4,6 +4,6 @@ interface SearchItem {
 export interface ResultListProps {
   list: SearchItem[];
   onClose: () => void;
-  loadMore?: (p: number) => void;
+  loadMore?: (p: number) => void | undefined;
   hasMore?: boolean;
 }

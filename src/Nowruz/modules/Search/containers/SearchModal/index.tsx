@@ -23,6 +23,8 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
     showNoResult,
     navigateFullSearch,
     selectedTab,
+    loadMoreSearchResult,
+    hasMoreSearchResult
   } = useSearchModal({
     open,
     onClose,
@@ -69,7 +71,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
             />
           </div>
           <div className={css.content}>
-            {!!list?.length && <ResultList list={list} onClose={onClose} />}
+            {!!list?.length && <ResultList list={list} onClose={onClose} loadMore={loadMoreSearchResult} hasMore={hasMoreSearchResult} />}
             {showNoResult && !list?.length && (
               <ResultNotFound type={selectedTab} searchTerm={searchTerm} onClose={onClose} />
             )}

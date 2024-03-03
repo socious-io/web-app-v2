@@ -7,7 +7,7 @@ import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import css from './result-list.module.scss';
 import { ResultListProps } from './ResultList.types';
 import { Item } from '../../containers/SearchModal/SearchModal.types';
-export const ResultList: React.FC<ResultListProps> = ({ list, onClose,loadMore = console.log, hasMore = false }) => {
+export const ResultList: React.FC<ResultListProps> = ({ list, onClose, loadMore, hasMore }) => {
 
   const selectedRef = useRef(null);
   const [selectedRowIndex] = useState(null);
@@ -34,15 +34,12 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose,loadMore =
   return (
     <div className="h-full w-full overflow-y-auto flex flex-col ">
       <InfiniteScroll
+        initialLoad={false}
+        threshold={100}
+        useWindow={false}
         pageStart={1}
         loadMore={loadMore}
         hasMore={hasMore}
-        loader={
-          <div className="loader" key={0}>
-            Loading ...
-          </div>
-        }
-        useWindow={false}
       >
       {list.map((item, index) => (
         <div className="flex flex-row items-start">
