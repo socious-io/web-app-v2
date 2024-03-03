@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import variables from 'src/components/_exports.module.scss';
 import { Contract, CurrentIdentity } from 'src/core/api';
+import dapp from 'src/dapp';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
@@ -21,7 +22,16 @@ export const useContractCard = (contract: Contract, setOpenOverlay: (val: boolea
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setContractVal(contract);
+    let unit = contract.currency;
+
+    if (contract.crypto_currency_address) {
+      dapp.NETWORKS.map((n) => {
+        const token = n.tokens.filter((t) => contract.crypto_currency_address === t.address)[0];
+        if (token) unit = token.symbol;
+      });
+    }
+
+    setContractVal({ ...contract, currency: unit });
   }, [contract]);
 
   // We might delete currency icon later (we accept only USD or JPY at the moment)
