@@ -17,6 +17,7 @@ const ApplyModalQuestions: React.FC<ApplyModalQuestionsProps> = ({ answers, setA
     screeningQuestions: QuestionsRes;
   };
 
+  const questions = screeningQuestions.questions.sort((a, b) => (a.id > b.id ? 1 : -1));
   const handleSelectOption = (questionId: string, selectedOption: number, answer: string) => {
     const answersCopy = [...answers];
     const idx = answersCopy.findIndex((item) => item.id === questionId);
@@ -39,7 +40,7 @@ const ApplyModalQuestions: React.FC<ApplyModalQuestionsProps> = ({ answers, setA
       <Typography variant="h4" className="text-Gray-light-mode-700">
         Screening questions
       </Typography>
-      {screeningQuestions.questions.map((question) => (
+      {questions.map((question) => (
         <div key={question.id} className="flex flex-col gap-4">
           <Typography variant="h5" className="text-Gray-light-mode-600">
             {question.question}
