@@ -10,6 +10,8 @@
 }
 .row {
   display: flex;
+  align-items: flex-start;
+  width: 100%;
   @media screen and (max-width: 600px) {
     justify-content: space-between;
     flex-direction: column;
@@ -17,8 +19,9 @@
 }
 
 .info {
-  width: 280px;
-  margin-right: 32px;
+  width: 120px;
+  min-width: 120px;
+  margin-right: 12px;
   @media screen and (max-width: 600px) {
     width: 100%;
     margin-bottom: 20px;
@@ -42,7 +45,7 @@
 }
 
 .componentsContainer {
-  width: 512px;
+  width: 345px;
   @media screen and (max-width: 600px) {
     max-width: 100%;
   }

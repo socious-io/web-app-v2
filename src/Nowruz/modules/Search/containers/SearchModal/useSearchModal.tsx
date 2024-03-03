@@ -38,7 +38,13 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
   };
 
   const navigateFullSearch = () => {
+    localStorage.removeItem('searchPage');
+    localStorage.removeItem('navigateToSearch');
+    localStorage.removeItem('filter');
+    localStorage.removeItem('searchTerm');
+    localStorage.removeItem('type');
     props.onClose();
+
     navigate(`/search?q=${searchTerm}&type=${selectedTab}&page=1`);
   };
 

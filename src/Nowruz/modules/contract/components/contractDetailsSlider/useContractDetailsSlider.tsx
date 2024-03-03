@@ -210,16 +210,7 @@ export const useContractDetailsSlider = () => {
                 subtitle={`<b>${name}</b> has marked this job completed. Confirm so they can receive payment.`}
               />
             );
-            setAllStates(
-              true,
-              alertMsg,
-              true,
-              'Confirm completion',
-              true,
-              'Contest',
-              handleConfirmCompletion,
-              handleContest,
-            );
+            setAllStates(true, alertMsg, true, 'Confirm completion', false, '', handleConfirmCompletion, undefined);
           }
         }
         break;
@@ -336,7 +327,10 @@ export const useContractDetailsSlider = () => {
               subtitle={`Completed on ${isoToStandard(contract.mission.updated_at.toString())}`}
             />
           );
-          setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
+
+          if (!contract.org_feedback) {
+            setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
+          } else setAllStates(true, alertMsg, false, '', false, '');
         }
         break;
       default:

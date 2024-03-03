@@ -41,6 +41,10 @@ export const contractsSlice = createSlice({
       if (action.payload.missionStatus)
         state.offers[idx].mission = { ...state.offers[idx].mission, status: action.payload.missionStatus };
     },
+    updateFeedback: (state, action) => {
+      const idx = state.offers.findIndex((item) => item.id === action.payload.id);
+      state.offers[idx].org_feedback = action.payload.orgFeedback;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -63,4 +67,4 @@ export const contractsSlice = createSlice({
   },
 });
 
-export const { setSelected, updateStatus } = contractsSlice.actions;
+export const { setSelected, updateStatus, updateFeedback } = contractsSlice.actions;

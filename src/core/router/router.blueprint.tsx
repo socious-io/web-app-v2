@@ -89,10 +89,31 @@ export const blueprint: RouteObject[] = [
                 children: [
                   {
                     path: 'view',
+
                     loader: async ({ params }) => {
                       const organization = await getOrganizationByShortName(params.id!);
+                      const orgJobs = await jobs({ page: 0, status: 'ACTIVE', limit: 2, identity_id: organization.id });
                       return {
                         organization,
+                        orgJobs,
+                      };
+                    },
+                    async lazy() {
+                      const { OrgProfile } = await import('src/Nowruz/pages/orgProfile');
+                      return {
+                        Component: OrgProfile,
+                      };
+                    },
+                  },
+                  {
+                    path: 'jobs',
+
+                    loader: async ({ params }) => {
+                      const organization = await getOrganizationByShortName(params.id!);
+                      const orgJobs = await jobs({ page: 0, status: 'ACTIVE', limit: 2, identity_id: organization.id });
+                      return {
+                        organization,
+                        orgJobs,
                       };
                     },
                     async lazy() {
@@ -267,9 +288,14 @@ export const blueprint: RouteObject[] = [
                   };
                 },
                 loader: async ({ request }) => {
+                  const page = Number(localStorage.getItem('searchPage')) || 1;
+
                   const url = new URL(request.url);
                   const q = url.searchParams.get('q');
                   const type = url.searchParams.get('type') ?? 'projects';
+                  localStorage.setItem('type', type || 'projects');
+                  localStorage.setItem('searchTerm', q || '');
+                  localStorage.setItem('navigateToSearch', 'true');
                   const body = {
                     filter: {},
                     type,
@@ -277,7 +303,7 @@ export const blueprint: RouteObject[] = [
                   if (q?.trim()) {
                     Object.assign(body, { q: q });
                   }
-                  const data = await searchReq(body, { limit: 10, page: 1 });
+                  const data = await searchReq(body, { limit: 10, page });
                   return data;
                 },
               },

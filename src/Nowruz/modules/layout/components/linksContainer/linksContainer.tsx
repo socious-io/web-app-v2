@@ -13,8 +13,13 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
   const { filteredMenu, userIsLoggedIn } = useLinksContainer();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const navigateFunction = (route: string) => {
+  const navigateFunction = async (route: string) => {
     localStorage.removeItem('page');
+    localStorage.removeItem('searchPage');
+    localStorage.removeItem('navigateToSearch');
+    localStorage.removeItem('filter');
+    localStorage.removeItem('searchTerm');
+    localStorage.removeItem('type');
     navigate(route);
     if (isTouchDevice()) setOpen(false);
   };
