@@ -137,7 +137,7 @@ export const ContractDetailsSlider: React.FC = () => {
           walletAddress={contract.recipient?.meta.wallet_address}
         />
       )}
-      {openReviewModal && <ReviewModal open={openReviewModal} handleClose={() => setOpenReviewModal(false)} />}
+      {openReviewModal && <ReviewModal open={openReviewModal} closeReviewModal={() => setOpenReviewModal(false)} />}
     </>
   );
 };

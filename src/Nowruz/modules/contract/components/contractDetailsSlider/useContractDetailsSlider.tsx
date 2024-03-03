@@ -327,7 +327,10 @@ export const useContractDetailsSlider = () => {
               subtitle={`Completed on ${isoToStandard(contract.mission.updated_at.toString())}`}
             />
           );
-          setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
+
+          if (!contract.org_feedback) {
+            setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
+          } else setAllStates(true, alertMsg, false, '', false, '');
         }
         break;
       default:
