@@ -12,8 +12,6 @@ export const ContractCard: React.FC<ContractCardProps> = ({ contract, setOpenOve
   const { type, badge, name, profileImageUrl, currencyIconName, formatCurrency, contractVal, handleOpenOverlayModal } =
     useContractCard(contract, setOpenOverlay);
 
-  console.log(contractVal);
-
   return (
     <>
       <div
