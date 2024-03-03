@@ -210,16 +210,7 @@ export const useContractDetailsSlider = () => {
                 subtitle={`<b>${name}</b> has marked this job completed. Confirm so they can receive payment.`}
               />
             );
-            setAllStates(
-              true,
-              alertMsg,
-              true,
-              'Confirm completion',
-              true,
-              'Contest',
-              handleConfirmCompletion,
-              handleContest,
-            );
+            setAllStates(true, alertMsg, true, 'Confirm completion', false, '', handleConfirmCompletion, undefined);
           }
         }
         break;
