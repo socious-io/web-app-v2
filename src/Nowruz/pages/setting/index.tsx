@@ -3,6 +3,7 @@ import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontal
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 import Account from 'src/Nowruz/modules/settings/components/account/';
 import Password from 'src/Nowruz/modules/settings/components/password';
+import Team from 'src/Nowruz/modules/settings/components/team';
 
 export const Setting = () => {
   const tabs = [
@@ -15,10 +16,10 @@ export const Setting = () => {
       label: 'Password',
       content: <Password />,
     },
-    // {
-    //   label: 'Team',
-    //   content: <h1>Team</h1>
-    // },
+    {
+      label: 'Team',
+      content: <Team />
+    },
     // {
     //   label: 'Working Prefrences',
     //   content: <h1>Working</h1>
@@ -31,6 +32,7 @@ export const Setting = () => {
   const items: any[] = [
     { label: 'Account', value: 'Account' },
     { label: 'Password', value: 'Password' },
+    { label: 'Team', value: 'Team' },
   ];
 
   const [content, setContent] = useState<ReactNode>();
@@ -40,6 +42,7 @@ export const Setting = () => {
 
     if (value.value === 'Account') return setContent(<Account />);
     if (value.value === 'Password') return setContent(<Password />);
+    if (value.value === 'Team') return setContent(<Team />);
   };
 
   useEffect(() => {
