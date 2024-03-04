@@ -40,7 +40,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
             menuOpen={open}
           /> */}
 
-      {userIsLoggedIn && (
+      {userIsLoggedIn && currentIdentity.type === 'users' && (
         <LinkItem
           label="Settings"
           navigateFunc={() => {
