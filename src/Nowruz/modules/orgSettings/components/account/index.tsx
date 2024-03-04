@@ -6,7 +6,6 @@ import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
-import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 import css from './account.module.scss';
 
@@ -26,65 +25,6 @@ const Account = () => {
 
   return (
     <>
-      <div className="hidden">
-        <div className={css.borderSection}>
-          <div className="flex flex-row w-full pt-8 items-center">
-            <h2 className={css.title}>Account Information</h2>
-            <div className="flex gap-4">
-              <div>
-                <Button color="info">Cancel</Button>
-              </div>
-              <div>
-                <Button color="primary">Save</Button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className={css.borderSection}>
-          <div className="grid grid-cols-5 gap-4">
-            <label>Name</label>
-            <div>
-              <Input id="name" type="text" />
-            </div>
-            <div>
-              <Input id="name" type="text" />
-            </div>
-          </div>
-        </div>
-        <div className={css.borderSection}>
-          <div className="grid grid-cols-5 gap-4">
-            <label>Email Address</label>
-            <div className="col-span-2">
-              <Input id="email" type="email" />
-            </div>
-          </div>
-        </div>
-        <div className={css.borderSection}>
-          <div className="grid grid-cols-5 gap-4">
-            <label>Username</label>
-            <div className="col-span-2">
-              <Input id="username" prefix="socious.io/" />
-            </div>
-          </div>
-        </div>
-        <div className={css.borderSection}>
-          <div className="grid grid-cols-5 gap-4">
-            <label>Role</label>
-            <div className="col-span-2">
-              <Input id="role" />
-            </div>
-          </div>
-        </div>
-        <div className={css.borderSection}>
-          <div className="grid grid-cols-5 gap-4">
-            <label>City</label>
-            <div className="col-span-2 ...">
-              <SearchDropdown id="location" isAsync icon="search-lg" hasDropdownIcon={false} />
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div className="text-Error-700 text-sm py-5 cursor-pointer" onClick={() => setModalVisibility(true)}>
         Close your Account
