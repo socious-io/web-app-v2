@@ -52,7 +52,7 @@ export const Experiences = () => {
                   handleDelete={() => handleDelete(item.id)}
                 />
                 {/* FIXME: Need to fix this button style should be go in to StepperCard */}
-                {myProfile && (!item.credential || item.credential?.status === 'PENDING') && (
+                {/* {myProfile && (!item.credential || item.credential?.status === 'PENDING') && (
                   <Button
                     variant="text"
                     color="secondary"
@@ -62,7 +62,7 @@ export const Experiences = () => {
                   >
                     Verify experience
                   </Button>
-                )}
+                )} */}
                 {myProfile && item.credential?.status === 'APPROVED' && (
                   <Button
                     variant="text"
