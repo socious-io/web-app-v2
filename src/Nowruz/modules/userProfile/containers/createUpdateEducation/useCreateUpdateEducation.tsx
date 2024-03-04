@@ -169,7 +169,6 @@ export const useCreateUpdateEducation = (
   };
 
   const onSelectSchool = (newCompanyVal: OptionType) => {
-    console.log('test log newCompanyVal', newCompanyVal);
     const newValue = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
     setValue('school', { ...newCompanyVal, value: newValue }, { shouldValidate: true });
   };

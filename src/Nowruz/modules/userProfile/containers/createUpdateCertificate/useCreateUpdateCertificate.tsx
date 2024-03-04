@@ -64,7 +64,6 @@ export const useCreateUpdateCertificate = (
   const dispatch = useDispatch();
 
   const [orgVal, setOrgVal] = useState<OptionType | null>();
-  // const [orgs, setOrgs] = useState<Organization[]>([]);
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
   const [issueMonth, setIssueMonth] = useState<OptionType | null>();
@@ -171,12 +170,6 @@ export const useCreateUpdateCertificate = (
   };
 
   const onSelectOrg = (newCompanyVal) => {
-    // console.log('test log newCompanyVal', newCompanyVal);
-    // const newValue = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
-    // setValue('school', { ...newCompanyVal, value: newValue }, { shouldValidate: true });
-
-    console.log('test log newCompanyVal', newCompanyVal);
-
     const value = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
     setValue('orgId', value, { shouldValidate: true });
     setValue('orgName', newCompanyVal.label, { shouldValidate: true });
@@ -215,6 +208,9 @@ export const useCreateUpdateCertificate = (
       credentialId,
       credentialUrl,
       description,
+      orgImageId,
+      orgImageUrl,
+      orgCity,
     } = getValues();
 
     let oId = orgId;
@@ -230,19 +226,15 @@ export const useCreateUpdateCertificate = (
       issue_year: issueYear,
       expire_month: expireMonth,
       expire_year: expireYear,
+      organization_city: orgCity,
+      organization_image: orgImageUrl,
     };
     const payload: AdditionalReq = {
       type: 'CERTIFICATE',
       title: name,
       enabled: true,
+      image: orgImageId,
     };
-
-    // if (orgId) {
-    //   const organization = orgs.find((i) => i.id === orgId);
-    //   payload.image = organization?.image?.id;
-    //   payloadMeta.organization_city = organization?.city;
-    //   payloadMeta.organization_image = organization?.image?.url;
-    // }
 
     if (description) payload.description = description;
     removedEmptyProps(payloadMeta);

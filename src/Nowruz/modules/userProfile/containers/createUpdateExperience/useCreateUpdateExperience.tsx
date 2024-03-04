@@ -325,7 +325,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     } = getValues();
 
     let organizationId = org.value;
-    console.log('test log organizationId', organizationId);
     if (!organizationId) {
       organizationId = (await createOrganization({ name: org.label, email: 'org@socious.io' }, false)).id;
     }
