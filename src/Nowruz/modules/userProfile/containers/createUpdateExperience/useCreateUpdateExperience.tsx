@@ -88,7 +88,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   const [employmentTypes, setEmploymentTypes] = useState<OptionType[]>();
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
-  const [companies, setCompanies] = useState<Organization[]>();
   const [dateError, setDateError] = useState('');
 
   const getJobCategories = async () => {
@@ -226,18 +225,15 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   };
   const orgToOption = (orgs: Organization[], searchText: string) => {
     let options: OptionType[] = [];
-    if (!orgs.length) options = options.concat({ value: '', label: searchText });
-    options = options.concat(
-      orgs.map((org) => ({
-        value: org.id,
-        label: org.name,
-        icon: org.image ? (
-          <img src={org.image.url} width={24} height={24} alt="" />
-        ) : (
-          <Avatar type="organizations" size="24px" />
-        ),
-      })),
-    );
+    options = orgs.map((org) => ({
+      value: org.id,
+      label: org.name,
+      icon: org.image ? (
+        <img src={org.image.url} width={24} height={24} alt="" />
+      ) : (
+        <Avatar type="organizations" size="24px" />
+      ),
+    }));
     return options;
   };
 
@@ -245,7 +241,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     try {
       if (searchText) {
         const response = await search({ type: 'organizations', q: searchText, filter: {} }, { page: 1, limit: 10 });
-        setCompanies(response.items);
         cb(orgToOption(response.items, searchText));
       }
     } catch (error) {
@@ -254,10 +249,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   };
 
   const onSelectCompany = (newCompanyVal: OptionType) => {
-    setValue('org', newCompanyVal, { shouldValidate: true });
-    const org = companies?.find((item) => item.id === newCompanyVal.value);
-    setValue('city', { value: org?.city || '', label: org?.city || '' });
-    setValue('country', org?.country || '', { shouldValidate: true });
+    const value = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
+    setValue('org', { value, label: newCompanyVal.label }, { shouldValidate: true });
   };
 
   const cityToOption = (cities: Location[]) => {
@@ -332,6 +325,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     } = getValues();
 
     let organizationId = org.value;
+    console.log('test log organizationId', organizationId);
     if (!organizationId) {
       organizationId = (await createOrganization({ name: org.label, email: 'org@socious.io' }, false)).id;
     }
