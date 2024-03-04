@@ -1,7 +1,9 @@
 import { SearchDropdown } from "src/Nowruz/modules/general/components/SearchDropdown";
 import css from "./team.module.scss";
+import { useTeam } from "./useTeam";
 
 const Team = () => {
+    const {pipi} = useTeam();
     return(
         <>
         <div className={css.borderSection}>
@@ -23,7 +25,7 @@ const Team = () => {
                 <SearchDropdown
                 placeholder="Please select"
                 icon="image-user"
-                // options={EXPERIENCE_LEVEL_V2}
+                // options={memberList}
                 isSearchable
                 // onChange={(option) => onSelectExperienceLevel(option.value)}
                 />
