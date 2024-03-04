@@ -219,11 +219,9 @@ export const useJobCreateForm = () => {
     };
     try {
       const res = await createJob(jobPayload);
-      const requests = [];
-      questions.forEach((q) => {
-        requests.push(addQuestionJob(res.id, q));
+      questions.forEach(async (q) => {
+        await addQuestionJob(res.id, q);
       });
-      await Promise.all(requests);
       setOpenSuccessModal(true);
     } catch (error) {}
   };
@@ -289,7 +287,7 @@ export const useJobCreateForm = () => {
   };
 
   const handleCloseSuccessModal = () => {
-    navigate('/nowruz/jobs');
+    navigate('/jobs/created');
   };
 
   const deleteQuestion = (index: number) => {

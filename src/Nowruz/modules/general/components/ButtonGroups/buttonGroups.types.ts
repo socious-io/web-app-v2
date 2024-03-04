@@ -1,6 +1,6 @@
 export type ButtonGroupItem = {
   label: string;
-  handleClick: () => Promise<void>;
+  handleClick: () => void;
 };
 
 export interface ButtonGroupsProps {

@@ -6,11 +6,12 @@ import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { AvatarLabelGroupProps } from './avatarLabelGroup.types';
 
 export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = (props) => {
-  const { account, customStyle, handleClick, avatarSize } = props;
+  const { account, customStyle, handleClick, avatarSize, removeFull = false } = props;
+  const nonFull = removeFull ? '' : 'w-full';
 
   return (
     <div
-      className={`w-full h-fit flex flex-row gap-3 py-3 px-4 ${customStyle} ${handleClick && 'cursor-pointer'}`}
+      className={`${nonFull} h-fit flex flex-row gap-3 py-3 px-4 ${customStyle} ${handleClick && 'cursor-pointer'}`}
       onClick={handleClick}
     >
       <Avatar img={account.img} type={account.type} size={avatarSize || '40px'} />
@@ -19,7 +20,7 @@ export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = (props) => {
           {account.name}
         </Typography>
         <Typography variant="caption" color={variables.color_grey_600}>
-          {`@${account.username}`}
+          {`${['users', 'organizations'].includes(account.type) ? '@' : ''}${account.username}`}
         </Typography>
       </div>
     </div>

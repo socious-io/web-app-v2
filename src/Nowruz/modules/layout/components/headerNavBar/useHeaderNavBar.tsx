@@ -11,6 +11,7 @@ import {
   readAllNotifications,
 } from 'src/core/api';
 import { openToVolunteer as openToVolunteerApi, openToWork as openToWorkApi, hiring as hiringApi } from 'src/core/api';
+import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { RootState } from 'src/store';
 
 export const useHeaderNavBar = () => {
@@ -18,6 +19,7 @@ export const useHeaderNavBar = () => {
   const identities = useSelector<RootState, Identity[]>((state) => {
     return state.identity.entities;
   });
+
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((i) => i.current);
   });
@@ -32,6 +34,9 @@ export const useHeaderNavBar = () => {
   const [openNotifPanel, setOpenNotifPanel] = useState(false);
   const [notifList, setNotifList] = useState<Notification[]>();
   const [unreadNotif, setUnreadNotif] = useState(false);
+  const [openSearchModal, setOpenSearchModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [accounts, setaccounts] = useState<AccountItem[]>([]);
   const getNotification = async () => {
     const res = await notifications({ page: 1, limit: 50 });
     setNotifList(res.items);
@@ -53,18 +58,21 @@ export const useHeaderNavBar = () => {
     }
   }, [currentIdentity]);
 
-  const accounts = identities.map((i) => {
-    const user = i.meta as UserMeta;
-    const org = i.meta as OrgMeta;
-    return {
-      id: i.id,
-      img: user.avatar || org.image || '',
-      type: i.type,
-      name: user.name || org.name,
-      username: user.username || org.shortname,
-      selected: user.id === currentIdentity?.id,
-    };
-  });
+  useEffect(() => {
+    const accList = identities.map((i) => {
+      const user = i.meta as UserMeta;
+      const org = i.meta as OrgMeta;
+      return {
+        id: i.id,
+        img: user.avatar || org.image || '',
+        type: i.type,
+        name: user.name || org.name,
+        username: user.username || org.shortname,
+        selected: user.id === currentIdentity?.id,
+      };
+    });
+    setaccounts(accList);
+  }, [identities]);
 
   const handleOpenToWork = async () => {
     const res = await openToWorkApi();
@@ -89,11 +97,16 @@ export const useHeaderNavBar = () => {
     }
   };
 
+  const navigateToSettings = () => {
+    navigate('/settings');
+  };
+
   const readNotifications = async () => {
     setOpenNotifPanel(true);
     setUnreadNotif(false);
     await readAllNotifications();
   };
+
   return {
     userIsLoggedIn,
     userType,
@@ -111,5 +124,10 @@ export const useHeaderNavBar = () => {
     navigateToProfile,
     unreadNotif,
     readNotifications,
+    navigateToSettings,
+    openSearchModal,
+    setOpenSearchModal,
+    searchTerm,
+    setSearchTerm,
   };
 };

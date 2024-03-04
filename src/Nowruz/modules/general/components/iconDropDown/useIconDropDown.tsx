@@ -13,6 +13,9 @@ export const useIconDropDown = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
+  const allIdentities = useSelector<RootState, CurrentIdentity[]>((state) => {
+    return state.identity.entities;
+  });
   const myProfile = currentIdentity?.id === user?.id;
 
   const [open, setOpen] = useState(false);
@@ -35,6 +38,19 @@ export const useIconDropDown = () => {
       .then(() => setOpen(false));
   };
 
+  const navigateToOnboarding = async () => {
+    if (currentIdentity?.type === 'organizations') {
+      localStorage.setItem('registerFor', 'user');
+      const userAccount = allIdentities.find((a) => a.type === 'users');
+      await nonPermanentStorage.set({ key: 'identity', value: userAccount!.id });
+      const identityList = await identities();
+      dispatch(setIdentityList(identityList));
+    } else {
+      localStorage.setItem('registerFor', 'organization');
+    }
+    navigate('/sign-up/user/onboarding');
+  };
+
   const handleClick = () => {
     setOpen(!open);
   };
@@ -46,5 +62,5 @@ export const useIconDropDown = () => {
     setOpen(false);
   };
 
-  return { switchAccount, open, myProfile, handleClick, handleOpen, handleClose };
+  return { switchAccount, open, myProfile, handleClick, handleOpen, handleClose, navigateToOnboarding };
 };

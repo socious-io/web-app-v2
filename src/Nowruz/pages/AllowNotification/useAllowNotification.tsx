@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { logout } from 'src/core/api';
 import { useSignInForm } from 'src/Nowruz/modules/Auth/containers/signin/SignInForm/useSignInForm';
-import { logout } from 'src/pages/sidebar/sidebar.service';
 
 export const useAllowNotification = () => {
   const type = localStorage.getItem('registerFor');

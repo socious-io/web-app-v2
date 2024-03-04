@@ -1,5 +1,5 @@
 import { Skeleton } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Applicant, Job, jobApplicants } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
@@ -20,20 +20,20 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
   const theme = isActive ? 'success' : 'error';
   const applicantsLabel = job.applicants === 1 ? 'applicant' : 'applicants';
 
-  const getApplicants = async () => {
+  const getApplicants = useCallback(async () => {
+    setLoading(true);
     const data = await jobApplicants(job.id, { page: 1, status: 'PENDING', limit: 100 });
     setApplicants(data.items);
     setLoading(false);
-  };
+  }, [job.id]);
 
   useEffect(() => {
-    setLoading(true);
     getApplicants();
   }, [job]);
 
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/nowruz/jobs/${job.id}`);
+    navigate(`/jobs/created/${job.id}`);
   };
   return (
     <div className={`${css.container} cursor-pointer`} onClick={handleClick}>

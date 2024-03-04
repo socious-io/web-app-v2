@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Offer, hireOffer, payByOffer } from 'src/core/api';
 import dapp from 'src/dapp';
-import store from 'src/store';
-import { getMissions } from 'src/store/thunks/contracts.thunk';
 
 export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => void, offer?: Offer) => {
   const { chainId, signer, account, isConnected, open } = dapp.useWeb3();
@@ -61,7 +59,6 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
         meta: result,
       });
       await hireOffer(offer.id);
-      await store.dispatch(getMissions());
       handleCloseModal(true);
     } catch (err: any) {
       handleCloseModal(false);

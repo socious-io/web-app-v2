@@ -1,8 +1,9 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
+  Contract,
   CurrentIdentity,
-  Mission,
   Offer,
   StripeAccount,
   acceptOffer,
@@ -10,17 +11,19 @@ import {
   cancelOffer,
   completeMission,
   confirmMission,
+  connectionStatus,
   contestMission,
   dropMission,
   getOffer,
+  hireOffer,
   rejectOffer,
+  stripeProfile,
 } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
-import { getSrtipeProfile } from 'src/pages/offer-received/offer-received.services';
 import { RootState } from 'src/store';
-import { updateMissionStatus, updateOfferStatus } from 'src/store/reducers/contracts.reducer';
+import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
 import { ContractDetailTab } from '../contractDetailTab';
 
@@ -29,27 +32,35 @@ export const useContractDetailsSlider = () => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
+  const navigate = useNavigate();
   const selectedOfferId = useSelector<RootState, string | undefined>((state) => {
     return state.contracts.selectedOfferId;
   });
-  const offer = useSelector<RootState, Offer | undefined>((state) => {
+  const contract = useSelector<RootState, Contract>((state) => {
     return state.contracts.offers.find((item) => item.id === selectedOfferId);
   });
 
-  const mission = useSelector<RootState, Mission | undefined>((state) => {
-    return state.contracts.missions.find((item) => item.offer.id === selectedOfferId);
-  });
+  const checkMessageButtonStatus = async () => {
+    if (type === 'organizations') {
+      setDisableMessageButton(false);
+      return;
+    }
+
+    const res = (await connectionStatus(contract?.organization.id)).connect;
+    setDisableMessageButton(!res);
+  };
 
   useEffect(() => {
     inititalize();
-  }, [offer, mission]);
+    checkMessageButtonStatus();
+  }, [contract]);
 
   const type = identity?.type;
-  const name = type === 'users' ? offer?.offerer.meta.name : offer?.recipient.meta.name;
-  const profileImage = type === 'users' ? offer?.offerer.meta.image : offer?.recipient.meta.avatar;
+  const name = type === 'users' ? contract.offerer.meta.name : contract.recipient.meta.name;
+  const profileImage = type === 'users' ? contract.offerer.meta.image : contract.recipient.meta.avatar;
 
   const tabs = [
-    { label: 'Details', content: <ContractDetailTab offer={offer} /> },
+    { label: 'Details', content: <ContractDetailTab contract={contract} /> },
     // { label: 'Activity', content: <div /> },
   ];
 
@@ -75,6 +86,7 @@ export const useContractDetailsSlider = () => {
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const [openSelectCardModal, setOpenSelectCardModal] = useState(false);
   const [openWalletModal, setOpenWalletModal] = useState(false);
+  const [disableMessageButton, setDisableMessageButton] = useState(true);
 
   const setAllStates = (
     displayMsg: boolean,
@@ -85,7 +97,6 @@ export const useContractDetailsSlider = () => {
     secondaryBtnLabel: string,
     primaryBtnAction?: () => void,
     secondaryBtnAction?: () => void,
-    // primaryBtnDisabled = false,
   ) => {
     setDisplayMessage(displayMsg);
     setMessage(msg);
@@ -95,12 +106,12 @@ export const useContractDetailsSlider = () => {
     setDisplaySecondaryButton(displaySecondaryBtn);
     setSecondaryButtonLabel(secondaryBtnLabel);
     setSecondaryButtonAction(() => secondaryBtnAction);
-    // setDisplayPrimaryButton(primaryBtnDisabled);
   };
 
   const initializeAcceptOfferFiat = async () => {
-    await getSrtipeProfile({ is_jp: offer.currency === 'JPY' }).then((r) => {
+    await stripeProfile({ is_jp: contract.currency === 'JPY' }).then((r) => {
       const { data } = r?.external_accounts || {};
+
       if (data?.length > 0) {
         setStripeAccounts(data);
         setPrimaryButtonDisabled(false);
@@ -133,80 +144,89 @@ export const useContractDetailsSlider = () => {
   };
 
   const inititalizeAccepOffer = async () => {
-    if (offer.project.payment_type === 'VOLUNTEER') {
+    if (contract.project.payment_type === 'VOLUNTEER') {
       setPrimaryButtonDisabled(false);
       setAllStates(false, null, true, 'Accept', true, 'Decline', handleAcceptOffer, handleDecline);
       return;
     }
-    if (offer.payment_mode === 'FIAT') await initializeAcceptOfferFiat();
-    else if (offer.payment_mode === 'CRYPTO') initializeAcceptOfferCrypto();
+    if (contract.payment_mode === 'FIAT') await initializeAcceptOfferFiat();
+    else if (contract.payment_mode === 'CRYPTO') initializeAcceptOfferCrypto();
   };
   const inititalize = async () => {
-    if (type === 'users') {
-      if (offer?.status === 'PENDING') {
+    let alertMsg = null;
+    switch (contract.contractStatus) {
+      case 'Offer sent':
+        alertMsg = (
+          <AlertMessage
+            theme="gray"
+            iconName="check-circle"
+            title="You have sent an offer to the applicant"
+            subtitle=""
+          />
+        );
+        setAllStates(true, alertMsg, false, '', true, 'Withdraw', undefined, withdrawOfferByOP);
+        break;
+      case 'Offer received':
         setPrimaryButtonDisabled(true);
         setAllStates(false, null, true, 'Accept', true, 'Decline', undefined, handleDecline);
         await inititalizeAccepOffer();
-        return;
-      }
+        break;
 
-      if (offer?.status === 'APPROVED') {
-        const alertMsg = (
+      case 'Awaiting confirmation':
+        if (contract.status === 'APPROVED') {
+          //approved by Umaya, waiting for OP confirmation
+          alertMsg = (
+            <AlertMessage
+              theme="primary"
+              iconName="check-circle"
+              title={type === 'users' ? 'You have accepted this offer' : `${name} has accepted this offer`}
+              subtitle={
+                type === 'users'
+                  ? `We are just waiting for the final confirmation from ${name} to start the job.`
+                  : ' We are just waiting for the final confirmation from you to start the job. '
+              }
+            />
+          );
+          if (type === 'users') setAllStates(true, alertMsg, false, '', false, '');
+          else setAllStates(true, alertMsg, true, 'Confirm', true, 'Cancel', hadleHireVolunteer, withdrawOfferByOP);
+        } else if (contract.mission?.status === 'COMPLETE') {
+          //completed by Umaya, waiting fot OP confirmation
+          if (type === 'users') {
+            alertMsg = (
+              <AlertMessage
+                theme="warning"
+                iconName="alert-circle"
+                title="Completion submitted"
+                subtitle={`Awaiting confirmation from <b>${name}</b>`}
+              />
+            );
+            setAllStates(true, alertMsg, false, '', false, '');
+          } else {
+            alertMsg = (
+              <AlertMessage
+                theme="warning"
+                iconName="alert-circle"
+                title="Awaiting confirmation"
+                subtitle={`<b>${name}</b> has marked this job completed. Confirm so they can receive payment.`}
+              />
+            );
+            setAllStates(true, alertMsg, true, 'Confirm completion', false, '', handleConfirmCompletion, undefined);
+          }
+        }
+        break;
+      case 'Withdrawn':
+        alertMsg = (
           <AlertMessage
-            theme="primary"
-            iconName="check-circle"
-            title="You have accepted this offer"
-            subtitle={`We are just waiting for the final confirmation from ${name} to start the job.`}
-          />
-        );
-        setAllStates(true, alertMsg, false, '', false, '');
-        return;
-      }
-      if (offer?.status === 'WITHDRAWN') {
-        const alertMsg = (
-          <AlertMessage theme="gray" iconName="check-circle" title="" subtitle="You have declined this offer" />
-        );
-        setAllStates(true, alertMsg, false, '', false, '');
-
-        return;
-      }
-
-      if (offer?.status === 'HIRED' && mission?.status === 'ACTIVE') {
-        const alertMsg = (
-          <AlertMessage
-            theme="primary"
-            iconName="check-circle"
-            title="Your job has been confirmed"
-            subtitle="Once you have finished your work please click on <b>complete</b> button."
-          />
-        );
-        setAllStates(true, alertMsg, true, 'Complete', true, 'Stop', handleOpenCompleteConfirm, handleStop);
-        return;
-      }
-
-      if (offer?.status === 'CLOSED' && mission?.status === 'CANCELED') {
-        const alertMsg = (
-          <AlertMessage theme="gray" iconName="check-circle" title="" subtitle="You have canceled this contract" />
-        );
-        setAllStates(true, alertMsg, false, '', false, '');
-        return;
-      }
-      if (offer?.status === 'CLOSED' && mission?.status === 'COMPLETE') {
-        const alertMsg = (
-          <AlertMessage
-            theme="warning"
+            theme="gray"
             iconName="alert-circle"
-            title="Completion submitted"
-            subtitle={`Awaiting confirmation from <b>${name}</b>`}
+            title={type === 'users' ? 'you have declined this offer' : `${name} has declined this offer`}
+            subtitle=""
           />
         );
         setAllStates(true, alertMsg, false, '', false, '');
-        return;
-      }
-    }
-    if (type === 'organizations') {
-      if (offer?.status === 'APPROVED' && offer.assignment_total) {
-        const alertMsg = (
+        break;
+      case 'Payment required':
+        alertMsg = (
           <AlertMessage
             theme="warning"
             iconName="alert-circle"
@@ -224,71 +244,98 @@ export const useContractDetailsSlider = () => {
           handleOpenPaymentModal,
           withdrawOfferByOP,
         );
-        return;
-      }
-      if (offer?.status === 'HIRED' && offer.assignment_total) {
-        const alertMsg = (
-          <AlertMessage
-            theme="primary"
-            iconName="alert-circle"
-            title="Payment was done successfully"
-            subtitle={`${name} can now start the job`}
-          />
-        );
-        setAllStates(true, alertMsg, false, '', true, 'Stop', undefined, handleStopByOP);
-        return;
-      }
-      if (offer?.status === 'CLOSED' && mission?.status === 'KICKED_OUT') {
-        const alertMsg = (
-          <AlertMessage theme="gray" iconName="alert-circle" title="You have stopped this contract" subtitle="" />
-        );
-        setAllStates(true, alertMsg, false, '', false, '');
-        return;
-      }
-      if (offer?.status === 'CANCELED') {
-        const alertMsg = (
-          <AlertMessage theme="gray" iconName="alert-circle" title="You have canceled this offer" subtitle="" />
-        );
-        setAllStates(true, alertMsg, false, '', false, '');
-        return;
-      }
-      if (offer?.status === 'CLOSED' && mission?.status === 'COMPLETE') {
-        const alertMsg = (
-          <AlertMessage
-            theme="warning"
-            iconName="alert-circle"
-            title="Awaiting confirmation"
-            subtitle={`<b>${name}</b> has marked this job completed. Confirm so they can receive payment.`}
-          />
-        );
-        setAllStates(
-          true,
-          alertMsg,
-          true,
-          'Confirm completion',
-          true,
-          'Contest',
-          handleConfirmCompletion,
-          handleContest,
-        );
-        return;
-      }
+        break;
+      case 'Ongoing':
+        if (type === 'users') {
+          alertMsg = (
+            <AlertMessage
+              theme="primary"
+              iconName="check-circle"
+              title="Your job has been confirmed"
+              subtitle="Once you have finished your work please click on <b>complete</b> button."
+            />
+          );
+          setAllStates(true, alertMsg, true, 'Complete', true, 'Stop', handleOpenCompleteConfirm, handleStop);
+        } else {
+          if (contract.project.payment_type === 'VOLUNTEER')
+            setAllStates(false, null, false, '', true, 'Stop', undefined, handleStopByOP);
+          else {
+            alertMsg = (
+              <AlertMessage
+                theme="primary"
+                iconName="alert-circle"
+                title="Payment was done successfully"
+                subtitle={`${name} can now start the job`}
+              />
+            );
+            setAllStates(true, alertMsg, false, '', true, 'Stop', undefined, handleStopByOP);
+          }
+        }
+        break;
+      case 'Kicked out':
+        if (type === 'users') {
+          alertMsg = (
+            <AlertMessage
+              theme="gray"
+              iconName="alert-circle"
+              title={`${name} have stopped this contract`}
+              subtitle=""
+            />
+          );
+          setAllStates(true, alertMsg, false, '', false, '');
+        } else {
+          alertMsg = (
+            <AlertMessage theme="gray" iconName="alert-circle" title="You have stopped this contract" subtitle="" />
+          );
+          setAllStates(true, alertMsg, false, '', false, '');
+        }
+        break;
 
-      if (offer?.status === 'CLOSED' && mission?.status === 'CONFIRMED') {
-        const alertMsg = (
-          <AlertMessage
-            theme="primary"
-            iconName="info-circle"
-            title="Job completed"
-            subtitle={`Completed on ${isoToStandard(mission.updated_at.toString())}`}
-          />
-        );
-        setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
-        return;
-      }
+      case 'Canceled':
+        if (contract.status === 'CANCELED') {
+          alertMsg = (
+            <AlertMessage
+              theme="gray"
+              iconName="alert-circle"
+              title={type === 'users' ? `${name} has canceled this offer` : 'You have canceled this offer'}
+              subtitle=""
+            />
+          );
+          setAllStates(true, alertMsg, false, '', false, '');
+        }
+        if (contract.mission?.status === 'CANCELED') {
+          alertMsg = (
+            <AlertMessage
+              theme="gray"
+              iconName="alert-circle"
+              title={type === 'users' ? 'You have canceled this contract' : `${name} has canceled this contract`}
+              subtitle=""
+            />
+          );
+          setAllStates(true, alertMsg, false, '', false, '');
+        }
+        break;
+      case 'Completed':
+        if (type === 'users') {
+          setAllStates(false, null, false, '', false, '');
+        } else {
+          const alertMsg = (
+            <AlertMessage
+              theme="primary"
+              iconName="info-circle"
+              title="Job completed"
+              subtitle={`Completed on ${isoToStandard(contract.mission.updated_at.toString())}`}
+            />
+          );
+
+          if (!contract.org_feedback) {
+            setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
+          } else setAllStates(true, alertMsg, false, '', false, '');
+        }
+        break;
+      default:
+        setAllStates(false, null, false, '', false, '');
     }
-
-    setAllStates(false, null, false, '', false, '');
   };
 
   const openSelectBankAccount = () => {
@@ -297,87 +344,144 @@ export const useContractDetailsSlider = () => {
 
   const handleAcceptOffer = async () => {
     try {
-      dispatch(updateOfferStatus({ id: offer?.id, status: 'APPROVED' }));
-      acceptOffer(offer.id);
+      dispatch(
+        updateStatus({ type, paymentType: contract.project.payment_type, id: contract.id, offerStatus: 'APPROVED' }),
+      );
+      acceptOffer(contract.id);
       setOpenSelectCardModal(false);
       setOpenWalletModal(false);
     } catch (error) {}
   };
   const handleDecline = async () => {
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'WITHDRAWN' }));
-    rejectOffer(offer.id);
+    dispatch(
+      updateStatus({ type, paymentType: contract.project.payment_type, id: contract.id, offerStatus: 'WITHDRAWN' }),
+    );
+    rejectOffer(contract.id);
   };
 
+  const hadleHireVolunteer = async () => {
+    await hireOffer(contract.id);
+    dispatch(
+      updateStatus({
+        type,
+        paymentType: contract.project.payment_type,
+        id: contract.id,
+        offerStatus: 'HIRED',
+        missionStatus: 'ACTIVE',
+      }),
+    );
+    return;
+  };
   const handleStop = async () => {
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
-    dispatch(updateMissionStatus({ id: mission?.id, status: 'CANCELED' }));
-    cancelMission(mission.id);
+    dispatch(
+      updateStatus({
+        type,
+        paymentType: contract.project.payment_type,
+        id: contract.id,
+        offerStatus: 'CLOSED',
+        missionStatus: 'CANCELED',
+      }),
+    );
+    if (contract.mission) cancelMission(contract.mission.id);
   };
   const handleOpenCompleteConfirm = () => {
     setAlertTitle('Submit job completion?');
     setAlertIcon(<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />);
     setAlertMessage(`Once ${name} confirms the job completion, you will receive your payment.`);
-    setHandleAlertSubmit(() => handleComplete);
+    setHandleAlertSubmit(() => handleComplete());
     setOpenAlert(true);
   };
   const handleComplete = async () => {
     setOpenAlert(false);
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
-    dispatch(updateMissionStatus({ id: mission?.id, status: 'COMPLETE' }));
-    completeMission(mission.id);
+    dispatch(
+      updateStatus({
+        type,
+        paymentType: contract.project.payment_type,
+        id: contract.id,
+        offerStatus: 'CLOSED',
+        missionStatus: 'COMPLETE',
+      }),
+    );
+    if (contract.mission) completeMission(contract.mission.id);
     setOpenAlert(false);
   };
 
   const handleOpenPaymentModal = async () => {
-    const res = await getOffer(offer.id);
+    const res = await getOffer(contract.id);
     setPaymentOffer(res);
-
     setOpenPaymentModal(true);
   };
 
   const handleClosePaymentModal = (paymentSuccess: boolean) => {
     if (paymentSuccess) {
-      dispatch(updateOfferStatus({ id: offer?.id, status: 'HIRED' }));
-      dispatch(updateMissionStatus({ id: mission?.id, status: 'ACTIVE' }));
+      dispatch(
+        updateStatus({
+          type,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'HIRED',
+          missionStatus: 'ACTIVE',
+        }),
+      );
     }
     setOpenPaymentModal(false);
   };
   const handleStopByOP = async () => {
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
-    dispatch(updateMissionStatus({ id: mission?.id, status: 'KICKED_OUT' }));
-    dropMission(mission.id);
+    dispatch(
+      updateStatus({
+        type,
+        paymentType: contract.project.payment_type,
+        id: contract.id,
+        offerStatus: 'CLOSED',
+        missionStatus: 'KICKED_OUT',
+      }),
+    );
+    if (contract.mission) dropMission(contract.mission.id);
   };
 
   const withdrawOfferByOP = async () => {
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CANCELED' }));
-    cancelOffer(offer.id);
+    dispatch(
+      updateStatus({ type, paymentType: contract.project.payment_type, id: contract.id, offerStatus: 'CANCELED' }),
+    );
+    cancelOffer(contract.id);
   };
 
   const onConfirm = async () => {
-    if (!mission) return;
+    if (!contract.mission) return;
     setOpenAlert(false);
-    dispatch(updateOfferStatus({ id: offer?.id, status: 'CLOSED' }));
-    dispatch(updateMissionStatus({ id: mission?.id, status: 'CONFIRMED' }));
-    confirmMission(mission.id);
+    dispatch(
+      updateStatus({
+        type,
+        paymentType: contract.project.payment_type,
+        id: contract.id,
+        offerStatus: 'CLOSED',
+        missionStatus: 'CONFIRMED',
+      }),
+    );
+    confirmMission(contract.mission.id);
   };
 
   const handleConfirmCompletion = async () => {
     setAlertTitle('Confirm completion');
     setAlertIcon(<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />);
     setAlertMessage(`Do you want to job completion?`);
-    setHandleAlertSubmit(() => onConfirm);
+    setHandleAlertSubmit(() => onConfirm());
     setOpenAlert(true);
   };
 
   const handleContest = async () => {
-    if (!mission) return;
-    await contestMission(mission.id);
+    if (!contract.mission) return;
+    await contestMission(contract.mission.id);
   };
 
   const handleReview = () => {
     setOpenReviewModal(true);
   };
 
+  const redirectToChat = () => {
+    const participantId = type === 'users' ? contract.offerer.meta.id : contract.recipient.meta.id;
+    navigate(`../chats?participantId=${participantId}`);
+  };
   return {
     name,
     profileImage,
@@ -400,7 +504,7 @@ export const useContractDetailsSlider = () => {
     openPaymentModal,
     setOpenPaymentModal,
     handleClosePaymentModal,
-    openReviewModal, 
+    openReviewModal,
     setOpenReviewModal,
     paymentOffer,
     primaryButtonDisabled,
@@ -413,7 +517,8 @@ export const useContractDetailsSlider = () => {
     stripeAccounts,
     openWalletModal,
     setOpenWalletModal,
-    offer,
-    mission,
+    redirectToChat,
+    contract,
+    disableMessageButton,
   };
 };

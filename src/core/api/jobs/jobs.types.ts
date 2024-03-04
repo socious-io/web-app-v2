@@ -185,6 +185,21 @@ export interface Offer extends OfferReq {
   total?: number;
   payout?: number;
   app_fee?: number;
+  mission?: Mission;
+}
+export type ContractStatus =
+  | 'Offer sent'
+  | 'Offer received'
+  | 'Awaiting confirmation'
+  | 'Payment required'
+  | 'Ongoing'
+  | 'Completed'
+  | 'Canceled'
+  | 'Withdrawn'
+  | 'Kicked out'
+  | 'Closed';
+export interface Contract extends Offer {
+  contractStatus: ContractStatus;
 }
 
 export interface Mission {

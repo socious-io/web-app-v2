@@ -11,6 +11,7 @@ import { useHeaderNavBar } from './useHeaderNavBar';
 import { Notifications } from '../../containers/notifications';
 import NotifBellIcon from '../notifBellIcon';
 import { StatusDropDown } from '../statusDropDown';
+import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 
 interface HeaderNavBarProps {
   setOpen: (val: boolean) => void;
@@ -34,9 +35,12 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     navigateToProfile,
     unreadNotif,
     readNotifications,
+    navigateToSettings,
+    openSearchModal,
+    setOpenSearchModal,
+    searchTerm,
+    setSearchTerm,
   } = useHeaderNavBar();
-
-  const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <div className={`h-16 md:h-[72px] px-4 md:px-8 shadow-Shadows/shadow-sm md:[box-shadow:none] ${css.container}`}>
@@ -54,13 +58,15 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           name="search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onClick={() => setOpenSearchModal(true)}
           placeholder="Search"
           startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
+          autoComplete="off"
         />
       </div>
       {userIsLoggedIn && (
         <div className="flex w-fit h-10 gap-2 md:gap-4 items-center">
-          <div className="flex gap-4 md:hidden mr-2">
+          <div className="flex gap-4 md:hidden mr-2" onClick={() => setOpenSearchModal(true)}>
             <Icon name="search-lg" fontSize={24} className="text-Gray-light-mode-500" />
           </div>
           <div onClick={readNotifications}>
@@ -84,31 +90,24 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
             accounts={accounts}
             iconItems={[
               { iconName: 'user-circle', label: 'View profile', onClick: navigateToProfile },
-              {
-                iconName: 'settings-01',
-                label: 'Settings',
-                onClick: () => {
-                  return;
-                },
-              },
-              // {
-              //   iconName: 'help-circle',
-              //   label: 'Support',
-              //   onClick: () => {
-              //     return;
-              //   },
-              // },
+              ...(userType === 'users'
+                ? [{ iconName: 'settings-01', label: 'Settings', onClick: navigateToSettings }]
+                : []),
               { iconName: 'log-out-01', label: 'Log out', onClick: logout },
             ]}
             createItem
           />
         </div>
       )}
-      <SlideOut
+      {/* <SlideOut
         component={<Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />}
         open={openNotifPanel}
         handleClose={() => setOpenNotifPanel(false)}
-      />
+      /> */}
+      <Overlay open={openNotifPanel} onClose={() => setOpenNotifPanel(false)} title="Notifications">
+        <Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />
+      </Overlay>
+      <SearchModal open={openSearchModal} onClose={() => setOpenSearchModal(false)} setSearchText={setSearchTerm} />
     </div>
   );
 };

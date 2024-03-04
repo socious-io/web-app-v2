@@ -1,4 +1,4 @@
-import { Offer } from 'src/core/api';
+import { Contract } from 'src/core/api';
 import { ContractCard } from 'src/Nowruz/modules/contract/components/contractCard';
 import { ContractDetailsSlider } from 'src/Nowruz/modules/contract/components/contractDetailsSlider';
 import { ButtonGroups } from 'src/Nowruz/modules/general/components/ButtonGroups';
@@ -10,7 +10,8 @@ import css from './contracts.module.scss';
 import { useContracts } from './useContracts';
 
 export const Contracts = () => {
-  const { filterButtons, pageCount, setPage, offerList, page, openOverlayModal, setOpenOverlayModal } = useContracts();
+  const { filterButtons, pageCount, setPage, contractList, page, openOverlayModal, setOpenOverlayModal } =
+    useContracts();
 
   return (
     <>
@@ -23,10 +24,10 @@ export const Contracts = () => {
           <div className={css.right}></div>
         </div>
 
-        <ButtonGroups buttons={filterButtons} />
+        {/* <ButtonGroups buttons={filterButtons} /> */}
         <div className="flex flex-col gap-6 md:gap-5 w-full max-w-[640px] mt-8">
-          {offerList?.map((item: Offer) => (
-            <ContractCard key={item.id} offer={item} setOpenOverlay={setOpenOverlayModal} />
+          {contractList?.map((item: Contract) => (
+            <ContractCard key={item.id} contract={item} setOpenOverlay={setOpenOverlayModal} />
           ))}
         </div>
         <div className="mt-11 hidden md:block">
@@ -36,9 +37,11 @@ export const Contracts = () => {
           <PaginationMobile page={page} count={pageCount} handleChange={setPage} />
         </div>
       </div>
-      <Overlay open={openOverlayModal} onClose={() => setOpenOverlayModal(false)}>
-        <ContractDetailsSlider />
-      </Overlay>
+      {openOverlayModal && (
+        <Overlay open={openOverlayModal} onClose={() => setOpenOverlayModal(false)}>
+          <ContractDetailsSlider />
+        </Overlay>
+      )}
     </>
   );
 };
