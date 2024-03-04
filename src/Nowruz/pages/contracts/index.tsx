@@ -24,7 +24,7 @@ export const Contracts = () => {
           <div className={css.right}></div>
         </div>
 
-        <ButtonGroups buttons={filterButtons} />
+        {/* <ButtonGroups buttons={filterButtons} /> */}
         <div className="flex flex-col gap-6 md:gap-5 w-full max-w-[640px] mt-8">
           {contractList?.map((item: Contract) => (
             <ContractCard key={item.id} contract={item} setOpenOverlay={setOpenOverlayModal} />
