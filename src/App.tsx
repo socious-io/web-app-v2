@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@emotion/react';
 import { StyledEngineProvider } from '@mui/material';
 import { theme } from 'material.theme';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import router from 'src/core/router';
@@ -29,6 +29,12 @@ function App() {
     setupInterceptors(store);
     store.dispatch(currentIdentities());
   }, []);
+
+  const scrollInto = useRef<null | HTMLDivElement>(null);
+  useEffect(() => {
+    if (scrollInto.current) scrollInto.current.scrollIntoView();
+  });
+
   return (
     <StyledEngineProvider injectFirst>
       <Provider store={store}>
