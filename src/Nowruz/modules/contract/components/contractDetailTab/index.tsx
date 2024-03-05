@@ -10,15 +10,14 @@ interface ContractDetailTabProps {
 }
 export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ contract }) => {
   let unit = contract.currency;
-
-  if (contract.crypto_currency_address) {
+  if (!unit && contract.crypto_currency_address) {
     dapp.NETWORKS.map((n) => {
       const token = n.tokens.filter((t) => contract.crypto_currency_address === t.address)[0];
       if (token) unit = token.symbol;
     });
   }
 
-  const cuttencyIcon =
+  const currencyIcon =
     contract.payment_mode === 'CRYPTO'
       ? ''
       : contract.currency === 'JPY'
@@ -38,16 +37,20 @@ export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ contract }
       <ExpandableText text={contract.offer_message} isMarkdown expectedLength={700} />
       {(contract.due_date || contract.total_hours || contract.assignment_total) && (
         <div className="flex flex-col p-5 gap-5 border border-solid border-Gray-light-mode-200 rounded-default">
-          {contract.due_date && renderDetailItems('calendar-check-01', `Due ${contract.due_date || ''}`)}
-          {contract.total_hours &&
-            renderDetailItems('clock', `${contract.total_hours} ${contract.total_hours === 1 ? 'hour' : 'hours'}`)}
-          {contract.assignment_total &&
-            renderDetailItems(cuttencyIcon, `${contract.assignment_total.toString()} ${unit}`, '(fixed-price)')}
-          {contract.project.payment_type === 'VOLUNTEER' && (
+          {contract.due_date ? renderDetailItems('calendar-check-01', `Due ${contract.due_date || ''}`) : ''}
+          {contract.total_hours
+            ? renderDetailItems('clock', `${contract.total_hours} ${contract.total_hours === 1 ? 'hour' : 'hours'}`)
+            : ''}
+          {contract.assignment_total
+            ? renderDetailItems(currencyIcon, `${contract.assignment_total.toString()} ${unit}`, '(fixed-price)')
+            : ''}
+          {contract.project.payment_type === 'VOLUNTEER' ? (
             <div className="flex gap-1.5">
               <img src="/icons/nowruz/red-heart.svg" alt="" />
               <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Volunteer</span>
             </div>
+          ) : (
+            ''
           )}
         </div>
       )}
