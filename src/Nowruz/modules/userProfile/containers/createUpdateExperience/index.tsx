@@ -84,11 +84,12 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         isDisabled={readonly}
       />
       <SearchDropdown
-        required
         id="company"
         cacheOptions
         value={companyVal}
+        placeholder="Search for company"
         isAsync
+        creatable
         loadOptions={searchCompanies}
         defaultOptions
         icon="search-lg"
@@ -97,8 +98,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         onChange={(value) => {
           onSelectCompany(value);
         }}
-        placeholder="Search for company"
-        noOptionsMessage={({ inputValue }) => inputValue}
         errors={errors['org']?.label?.message ? [errors['org']?.label?.message.toString()] : undefined}
         isDisabled={readonly}
       />

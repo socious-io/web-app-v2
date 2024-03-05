@@ -37,6 +37,7 @@ export const Certificates = () => {
               <StepperCard
                 key={item.id}
                 iconName="building-05"
+                img={(item.meta as CertificateMeta).organization_image || ''}
                 title={item.title}
                 subtitle={(item.meta as CertificateMeta).organization_name}
                 supprtingText={getDateText(item)}

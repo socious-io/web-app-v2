@@ -58,6 +58,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
         cacheOptions
         value={orgVal}
         isAsync
+        creatable
         loadOptions={searchOrgs}
         defaultOptions
         icon="search-lg"
