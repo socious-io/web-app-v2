@@ -51,6 +51,10 @@ body {
   }
 }
 
+body {
+  padding-top: env(safe-area-inset-top); // for previous ios versions
+}
+
 //shared container for all sign up pages
 .form-container {
   width: 360px;
