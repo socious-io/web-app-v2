@@ -22,7 +22,7 @@ export const useTeam = () => {
         if(hasMore) {
 
             const Req = await getFollowings({ page: currentPage + 1 });
-            if(Req.items.length) {
+            if(Req.page * Req.limit < Req.total_count) {
                 setCurrectPage((prev) => prev + 1);
                 setFollowings({
                     ...followings,
@@ -31,7 +31,7 @@ export const useTeam = () => {
                 });
 
             } else {
-                sethasMore(false)
+                sethasMore(false);
             }
         }
     }
