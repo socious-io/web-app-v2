@@ -35,7 +35,7 @@ const Team = () => {
                         followings?.items.map((i)=>(
                             <div className={css.uList}>
                                 <div className="flex justify-start items-center">
-                                    <Avatar size="40px" type={'users'} img={i.identity_meta.img} />
+                                    <Avatar size="40px" type={i.identity_type} img={i.identity_meta.image} />
                                     <div className="flex flex-col ml-3">
                                         <span className="leading-7 text-Gray-light-mode-900">
                                         {i.identity_meta.name}
