@@ -14,26 +14,11 @@ import store from './store';
 
 import 'src/core/translation/i18n';
 
-// function ModalPlaceholder() {
-//   const modal = useSelector<RootState>((state) => state.modal);
-//   const dispatch = useDispatch();
-//   return (
-//     <Modal open={modal.open} onClose={() => dispatch(closeModal())}>
-//       {modal.children}
-//     </Modal>
-//   );
-// }
-
 function App() {
   useEffect(() => {
     setupInterceptors(store);
     store.dispatch(currentIdentities());
   }, []);
-
-  const scrollInto = useRef<null | HTMLDivElement>(null);
-  useEffect(() => {
-    if (scrollInto.current) scrollInto.current.scrollIntoView();
-  });
 
   return (
     <StyledEngineProvider injectFirst>
@@ -42,7 +27,6 @@ function App() {
           <RouterProvider router={router.routes} />
         </ThemeProvider>
         <DeepLinks />
-        {/* <ModalPlaceholder /> */}
         <Spinner />
       </Provider>
     </StyledEngineProvider>
