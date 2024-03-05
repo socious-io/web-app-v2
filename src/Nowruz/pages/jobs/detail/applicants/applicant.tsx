@@ -82,7 +82,7 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
               <p onClick={handleClickResume}>{applicant.attachment?.filename}</p>
             </div>
           )}
-          {questionList.map((item) => (
+          {questionList?.map((item) => (
             <div key={item.id} className="w-full flex flex-col gap-2">
               <span className="font-medium text-sm leading-5 text-Gray-light-mode-700">{item.question}</span>
               <span className="font-medium text-base leading-6 text-Gray-light-mode-900">{item.answer}</span>
