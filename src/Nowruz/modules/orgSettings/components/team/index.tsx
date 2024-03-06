@@ -1,12 +1,14 @@
-import { SearchDropdown } from "src/Nowruz/modules/general/components/SearchDropdown";
-import css from "./team.module.scss";
-import { Button } from "src/Nowruz/modules/general/components/Button";
-import { useTeam } from "./useTeam";
-import { Avatar } from "src/Nowruz/modules/general/components/avatar/avatar";
 import { Icon } from "src/Nowruz/general/Icon";
+import { Avatar } from "src/Nowruz/modules/general/components/avatar/avatar";
+import { Button } from "src/Nowruz/modules/general/components/Button";
+import { SearchDropdown } from "src/Nowruz/modules/general/components/SearchDropdown";
+
+import css from "./team.module.scss";
+import { useTeam } from "./useTeam";
+
 
 const Team = () => {
-    const {members,onRemove} = useTeam();
+    const {members,onRemove,memberList,onSearchMember,onAddMember,role,userId} = useTeam();
     return(
         <>
             <div className={css.borderSection}>
@@ -17,6 +19,7 @@ const Team = () => {
                     </p>     
                 </div>
             </div>
+
             <div className="grid grid-cols-5 gap-4 pt-6">
                 <div>
                     <h6 className="text-sm font-semibold text-Gray-light-mode-700">Invite team members</h6>
@@ -28,17 +31,16 @@ const Team = () => {
                     <SearchDropdown
                     placeholder="Please select"
                     icon="image-user"
-                    options={members?.items}
+                    options={memberList}
                     isSearchable
-                    // onChange={(option) => onSelectExperienceLevel(option.value)}
+                    onChange={(option) => onSearchMember(option.value)}
                     />
                 </div>
                 <div>
                     <SearchDropdown
                         placeholder="Please select"
-                        // options={EXPERIENCE_LEVEL_V2}
+                        options={role}
                         isSearchable
-                        // onChange={(option) => onSelectExperienceLevel(option.value)}
                     />
                 </div>
             </div>
@@ -47,8 +49,11 @@ const Team = () => {
                 <div className="col-span-3">
                     + Add another 
                 </div>
-                <div className="text-right">
-                    <Button color="primary" size="medium" startIcon={<Icon name='mail-01'  fontSize={20} color={'#fff'}/>} className="">Send invites</Button>
+                <div className="">
+                    <Button color="primary" size="medium" 
+                    startIcon={<Icon name='mail-01'  fontSize={20} color={'#fff'}/>} onClick={()=> {onAddMember(userId)}}>
+                        Send invites
+                    </Button>
                 </div>
             </div>
 
@@ -73,7 +78,7 @@ const Team = () => {
                             <tbody>
                                 {members?.items.map((i)=> (
                                     <tr className="text-sm font-normal text-left">
-                                        <td className="w-3/5 flex justify-start items-center">
+                                        <td className="w-5/6 flex justify-start items-center">
                                         <Avatar size="40px" type={'users'} img={i.avatar} />
                                             <div className="flex flex-col ml-3">
                                                 <span className="leading-7 text-Gray-light-mode-900">
@@ -84,10 +89,10 @@ const Team = () => {
                                                 </span>
                                             </div>
                                         </td>
-                                        <td className="w-1/5">{i.id}</td>
-                                        <td  className="w-1/5 flex justify-start items-center gap-2">
+                                        <td className="w-1/6">Admin</td>
+                                        <td  className="w-1/6 flex items-center gap-2">
                                             <div className="text-sm font-semibold text-Gray-light-mode-600" onClick={()=> onRemove(i.id) }>Delete</div>
-                                            <div className="text-sm font-semibold text-Brand-700">Edit</div>
+                                            {/* <div className="text-sm font-semibold text-Brand-700">Edit</div> */}
                                         </td>
                                     </tr>
 

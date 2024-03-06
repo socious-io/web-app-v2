@@ -24,36 +24,60 @@ export const useTeam = () => {
     });
     const [members, setMembers] = useState<MembersRes>();
     const [followings, setFollowings] = useState<FollowingRes>();
-
+    const [memberList, setMemberList] = useState();
+    const [role, setRole] = useState([{value: 'Admin'}]);
+    const [userId, setUserId] = useState('');
 
     const orgId = currentIdentity?.id;
 
     const getMembers = async() => {
         console.log('orgId',orgId);
         const memberRes = await getOrganizationMembers( ''+orgId +'', { page: 1 });
-        console.log(memberRes.items);
+        console.log(memberRes);
         setMembers(memberRes);
     };
+    
 
-    const getFollowing = async() => {
-        const FollowingRes = await filterFollowings({ page: 1, name: '', type: 'users' });
-        console.log('FollowingRes',FollowingRes);
-        setFollowings(FollowingRes);
+    const getFollowing = async(name:string) => {
+        await filterFollowings({ page: 1, name: name , type: 'users' }).then((res)=>{
+            setFollowings(res);
+            console.log('followings',followings);
+            const initialMemberList = convertFollowingsToContactList(res?.items);
+            setMemberList(initialMemberList);
+        });
+        
     };
+
+    
+  function onSearchMember(value: string) {
+    getFollowing(value);
+    setUserId(value);
+  }
+
+
     useEffect(()=>{
         getMembers();  
-        getFollowing();      
+        getFollowing(''); 
     },[]);
+
+    
+    
+
 
     function onRemove(user_id: string) {
         removeOrganizationMember(''+orgId +'', user_id).then(() => {
             getMembers();
         });
+        getFollowing('');
     }
+    function onAddMember(user_id: string) {
+        addOrganizationMember( ''+orgId +'', user_id).then(() => {
+          getOrganizationMembers( ''+orgId +'', { page: members.page }).then(setMembers);
+          getFollowing('');
+        });
+      }
     
-//     const initialMemberList = convertFollowingsToContactList(followings?.items);
-// console.log('initialMemberList',initialMemberList);
     
-    return{ orgId,members,followings,onRemove};
+    return{ members,followings,onRemove,memberList,onSearchMember,onAddMember,role,userId};
 
 };
