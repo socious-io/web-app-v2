@@ -3,6 +3,7 @@ import css from "./team.module.scss";
 import { Button } from "src/Nowruz/modules/general/components/Button";
 import { useTeam } from "./useTeam";
 import { Avatar } from "src/Nowruz/modules/general/components/avatar/avatar";
+import { Icon } from "src/Nowruz/general/Icon";
 
 const Team = () => {
     const {members,onRemove} = useTeam();
@@ -46,8 +47,8 @@ const Team = () => {
                 <div className="col-span-3">
                     + Add another 
                 </div>
-                <div>
-                    <Button color="primary" size="medium" startIcon={<img src="/icons/team.svg"/>} className="w-full">Send invites</Button>
+                <div className="text-right">
+                    <Button color="primary" size="medium" startIcon={<Icon name='mail-01'  fontSize={20} color={'#fff'}/>} className="">Send invites</Button>
                 </div>
             </div>
 
