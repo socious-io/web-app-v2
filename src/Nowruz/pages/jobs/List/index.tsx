@@ -14,7 +14,7 @@ export const JobsList = () => {
       <div>
         <div className={headerClass}>
           <h1 className={css.title}>{`${userJobs?.total_count} impact jobs`}</h1>
-          <h2 className={css.subtitle}>{`Find jobs that makes an impact`}</h2>
+          <h2 className={css.subtitle}>{`Find work that matters to you and the world`}</h2>
         </div>
       </div>
       <div className={css.list}>{<JobsListing />}</div>
