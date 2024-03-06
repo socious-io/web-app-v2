@@ -14,6 +14,7 @@ import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import { RootState } from 'src/store';
 
 import css from './jobDetailHeader.module.scss';
+import { ApplyExternalPartyModal } from '../applyExternalPartyModal';
 import { ApplyModal } from '../applyModal';
 
 interface JobDetailHeaderProps {
@@ -25,12 +26,19 @@ interface JobDetailHeaderProps {
 export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, setJustApplied }) => {
   const navigate = useNavigate();
   const [openApply, setOpenApply] = useState(false);
+  const [openExternalApply, setOpenExternalApply] = useState(false);
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
+
+  const handleOpenApplyModal = () => {
+    if (job.other_party_id) setOpenExternalApply(true);
+    else setOpenApply(true);
+  };
+
   useEffect(() => {
     nonPermanentStorage.get('openApplyModal').then((res) => {
-      if (currentIdentity && res && !job.applied) setOpenApply(true);
+      if (currentIdentity && res && !job.applied) handleOpenApplyModal();
       nonPermanentStorage.remove('openApplyModal');
     });
   }, []);
@@ -78,12 +86,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
           </span> */}
           {!applied && currentIdentity?.type !== 'organizations' && (
             <AuthGuard>
-              <Button
-                color="primary"
-                variant="contained"
-                customStyle="md:hidden w-full"
-                onClick={() => setOpenApply(true)}
-              >
+              <Button color="primary" variant="contained" customStyle="md:hidden w-full" onClick={handleOpenApplyModal}>
                 Apply now
               </Button>
             </AuthGuard>
@@ -92,6 +95,11 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
         </div>
       </div>
       <ApplyModal open={openApply} handleClose={handleCloseApplyModal} />
+      <ApplyExternalPartyModal
+        open={openExternalApply}
+        handleClose={() => setOpenExternalApply(false)}
+        otherPartyUrl={job.other_party_url || ''}
+      />
     </>
   );
 };
