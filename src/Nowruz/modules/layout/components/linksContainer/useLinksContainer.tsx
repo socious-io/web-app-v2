@@ -75,13 +75,13 @@ export const useLinksContainer = () => {
       iconName: 'wallet-04',
       public: false,
     },
-    // {
-    //   label: 'Credentials',
-    //   route: '/credentials',
-    //   iconName: 'shield-tick',
-    //   public: false,
-    //   only: 'organizations',
-    // },
+    {
+      label: 'Credentials',
+      route: '/credentials',
+      iconName: 'shield-tick',
+      public: false,
+      only: 'organizations',
+    },
   ];
   let filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
 
