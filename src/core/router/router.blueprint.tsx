@@ -92,7 +92,14 @@ export const blueprint: RouteObject[] = [
 
                     loader: async ({ params }) => {
                       const organization = await getOrganizationByShortName(params.id!);
-                      const orgJobs = await jobs({ page: 0, status: 'ACTIVE', limit: 2, identity_id: organization.id });
+                      const page = Number(localStorage.getItem('profileJobPage'));
+                      localStorage.setItem('source', organization.shortname);
+                      const orgJobs = await jobs({
+                        page: page,
+                        status: 'ACTIVE',
+                        limit: 2,
+                        identity_id: organization.id,
+                      });
                       return {
                         organization,
                         orgJobs,
@@ -110,7 +117,14 @@ export const blueprint: RouteObject[] = [
 
                     loader: async ({ params }) => {
                       const organization = await getOrganizationByShortName(params.id!);
-                      const orgJobs = await jobs({ page: 0, status: 'ACTIVE', limit: 2, identity_id: organization.id });
+                      const page = Number(localStorage.getItem('profileJobPage'));
+                      localStorage.setItem('source', organization.shortname);
+                      const orgJobs = await jobs({
+                        page: page,
+                        status: 'ACTIVE',
+                        limit: 2,
+                        identity_id: organization.id,
+                      });
                       return {
                         organization,
                         orgJobs,
