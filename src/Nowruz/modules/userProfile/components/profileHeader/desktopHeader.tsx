@@ -51,6 +51,16 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
                 shape="sharp"
               />
             )}
+            {type === 'users' && (identity as User).open_to_volunteer && (
+              <Chip
+                label="Open to volunteer"
+                size="lg"
+                theme="secondary"
+                startIcon={<Dot color={variables.color_success_500} size="small" shadow={false} />}
+                shape="sharp"
+              />
+            )}
+
             {type === 'organizations' && (identity as Organization).hiring && (
               <Chip
                 label="Hiring"
