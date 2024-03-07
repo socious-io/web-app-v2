@@ -28,7 +28,6 @@ export const useOrganizationJobs = () => {
   };
 
   useEffect(() => {
-    console.log('trigger');
     localStorage.setItem('profileJobPage', page.toString());
     getJobsData();
   }, [page]);
