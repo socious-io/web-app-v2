@@ -51,8 +51,14 @@ body {
   }
 }
 
-body {
-  padding-top: env(safe-area-inset-top); // for previous ios versions
+#root,
+.navigation {
+  margin-top: env(safe-area-inset-top) !important;
+}
+
+#modal-box,
+.sidebar {
+  padding-top: env(safe-area-inset-top) !important;
 }
 
 //shared container for all sign up pages
