@@ -272,6 +272,7 @@ export const useJobCreateForm = () => {
       setOpenSuccessModal(true);
     } catch (error) {}
   };
+
   const onPreview = () => {
     const { name, description, image, mission } = currentIdentity?.meta as OrgMeta;
 
@@ -313,6 +314,7 @@ export const useJobCreateForm = () => {
     setPreviewModalProps(previewModalPayload);
     setOpenPreview(true);
   };
+
   const onSelectSkills = (skills: Array<OptionType>) => {
     setValue('skills', skills, { shouldValidate: true });
   };
