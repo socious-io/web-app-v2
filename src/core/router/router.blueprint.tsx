@@ -94,6 +94,7 @@ export const blueprint: RouteObject[] = [
                       const organization = await getOrganizationByShortName(params.id!);
                       const page = Number(localStorage.getItem('profileJobPage'));
                       localStorage.setItem('source', organization.shortname);
+                      localStorage.removeItem('navigateToSearch');
                       const orgJobs = await jobs({
                         page: page,
                         status: 'ACTIVE',
@@ -119,6 +120,7 @@ export const blueprint: RouteObject[] = [
                       const organization = await getOrganizationByShortName(params.id!);
                       const page = Number(localStorage.getItem('profileJobPage'));
                       localStorage.setItem('source', organization.shortname);
+                      localStorage.removeItem('navigateToSearch');
                       const orgJobs = await jobs({
                         page: page,
                         status: 'ACTIVE',
