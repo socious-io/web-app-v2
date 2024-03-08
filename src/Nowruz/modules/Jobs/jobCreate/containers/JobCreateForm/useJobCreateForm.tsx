@@ -183,6 +183,9 @@ export const useJobCreateForm = () => {
   };
 
   const onSelectJobLocation = (jobLocation: string) => {
+    if (jobLocation === 'Anywhere') {
+      setValue('location', { city: 'Anywhere', country: '', label: '' }, { shouldValidate: true });
+    }
     setValue('jobLocation', jobLocation, { shouldValidate: true });
   };
 
