@@ -356,6 +356,7 @@ export const JobCreateForm = () => {
 
             <div className={css.componentsContainer}>
               <RadioGroup
+                name="paidOption"
                 onChange={(option) => onSelectPaymentScheme(option.value.toString())}
                 items={[
                   { label: 'Fixed', value: 'FIXED', children: renderAmountFields() },
@@ -373,6 +374,7 @@ export const JobCreateForm = () => {
 
             <div className={css.componentsContainer}>
               <RadioGroup
+                name="volunteeredOption"
                 onChange={(option) => onSelectPaymentScheme(option.value)}
                 items={[
                   { label: 'Fixed', value: 'FIXED', children: renderHoursFields() },
