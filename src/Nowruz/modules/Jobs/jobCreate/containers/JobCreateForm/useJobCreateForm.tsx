@@ -183,7 +183,7 @@ export const useJobCreateForm = () => {
   };
 
   const onSelectJobLocation = (jobLocation: string) => {
-    setValue('jobLocation', jobLocation);
+    setValue('jobLocation', jobLocation, { shouldValidate: true });
   };
 
   const cityToOption = (cities: Location[]) => {
@@ -265,7 +265,7 @@ export const useJobCreateForm = () => {
     };
 
     try {
-      const res = await createJob(jobPayload);
+      const res = isEdit ? await updateJob(jobDetail?.id, jobPayload) : await createJob(jobPayload);
       questions.forEach(async (q) => {
         await addQuestionJob(res.id, q);
       });
@@ -394,8 +394,8 @@ export const useJobCreateForm = () => {
         paymentMin: Number(job?.payment_range_lower) || 0,
         paymentMax: Number(job?.payment_range_higher) || 0,
         jobLocation: job.city ? 'Country / City' : 'Anywhere',
-        // commitmentHoursLower: Number(job?.commitment_hours_lower) || 0,
-        // commitmentHoursHigher: Number(job?.commitment_hours_higher) || 0,
+        commitmentHoursLower: Number(job?.commitment_hours_lower) ?? 0,
+        commitmentHoursHigher: Number(job?.commitment_hours_higher) ?? 0,
       };
       reset(initialVal);
     },
@@ -404,9 +404,6 @@ export const useJobCreateForm = () => {
 
   useEffect(() => {
     if (jobDetail && isEdit) {
-      if (jobDetail.city) {
-        //setValue('location', { city: jobDetail.city, country: jobDetail.country }, { shouldValidate: true });
-      }
       initializeValues(jobDetail);
     }
   }, [jobDetail, isEdit, initializeValues, setValue]);

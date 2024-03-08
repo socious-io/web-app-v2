@@ -378,6 +378,7 @@ export const JobCreateForm = () => {
                   { label: 'Fixed', value: 'FIXED', children: renderHoursFields() },
                   { label: 'Hourly', value: 'HOURLY', children: renderHoursFields() },
                 ]}
+                defaultValue={paymentScheme}
                 errors={errors['paymentScheme']?.message ? [errors['paymentScheme']?.message.toString()] : undefined}
               />
             </div>
