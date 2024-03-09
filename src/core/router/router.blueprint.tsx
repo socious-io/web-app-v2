@@ -208,7 +208,7 @@ export const blueprint: RouteObject[] = [
                 path: '',
                 loader: async () => {
                   const page = Number(localStorage.getItem('page') || 1);
-                  const data = await jobs({ page, status: 'ACTIVE', limit: 5 });
+                  const data = await jobs({ page, status: 'ACTIVE', limit: 10 });
                   return data;
                 },
                 async lazy() {
