@@ -38,8 +38,8 @@ export const ChatDetails: React.FC<ChatDetailsProps> = ({
   }, [newSocketMessage]);
 
   return (
-    <div className="flex flex-col w-full h-full ">
-      <div className="bg-Base-White w-full z-10 pl-0 pr-4 md:px-6 py-5 flex ">
+    <div className="flex flex-col w-full h-full relative">
+      <div className="pl-0 pr-4 md:px-6 py-5 flex absolute top-0 w-full bg-Base-White z-10">
         <div className="flex md:hidden">
           <IconButton
             size="medium"
@@ -51,10 +51,7 @@ export const ChatDetails: React.FC<ChatDetailsProps> = ({
         </div>
         <AvatarLabelGroup account={account} customStyle="!p-0" />
       </div>
-      <div
-        id="chat-list-div"
-        className="w-full px-4 pb-4 pt-0 md:px-8 md:pb-8 md:pt-0 flex-1 flex flex-col gap-6 overflow-y-auto"
-      >
+      <div id="chat-list-div" className="w-full mt-20 p-4 md:p-8 flex-1 flex flex-col gap-6 overflow-y-auto">
         <InfiniteScroll
           initialLoad={false}
           threshold={150}
