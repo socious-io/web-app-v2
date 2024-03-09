@@ -52,10 +52,14 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
   };
 
   const getBackLink = () => {
+    const sourceOrg = localStorage.getItem('source') ?? '';
     if (localStorage.getItem('navigateToSearch') === 'true') {
       const searchTerm = localStorage.getItem('searchTerm');
       const type = localStorage.getItem('type');
       return `/search?q=${searchTerm}&type=${type}&page=1`;
+    }
+    if (sourceOrg) {
+      return `/profile/organizations/${sourceOrg}/jobs`;
     }
     return currentIdentity?.type === 'organizations' ? '/jobs/created' : '/jobs';
   };
