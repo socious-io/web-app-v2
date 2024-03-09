@@ -23,7 +23,11 @@ export const Layout = () => {
         <div className="w-full fixed top-0 right-0 z-20 bg-Base-White ">
           <HeaderNavBar setOpen={setOpen} logout={logOut} />
         </div>
-        <div className="w-full h-[calc(100%-64px)] mt-16 md:mt-[72px] md:h-[calc(100%-72px)]">
+        <div
+          className={`w-full h-[calc(100%-64px)] mt-16 md:mt-[72px] md:h-[calc(100%-72px)] md:block ${
+            open ? 'hidden' : 'block'
+          }`}
+        >
           <Outlet />
         </div>
       </div>
