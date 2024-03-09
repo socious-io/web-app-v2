@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
-import { SlideOut } from 'src/Nowruz/modules/general/components/slideOut';
+import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 import { SearchModal } from 'src/Nowruz/modules/Search/containers/SearchModal';
 
 import css from './headerNavBar.module.scss';
@@ -11,7 +11,6 @@ import { useHeaderNavBar } from './useHeaderNavBar';
 import { Notifications } from '../../containers/notifications';
 import NotifBellIcon from '../notifBellIcon';
 import { StatusDropDown } from '../statusDropDown';
-import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 
 interface HeaderNavBarProps {
   setOpen: (val: boolean) => void;
@@ -42,6 +41,8 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     setSearchTerm,
   } = useHeaderNavBar();
 
+  const searchPlaceholder = window.location.pathname === '/jobs' ? 'Search by title, skill or organization' : 'Search';
+
   return (
     <div className={`h-16 md:h-[72px] px-4 md:px-8 shadow-Shadows/shadow-sm md:[box-shadow:none] ${css.container}`}>
       <div
@@ -59,7 +60,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onClick={() => setOpenSearchModal(true)}
-          placeholder="Search"
+          placeholder={searchPlaceholder}
           startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
           autoComplete="off"
         />
@@ -99,11 +100,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           />
         </div>
       )}
-      {/* <SlideOut
-        component={<Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />}
-        open={openNotifPanel}
-        handleClose={() => setOpenNotifPanel(false)}
-      /> */}
+
       <Overlay open={openNotifPanel} onClose={() => setOpenNotifPanel(false)} title="Notifications">
         <Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />
       </Overlay>
