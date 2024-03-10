@@ -17,7 +17,7 @@ export const Setting = () => {
       content: <Password />,
     },
     {
-      label: 'Notification',
+      label: 'Notifications',
       content: <Notification />,
     },
     // {
@@ -36,7 +36,7 @@ export const Setting = () => {
   const items: any[] = [
     { label: 'Account', value: 'Account' },
     { label: 'Password', value: 'Password' },
-    { label: 'Notification', value: 'Notification' },
+    { label: 'Notifications', value: 'Notification' },
   ];
 
   const [content, setContent] = useState<ReactNode>();
