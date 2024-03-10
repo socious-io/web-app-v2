@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
@@ -11,7 +12,6 @@ import { useHeaderNavBar } from './useHeaderNavBar';
 import { Notifications } from '../../containers/notifications';
 import NotifBellIcon from '../notifBellIcon';
 import { StatusDropDown } from '../statusDropDown';
-import { useLocation } from 'react-router-dom';
 
 interface HeaderNavBarProps {
   setOpen: (val: boolean) => void;
