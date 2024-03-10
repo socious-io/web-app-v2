@@ -16,6 +16,7 @@ import {
   impactPoints,
   getOrganizationByShortName,
   getRequestedVerifyExperiences,
+  userApplicants,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -230,6 +231,20 @@ export const blueprint: RouteObject[] = [
                 async lazy() {
                   const { JobDetail } = await import('src/Nowruz/pages/jobs/detail');
                   return { Component: JobDetail };
+                },
+              },
+              {
+                path: 'applied',
+                loader: async () => {
+                  const data = await userApplicants({ status: 'PENDING', page: 1, limit: 10 });
+                  console.log(data);
+                  return data;
+                },
+                async lazy() {
+                  const { AppliedList } = await import('src/Nowruz/pages/jobs/Applied');
+                  return {
+                    Component: Protect(AppliedList),
+                  };
                 },
               },
             ],

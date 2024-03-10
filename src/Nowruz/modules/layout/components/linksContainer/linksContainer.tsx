@@ -48,14 +48,17 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
             <LinkItem
               key={item.label}
               label={item.label}
-              navigateFunc={() => setSubMenuOpen(!setSubMenuOpen)} //navigateFunction(item.route)}
+              navigateFunc={() => navigateFunction(item.route)}
+              iconClick={(e) => {
+                e.preventDefault();
+                setSubMenuOpen(!subMenuOpen);
+              }}
               iconName={item.iconName}
               children={item.children.map((ch) => {
                 return {
                   label: ch.label,
                   navigateFunc: () => {
-                    setSubMenuOpen(true);
-                    // navigateFunction(ch.route);
+                    navigateFunction(ch.route);
                   },
                 };
               })}

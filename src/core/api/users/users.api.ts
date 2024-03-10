@@ -111,6 +111,6 @@ export async function userOffers(params: PaginateReq): Promise<OffersRes> {
   return (await get<OffersRes>(`user/offers`, { params })).data;
 }
 
-export async function userApplicants(params: PaginateReq): Promise<ApplicantsRes> {
+export async function userApplicants(params: FilterReq): Promise<ApplicantsRes> {
   return (await get<ApplicantsRes>(`user/applicants`, { params })).data;
 }
