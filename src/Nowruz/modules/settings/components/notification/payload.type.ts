@@ -1,9 +1,10 @@
-import { NotificationType } from 'src/core/api';
-
-export type Payload = {
-  [x in NotificationType]: {
-    in_app: boolean;
-    email: boolean;
-    push: boolean;
-  };
-};
+export interface ToggleButtonItem {
+  text: string;
+  checked: boolean;
+  onChange: () => void;
+}
+export interface SettingsItem {
+  label: string;
+  description?: string;
+  toggleButtons: ToggleButtonItem[];
+}

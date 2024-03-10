@@ -1,71 +1,55 @@
-import { ToggleButton } from "src/Nowruz/modules/general/components/toggleButton";
+import { Divider } from '@mui/material';
+import { ToggleButton } from 'src/Nowruz/modules/general/components/toggleButton';
 
-import css from "./notification.module.scss";
-import { useNotification } from "./useNotification";
+import css from './notification.module.scss';
+import { SettingsItem } from './payload.type';
+import { useNotification } from './useNotification';
 
 const Notification = () => {
-    const {allChecked,onAllowNotifications,generateSettings,onChange} = useNotification();
+  const { mappedSettings } = useNotification();
 
-    return(
-        <>
-            <div>
-                <div className="w-full py-8 items-center">
-                    <h2 className="grow css.title text-lg font-semibold">Notification settings</h2>
-                    <p className='text-sm font-normal text-Gray-light-mode-600 pt-1'>
-                    We may still send you important notifications about your account outside of your notification settings.
-                    </p>
+  const renderItems = (item: SettingsItem) => {
+    return (
+      <div className="w-full  flex flex-col">
+        <Divider />
+
+        <div
+          key={item.label}
+          className="w-full md:w-[856px] flex flex-col md:flex-row gap-5 md:gap-16 items-center py-6"
+        >
+          <div className="flex flex-col w-full md:w-[512px]">
+            <span className="font-semibold text-sm text-Gray-light-mode-700">{item.label}</span>
+            <span className="font-normal text-sm text-Gray-light-mode-600">{item.description}</span>
+          </div>
+          <div className="flex flex-col gap-4 w-full md:[w-280px]">
+            {item.toggleButtons.map((btn, index) => (
+              <div key={`label-toggle-${index}`} className={css.item}>
+                <ToggleButton checked={btn.checked} size="small" onChange={btn.onChange} />
+                <div className="flex flex-col">
+                  <p className={css.title}>{btn.text}</p>
                 </div>
-            </div>
-            <div className={css.borderSection}>
-                <div className='grid grid-cols-1 lg:grid-cols-5 gap-4'>
-                    <label className="text-Gray-light-mode-700">Allow notifications</label>
-                    <div className='col-span-2'>
-                        <div className={css.item}>
-                            <ToggleButton checked={allChecked} onChange={onAllowNotifications} size="small" />
-                            <div className="flex flex-col">
-                                <p className={css.title}>Allow All</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {generateSettings.length > 0 && generateSettings.map((item) => (
-
-                <div className={css.borderSection}>
-                    <div className='grid grid-cols-1 lg:grid-cols-5 gap-4'>
-                        <div>
-                            <label className="capitalize text-sm font-semibold text-Gray-light-mode-700 leading-5">{item.type ? item.type.toLowerCase() : item.type}</label>
-                            <p className="text-sm font-normal text-Gray-light-mode-600">
-                            These are notifications for when someone likes your post.
-                            </p>
-                        </div>
-                        <div className='col-span-2'>
-                            <div className={css.item}>
-                                <ToggleButton checked={item.push} size="small" onChange={() => onChange(item.push, item.type, 'push')}/>
-                                <div className="flex flex-col">
-                                    <p className={css.title}>Push</p>
-                                </div>
-                            </div>
-                            <div className={css.item}>
-                                <ToggleButton checked={item.in_app} size="small" onChange={() => onChange(item.in_app, item.type, 'in_app')}/>
-                                <div className="flex flex-col">
-                                    <p className={css.title}>in-app</p>
-                                </div>
-                            </div>
-                            <div className={css.item}>
-                                <ToggleButton checked={item.email} size="small" onChange={() => onChange(item.email, item.type, 'email')}/>
-                                <div className="flex flex-col">
-                                    <p className={css.title}>Email</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-
+              </div>
             ))}
-            
-        </>
+          </div>
+        </div>
+      </div>
     );
+  };
+
+  return (
+    <>
+      <div>
+        <div className="w-full pb-8 items-center">
+          <h2 className="grow css.title text-lg font-semibold">Notification settings</h2>
+          <p className="text-sm font-normal text-Gray-light-mode-600 pt-1">
+            We may still send you important notifications about your account outside of your notification settings.
+          </p>
+        </div>
+      </div>
+
+      {mappedSettings.length > 0 && mappedSettings.map((item) => renderItems(item))}
+    </>
+  );
 };
 
 export default Notification;
