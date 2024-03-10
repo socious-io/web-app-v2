@@ -23,7 +23,7 @@ export const JobDetail = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
-
+  console.log(jobDetail);
   const [organization, setOrganization] = useState<Organization>();
   const [justApplied, setJustApplied] = useState(false);
   const [beforeApplied, setBeforeApplied] = useState(jobDetail.applied);

@@ -11,6 +11,7 @@ import { LinkItem } from '../linkItem/LinkItem';
 
 export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen }) => {
   const { filteredMenu, userIsLoggedIn } = useLinksContainer();
+  console.log(filteredMenu);
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   const navigateFunction = async (route: string) => {
@@ -47,13 +48,14 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
             <LinkItem
               key={item.label}
               label={item.label}
-              navigateFunc={() => navigateFunction(item.route)}
+              navigateFunc={() => setSubMenuOpen(!setSubMenuOpen)} //navigateFunction(item.route)}
               iconName={item.iconName}
               children={item.children.map((ch) => {
                 return {
                   label: ch.label,
                   navigateFunc: () => {
-                    navigateFunction(ch.route);
+                    setSubMenuOpen(true);
+                    // navigateFunction(ch.route);
                   },
                 };
               })}

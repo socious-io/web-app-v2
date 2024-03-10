@@ -38,13 +38,13 @@ export const useLinksContainer = () => {
       iconName: 'briefcase-01',
       public: true,
 
-      // children:
-      //   !userIsLoggedIn || currentIdentity?.type === 'users'
-      //     ? [
-      //         { label: 'Find work', route: '/jobs', public: true },
-      //         //{ label: 'Saved jobs', route: '/', public: false },
-      //       ]
-      //     : undefined,
+      children:
+        !userIsLoggedIn || currentIdentity?.type === 'users'
+          ? [
+              { label: 'Applied jobs', route: '/jobs/applied', public: false },
+              //{ label: 'Saved jobs', route: '/', public: false },
+            ]
+          : undefined,
     },
     {
       label: 'Contracts',
