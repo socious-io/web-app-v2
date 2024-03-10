@@ -25,9 +25,10 @@ export const useSearch = () => {
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
   const [searchResult, setSearchResult] = useState({} as JobsRes | UsersRes | OrganizationsRes);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(data.page);
   const [sliderFilterOpen, setSliderFilterOpen] = useState(false);
-  const [filter, setFilter] = useState<FilterReq>({} as FilterReq);
+  const savedFilter = JSON.parse(localStorage.getItem('filter') || '{}') as FilterReq;
+  const [filter, setFilter] = useState<FilterReq>(savedFilter);
   const [countryName, setCountryName] = useState<string | undefined>('');
 
   const navigate = useNavigate();
@@ -116,12 +117,15 @@ export const useSearch = () => {
 
   useEffect(() => {
     fetchMore(page);
+    localStorage.setItem('searchPage', page.toString());
+    localStorage.setItem('filter', JSON.stringify(filter));
   }, [page, filter]);
 
   useEffect(() => {
     if (data.items.length) {
       setSearchResult(data);
-      setFilter({});
+      const savedFilter = JSON.parse(localStorage.getItem('filter') || '{}') as FilterReq;
+      setFilter(savedFilter);
       setCountryName('');
     }
   }, [data]);

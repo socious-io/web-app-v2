@@ -11,7 +11,6 @@ import { useContractCard } from './useContractCard';
 export const ContractCard: React.FC<ContractCardProps> = ({ contract, setOpenOverlay }) => {
   const { type, badge, name, profileImageUrl, currencyIconName, formatCurrency, contractVal, handleOpenOverlayModal } =
     useContractCard(contract, setOpenOverlay);
-
   return (
     <>
       <div
@@ -31,13 +30,33 @@ export const ContractCard: React.FC<ContractCardProps> = ({ contract, setOpenOve
           </div>
         </div>
         <div className="flex flex-col gap-5 md:flex-row">
-          <div className="flex gap-2 items-center">
-            <Icon name={currencyIconName} fontSize={20} color={variables.color_grey_500} />
-            <span className="font-medium text-base leading-6 text-Gray-light-mode-700">
-              {formatCurrency} {`${contractVal.currency}`}
-            </span>
-            <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`(Fixed-price)`}</span>
-          </div>
+          {formatCurrency ? (
+            <div className="flex gap-2 items-center">
+              {['USD', 'JPY'].includes(contractVal?.currency) ? (
+                <Icon name={currencyIconName} fontSize={20} color={variables.color_grey_500} />
+              ) : (
+                contractVal?.currency && (
+                  <img
+                    src={`/icons/crypto/${contractVal?.currency?.toString()}.svg`}
+                    width={20}
+                    alt={`${contractVal?.currency.toString()}`}
+                  />
+                )
+              )}
+
+              <span className="font-medium text-base leading-6 text-Gray-light-mode-700">
+                {formatCurrency} {`${contractVal.currency}`}
+              </span>
+              <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`(Fixed-price)`}</span>
+            </div>
+          ) : contract.project.payment_type === 'VOLUNTEER' ? (
+            <div className="flex gap-1.5">
+              <img src="/icons/nowruz/red-heart.svg" alt="" />
+              <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Volunteer</span>
+            </div>
+          ) : (
+            ''
+          )}
           <div className="md:mr-0 md:ml-auto w-fit">
             <Chip
               label={contract.contractStatus}

@@ -7,7 +7,7 @@ export const useOrganizationJobs = () => {
   const { organization, orgJobs } = useLoaderData() as { organization: Organization; orgJobs: JobsRes };
   const [jobList, setJobList] = useState<Array<Job>>(orgJobs.items);
   const [total, setTotal] = useState<number>(orgJobs.total_count);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(Number(orgJobs.page));
 
   const PER_PAGE = 2;
   const isMobile = isTouchDevice();
@@ -28,6 +28,7 @@ export const useOrganizationJobs = () => {
   };
 
   useEffect(() => {
+    localStorage.setItem('profileJobPage', page.toString());
     getJobsData();
   }, [page]);
 

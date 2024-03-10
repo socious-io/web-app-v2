@@ -34,17 +34,16 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({
     optionError,
     isValid,
   } = useCreateScreenQuestion(editedQuestion, addQuestion, editQuestion);
-  const renderInfo = (title: string, description: string) => (
+  const renderInfo = (title: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
-      <div className={css.infoDescription}>{description}</div>
     </div>
   );
 
   return (
     <div className={css.container}>
       <div className={css.row}>
-        {renderInfo('Question type', '')}
+        {renderInfo('Type')}
         <div className={css.componentsContainer}>
           <RadioGroup
             items={questionTypes}
@@ -55,7 +54,7 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({
         </div>
       </div>
       <div className={css.row}>
-        {renderInfo('Question', '')}
+        {renderInfo('Question')}
         <div className={css.componentsContainer}>
           <Input
             register={register}
@@ -66,11 +65,12 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({
       </div>
       {type === 'Multi-choice' && (
         <div className={css.row}>
-          {renderInfo('Options', '')}
+          {renderInfo('Options')}
           <div className={`${css.componentsContainer} flex flex-col gap-1`}>
             <div className="flex gap-1 items-center mb-2">
-              <Input value={newOption} onChange={(e) => setNewOption(e.target.value)} />
-
+              <div className="flex-1">
+                <Input value={newOption} onChange={(e) => setNewOption(e.target.value)} />
+              </div>
               <IconButton
                 iconName="plus"
                 iconSize={20}
@@ -96,7 +96,7 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({
         </div>
       )}
       <div className={css.row}>
-        {renderInfo('Is required?', '')}
+        {renderInfo('Is required?')}
         <div className={css.componentsContainer}>
           <RadioGroup
             items={requireOptions}
@@ -107,10 +107,16 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({
         </div>
       </div>
       <div className={`${css.row} md:justify-start gap-2 md:flex-row-reverse`}>
-        <Button variant="contained" color="primary" onClick={handleSubmit(onSubmit)} disabled={!isValid || optionError}>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit(onSubmit)}
+          disabled={!isValid || optionError}
+        >
           {editedQuestion ? 'Edit question' : 'Add question'}
         </Button>
-        <Button variant="outlined" color="secondary" onClick={cancel}>
+        <Button fullWidth variant="outlined" color="secondary" onClick={cancel}>
           Cancel
         </Button>
       </div>

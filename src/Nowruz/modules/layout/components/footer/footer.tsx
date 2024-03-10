@@ -16,6 +16,13 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
   const navigate = useNavigate();
   const navigateFunction = (route: string) => {
     localStorage.removeItem('page');
+    localStorage.removeItem('searchPage');
+    localStorage.removeItem('navigateToSearch');
+    localStorage.removeItem('filter');
+    localStorage.removeItem('searchTerm');
+    localStorage.removeItem('type');
+    localStorage.removeItem('source');
+    localStorage.removeItem('profileJobPage');
     navigate(route);
     if (isTouchDevice()) setOpen(false);
   };
@@ -35,7 +42,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
             menuOpen={open}
           /> */}
 
-      {userIsLoggedIn && (
+      {userIsLoggedIn && currentIdentity.type === 'users' && (
         <LinkItem
           label="Settings"
           navigateFunc={() => {

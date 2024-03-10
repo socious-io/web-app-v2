@@ -13,7 +13,7 @@ export const useJobListing = () => {
     return state.skills.items;
   });
   const dispatch = useDispatch();
-  const PER_PAGE = 5;
+  const PER_PAGE = 10;
   const isMobile = isTouchDevice();
   const [jobsList, setJobsList] = useState<Job[]>(loaderData.items);
   const [totalCount, setTotalCount] = useState(loaderData.total_count);
@@ -34,7 +34,7 @@ export const useJobListing = () => {
 
   const fetchMore = async () => {
     if (!isMount) {
-      const data = await jobs({ page: page, status: 'ACTIVE', limit: 5 });
+      const data = await jobs({ page: page, status: 'ACTIVE', limit: PER_PAGE });
       setTotalCount(data.total_count);
       if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
       else setJobsList(data.items);

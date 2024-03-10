@@ -44,11 +44,11 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <SearchDropdown
-        required
         id="school"
         cacheOptions
         value={schoolVal}
         isAsync
+        creatable
         loadOptions={searchSchools}
         defaultOptions
         icon="search-lg"

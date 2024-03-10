@@ -51,6 +51,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
                 shape="sharp"
               />
             )}
+
             {type === 'organizations' && (identity as Organization).hiring && (
               <Chip
                 label="Hiring"

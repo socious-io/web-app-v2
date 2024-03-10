@@ -18,7 +18,7 @@ export const useCreateScreenQuestion = (
   addQuestion?: (q: QuestionReq) => void,
   editedQuestion?: (q: QuestionReq) => void,
 ) => {
-  const [options, setOptions] = useState<string[]>([]);
+  const [options, setOptions] = useState<string[]>(defaultValue?.options || []);
   const [optionError, setOptionError] = useState('');
   const [newOption, setNewOption] = useState('');
   const {

@@ -30,10 +30,16 @@ export const Search = () => {
         </div>
       </div>
       <div className={css.list}>
-        {searchResult.items?.map((item) => <div className="mt-6">{card(item)}</div>)}
+        {searchResult.items?.map((item) => (
+          <div key={item.id} className="mt-6">
+            {card(item)}
+          </div>
+        ))}
 
         <div className="mt-11 hidden md:block">
-          {total >= PER_PAGE && <Pagination count={Math.ceil(total / PER_PAGE)} onChange={(e, p) => setPage(p)} />}
+          {total >= PER_PAGE && (
+            <Pagination page={page} count={Math.ceil(total / PER_PAGE)} onChange={(e, p) => setPage(p)} />
+          )}
         </div>
 
         <div className="mt-5 flex items-center justify-center block md:hidden">

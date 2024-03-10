@@ -23,12 +23,13 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
     data: { seeMore, copyProccessed },
     operations: { handleSeeMore },
   } = useSeeMore(applicant?.cover_letter ?? '');
-  const { handleViewProfile, handleClickResume } = useApplicant(applicant);
+
+  const { handleViewProfile, handleClickResume, questionList } = useApplicant(applicant);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-6 ">
-          <Avatar size="72px" type="user" img={applicant.user.avatar} />
+          <Avatar size="72px" type="users" img={applicant.user.avatar} />
           <div className="flex flex-col">
             <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">{applicant.user?.name}</span>
             <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{applicant.user.username}</span>
@@ -81,6 +82,12 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
               <p onClick={handleClickResume}>{applicant.attachment?.filename}</p>
             </div>
           )}
+          {questionList?.map((item) => (
+            <div key={item.id} className="w-full flex flex-col gap-2">
+              <span className="font-medium text-sm leading-5 text-Gray-light-mode-700">{item.question}</span>
+              <span className="font-medium text-base leading-6 text-Gray-light-mode-900">{item.answer}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

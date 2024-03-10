@@ -20,6 +20,18 @@ export const Setting = () => {
       label: 'Notification',
       content: <Notification />,
     },
+    // {
+    //   label: 'Team',
+    //   content: <h1>Team</h1>
+    // },
+    // {
+    //   label: 'Working Prefrences',
+    //   content: <h1>Working</h1>
+    // },
+    // {
+    //   label: 'Notification',
+    //   content: <h1>Notif</h1>
+    // },
   ];
   const items: any[] = [
     { label: 'Account', value: 'Account' },

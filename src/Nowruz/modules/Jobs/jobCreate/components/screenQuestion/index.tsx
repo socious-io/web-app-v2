@@ -8,9 +8,9 @@ import { ScreenQuestionProps } from './screenQuestions.type';
 export const ScreenQuestion: React.FC<ScreenQuestionProps> = ({ question, index, handleDelete, handleEdit }) => {
   return (
     <div className="w-full flex items-center justify-between">
-      <div className="flex">
+      <div className="flex items-center">
         <div className={css.title}>{`${index + 1}.${question.question}`}</div>
-        <div className={css.subtitle}>{` , ${question.options?.length ? 'Multi choices' : 'Text'}, ${
+        <div className={css.subtitle}>{` , ${question.options?.length ? 'Multiple choices' : 'Text'}, ${
           question.required ? 'Required' : 'Not required'
         }`}</div>
       </div>
