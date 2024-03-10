@@ -38,7 +38,7 @@ export const ChatDetails: React.FC<ChatDetailsProps> = ({
   }, [newSocketMessage]);
 
   return (
-    <div className="flex flex-col w-full h-full relative">
+    <div className="flex flex-col w-full h-full">
       <div className="pl-0 pr-4 md:px-6 py-5 flex absolute top-0 w-full bg-Base-White z-10">
         <div className="flex md:hidden">
           <IconButton
