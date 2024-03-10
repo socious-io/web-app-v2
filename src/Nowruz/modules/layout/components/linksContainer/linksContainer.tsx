@@ -11,7 +11,7 @@ import { LinkItem } from '../linkItem/LinkItem';
 
 export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen }) => {
   const { filteredMenu, userIsLoggedIn } = useLinksContainer();
-  console.log(filteredMenu);
+
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   const navigateFunction = async (route: string) => {
@@ -49,10 +49,6 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
               key={item.label}
               label={item.label}
               navigateFunc={() => navigateFunction(item.route)}
-              iconClick={(e) => {
-                e.preventDefault();
-                setSubMenuOpen(!subMenuOpen);
-              }}
               iconName={item.iconName}
               children={item.children.map((ch) => {
                 return {
@@ -65,21 +61,15 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
               menuOpen={open}
               subMenuOpen={subMenuOpen}
               badgeIcon={
-                subMenuOpen ? (
-                  <Icon
-                    name="chevron-up"
-                    className="text-Brand-300 !cursor-pointer"
-                    fontSize={20}
-                    onClick={() => setSubMenuOpen(!subMenuOpen)}
-                  />
-                ) : (
-                  <Icon
-                    name="chevron-down"
-                    className="text-Brand-300 !cursor-pointer"
-                    fontSize={20}
-                    onClick={() => setSubMenuOpen(!subMenuOpen)}
-                  />
-                )
+                <Icon
+                  name={subMenuOpen ? 'chevron-up' : 'chevron-down'}
+                  className="text-Brand-300 !cursor-pointer"
+                  fontSize={20}
+                  onClick={(event) => {
+                    event?.stopPropagation();
+                    setSubMenuOpen(!subMenuOpen);
+                  }}
+                />
               }
             />
           ) : (

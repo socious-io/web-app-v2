@@ -6,7 +6,7 @@ import css from './linkItem.module.scss';
 import { LinkItemProps } from './linkItem.types';
 
 export const LinkItem: React.FC<LinkItemProps> = (props) => {
-  const { children, iconName, label, navigateFunc, badgeIcon, menuOpen, subMenuOpen, iconClick } = props;
+  const { children, iconName, label, navigateFunc, badgeIcon, menuOpen, subMenuOpen } = props;
 
   return (
     <>
@@ -17,7 +17,6 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
             fontSize={24}
             className="text-Gray-light-mode-500 md:text-Brand-300 !cursor-pointer"
             style={{ pointerEvents: 'none' }}
-            onClick={iconClick}
           />
         )}
         {menuOpen && (
@@ -26,7 +25,7 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
               {label}
             </span>
             {badgeIcon && menuOpen ? (
-              <div className="mr-0 ml-auto cursor-pointer" style={{ pointerEvents: 'none' }}>
+              <div className="mr-0 ml-auto cursor-pointer z-50" style={{ pointerEvents: 'none' }}>
                 {badgeIcon}
               </div>
             ) : (

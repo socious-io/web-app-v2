@@ -8,5 +8,4 @@ export interface LinkItemProps {
   navigateFunc: () => void;
   children?: LinkItemProps[];
   badgeIcon?: ReactNode;
-  iconClick?: () => void;
 }
