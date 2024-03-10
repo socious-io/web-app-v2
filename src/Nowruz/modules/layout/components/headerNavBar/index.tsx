@@ -11,6 +11,7 @@ import { useHeaderNavBar } from './useHeaderNavBar';
 import { Notifications } from '../../containers/notifications';
 import NotifBellIcon from '../notifBellIcon';
 import { StatusDropDown } from '../statusDropDown';
+import { useLocation } from 'react-router-dom';
 
 interface HeaderNavBarProps {
   setOpen: (val: boolean) => void;
@@ -41,7 +42,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     setSearchTerm,
   } = useHeaderNavBar();
 
-  const searchPlaceholder = window.location.pathname === '/jobs' ? 'Search by title, skill or organization' : 'Search';
+  const searchPlaceholder = useLocation().pathname === '/jobs' ? 'Search by title, skill or organization' : 'Search';
 
   return (
     <div className={`h-16 md:h-[72px] px-4 md:px-8 shadow-Shadows/shadow-sm md:[box-shadow:none] ${css.container}`}>
