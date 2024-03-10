@@ -39,8 +39,9 @@ export const useLinksContainer = () => {
       public: true,
 
       children:
-        !userIsLoggedIn || currentIdentity?.type === 'users'
+        userIsLoggedIn && currentIdentity?.type === 'users'
           ? [
+              { label: 'Find job', route: '/jobs', public: false },
               { label: 'Applied jobs', route: '/jobs/applied', public: false },
               //{ label: 'Saved jobs', route: '/', public: false },
             ]
