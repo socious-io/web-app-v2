@@ -47,10 +47,10 @@ type Inputs = {
   cause: OptionType;
   description: string;
   category: OptionType;
-  paymentMin: number;
-  paymentMax: number;
-  commitmentHoursLower: number;
-  commitmentHoursHigher: number;
+  paymentMin: number | null;
+  paymentMax: number | null;
+  commitmentHoursLower: number | null;
+  commitmentHoursHigher: number | null;
   skills: Array<{ label: string; value: string }>;
   preference: OptionType;
   type: OptionType;
@@ -80,13 +80,15 @@ const schema = yup.object().shape({
     label: yup.string().required(),
     value: yup.string().required(),
   }),
-  paymentMin: yup.number().lessThan(yup.ref('paymentMax'), 'Max price must be higher than min price'),
-  paymentMax: yup.number().moreThan(yup.ref('paymentMin'), 'Max price must be higher than min price'),
+  paymentMin: yup.number().nullable().lessThan(yup.ref('paymentMax'), 'Max price must be higher than min price'),
+  paymentMax: yup.number().nullable().moreThan(yup.ref('paymentMin'), 'Max price must be higher than min price'),
   commitmentHoursLower: yup
     .number()
+    .nullable()
     .lessThan(yup.ref('commitmentHoursHigher'), 'Max hours must be higher than min hours'),
   commitmentHoursHigher: yup
     .number()
+    .nullable()
     .moreThan(yup.ref('commitmentHoursLower'), 'Max hours must be higher than min hours'),
   skills: yup
     .array()
@@ -394,11 +396,11 @@ export const useJobCreateForm = () => {
         paymentType: job?.payment_type,
         paymentScheme: job?.payment_scheme,
         location: job?.city ? { city: job.city, country: job.country, label: `${job.city}, ${job.country}` } : {},
-        paymentMin: Number(job?.payment_range_lower) || 0,
-        paymentMax: Number(job?.payment_range_higher) || 0,
+        paymentMin: job?.payment_range_lower || null,
+        paymentMax: job?.payment_range_higher || null,
         jobLocation: job.city ? 'Country / City' : 'Anywhere',
-        commitmentHoursLower: Number(job?.commitment_hours_lower) ?? 0,
-        commitmentHoursHigher: Number(job?.commitment_hours_higher) ?? 0,
+        commitmentHoursLower: job?.commitment_hours_lower || null,
+        commitmentHoursHigher: job?.commitment_hours_higher ?? null,
       };
       reset(initialVal);
     },
