@@ -51,12 +51,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
             <span className={css.statusText}>Available for work</span>
           </div>
         )}
-        {type === 'users' && (identity as User).open_to_volunteer && (
-          <div className={css.status}>
-            <Dot color={variables.color_success_500} size="small" shadow={false} />
-            <span className={css.statusText}>Open to volunteer</span>
-          </div>
-        )}
+
         <div className={css.username}>
           <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
           <div className="text-base font-normal text-Gray-light-mode-500">{username}</div>

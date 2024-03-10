@@ -71,6 +71,12 @@ export const MainInfo = () => {
         borderColor={variables.color_primary_200}
         fontColor={variables.color_primary_700}
       />
+      {profileType === 'users' && (identity as User).open_to_volunteer && (
+        <div className="flex gap-2">
+          <img src="/icons/nowruz/red-heart.svg" alt="" />
+          <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Open to volunteer</span>
+        </div>
+      )}
       {identity?.country && <Location country={identity.country} city={identity?.city} iconName={identity?.country} />}
       {profileType === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
       {org.industry && renderData('Industry', 'globe-04', org.industry)}
