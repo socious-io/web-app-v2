@@ -18,7 +18,7 @@ export const Layout = () => {
     nonPermanentStorage.clear();
   };
   return (
-    <div className="w-full h-screen relative">
+    <div className="w-full h-dvh relative">
       <div className="w-full h-full relative flex flex-col md:pl-20">
         <div className="w-full fixed top-0 right-0 z-20 bg-Base-White ">
           <HeaderNavBar setOpen={setOpen} logout={logOut} />
