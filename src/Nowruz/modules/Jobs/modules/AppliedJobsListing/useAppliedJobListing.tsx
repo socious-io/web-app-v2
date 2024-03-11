@@ -1,26 +1,33 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
-import { Applicant, ApplicantsRes, JobsRes, Skill, skills, userApplicants } from 'src/core/api';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Applicant, ApplicantsRes, CurrentIdentity, Skill, skills, userApplicants } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { useIsMount } from 'src/Nowruz/modules/general/components/useIsMount';
 import { RootState } from 'src/store';
 import { setSkills } from 'src/store/reducers/skills.reducer';
 
 export const useAppliedJobListing = () => {
-  const loaderData = useLoaderData() as ApplicantsRes;
+  //const loaderData = useLoaderData() as ApplicantsRes;
+
   const skillList = useSelector<RootState, Skill[]>((state) => {
     return state.skills.items;
   });
   const dispatch = useDispatch();
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
-  const [applicants, setApplicants] = useState<Applicant[]>(loaderData.items);
-  const [totalCount, setTotalCount] = useState(loaderData.total_count);
-  const pageNumber = Number(loaderData.page);
-  const [page, setPage] = useState(pageNumber);
+  const [applicants, setApplicants] = useState<Applicant[]>([] as Applicant[]);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [page, setPage] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const isMount = useIsMount();
+
+  const initialData = async () => {
+    const data = await userApplicants({ page: 1, status: 'PENDING', limit: PER_PAGE });
+    setApplicants(data.items);
+    setPage(data.page);
+    setTotalCount(data.total_count);
+  };
 
   const loadPage = async () => {
     setLoading(true);
@@ -35,7 +42,7 @@ export const useAppliedJobListing = () => {
   const fetchMore = async () => {
     if (!isMount) {
       const data = await userApplicants({ page: page, status: 'PENDING', limit: PER_PAGE });
-      console.log(data);
+      setPage(data.page);
       setTotalCount(data.total_count);
       if (isMobile && page > 1) setApplicants([...applicants, ...data.items]);
       else setApplicants(data.items);
@@ -45,12 +52,19 @@ export const useAppliedJobListing = () => {
   const getSkills = async () => {
     if (skillList.length) return;
     const res = await skills({ limit: 500 });
-    await dispatch(setSkills(res.items));
+    dispatch(setSkills(res.items));
   };
 
   useEffect(() => {
     loadPage();
-    //localStorage.setItem('page', page.toString());
+    localStorage.setItem('appliedJobPage', page.toString());
   }, [page]);
+
+  useEffect(() => {
+    localStorage.setItem('source', 'applied');
+    localStorage.removeItem('navigateToSearch');
+    initialData();
+  }, []);
+
   return { page, setPage, applicants, totalCount, PER_PAGE, skillList, loading };
 };
