@@ -1,4 +1,5 @@
 import { Divider } from '@mui/material';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { ToggleButton } from 'src/Nowruz/modules/general/components/toggleButton';
 
 import css from './notification.module.scss';
@@ -6,7 +7,7 @@ import { SettingsItem } from './payload.type';
 import { useNotification } from './useNotification';
 
 const Notification = () => {
-  const { mappedSettings } = useNotification();
+  const { mappedSettings, onSave } = useNotification();
 
   const renderItems = (item: SettingsItem) => {
     return (
@@ -48,6 +49,9 @@ const Notification = () => {
       </div>
 
       {mappedSettings.length > 0 && mappedSettings.map((item) => renderItems(item))}
+      <Button variant="contained" color="primary" customStyle="w-full md:w-fit mr-0 ml-auto" onClick={onSave}>
+        Save
+      </Button>
     </>
   );
 };

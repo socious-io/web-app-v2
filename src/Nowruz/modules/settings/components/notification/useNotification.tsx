@@ -20,7 +20,6 @@ export const useNotification = () => {
     const idx = settingVal.findIndex((item) => item.type === type);
     settingVal[idx][toggleButtonLabel] = !settingVal[idx][toggleButtonLabel];
     setSettings(settingVal);
-    await updateNotificationSettings({ settings: settingVal });
   };
 
   const getToggleButtons = (type: NotificationType) => {
@@ -94,9 +93,11 @@ export const useNotification = () => {
     setSettings(t);
   }
 
+  const onSave = async () => {
+    await updateNotificationSettings({ settings });
+  };
   return {
-    settings,
-    onAllowNotifications,
     mappedSettings,
+    onSave,
   };
 };
