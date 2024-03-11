@@ -42,7 +42,8 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     setSearchTerm,
   } = useHeaderNavBar();
 
-  const searchPlaceholder = useLocation().pathname === '/jobs' ? 'Search by title, skill or organization' : 'Search';
+  const searchPlaceholder =
+    useLocation().pathname === '/jobs' && userType === 'users' ? 'Search by title, skill or organization' : 'Search';
 
   return (
     <div className={`h-16 md:h-[72px] px-4 md:px-8 shadow-Shadows/shadow-sm md:[box-shadow:none] ${css.container}`}>
