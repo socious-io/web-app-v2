@@ -454,15 +454,6 @@ export const useContractDetailsSlider = () => {
   const onConfirm = async () => {
     if (!contract.mission) return;
     setOpenAlert(false);
-    dispatch(
-      updateStatus({
-        type,
-        paymentType: contract.project.payment_type,
-        id: contract.id,
-        offerStatus: 'CLOSED',
-        missionStatus: 'CONFIRMED',
-      }),
-    );
     let allowConfirm = true;
     if (contract.payment_mode === 'CRYPTO') {
       if (signer && chainId) {
@@ -478,6 +469,15 @@ export const useContractDetailsSlider = () => {
     }
     if (allowConfirm) {
       await confirmMission(contract.mission.id);
+      dispatch(
+        updateStatus({
+          type,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'CLOSED',
+          missionStatus: 'CONFIRMED',
+        }),
+      );
     }
   };
 
