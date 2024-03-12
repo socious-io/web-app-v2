@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
@@ -18,9 +18,13 @@ import {
   QuestionReq,
   addQuestionJob,
   createJob,
+  jobQuestions,
+  removeQuestionJob,
   searchLocation,
   updateJob,
+  updateQuestionJob,
 } from 'src/core/api';
+import { Question, QuestionsRes } from 'src/core/types';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
@@ -149,7 +153,7 @@ export const useJobCreateForm = () => {
 
   const [questions, setQuestions] = useState<QuestionReq[]>([]);
   const [editedQuestion, setEditedQuestion] = useState<QuestionReq>();
-  const [editedQuestionIndex, setEditedQuestionIndex] = useState();
+  const editedQuestionIndex = useRef<number>();
   const [openCreateQuestion, setOpenCreateQuestion] = useState(false);
   const catagoriesList = categories.map((item) => ({ label: item.name, value: item.id }));
   const keytems = Object.keys(SOCIAL_CAUSES);
@@ -271,8 +275,16 @@ export const useJobCreateForm = () => {
 
     try {
       const res = isEdit ? await updateJob(jobDetail?.id, jobPayload) : await createJob(jobPayload);
-      questions.forEach(async (q) => {
-        await addQuestionJob(res.id, q);
+      questions.forEach(async (q: QuestionReq) => {
+        if (q?.id) {
+          await updateQuestionJob(q?.project_id, q?.id, {
+            question: q.question,
+            required: q.required,
+            options: q.options,
+          });
+        } else {
+          await addQuestionJob(res.id, q);
+        }
       });
       setOpenSuccessModal(true);
     } catch (error) {}
@@ -344,24 +356,28 @@ export const useJobCreateForm = () => {
     navigate('/jobs/created');
   };
 
-  const deleteQuestion = (index: number) => {
+  const deleteQuestion = async (index: number) => {
     const q = [...questions];
-    q.splice(index, 1);
-    setQuestions(q);
+    const selected = q[index];
+    const res = await removeQuestionJob(selected?.project_id, selected?.id);
+    if (res.message === 'success') {
+      q.splice(index, 1);
+      setQuestions(q);
+    }
   };
 
   const openEditQuestionForm = (index: number) => {
     setEditedQuestion(questions[index]);
-    setEditedQuestionIndex(index);
+    editedQuestionIndex.current = index;
     setOpenCreateQuestion(true);
   };
 
   const handleEditQuestion = (editedQ: QuestionReq) => {
     const q = [...questions];
-    q[editedQuestionIndex] = editedQ;
+    q[editedQuestionIndex.current ?? 0] = { ...q[editedQuestionIndex.current ?? 0], ...editedQ };
     setQuestions(q);
     setEditedQuestion(undefined);
-    setEditedQuestionIndex(undefined);
+    editedQuestionIndex.current = 0;
     setOpenCreateQuestion(false);
   };
 
@@ -407,11 +423,17 @@ export const useJobCreateForm = () => {
     [reset],
   );
 
+  const getQuestions = useCallback(async () => {
+    const res = await jobQuestions(jobDetail.id);
+    setQuestions(res.questions as unknown as QuestionReq[]);
+  }, [jobDetail.id]);
+
   useEffect(() => {
     if (jobDetail && isEdit) {
       initializeValues(jobDetail);
+      getQuestions();
     }
-  }, [jobDetail, isEdit, initializeValues, setValue]);
+  }, [jobDetail, isEdit, initializeValues, setValue, getQuestions]);
 
   return {
     register,
