@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
+import { config } from 'src/config';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { closeJob, CurrentIdentity, Job } from 'src/core/api';
+import { isTouchDevice } from 'src/core/device-type-detector';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { QuestionsRes } from 'src/core/types';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -41,7 +43,12 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
   const [openApply, setOpenApply] = useState(false);
   const [openExternalApply, setOpenExternalApply] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const url = window.location.href;
+  let url = window.location.href;
+  const extractedString = url.slice(url.indexOf('jobs'));
+  url =
+    isTouchDevice() && config.env === 'development'
+      ? `https://webapp2.dev.socious.io/${extractedString}`
+      : `https://app.socious.io/${extractedString}`;
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
   };
