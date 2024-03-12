@@ -30,6 +30,9 @@ export interface Payment {
   source: string;
   verified_at?: Date;
   created_at: Date;
+  meta: {
+    id: string;
+  };
 }
 
 export interface Card extends CardReq {
