@@ -4,6 +4,7 @@ import { Contract, CurrentIdentity } from 'src/core/api';
 import { ButtonGroupItem } from 'src/Nowruz/modules/general/components/ButtonGroups/buttonGroups.types';
 import store, { RootState } from 'src/store';
 import { getContracts } from 'src/store/thunks/contracts.thunk';
+import dapp from 'src/dapp';
 
 export const useContracts = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -27,6 +28,8 @@ export const useContracts = () => {
     if (currentIdentity)
       await store.dispatch(getContracts({ page, limit: PER_PAGE, identityType: currentIdentity.type }));
   };
+
+  const { signer, chainId } = dapp.useWeb3();
 
   const filterOngoing = async () => {
     // const missionRes = await userMissions('', { status: 'ACTIVE' });

@@ -12,7 +12,7 @@ import { ReviewModal } from '../reviewModal';
 import { SelectBankAccountUser } from '../selectBankAccountUser';
 import { WalletModal } from '../walletModal';
 
-export const ContractDetailsSlider: React.FC = () => {
+export const ContractDetailsSlider: React.FC<{ web3?: any }> = ({ web3 }) => {
   const {
     name,
     profileImage,
@@ -49,7 +49,7 @@ export const ContractDetailsSlider: React.FC = () => {
     contract,
     redirectToChat,
     disableMessageButton,
-  } = useContractDetailsSlider();
+  } = useContractDetailsSlider(web3);
 
   return (
     <>
