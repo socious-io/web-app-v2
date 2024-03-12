@@ -12,7 +12,7 @@ import { JobInfoCard } from '../JobInfoCard';
 
 export const JobPreviewModal: React.FC<JobPreviewModalProps> = ({ open, onClose, company, job }) => {
   const isMobile = window.innerWidth < 600;
-  console.log(job);
+
   return (
     <Modal open={open} onClose={onClose} className={css.container}>
       <div className={css.content}>
