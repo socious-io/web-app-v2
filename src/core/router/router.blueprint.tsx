@@ -380,6 +380,32 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          {
+            path: 'dashboard',
+            loader: async () => {
+              const [userProfile, impactPointHistory] = await Promise.all([profile(), impactPoints()]);
+              return { userProfile, impactPointHistory };
+            },
+            async lazy() {
+              const { Dashboard } = await import('src/Nowruz/pages/dashboard');
+              return {
+                Component: Protect(Dashboard, 'users'),
+              };
+            },
+          },
+          {
+            path: 'refer',
+            loader: async () => {
+              const [userProfile, impactPointHistory] = await Promise.all([profile(), impactPoints()]);
+              return { userProfile, impactPointHistory };
+            },
+            async lazy() {
+              const { Refer } = await import('src/Nowruz/pages/refer');
+              return {
+                Component: Protect(Refer, 'users'),
+              };
+            },
+          },
         ],
       },
     ],
@@ -483,6 +509,37 @@ export const blueprint: RouteObject[] = [
           //   },
           // },
         ],
+      },
+    ],
+  },
+  {
+    path: 'referral',
+    children: [
+      {
+        path: ':username/talent',
+        loader: async ( { params } ) => {
+          localStorage.setItem('registerFor', 'user');
+          return await otherProfileByUsername(params.username!);
+        },
+        async lazy() {
+          const { Email } = await import('src/Nowruz/pages/sign-up/Email');
+          return {
+            Component: Email,
+          };
+        },
+      },
+      {
+        path: ':username/org',
+        loader: async ( { params } ) => {
+          localStorage.setItem('registerFor', 'organization');
+          return await otherProfileByUsername(params.username!);
+        },
+        async lazy() {
+          const { Email } = await import('src/Nowruz/pages/sign-up/Email');
+          return {
+            Component: Email,
+          };
+        },
       },
     ],
   },
