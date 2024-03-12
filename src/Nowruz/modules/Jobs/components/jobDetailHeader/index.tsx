@@ -58,6 +58,9 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
       const type = localStorage.getItem('type');
       return `/search?q=${searchTerm}&type=${type}&page=1`;
     }
+    if (sourceOrg === 'applied') {
+      return `/jobs/applied`;
+    }
     if (sourceOrg) {
       return `/profile/organizations/${sourceOrg}/jobs`;
     }

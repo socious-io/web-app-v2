@@ -16,6 +16,7 @@ import {
   impactPoints,
   getOrganizationByShortName,
   getRequestedVerifyExperiences,
+  userApplicants,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -184,7 +185,7 @@ export const blueprint: RouteObject[] = [
                 async lazy() {
                   const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
                   return {
-                    Component: Protect(CreatedList),
+                    Component: Protect(CreatedList, 'organizations'),
                   };
                 },
               },
@@ -200,7 +201,7 @@ export const blueprint: RouteObject[] = [
                 async lazy() {
                   const { CreatedDetail } = await import('src/Nowruz/pages/jobs/detail/Created');
                   return {
-                    Component: Protect(CreatedDetail),
+                    Component: Protect(CreatedDetail, 'organizations'),
                   };
                 },
               },
@@ -232,6 +233,21 @@ export const blueprint: RouteObject[] = [
                   return { Component: JobDetail };
                 },
               },
+              {
+                path: 'applied',
+                // loader: async () => {
+                //   localStorage.setItem('source', 'applied');
+                //   localStorage.removeItem('navigateToSearch');
+                //   //const data = await userApplicants({ status: 'PENDING', page: page, limit: 10 });
+                //   //return data;
+                // },
+                async lazy() {
+                  const { AppliedList } = await import('src/Nowruz/pages/jobs/Applied');
+                  return {
+                    Component: Protect(AppliedList, 'users'),
+                  };
+                },
+              },
             ],
           },
           {
@@ -239,7 +255,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { Contracts } = await import('src/Nowruz/pages/contracts');
               return {
-                Component: Protect(Contracts),
+                Component: Protect(Contracts, 'both'),
               };
             },
           },
@@ -260,7 +276,7 @@ export const blueprint: RouteObject[] = [
                 async lazy() {
                   const { Wallet } = await import('src/Nowruz/pages/wallet');
                   return {
-                    Component: Protect(Wallet),
+                    Component: Protect(Wallet, 'both'),
                   };
                 },
               },
@@ -288,7 +304,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { Chats } = await import('src/Nowruz/pages/chats');
               return {
-                Component: Protect(Chats),
+                Component: Protect(Chats, 'both'),
               };
             },
           },
@@ -578,13 +594,16 @@ export const blueprint: RouteObject[] = [
   },
 ];
 
-function Protect<T extends {}>(Component: ComponentType<T>): ComponentType<T> {
+function Protect<T extends {}>(Component: ComponentType<T>, allowedIdentity: string): ComponentType<T> {
   return function ProtectedRoute(props: T) {
-    const status = useSelector((state: RootState) => state.identity.status);
+    const { status, entities } = useSelector((state: RootState) => state.identity);
+    const current = entities.find((identity) => identity.current)?.type;
     // TODO: We may notify user before redirect to intro page
     if (status === 'loading') return <div></div>;
     if (status === 'failed') return <Navigate to="/intro" />;
-    return <Component {...props} />;
+    if (allowedIdentity === current || allowedIdentity === 'both') {
+      return <Component {...props} />;
+    } else return <Navigate to="/jobs" />;
   };
 }
 

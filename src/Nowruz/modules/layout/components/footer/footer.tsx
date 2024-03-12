@@ -23,6 +23,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
     localStorage.removeItem('type');
     localStorage.removeItem('source');
     localStorage.removeItem('profileJobPage');
+    localStorage.removeItem('appliedJobPage');
     navigate(route);
     if (isTouchDevice()) setOpen(false);
   };
