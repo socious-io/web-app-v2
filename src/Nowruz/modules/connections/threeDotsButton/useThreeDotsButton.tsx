@@ -40,10 +40,6 @@ export const useThreeDotsButton = (otherIdentityId: string) => {
     getConectionStatus();
   }, [follower, following]);
 
-  const handleOpen = () => {
-    setOpenMenu(true);
-  };
-
   const handleClose = () => {
     setOpenMenu(false);
   };

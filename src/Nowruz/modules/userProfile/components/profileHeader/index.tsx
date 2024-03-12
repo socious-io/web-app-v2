@@ -82,7 +82,7 @@ export const ProfileHeader = () => {
         {!myProfile && (
           <div className={`${css.actionDiv} w-full mb-8 px-4`}>
             {displayShareButton() && (
-              <Button color="primary" variant="outlined" customStyle="h-10 text-sm flex gap-1.5 py-0">
+              <Button fullWidth color="primary" variant="outlined" customStyle="h-10 text-sm flex gap-1.5 py-0">
                 <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
                 Share
               </Button>
