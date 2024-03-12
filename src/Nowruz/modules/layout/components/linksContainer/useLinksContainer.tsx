@@ -87,6 +87,12 @@ export const useLinksContainer = () => {
       public: false,
       only: 'organizations',
     },
+    {
+      label: 'Refer and earn',
+      route: '/refer',
+      iconName: 'star-06',
+      public: false,
+    },
   ];
   let filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
 

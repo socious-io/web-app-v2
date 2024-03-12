@@ -1,7 +1,7 @@
 import type { FC } from 'react';
-import { Icon } from 'src/Nowruz/general/Icon';
 
 import { Impact } from '../../components/impact';
+import { HoursSpentCard } from '../../components/impact/hoursSpentCard';
 
 export type OverviewProps = {
   hours: Array<{ type: 'paid' | 'volunteered'; hours: number }>;
@@ -29,43 +29,9 @@ export const Overview: FC<OverviewProps> = ({ hours, points }) => {
           <Impact point={points} myProfile={false} />
         </div>
 
-        <div className="bg-white rounded-lg border border-solid p-6 border border-Gray-light-mode-200">
-          <div className="flex flex-col items-start gap-4">
-            <div className="rounded-lg border border-solid border-Gray-light-mode-200 p-2">
-              <Icon fontSize={24} name="clock" className="text-Gray-light-mode-700" />
-            </div>
-            <p className="text-sm text-gray-600">Total hours contributed</p>
-            <div className="flex flex-row items-end gap-1">
-              <p className="text-3xl text-gray-600 font-bold">{totalPaidHours + totalVolunteeredHours}</p>
-              <p className="text-sm text-gray-600">hrs</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white rounded-lg border border-solid p-6 border border-Gray-light-mode-200">
-          <div className="flex flex-col items-start gap-4">
-            <div className="rounded-lg border border-solid border-Gray-light-mode-200 p-2">
-              <Icon fontSize={24} name="clock" className="text-Gray-light-mode-700" />
-            </div>
-            <p className="text-sm text-gray-600">Hours worked</p>
-            <div className="flex flex-row items-end gap-1">
-              <p className="text-3xl text-gray-600 font-bold">{totalPaidHours}</p>
-              <p className="text-sm text-gray-600">hrs</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg border border-solid p-6 border border-Gray-light-mode-200">
-          <div className="flex flex-col items-start gap-4">
-            <div className="rounded-lg border border-solid border-Gray-light-mode-200 p-2">
-              <Icon fontSize={24} name="clock" className="text-Gray-light-mode-700" />
-            </div>
-            <p className="text-sm text-gray-600">Hours volunteered</p>
-            <div className="flex flex-row items-end gap-1">
-              <p className="text-3xl text-gray-600 font-bold">{totalVolunteeredHours}</p>
-              <p className="text-sm text-gray-600">hrs</p>
-            </div>
-          </div>
-        </div>
+        <HoursSpentCard cardText={"Total hours contributed"} hours={totalPaidHours + totalVolunteeredHours} />
+        <HoursSpentCard cardText={"Hours worked"} hours={totalPaidHours} />
+        <HoursSpentCard cardText={"Hours volunteered"} hours={totalVolunteeredHours} />
       </div>
     </div>
   );

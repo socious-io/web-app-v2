@@ -37,6 +37,9 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
       return;
     }
 
+    const applyOrgFeeDiscount = offer.org_referrer_wallet != null && offer.org_referrer_wallet != undefined
+    const applyContFeeDiscount = offer.contributor_referrer_wallet != null && offer.contributor_referrer_wallet != undefined
+
     setDisabledPayment(true);
     try {
       // put escrow on smart contract
@@ -49,6 +52,10 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
         token: offer.crypto_currency_address,
         projectId: offer.project_id,
         verifiedOrg: offer.offerer.meta.verified_impact || false,
+        addressReferringOrg: offer.org_referrer_wallet,
+        addressReferringCont: offer.contributor_referrer_wallet,
+        applyOrgFeeDiscount,
+        applyContFeeDiscount,
       });
 
       // this is paramater need to sync with backend to make Hire available

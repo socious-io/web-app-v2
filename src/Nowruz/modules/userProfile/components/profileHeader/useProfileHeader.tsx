@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity, OrganizationProfile, UserProfile } from 'src/core/api';
+import { CurrentIdentity, getReferrer, OrganizationProfile, UserProfile } from 'src/core/api';
 import { StepsContext } from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { RootState } from 'src/store';
 
@@ -23,6 +23,7 @@ export const useProfileHeader = () => {
   const [openEditAvatar, setOpenEditAvatar] = useState(false);
   const [openEditHeader, setOpenEditHeader] = useState(false);
   const [openConnectRequest, setOpenConnectRequest] = useState(false);
+  const [displayVerifyAlert, setDisplayVerifyAlert] = useState(false);
 
   const { updateSelectedStep } = useContext(StepsContext);
 
@@ -94,6 +95,27 @@ export const useProfileHeader = () => {
     if (!myProfile && isLoggedIn) return true;
     return false;
   };
+
+  useEffect(() => {
+    const handleDisplayVerifyAlert = async () => {
+      if (!isLoggedIn || !myProfile) setDisplayVerifyAlert(false);
+  
+      let verified;
+      if (identityType === 'users')
+        verified = (identity as UserProfile).identity_verified
+      else
+        verified = (identity as OrganizationProfile).verified_impact
+      
+      if (!verified) {
+        const referrer = await getReferrer(identity!.id);
+        if (referrer) setDisplayVerifyAlert(true);
+      }
+      return setDisplayVerifyAlert(false);
+    }
+
+    handleDisplayVerifyAlert();
+  }, []);
+
   return {
     identity,
     identityType,
@@ -119,5 +141,6 @@ export const useProfileHeader = () => {
     displayConnectButton,
     displayMessageButton,
     displayThreeDotsButton,
+    displayVerifyAlert,
   };
 };
