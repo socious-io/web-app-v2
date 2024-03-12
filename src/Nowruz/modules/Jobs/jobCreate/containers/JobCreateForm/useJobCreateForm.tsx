@@ -24,7 +24,6 @@ import {
   updateJob,
   updateQuestionJob,
 } from 'src/core/api';
-import { Question, QuestionsRes } from 'src/core/types';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
@@ -423,17 +422,17 @@ export const useJobCreateForm = () => {
     [reset],
   );
 
-  const getQuestions = useCallback(async () => {
+  const getQuestions = async () => {
     const res = await jobQuestions(jobDetail.id);
     setQuestions(res.questions as unknown as QuestionReq[]);
-  }, [jobDetail.id]);
+  };
 
   useEffect(() => {
     if (jobDetail && isEdit) {
       initializeValues(jobDetail);
       getQuestions();
     }
-  }, [jobDetail, isEdit, initializeValues, setValue, getQuestions]);
+  }, [jobDetail, isEdit, initializeValues, setValue]);
 
   return {
     register,
