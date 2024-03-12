@@ -370,7 +370,7 @@ export const JobCreateForm = () => {
         )}
         {paymentType === 'VOLUNTEER' && (
           <div className={css.row}>
-            {renderInfo('Commitment', 'Do you also offer payment in Crypto?')}
+            {renderInfo('Commitment', 'How many hours are expected for this job?')}
 
             <div className={css.componentsContainer}>
               <RadioGroup
