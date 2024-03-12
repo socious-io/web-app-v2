@@ -8,11 +8,12 @@ import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 
 import css from './contracts.module.scss';
 import { useContracts } from './useContracts';
+import { useWeb3 } from 'src/dapp/dapp.connect';
 
 export const Contracts = () => {
   const { filterButtons, pageCount, setPage, contractList, page, openOverlayModal, setOpenOverlayModal } =
     useContracts();
-
+  const web3 = useWeb3();
   return (
     <>
       <div className={css.container}>
@@ -39,7 +40,7 @@ export const Contracts = () => {
       </div>
       {openOverlayModal && (
         <Overlay open={openOverlayModal} onClose={() => setOpenOverlayModal(false)}>
-          <ContractDetailsSlider />
+          <ContractDetailsSlider web3={web3} />
         </Overlay>
       )}
     </>

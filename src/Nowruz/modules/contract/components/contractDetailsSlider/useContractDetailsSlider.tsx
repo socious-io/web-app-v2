@@ -27,10 +27,8 @@ import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
 import { ContractDetailTab } from '../contractDetailTab';
 import dapp from 'src/dapp';
-import { JsonRpcSigner } from 'ethers';
-import { useWeb3 } from 'src/dapp/dapp.connect';
 
-export const useContractDetailsSlider = () => {
+export const useContractDetailsSlider = (web3?: any) => {
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
@@ -52,11 +50,6 @@ export const useContractDetailsSlider = () => {
     const res = (await connectionStatus(contract?.organization.id)).connect;
     setDisableMessageButton(!res);
   };
-
-  useEffect(() => {
-    inititalize();
-    checkMessageButtonStatus();
-  }, [contract]);
 
   const type = identity?.type;
   const name = type === 'users' ? contract.offerer.meta.name : contract.recipient.meta.name;
@@ -91,8 +84,6 @@ export const useContractDetailsSlider = () => {
   const [openWalletModal, setOpenWalletModal] = useState(false);
   const [disableMessageButton, setDisableMessageButton] = useState(true);
 
-  const { signer, chainId, open } = useWeb3();
-
   const setAllStates = (
     displayMsg: boolean,
     msg: ReactNode | null,
@@ -112,6 +103,11 @@ export const useContractDetailsSlider = () => {
     setSecondaryButtonLabel(secondaryBtnLabel);
     setSecondaryButtonAction(() => secondaryBtnAction);
   };
+
+  useEffect(() => {
+    inititalize();
+    checkMessageButtonStatus();
+  }, [contract]);
 
   const initializeAcceptOfferFiat = async () => {
     await stripeProfile({ is_jp: contract.currency === 'JPY' }).then((r) => {
@@ -454,17 +450,18 @@ export const useContractDetailsSlider = () => {
   const onConfirm = async () => {
     if (!contract.mission) return;
     setOpenAlert(false);
+    setPrimaryButtonDisabled(true);
     let allowConfirm = true;
     if (contract.payment_mode === 'CRYPTO') {
-      if (signer && chainId) {
+      if (web3.signer && web3.chainId) {
         await dapp.withdrawnEscrow({
-          signer,
-          chainId,
+          signer: web3.signer,
+          chainId: web3.chainId,
           escrowId: contract?.payment?.meta.id as string,
         });
       } else {
         allowConfirm = false;
-        await open();
+        await web3.open();
       }
     }
     if (allowConfirm) {
@@ -479,6 +476,7 @@ export const useContractDetailsSlider = () => {
         }),
       );
     }
+    setPrimaryButtonDisabled(false);
   };
 
   const handleConfirmCompletion = async () => {
