@@ -26,6 +26,9 @@ import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
 import { ContractDetailTab } from '../contractDetailTab';
+import dapp from 'src/dapp';
+import { JsonRpcSigner } from 'ethers';
+import { useWeb3 } from 'src/dapp/dapp.connect';
 
 export const useContractDetailsSlider = () => {
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
@@ -87,6 +90,8 @@ export const useContractDetailsSlider = () => {
   const [openSelectCardModal, setOpenSelectCardModal] = useState(false);
   const [openWalletModal, setOpenWalletModal] = useState(false);
   const [disableMessageButton, setDisableMessageButton] = useState(true);
+
+  const { signer, chainId, open } = useWeb3();
 
   const setAllStates = (
     displayMsg: boolean,
@@ -458,7 +463,22 @@ export const useContractDetailsSlider = () => {
         missionStatus: 'CONFIRMED',
       }),
     );
-    confirmMission(contract.mission.id);
+    let allowConfirm = true;
+    if (contract.payment_mode === 'CRYPTO') {
+      if (signer && chainId) {
+        await dapp.withdrawnEscrow({
+          signer,
+          chainId,
+          escrowId: contract?.payment?.meta.id as string,
+        });
+      } else {
+        allowConfirm = false;
+        await open();
+      }
+    }
+    if (allowConfirm) {
+      await confirmMission(contract.mission.id);
+    }
   };
 
   const handleConfirmCompletion = async () => {
