@@ -16,6 +16,7 @@ import {
   Badges,
   ImpactPoints,
   ExperienceReq,
+  UserProfile,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -34,8 +35,8 @@ export async function impactPoints(params?: FilterReq): Promise<ImpactPoints> {
   return (await get<ImpactPoints>(`user/impact-points`, { params })).data;
 }
 
-export async function otherProfileByUsername(username: string): Promise<User> {
-  return (await get<User>(`user/by-username/${username}/profile`)).data;
+export async function otherProfileByUsername(username: string): Promise<UserProfile> {
+  return (await get<UserProfile>(`user/by-username/${username}/profile`)).data;
 }
 
 export async function report(identityId: string, payload: ReportReq): Promise<SuccessRes> {
