@@ -57,7 +57,8 @@ body {
 }
 
 #modal-box,
-.sidebar {
+.sidebar,
+#notification {
   padding-top: env(safe-area-inset-top) !important;
 }
 
