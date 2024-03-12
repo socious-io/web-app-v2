@@ -1,5 +1,6 @@
 import { Cell, ColumnDef } from '@tanstack/react-table';
 import { useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Applicant, rejectApplicant } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
@@ -12,6 +13,8 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
   const [success, setSuccess] = useState<boolean>(false);
   const currentSelectedId = useRef<string>();
 
+  const navigate = useNavigate();
+
   const onClickName = (id: string) => {
     const details = applicants.find((applicant) => applicant.user.id === id);
     setOpen(true);
@@ -22,6 +25,12 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
     if (!id) return;
     currentSelectedId.current = id;
     setOpenAlert(true);
+  };
+
+  const onMessage = (id: string) => {
+    const details = applicants.find((applicant) => applicant.id === id);
+    const participantId = details?.user.id;
+    navigate(`../../chats?participantId=${participantId}`);
   };
 
   const onOffer = (id: string) => {
@@ -138,6 +147,13 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
         cell: function render({ getValue }) {
           return (
             <div className="flex justify-center items-center gap-3">
+              <p
+                onClick={() => onMessage(getValue())}
+                className="text-Gray-light-mode-600 font-semibold leading-5 text-sm cursor-pointer"
+              >
+                Message
+              </p>
+
               {['applicants'].includes(currentTab) && (
                 <p
                   onClick={() => onReject(getValue())}
@@ -217,6 +233,7 @@ export const useApplicantAction = (applicants: Array<Applicant>, currentTab: str
     onReject,
     onOffer,
     onSuccess,
+    onMessage,
     handleCloseSuccess,
     success,
   };
