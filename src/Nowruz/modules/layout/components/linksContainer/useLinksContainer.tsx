@@ -38,13 +38,14 @@ export const useLinksContainer = () => {
       iconName: 'briefcase-01',
       public: true,
 
-      // children:
-      //   !userIsLoggedIn || currentIdentity?.type === 'users'
-      //     ? [
-      //         { label: 'Find work', route: '/jobs', public: true },
-      //         //{ label: 'Saved jobs', route: '/', public: false },
-      //       ]
-      //     : undefined,
+      children:
+        userIsLoggedIn && currentIdentity?.type === 'users'
+          ? [
+              { label: 'Find job', route: '/jobs', public: false },
+              { label: 'Applied jobs', route: '/jobs/applied', public: false },
+              //{ label: 'Saved jobs', route: '/', public: false },
+            ]
+          : undefined,
     },
     {
       label: 'Contracts',
@@ -75,13 +76,13 @@ export const useLinksContainer = () => {
       iconName: 'wallet-04',
       public: false,
     },
-    // {
-    //   label: 'Credentials',
-    //   route: '/credentials',
-    //   iconName: 'shield-tick',
-    //   public: false,
-    //   only: 'organizations',
-    // },
+    {
+      label: 'Credentials',
+      route: '/credentials',
+      iconName: 'shield-tick',
+      public: false,
+      only: 'organizations',
+    },
   ];
   let filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
 

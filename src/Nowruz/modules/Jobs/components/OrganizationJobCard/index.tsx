@@ -1,10 +1,12 @@
 import { Skeleton } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import variables from 'src/components/_exports.module.scss';
 import { Applicant, Job, jobApplicants } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
+import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 
 import css from './organization-job-card.module.scss';
 
@@ -35,6 +37,9 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
   const handleClick = () => {
     navigate(`/jobs/created/${job.id}`);
   };
+  const handleEdit = () => {
+    navigate(`/jobs/edit/${job.id}`);
+  };
   return (
     <div className={`${css.container} cursor-pointer`} onClick={handleClick}>
       <div className={css.cardInfo}>
@@ -45,6 +50,18 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
               <div className={css.subTitle}>Posted on {isoToStandard(job.updated_at?.toString() || '')}</div>
             </div>
             {/* <div>Action button placeholder</div> */}
+            <div className={css.right}>
+              <IconButton
+                iconName="pencil-01"
+                iconSize={20}
+                iconColor={variables.color_grey_600}
+                handleClick={(e) => {
+                  e.stopPropagation();
+                  handleEdit();
+                }}
+                size="medium"
+              />
+            </div>
           </div>
         </div>
         <div className={css.footer}>

@@ -3,4 +3,5 @@ export interface JobCreateHeaderProps {
   onPreview: () => void;
   isValid: boolean;
   isDirty: boolean;
+  isEdit: boolean;
 }

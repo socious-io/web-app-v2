@@ -7,6 +7,7 @@
 
   .intro {
     display: flex;
+    justify-content: space-between;
     padding: 24px;
     gap: 16px;
     .left {
@@ -20,6 +21,9 @@
       .subTitle {
         color: $color-grey-600;
       }
+    }
+    .right {
+      gap: 4px;
     }
 
     @media (max-width: 640px) {

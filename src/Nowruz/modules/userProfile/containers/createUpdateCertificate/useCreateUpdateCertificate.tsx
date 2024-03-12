@@ -18,6 +18,9 @@ const schema = yup
     name: yup.string().required('Required'),
     orgName: yup.string().required('Required'),
     orgId: yup.string(),
+    orgImageId: yup.string(),
+    orgImageUrl: yup.string(),
+    orgCity: yup.string(),
     issueMonth: yup.string(),
     issueYear: yup.string(),
     expireMonth: yup.string(),
@@ -61,7 +64,6 @@ export const useCreateUpdateCertificate = (
   const dispatch = useDispatch();
 
   const [orgVal, setOrgVal] = useState<OptionType | null>();
-  const [orgs, setOrgs] = useState<Organization[]>([]);
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
   const [issueMonth, setIssueMonth] = useState<OptionType | null>();
@@ -141,26 +143,25 @@ export const useCreateUpdateCertificate = (
   }, [certificate]);
 
   const orgToOption = (orgList: Organization[], searchText: string) => {
-    let options: OptionType[] = [];
-    if (!orgList.length) options = options.concat({ value: '', label: searchText });
-    options = options.concat(
-      orgList.map((s) => ({
-        value: s.id,
-        label: s.name,
-        icon: s.image ? (
-          <img src={s.image.url} width={24} height={24} alt="" />
-        ) : (
-          <Avatar type="organizations" size="24px" />
-        ),
-      })),
-    );
+    let options = [];
+    options = orgList.map((s) => ({
+      value: s.id,
+      label: s.name,
+      icon: s.image ? (
+        <img src={s.image.url} width={24} height={24} alt="" />
+      ) : (
+        <Avatar type="organizations" size="24px" />
+      ),
+      city: s.city,
+      imageId: s.image?.id,
+      imageUrl: s.image?.url,
+    }));
     return options;
   };
   const searchOrgs = async (searchText: string, cb) => {
     try {
       if (searchText) {
         const response = await search({ type: 'organizations', q: searchText, filter: {} }, { page: 1, limit: 10 });
-        setOrgs(response.items);
         cb(orgToOption(response.items, searchText));
       }
     } catch (error) {
@@ -168,9 +169,13 @@ export const useCreateUpdateCertificate = (
     }
   };
 
-  const onSelectOrg = (newCompanyVal: OptionType) => {
-    setValue('orgId', newCompanyVal.value, { shouldValidate: true });
+  const onSelectOrg = (newCompanyVal) => {
+    const value = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
+    setValue('orgId', value, { shouldValidate: true });
     setValue('orgName', newCompanyVal.label, { shouldValidate: true });
+    setValue('orgCity', newCompanyVal.city, { shouldValidate: true });
+    setValue('orgImageId', newCompanyVal.imageId, { shouldValidate: true });
+    setValue('orgImageUrl', newCompanyVal.imageUrl, { shouldValidate: true });
     setOrgVal({ value: newCompanyVal.value, label: newCompanyVal.label });
   };
 
@@ -203,6 +208,9 @@ export const useCreateUpdateCertificate = (
       credentialId,
       credentialUrl,
       description,
+      orgImageId,
+      orgImageUrl,
+      orgCity,
     } = getValues();
 
     let oId = orgId;
@@ -218,19 +226,15 @@ export const useCreateUpdateCertificate = (
       issue_year: issueYear,
       expire_month: expireMonth,
       expire_year: expireYear,
+      organization_city: orgCity,
+      organization_image: orgImageUrl,
     };
     const payload: AdditionalReq = {
       type: 'CERTIFICATE',
       title: name,
       enabled: true,
+      image: orgImageId,
     };
-
-    if (orgId) {
-      const organization = orgs.find((i) => i.id === orgId);
-      payload.image = organization?.image?.id;
-      payloadMeta.organization_city = organization?.city;
-      payloadMeta.organization_image = organization?.image?.url;
-    }
 
     if (description) payload.description = description;
     removedEmptyProps(payloadMeta);

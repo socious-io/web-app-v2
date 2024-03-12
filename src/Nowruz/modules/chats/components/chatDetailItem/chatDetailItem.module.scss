@@ -1,7 +1,7 @@
 @import 'src/components/_primitives.scss';
 .myMessage {
   width: fit-content;
-  max-width: 100%;
+  max-width: 35rem;
   padding: 10px 14px;
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@
 
 .otherMessage {
   width: fit-content;
-  max-width: 100%;
+  max-width: 35rem;
   padding: 10px 14px;
   display: flex;
   align-items: center;

@@ -24,7 +24,7 @@ export const useContractCard = (contract: Contract, setOpenOverlay: (val: boolea
   useEffect(() => {
     let unit = contract.currency;
 
-    if (contract.crypto_currency_address) {
+    if (!unit && contract.crypto_currency_address) {
       dapp.NETWORKS.map((n) => {
         const token = n.tokens.filter((t) => contract.crypto_currency_address === t.address)[0];
         if (token) unit = token.symbol;
@@ -46,6 +46,7 @@ export const useContractCard = (contract: Contract, setOpenOverlay: (val: boolea
 
   // Format the amount depending of the currency
   const formatCurrency = (() => {
+    if (!contractVal.assignment_total) return;
     const options = { useGrouping: true };
 
     switch (contractVal.currency) {

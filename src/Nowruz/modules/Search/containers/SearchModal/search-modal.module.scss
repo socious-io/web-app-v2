@@ -54,9 +54,6 @@
   font-style: normal;
   font-weight: 500;
   color: $color-grey-500;
-  @media screen and (max-width: 600px) {
-    display: none;
-  }
 }
 .footerSelecteItem {
   width: calc(50% + 1px);

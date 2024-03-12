@@ -25,7 +25,7 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
               {label}
             </span>
             {badgeIcon && menuOpen ? (
-              <div className="mr-0 ml-auto cursor-pointer" style={{ pointerEvents: 'none' }}>
+              <div className="mr-0 ml-auto cursor-pointer z-50" style={{ pointerEvents: 'none' }}>
                 {badgeIcon}
               </div>
             ) : (

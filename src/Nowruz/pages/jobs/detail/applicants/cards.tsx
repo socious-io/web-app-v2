@@ -32,6 +32,7 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
     onClickName,
     onReject,
     onOffer,
+    onMessage,
     onSuccess,
     handleCloseSuccess,
     success,
@@ -44,7 +45,7 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
             className="flex flex-row justify-start items-center gap-2 p-4 cursor-pointer"
             onClick={() => onClickName(applicant.user.id)}
           >
-            <Avatar size="40px" type="users" img={applicant.user.avatar} />
+            <Avatar size="40px" type="users" img={applicant.user.avatar?.url} />
             <div className="flex flex-col justify-start">
               <p className="text-Gray-light-mode-900 leading-6 font-medium">{applicant.user?.name ?? ''}</p>
               <p className="text-Gray-light-mode-600 text-sm leading-5">
@@ -57,9 +58,20 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
             <p className="text-Gray-light-mode-600 font-medium leading-5 text-sm">{`${applicant.user.city}, ${applicant.user.country}`}</p>
           </div>
           <div className="flex flex-row border-Gray-light-mode-200 border-solid border-b-0 border-t-1 border-l-0 border-r-0">
+            <div
+              className={`${
+                currentTab === 'applicants' ? 'w-1/3' : 'w-1/2'
+              } border-Gray-light-mode-200 border-solid border-b-0 border-t-0 border-l-0 border-r text-center`}
+              onClick={() => onMessage(applicant.id)}
+            >
+              <p className="py-2.5 px-4 text-Gray-light-mode-700 font-semibold leading-5 text-sm cursor-pointer">
+                Message
+              </p>
+            </div>
+
             {currentTab === 'applicants' && (
               <div
-                className="w-1/2 border-Gray-light-mode-200 border-solid border-b-0 border-t-0 border-l-0 border-r text-center"
+                className="w-1/3 border-Gray-light-mode-200 border-solid border-b-0 border-t-0 border-l-0 border-r text-center"
                 onClick={() => onReject(applicant.id)}
               >
                 <p className="py-2.5 px-4 text-Gray-light-mode-700 font-semibold leading-5 text-sm cursor-pointer">
@@ -67,11 +79,12 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
                 </p>
               </div>
             )}
+
             <div
-              className={currentTab === 'applicants' ? `w-1/2 text-center` : `w-full text-center`}
+              className={`${currentTab === 'applicants' ? 'w-1/3' : 'w-1/2'} text-center`}
               onClick={() => onOffer(applicant.id)}
             >
-              <p className="py-2.5 px-4 text-Gray-light-mode-700 font-semibold leading-5 text-sm cursor-pointer">
+              <p className="py-2.5 px-4 text-Brand-700 font-semibold leading-5 text-sm cursor-pointer">
                 {currentTab === 'offered' ? 'Re-hire' : 'Hire'}
               </p>
             </div>

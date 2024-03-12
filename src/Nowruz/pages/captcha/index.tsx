@@ -3,6 +3,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { useNavigate } from 'react-router-dom';
 import { config } from 'src/config';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { isMobile } from 'react-device-detect';
 
 const STORAGE_KEY = 'TRY_COUNTER';
 const TRY_LIMIT = 6;
@@ -17,7 +18,7 @@ export const useCaptcha = () => {
       if (c) {
         const current = parseInt(c);
         setCounter(current);
-        if (current > TRY_LIMIT) setRequired(true);
+        if (current > TRY_LIMIT && !isMobile) setRequired(true);
       }
     });
     
@@ -27,7 +28,7 @@ export const useCaptcha = () => {
     const current = counter + 1;
     setCounter(current);
     await nonPermanentStorage.set({key: STORAGE_KEY, value: `${current}`}, 1);
-    if (current > TRY_LIMIT) setRequired(true);
+    if (current > TRY_LIMIT && !isMobile) setRequired(true);
   };
 
   const change = async (value: string | null) => {
