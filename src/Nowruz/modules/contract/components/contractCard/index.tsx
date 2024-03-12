@@ -19,7 +19,7 @@ export const ContractCard: React.FC<ContractCardProps> = ({ contract, setOpenOve
         onClick={handleOpenOverlayModal}
       >
         <div className="flex gap-4 ">
-          <Avatar size="56px" type={type || 'users'} img={profileImageUrl} />
+          <Avatar size="56px" type={type === 'users' ? 'organizations' : 'users'} img={profileImageUrl} />
           <div className="flex flex-col">
             <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">
               {contractVal.project.title}
