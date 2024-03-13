@@ -1,32 +1,99 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
-import { Connection, CurrentIdentity, connections } from 'src/core/api';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import {
+  Connection,
+  ConnectionsRes,
+  CurrentIdentity,
+  block,
+  connections as getConnections,
+  follow,
+  removeConnection,
+  unfollow,
+} from 'src/core/api';
 import { RootState } from 'src/store';
 
-import { useIsMount } from '../../general/components/useIsMount';
-
 export const useConnectionTab = () => {
-  const loaderData = useLoaderData();
-  console.log('test log loaderData.connections?.items ', loaderData.connections?.items);
+  const { connections } = useLoaderData() as { connections: ConnectionsRes };
+  const navigate = useNavigate();
 
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) =>
     state.identity.entities.find((identity) => identity.current),
   );
-  const [connectionList, setConnectionList] = useState<Connection[]>(loaderData.connections?.items || []);
+  const [connectionList, setConnectionList] = useState<Connection[]>(connections?.items || []);
   const [page, setPage] = useState(1);
-  const isMount = useIsMount();
+  const [totalCount, setTotalCount] = useState(connections?.total_count || 0);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [connectionId, setConnectionId] = useState('');
+  const PER_PAGE = 10;
 
-  const fetchMore = async () => {
-    if (!isMount) {
-      const res = await connections({ page, limit: 10, 'filter.status': 'CONNECTED' });
-      setConnectionList(res.items);
-    }
+  const fetchData = async () => {
+    const res = await getConnections({ page, limit: 10, 'filter.status': 'CONNECTED' });
+    setTotalCount(res.total_count);
+    setConnectionList(res.items);
   };
 
   useEffect(() => {
-    fetchMore();
+    fetchData();
   }, [page]);
 
-  return { setPage, connectionList, currentIdentity };
+  const redirectToChat = (id: string) => {
+    navigate(`/chats?participantId=${id}`);
+  };
+
+  const handleFollow = async (connectionId: string, otherIdentityId: string) => {
+    try {
+      await follow(otherIdentityId);
+      fetchData();
+    } catch {}
+  };
+  const handleUnfollow = async (connectionId: string, otherIdentityId: string) => {
+    try {
+      await unfollow(otherIdentityId);
+      fetchData();
+    } catch {}
+  };
+
+  const handleRemoveConnection = async (connectionId: string) => {
+    try {
+      await removeConnection(connectionId);
+      await fetchData();
+      setOpenAlert(false);
+    } catch {}
+  };
+  const handleBlock = async (connectionId: string, otherIdentityId: string) => {
+    try {
+      await block(otherIdentityId);
+      await fetchData();
+    } catch {}
+  };
+
+  const handleOpenAlert = (connectionId: string, firstName: string, fullName: string) => {
+    setConnectionId(connectionId);
+    setFirstName(firstName);
+    setFullName(fullName);
+    setOpenAlert(true);
+  };
+
+  return {
+    page,
+    setPage,
+    connectionList,
+    currentIdentity,
+    redirectToChat,
+    handleFollow,
+    handleUnfollow,
+    handleRemoveConnection,
+    handleBlock,
+    totalCount,
+    PER_PAGE,
+    openAlert,
+    setOpenAlert,
+    handleOpenAlert,
+    firstName,
+    fullName,
+    connectionId,
+  };
 };
