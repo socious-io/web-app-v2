@@ -16,7 +16,7 @@ import {
   impactPoints,
   getOrganizationByShortName,
   getRequestedVerifyExperiences,
-  userApplicants,
+  connections as getConnections,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -363,6 +363,19 @@ export const blueprint: RouteObject[] = [
               const { Setting } = await import('src/Nowruz/pages/setting/index');
               return {
                 Component: Setting,
+              };
+            },
+          },
+          {
+            path: 'connections',
+            loader: async () => {
+              const connections = await getConnections({ page: 1, limit: 10, 'filter.status': 'CONNECTED' });
+              return { connections };
+            },
+            async lazy() {
+              const { Connctions } = await import('src/Nowruz/pages/connections');
+              return {
+                Component: Protect(Connctions, 'both'),
               };
             },
           },
