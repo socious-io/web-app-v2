@@ -1,4 +1,11 @@
-import { IndustryRes, MembersRes, Organization, OrganizationReq, OrganizationsRes } from './organizations.types';
+import {
+  IndustryRes,
+  MembersRes,
+  Organization,
+  OrganizationProfile,
+  OrganizationReq,
+  OrganizationsRes,
+} from './organizations.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq, PaginateRes } from '../types';
 
@@ -13,8 +20,8 @@ export async function createOrganization(payload: OrganizationReq, autoMember = 
 export async function getOrganization(id: string): Promise<Organization> {
   return (await get<Organization>(`orgs/${id}`)).data;
 }
-export async function getOrganizationByShortName(shortName: string): Promise<Organization> {
-  return (await get<Organization>(`orgs/by-shortname/${shortName}`)).data;
+export async function getOrganizationByShortName(shortName: string): Promise<OrganizationProfile> {
+  return (await get<OrganizationProfile>(`orgs/by-shortname/${shortName}`)).data;
 }
 
 export async function updateOrganization(id: string, payload: OrganizationReq): Promise<Organization> {

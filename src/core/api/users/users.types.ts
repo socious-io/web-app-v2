@@ -5,7 +5,7 @@ import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
 import { Identity } from '../site/site.types';
-import { LanguageCode, SDG, PaginateRes } from '../types';
+import { LanguageCode, SDG, PaginateRes, ConnectStatus } from '../types';
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
@@ -109,6 +109,13 @@ export interface User {
   recommendations?: AdditionalRes[];
   portfolios?: AdditionalRes[];
   certificates?: AdditionalRes[];
+}
+
+export interface UserProfile extends User {
+  following: boolean;
+  follower: boolean;
+  connection_status: ConnectStatus | null;
+  connection_id: string;
 }
 
 export interface Language extends LanguageReq {

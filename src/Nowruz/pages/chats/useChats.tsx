@@ -49,8 +49,12 @@ export const useChats = () => {
         participants: [id],
       });
 
-      let participantDeatils: User | Organization = await otherProfile(id);
-      if (!participantDeatils) participantDeatils = await getOrganization(id);
+      let participantDeatils: User | Organization | null = null;
+      try {
+        participantDeatils = await getOrganization(id);
+      } catch {
+        participantDeatils = await otherProfile(id);
+      }
       const { name, type, profileImage, username } = getIdentityMeta(participantDeatils);
       const newParticipant = {
         identity_meta: {

@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ConnectStatus, CurrentIdentity, Organization, User, connectionStatus } from 'src/core/api';
+import { useNavigate } from 'react-router-dom';
+import { CurrentIdentity, OrganizationProfile, UserProfile } from 'src/core/api';
 import { StepsContext } from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { RootState } from 'src/store';
 
 export const useProfileHeader = () => {
-  const identity = useSelector<RootState, User | Organization | undefined>((state) => {
+  const navigate = useNavigate();
+  const identity = useSelector<RootState, UserProfile | OrganizationProfile | undefined>((state) => {
     return state.profile.identity;
   });
   const identityType = useSelector<RootState, 'users' | 'organizations'>((state) => {
@@ -16,23 +18,15 @@ export const useProfileHeader = () => {
   });
   const myProfile = currentIdentity?.id === identity?.id;
   const isLoggedIn = !!currentIdentity;
-
-  const [connectStatus, setConnectStatus] = useState<ConnectStatus | undefined>(undefined);
   const [openEditInfoModal, setOpenEditInfoModal] = useState(false);
   const [openEditInfoOrgModal, setOpenEditInfoOrgModal] = useState(false);
   const [openEditAvatar, setOpenEditAvatar] = useState(false);
   const [openEditHeader, setOpenEditHeader] = useState(false);
+  const [openConnectRequest, setOpenConnectRequest] = useState(false);
 
   const { updateSelectedStep } = useContext(StepsContext);
 
   useEffect(() => {
-    const getConnectionsStatus = async () => {
-      if (identity) {
-        const res = await connectionStatus(identity.id);
-        setConnectStatus(res?.connect?.status);
-      }
-    };
-    getConnectionsStatus();
     updateSelectedStep(0);
   }, []);
 
@@ -62,12 +56,50 @@ export const useProfileHeader = () => {
   const handleCloseEditHeader = () => {
     setOpenEditHeader(false);
   };
+
+  const redirectToChat = () => {
+    const id = identity?.id;
+    navigate(`/chats?participantId=${id}`);
+  };
+
+  const displayShareButton = () => {
+    if (myProfile || !isLoggedIn) return false;
+    if (currentIdentity?.type === 'users') return true;
+    if (identityType === 'organizations') return true;
+    if (identity?.connection_status === 'CONNECTED') {
+      return true;
+    }
+    return false;
+  };
+
+  const displayConnectButton = () => {
+    if (myProfile || !isLoggedIn) return false;
+    if (!identity?.connection_status || identity?.connection_status === 'PENDING') {
+      return true;
+    }
+    return false;
+  };
+
+  const displayMessageButton = () => {
+    if (myProfile || !isLoggedIn) return false;
+    if (currentIdentity.type === 'users' && identity?.connection_status === 'CONNECTED') return true;
+    if (currentIdentity.type === 'organizations') {
+      if (identityType === 'users') return true;
+      if (identity?.connection_status === 'CONNECTED') return true;
+    }
+    return false;
+  };
+
+  const displayThreeDotsButton = () => {
+    if (!myProfile && isLoggedIn) return true;
+    return false;
+  };
   return {
     identity,
     identityType,
     myProfile,
     isLoggedIn,
-    connectStatus,
+    connectStatus: identity?.connection_status,
     openEditInfoModal,
     closeEditInfoModal,
     handleOpenEditInfoModal,
@@ -79,5 +111,13 @@ export const useProfileHeader = () => {
     handleCloseEditHeader,
     openEditInfoOrgModal,
     closeEditInfoOrgModal,
+    currentIdentity,
+    redirectToChat,
+    openConnectRequest,
+    setOpenConnectRequest,
+    displayShareButton,
+    displayConnectButton,
+    displayMessageButton,
+    displayThreeDotsButton,
   };
 };
