@@ -51,20 +51,14 @@ export const useNotifications = () => {
         path = `/feeds/${notifRefId}`;
         break;
       case 'APPLICATION':
-        path = `/jobs/created/${notifRefId}`;
-        break;
-      case 'OFFER':
-        path = `/jobs/received-offer/${notifRefId}`;
+        path = `/jobs/${notifRefId}`;
         break;
       case 'REJECT':
-        path = `/jobs/applied/${notifRefId}?tab=Applied`;
+        path = `/jobs/${notifRefId}`;
         break;
+      case 'OFFER':
       case 'APPROVED':
-        path = `/jobs/created/${notifRefId}/overview?tab=Offered`;
-        break;
       case 'HIRED':
-        path = `/jobs/applied/${notifRefId}?tab=Hired`;
-        break;
       case 'PROJECT_COMPLETE':
       case 'ASSIGNEE_CANCELED':
       case 'ASSIGNER_CANCELED':
