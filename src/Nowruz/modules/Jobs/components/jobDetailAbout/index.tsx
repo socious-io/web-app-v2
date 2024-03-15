@@ -8,7 +8,6 @@ import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { closeJob, CurrentIdentity, Job } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { QuestionsRes } from 'src/core/types';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -43,11 +42,8 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
   const [openApply, setOpenApply] = useState(false);
   const [openExternalApply, setOpenExternalApply] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  let url = `${config.appBaseURL}/jobs/${jobDetail.id}`
-  
-    isTouchDevice() && config.env === 'development'
-      ? `https://webapp2.dev.socious.io/${extractedString}`
-      : `https://app.socious.io/${extractedString}`;
+  const url = `${config.appBaseURL}/jobs/${jobDetail.id}`;
+
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
   };
