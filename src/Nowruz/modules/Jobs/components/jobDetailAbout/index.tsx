@@ -43,7 +43,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
   const [openApply, setOpenApply] = useState(false);
   const [openExternalApply, setOpenExternalApply] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  let url = window.location.href;
+  let url = `${config.appBaseURL}/jobs/${job.id}`
   const extractedString = url.slice(url.indexOf('jobs'));
   url =
     isTouchDevice() && config.env === 'development'
