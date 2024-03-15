@@ -45,7 +45,6 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
   const [openAlert, setOpenAlert] = useState(false);
   let url = `${config.appBaseURL}/jobs/${jobDetail.id}`
   
-  url =
     isTouchDevice() && config.env === 'development'
       ? `https://webapp2.dev.socious.io/${extractedString}`
       : `https://app.socious.io/${extractedString}`;
