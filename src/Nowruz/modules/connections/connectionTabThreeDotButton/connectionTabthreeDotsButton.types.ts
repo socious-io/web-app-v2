@@ -5,6 +5,7 @@ export interface ConnectionTabThreeDotsButtonProps {
   handleUnfollow: () => void;
   handleRemoveConnection: () => void;
   handleBlock: () => void;
+  name: string;
 }
 
 export interface MenuItemType {

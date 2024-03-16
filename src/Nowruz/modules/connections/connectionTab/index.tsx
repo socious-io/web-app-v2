@@ -62,6 +62,7 @@ export const ConnectionTab = () => {
                 handleUnfollow={() => handleUnfollow(item.id, accountItem.id)}
                 handleRemoveConnection={() => handleOpenAlert(item.id, accountItem.name, accountItem.name)}
                 handleBlock={() => handleBlock(item.id, accountItem.id)}
+                name={accountItem.name}
               />
             </div>
           </div>
