@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 import Account from 'src/Nowruz/modules/settings/components/account/';
+import Notification from 'src/Nowruz/modules/settings/components/notification';
 import Password from 'src/Nowruz/modules/settings/components/password';
 
 export const Setting = () => {
@@ -14,6 +15,10 @@ export const Setting = () => {
     {
       label: 'Password',
       content: <Password />,
+    },
+    {
+      label: 'Notifications',
+      content: <Notification />,
     },
     // {
     //   label: 'Team',
@@ -31,15 +36,15 @@ export const Setting = () => {
   const items: any[] = [
     { label: 'Account', value: 'Account' },
     { label: 'Password', value: 'Password' },
+    { label: 'Notifications', value: 'Notification' },
   ];
 
   const [content, setContent] = useState<ReactNode>();
 
   const setValue = (value) => {
-    console.log('value', value);
-
     if (value.value === 'Account') return setContent(<Account />);
     if (value.value === 'Password') return setContent(<Password />);
+    if (value.value === 'Notification') return setContent(<Notification />);
   };
 
   useEffect(() => {
@@ -51,9 +56,9 @@ export const Setting = () => {
       <div className="container">
         <div className="col-12">
           <div className="p-4">
-            <h1 className="text-gray-900 text-3xl font-semibold leading-7 p-4 mb-5">Settings</h1>
+            <h2 className="gap-5 text-3xl mb-6">Settings</h2>
 
-            <div className="block lg:hidden">
+            <div className="block md:hidden">
               <SearchDropdown
                 required
                 id="end-month"
@@ -68,7 +73,7 @@ export const Setting = () => {
               <div className="mt-6">{content}</div>
             </div>
 
-            <div className="hidden lg:block">
+            <div className="hidden md:block">
               <HorizontalTabs tabs={tabs} />
             </div>
           </div>
