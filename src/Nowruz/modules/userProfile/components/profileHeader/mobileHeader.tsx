@@ -51,6 +51,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
             <span className={css.statusText}>Available for work</span>
           </div>
         )}
+
         <div className={css.username}>
           <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
           <div className="text-base font-normal text-Gray-light-mode-500">{username}</div>

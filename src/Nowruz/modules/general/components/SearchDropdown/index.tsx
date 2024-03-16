@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
 import Select, { type DropdownIndicatorProps, components } from 'react-select';
 import AsyncSelect from 'react-select/async';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 import { Icon } from 'src/Nowruz/general/Icon';
 
 import css from './search-dropdown.module.scss';
 import { SelectProps } from './search-dropdown.types';
 //TODO: Multi select chips not implemented
-const CustomControl = ({ hasValue, icon, children, ...props }) => {
+const CustomControl = (props) => {
+  const { icon, children } = props;
   return (
     <components.Control {...props} className={css.input}>
       {<Icon className={css.startIcon} name={icon} fontSize={20} color="#667085" />}
@@ -14,6 +16,7 @@ const CustomControl = ({ hasValue, icon, children, ...props }) => {
     </components.Control>
   );
 };
+
 const CustomOption = ({ value, ...props }) => {
   const { innerProps, label, data, ...rest } = props;
   const labelValue = handleMultiValueAsync(label).isObject ? handleMultiValueAsync(label).label : label;
@@ -60,6 +63,7 @@ const handleMultiValueAsync = (value: string) => {
 };
 export const SearchDropdown: React.FC<SelectProps> = ({
   isAsync,
+  creatable = false,
   hasDropdownIcon = true,
   options,
   className,
@@ -90,43 +94,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           {label}
         </label>
       </div>
-      {isAsync ? (
-        <AsyncSelect
-          id={id}
-          ref={selectRef}
-          options={options}
-          noOptionsMessage={() => null}
-          components={{
-            Option: (props) => <CustomOption {...props} value={selectedVal} />,
-            Control: (props) => <CustomControl {...props} icon={icon} />,
-            DropdownIndicator: () => (
-              <div className={css.dropdown}>
-                {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
-              </div>
-            ),
-            SingleValue: CustomSingleValue,
-          }}
-          styles={{
-            singleValue: (provided, state) => ({
-              ...provided,
-              color: '#101828',
-              fontSize: '16px',
-              fontWeight: 500,
-            }),
-
-            control: (provided: any, state: any) => ({
-              ...provided,
-              '&:hover': '',
-              border: !border ? 'none' : state.isFocused ? '1px solid #99B7B5' : '1px solid #D0D5DD',
-              boxShadow: !border ? null : state.isFocused ? ' 0px 0px 0px 4px #E6EDED;' : null,
-              borderRadius: '8px',
-            }),
-            indicatorSeparator: () => ({ display: 'none' }),
-          }}
-          {...props}
-          aria-labelledby={`searchDropdown-${id}`}
-        />
-      ) : (
+      {!isAsync ? (
         <Select
           id={id}
           ref={selectRef}
@@ -161,6 +129,80 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           }}
           {...props}
           aria-labelledby="searchDropdown"
+        />
+      ) : creatable ? (
+        <AsyncCreatableSelect
+          cacheOptions
+          defaultOptions
+          ref={selectRef}
+          options={options}
+          components={{
+            Option: (props) => <CustomOption {...props} value={selectedVal} />,
+            Control: (props) => <CustomControl ref={selectRef} {...props} icon={icon} />,
+            DropdownIndicator: () => (
+              <div className={css.dropdown}>
+                {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
+              </div>
+            ),
+            SingleValue: CustomSingleValue,
+          }}
+          styles={{
+            singleValue: (provided, state) => ({
+              ...provided,
+              color: '#101828',
+              fontSize: '16px',
+              fontWeight: 500,
+            }),
+            control: (provided: any, state: any) => ({
+              ...provided,
+              '&:hover': '',
+              border: !border ? 'none' : state.isFocused ? '1px solid #99B7B5' : '1px solid #D0D5DD',
+              boxShadow: !border ? null : state.isFocused ? ' 0px 0px 0px 4px #E6EDED;' : null,
+              borderRadius: '8px',
+              height: '44px',
+            }),
+            indicatorSeparator: () => ({ display: 'none' }),
+          }}
+          {...props}
+          aria-labelledby={`searchDropdown-${id}`}
+        />
+      ) : (
+        <AsyncSelect
+          id={id}
+          cacheOptions
+          defaultOptions
+          ref={selectRef}
+          options={options}
+          noOptionsMessage={() => null}
+          components={{
+            Option: (props) => <CustomOption {...props} value={selectedVal} />,
+            Control: (props) => <CustomControl {...props} icon={icon} />,
+            DropdownIndicator: () => (
+              <div className={css.dropdown}>
+                {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
+              </div>
+            ),
+            SingleValue: CustomSingleValue,
+          }}
+          styles={{
+            singleValue: (provided, state) => ({
+              ...provided,
+              color: '#101828',
+              fontSize: '16px',
+              fontWeight: 500,
+            }),
+
+            control: (provided: any, state: any) => ({
+              ...provided,
+              '&:hover': '',
+              border: !border ? 'none' : state.isFocused ? '1px solid #99B7B5' : '1px solid #D0D5DD',
+              boxShadow: !border ? null : state.isFocused ? ' 0px 0px 0px 4px #E6EDED;' : null,
+              borderRadius: '8px',
+            }),
+            indicatorSeparator: () => ({ display: 'none' }),
+          }}
+          {...props}
+          aria-labelledby={`searchDropdown-${id}`}
         />
       )}
       {errors &&

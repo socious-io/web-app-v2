@@ -61,7 +61,7 @@ export interface ApplyReq {
 }
 
 export interface OfferReq {
-  payment_mode?: PaymentMode;
+  payment_mode: 'CRYPTO' | 'FIAT';
   offer_rate?: number;
   offer_message: string;
   due_date?: string;
@@ -200,6 +200,9 @@ export type ContractStatus =
   | 'Closed';
 export interface Contract extends Offer {
   contractStatus: ContractStatus;
+  mission?: Mission;
+  escrow?: Escrow;
+  payment?: Payment;
 }
 
 export interface Mission {
@@ -210,8 +213,8 @@ export interface Mission {
   project: Job;
   assignee: Identity;
   assigner: Identity;
-  escrow: Escrow;
-  payment: Payment;
+  escrow?: Escrow;
+  payment?: Payment;
   organization: Organization;
   offer: Offer;
   user_feedback?: any;

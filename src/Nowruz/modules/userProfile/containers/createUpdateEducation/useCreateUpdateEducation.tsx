@@ -18,6 +18,9 @@ const schema = yup
     school: yup.object().shape({
       label: yup.string().required('Required'),
       value: yup.string(),
+      image: yup.string(),
+      imageId: yup.string(),
+      city: yup.string(),
     }),
     degree: yup.string(),
     field: yup.string(),
@@ -56,7 +59,6 @@ export const useCreateUpdateEducation = (
     return state.profile.identity;
   }) as User;
 
-  const [schools, setSchools] = useState<Organization[]>([]);
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
   const [dateError, setDateError] = useState('');
@@ -140,26 +142,25 @@ export const useCreateUpdateEducation = (
   }, [startMonth, startYear, endMonth, endYear]);
 
   const schoolToOption = (schoolList: Organization[], searchText: string) => {
-    let options: OptionType[] = [];
-    if (!schoolList.length) options = options.concat({ value: '', label: searchText });
-    options = options.concat(
-      schoolList.map((s) => ({
-        value: s.id,
-        label: s.name,
-        icon: s.image ? (
-          <img src={s.image.url} width={24} height={24} alt="" />
-        ) : (
-          <Avatar type="organizations" size="24px" />
-        ),
-      })),
-    );
+    let options = [];
+    options = schoolList.map((s) => ({
+      value: s.id,
+      label: s.name,
+      icon: s.image ? (
+        <img src={s.image.url} width={24} height={24} alt="" />
+      ) : (
+        <Avatar type="organizations" size="24px" />
+      ),
+      image: s.image?.url,
+      imageId: s.image?.id,
+      city: s.city,
+    }));
     return options;
   };
   const searchSchools = async (searchText: string, cb) => {
     try {
       if (searchText) {
         const response = await search({ type: 'organizations', q: searchText, filter: {} }, { page: 1, limit: 10 });
-        setSchools(response.items);
         cb(schoolToOption(response.items, searchText));
       }
     } catch (error) {
@@ -168,7 +169,8 @@ export const useCreateUpdateEducation = (
   };
 
   const onSelectSchool = (newCompanyVal: OptionType) => {
-    setValue('school', newCompanyVal, { shouldValidate: true });
+    const newValue = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
+    setValue('school', { ...newCompanyVal, value: newValue }, { shouldValidate: true });
   };
   const onSelectStartMonth = (month: OptionType) => {
     setValue('startMonth', month, { shouldValidate: true });
@@ -209,19 +211,15 @@ export const useCreateUpdateEducation = (
       start_year: startYear.value,
       school_id: schId,
       school_name: school.label,
+      school_image: school.image,
+      school_city: school.city,
     };
     const payload: AdditionalReq = {
       type: 'EDUCATION',
       title: school.label,
       enabled: true,
+      image: school.imageId,
     };
-
-    if (school.value) {
-      const sch = schools.find((i) => i.id === school.value);
-      payload.image = sch?.image?.id;
-      payloadMeta.school_city = sch?.city;
-      payloadMeta.school_image = sch?.image?.url;
-    }
 
     if (description) payload.description = description;
     removedEmptyProps(payloadMeta);

@@ -26,11 +26,13 @@ export const useExperience = () => {
   const [openModal, setOpenModal] = useState(false);
   const [experience, setExperience] = useState<Experience>();
   const [disabledClaims, setDisabledClaims] = useState<{ [key: string]: boolean }>({});
+  const [reqModelShow, setReqModelShow] = useState(false);
 
   const dispatch = useDispatch();
 
   const handleClose = () => {
     setOpenModal(false);
+    setReqModelShow(false);
   };
 
   const handleEdit = (ex: Experience) => {
@@ -62,6 +64,7 @@ export const useExperience = () => {
     const updated = await otherProfileByUsername(user?.username || '');
     dispatch(setIdentity(updated));
     dispatch(setIdentityType('users'));
+    setReqModelShow(true);
   };
 
   const handleClaimVC = (id: string) => async () => {
@@ -87,5 +90,6 @@ export const useExperience = () => {
     handleRequestVerify,
     handleClaimVC,
     disabledClaims,
+    reqModelShow,
   };
 };

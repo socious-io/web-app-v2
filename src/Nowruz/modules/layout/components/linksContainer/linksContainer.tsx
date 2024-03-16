@@ -11,6 +11,7 @@ import { LinkItem } from '../linkItem/LinkItem';
 
 export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen }) => {
   const { filteredMenu, userIsLoggedIn } = useLinksContainer();
+
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   const navigateFunction = async (route: string) => {
@@ -20,6 +21,9 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
     localStorage.removeItem('filter');
     localStorage.removeItem('searchTerm');
     localStorage.removeItem('type');
+    localStorage.removeItem('source');
+    localStorage.removeItem('profileJobPage');
+    localStorage.removeItem('appliedJobPage');
     navigate(route);
     if (isTouchDevice()) setOpen(false);
   };
@@ -45,7 +49,7 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
             <LinkItem
               key={item.label}
               label={item.label}
-              navigateFunc={() => navigateFunction(item.route)}
+              navigateFunc={() => setSubMenuOpen(!subMenuOpen)}
               iconName={item.iconName}
               children={item.children.map((ch) => {
                 return {
@@ -58,21 +62,15 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
               menuOpen={open}
               subMenuOpen={subMenuOpen}
               badgeIcon={
-                subMenuOpen ? (
-                  <Icon
-                    name="chevron-up"
-                    className="text-Brand-300 !cursor-pointer"
-                    fontSize={20}
-                    onClick={() => setSubMenuOpen(!subMenuOpen)}
-                  />
-                ) : (
-                  <Icon
-                    name="chevron-down"
-                    className="text-Brand-300 !cursor-pointer"
-                    fontSize={20}
-                    onClick={() => setSubMenuOpen(!subMenuOpen)}
-                  />
-                )
+                <Icon
+                  name={subMenuOpen ? 'chevron-up' : 'chevron-down'}
+                  className="text-Brand-300 !cursor-pointer"
+                  fontSize={20}
+                  onClick={(event) => {
+                    event?.stopPropagation();
+                    setSubMenuOpen(!subMenuOpen);
+                  }}
+                />
               }
             />
           ) : (

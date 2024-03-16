@@ -19,6 +19,7 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { RootState } from 'src/store';
 
 import css from './jobDetailAbout.module.scss';
+import { ApplyExternalPartyModal } from '../applyExternalPartyModal';
 import { ApplyModal } from '../applyModal';
 
 interface JobDetailAboutProps {
@@ -38,10 +39,16 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
   });
 
   const [openApply, setOpenApply] = useState(false);
+  const [openExternalApply, setOpenExternalApply] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const url = window.location.href;
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
+  };
+
+  const handleOpenApplyModal = () => {
+    if (jobDetail.other_party_id) setOpenExternalApply(true);
+    else setOpenApply(true);
   };
 
   const handleCloseApplyModal = (applied: boolean) => {
@@ -59,7 +66,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
 
   useEffect(() => {
     nonPermanentStorage.get('openApplyModal').then((res) => {
-      if (currentIdentity && res && !jobDetail.applied) setOpenApply(true);
+      if (currentIdentity && res && !jobDetail.applied) handleOpenApplyModal();
       nonPermanentStorage.remove('openApplyModal');
     });
   }, []);
@@ -90,7 +97,9 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
   }
   const renderJobLocation = () => {
     const address = jobDetail.country
-      ? `${jobDetail.city}, ${getCountryName(jobDetail.country as keyof typeof COUNTRIES_DICT | undefined)}`
+      ? `${jobDetail.city ? `${jobDetail.city}, ` : ''}${getCountryName(
+          jobDetail.country as keyof typeof COUNTRIES_DICT | undefined,
+        )}`
       : '';
     return (
       <div className="flex gap-2">
@@ -153,7 +162,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
               variant="contained"
               color="primary"
               customStyle="hidden md:block w-full"
-              onClick={() => setOpenApply(true)}
+              onClick={handleOpenApplyModal}
             >
               Apply now
             </Button>
@@ -175,6 +184,11 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
         </div>
       </div>
       <ApplyModal open={openApply} handleClose={handleCloseApplyModal} />
+      <ApplyExternalPartyModal
+        open={openExternalApply}
+        handleClose={() => setOpenExternalApply(false)}
+        otherPartyUrl={jobDetail.other_party_url || ''}
+      />
       <AlertModal
         open={openAlert}
         onClose={() => setOpenAlert(false)}

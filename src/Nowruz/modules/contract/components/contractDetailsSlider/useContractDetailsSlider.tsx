@@ -26,8 +26,9 @@ import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
 import { ContractDetailTab } from '../contractDetailTab';
+import dapp from 'src/dapp';
 
-export const useContractDetailsSlider = () => {
+export const useContractDetailsSlider = (web3?: any) => {
   const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
@@ -49,11 +50,6 @@ export const useContractDetailsSlider = () => {
     const res = (await connectionStatus(contract?.organization.id)).connect;
     setDisableMessageButton(!res);
   };
-
-  useEffect(() => {
-    inititalize();
-    checkMessageButtonStatus();
-  }, [contract]);
 
   const type = identity?.type;
   const name = type === 'users' ? contract.offerer.meta.name : contract.recipient.meta.name;
@@ -107,6 +103,11 @@ export const useContractDetailsSlider = () => {
     setSecondaryButtonLabel(secondaryBtnLabel);
     setSecondaryButtonAction(() => secondaryBtnAction);
   };
+
+  useEffect(() => {
+    inititalize();
+    checkMessageButtonStatus();
+  }, [contract]);
 
   const initializeAcceptOfferFiat = async () => {
     await stripeProfile({ is_jp: contract.currency === 'JPY' }).then((r) => {
@@ -449,16 +450,33 @@ export const useContractDetailsSlider = () => {
   const onConfirm = async () => {
     if (!contract.mission) return;
     setOpenAlert(false);
-    dispatch(
-      updateStatus({
-        type,
-        paymentType: contract.project.payment_type,
-        id: contract.id,
-        offerStatus: 'CLOSED',
-        missionStatus: 'CONFIRMED',
-      }),
-    );
-    confirmMission(contract.mission.id);
+    setPrimaryButtonDisabled(true);
+    let allowConfirm = true;
+    if (contract.payment_mode === 'CRYPTO') {
+      if (web3.signer && web3.chainId) {
+        await dapp.withdrawnEscrow({
+          signer: web3.signer,
+          chainId: web3.chainId,
+          escrowId: contract?.payment?.meta.id as string,
+        });
+      } else {
+        allowConfirm = false;
+        await web3.open();
+      }
+    }
+    if (allowConfirm) {
+      await confirmMission(contract.mission.id);
+      dispatch(
+        updateStatus({
+          type,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'CLOSED',
+          missionStatus: 'CONFIRMED',
+        }),
+      );
+    }
+    setPrimaryButtonDisabled(false);
   };
 
   const handleConfirmCompletion = async () => {

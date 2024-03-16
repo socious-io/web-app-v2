@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   CurrentIdentity,
@@ -9,13 +9,17 @@ import {
   notifications,
   Notification,
   readAllNotifications,
+  User,
+  Organization,
 } from 'src/core/api';
 import { openToVolunteer as openToVolunteerApi, openToWork as openToWorkApi, hiring as hiringApi } from 'src/core/api';
 import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { RootState } from 'src/store';
+import { setIdentity } from 'src/store/reducers/profile.reducer';
 
 export const useHeaderNavBar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const identities = useSelector<RootState, Identity[]>((state) => {
     return state.identity.entities;
   });
@@ -24,6 +28,7 @@ export const useHeaderNavBar = () => {
     return state.identity.entities.find((i) => i.current);
   });
 
+  const profileIdentity = useSelector<RootState, User | Organization | undefined>((state) => state.profile.identity);
   const userIsLoggedIn = !!currentIdentity;
 
   const [userType, setUserType] = useState<'users' | 'organizations'>('users');
@@ -76,15 +81,27 @@ export const useHeaderNavBar = () => {
 
   const handleOpenToWork = async () => {
     const res = await openToWorkApi();
+    if (profileIdentity) {
+      const profId = profileIdentity as User;
+      await dispatch(setIdentity({ ...profId, open_to_work: res }));
+    }
     setOpenToWork(res);
   };
 
   const handleOpenToVolunteer = async () => {
     const res = await openToVolunteerApi();
+    if (profileIdentity) {
+      const profId = profileIdentity as User;
+      await dispatch(setIdentity({ ...profId, open_to_volunteer: res }));
+    }
     setOpenToVolunteer(res);
   };
   const handleHiring = async () => {
     const res = await hiringApi();
+    if (profileIdentity) {
+      const profId = profileIdentity as Organization;
+      await dispatch(setIdentity({ ...profId, hiring: res }));
+    }
     setHiring(res);
   };
 

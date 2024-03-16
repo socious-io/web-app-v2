@@ -5,7 +5,7 @@ import { Button } from 'src/Nowruz/modules/general/components/Button';
 import css from './header.module.scss';
 import { JobCreateHeaderProps } from './Header.types';
 
-export const JobCreateHeader: React.FC<JobCreateHeaderProps> = ({ onPublish, onPreview, isValid, isDirty }) => {
+export const JobCreateHeader: React.FC<JobCreateHeaderProps> = ({ onPublish, onPreview, isValid, isDirty, isEdit }) => {
   const isMobile = window.innerWidth < 600;
   return (
     <div className={css.container}>
@@ -14,7 +14,7 @@ export const JobCreateHeader: React.FC<JobCreateHeaderProps> = ({ onPublish, onP
       </div> */}
       <div className={css.titleButtons}>
         <div>
-          <h1 className={css.title}>Create a new job</h1>
+          <h1 className={css.title}>{isEdit ? 'Edit job' : 'Create a new job'}</h1>
           <h2 className={css.description}>Tell us more about your job</h2>
         </div>
         <div className="flex space-x-3 mt-4 sm:mt-0">
