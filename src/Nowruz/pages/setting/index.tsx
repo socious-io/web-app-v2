@@ -1,16 +1,27 @@
 import { ReactNode, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { CurrentIdentity } from 'src/core/api';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 import Account from 'src/Nowruz/modules/settings/components/account/';
 import Notification from 'src/Nowruz/modules/settings/components/notification';
 import Password from 'src/Nowruz/modules/settings/components/password';
+import { UserTeam } from 'src/Nowruz/modules/settings/components/userTeam';
+import { RootState } from 'src/store';
 
 export const Setting = () => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) =>
+    state.identity.entities.find((identity) => identity.current),
+  );
   const tabs = [
     {
       label: 'Account',
       content: <Account />,
       default: true,
+    },
+    {
+      label: 'Team',
+      content: currentIdentity?.type === 'users' ? <UserTeam /> : <h1>Team</h1>,
     },
     {
       label: 'Password',
@@ -20,10 +31,7 @@ export const Setting = () => {
       label: 'Notifications',
       content: <Notification />,
     },
-    // {
-    //   label: 'Team',
-    //   content: <h1>Team</h1>
-    // },
+
     // {
     //   label: 'Working Prefrences',
     //   content: <h1>Working</h1>
@@ -35,6 +43,7 @@ export const Setting = () => {
   ];
   const items: any[] = [
     { label: 'Account', value: 'Account' },
+    { label: 'Team', value: 'Team' },
     { label: 'Password', value: 'Password' },
     { label: 'Notifications', value: 'Notification' },
   ];
@@ -45,6 +54,7 @@ export const Setting = () => {
     if (value.value === 'Account') return setContent(<Account />);
     if (value.value === 'Password') return setContent(<Password />);
     if (value.value === 'Notification') return setContent(<Notification />);
+    if (value.value === 'Team' && currentIdentity?.type === 'users') return setContent(<UserTeam />);
   };
 
   useEffect(() => {
