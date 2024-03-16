@@ -11,7 +11,6 @@ export const useFollowerTab = () => {
   const PER_PAGE = 10;
   const fetchDate = async () => {
     const followerRes = await getFollowers({ page, limit: PER_PAGE });
-    console.log('test log followerRes', followerRes);
     setTotalCount(followerRes.total_count);
     setFollowerList(followerRes.items);
   };
