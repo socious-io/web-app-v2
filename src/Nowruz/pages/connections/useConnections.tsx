@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Connection, CurrentIdentity, connections } from 'src/core/api';
 import ConnectionTab from 'src/Nowruz/modules/connections/connectionTab';
+import { FollowerTab } from 'src/Nowruz/modules/connections/followerTab';
 import { FollowingTab } from 'src/Nowruz/modules/connections/followingTab';
 import { useIsMount } from 'src/Nowruz/modules/general/components/useIsMount';
 import { RootState } from 'src/store';
@@ -33,7 +34,7 @@ export const useConnections = () => {
   const tabs = [
     { label: 'Connections', content: <ConnectionTab /> },
     { label: 'Followings', content: <FollowingTab /> },
-    { label: 'Followers', content: <div /> },
+    { label: 'Followers', content: <FollowerTab /> },
     { label: 'Requests', content: <div /> },
     { label: 'Blocked', content: <div /> },
   ];

@@ -28,6 +28,9 @@ export async function connectRequestReject(id: string): Promise<SuccessRes> {
 export async function block(identityId: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`connections/${identityId}/block/direct`, {})).data;
 }
+export async function getFollowers(params: PaginateReq): Promise<FollowingRes> {
+  return (await get<FollowingRes>('follows/followers', { params })).data;
+}
 export async function getFollowings(params: PaginateReq): Promise<FollowingRes> {
   return (await get<FollowingRes>('follows/followings', { params })).data;
 }
