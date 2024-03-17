@@ -24,7 +24,7 @@ export const OrgTeam = () => {
     setOpenAlert,
     toDeleteName,
     handleClickDelete,
-    getTeamMembers,
+    loadMore,
     hasMore,
   } = useOrgTeam();
   return (
@@ -96,7 +96,7 @@ export const OrgTeam = () => {
                 threshold={150}
                 useWindow={true}
                 pageStart={1}
-                loadMore={getTeamMembers}
+                loadMore={loadMore}
                 hasMore={hasMore}
                 className="flex-1"
               >

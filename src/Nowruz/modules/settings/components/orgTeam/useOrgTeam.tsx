@@ -23,10 +23,30 @@ export const useOrgTeam = () => {
   const [openAlert, setOpenAlert] = useState(false);
   const [toDeleteName, setToDeleteName] = useState('');
   const [toDeleteId, settoDeleteId] = useState('');
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
   const getTeamMembers = async () => {
+    try {
+      const res = await getOrganizationMembers(currentIdentity!.id, { page: 1 });
+      const mapped = res.items.map((item) => {
+        return {
+          id: item.id,
+          img: item.avatar?.url,
+          type: 'users',
+          name: `${item.first_name || ''} ${item.last_name || ''}`,
+          username: item.username,
+        };
+      });
+      setTeamMembers(mapped);
+      setPage(1);
+      setHasMore(true);
+    } catch (e) {
+      console.log('error in getting team members', e);
+    }
+  };
+
+  const loadMore = async () => {
     try {
       if (hasMore) {
         const res = await getOrganizationMembers(currentIdentity!.id, { page: page + 1 });
@@ -65,7 +85,6 @@ export const useOrgTeam = () => {
     try {
       if (searchText) {
         const response = await filterFollowings({ name: searchText, type: 'users', page: 1, limit: 10 });
-        console.log('test log response', response);
         const filtered = response.items.filter((item) => !teamMembers.map((m) => m.id).includes(item.identity_meta.id));
         cb(followingToOption(filtered));
       }
@@ -75,7 +94,6 @@ export const useOrgTeam = () => {
   };
 
   const onSelectMember = (member) => {
-    console.log('test log member', member);
     setselectedPerson(member);
     const members = [...addedMembers];
     const indx = members.findIndex((item) => item === '');
@@ -93,7 +111,6 @@ export const useOrgTeam = () => {
   const handleAddMembers = async () => {
     try {
       let members = [...addedMembers];
-      console.log('test log members', members);
       members = members.filter((item) => item !== '');
       const uniq = [...new Set(members)];
       const requests = [];
@@ -101,7 +118,6 @@ export const useOrgTeam = () => {
         requests.push(addOrganizationMember(currentIdentity!.id, memberId));
       });
       const res = await Promise.all(requests);
-      console.log('test log res', res);
       await getTeamMembers();
     } catch (e) {
       console.log('error in adding members', e);
@@ -139,6 +155,7 @@ export const useOrgTeam = () => {
     toDeleteName,
     handleClickDelete,
     getTeamMembers,
+    loadMore,
     hasMore,
   };
 };
