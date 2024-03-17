@@ -13,7 +13,7 @@ export const Setting = () => {
     },
     {
       label: 'Team',
-      content: <Team />
+      content: <Team />,
     },
   ];
   const items: any[] = [
@@ -37,8 +37,8 @@ export const Setting = () => {
   return (
     <>
       <div className="container">
-        <div className="col-12">
-          <div className="p-4">
+        <div className="w-full">
+          <div className="p-4 md:px-8">
             <h1 className="text-gray-900 text-3xl font-semibold leading-7 p-4 mb-5">Settings</h1>
 
             <div className="block lg:hidden">

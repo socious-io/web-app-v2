@@ -15,6 +15,8 @@ export const UserTeam = () => {
             <span className="text-sm font-semibold text-Gray-light-mode-700">On teams</span>
             <span className="text-sm font-normal text-Gray-light-mode-600">You’re currently on these teams.</span>
           </div>
+
+          <div className="flex flex-col gap-4"></div>
         </div>
       </div>
     </div>

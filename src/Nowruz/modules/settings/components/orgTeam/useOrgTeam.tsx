@@ -1,0 +1,144 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import {
+  CurrentIdentity,
+  Following,
+  addOrganizationMember,
+  filterFollowings,
+  getOrganizationMembers,
+  removeOrganizationMember,
+} from 'src/core/api';
+import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
+import { RootState } from 'src/store';
+
+export const useOrgTeam = () => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) =>
+    state.identity.entities.find((identity) => identity.current),
+  );
+
+  const [addedMembers, setAddedMembers] = useState<string[]>([]);
+  const [teamMembers, setTeamMembers] = useState<AccountItem[]>([]);
+  const [selectedPerson, setselectedPerson] = useState();
+  const [openAlert, setOpenAlert] = useState(false);
+  const [toDeleteName, setToDeleteName] = useState('');
+  const [toDeleteId, settoDeleteId] = useState('');
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+
+  const getTeamMembers = async () => {
+    try {
+      if (hasMore) {
+        const res = await getOrganizationMembers(currentIdentity!.id, { page: page + 1 });
+        if (res.items.length) {
+          const mapped = res.items.map((item) => {
+            return {
+              id: item.id,
+              img: item.avatar?.url,
+              type: 'users',
+              name: `${item.first_name || ''} ${item.last_name || ''}`,
+              username: item.username,
+            };
+          });
+          setTeamMembers([...teamMembers, ...mapped]);
+          setPage(page + 1);
+        } else setHasMore(false);
+      }
+    } catch (e) {
+      console.log('error in getting team members', e);
+    }
+  };
+
+  useEffect(() => {
+    getTeamMembers();
+  }, []);
+
+  const followingToOption = (followings: Following[]) => {
+    return followings.map((i) => ({
+      label: JSON.stringify({ label: i.identity_meta.name || '', description: i.identity_meta.username }),
+      value: i.identity_meta.id,
+      icon: <Avatar img={i.identity_meta.avatar} type="users" size="24px" />,
+    }));
+  };
+
+  const searchMembers = async (searchText: string, cb) => {
+    try {
+      if (searchText) {
+        const response = await filterFollowings({ name: searchText, type: 'users', page: 1, limit: 10 });
+        console.log('test log response', response);
+        const filtered = response.items.filter((item) => !teamMembers.map((m) => m.id).includes(item.identity_meta.id));
+        cb(followingToOption(filtered));
+      }
+    } catch (error) {
+      console.error('Error fetching following data:', error);
+    }
+  };
+
+  const onSelectMember = (member) => {
+    console.log('test log member', member);
+    setselectedPerson(member);
+    const members = [...addedMembers];
+    const indx = members.findIndex((item) => item === '');
+    if (indx > -1) members.splice(indx, 1);
+    members.push(member.value);
+    setAddedMembers(members);
+  };
+
+  const handleAddAnother = () => {
+    const members = [...addedMembers];
+    members.push('');
+    setAddedMembers(members);
+  };
+
+  const handleAddMembers = async () => {
+    try {
+      let members = [...addedMembers];
+      console.log('test log members', members);
+      members = members.filter((item) => item !== '');
+      const uniq = [...new Set(members)];
+      const requests = [];
+      uniq.forEach((memberId) => {
+        requests.push(addOrganizationMember(currentIdentity!.id, memberId));
+      });
+      const res = await Promise.all(requests);
+      console.log('test log res', res);
+      await getTeamMembers();
+    } catch (e) {
+      console.log('error in adding members', e);
+    }
+    setAddedMembers([]);
+    setselectedPerson(undefined);
+  };
+
+  const handleClickDelete = (id: string, name: string) => {
+    settoDeleteId(id);
+    setToDeleteName(name);
+    setOpenAlert(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await removeOrganizationMember(currentIdentity!.id, toDeleteId);
+      getTeamMembers();
+      setOpenAlert(false);
+    } catch (e) {
+      console.log('error in deleting member', e);
+    }
+  };
+  return {
+    addedMembers,
+    searchMembers,
+    onSelectMember,
+    handleAddAnother,
+    handleAddMembers,
+    teamMembers,
+    selectedPerson,
+    handleDelete,
+    openAlert,
+    setOpenAlert,
+    toDeleteName,
+    handleClickDelete,
+    getTeamMembers,
+    hasMore,
+  };
+};

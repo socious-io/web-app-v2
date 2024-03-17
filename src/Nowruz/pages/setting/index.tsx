@@ -5,6 +5,7 @@ import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontal
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 import Account from 'src/Nowruz/modules/settings/components/account/';
 import Notification from 'src/Nowruz/modules/settings/components/notification';
+import { OrgTeam } from 'src/Nowruz/modules/settings/components/orgTeam';
 import Password from 'src/Nowruz/modules/settings/components/password';
 import { UserTeam } from 'src/Nowruz/modules/settings/components/userTeam';
 import { RootState } from 'src/store';
@@ -21,7 +22,7 @@ export const Setting = () => {
     },
     {
       label: 'Team',
-      content: currentIdentity?.type === 'users' ? <UserTeam /> : <h1>Team</h1>,
+      content: currentIdentity?.type === 'users' ? <UserTeam /> : <OrgTeam />,
     },
     {
       label: 'Password',
@@ -55,6 +56,7 @@ export const Setting = () => {
     if (value.value === 'Password') return setContent(<Password />);
     if (value.value === 'Notification') return setContent(<Notification />);
     if (value.value === 'Team' && currentIdentity?.type === 'users') return setContent(<UserTeam />);
+    if (value.value === 'Team' && currentIdentity?.type === 'organizations') return setContent(<OrgTeam />);
   };
 
   useEffect(() => {
@@ -64,8 +66,8 @@ export const Setting = () => {
   return (
     <>
       <div className="container">
-        <div className="col-12">
-          <div className="p-4">
+        <div className="w-full ">
+          <div className="p-4 md:px-8">
             <h2 className="gap-5 text-3xl mb-6">Settings</h2>
 
             <div className="block md:hidden">
