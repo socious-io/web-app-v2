@@ -4,8 +4,8 @@ import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 
+import css from './threeDotButton.module.scss';
 import { ThreeDotsButtonProps } from './threeDotsButton.types';
-import css from './treeDotButton.module.scss';
 import { useThreeDotsButton } from './useThreeDotsButton';
 
 export const ThreeDotsButton: React.FC<ThreeDotsButtonProps> = ({ otherIdentityId }) => {

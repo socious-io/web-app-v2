@@ -12,10 +12,10 @@ export const useConnectRequestModal = (identityId: string, handleClose: () => vo
       const res = await connectRequest(identityId, { text: message });
       const payload = { connection_id: res.id, connection_status: res.status, follower: false, following: false };
       await dispatch(setConnectionStatus(payload));
-      handleClose();
-    } catch {
-      handleClose();
+    } catch (e) {
+      console.log('error in connect request', e);
     }
+    handleClose();
   };
 
   return { message, setMessage, handleConnect };
