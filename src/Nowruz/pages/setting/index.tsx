@@ -7,6 +7,7 @@ import Account from 'src/Nowruz/modules/settings/components/account/';
 import Notification from 'src/Nowruz/modules/settings/components/notification';
 import { OrgTeam } from 'src/Nowruz/modules/settings/components/orgTeam';
 import Password from 'src/Nowruz/modules/settings/components/password';
+import { Plan } from 'src/Nowruz/modules/settings/components/plan';
 import { UserTeam } from 'src/Nowruz/modules/settings/components/userTeam';
 import { RootState } from 'src/store';
 
@@ -42,13 +43,23 @@ export const Setting = () => {
     //   content: <h1>Notif</h1>
     // },
   ];
+
+  if (currentIdentity?.type === 'organizations')
+    tabs.push({
+      label: 'Plan',
+      content: <Plan />,
+    });
   const items: any[] = [
     { label: 'Account', value: 'Account' },
     { label: 'Team', value: 'Team' },
     { label: 'Password', value: 'Password' },
     { label: 'Notifications', value: 'Notification' },
   ];
-
+  if (currentIdentity?.type === 'organizations')
+    items.push({
+      label: 'Plan',
+      value: 'Plan',
+    });
   const [content, setContent] = useState<ReactNode>();
 
   const setValue = (value) => {
@@ -57,6 +68,7 @@ export const Setting = () => {
     if (value.value === 'Notification') return setContent(<Notification />);
     if (value.value === 'Team' && currentIdentity?.type === 'users') return setContent(<UserTeam />);
     if (value.value === 'Team' && currentIdentity?.type === 'organizations') return setContent(<OrgTeam />);
+    if (value.value === 'Plan') return setContent(<Plan />);
   };
 
   useEffect(() => {
