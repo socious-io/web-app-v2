@@ -1,11 +1,17 @@
 import { ReactNode, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { CurrentIdentity } from 'src/core/api';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 import Account from 'src/Nowruz/modules/settings/components/account/';
 import Notification from 'src/Nowruz/modules/settings/components/notification';
 import Password from 'src/Nowruz/modules/settings/components/password';
+import { RootState } from 'src/store';
 
 export const Setting = () => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) =>
+    state.identity.entities.find((identity) => identity.current),
+  );
   const tabs = [
     {
       label: 'Account',
@@ -16,10 +22,7 @@ export const Setting = () => {
       label: 'Password',
       content: <Password />,
     },
-    {
-      label: 'Notifications',
-      content: <Notification />,
-    },
+
     // {
     //   label: 'Team',
     //   content: <h1>Team</h1>
@@ -33,12 +36,18 @@ export const Setting = () => {
     //   content: <h1>Notif</h1>
     // },
   ];
+  if (currentIdentity?.type === 'users')
+    tabs.push({
+      label: 'Notifications',
+      content: <Notification />,
+    });
+
   const items: any[] = [
     { label: 'Account', value: 'Account' },
     { label: 'Password', value: 'Password' },
-    { label: 'Notifications', value: 'Notification' },
   ];
 
+  if (currentIdentity?.type === 'users') items.push({ label: 'Notifications', value: 'Notification' });
   const [content, setContent] = useState<ReactNode>();
 
   const setValue = (value) => {
