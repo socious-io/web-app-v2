@@ -41,7 +41,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
   const [openApply, setOpenApply] = useState(false);
   const [openExternalApply, setOpenExternalApply] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const url = window.location.href;
+  const url = window.location.href.replace('created/', '');
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
   };
