@@ -22,17 +22,17 @@ export const useTransactions = () => {
 
   const mapDataToColumns = (missions: Mission[]) => {
     const result: PaymentDataType[] = missions.map((item) => {
-      const symbol = item.offer.currency === 'JPY' ? '¥' : item.offer.currency === 'USD' ? '$' : '';
+      const symbol = item.payment?.currency === 'JPY' ? '¥' : item.payment?.currency === 'USD' ? '$' : '';
       return {
         name: type === 'users' ? item.assigner.meta.name : item.assignee.meta.name,
         profileImage: type === 'users' ? item.assigner.meta.image : item.assignee.meta.avatar,
         userType: type === 'users' ? 'organizations' : 'users',
-        amount: type === 'users' ? `${symbol}${item.payment.amount}` : `${symbol}${item.amount}`,
+        amount: `${symbol}${item.payment?.amount}`,
         date: toRelativeTime(item.payment.created_at.toString()),
-        currency: item.offer.currency,
+        currency: item.payment?.currency,
         type: '', //type === 'users' ? 'Payment received' : 'Payment sent',
         missionId: item.id,
-        transactionId: item.escrow.id,
+        transactionId: item.escrow?.id,
       };
     });
     return result;
