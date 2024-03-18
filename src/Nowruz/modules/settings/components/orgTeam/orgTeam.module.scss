@@ -1,0 +1,53 @@
+@import 'src/components/_primitives.scss';
+
+.containerSector {
+  @apply w-full flex flex-col md:flex-row gap-6 md:gap-8;
+}
+.firstCol {
+  @apply flex flex-col;
+}
+.colTitle {
+  @apply text-sm font-semibold text-Gray-light-mode-700;
+}
+.colSubtitle {
+  @apply text-sm font-normal text-Gray-light-mode-600  w-full md:w-[280px];
+}
+.secondCol {
+  @apply flex flex-col flex-1 gap-4;
+}
+
+.table {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid $color-grey-200;
+  @media screen and (max-width: 600px) {
+    margin-left: -16px;
+    width: calc(100% + 32px);
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 24px;
+    width: 100%;
+    height: 44px;
+    background-color: $color-grey-200;
+    border-radius: 12px 12px 0 0;
+    font-weight: 500;
+    font-size: 14px;
+    color: $color-grey-600;
+    @media screen and (max-width: 600px) {
+      border-radius: 0;
+    }
+  }
+
+  .row {
+    width: 100%;
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: solid 1px $color-grey-200;
+    padding: 0 24px;
+  }
+}
