@@ -10,6 +10,9 @@ export const useRequestTab = () => {
   const [connectRequests, setConnectRequests] = useState<Connection[]>([]);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [openAcceptModal, setOpenAcceptModal] = useState(false);
+  const [requestedId, setRequestedId] = useState('');
+  const [selectedRequest, setselectedRequest] = useState<Connection>();
   const PER_PAGE = 10;
 
   const fetchData = async () => {
@@ -19,6 +22,7 @@ export const useRequestTab = () => {
       'filter.status': 'PENDING',
       'filter.requested_id': currentIdentity?.id,
     });
+
     setConnectRequests(requestRes.items);
     setTotalCount(requestRes.total_count);
   };
@@ -27,23 +31,45 @@ export const useRequestTab = () => {
     fetchData();
   }, [page]);
 
-  const handleAccept = async (id: string) => {
+  const handleAccept = async () => {
     try {
-      await connectRequestAccept(id);
-      fetchData();
+      await connectRequestAccept(requestedId);
+      await fetchData();
     } catch (e) {
       console.log(e);
     }
+    setOpenAcceptModal(false);
   };
 
-  const handleReject = async (id: string) => {
+  const handleReject = async (id?: string) => {
     try {
-      await connectRequestReject(id);
-      fetchData();
+      const connectionId = id || requestedId;
+      await connectRequestReject(connectionId);
+      await fetchData();
     } catch (e) {
       console.log(e);
     }
+    setOpenAcceptModal(false);
   };
 
-  return { page, setPage, connectRequests, totalCount, PER_PAGE, handleAccept, handleReject };
+  const handleOpenAcceptModal = (id: string) => {
+    setRequestedId(id);
+    const req = connectRequests.find((item) => item.id === id);
+    setselectedRequest(req);
+    setOpenAcceptModal(true);
+  };
+
+  return {
+    page,
+    setPage,
+    connectRequests,
+    totalCount,
+    PER_PAGE,
+    handleAccept,
+    handleReject,
+    openAcceptModal,
+    setOpenAcceptModal,
+    handleOpenAcceptModal,
+    selectedRequest,
+  };
 };

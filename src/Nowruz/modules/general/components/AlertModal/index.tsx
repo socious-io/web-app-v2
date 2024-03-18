@@ -20,6 +20,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
   submitButtonLabel,
   customIcon,
   children,
+  disableSubmitButton = false,
 }) => {
   return (
     <Modal open={open} onClose={onClose} className={css.modal}>
@@ -44,7 +45,13 @@ export const AlertModal: React.FC<AlertModalProps> = ({
         {children && <div className="w-full overflow-y-auto">{children}</div>}
         <div className="w-full flex flex-col md:flex-row-reverse gap-3">
           {submitButton && (
-            <Button color={submitButtonTheme} variant="contained" onClick={onSubmit} fullWidth>
+            <Button
+              color={submitButtonTheme}
+              variant="contained"
+              onClick={onSubmit}
+              fullWidth
+              disabled={disableSubmitButton}
+            >
               {submitButtonLabel}
             </Button>
           )}
