@@ -1,16 +1,21 @@
 import { MenuItem, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon } from 'src/Nowruz/general/Icon';
 
 import css from './linkItem.module.scss';
 import { LinkItemProps } from './linkItem.types';
 
 export const LinkItem: React.FC<LinkItemProps> = (props) => {
-  const { children, iconName, label, navigateFunc, badgeIcon, menuOpen, subMenuOpen } = props;
+  const { children, iconName, label, navigateFunc, badgeIcon, menuOpen } = props;
+  const [subMenuOpen, setSubMenuOpen] = useState(false);
 
   return (
     <>
-      <MenuItem className={css.container} tabIndex={1} onClick={navigateFunc}>
+      <MenuItem
+        className={css.container}
+        tabIndex={1}
+        onClick={children?.length ? () => setSubMenuOpen(!subMenuOpen) : navigateFunc}
+      >
         {iconName && (
           <Icon
             name={iconName}
@@ -24,12 +29,16 @@ export const LinkItem: React.FC<LinkItemProps> = (props) => {
             <span className={css.itemLabel} style={{ pointerEvents: 'none' }}>
               {label}
             </span>
-            {badgeIcon && menuOpen ? (
+            {children?.length ? (
               <div className="mr-0 ml-auto cursor-pointer z-50" style={{ pointerEvents: 'none' }}>
-                {badgeIcon}
+                <Icon
+                  name={subMenuOpen ? 'chevron-up' : 'chevron-down'}
+                  className="text-Brand-300 !cursor-pointer"
+                  fontSize={20}
+                />
               </div>
             ) : (
-              ''
+              badgeIcon
             )}
           </>
         )}
