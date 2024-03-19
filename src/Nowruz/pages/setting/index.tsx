@@ -28,10 +28,6 @@ export const Setting = () => {
       label: 'Password',
       content: <Password />,
     },
-    {
-      label: 'Notifications',
-      content: <Notification />,
-    },
 
     // {
     //   label: 'Working Prefrences',
@@ -42,13 +38,19 @@ export const Setting = () => {
     //   content: <h1>Notif</h1>
     // },
   ];
+  if (currentIdentity?.type === 'users')
+    tabs.push({
+      label: 'Notifications',
+      content: <Notification />,
+    });
+
   const items: any[] = [
     { label: 'Account', value: 'Account' },
     { label: 'Team', value: 'Team' },
     { label: 'Password', value: 'Password' },
-    { label: 'Notifications', value: 'Notification' },
   ];
 
+  if (currentIdentity?.type === 'users') items.push({ label: 'Notifications', value: 'Notification' });
   const [content, setContent] = useState<ReactNode>();
 
   const setValue = (value) => {

@@ -47,9 +47,9 @@ export const useNotification = () => {
     setAllChecked(isAllChecked);
     let mapped: SettingsItem[] = [];
 
-    let label = 'Allow notifications';
-    let description = '';
-    let list: ToggleButtonItem[] = [
+    const label = 'Allow notifications';
+    const description = '';
+    const list: ToggleButtonItem[] = [
       {
         text: 'Allow all',
         checked: isAllChecked,
@@ -59,18 +59,25 @@ export const useNotification = () => {
 
     mapped.push({ label, description, toggleButtons: list });
 
-    label = 'Likes';
-    description = 'These are notifications for when someone likes your post.';
-    list = getToggleButtons('POST_LIKE');
-    mapped.push({ label, description, toggleButtons: list });
+    // label = 'Likes';
+    // description = 'These are notifications for when someone likes your post.';
+    // list = getToggleButtons('POST_LIKE');
+    // mapped.push({ label, description, toggleButtons: list });
 
-    label = 'Comments';
-    description = 'These are notifications for comments on your posts and replies to your comments.';
-    list = getToggleButtons('COMMENT');
-    mapped.push({ label, description, toggleButtons: list });
+    // label = 'Comments';
+    // description = 'These are notifications for comments on your posts and replies to your comments.';
+    // list = getToggleButtons('COMMENT');
+    // mapped.push({ label, description, toggleButtons: list });
 
     const rest = settings
-      .filter((s) => s.type !== 'POST_LIKE' && s.type !== 'COMMENT')
+      .filter(
+        (s) =>
+          s.type !== 'POST_LIKE' &&
+          s.type !== 'COMMENT' &&
+          s.type !== 'SHARE_PROJECT' &&
+          s.type !== 'COMMENT_LIKE' &&
+          s.type !== 'SHARE_POST',
+      )
       .map((item) => {
         return { label: translate(item.type), description: '', toggleButtons: getToggleButtons(item.type) };
       });

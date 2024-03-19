@@ -351,8 +351,9 @@ export const blueprint: RouteObject[] = [
                   if (q?.trim()) {
                     Object.assign(body, { q: q });
                   }
-                  const data = await searchReq(body, { limit: 10, page });
-                  return data;
+                  const requests = [searchReq(body, { limit: 10, page }), jobCategoriesReq()];
+                  const [searchData, jobCategories] = await Promise.all(requests);
+                  return { searchData, jobCategories };
                 },
               },
             ],

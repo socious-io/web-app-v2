@@ -26,7 +26,7 @@ export const Overlay: React.FC<OverlayProps> = ({ open, onClose, children, title
   }, [ref]);
   return (
     <Slide direction="left" in={open} mountOnEnter unmountOnExit>
-      <div ref={ref} className={css.container}>
+      <div ref={ref} className={css.container} id="notification">
         <div className={headerStyle}>
           {(title || subtitle) && (
             <div className={css.headerContent}>
