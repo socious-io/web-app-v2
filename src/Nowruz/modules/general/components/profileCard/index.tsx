@@ -12,9 +12,10 @@ import { ChipList } from '../chipList';
 interface ProfileCardProps {
   identity?: User | Organization;
   labelShown?: boolean;
+  connectFlow?: boolean;
 }
-const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true }) => {
-  const { name, profileImage, type, website } = getIdentityMeta(identity);
+const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, connectFlow = false }) => {
+  const { name, profileImage, type, website, username } = getIdentityMeta(identity);
   const socialCauses = socialCausesToCategory(identity?.social_causes).map((item) => item.label);
   if (!identity) return;
   return (
@@ -26,11 +27,15 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true }
         <ProfileCardHeader
           name={name}
           type={type}
-          bio={identity.bio || ''}
           profileImageUrl={profileImage}
           coverImageUrl={identity.cover_image?.url}
+          connectFlow={connectFlow}
+          username={username}
+          openToWork={(identity as User).open_to_work}
+          hiring={(identity as Organization).hiring}
         />
         <div className="flex flex-col gap-5 md:gap-6 p-5 md:p-6">
+          <span className="text-base font-normal leading-6 text-Gray-light-mode-600">{identity.bio || ''}</span>
           <div className="flex gap-2 flex-wrap">
             <ChipList
               items={socialCauses}

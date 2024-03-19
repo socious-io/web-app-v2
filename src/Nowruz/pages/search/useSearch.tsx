@@ -116,7 +116,7 @@ export const useSearch = () => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
           <div onClick={() => handleNavigate(item as Organization | User)} className="cursor-pointer">
-            <ProfileCard identity={item as User | Organization} labelShown={false} />
+            <ProfileCard identity={item as User | Organization} labelShown={false} connectFlow={true} />
           </div>
         );
       }
