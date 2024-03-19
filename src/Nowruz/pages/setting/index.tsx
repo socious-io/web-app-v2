@@ -64,8 +64,8 @@ export const Setting = () => {
   return (
     <>
       <div className="container">
-        <div className="col-12">
-          <div className="p-4">
+        <div className="w-full">
+          <div className="p-4 md:px-8">
             <h2 className="gap-5 text-3xl mb-6">Settings</h2>
 
             <div className="block md:hidden">
