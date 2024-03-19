@@ -22,6 +22,7 @@ export const FollowerTab = () => {
     name,
     handleUnfollow,
   } = useFollowerTab();
+
   return (
     <div className={css.container}>
       {followerList.map((item) => {
@@ -45,7 +46,7 @@ export const FollowerTab = () => {
               customStyle={item.following ? '' : css.followBtn}
               onClick={() => handleClick(item.id)}
             >
-              {item.following ? 'Following' : 'Follow'}
+              {item.mutual ? 'Following' : 'Follow'}
             </Button>
           </div>
         );

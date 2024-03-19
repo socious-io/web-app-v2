@@ -8,7 +8,7 @@ import css from './BlockedTab.module.scss';
 import { useBlockedTab } from './useBlockedTab';
 
 export const BlockedTab = () => {
-  const { blockList, page, setPage, PER_PAGE, totalCount, currentIdentity } = useBlockedTab();
+  const { blockList, page, setPage, PER_PAGE, totalCount, currentIdentity, handleUnblock } = useBlockedTab();
   return (
     <div className={css.container}>
       {blockList.map((item) => {
@@ -30,7 +30,7 @@ export const BlockedTab = () => {
               variant="outlined"
               color="primary"
               style={{ height: '40px', fontSize: '14px' }}
-              // onClick={() => redirectToChat(accountItem.id)}
+              onClick={() => handleUnblock(item.id)}
             >
               Unblock
             </Button>
@@ -47,19 +47,6 @@ export const BlockedTab = () => {
           <PaginationMobile page={page} count={Math.ceil(totalCount / PER_PAGE)} handleChange={setPage} />
         </div>
       )}
-      {/* <AlertModal
-        open={openAlert}
-        onClose={() => setOpenAlert(false)}
-        title="Remove connection"
-        message={`Are you sure you want to remove ${fullName} as a connection? ${firstName} won’t be notified.`}
-        customIcon={<FeaturedIcon iconName="alert-circle" size="lg" theme="warning" type="light-circle-outlined" />}
-        closeButtn={true}
-        closeButtonLabel="Cancel"
-        submitButton={true}
-        submitButtonTheme="primary"
-        submitButtonLabel="Remove"
-        onSubmit={() => handleRemoveConnection(connectionId)}
-      /> */}
     </div>
   );
 };
