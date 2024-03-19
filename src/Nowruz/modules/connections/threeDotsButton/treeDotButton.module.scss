@@ -1,0 +1,36 @@
+@import 'src/components/_primitives.scss';
+
+.menuList {
+  display: flex;
+  width: 280px;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 8px;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  border: 1px solid $color-grey-200;
+  box-shadow: $shadow-lg;
+  padding: 0;
+  background-color: $color-white;
+}
+.menuItem {
+  width: 100%;
+  height: 50px;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: $color-grey-700;
+  }
+}
+
+.borderedMenuItem {
+  border-top: 1px solid $color-grey-200;
+}

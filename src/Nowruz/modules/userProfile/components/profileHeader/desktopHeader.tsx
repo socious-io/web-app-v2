@@ -2,6 +2,8 @@ import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { ConnectStatus, Organization, User } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
+import { Icon } from 'src/Nowruz/general/Icon';
+import { ThreeDotsButton } from 'src/Nowruz/modules/connections/threeDotsButton';
 import { AvatarProfile } from 'src/Nowruz/modules/general/components/avatarProfile';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
@@ -15,9 +17,15 @@ interface DesktopHeaderProps {
   type: 'users' | 'organizations';
   myProfile: boolean;
   isLoggedIn: boolean;
-  connectStatus: ConnectStatus | undefined;
+  connectStatus: ConnectStatus | null | undefined;
   handleOpenEditInfoModal: () => void;
   handleOpenEditAvatar: () => void;
+  handleMessage?: () => void;
+  setOpenConnectRequest: (val: boolean) => void;
+  displayShareButton: () => boolean;
+  displayConnectButton: () => boolean;
+  displayMessageButton: () => boolean;
+  displayThreeDotsButton: () => boolean;
 }
 export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
   identity,
@@ -27,8 +35,15 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
   handleOpenEditInfoModal,
   handleOpenEditAvatar,
   type,
+  handleMessage,
+  setOpenConnectRequest,
+  displayShareButton,
+  displayConnectButton,
+  displayMessageButton,
+  displayThreeDotsButton,
 }) => {
   const { username, name, profileImage } = getIdentityMeta(identity);
+
   return (
     <div className="hidden md:block">
       <div className={css.avatar}>
@@ -77,27 +92,39 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
         )}
         {!myProfile && (
           <div className={`${css.actionDiv} right-8 w-fit`}>
-            {/* <Button color="primary" variant="outlined" className={css.shareButton}>
-              <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
-              Share
-            </Button> */}
-            {isLoggedIn && connectStatus !== 'CONNECTED' && (
+            {displayShareButton() && (
+              <Button
+                color="primary"
+                variant="outlined"
+                style={{ height: '40px', fontSize: '14px', display: 'flex', gap: '6px' }}
+              >
+                <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
+                Share
+              </Button>
+            )}
+            {displayMessageButton() && (
+              <Button
+                color="primary"
+                variant={displayConnectButton() ? 'outlined' : 'contained'}
+                style={{ height: '40px', fontSize: '14px' }}
+                onClick={handleMessage}
+              >
+                Message
+              </Button>
+            )}
+            {displayConnectButton() && (
               <Button
                 disabled={connectStatus === 'PENDING'}
                 color="primary"
                 variant="contained"
-                style={{ flex: '1', height: '40px', fontSize: '14px' }}
+                style={{ height: '40px', fontSize: '14px' }}
+                onClick={() => setOpenConnectRequest(true)}
               >
                 {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
               </Button>
             )}
-            {/* <IconButton
-              size="small"
-              iconName="dots-vertical"
-              iconColor={variables.color_grey_700}
-              iconSize={20}
-              customStyle="w-9 h-10 !border !border-solid !border-Gray-light-mode-300"
-            /> */}
+
+            {displayThreeDotsButton() && <ThreeDotsButton otherIdentityId={identity?.id || ''} />}
           </div>
         )}
       </div>

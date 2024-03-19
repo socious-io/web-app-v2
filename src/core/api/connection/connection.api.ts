@@ -45,3 +45,7 @@ export async function unfollow(identityId: string): Promise<SuccessRes> {
 export async function connectionStatus(id: string): Promise<ConnectionStatus> {
   return (await get<ConnectionStatus>(`connections/related/${id}`)).data;
 }
+
+export async function removeConnection(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`connections/${id}/disconnect`, {})).data;
+}

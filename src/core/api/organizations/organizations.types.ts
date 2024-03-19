@@ -1,6 +1,6 @@
 import { AdditionalRes } from '../additionals/additionals.types';
 import { Media } from '../media/media.types';
-import { SocialCauses, PaginateRes, OrganizationType } from '../types';
+import { SocialCauses, PaginateRes, OrganizationType, ConnectStatus } from '../types';
 
 export interface OrganizationReq {
   name: string;
@@ -58,7 +58,12 @@ export interface Organization extends OrganizationReq {
   created_at: Date;
   updated_at: Date;
 }
-
+export interface OrganizationProfile extends Organization {
+  following: boolean;
+  follower: boolean;
+  connection_status: ConnectStatus | null;
+  connection_id: string;
+}
 export interface Member {
   id: string;
   username: string;
