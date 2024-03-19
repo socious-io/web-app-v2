@@ -18,7 +18,6 @@ export const OrgTeam = () => {
     handleAddAnother,
     handleAddMembers,
     teamMembers,
-    selectedPerson,
     handleDelete,
     openAlert,
     setOpenAlert,
@@ -52,7 +51,7 @@ export const OrgTeam = () => {
                 <SearchDropdown
                   key={`${item} ${index}`}
                   id={`member-${index}`}
-                  value={selectedPerson}
+                  value={addedMembers[index]}
                   placeholder="Select team member"
                   cacheOptions
                   isAsync
@@ -100,7 +99,7 @@ export const OrgTeam = () => {
                 hasMore={hasMore}
                 className="flex-1"
               >
-                {teamMembers.length ? (
+                {!!teamMembers.length && (
                   <div className={css.table}>
                     <div className={css.header}>Name</div>
 
@@ -113,8 +112,6 @@ export const OrgTeam = () => {
                       </div>
                     ))}
                   </div>
-                ) : (
-                  ''
                 )}
               </InfiniteScroll>
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   CurrentIdentity,
@@ -11,15 +11,18 @@ import {
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { RootState } from 'src/store';
-
+interface DropDownItem {
+  label: string;
+  value: string;
+  icon?: ReactNode;
+}
 export const useOrgTeam = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) =>
     state.identity.entities.find((identity) => identity.current),
   );
 
-  const [addedMembers, setAddedMembers] = useState<string[]>([]);
+  const [addedMembers, setAddedMembers] = useState<DropDownItem[]>([]);
   const [teamMembers, setTeamMembers] = useState<AccountItem[]>([]);
-  const [selectedPerson, setselectedPerson] = useState();
   const [openAlert, setOpenAlert] = useState(false);
   const [toDeleteName, setToDeleteName] = useState('');
   const [toDeleteId, settoDeleteId] = useState('');
@@ -29,7 +32,7 @@ export const useOrgTeam = () => {
   const getTeamMembers = async () => {
     try {
       const res = await getOrganizationMembers(currentIdentity!.id, { page: 1 });
-      const mapped = res.items.map((item) => {
+      const mapped = res.items?.map((item) => {
         return {
           id: item.id,
           img: item.avatar?.url,
@@ -50,7 +53,7 @@ export const useOrgTeam = () => {
     try {
       if (hasMore) {
         const res = await getOrganizationMembers(currentIdentity!.id, { page: page + 1 });
-        if (res.items.length) {
+        if (res.items?.length) {
           const mapped = res.items.map((item) => {
             return {
               id: item.id,
@@ -93,37 +96,36 @@ export const useOrgTeam = () => {
     }
   };
 
-  const onSelectMember = (member) => {
-    setselectedPerson(member);
-    const members = [...addedMembers];
-    const indx = members.findIndex((item) => item === '');
-    if (indx > -1) members.splice(indx, 1);
-    members.push(member.value);
+  const onSelectMember = (member: DropDownItem) => {
+    let members = [...addedMembers];
+    members = members.filter((item) => !!item.value);
+    members.push(member);
+    console.log('test log member', member);
     setAddedMembers(members);
   };
 
   const handleAddAnother = () => {
     const members = [...addedMembers];
-    members.push('');
+    members.push({ value: '', label: '' });
     setAddedMembers(members);
   };
 
   const handleAddMembers = async () => {
     try {
       let members = [...addedMembers];
-      members = members.filter((item) => item !== '');
-      const uniq = [...new Set(members)];
+      members = members.filter((item) => !!item.value);
+      const uniqIds = [...new Set(members.map((item) => item.value))];
+
       const requests = [];
-      uniq.forEach((memberId) => {
+      uniqIds.forEach((memberId) => {
         requests.push(addOrganizationMember(currentIdentity!.id, memberId));
       });
-      const res = await Promise.all(requests);
+      await Promise.all(requests);
       await getTeamMembers();
     } catch (e) {
       console.log('error in adding members', e);
     }
     setAddedMembers([]);
-    setselectedPerson(undefined);
   };
 
   const handleClickDelete = (id: string, name: string) => {
@@ -148,7 +150,6 @@ export const useOrgTeam = () => {
     handleAddAnother,
     handleAddMembers,
     teamMembers,
-    selectedPerson,
     handleDelete,
     openAlert,
     setOpenAlert,
