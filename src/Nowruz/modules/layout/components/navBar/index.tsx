@@ -14,7 +14,7 @@ export const NavBar: React.FC<NavBarProps> = ({ open, setOpen, logout }) => {
     <div
       className={` h-full fixed top-0 left-0 z-50 ${
         open ? 'w-full  md:w-[280px] ' : ' hidden md:block w-[82px] '
-      } h-full bg-Base-White md:bg-Brand-700 flex`}
+      } h-full bg-Base-White md:bg-Brand-700 flex sidebar`}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       tabIndex={1}

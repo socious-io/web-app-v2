@@ -19,6 +19,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
   submitButtonTheme = 'primary',
   submitButtonLabel,
   customIcon,
+  children,
 }) => {
   return (
     <Modal open={open} onClose={onClose} className={css.modal}>
@@ -40,15 +41,16 @@ export const AlertModal: React.FC<AlertModalProps> = ({
         </div>
         <div className={css.title}>{title}</div>
         <div className={css.message}>{message}</div>
-        <div className="w-full flex flex-col md:flex-row gap-3">
-          {closeButtn && (
-            <Button color="secondary" variant="outlined" onClick={onClose} fullWidth>
-              {closeButtonLabel}
-            </Button>
-          )}
+        {children && <div className="w-full overflow-y-auto">{children}</div>}
+        <div className="w-full flex flex-col md:flex-row-reverse gap-3">
           {submitButton && (
             <Button color={submitButtonTheme} variant="contained" onClick={onSubmit} fullWidth>
               {submitButtonLabel}
+            </Button>
+          )}
+          {closeButtn && (
+            <Button color="secondary" variant="outlined" onClick={onClose} fullWidth>
+              {closeButtonLabel}
             </Button>
           )}
         </div>

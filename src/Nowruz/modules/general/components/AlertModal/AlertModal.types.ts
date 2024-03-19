@@ -13,4 +13,5 @@ export interface AlertModalProps {
   submitButton?: boolean;
   submitButtonTheme?: 'error' | 'primary' | 'secondary';
   submitButtonLabel?: string;
+  children?: ReactNode;
 }

@@ -1,9 +1,16 @@
 import { ReactNode } from 'react';
 
-type Item = { label: string; value: string | number; disabled?: boolean; children?: ReactNode; error?: string[] };
+export type Item = {
+  label: string;
+  value: string | number;
+  disabled?: boolean;
+  children?: ReactNode;
+  error?: string[];
+};
 export interface RadioGroupProps {
   row?: boolean;
   items: Item[];
+  selectedItem?: Item;
   id?: string;
   name?: string;
   label?: string;
@@ -11,4 +18,5 @@ export interface RadioGroupProps {
   onChange?: (item: Item) => void;
   preselectIndex?: number;
   defaultValue?: string | number;
+  labelClassName?: string;
 }

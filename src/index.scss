@@ -51,6 +51,17 @@ body {
   }
 }
 
+#root,
+.navigation {
+  margin-top: env(safe-area-inset-top) !important;
+}
+
+#modal-box,
+.sidebar,
+#notification {
+  padding-top: env(safe-area-inset-top) !important;
+}
+
 //shared container for all sign up pages
 .form-container {
   width: 360px;
