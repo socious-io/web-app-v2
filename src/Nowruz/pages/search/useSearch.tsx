@@ -5,8 +5,8 @@ import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'sr
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
-import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
 import { JobListingCard } from 'src/Nowruz/modules/Jobs/components/JobListingCard';
+import { SearchResultProfile } from 'src/Nowruz/modules/Search/components/searchResultProfile';
 
 export type FilterReq = {
   causes_tags?: Array<string>;
@@ -115,8 +115,13 @@ export const useSearch = () => {
     (item: Job | Organization | User) => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
-          <div onClick={() => handleNavigate(item as Organization | User)} className="cursor-pointer">
-            <ProfileCard identity={item as User | Organization} labelShown={false} />
+          <div
+            onClick={(e) => {
+              if (e.target === e.currentTarget) handleNavigate(item as Organization | User);
+            }}
+            className="cursor-pointer"
+          >
+            <SearchResultProfile identity={item as User | Organization} />
           </div>
         );
       }
