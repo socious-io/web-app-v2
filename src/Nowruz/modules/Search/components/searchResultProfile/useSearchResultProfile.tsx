@@ -1,20 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  connectionStatus as connectionStatusAPI,
-  connectRequest,
-  CurrentIdentity,
-  Organization,
-  User,
-} from 'src/core/api';
+import { connectionStatus as connectionStatusAPI, connectRequest, Organization, User } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
-import { RootState } from 'src/store';
 
 export const useSearchResultProfile = (identity?: User | Organization) => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) =>
-    state.identity.entities.find((identity) => identity.current),
-  );
   const { name, profileImage, type, username, website } = getIdentityMeta(identity);
   const coverImageUrl = identity?.cover_image?.url;
   const [buttonLabel, setButtonLabel] = useState('');
@@ -26,21 +15,16 @@ export const useSearchResultProfile = (identity?: User | Organization) => {
 
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     console.log('test log openModal', openModal);
-  //   }, [openModal]);
-
   const getConnectionStatus = async () => {
     if (!identity?.id) return;
     const res = await connectionStatusAPI(identity.id);
+
     setDisplayButton(true);
     if (!res.connect) setButtonLabel('Connect');
+
     if (res.connect?.status === 'BLOCKED') setDisplayButton(false);
 
-    if (res.connect?.status === 'PENDING') {
-      if (res.connect.requester?.id === currentIdentity?.id) setButtonLabel('Request sent');
-      else setButtonLabel('Connect');
-    }
+    if (res.connect?.status === 'PENDING') setButtonLabel('Request sent');
 
     if (res.connect?.status === 'CONNECTED') setButtonLabel('Message');
   };
@@ -49,7 +33,7 @@ export const useSearchResultProfile = (identity?: User | Organization) => {
     getConnectionStatus();
   }, []);
 
-  const handleClick = async () => {
+  const handleClick = () => {
     try {
       switch (buttonLabel) {
         case 'Connect':
