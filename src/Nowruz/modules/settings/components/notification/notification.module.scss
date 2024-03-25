@@ -1,0 +1,14 @@
+@import 'src/components/_primitives.scss';
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  color: $color-grey-700;
+}
+.item {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+}

@@ -54,14 +54,18 @@ export const useLinksContainer = () => {
       public: false,
     },
 
-    /* Not available
     {
       label: 'Communities',
-      route: '/',
+      route: '',
       iconName: 'users-01',
-      public: false,
+      public: true,
+      children: userIsLoggedIn
+        ? [
+            { label: 'Feeds', route: '/', public: true },
+            { label: 'Connections', route: '/connections', public: false },
+          ]
+        : [{ label: 'Feeds', route: '/', public: true }],
     },
-    */
 
     {
       label: 'Messages',

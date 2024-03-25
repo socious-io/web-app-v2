@@ -1,8 +1,7 @@
 import { MenuList } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { Icon } from 'src/Nowruz/general/Icon';
 import { AvatarDropDown } from 'src/Nowruz/modules/general/components/avatarDropDown';
 
 import { LinksContainerProps } from './linksContainer.types';
@@ -12,7 +11,6 @@ import { LinkItem } from '../linkItem/LinkItem';
 export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen }) => {
   const { filteredMenu, userIsLoggedIn } = useLinksContainer();
 
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   const navigateFunction = async (route: string) => {
     localStorage.removeItem('page');
@@ -49,7 +47,6 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
             <LinkItem
               key={item.label}
               label={item.label}
-              navigateFunc={() => setSubMenuOpen(!subMenuOpen)}
               iconName={item.iconName}
               children={item.children.map((ch) => {
                 return {
@@ -60,18 +57,6 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
                 };
               })}
               menuOpen={open}
-              subMenuOpen={subMenuOpen}
-              badgeIcon={
-                <Icon
-                  name={subMenuOpen ? 'chevron-up' : 'chevron-down'}
-                  className="text-Brand-300 !cursor-pointer"
-                  fontSize={20}
-                  onClick={(event) => {
-                    event?.stopPropagation();
-                    setSubMenuOpen(!subMenuOpen);
-                  }}
-                />
-              }
             />
           ) : (
             <LinkItem
