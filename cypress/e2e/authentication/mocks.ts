@@ -182,3 +182,124 @@ export const PROJECT = {
   missions: 0,
   applied: false,
 };
+
+export const SKILLS = {
+  page: 1,
+  limit: 500,
+  total_count: 3,
+  items: [
+    {
+      id: '1ce1d1aa-efaf-460f-bdbb-c51429d7e02a',
+      name: 'C',
+      created_at: '2022-09-08T12:05:48.029Z',
+    },
+    {
+      id: '80e497a9-ef2f-4d27-b0d6-493bdddb5e89',
+      name: 'C#',
+      created_at: '2022-09-08T12:05:48.029Z',
+    },
+    {
+      id: '7df80c0d-a24e-48e0-84ff-ac3cfcb5d87e',
+      name: 'C++',
+      created_at: '2022-09-08T12:05:48.029Z',
+    },
+  ],
+};
+
+export const LOCATIONS = {
+  page: 1,
+  limit: 20,
+  total_count: 2,
+  items: [
+    {
+      add_id: 1649380,
+      id: 1850147,
+      name: 'Tokyo',
+      type: 'PPLC',
+      population: 8336599,
+      country_code: 'JP',
+      alternate_name: 'Tokyo',
+      alt_language: 'en',
+      is_historic: false,
+      is_colloquial: false,
+      is_short_name: false,
+      region_id: '40',
+      subregion_id: '',
+      region_name: 'Tokyo Prefecture',
+      region_iso: '13',
+      subregion_name: null,
+      subregion_iso: null,
+      timezone: 'Asia/Tokyo',
+      country_name: 'Japan',
+      timezone_utc: 'UTC+09:00',
+    },
+  ],
+};
+
+export const INDUSTRIES = {
+  page: 1,
+  limit: 20,
+  total_count: 469,
+  items: [
+    {
+      name: 'Abrasives and Nonmetallic Minerals Manufacturing',
+    },
+    {
+      name: 'Accessible Architecture and Design',
+    },
+    {
+      name: 'Accessible Hardware Manufacturing',
+    },
+    {
+      name: 'Accommodation',
+    },
+    {
+      name: 'Accommodation and Food Services',
+    },
+    {
+      name: 'Accounting',
+    },
+    {
+      name: 'Administration of Justice',
+    },
+    {
+      name: 'Administrative and Support Services',
+    },
+    {
+      name: 'Advertising Services',
+    },
+    {
+      name: 'Agricultural Chemical Manufacturing',
+    },
+    {
+      name: 'Agriculture, Construction, Mining Machinery Manufacturing',
+    },
+    {
+      name: 'Airlines and Aviation',
+    },
+    {
+      name: 'Airlines/Aviation',
+    },
+    {
+      name: 'Air, Water, and Waste Program Management',
+    },
+    {
+      name: 'Alternative Dispute Resolution',
+    },
+    {
+      name: 'Alternative Fuel Vehicle Manufacturing',
+    },
+    {
+      name: 'Alternative Medicine',
+    },
+    {
+      name: 'Ambulance Services',
+    },
+    {
+      name: 'Amusement Parks and Arcades',
+    },
+    {
+      name: 'Animal Feed Manufacturing',
+    },
+  ],
+};
