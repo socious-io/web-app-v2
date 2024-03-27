@@ -30,7 +30,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
         aria-labelledby={label}
         name={name}
         defaultValue={defaultValue}
-        value={selectedItem ? selectedItem.value : ''}
+        value={selectedItem ? selectedItem.value : items?.find((_, index) => index === selectedIndex)?.value}
       >
         {items.map((item, index) => (
           <>
