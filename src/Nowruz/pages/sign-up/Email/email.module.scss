@@ -34,3 +34,16 @@
   align-items: center;
   justify-content: center;
 }
+
+.referrerContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.referrerText {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  color: $color-grey-700;
+}

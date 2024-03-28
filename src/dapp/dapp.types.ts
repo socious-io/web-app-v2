@@ -43,6 +43,8 @@ export interface EscrowParams {
   projectId: string;
   token?: string;
   verifiedOrg: boolean;
+  addressReferringOrg?: string;
+  addressReferringCont?: string;
 }
 
 export interface AllowanceParams {

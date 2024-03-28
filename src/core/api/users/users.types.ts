@@ -109,6 +109,7 @@ export interface User {
   recommendations?: AdditionalRes[];
   portfolios?: AdditionalRes[];
   certificates?: AdditionalRes[];
+  identity_verified: boolean;
 }
 
 export interface UserProfile extends User {

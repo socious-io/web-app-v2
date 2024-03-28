@@ -5,13 +5,14 @@ import { ConnectRequestModal } from 'src/Nowruz/modules/connections/connectReque
 import { ThreeDotsButton } from 'src/Nowruz/modules/connections/threeDotsButton';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { EditInfoModal } from 'src/Nowruz/modules/userProfile/containers/editInfo';
-
+import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import DesktopHeader from './desktopHeader';
 import { MobileHeader } from './mobileHeader';
 import css from './profileHeader.module.scss';
 import { useProfileHeader } from './useProfileHeader';
 import { EditImageModal } from '../../containers/editImage';
 import { EditInfoOrgModal } from '../../containers/editInfoOrg';
+import { Organization, User } from 'src/core/api';
 
 export const ProfileHeader = () => {
   const {
@@ -42,8 +43,37 @@ export const ProfileHeader = () => {
 
   const coverImage = identity?.cover_image;
 
+  let verified;
+  if (identityType === 'users')
+    verified = (identity as User).identity_verified
+  else
+    verified = (identity as Organization).verified_impact
+
   return (
     <>
+      {myProfile && !verified && (
+        <AlertMessage
+          theme="warning"
+          iconName="alert-circle"
+          title="Verify your identity"
+          subtitle="In order to access referrals, you need to have a Atala PRISM DID and verify your identity."
+        >
+          <div className="flex">
+            <button
+              className="cursor-pointer border-none text-sm leading-5 font-semibold text-Warning-600"
+            >
+              Learn more
+            </button>
+            <button
+              className="cursor-pointer border-none flex"
+            >
+              <div className="text-sm leading-5 font-semibold text-Error-700 pl-3 pr-2">Verify now</div>
+              <Icon name="arrow-right" fontSize={20} color={variables.color_error_700} />
+            </button>
+          </div>
+        </AlertMessage>
+      )}
+
       <div className={`${css.container} md:mb-12 mb-6`}>
         {myProfile && (
           <MUIIconButton aria-label="upload-banner" className={`${css.iconCamera}`} onClick={handleOpenEditHeader}>

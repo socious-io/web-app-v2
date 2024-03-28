@@ -305,6 +305,16 @@ export const dappConfig: DappConfig = {
             type: 'bool',
           },
           {
+            internalType: 'address',
+            name: '_addressReferringOrg',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_addressReferringCont',
+            type: 'address',
+          },
+          {
             internalType: 'contract IERC20',
             name: '_token',
             type: 'address',
@@ -351,6 +361,11 @@ export const dappConfig: DappConfig = {
           {
             internalType: 'address',
             name: '_contributor',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_addressReferringCont',
             type: 'address',
           },
         ],
