@@ -102,6 +102,7 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
 
   return (
     <Modal
+      id="apply-job"
       open={open}
       handleClose={() => handleClose(false)}
       title="Apply to job"
