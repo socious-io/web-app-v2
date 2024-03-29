@@ -1,6 +1,6 @@
 //Server
-export const API_SERVER = Cypress.env('api_server');
-export const APP_URL = Cypress.env('app_url');
+export const API_SERVER = Cypress.env('api_server') || 'https://dev.socious.io/api/v2';
+export const APP_URL = Cypress.env('app_url') || 'http://localhost:3000';
 
 //Credentials
 export const VALID_EMAIL = 'valid_email@gmail.com';
