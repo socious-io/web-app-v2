@@ -23,7 +23,7 @@ jobs:
     - name: Run Cypress tests
       uses: cypress-io/github-action@v6.1.0
       with:
-        config-file: cypress.env.json
+        config: api_server=https://dev.socious.io/api/v2/,app_url=http://localhost:3000
         start: npm run test
         command: npm run cypress:run # This explicitly runs Cypress tests
       env:
