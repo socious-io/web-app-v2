@@ -23,6 +23,7 @@ jobs:
     - name: Run Cypress tests
       uses: cypress-io/github-action@v6.1.0
       with:
+        config-file: cypress.env.json
         start: npm run test
         command: npm run cypress:run # This explicitly runs Cypress tests
       env:
