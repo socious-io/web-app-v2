@@ -1,9 +1,6 @@
-name: CI - Build, Test, and Deploy
+name: CI - Build, Test
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
   build-and-test:
@@ -18,7 +15,9 @@ jobs:
         node-version: '20'
 
     - name: Install dependencies
-      run: npm install
+      run: |
+          npm cache clean --force
+          npm install
 
     - name: Start server and run unit tests
       run: npm run test &
@@ -33,13 +32,13 @@ jobs:
         VITE_GOOGLE_RECAPTCHA_SITE_KEY: secret
 
     - name: Run Cypress tests
-      uses: cypress-io/github-action@v2
+      uses: cypress-io/github-action@v6.1.0
       with:
         start: npm start # This should start your server
         wait-on: 'http://localhost:3000'
         wait-on-timeout: 60 # Waits for 1 minute for the server to start
         command: npm run cypress:run # This explicitly runs Cypress tests
 
-    - name: Deploy to Cloudflare via Webhook
+    - name: Check Status
       if: failure()
       run: exit 1
