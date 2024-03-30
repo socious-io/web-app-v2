@@ -156,7 +156,7 @@ describe('User Application', () => {
     //Just hit continue and check the route
     cy.contains('button', 'Continue').click();
     cy.get('#apply-job').should('exist');
-    cy.get('textarea[name=coverLetter]').eq(1).type('Example Cover Letter');
+    cy.get('textarea[name=coverLetter]').type('Example Cover Letter');
     cy.fixture('example.pdf').then((fileContent) => {
       cy.get('input[type="file"]').attachFile({
         fileContent: fileContent.toString(),
