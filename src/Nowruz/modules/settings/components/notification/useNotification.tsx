@@ -91,13 +91,13 @@ export const useNotification = () => {
 
   function onAllowNotifications() {
     setAllChecked(!allChecked);
-    const t = settings.map((x) => {
+    const mappedSettings = settings.map((x) => {
       x.in_app = !allChecked;
       x.email = !allChecked;
       x.push = !allChecked;
       return x;
     });
-    setSettings(t);
+    setSettings(mappedSettings);
   }
 
   const onSave = async () => {

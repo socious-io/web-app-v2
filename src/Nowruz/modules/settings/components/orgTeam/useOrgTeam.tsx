@@ -95,9 +95,7 @@ export const useOrgTeam = () => {
 
   const onSelectMember = (member) => {
     setselectedPerson(member);
-    const members = [...addedMembers];
-    const indx = members.findIndex((item) => item === '');
-    if (indx > -1) members.splice(indx, 1);
+    const members = addedMembers.filter((item) => !item);
     members.push(member.value);
     setAddedMembers(members);
   };

@@ -16,7 +16,6 @@ import {
   impactPoints,
   getOrganizationByShortName,
   getRequestedVerifyExperiences,
-  userApplicants,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -361,15 +360,6 @@ export const blueprint: RouteObject[] = [
             path: 'settings',
             async lazy() {
               const { Setting } = await import('src/Nowruz/pages/setting/index');
-              return {
-                Component: Setting,
-              };
-            },
-          },
-          {
-            path: 'orgSettings',
-            async lazy() {
-              const { Setting } = await import('src/Nowruz/pages/orgSetting/index');
               return {
                 Component: Setting,
               };
