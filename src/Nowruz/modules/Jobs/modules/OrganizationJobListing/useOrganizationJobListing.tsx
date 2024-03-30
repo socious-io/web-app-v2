@@ -57,7 +57,7 @@ export const useOrganizationJobListing = () => {
   ];
 
   const navigateToCreateJob = () => {
-    navigate('./create');
+    navigate('../create');
   };
 
   useEffect(() => {

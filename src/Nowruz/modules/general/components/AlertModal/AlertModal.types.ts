@@ -11,6 +11,8 @@ export interface AlertModalProps {
   closeButtn?: boolean;
   closeButtonLabel?: string;
   submitButton?: boolean;
+  disableSubmitButton?: boolean;
   submitButtonTheme?: 'error' | 'primary' | 'secondary';
   submitButtonLabel?: string;
+  children?: ReactNode;
 }

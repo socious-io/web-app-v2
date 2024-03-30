@@ -8,16 +8,21 @@ import { removeValuesFromObject } from 'src/core/utils';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
 import { JobListingCard } from 'src/Nowruz/modules/Jobs/components/JobListingCard';
 
-type FilterReq = {
+export type FilterReq = {
   causes_tags?: Array<string>;
   skills?: Array<string>;
-  country?: Array<string>;
+  country?: Array<keyof typeof COUNTRIES_DICT>;
   city?: Array<string>;
-  label?: { value: string; label: string; countryCode: string };
+  remote_preference?: string;
+  job_category_id: string;
+  project_length?: Array<string>;
+  experience_level: Array<number>;
+  payment_type?: string | number;
+  location?: { value: number; label: string; countryCode: string };
 };
 
 export const useSearch = () => {
-  const data = useLoaderData() as JobsRes | UsersRes | OrganizationsRes;
+  const { searchData: data } = useLoaderData() as { searchData: JobsRes | UsersRes | OrganizationsRes };
   const [searchParams] = useSearchParams();
   const type = searchParams.get('type');
   const q = searchParams.get('q');
@@ -48,6 +53,11 @@ export const useSearch = () => {
       skills: filter.skills,
       country: filter.country,
       city: filter.city,
+      remote_preference: filter.remote_preference,
+      job_category_id: filter.job_category_id,
+      project_length: filter.project_length,
+      experience_level: filter.experience_level,
+      payment_type: filter.payment_type,
     };
   };
 
@@ -74,8 +84,8 @@ export const useSearch = () => {
 
   const onApply = async (filterRaw: FilterReq) => {
     setFilter(filterRaw);
-    if (filterRaw.label && filterRaw.country) {
-      const label = `${filterRaw.label.label}, ${getCountryName(filterRaw.country)}`;
+    if (filterRaw.location && !!filterRaw?.country?.length) {
+      const label = `${filterRaw.location.label}, ${getCountryName(filterRaw.country[0])}`;
       setCountryName(label);
     }
     handleCloseOrApplyFilter();

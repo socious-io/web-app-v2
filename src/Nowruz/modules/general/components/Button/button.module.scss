@@ -27,7 +27,7 @@
   &:global(.MuiButton-root) {
     &:disabled {
       background-color: $color-primary-200;
-      color: $color-white;
+      color: $color-primary-700;
     }
   }
   &:global(.MuiButton-containedPrimary) {

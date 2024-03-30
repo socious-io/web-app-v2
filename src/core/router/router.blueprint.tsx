@@ -16,6 +16,7 @@ import {
   impactPoints,
   getOrganizationByShortName,
   getRequestedVerifyExperiences,
+  connections as getConnections,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -350,8 +351,9 @@ export const blueprint: RouteObject[] = [
                   if (q?.trim()) {
                     Object.assign(body, { q: q });
                   }
-                  const data = await searchReq(body, { limit: 10, page });
-                  return data;
+                  const requests = [searchReq(body, { limit: 10, page }), jobCategoriesReq()];
+                  const [searchData, jobCategories] = await Promise.all(requests);
+                  return { searchData, jobCategories };
                 },
               },
             ],
@@ -362,6 +364,19 @@ export const blueprint: RouteObject[] = [
               const { Setting } = await import('src/Nowruz/pages/setting/index');
               return {
                 Component: Setting,
+              };
+            },
+          },
+          {
+            path: 'connections',
+            loader: async () => {
+              const connections = await getConnections({ page: 1, limit: 10, 'filter.status': 'CONNECTED' });
+              return { connections };
+            },
+            async lazy() {
+              const { Connctions } = await import('src/Nowruz/pages/connections');
+              return {
+                Component: Protect(Connctions, 'both'),
               };
             },
           },
@@ -637,12 +652,10 @@ function ErrorBoundary() {
   const refreshed = localStorage.getItem(flag);
 
   if (!refreshed) {
-    localStorage.setItem(flag, 'true');
+    localStorage.setItem(flag, `${new Date().getTime()}`);
     window.location.reload();
     return <></>;
   }
-
-  localStorage.removeItem(flag);
 
   const error: any = useRouteError();
   if (error?.response?.status === 401) return <Navigate to="/intro" />;

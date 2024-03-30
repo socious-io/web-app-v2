@@ -16,3 +16,5 @@ export const config = {
   googleOauthClientId: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID,
   googleRecaptchaSiteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
 };
+
+export const isTestingEnvironment = config.env === 'test';

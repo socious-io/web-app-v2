@@ -28,6 +28,9 @@ export async function connectRequestReject(id: string): Promise<SuccessRes> {
 export async function block(identityId: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`connections/${identityId}/block/direct`, {})).data;
 }
+export async function getFollowers(params: PaginateReq): Promise<FollowingRes> {
+  return (await get<FollowingRes>('follows/followers', { params })).data;
+}
 export async function getFollowings(params: PaginateReq): Promise<FollowingRes> {
   return (await get<FollowingRes>('follows/followings', { params })).data;
 }
@@ -44,4 +47,8 @@ export async function unfollow(identityId: string): Promise<SuccessRes> {
 
 export async function connectionStatus(id: string): Promise<ConnectionStatus> {
   return (await get<ConnectionStatus>(`connections/related/${id}`)).data;
+}
+
+export async function removeConnection(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`connections/${id}/disconnect`, {})).data;
 }

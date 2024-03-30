@@ -29,6 +29,7 @@ export const Chats = () => {
     setOpenError,
     setChats,
   } = useChats();
+
   const summaryJSX = (
     <div className={css.summary}>
       <div className="w-full py-5 px-6 flex justify-between items-center">
@@ -56,14 +57,16 @@ export const Chats = () => {
         hasMore={true}
         className="w-full"
       >
-        {chats.map((item) => (
-          <SummaryCard
-            key={item.id}
-            chat={item}
-            handleSelect={handleSelectChat}
-            isSelected={item.id === selectedChat?.id}
-          />
-        ))}
+        {chats
+          .filter((c) => c.participants.length > 0)
+          .map((item) => (
+            <SummaryCard
+              key={item.id}
+              chat={item}
+              handleSelect={handleSelectChat}
+              isSelected={item.id === selectedChat?.id}
+            />
+          ))}
       </InfiniteScroll>
     </div>
   );

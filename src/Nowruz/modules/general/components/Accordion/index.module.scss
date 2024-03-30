@@ -1,0 +1,40 @@
+@import 'src/components/_primitives.scss';
+
+.accordionRoot {
+  box-shadow: none;
+
+  &:global(.MuiAccordion-root.Mui-expanded) {
+    margin: 0;
+  }
+
+  &::before {
+    display: none;
+  }
+}
+
+.accordionSummaryRoot {
+  padding: 0;
+  border: solid $color-grey-200;
+  border-width: 1px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+
+  &:global(.MuiAccordionSummary-root) {
+    &:global(.Mui-expanded) {
+      min-height: 3rem;
+      border-width: 1px 0;
+    }
+
+    :global(.MuiAccordionSummary-content) {
+      margin: 1rem 0;
+
+      :global(.Mui-expanded) {
+        margin: inherit;
+      }
+    }
+  }
+}
+
+.accordionContent {
+  padding: 1.5rem 0;
+}
