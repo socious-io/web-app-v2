@@ -17,7 +17,7 @@ export const useUserTeam = () => {
     try {
       await removeOrganizationMember(orgId, currentIdentity!.id);
       const resp = await identities();
-      await dispatch(setIdentityList(resp));
+      dispatch(setIdentityList(resp));
     } catch (error) {
       console.log('error in leaving a team: ', error);
     }
