@@ -7,7 +7,6 @@ export const useSearchResultProfile = (identity?: User | Organization) => {
   const { name, profileImage, type, username, website } = getIdentityMeta(identity);
   const coverImageUrl = identity?.cover_image?.url;
   const [buttonLabel, setButtonLabel] = useState('');
-  const [displayButton, setDisplayButton] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -19,14 +18,10 @@ export const useSearchResultProfile = (identity?: User | Organization) => {
     if (!identity?.id) return;
     const res = await connectionStatusAPI(identity.id);
 
-    setDisplayButton(true);
     if (!res.connect) setButtonLabel('Connect');
-
-    if (res.connect?.status === 'BLOCKED') setDisplayButton(false);
-
-    if (res.connect?.status === 'PENDING') setButtonLabel('Request sent');
-
-    if (res.connect?.status === 'CONNECTED') setButtonLabel('Message');
+    else if (res.connect?.status === 'BLOCKED') setButtonLabel('');
+    else if (res.connect?.status === 'PENDING') setButtonLabel('Request sent');
+    else if (res.connect?.status === 'CONNECTED') setButtonLabel('Message');
   };
 
   useEffect(() => {
@@ -55,7 +50,6 @@ export const useSearchResultProfile = (identity?: User | Organization) => {
       if (error || !identity?.id) return;
       await connectRequest(identity.id, { text: message });
       setButtonLabel('Request sent');
-      setDisplayButton(true);
     } catch (e) {
       console.log('error in connect request', e);
     }
@@ -76,7 +70,6 @@ export const useSearchResultProfile = (identity?: User | Organization) => {
     username,
     website,
     coverImageUrl,
-    displayButton,
     buttonLabel,
     handleClick,
     openModal,

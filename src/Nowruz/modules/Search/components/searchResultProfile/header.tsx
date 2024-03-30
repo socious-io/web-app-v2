@@ -22,7 +22,6 @@ export const Header: React.FC<HeaderProps> = ({ identity }) => {
     type,
     username,
     coverImageUrl,
-    displayButton,
     buttonLabel,
     handleClick,
     openModal,
@@ -90,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({ identity }) => {
               />
             )}
           </div>
-          {displayButton && (
+          {!!buttonLabel && (
             <Button
               variant="contained"
               color="primary"
