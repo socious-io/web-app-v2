@@ -13,6 +13,9 @@ import { JobDetailHeader } from 'src/Nowruz/modules/Jobs/components/jobDetailHea
 import { RootState } from 'src/store';
 
 import css from './jobDetail.module.scss';
+import { ApplyModal } from 'src/Nowruz/modules/Jobs/components/applyModal';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { ApplyExternalPartyModal } from 'src/Nowruz/modules/Jobs/components/applyExternalPartyModal';
 
 export const JobDetail = () => {
   const { jobDetail } = useLoaderData() as {
@@ -27,10 +30,26 @@ export const JobDetail = () => {
   const [organization, setOrganization] = useState<Organization>();
   const [justApplied, setJustApplied] = useState(false);
   const [beforeApplied, setBeforeApplied] = useState(jobDetail.applied);
+  const [openApply, setOpenApply] = useState(false);
+  const [openExternalApply, setOpenExternalApply] = useState(false);
 
   useEffect(() => {
     getOrganization(jobDetail.identity_meta.id).then((res) => setOrganization(res));
+    nonPermanentStorage.get('openApplyModal').then((res) => {
+      if (currentIdentity && res && !jobDetail.applied) handleOpenApplyModal();
+      nonPermanentStorage.remove('openApplyModal');
+    });
   }, []);
+
+  const handleOpenApplyModal = () => {
+    if (jobDetail.other_party_id) setOpenExternalApply(true);
+    else setOpenApply(true);
+  };
+
+  const handleCloseApplyModal = (applied: boolean) => {
+    setOpenApply(false);
+    if (setJustApplied) setJustApplied(applied);
+  };
 
   const userJSX = () => (
     <div className="flex flex-col md:flex-row-reverse gap-8 md:gap-16">
@@ -54,7 +73,11 @@ export const JobDetail = () => {
       </div>
 
       <div className="md:mr-16">
-        <JobDetailAbout isUser={true} applied={justApplied || beforeApplied} setJustApplied={setJustApplied} />
+        <JobDetailAbout
+          isUser={true}
+          applied={justApplied || beforeApplied}
+          handleOpenApplyModal={handleOpenApplyModal}
+        />
       </div>
       <div className={css.content}>
         <div className="hidden md:flex">
@@ -86,9 +109,21 @@ export const JobDetail = () => {
   );
 
   return (
-    <div className={css.container}>
-      <JobDetailHeader job={jobDetail} applied={justApplied || beforeApplied} setJustApplied={setJustApplied} />
-      {userJSX()}
-    </div>
+    <>
+      <div className={css.container}>
+        <JobDetailHeader
+          job={jobDetail}
+          applied={justApplied || beforeApplied}
+          handleOpenApplyModal={handleOpenApplyModal}
+        />
+        {userJSX()}
+      </div>
+      <ApplyModal open={openApply} handleClose={handleCloseApplyModal} />
+      <ApplyExternalPartyModal
+        open={openExternalApply}
+        handleClose={() => setOpenExternalApply(false)}
+        otherPartyUrl={jobDetail.other_party_url || ''}
+      />
+    </>
   );
 };
