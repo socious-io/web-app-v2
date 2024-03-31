@@ -1,20 +1,24 @@
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { ImpactPoints, User } from 'src/core/api';
-import { Divider, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
-import { HoursSpentCard } from 'src/Nowruz/modules/userProfile/components/impact/hoursSpentCard';
 import css from './dashboard.module.scss';
 import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Icon } from 'src/Nowruz/general/Icon';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
+import { Card } from 'src/Nowruz/modules/dashboard/card';
 
 export const Dashboard = () => {
-  const { userProfile, impactPointHistory } = useLoaderData() as { userProfile: User; impactPointHistory: ImpactPoints };
+  const { userProfile, impactPointHistory } = useLoaderData() as {
+    userProfile: User;
+    impactPointHistory: ImpactPoints;
+  };
   const navigate = useNavigate();
 
   let hoursWorked = 0;
   let hoursVolunteered = 0;
+  let donated = 0;
   if (impactPointHistory) {
     impactPointHistory.items
       .filter((item) => item.offer !== null)
@@ -22,98 +26,95 @@ export const Dashboard = () => {
         if (item.offer) {
           if ((item?.offer?.currency && ['USD', 'YEN'].includes(item?.offer?.currency)) || item.offer.currency)
             hoursWorked += item.offer.total_hours;
-          else
-            hoursVolunteered += item.offer.total_hours;
+          else hoursVolunteered += item.offer.total_hours;
         }
       });
   }
 
-  return (
-    <div className="flex h-full">
-      <div className={css.dashboardContainer}>
-        <Typography variant="h3" className="text-Gray-light-mode-900">
-          👋 Welcome back, {userProfile.first_name}
-        </Typography>
-        <Typography variant="h5" className="text-Gray-light-mode-600 pt-1">
-          Your current impact and activity.
-        </Typography>
-
-        <div className="flex gap-4">
-          <div className="hidden lg:block rounded-lg sm:row-span-2">
-            <div className={`${css.colorCardContainer} ${css.bgWildBlue}`}>
-              <div className={css.colorCardDiv}>
-                <div className={css.colorCardTitle}>Refer and earn</div>
-              </div>
-              <div className={css.colorCardDescription}>
-                Help us make an impact and earn rewards by sharing Socious with  potential talent and organizations.
-              </div>
-              <div className="self-end">
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  className={css.button}
-                  onClick={() => {navigate('/refer');}}
-                >
-                  <Icon name="star-06" fontSize={20} color={variables.color_grey_700} />
-                  Refer now
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className="hidden lg:block rounded-lg sm:row-span-2">
-            <div className={`${css.colorCardContainer} ${css.bgDarkVanilla}`}>
-              <div className={css.colorCardDiv}>
-                <div className={css.colorCardTitle}>Find jobs</div>
-              </div>
-              <div className={css.colorCardDescription}>
-                Explore opportunities aligned with your values
-              </div>
-              <div className="self-end">
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  className={css.button}
-                  onClick={() => {navigate('/jobs');}}
-                >
-                  Find jobs
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className="hidden lg:block rounded-lg sm:row-span-2">
-            <div className={`${css.colorCardContainer} ${css.bgApricot}`}>
-              <div className={css.colorCardDiv}>
-                <div className={css.colorCardTitle}>Sell your services</div>
-              </div>
-              <div className={css.colorCardDescription}>
-                Showcase your unique offerings and attract clients
-              </div>
-              <div className="self-end">
-                <Button variant="outlined" color="secondary" className={css.button}>
-                  Create service
-                </Button>
-              </div>
-            </div>
-          </div>
+  const renderCard = (
+    title: string,
+    description: string,
+    bgColor: string,
+    redirectUrl: string,
+    buttonLabel: string,
+    buttonIcon?: string,
+  ) => {
+    return (
+      <div className={css.card} style={{ backgroundColor: bgColor }}>
+        <div className="flex flex-col gap-1">
+          <span className="text-lg font-semibold text-Gray-light-mode-900">{title}</span>
+          <span className="text-sm font-normal text-Gray-light-mode-600">{description}</span>
         </div>
-
-        <div className="grid grid-cols-3 gap-4">
-          <div className="row-span-2"><Impact myProfile={true} point={userProfile.impact_points} /></div>
-          <div className={css.impactCardContainer}>
-            <HoursSpentCard cardText={"Total hours contributed"} hours={hoursWorked + hoursVolunteered} />
-          </div>
-          <div className={css.impactCardContainer}>
-            <HoursSpentCard cardText={"Hours worked"} hours={hoursWorked} />
-          </div>
-          <div className={css.impactCardContainer}>
-            <HoursSpentCard cardText={"Hours volunteered"} hours={hoursVolunteered} />
-          </div>
+        <div className="mr-0 ml-auto">
+          <Button variant="outlined" color="primary" onClick={() => navigate(redirectUrl)} customStyle="flex gap-2">
+            {!!buttonIcon && <Icon name={buttonIcon} fontSize={20} className="text-Gray-light-mode-500" />}
+            {buttonLabel}
+          </Button>
         </div>
-        
       </div>
-      <Divider orientation="vertical" sx={{ bgcolor: variables.color_grey_200 }} flexItem />
-      <div className="flex-none w-25">
-        <ProfileCard identity={userProfile} />
+    );
+  };
+
+  return (
+    <div className=" w-full flex ">
+      <div className="w-full h-full flex flex-col gap-8 py-8 px-4 md:px-8">
+        <div className="flex flex-col gap-1">
+          <Typography variant="h3" className="text-Gray-light-mode-900">
+            👋 Welcome back, {userProfile.first_name}
+          </Typography>
+          <Typography variant="h5" className="text-Gray-light-mode-600">
+            Your current impact and activity.
+          </Typography>
+        </div>
+        <div className="w-full h-fit flex gap-4 overflow-x-scroll">
+          {renderCard(
+            'Refer and earn',
+            'Help us make an impact and earn rewards by sharing Socious with  potential talent and organizations.',
+            variables.color_wild_blue_100,
+            '/refer',
+            'Refer now',
+            'star-06',
+          )}
+          {renderCard(
+            'Find jobs',
+            'Explore opportunities aligned with your values',
+            variables.color_dark_vanilla_100,
+            '/jobs',
+            'Find jobs',
+          )}
+          {renderCard(
+            'Sell your services',
+            'Showcase your unique offerings and attract clients',
+            variables.color_appricot_100,
+            '/',
+            'Create service',
+          )}
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 grid-rows-4 md:grid-rows-2 gap-4">
+          <div className="row-span-2 col-span-2 md:col-span-1">
+            <Impact myProfile={true} point={userProfile.impact_points} />
+          </div>
+          <div className="row-span-1 col-span-1">
+            <Card
+              iconName="clock"
+              cardText={'Total hours contributed'}
+              number={hoursWorked + hoursVolunteered}
+              unit="hrs"
+            />
+          </div>
+          <div className="row-span-1 col-span-1">
+            <Card iconName="clock" cardText={'Hours worked'} number={hoursWorked} unit="hrs" />
+          </div>
+          <div className="row-span-1 col-span-1">
+            <Card iconName="clock" cardText={'Hours volunteered'} number={hoursVolunteered} unit="hrs" />
+          </div>
+          <div className="row-span-1 col-span-1">
+            <Card iconName="currency-dollar" cardText={'Donated'} number={`$${donated}`} />
+          </div>
+        </div>
+      </div>
+      <div className="hidden md:flex w-[392px] h-full">
+        <ProfileCard identity={userProfile} labelShown={false} rounded={false} />
       </div>
     </div>
   );

@@ -15,14 +15,14 @@ export const Impact: React.FC<ImpactProps> = (props) => {
     return state.identity.entities.find((identity) => identity.current);
   });
   const user = currentIdentity?.meta as UserMeta;
-  const { point = 0, myProfile } = props;
+  const { point = 0, myProfile, customContainerStyle } = props;
   const navigate = useNavigate();
   const navigateToImpact = () => {
     navigate(`/profile/users/${user.username}/impact`);
   };
 
   return (
-    <div className={css.container}>
+    <div className={`${css.container} ${customContainerStyle}`}>
       <div className={css.titleDiv}>
         <div className={css.title}>Impact points</div>
       </div>

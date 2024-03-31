@@ -131,6 +131,15 @@ export default {
         900: '#101323',
         950: '#0d0f1c',
       },
+      'Wild blue': {
+        100: '#eaf0f9',
+      },
+      'Dark vanilla': {
+        100: '#f2f4ec',
+      },
+      Apricot: {
+        100: '#fcf3e5',
+      },
       'Gray cool': {
         25: '#fcfcfd',
         50: '#f9f9fb',

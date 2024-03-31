@@ -1,80 +1,16 @@
-@import 'src/components/_primitives.scss';
-
-.dashboardContainer {
-  margin: 32px 16px;
-  @media (min-width: 640px) {
-    margin: 32px 32px;
-  }
-}
-
-.colorCardContainer {
-  margin: 32px 0;
-  padding: 20px;
-  border-radius: 12px;
+.card {
   display: flex;
   flex-direction: column;
-  @media (min-width: 640px) {
-    width: 290px;
+  justify-content: space-between;
+  gap: 24px;
+  border-radius: 12px;
+  padding: 20px 24px 16px 24px;
+
+  @media (max-width: 640px) {
+    width: 100%;
+    min-width: 100%;
   }
-}
-
-.bgWildBlue {
-  background-color: #EAF0F9;
-}
-
-.bgDarkVanilla {
-  background-color: #F2F4EC;
-}
-
-.bgApricot {
-  background-color: #FCF3E5;
-}
-
-.colorCardDiv {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  margin-bottom: 4px;
-  gap: 8px;
-}
-
-.colorCardTitle {
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 28px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: black;
-}
-
-.colorCardDescription {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: $color-grey-600;
-  margin-bottom: 8px;
-}
-
-.button {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  letter-spacing: 0em;
-  text-align: left;
-  gap: 8px;
-  display: flex;
-  padding: 10px 16px 10px 16px;
-  border-radius: 8px;
-  border-color: $color-grey-300;
-  background-color: white;
-  text-transform: none;
-  margin-top: 20px;
-}
-
-.impactCardContainer {
   @media (min-width: 640px) {
-    width: 290px;
+    flex: 1;
   }
 }
