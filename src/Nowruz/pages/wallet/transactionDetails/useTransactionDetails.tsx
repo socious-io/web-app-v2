@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { CurrentIdentity, Mission, StripeProfileRes, payoutByMission } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
+import dapp from 'src/dapp';
 import { RootState } from 'src/store';
 
 export const useTransactionDetailes = () => {
@@ -34,6 +35,14 @@ export const useTransactionDetailes = () => {
     navigate('/payments');
   };
 
+  let currency = mission.offer?.currency || '';
+  if (mission.offer?.crypto_currency_address) {
+    dapp.NETWORKS.map((n) => {
+      const token = n.tokens.find((t) => mission.offer.crypto_currency_address === t.address);
+      if (token) currency = token.symbol;
+    });
+  }
+
   const detail = {
     name: isUser ? mission.assigner.meta.name : mission.assignee.meta.name,
     avatar: isUser ? mission.assigner.meta.image : mission.assignee.meta.avatar,
@@ -43,6 +52,7 @@ export const useTransactionDetailes = () => {
     amount: mission.payment.amount,
     transactionId: mission.escrow.id,
     symbol: mission.offer.currency === 'JPY' ? '¥' : mission.offer.currency === 'USD' ? '$' : '',
+    currency,
   };
 
   function checkDisablePayout() {
