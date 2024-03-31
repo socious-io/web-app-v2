@@ -8,17 +8,22 @@ import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Icon } from 'src/Nowruz/general/Icon';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
 import { Card } from 'src/Nowruz/modules/dashboard/card';
+import { getIdentityMeta } from 'src/core/utils';
 
 export const Dashboard = () => {
   const { userProfile, impactPointHistory } = useLoaderData() as {
     userProfile: User;
     impactPointHistory: ImpactPoints;
   };
+
   const navigate = useNavigate();
 
   let hoursWorked = 0;
   let hoursVolunteered = 0;
-  let donated = 0;
+  const { name, type, usernameVal } = getIdentityMeta(userProfile);
+  const profileUrl =
+    type === 'users' ? `/profile/users/${usernameVal}/view` : `/profile/organizations/${usernameVal}/view`;
+
   if (impactPointHistory) {
     impactPointHistory.items
       .filter((item) => item.offer !== null)
@@ -38,12 +43,22 @@ export const Dashboard = () => {
     redirectUrl: string,
     buttonLabel: string,
     buttonIcon?: string,
+    supportingText1?: string,
+    supportingText2?: string,
   ) => {
     return (
       <div className={css.card} style={{ backgroundColor: bgColor }}>
         <div className="flex flex-col gap-1">
           <span className="text-lg font-semibold text-Gray-light-mode-900">{title}</span>
           <span className="text-sm font-normal text-Gray-light-mode-600">{description}</span>
+        </div>
+        <div className="flex flex-col gap-1">
+          {!!supportingText1 && (
+            <span className="text-sm font-semibold text-Gray-light-mode-900">{supportingText1}</span>
+          )}
+          {!!supportingText2 && (
+            <span className="text-sm font-semibold text-Gray-light-mode-900">{supportingText2}</span>
+          )}
         </div>
         <div className="mr-0 ml-auto">
           <Button variant="outlined" color="primary" onClick={() => navigate(redirectUrl)} customStyle="flex gap-2">
@@ -60,21 +75,35 @@ export const Dashboard = () => {
       <div className="w-full h-full flex flex-col gap-8 py-8 px-4 md:px-8">
         <div className="flex flex-col gap-1">
           <Typography variant="h3" className="text-Gray-light-mode-900">
-            👋 Welcome back, {userProfile.first_name}
+            👋 Welcome back, {type === 'users' ? userProfile.first_name : name}
           </Typography>
-          <Typography variant="h5" className="text-Gray-light-mode-600">
-            Your current impact and activity.
-          </Typography>
+          {type === 'users' && (
+            <Typography variant="h5" className="text-Gray-light-mode-600">
+              Your current impact and activity.
+            </Typography>
+          )}
         </div>
         <div className="w-full h-fit flex gap-4 overflow-x-scroll">
-          {renderCard(
-            'Refer and earn',
-            'Help us make an impact and earn rewards by sharing Socious with  potential talent and organizations.',
-            variables.color_wild_blue_100,
-            '/refer',
-            'Refer now',
-            'star-06',
-          )}
+          {!userProfile.bio || !userProfile.experiences?.length
+            ? renderCard(
+                'Complete your profile',
+                'Get discovered by organizations',
+                variables.color_wild_blue_100,
+                profileUrl,
+                'Edit profile',
+                '',
+                'Add a summary',
+                'Add your experience',
+              )
+            : renderCard(
+                'Refer and earn',
+                'Help us make an impact and earn rewards by sharing Socious with  potential talent and organizations.',
+                variables.color_wild_blue_100,
+                '/refer',
+                'Refer now',
+                'star-06',
+              )}
+
           {renderCard(
             'Find jobs',
             'Explore opportunities aligned with your values',
@@ -108,9 +137,9 @@ export const Dashboard = () => {
           <div className="row-span-1 col-span-1">
             <Card iconName="clock" cardText={'Hours volunteered'} number={hoursVolunteered} unit="hrs" />
           </div>
-          <div className="row-span-1 col-span-1">
+          {/* <div className="row-span-1 col-span-1">
             <Card iconName="currency-dollar" cardText={'Donated'} number={`$${donated}`} />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="hidden md:flex w-[392px] h-full">

@@ -23,15 +23,6 @@ export const useLinksContainer = () => {
   }, [userIsLoggedIn]);
 
   const menu = [
-    /* Not available
-    {
-      label: 'Dashboard',
-      route: '/',
-      iconName: 'home-line',
-      public: false,
-    },
-    */
-
     {
       label: 'Jobs',
       route: !userIsLoggedIn || currentIdentity?.type === 'users' ? '/jobs' : '/jobs/created',
@@ -94,6 +85,15 @@ export const useLinksContainer = () => {
       public: false,
     },
   ];
+
+  if (currentIdentity?.type === 'users')
+    menu.unshift({
+      label: 'Dashboard',
+      route: '/dashboard',
+      iconName: 'home-line',
+      public: false,
+    });
+
   let filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
 
   // filter menu for role items
