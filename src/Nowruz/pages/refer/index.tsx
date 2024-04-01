@@ -1,75 +1,17 @@
 import { useLoaderData } from 'react-router-dom';
 import { User } from 'src/core/api';
 import { Typography } from '@mui/material';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { useState } from 'react';
 import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Link } from 'src/Nowruz/modules/general/components/link';
 
+import { ReferCard } from 'src/Nowruz/modules/refer/referCard';
+
 export const Refer = () => {
   const { userProfile } = useLoaderData() as { userProfile: User };
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
-
-  const renderCard = (type: 'organization' | 'talent') => {
-    const title = type === 'organization' ? 'Refer organizations' : 'Refer talent';
-    const subtitle =
-      type === 'organization'
-        ? 'Send your link to organizations looking for purpose-driven talent.'
-        : 'Send your link to talent looking for jobs and making a difference.';
-    return (
-      <div
-        className="flex-1 flex flex-col gap-6 rounded-xl"
-        style={{
-          backgroundColor: type === 'organization' ? variables.color_wild_blue_100 : variables.color_dark_vanilla_100,
-        }}
-      >
-        <div className="flex flex-col gap-1 px-6 pt-5">
-          <span className="font-semibold text-lg text-Gray-light-mode-900">{title}</span>
-          <span className="font-normal text-sm text-Gray-light-mode-600">{subtitle}</span>
-        </div>
-        <div
-          className={`p-6 flex flex-col gap-3 border border-b-0 border-x-0 border-t border-solid ${
-            type === 'organization' ? 'border-Wild_blue-500' : 'border-Dark_vanilla-500'
-          } `}
-        >
-          <span className="text-lg font-semibold text-Gray-light-mode-900">You get</span>
-          <div className="flex gap-3">
-            <div
-              className="h-5 w-5 rounded-lg flex items-center justify-center"
-              style={{
-                backgroundColor:
-                  type === 'organization' ? variables.color_wild_blue_500 : variables.color_dark_vanilla_500,
-              }}
-            >
-              <img src="/icons/nowruz/check.svg" alt="" />
-            </div>
-            <span className="text-sm font-normal text-Gray-light-mode-600">
-              {type === 'organization'
-                ? '1% of every invoice when your referral hires'
-                : '1% of their earnings on Socious'}
-            </span>
-          </div>
-          <span className="text-lg font-semibold text-Gray-light-mode-900">They get</span>
-          <div className="flex gap-3">
-            <div
-              className="h-5 w-5 rounded-lg flex items-center justify-center"
-              style={{
-                backgroundColor:
-                  type === 'organization' ? variables.color_wild_blue_500 : variables.color_dark_vanilla_500,
-              }}
-            >
-              <img src="/icons/nowruz/check.svg" alt="" />
-            </div>
-            <span className="text-sm font-normal text-Gray-light-mode-600">
-              50% discount on Socious fees for the first month
-            </span>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="flex flex-col">
@@ -115,8 +57,8 @@ export const Refer = () => {
             <Link label="Learn more about our referral program." href="/refer" customStyle="!text-base" />
           </div>
           <div className="flex flex-col gap-6 md:flex-row md:gap-8">
-            <div>{renderCard('organization')}</div>
-            <div>{renderCard('talent')}</div>
+            <ReferCard type="organization" />
+            <ReferCard type="talent" />
           </div>
         </div>
       </div>
