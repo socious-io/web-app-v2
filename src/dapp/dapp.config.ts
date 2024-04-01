@@ -40,8 +40,8 @@ export const dappConfig: DappConfig = {
   testnet: [
     {
       chain: milkomedaTestnet,
-      escrow: '0xAC87EDb9209E9637549c43fA9Ca267b4d4577959',
-      logic: '0xAC87EDb9209E9637549c43fA9Ca267b4d4577959',
+      escrow: '0x30cB9dCac6B2bc7f8289d262BCaAb28f86bc64ED',
+      logic: '0x30cB9dCac6B2bc7f8289d262BCaAb28f86bc64ED',
       tokens: [
         {
           name: 'USDC',
