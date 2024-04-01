@@ -48,7 +48,7 @@ const Notification = () => {
         </div>
       </div>
 
-      {mappedSettings.length > 0 && mappedSettings.map((item) => renderItems(item))}
+      {!!mappedSettings.length && mappedSettings.map((item) => renderItems(item))}
       <Button variant="contained" color="primary" customStyle="w-full md:w-fit mr-0 ml-auto" onClick={onSave}>
         Save
       </Button>

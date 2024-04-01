@@ -8,4 +8,5 @@ export interface PaymentDataType {
   userType: 'users' | 'organizations';
   missionId: string;
   transactionId: string;
+  mobileAmount: string;
 }

@@ -1,6 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 import { Preferences, SetOptions } from '@capacitor/preferences';
 import Cookies from 'js-cookie';
+import { isTestingEnvironment } from 'src/config';
 
 const isNative = Capacitor.isNativePlatform();
 
@@ -24,7 +25,11 @@ async function set(payload: SetOptions, expires?: number): Promise<void> {
   if (isNative) {
     await Preferences.set(payload);
   } else {
-    Cookies.set(payload.key, payload.value, { sameSite: 'Strict', secure: true, ...(expires && { expires }) });
+    Cookies.set(payload.key, payload.value, {
+      sameSite: 'Strict',
+      secure: !isTestingEnvironment,
+      ...(expires && { expires }),
+    });
   }
 }
 

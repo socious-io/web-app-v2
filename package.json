@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --port 3000 --host 0.0.0.0 --mode development",
     "preview": "vite preview",
-    "test": "jest --watch",
+    "test": "vite --port 3000 --host 0.0.0.0 --mode test",
     "open:android": "vite build --mode production && npx cap sync android && npx cap open android",
     "open:ios": "vite build --mode production && npx cap sync ios && npx cap open ios",
     "build:icons": "npx @capacitor/assets generate --iconBackgroundColor '#183E3B' --splashBackgroundColor '#183E3B'",
@@ -106,7 +106,8 @@
     "@vitejs/plugin-react-swc": "^3.0.0",
     "autoprefixer": "^10.4.15",
     "babel-loader": "^8.3.0",
-    "cypress": "^12.17.3",
+    "cypress": "^13.7.1",
+    "cypress-file-upload": "^5.0.8",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",

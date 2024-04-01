@@ -1,0 +1,41 @@
+name: CI - Build, Test
+
+on: [push]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: |
+          npm cache clean --force
+          npm install
+
+
+    - name: Run Cypress tests
+      uses: cypress-io/github-action@v6.1.0
+      with:
+        start: npm run test
+        command: npm run cypress:run # This explicitly runs Cypress tests
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PORT: 3000
+        VITE_ENV: development
+        VITE_BASE_URL: https://dev.socious.io/api/v2
+        VITE_APP_URL: https://webapp2.dev.socious.io/
+        VITE_JP_STRIPE_PUBLIC_KEY: pk_test
+        VITE_DAPP_ENV: testnet
+        VITE_GOOGLE_OAUTH_CLIENT_ID: id
+        VITE_GOOGLE_RECAPTCHA_SITE_KEY: secret
+
+    - name: Check Status
+      if: failure()
+      run: exit 1

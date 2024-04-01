@@ -16,7 +16,7 @@ import {
   impactPoints,
   getOrganizationByShortName,
   getRequestedVerifyExperiences,
-  userApplicants,
+  connections as getConnections,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -367,6 +367,19 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          {
+            path: 'connections',
+            loader: async () => {
+              const connections = await getConnections({ page: 1, limit: 10, 'filter.status': 'CONNECTED' });
+              return { connections };
+            },
+            async lazy() {
+              const { Connctions } = await import('src/Nowruz/pages/connections');
+              return {
+                Component: Protect(Connctions, 'both'),
+              };
+            },
+          },
         ],
       },
     ],
@@ -639,12 +652,10 @@ function ErrorBoundary() {
   const refreshed = localStorage.getItem(flag);
 
   if (!refreshed) {
-    localStorage.setItem(flag, 'true');
+    localStorage.setItem(flag, `${new Date().getTime()}`);
     window.location.reload();
     return <></>;
   }
-
-  localStorage.removeItem(flag);
 
   const error: any = useRouteError();
   if (error?.response?.status === 401) return <Navigate to="/intro" />;

@@ -5,7 +5,9 @@ import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontal
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 import Account from 'src/Nowruz/modules/settings/components/account/';
 import Notification from 'src/Nowruz/modules/settings/components/notification';
+import { OrgTeam } from 'src/Nowruz/modules/settings/components/orgTeam';
 import Password from 'src/Nowruz/modules/settings/components/password';
+import { Plan } from 'src/Nowruz/modules/settings/components/plan';
 import { UserTeam } from 'src/Nowruz/modules/settings/components/userTeam';
 import { RootState } from 'src/store';
 
@@ -21,7 +23,7 @@ export const Setting = () => {
     },
     {
       label: 'Team',
-      content: currentIdentity?.type === 'users' ? <UserTeam /> : <h1>Team</h1>,
+      content: currentIdentity?.type === 'users' ? <UserTeam /> : <OrgTeam />,
     },
     {
       label: 'Password',
@@ -33,6 +35,13 @@ export const Setting = () => {
     //   content: <h1>Working</h1>
     // },
   ];
+
+  if (currentIdentity?.type === 'organizations')
+    tabs.push({
+      label: 'Plan',
+      content: <Plan />,
+    });
+
   if (currentIdentity?.type === 'users')
     tabs.push({
       label: 'Notifications',
@@ -45,7 +54,14 @@ export const Setting = () => {
     { label: 'Password', value: 'Password' },
   ];
 
+  if (currentIdentity?.type === 'organizations')
+    items.push({
+      label: 'Plan',
+      value: 'Plan',
+    });
+
   if (currentIdentity?.type === 'users') items.push({ label: 'Notifications', value: 'Notification' });
+
   const [content, setContent] = useState<ReactNode>();
 
   const setValue = (value) => {
@@ -53,6 +69,8 @@ export const Setting = () => {
     if (value.value === 'Password') return setContent(<Password />);
     if (value.value === 'Notification') return setContent(<Notification />);
     if (value.value === 'Team' && currentIdentity?.type === 'users') return setContent(<UserTeam />);
+    if (value.value === 'Team' && currentIdentity?.type === 'organizations') return setContent(<OrgTeam />);
+    if (value.value === 'Plan') return setContent(<Plan />);
   };
 
   useEffect(() => {

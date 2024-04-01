@@ -24,13 +24,13 @@ dist-ssr
 *.sw?
 .DS_Store
 .env
+.env.test
+.env.dev
 .env.development
 .env.production
 *.orig
 
 cypress/videos/
 cypress/screenshots/
-cypress.env.json
+
 storybook-static
-node_modules/.package-lock.json
-.env.dev
