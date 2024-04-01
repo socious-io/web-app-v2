@@ -31,10 +31,6 @@ export const Setting = () => {
     },
 
     // {
-    //   label: 'Team',
-    //   content: <h1>Team</h1>
-    // },
-    // {
     //   label: 'Working Prefrences',
     //   content: <h1>Working</h1>
     // },

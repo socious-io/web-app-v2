@@ -367,6 +367,7 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+
           {
             path: 'connections',
             loader: async () => {
