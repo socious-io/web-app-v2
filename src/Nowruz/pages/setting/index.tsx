@@ -34,10 +34,6 @@ export const Setting = () => {
     //   label: 'Working Prefrences',
     //   content: <h1>Working</h1>
     // },
-    // {
-    //   label: 'Notification',
-    //   content: <h1>Notif</h1>
-    // },
   ];
 
   if (currentIdentity?.type === 'organizations')
@@ -84,7 +80,7 @@ export const Setting = () => {
   return (
     <>
       <div className="container">
-        <div className="w-full ">
+        <div className="w-full">
           <div className="p-4 md:px-8">
             <h2 className="gap-5 text-3xl mb-6">Settings</h2>
 
