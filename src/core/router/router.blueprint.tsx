@@ -396,8 +396,8 @@ export const blueprint: RouteObject[] = [
           {
             path: 'refer',
             loader: async () => {
-              const [userProfile, impactPointHistory] = await Promise.all([profile(), impactPoints()]);
-              return { userProfile, impactPointHistory };
+              const userProfile = await profile();
+              return { userProfile };
             },
             async lazy() {
               const { Refer } = await import('src/Nowruz/pages/refer');
@@ -517,7 +517,7 @@ export const blueprint: RouteObject[] = [
     children: [
       {
         path: ':username/talent',
-        loader: async ( { params } ) => {
+        loader: async ({ params }) => {
           localStorage.setItem('registerFor', 'user');
           return await otherProfileByUsername(params.username!);
         },
@@ -530,7 +530,7 @@ export const blueprint: RouteObject[] = [
       },
       {
         path: ':username/org',
-        loader: async ( { params } ) => {
+        loader: async ({ params }) => {
           localStorage.setItem('registerFor', 'organization');
           return await otherProfileByUsername(params.username!);
         },
