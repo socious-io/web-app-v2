@@ -2,10 +2,9 @@ import { ReactNode } from 'react';
 
 export interface LinkItemProps {
   menuOpen?: boolean;
-  subMenuOpen?: boolean;
   iconName?: string;
   label: string;
-  navigateFunc: () => void;
+  navigateFunc?: () => void;
   children?: LinkItemProps[];
   badgeIcon?: ReactNode;
 }

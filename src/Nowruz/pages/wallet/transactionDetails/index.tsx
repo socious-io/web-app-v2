@@ -57,11 +57,13 @@ export const TransactionDetails = () => {
               {renderItems(detail.name, [detail.date])}
             </div>
             <span className=" hidden md:flex text-sm font-medium leading-5 text-Gray-light-mode-900">
-              {`${detail.symbol}${detail.amount}`}
+              {detail.symbol ? `${detail.symbol}${detail.amount}` : `${detail.amount} ${detail.currency}`}
             </span>
           </div>
           <div className={`${css.bordered} flex md:!hidden`}>
-            <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">{`${detail.symbol}${detail.amount}`}</span>
+            <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">
+              {detail.symbol ? `${detail.symbol}${detail.amount}` : `${detail.amount} ${detail.currency}`}
+            </span>
           </div>
           {/* <div className={css.bordered}>{renderItems('Paid to', [detail.name])}</div> */}
           <div className={css.bordered}>{renderItems('Transaction ID', [detail.transactionId])}</div>

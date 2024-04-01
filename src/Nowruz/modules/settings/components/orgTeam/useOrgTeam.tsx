@@ -96,11 +96,10 @@ export const useOrgTeam = () => {
     }
   };
 
-  const onSelectMember = (member: DropDownItem) => {
-    let members = [...addedMembers];
-    members = members.filter((item) => !!item.value);
-    members.push(member);
-    console.log('test log member', member);
+  const onSelectMember = (member) => {
+    setselectedPerson(member);
+    const members = addedMembers.filter((item) => !item);
+    members.push(member.value);
     setAddedMembers(members);
   };
 
