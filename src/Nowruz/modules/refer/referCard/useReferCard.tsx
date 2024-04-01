@@ -24,6 +24,7 @@ export const useReferCard = (type: 'organization' | 'talent') => {
   };
 
   const sendInviteEmail = () => {
+    setEmails([]);
     setOpenEmailModal(false);
     setOpenSentModal(true);
   };
