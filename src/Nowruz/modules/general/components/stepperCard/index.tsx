@@ -91,10 +91,13 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
           <Typography variant="h4" component="div" color={variables.color_grey_900}>
             <Box component="h4" display="flex" alignItems="center" sx={{ gap: 0.5 }}>
               {title}
-              {verified && (
+              {verified ? (
                 <Box component="span" display="flex" alignItems="center" color={variables.color_grey_400}>
-                  <Icon name="shield-tick" color={variables.color_success_500} /> ( verified )
+                  <Icon name="shield-tick" color={variables.color_success_500} />
+                  <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">(verified)</span>
                 </Box>
+              ) : (
+                <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">(unverified)</span>
               )}
             </Box>
           </Typography>

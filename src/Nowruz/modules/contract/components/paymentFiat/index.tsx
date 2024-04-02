@@ -68,7 +68,7 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
         sociousFee={offer?.fee || 0}
         stripeFee={offer?.stripe_fee || 0}
         total={offer?.total || 0}
-        hasFeeDiscount={offer?.org_referrer_wallet !== null || false}
+        hasFeeDiscount={!!offer?.org_referrer_wallet}
       />
     </div>
   );

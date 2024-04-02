@@ -45,31 +45,31 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
           <span className="font-semibold text-lg text-Gray-light-mode-900">{title}</span>
           <span className="font-normal text-sm text-Gray-light-mode-600">{subtitle}</span>
         </div>
-        {/* {!!verified && ( */}
-        <div className="py-5 px-4 md:p-6 flex flex-col gap-3">
-          <Input className="bg-Base-White" id="copy-url" value={url} postfix={inputJSX} />
-          <div className="w-full flex gap-3">
-            <Button
-              fullWidth
-              customStyle="bg-Base-White"
-              variant="outlined"
-              color="secondary"
-              onClick={() => setOpenEmailModal(true)}
-            >
-              <Icon name="mail-01" fontSize={24} className="text-Gray-light-mode-700" />
-            </Button>
-            <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
-              <Icon name="share-01" fontSize={24} className="text-Gray-light-mode-700" />
-            </Button>
-            <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
-              <img src="/icons/nowruz/whatsapp.svg" />
-            </Button>
-            <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
-              <img src="/icons/nowruz/telegram.svg" />
-            </Button>
+        {!!verified && (
+          <div className="py-5 px-4 md:p-6 flex flex-col gap-3">
+            <Input className="bg-Base-White" id="copy-url" value={url} postfix={inputJSX} />
+            <div className="w-full flex gap-3">
+              <Button
+                fullWidth
+                customStyle="bg-Base-White"
+                variant="outlined"
+                color="secondary"
+                onClick={() => setOpenEmailModal(true)}
+              >
+                <Icon name="mail-01" fontSize={24} className="text-Gray-light-mode-700" />
+              </Button>
+              <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
+                <Icon name="share-01" fontSize={24} className="text-Gray-light-mode-700" />
+              </Button>
+              <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
+                <img src="/icons/nowruz/whatsapp.svg" />
+              </Button>
+              <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
+                <img src="/icons/nowruz/telegram.svg" />
+              </Button>
+            </div>
           </div>
-        </div>
-        {/* )} */}
+        )}
         <div
           className={`p-6 flex flex-col gap-3 border border-b-0 border-x-0 border-t border-solid ${
             type === 'organization' ? 'border-Wild_blue-500' : 'border-Dark_vanilla-500'

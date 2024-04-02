@@ -1,10 +1,7 @@
 import { ReactNode } from 'react';
 
-export interface AlertModalProps {
+export interface ModalCenteredProps {
   title?: string;
-  message: string;
-  customImage?: string;
-  customIcon?: ReactNode;
   open: boolean;
   onClose: () => void;
   onSubmit?: () => void;

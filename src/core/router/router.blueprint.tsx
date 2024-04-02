@@ -382,16 +382,37 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'dashboard',
-            loader: async () => {
-              const [userProfile, impactPointHistory] = await Promise.all([profile(), impactPoints()]);
-              return { userProfile, impactPointHistory };
-            },
-            async lazy() {
-              const { Dashboard } = await import('src/Nowruz/pages/dashboard');
-              return {
-                Component: Protect(Dashboard, 'users'),
-              };
-            },
+            children: [
+              {
+                path: 'user',
+                loader: async () => {
+                  const [profileData, impactPointHistory] = await Promise.all([profile(), impactPoints()]);
+                  return { profileData, impactPointHistory };
+                },
+                async lazy() {
+                  const { Dashboard } = await import('src/Nowruz/pages/dashboard');
+                  return {
+                    Component: Protect(Dashboard, 'users'),
+                  };
+                },
+              },
+              {
+                path: ':id/org',
+                loader: async ({ params }) => {
+                  const [profileData, impactPointHistory] = await Promise.all([
+                    getOrganizationByShortName(params.id!),
+                    impactPoints(),
+                  ]);
+                  return { profileData, impactPointHistory };
+                },
+                async lazy() {
+                  const { Dashboard } = await import('src/Nowruz/pages/dashboard');
+                  return {
+                    Component: Protect(Dashboard, 'organizations'),
+                  };
+                },
+              },
+            ],
           },
           {
             path: 'refer',
@@ -519,27 +540,21 @@ export const blueprint: RouteObject[] = [
         path: ':username/talent',
         loader: async ({ params }) => {
           localStorage.setItem('registerFor', 'user');
-          return await otherProfileByUsername(params.username!);
+          const user = await otherProfileByUsername(params.username!);
+          localStorage.setItem('referrer', JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url }));
+          return null;
         },
-        async lazy() {
-          const { Email } = await import('src/Nowruz/pages/sign-up/Email');
-          return {
-            Component: Email,
-          };
-        },
+        element: <Navigate to="/sign-up/user/email" />,
       },
       {
         path: ':username/org',
         loader: async ({ params }) => {
           localStorage.setItem('registerFor', 'organization');
-          return await otherProfileByUsername(params.username!);
+          const user = await otherProfileByUsername(params.username!);
+          localStorage.setItem('referrer', JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url }));
+          return null;
         },
-        async lazy() {
-          const { Email } = await import('src/Nowruz/pages/sign-up/Email');
-          return {
-            Component: Email,
-          };
-        },
+        element: <Navigate to="/sign-up/user/email" />,
       },
     ],
   },

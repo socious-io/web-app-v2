@@ -1,26 +1,28 @@
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { ImpactPoints, User } from 'src/core/api';
+import { ImpactPoints, Organization, User } from 'src/core/api';
 import { Typography } from '@mui/material';
 import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
-import css from './dashboard.module.scss';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Icon } from 'src/Nowruz/general/Icon';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
 import { Card } from 'src/Nowruz/modules/dashboard/card';
 import { getIdentityMeta } from 'src/core/utils';
+import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
+import { UserCards } from 'src/Nowruz/modules/dashboard/userCards';
+import { OrgCards } from 'src/Nowruz/modules/dashboard/orgCards';
+import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
+import { useState } from 'react';
 
 export const Dashboard = () => {
-  const { userProfile, impactPointHistory } = useLoaderData() as {
-    userProfile: User;
+  const { profileData, impactPointHistory } = useLoaderData() as {
+    profileData: User | Organization;
     impactPointHistory: ImpactPoints;
   };
-
-  const navigate = useNavigate();
-
+  const [openVerifyModal, setOpenVerifyModal] = useState(false);
   let hoursWorked = 0;
   let hoursVolunteered = 0;
-  const { name, type, usernameVal } = getIdentityMeta(userProfile);
+  const { name, type, usernameVal } = getIdentityMeta(profileData);
+  const verified = type === 'users' ? (profileData as User).identity_verified : (profileData as Organization).verified;
   const profileUrl =
     type === 'users' ? `/profile/users/${usernameVal}/view` : `/profile/organizations/${usernameVal}/view`;
 
@@ -36,115 +38,94 @@ export const Dashboard = () => {
       });
   }
 
-  const renderCard = (
-    title: string,
-    description: string,
-    bgColor: string,
-    redirectUrl: string,
-    buttonLabel: string,
-    buttonIcon?: string,
-    supportingText1?: string,
-    supportingText2?: string,
-  ) => {
-    return (
-      <div className={css.card} style={{ backgroundColor: bgColor }}>
-        <div className="flex flex-col gap-1">
-          <span className="text-lg font-semibold text-Gray-light-mode-900">{title}</span>
-          <span className="text-sm font-normal text-Gray-light-mode-600">{description}</span>
-        </div>
-        <div className="flex flex-col gap-1">
-          {!!supportingText1 && (
-            <span className="text-sm font-semibold text-Gray-light-mode-900">{supportingText1}</span>
-          )}
-          {!!supportingText2 && (
-            <span className="text-sm font-semibold text-Gray-light-mode-900">{supportingText2}</span>
-          )}
-        </div>
-        <div className="mr-0 ml-auto">
-          <Button variant="outlined" color="primary" onClick={() => navigate(redirectUrl)} customStyle="flex gap-2">
-            {!!buttonIcon && <Icon name={buttonIcon} fontSize={20} className="text-Gray-light-mode-500" />}
-            {buttonLabel}
-          </Button>
-        </div>
-      </div>
-    );
-  };
-
   return (
-    <div className=" w-full flex ">
-      <div className="w-full h-full flex flex-col gap-8 py-8 px-4 md:px-8">
-        <div className="flex flex-col gap-1">
-          <Typography variant="h3" className="text-Gray-light-mode-900">
-            👋 Welcome back, {type === 'users' ? userProfile.first_name : name}
-          </Typography>
-          {type === 'users' && (
-            <Typography variant="h5" className="text-Gray-light-mode-600">
-              Your current impact and activity.
-            </Typography>
+    <>
+      <div className=" w-full flex ">
+        <div className="w-full h-full flex flex-col">
+          {!verified && (
+            <div className="w-full  px-4 py-4 md:px-8 md:py-1 bg-Warning-25 border border-t-0 border-x-0 border-b border-solid border-Warning-300 flex flex-col md:flex-row gap-4 md:justify-between">
+              <div className="flex gap-4 items-center">
+                <div className="hidden md:flex">
+                  <FeaturedIconOutlined theme="warning" iconName="alert-circle" size="md" />
+                </div>
+                <div className="flex flex-col md:flex-row gap-[2px] md:gap-1.5">
+                  <span className="font-semibold text-sm text-Warning-700">
+                    {type === 'users' ? 'Verify your identity' : 'Verify your organization'}
+                  </span>
+                  <span className="font-normal text-sm text-Warning-700">
+                    {type === 'users'
+                      ? 'In order to access referrals, you need to have a Atala PRISM DID and verify your identity.'
+                      : 'Get a 50% discount on Socious fee for 1 month.'}
+                  </span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="text" color="error" customStyle="text-Warning-600">
+                  Learn more
+                </Button>
+                <Button
+                  variant="text"
+                  color="error"
+                  customStyle="text-Warning-700 flex gap-2 items-center"
+                  onClick={() => setOpenVerifyModal(true)}
+                >
+                  Verify now
+                  <Icon name="arrow-right" fontSize={20} className="text-Warning-700" />
+                </Button>
+              </div>
+            </div>
           )}
-        </div>
-        <div className="w-full h-fit flex gap-4 overflow-x-scroll">
-          {!userProfile.bio || !userProfile.experiences?.length
-            ? renderCard(
-                'Complete your profile',
-                'Get discovered by organizations',
-                variables.color_wild_blue_100,
-                profileUrl,
-                'Edit profile',
-                '',
-                'Add a summary',
-                'Add your experience',
-              )
-            : renderCard(
-                'Refer and earn',
-                'Help us make an impact and earn rewards by sharing Socious with  potential talent and organizations.',
-                variables.color_wild_blue_100,
-                '/refer',
-                'Refer now',
-                'star-06',
+          <div className=" flex flex-col gap-8 py-8 px-4 md:px-8">
+            <div className="flex flex-col gap-1">
+              <Typography variant="h3" className="text-Gray-light-mode-900">
+                👋 Welcome back, {type === 'users' ? (profileData as User).first_name : name}
+              </Typography>
+              {type === 'users' && (
+                <Typography variant="h5" className="text-Gray-light-mode-600">
+                  Your current impact and activity.
+                </Typography>
               )}
-
-          {renderCard(
-            'Find jobs',
-            'Explore opportunities aligned with your values',
-            variables.color_dark_vanilla_100,
-            '/jobs',
-            'Find jobs',
-          )}
-          {renderCard(
-            'Sell your services',
-            'Showcase your unique offerings and attract clients',
-            variables.color_appricot_100,
-            '/',
-            'Create service',
-          )}
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 grid-rows-4 md:grid-rows-2 gap-4">
-          <div className="row-span-2 col-span-2 md:col-span-1">
-            <Impact myProfile={true} point={userProfile.impact_points} />
-          </div>
-          <div className="row-span-1 col-span-1">
-            <Card
-              iconName="clock"
-              cardText={'Total hours contributed'}
-              number={hoursWorked + hoursVolunteered}
-              unit="hrs"
-            />
-          </div>
-          <div className="row-span-1 col-span-1">
-            <Card iconName="clock" cardText={'Hours worked'} number={hoursWorked} unit="hrs" />
-          </div>
-          <div className="row-span-1 col-span-1">
-            <Card iconName="clock" cardText={'Hours volunteered'} number={hoursVolunteered} unit="hrs" />
-          </div>
-          {/* <div className="row-span-1 col-span-1">
+            </div>
+            {type === 'users' ? (
+              <UserCards
+                profileCompleted={!!profileData.bio && !!(profileData as User).experiences?.length}
+                profileUrl={profileUrl}
+              />
+            ) : (
+              <OrgCards profileCompleted={!!(profileData as Organization).culture} profileUrl={profileUrl} />
+            )}
+            {type === 'users' && (
+              <div className="grid grid-cols-2 md:grid-cols-3 grid-rows-4 md:grid-rows-2 gap-4">
+                <div className="row-span-2 col-span-2 md:col-span-1">
+                  <Impact myProfile={true} point={profileData.impact_points} />
+                </div>
+                <div className="row-span-1 col-span-1">
+                  <Card
+                    iconName="clock"
+                    cardText={'Total hours contributed'}
+                    number={hoursWorked + hoursVolunteered}
+                    unit="hrs"
+                  />
+                </div>
+                <div className="row-span-1 col-span-1">
+                  <Card iconName="clock" cardText={'Hours worked'} number={hoursWorked} unit="hrs" />
+                </div>
+                <div className="row-span-1 col-span-1">
+                  <Card iconName="clock" cardText={'Hours volunteered'} number={hoursVolunteered} unit="hrs" />
+                </div>
+                {/* <div className="row-span-1 col-span-1">
             <Card iconName="currency-dollar" cardText={'Donated'} number={`$${donated}`} />
           </div> */}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="hidden md:flex w-[392px] h-full">
+          <ProfileCard identity={profileData} labelShown={false} rounded={false} />
         </div>
       </div>
-      <div className="hidden md:flex w-[392px] h-full">
-        <ProfileCard identity={userProfile} labelShown={false} rounded={false} />
-      </div>
-    </div>
+
+      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} />
+    </>
   );
 };
