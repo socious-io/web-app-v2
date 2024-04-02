@@ -13,11 +13,14 @@
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx"
   },
   "include": ["cypress", "src", "**/*.ts", "**/*.tsx", "tailwind.config.js", "postcss.config.js"],
+  "typesOnlyInclude": ["**/*.d.ts", "tailwind.config.js", "postcss.config.js"],
+  "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
