@@ -8,7 +8,6 @@ interface KYBModalProps {
   setOpen: (val: boolean) => void;
 }
 export const KYBModal: React.FC<KYBModalProps> = ({ open, setOpen }) => {
-  console.log('test log render KYB');
   const [openDescModal, setOpenDescModal] = useState(true);
   const [openUploadModal, setOpenUploadModal] = useState(false);
   const [openSuccessModal, setopenSuccessModal] = useState(false);
@@ -28,9 +27,6 @@ export const KYBModal: React.FC<KYBModalProps> = ({ open, setOpen }) => {
     setOpenUploadModal(false);
     setopenSuccessModal(true);
   };
-  useEffect(() => {
-    console.log('test log openSuccessModal', openSuccessModal);
-  }, [openSuccessModal]);
 
   if (!open) return;
   return (

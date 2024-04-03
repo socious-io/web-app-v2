@@ -12,14 +12,7 @@ export const Credentials = () => {
   return (
     <>
       <div className="w-full flex flex-col">
-        {!verified && (
-          <NotVerifiedAlert
-            handleOpenVerifyModal={() => {
-              console.log('test log');
-              setOpenVerifiyAlert(true);
-            }}
-          />
-        )}
+        {!verified && <NotVerifiedAlert handleOpenVerifyModal={() => setOpenVerifiyAlert(true)} />}
         <div className={css.container}>
           <div className={css.header}>
             <div className={css.left}>

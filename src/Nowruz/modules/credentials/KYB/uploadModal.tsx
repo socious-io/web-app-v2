@@ -13,9 +13,6 @@ interface UploadModalProps {
 export const UploadModal: React.FC<UploadModalProps> = ({ open, handleClose, handleOpenSuccessModal }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    console.log('test log files in parent', files);
-  }, [files]);
 
   const handleContinue = async () => {
     setLoading(true);
@@ -25,7 +22,6 @@ export const UploadModal: React.FC<UploadModalProps> = ({ open, handleClose, han
         requests.push(uploadMedia(f));
       });
       const res = await Promise.all(requests);
-      console.log('test log upload res', res);
       setLoading(false);
       handleOpenSuccessModal();
     } catch (error) {

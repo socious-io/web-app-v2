@@ -13,9 +13,6 @@ export const useFileUploader = (
 ) => {
   const [error, setError] = useState('');
   const [totalSize, setTotalSize] = useState(0);
-  useEffect(() => {
-    console.log('test log totalSize', totalSize);
-  }, [totalSize]);
 
   const getAcceptedFileTypes = () => {
     const types = [
@@ -65,8 +62,6 @@ export const useFileUploader = (
   };
   const onDrop = (acceptedFiles: File[]) => {
     const newUploadedSize = acceptedFiles.map(f => f.size).reduce((a, b) => a + b, 0);
-    console.log('test log newUploadedSize', newUploadedSize);
-    console.log('test log maxSize', maxSize * 1000000);
     const newTotal = totalSize + newUploadedSize;
     if (newTotal > maxSize * 1000000) {
       setError(`Max file size is ${maxSize}mb`);
@@ -79,7 +74,6 @@ export const useFileUploader = (
 
   const deleteFile = (deletedIndex: number) => {
     const filtered = files.filter((_, index) => index !== deletedIndex);
-    console.log('test log filtered', filtered);
     setFiles(filtered);
     const size = filtered.map(f => f.size).reduce((a, b) => a + b, 0);
     setTotalSize(size);

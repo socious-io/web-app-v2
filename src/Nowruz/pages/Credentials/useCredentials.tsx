@@ -9,7 +9,6 @@ export const useCredentials = () => {
     state.identity.entities.find(item => item.current),
   );
 
-  console.log('test log currentIdentity', currentIdentity);
   const [openVerifiyAlert, setOpenVerifiyAlert] = useState(false);
   const verified = (currentIdentity?.meta as OrgMeta).verified;
   const tabs = [{ label: 'Requested', content: <CredentialList /> }];
