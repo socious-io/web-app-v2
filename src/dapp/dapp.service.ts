@@ -45,6 +45,10 @@ export const escrow = async (params: EscrowParams) => {
     params.projectId,
     parseUnits(`${params.escrowAmount}`, approved.decimals),
     params.verifiedOrg,
+    params.addressReferringOrg,
+    params.addressReferringCont,
+    params.applyOrgFeeDiscount,
+    params.applyContFeeDiscount,
     token,
   );
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { CurrentIdentity } from 'src/core/api';
+import { CurrentIdentity, OrgMeta } from 'src/core/api';
 import Badge from 'src/Nowruz/modules/general/components/Badge';
 import store, { RootState } from 'src/store';
 import { getUnreadCount } from 'src/store/thunks/chat.thunk';
@@ -23,15 +23,15 @@ export const useLinksContainer = () => {
   }, [userIsLoggedIn]);
 
   const menu = [
-    /* Not available
     {
       label: 'Dashboard',
-      route: '/',
+      route:
+        currentIdentity?.type === 'organizations'
+          ? `/dashboard/${(currentIdentity?.meta as OrgMeta).shortname}/org`
+          : '/dashboard/user',
       iconName: 'home-line',
       public: false,
     },
-    */
-
     {
       label: 'Jobs',
       route: !userIsLoggedIn || currentIdentity?.type === 'users' ? '/jobs' : '/jobs/created',
@@ -87,7 +87,14 @@ export const useLinksContainer = () => {
       public: false,
       only: 'organizations',
     },
+    {
+      label: 'Refer and earn',
+      route: '/refer',
+      iconName: 'star-06',
+      public: false,
+    },
   ];
+
   let filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
 
   // filter menu for role items

@@ -51,6 +51,7 @@ export interface Organization extends OrganizationReq {
   other_party_url: string;
   geoname_id?: number;
   verified_impact: boolean;
+  verified: boolean;
   hiring: boolean;
   recommendations?: AdditionalRes[];
   benefits?: AdditionalRes[];

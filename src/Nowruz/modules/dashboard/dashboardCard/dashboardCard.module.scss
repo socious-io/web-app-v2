@@ -1,0 +1,16 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  border-radius: 12px;
+  padding: 20px 24px 16px 24px;
+
+  @media (max-width: 640px) {
+    width: 100%;
+    min-width: 100%;
+  }
+  @media (min-width: 640px) {
+    flex: 1;
+  }
+}

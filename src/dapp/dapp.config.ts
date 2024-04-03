@@ -40,8 +40,8 @@ export const dappConfig: DappConfig = {
   testnet: [
     {
       chain: milkomedaTestnet,
-      escrow: '0xAC87EDb9209E9637549c43fA9Ca267b4d4577959',
-      logic: '0xAC87EDb9209E9637549c43fA9Ca267b4d4577959',
+      escrow: '0x30cB9dCac6B2bc7f8289d262BCaAb28f86bc64ED',
+      logic: '0x30cB9dCac6B2bc7f8289d262BCaAb28f86bc64ED',
       tokens: [
         {
           name: 'USDC',
@@ -305,6 +305,26 @@ export const dappConfig: DappConfig = {
             type: 'bool',
           },
           {
+            internalType: 'address',
+            name: '_addressReferringOrg',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_addressReferringCont',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: '_applyOrgFeeDiscount',
+            type: 'bool'
+          },
+          {
+            internalType: 'bool',
+            name: '_applyContFeeDiscount',
+            type: 'bool'
+          },
+          {
             internalType: 'contract IERC20',
             name: '_token',
             type: 'address',
@@ -352,6 +372,16 @@ export const dappConfig: DappConfig = {
             internalType: 'address',
             name: '_contributor',
             type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_addressReferringCont',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: '_applyContFeeDiscount',
+            type: 'bool'
           },
         ],
         name: 'setContributor',

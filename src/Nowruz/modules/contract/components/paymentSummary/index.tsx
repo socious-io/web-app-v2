@@ -9,19 +9,27 @@ export interface PaymentSummaryProps {
   stripeFee: number;
   total: number;
   currency: string;
+  hasFeeDiscount: boolean;
 }
-export const PaymentSummary: React.FC<PaymentSummaryProps> = ({ amount, sociousFee, stripeFee, total, currency }) => {
+export const PaymentSummary: React.FC<PaymentSummaryProps> = ({
+  amount,
+  sociousFee,
+  stripeFee,
+  total,
+  currency,
+  hasFeeDiscount,
+}) => {
   const sociousPercent = Math.trunc((sociousFee / amount) * 1000) / 10;
   const stripePercent = Math.trunc((stripeFee / amount) * 1000) / 10;
   const symbol = currency === 'JPY' ? '¥' : currency === 'USD' ? '$' : '';
 
-  const renderItems = (title: string, value: number) => {
+  const renderItems = (title: string, value: number, colorClassName?: string) => {
     return (
       <div className="flex justify-between">
-        <Typography variant="caption" className="text-Gray-light-mode-700">
+        <Typography variant="caption" className={colorClassName || 'text-Gray-light-mode-700'}>
           {title}
         </Typography>
-        <Typography variant="h6" className="text-Gray-light-mode-700">
+        <Typography variant="h6" className={colorClassName || 'text-Gray-light-mode-700'}>
           {`${symbol}${value.toLocaleString()} ${currency}`}
         </Typography>
       </div>
@@ -34,6 +42,9 @@ export const PaymentSummary: React.FC<PaymentSummaryProps> = ({ amount, sociousF
       <div className="flex flex-col gap-2">
         {amount ? renderItems('Job payment', amount) : ''}
         {sociousFee ? renderItems(`Socious commission (${sociousPercent}%)`, sociousFee) : ''}
+        {sociousFee &&
+          hasFeeDiscount &&
+          renderItems('Discount on Socious fee (50%)', sociousFee / 2, 'text-Success-600')}
         {stripeFee ? renderItems(`Stripe fees (${stripePercent}%)`, stripeFee) : ''}
       </div>
       <Divider />

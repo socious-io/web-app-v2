@@ -5,7 +5,7 @@ import { ConnectRequestModal } from 'src/Nowruz/modules/connections/connectReque
 import { ThreeDotsButton } from 'src/Nowruz/modules/connections/threeDotsButton';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { EditInfoModal } from 'src/Nowruz/modules/userProfile/containers/editInfo';
-
+import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import DesktopHeader from './desktopHeader';
 import { MobileHeader } from './mobileHeader';
 import css from './profileHeader.module.scss';
@@ -38,12 +38,36 @@ export const ProfileHeader = () => {
     displayConnectButton,
     displayMessageButton,
     displayThreeDotsButton,
+    displayVerifyAlert,
   } = useProfileHeader();
 
   const coverImage = identity?.cover_image;
 
   return (
     <>
+      {displayVerifyAlert && (
+        <AlertMessage
+          theme="warning"
+          iconName="alert-circle"
+          title="Verify your identity"
+          subtitle="In order to access referrals, you need to have a Atala PRISM DID and verify your identity."
+        >
+          <div className="flex">
+            <button
+              className="cursor-pointer border-none text-sm leading-5 font-semibold text-Warning-600"
+            >
+              Learn more
+            </button>
+            <button
+              className="cursor-pointer border-none flex"
+            >
+              <div className="text-sm leading-5 font-semibold text-Error-700 pl-3 pr-2">Verify now</div>
+              <Icon name="arrow-right" fontSize={20} color={variables.color_error_700} />
+            </button>
+          </div>
+        </AlertMessage>
+      )}
+
       <div className={`${css.container} md:mb-12 mb-6`}>
         {myProfile && (
           <MUIIconButton aria-label="upload-banner" className={`${css.iconCamera}`} onClick={handleOpenEditHeader}>

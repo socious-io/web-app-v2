@@ -1,18 +1,27 @@
 import { Typography } from '@mui/material';
 import { Google } from 'public/icons/nowruz/google';
 import { Logo } from 'public/icons/nowruz/logo';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/Nowruz/modules/Auth/containers/ServiceIntro';
 import { EmailForm } from 'src/Nowruz/modules/Auth/containers/signup/EmailForm';
 import { reviews } from 'src/Nowruz/modules/Auth/statics/intro';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Link } from 'src/Nowruz/modules/general/components/link';
+import { User } from 'src/core/api';
 
 import css from './email.module.scss';
 import { useCaptcha } from '../../captcha';
+import { useEffect, useState } from 'react';
+import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+
 export const Email = () => {
+  // const referrerUser = useLoaderData() as User;
+
   const type = localStorage.getItem('registerFor');
+  const savedReferrer = localStorage.getItem('referrer');
+  const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
+  localStorage.removeItem('referrer');
   const { tried } = useCaptcha();
   const navigate = useNavigate();
 
@@ -35,15 +44,37 @@ export const Email = () => {
       />
     );
   };
+
   return (
     <div className="flex h-screen px-4 sm:p-0">
       <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
         <div className="form-container">
-          <IntroHeader
-            title="Create an account"
-            description={type === 'user' ? 'Sign up and start making an impact' : 'Sign up to hire professional'}
-            logo={<Logo width={48} height={48} />}
-          />
+          {!referrerUser && (
+            <IntroHeader
+              title="Create an account"
+              description={type === 'user' ? 'Sign up and start making an impact' : 'Sign up to hire professional'}
+              logo={<Logo width={48} height={48} />}
+            />
+          )}
+          {!!referrerUser && (
+            <>
+              <IntroHeader title="Create an account" logo={<Logo width={48} height={48} />} />
+              <div className={css.referrerContainer}>
+                <div
+                  className="flex gap-1.5 w-fit justfy-center align-center items-center
+                border border-solid border-Gray-light-mode-300 rounded-[16px] bg-grey-200 ...
+              "
+                >
+                  <div className="py-1.5 px-1.5">
+                    <Avatar size="16px" type="users" img={referrerUser.avatarUrl} />
+                  </div>
+                  <div className="py-1 pr-3">
+                    <span className={css.referrerText}>{referrerUser.fisrtName} invited you to join!</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
           <div className="mt-7">
             <EmailForm />
             <Button

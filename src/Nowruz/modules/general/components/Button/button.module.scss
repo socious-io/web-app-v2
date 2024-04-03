@@ -45,6 +45,7 @@
     }
   }
   &:global(.MuiButton-outlinedPrimary) {
+    background-color: $color-white;
     border: solid 1px $color-grey-300;
     box-shadow: 0px 1px 2px 0px #1018280d;
     color: $color-grey-700;

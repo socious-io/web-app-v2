@@ -381,6 +381,53 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          {
+            path: 'dashboard',
+            children: [
+              {
+                path: 'user',
+                loader: async () => {
+                  const [profileData, impactPointHistory] = await Promise.all([profile(), impactPoints()]);
+                  return { profileData, impactPointHistory };
+                },
+                async lazy() {
+                  const { Dashboard } = await import('src/Nowruz/pages/dashboard');
+                  return {
+                    Component: Protect(Dashboard, 'users'),
+                  };
+                },
+              },
+              {
+                path: ':id/org',
+                loader: async ({ params }) => {
+                  const [profileData, impactPointHistory] = await Promise.all([
+                    getOrganizationByShortName(params.id!),
+                    impactPoints(),
+                  ]);
+                  return { profileData, impactPointHistory };
+                },
+                async lazy() {
+                  const { Dashboard } = await import('src/Nowruz/pages/dashboard');
+                  return {
+                    Component: Protect(Dashboard, 'organizations'),
+                  };
+                },
+              },
+            ],
+          },
+          {
+            path: 'refer',
+            loader: async () => {
+              const userProfile = await profile();
+              return { userProfile };
+            },
+            async lazy() {
+              const { Refer } = await import('src/Nowruz/pages/refer');
+              return {
+                Component: Protect(Refer, 'users'),
+              };
+            },
+          },
         ],
       },
     ],
@@ -484,6 +531,31 @@ export const blueprint: RouteObject[] = [
           //   },
           // },
         ],
+      },
+    ],
+  },
+  {
+    path: 'referral',
+    children: [
+      {
+        path: ':username/talent',
+        loader: async ({ params }) => {
+          localStorage.setItem('registerFor', 'user');
+          const user = await otherProfileByUsername(params.username!);
+          localStorage.setItem('referrer', JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url }));
+          return null;
+        },
+        element: <Navigate to="/sign-up/user/email" />,
+      },
+      {
+        path: ':username/org',
+        loader: async ({ params }) => {
+          localStorage.setItem('registerFor', 'organization');
+          const user = await otherProfileByUsername(params.username!);
+          localStorage.setItem('referrer', JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url }));
+          return null;
+        },
+        element: <Navigate to="/sign-up/user/email" />,
       },
     ],
   },
