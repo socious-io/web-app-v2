@@ -1,53 +1,84 @@
-import { Icon } from 'src/Nowruz/general/Icon';
 import variables from 'src/components/_exports.module.scss';
+import { formatDate } from 'src/core/time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 
 import css from './credentialsList.module.scss';
-import { CreditStatus } from '../creditStatus';
 import { useCredentialsList } from './useCredentialsList';
-import { CreateUpdateExperience } from 'src/Nowruz/modules/userProfile/containers/createUpdateExperience';
-import { useState } from 'react';
-import { CredentialExperienceRes, Experience } from 'src/core/api';
+import { CredentialDetails } from '../credentialDetails';
+import { CreditStatus } from '../creditStatus';
 
 export const CredentialList = () => {
-  const { credentialsList, total, setPage, onApprove, onReject, onDetails, setOpenModal, openModal, experience } =
-    useCredentialsList();
+  const {
+    credentialsList,
+    totalPage,
+    setPage,
+    onApprove,
+    onReject,
+    onView,
+    setOpenModal,
+    openModal,
+    experience,
+    onUpdateExperience,
+    avatarInfo,
+    selectedCredential,
+    onSelectCredential,
+  } = useCredentialsList();
 
   return (
-    <>
+    <div className="flex flex-col">
+      <div className="flex gap-3 justify-end">
+        <Button
+          color="inherit"
+          variant="outlined"
+          disabled={!selectedCredential}
+          onClick={() => onApprove(selectedCredential)}
+        >
+          Approve
+        </Button>
+        <Button
+          color="inherit"
+          variant="outlined"
+          disabled={!selectedCredential}
+          onClick={() => onReject(selectedCredential)}
+        >
+          Decline
+        </Button>
+      </div>
       <div className={css.tableCereditList}>
-        <table>
-          <thead className="border border-Gray-light-mode-200">
-            <tr className="text-xs font-medium text-Gray-light-mode-600">
-              <th>Name</th>
-              <th>Credential Type</th>
-              <th className="flex items-center">
-                Status
-                <Icon name="arrow-down" />
-              </th>
-              <th>Created DATE</th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {credentialsList.map((item) => (
-              <tr className="text-sm font-normal text-left">
-                <td className="flex justify-start items-center">
-                  <Avatar size="40px" type={'users'} img={item.avatar?.url} />
-                  <div className="flex flex-col ml-3">
-                    <span className="leading-7 text-Gray-light-mode-900">
-                      {item.user.first_name} {item.user.last_name}
-                    </span>
-                    <span className="text-sm font-medium leading-5 text-Gray-light-mode-600">
-                      @{item.user.username}
-                    </span>
-                  </div>
-                </td>
-                <td>Experience</td>
-                <td>
+        <div className={css.header}>
+          <div className="flex flex-[2_2_0%] gap-3">
+            {/* <Checkbox id="select-all" /> */}
+            Name
+          </div>
+          <div className="flex-1">Credential Type</div>
+          <div className={css.col}>Status</div>
+          <div className={css.col}>Requested Date</div>
+          <div className={css.col} />
+        </div>
+        <div className="flex flex-col">
+          {credentialsList.map(item => (
+            <div key={item.id} className="flex items-center text-sm font-normal text-left px-6 py-4">
+              <div className="flex flex-[2_2_0%] justify-start items-center gap-3">
+                <Checkbox
+                  id={item.id}
+                  checked={selectedCredential === item.id}
+                  onChange={() => onSelectCredential(item.id)}
+                  disabled={item.status !== 'PENDING'}
+                />
+                <Avatar size="40px" type={'users'} img={item.avatar?.url} />
+                <div className="flex flex-col">
+                  <span className="leading-7 text-Gray-light-mode-900">
+                    {item.user.first_name} {item.user.last_name}
+                  </span>
+                  <span className="text-sm font-medium leading-5 text-Gray-light-mode-600">@{item.user.username}</span>
+                </div>
+              </div>
+              <div className="flex-1">Work Certificate</div>
+              <div className={css.col}>
+                <div className="flex">
                   {item.status === 'PENDING' && (
                     <CreditStatus icon="clock" label="Pending" color={variables.color_grey_500} />
                   )}
@@ -63,53 +94,34 @@ export const CredentialList = () => {
                   {item.status === 'CLAIMED' && (
                     <CreditStatus icon="check" label="Claimed" color={variables.color_success_500} />
                   )}
-                </td>
-                <td>{item.created_at.toString()}</td>
-                <td>
-                  <Icon
-                    name="eye"
-                    fontSize={20}
-                    className="text-Gray-light-mode-600"
-                    onClick={() => onDetails(item)}
-                    cursor="pointer"
-                  />
-                </td>
-                <td>
-                  {item.status === 'PENDING' && (
-                    <Icon
-                      name="check"
-                      fontSize={20}
-                      className="text-Gray-light-mode-600"
-                      onClick={() => onApprove(item.id)}
-                      cursor="pointer"
-                    />
-                  )}
-                </td>
-                <td>
-                  {item.status === 'PENDING' && (
-                    <Icon
-                      name="x-close"
-                      fontSize={20}
-                      className="text-Gray-light-mode-600"
-                      onClick={() => onReject(item.id)}
-                      cursor="pointer"
-                    />
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </div>
+              </div>
+              <div className={css.col}>{formatDate(item.created_at)}</div>
+              <div className={css.col}>
+                <Button color="primary" variant="text" onClick={() => onView(item)}>
+                  View
+                </Button>
+                {item.status === 'PENDING' && (
+                  <Button color="secondary" variant="text" onClick={() => onReject(item.id)}>
+                    Decline
+                  </Button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
       <div className={css.paginationBox}>
-        <Pagination count={total} onChange={(e, p) => setPage(p)} />
+        <Pagination count={totalPage} onChange={(e, p) => setPage(p)} />
       </div>
-      <CreateUpdateExperience
+      <CredentialDetails
         open={openModal}
         handleClose={() => setOpenModal(false)}
         experience={experience}
-        readonly={true}
+        onUpdateExperience={onUpdateExperience}
+        avatarInfo={avatarInfo}
+        readonly={experience?.credential?.status === 'APPROVED'}
       />
-    </>
+    </div>
   );
 };
