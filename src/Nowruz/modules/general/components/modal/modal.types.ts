@@ -5,7 +5,7 @@ export interface ModalProps {
   open: boolean;
   handleClose: (a?: any) => void;
   icon?: ReactNode;
-  title?: string;
+  title?: string | ReactNode;
   subTitle?: string;
   content?: ReactNode;
   footer?: ReactNode;
