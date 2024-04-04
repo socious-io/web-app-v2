@@ -147,15 +147,17 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   });
 
   const initializeValues = () => {
-    const startDate = experience?.start_at ? new Date(experience.start_at) : undefined;
-    const endDate = experience?.end_at ? new Date(experience.end_at) : undefined;
+    //FIXME: start_at and end_at from BE, not in UTC version
+    const getUTCDate = (date: string) => (date.endsWith('Z') ? date : `${date}Z`);
+    const startDate = experience?.start_at ? new Date(getUTCDate(experience.start_at)) : undefined;
+    const endDate = experience?.end_at ? new Date(getUTCDate(experience.end_at)) : undefined;
 
     const empTypeLabel = experience ? PROJECT_TYPE.find(t => t.value === experience.employment_type)?.title : undefined;
 
     const initialVal = {
       title: experience?.title || '',
       jobCategories: {
-        label: experience?.job_category?.name || '',
+        label: jobCategories?.find((category) => category.value === experience?.job_category?.id)?.label || '',
         value: experience?.job_category?.id || '',
       },
       orgName: experience?.org.name || '',
@@ -317,7 +319,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       city,
       employmentType,
       currentlyWorking,
-      volunteer,
     } = getValues();
 
     let organizationId = org.value;
@@ -359,6 +360,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     dispatch(setIdentityType('users'));
     handleClose();
   };
+  
   return {
     jobCategories,
     register,

@@ -59,7 +59,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="title"
-        label="Title*"
+        label="Job title*"
         required
         name="title"
         register={register}
@@ -192,7 +192,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         <SearchDropdown
           id="end-month"
           value={endMonth}
-          label="End date"
+          label={`End date${!currentlyWorking ? '*' : ''}`}
           options={months}
           hasDropdownIcon
           onChange={(value) => {
