@@ -132,6 +132,7 @@ export interface Experience extends ExperienceReq {
   job_category: Category;
   created_at: Date;
   credential?: Credential;
+  message?: string;
 }
 
 export interface Badge {
