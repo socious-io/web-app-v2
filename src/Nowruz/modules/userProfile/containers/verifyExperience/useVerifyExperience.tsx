@@ -1,21 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { PROJECT_TYPE } from 'src/constants/PROJECT_TYPES';
-import {
-  Experience,
-  ExperienceReq,
-  Organization,
-  User,
-  createOrganization,
-  otherProfileByUsername,
-  updateExperiences,
-} from 'src/core/api';
+import { Experience, ExperienceReq, createOrganization, updateExperiences } from 'src/core/api';
 import { getDaysInMonth, monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
-import { RootState } from 'src/store';
-import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 import * as yup from 'yup';
 
 const schema = yup
@@ -85,10 +74,6 @@ export const useVerifyExperience = (
   onVerifyExperience: (id: string, message?: string, exact_info?: boolean) => void,
   experience?: Experience,
 ) => {
-  const user = useSelector<RootState, User | Organization | undefined>(state => {
-    return state.profile.identity;
-  }) as User;
-  const dispatch = useDispatch();
   const [months, setMonths] = useState<OptionType[]>([]);
   const [startDays, setStartDays] = useState<OptionType[]>([]);
   const [endDays, setEndDays] = useState<OptionType[]>([]);
@@ -189,6 +174,7 @@ export const useVerifyExperience = (
         label: experience?.org.name || '',
       },
       message: experience?.message || '',
+      forgotInfo: false,
       employmentType: { value: experience?.employment_type || '', label: empTypeLabel },
     };
     reset(initialVal);
@@ -308,11 +294,8 @@ export const useVerifyExperience = (
 
     payload = removedEmptyProps(payload);
     await updateExperiences(experience.id, payload);
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
-    dispatch(setIdentityType('users'));
-    handleClose();
     onVerifyExperience(experience.id, message, forgotInfo);
+    handleClose();
   };
 
   return {

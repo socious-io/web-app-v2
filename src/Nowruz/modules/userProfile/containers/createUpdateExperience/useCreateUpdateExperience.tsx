@@ -99,8 +99,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     setJobCategories(options);
     if (experience)
       setValue('jobCategory', {
-        value: experience.job_category_id,
-        label: options.find(item => item.value === experience.job_category_id)?.label,
+        value: experience.job_category?.id,
+        label: experience.job_category?.name,
       });
     else setValue('jobCategory', { label: '', value: '' });
   };
@@ -156,8 +156,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
 
     const initialVal = {
       title: experience?.title || '',
-      jobCategories: {
-        label: jobCategories?.find((category) => category.value === experience?.job_category?.id)?.label || '',
+      jobCategory: {
+        label: experience?.job_category?.name || '',
         value: experience?.job_category?.id || '',
       },
       orgName: experience?.org.name || '',
@@ -174,7 +174,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       description: experience?.description || '',
       currentlyWorking: experience ? !experience?.end_at : false,
       org: {
-        value: experience?.org_id || '',
+        value: experience?.org.id || '',
         label: experience?.org.name || '',
       },
       employmentType: { value: experience?.employment_type || '', label: empTypeLabel },
@@ -360,7 +360,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     dispatch(setIdentityType('users'));
     handleClose();
   };
-  
+
   return {
     jobCategories,
     register,

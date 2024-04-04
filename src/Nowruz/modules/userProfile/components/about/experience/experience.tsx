@@ -1,10 +1,12 @@
+import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
-import { StepperCard } from 'src/Nowruz/modules/general/components/stepperCard';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { StepperCard } from 'src/Nowruz/modules/general/components/stepperCard';
 import { CreateUpdateExperience } from 'src/Nowruz/modules/userProfile/containers/createUpdateExperience';
+import { VerifyExperience } from 'src/Nowruz/modules/userProfile/containers/verifyExperience';
 
 import { useExperience } from './useExperience';
 import css from '../about.module.scss';
@@ -25,15 +27,15 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
     handleDelete,
     getStringDate,
     handleClose,
+    onOpenVerifyModal,
     handleRequestVerify,
     disabledClaims,
     reqModelShow,
     userVerified,
-    openClaimModal,
-    setOpenClaimModal,
     handleOpenClaimModal,
     credentialId,
   } = useExperience();
+
   return (
     <>
       <div className="w-full flex flex-col gap-5">
@@ -72,7 +74,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
                     color="secondary"
                     disabled={!!item.credential}
                     className={css.addBtn}
-                    onClick={handleRequestVerify(item.id)}
+                    onClick={() => onOpenVerifyModal(item)}
                   >
                     Verify experience
                   </Button>
@@ -113,14 +115,22 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
         closeButtonLabel="Close"
         submitButton={false}
       />
-      <CreateUpdateExperience open={openModal} handleClose={handleClose} experience={experience} />
-      {openClaimModal && (
-        <ClaimCertificateModal
-          open={openClaimModal}
-          handleClose={() => setOpenClaimModal(false)}
-          credentialId={credentialId}
-        />
-      )}
+      <ClaimCertificateModal
+        open={openModal.name === 'claim' && openModal.open}
+        handleClose={handleClose}
+        credentialId={credentialId}
+      />
+      <CreateUpdateExperience
+        open={(openModal.name === 'add' || openModal.name === 'edit') && openModal.open}
+        handleClose={handleClose}
+        experience={experience}
+      />
+      <VerifyExperience
+        open={openModal.name === 'verify' && openModal.open}
+        handleClose={handleClose}
+        experience={experience}
+        onVerifyExperience={handleRequestVerify}
+      />
     </>
   );
 };
