@@ -10,7 +10,7 @@ export const useCredentials = () => {
   );
 
   const [openVerifiyAlert, setOpenVerifiyAlert] = useState(false);
-  const verified = (currentIdentity?.meta as OrgMeta).verified;
+  const verified = (currentIdentity?.meta as OrgMeta)?.verified;
   const tabs = [{ label: 'Requested', content: <CredentialList /> }];
   return { tabs, verified, openVerifiyAlert, setOpenVerifiyAlert };
 };

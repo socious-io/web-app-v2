@@ -18,7 +18,7 @@ export const useCredentialsList = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(item => item.current),
   );
-  const verified = (currentIdentity?.meta as OrgMeta).verified;
+  const verified = (currentIdentity?.meta as OrgMeta)?.verified;
   const { credentials } = useLoaderData() as { credentials: CredentialExperiencePaginateRes };
   const [credentialsList, setCredentialsList] = useState(credentials.items);
   const [page, setPage] = useState(1);
