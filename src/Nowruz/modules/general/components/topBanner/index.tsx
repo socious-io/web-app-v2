@@ -2,12 +2,14 @@ import React, { ReactNode } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { FeaturedIconOutlined } from '../featuredIconOutlined';
 import { Button } from '../Button';
+import { Link } from '../link';
 
 interface TopBannerProps {
   theme: 'success' | 'warning';
   primaryBtnLabel?: string;
   primaryBtnAction?: () => void;
   secondaryBtnLabel?: string;
+  secondaryBtnLink?: string;
   primaryBtnIcon?: ReactNode;
   secondaryBtnAction?: () => void;
   text: string;
@@ -20,6 +22,7 @@ export const TopBanner: React.FC<TopBannerProps> = ({
   primaryBtnIcon,
   secondaryBtnLabel,
   secondaryBtnAction,
+  secondaryBtnLink,
   text,
   supportingText,
 }) => {
@@ -49,24 +52,34 @@ export const TopBanner: React.FC<TopBannerProps> = ({
           {supportingText}
         </span>
       </div>
-      <div className="md:mr-0 md:ml-auto flex gap-2">
-        {!!secondaryBtnLabel && (
-          <Button
-            variant="text"
-            color="error"
-            customStyle={`${
-              theme === 'warning' ? 'text-Warning-600' : theme === 'success' ? 'text-Success-600' : ''
-            }  p-0`}
-            onClick={secondaryBtnAction}
-          >
-            {secondaryBtnLabel}
-          </Button>
-        )}
+      <div className="md:mr-0 md:ml-auto flex gap-2 items-center">
+        {!!secondaryBtnLabel &&
+          (secondaryBtnLink ? (
+            <Link
+              label={secondaryBtnLabel}
+              href={secondaryBtnLink}
+              target="_blank"
+              customStyle={`!text-sm !font-semibold !leading-5 ${
+                theme === 'warning' ? '!text-Warning-600' : theme === 'success' ? '!text-Success-600' : ''
+              }  p-0`}
+            />
+          ) : (
+            <Button
+              variant="text"
+              color="error"
+              customStyle={`font-semibold text-sm leading-5 ${
+                theme === 'warning' ? 'text-Warning-600' : theme === 'success' ? 'text-Success-600' : ''
+              }  p-0`}
+              onClick={secondaryBtnAction}
+            >
+              {secondaryBtnLabel}
+            </Button>
+          ))}
         {!!primaryBtnLabel && (
           <Button
             variant="text"
             color="error"
-            customStyle={`${
+            customStyle={`!font-semibold !text-sm leading-5 ${
               theme === 'warning' ? 'text-Warning-700' : theme === 'success' ? 'text-Success-700' : ''
             }  flex gap-2 items-center`}
             onClick={primaryBtnAction}

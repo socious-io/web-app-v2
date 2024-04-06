@@ -37,13 +37,13 @@ export const UserCards: React.FC<UserCardsProps> = ({ profileCompleted, profileU
         buttonLabel="Find jobs"
       />
 
-      <DashboardCard
+      {/* <DashboardCard
         title="Sell your services"
         description="Showcase your unique offerings and attract clients"
         bgColor={variables.color_appricot_100}
         redirectUrl="/"
         buttonLabel="Create service"
-      />
+      /> */}
     </div>
   );
 };

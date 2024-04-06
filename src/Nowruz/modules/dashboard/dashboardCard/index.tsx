@@ -29,8 +29,8 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
   return (
     <div className={css.card} style={{ backgroundColor: bgColor }}>
       <div className="flex flex-col gap-1">
-        <span className="text-lg font-semibold text-Gray-light-mode-900">{title}</span>
-        <span className="text-sm font-normal text-Gray-light-mode-600">{description}</span>
+        <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">{title}</span>
+        <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">{description}</span>
       </div>
       <div className="flex flex-col gap-1">
         {!!supportingText1 && <span className="text-sm font-semibold text-Gray-light-mode-900">{supportingText1}</span>}

@@ -52,9 +52,9 @@ export const ProfileCardHeader: React.FC<ProfileCardHeaderProps> = ({
             <Button variant="contained" color="primary" onClick={navigateToProfile}>
               View profile
             </Button>
-            <Button variant="outlined" color="secondary">
+            {/* <Button variant="outlined" color="secondary">
               Edit profile
-            </Button>
+            </Button> */}
           </div>
         )}
         <span className="text-base font-normal leading-6 text-Gray-light-mode-600">{bio}</span>

@@ -22,6 +22,7 @@ export const Credentials = () => {
             primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700 p-0" />}
             primaryBtnAction={() => setOpenVerifiyAlert(true)}
             secondaryBtnLabel="Learn more"
+            secondaryBtnLink="https://socious.io/verified-credentials"
             text="Verify your identity"
             supportingText="In order to claim your certificates, please verify your identity."
           />
