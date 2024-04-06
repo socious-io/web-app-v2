@@ -9,11 +9,14 @@ import { Recommendation } from './recommendaion/recommendation';
 import { Skills } from './skills';
 import { Summary } from './summary';
 import { MainInfo } from '../mainInfo';
+import { useState } from 'react';
+import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
 
 export const About = () => {
-  const identityType = useSelector<RootState, 'users' | 'organizations'>((state) => {
+  const identityType = useSelector<RootState, 'users' | 'organizations'>(state => {
     return state.profile.type;
   });
+  const [openVerifyModal, setOpenVerifyModal] = useState(false);
   return (
     <div className="flex flex-col gap-8">
       <div className="w-full block md:hidden">
@@ -25,9 +28,10 @@ export const About = () => {
         <>
           <Skills />
           <Divider />
-          <Experiences />
+          <Experiences handleOpenVerifyModal={() => setOpenVerifyModal(true)} />
           <Educations />
           <Certificates />
+          <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} />
         </>
       )}
 

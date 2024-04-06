@@ -5,6 +5,7 @@ import {
   Experience,
   Organization,
   User,
+  UserMeta,
   claimExperienceVC,
   otherProfileByUsername,
   removeExperiences,
@@ -15,13 +16,14 @@ import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer
 import { requestVerifyExperience } from 'src/core/api';
 
 export const useExperience = () => {
-  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+  const user = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   }) as User;
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const myProfile = currentIdentity?.id === user?.id;
+  const userVerified = (currentIdentity?.meta as UserMeta)?.identity_verified;
 
   const [openModal, setOpenModal] = useState(false);
   const [experience, setExperience] = useState<Experience>();
@@ -68,7 +70,7 @@ export const useExperience = () => {
   };
 
   const handleClaimVC = (id: string) => async () => {
-    setDisabledClaims((prevState) => ({
+    setDisabledClaims(prevState => ({
       ...prevState,
       [id]: true,
     }));
@@ -91,5 +93,6 @@ export const useExperience = () => {
     handleClaimVC,
     disabledClaims,
     reqModelShow,
+    userVerified,
   };
 };
