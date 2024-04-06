@@ -89,7 +89,7 @@ export const useLinksContainer = () => {
     },
     {
       label: 'Refer and earn',
-      route: '/refer',
+      route: '/referral',
       iconName: 'star-06',
       public: false,
     },

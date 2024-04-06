@@ -416,7 +416,7 @@ export const blueprint: RouteObject[] = [
             ],
           },
           {
-            path: 'refer',
+            path: 'referral',
             loader: async () => {
               const userProfile = await profile();
               return { userProfile };
@@ -700,7 +700,7 @@ export const blueprint: RouteObject[] = [
 function Protect<T extends {}>(Component: ComponentType<T>, allowedIdentity: string): ComponentType<T> {
   return function ProtectedRoute(props: T) {
     const { status, entities } = useSelector((state: RootState) => state.identity);
-    const current = entities.find((identity) => identity.current)?.type;
+    const current = entities.find(identity => identity.current)?.type;
     // TODO: We may notify user before redirect to intro page
     if (status === 'loading') return <div></div>;
     if (status === 'failed') return <Navigate to="/intro" />;

@@ -42,8 +42,8 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
         }}
       >
         <div className="flex flex-col gap-1 px-4 md:px-6 pt-5">
-          <span className="font-semibold text-lg text-Gray-light-mode-900">{title}</span>
-          <span className="font-normal text-sm text-Gray-light-mode-600">{subtitle}</span>
+          <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">{title}</span>
+          <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{subtitle}</span>
         </div>
         {!!verified && (
           <div className="py-5 px-4 md:p-6 flex flex-col gap-3">
