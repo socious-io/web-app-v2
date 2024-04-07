@@ -29,7 +29,8 @@ export const useExperience = () => {
   const [experience, setExperience] = useState<Experience>();
   const [disabledClaims, setDisabledClaims] = useState<{ [key: string]: boolean }>({});
   const [reqModelShow, setReqModelShow] = useState(false);
-
+  const [openClaimModal, setOpenClaimModal] = useState(false);
+  const [credentialId, setCredentialId] = useState('');
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -69,14 +70,14 @@ export const useExperience = () => {
     setReqModelShow(true);
   };
 
-  const handleClaimVC = (id: string) => async () => {
+  const handleOpenClaimModal = (id?: string) => {
+    if (!id) return;
+    setCredentialId(id);
     setDisabledClaims(prevState => ({
       ...prevState,
       [id]: true,
     }));
-
-    const { url } = await claimExperienceVC(id);
-    window.open(url, '_blank');
+    setOpenClaimModal(true);
   };
 
   return {
@@ -90,9 +91,12 @@ export const useExperience = () => {
     getStringDate,
     handleClose,
     handleRequestVerify,
-    handleClaimVC,
     disabledClaims,
     reqModelShow,
     userVerified,
+    openClaimModal,
+    setOpenClaimModal,
+    handleOpenClaimModal,
+    credentialId,
   };
 };

@@ -8,6 +8,7 @@ import { CreateUpdateExperience } from 'src/Nowruz/modules/userProfile/container
 
 import { useExperience } from './useExperience';
 import css from '../about.module.scss';
+import { ClaimCertificateModal } from '../claimCertificateModal';
 
 interface ExperienceProps {
   handleOpenVerifyModal: () => void;
@@ -25,10 +26,13 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
     getStringDate,
     handleClose,
     handleRequestVerify,
-    handleClaimVC,
     disabledClaims,
     reqModelShow,
     userVerified,
+    openClaimModal,
+    setOpenClaimModal,
+    handleOpenClaimModal,
+    credentialId,
   } = useExperience();
   return (
     <>
@@ -80,7 +84,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
                     disabled={!!disabledClaims[item.credential.id]}
                     className={css.addBtn}
                     key={item.credential.id}
-                    onClick={userVerified ? handleClaimVC(item.credential.id) : handleOpenVerifyModal}
+                    onClick={userVerified ? () => handleOpenClaimModal(item.id) : handleOpenVerifyModal}
                   >
                     Claim
                   </Button>
@@ -110,6 +114,13 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
         submitButton={false}
       />
       <CreateUpdateExperience open={openModal} handleClose={handleClose} experience={experience} />
+      {openClaimModal && (
+        <ClaimCertificateModal
+          open={openClaimModal}
+          handleClose={() => setOpenClaimModal(false)}
+          credentialId={credentialId}
+        />
+      )}
     </>
   );
 };
