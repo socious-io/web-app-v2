@@ -8,11 +8,11 @@ import { RootState } from 'src/store';
 export const useNotifications = () => {
   const { switchAccount } = useIconDropDown();
   const navigate = useNavigate();
-  const identities = useSelector<RootState, CurrentIdentity[]>((state) => {
+  const identities = useSelector<RootState, CurrentIdentity[]>(state => {
     return state.identity.entities;
   });
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   const mapTypeToRoute = (
@@ -22,7 +22,7 @@ export const useNotifications = () => {
     notifIdentityType: string,
     username?: string,
   ) => {
-    if (!originIdentityId || !identities.find((i) => i.id === originIdentityId)) {
+    if (!originIdentityId || !identities.find(i => i.id === originIdentityId)) {
       dialog.alert({ message: 'This is an old notification' });
       return;
     }
@@ -83,6 +83,13 @@ export const useNotifications = () => {
       case 'MEMBERED':
         path = ''; // FIXME: later for member feature
         break;
+      case 'REFERRAL_JOINED':
+      case 'REFERRAL_VERIFIED':
+      case 'REFERRAL_HIRED':
+      case 'REFERRAL_HIRED':
+      case 'REFERRAL_COMPLETED_JOB':
+      case 'REFERRAL_CONFIRMED_JOB':
+        return {};
     }
     navigate(path);
   };
