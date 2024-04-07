@@ -34,6 +34,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
     userVerified,
     handleOpenClaimModal,
     credentialId,
+    verificationStatus,
   } = useExperience();
 
   return (
@@ -60,7 +61,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
                     item.end_at ? getStringDate(item.end_at) : 'Now'
                   }`}
                   DisplayVerificationStatus
-                  verified={['APPROVED', 'SENT', 'CLAIMED'].includes(item.credential?.status || '')}
+                  verified={item.credential?.status ? verificationStatus[item.credential?.status] : 'unverified'}
                   description={item.description}
                   editable={myProfile}
                   deletable={myProfile}

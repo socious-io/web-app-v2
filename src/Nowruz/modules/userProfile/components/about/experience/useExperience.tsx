@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  Credential,
   CurrentIdentity,
   Experience,
   Organization,
@@ -33,6 +34,14 @@ export const useExperience = () => {
   const [reqModelShow, setReqModelShow] = useState(false);
   const [credentialId, setCredentialId] = useState('');
   const dispatch = useDispatch();
+
+  const verificationStatus: Record<Credential['status'], 'verified' | 'unverified' | 'pending'> = {
+    APPROVED: 'verified',
+    SENT: 'verified',
+    CLAIMED: 'verified',
+    PENDING: 'pending',
+    REJECTED: 'unverified',
+  };
 
   const handleClose = () => {
     setOpenModal({ ...openModal, open: false });
@@ -107,5 +116,6 @@ export const useExperience = () => {
     userVerified,
     handleOpenClaimModal,
     credentialId,
+    verificationStatus,
   };
 };
