@@ -41,14 +41,14 @@ export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({ op
             We’ve partnered with Atala Prism through which your decentralized ID can receive verifiable credentials.
           </span>
         </div>
-        <span className="text-base leading-6 font-semibold text-Gray-light-mode-900">How to get your certificate</span>
+        {/* <span className="text-base leading-6 font-semibold text-Gray-light-mode-900">How to get your certificate</span>
         <div className="flex flex-col">
           <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">1. Open your Socious Wallet</span>
           <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">2. Scan the QR code below</span>
           <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">
             3. Accept the request to get your certificate
           </span>
-        </div>
+        </div> */}
       </div>
     </Modal>
   );
