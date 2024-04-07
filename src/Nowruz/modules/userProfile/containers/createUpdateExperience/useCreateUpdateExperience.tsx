@@ -34,6 +34,10 @@ const schema = yup
       .required('Required')
       .min(2, 'Must be 2-50 characters')
       .max(50, 'Must be 2-50 characters'),
+    jobCategory: yup.object().shape({
+      label: yup.string(),
+      value: yup.string(),
+    }),
     org: yup.object().shape({
       label: yup.string().required('Required').min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
       value: yup.string(),
@@ -42,17 +46,13 @@ const schema = yup
       label: yup.string(),
       value: yup.string(),
     }),
-
     country: yup.string(),
+    volunteer: yup.boolean(),
     employmentType: yup.object().shape({
       label: yup.string().required('Required'),
       value: yup.string(),
     }),
-    jobCategory: yup.object().shape({
-      label: yup.string(),
-      value: yup.string(),
-    }),
-    volunteer: yup.boolean(),
+    currentlyWorking: yup.boolean(),
     startMonth: yup.object().shape({
       label: yup.string(),
       value: yup.string(),
@@ -61,8 +61,6 @@ const schema = yup
       label: yup.string().required('Required'),
       value: yup.string(),
     }),
-    currentlyWorking: yup.boolean(),
-
     endMonth: yup.object().shape({
       label: yup.string(),
       value: yup.string(),
@@ -80,7 +78,7 @@ interface OptionType {
   label: string;
 }
 export const useCreateUpdateExperience = (handleClose: () => void, experience?: Experience) => {
-  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+  const user = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   }) as User;
   const dispatch = useDispatch();
@@ -92,7 +90,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
 
   const getJobCategories = async () => {
     const res = await jobCategoriesApi();
-    const options = res.categories.map((item) => {
+    const options = res.categories.map(item => {
       return {
         value: item.id,
         label: item.name,
@@ -102,13 +100,13 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     if (experience)
       setValue('jobCategory', {
         value: experience.job_category_id,
-        label: options.find((item) => item.value === experience.job_category_id)?.label,
+        label: options.find(item => item.value === experience.job_category_id)?.label,
       });
     else setValue('jobCategory', { label: '', value: '' });
   };
 
   const mapEmploymentTypes = () => {
-    const types = PROJECT_TYPE.map((item) => {
+    const types = PROJECT_TYPE.map(item => {
       return {
         value: item.value,
         label: item.title,
@@ -152,9 +150,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     const startDate = experience?.start_at ? new Date(experience.start_at) : undefined;
     const endDate = experience?.end_at ? new Date(experience.end_at) : undefined;
 
-    const empTypeLabel = experience
-      ? PROJECT_TYPE.find((t) => t.value === experience.employment_type)?.title
-      : undefined;
+    const empTypeLabel = experience ? PROJECT_TYPE.find(t => t.value === experience.employment_type)?.title : undefined;
 
     const initialVal = {
       title: experience?.title || '',
@@ -225,7 +221,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   };
   const orgToOption = (orgs: Organization[], searchText: string) => {
     let options: OptionType[] = [];
-    options = orgs.map((org) => ({
+    options = orgs.map(org => ({
       value: org.id,
       label: org.name,
       icon: org.image ? (
@@ -254,7 +250,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   };
 
   const cityToOption = (cities: Location[]) => {
-    return cities.map((city) => ({
+    return cities.map(city => ({
       value: city.id,
       label: JSON.stringify({ label: `${city.name}, ${city.country_name}`, description: city.timezone_utc }),
       city: city.name,
@@ -272,7 +268,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       console.error('Error fetching city data:', error);
     }
   };
-  const onSelectCity = (location) => {
+  const onSelectCity = location => {
     setValue('city', { value: location.city, label: location.city }, { shouldValidate: true });
     setValue('country', location.countryCode, { shouldValidate: true });
   };
@@ -329,7 +325,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       organizationId = (await createOrganization({ name: org.label, email: 'org@socious.io' }, false)).id;
     }
 
-    const startDate = new Date(Number(startYear.value), Number(startMonth.value || 0), 2).toISOString();
+    const startDate = new Date(Number(startYear.value), Number(startMonth.value || 0), 1).toISOString();
 
     let payload: ExperienceReq = {
       org_id: organizationId,
@@ -342,7 +338,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     };
     if (employmentType.value) payload.employment_type = employmentType.value;
     if (!currentlyWorking && endYear.value) {
-      const endDate = new Date(Number(endYear.value), Number(endMonth.value || 0), 2).toISOString();
+      const endDate = new Date(Number(endYear.value), Number(endMonth.value || 0), 1).toISOString();
       payload.end_at = endDate;
     }
 
