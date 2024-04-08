@@ -18,7 +18,9 @@ export const useCredentialsList = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(item => item.current),
   );
-  const verified = (currentIdentity?.meta as OrgMeta)?.verified;
+  const PER_PAGE = 10;
+  // const verified = (currentIdentity?.meta as OrgMeta)?.verified;
+  const verified = true;
   const { credentials } = useLoaderData() as { credentials: CredentialExperiencePaginateRes };
   const [credentialsList, setCredentialsList] = useState(credentials.items);
   const [page, setPage] = useState(1);
@@ -26,6 +28,7 @@ export const useCredentialsList = () => {
   const [experience, setExperience] = useState<Experience>();
 
   const isMobile = isTouchDevice();
+  const userProfile = currentIdentity?.type === 'users';
 
   const fetchMore = async (page: number, reload = false) => {
     const data = await getRequestedVerifyExperiences({ page, limit: 10 });
@@ -68,5 +71,7 @@ export const useCredentialsList = () => {
     openModal,
     experience,
     verified,
+    userProfile,
+    PER_PAGE,
   };
 };

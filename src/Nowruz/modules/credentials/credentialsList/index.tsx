@@ -8,11 +8,14 @@ import { CreditStatus } from '../creditStatus';
 import { useCredentialsList } from './useCredentialsList';
 import { CreateUpdateExperience } from 'src/Nowruz/modules/userProfile/containers/createUpdateExperience';
 import { toRelativeTime } from 'src/core/relative-time';
+import { Chip } from '../../general/components/Chip';
+import { PaginationMobile } from '../../general/components/paginationMobile';
 
 export const CredentialList = () => {
   const {
     credentialsList,
     total,
+    page,
     setPage,
     onApprove,
     onReject,
@@ -21,7 +24,11 @@ export const CredentialList = () => {
     openModal,
     experience,
     verified,
+    userProfile,
+    PER_PAGE,
   } = useCredentialsList();
+
+  console.log('test log credentialsList', credentialsList);
 
   return (
     <>
@@ -40,7 +47,7 @@ export const CredentialList = () => {
                 <>
                   <th></th>
                   <th></th>
-                  <th></th>
+                  {!userProfile && <th></th>}
                 </>
               )}
             </tr>
@@ -49,78 +56,92 @@ export const CredentialList = () => {
             {credentialsList.map(item => (
               <tr className="text-sm font-normal text-left">
                 <td className="flex justify-start items-center">
-                  <Avatar size="40px" type={'users'} img={item.avatar?.url} />
+                  {userProfile ? (
+                    <Avatar size="40px" type={'organizations'} />
+                  ) : (
+                    <Avatar size="40px" type={'users'} img={item.avatar?.url} />
+                  )}
+
                   <div className="flex flex-col ml-3">
                     <span className="leading-7 text-Gray-light-mode-900">
-                      {item.user.first_name} {item.user.last_name}
+                      {userProfile ? item.org.name : `${item.user.first_name} ${item.user.last_name}`}
                     </span>
                     <span className="text-sm font-medium leading-5 text-Gray-light-mode-600">
-                      @{item.user.username}
+                      {userProfile ? `@${item.org.shortname}` : `@${item.user.username}`}
                     </span>
                   </div>
                 </td>
                 <td>Experience</td>
                 <td>
-                  {item.status === 'PENDING' && (
-                    <CreditStatus icon="clock" label="Pending" color={variables.color_grey_500} />
-                  )}
-                  {item.status === 'APPROVED' && (
-                    <CreditStatus icon="check" label="Approved" color={variables.color_primary_500} />
-                  )}
+                  {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" theme="secondary" />}
+                  {item.status === 'APPROVED' && <CreditStatus icon="check" label="Approved" theme="primary" />}
                   {item.status === 'SENT' && (
-                    <CreditStatus icon="check" label="Sent" color={variables.color_success_500} />
+                    <CreditStatus
+                      icon={userProfile ? 'arrow-down' : 'arrow-up'}
+                      label={userProfile ? 'Received' : 'Sent'}
+                      theme="success"
+                    />
                   )}
-                  {item.status === 'REJECTED' && (
-                    <CreditStatus icon="x-close" label="Rejected" color={variables.color_error_500} />
-                  )}
-                  {item.status === 'CLAIMED' && (
-                    <CreditStatus icon="check" label="Claimed" color={variables.color_success_500} />
-                  )}
+                  {item.status === 'REJECTED' && <CreditStatus icon="x-close" label="Rejected" theme="error" />}
+                  {item.status === 'CLAIMED' && <CreditStatus icon="check" label="Claimed" theme="success" />}
                 </td>
                 <td>{toRelativeTime(item.created_at.toString())}</td>
-                {verified && (
-                  <>
-                    <td>
-                      <Icon
-                        name="eye"
-                        fontSize={20}
-                        className="text-Gray-light-mode-600"
-                        onClick={() => onDetails(item)}
-                        cursor="pointer"
-                      />
-                    </td>
-                    <td>
-                      {item.status === 'PENDING' && (
+                {verified &&
+                  (userProfile ? (
+                    <></>
+                  ) : (
+                    <>
+                      <td>
                         <Icon
-                          name="check"
+                          name="eye"
                           fontSize={20}
                           className="text-Gray-light-mode-600"
-                          onClick={() => onApprove(item.id)}
+                          onClick={() => onDetails(item)}
                           cursor="pointer"
                         />
-                      )}
-                    </td>
-                    <td>
-                      {item.status === 'PENDING' && (
-                        <Icon
-                          name="x-close"
-                          fontSize={20}
-                          className="text-Gray-light-mode-600"
-                          onClick={() => onReject(item.id)}
-                          cursor="pointer"
-                        />
-                      )}
-                    </td>
-                  </>
-                )}
+                      </td>
+                      <td>
+                        {item.status === 'PENDING' && (
+                          <Icon
+                            name="check"
+                            fontSize={20}
+                            className="text-Gray-light-mode-600"
+                            onClick={() => onApprove(item.id)}
+                            cursor="pointer"
+                          />
+                        )}
+                      </td>
+                      <td>
+                        {item.status === 'PENDING' && (
+                          <Icon
+                            name="x-close"
+                            fontSize={20}
+                            className="text-Gray-light-mode-600"
+                            onClick={() => onReject(item.id)}
+                            cursor="pointer"
+                          />
+                        )}
+                      </td>
+                    </>
+                  ))}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
       <div className={css.paginationBox}>
-        <Pagination count={total} onChange={(e, p) => setPage(p)} />
+        {total && (
+          <div className="hidden md:block">
+            <Pagination page={page} count={Math.ceil(total / PER_PAGE)} onChange={(e, p) => setPage(p)} />
+          </div>
+        )}
+        {total && (
+          <div className="block md:hidden">
+            <PaginationMobile page={page} count={Math.ceil(total / PER_PAGE)} handleChange={setPage} />
+          </div>
+        )}
       </div>
+
       <CreateUpdateExperience
         open={openModal}
         handleClose={() => setOpenModal(false)}
