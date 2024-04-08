@@ -86,10 +86,15 @@ export const useNotifications = () => {
       case 'REFERRAL_JOINED':
       case 'REFERRAL_VERIFIED':
       case 'REFERRAL_HIRED':
-      case 'REFERRAL_HIRED':
       case 'REFERRAL_COMPLETED_JOB':
       case 'REFERRAL_CONFIRMED_JOB':
         return {};
+      case 'EXPERIENCE_VERIFY_REQUEST':
+        path = '/credentials';
+        break;
+      default:
+        path = '';
+        break;
     }
     navigate(path);
   };
