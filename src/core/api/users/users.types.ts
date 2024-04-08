@@ -1,4 +1,5 @@
 import { Offer } from 'src/core/types';
+
 import { AdditionalRes } from '../additionals/additionals.types';
 import { Category, Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
@@ -55,6 +56,7 @@ export interface ExperienceReq {
   country?: string;
   city?: string;
   employment_type?: 'ONE_OFF' | 'PART_TIME' | 'FULL_TIME';
+  weekly_hours?: number | null;
 }
 
 export interface ChangePasswordReq {
