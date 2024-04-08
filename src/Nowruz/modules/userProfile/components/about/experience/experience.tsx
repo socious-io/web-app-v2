@@ -125,6 +125,9 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
         open={(openModal.name === 'add' || openModal.name === 'edit') && openModal.open}
         handleClose={handleClose}
         experience={experience}
+        readonly={
+          experience?.credential && ['APPROVED', 'SENT', 'CLAIMED'].includes(experience.credential?.status || '')
+        }
       />
       <VerifyExperience
         open={openModal.name === 'verify' && openModal.open}
