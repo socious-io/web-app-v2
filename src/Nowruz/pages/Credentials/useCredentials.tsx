@@ -8,7 +8,6 @@ export const useCredentials = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(item => item.current),
   );
-
   const [openVerifiyAlert, setOpenVerifiyAlert] = useState(false);
   const verified = (currentIdentity?.meta as OrgMeta)?.verified;
   const tabs = [{ label: 'Requested', content: <CredentialList /> }];
