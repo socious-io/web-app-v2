@@ -9,16 +9,16 @@ import { setConnectionStatus } from 'src/store/reducers/profile.reducer';
 import { MenuItemType } from './threeDotsButton.types';
 
 export const useThreeDotsButton = (otherIdentityId: string) => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) =>
-    state.identity.entities.find((identity) => identity.current),
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(identity => identity.current),
   );
 
   const connectionStatus = useSelector<RootState, ConnectStatus | undefined | null>(
-    (state) => state.profile.identity?.connection_status,
+    state => state.profile.identity?.connection_status,
   );
-  const following = useSelector<RootState, boolean | undefined>((state) => state.profile.identity?.following);
-  const follower = useSelector<RootState, boolean | undefined>((state) => state.profile.identity?.follower);
-  const connectionId = useSelector<RootState, string | undefined>((state) => state.profile.identity?.connection_id);
+  const following = useSelector<RootState, boolean | undefined>(state => state.profile.identity?.following);
+  const follower = useSelector<RootState, boolean | undefined>(state => state.profile.identity?.follower);
+  const connectionId = useSelector<RootState, string | undefined>(state => state.profile.identity?.connection_id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
@@ -32,7 +32,7 @@ export const useThreeDotsButton = (otherIdentityId: string) => {
     if (connectionStatus === 'CONNECTED')
       items.push({ iconName: 'user-x-01', title: 'Remove connection', onClick: handleRemoveConnection });
 
-    items.push({ iconName: 'share-01', title: 'Share profile' });
+    // items.push({ iconName: 'share-01', title: 'Share profile' });
     setMenuItems(items);
   };
 

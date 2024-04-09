@@ -58,13 +58,8 @@ export const useLinksContainer = () => {
       label: 'Communities',
       route: '',
       iconName: 'users-01',
-      public: true,
-      children: userIsLoggedIn
-        ? [
-            { label: 'Feeds', route: '/', public: true },
-            { label: 'Connections', route: '/connections', public: false },
-          ]
-        : [{ label: 'Feeds', route: '/', public: true }],
+      public: false,
+      children: userIsLoggedIn ? [{ label: 'Connections', route: '/connections', public: false }] : [],
     },
 
     {
