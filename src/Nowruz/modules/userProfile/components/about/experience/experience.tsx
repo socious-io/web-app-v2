@@ -9,7 +9,11 @@ import { CreateUpdateExperience } from 'src/Nowruz/modules/userProfile/container
 import { useExperience } from './useExperience';
 import css from '../about.module.scss';
 
-export const Experiences = () => {
+interface ExperienceProps {
+  handleOpenVerifyModal: () => void;
+}
+
+export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }) => {
   const {
     user,
     myProfile,
@@ -24,6 +28,7 @@ export const Experiences = () => {
     handleClaimVC,
     disabledClaims,
     reqModelShow,
+    userVerified,
   } = useExperience();
   return (
     <>
@@ -75,7 +80,7 @@ export const Experiences = () => {
                     disabled={!!disabledClaims[item.credential.id]}
                     className={css.addBtn}
                     key={item.credential.id}
-                    onClick={handleClaimVC(item.credential.id)}
+                    onClick={userVerified ? handleClaimVC(item.credential.id) : handleOpenVerifyModal}
                   >
                     Claim
                   </Button>

@@ -36,6 +36,7 @@ export interface UserMeta {
   open_to_work: boolean;
   wallet_address: null;
   open_to_volunteer: boolean;
+  identity_verified: boolean;
 }
 
 export interface OrgMeta {
