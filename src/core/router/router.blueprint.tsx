@@ -146,6 +146,7 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'credentials',
+
             loader: async () => {
               return {
                 credentials: await getRequestedVerifyExperiences({ page: 1, limit: 10 }),
@@ -154,7 +155,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { Credentials } = await import('src/Nowruz/pages/Credentials');
               return {
-                Component: Credentials,
+                Component: Protect(Credentials, 'both'),
               };
             },
           },

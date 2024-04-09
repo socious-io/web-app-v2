@@ -36,8 +36,8 @@ export const Modal: React.FC<ModalProps> = props => {
             <div className="w-full flex gap-4 px-6 pt-6 relative top-0">
               {icon}
               <div className="flex-1 flex flex-col gap-1 justify-center items-start pb-5">
-                <h1 className={css.title}>{title}</h1>
-                <h2 className={css.subtitle}>{subTitle}</h2>
+                {title && <h1 className={css.title}>{title}</h1>}
+                {subTitle && <h2 className={css.subtitle}>{subTitle}</h2>}
               </div>
               <IconButton className={`absolute top-3 right-3 ${css.closeBtn}`} onClick={handleClose}>
                 <Icon name="x-close" fontSize={24} color={variables.color_grey_500} />

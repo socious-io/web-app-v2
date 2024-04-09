@@ -85,7 +85,6 @@ export const useLinksContainer = () => {
       route: '/credentials',
       iconName: 'shield-tick',
       public: false,
-      only: 'organizations',
     },
     {
       label: 'Refer and earn',

@@ -49,11 +49,11 @@ export const Credentials = () => {
               <h1 className={css.title}>Credentials</h1>
               <h2 className={css.subtitle}>Here all credentials issued or requested</h2>
             </div>
-            <div className={css.hidden}>
+            {/* <div className={css.hidden}>
               <Button color="primary" startIcon={<img src="/icons/plus.svg" alt="plus" style={{ width: '20px' }} />}>
                 Issue a Credential
               </Button>
-            </div>
+            </div> */}
           </div>
           <HorizontalTabs tabs={tabs} />
         </div>
