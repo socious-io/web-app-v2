@@ -16,7 +16,7 @@ const store = configureStore({
     contracts: contractsSlice.reducer,
     skills: skillsSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) => {
+  middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: ['modals/openModal'],

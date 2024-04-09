@@ -7,9 +7,6 @@ import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 
 import css from './credentialsList.module.scss';
 import { useCredentialsList } from './useCredentialsList';
-import { CreateUpdateExperience } from 'src/Nowruz/modules/userProfile/containers/createUpdateExperience';
-import { toRelativeTime } from 'src/core/relative-time';
-import { PaginationMobile } from '../../general/components/paginationMobile';
 import { CredentialDetails } from '../credentialDetails';
 import { CreditStatus } from '../creditStatus';
 
