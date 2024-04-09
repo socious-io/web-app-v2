@@ -37,7 +37,7 @@ export const Experiences = () => {
         )}
         {user?.experiences && (
           <div className="md:pr-48 flex flex-col gap-5">
-            {user?.experiences.map((item) => (
+            {user?.experiences.map(item => (
               <>
                 <StepperCard
                   key={item.id}
@@ -48,6 +48,7 @@ export const Experiences = () => {
                   supprtingText={`${getStringDate(item.start_at)} - ${
                     item.end_at ? getStringDate(item.end_at) : 'Now'
                   }`}
+                  DisplayVerificationStatus
                   verified={['APPROVED', 'SENT', 'CLAIMED'].includes(item.credential?.status || '')}
                   description={item.description}
                   editable={myProfile}

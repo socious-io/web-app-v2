@@ -9,7 +9,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import css from './stepperCard.module.scss';
 import { StepperCardProps } from './stepperCard.types';
 
-export const StepperCard: React.FC<StepperCardProps> = (props) => {
+export const StepperCard: React.FC<StepperCardProps> = props => {
   const {
     title,
     subtitle,
@@ -21,7 +21,9 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
     description,
     handleEdit,
     handleDelete,
+    DisplayVerificationStatus,
     verified,
+    customIcon,
   } = props;
   const [seeMore, setSeeMore] = useState(false);
   const [descriptionStr, setDescriptionStr] = useState(description);
@@ -55,7 +57,7 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
   return (
     <div className="flex gap-3 h-full">
       <div className="hidden md:flex flex-col w-fit gap-1">
-        <Avatar iconName={iconName} type="users" img={img || undefined} />
+        {!!customIcon ? customIcon : <Avatar iconName={iconName} type="users" img={img || undefined} />}
 
         <div className="w-1/2 flex-1 ">
           <Divider orientation="vertical" />
@@ -91,13 +93,17 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
           <Typography variant="h4" component="div" color={variables.color_grey_900}>
             <Box component="h4" display="flex" alignItems="center" sx={{ gap: 0.5 }}>
               {title}
-              {verified ? (
-                <Box component="span" display="flex" alignItems="center" color={variables.color_grey_400}>
-                  <Icon name="shield-tick" color={variables.color_success_500} />
-                  <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">(verified)</span>
-                </Box>
+              {DisplayVerificationStatus ? (
+                verified ? (
+                  <Box component="span" display="flex" alignItems="center" color={variables.color_grey_400}>
+                    <Icon name="shield-tick" color={variables.color_success_500} />
+                    <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">(verified)</span>
+                  </Box>
+                ) : (
+                  <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">(unverified)</span>
+                )
               ) : (
-                <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">(unverified)</span>
+                ''
               )}
             </Box>
           </Typography>

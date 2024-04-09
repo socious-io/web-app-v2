@@ -6,11 +6,11 @@ import store, { RootState } from 'src/store';
 import { getUnreadCount } from 'src/store/thunks/chat.thunk';
 
 export const useLinksContainer = () => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const userIsLoggedIn = !!currentIdentity;
-  const unread = useSelector<RootState, string>((state) => {
+  const unread = useSelector<RootState, string>(state => {
     return state.chat.unreadCount;
   });
 
@@ -19,7 +19,7 @@ export const useLinksContainer = () => {
   };
 
   useEffect(() => {
-    unreadMessagesCount();
+    if (userIsLoggedIn) unreadMessagesCount();
   }, [userIsLoggedIn]);
 
   const menu = [
@@ -95,16 +95,16 @@ export const useLinksContainer = () => {
     },
   ];
 
-  let filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
+  let filteredMenu = userIsLoggedIn ? menu : menu.filter(item => item.public);
 
   // filter menu for role items
-  filteredMenu = filteredMenu.filter((item) => !item.only || item.only === currentIdentity?.type);
+  filteredMenu = filteredMenu.filter(item => !item.only || item.only === currentIdentity?.type);
 
   // filter menu childs for public items if user is not logged in
   if (!userIsLoggedIn) {
-    filteredMenu.forEach((element) => {
+    filteredMenu.forEach(element => {
       if (element.children) {
-        element.children = element.children.filter((item) => item.public);
+        element.children = element.children.filter(item => item.public);
       }
     });
   }
