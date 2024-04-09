@@ -13,8 +13,8 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
   let unit = offer?.currency || '';
 
   if (offer?.crypto_currency_address) {
-    dapp.NETWORKS.map((n) => {
-      const token = n.tokens.filter((t) => offer.crypto_currency_address === t.address)[0];
+    dapp.NETWORKS.map(n => {
+      const token = n.tokens.filter(t => offer.crypto_currency_address === t.address)[0];
       if (token) unit = token.symbol;
     });
   }
@@ -37,8 +37,8 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
       return;
     }
 
-    const applyOrgFeeDiscount = offer.org_referrer_wallet != null && offer.org_referrer_wallet != undefined
-    const applyContFeeDiscount = offer.contributor_referrer_wallet != null && offer.contributor_referrer_wallet != undefined
+    const applyOrgFeeDiscount = !!offer.org_referrer_wallet;
+    const applyContFeeDiscount = !!offer.contributor_referrer_wallet;
 
     setDisabledPayment(true);
     try {

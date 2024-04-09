@@ -14,22 +14,20 @@ export const useTransactions = () => {
     stripeProfileRes: StripeProfileRes;
     jpStripeProfileRes: StripeProfileRes;
   };
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const type = currentIdentity?.type;
   const PER_PAGE = 10;
   const navigate = useNavigate();
 
   const mapDataToColumns = (missions: Mission[]) => {
-    console.log('test log missions', missions);
-
-    const result: PaymentDataType[] = missions.map((item) => {
+    const result: PaymentDataType[] = missions.map(item => {
       const symbol = item.offer.currency === 'JPY' ? '¥' : item.offer.currency === 'USD' ? '$' : '';
       let currency = item.offer?.currency || '';
       if (item.offer?.crypto_currency_address) {
-        dapp.NETWORKS.map((n) => {
-          const token = n.tokens.find((t) => item.offer.crypto_currency_address === t.address);
+        dapp.NETWORKS.map(n => {
+          const token = n.tokens.find(t => item.offer.crypto_currency_address === t.address);
           if (token) currency = token.symbol;
         });
       }

@@ -3,28 +3,61 @@ import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontal
 
 import css from './credentials.module.scss';
 import { useCredentials } from './useCredentials';
+import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
+import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
+import { Icon } from 'src/Nowruz/general/Icon';
+import { useState } from 'react';
 
 export const Credentials = () => {
-  const { tabs } = useCredentials();
+  const { tabs, verified, setOpenVerifiyAlert, openVerifiyAlert } = useCredentials();
 
+  const [hideVerifyBanner, setHideVerifyBanner] = useState(localStorage.getItem('hideVerifiedBanner') === 'true');
+
+  const handleDispissVerified = () => {
+    localStorage.setItem('hideVerifiedBanner', 'true');
+    setHideVerifyBanner(true);
+  };
 
   return (
     <>
-      <div className={css.container}>
-        <div className={css.header}>
-          <div className={css.left}>
-            <h1 className={css.title}>Credentials</h1>
-            <h2 className={css.subtitle}>Here all credentials issued or requested</h2>
+      <div className="w-full flex flex-col">
+        {!verified ? (
+          <TopBanner
+            theme="warning"
+            primaryBtnLabel="Verify now"
+            primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700 p-0" />}
+            primaryBtnAction={() => setOpenVerifiyAlert(true)}
+            secondaryBtnLabel="Learn more"
+            text="Verify your identity"
+            supportingText="In order to claim your certificates, please verify your identity."
+          />
+        ) : !hideVerifyBanner ? (
+          <TopBanner
+            theme="success"
+            text="Your identity has been verified"
+            supportingText="You can now claim your certificates."
+            secondaryBtnLabel="Dismiss"
+            secondaryBtnAction={handleDispissVerified}
+          />
+        ) : (
+          ''
+        )}
+        <div className={css.container}>
+          <div className={css.header}>
+            <div className={css.left}>
+              <h1 className={css.title}>Credentials</h1>
+              <h2 className={css.subtitle}>Here all credentials issued or requested</h2>
+            </div>
+            <div className={css.hidden}>
+              <Button color="primary" startIcon={<img src="/icons/plus.svg" alt="plus" style={{ width: '20px' }} />}>
+                Issue a Credential
+              </Button>
+            </div>
           </div>
-          <div className={css.hidden}>
-            <Button color='primary' startIcon={<img src='/icons/plus.svg' alt='plus' style={{ width: '20px' }}/>}>
-              Issue a Credential
-            </Button>
-          </div>
+          <HorizontalTabs tabs={tabs} />
         </div>
-        <HorizontalTabs tabs={tabs} />
-        
       </div>
+      {openVerifiyAlert && <KYBModal open={openVerifiyAlert} setOpen={setOpenVerifiyAlert} />}
     </>
   );
 };

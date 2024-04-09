@@ -7,12 +7,21 @@ import css from './credentialsList.module.scss';
 import { CreditStatus } from '../creditStatus';
 import { useCredentialsList } from './useCredentialsList';
 import { CreateUpdateExperience } from 'src/Nowruz/modules/userProfile/containers/createUpdateExperience';
-import { useState } from 'react';
-import { CredentialExperienceRes, Experience } from 'src/core/api';
+import { toRelativeTime } from 'src/core/relative-time';
 
 export const CredentialList = () => {
-  const { credentialsList, total, setPage, onApprove, onReject, onDetails, setOpenModal, openModal, experience } =
-    useCredentialsList();
+  const {
+    credentialsList,
+    total,
+    setPage,
+    onApprove,
+    onReject,
+    onDetails,
+    setOpenModal,
+    openModal,
+    experience,
+    verified,
+  } = useCredentialsList();
 
   return (
     <>
@@ -27,13 +36,17 @@ export const CredentialList = () => {
                 <Icon name="arrow-down" />
               </th>
               <th>Created DATE</th>
-              <th></th>
-              <th></th>
-              <th></th>
+              {!!verified && (
+                <>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody>
-            {credentialsList.map((item) => (
+            {credentialsList.map(item => (
               <tr className="text-sm font-normal text-left">
                 <td className="flex justify-start items-center">
                   <Avatar size="40px" type={'users'} img={item.avatar?.url} />
@@ -64,38 +77,42 @@ export const CredentialList = () => {
                     <CreditStatus icon="check" label="Claimed" color={variables.color_success_500} />
                   )}
                 </td>
-                <td>{item.created_at.toString()}</td>
-                <td>
-                  <Icon
-                    name="eye"
-                    fontSize={20}
-                    className="text-Gray-light-mode-600"
-                    onClick={() => onDetails(item)}
-                    cursor="pointer"
-                  />
-                </td>
-                <td>
-                  {item.status === 'PENDING' && (
-                    <Icon
-                      name="check"
-                      fontSize={20}
-                      className="text-Gray-light-mode-600"
-                      onClick={() => onApprove(item.id)}
-                      cursor="pointer"
-                    />
-                  )}
-                </td>
-                <td>
-                  {item.status === 'PENDING' && (
-                    <Icon
-                      name="x-close"
-                      fontSize={20}
-                      className="text-Gray-light-mode-600"
-                      onClick={() => onReject(item.id)}
-                      cursor="pointer"
-                    />
-                  )}
-                </td>
+                <td>{toRelativeTime(item.created_at.toString())}</td>
+                {verified && (
+                  <>
+                    <td>
+                      <Icon
+                        name="eye"
+                        fontSize={20}
+                        className="text-Gray-light-mode-600"
+                        onClick={() => onDetails(item)}
+                        cursor="pointer"
+                      />
+                    </td>
+                    <td>
+                      {item.status === 'PENDING' && (
+                        <Icon
+                          name="check"
+                          fontSize={20}
+                          className="text-Gray-light-mode-600"
+                          onClick={() => onApprove(item.id)}
+                          cursor="pointer"
+                        />
+                      )}
+                    </td>
+                    <td>
+                      {item.status === 'PENDING' && (
+                        <Icon
+                          name="x-close"
+                          fontSize={20}
+                          className="text-Gray-light-mode-600"
+                          onClick={() => onReject(item.id)}
+                          cursor="pointer"
+                        />
+                      )}
+                    </td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>
