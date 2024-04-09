@@ -24,6 +24,7 @@ export const Dashboard = () => {
   let hoursVolunteered = 0;
   const { name, type, usernameVal } = getIdentityMeta(profileData);
   const verified = type === 'users' ? (profileData as User).identity_verified : (profileData as Organization).verified;
+
   const profileUrl =
     type === 'users' ? `/profile/users/${usernameVal}/view` : `/profile/organizations/${usernameVal}/view`;
 

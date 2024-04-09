@@ -1,24 +1,27 @@
-import { useLoaderData } from 'react-router-dom';
-import { User } from 'src/core/api';
+import { CurrentIdentity, UserMeta } from 'src/core/api';
 import { Typography } from '@mui/material';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { useState } from 'react';
-import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Link } from 'src/Nowruz/modules/general/components/link';
-
 import { ReferCard } from 'src/Nowruz/modules/refer/referCard';
 import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
 import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
 
 export const Refer = () => {
-  const { userProfile } = useLoaderData() as { userProfile: User };
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(identity => identity.current),
+  );
+
+  const verified = (currentIdentity?.meta as UserMeta).identity_verified;
+
   const [openVerifyModal, setOpenVerifyModal] = useState(false);
 
   return (
     <>
       <div className="flex flex-col">
-        {!userProfile.identity_verified && (
+        {!verified && (
           <TopBanner
             theme="warning"
             text="Verify your identity"

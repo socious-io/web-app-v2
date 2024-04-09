@@ -417,10 +417,6 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'referral',
-            loader: async () => {
-              const userProfile = await profile();
-              return { userProfile };
-            },
             async lazy() {
               const { Refer } = await import('src/Nowruz/pages/refer');
               return {
@@ -641,6 +637,20 @@ export const blueprint: RouteObject[] = [
   //     },
   //   ],
   // },
+  {
+    path: 'notifications/:id',
+    loader: ({ params }) => {
+      return {
+        notificationId: params.id,
+      };
+    },
+    async lazy() {
+      const { NotificationDeepLink } = await import('src/Nowruz/pages/notificationDeepLink');
+      return {
+        Component: NotificationDeepLink,
+      };
+    },
+  },
   {
     path: '/intro',
     async lazy() {
