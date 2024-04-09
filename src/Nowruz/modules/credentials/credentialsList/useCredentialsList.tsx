@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
 import {
   getRequestedVerifyExperiences,
@@ -8,17 +7,10 @@ import {
   rejectVerifyExperience,
   Experience,
   CredentialExperienceRes,
-  CurrentIdentity,
-  OrgMeta,
 } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { RootState } from 'src/store';
 
 export const useCredentialsList = () => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
-    state.identity.entities.find(item => item.current),
-  );
-  const verified = (currentIdentity?.meta as OrgMeta)?.verified;
   const { credentials } = useLoaderData() as { credentials: CredentialExperiencePaginateRes };
   const [credentialsList, setCredentialsList] = useState(credentials.items);
   const [page, setPage] = useState(1);
@@ -67,6 +59,5 @@ export const useCredentialsList = () => {
     setOpenModal,
     openModal,
     experience,
-    verified,
   };
 };

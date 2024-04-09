@@ -6,7 +6,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import css from './modal.module.scss';
 import { ModalProps } from './modal.types';
 
-export const Modal: React.FC<ModalProps> = props => {
+export const Modal: React.FC<ModalProps> = (props) => {
   const {
     open,
     handleClose,
@@ -16,7 +16,6 @@ export const Modal: React.FC<ModalProps> = props => {
     content,
     footer,
     mobileFullHeight = true,
-    mobileCentered = false,
     children,
     headerDivider = true,
     footerDivider = true,
@@ -27,11 +26,11 @@ export const Modal: React.FC<ModalProps> = props => {
   return (
     <>
       {open && (
-        <Backdrop sx={{ zIndex: theme => theme.zIndex.drawer + 1, width: '100vw' }} open={open} id={id}>
+        <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, width: '100vw' }} open={open} id={id}>
           <div
-            className={`${css.container} ${customStyle} ${
-              mobileCentered ? css.mobileCentered : mobileFullHeight ? css.mobileFullHeight : css.mobileDefault
-            }`}
+            className={`md:rounded-xl flex flex-col m-auto bg-Base-White z-30 w-full ${
+              mobileFullHeight ? 'h-full max-h-full' : 'mt-20 rounded-t-2xl h-[calc(100%-80px)] max-h-[calc(100%-80px)]'
+            } ${css.container} ${customStyle}`}
           >
             <div className="w-full flex gap-4 px-6 pt-6 relative top-0">
               {icon}

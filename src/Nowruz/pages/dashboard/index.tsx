@@ -23,14 +23,13 @@ export const Dashboard = () => {
   let hoursVolunteered = 0;
   const { name, type, usernameVal } = getIdentityMeta(profileData);
   const verified = type === 'users' ? (profileData as User).identity_verified : (profileData as Organization).verified;
-
   const profileUrl =
     type === 'users' ? `/profile/users/${usernameVal}/view` : `/profile/organizations/${usernameVal}/view`;
 
   if (impactPointHistory) {
     impactPointHistory.items
-      .filter(item => item.offer !== null)
-      .forEach(item => {
+      .filter((item) => item.offer !== null)
+      .forEach((item) => {
         if (item.offer) {
           if ((item?.offer?.currency && ['USD', 'YEN'].includes(item?.offer?.currency)) || item.offer.currency)
             hoursWorked += item.offer.total_hours;
