@@ -10,7 +10,13 @@ import { useState } from 'react';
 
 export const Credentials = () => {
   const { tabs, verified, setOpenVerifiyAlert, openVerifiyAlert } = useCredentials();
-  const [displayVerifiedBanner, setDisplayVerifiedBanner] = useState(true);
+
+  const [hideVerifyBanner, setHideVerifyBanner] = useState(localStorage.getItem('hideVerifiedBanner') === 'true');
+
+  const handleDispissVerified = () => {
+    localStorage.setItem('hideVerifiedBanner', 'true');
+    setHideVerifyBanner(true);
+  };
 
   return (
     <>
@@ -26,13 +32,13 @@ export const Credentials = () => {
             text="Verify your identity"
             supportingText="In order to claim your certificates, please verify your identity."
           />
-        ) : displayVerifiedBanner ? (
+        ) : !hideVerifyBanner ? (
           <TopBanner
             theme="success"
             text="Your identity has been verified"
             supportingText="You can now claim your certificates."
             secondaryBtnLabel="Dismiss"
-            secondaryBtnAction={() => setDisplayVerifiedBanner(false)}
+            secondaryBtnAction={handleDispissVerified}
           />
         ) : (
           ''

@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
 import { config } from 'src/config';
-import { User } from 'src/core/api';
+import { CurrentIdentity, User, UserMeta } from 'src/core/api';
+import { RootState } from 'src/store';
 
 export const useReferCard = (type: 'organization' | 'talent') => {
-  const { userProfile } = useLoaderData() as { userProfile: User };
+  const user = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(identity => identity.current),
+  )?.meta as UserMeta;
   const [openEmailModal, setOpenEmailModal] = useState(false);
   const [openSentModal, setOpenSentModal] = useState(false);
   const [emails, setEmails] = useState<string[]>([]);
@@ -12,8 +16,8 @@ export const useReferCard = (type: 'organization' | 'talent') => {
   const title = type === 'organization' ? 'Refer organizations' : 'Refer talent';
   const url =
     type === 'organization'
-      ? `${config.appBaseURL}referral/${userProfile.username}/org`
-      : `${config.appBaseURL}referral/${userProfile.username}/talent`;
+      ? `${config.appBaseURL}referral/${user.username}/org`
+      : `${config.appBaseURL}referral/${user.username}/talent`;
   const subtitle =
     type === 'organization'
       ? 'Send your link to organizations looking for purpose-driven talent.'
@@ -34,7 +38,7 @@ export const useReferCard = (type: 'organization' | 'talent') => {
     handleCopy,
     title,
     subtitle,
-    verified: userProfile.identity_verified,
+    verified: user.identity_verified,
     sendInviteEmail,
     url,
     emails,
