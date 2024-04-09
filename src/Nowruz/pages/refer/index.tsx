@@ -2,12 +2,10 @@ import { CurrentIdentity, UserMeta } from 'src/core/api';
 import { Typography } from '@mui/material';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { useState } from 'react';
-import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Link } from 'src/Nowruz/modules/general/components/link';
-
 import { ReferCard } from 'src/Nowruz/modules/refer/referCard';
 import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
+import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store';
 
@@ -24,33 +22,16 @@ export const Refer = () => {
     <>
       <div className="flex flex-col">
         {!verified && (
-          <div className="w-full  px-4 py-4 md:px-8 md:py-1 bg-Warning-25 border border-t-0 border-x-0 border-b border-solid border-Warning-300 flex flex-col md:flex-row gap-4 md:justify-between">
-            <div className="flex gap-4 items-center">
-              <div className="hidden md:flex">
-                <FeaturedIconOutlined theme="warning" iconName="alert-circle" size="md" />
-              </div>
-              <div className="flex flex-col md:flex-row gap-[2px] md:gap-1.5">
-                <span className="font-semibold text-sm text-Warning-700">Verify your identity</span>
-                <span className="font-normal text-sm text-Warning-700">
-                  In order to access referrals, you need to have a Atala PRISM DID and verify your identity.
-                </span>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="text" color="error" customStyle="text-Warning-600">
-                Learn more
-              </Button>
-              <Button
-                variant="text"
-                color="error"
-                customStyle="text-Warning-700 flex gap-2 items-center"
-                onClick={() => setOpenVerifyModal(true)}
-              >
-                Verify now
-                <Icon name="arrow-right" fontSize={20} className="text-Warning-700" />
-              </Button>
-            </div>
-          </div>
+          <TopBanner
+            theme="warning"
+            text="Verify your identity"
+            supportingText="In order to access referrals, you need to have a Atala PRISM DID and verify your identity."
+            primaryBtnLabel="Verify now"
+            primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700" />}
+            primaryBtnAction={() => setOpenVerifyModal(true)}
+            secondaryBtnLabel="Learn more"
+            secondaryBtnLink="https://socious.io/decentralized-referrals"
+          />
         )}
         <div className="pt-8 pb-12 px-4 md:px-8 w-full md:max-w-[926px] flex flex-col gap-8">
           <div className="flex flex-col gap-1 pb-5 border border-x-0 border-t-0 border-b border-solid border-Gray-light-mode-200">
@@ -63,11 +44,16 @@ export const Refer = () => {
           </div>
           <div className="flex flex-col gap-8">
             <div className="flex flex-col">
-              <span className="text-base font-normal text-Gray-light-mode-600">
+              <span className="text-base font-normal leading-6 text-Gray-light-mode-600">
                 By sharing Socious with promising talent and impact organizations, you're not just expanding our
                 network, you're also accelerating change.
               </span>
-              <Link label="Learn more about our referral program." href="/refer" customStyle="!text-base" />
+              <Link
+                label="Learn more about our referral program."
+                href="https://socious.io/decentralized-referrals"
+                target="_blank"
+                customStyle="!text-base !leading-6"
+              />
             </div>
             <div className="flex flex-col gap-6 md:flex-row md:gap-8">
               <ReferCard type="organization" />

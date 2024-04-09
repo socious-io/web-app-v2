@@ -24,7 +24,7 @@ export const UserCards: React.FC<UserCardsProps> = ({ profileCompleted, profileU
           title="Refer and earn"
           description="Help us make an impact and earn rewards by sharing Socious with  potential talent and organizations."
           bgColor={variables.color_wild_blue_100}
-          redirectUrl="/refer"
+          redirectUrl="/referral"
           buttonLabel="Refer now"
           buttonIcon="star-06"
         />

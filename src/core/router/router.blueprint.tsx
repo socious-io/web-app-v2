@@ -416,7 +416,7 @@ export const blueprint: RouteObject[] = [
             ],
           },
           {
-            path: 'refer',
+            path: 'referral',
             async lazy() {
               const { Refer } = await import('src/Nowruz/pages/refer');
               return {
