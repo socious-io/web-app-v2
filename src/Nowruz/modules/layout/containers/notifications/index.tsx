@@ -8,7 +8,7 @@ export const Notifications: React.FC<NotificationProps> = ({ handleClose, list }
   const { mapTypeToRoute } = useNotifications();
   return (
     <div className="py-6 w-full h-full flex flex-col gap-8">
-      {list?.map((item) => (
+      {list?.map(item => (
         <NotificationItem
           key={item.id}
           item={item}
