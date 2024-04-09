@@ -1,5 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
-import { User } from 'src/core/api';
+import { CurrentIdentity, UserMeta } from 'src/core/api';
 import { Typography } from '@mui/material';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { useState } from 'react';
@@ -9,15 +8,22 @@ import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import { ReferCard } from 'src/Nowruz/modules/refer/referCard';
 import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
 
 export const Refer = () => {
-  const { userProfile } = useLoaderData() as { userProfile: User };
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(identity => identity.current),
+  );
+
+  const verified = (currentIdentity?.meta as UserMeta).identity_verified;
+
   const [openVerifyModal, setOpenVerifyModal] = useState(false);
 
   return (
     <>
       <div className="flex flex-col">
-        {!userProfile.identity_verified && (
+        {!verified && (
           <div className="w-full  px-4 py-4 md:px-8 md:py-1 bg-Warning-25 border border-t-0 border-x-0 border-b border-solid border-Warning-300 flex flex-col md:flex-row gap-4 md:justify-between">
             <div className="flex gap-4 items-center">
               <div className="hidden md:flex">
