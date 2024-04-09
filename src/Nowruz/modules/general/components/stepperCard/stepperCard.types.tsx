@@ -1,8 +1,5 @@
-import { ReactNode } from 'react';
-
 export interface StepperCardProps {
   iconName?: string;
-  customIcon?: ReactNode;
   img?: string;
   title?: string;
   subtitle?: string;
@@ -15,5 +12,4 @@ export interface StepperCardProps {
   handleEdit?: () => void;
   handleDelete?: () => void;
   verified?: boolean;
-  DisplayVerificationStatus?: boolean;
 }

@@ -53,7 +53,6 @@ export interface OrgMeta {
   description?: string;
   wallet_address?: string;
   verified_impact: boolean;
-  verified: boolean;
 }
 
 export interface CurrentIdentity extends Identity {
