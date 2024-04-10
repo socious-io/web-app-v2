@@ -90,7 +90,10 @@ export const useNotifications = () => {
       case 'REFERRAL_CONFIRMED_JOB':
         return {};
       case 'EXPERIENCE_VERIFY_REQUEST':
-        path = '/credentials';
+        path = '/credentials#requested';
+        break;
+      case 'EXPERIENCE_VERIFY_APPROVED':
+        path = '/credentials#issued';
         break;
       default:
         path = '';
