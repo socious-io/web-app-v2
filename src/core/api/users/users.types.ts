@@ -163,7 +163,7 @@ export interface ImpactPoints extends PaginateRes {
 
 export interface Credential {
   id: string;
-  status: 'PENDING' | 'APPROVED' | 'SENT' | 'CLAIMED' | 'REJECTED';
+  status: 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'CLAIMED' | 'REJECTED';
   message?: string;
   connection_id?: string;
   connection_url?: string;

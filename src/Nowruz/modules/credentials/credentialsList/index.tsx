@@ -1,4 +1,3 @@
-import variables from 'src/components/_exports.module.scss';
 import { formatDate } from 'src/core/time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -27,30 +26,30 @@ export const CredentialList = () => {
     onSelectCredential,
     userProfile,
     verified,
-    claimByTalent,
-    archiveByTalent,
   } = useCredentialsList();
 
   return (
     <div className="flex flex-col">
-      <div className="flex gap-3 justify-end">
-        <Button
-          color="inherit"
-          variant="outlined"
-          disabled={!selectedCredential}
-          onClick={() => onApprove(selectedCredential)}
-        >
-          Approve
-        </Button>
-        <Button
-          color="inherit"
-          variant="outlined"
-          disabled={!selectedCredential}
-          onClick={() => onReject(selectedCredential)}
-        >
-          Decline
-        </Button>
-      </div>
+      {!userProfile && (
+        <div className="flex gap-3 justify-end">
+          <Button
+            color="inherit"
+            variant="outlined"
+            disabled={!selectedCredential}
+            onClick={() => onApprove(selectedCredential)}
+          >
+            Approve
+          </Button>
+          <Button
+            color="inherit"
+            variant="outlined"
+            disabled={!selectedCredential}
+            onClick={() => onReject(selectedCredential)}
+          >
+            Decline
+          </Button>
+        </div>
+      )}
       <div className={css.tableCereditList}>
         <div className={css.header}>
           <div className="flex flex-[2_2_0%] gap-3">
@@ -66,12 +65,14 @@ export const CredentialList = () => {
           {credentialsList.map(item => (
             <div key={item.id} className="flex items-center text-sm font-normal text-left px-6 py-4">
               <div className="flex flex-[2_2_0%] justify-start items-center gap-3">
-                <Checkbox
-                  id={item.id}
-                  checked={selectedCredential === item.id}
-                  onChange={() => onSelectCredential(item.id)}
-                  disabled={item.status !== 'PENDING'}
-                />
+                {!userProfile && (
+                  <Checkbox
+                    id={item.id}
+                    checked={selectedCredential === item.id}
+                    onChange={() => onSelectCredential(item.id)}
+                    disabled={item.status !== 'PENDING' || !verified}
+                  />
+                )}
                 {userProfile ? (
                   <Avatar size="40px" type={'organizations'} />
                 ) : (
@@ -106,27 +107,7 @@ export const CredentialList = () => {
               <div className={css.col}>{formatDate(item.created_at)}</div>
               {verified &&
                 (userProfile ? (
-                  <div className={css.col}>
-                    {item.status === 'APPROVED' && (
-                      <Button
-                        color="primary"
-                        variant="text"
-                        onClick={claimByTalent}
-                        customStyle="!text-sm !font-semibold"
-                      >
-                        Claim
-                      </Button>
-                    )}
-
-                    <Button
-                      color="secondary"
-                      variant="text"
-                      onClick={archiveByTalent}
-                      customStyle="!text-sm !font-semibold"
-                    >
-                      Archive
-                    </Button>
-                  </div>
+                  <div className={css.col} />
                 ) : (
                   <div className={css.col}>
                     <Button
@@ -162,7 +143,7 @@ export const CredentialList = () => {
         experience={experience}
         onUpdateExperience={onUpdateExperience}
         avatarInfo={avatarInfo}
-        readonly={experience?.credential?.status === 'APPROVED'}
+        readonly={experience?.credential?.status !== 'PENDING'}
       />
     </div>
   );

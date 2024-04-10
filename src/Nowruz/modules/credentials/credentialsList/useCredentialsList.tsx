@@ -20,7 +20,8 @@ export const useCredentialsList = () => {
   );
   const verified = (currentIdentity?.meta as OrgMeta)?.verified;
   const { credentials } = useLoaderData() as { credentials: CredentialExperiencePaginateRes };
-  const [credentialsList, setCredentialsList] = useState(credentials.items);
+  const userProfile = currentIdentity?.type === 'users';
+  const isMobile = isTouchDevice();
   const [page, setPage] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const [experience, setExperience] = useState<Experience>();
@@ -33,13 +34,20 @@ export const useCredentialsList = () => {
   const [selectedCredential, setSelectedCredential] = useState<string>('');
   const totalPage = Math.ceil(credentials?.total_count / credentials?.limit) || 1;
 
-  const isMobile = isTouchDevice();
-  const userProfile = currentIdentity?.type === 'users';
+  const filteredRequested = (items: CredentialExperiencePaginateRes['items']) => {
+    if (userProfile) {
+      return items.filter(item => item.status === 'PENDING' || item.status === 'REJECTED');
+    } else {
+      return items.filter(item => item.status !== 'ISSUED');
+    }
+  };
+  const [credentialsList, setCredentialsList] = useState(filteredRequested(credentials.items));
 
   const fetchMore = async (page: number, reload = false) => {
     const data = await getRequestedVerifyExperiences({ page, limit: 10 });
-    if (isMobile && page > 1 && !reload) setCredentialsList([...credentialsList, ...data.items]);
-    else setCredentialsList(data.items);
+    const filteredRequestedData = filteredRequested(data.items);
+    if (isMobile && page > 1 && !reload) setCredentialsList([...credentialsList, ...filteredRequestedData]);
+    else setCredentialsList(filteredRequestedData);
   };
 
   useEffect(() => {
@@ -103,9 +111,6 @@ export const useCredentialsList = () => {
     }
   };
 
-  const claimByTalent = () => {};
-  const archiveByTalent = () => {};
-
   return {
     credentialsList,
     setCredentialsList,
@@ -124,7 +129,5 @@ export const useCredentialsList = () => {
     avatarInfo,
     selectedCredential,
     onSelectCredential,
-    claimByTalent,
-    archiveByTalent,
   };
 };

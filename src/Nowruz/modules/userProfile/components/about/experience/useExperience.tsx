@@ -39,6 +39,7 @@ export const useExperience = () => {
     APPROVED: 'verified',
     SENT: 'verified',
     CLAIMED: 'verified',
+    ISSUED: 'verified',
     PENDING: 'pending',
     REJECTED: 'unverified',
   };
