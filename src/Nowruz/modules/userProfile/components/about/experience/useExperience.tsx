@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  Credential,
   CurrentIdentity,
   Experience,
   Organization,
   User,
   UserMeta,
-  claimExperienceVC,
   otherProfileByUsername,
   removeExperiences,
+  requestVerifyExperience,
 } from 'src/core/api';
 import { monthShortNames } from 'src/core/time';
 import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
-import { requestVerifyExperience } from 'src/core/api';
 
 export const useExperience = () => {
   const user = useSelector<RootState, User | Organization | undefined>(state => {
@@ -25,27 +25,37 @@ export const useExperience = () => {
   const myProfile = currentIdentity?.id === user?.id;
   const userVerified = (currentIdentity?.meta as UserMeta)?.identity_verified;
 
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState<{ name: 'add' | 'edit' | 'verify' | 'claim'; open: boolean }>({
+    name: 'add',
+    open: false,
+  });
   const [experience, setExperience] = useState<Experience>();
   const [disabledClaims, setDisabledClaims] = useState<{ [key: string]: boolean }>({});
   const [reqModelShow, setReqModelShow] = useState(false);
-  const [openClaimModal, setOpenClaimModal] = useState(false);
   const [credentialId, setCredentialId] = useState('');
   const dispatch = useDispatch();
 
+  const verificationStatus: Record<Credential['status'], 'verified' | 'unverified' | 'pending'> = {
+    APPROVED: 'verified',
+    SENT: 'verified',
+    CLAIMED: 'verified',
+    PENDING: 'pending',
+    REJECTED: 'unverified',
+  };
+
   const handleClose = () => {
-    setOpenModal(false);
+    setOpenModal({ ...openModal, open: false });
     setReqModelShow(false);
   };
 
   const handleEdit = (ex: Experience) => {
     setExperience(ex);
-    setOpenModal(true);
+    setOpenModal({ name: 'edit', open: true });
   };
 
   const handleAdd = () => {
     setExperience(undefined);
-    setOpenModal(true);
+    setOpenModal({ name: 'add', open: true });
   };
 
   const handleDelete = async (id: string) => {
@@ -62,12 +72,21 @@ export const useExperience = () => {
     return `${month} ${year}`;
   };
 
-  const handleRequestVerify = (id: string) => async () => {
-    await requestVerifyExperience(id);
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
-    dispatch(setIdentityType('users'));
-    setReqModelShow(true);
+  const onOpenVerifyModal = (ex: Experience) => {
+    setExperience(ex);
+    setOpenModal({ name: 'verify', open: true });
+  };
+
+  const handleRequestVerify = async (id: string, message?: string, exact_info?: boolean) => {
+    try {
+      await requestVerifyExperience(id, message, exact_info);
+      const updated = await otherProfileByUsername(user?.username || '');
+      dispatch(setIdentity(updated));
+      dispatch(setIdentityType('users'));
+      setReqModelShow(true);
+    } catch (e) {
+      console.log('error in verifying experiece:', e);
+    }
   };
 
   const handleOpenClaimModal = (id?: string) => {
@@ -77,7 +96,7 @@ export const useExperience = () => {
       ...prevState,
       [id]: true,
     }));
-    setOpenClaimModal(true);
+    setOpenModal({ name: 'claim', open: true });
   };
 
   return {
@@ -90,13 +109,13 @@ export const useExperience = () => {
     handleDelete,
     getStringDate,
     handleClose,
+    onOpenVerifyModal,
     handleRequestVerify,
     disabledClaims,
     reqModelShow,
     userVerified,
-    openClaimModal,
-    setOpenClaimModal,
     handleOpenClaimModal,
     credentialId,
+    verificationStatus,
   };
 };

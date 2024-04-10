@@ -1,12 +1,15 @@
 import { get, post } from 'src/core/api/http';
+
 import { ClaimVCRes, CredentialExperienceRes, CredentialExperiencePaginateRes } from './credentials.types';
 import { PaginateReq } from '../types';
 
 export async function requestVerifyExperience(
   experienceId: string,
   message?: string,
+  exact_info?: boolean,
 ): Promise<CredentialExperienceRes> {
-  return (await post<CredentialExperienceRes>(`/credentials/experiences/${experienceId}`, { message })).data;
+  return (await post<CredentialExperienceRes>(`/credentials/experiences/${experienceId}`, { message, exact_info }))
+    .data;
 }
 
 export async function approveVerifyExperience(verifyRequestId: string): Promise<CredentialExperienceRes> {

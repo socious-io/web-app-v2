@@ -14,6 +14,6 @@ export interface StepperCardProps {
   description?: string;
   handleEdit?: () => void;
   handleDelete?: () => void;
-  verified?: boolean;
   DisplayVerificationStatus?: boolean;
+  verified?: 'verified' | 'unverified' | 'pending';
 }

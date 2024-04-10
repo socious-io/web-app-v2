@@ -1,6 +1,6 @@
+import React from 'react';
 import { NotificationItem } from 'src/Nowruz/modules/layout/components/NotificationItem';
 
-import css from './notifications.module.scss';
 import { NotificationProps } from './notifications.type';
 import { useNotifications } from './useNotifications';
 

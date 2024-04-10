@@ -99,8 +99,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     setJobCategories(options);
     if (experience)
       setValue('jobCategory', {
-        value: experience.job_category_id,
-        label: options.find(item => item.value === experience.job_category_id)?.label,
+        value: experience.job_category?.id,
+        label: experience.job_category?.name,
       });
     else setValue('jobCategory', { label: '', value: '' });
   };
@@ -147,14 +147,16 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   });
 
   const initializeValues = () => {
-    const startDate = experience?.start_at ? new Date(experience.start_at) : undefined;
-    const endDate = experience?.end_at ? new Date(experience.end_at) : undefined;
+    //FIXME: start_at and end_at from BE, not in UTC version
+    const getUTCDate = (date: string) => (date.endsWith('Z') ? date : `${date}Z`);
+    const startDate = experience?.start_at ? new Date(getUTCDate(experience.start_at)) : undefined;
+    const endDate = experience?.end_at ? new Date(getUTCDate(experience.end_at)) : undefined;
 
     const empTypeLabel = experience ? PROJECT_TYPE.find(t => t.value === experience.employment_type)?.title : undefined;
 
     const initialVal = {
       title: experience?.title || '',
-      jobCategories: {
+      jobCategory: {
         label: experience?.job_category?.name || '',
         value: experience?.job_category?.id || '',
       },
@@ -172,7 +174,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       description: experience?.description || '',
       currentlyWorking: experience ? !experience?.end_at : false,
       org: {
-        value: experience?.org_id || '',
+        value: experience?.org.id || '',
         label: experience?.org.name || '',
       },
       employmentType: { value: experience?.employment_type || '', label: empTypeLabel },
@@ -317,7 +319,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       city,
       employmentType,
       currentlyWorking,
-      volunteer,
     } = getValues();
 
     let organizationId = org.value;
@@ -359,6 +360,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     dispatch(setIdentityType('users'));
     handleClose();
   };
+
   return {
     jobCategories,
     register,
