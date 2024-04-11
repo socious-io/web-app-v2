@@ -97,12 +97,12 @@ export const getIdentityMeta = (identity: User | Organization | Identity | undef
   }
 
   // if identity type is 'User'
-  if ('first_name' in identity) {
+  if ('first_name' in identity || 'username' in identity) {
     const user = identity as User;
     return {
       username: `@${user.username}`,
       usernameVal: user.username,
-      name: `${user.first_name} ${user.last_name}`,
+      name: user.name || `${user.first_name} ${user.last_name}`,
       profileImage: user.avatar?.url || '',
       type: 'users',
       website: undefined,
