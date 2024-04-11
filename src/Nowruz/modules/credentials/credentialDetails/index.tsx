@@ -50,7 +50,6 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
     onSelectEndMonth,
     onSelectEndDay,
     onSelectEndYear,
-    currentlyWorking,
     handleSubmit,
     onSave,
     dateError,
@@ -185,7 +184,7 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
         <SearchDropdown
           id="end-month"
           value={endMonth}
-          label={`End date${!currentlyWorking ? '*' : ''}`}
+          label="End date*"
           options={months}
           hasDropdownIcon
           onChange={value => {
@@ -195,7 +194,7 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           className="flex-1"
           isSearchable
           errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label?.message.toString()] : undefined}
-          isDisabled={currentlyWorking || readonly}
+          isDisabled={readonly}
         />
         <SearchDropdown
           id="end-day"
@@ -209,7 +208,7 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           placeholder="Day"
           className="flex-1"
           errors={errors['endDay']?.label?.message ? [errors['endDay']?.label?.message.toString()] : undefined}
-          isDisabled={currentlyWorking || readonly}
+          isDisabled={readonly}
         />
         <SearchDropdown
           id="end-year"
@@ -224,7 +223,7 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           placeholder="Year"
           isSearchable
           errors={dateError ? [dateError] : undefined} //{errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
-          isDisabled={currentlyWorking || readonly}
+          isDisabled={readonly}
         />
       </div>
     </div>

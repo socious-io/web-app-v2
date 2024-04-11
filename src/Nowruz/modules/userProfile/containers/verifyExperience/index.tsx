@@ -42,7 +42,6 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
     onSelectEndYear,
     forgotInfo,
     handleForgotInfo,
-    currentlyWorking,
     handleSubmit,
     onSave,
     dateError,
@@ -106,7 +105,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
         <SearchDropdown
           id="end-month"
           value={endMonth}
-          label={`End date${!currentlyWorking ? '*' : ''}`}
+          label="End date*"
           options={months}
           hasDropdownIcon
           onChange={value => {
@@ -116,7 +115,6 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           className="flex-1"
           isSearchable
           errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label?.message.toString()] : undefined}
-          isDisabled={currentlyWorking}
         />
         <SearchDropdown
           id="end-day"
@@ -130,7 +128,6 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           placeholder="Day"
           className="flex-1"
           errors={errors['endDay']?.label?.message ? [errors['endDay']?.label?.message.toString()] : undefined}
-          isDisabled={currentlyWorking}
         />
         <SearchDropdown
           id="end-year"
@@ -145,7 +142,6 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           placeholder="Year"
           isSearchable
           errors={dateError ? [dateError] : undefined} //{errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
-          isDisabled={currentlyWorking}
         />
       </div>
       <div className="flex flex-col">

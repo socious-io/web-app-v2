@@ -17,7 +17,7 @@ const schema = yup
       .min(2, 'Must be 2-50 characters')
       .max(50, 'Must be 2-50 characters'),
     startMonth: yup.object().shape({
-      label: yup.string(),
+      label: yup.string().required('Required'),
       value: yup.string(),
     }),
     startDay: yup.object().shape({
@@ -29,15 +29,15 @@ const schema = yup
       value: yup.string(),
     }),
     endMonth: yup.object().shape({
-      label: yup.string(),
+      label: yup.string().required('Required'),
       value: yup.string(),
     }),
     endDay: yup.object().shape({
-      label: yup.string(),
+      label: yup.string().required('Please indicate a day'),
       value: yup.string(),
     }),
     endYear: yup.object().shape({
-      label: yup.string(),
+      label: yup.string().required('Required'),
       value: yup.string(),
     }),
     forgotInfo: yup.boolean(),
@@ -60,7 +60,6 @@ const schema = yup
       value: yup.string(),
     }),
     country: yup.string(),
-    currentlyWorking: yup.boolean(),
     description: yup.string(),
   })
   .required();
@@ -142,6 +141,7 @@ export const useVerifyExperience = (
     const getUTCDate = (date: string) => (date.endsWith('Z') ? date : `${date}Z`);
     const startDate = experience?.start_at ? new Date(getUTCDate(experience.start_at)) : undefined;
     const endDate = experience?.end_at ? new Date(getUTCDate(experience.end_at)) : undefined;
+    const currentDate = new Date();
 
     const empTypeLabel = experience ? PROJECT_TYPE.find(t => t.value === experience.employment_type)?.title : undefined;
 
@@ -164,11 +164,19 @@ export const useVerifyExperience = (
         value: startDate?.getDate() || '',
       },
       startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
-      endMonth: { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth() : '' },
-      endDay: { label: endDate?.getDate() || '', value: endDate?.getDate() || '' },
-      endYear: { label: endDate?.getFullYear() || '', value: endDate?.getFullYear() || '' },
+      endMonth: {
+        label: endDate ? monthNames[endDate.getMonth()] : monthNames[currentDate.getUTCMonth()],
+        value: endDate ? endDate.getMonth() : currentDate.getUTCMonth(),
+      },
+      endDay: {
+        label: endDate?.getDate() || currentDate.getUTCDate(),
+        value: endDate?.getDate() || currentDate.getUTCDate(),
+      },
+      endYear: {
+        label: endDate?.getFullYear() || currentDate.getUTCFullYear(),
+        value: endDate?.getFullYear() || currentDate.getUTCFullYear(),
+      },
       description: experience?.description || '',
-      currentlyWorking: !experience?.end_at,
       org: {
         value: experience?.org.id || '',
         label: experience?.org.name || '',
@@ -186,19 +194,11 @@ export const useVerifyExperience = (
   const endDay = watch('endDay');
   const startYear = watch('startYear');
   const endYear = watch('endYear');
-  const currentlyWorking = watch('currentlyWorking');
 
   const validateDates = () => {
-    if (!currentlyWorking && !endYear?.label) {
-      return 'Select currently working or enter end year';
-    }
-    if (!startYear?.label) return;
+    if (!startYear?.label || !endYear?.label) return;
     const start = new Date(Number(startYear?.label), Number(startMonth?.value || 0), Number(startDay?.value || 1));
-    let end = new Date();
-    if (!currentlyWorking) {
-      if (!endYear?.label) return;
-      end = new Date(Number(endYear?.label), Number(endMonth?.value || 0), Number(endDay?.value || 1));
-    }
+    const end = new Date(Number(endYear?.label), Number(endMonth?.value || 0), Number(endDay?.value || 1));
     if (end < start) return 'Start date cannot be later than end date';
     return;
   };
@@ -208,7 +208,7 @@ export const useVerifyExperience = (
     if (msg) {
       setDateError(msg);
     } else setDateError('');
-  }, [startMonth, startDay, startYear, endMonth, endDay, endYear, currentlyWorking]);
+  }, [startMonth, startDay, startYear, endMonth, endDay, endYear]);
 
   useEffect(() => {
     mapMonthNames();
@@ -258,7 +258,6 @@ export const useVerifyExperience = (
       country,
       city,
       employmentType,
-      currentlyWorking,
       forgotInfo,
     } = getValues();
 
@@ -283,7 +282,7 @@ export const useVerifyExperience = (
       city: city.label,
     };
     if (employmentType.value) payload.employment_type = employmentType.value;
-    if (!currentlyWorking && endYear.value) {
+    if (endYear.value) {
       const endDate = new Date(
         Number(endYear.value),
         Number(endMonth.value || 0),
@@ -320,7 +319,6 @@ export const useVerifyExperience = (
     onSelectEndYear,
     forgotInfo: getValues().forgotInfo,
     handleForgotInfo,
-    currentlyWorking: getValues().currentlyWorking,
     onSave,
     dateError,
   };
