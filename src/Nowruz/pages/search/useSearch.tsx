@@ -23,7 +23,7 @@ export type FilterReq = {
 
 export const useSearch = () => {
   const { searchData: data } = useLoaderData() as { searchData: JobsRes | UsersRes | OrganizationsRes };
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const type = searchParams.get('type');
   const q = searchParams.get('q');
 
@@ -37,7 +37,6 @@ export const useSearch = () => {
   const [countryName, setCountryName] = useState<string | undefined>('');
 
   const navigate = useNavigate();
-
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
       return COUNTRIES_DICT[shortname];
@@ -83,6 +82,7 @@ export const useSearch = () => {
   };
 
   const onApply = async (filterRaw: FilterReq) => {
+    handleChangePage(1);
     setFilter(filterRaw);
     if (filterRaw.location && !!filterRaw?.country?.length) {
       const label = `${filterRaw.location.label}, ${getCountryName(filterRaw.country[0])}`;
@@ -110,13 +110,19 @@ export const useSearch = () => {
     }
     navigate(`/profile/${type}/${id}/view`);
   };
+  const handleChangePage = page => {
+    searchParams.set('page', page);
+    setSearchParams(searchParams);
+    setPage(page);
+    localStorage.setItem('searchPage', page.toString());
+  };
 
   const card = useCallback(
     (item: Job | Organization | User) => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
           <div
-            onClick={(e) => {
+            onClick={e => {
               if (e.target === e.currentTarget) handleNavigate(item as Organization | User);
             }}
             className="cursor-pointer"
@@ -129,12 +135,12 @@ export const useSearch = () => {
     },
     [type],
   );
-
   useEffect(() => {
-    fetchMore(page);
-    localStorage.setItem('searchPage', page.toString());
+    handleChangePage(Number(searchParams.get('page')));
+  }, [searchParams.get('page')]);
+  useEffect(() => {
     localStorage.setItem('filter', JSON.stringify(filter));
-  }, [page, filter]);
+  }, [filter]);
 
   useEffect(() => {
     if (data.items.length) {
@@ -158,12 +164,13 @@ export const useSearch = () => {
       countryName,
     },
     operations: {
-      setPage,
+      setPage: handleChangePage,
       card,
       handleCloseOrApplyFilter,
       onApply,
       onClose,
       getCountryName,
+      fetchMore,
     },
   };
 };
