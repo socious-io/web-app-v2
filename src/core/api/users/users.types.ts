@@ -112,6 +112,7 @@ export interface User {
   portfolios?: AdditionalRes[];
   certificates?: AdditionalRes[];
   identity_verified: boolean;
+  name?: string;
 }
 
 export interface UserProfile extends User {

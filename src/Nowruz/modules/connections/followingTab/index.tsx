@@ -24,7 +24,7 @@ export const FollowingTab = () => {
   } = useFollowingTab();
   return (
     <div className={css.container}>
-      {followingList.map((item) => {
+      {followingList.map(item => {
         const { username, profileImage, type, name } = getIdentityMeta(item.identity_meta);
         const accountItem = {
           id: item.identity_meta?.id || '',

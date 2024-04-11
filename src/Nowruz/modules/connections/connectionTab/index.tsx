@@ -32,8 +32,8 @@ export const ConnectionTab = () => {
   } = useConnectionTab();
   return (
     <div className={css.container}>
-      {connectionList.map((item) => {
-        const account = [item.requested, item.requester].find((item) => item.meta.id !== currentIdentity?.id);
+      {connectionList.map(item => {
+        const account = [item.requested, item.requester].find(item => item.meta.id !== currentIdentity?.id);
         const { username, profileImage, type, name } = getIdentityMeta(account);
         const accountItem = {
           id: account?.id || '',
