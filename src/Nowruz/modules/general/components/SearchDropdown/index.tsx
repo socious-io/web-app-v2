@@ -7,7 +7,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import css from './search-dropdown.module.scss';
 import { SelectProps } from './search-dropdown.types';
 //TODO: Multi select chips not implemented
-const CustomControl = (props) => {
+const CustomControl = props => {
   const { icon, children } = props;
   return (
     <components.Control {...props} className={css.input}>
@@ -101,8 +101,8 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           options={options}
           noOptionsMessage={() => null}
           components={{
-            Option: (props) => <CustomOption {...props} value={selectedVal} />,
-            Control: (props) => <CustomControl {...props} icon={icon} />,
+            Option: props => <CustomOption {...props} value={selectedVal} />,
+            Control: props => <CustomControl {...props} icon={icon} />,
             DropdownIndicator: () => (
               <div className={css.dropdown}>
                 {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
@@ -133,12 +133,13 @@ export const SearchDropdown: React.FC<SelectProps> = ({
       ) : creatable ? (
         <AsyncCreatableSelect
           cacheOptions
+          isClearable
           defaultOptions
           ref={selectRef}
           options={options}
           components={{
-            Option: (props) => <CustomOption {...props} value={selectedVal} />,
-            Control: (props) => <CustomControl ref={selectRef} {...props} icon={icon} />,
+            Option: props => <CustomOption {...props} value={selectedVal} />,
+            Control: props => <CustomControl ref={selectRef} {...props} icon={icon} />,
             DropdownIndicator: () => (
               <div className={css.dropdown}>
                 {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
@@ -175,8 +176,8 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           options={options}
           noOptionsMessage={() => null}
           components={{
-            Option: (props) => <CustomOption {...props} value={selectedVal} />,
-            Control: (props) => <CustomControl {...props} icon={icon} />,
+            Option: props => <CustomOption {...props} value={selectedVal} />,
+            Control: props => <CustomControl {...props} icon={icon} />,
             DropdownIndicator: () => (
               <div className={css.dropdown}>
                 {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}

@@ -45,6 +45,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           value={filters.location}
           loadOptions={searchCities}
           defaultOptions
+          creatable
           icon="search-lg"
           hasDropdownIcon={true}
           placeholder="Select a location"
@@ -59,7 +60,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           isSearchable
           icon="search-lg"
           hasDropdownIcon={true}
-          onChange={(value) => onSelectSearchDropdown('preference', value)}
+          onChange={value => onSelectSearchDropdown('preference', value)}
         />
 
         <SearchDropdown
@@ -71,7 +72,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           icon="search-lg"
           hasDropdownIcon={true}
           placeholder="Select a category"
-          onChange={(value) => onSelectSearchDropdown('jobCategory', value)}
+          onChange={value => onSelectSearchDropdown('jobCategory', value)}
         />
 
         <CheckboxGroup
@@ -79,7 +80,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           label="Job length"
           items={PROJECT_LENGTH_V2}
           selectedItems={filters.jobLength}
-          onChange={(value) => onSelectCheckboxs('jobLength', value)}
+          onChange={value => onSelectCheckboxs('jobLength', value)}
         />
 
         <CheckboxGroup
@@ -87,7 +88,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           label="Experience level"
           items={EXPERIENCE_LEVEL_V2}
           selectedItems={filters.experienceLevel}
-          onChange={(value) => onSelectCheckboxs('experienceLevel', value)}
+          onChange={value => onSelectCheckboxs('experienceLevel', value)}
         />
 
         <RadioGroup
@@ -130,7 +131,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
             maxLabel=""
             items={causesItems.slice(0, 30)}
             componentValue={filters.causes}
-            setComponentValue={(value) => onSelectMultiSelect('causes', value)}
+            setComponentValue={value => onSelectMultiSelect('causes', value)}
             customHeight="135px"
             popularLabel={false}
             displayDefaultBadges={false}
@@ -145,7 +146,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
               maxLabel=""
               max={10}
               componentValue={filters.skills}
-              setComponentValue={(value) => onSelectMultiSelect('skills', value)}
+              setComponentValue={value => onSelectMultiSelect('skills', value)}
               chipBorderColor={variables.color_grey_blue_200}
               chipBgColor={variables.color_grey_blue_50}
               chipFontColor={variables.color_grey_blue_700}
