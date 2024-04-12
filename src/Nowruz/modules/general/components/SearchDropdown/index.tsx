@@ -133,7 +133,6 @@ export const SearchDropdown: React.FC<SelectProps> = ({
       ) : creatable ? (
         <AsyncCreatableSelect
           cacheOptions
-          isClearable
           defaultOptions
           ref={selectRef}
           options={options}
