@@ -23,7 +23,6 @@ export const Educations = () => {
     getDegree,
     getSchool,
   } = useEducation();
-
   return (
     <>
       <div className="w-full flex flex-col gap-5">
@@ -36,9 +35,9 @@ export const Educations = () => {
         )}
         {user?.educations && (
           <div className="md:pr-48 flex flex-col gap-5">
-            {user?.educations.map((item) => (
+            {user?.educations.map(item => (
               <StepperCard
-                img={(item.meta as EducationMeta).school_image || ''}
+                img={item.meta ? (item.meta as EducationMeta).school_image : ''}
                 key={item.id}
                 iconName="graduation-hat-01"
                 title={getSchool(item)}

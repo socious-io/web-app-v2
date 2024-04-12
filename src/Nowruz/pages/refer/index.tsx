@@ -1,4 +1,4 @@
-import { CurrentIdentity, UserMeta } from 'src/core/api';
+import { CurrentIdentity, UserMeta, requestVerification } from 'src/core/api';
 import { Typography } from '@mui/material';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { useState } from 'react';
@@ -8,15 +8,10 @@ import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
 import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/store';
+import { useRefer } from './useRefer';
 
 export const Refer = () => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
-    state.identity.entities.find(identity => identity.current),
-  );
-
-  const verified = (currentIdentity?.meta as UserMeta).identity_verified;
-
-  const [openVerifyModal, setOpenVerifyModal] = useState(false);
+  const { verified, openVerifyModal, setOpenVerifyModal, verifyAction, connectUrl } = useRefer();
 
   return (
     <>
@@ -28,7 +23,7 @@ export const Refer = () => {
             supportingText="In order to access referrals, you need to have a Atala PRISM DID and verify your identity."
             primaryBtnLabel="Verify now"
             primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700" />}
-            primaryBtnAction={() => setOpenVerifyModal(true)}
+            primaryBtnAction={verifyAction}
             secondaryBtnLabel="Learn more"
             secondaryBtnLink="https://socious.io/decentralized-referrals"
           />
@@ -62,7 +57,7 @@ export const Refer = () => {
           </div>
         </div>
       </div>
-      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} />
+      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
     </>
   );
 };

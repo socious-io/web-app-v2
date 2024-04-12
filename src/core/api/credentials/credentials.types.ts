@@ -22,3 +22,20 @@ export interface ClaimVCRes {
 export interface CredentialExperiencePaginateRes extends PaginateRes {
   items: CredentialExperienceRes[];
 }
+
+export interface RequestVerificationRes {
+  id: string;
+  status: string;
+  identity_id: string;
+  connection_id: string;
+  connection_url: string;
+  present_id: string;
+  body: null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface RequestVerificationStatusRes {
+  message: string;
+  verified: boolean;
+}

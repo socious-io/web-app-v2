@@ -6,12 +6,21 @@ import { Button } from '../../general/components/Button';
 interface VerifyModalProps {
   open: boolean;
   handleClose: () => void;
+  connectUrl: string;
 }
 
-export const VerifyModal: React.FC<VerifyModalProps> = ({ open, handleClose }) => {
+export const VerifyModal: React.FC<VerifyModalProps> = ({ open, handleClose, connectUrl }) => {
   const footerJsx = (
     <div className=" w-full p-6 ">
-      <Button variant="contained" color="primary" fullWidth>
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        onClick={() => {
+          var newTab = window.open(connectUrl, '_blank');
+          newTab?.focus();
+        }}
+      >
         Open Socious Wallet app
       </Button>
     </div>

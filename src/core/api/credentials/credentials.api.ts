@@ -1,6 +1,12 @@
 import { get, post } from 'src/core/api/http';
 
-import { ClaimVCRes, CredentialExperienceRes, CredentialExperiencePaginateRes } from './credentials.types';
+import {
+  ClaimVCRes,
+  CredentialExperienceRes,
+  CredentialExperiencePaginateRes,
+  RequestVerificationRes,
+  RequestVerificationStatusRes,
+} from './credentials.types';
 import { PaginateReq } from '../types';
 
 export async function requestVerifyExperience(
@@ -26,4 +32,12 @@ export async function claimExperienceVC(verifyRequestId: string): Promise<ClaimV
 
 export async function getRequestedVerifyExperiences(params: PaginateReq): Promise<CredentialExperiencePaginateRes> {
   return (await get<CredentialExperiencePaginateRes>(`/credentials/experiences`, { params })).data;
+}
+
+export async function requestVerification(): Promise<RequestVerificationRes> {
+  return (await post<RequestVerificationRes>(`/credentials/verifications`, {})).data;
+}
+
+export async function checkVerification(): Promise<RequestVerificationStatusRes> {
+  return (await get<RequestVerificationStatusRes>(`/credentials/verifications`, {})).data;
 }
