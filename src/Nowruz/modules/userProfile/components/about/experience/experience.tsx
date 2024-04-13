@@ -1,5 +1,6 @@
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
+import { verificationStatus } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -34,7 +35,6 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
     userVerified,
     handleOpenClaimModal,
     credentialId,
-    verificationStatus,
   } = useExperience();
 
   return (

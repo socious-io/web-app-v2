@@ -1,11 +1,12 @@
 import variables from 'src/components/_exports.module.scss';
 import { EducationMeta } from 'src/core/api/additionals/additionals.types';
+import { verificationStatus } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { StepperCard } from 'src/Nowruz/modules/general/components/stepperCard';
+import { CreateUpdateEducation } from 'src/Nowruz/modules/userProfile/containers/createUpdateEducation';
 
 import { useEducation } from './useEducation';
-import { CreateUpdateEducation } from '../../../containers/createUpdateEducation';
 import css from '../about.module.scss';
 
 export const Educations = () => {
@@ -48,6 +49,16 @@ export const Educations = () => {
                 description={item.description}
                 handleEdit={() => handleEdit(item)}
                 handleDelete={() => handleDelete(item.id)}
+                DisplayVerificationStatus
+                verified={item.credential?.status ? verificationStatus[item.credential?.status] : 'unverified'}
+                verifyButton={{
+                  display: myProfile && (!item.credential || item.credential?.status === 'PENDING'),
+                  label: 'Request certificate',
+                  disabled: !!item.credential,
+                  action: () => {
+                    return;
+                  },
+                }}
               />
             ))}
           </div>
