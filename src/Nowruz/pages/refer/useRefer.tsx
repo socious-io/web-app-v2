@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store';
-import { CurrentIdentity, UserMeta, checkVerification, requestVerification } from 'src/core/api';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { CurrentIdentity, UserMeta, checkVerification, requestVerification } from 'src/core/api';
+import { RootState } from 'src/store';
 
 export const useRefer = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>

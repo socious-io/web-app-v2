@@ -1,45 +1,30 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import { ImpactPoints, Organization, User } from 'src/core/api';
 import { Typography } from '@mui/material';
-import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { Organization, User } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
-import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
 import { Card } from 'src/Nowruz/modules/dashboard/card';
-import { getIdentityMeta } from 'src/core/utils';
-import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
-import { UserCards } from 'src/Nowruz/modules/dashboard/userCards';
 import { OrgCards } from 'src/Nowruz/modules/dashboard/orgCards';
-import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
-import { useState } from 'react';
+import { UserCards } from 'src/Nowruz/modules/dashboard/userCards';
+import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
 import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
+import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
+import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
+
+import { useDashboard } from './useDashborad';
 
 export const Dashboard = () => {
-  const { profileData, impactPointHistory } = useLoaderData() as {
-    profileData: User | Organization;
-    impactPointHistory: ImpactPoints;
-  };
-  const [openVerifyModal, setOpenVerifyModal] = useState(false);
-  let hoursWorked = 0;
-  let hoursVolunteered = 0;
-  const { name, type, usernameVal } = getIdentityMeta(profileData);
-  const verified = type === 'users' ? (profileData as User).identity_verified : (profileData as Organization).verified;
-
-  const profileUrl =
-    type === 'users' ? `/profile/users/${usernameVal}/view` : `/profile/organizations/${usernameVal}/view`;
-
-  if (impactPointHistory) {
-    impactPointHistory.items
-      .filter(item => item.offer !== null)
-      .forEach(item => {
-        if (item.offer) {
-          if ((item?.offer?.currency && ['USD', 'YEN'].includes(item?.offer?.currency)) || item.offer.currency)
-            hoursWorked += item.offer.total_hours;
-          else hoursVolunteered += item.offer.total_hours;
-        }
-      });
-  }
-
+  const {
+    verified,
+    type,
+    verifyAction,
+    profileData,
+    profileUrl,
+    hoursVolunteered,
+    hoursWorked,
+    openVerifyModal,
+    setOpenVerifyModal,
+    connectUrl,
+    name,
+  } = useDashboard();
   return (
     <>
       <div className=" w-full flex ">
@@ -55,7 +40,7 @@ export const Dashboard = () => {
               theme="warning"
               primaryBtnLabel="Verify now"
               primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700" />}
-              primaryBtnAction={() => setOpenVerifyModal(true)}
+              primaryBtnAction={verifyAction}
               secondaryBtnLabel="Learn more"
               secondaryBtnLink="https://socious.io/verified-credentials"
             />
@@ -110,7 +95,7 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} />
+      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
     </>
   );
 };

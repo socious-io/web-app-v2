@@ -1,13 +1,10 @@
-import { CurrentIdentity, UserMeta, requestVerification } from 'src/core/api';
 import { Typography } from '@mui/material';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { useState } from 'react';
 import { Link } from 'src/Nowruz/modules/general/components/link';
+import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
 import { ReferCard } from 'src/Nowruz/modules/refer/referCard';
 import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
-import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store';
+
 import { useRefer } from './useRefer';
 
 export const Refer = () => {
@@ -40,8 +37,8 @@ export const Refer = () => {
           <div className="flex flex-col gap-8">
             <div className="flex flex-col">
               <span className="text-base font-normal leading-6 text-Gray-light-mode-600">
-                By sharing Socious with promising talent and impact organizations, you're not just expanding our
-                network, you're also accelerating change.
+                By sharing Socious with promising talent and impact organizations, you&apos;re not just expanding our
+                network, you&apos;re also accelerating change.
               </span>
               <Link
                 label="Learn more about our referral program."

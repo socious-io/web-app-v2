@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal } from '../../general/components/modal';
-import { FeaturedIcon } from '../../general/components/featuredIcon-new';
-import { Button } from '../../general/components/Button';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { Modal } from 'src/Nowruz/modules/general/components/modal';
 
 interface VerifyModalProps {
   open: boolean;
@@ -17,7 +17,7 @@ export const VerifyModal: React.FC<VerifyModalProps> = ({ open, handleClose, con
         color="primary"
         fullWidth
         onClick={() => {
-          var newTab = window.open(connectUrl, '_blank');
+          const newTab = window.open(connectUrl, '_blank');
           newTab?.focus();
         }}
       >
@@ -45,7 +45,7 @@ export const VerifyModal: React.FC<VerifyModalProps> = ({ open, handleClose, con
             We’ve partnered with Atala Prism through which your decentralized ID can receive verifiable credentials.
           </span>
         </div>
-        <span className="text-base leading-6 font-semibold text-Gray-light-mode-900">How to verify you identity</span>
+        <span className="text-base leading-6 font-semibold text-Gray-light-mode-900">How to verify your identity</span>
         <div className="flex flex-col">
           <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">
             1. Go through the app’s onboarding process which will create a decentralized ID on Atala Prism.
