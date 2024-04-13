@@ -10,12 +10,11 @@ import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer
 export const useEducation = () => {
   const [openModal, setOpenModal] = useState(false);
   const [education, setEducation] = useState<AdditionalRes>();
-  const user = useSelector<RootState, User | Organization | undefined>((state) => {
-    return state.profile.identity;
-  }) as User;
+  const user = useSelector<RootState, User | Organization | undefined>(state => state.profile.identity) as User;
+  const isVerified = (user as User).identity_verified;
 
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const myProfile = currentIdentity?.id === user?.id;
   const dispatch = useDispatch();
@@ -66,6 +65,10 @@ export const useEducation = () => {
     dispatch(setIdentityType('users'));
   };
 
+  const handleOpenRequestCertificate = () => {
+    return;
+  };
+
   return {
     openModal,
     handleClose,
@@ -79,5 +82,7 @@ export const useEducation = () => {
     getDegree,
     getSchool,
     setEducation,
+    isVerified,
+    handleOpenRequestCertificate,
   };
 };

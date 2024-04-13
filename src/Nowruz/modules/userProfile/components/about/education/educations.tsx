@@ -1,3 +1,4 @@
+import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { EducationMeta } from 'src/core/api/additionals/additionals.types';
 import { verificationStatus } from 'src/core/utils';
@@ -9,7 +10,10 @@ import { CreateUpdateEducation } from 'src/Nowruz/modules/userProfile/containers
 import { useEducation } from './useEducation';
 import css from '../about.module.scss';
 
-export const Educations = () => {
+interface ExperienceProps {
+  handleOpenVerifyModal: () => void;
+}
+export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }) => {
   const {
     openModal,
     myProfile,
@@ -23,6 +27,8 @@ export const Educations = () => {
     setEducation,
     getDegree,
     getSchool,
+    isVerified,
+    handleOpenRequestCertificate,
   } = useEducation();
   return (
     <>
@@ -55,9 +61,7 @@ export const Educations = () => {
                   display: myProfile && (!item.credential || item.credential?.status === 'PENDING'),
                   label: 'Request certificate',
                   disabled: !!item.credential,
-                  action: () => {
-                    return;
-                  },
+                  action: isVerified ? handleOpenRequestCertificate : handleOpenVerifyModal,
                 }}
               />
             ))}
