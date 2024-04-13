@@ -13,10 +13,13 @@ export const GoogleOauth2 = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const savedReferrer = localStorage.getItem('referrer');
+  const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
+
   const checkOnboardingMandatoryFields = (profile: User) => {
     const mandatoryFields: (keyof User)[] = ['country', 'city', 'social_causes', 'skills'];
 
-    return mandatoryFields.some((field) => {
+    return mandatoryFields.some(field => {
       const value = profile[field];
       return value === null || value === '' || (Array.isArray(value) && value.length === 0);
     });
@@ -25,7 +28,7 @@ export const GoogleOauth2 = () => {
   const hasUserParticularsMandatoryFields = (profile: User) => {
     const particularsFields: (keyof User)[] = ['first_name', 'last_name', 'username'];
 
-    return particularsFields.some((field) => {
+    return particularsFields.some(field => {
       const value = profile[field];
       return value === null || value === '';
     });
@@ -67,9 +70,10 @@ export const GoogleOauth2 = () => {
       window.location.href = googleLoginURL;
       return;
     } else {
-      googleOauth(code)
-        .then((res) => onLoginSucceed(res))
+      googleOauth(code, referrerUser?.id)
+        .then(res => onLoginSucceed(res))
         .catch(() => navigate('/sign-in'));
+      localStorage.removeItem('referrer');
     }
   }, [code]);
 

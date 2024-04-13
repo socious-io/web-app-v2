@@ -539,7 +539,10 @@ export const blueprint: RouteObject[] = [
         loader: async ({ params }) => {
           localStorage.setItem('registerFor', 'user');
           const user = await otherProfileByUsername(params.username!);
-          localStorage.setItem('referrer', JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url }));
+          localStorage.setItem(
+            'referrer',
+            JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url, id: user.id }),
+          );
           return null;
         },
         element: <Navigate to="/sign-up/user/email" />,
@@ -549,7 +552,10 @@ export const blueprint: RouteObject[] = [
         loader: async ({ params }) => {
           localStorage.setItem('registerFor', 'organization');
           const user = await otherProfileByUsername(params.username!);
-          localStorage.setItem('referrer', JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url }));
+          localStorage.setItem(
+            'referrer',
+            JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url, id: user.id }),
+          );
           return null;
         },
         element: <Navigate to="/sign-up/user/email" />,

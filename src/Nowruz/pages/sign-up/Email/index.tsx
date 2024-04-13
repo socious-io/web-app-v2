@@ -16,12 +16,10 @@ import { useEffect, useState } from 'react';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 
 export const Email = () => {
-  // const referrerUser = useLoaderData() as User;
 
   const type = localStorage.getItem('registerFor');
   const savedReferrer = localStorage.getItem('referrer');
   const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
-  localStorage.removeItem('referrer');
   const { tried } = useCaptcha();
   const navigate = useNavigate();
 
