@@ -2,6 +2,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
+import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
 
 import css from './credentials.module.scss';
 import { useCredentials } from './useCredentials';
@@ -9,7 +10,6 @@ import { useCredentials } from './useCredentials';
 export const Credentials = () => {
   const { tabs, verified, setOpenVerifiyAlert, openVerifiyAlert, hideVerifyBanner, handleDismissVerified, type } =
     useCredentials();
-
   return (
     <>
       <div className="w-full flex flex-col">
@@ -55,7 +55,12 @@ export const Credentials = () => {
           <HorizontalTabs tabs={tabs} />
         </div>
       </div>
-      {openVerifiyAlert && <KYBModal open={openVerifiyAlert} setOpen={setOpenVerifiyAlert} />}
+
+      {type === 'users' ? (
+        <VerifyModal open={openVerifiyAlert} handleClose={() => setOpenVerifiyAlert(false)} />
+      ) : (
+        <KYBModal open={openVerifiyAlert} setOpen={setOpenVerifiyAlert} />
+      )}
     </>
   );
 };
