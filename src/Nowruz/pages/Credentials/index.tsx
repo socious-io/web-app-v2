@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
@@ -46,6 +45,7 @@ export const Credentials = () => {
               <h1 className={css.title}>Credentials</h1>
               <h2 className={css.subtitle}>Here all credentials issued or requested</h2>
             </div>
+            {/* keep this for possible changes in near future */}
             {/* <div className={css.hidden}>
               <Button color="primary" startIcon={<img src="/icons/plus.svg" alt="plus" style={{ width: '20px' }} />}>
                 Issue a Credential
