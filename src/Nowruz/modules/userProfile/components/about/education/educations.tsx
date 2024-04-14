@@ -6,6 +6,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { StepperCard } from 'src/Nowruz/modules/general/components/stepperCard';
 import { CreateUpdateEducation } from 'src/Nowruz/modules/userProfile/containers/createUpdateEducation';
+import { VerifyEducationModal } from 'src/Nowruz/modules/userProfile/containers/verifyEducationModal';
 
 import { useEducation } from './useEducation';
 import css from '../about.module.scss';
@@ -29,6 +30,10 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
     getSchool,
     isVerified,
     handleOpenRequestCertificate,
+    openCertificate,
+    setOpenCertificate,
+    org,
+    handleSendRequestCertificate,
   } = useEducation();
   return (
     <>
@@ -61,7 +66,7 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
                   display: myProfile && (!item.credential || item.credential?.status === 'PENDING'),
                   label: 'Request certificate',
                   disabled: !!item.credential,
-                  action: isVerified ? handleOpenRequestCertificate : handleOpenVerifyModal,
+                  action: isVerified ? () => handleOpenRequestCertificate(item) : handleOpenVerifyModal,
                 }}
               />
             ))}
@@ -74,6 +79,15 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
         education={education}
         setEducation={setEducation}
       />
+      {!!education && !!org && (
+        <VerifyEducationModal
+          education={education}
+          organization={org}
+          open={openCertificate}
+          handleClose={() => setOpenCertificate(false)}
+          onSendRequest={handleSendRequestCertificate}
+        />
+      )}
     </>
   );
 };
