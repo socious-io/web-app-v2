@@ -15,4 +15,5 @@ export interface ModalProps {
   footerDivider?: boolean;
   customStyle?: string;
   id?: string;
+  inlineTitle?: boolean;
 }

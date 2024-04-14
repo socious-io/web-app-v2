@@ -1,9 +1,9 @@
 import React from 'react';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { Modal } from 'src/Nowruz/modules/general/components/modal';
 
-import { FeaturedIcon } from '../../general/components/featuredIcon-new';
-import { Button } from '../../general/components/Button';
 import { CustomStepper } from './customStepper';
-import { Modal } from '../../general/components/modal';
 
 interface DescriptionModalProps {
   open: boolean;
@@ -56,6 +56,7 @@ export const DescriptionModal: React.FC<DescriptionModalProps> = ({ open, handle
       footerDivider={false}
       customStyle="!w-[432px]"
       id="org_verify_first"
+      inlineTitle={false}
     >
       <div className="px-4 py-5 md:px-6">
         {steps.map(item => (
