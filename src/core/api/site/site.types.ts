@@ -37,6 +37,7 @@ export interface UserMeta {
   wallet_address: null;
   open_to_volunteer: boolean;
   identity_verified: boolean;
+  verification_status: null | 'PENDING' | 'APPROVED' | 'REJECTED';
 }
 
 export interface OrgMeta {

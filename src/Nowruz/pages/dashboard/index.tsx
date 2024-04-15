@@ -1,8 +1,5 @@
 import { Typography } from '@mui/material';
-import { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { ImpactPoints, Organization, User } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
+import { Organization, User } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
 import { Card } from 'src/Nowruz/modules/dashboard/card';
@@ -13,32 +10,22 @@ import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
 import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
 import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
 
+import { useDashboard } from './useDashborad';
+
 export const Dashboard = () => {
-  const { profileData, impactPointHistory } = useLoaderData() as {
-    profileData: User | Organization;
-    impactPointHistory: ImpactPoints;
-  };
-  const [openVerifyModal, setOpenVerifyModal] = useState(false);
-  let hoursWorked = 0;
-  let hoursVolunteered = 0;
-  const { name, type, usernameVal } = getIdentityMeta(profileData);
-  const verified = type === 'users' ? (profileData as User).identity_verified : (profileData as Organization).verified;
-
-  const profileUrl =
-    type === 'users' ? `/profile/users/${usernameVal}/view` : `/profile/organizations/${usernameVal}/view`;
-
-  if (impactPointHistory) {
-    impactPointHistory.items
-      .filter(item => item.offer !== null)
-      .forEach(item => {
-        if (item.offer) {
-          if ((item?.offer?.currency && ['USD', 'YEN'].includes(item?.offer?.currency)) || item.offer.currency)
-            hoursWorked += item.offer.total_hours;
-          else hoursVolunteered += item.offer.total_hours;
-        }
-      });
-  }
-
+  const {
+    verified,
+    type,
+    verifyAction,
+    profileData,
+    profileUrl,
+    hoursVolunteered,
+    hoursWorked,
+    openVerifyModal,
+    setOpenVerifyModal,
+    connectUrl,
+    name,
+  } = useDashboard();
   return (
     <>
       <div className=" w-full flex ">
@@ -54,7 +41,7 @@ export const Dashboard = () => {
               theme="warning"
               primaryBtnLabel="Verify now"
               primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700" />}
-              primaryBtnAction={() => setOpenVerifyModal(true)}
+              primaryBtnAction={verifyAction}
               secondaryBtnLabel="Learn more"
               secondaryBtnLink="https://socious.io/verified-credentials"
             />
@@ -108,8 +95,9 @@ export const Dashboard = () => {
           <ProfileCard identity={profileData} labelShown={false} rounded={false} />
         </div>
       </div>
+
       {type === 'users' ? (
-        <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} />
+        <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
       ) : (
         <KYBModal open={openVerifyModal} setOpen={setOpenVerifyModal} />
       )}

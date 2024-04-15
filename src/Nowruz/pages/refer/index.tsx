@@ -1,22 +1,14 @@
-import { CurrentIdentity, UserMeta } from 'src/core/api';
 import { Typography } from '@mui/material';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { useState } from 'react';
 import { Link } from 'src/Nowruz/modules/general/components/link';
+import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
 import { ReferCard } from 'src/Nowruz/modules/refer/referCard';
 import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
-import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
-import { useSelector } from 'react-redux';
-import { RootState } from 'src/store';
+
+import { useRefer } from './useRefer';
 
 export const Refer = () => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
-    state.identity.entities.find(identity => identity.current),
-  );
-
-  const verified = (currentIdentity?.meta as UserMeta).identity_verified;
-
-  const [openVerifyModal, setOpenVerifyModal] = useState(false);
+  const { verified, openVerifyModal, setOpenVerifyModal, verifyAction, connectUrl } = useRefer();
 
   return (
     <>
@@ -28,7 +20,7 @@ export const Refer = () => {
             supportingText="In order to access referrals, you need to have a Atala PRISM DID and verify your identity."
             primaryBtnLabel="Verify now"
             primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700" />}
-            primaryBtnAction={() => setOpenVerifyModal(true)}
+            primaryBtnAction={verifyAction}
             secondaryBtnLabel="Learn more"
             secondaryBtnLink="https://socious.io/decentralized-referrals"
           />
@@ -45,8 +37,8 @@ export const Refer = () => {
           <div className="flex flex-col gap-8">
             <div className="flex flex-col">
               <span className="text-base font-normal leading-6 text-Gray-light-mode-600">
-                By sharing Socious with promising talent and impact organizations, you're not just expanding our
-                network, you're also accelerating change.
+                By sharing Socious with promising talent and impact organizations, you&apos;re not just expanding our
+                network, you&apos;re also accelerating change.
               </span>
               <Link
                 label="Learn more about our referral program."
@@ -62,7 +54,7 @@ export const Refer = () => {
           </div>
         </div>
       </div>
-      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} />
+      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
     </>
   );
 };

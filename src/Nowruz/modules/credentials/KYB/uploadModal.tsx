@@ -21,7 +21,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ open, handleClose, han
       files.forEach(f => {
         requests.push(uploadMedia(f));
       });
-      const res = await Promise.all(requests);
+      await Promise.all(requests);
       setLoading(false);
       handleOpenSuccessModal();
     } catch (error) {

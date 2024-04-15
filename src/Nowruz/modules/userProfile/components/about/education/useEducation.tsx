@@ -21,6 +21,7 @@ export const useEducation = () => {
   const dispatch = useDispatch();
 
   const getDateText = (item: AdditionalRes) => {
+    if (!item.meta) return '';
     const meta = item.meta as EducationMeta;
     let txt = '';
     if (meta.start_month) txt = txt.concat(monthShortNames[Number(meta.start_month)]);
@@ -31,11 +32,13 @@ export const useEducation = () => {
   };
 
   const getDegree = (item: AdditionalRes) => {
+    if (!item.meta) return '';
     const meta = item.meta as EducationMeta;
     return `${meta.degree} ${meta.degree && meta.field ? 'of' : ''} ${meta.field}`;
   };
 
   const getSchool = (item: AdditionalRes) => {
+    if (!item.meta) return '';
     const meta = item.meta as EducationMeta;
     let res = `${meta.school_name}`;
     if (meta.school_city) res = res.concat(`, ${meta.school_city}`);

@@ -22,8 +22,7 @@ export const IconDropDown: React.FC<IconDropDownProps> = props => {
   } = props;
   const currentAccount = accounts.find(a => a.selected);
   const otherAccounts = accounts.filter(a => !a.selected);
-  const { open, handleOpen, handleClose, switchAccount, myProfile, handleClick, navigateToOnboarding } =
-    useIconDropDown();
+  const { open, handleOpen, handleClose, switchAccount, handleClick, navigateToOnboarding } = useIconDropDown();
 
   return (
     <div className="flex flex-col items-end relative">
@@ -43,16 +42,18 @@ export const IconDropDown: React.FC<IconDropDownProps> = props => {
       </IconButton>
       {open && (
         <MenuList autoFocusItem className={`${css.menuList} ${customStyle}`} onMouseLeave={handleClose}>
-          <MenuItem
-            key={currentAccount!.id}
-            className={css.menuItem}
-            onFocus={handleOpen}
-            onBlur={handleClose}
-            onMouseDown={handleClose}
-            onClick={handleClose}
-          >
-            <AvatarLabelGroup account={currentAccount!} />
-          </MenuItem>
+          {!!currentAccount && (
+            <MenuItem
+              key={currentAccount.id}
+              className={css.menuItem}
+              onFocus={handleOpen}
+              onBlur={handleClose}
+              onMouseDown={handleClose}
+              onClick={handleClose}
+            >
+              <AvatarLabelGroup account={currentAccount} />
+            </MenuItem>
+          )}
           <Divider className="!m-0" />
           {otherAccounts.map(a => (
             <MenuItem
@@ -98,8 +99,14 @@ export const IconDropDown: React.FC<IconDropDownProps> = props => {
             </MenuItem>
           ))}
           {customItems.length ? <Divider className="!m-0" /> : ''}
-          {customItems.map(i => (
-            <MenuItem sx={{ padding: '0' }} className={css.menuItem} onFocus={handleOpen} onBlur={handleClose}>
+          {customItems.map((i, index) => (
+            <MenuItem
+              key={index}
+              sx={{ padding: '0' }}
+              className={css.menuItem}
+              onFocus={handleOpen}
+              onBlur={handleClose}
+            >
               {i}
             </MenuItem>
           ))}
