@@ -17,8 +17,8 @@ interface DropDownItem {
   icon?: ReactNode;
 }
 export const useOrgTeam = () => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) =>
-    state.identity.entities.find((identity) => identity.current),
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(identity => identity.current),
   );
 
   const [addedMembers, setAddedMembers] = useState<DropDownItem[]>([]);
@@ -32,7 +32,7 @@ export const useOrgTeam = () => {
   const getTeamMembers = async () => {
     try {
       const res = await getOrganizationMembers(currentIdentity!.id, { page: 1 });
-      const mapped = res.items?.map((item) => {
+      const mapped = res.items?.map(item => {
         return {
           id: item.id,
           img: item.avatar?.url,
@@ -54,7 +54,7 @@ export const useOrgTeam = () => {
       if (hasMore) {
         const res = await getOrganizationMembers(currentIdentity!.id, { page: page + 1 });
         if (res.items?.length) {
-          const mapped = res.items.map((item) => {
+          const mapped = res.items.map(item => {
             return {
               id: item.id,
               img: item.avatar?.url,
@@ -77,8 +77,8 @@ export const useOrgTeam = () => {
   }, []);
 
   const followingToOption = (followings: Following[]) => {
-    return followings.map((i) => ({
-      label: JSON.stringify({ label: i.identity_meta.name || '', description: i.identity_meta.username }),
+    return followings.map(i => ({
+      label: JSON.stringify({ label: i.identity_meta.name || '', description: `@${i.identity_meta.username}` }),
       value: i.identity_meta.id,
       icon: <Avatar img={i.identity_meta.avatar} type="users" size="24px" />,
     }));
@@ -88,7 +88,7 @@ export const useOrgTeam = () => {
     try {
       if (searchText) {
         const response = await filterFollowings({ name: searchText, type: 'users', page: 1, limit: 10 });
-        const filtered = response.items.filter((item) => !teamMembers.map((m) => m.id).includes(item.identity_meta.id));
+        const filtered = response.items.filter(item => !teamMembers.map(m => m.id).includes(item.identity_meta.id));
         cb(followingToOption(filtered));
       }
     } catch (error) {
@@ -96,27 +96,26 @@ export const useOrgTeam = () => {
     }
   };
 
-  const onSelectMember = (member) => {
-    setselectedPerson(member);
-    const members = addedMembers.filter((item) => !item);
-    members.push(member.value);
+  const onSelectMember = member => {
+    const members = addedMembers.filter(item => !item);
+    members.push(member);
     setAddedMembers(members);
   };
 
   const handleAddAnother = () => {
     const members = [...addedMembers];
-    members.push({ value: '', label: '' });
+    members.push({ value: undefined, label: undefined });
     setAddedMembers(members);
   };
 
   const handleAddMembers = async () => {
     try {
       let members = [...addedMembers];
-      members = members.filter((item) => !!item.value);
-      const uniqIds = [...new Set(members.map((item) => item.value))];
+      members = members.filter(item => !!item.value);
+      const uniqIds = [...new Set(members.map(item => item.value))];
 
       const requests = [];
-      uniqIds.forEach((memberId) => {
+      uniqIds.forEach(memberId => {
         requests.push(addOrganizationMember(currentIdentity!.id, memberId));
       });
       await Promise.all(requests);
