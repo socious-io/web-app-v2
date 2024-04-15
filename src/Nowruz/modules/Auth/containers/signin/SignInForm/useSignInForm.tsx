@@ -12,9 +12,9 @@ import {
   requestPermissions,
 } from 'src/core/pushNotification';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { useCaptcha } from 'src/Nowruz/pages/captcha';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
-import { useCaptcha } from 'src/Nowruz/pages/captcha';
 import * as yup from 'yup';
 
 const schema = yup
@@ -24,7 +24,7 @@ const schema = yup
       .string()
       .trim()
       .email('Enter a correct email')
-      .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
+      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'Enter a correct email')
       .required('Enter a correct email'),
     password: yup.string().required('Enter a correct password'),
   })
@@ -55,7 +55,7 @@ export const useSignInForm = () => {
   const checkOnboardingMandatoryFields = (profile: User) => {
     const mandatoryFields: (keyof User)[] = ['country', 'city', 'social_causes', 'skills'];
 
-    return mandatoryFields.some((field) => {
+    return mandatoryFields.some(field => {
       const value = profile[field];
       return value === null || value === '' || (Array.isArray(value) && value.length === 0);
     });
@@ -73,8 +73,8 @@ export const useSignInForm = () => {
     return loginResp;
   }
   const addListeners = () => {
-    addNotificationReceivedListener().then((n) => console.log('addNotificationReceivedListener: ', n));
-    getDeliveredNotifications().then((r) => console.log('getDeliveredNotifications', r));
+    addNotificationReceivedListener().then(n => console.log('addNotificationReceivedListener: ', n));
+    getDeliveredNotifications().then(r => console.log('getDeliveredNotifications', r));
   };
 
   const getFCMToken = async (response: Awaited<ReturnType<typeof requestPermissions>>): Promise<string> => {
@@ -94,7 +94,7 @@ export const useSignInForm = () => {
       return;
     }
     const getDeviceTokens = await devices();
-    const isTokenExisting = getDeviceTokens.some((device) => device.token === token);
+    const isTokenExisting = getDeviceTokens.some(device => device.token === token);
     const determinePlatform = () => {
       const platform = Capacitor.getPlatform();
       return platform === 'android' ? 'ANDROID' : 'IOS';
@@ -123,7 +123,7 @@ export const useSignInForm = () => {
     login(formValues)
       .then(onLoginSucceed)
       .then(registerPushNotifications)
-      .catch((e) => {
+      .catch(e => {
         if (e?.response?.data.error) {
           setError('password', {
             type: 'manual',

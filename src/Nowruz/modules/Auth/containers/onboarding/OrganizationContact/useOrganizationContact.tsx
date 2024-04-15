@@ -19,7 +19,7 @@ type Inputs = {
 const schema = yup.object().shape({
   email: yup
     .string()
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'Enter a correct email')
     .required('Email is required'),
   username: yup.string().required('username is required'),
 });
@@ -45,7 +45,7 @@ export const useOrganizationContact = () => {
   });
   const dispatch = useDispatch();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async data => {
     const { orgName, orgType, social_causes, bio, city, country, email, size, shortname, industry } = state;
     try {
       const websiteUrl = state.website ? 'https://' + state.website : '';
@@ -80,7 +80,9 @@ export const useOrganizationContact = () => {
           },
         });
       } else navigate(`/profile/organizations/${shortname}/view`);
-    } catch (error) {}
+    } catch (error) {
+      console.log('error in creating new organization', error);
+    }
   };
   const searchCities = async (searchText: string, cb) => {
     try {
@@ -93,7 +95,7 @@ export const useOrganizationContact = () => {
     }
   };
   const cityToOption = (cities: Location[]) => {
-    return cities.map((city) => ({
+    return cities.map(city => ({
       label: JSON.stringify({ label: `${city.name}, ${city.country_name}`, description: city.timezone_utc }),
       value: city.country_code,
       city: city.name,
@@ -103,13 +105,13 @@ export const useOrganizationContact = () => {
     try {
       if (searchText) {
         const response = await getIndustries(searchText, { page: 1, limit: 20 });
-        cb(response.items.map((i) => ({ value: i.name, label: i.name })));
+        cb(response.items.map(i => ({ value: i.name, label: i.name })));
       }
     } catch (error) {
       console.error('Error fetching city data:', error);
     }
   };
-  const onSelectIndustry = (industry) => {
+  const onSelectIndustry = industry => {
     updateUser({ ...state, industry: industry.value });
   };
 
@@ -155,11 +157,11 @@ export const useOrganizationContact = () => {
     }
   }, [state.shortname]);
 
-  const onSelectCity = (location) => {
+  const onSelectCity = location => {
     updateUser({ ...state, city: location.city, country: location.value, cityLabel: location.label });
   };
 
-  const onSelectSize = (size) => {
+  const onSelectSize = size => {
     updateUser({ ...state, size });
   };
 
