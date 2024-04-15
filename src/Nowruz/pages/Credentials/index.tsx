@@ -8,8 +8,17 @@ import css from './credentials.module.scss';
 import { useCredentials } from './useCredentials';
 
 export const Credentials = () => {
-  const { tabs, verified, setOpenVerifiyAlert, openVerifiyAlert, hideVerifyBanner, handleDismissVerified, type } =
-    useCredentials();
+  const {
+    tabs,
+    verified,
+    setOpenVerifiyAlert,
+    openVerifiyAlert,
+    hideVerifyBanner,
+    handleDismissVerified,
+    type,
+    activeTabIndex,
+  } = useCredentials();
+
   return (
     <>
       <div className="w-full flex flex-col">
@@ -52,7 +61,7 @@ export const Credentials = () => {
               </Button>
             </div> */}
           </div>
-          <HorizontalTabs tabs={tabs} />
+          <HorizontalTabs tabs={tabs} activeIndex={activeTabIndex} />
         </div>
       </div>
 

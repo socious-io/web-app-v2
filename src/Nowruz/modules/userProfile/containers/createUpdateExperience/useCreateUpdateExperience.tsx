@@ -54,7 +54,7 @@ const schema = yup
     }),
     currentlyWorking: yup.boolean(),
     startMonth: yup.object().shape({
-      label: yup.string(),
+      label: yup.string().required('Required'),
       value: yup.string(),
     }),
     startYear: yup.object().shape({

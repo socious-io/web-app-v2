@@ -6,7 +6,7 @@ import Radio from '@mui/material/Radio';
 import React, { useState } from 'react';
 
 import css from './radio-group.module.scss';
-import { Item, RadioGroupProps } from './RadioGroup.types';
+import { RadioGroupProps } from './RadioGroup.types';
 export const RadioGroup: React.FC<RadioGroupProps> = ({
   row,
   items,
@@ -43,8 +43,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     setSelectedIndex(index);
                     const value = event.target.value;
-                    const selectedItem = items.find((item) => item.value === value) as Item;
-                    onChange?.(selectedItem);
+                    if (String(item.value) === value) onChange?.(item);
                   }}
                 />
               }

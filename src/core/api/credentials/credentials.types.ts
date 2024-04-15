@@ -5,7 +5,7 @@ import { Experience, User } from '../users/users.types';
 
 export interface CredentialExperienceRes {
   id: string;
-  status: 'PENDING' | 'APPROVED' | 'SENT' | 'REJECTED' | 'CLAIMED';
+  status: 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
   experience: Experience;
   user: User;
   org: Organization;
