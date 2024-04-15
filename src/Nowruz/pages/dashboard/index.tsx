@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { Organization, User } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
+import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
 import { Card } from 'src/Nowruz/modules/dashboard/card';
 import { OrgCards } from 'src/Nowruz/modules/dashboard/orgCards';
 import { UserCards } from 'src/Nowruz/modules/dashboard/userCards';
@@ -95,7 +96,11 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
+      {type === 'users' ? (
+        <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
+      ) : (
+        <KYBModal open={openVerifyModal} setOpen={setOpenVerifyModal} />
+      )}
     </>
   );
 };

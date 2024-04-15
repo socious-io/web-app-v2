@@ -49,14 +49,16 @@ export const blueprint: RouteObject[] = [
                   {
                     path: 'view',
                     loader: async ({ params }) => {
-                      const user = await otherProfileByUsername(params.id!);
-                      // Keep this, it might be needed in the future
-                      // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
-                      return {
-                        user,
-                        // badges: userBadges,
-                        // missions,
-                      };
+                      if (params.id) {
+                        const user = await otherProfileByUsername(params.id);
+                        // Keep this, it might be needed in the future
+                        // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
+                        return {
+                          user,
+                          // badges: userBadges,
+                          // missions,
+                        };
+                      }
                     },
                     async lazy() {
                       const { UserProifle } = await import('src/Nowruz/pages/userProfile');
@@ -92,20 +94,22 @@ export const blueprint: RouteObject[] = [
                     path: 'view',
 
                     loader: async ({ params }) => {
-                      const organization = await getOrganizationByShortName(params.id!);
-                      const page = Number(localStorage.getItem('profileJobPage'));
-                      localStorage.setItem('source', organization.shortname);
-                      localStorage.removeItem('navigateToSearch');
-                      const orgJobs = await jobs({
-                        page: page,
-                        status: 'ACTIVE',
-                        limit: 2,
-                        identity_id: organization.id,
-                      });
-                      return {
-                        organization,
-                        orgJobs,
-                      };
+                      if (params.id) {
+                        const organization = await getOrganizationByShortName(params.id);
+                        const page = Number(localStorage.getItem('profileJobPage'));
+                        localStorage.setItem('source', organization.shortname);
+                        localStorage.removeItem('navigateToSearch');
+                        const orgJobs = await jobs({
+                          page: page,
+                          status: 'ACTIVE',
+                          limit: 2,
+                          identity_id: organization.id,
+                        });
+                        return {
+                          organization,
+                          orgJobs,
+                        };
+                      }
                     },
                     async lazy() {
                       const { OrgProfile } = await import('src/Nowruz/pages/orgProfile');
@@ -118,20 +122,22 @@ export const blueprint: RouteObject[] = [
                     path: 'jobs',
 
                     loader: async ({ params }) => {
-                      const organization = await getOrganizationByShortName(params.id!);
-                      const page = Number(localStorage.getItem('profileJobPage'));
-                      localStorage.setItem('source', organization.shortname);
-                      localStorage.removeItem('navigateToSearch');
-                      const orgJobs = await jobs({
-                        page: page,
-                        status: 'ACTIVE',
-                        limit: 2,
-                        identity_id: organization.id,
-                      });
-                      return {
-                        organization,
-                        orgJobs,
-                      };
+                      if (params.id) {
+                        const organization = await getOrganizationByShortName(params.id);
+                        const page = Number(localStorage.getItem('profileJobPage'));
+                        localStorage.setItem('source', organization.shortname);
+                        localStorage.removeItem('navigateToSearch');
+                        const orgJobs = await jobs({
+                          page: page,
+                          status: 'ACTIVE',
+                          limit: 2,
+                          identity_id: organization.id,
+                        });
+                        return {
+                          organization,
+                          orgJobs,
+                        };
+                      }
                     },
                     async lazy() {
                       const { OrgProfile } = await import('src/Nowruz/pages/orgProfile');
@@ -340,18 +346,23 @@ export const blueprint: RouteObject[] = [
                   const page = Number(localStorage.getItem('searchPage')) || 1;
 
                   const url = new URL(request.url);
-                  const q = url.searchParams.get('q');
-                  const type = url.searchParams.get('type') ?? 'projects';
+                  const q = url.searchParams.get('q') || '';
+                  const type = (url.searchParams.get('type') ?? 'projects') as
+                    | 'projects'
+                    | 'users'
+                    | 'posts'
+                    | 'organizations';
                   localStorage.setItem('type', type || 'projects');
                   localStorage.setItem('searchTerm', q || '');
                   localStorage.setItem('navigateToSearch', 'true');
                   const body = {
                     filter: {},
                     type,
+                    q,
                   };
-                  if (q?.trim()) {
-                    Object.assign(body, { q: q });
-                  }
+                  // if (q?.trim()) {
+                  //   Object.assign(body, { q: q });
+                  // }
                   const requests = [searchReq(body, { limit: 10, page }), jobCategoriesReq()];
                   const [searchData, jobCategories] = await Promise.all(requests);
                   return { searchData, jobCategories };
@@ -401,11 +412,13 @@ export const blueprint: RouteObject[] = [
               {
                 path: ':id/org',
                 loader: async ({ params }) => {
-                  const [profileData, impactPointHistory] = await Promise.all([
-                    getOrganizationByShortName(params.id!),
-                    impactPoints(),
-                  ]);
-                  return { profileData, impactPointHistory };
+                  if (params.id) {
+                    const [profileData, impactPointHistory] = await Promise.all([
+                      getOrganizationByShortName(params.id),
+                      impactPoints(),
+                    ]);
+                    return { profileData, impactPointHistory };
+                  }
                 },
                 async lazy() {
                   const { Dashboard } = await import('src/Nowruz/pages/dashboard');
@@ -537,20 +550,30 @@ export const blueprint: RouteObject[] = [
       {
         path: ':username/talent',
         loader: async ({ params }) => {
-          localStorage.setItem('registerFor', 'user');
-          const user = await otherProfileByUsername(params.username!);
-          localStorage.setItem('referrer', JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url }));
-          return null;
+          if (params.username) {
+            localStorage.setItem('registerFor', 'user');
+            const user = await otherProfileByUsername(params.username);
+            localStorage.setItem(
+              'referrer',
+              JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url, id: user.id }),
+            );
+            return null;
+          }
         },
         element: <Navigate to="/sign-up/user/email" />,
       },
       {
         path: ':username/org',
         loader: async ({ params }) => {
-          localStorage.setItem('registerFor', 'organization');
-          const user = await otherProfileByUsername(params.username!);
-          localStorage.setItem('referrer', JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url }));
-          return null;
+          if (params.username) {
+            localStorage.setItem('registerFor', 'organization');
+            const user = await otherProfileByUsername(params.username);
+            localStorage.setItem(
+              'referrer',
+              JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url, id: user.id }),
+            );
+            return null;
+          }
         },
         element: <Navigate to="/sign-up/user/email" />,
       },
@@ -708,7 +731,7 @@ export const blueprint: RouteObject[] = [
   },
 ];
 
-function Protect<T extends {}>(Component: ComponentType<T>, allowedIdentity: string): ComponentType<T> {
+function Protect<T extends object>(Component: ComponentType<T>, allowedIdentity: string): ComponentType<T> {
   return function ProtectedRoute(props: T) {
     const { status, entities } = useSelector((state: RootState) => state.identity);
     const current = entities.find(identity => identity.current)?.type;

@@ -6,7 +6,7 @@ export interface LoginReq {
 
 export interface RegisterReq {
   email: string;
-  password: string;
+  password?: string;
   first_name?: string;
   last_name?: string;
   username?: string;

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+
 import { DescriptionModal } from './descriptionModal';
-import { UploadModal } from './uploadModal';
 import { SuccessModal } from './successModal';
+import { UploadModal } from './uploadModal';
 
 interface KYBModalProps {
   open: boolean;

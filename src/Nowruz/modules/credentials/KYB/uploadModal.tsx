@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { PostMediaUploadRes, uploadMedia } from 'src/core/api';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
-import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { FileUploaderMultiple } from 'src/Nowruz/modules/general/components/fileUploaderMultiple';
-import { PostMediaUploadRes, uploadMedia } from 'src/core/api';
+import { Modal } from 'src/Nowruz/modules/general/components/modal';
 
 interface UploadModalProps {
   open: boolean;
@@ -21,7 +21,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ open, handleClose, han
       files.forEach(f => {
         requests.push(uploadMedia(f));
       });
-      const res = await Promise.all(requests);
+      await Promise.all(requests);
       setLoading(false);
       handleOpenSuccessModal();
     } catch (error) {
@@ -43,7 +43,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ open, handleClose, han
     <Modal
       open={open}
       handleClose={handleClose}
-      icon={<FeaturedIcon type="light-circle" theme="primary" size="lg" iconName="check-verified-03" />}
+      icon={<FeaturedIcon type="light-circle" theme="primary" size="lg" iconName="upload-cloud-02" />}
       title="Send your organization details"
       subTitle="Please upload your company registration document, like a certificate or equivalent."
       footer={footerJSX}
@@ -52,6 +52,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({ open, handleClose, han
       footerDivider={false}
       customStyle="!w-[432px]"
       id="org_verify_first"
+      inlineTitle={false}
     >
       <div className="px-4 py-5 md:px-6">
         <FileUploaderMultiple
