@@ -1,18 +1,17 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import { ImpactPoints, Organization, User } from 'src/core/api';
 import { Typography } from '@mui/material';
-import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
-import { Icon } from 'src/Nowruz/general/Icon';
-import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
-import { Card } from 'src/Nowruz/modules/dashboard/card';
-import { getIdentityMeta } from 'src/core/utils';
-import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
-import { UserCards } from 'src/Nowruz/modules/dashboard/userCards';
-import { OrgCards } from 'src/Nowruz/modules/dashboard/orgCards';
-import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
 import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { ImpactPoints, Organization, User } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
+import { Icon } from 'src/Nowruz/general/Icon';
+import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
+import { Card } from 'src/Nowruz/modules/dashboard/card';
+import { OrgCards } from 'src/Nowruz/modules/dashboard/orgCards';
+import { UserCards } from 'src/Nowruz/modules/dashboard/userCards';
+import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
 import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
+import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
+import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
 
 export const Dashboard = () => {
   const { profileData, impactPointHistory } = useLoaderData() as {
@@ -109,8 +108,11 @@ export const Dashboard = () => {
           <ProfileCard identity={profileData} labelShown={false} rounded={false} />
         </div>
       </div>
-
-      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} />
+      {type === 'users' ? (
+        <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} />
+      ) : (
+        <KYBModal open={openVerifyModal} setOpen={setOpenVerifyModal} />
+      )}
     </>
   );
 };

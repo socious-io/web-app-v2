@@ -1,22 +1,19 @@
 import { Typography } from '@mui/material';
 import { Google } from 'public/icons/nowruz/google';
 import { Logo } from 'public/icons/nowruz/logo';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/Nowruz/modules/Auth/containers/ServiceIntro';
 import { EmailForm } from 'src/Nowruz/modules/Auth/containers/signup/EmailForm';
 import { reviews } from 'src/Nowruz/modules/Auth/statics/intro';
+import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Link } from 'src/Nowruz/modules/general/components/link';
-import { User } from 'src/core/api';
 
 import css from './email.module.scss';
 import { useCaptcha } from '../../captcha';
-import { useEffect, useState } from 'react';
-import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 
 export const Email = () => {
-
   const type = localStorage.getItem('registerFor');
   const savedReferrer = localStorage.getItem('referrer');
   const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;

@@ -81,14 +81,15 @@ export const useLinksContainer = () => {
       iconName: 'shield-tick',
       public: false,
     },
-    {
+  ];
+
+  if (currentIdentity?.type === 'users')
+    menu.push({
       label: 'Refer and earn',
       route: '/referral',
       iconName: 'star-06',
       public: false,
-    },
-  ];
-
+    });
   let filteredMenu = userIsLoggedIn ? menu : menu.filter(item => item.public);
 
   // filter menu for role items

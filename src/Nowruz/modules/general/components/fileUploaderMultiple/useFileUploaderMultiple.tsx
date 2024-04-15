@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import pdf from 'public/icons/nowruz/file-pdf.svg';
 import jpg from 'public/icons/nowruz/file-jpg.svg';
+import pdf from 'public/icons/nowruz/file-pdf.svg';
 import png from 'public/icons/nowruz/file-png.svg';
+import { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 
 export const useFileUploader = (
   fileTypes: string[],
@@ -63,7 +63,7 @@ export const useFileUploader = (
   const onDrop = (acceptedFiles: File[]) => {
     const newUploadedSize = acceptedFiles.map(f => f.size).reduce((a, b) => a + b, 0);
     const newTotal = totalSize + newUploadedSize;
-    if (newTotal > maxSize * 1000000) {
+    if (newTotal > maxSize * 1024 * 1024) {
       setError(`Max file size is ${maxSize}mb`);
       return;
     }

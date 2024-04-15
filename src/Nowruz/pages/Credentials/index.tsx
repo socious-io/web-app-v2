@@ -1,23 +1,15 @@
-import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { Icon } from 'src/Nowruz/general/Icon';
+import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
+import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
+import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
 
 import css from './credentials.module.scss';
 import { useCredentials } from './useCredentials';
-import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
-import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
-import { Icon } from 'src/Nowruz/general/Icon';
-import { useState } from 'react';
 
 export const Credentials = () => {
-  const { tabs, verified, setOpenVerifiyAlert, openVerifiyAlert } = useCredentials();
-
-  const [hideVerifyBanner, setHideVerifyBanner] = useState(localStorage.getItem('hideVerifiedBanner') === 'true');
-
-  const handleDispissVerified = () => {
-    localStorage.setItem('hideVerifiedBanner', 'true');
-    setHideVerifyBanner(true);
-  };
-
+  const { tabs, verified, setOpenVerifiyAlert, openVerifiyAlert, hideVerifyBanner, handleDismissVerified, type } =
+    useCredentials();
   return (
     <>
       <div className="w-full flex flex-col">
@@ -29,8 +21,12 @@ export const Credentials = () => {
             primaryBtnAction={() => setOpenVerifiyAlert(true)}
             secondaryBtnLabel="Learn more"
             secondaryBtnLink="https://socious.io/verified-credentials"
-            text="Verify your identity"
-            supportingText="In order to claim your certificates, please verify your identity."
+            text={type === 'users' ? 'Verify your identity' : 'Verify your organization'}
+            supportingText={
+              type === 'users'
+                ? 'In order to claim your certificates, please verify your identity.'
+                : 'Get your organization verified to issue credentials.'
+            }
           />
         ) : !hideVerifyBanner ? (
           <TopBanner
@@ -38,7 +34,7 @@ export const Credentials = () => {
             text="Your identity has been verified"
             supportingText="You can now claim your certificates."
             secondaryBtnLabel="Dismiss"
-            secondaryBtnAction={handleDispissVerified}
+            secondaryBtnAction={handleDismissVerified}
           />
         ) : (
           ''
@@ -49,6 +45,7 @@ export const Credentials = () => {
               <h1 className={css.title}>Credentials</h1>
               <h2 className={css.subtitle}>Here all credentials issued or requested</h2>
             </div>
+            {/* keep this for possible changes in near future */}
             {/* <div className={css.hidden}>
               <Button color="primary" startIcon={<img src="/icons/plus.svg" alt="plus" style={{ width: '20px' }} />}>
                 Issue a Credential
@@ -58,7 +55,12 @@ export const Credentials = () => {
           <HorizontalTabs tabs={tabs} />
         </div>
       </div>
-      {openVerifiyAlert && <KYBModal open={openVerifiyAlert} setOpen={setOpenVerifiyAlert} />}
+
+      {type === 'users' ? (
+        <VerifyModal open={openVerifiyAlert} handleClose={() => setOpenVerifiyAlert(false)} />
+      ) : (
+        <KYBModal open={openVerifiyAlert} setOpen={setOpenVerifiyAlert} />
+      )}
     </>
   );
 };

@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { Logo } from 'public/icons/nowruz/logo';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { IntroHeader } from 'src/Nowruz/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/Nowruz/modules/Auth/containers/ServiceIntro';
@@ -8,7 +9,6 @@ import { reviews, onboardingOptons } from 'src/Nowruz/modules/Auth/statics/intro
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { CardRadioButton } from 'src/Nowruz/modules/general/components/cardRadioButton/cardRadioButton';
 import { Link } from 'src/Nowruz/modules/general/components/link';
-import { useSelector } from 'react-redux';
 import { RootState } from 'src/store';
 
 import css from './intro.module.scss';
@@ -20,6 +20,7 @@ export const Intro = () => {
 
   const navigateToOnboarding = () => {
     localStorage.setItem('registerFor', selectedOnboarding);
+    localStorage.removeItem('referrer');
     navigate('/sign-up/user/email');
   };
 
@@ -60,7 +61,7 @@ export const Intro = () => {
             <CardRadioButton
               items={onboardingOptons}
               selectedValue={selectedOnboarding}
-              setSelectedValue={(value) => {
+              setSelectedValue={value => {
                 setSelectedOnboarding(value);
               }}
             />
