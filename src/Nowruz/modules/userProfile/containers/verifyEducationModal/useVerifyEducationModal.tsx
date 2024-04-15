@@ -84,6 +84,7 @@ export const useVerifyExperienceModal = (
     setValue,
     reset,
     trigger,
+    watch,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -102,7 +103,7 @@ export const useVerifyExperienceModal = (
   };
 
   const getDayOptions = () => {
-    const yearValue = getValues().year?.value;
+    const yearValue = getValues().year?.value || new Date().getFullYear();
     const monthValue = Number(getValues().month?.value) + 1;
     const getAllDaysInMonth = monthValue && getDaysInMonth(Number(yearValue), monthValue);
     const options = getAllDaysInMonth
@@ -127,13 +128,15 @@ export const useVerifyExperienceModal = (
   };
 
   const initializeValues = () => {
-    const awardedDate = meta.end_year ? new Date(Number(meta.end_year), Number(meta.end_month) || 0, 1) : undefined;
+    const awardedDate = meta.awarded_date ? new Date(meta.awarded_date) : undefined;
     const strYear = awardedDate?.getFullYear().toString() || '';
     const strDay = awardedDate?.getDate().toString() || '';
 
     const initialVal = {
-      creadentialName: `${meta.degree}${meta.field ? ` in ${meta.field}` : ''}`,
+      creadentialName: meta.credential_name || `${meta.degree}${meta.field ? ` in ${meta.field}` : ''}`,
       email: organization.email || '',
+      message: '',
+      forgotInfo: false,
       month: {
         label: awardedDate ? monthNames[awardedDate.getMonth()] : '',
         value: awardedDate ? awardedDate.getMonth().toString() : '',
@@ -143,18 +146,21 @@ export const useVerifyExperienceModal = (
         value: strDay,
       },
       year: { label: strYear, value: strYear },
-      message: '',
-      forgotInfo: false,
     };
     reset(initialVal);
   };
 
   useEffect(() => {
     mapMonthNames();
-    getDayOptions();
     getYearOptions();
     initializeValues();
   }, [education]);
+
+  const monthVal = watch('month');
+  const yearVal = watch('year');
+  useEffect(() => {
+    getDayOptions();
+  }, [monthVal, yearVal]);
 
   const onSelectMonth = (month: OptionType) => {
     setValue('month', month, { shouldValidate: true });
@@ -174,12 +180,13 @@ export const useVerifyExperienceModal = (
 
   // apply backend API
   const onSend = async () => {
-    const { month, year, email, creadentialName, message, forgotInfo } = getValues();
+    const { month, year, day, email, creadentialName, message, forgotInfo } = getValues();
 
     //update education
     const meta: EducationMeta = { ...education.meta };
-    if (month.value) meta.end_month = month.value;
-    if (year.value) meta.end_year = month.value;
+    if (year.value && month.value && day.value)
+      meta.awarded_date = new Date(Number(year.value), Number(month.value), Number(day.value)).toISOString();
+    meta.credential_name = creadentialName;
     const additional = removedEmptyProps({ type: education.type, title: creadentialName, meta }) as AdditionalReq;
     updateAdditional(education.id, additional);
 

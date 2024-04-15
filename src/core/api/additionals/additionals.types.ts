@@ -14,6 +14,8 @@ export interface EducationMeta {
   school_name: string;
   school_city?: string;
   school_image?: string;
+  awarded_date?: string;
+  credential_name?: string;
 }
 export interface CertificateMeta {
   issue_month?: string;
