@@ -16,7 +16,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ item, onClic
   const avatarImg = item.data.identity.meta.avatar || item.data.identity.meta.image || '';
   return (
     <div className="flex gap-3 w-full h-fit items-start cursor-pointer" onClick={onClick}>
-      <Avatar size="48px" img={avatarImg} type={item.data.type || 'users'} />
+      <Avatar size="48px" img={avatarImg} type={item.data.identity?.type || 'users'} />
       <div className="w-full h-fit flex flex-col">
         <div className="flex gap-2">
           <p className={css.name}>{item.data.identity.meta.name}</p>
