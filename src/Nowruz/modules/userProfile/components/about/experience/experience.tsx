@@ -87,7 +87,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
                     disabled={!!disabledClaims[item.credential.id]}
                     className={css.addBtn}
                     key={item.credential.id}
-                    onClick={userVerified ? () => handleOpenClaimModal(item.id) : handleOpenVerifyModal}
+                    onClick={userVerified ? () => handleOpenClaimModal(item.credential?.id) : handleOpenVerifyModal}
                   >
                     Claim
                   </Button>
