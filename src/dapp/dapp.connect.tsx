@@ -14,7 +14,7 @@ import { Network } from './dapp.types';
 
 export const NETWORKS: Network[] = config.dappENV === 'mainet' ? dappConfig.mainet : dappConfig.testnet;
 
-const chains = NETWORKS.map((n) => n.chain);
+const chains = NETWORKS.map(n => n.chain);
 
 const projectId = dappConfig.walletConnetProjectId;
 
@@ -41,7 +41,7 @@ export const useWeb3 = () => {
   useEffect(() => {
     const checkNetwork = async (ethers: BrowserProvider) => {
       const net = await ethers.getNetwork();
-      const selectd = chains.filter((c) => BigInt(c.chainId) === net.chainId);
+      const selectd = chains.filter(c => BigInt(c.chainId) === net.chainId);
       if (selectd.length < 1) {
         try {
           await ethers.send('wallet_switchEthereumChain', [{ chainId: `0x${chains[0].chainId.toString(16)}` }]);
@@ -55,7 +55,7 @@ export const useWeb3 = () => {
     if (isConnected && walletProvider) {
       const ethers = new BrowserProvider(walletProvider);
       setProvier(ethers);
-      ethers.getSigner().then((s) => setSigner(s));
+      ethers.getSigner().then(s => setSigner(s));
       checkNetwork(ethers);
     }
   }, [address, isConnected, walletProvider]);

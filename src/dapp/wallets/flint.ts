@@ -37,7 +37,7 @@ export default class extends Connector {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: chainId }],
       }); */
-    return this.chains.filter((c) => c.id == chainId)[0];
+    return this.chains.filter(c => c.id == chainId)[0];
   }
 
   async getAccount(): Promise<Address> {
