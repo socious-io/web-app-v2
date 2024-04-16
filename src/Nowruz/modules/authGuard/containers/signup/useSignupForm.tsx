@@ -9,7 +9,7 @@ type Inputs = {
 const schema = yup.object().shape({
   email: yup
     .string()
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'Enter a correct email')
     .required('Email is required'),
 });
 export const useSignupForm = () => {

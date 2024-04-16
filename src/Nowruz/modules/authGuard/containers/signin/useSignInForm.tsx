@@ -16,7 +16,7 @@ const schema = yup
       .string()
       .trim()
       .email('Enter a correct email')
-      .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
+      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'Enter a correct email')
       .required('Enter a correct email'),
     password: yup.string().required('Enter a correct password'),
   })
@@ -56,7 +56,7 @@ export const useSignInForm = () => {
     tried();
     login(formValues)
       .then(onLoginSucceed)
-      .catch((e) => {
+      .catch(e => {
         if (e?.response?.data.error) {
           setError('password', {
             type: 'manual',
