@@ -1,7 +1,6 @@
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
@@ -10,7 +9,7 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
-import { useVerifyExperienceModal } from './useVerifyEducationModal';
+import { useVerifyEducationModal } from './useVerifyEducationModal';
 import { OptionType, VerifyEducationModalProps } from './verifyEducationModal.types';
 
 export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
@@ -36,18 +35,9 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
     onSelectMonth,
     onSelectYear,
     handleForgotInfo,
-  } = useVerifyExperienceModal(education, organization, handleClose, onSendRequest);
-  const subtitle = organization.verified
-    ? `Confirm the below information to send your request to ${organization?.name}`
-    : `${organization?.name} is not registered organization. Confirm your information and send your request.`;
-
-  const accountItem = {
-    id: organization.id,
-    name: organization.name,
-    type: 'organizations',
-    username: organization.shortname,
-    img: organization.image?.url || '',
-  } as AccountItem;
+    subtitle,
+    accountItem,
+  } = useVerifyEducationModal(education, organization, handleClose, onSendRequest);
 
   const footerJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">

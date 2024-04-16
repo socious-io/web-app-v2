@@ -6,6 +6,7 @@ import { updateAdditional } from 'src/core/api/additionals/additionals.api';
 import { AdditionalReq, AdditionalRes, EducationMeta } from 'src/core/api/additionals/additionals.types';
 import { getDaysInMonth, monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
+import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import * as yup from 'yup';
 
 import { OptionType } from './verifyEducationModal.types';
@@ -70,7 +71,7 @@ const schema = yup.object().shape({
   message: yup.string().required('Required'),
 });
 
-export const useVerifyExperienceModal = (
+export const useVerifyEducationModal = (
   education: AdditionalRes,
   organization: Organization,
   handleClose: () => void,
@@ -199,6 +200,17 @@ export const useVerifyExperienceModal = (
     handleClose();
     return;
   };
+  const subtitle = organization.verified
+    ? `Confirm the below information to send your request to ${organization?.name}`
+    : `${organization?.name} is not registered organization. Confirm your information and send your request.`;
+
+  const accountItem = {
+    id: organization.id,
+    name: organization.name,
+    type: 'organizations',
+    username: organization.shortname,
+    img: organization.image?.url || '',
+  } as AccountItem;
 
   return {
     register,
@@ -216,5 +228,7 @@ export const useVerifyExperienceModal = (
     onSelectMonth,
     onSelectYear,
     handleForgotInfo,
+    subtitle,
+    accountItem,
   };
 };
