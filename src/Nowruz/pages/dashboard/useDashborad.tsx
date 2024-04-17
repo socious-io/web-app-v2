@@ -19,8 +19,10 @@ export const useDashboard = () => {
   const [connectUrl, setConnectUrl] = useState('');
 
   const verifyAction = async () => {
-    const vc = await requestVerification();
-    setConnectUrl(vc.connection_url);
+    if (type === 'users') {
+      const vc = await requestVerification();
+      setConnectUrl(vc.connection_url);
+    }
     setOpenVerifyModal(true);
   };
   let hoursWorked = 0;

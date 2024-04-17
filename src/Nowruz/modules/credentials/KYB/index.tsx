@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { DescriptionModal } from './descriptionModal';
 import { SuccessModal } from './successModal';
@@ -15,6 +15,11 @@ export const KYBModal: React.FC<KYBModalProps> = ({ open, setOpen }) => {
     uplaod: false,
     success: false,
   });
+
+  useEffect(() => {
+    if (open) setopenModals({ desc: true, uplaod: false, success: false });
+  }, [open]);
+
   const handleClose = () => {
     setopenModals({ desc: false, uplaod: false, success: false });
     setOpen(false);

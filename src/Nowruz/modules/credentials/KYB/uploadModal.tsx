@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PostMediaUploadRes, uploadMedia } from 'src/core/api';
+import { PostMediaUploadRes } from 'src/core/api';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { FileUploaderMultiple } from 'src/Nowruz/modules/general/components/fileUploaderMultiple';
@@ -11,17 +11,13 @@ interface UploadModalProps {
   handleOpenSuccessModal: () => void;
 }
 export const UploadModal: React.FC<UploadModalProps> = ({ open, handleClose, handleOpenSuccessModal }) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<PostMediaUploadRes[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleContinue = async () => {
     setLoading(true);
     try {
-      const requests: Promise<PostMediaUploadRes>[] = [];
-      files.forEach(f => {
-        requests.push(uploadMedia(f));
-      });
-      await Promise.all(requests);
+      // apply API for KYB
       setLoading(false);
       handleOpenSuccessModal();
     } catch (error) {
@@ -60,8 +56,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({ open, handleClose, han
           maxFileNumbers={10}
           maxSize={2}
           customStyle="w-full h-[126px]"
-          files={files}
-          setFiles={setFiles}
+          uploaded={files}
+          setUploaded={setFiles}
           loading={loading}
         />
       </div>
