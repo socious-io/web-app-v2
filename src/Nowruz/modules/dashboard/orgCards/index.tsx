@@ -1,15 +1,16 @@
 import React from 'react';
-import { DashboardCard } from '../dashboardCard';
 import variables from 'src/components/_exports.module.scss';
+
+import { DashboardCard } from '../dashboardCard';
 
 interface OrgCardsProps {
   profileCompleted: boolean;
   profileUrl: string;
 }
-export const OrgCards: React.FC<OrgCardsProps> = ({ profileCompleted, profileUrl }) => {
+export const OrgCards: React.FC<OrgCardsProps> = () => {
   return (
     <div className="w-full h-fit flex gap-4 overflow-x-scroll">
-      {!profileCompleted && (
+      {/* {!profileCompleted && (
         <DashboardCard
           title="Complete your profile"
           description=""
@@ -19,7 +20,7 @@ export const OrgCards: React.FC<OrgCardsProps> = ({ profileCompleted, profileUrl
           supportingText1="Add your organization culture"
           supportingText2="Add social media"
         />
-      )}
+      )} */}
       <DashboardCard
         title="Find professionals"
         description="Discover purpose-driven individuals aligned with your values"
