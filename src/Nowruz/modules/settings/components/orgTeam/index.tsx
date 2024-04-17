@@ -51,7 +51,7 @@ export const OrgTeam = () => {
                 <SearchDropdown
                   key={`${item} ${index}`}
                   id={`member-${index}`}
-                  value={addedMembers[index]}
+                  value={addedMembers[index].value ? addedMembers[index] : undefined}
                   placeholder="Select team member"
                   cacheOptions
                   isAsync
@@ -61,7 +61,7 @@ export const OrgTeam = () => {
                   icon="user-01"
                   hasDropdownIcon={true}
                   label=""
-                  onChange={(value) => {
+                  onChange={value => {
                     onSelectMember(value);
                   }}
                 />
@@ -75,7 +75,7 @@ export const OrgTeam = () => {
                   variant="contained"
                   color="primary"
                   onClick={handleAddMembers}
-                  disabled={addedMembers.filter((item) => item).length === 0}
+                  disabled={addedMembers.filter(item => item).length === 0}
                 >
                   Add member
                 </Button>
@@ -103,10 +103,15 @@ export const OrgTeam = () => {
                   <div className={css.table}>
                     <div className={css.header}>Name</div>
 
-                    {teamMembers.map((item) => (
+                    {teamMembers.map(item => (
                       <div key={item.id} className={css.row}>
                         <AvatarLabelGroup account={item} customStyle="!p-0" />
-                        <Button variant="text" color="secondary" onClick={() => handleClickDelete(item.id, item.name)}>
+                        <Button
+                          variant="text"
+                          color="secondary"
+                          onClick={() => handleClickDelete(item.id, item.name)}
+                          disabled={teamMembers.length === 1}
+                        >
                           Delete
                         </Button>
                       </div>
