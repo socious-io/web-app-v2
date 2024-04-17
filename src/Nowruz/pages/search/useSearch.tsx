@@ -88,6 +88,7 @@ export const useSearch = () => {
       const label = `${filterRaw.location.label}, ${getCountryName(filterRaw.country[0])}`;
       setCountryName(label);
     }
+    setPage(1);
     handleCloseOrApplyFilter();
   };
 
@@ -116,7 +117,7 @@ export const useSearch = () => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
           <div
-            onClick={(e) => {
+            onClick={e => {
               if (e.target === e.currentTarget) handleNavigate(item as Organization | User);
             }}
             className="cursor-pointer"
