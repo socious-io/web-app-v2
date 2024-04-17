@@ -46,7 +46,6 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
     onSave,
     dateError,
   } = useVerifyExperience(handleClose, onVerifyExperience, experience);
-
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
@@ -186,7 +185,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           Verify experience
         </div>
       }
-      subTitle="Confirm your information and send a request to UNHCR to verify your experience."
+      subTitle={`Confirm your information and send a request to ${experience?.org.name} to verify your experience.`}
       content={contentJSX}
       footer={modalFooterJsx}
     />
