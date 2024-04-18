@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import {
   CurrentIdentity,
   Following,
+  SuccessRes,
   addOrganizationMember,
   filterFollowings,
   getOrganizationMembers,
@@ -23,16 +24,15 @@ export const useOrgTeam = () => {
 
   const [addedMembers, setAddedMembers] = useState<DropDownItem[]>([]);
   const [teamMembers, setTeamMembers] = useState<AccountItem[]>([]);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [toDeleteName, setToDeleteName] = useState('');
-  const [toDeleteId, settoDeleteId] = useState('');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<{ id: string; name: string }>({ id: '', name: '' });
 
   const getTeamMembers = async () => {
     try {
       const res = await getOrganizationMembers(currentIdentity!.id, { page: 1 });
-      const mapped = res.items?.map(item => {
+      const mapped: AccountItem[] = res.items?.map(item => {
         return {
           id: item.id,
           img: item.avatar?.url,
@@ -54,7 +54,7 @@ export const useOrgTeam = () => {
       if (hasMore) {
         const res = await getOrganizationMembers(currentIdentity!.id, { page: page + 1 });
         if (res.items?.length) {
-          const mapped = res.items.map(item => {
+          const mapped: AccountItem[] = res.items.map(item => {
             return {
               id: item.id,
               img: item.avatar?.url,
@@ -77,10 +77,13 @@ export const useOrgTeam = () => {
   }, []);
 
   const followingToOption = (followings: Following[]) => {
-    return followings.map(i => ({
-      label: JSON.stringify({ label: i.identity_meta.name || '', description: `@${i.identity_meta.username}` }),
-      value: i.identity_meta.id,
-      icon: <Avatar img={i.identity_meta.avatar} type="users" size="24px" />,
+    return followings.map(following => ({
+      label: JSON.stringify({
+        label: following.identity_meta?.name || '',
+        description: following.identity_meta?.username ? `@${following.identity_meta?.username}` : '',
+      }),
+      value: following.identity_meta?.id,
+      icon: <Avatar img={following.identity_meta?.avatar || ''} type="users" size="24px" />,
     }));
   };
 
@@ -88,7 +91,9 @@ export const useOrgTeam = () => {
     try {
       if (searchText) {
         const response = await filterFollowings({ name: searchText, type: 'users', page: 1, limit: 10 });
-        const filtered = response.items.filter(item => !teamMembers.map(m => m.id).includes(item.identity_meta.id));
+        const filtered = response.items.filter(
+          item => !teamMembers.map(m => m.id).includes(item.identity_meta?.id || ''),
+        );
         cb(followingToOption(filtered));
       }
     } catch (error) {
@@ -104,7 +109,7 @@ export const useOrgTeam = () => {
 
   const handleAddAnother = () => {
     const members = [...addedMembers];
-    members.push({ value: undefined, label: undefined });
+    members.push({ value: '', label: '' });
     setAddedMembers(members);
   };
 
@@ -114,7 +119,7 @@ export const useOrgTeam = () => {
       members = members.filter(item => !!item.value);
       const uniqIds = [...new Set(members.map(item => item.value))];
 
-      const requests = [];
+      const requests: Promise<SuccessRes>[] = [];
       uniqIds.forEach(memberId => {
         requests.push(addOrganizationMember(currentIdentity!.id, memberId));
       });
@@ -126,21 +131,25 @@ export const useOrgTeam = () => {
     setAddedMembers([]);
   };
 
-  const handleClickDelete = (id: string, name: string) => {
-    settoDeleteId(id);
-    setToDeleteName(name);
-    setOpenAlert(true);
-  };
-
-  const handleDelete = async () => {
+  const handleDelete = async (userId: string) => {
     try {
-      await removeOrganizationMember(currentIdentity!.id, toDeleteId);
-      getTeamMembers();
-      setOpenAlert(false);
+      if (currentIdentity?.id) {
+        await removeOrganizationMember(currentIdentity?.id, userId);
+        getTeamMembers();
+        handleCloseModal();
+      }
     } catch (e) {
       console.log('error in deleting member', e);
     }
   };
+
+  const handleOpenModal = (id: string, organizationName: string) => {
+    setOpenModal(true);
+    setSelectedMember({ id, name: organizationName });
+  };
+
+  const handleCloseModal = () => setOpenModal(false);
+
   return {
     addedMembers,
     searchMembers,
@@ -149,12 +158,11 @@ export const useOrgTeam = () => {
     handleAddMembers,
     teamMembers,
     handleDelete,
-    openAlert,
-    setOpenAlert,
-    toDeleteName,
-    handleClickDelete,
-    getTeamMembers,
     loadMore,
     hasMore,
+    selectedMember,
+    openModal,
+    handleOpenModal,
+    handleCloseModal,
   };
 };

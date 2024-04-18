@@ -72,7 +72,7 @@ export interface Member {
   email: string;
   first_name?: string;
   last_name?: string;
-  avatar?: string;
+  avatar?: { url: string };
 }
 
 export interface Industry {

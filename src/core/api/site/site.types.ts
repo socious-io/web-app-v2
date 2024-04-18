@@ -22,6 +22,7 @@ export interface Identity {
   meta: OrgMeta | UserMeta;
   created_at: Date;
   verification_status: CredentailStatus;
+  identity_meta?: UserMeta | OrgMeta;
 }
 
 export interface UserMeta {
