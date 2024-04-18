@@ -79,10 +79,10 @@ export const JobCreateForm = () => {
     jobLocation,
   } = useJobCreateForm();
 
-  const renderInfo = (title: string, description: string) => (
+  const renderInfo = (title: string, description?: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
-      <div className={css.infoDescription}>{description}</div>
+      {description && <div className={css.infoDescription}>{description}</div>}
     </div>
   );
   const renderAmountFields = () => {
@@ -216,7 +216,7 @@ export const JobCreateForm = () => {
           </div>
         </div>
         <div className={css.row}>
-          {renderInfo('Location', 'Job titles must describe one position')}
+          {renderInfo('Location')}
           <div className={css.componentsContainer}>
             {jobLocation && (
               <RadioGroup
