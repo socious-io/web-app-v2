@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CurrentIdentity, Organization, User, otherProfileByUsername } from 'src/core/api';
+import { CurrentIdentity, Organization, User, getOrganization, otherProfileByUsername } from 'src/core/api';
 import { removeAdditional } from 'src/core/api/additionals/additionals.api';
 import { AdditionalRes, EducationMeta } from 'src/core/api/additionals/additionals.types';
 import { monthShortNames } from 'src/core/time';
@@ -10,12 +10,13 @@ import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer
 export const useEducation = () => {
   const [openModal, setOpenModal] = useState(false);
   const [education, setEducation] = useState<AdditionalRes>();
-  const user = useSelector<RootState, User | Organization | undefined>((state) => {
-    return state.profile.identity;
-  }) as User;
+  const [org, setOrg] = useState<Organization>();
+  const [openCertificate, setOpenCertificate] = useState(false);
+  const user = useSelector<RootState, User | Organization | undefined>(state => state.profile.identity) as User;
+  const isVerified = (user as User).identity_verified;
 
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const myProfile = currentIdentity?.id === user?.id;
   const dispatch = useDispatch();
@@ -66,6 +67,26 @@ export const useEducation = () => {
     dispatch(setIdentityType('users'));
   };
 
+  const handleOpenRequestCertificate = async (ed: AdditionalRes) => {
+    const res = await getOrganization((ed.meta as EducationMeta).school_id);
+    setOrg(res);
+    setEducation(ed);
+    setOpenCertificate(true);
+    return;
+  };
+
+  const handleSendRequestCertificate = async (id: string, message?: string, exact_info?: boolean) => {
+    try {
+      // Apply new api from BE
+      // await requestVerifyExperience(id, message, exact_info);
+      const updated = await otherProfileByUsername(user?.username || '');
+      dispatch(setIdentity(updated));
+      dispatch(setIdentityType('users'));
+    } catch (e) {
+      console.log('error in verifying experiece:', e);
+    }
+  };
+
   return {
     openModal,
     handleClose,
@@ -79,5 +100,11 @@ export const useEducation = () => {
     getDegree,
     getSchool,
     setEducation,
+    isVerified,
+    handleOpenRequestCertificate,
+    openCertificate,
+    setOpenCertificate,
+    org,
+    handleSendRequestCertificate,
   };
 };

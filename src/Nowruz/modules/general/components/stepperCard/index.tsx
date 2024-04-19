@@ -8,6 +8,7 @@ import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 
 import css from './stepperCard.module.scss';
 import { StepperCardProps } from './stepperCard.types';
+import { Button } from '../Button';
 
 export const StepperCard: React.FC<StepperCardProps> = props => {
   const {
@@ -24,6 +25,7 @@ export const StepperCard: React.FC<StepperCardProps> = props => {
     DisplayVerificationStatus,
     verified = 'unverified',
     customIcon,
+    verifyButton,
   } = props;
   const [seeMore, setSeeMore] = useState(false);
   const [descriptionStr, setDescriptionStr] = useState(description);
@@ -119,14 +121,31 @@ export const StepperCard: React.FC<StepperCardProps> = props => {
             {supprtingText}
           </Typography>
         </div>
-        <div className="mb-5">
-          <Typography variant="h5" color={variables.color_grey_600}>
-            {descriptionStr}
-          </Typography>
-          {seeMore && (
-            <span className={css.seeMoreBtn} onClick={seeMoreClick}>
-              see more
-            </span>
+        <div className="flex flex-col gap-5 mb-5">
+          {!!descriptionStr && (
+            <div>
+              <Typography variant="h5" color={variables.color_grey_600}>
+                {descriptionStr}
+              </Typography>
+              {seeMore && (
+                <span className={css.seeMoreBtn} onClick={seeMoreClick}>
+                  see more
+                </span>
+              )}
+            </div>
+          )}
+          {verifyButton?.display && (
+            <div>
+              <Button
+                variant="text"
+                color="primary"
+                disabled={verifyButton.disabled}
+                onClick={verifyButton.action}
+                customStyle="!p-0 !font-semibold !text-sm !leading-5 !h-5"
+              >
+                {verifyButton.label}
+              </Button>
+            </div>
           )}
         </div>
       </div>

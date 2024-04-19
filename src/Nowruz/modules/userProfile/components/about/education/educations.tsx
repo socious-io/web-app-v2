@@ -1,14 +1,20 @@
+import React from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { EducationMeta } from 'src/core/api/additionals/additionals.types';
+import { verificationStatus } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { StepperCard } from 'src/Nowruz/modules/general/components/stepperCard';
+import { CreateUpdateEducation } from 'src/Nowruz/modules/userProfile/containers/createUpdateEducation';
+import { VerifyEducationModal } from 'src/Nowruz/modules/userProfile/containers/verifyEducationModal';
 
 import { useEducation } from './useEducation';
-import { CreateUpdateEducation } from '../../../containers/createUpdateEducation';
 import css from '../about.module.scss';
 
-export const Educations = () => {
+interface ExperienceProps {
+  handleOpenVerifyModal: () => void;
+}
+export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }) => {
   const {
     openModal,
     myProfile,
@@ -22,6 +28,12 @@ export const Educations = () => {
     setEducation,
     getDegree,
     getSchool,
+    isVerified,
+    handleOpenRequestCertificate,
+    openCertificate,
+    setOpenCertificate,
+    org,
+    handleSendRequestCertificate,
   } = useEducation();
   return (
     <>
@@ -48,6 +60,14 @@ export const Educations = () => {
                 description={item.description}
                 handleEdit={() => handleEdit(item)}
                 handleDelete={() => handleDelete(item.id)}
+                DisplayVerificationStatus
+                verified={item.credential?.status ? verificationStatus[item.credential?.status] : 'unverified'}
+                verifyButton={{
+                  display: myProfile && (!item.credential || item.credential?.status === 'PENDING'),
+                  label: 'Request certificate',
+                  disabled: !!item.credential,
+                  action: isVerified ? () => handleOpenRequestCertificate(item) : handleOpenVerifyModal,
+                }}
               />
             ))}
           </div>
@@ -59,6 +79,15 @@ export const Educations = () => {
         education={education}
         setEducation={setEducation}
       />
+      {!!education && !!org && (
+        <VerifyEducationModal
+          education={education}
+          organization={org}
+          open={openCertificate}
+          handleClose={() => setOpenCertificate(false)}
+          onSendRequest={handleSendRequestCertificate}
+        />
+      )}
     </>
   );
 };

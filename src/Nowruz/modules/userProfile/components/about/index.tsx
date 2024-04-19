@@ -41,7 +41,7 @@ export const About = () => {
           <Skills />
           <Divider />
           <Experiences handleOpenVerifyModal={handleOpenVerifyModal} />
-          <Educations />
+          <Educations handleOpenVerifyModal={() => setOpenVerifyModal(true)} />
           <Certificates />
           <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
         </>
