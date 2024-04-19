@@ -1,10 +1,16 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Organization, OrganizationReq, updateOrganization } from 'src/core/api';
-import { updateAdditional } from 'src/core/api/additionals/additionals.api';
-import { AdditionalReq, AdditionalRes, EducationMeta } from 'src/core/api/additionals/additionals.types';
-import { getDaysInMonth, monthNames } from 'src/core/time';
+import {
+  createOrganization,
+  Education,
+  EducationsReq,
+  Organization,
+  OrganizationReq,
+  updateEducations,
+  updateOrganization,
+} from 'src/core/api';
+import { getDaysInMonth, getUTCDate, monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import * as yup from 'yup';
@@ -12,7 +18,7 @@ import * as yup from 'yup';
 import { OptionType } from './verifyEducationModal.types';
 
 const schema = yup.object().shape({
-  creadentialName: yup
+  credentialName: yup
     .string()
     .trim()
     .required('Required')
@@ -72,10 +78,10 @@ const schema = yup.object().shape({
 });
 
 export const useVerifyEducationModal = (
-  education: AdditionalRes,
-  organization: Organization,
   handleClose: () => void,
-  onSendRequest: (id: string, message?: string, exact_info?: boolean) => void,
+  onVerifyEducation: (id: string, message?: string, exact_info?: boolean) => void,
+  organization: Organization,
+  education: Education,
 ) => {
   const {
     register,
@@ -90,7 +96,6 @@ export const useVerifyEducationModal = (
     mode: 'all',
     resolver: yupResolver(schema),
   });
-  const meta = education.meta as EducationMeta;
 
   const [months, setMonths] = useState<OptionType[]>([]);
   const [days, setDays] = useState<OptionType[]>([]);
@@ -129,24 +134,25 @@ export const useVerifyEducationModal = (
   };
 
   const initializeValues = () => {
-    const awardedDate = meta.awarded_date ? new Date(meta.awarded_date) : undefined;
-    const strYear = awardedDate?.getFullYear().toString() || '';
-    const strDay = awardedDate?.getDate().toString() || '';
+    const awardedDate = education.end_at ? new Date(getUTCDate(education.end_at)) : undefined;
 
     const initialVal = {
-      creadentialName: meta.credential_name || `${meta.degree}${meta.field ? ` in ${meta.field}` : ''}`,
+      credentialName: education.degree || '',
       email: organization.email || '',
       message: '',
       forgotInfo: false,
       month: {
         label: awardedDate ? monthNames[awardedDate.getMonth()] : '',
-        value: awardedDate ? awardedDate.getMonth().toString() : '',
+        value: awardedDate ? awardedDate.getMonth() : '',
       },
       day: {
-        label: strDay,
-        value: strDay,
+        label: awardedDate?.getDate() || '',
+        value: awardedDate?.getDate() || '',
       },
-      year: { label: strYear, value: strYear },
+      year: {
+        label: awardedDate?.getFullYear() || '',
+        value: awardedDate?.getFullYear() || '',
+      },
     };
     reset(initialVal);
   };
@@ -159,6 +165,7 @@ export const useVerifyEducationModal = (
 
   const monthVal = watch('month');
   const yearVal = watch('year');
+
   useEffect(() => {
     getDayOptions();
   }, [monthVal, yearVal]);
@@ -181,25 +188,47 @@ export const useVerifyEducationModal = (
 
   // apply backend API
   const onSend = async () => {
-    const { month, year, day, email, creadentialName, message, forgotInfo } = getValues();
+    const { month, year, day, email, credentialName, message, forgotInfo } = getValues();
+    const startedDate = education.start_at ? new Date(getUTCDate(education.start_at)) : undefined;
+    const title = education?.title || '';
+    const grade = education?.grade || '';
+    const description = education?.description || '';
 
-    //update education
-    const meta: EducationMeta = { ...education.meta };
-    if (year.value && month.value && day.value)
-      meta.awarded_date = new Date(Number(year.value), Number(month.value), Number(day.value)).toISOString();
-    meta.credential_name = creadentialName;
-    const additional = removedEmptyProps({ type: education.type, title: creadentialName, meta }) as AdditionalReq;
-    updateAdditional(education.id, additional);
+    let organizationId = organization.id;
+    if (!organizationId) {
+      organizationId = (await createOrganization({ name: organization.name, email: 'org@socious.io' }, false)).id;
+    }
 
-    // update org email
+    const startDate = new Date(
+      Number(startedDate?.getFullYear()),
+      Number(startedDate?.getMonth() || 0),
+      Number(startedDate?.getDate() || 1),
+    ).toISOString();
+
+    let payload: EducationsReq = {
+      org_id: organizationId,
+      title,
+      degree: credentialName,
+      grade,
+      description,
+      start_at: startDate,
+    };
+    if (year.value) {
+      const endDate = new Date(Number(year.value), Number(month.value || 0), Number(day.value || 1)).toISOString();
+      payload.end_at = endDate;
+    }
+
+    payload = removedEmptyProps(payload) as EducationsReq;
+    await updateEducations(education.id, payload);
     if (!organization.verified) {
       const org = { name: organization.name, email } as OrganizationReq;
       updateOrganization(organization.id, org);
     }
-    await onSendRequest(education.id, message, !forgotInfo);
+    onVerifyEducation(education.id, message, !forgotInfo);
     handleClose();
     return;
   };
+
   const subtitle = organization.verified
     ? `Confirm the below information to send your request to ${organization?.name}`
     : `${organization?.name} is not registered organization. Confirm your information and send your request.`;

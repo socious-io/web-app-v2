@@ -2,10 +2,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrganization, Organization, otherProfileByUsername, search, User } from 'src/core/api';
-import { createAdditional, removeAdditional, updateAdditional } from 'src/core/api/additionals/additionals.api';
-import { AdditionalReq, AdditionalRes, EducationMeta } from 'src/core/api/additionals/additionals.types';
-import { monthNames } from 'src/core/time';
+import {
+  addEducations,
+  createOrganization,
+  Education,
+  EducationsReq,
+  Organization,
+  otherProfileByUsername,
+  search,
+  updateEducations,
+  User,
+} from 'src/core/api';
+import { removeAdditional } from 'src/core/api/additionals/additionals.api';
+import { getUTCDate, monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
@@ -18,12 +27,9 @@ const schema = yup
     school: yup.object().shape({
       label: yup.string().required('Required'),
       value: yup.string(),
-      image: yup.string(),
-      imageId: yup.string(),
-      city: yup.string(),
     }),
     degree: yup.string(),
-    field: yup.string(),
+    field: yup.string().required('Required'),
     startMonth: yup.object().shape({
       label: yup.string(),
       value: yup.string(),
@@ -50,12 +56,8 @@ interface OptionType {
   label: string;
 }
 
-export const useCreateUpdateEducation = (
-  handleClose: () => void,
-  setEducation: (val: AdditionalRes) => void,
-  education?: AdditionalRes,
-) => {
-  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+export const useCreateUpdateEducation = (handleClose: () => void, education?: Education) => {
+  const user = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   }) as User;
 
@@ -83,20 +85,21 @@ export const useCreateUpdateEducation = (
   };
 
   const initializeValues = () => {
-    const meta = education ? (education.meta as EducationMeta) : null;
+    const startDate = education?.start_at ? new Date(getUTCDate(education.start_at)) : undefined;
+    const endDate = education?.end_at ? new Date(getUTCDate(education.end_at)) : undefined;
 
     const initialVal = {
-      school: { label: meta?.school_name || '', value: meta?.school_id || '' },
-      degree: meta?.degree || '',
-      field: meta?.field || '',
+      school: { label: education?.org.name || '', value: education?.org.id || '' },
+      degree: education?.degree || '',
+      field: education?.title || '',
       startMonth: {
-        label: meta?.start_month ? monthNames[Number(meta.start_month)] : '',
-        value: meta?.start_month || '',
+        label: startDate ? monthNames[startDate.getMonth()] : '',
+        value: startDate ? startDate.getMonth() : '',
       },
-      startYear: { label: meta?.start_year || '', value: meta?.start_year || '' },
-      endMonth: { label: meta?.end_month ? monthNames[Number(meta.end_month)] : '', value: meta?.end_month || '' },
-      endYear: { label: meta?.end_year || '', value: meta?.end_year || '' },
-      grade: meta?.grade || '',
+      startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
+      endMonth: { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth() : '' },
+      endYear: { label: endDate?.getFullYear() || '', value: endDate?.getFullYear() || '' },
+      grade: education?.grade || '',
       description: education?.description || '',
     };
     reset(initialVal);
@@ -142,18 +145,17 @@ export const useCreateUpdateEducation = (
   }, [startMonth, startYear, endMonth, endYear]);
 
   const schoolToOption = (schoolList: Organization[], searchText: string) => {
-    let options = [];
-    options = schoolList.map((s) => ({
-      value: s.id,
-      label: s.name,
-      icon: s.image ? (
-        <img src={s.image.url} width={24} height={24} alt="" />
+    const options = schoolList.map(list => ({
+      value: list.id,
+      label: list.name,
+      icon: list.image ? (
+        <img src={list.image.url} width={24} height={24} alt="" />
       ) : (
         <Avatar type="organizations" size="24px" />
       ),
-      image: s.image?.url,
-      imageId: s.image?.id,
-      city: s.city,
+      image: list.image?.url,
+      imageId: list.image?.id,
+      city: list.city,
     }));
     return options;
   };
@@ -197,42 +199,27 @@ export const useCreateUpdateEducation = (
     if (dateError) return;
     const { school, degree, field, startMonth, startYear, endMonth, endYear, grade, description } = getValues();
 
-    let schId = school.value;
-    if (!schId) {
-      schId = (await createOrganization({ name: school.label, email: 'org@socious.io' }, false)).id;
+    let organizationId = school.value;
+    if (!organizationId) {
+      organizationId = (await createOrganization({ name: school.label, email: 'org@socious.io' }, false)).id;
     }
-    const payloadMeta: EducationMeta = {
-      field: field,
-      grade: grade,
-      degree: degree,
-      end_month: endMonth.value,
-      end_year: endYear.value,
-      start_month: startMonth.value,
-      start_year: startYear.value,
-      school_id: schId,
-      school_name: school.label,
-      school_image: school.image,
-      school_city: school.city,
-    };
-    const payload: AdditionalReq = {
-      type: 'EDUCATION',
-      title: school.label,
-      enabled: true,
-      image: school.imageId,
+
+    const startDate = new Date(Number(startYear.value), Number(startMonth.value || 0), 1).toISOString();
+    const endDate = new Date(Number(endYear.value), Number(endMonth.value || 0), 1).toISOString();
+
+    let payload: EducationsReq = {
+      org_id: organizationId,
+      title: field,
+      degree,
+      grade,
+      description,
+      start_at: startDate,
+      end_at: endDate,
     };
 
-    if (description) payload.description = description;
-    removedEmptyProps(payloadMeta);
-    removedEmptyProps(payload);
-    payload.meta = payloadMeta;
-
-    if (education) {
-      const res = await updateAdditional(education.id, payload);
-      setEducation(res);
-    } else {
-      const res = await createAdditional(payload);
-      setEducation(res);
-    }
+    payload = removedEmptyProps(payload) as EducationsReq;
+    if (education) await updateEducations(education.id, payload);
+    else await addEducations(payload);
     const updated = await otherProfileByUsername(user?.username || '');
     dispatch(setIdentity(updated));
     dispatch(setIdentityType('users'));

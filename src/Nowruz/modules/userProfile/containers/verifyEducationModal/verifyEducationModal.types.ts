@@ -1,5 +1,4 @@
-import { Organization } from 'src/core/api';
-import { AdditionalRes } from 'src/core/api/additionals/additionals.types';
+import { Education, Organization } from 'src/core/api';
 
 export interface OptionType {
   value: string;
@@ -9,7 +8,7 @@ export interface OptionType {
 export interface VerifyEducationModalProps {
   open: boolean;
   handleClose: () => void;
-  education: AdditionalRes;
+  onVerifyEducation: (id: string, message?: string, exact_info?: boolean) => void;
   organization: Organization;
-  onSendRequest: (id: string, message?: string, exact_info?: boolean) => void;
+  education: Education;
 }
