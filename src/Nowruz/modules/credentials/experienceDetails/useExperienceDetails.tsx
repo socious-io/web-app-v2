@@ -73,7 +73,7 @@ interface OptionType {
   value: string;
   label: string;
 }
-export const useCredentialDetails = (
+export const useExperienceDetails = (
   handleClose: () => void,
   experience?: Experience,
   onUpdateExperience?: (experience: Experience) => void,

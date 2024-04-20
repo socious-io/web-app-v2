@@ -7,17 +7,17 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
-import { useCredentialDetails } from './useCredentialDetails';
+import { useExperienceDetails } from './useExperienceDetails';
 
-interface CredentialDetailsProps {
+interface ExperienceDetailsProps {
   open: boolean;
   handleClose: () => void;
-  experience?: Experience;
+  experience: Experience;
   onUpdateExperience?: (experience: Experience) => void;
   avatarInfo?: { url: string; first_name: string; last_name: string; username: string } | null;
   readonly?: boolean;
 }
-export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
+export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
   open,
   handleClose,
   experience,
@@ -55,7 +55,7 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
     dateError,
     volunteer,
     handleCheckVolunteer,
-  } = useCredentialDetails(handleClose, experience, onUpdateExperience);
+  } = useExperienceDetails(handleClose, experience, onUpdateExperience);
 
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
