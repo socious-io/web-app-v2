@@ -74,7 +74,7 @@ export const CredentialList = () => {
                   />
                 )}
                 {userProfile ? (
-                  <Avatar size="40px" type={'organizations'} />
+                  <Avatar size="40px" type={'organizations'} img={item.org_image?.url} />
                 ) : (
                   <Avatar size="40px" type={'users'} img={item.avatar?.url} />
                 )}
