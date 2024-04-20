@@ -1,29 +1,21 @@
 import { Typography } from '@mui/material';
-import { Icon } from 'src/Nowruz/general/Icon';
+import { useSelector } from 'react-redux';
+import { UserMeta } from 'src/core/api';
 import { Link } from 'src/Nowruz/modules/general/components/link';
-import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
+import { TopBannerNotVerified } from 'src/Nowruz/modules/general/components/TopBannerNotVerified';
 import { ReferCard } from 'src/Nowruz/modules/refer/referCard';
-import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
-
-import { useRefer } from './useRefer';
+import { RootState } from 'src/store';
 
 export const Refer = () => {
-  const { verified, openVerifyModal, setOpenVerifyModal, verifyAction, connectUrl } = useRefer();
+  const verified = useSelector<RootState, boolean>(
+    state => (state.identity.entities.find(item => item.current)?.meta as UserMeta).identity_verified,
+  );
 
   return (
     <>
       <div className="flex flex-col">
         {!verified && (
-          <TopBanner
-            theme="warning"
-            text="Verify your identity"
-            supportingText="In order to access referrals, you need to have a Atala PRISM DID and verify your identity."
-            primaryBtnLabel="Verify now"
-            primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700" />}
-            primaryBtnAction={verifyAction}
-            secondaryBtnLabel="Learn more"
-            secondaryBtnLink="https://socious.io/decentralized-referrals"
-          />
+          <TopBannerNotVerified supportingText="In order to access referrals, you need to have a Atala PRISM DID and verify your identity." />
         )}
         <div className="pt-8 pb-12 px-4 md:px-8 w-full md:max-w-[926px] flex flex-col gap-8">
           <div className="flex flex-col gap-1 pb-5 border border-x-0 border-t-0 border-b border-solid border-Gray-light-mode-200">
@@ -54,7 +46,6 @@ export const Refer = () => {
           </div>
         </div>
       </div>
-      <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
     </>
   );
 };

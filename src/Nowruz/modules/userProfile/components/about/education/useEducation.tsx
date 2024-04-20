@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CurrentIdentity, Organization, User, getOrganization, otherProfileByUsername } from 'src/core/api';
+import { CurrentIdentity, Organization, User, UserMeta, getOrganization, otherProfileByUsername } from 'src/core/api';
 import { removeAdditional } from 'src/core/api/additionals/additionals.api';
 import { AdditionalRes, EducationMeta } from 'src/core/api/additionals/additionals.types';
 import { monthShortNames } from 'src/core/time';
@@ -13,11 +13,11 @@ export const useEducation = () => {
   const [org, setOrg] = useState<Organization>();
   const [openCertificate, setOpenCertificate] = useState(false);
   const user = useSelector<RootState, User | Organization | undefined>(state => state.profile.identity) as User;
-  const isVerified = (user as User).identity_verified;
 
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
+  const isVerified = (currentIdentity?.meta as UserMeta).identity_verified;
   const myProfile = currentIdentity?.id === user?.id;
   const dispatch = useDispatch();
 
