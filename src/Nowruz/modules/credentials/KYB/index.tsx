@@ -10,34 +10,38 @@ interface KYBModalProps {
 }
 
 export const KYBModal: React.FC<KYBModalProps> = ({ open, setOpen }) => {
-  const [openModals, setopenModals] = useState<{ [key in 'desc' | 'uplaod' | 'success']: boolean }>({
+  const [openModals, setopenModals] = useState<{ [key in 'desc' | 'upload' | 'success']: boolean }>({
     desc: true,
-    uplaod: false,
+    upload: false,
     success: false,
   });
 
   useEffect(() => {
-    if (open) setopenModals({ desc: true, uplaod: false, success: false });
+    setopenModals({
+      desc: true,
+      upload: false,
+      success: false,
+    });
   }, [open]);
 
   const handleClose = () => {
-    setopenModals({ desc: false, uplaod: false, success: false });
+    setopenModals({ desc: false, upload: false, success: false });
     setOpen(false);
   };
 
   const handleContinueFirstStep = () => {
-    setopenModals({ desc: false, uplaod: true, success: false });
+    setopenModals({ desc: false, upload: true, success: false });
   };
 
   const handleOpenSuccessModal = () => {
-    setopenModals({ desc: false, uplaod: false, success: true });
+    setopenModals({ desc: false, upload: false, success: true });
   };
 
   if (!open) return;
   return (
     <>
       <DescriptionModal open={openModals.desc} handleClose={handleClose} handleContinue={handleContinueFirstStep} />
-      <UploadModal open={openModals.uplaod} handleClose={handleClose} handleOpenSuccessModal={handleOpenSuccessModal} />
+      <UploadModal open={openModals.upload} handleClose={handleClose} handleOpenSuccessModal={handleOpenSuccessModal} />
       <SuccessModal open={openModals.success} handleClose={handleClose} />
     </>
   );

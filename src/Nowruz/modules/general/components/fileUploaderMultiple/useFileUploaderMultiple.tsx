@@ -81,12 +81,11 @@ export const useFileUploader = (
       const res = await Promise.all(requests);
       setUploaded([...uploaded, ...res]);
       setFiles([...files, ...acceptedFiles]);
-      setUploading(false);
     } catch (e) {
       setError('Internal error in uploading files');
-      setUploading(false);
       console.log('error in uploading files', e);
     }
+    setUploading(false);
   };
 
   const deleteFile = (deletedIndex: number) => {
