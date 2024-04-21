@@ -27,8 +27,8 @@ export const OrganizationJobListing = () => {
       )}
 
       {!loading &&
-        jobsList.map((job) => (
-          <div className="mt-6">
+        jobsList.map(job => (
+          <div key={job.id} className="mt-6">
             <OrganizationJobCard job={job} />
           </div>
         ))}
@@ -39,6 +39,7 @@ export const OrganizationJobListing = () => {
             message="No jobs found"
             button={
               <Button
+                id="create-first-job"
                 startIcon={<Icon name="plus" color={variables.color_white} />}
                 color="primary"
                 variant="contained"
