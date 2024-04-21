@@ -39,6 +39,7 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
     onSelectYear,
     handleSubmit,
     onSend,
+    dateErrors,
   } = useEducationDetails(handleClose, education, onUpdateEducation);
 
   const contentJSX = (
@@ -76,7 +77,7 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label.message.toString()] : undefined}
+          errors={dateErrors ? [dateErrors.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -90,7 +91,6 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
           label="&nbsp;"
           className="flex-1"
           placeholder="Day"
-          errors={errors['startDay']?.label?.message ? [errors['startDay']?.label?.message.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -106,7 +106,6 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['startYear']?.label?.message ? [errors['startYear']?.label.message.toString()] : undefined}
           isDisabled={readonly}
         />
       </div>

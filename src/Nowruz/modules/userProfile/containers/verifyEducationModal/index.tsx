@@ -36,6 +36,7 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
     handleForgotInfo,
     subtitle,
     accountItem,
+    dateErrors,
   } = useVerifyEducationModal(handleClose, onVerifyEducation, organization, education);
 
   const footerJsx = (
@@ -109,7 +110,7 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             className="flex-1"
             placeholder="Month"
             isSearchable
-            errors={errors['month']?.label?.message ? [errors['month']?.label?.message.toString()] : undefined}
+            errors={dateErrors ? [dateErrors.toString()] : undefined}
           />
           <SearchDropdown
             id="day"
@@ -122,7 +123,6 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             label="&nbsp;"
             className="flex-1"
             placeholder="Day"
-            errors={errors['day']?.label?.message ? [errors['day']?.label?.message.toString()] : undefined}
           />
           <SearchDropdown
             id="start-year"
@@ -136,7 +136,6 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             className="flex-1"
             placeholder="Year"
             isSearchable
-            errors={errors['year']?.label?.message ? [errors['year']?.label?.message.toString()] : undefined}
           />
         </div>
         <div className="flex flex-col">

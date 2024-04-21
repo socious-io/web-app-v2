@@ -28,7 +28,10 @@ const schema = yup.object().shape({
   forgotInfo: yup.boolean(),
   month: yup
     .object()
-    .shape({ label: yup.string(), value: yup.string() })
+    .shape({
+      label: yup.string(),
+      value: yup.string(),
+    })
     .when('forgotInfo', {
       is: true,
       then: schema =>
@@ -44,7 +47,10 @@ const schema = yup.object().shape({
     }),
   day: yup
     .object()
-    .shape({ label: yup.string(), value: yup.string() })
+    .shape({
+      label: yup.string(),
+      value: yup.string(),
+    })
     .when('forgotInfo', {
       is: true,
       then: schema =>
@@ -54,13 +60,16 @@ const schema = yup.object().shape({
         }),
       otherwise: schema =>
         schema.shape({
-          label: yup.string().required('Required'),
+          label: yup.string().required('Please indicate a day'),
           value: yup.string(),
         }),
     }),
   year: yup
     .object()
-    .shape({ label: yup.string(), value: yup.string() })
+    .shape({
+      label: yup.string(),
+      value: yup.string(),
+    })
     .when('forgotInfo', {
       is: true,
       then: schema =>
@@ -96,6 +105,7 @@ export const useVerifyEducationModal = (
     mode: 'all',
     resolver: yupResolver(schema),
   });
+  const dateErrors = errors['month']?.label?.message || errors['day']?.label?.message || errors['year']?.label?.message;
 
   const [months, setMonths] = useState<OptionType[]>([]);
   const [days, setDays] = useState<OptionType[]>([]);
@@ -146,8 +156,8 @@ export const useVerifyEducationModal = (
         value: awardedDate ? awardedDate.getMonth() : '',
       },
       day: {
-        label: awardedDate?.getDate() || '',
-        value: awardedDate?.getDate() || '',
+        label: '',
+        value: '',
       },
       year: {
         label: awardedDate?.getFullYear() || '',
@@ -216,6 +226,8 @@ export const useVerifyEducationModal = (
     if (year.value) {
       const endDate = new Date(Number(year.value), Number(month.value || 0), Number(day.value || 1)).toISOString();
       payload.end_at = endDate;
+    } else if (!year.value && !day.value && !month.value) {
+      payload.end_at = '';
     }
 
     payload = removedEmptyProps(payload) as EducationsReq;
@@ -259,5 +271,6 @@ export const useVerifyEducationModal = (
     handleForgotInfo,
     subtitle,
     accountItem,
+    dateErrors,
   };
 };

@@ -52,7 +52,8 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
     onSelectEndYear,
     handleSubmit,
     onSave,
-    dateError,
+    startDateErrors,
+    endDateErrors,
     volunteer,
     handleCheckVolunteer,
   } = useExperienceDetails(handleClose, experience, onUpdateExperience);
@@ -128,7 +129,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           id="weekly-hours"
           name="weeklyHours"
           register={register}
-          label="Estimated weekly hours"
+          label="Estimated weekly hours*"
           postfix="hrs/week"
           noBorderPostfix
           disabled={readonly}
@@ -147,7 +148,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label?.message.toString()] : undefined}
+          errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -161,7 +162,6 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           label="&nbsp;"
           className="flex-1"
           placeholder="Day"
-          errors={errors['startDay']?.label?.message ? [errors['startDay']?.label?.message.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -176,7 +176,6 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['startYear']?.label?.message ? [errors['startYear']?.label?.message.toString()] : undefined}
           isDisabled={readonly}
         />
       </div>
@@ -193,7 +192,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           placeholder="Month"
           className="flex-1"
           isSearchable
-          errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label?.message.toString()] : undefined}
+          errors={endDateErrors ? [endDateErrors.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -207,7 +206,6 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           }}
           placeholder="Day"
           className="flex-1"
-          errors={errors['endDay']?.label?.message ? [errors['endDay']?.label?.message.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -222,7 +220,6 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={dateError ? [dateError] : undefined} //{errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
           isDisabled={readonly}
         />
       </div>

@@ -20,9 +20,9 @@ const schema = yup.object().shape({
     .required('Required')
     .min(2, 'Must be 2-50 characters')
     .max(50, 'Must be 2-50 characters'),
-  month: yup.object().shape({ label: yup.string(), value: yup.string() }),
-  day: yup.object().shape({ label: yup.string(), value: yup.string() }),
-  year: yup.object().shape({ label: yup.string(), value: yup.string() }),
+  month: yup.object().shape({ label: yup.string().required('Required'), value: yup.string() }),
+  day: yup.object().shape({ label: yup.string().required('Please indicate a day'), value: yup.string() }),
+  year: yup.object().shape({ label: yup.string().required('Required'), value: yup.string() }),
 });
 
 interface OptionType {
@@ -46,6 +46,7 @@ export const useEducationDetails = (
     mode: 'all',
     resolver: yupResolver(schema),
   });
+  const dateErrors = errors['month']?.label?.message || errors['day']?.label?.message || errors['year']?.label?.message;
 
   const [months, setMonths] = useState<OptionType[]>([]);
   const [days, setDays] = useState<OptionType[]>([]);
@@ -85,21 +86,20 @@ export const useEducationDetails = (
 
   const initializeValues = () => {
     const awardedDate = education?.end_at ? new Date(getUTCDate(education.end_at)) : undefined;
-    const currentDate = new Date();
 
     const initialVal = {
       credentialName: education?.degree || '',
       month: {
-        label: awardedDate ? monthNames[awardedDate.getMonth()] : monthNames[currentDate.getUTCMonth()],
-        value: awardedDate ? awardedDate.getMonth().toString() : currentDate.getUTCMonth(),
+        label: awardedDate ? monthNames[awardedDate.getMonth()] : '',
+        value: awardedDate ? awardedDate.getMonth().toString() : '',
       },
       day: {
-        label: awardedDate?.getDate() || currentDate.getUTCDate(),
-        value: awardedDate?.getDate() || currentDate.getUTCDate(),
+        label: awardedDate?.getDate() || '',
+        value: awardedDate?.getDate() || '',
       },
       year: {
-        label: awardedDate?.getFullYear() || currentDate.getUTCFullYear(),
-        value: awardedDate?.getFullYear() || currentDate.getUTCFullYear(),
+        label: awardedDate?.getFullYear() || '',
+        value: awardedDate?.getFullYear() || '',
       },
     };
     reset(initialVal);
@@ -186,5 +186,6 @@ export const useEducationDetails = (
     onSelectYear,
     handleSubmit,
     onSend,
+    dateErrors,
   };
 };

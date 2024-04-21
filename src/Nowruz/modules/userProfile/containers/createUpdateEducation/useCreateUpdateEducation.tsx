@@ -31,11 +31,11 @@ const schema = yup
     degree: yup.string(),
     field: yup.string().required('Required'),
     startMonth: yup.object().shape({
-      label: yup.string(),
+      label: yup.string().required('Required'),
       value: yup.string(),
     }),
     startYear: yup.object().shape({
-      label: yup.string(),
+      label: yup.string().required('Required'),
       value: yup.string(),
     }),
     endMonth: yup.object().shape({
@@ -123,6 +123,8 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
     mode: 'all',
     resolver: yupResolver(schema),
   });
+  const startDateErrors = errors['startMonth']?.label?.message || errors['startYear']?.label?.message;
+  const endDateErrors = errors['endMonth']?.label?.message || errors['endYear']?.label?.message || dateError;
 
   const startMonth = watch('startMonth');
   const endMonth = watch('endMonth');
@@ -204,8 +206,13 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
       organizationId = (await createOrganization({ name: school.label, email: 'org@socious.io' }, false)).id;
     }
 
-    const startDate = new Date(Number(startYear.value), Number(startMonth.value || 0), 1).toISOString();
-    const endDate = new Date(Number(endYear.value), Number(endMonth.value || 0), 1).toISOString();
+    const currentDate = new Date();
+    const startDate = new Date(Number(startYear?.value), Number(startMonth.value || 0), 1).toISOString();
+    const endDate = new Date(
+      Number(endYear?.value) || currentDate.getUTCFullYear(),
+      Number(endMonth.value || 0),
+      1,
+    ).toISOString();
 
     let payload: EducationsReq = {
       org_id: organizationId,
@@ -214,7 +221,7 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
       grade,
       description,
       start_at: startDate,
-      end_at: endDate,
+      end_at: !endYear?.value && !endMonth?.value ? '' : endDate,
     };
 
     payload = removedEmptyProps(payload) as EducationsReq;
@@ -245,6 +252,7 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
     handleSubmit,
     onSave,
     onDelete,
-    dateError,
+    startDateErrors,
+    endDateErrors,
   };
 };

@@ -20,10 +20,25 @@ const schema = yup
       label: yup.string().required('Required'),
       value: yup.string(),
     }),
-    startDay: yup.object().shape({
-      label: yup.string().required('Please indicate a day'),
-      value: yup.string(),
-    }),
+    startDay: yup
+      .object()
+      .shape({
+        label: yup.string(),
+        value: yup.string(),
+      })
+      .when('forgotInfo', {
+        is: true,
+        then: schema =>
+          schema.shape({
+            label: yup.string(),
+            value: yup.string(),
+          }),
+        otherwise: schema =>
+          schema.shape({
+            label: yup.string().required('Please indicate a day'),
+            value: yup.string(),
+          }),
+      }),
     startYear: yup.object().shape({
       label: yup.string().required('Required'),
       value: yup.string(),
@@ -32,10 +47,25 @@ const schema = yup
       label: yup.string().required('Required'),
       value: yup.string(),
     }),
-    endDay: yup.object().shape({
-      label: yup.string().required('Please indicate a day'),
-      value: yup.string(),
-    }),
+    endDay: yup
+      .object()
+      .shape({
+        label: yup.string(),
+        value: yup.string(),
+      })
+      .when('forgotInfo', {
+        is: true,
+        then: schema =>
+          schema.shape({
+            label: yup.string(),
+            value: yup.string(),
+          }),
+        otherwise: schema =>
+          schema.shape({
+            label: yup.string().required('Please indicate a day'),
+            value: yup.string(),
+          }),
+      }),
     endYear: yup.object().shape({
       label: yup.string().required('Required'),
       value: yup.string(),
@@ -135,6 +165,13 @@ export const useVerifyExperience = (
     mode: 'all',
     resolver: yupResolver(schema),
   });
+  const startDateErrors =
+    errors['startMonth']?.label?.message || errors['startDay']?.label?.message || errors['startYear']?.label?.message;
+  const endDateErrors =
+    errors['endMonth']?.label?.message ||
+    errors['endDay']?.label?.message ||
+    errors['endYear']?.label?.message ||
+    dateError;
 
   const initializeValues = () => {
     //FIXME: start_at and end_at from BE, not in UTC version
@@ -160,8 +197,8 @@ export const useVerifyExperience = (
         value: startDate ? startDate.getMonth() : '',
       },
       startDay: {
-        label: startDate?.getDate() || '',
-        value: startDate?.getDate() || '',
+        label: '',
+        value: '',
       },
       startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
       endMonth: {
@@ -169,8 +206,8 @@ export const useVerifyExperience = (
         value: endDate ? endDate.getMonth() : currentDate.getUTCMonth(),
       },
       endDay: {
-        label: endDate?.getDate() || currentDate.getUTCDate(),
-        value: endDate?.getDate() || currentDate.getUTCDate(),
+        label: '',
+        value: '',
       },
       endYear: {
         label: endDate?.getFullYear() || currentDate.getUTCFullYear(),
@@ -211,9 +248,15 @@ export const useVerifyExperience = (
   }, [startMonth, startDay, startYear, endMonth, endDay, endYear]);
 
   useEffect(() => {
-    mapMonthNames();
     getStartDayOptions();
+  }, [startMonth, startYear]);
+
+  useEffect(() => {
     getEndDayOptions();
+  }, [endMonth, endYear]);
+
+  useEffect(() => {
+    mapMonthNames();
     getYearOptions();
     initializeValues();
   }, [experience]);
@@ -320,6 +363,7 @@ export const useVerifyExperience = (
     forgotInfo: getValues().forgotInfo,
     handleForgotInfo,
     onSave,
-    dateError,
+    startDateErrors,
+    endDateErrors,
   };
 };

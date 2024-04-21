@@ -39,7 +39,8 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
     handleSubmit,
     onSave,
     onDelete,
-    dateError,
+    startDateErrors,
+    endDateErrors,
   } = useCreateUpdateEducation(handleClose, education);
 
   const contentJSX = (
@@ -86,7 +87,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           required
           id="start-month"
           value={startMonth}
-          label="Start date"
+          label="Start date*"
           options={months}
           hasDropdownIcon
           onChange={value => {
@@ -95,7 +96,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label.message.toString()] : undefined}
+          errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -111,7 +112,6 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['startYear']?.label?.message ? [errors['startYear']?.label.message.toString()] : undefined}
           isDisabled={readonly}
         />
       </div>
@@ -129,7 +129,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           placeholder="Month"
           className="flex-1"
           isSearchable
-          errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label.message.toString()] : undefined}
+          errors={endDateErrors ? [endDateErrors.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -145,7 +145,6 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={dateError ? [dateError] : undefined}
           isDisabled={readonly}
         />
       </div>
