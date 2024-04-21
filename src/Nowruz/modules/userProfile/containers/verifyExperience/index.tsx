@@ -12,14 +12,14 @@ import { useVerifyExperience } from './useVerifyExperience';
 interface VerifyExperienceProps {
   open: boolean;
   handleClose: () => void;
+  experience: Experience;
   onVerifyExperience: (id: string, message?: string, exact_info?: boolean) => void;
-  experience?: Experience;
 }
 export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
   open,
   handleClose,
-  onVerifyExperience,
   experience,
+  onVerifyExperience,
 }) => {
   const {
     register,
@@ -45,7 +45,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
     handleSubmit,
     onSave,
     dateError,
-  } = useVerifyExperience(handleClose, onVerifyExperience, experience);
+  } = useVerifyExperience(handleClose, experience, onVerifyExperience);
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input

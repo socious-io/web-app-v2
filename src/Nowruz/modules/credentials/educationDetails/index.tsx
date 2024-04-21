@@ -12,7 +12,7 @@ interface EducationDetailsProps {
   open: boolean;
   handleClose: () => void;
   education: Education;
-  onUpdateEducation: (education: Education) => void;
+  onUpdateEducation?: (education: Education) => void;
   avatarInfo?: { url: string; first_name: string; last_name: string; username: string } | null;
   readonly?: boolean;
 }

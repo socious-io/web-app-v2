@@ -75,7 +75,7 @@ interface OptionType {
 }
 export const useExperienceDetails = (
   handleClose: () => void,
-  experience?: Experience,
+  experience: Experience,
   onUpdateExperience?: (experience: Experience) => void,
 ) => {
   const [jobCategories, setJobCategories] = useState<OptionType[]>();

@@ -70,8 +70,8 @@ interface OptionType {
 }
 export const useVerifyExperience = (
   handleClose: () => void,
+  experience: Experience,
   onVerifyExperience: (id: string, message?: string, exact_info?: boolean) => void,
-  experience?: Experience,
 ) => {
   const [months, setMonths] = useState<OptionType[]>([]);
   const [startDays, setStartDays] = useState<OptionType[]>([]);
