@@ -2,19 +2,13 @@ import React from 'react';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
-import { claimExperienceVC } from 'src/core/api';
 
 interface ClaimCertificateModalProps {
-  credentialId: string;
   open: boolean;
   handleClose: () => void;
+  handleClaimVC: () => void;
 }
-export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({ open, handleClose, credentialId }) => {
-  const handleClaimVC = async () => {
-    const { url } = await claimExperienceVC(credentialId);
-    window.open(url, '_blank');
-  };
-
+export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({ open, handleClose, handleClaimVC }) => {
   const footerJsx = (
     <div className=" w-full p-6 ">
       <Button variant="contained" color="primary" fullWidth onClick={handleClaimVC}>

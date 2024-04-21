@@ -10,6 +10,7 @@ import { VerifyEducationModal } from 'src/Nowruz/modules/userProfile/containers/
 
 import { useEducation } from './useEducation';
 import css from '../about.module.scss';
+import { ClaimCertificateModal } from '../claimCertificateModal';
 
 interface ExperienceProps {
   handleOpenVerifyModal: () => void;
@@ -29,6 +30,9 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
     onOpenVerifyModal,
     handleRequestVerify,
     org,
+    onOpenClaimModal,
+    disabledClaims,
+    handleClaimVC,
   } = useEducation();
 
   return (
@@ -64,11 +68,22 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
                   disabled: !!item.credential,
                   action: isVerified ? () => onOpenVerifyModal(item) : handleOpenVerifyModal,
                 }}
+                claimButton={{
+                  display: myProfile && item.credential?.status === 'APPROVED',
+                  label: 'Claim certificate',
+                  disabled: !!disabledClaims[item.credential?.id || ''],
+                  action: isVerified ? () => onOpenClaimModal(item.credential?.id) : handleOpenVerifyModal,
+                }}
               />
             ))}
           </div>
         )}
       </div>
+      <ClaimCertificateModal
+        open={openModal.name === 'claim' && openModal.open}
+        handleClose={handleClose}
+        handleClaimVC={handleClaimVC}
+      />
       <CreateUpdateEducation
         open={(openModal.name === 'add' || openModal.name === 'edit') && openModal.open}
         handleClose={handleClose}

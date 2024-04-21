@@ -5,6 +5,7 @@ import {
   Education,
   Organization,
   User,
+  claimEducationVC,
   getOrganization,
   otherProfileByUsername,
   removeEducations,
@@ -25,6 +26,8 @@ export const useEducation = () => {
   const [education, setEducation] = useState<Education>();
   const [org, setOrg] = useState<Organization>();
   const [openCertificate, setOpenCertificate] = useState(false);
+  const [disabledClaims, setDisabledClaims] = useState<{ [key: string]: boolean }>({});
+  const [credentialId, setCredentialId] = useState('');
   const isVerified = (user as User).identity_verified;
   const myProfile = currentIdentity?.id === user?.id;
   const dispatch = useDispatch();
@@ -57,7 +60,6 @@ export const useEducation = () => {
   };
 
   const onOpenVerifyModal = async (ed: Education) => {
-    console.log(ed);
     const res = await getOrganization(ed.org.id);
     setOrg(res);
     setEducation(ed);
@@ -73,6 +75,21 @@ export const useEducation = () => {
     } catch (e) {
       console.log('error in verifying education:', e);
     }
+  };
+
+  const onOpenClaimModal = (id?: string) => {
+    if (!id) return;
+    setCredentialId(id);
+    setDisabledClaims(prevState => ({
+      ...prevState,
+      [id]: true,
+    }));
+    setOpenModal({ name: 'claim', open: true });
+  };
+
+  const handleClaimVC = async () => {
+    const { url } = await claimEducationVC(credentialId);
+    window.open(url, '_blank');
   };
 
   return {
@@ -91,5 +108,9 @@ export const useEducation = () => {
     setOpenCertificate,
     org,
     handleRequestVerify,
+    onOpenClaimModal,
+    credentialId,
+    disabledClaims,
+    handleClaimVC,
   };
 };
