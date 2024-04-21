@@ -26,6 +26,7 @@ export const Dashboard = () => {
     connectUrl,
     name,
   } = useDashboard();
+
   return (
     <>
       <div className=" w-full flex ">
