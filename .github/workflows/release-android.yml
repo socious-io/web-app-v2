@@ -10,6 +10,11 @@ jobs:
   setup-fastlane:
     runs-on: ubuntu-latest
     steps:
+
+      - name: Testing the environment
+        run: |
+          echo ${{ github.ref }}
+          
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -58,10 +63,6 @@ jobs:
           mv android/android-config android/fastlane
           cd android
           fastlane beta
-
-      - name: Testing the environment
-        run: |
-          echo ${{ github.ref }}
 
       
 
