@@ -8,12 +8,13 @@ import { RootState } from 'src/store';
 
 export const useOrganizationJobListing = () => {
   const loaderData = useLoaderData() as JobsRes;
+  console.log('test log loaderData.items', loaderData.items);
   const [jobsList, setJobsList] = useState(loaderData.items);
   const [total, setTotal] = useState<number>(loaderData.total_count);
   const [loading, setLoading] = useState<boolean>(false);
   const [filter, setFilter] = useState<'all' | 'archived'>('all');
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   const navigate = useNavigate();

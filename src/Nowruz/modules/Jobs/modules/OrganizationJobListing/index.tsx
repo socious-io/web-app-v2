@@ -14,7 +14,7 @@ import { OrganizationJobCard } from '../../components/OrganizationJobCard';
 export const OrganizationJobListing = () => {
   const { filterButtons, page, setPage, total, PER_PAGE, jobsList, loading, navigateToCreateJob } =
     useOrganizationJobListing();
-
+  console.log('test log jobsList', jobsList);
   return (
     <div className={css.container}>
       <ButtonGroups buttons={filterButtons} />
