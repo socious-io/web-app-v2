@@ -49,6 +49,7 @@ jobs:
         run: |
           cp -R fastlane/android-config android
           mv android/android-config android/fastlane
+          cd android
           fastlane beta
 
       - name: Testing the environment
