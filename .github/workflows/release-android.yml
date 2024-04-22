@@ -34,13 +34,19 @@ jobs:
         run: |
           npm run make:android
 
-      - name: Configurating Fastlane
+      - name: Configurating Bundler
         run: |
           gem install bundler
           cp Gemfile ./android
+
+      - name: Installing Fastlane with Bundler
+        run: |
           cd android
           bundle update
           bundle install
+
+      - name: Configurating Fastlane
+        run: |
           fastlane init
 
       - name: Testing the environment
