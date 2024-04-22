@@ -36,3 +36,6 @@ cypress/screenshots/
 storybook-static
 
 .eslintcache
+
+ios
+android
