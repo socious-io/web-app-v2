@@ -37,7 +37,7 @@ export const MobileTransactions = () => {
               <span>Transaction</span>
               <span>Amount</span>
             </div>
-            {list.map((item) =>
+            {list.map(item =>
               renderTableRow(item.missionId, item.name, item.date, item.mobileAmount, item.userType, item.profileImage),
             )}
           </div>

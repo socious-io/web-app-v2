@@ -1,3 +1,5 @@
+import { PaymentsRes, StripeProfileRes } from 'src/core/api';
+
 export interface PaymentDataType {
   profileImage?: string;
   name: string;
@@ -9,4 +11,10 @@ export interface PaymentDataType {
   missionId: string;
   transactionId: string;
   mobileAmount: string;
+}
+
+export interface Resolver {
+  paymentRes: PaymentsRes;
+  stripeProfileRes: StripeProfileRes;
+  jpStripeProfileRes: StripeProfileRes;
 }
