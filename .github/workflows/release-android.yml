@@ -2,9 +2,8 @@ name: CD - Release - Android
 
 on:
   push:
-    branches:
-      - ci
-      - main
+    tags:
+      - '*'
 
 jobs:
   setup-fastlane:
@@ -14,7 +13,7 @@ jobs:
       - name: Testing the environment
         run: |
           echo ${{ github.ref }}
-          
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
