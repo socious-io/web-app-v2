@@ -3,7 +3,6 @@ import {
   API_SERVER,
   APP_URL,
   CITY,
-  CITY_OPTION_VALUE,
   FIRSTNAME,
   LASTNAME,
   ORGANIZATION_EMAIL,
@@ -75,14 +74,14 @@ describe('Create Job', () => {
     //select country
 
     cy.get('input[name="Country / City"]').check();
-    cy.get('input[placeholder*="Search for a city"]').should('exist');
+    cy.get('input[aria-labelledby="searchDropdown-city"]').should('exist');
 
     // cy.get('input#react-select-9-input').should('exist');
     cy.get('input[name="Anywhere"]').check();
-    cy.get('input[placeholder="Search for a city"').should('not.exist');
+    cy.get('input[aria-labelledby="searchDropdown-city"]').should('not.exist');
     cy.get('input[name="Country / City"]').check();
-    cy.get('input[placeholder="Search for a city"').type(CITY);
-    cy.get(`#${CITY_OPTION_VALUE}`).click();
+    cy.get('input[aria-labelledby="searchDropdown-city"]').type(CITY);
+    cy.get('#city-option-0').click();
 
     cy.get('#preference').click();
     cy.get('#preference-option-0').click();
@@ -111,54 +110,66 @@ describe('Create Job', () => {
     cy.contains('button', 'Publish').click();
   });
 
-  //   it('it should open created jobs page, view jobs listed and create the paid/fixed job ', () => {
-  //     // Visit jobs page
-  //     cy.visit(`${APP_URL}/jobs/created`);
-  //     cy.contains('button', 'Create job').click();
+  it('it should open created jobs page, view jobs listed and create the paid/fixed job ', () => {
+    // Visit jobs page
+    cy.visit(`${APP_URL}/jobs/created`);
+    cy.contains('button', 'Create job').click();
 
-  //     cy.url().should('include', '/jobs/create');
-  //     // select social causes
-  //     cy.get('#cause').click();
-  //     cy.get('#react-select-2-option-0').click();
+    cy.url().should('include', '/jobs/create');
+    // select social causes
+    cy.get('#cause').click();
+    cy.get('#cause-option-0').click();
 
-  //     // enter job title
-  //     cy.get('input[name=title]').type('First job, Volunteer-Fixed');
+    // enter job title
+    cy.get('input[name=title]').type('Third job, Paid-Fixed');
 
-  //     //select category
-  //     cy.get('#category').click();
-  //     cy.get('#react-select-3-option-0').click();
+    //select category
+    cy.get('#category').click();
+    cy.get('#category-option-0').click();
 
-  //     cy.get('textarea[name=description]').type('Example Description');
+    cy.get('textarea[name=description]').type('Example Description');
 
-  //     //select country
-  //     cy.get('input[name="Country / City"]').check();
-  //     cy.get('input#react-select-9-input').type(CITY);
-  //     cy.get('#react-select-9-option-0').click();
+    //select country
 
-  //     cy.get('#preference').click();
-  //     cy.get('#react-select-4-option-0').click();
+    cy.get('input[name="Country / City"]').check();
+    cy.get('input[aria-labelledby="searchDropdown-city"]').should('exist');
 
-  //     cy.get('#job-type').click();
-  //     cy.get('#react-select-5-option-0').click();
+    // cy.get('input#react-select-9-input').should('exist');
+    cy.get('input[name="Anywhere"]').check();
+    cy.get('input[aria-labelledby="searchDropdown-city"]').should('not.exist');
+    cy.get('input[name="Country / City"]').check();
+    cy.get('input[aria-labelledby="searchDropdown-city"]').type(CITY);
+    cy.get('#city-option-0').click();
 
-  //     cy.get('#length').click();
-  //     cy.get('#react-select-6-option-0').click();
+    cy.get('#preference').click();
+    cy.get('#preference-option-1').click();
 
-  //     //select voulnteer fixed hours
-  //     cy.get('input[name=Volunteer]').check();
-  //     cy.get('input[name=Fixed]').check();
-  //     cy.get('#commitmentHoursLower').type('20');
-  //     cy.get('#commitmentHoursHigher').type('30');
+    cy.get('#job-type').click();
+    cy.get('#job-type-option-1').click();
 
-  //     //select experience level
-  //     cy.get('#experience-level').click();
-  //     cy.get('#react-select-7-option-0').click();
+    cy.get('#length').click();
+    cy.get('#length-option-3').click();
 
-  //     //select skill
-  //     cy.get('#skills').type('c');
-  //     cy.contains('span', 'C++').parent().click();
+    //select paid fixed hours
+    cy.get('input[name=Paid]').check();
+    cy.get('input[name=Fixed]').check();
+    cy.get('#paymentMin').type('6');
+    cy.get('#paymentMax').type('2');
+    cy.contains('p', 'Max price must be higher than min price').should('exist');
+    cy.get('#paymentMin').clear();
+    cy.get('#paymentMin').type('10');
+    cy.get('#paymentMax').clear();
+    cy.get('#paymentMax').type('16');
 
-  //     //publish job
-  //     cy.contains('button', 'Publish').click();
-  //   });
+    //select experience level
+    cy.get('#experience-level').click();
+    cy.get('#experience-level-option-0').click();
+
+    //select skill
+    cy.get('#skills').type('c');
+    cy.contains('span', 'C++').parent().click();
+
+    //publish job
+    cy.contains('button', 'Publish').click();
+  });
 });

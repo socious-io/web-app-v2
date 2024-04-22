@@ -61,30 +61,31 @@ describe('Create First Job', () => {
     cy.url().should('include', '/jobs/create');
     // select social causes
     cy.get('#cause').click();
-    cy.get('#react-select-2-option-0').click();
+    cy.get('#cause-option-0').click();
 
     // enter job title
     cy.get('input[name=title]').type('First job, Volunteer-Fixed');
 
     //select category
     cy.get('#category').click();
-    cy.get('#react-select-3-option-0').click();
+    cy.get('#category-option-0').click();
 
     cy.get('textarea[name=description]').type('Example Description');
 
     //select country
     cy.get('input[name="Country / City"]').check();
-    cy.get('input#react-select-9-input').type(CITY);
-    cy.get('#react-select-9-option-0').click();
+    cy.get('input[aria-labelledby="searchDropdown-city"]').should('exist');
+    cy.get('input[aria-labelledby="searchDropdown-city"]').type(CITY);
+    cy.get('#city-option-0').click();
 
     cy.get('#preference').click();
-    cy.get('#react-select-4-option-0').click();
+    cy.get('#preference-option-0').click();
 
     cy.get('#job-type').click();
-    cy.get('#react-select-5-option-0').click();
+    cy.get('#job-type-option-0').click();
 
     cy.get('#length').click();
-    cy.get('#react-select-6-option-0').click();
+    cy.get('#length-option-0').click();
 
     //select voulnteer fixed hours
     cy.get('input[name=Volunteer]').check();
@@ -94,7 +95,7 @@ describe('Create First Job', () => {
 
     //select experience level
     cy.get('#experience-level').click();
-    cy.get('#react-select-7-option-0').click();
+    cy.get('#experience-level-option-0').click();
 
     //select skill
     cy.get('#skills').type('c');

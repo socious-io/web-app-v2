@@ -89,6 +89,7 @@ export const JobCreateForm = () => {
     return (
       <div className="flex justfy-center align-center">
         <Input
+          id="paymentMin"
           name="paymentMin"
           value={paymentMin}
           onChange={e => onChangePaymentMin(e.target.value)}
@@ -99,6 +100,7 @@ export const JobCreateForm = () => {
         />
         <div className="flex items-center mx-2">to</div>
         <Input
+          id="paymentMax"
           name="paymentMax"
           value={paymentMax}
           onChange={e => onChangePaymentMax(e.target.value)}
