@@ -28,7 +28,6 @@ jobs:
           ruby-version: '3.3' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      
       - name: Install Node.js dependencies
         run: |
           npm cache clean --force
@@ -62,6 +61,16 @@ jobs:
           mv android/android-config android/fastlane
           cd android
           fastlane beta
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+          asset_name: Socious-${{ GITHUB_REF_NAME }}
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "This is my release text"
 
       
 
