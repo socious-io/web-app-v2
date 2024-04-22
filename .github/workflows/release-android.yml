@@ -24,6 +24,13 @@ jobs:
           ruby-version: '3.3' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: 'oracle' # See 'Supported distributions' for available options
+          java-version: '17'
+          cache: 'gradle'
+
       - name: Install Node.js dependencies
         run: |
           npm cache clean --force
