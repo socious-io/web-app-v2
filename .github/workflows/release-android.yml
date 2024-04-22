@@ -23,7 +23,6 @@ jobs:
         with:
           ruby-version: '3.3' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          
 
       - name: Install Node.js dependencies
         run: |
@@ -48,7 +47,7 @@ jobs:
 
       - name: Configurating Fastlane
         run: |
-          cp fastlane/android android
+          cp fastlane/android-config android
           mv android/android-config android/fastlane
           fastlane beta
 
