@@ -19,7 +19,7 @@ export const useLinksContainer = () => {
   };
 
   useEffect(() => {
-    unreadMessagesCount();
+    if (userIsLoggedIn) unreadMessagesCount();
   }, [userIsLoggedIn]);
 
   const menu = [
