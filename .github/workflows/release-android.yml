@@ -3,7 +3,7 @@ name: CD - Release - Android
 on:
   push:
     tags:
-      - '*'
+      - v1.*
 
 jobs:
   setup-fastlane:
