@@ -1,11 +1,12 @@
 import { Offer } from 'src/core/types';
+
 import { AdditionalRes } from '../additionals/additionals.types';
 import { Category, Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
 import { Identity } from '../site/site.types';
-import { LanguageCode, SDG, PaginateRes } from '../types';
+import { LanguageCode, SDG, PaginateRes, ConnectStatus } from '../types';
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
@@ -55,6 +56,7 @@ export interface ExperienceReq {
   country?: string;
   city?: string;
   employment_type?: 'ONE_OFF' | 'PART_TIME' | 'FULL_TIME';
+  weekly_hours?: number | null;
 }
 
 export interface ChangePasswordReq {
@@ -109,6 +111,15 @@ export interface User {
   recommendations?: AdditionalRes[];
   portfolios?: AdditionalRes[];
   certificates?: AdditionalRes[];
+  identity_verified: boolean;
+  name?: string;
+}
+
+export interface UserProfile extends User {
+  following: boolean;
+  follower: boolean;
+  connection_status: ConnectStatus | null;
+  connection_id: string;
 }
 
 export interface Language extends LanguageReq {
@@ -122,6 +133,7 @@ export interface Experience extends ExperienceReq {
   job_category: Category;
   created_at: Date;
   credential?: Credential;
+  message?: string;
 }
 
 export interface Badge {
@@ -151,7 +163,7 @@ export interface ImpactPoints extends PaginateRes {
 
 export interface Credential {
   id: string;
-  status: 'PENDING' | 'APPROVED' | 'SENT' | 'CLAIMED' | 'REJECTED';
+  status: 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'CLAIMED' | 'REJECTED';
   message?: string;
   connection_id?: string;
   connection_url?: string;

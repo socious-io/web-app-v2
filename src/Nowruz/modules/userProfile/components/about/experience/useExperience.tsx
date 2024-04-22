@@ -5,44 +5,48 @@ import {
   Experience,
   Organization,
   User,
-  claimExperienceVC,
+  UserMeta,
   otherProfileByUsername,
   removeExperiences,
+  requestVerifyExperience,
 } from 'src/core/api';
-import { monthShortNames } from 'src/core/time';
+import { getUTCDate, monthShortNames } from 'src/core/time';
 import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
-import { requestVerifyExperience } from 'src/core/api';
 
 export const useExperience = () => {
-  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+  const user = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   }) as User;
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const myProfile = currentIdentity?.id === user?.id;
+  const userVerified = (currentIdentity?.meta as UserMeta)?.identity_verified;
 
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState<{ name: 'add' | 'edit' | 'verify' | 'claim'; open: boolean }>({
+    name: 'add',
+    open: false,
+  });
   const [experience, setExperience] = useState<Experience>();
   const [disabledClaims, setDisabledClaims] = useState<{ [key: string]: boolean }>({});
   const [reqModelShow, setReqModelShow] = useState(false);
-
+  const [credentialId, setCredentialId] = useState('');
   const dispatch = useDispatch();
 
   const handleClose = () => {
-    setOpenModal(false);
+    setOpenModal({ ...openModal, open: false });
     setReqModelShow(false);
   };
 
   const handleEdit = (ex: Experience) => {
     setExperience(ex);
-    setOpenModal(true);
+    setOpenModal({ name: 'edit', open: true });
   };
 
   const handleAdd = () => {
     setExperience(undefined);
-    setOpenModal(true);
+    setOpenModal({ name: 'add', open: true });
   };
 
   const handleDelete = async (id: string) => {
@@ -53,28 +57,37 @@ export const useExperience = () => {
   };
 
   const getStringDate = (date: string) => {
-    const dateFormat = new Date(date);
+    const dateFormat = new Date(getUTCDate(date));
     const month = monthShortNames[dateFormat.getMonth()];
     const year = dateFormat.getFullYear().toString();
     return `${month} ${year}`;
   };
 
-  const handleRequestVerify = (id: string) => async () => {
-    await requestVerifyExperience(id);
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
-    dispatch(setIdentityType('users'));
-    setReqModelShow(true);
+  const onOpenVerifyModal = (ex: Experience) => {
+    setExperience(ex);
+    setOpenModal({ name: 'verify', open: true });
   };
 
-  const handleClaimVC = (id: string) => async () => {
-    setDisabledClaims((prevState) => ({
+  const handleRequestVerify = async (id: string, message?: string, exact_info?: boolean) => {
+    try {
+      await requestVerifyExperience(id, message, exact_info);
+      const updated = await otherProfileByUsername(user?.username || '');
+      dispatch(setIdentity(updated));
+      dispatch(setIdentityType('users'));
+      setReqModelShow(true);
+    } catch (e) {
+      console.log('error in verifying experiece:', e);
+    }
+  };
+
+  const handleOpenClaimModal = (id?: string) => {
+    if (!id) return;
+    setCredentialId(id);
+    setDisabledClaims(prevState => ({
       ...prevState,
       [id]: true,
     }));
-
-    const { url } = await claimExperienceVC(id);
-    window.open(url, '_blank');
+    setOpenModal({ name: 'claim', open: true });
   };
 
   return {
@@ -87,9 +100,12 @@ export const useExperience = () => {
     handleDelete,
     getStringDate,
     handleClose,
+    onOpenVerifyModal,
     handleRequestVerify,
-    handleClaimVC,
     disabledClaims,
     reqModelShow,
+    userVerified,
+    handleOpenClaimModal,
+    credentialId,
   };
 };

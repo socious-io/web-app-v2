@@ -1,16 +1,28 @@
 {
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
   "extends": [
-    "react-app",
-    "react-app/jest",
-    "prettier",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
     "eslint:recommended",
-    "plugin:storybook/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "react-app/jest",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:storybook/recommended",
+    "plugin:cypress/recommended"
   ],
-  "plugins": ["@typescript-eslint", "import"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "react", "import", "jsdoc"],
   "rules": {
     "semi": "error",
+    "eol-last": ["error", "always"],
+    "react/react-in-jsx-scope": "off",
     "import/order": [
       "error",
       {

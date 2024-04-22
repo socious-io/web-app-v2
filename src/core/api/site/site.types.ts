@@ -36,6 +36,8 @@ export interface UserMeta {
   open_to_work: boolean;
   wallet_address: null;
   open_to_volunteer: boolean;
+  identity_verified: boolean;
+  verification_status: null | 'PENDING' | 'APPROVED' | 'REJECTED';
 }
 
 export interface OrgMeta {
@@ -53,6 +55,7 @@ export interface OrgMeta {
   description?: string;
   wallet_address?: string;
   verified_impact: boolean;
+  verified: boolean;
 }
 
 export interface CurrentIdentity extends Identity {

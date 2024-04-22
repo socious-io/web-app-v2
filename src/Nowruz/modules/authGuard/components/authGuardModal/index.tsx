@@ -13,7 +13,7 @@ interface SigninModalProps {
 
 export const AuthGuardModal: React.FC<SigninModalProps> = ({ open, handleSignin, handleSignup, handleClose }) => {
   return (
-    <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
+    <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open} id="auth-guard-modal">
       <div className="max-w-[400px] md:w-[400px] mb-20 mt-auto md:m-auto rounded-xl flex flex-col bg-Base-White z-30 p-4 md:p-6 relative">
         <ModalHeader
           title="Log in to your account"

@@ -5,19 +5,24 @@ import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'sr
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
-import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
 import { JobListingCard } from 'src/Nowruz/modules/Jobs/components/JobListingCard';
+import { SearchResultProfile } from 'src/Nowruz/modules/Search/components/searchResultProfile';
 
-type FilterReq = {
+export type FilterReq = {
   causes_tags?: Array<string>;
   skills?: Array<string>;
-  country?: Array<string>;
+  country?: Array<keyof typeof COUNTRIES_DICT>;
   city?: Array<string>;
-  label?: { value: string; label: string; countryCode: string };
+  remote_preference?: string;
+  job_category_id: string;
+  project_length?: Array<string>;
+  experience_level: Array<number>;
+  payment_type?: string | number;
+  location?: { value: number; label: string; countryCode: string };
 };
 
 export const useSearch = () => {
-  const data = useLoaderData() as JobsRes | UsersRes | OrganizationsRes;
+  const { searchData: data } = useLoaderData() as { searchData: JobsRes | UsersRes | OrganizationsRes };
   const [searchParams] = useSearchParams();
   const type = searchParams.get('type');
   const q = searchParams.get('q');
@@ -48,6 +53,11 @@ export const useSearch = () => {
       skills: filter.skills,
       country: filter.country,
       city: filter.city,
+      remote_preference: filter.remote_preference,
+      job_category_id: filter.job_category_id,
+      project_length: filter.project_length,
+      experience_level: filter.experience_level,
+      payment_type: filter.payment_type,
     };
   };
 
@@ -74,10 +84,11 @@ export const useSearch = () => {
 
   const onApply = async (filterRaw: FilterReq) => {
     setFilter(filterRaw);
-    if (filterRaw.label && filterRaw.country) {
-      const label = `${filterRaw.label.label}, ${getCountryName(filterRaw.country)}`;
+    if (filterRaw.location && !!filterRaw?.country?.length) {
+      const label = `${filterRaw.location.label}, ${getCountryName(filterRaw.country[0])}`;
       setCountryName(label);
     }
+    setPage(1);
     handleCloseOrApplyFilter();
   };
 
@@ -105,8 +116,13 @@ export const useSearch = () => {
     (item: Job | Organization | User) => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
-          <div onClick={() => handleNavigate(item as Organization | User)} className="cursor-pointer">
-            <ProfileCard identity={item as User | Organization} labelShown={false} />
+          <div
+            onClick={e => {
+              if (e.target === e.currentTarget) handleNavigate(item as Organization | User);
+            }}
+            className="cursor-pointer"
+          >
+            <SearchResultProfile identity={item as User | Organization} />
           </div>
         );
       }

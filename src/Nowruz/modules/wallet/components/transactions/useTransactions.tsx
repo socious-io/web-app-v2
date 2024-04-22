@@ -6,6 +6,7 @@ import { toRelativeTime } from 'src/core/relative-time';
 import { RootState } from 'src/store';
 
 import { PaymentDataType } from './transactions.types';
+import dapp from 'src/dapp';
 
 export const useTransactions = () => {
   const { missionsList } = useLoaderData() as {
@@ -13,26 +14,35 @@ export const useTransactions = () => {
     stripeProfileRes: StripeProfileRes;
     jpStripeProfileRes: StripeProfileRes;
   };
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const type = currentIdentity?.type;
   const PER_PAGE = 10;
   const navigate = useNavigate();
 
   const mapDataToColumns = (missions: Mission[]) => {
-    const result: PaymentDataType[] = missions.map((item) => {
+    const result: PaymentDataType[] = missions.map(item => {
       const symbol = item.offer.currency === 'JPY' ? '¥' : item.offer.currency === 'USD' ? '$' : '';
+      let currency = item.offer?.currency || '';
+      if (item.offer?.crypto_currency_address) {
+        dapp.NETWORKS.map(n => {
+          const token = n.tokens.find(t => item.offer.crypto_currency_address === t.address);
+          if (token) currency = token.symbol;
+        });
+      }
+
       return {
         name: type === 'users' ? item.assigner.meta.name : item.assignee.meta.name,
         profileImage: type === 'users' ? item.assigner.meta.image : item.assignee.meta.avatar,
         userType: type === 'users' ? 'organizations' : 'users',
         amount: type === 'users' ? `${symbol}${item.payment.amount}` : `${symbol}${item.amount}`,
         date: toRelativeTime(item.payment.created_at.toString()),
-        currency: item.offer.currency,
+        currency,
         type: '', //type === 'users' ? 'Payment received' : 'Payment sent',
         missionId: item.id,
         transactionId: item.escrow.id,
+        mobileAmount: !!symbol ? `${symbol}${item.payment?.amount}` : `${currency} ${item.payment?.amount}`,
       };
     });
     return result;

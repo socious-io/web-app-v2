@@ -9,7 +9,7 @@ type Inputs = {
 const schema = yup.object().shape({
   email: yup
     .string()
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, 'Enter a correct email')
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'Enter a correct email')
     .required('Email is required'),
 });
 export const useEmailForm = () => {
@@ -23,6 +23,10 @@ export const useEmailForm = () => {
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
+
+  const savedReferrer = localStorage.getItem('referrer');
+  const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
+
   const onSubmit: SubmitHandler<Inputs> = async ({ email }) => {
     const response = await preRegister({ email: email });
     clearErrors('email');
@@ -34,10 +38,11 @@ export const useEmailForm = () => {
       });
       return;
     } else {
-      registerReq({ email })
+      registerReq({ email }, referrerUser?.id)
         .then(() => localStorage.setItem('email', email))
         .then(() => navigate('../verification'))
         .catch(handleError());
+      localStorage.removeItem('referrer');
     }
   };
 

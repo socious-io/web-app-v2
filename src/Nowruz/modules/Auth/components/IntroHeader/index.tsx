@@ -9,7 +9,7 @@ export const IntroHeader: React.FC<IntroHeaderProps> = ({ logo, title, descripti
 
     <h1 className={css.title}>{title}</h1>
 
-    <h2 className={css.subtitle}>{description}</h2>
+    {!!description && <h2 className={css.subtitle}>{description}</h2>}
     {!!subtitle && <h2 className={css.subtitle}>{subtitle}</h2>}
   </div>
 );

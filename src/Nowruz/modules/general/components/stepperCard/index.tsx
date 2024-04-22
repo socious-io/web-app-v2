@@ -2,14 +2,15 @@ import { Divider, Typography, Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
-import { Icon } from 'src/Nowruz/general/Icon';
 
 import css from './stepperCard.module.scss';
 import { StepperCardProps } from './stepperCard.types';
+import { Button } from '../Button';
 
-export const StepperCard: React.FC<StepperCardProps> = (props) => {
+export const StepperCard: React.FC<StepperCardProps> = props => {
   const {
     title,
     subtitle,
@@ -21,7 +22,10 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
     description,
     handleEdit,
     handleDelete,
-    verified,
+    DisplayVerificationStatus,
+    verified = 'unverified',
+    customIcon,
+    verifyButton,
   } = props;
   const [seeMore, setSeeMore] = useState(false);
   const [descriptionStr, setDescriptionStr] = useState(description);
@@ -52,10 +56,26 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
     truncateString();
   }, [description]);
 
+  const verificationStatusContent: Record<string, React.ReactNode> = {
+    verified: (
+      <Box component="span" display="flex" alignItems="center" color={variables.color_grey_400}>
+        <Icon name="shield-tick" color={variables.color_success_500} />
+        <span className="ml-1 text-sm font-normal leading-5 text-Gray-light-mode-600">(verified)</span>
+      </Box>
+    ),
+    unverified: <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">(unverified)</span>,
+    pending: (
+      <Box component="span" display="flex" alignItems="center" color={variables.color_grey_400}>
+        <Icon name="clock" color={variables.color_grey_600} />
+        <span className="ml-1 text-sm font-normal leading-5 text-Gray-light-mode-600">(verification pending)</span>
+      </Box>
+    ),
+  };
+
   return (
     <div className="flex gap-3 h-full">
       <div className="hidden md:flex flex-col w-fit gap-1">
-        <Avatar iconName={iconName} type="users" img={img || undefined} />
+        {customIcon ? customIcon : <Avatar iconName={iconName} type="users" img={img || undefined} />}
 
         <div className="w-1/2 flex-1 ">
           <Divider orientation="vertical" />
@@ -91,11 +111,7 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
           <Typography variant="h4" component="div" color={variables.color_grey_900}>
             <Box component="h4" display="flex" alignItems="center" sx={{ gap: 0.5 }}>
               {title}
-              {verified && (
-                <Box component="span" display="flex" alignItems="center" color={variables.color_grey_400}>
-                  <Icon name="shield-tick" color={variables.color_success_500} /> ( verified )
-                </Box>
-              )}
+              {DisplayVerificationStatus ? verificationStatusContent[verified] : ''}
             </Box>
           </Typography>
           <Typography variant="h5" color={variables.color_grey_600}>
@@ -105,14 +121,31 @@ export const StepperCard: React.FC<StepperCardProps> = (props) => {
             {supprtingText}
           </Typography>
         </div>
-        <div className="mb-5">
-          <Typography variant="h5" color={variables.color_grey_600}>
-            {descriptionStr}
-          </Typography>
-          {seeMore && (
-            <span className={css.seeMoreBtn} onClick={seeMoreClick}>
-              see more
-            </span>
+        <div className="flex flex-col gap-5 mb-5">
+          {!!descriptionStr && (
+            <div>
+              <Typography variant="h5" color={variables.color_grey_600}>
+                {descriptionStr}
+              </Typography>
+              {seeMore && (
+                <span className={css.seeMoreBtn} onClick={seeMoreClick}>
+                  see more
+                </span>
+              )}
+            </div>
+          )}
+          {verifyButton?.display && (
+            <div>
+              <Button
+                variant="text"
+                color="primary"
+                disabled={verifyButton.disabled}
+                onClick={verifyButton.action}
+                customStyle="!p-0 !font-semibold !text-sm !leading-5 !h-5"
+              >
+                {verifyButton.label}
+              </Button>
+            </div>
           )}
         </div>
       </div>

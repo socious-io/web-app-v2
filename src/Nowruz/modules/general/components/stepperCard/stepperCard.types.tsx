@@ -1,5 +1,15 @@
+import { ReactNode } from 'react';
+
+export interface VerifyButton {
+  display: boolean;
+  label: string;
+  disabled: boolean;
+  action: () => void;
+}
+
 export interface StepperCardProps {
   iconName?: string;
+  customIcon?: ReactNode;
   img?: string;
   title?: string;
   subtitle?: string;
@@ -11,5 +21,7 @@ export interface StepperCardProps {
   description?: string;
   handleEdit?: () => void;
   handleDelete?: () => void;
-  verified?: boolean;
+  DisplayVerificationStatus?: boolean;
+  verified?: 'verified' | 'unverified' | 'pending';
+  verifyButton?: VerifyButton;
 }

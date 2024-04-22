@@ -8,11 +8,11 @@ import { RootState } from 'src/store';
 export const useNotifications = () => {
   const { switchAccount } = useIconDropDown();
   const navigate = useNavigate();
-  const identities = useSelector<RootState, CurrentIdentity[]>((state) => {
+  const identities = useSelector<RootState, CurrentIdentity[]>(state => {
     return state.identity.entities;
   });
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   const mapTypeToRoute = (
@@ -22,7 +22,7 @@ export const useNotifications = () => {
     notifIdentityType: string,
     username?: string,
   ) => {
-    if (!originIdentityId || !identities.find((i) => i.id === originIdentityId)) {
+    if (!originIdentityId || !identities.find(i => i.id === originIdentityId)) {
       dialog.alert({ message: 'This is an old notification' });
       return;
     }
@@ -51,20 +51,14 @@ export const useNotifications = () => {
         path = `/feeds/${notifRefId}`;
         break;
       case 'APPLICATION':
-        path = `/jobs/created/${notifRefId}`;
-        break;
-      case 'OFFER':
-        path = `/jobs/received-offer/${notifRefId}`;
+        path = `/jobs/${notifRefId}`;
         break;
       case 'REJECT':
-        path = `/jobs/applied/${notifRefId}?tab=Applied`;
+        path = `/jobs/${notifRefId}`;
         break;
+      case 'OFFER':
       case 'APPROVED':
-        path = `/jobs/created/${notifRefId}/overview?tab=Offered`;
-        break;
       case 'HIRED':
-        path = `/jobs/applied/${notifRefId}?tab=Hired`;
-        break;
       case 'PROJECT_COMPLETE':
       case 'ASSIGNEE_CANCELED':
       case 'ASSIGNER_CANCELED':
@@ -88,6 +82,21 @@ export const useNotifications = () => {
         break;
       case 'MEMBERED':
         path = ''; // FIXME: later for member feature
+        break;
+      case 'REFERRAL_JOINED':
+      case 'REFERRAL_VERIFIED':
+      case 'REFERRAL_HIRED':
+      case 'REFERRAL_COMPLETED_JOB':
+      case 'REFERRAL_CONFIRMED_JOB':
+        return {};
+      case 'EXPERIENCE_VERIFY_REQUEST':
+        path = '/credentials#requested';
+        break;
+      case 'EXPERIENCE_VERIFY_APPROVED':
+        path = '/credentials#issued';
+        break;
+      default:
+        path = '';
         break;
     }
     navigate(path);

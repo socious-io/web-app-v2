@@ -48,6 +48,7 @@ export const PaymentCrypto: React.FC<PaymentCryptoProps> = ({ open, handleClose,
         sociousFee={offer?.fee || 0}
         stripeFee={offer?.stripe_fee || 0}
         total={offer?.total || 0}
+        hasFeeDiscount={!!offer?.org_referrer_wallet}
       />
     </div>
   );

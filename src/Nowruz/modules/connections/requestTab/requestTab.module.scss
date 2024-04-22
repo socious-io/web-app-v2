@@ -1,0 +1,14 @@
+@import 'src/components/_primitives.scss';
+
+.container {
+  @apply flex flex-col w-full md:max-w-[840px];
+}
+
+.row {
+  @apply flex justify-between py-4 items-center;
+  border-bottom: solid 1px $color-grey-200;
+}
+
+.action {
+  @apply flex gap-3;
+}

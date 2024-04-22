@@ -25,7 +25,7 @@ export const Layout = () => {
         </div>
         <div
           className={`w-full h-[calc(100%-64px)] mt-16 md:mt-[72px] md:h-[calc(100%-72px)] md:block ${
-            open ? 'hidden' : 'block'
+            open ? 'fixed' : 'block'
           }`}
         >
           <Outlet />

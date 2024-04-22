@@ -1,11 +1,10 @@
 import { Divider } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Job } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { AuthGuard } from 'src/Nowruz/modules/authGuard';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
@@ -14,42 +13,21 @@ import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import { RootState } from 'src/store';
 
 import css from './jobDetailHeader.module.scss';
-import { ApplyExternalPartyModal } from '../applyExternalPartyModal';
-import { ApplyModal } from '../applyModal';
 
 interface JobDetailHeaderProps {
   job: Job;
   applied?: boolean;
-  setJustApplied?: (applied: boolean) => void;
+  handleOpenApplyModal: () => void;
 }
 
-export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, setJustApplied }) => {
+export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, handleOpenApplyModal }) => {
   const navigate = useNavigate();
-  const [openApply, setOpenApply] = useState(false);
-  const [openExternalApply, setOpenExternalApply] = useState(false);
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
     return state.identity.entities.find((identity) => identity.current);
   });
 
-  const handleOpenApplyModal = () => {
-    if (job.other_party_id) setOpenExternalApply(true);
-    else setOpenApply(true);
-  };
-
-  useEffect(() => {
-    nonPermanentStorage.get('openApplyModal').then((res) => {
-      if (currentIdentity && res && !job.applied) handleOpenApplyModal();
-      nonPermanentStorage.remove('openApplyModal');
-    });
-  }, []);
-
   const socialCauses = socialCausesToCategory(job.causes_tags).map((item) => item.label);
   const skills = skillsToCategory(job.skills).map((item) => item.label);
-
-  const handleCloseApplyModal = (applied: boolean) => {
-    if (setJustApplied) setJustApplied(applied);
-    setOpenApply(false);
-  };
 
   const getBackLink = () => {
     const sourceOrg = localStorage.getItem('source') ?? '';
@@ -101,12 +79,6 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
           {currentIdentity?.type === 'users' && <Divider />}
         </div>
       </div>
-      <ApplyModal open={openApply} handleClose={handleCloseApplyModal} />
-      <ApplyExternalPartyModal
-        open={openExternalApply}
-        handleClose={() => setOpenExternalApply(false)}
-        otherPartyUrl={job.other_party_url || ''}
-      />
     </>
   );
 };

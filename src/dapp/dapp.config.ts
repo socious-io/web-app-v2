@@ -40,8 +40,8 @@ export const dappConfig: DappConfig = {
   testnet: [
     {
       chain: milkomedaTestnet,
-      escrow: '0xAC87EDb9209E9637549c43fA9Ca267b4d4577959',
-      logic: '0xAC87EDb9209E9637549c43fA9Ca267b4d4577959',
+      escrow: '0x6193c4A81736Cd9e2F018F1Ce2121fD91931db50',
+      logic: '0x6193c4A81736Cd9e2F018F1Ce2121fD91931db50',
       tokens: [
         {
           name: 'USDC',
@@ -305,6 +305,26 @@ export const dappConfig: DappConfig = {
             type: 'bool',
           },
           {
+            internalType: 'address',
+            name: '_addressReferringOrg',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_addressReferringCont',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: '_applyOrgFeeDiscount',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: '_applyContFeeDiscount',
+            type: 'bool',
+          },
+          {
             internalType: 'contract IERC20',
             name: '_token',
             type: 'address',
@@ -352,6 +372,16 @@ export const dappConfig: DappConfig = {
             internalType: 'address',
             name: '_contributor',
             type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: '_addressReferringCont',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: '_applyContFeeDiscount',
+            type: 'bool',
           },
         ],
         name: 'setContributor',
@@ -427,6 +457,58 @@ export const dappConfig: DappConfig = {
       {
         inputs: [
           {
+            internalType: 'uint256',
+            name: '_newDiscount',
+            type: 'uint256',
+          },
+        ],
+        name: 'setReferredContFeeDiscount',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '_newDiscount',
+            type: 'uint256',
+          },
+        ],
+        name: 'setReferredOrgFeeDiscount',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '_newFee',
+            type: 'uint256',
+          },
+        ],
+        name: 'setReferringContBonus',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '_newFee',
+            type: 'uint256',
+          },
+        ],
+        name: 'setReferringOrgBonus',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
             internalType: 'address',
             name: 'destination',
             type: 'address',
@@ -456,6 +538,11 @@ export const dappConfig: DappConfig = {
         type: 'function',
       },
       {
+        inputs: [],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+      },
+      {
         inputs: [
           {
             internalType: 'uint256',
@@ -467,11 +554,6 @@ export const dappConfig: DappConfig = {
         outputs: [],
         stateMutability: 'nonpayable',
         type: 'function',
-      },
-      {
-        inputs: [],
-        stateMutability: 'nonpayable',
-        type: 'constructor',
       },
       {
         inputs: [],
@@ -543,6 +625,26 @@ export const dappConfig: DappConfig = {
           {
             internalType: 'bool',
             name: 'verifiedOrg',
+            type: 'bool',
+          },
+          {
+            internalType: 'address',
+            name: 'addressReferringOrg',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'addressReferringCont',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: 'applyOrgFeeDiscount',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'applyContFeeDiscount',
             type: 'bool',
           },
           {
@@ -625,6 +727,26 @@ export const dappConfig: DappConfig = {
               {
                 internalType: 'bool',
                 name: 'verifiedOrg',
+                type: 'bool',
+              },
+              {
+                internalType: 'address',
+                name: 'addressReferringOrg',
+                type: 'address',
+              },
+              {
+                internalType: 'address',
+                name: 'addressReferringCont',
+                type: 'address',
+              },
+              {
+                internalType: 'bool',
+                name: 'applyOrgFeeDiscount',
+                type: 'bool',
+              },
+              {
+                internalType: 'bool',
+                name: 'applyContFeeDiscount',
                 type: 'bool',
               },
               {
@@ -722,6 +844,58 @@ export const dappConfig: DappConfig = {
       {
         inputs: [],
         name: 'getNoImpactOrgFee',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'getReferredContFeeDiscount',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'getReferredOrgFeeDiscount',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'getReferringContBonus',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
+        inputs: [],
+        name: 'getReferringOrgBonus',
         outputs: [
           {
             internalType: 'uint256',

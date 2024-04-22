@@ -6,7 +6,7 @@ import Chip from './chip';
 import css from './multiSelect.module.scss';
 import { MultiSelectProps } from './multiSelect.types';
 
-const MultiSelect: React.FC<MultiSelectProps> = (props) => {
+const MultiSelect: React.FC<MultiSelectProps> = props => {
   const {
     id,
     searchTitle,
@@ -32,35 +32,35 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
     setSearchVal(val);
     setChipItems(
       items
-        ?.filter((item) => !componentValue.map((cv) => cv.value).includes(item.value))
-        .filter((item) => item.label.toLowerCase().includes(val.toLowerCase())),
+        ?.filter(item => !componentValue.map(cv => cv.value).includes(item.value))
+        .filter(item => item.label.toLowerCase().startsWith(val.toLowerCase())),
     );
   }
 
   function handleChange(val: (MultiSelectItem | string)[]) {
     const lastItem = val[val.length - 1];
     const newVal = items?.find(
-      (i) =>
+      i =>
         i.label.toLowerCase() === lastItem.toLowerCase() &&
-        !componentValue.map((i) => i.label.toLowerCase()).includes(lastItem.toLowerCase()),
+        !componentValue.map(i => i.label.toLowerCase()).includes(lastItem.toLowerCase()),
     );
     if (newVal) setComponentValue([...componentValue, newVal]);
-    else setChipItems(items?.filter((i) => !componentValue?.includes(i)));
+    else setChipItems(items?.filter(i => !componentValue?.includes(i)));
   }
 
   function add(value: string, label: string) {
-    const existed = componentValue.find((item) => item.value === value || item.label === label);
+    const existed = componentValue.find(item => item.value === value || item.label === label);
     if (!existed && componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
     inputRef.current.focus();
   }
 
   function remove(val: string) {
-    setComponentValue(componentValue?.filter((item) => item.label !== val));
+    setComponentValue(componentValue?.filter(item => item.label !== val));
   }
 
   useEffect(() => {
     setSearchVal('');
-    setChipItems(items?.filter((i) => !componentValue.map((cv) => cv.value).includes(i.value)));
+    setChipItems(items?.filter(i => !componentValue.map(cv => cv.value).includes(i.value)));
   }, [componentValue]);
 
   return (
@@ -93,14 +93,14 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         }
         disabled={componentValue?.length >= (max || 0)}
         onInputChange={(e, newValue) => filterItems(newValue)}
-        renderInput={(params) => {
+        renderInput={params => {
           return (
             <div className={css.inputContainer}>
               <TextField
                 variant="outlined"
                 label=""
                 placeholder={componentValue?.length ? '' : placeholder}
-                onChange={(e) => filterItems(e.target.value)}
+                onChange={e => filterItems(e.target.value)}
                 {...params}
                 inputProps={{ ...params.inputProps, value: searchVal, tabIndex: 0 }}
                 inputRef={inputRef}
@@ -131,7 +131,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
       )}
       {(displayDefaultBadges || searchVal) && (
         <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
-          {chipItems?.map((i) => (
+          {chipItems?.map(i => (
             <Chip
               key={i.value}
               id={i.value}

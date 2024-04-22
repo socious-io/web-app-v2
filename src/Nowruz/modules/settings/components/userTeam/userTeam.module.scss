@@ -1,0 +1,5 @@
+@import 'src/components/_primitives.scss';
+
+.header {
+  @apply flex flex-col gap-5;
+}

@@ -34,3 +34,19 @@ export function getMonthName(value: string): string {
   const date = new Date(value);
   return monthNames[date.getMonth() + 1];
 }
+
+export const formatDate = (date: string | Date, options?: Intl.DateTimeFormatOptions) => {
+  const currentDate = new Date(date);
+  const currentOptions =
+    options && Object?.keys(options)?.length
+      ? options
+      : ({ year: 'numeric', month: 'short', day: '2-digit' } as Intl.DateTimeFormatOptions);
+  return currentDate.toLocaleDateString('en-US', currentOptions);
+};
+
+export const getDaysInMonth = (month: number, year: number) => {
+  const date = new Date(year, month + 1, 0);
+  return date.getDate();
+};
+
+export const getUTCDate = (date: string) => (date.endsWith('Z') ? date : `${date}Z`);

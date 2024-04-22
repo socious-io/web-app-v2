@@ -13,8 +13,8 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
   let unit = offer?.currency || '';
 
   if (offer?.crypto_currency_address) {
-    dapp.NETWORKS.map((n) => {
-      const token = n.tokens.filter((t) => offer.crypto_currency_address === t.address)[0];
+    dapp.NETWORKS.map(n => {
+      const token = n.tokens.filter(t => offer.crypto_currency_address === t.address)[0];
       if (token) unit = token.symbol;
     });
   }
@@ -37,6 +37,9 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
       return;
     }
 
+    const applyOrgFeeDiscount = !!offer.org_referrer_wallet;
+    const applyContFeeDiscount = !!offer.contributor_referrer_wallet;
+
     setDisabledPayment(true);
     try {
       // put escrow on smart contract
@@ -49,6 +52,10 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
         token: offer.crypto_currency_address,
         projectId: offer.project_id,
         verifiedOrg: offer.offerer.meta.verified_impact || false,
+        addressReferringOrg: offer.org_referrer_wallet,
+        addressReferringCont: offer.contributor_referrer_wallet,
+        applyOrgFeeDiscount,
+        applyContFeeDiscount,
       });
 
       // this is paramater need to sync with backend to make Hire available

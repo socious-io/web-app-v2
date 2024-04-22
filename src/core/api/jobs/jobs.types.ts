@@ -186,6 +186,8 @@ export interface Offer extends OfferReq {
   payout?: number;
   app_fee?: number;
   mission?: Mission;
+  org_referrer_wallet?: string;
+  contributor_referrer_wallet?: string;
 }
 export type ContractStatus =
   | 'Offer sent'

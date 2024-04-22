@@ -1,11 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
+import { UserProfile } from 'src/core/api';
 import { About } from 'src/Nowruz/modules/userProfile/components/about';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 
 export const useUserProfile = () => {
   const dispatch = useDispatch();
-  const resolver = useLoaderData() as { user: User };
+  const resolver = useLoaderData() as { user: UserProfile };
 
   dispatch(setIdentity(resolver.user));
   dispatch(setIdentityType('users'));

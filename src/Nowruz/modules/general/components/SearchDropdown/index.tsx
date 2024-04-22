@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Select, { type DropdownIndicatorProps, components } from 'react-select';
+import Select, { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -7,7 +7,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import css from './search-dropdown.module.scss';
 import { SelectProps } from './search-dropdown.types';
 //TODO: Multi select chips not implemented
-const CustomControl = (props) => {
+const CustomControl = (props: any) => {
   const { icon, children } = props;
   return (
     <components.Control {...props} className={css.input}>
@@ -17,8 +17,8 @@ const CustomControl = (props) => {
   );
 };
 
-const CustomOption = ({ value, ...props }) => {
-  const { innerProps, label, data, ...rest } = props;
+const CustomOption = (props: any) => {
+  const { innerProps, label, data, value, ...rest } = props;
   const labelValue = handleMultiValueAsync(label).isObject ? handleMultiValueAsync(label).label : label;
   const descriptionValue =
     (handleMultiValueAsync(label).isObject ? handleMultiValueAsync(label).description : data.description) || '';
@@ -27,7 +27,7 @@ const CustomOption = ({ value, ...props }) => {
     <div className="px-1.5">
       <div {...innerProps} className={`${css.option}`}>
         {selected && <Icon name="check" fontSize={20} color="#667085" />}
-        <div className="ml-0 mr-auto flex gap-2">
+        <div className="ml-0 mr-auto flex gap-2 items-center">
           <span style={{ marginRight: '8px' }}>{data.icon}</span>
           {labelValue} {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
         </div>
@@ -35,14 +35,15 @@ const CustomOption = ({ value, ...props }) => {
     </div>
   );
 };
-const CustomSingleValue = ({ children, data, ...props }) => {
+const CustomSingleValue = (props: any) => {
+  const { children, data } = props;
   const labelValue = handleMultiValueAsync(children).isObject ? handleMultiValueAsync(children).label : children;
   const descriptionValue = handleMultiValueAsync(children).isObject
     ? handleMultiValueAsync(children).description
     : data.description;
   return (
     <components.SingleValue {...props}>
-      <div className="flex">
+      <div className="flex items-center">
         <span className="overflow-hidden whitespace-no-wrap overflow-ellipsis">{labelValue}</span>
         {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
       </div>
@@ -75,7 +76,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   ...props
 }) => {
   const selectedVal = props.value || '';
-  const selectRef = useRef(null);
+  const selectRef = useRef<HTMLSelectElement>(null);
   const handleLabelClick = () => {
     if (selectRef.current) {
       selectRef.current.focus();
@@ -101,8 +102,8 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           options={options}
           noOptionsMessage={() => null}
           components={{
-            Option: (props) => <CustomOption {...props} value={selectedVal} />,
-            Control: (props) => <CustomControl {...props} icon={icon} />,
+            Option: props => <CustomOption {...props} value={selectedVal} />,
+            Control: props => <CustomControl {...props} icon={icon} />,
             DropdownIndicator: () => (
               <div className={css.dropdown}>
                 {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
@@ -137,8 +138,8 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           ref={selectRef}
           options={options}
           components={{
-            Option: (props) => <CustomOption {...props} value={selectedVal} />,
-            Control: (props) => <CustomControl ref={selectRef} {...props} icon={icon} />,
+            Option: props => <CustomOption {...props} value={selectedVal} />,
+            Control: props => <CustomControl ref={selectRef} {...props} icon={icon} />,
             DropdownIndicator: () => (
               <div className={css.dropdown}>
                 {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
@@ -175,8 +176,8 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           options={options}
           noOptionsMessage={() => null}
           components={{
-            Option: (props) => <CustomOption {...props} value={selectedVal} />,
-            Control: (props) => <CustomControl {...props} icon={icon} />,
+            Option: props => <CustomOption {...props} value={selectedVal} />,
+            Control: props => <CustomControl {...props} icon={icon} />,
             DropdownIndicator: () => (
               <div className={css.dropdown}>
                 {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}

@@ -59,7 +59,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="title"
-        label="Title*"
+        label="Job title*"
         required
         name="title"
         register={register}
@@ -74,7 +74,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         options={jobCategories}
         icon="search-lg"
         hasDropdownIcon={false}
-        onChange={(value) => {
+        onChange={value => {
           onChangeCategory(value);
         }}
         className="flex-1"
@@ -95,7 +95,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         icon="search-lg"
         hasDropdownIcon={false}
         label="Company*"
-        onChange={(value) => {
+        onChange={value => {
           onSelectCompany(value);
         }}
         errors={errors['org']?.label?.message ? [errors['org']?.label?.message.toString()] : undefined}
@@ -113,7 +113,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         icon="search-lg"
         hasDropdownIcon={false}
         label="Location"
-        onChange={(value) => {
+        onChange={value => {
           onSelectCity(value);
         }}
         errors={errors['city']?.label?.message ? [errors['city']?.label?.message.toString()] : undefined}
@@ -125,7 +125,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           id="volunteer-experience"
           label={'Yes'}
           checked={volunteer}
-          onChange={(e) => handleCheckVolunteer(e.target.checked)}
+          onChange={e => handleCheckVolunteer(e.target.checked)}
           value
           disabled={readonly}
         />
@@ -138,7 +138,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         options={employmentTypes}
         icon="search-lg"
         hasDropdownIcon={false}
-        onChange={(value) => {
+        onChange={value => {
           onSelectEmplymentType(value);
         }}
         className="flex-1"
@@ -152,7 +152,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         id="currently-working"
         label={'I am currently working in this role'}
         checked={currentlyWorking}
-        onChange={(e) => handleCheckWorking(e.target.checked)}
+        onChange={e => handleCheckWorking(e.target.checked)}
         value
         disabled={readonly}
       />
@@ -163,7 +163,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           label="Start date*"
           options={months}
           hasDropdownIcon
-          onChange={(value) => {
+          onChange={value => {
             onSelectStartMonth(value);
           }}
           className="flex-1"
@@ -177,7 +177,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           value={startYear}
           options={years}
           hasDropdownIcon
-          onChange={(value) => {
+          onChange={value => {
             onSelectStartYear(value);
           }}
           label="&nbsp;"
@@ -192,10 +192,10 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         <SearchDropdown
           id="end-month"
           value={endMonth}
-          label="End date"
+          label={`End date${!currentlyWorking ? '*' : ''}`}
           options={months}
           hasDropdownIcon
-          onChange={(value) => {
+          onChange={value => {
             onSelectEndMonth(value);
           }}
           placeholder="Month"
@@ -210,7 +210,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           value={endYear}
           options={years}
           hasDropdownIcon
-          onChange={(value) => {
+          onChange={value => {
             onSelectEndYear(value);
           }}
           className="flex-1"
@@ -228,7 +228,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         customHeight="130px"
         register={register}
         placeholder="e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints."
-        disabled={readonly}
       />
     </div>
   );
@@ -260,7 +259,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
       title={experience ? 'Edit experience' : 'Add experience'}
       subTitle={experience ? '' : 'Share where you’ve worked on your profile.'}
       content={contentJSX}
-      footer={readonly ? <></> : modalFooterJsx}
+      footer={modalFooterJsx}
     />
   );
 };

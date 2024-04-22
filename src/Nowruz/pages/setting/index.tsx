@@ -1,10 +1,20 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { CurrentIdentity } from 'src/core/api';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 import Account from 'src/Nowruz/modules/settings/components/account/';
+import Notification from 'src/Nowruz/modules/settings/components/notification';
+import { OrgTeam } from 'src/Nowruz/modules/settings/components/orgTeam';
 import Password from 'src/Nowruz/modules/settings/components/password';
+import { Plan } from 'src/Nowruz/modules/settings/components/plan';
+import { UserTeam } from 'src/Nowruz/modules/settings/components/userTeam';
+import { RootState } from 'src/store';
 
 export const Setting = () => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) =>
+    state.identity.entities.find((identity) => identity.current),
+  );
   const tabs = [
     {
       label: 'Account',
@@ -12,34 +22,55 @@ export const Setting = () => {
       default: true,
     },
     {
+      label: 'Team',
+      content: currentIdentity?.type === 'users' ? <UserTeam /> : <OrgTeam />,
+    },
+    {
       label: 'Password',
       content: <Password />,
     },
-    // {
-    //   label: 'Team',
-    //   content: <h1>Team</h1>
-    // },
+
     // {
     //   label: 'Working Prefrences',
     //   content: <h1>Working</h1>
     // },
-    // {
-    //   label: 'Notification',
-    //   content: <h1>Notif</h1>
-    // },
   ];
+
+  if (currentIdentity?.type === 'organizations')
+    tabs.push({
+      label: 'Plan',
+      content: <Plan />,
+    });
+
+  if (currentIdentity?.type === 'users')
+    tabs.push({
+      label: 'Notifications',
+      content: <Notification />,
+    });
+
   const items: any[] = [
     { label: 'Account', value: 'Account' },
+    { label: 'Team', value: 'Team' },
     { label: 'Password', value: 'Password' },
   ];
+
+  if (currentIdentity?.type === 'organizations')
+    items.push({
+      label: 'Plan',
+      value: 'Plan',
+    });
+
+  if (currentIdentity?.type === 'users') items.push({ label: 'Notifications', value: 'Notification' });
 
   const [content, setContent] = useState<ReactNode>();
 
   const setValue = (value) => {
-    console.log('value', value);
-
     if (value.value === 'Account') return setContent(<Account />);
     if (value.value === 'Password') return setContent(<Password />);
+    if (value.value === 'Notification') return setContent(<Notification />);
+    if (value.value === 'Team' && currentIdentity?.type === 'users') return setContent(<UserTeam />);
+    if (value.value === 'Team' && currentIdentity?.type === 'organizations') return setContent(<OrgTeam />);
+    if (value.value === 'Plan') return setContent(<Plan />);
   };
 
   useEffect(() => {
@@ -49,11 +80,11 @@ export const Setting = () => {
   return (
     <>
       <div className="container">
-        <div className="col-12">
-          <div className="p-4">
-            <h1 className="text-gray-900 text-3xl font-semibold leading-7 p-4 mb-5">Settings</h1>
+        <div className="w-full">
+          <div className="p-4 md:px-8">
+            <h2 className="gap-5 text-3xl mb-6">Settings</h2>
 
-            <div className="block lg:hidden">
+            <div className="block md:hidden">
               <SearchDropdown
                 required
                 id="end-month"
@@ -68,7 +99,7 @@ export const Setting = () => {
               <div className="mt-6">{content}</div>
             </div>
 
-            <div className="hidden lg:block">
+            <div className="hidden md:block">
               <HorizontalTabs tabs={tabs} />
             </div>
           </div>

@@ -1,15 +1,23 @@
+import React from 'react';
 import variables from 'src/components/_exports.module.scss';
+import { verificationStatus } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { Button } from 'src/Nowruz/modules/general/components/Button';
-import { StepperCard } from 'src/Nowruz/modules/general/components/stepperCard';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
+import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { StepperCard } from 'src/Nowruz/modules/general/components/stepperCard';
 import { CreateUpdateExperience } from 'src/Nowruz/modules/userProfile/containers/createUpdateExperience';
+import { VerifyExperience } from 'src/Nowruz/modules/userProfile/containers/verifyExperience';
 
 import { useExperience } from './useExperience';
 import css from '../about.module.scss';
+import { ClaimCertificateModal } from '../claimCertificateModal';
 
-export const Experiences = () => {
+interface ExperienceProps {
+  handleOpenVerifyModal: () => void;
+}
+
+export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }) => {
   const {
     user,
     myProfile,
@@ -20,11 +28,15 @@ export const Experiences = () => {
     handleDelete,
     getStringDate,
     handleClose,
+    onOpenVerifyModal,
     handleRequestVerify,
-    handleClaimVC,
     disabledClaims,
     reqModelShow,
+    userVerified,
+    handleOpenClaimModal,
+    credentialId,
   } = useExperience();
+
   return (
     <>
       <div className="w-full flex flex-col gap-5">
@@ -37,7 +49,7 @@ export const Experiences = () => {
         )}
         {user?.experiences && (
           <div className="md:pr-48 flex flex-col gap-5">
-            {user?.experiences.map((item) => (
+            {user?.experiences.map(item => (
               <>
                 <StepperCard
                   key={item.id}
@@ -48,7 +60,8 @@ export const Experiences = () => {
                   supprtingText={`${getStringDate(item.start_at)} - ${
                     item.end_at ? getStringDate(item.end_at) : 'Now'
                   }`}
-                  verified={['APPROVED', 'SENT', 'CLAIMED'].includes(item.credential?.status || '')}
+                  DisplayVerificationStatus
+                  verified={item.credential?.status ? verificationStatus[item.credential?.status] : 'unverified'}
                   description={item.description}
                   editable={myProfile}
                   deletable={myProfile}
@@ -62,7 +75,7 @@ export const Experiences = () => {
                     color="secondary"
                     disabled={!!item.credential}
                     className={css.addBtn}
-                    onClick={handleRequestVerify(item.id)}
+                    onClick={() => onOpenVerifyModal(item)}
                   >
                     Verify experience
                   </Button>
@@ -74,7 +87,7 @@ export const Experiences = () => {
                     disabled={!!disabledClaims[item.credential.id]}
                     className={css.addBtn}
                     key={item.credential.id}
-                    onClick={handleClaimVC(item.credential.id)}
+                    onClick={userVerified ? () => handleOpenClaimModal(item.credential?.id) : handleOpenVerifyModal}
                   >
                     Claim
                   </Button>
@@ -103,7 +116,25 @@ export const Experiences = () => {
         closeButtonLabel="Close"
         submitButton={false}
       />
-      <CreateUpdateExperience open={openModal} handleClose={handleClose} experience={experience} />
+      <ClaimCertificateModal
+        open={openModal.name === 'claim' && openModal.open}
+        handleClose={handleClose}
+        credentialId={credentialId}
+      />
+      <CreateUpdateExperience
+        open={(openModal.name === 'add' || openModal.name === 'edit') && openModal.open}
+        handleClose={handleClose}
+        experience={experience}
+        readonly={
+          experience?.credential && ['APPROVED', 'SENT', 'CLAIMED'].includes(experience.credential?.status || '')
+        }
+      />
+      <VerifyExperience
+        open={openModal.name === 'verify' && openModal.open}
+        handleClose={handleClose}
+        experience={experience}
+        onVerifyExperience={handleRequestVerify}
+      />
     </>
   );
 };

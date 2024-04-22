@@ -1,0 +1,14 @@
+@import 'src/components/_primitives.scss';
+
+.copyBtn {
+  width: fit-content;
+  height: 100%;
+  border: none;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  color: $color-grey-700;
+  cursor: pointer;
+  background-color: $color-white;
+}

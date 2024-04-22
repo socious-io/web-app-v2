@@ -1,11 +1,15 @@
 import { Cell, ColumnDef } from '@tanstack/react-table';
-import { useMemo, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Applicant, rejectApplicant } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 
-export const useApplicantAction = (applicants: Array<Applicant>, currentTab: string, onRefetch) => {
+export const useApplicantAction = (
+  applicants: Array<Applicant>,
+  currentTab: string,
+  onRefetch: Dispatch<SetStateAction<boolean>>,
+) => {
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [offer, setOffer] = useState(false);

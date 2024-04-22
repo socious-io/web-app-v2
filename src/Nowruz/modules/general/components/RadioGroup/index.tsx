@@ -10,29 +10,44 @@ import { RadioGroupProps } from './RadioGroup.types';
 export const RadioGroup: React.FC<RadioGroupProps> = ({
   row,
   items,
+  selectedItem,
   id,
   name,
   label,
   errors,
   onChange,
   defaultValue,
+  labelClassName = '',
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<null | number>();
   return (
     <FormControl>
-      <FormLabel id={id}>{label}</FormLabel>
-      <RG row={row} aria-labelledby={label} name={name} defaultValue={defaultValue}>
+      <FormLabel id={id} className={`${css.label} ${labelClassName}`}>
+        {label}
+      </FormLabel>
+      <RG
+        row={row}
+        aria-labelledby={label}
+        name={name}
+        defaultValue={defaultValue}
+        value={selectedItem ? selectedItem.value : items?.find((_, index) => index === selectedIndex)?.value}
+      >
         {items.map((item, index) => (
           <>
             <FormControlLabel
               value={item.value}
-              control={<Radio />}
+              control={
+                <Radio
+                  name={item.label}
+                  disabled={!!item.disabled}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setSelectedIndex(index);
+                    const value = event.target.value;
+                    if (String(item.value) === value) onChange?.(item);
+                  }}
+                />
+              }
               label={<span className={css.optionsText}>{item.label}</span>}
-              disabled={item.disabled !== undefined ? item.disabled : false}
-              onClick={() => {
-                setSelectedIndex(index);
-                onChange && onChange(item);
-              }}
               sx={{ width: 'fit-content' }}
             />
             {(selectedIndex === index || item.value === defaultValue) && item.children}

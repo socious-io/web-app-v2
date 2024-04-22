@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
+import { config } from 'src/config';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { closeJob, CurrentIdentity, Job } from 'src/core/api';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { QuestionsRes } from 'src/core/types';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AuthGuard } from 'src/Nowruz/modules/authGuard';
@@ -19,16 +19,14 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { RootState } from 'src/store';
 
 import css from './jobDetailAbout.module.scss';
-import { ApplyExternalPartyModal } from '../applyExternalPartyModal';
-import { ApplyModal } from '../applyModal';
 
 interface JobDetailAboutProps {
   isUser: boolean;
   applied?: boolean;
-  setJustApplied?: (val: boolean) => void;
+  handleOpenApplyModal: () => void;
 }
 
-export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, setJustApplied, applied }) => {
+export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, applied, handleOpenApplyModal }) => {
   const { jobDetail } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
@@ -38,23 +36,14 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
     return state.identity.entities.find((identity) => identity.current);
   });
 
-  const [openApply, setOpenApply] = useState(false);
-  const [openExternalApply, setOpenExternalApply] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const url = window.location.href;
+
+  const url = window.location.href.replace('created/', '');
+
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
   };
 
-  const handleOpenApplyModal = () => {
-    if (jobDetail.other_party_id) setOpenExternalApply(true);
-    else setOpenApply(true);
-  };
-
-  const handleCloseApplyModal = (applied: boolean) => {
-    setOpenApply(false);
-    if (setJustApplied) setJustApplied(applied);
-  };
   const navigate = useNavigate();
 
   const onClose = async () => {
@@ -64,12 +53,6 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
     }
   };
 
-  useEffect(() => {
-    nonPermanentStorage.get('openApplyModal').then((res) => {
-      if (currentIdentity && res && !jobDetail.applied) handleOpenApplyModal();
-      nonPermanentStorage.remove('openApplyModal');
-    });
-  }, []);
   const inputJSX = (
     <button id="copy-button" className={css.copyBtn} onClick={handleCopy}>
       <Icon name="copy-01" fontSize={20} className="text-Gray-light-mode-700" />
@@ -183,12 +166,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, s
           <Input id="copy-url" value={url} postfix={inputJSX} />
         </div>
       </div>
-      <ApplyModal open={openApply} handleClose={handleCloseApplyModal} />
-      <ApplyExternalPartyModal
-        open={openExternalApply}
-        handleClose={() => setOpenExternalApply(false)}
-        otherPartyUrl={jobDetail.other_party_url || ''}
-      />
+
       <AlertModal
         open={openAlert}
         onClose={() => setOpenAlert(false)}

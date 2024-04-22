@@ -2,58 +2,68 @@
 @import './primitives';
 
 :export {
-  color_primary_25: $color-primary-25;
-  color_primary_50: $color-primary-50;
-  color_primary_100: $color-primary-100;
-  color_primary_200: $color-primary-200;
-  color_primary_300: $color-primary-300;
-  color_primary_500: $color-primary-500;
-  color_primary_600: $color-primary-600;
-  color_primary_700: $color-primary-700;
+    color_primary_25: $color-primary-25;
+    color_primary_50: $color-primary-50;
+    color_primary_100: $color-primary-100;
+    color_primary_200: $color-primary-200;
+    color_primary_300: $color-primary-300;
+    color_primary_500: $color-primary-500;
+    color_primary_600: $color-primary-600;
+    color_primary_700: $color-primary-700;
 
-  color_white: $color-white;
+    color_white: $color-white;
 
-  color_grey_25: $color-grey-25;
-  color_grey_50: $color-grey-50;
-  color_grey_100: $color-grey-100;
-  color_grey_200: $color-grey-200;
-  color_grey_300: $color-grey-300;
-  color_grey_400: $color-grey-400;
-  color_grey_500: $color-grey-500;
-  color_grey_600: $color-grey-600;
-  color_grey_700: $color-grey-700;
-  color_grey_800: $color-grey-800;
-  color_grey_900: $color-grey-900;
+    color_grey_25: $color-grey-25;
+    color_grey_50: $color-grey-50;
+    color_grey_100: $color-grey-100;
+    color_grey_200: $color-grey-200;
+    color_grey_300: $color-grey-300;
+    color_grey_400: $color-grey-400;
+    color_grey_500: $color-grey-500;
+    color_grey_600: $color-grey-600;
+    color_grey_700: $color-grey-700;
+    color_grey_800: $color-grey-800;
+    color_grey_900: $color-grey-900;
 
-  color_grey_blue_50: $color-grey-blue-50;
-  color_grey_blue_200: $color-grey-blue-200;
-  color_grey_blue_500: $color-grey-blue-500;
-  color_grey_blue_600: $color-grey-blue-600;
-  color_grey_blue_700: $color-grey-blue-700;
+    color_grey_blue_50: $color-grey-blue-50;
+    color_grey_blue_200: $color-grey-blue-200;
+    color_grey_blue_500: $color-grey-blue-500;
+    color_grey_blue_600: $color-grey-blue-600;
+    color_grey_blue_700: $color-grey-blue-700;
 
-  color_error_25: $color-error-25;
-  color_error_50: $color-error-50;
-  color_error_100: $color-error-100;
-  color_error_200: $color-error-200;
-  color_error_300: $color-error-300;
-  color_error_500: $color-error-500;
-  color_error_600: $color-error-600;
-  color_error_700: $color-error-700;
+    color_wild_blue_100: $color-wild-blue-100;
+    color_wild_blue_500: $color-wild-blue-500;
 
-  color_success_50: $color-success-50;
-  color_success_100: $color-success-100;
-  color_success_500: $color-success-500;
-  color_success_600: $color-success-600;
-  color_success_700: $color-success-700;
+    color_dark_vanilla_100: $color-dark-vanilla-100;
+    color_dark_vanilla_500: $color-dark-vanilla-500;
 
-  color_sail_100: $color-sail-100;
+    color_appricot_100: $color-appricot-100;
 
-  color_warning_25: $color-warning-25;
-  color_warning_50: $color-warning-50;
-  color_warning_100: $color-warning-100;
-  color_warning_300: $color-warning-300;
-  color_warning_600: $color-warning-600;
-  color_warning_700: $color-warning-700;
+    color_error_25: $color-error-25;
+    color_error_50: $color-error-50;
+    color_error_100: $color-error-100;
+    color_error_200: $color-error-200;
+    color_error_300: $color-error-300;
+    color_error_500: $color-error-500;
+    color_error_600: $color-error-600;
+    color_error_700: $color-error-700;
 
-  color_burgundy_600: $color-burgundy-600;
+    color_success_25: $color-success-25;
+    color_success_50: $color-success-50;
+    color_success_100: $color-success-100;
+    color_success_300: $color-success-300;
+    color_success_500: $color-success-500;
+    color_success_600: $color-success-600;
+    color_success_700: $color-success-700;
+
+    color_sail_100: $color-sail-100;
+
+    color_warning_25: $color-warning-25;
+    color_warning_50: $color-warning-50;
+    color_warning_100: $color-warning-100;
+    color_warning_300: $color-warning-300;
+    color_warning_600: $color-warning-600;
+    color_warning_700: $color-warning-700;
+
+    color_burgundy_600: $color-burgundy-600;
 }

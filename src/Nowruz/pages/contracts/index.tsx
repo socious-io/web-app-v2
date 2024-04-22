@@ -1,4 +1,5 @@
 import { Contract } from 'src/core/api';
+import { useWeb3 } from 'src/dapp/dapp.connect';
 import { ContractCard } from 'src/Nowruz/modules/contract/components/contractCard';
 import { ContractDetailsSlider } from 'src/Nowruz/modules/contract/components/contractDetailsSlider';
 import { ButtonGroups } from 'src/Nowruz/modules/general/components/ButtonGroups';
@@ -8,7 +9,6 @@ import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 
 import css from './contracts.module.scss';
 import { useContracts } from './useContracts';
-import { useWeb3 } from 'src/dapp/dapp.connect';
 
 export const Contracts = () => {
   const { filterButtons, pageCount, setPage, contractList, page, openOverlayModal, setOpenOverlayModal } =

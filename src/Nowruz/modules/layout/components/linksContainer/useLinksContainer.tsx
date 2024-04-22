@@ -1,37 +1,48 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { CurrentIdentity } from 'src/core/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { CurrentIdentity, identities, OrgMeta } from 'src/core/api';
+import { isTouchDevice } from 'src/core/device-type-detector';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import Badge from 'src/Nowruz/modules/general/components/Badge';
 import store, { RootState } from 'src/store';
+import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getUnreadCount } from 'src/store/thunks/chat.thunk';
 
-export const useLinksContainer = () => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+import { MenuProps } from './linksContainer.types';
+
+export const useLinksContainer = (setOpen: (val: boolean) => void) => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
-  const userIsLoggedIn = !!currentIdentity;
-  const unread = useSelector<RootState, string>((state) => {
+  const allIdentities = useSelector<RootState, CurrentIdentity[]>(state => {
+    return state.identity.entities;
+  });
+  const unread = useSelector<RootState, string>(state => {
     return state.chat.unreadCount;
   });
+  const userIsLoggedIn = !!currentIdentity;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userIsLoggedIn) unreadMessagesCount();
+  }, [userIsLoggedIn]);
 
   const unreadMessagesCount = async () => {
     await store.dispatch(getUnreadCount());
   };
 
-  useEffect(() => {
-    unreadMessagesCount();
-  }, [userIsLoggedIn]);
-
-  const menu = [
-    /* Not available
+  const menu: MenuProps[] = [
     {
       label: 'Dashboard',
-      route: '/',
+      route:
+        currentIdentity?.type === 'organizations'
+          ? `/dashboard/${(currentIdentity?.meta as OrgMeta).shortname}/org`
+          : '/dashboard/user',
       iconName: 'home-line',
       public: false,
     },
-    */
-
     {
       label: 'Jobs',
       route: !userIsLoggedIn || currentIdentity?.type === 'users' ? '/jobs' : '/jobs/created',
@@ -54,14 +65,13 @@ export const useLinksContainer = () => {
       public: false,
     },
 
-    /* Not available
     {
       label: 'Communities',
-      route: '/',
+      route: '',
       iconName: 'users-01',
       public: false,
+      children: userIsLoggedIn ? [{ label: 'Connections', route: '/connections', public: false }] : [],
     },
-    */
 
     {
       label: 'Messages',
@@ -81,22 +91,56 @@ export const useLinksContainer = () => {
       route: '/credentials',
       iconName: 'shield-tick',
       public: false,
-      only: 'organizations',
     },
   ];
-  let filteredMenu = userIsLoggedIn ? menu : menu.filter((item) => item.public);
+
+  if (currentIdentity?.type === 'users')
+    menu.push({
+      label: 'Refer and earn',
+      route: '/referral',
+      iconName: 'star-06',
+      public: false,
+    });
+  let filteredMenu = userIsLoggedIn ? menu : menu.filter(item => item.public);
 
   // filter menu for role items
-  filteredMenu = filteredMenu.filter((item) => !item.only || item.only === currentIdentity?.type);
+  filteredMenu = filteredMenu.filter(item => !item.only || item.only === currentIdentity?.type);
 
   // filter menu childs for public items if user is not logged in
   if (!userIsLoggedIn) {
-    filteredMenu.forEach((element) => {
+    filteredMenu.forEach(element => {
       if (element.children) {
-        element.children = element.children.filter((item) => item.public);
+        element.children = element.children.filter(item => item.public);
       }
     });
   }
 
-  return { filteredMenu, userIsLoggedIn };
+  const navigateFunction = async (route: string) => {
+    localStorage.removeItem('page');
+    localStorage.removeItem('searchPage');
+    localStorage.removeItem('navigateToSearch');
+    localStorage.removeItem('filter');
+    localStorage.removeItem('searchTerm');
+    localStorage.removeItem('type');
+    localStorage.removeItem('source');
+    localStorage.removeItem('profileJobPage');
+    localStorage.removeItem('appliedJobPage');
+    navigate(route);
+    if (isTouchDevice()) setOpen(false);
+  };
+
+  const navigateToOnboarding = async () => {
+    if (currentIdentity?.type === 'organizations') {
+      localStorage.setItem('registerFor', 'user');
+      const userAccount = allIdentities.find(a => a.type === 'users');
+      if (userAccount?.id) await nonPermanentStorage.set({ key: 'identity', value: userAccount.id });
+      const identityList = await identities();
+      dispatch(setIdentityList(identityList));
+    } else {
+      localStorage.setItem('registerFor', 'organization');
+    }
+    navigate('/sign-up/user/onboarding');
+  };
+
+  return { filteredMenu, userIsLoggedIn, navigateFunction, navigateToOnboarding };
 };

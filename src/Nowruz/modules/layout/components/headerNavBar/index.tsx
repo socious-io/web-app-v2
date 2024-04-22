@@ -46,7 +46,9 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     useLocation().pathname === '/jobs' && userType === 'users' ? 'Search by title, skill or organization' : 'Search';
 
   return (
-    <div className={`h-16 md:h-[72px] px-4 md:px-8 shadow-Shadows/shadow-sm md:[box-shadow:none] ${css.container}`}>
+    <div
+      className={`h-16 md:h-[72px] px-4 md:px-8 shadow-Shadows/shadow-sm md:[box-shadow:none] ${css.container} navigation`}
+    >
       <div
         className="md:hidden w-10 h-10 p-2 rounded-default cursor-pointer"
         onClick={() => {
@@ -93,9 +95,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
             accounts={accounts}
             iconItems={[
               { iconName: 'user-circle', label: 'View profile', onClick: navigateToProfile },
-              ...(userType === 'users'
-                ? [{ iconName: 'settings-01', label: 'Settings', onClick: navigateToSettings }]
-                : []),
+              { iconName: 'settings-01', label: 'Settings', onClick: navigateToSettings },
               { iconName: 'log-out-01', label: 'Log out', onClick: logout },
             ]}
             createItem
