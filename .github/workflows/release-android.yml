@@ -29,6 +29,14 @@ jobs:
           npm cache clean --force
           npm install
 
+      - name: Making Android Release Code
+        run: |
+          npm run make:android
+
+      - name: Configurating Fastlane
+        run: |
+          cp Gemfile ./android
+
       - name: Testing the environment
         run: |
           ls
