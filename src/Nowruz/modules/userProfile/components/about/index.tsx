@@ -1,5 +1,5 @@
 import { Divider } from '@mui/material';
-import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
+import { KYCModal } from 'src/Nowruz/modules/refer/KYC';
 
 import { Certificates } from './certificate/certificates';
 import { Educations } from './education/educations';
@@ -27,7 +27,7 @@ export const About = () => {
           <Experiences handleOpenVerifyModal={handleOpenVerifyModal} />
           <Educations handleOpenVerifyModal={() => setOpenVerifyModal(true)} />
           <Certificates />
-          <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
+          <KYCModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
         </>
       )}
 

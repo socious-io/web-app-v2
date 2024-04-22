@@ -2,7 +2,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
-import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
+import { KYCModal } from 'src/Nowruz/modules/refer/KYC';
 
 import css from './credentials.module.scss';
 import { useCredentials } from './useCredentials';
@@ -66,7 +66,7 @@ export const Credentials = () => {
       </div>
 
       {type === 'users' ? (
-        <VerifyModal open={openVerifiyAlert} handleClose={() => setOpenVerifiyAlert(false)} />
+        <KYCModal open={openVerifiyAlert} handleClose={() => setOpenVerifiyAlert(false)} />
       ) : (
         <KYBModal open={openVerifiyAlert} setOpen={setOpenVerifiyAlert} />
       )}
