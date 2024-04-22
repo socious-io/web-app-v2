@@ -13,9 +13,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
       - name: Setup Ruby, JRuby and TruffleRuby
         uses: ruby/setup-ruby@v1.174.0
         with:
           ruby-version: '3.3' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Install Node.js dependencies
+        run: |
+          npm cache clean --force
+          npm install
+
+      - name: Testing the environment
+        run: |
+          ls
+          pwd
+
+      
+
+
 
