@@ -54,8 +54,6 @@ jobs:
 
       - name: Configurating Fastlane
         run: |
-          ls
-          cd ..
           cp -R fastlane/android-config android
           mv android/android-config android/fastlane
           cd android
