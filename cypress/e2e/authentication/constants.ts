@@ -22,6 +22,7 @@ export const TOKEN_TYPE = 'VALID_TOKEN_TYPE';
 export const EXISTING_EMAIL_ADDRESS = 'existingEmail@test.com';
 export const PASSWORD = '$3cur3P@ssw0rd12345';
 export const CITY = 'Tokyo';
+export const CITY_OPTION_VALUE = 'Tokyo, Japan';
 export const ORGANIZATION_NAME = 'My Organization';
 export const ORGANIZATION_EMAIL = 'myorganization@test.com';
 export const ORGANIZATION_USERNAME = 'my_organization';
