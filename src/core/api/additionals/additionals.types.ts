@@ -1,5 +1,5 @@
 import { Media } from '../media/media.types';
-import { User } from '../users/users.types';
+import { Credential, User } from '../users/users.types';
 export type AdditionalTypes = 'PORTFOLIO' | 'CERTIFICATE' | 'EDUCATION' | 'BENEFIT' | 'RECOMMENDATIONS';
 
 export interface EducationMeta {
@@ -14,6 +14,8 @@ export interface EducationMeta {
   school_name: string;
   school_city?: string;
   school_image?: string;
+  awarded_date?: string;
+  credential_name?: string;
 }
 export interface CertificateMeta {
   issue_month?: string;
@@ -54,4 +56,5 @@ export interface AdditionalRes extends AdditionalReq {
   sub_image: Media;
   create_at: Date;
   update_at: Date;
+  credential?: Credential;
 }

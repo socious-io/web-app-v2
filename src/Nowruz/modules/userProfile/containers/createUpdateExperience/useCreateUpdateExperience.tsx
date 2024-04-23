@@ -61,14 +61,44 @@ const schema = yup
       label: yup.string().required('Required'),
       value: yup.string(),
     }),
-    endMonth: yup.object().shape({
-      label: yup.string(),
-      value: yup.string(),
-    }),
-    endYear: yup.object().shape({
-      label: yup.string(),
-      value: yup.string(),
-    }),
+    endMonth: yup
+      .object()
+      .shape({
+        label: yup.string(),
+        value: yup.string(),
+      })
+      .when('currentlyWorking', {
+        is: true,
+        then: schema =>
+          schema.shape({
+            label: yup.string(),
+            value: yup.string(),
+          }),
+        otherwise: schema =>
+          schema.shape({
+            label: yup.string().required('Required'),
+            value: yup.string(),
+          }),
+      }),
+    endYear: yup
+      .object()
+      .shape({
+        label: yup.string(),
+        value: yup.string(),
+      })
+      .when('currentlyWorking', {
+        is: true,
+        then: schema =>
+          schema.shape({
+            label: yup.string(),
+            value: yup.string(),
+          }),
+        otherwise: schema =>
+          schema.shape({
+            label: yup.string().required('Required'),
+            value: yup.string(),
+          }),
+      }),
     description: yup.string(),
   })
   .required();
@@ -145,6 +175,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     mode: 'all',
     resolver: yupResolver(schema),
   });
+  const startDateErrors = errors['startMonth']?.label?.message || errors['startYear']?.label?.message;
+  const endDateErrors = errors['endMonth']?.label?.message || errors['endYear']?.label?.message || dateError;
 
   const initializeValues = () => {
     //FIXME: start_at and end_at from BE, not in UTC version
@@ -393,6 +425,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     handleCheckVolunteer,
     onSave,
     onDelete,
-    dateError,
+    startDateErrors,
+    endDateErrors,
   };
 };

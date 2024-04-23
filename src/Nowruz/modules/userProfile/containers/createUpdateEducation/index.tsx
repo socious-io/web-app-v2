@@ -1,5 +1,5 @@
 import React from 'react';
-import { AdditionalRes } from 'src/core/api/additionals/additionals.types';
+import { Education } from 'src/core/api';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
@@ -10,15 +10,15 @@ import { useCreateUpdateEducation } from './useCreateUpdateEducation';
 interface CreateUpdateEducationProps {
   open: boolean;
   handleClose: () => void;
-  education: AdditionalRes | undefined;
-  setEducation: (newVal: AdditionalRes) => void;
+  education?: Education;
+  readonly?: boolean;
 }
 
 export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
   open,
   handleClose,
   education,
-  setEducation,
+  readonly,
 }) => {
   const {
     schoolVal,
@@ -39,8 +39,10 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
     handleSubmit,
     onSave,
     onDelete,
-    dateError,
-  } = useCreateUpdateEducation(handleClose, setEducation, education);
+    startDateErrors,
+    endDateErrors,
+  } = useCreateUpdateEducation(handleClose, education);
+
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <SearchDropdown
@@ -54,44 +56,48 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
         icon="search-lg"
         hasDropdownIcon={false}
         label="School*"
-        onChange={(value) => {
+        onChange={value => {
           onSelectSchool(value);
         }}
         placeholder="Search for school"
         noOptionsMessage={({ inputValue }) => inputValue}
         errors={errors['school']?.label?.message ? [errors['school']?.label.message.toString()] : undefined}
+        isDisabled={readonly}
       />
       <Input
         id="degree"
-        label="Degree"
+        label="Credential"
         name="degree"
         register={register}
-        placeholder="Degree name"
+        placeholder="Credential name"
         errors={errors['degree']?.message ? [errors['degree']?.message.toString()] : undefined}
+        disabled={readonly}
       />
       <Input
         id="field-of-study"
-        label="Field of study"
+        label="Field of study*"
         name="field"
         register={register}
         placeholder="Specialities"
         errors={errors['field']?.message ? [errors['field']?.message.toString()] : undefined}
+        disabled={readonly}
       />
       <div className="flex gap-4 items-start">
         <SearchDropdown
           required
           id="start-month"
           value={startMonth}
-          label="Start date"
+          label="Start date*"
           options={months}
           hasDropdownIcon
-          onChange={(value) => {
+          onChange={value => {
             onSelectStartMonth(value);
           }}
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label.message.toString()] : undefined}
+          errors={startDateErrors ? [startDateErrors.toString()] : undefined}
+          isDisabled={readonly}
         />
         <SearchDropdown
           required
@@ -100,13 +106,13 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           value={startYear}
           options={years}
           hasDropdownIcon
-          onChange={(value) => {
+          onChange={value => {
             onSelectStartYear(value);
           }}
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['startYear']?.label?.message ? [errors['startYear']?.label.message.toString()] : undefined}
+          isDisabled={readonly}
         />
       </div>
       <div className="flex gap-4 items-start">
@@ -117,13 +123,14 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           label="End date"
           options={months}
           hasDropdownIcon
-          onChange={(value) => {
+          onChange={value => {
             onSelectEndMonth(value);
           }}
           placeholder="Month"
           className="flex-1"
           isSearchable
-          errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label.message.toString()] : undefined}
+          errors={endDateErrors ? [endDateErrors.toString()] : undefined}
+          isDisabled={readonly}
         />
         <SearchDropdown
           required
@@ -132,13 +139,13 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           value={endYear}
           options={years}
           hasDropdownIcon
-          onChange={(value) => {
+          onChange={value => {
             onSelectEndYear(value);
           }}
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={dateError ? [dateError] : undefined}
+          isDisabled={readonly}
         />
       </div>
       <Input
@@ -148,6 +155,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
         register={register}
         placeholder="Grade"
         errors={errors['grade']?.message ? [errors['grade']?.message.toString()] : undefined}
+        disabled={readonly}
       />
       <Input
         id="description"
@@ -157,6 +165,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
         customHeight="130px"
         register={register}
         placeholder="Enter a description..."
+        disabled={readonly}
       />
     </div>
   );

@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Credential,
   CurrentIdentity,
   Experience,
   Organization,
   User,
   UserMeta,
+  claimExperienceVC,
   otherProfileByUsername,
   removeExperiences,
   requestVerifyExperience,
 } from 'src/core/api';
-import { monthShortNames } from 'src/core/time';
+import { getUTCDate, monthShortNames } from 'src/core/time';
 import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 
@@ -34,15 +34,6 @@ export const useExperience = () => {
   const [reqModelShow, setReqModelShow] = useState(false);
   const [credentialId, setCredentialId] = useState('');
   const dispatch = useDispatch();
-
-  const verificationStatus: Record<Credential['status'], 'verified' | 'unverified' | 'pending'> = {
-    APPROVED: 'verified',
-    SENT: 'verified',
-    CLAIMED: 'verified',
-    ISSUED: 'verified',
-    PENDING: 'pending',
-    REJECTED: 'unverified',
-  };
 
   const handleClose = () => {
     setOpenModal({ ...openModal, open: false });
@@ -67,7 +58,7 @@ export const useExperience = () => {
   };
 
   const getStringDate = (date: string) => {
-    const dateFormat = new Date(date);
+    const dateFormat = new Date(getUTCDate(date));
     const month = monthShortNames[dateFormat.getMonth()];
     const year = dateFormat.getFullYear().toString();
     return `${month} ${year}`;
@@ -100,6 +91,11 @@ export const useExperience = () => {
     setOpenModal({ name: 'claim', open: true });
   };
 
+  const handleClaimVC = async () => {
+    const { url } = await claimExperienceVC(credentialId);
+    window.open(url, '_blank');
+  };
+
   return {
     user,
     myProfile,
@@ -116,7 +112,6 @@ export const useExperience = () => {
     reqModelShow,
     userVerified,
     handleOpenClaimModal,
-    credentialId,
-    verificationStatus,
+    handleClaimVC,
   };
 };

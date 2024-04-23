@@ -23,6 +23,7 @@ export const Input: React.FC<InputProps> = ({
   startIcon,
   postfix,
   noBorderPostfix = false,
+  noBorderPrefix = true,
   postfixDropdown,
   onEnter,
   ...props
@@ -78,10 +79,7 @@ export const Input: React.FC<InputProps> = ({
         </InputAdornment>
       )}
       {postfixDropdown && (
-        <InputDropdown
-          options={postfixDropdown.options}
-          onChange={(option) => postfixDropdown.onChange(option.value)}
-        />
+        <InputDropdown options={postfixDropdown.options} onChange={option => postfixDropdown.onChange(option.value)} />
       )}
     </>
   );
@@ -108,7 +106,7 @@ export const Input: React.FC<InputProps> = ({
           endAdornment: endAdornmentJSX,
 
           startAdornment: prefix ? (
-            <InputAdornment position="start" className={css.prefix}>
+            <InputAdornment position="start" className={noBorderPrefix ? css['prefix-no-border'] : css.prefix}>
               {prefix}
             </InputAdornment>
           ) : startIcon ? (

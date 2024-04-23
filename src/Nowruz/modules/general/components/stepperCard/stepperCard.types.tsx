@@ -1,5 +1,12 @@
 import { ReactNode } from 'react';
 
+export interface ActionButton {
+  display: boolean;
+  label: string;
+  disabled: boolean;
+  action: () => void;
+}
+
 export interface StepperCardProps {
   iconName?: string;
   customIcon?: ReactNode;
@@ -16,4 +23,6 @@ export interface StepperCardProps {
   handleDelete?: () => void;
   DisplayVerificationStatus?: boolean;
   verified?: 'verified' | 'unverified' | 'pending';
+  verifyButton?: ActionButton;
+  claimButton?: ActionButton;
 }

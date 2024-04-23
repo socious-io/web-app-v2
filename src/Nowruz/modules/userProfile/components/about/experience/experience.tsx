@@ -1,5 +1,6 @@
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
+import { verificationStatus } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
@@ -33,8 +34,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
     reqModelShow,
     userVerified,
     handleOpenClaimModal,
-    credentialId,
-    verificationStatus,
+    handleClaimVC,
   } = useExperience();
 
   return (
@@ -119,7 +119,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
       <ClaimCertificateModal
         open={openModal.name === 'claim' && openModal.open}
         handleClose={handleClose}
-        credentialId={credentialId}
+        handleClaimVC={handleClaimVC}
       />
       <CreateUpdateExperience
         open={(openModal.name === 'add' || openModal.name === 'edit') && openModal.open}
@@ -129,12 +129,14 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
           experience?.credential && ['APPROVED', 'SENT', 'CLAIMED'].includes(experience.credential?.status || '')
         }
       />
-      <VerifyExperience
-        open={openModal.name === 'verify' && openModal.open}
-        handleClose={handleClose}
-        experience={experience}
-        onVerifyExperience={handleRequestVerify}
-      />
+      {!!experience && (
+        <VerifyExperience
+          open={openModal.name === 'verify' && openModal.open}
+          handleClose={handleClose}
+          experience={experience}
+          onVerifyExperience={handleRequestVerify}
+        />
+      )}
     </>
   );
 };

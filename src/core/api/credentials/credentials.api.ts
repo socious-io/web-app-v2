@@ -6,6 +6,8 @@ import {
   CredentialExperiencePaginateRes,
   RequestVerificationRes,
   RequestVerificationStatusRes,
+  CredentialEducationRes,
+  CredentialEducationPaginateRes,
 } from './credentials.types';
 import { PaginateReq } from '../types';
 
@@ -32,6 +34,30 @@ export async function claimExperienceVC(verifyRequestId: string): Promise<ClaimV
 
 export async function getRequestedVerifyExperiences(params: PaginateReq): Promise<CredentialExperiencePaginateRes> {
   return (await get<CredentialExperiencePaginateRes>(`/credentials/experiences`, { params })).data;
+}
+
+export async function requestVerifyEducation(
+  educationId: string,
+  message?: string,
+  exact_info?: boolean,
+): Promise<CredentialEducationRes> {
+  return (await post<CredentialEducationRes>(`/credentials/educations/${educationId}`, { message, exact_info })).data;
+}
+
+export async function approveVerifyEducation(verifyRequestId: string): Promise<CredentialEducationRes> {
+  return (await post<CredentialEducationRes>(`/credentials/educations/${verifyRequestId}/approve`, {})).data;
+}
+
+export async function rejectVerifyEducation(verifyRequestId: string): Promise<CredentialEducationRes> {
+  return (await post<CredentialEducationRes>(`/credentials/educations/${verifyRequestId}/reject`, {})).data;
+}
+
+export async function claimEducationVC(verifyRequestId: string): Promise<ClaimVCRes> {
+  return (await post<ClaimVCRes>(`/credentials/educations/${verifyRequestId}/claim`, {})).data;
+}
+
+export async function getRequestedVerifyEducations(params: PaginateReq): Promise<CredentialEducationPaginateRes> {
+  return (await get<CredentialEducationPaginateRes>(`/credentials/educations`, { params })).data;
 }
 
 export async function requestVerification(): Promise<RequestVerificationRes> {

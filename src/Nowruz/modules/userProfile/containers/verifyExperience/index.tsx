@@ -12,14 +12,14 @@ import { useVerifyExperience } from './useVerifyExperience';
 interface VerifyExperienceProps {
   open: boolean;
   handleClose: () => void;
+  experience: Experience;
   onVerifyExperience: (id: string, message?: string, exact_info?: boolean) => void;
-  experience?: Experience;
 }
 export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
   open,
   handleClose,
-  onVerifyExperience,
   experience,
+  onVerifyExperience,
 }) => {
   const {
     register,
@@ -44,9 +44,9 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
     handleForgotInfo,
     handleSubmit,
     onSave,
-    dateError,
-  } = useVerifyExperience(handleClose, onVerifyExperience, experience);
-
+    startDateErrors,
+    endDateErrors,
+  } = useVerifyExperience(handleClose, experience, onVerifyExperience);
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
@@ -71,7 +71,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label?.message.toString()] : undefined}
+          errors={startDateErrors ? [startDateErrors.toString()] : undefined}
         />
         <SearchDropdown
           id="start-day"
@@ -84,7 +84,6 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           label="&nbsp;"
           className="flex-1"
           placeholder="Day"
-          errors={errors['startDay']?.label?.message ? [errors['startDay']?.label?.message.toString()] : undefined}
         />
         <SearchDropdown
           id="start-year"
@@ -98,7 +97,6 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['startYear']?.label?.message ? [errors['startYear']?.label?.message.toString()] : undefined}
         />
       </div>
       <div className="flex gap-4 items-start">
@@ -114,7 +112,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           placeholder="Month"
           className="flex-1"
           isSearchable
-          errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label?.message.toString()] : undefined}
+          errors={endDateErrors ? [endDateErrors.toString()] : undefined}
         />
         <SearchDropdown
           id="end-day"
@@ -127,7 +125,6 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           }}
           placeholder="Day"
           className="flex-1"
-          errors={errors['endDay']?.label?.message ? [errors['endDay']?.label?.message.toString()] : undefined}
         />
         <SearchDropdown
           id="end-year"
@@ -141,7 +138,6 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={dateError ? [dateError] : undefined} //{errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
         />
       </div>
       <div className="flex flex-col">
@@ -186,7 +182,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           Verify experience
         </div>
       }
-      subTitle="Confirm your information and send a request to UNHCR to verify your experience."
+      subTitle={`Confirm your information and send a request to ${experience?.org.name} to verify your experience.`}
       content={contentJSX}
       footer={modalFooterJsx}
     />

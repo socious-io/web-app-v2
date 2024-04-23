@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Notification, getNotification as getNotificationApi, logout } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { getIdentityMeta } from 'src/core/utils';
 import { removeIdentityList } from 'src/store/reducers/identity.reducer';
 
 export const NotificationDeepLink = () => {
@@ -17,7 +16,7 @@ export const NotificationDeepLink = () => {
       const res = await getNotificationApi(notificationId);
       setNotification(res);
     } catch (error) {
-      if (error.response.data.error === 'Not matched') {
+      if (error.response?.data.error === 'Not matched') {
         dispatch(removeIdentityList());
         await logout();
         navigate('/sign-in');
@@ -34,12 +33,14 @@ export const NotificationDeepLink = () => {
   }, []);
 
   useEffect(() => {
-    if (!!notification) redirectToNotification();
+    if (notification) redirectToNotification();
   }, [notification]);
 
   const redirectToNotification = () => {
     if (!notification) return;
-    const { username, type } = getIdentityMeta(notification.data.identity);
+    const type = notification.data.identity.type;
+    const username =
+      type === 'users' ? notification.data.identity.meta.username : notification.data.identity.meta.shortname;
     const id = notification.data.type === 'OFFER' ? notification.data.refId : notification.data.parentId;
     const notifIdentity = notification.data.identity.type;
     const isOrg = type === 'organizations';

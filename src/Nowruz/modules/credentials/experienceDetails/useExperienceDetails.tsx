@@ -31,7 +31,10 @@ const schema = yup
       label: yup.string().required('Required'),
       value: yup.string(),
     }),
-    weeklyHours: yup.string(),
+    weeklyHours: yup.string().when('employmentType', {
+      is: employmentType => employmentType.value === 'PART_TIME',
+      then: schema => schema.required('Required'),
+    }),
     startMonth: yup.object().shape({
       label: yup.string().required('Required'),
       value: yup.string(),
@@ -73,9 +76,9 @@ interface OptionType {
   value: string;
   label: string;
 }
-export const useCredentialDetails = (
+export const useExperienceDetails = (
   handleClose: () => void,
-  experience?: Experience,
+  experience: Experience,
   onUpdateExperience?: (experience: Experience) => void,
 ) => {
   const [jobCategories, setJobCategories] = useState<OptionType[]>();
@@ -169,6 +172,13 @@ export const useCredentialDetails = (
     mode: 'all',
     resolver: yupResolver(schema),
   });
+  const startDateErrors =
+    errors['startMonth']?.label?.message || errors['startDay']?.label?.message || errors['startYear']?.label?.message;
+  const endDateErrors =
+    errors['endMonth']?.label?.message ||
+    errors['endDay']?.label?.message ||
+    errors['endYear']?.label?.message ||
+    dateError;
 
   const initializeValues = () => {
     //FIXME: start_at and end_at from BE, not in UTC version
@@ -244,11 +254,17 @@ export const useCredentialDetails = (
   }, [startMonth, startDay, startYear, endMonth, endDay, endYear]);
 
   useEffect(() => {
+    getStartDayOptions();
+  }, [startMonth, startYear]);
+
+  useEffect(() => {
+    getEndDayOptions();
+  }, [endMonth, endYear]);
+
+  useEffect(() => {
     getJobCategories();
     mapEmploymentTypes();
     mapMonthNames();
-    getStartDayOptions();
-    getEndDayOptions();
     getYearOptions();
     initializeValues();
   }, [experience]);
@@ -370,6 +386,7 @@ export const useCredentialDetails = (
     volunteer: getValues().volunteer,
     handleCheckVolunteer,
     onSave,
-    dateError,
+    startDateErrors,
+    endDateErrors,
   };
 };

@@ -1,30 +1,26 @@
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
-import { checkVerification, ImpactPoints, Organization, requestVerification, User } from 'src/core/api';
+import { CurrentIdentity, ImpactPoints, Organization, User, UserMeta } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
+import { RootState } from 'src/store';
 
 export const useDashboard = () => {
   const { profileData, impactPointHistory } = useLoaderData() as {
     profileData: User | Organization;
     impactPointHistory: ImpactPoints;
   };
+
   const { name, type, usernameVal } = getIdentityMeta(profileData);
 
   const profileUrl =
     type === 'users' ? `/profile/users/${usernameVal}/view` : `/profile/organizations/${usernameVal}/view`;
 
-  const [openVerifyModal, setOpenVerifyModal] = useState(false);
-  const verified = type === 'users' ? (profileData as User).identity_verified : (profileData as Organization).verified;
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(identity => identity.current),
+  );
+  const verified =
+    type === 'users' ? (currentIdentity?.meta as UserMeta).identity_verified : (profileData as Organization).verified;
 
-  const [connectUrl, setConnectUrl] = useState('');
-
-  const verifyAction = async () => {
-    if (type === 'users') {
-      const vc = await requestVerification();
-      setConnectUrl(vc.connection_url);
-    }
-    setOpenVerifyModal(true);
-  };
   let hoursWorked = 0;
   let hoursVolunteered = 0;
 
@@ -43,14 +39,10 @@ export const useDashboard = () => {
   return {
     verified,
     type,
-    verifyAction,
     profileData,
     profileUrl,
     hoursVolunteered,
     hoursWorked,
-    openVerifyModal,
-    setOpenVerifyModal,
-    connectUrl,
     name,
   };
 };

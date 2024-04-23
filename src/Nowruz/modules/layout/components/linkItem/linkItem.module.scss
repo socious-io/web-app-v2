@@ -1,52 +1,50 @@
 @import 'src/components/_primitives.scss';
 .container {
+    align-items: flex-start;
+    align-self: stretch;
+    background-color: $color-primary-700;
+    border-radius: 6px;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
 
-  align-items: flex-start;
-  align-self: stretch;
-  background-color: $color-primary-700;
-  border-radius: 6px;
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.75rem;
-
-  @media screen and (max-width: 600px) {
-    height: 40px;
-    background-color: white;
-  }
+    @media screen and (max-width: 768px) {
+        height: 40px;
+        background-color: white;
+    }
 }
 
 .container:hover,
 .container:focus {
+    background-color: $color-primary-600;
+    transition: background-color 200ms linear;
 
-  background-color: $color-primary-600;
-  transition: background-color 200ms linear;
-
-  @media screen and (max-width: 600px) {
-    background-color: $color-grey-50;
-  }
+    @media screen and (max-width: 768px) {
+        background-color: $color-grey-50;
+    }
 }
 
 .container div {
-  align-items: center;
-  display: flex;
-  height: 1.5rem;
-  justify-content: center;
-  width: 1.5rem;
+    align-items: center;
+    display: flex;
+    height: 1.5rem;
+    justify-content: center;
+    width: 1.5rem;
 }
 
 .itemLabel {
-  color: $color-primary-100;
-  font-weight: 600;
-  
-  @media screen and (max-width: 600px) {
-    color: $color-grey-700;
-  }
+    color: $color-primary-100;
+    font-weight: 600;
+
+    @media screen and (max-width: 768px) {
+        color: $color-grey-700;
+    }
 }
 
 .itemLabel:hover,
 .itemLabel:focus {
-  color: white;
-  @media screen and (max-width: 600px) {
-    color: black;
-  }
+    color: white;
+    @media screen and (max-width: 768px) {
+        color: black;
+    }
 }
