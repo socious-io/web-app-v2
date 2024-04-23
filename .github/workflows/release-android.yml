@@ -1,5 +1,9 @@
 name: CD - Release - Android
 
+env:
+  ANDROID_KEY_STORE: |
+    ${{ secrets.ANDROID_KEY_STORE }}
+
 on:
   push:
     tags:
@@ -63,7 +67,7 @@ jobs:
           sed -i 's|ANDROID_KEY_ALIAS|${{ secrets.ANDROID_KEY_ALIAS }}|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_PASSWORD|${{ secrets.ANDROID_KEY_PASSWORD }}|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_PASSWORD|${{ secrets.ANDROID_KEY_STORE_PASSWORD }}|g' fastlane/Fastfile
-          echo -n ${{ secrets.ANDROID_KEY_STORE }} > AndroidKeystore.jks
+          echo -n ${{ env.ANDROID_KEY_STORE }} > AndroidKeystore.jks
           cat fastlane/Fastfile
           cat AndroidKeystore.jks
           fastlane release
