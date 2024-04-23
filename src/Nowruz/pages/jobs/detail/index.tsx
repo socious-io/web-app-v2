@@ -4,18 +4,18 @@ import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
 import { CurrentIdentity, getOrganization, Job, Organization, QuestionsRes } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
+import { ApplyExternalPartyModal } from 'src/Nowruz/modules/Jobs/components/applyExternalPartyModal';
+import { ApplyModal } from 'src/Nowruz/modules/Jobs/components/applyModal';
 import { JobDetailAbout } from 'src/Nowruz/modules/Jobs/components/jobDetailAbout';
 import { JobDetailDescription } from 'src/Nowruz/modules/Jobs/components/jobDetailDescription';
 import { JobDetailHeader } from 'src/Nowruz/modules/Jobs/components/jobDetailHeader';
 import { RootState } from 'src/store';
 
 import css from './jobDetail.module.scss';
-import { ApplyModal } from 'src/Nowruz/modules/Jobs/components/applyModal';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { ApplyExternalPartyModal } from 'src/Nowruz/modules/Jobs/components/applyExternalPartyModal';
 
 export const JobDetail = () => {
   const { jobDetail } = useLoaderData() as {
@@ -23,8 +23,8 @@ export const JobDetail = () => {
     screeningQuestions: QuestionsRes;
   };
 
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   const [organization, setOrganization] = useState<Organization>();
@@ -34,8 +34,8 @@ export const JobDetail = () => {
   const [openExternalApply, setOpenExternalApply] = useState(false);
 
   useEffect(() => {
-    getOrganization(jobDetail.identity_meta.id).then((res) => setOrganization(res));
-    nonPermanentStorage.get('openApplyModal').then((res) => {
+    getOrganization(jobDetail.identity_meta.id).then(res => setOrganization(res));
+    nonPermanentStorage.get('openApplyModal').then(res => {
       if (currentIdentity && res && !jobDetail.applied) handleOpenApplyModal();
       nonPermanentStorage.remove('openApplyModal');
     });
@@ -58,7 +58,7 @@ export const JobDetail = () => {
           <div className={css.section1}>
             <FeaturedIconOutlined iconName="check-circle" size="md" theme="primary" />
             <Typography variant="subtitle2" className="text-Brand-700">
-              You application has been successfully submitted
+              Your application has been successfully submitted
             </Typography>
           </div>
         )}
@@ -85,7 +85,7 @@ export const JobDetail = () => {
             <div className={css.section1}>
               <FeaturedIconOutlined iconName="check-circle" size="md" theme="primary" />
               <Typography variant="subtitle2" className="text-Brand-700">
-                You application has been successfully submitted
+                Your application has been successfully submitted
               </Typography>
             </div>
           )}
