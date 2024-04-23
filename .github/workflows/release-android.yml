@@ -12,8 +12,6 @@ jobs:
   setup-fastlane:
     runs-on: ubuntu-latest
     steps:
-
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -57,14 +55,15 @@ jobs:
 
       - name: Configurating Fastlane
         run: |
-          echo ${{ github.workspace }}
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
           cp -R fastlane/android-config android
           mv android/android-config android/fastlane
           cd android
           sed -i 's|ANDROID_KEY_ALIAS|${{ secrets.ANDROID_KEY_ALIAS }}|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_PASSWORD|${{ secrets.ANDROID_KEY_PASSWORD }}|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_PASSWORD|${{ secrets.ANDROID_KEY_STORE_PASSWORD }}|g' fastlane/Fastfile
-          echo "${{ secrets.ANDROID_KEY_STORE_BASE64 }}" > AndroidKeystore.jks.base64
+          echo ${{ secrets.ANDROID_KEY_STORE_BASE64 }} > AndroidKeystore.jks.base64
           cat AndroidKeystore.jks.base64
           cat AndroidKeystore.jks.base64 | base64 --decode > AndroidKeystore.jks
           cat ${{ github.workspace }}/android/AndroidKeystore.jks

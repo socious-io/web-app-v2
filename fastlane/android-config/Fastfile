@@ -32,9 +32,8 @@ platform :android do
 
   desc "Build a new version of the App"
   lane :release do
-    gradle(task: 'clean')
     gradle(
-      task: 'bundle',
+      task: 'assemble',
       build_type: 'Release',
       print_command: false,
       properties: {
