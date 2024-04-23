@@ -10,9 +10,6 @@ export const verifyAction = async (
   setConnectUrl(vc.connection_url);
   setOpenVerifyModal(true);
 
-  /* TODO: as flow may change this is temp solution
-              we may call checkVerification method on init depend on Identity verification_status
-            */
   const interval = setInterval(async () => {
     const res = await checkVerification();
 

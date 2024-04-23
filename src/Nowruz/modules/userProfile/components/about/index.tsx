@@ -25,7 +25,7 @@ export const About = () => {
           <Skills />
           <Divider />
           <Experiences handleOpenVerifyModal={handleOpenVerifyModal} />
-          <Educations handleOpenVerifyModal={() => setOpenVerifyModal(true)} />
+          <Educations handleOpenVerifyModal={handleOpenVerifyModal} />
           <Certificates />
           <KYCModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
         </>
