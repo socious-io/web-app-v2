@@ -18,7 +18,9 @@ export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identi
   const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
   return (
     <div className="flex flex-col rounded-xl border border-solid border-Gray-light-mode-200">
-      <Header identity={identity} />
+      <div onClick={e => e.stopPropagation()}>
+        <Header identity={identity} />
+      </div>
       <div className="py-6 px-4 md:px-6 flex flex-col gap-5">
         {identity?.bio && (
           <span className="text-base font-normal leading-6 text-Gray-light-mode-700">{identity?.bio}</span>
