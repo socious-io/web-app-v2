@@ -57,7 +57,7 @@ jobs:
 
       - name: Configurating Fastlane
         run: |
-          echo $GITHUB_WORKSPACE
+          echo ${{ github.workspace }}
           cp -R fastlane/android-config android
           mv android/android-config android/fastlane
           cd android
@@ -66,10 +66,11 @@ jobs:
           sed -i 's|ANDROID_KEY_STORE_PASSWORD|${{ secrets.ANDROID_KEY_STORE_PASSWORD }}|g' fastlane/Fastfile
           echo "${{ secrets.ANDROID_KEY_STORE_BASE64 }}" > AndroidKeystore.jks.base64
           cat AndroidKeystore.jks.base64 | base64 --decode > app/AndroidKeystore.jks
-          sed -i 's|GITHUB_WORKSPACE|$GITHUB_WORKSPACE/android|g' fastlane/Fastfile
+          sed -i 's|GITHUB_WORKSPACE|${{ github.workspace }}/android|g' fastlane/Fastfile
           cat fastlane/Fastfile
-          fastlane release
-      
+          
+          
+      # fastlane release
       # - name: Upload binaries to release
       #   uses: svenstaro/upload-release-action@v2
       #   with:

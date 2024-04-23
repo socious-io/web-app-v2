@@ -43,7 +43,7 @@ platform :android do
         "android.injected.signing.key.alias" => "ANDROID_KEY_ALIAS",
         "android.injected.signing.key.password" => "ANDROID_KEY_PASSWORD"
       }
-    )
+    )f
   end
 
   # "android.injected.version.code" => current_build_number
