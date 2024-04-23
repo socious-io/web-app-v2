@@ -61,7 +61,9 @@ jobs:
           mv android/android-config android/fastlane
           cd android
           fastlane beta
-
+          cd app/build/outputs/apk/release
+          ls
+      
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:

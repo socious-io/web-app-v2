@@ -10,6 +10,7 @@ const config: CapacitorConfig = {
   appName: 'Socious',
   webDir: 'dist',
   bundledWebRuntime: false,
+
   server: {
     hostname: defineHostname(),
     androidScheme: 'https',

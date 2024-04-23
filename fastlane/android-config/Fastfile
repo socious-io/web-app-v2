@@ -25,7 +25,7 @@ platform :android do
   lane :beta do
     gradle(
       task: 'bundle',
-      build_type: 'Release'
+      build_type: 'assembleRelease'
     )
     # crashlytics
   
