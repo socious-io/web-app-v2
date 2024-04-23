@@ -17,6 +17,7 @@ import {
   getOrganizationByShortName,
   getRequestedVerifyExperiences,
   connections as getConnections,
+  getRequestedVerifyEducations,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -154,8 +155,14 @@ export const blueprint: RouteObject[] = [
             path: 'credentials',
 
             loader: async () => {
+              const experiences = await getRequestedVerifyExperiences({ page: 1, limit: 10 });
+              const educations = await getRequestedVerifyEducations({ page: 1, limit: 10 });
+              const items = [...(experiences?.items || []), ...(educations?.items || [])];
+              const total_count = (experiences?.total_count || 0) + (educations?.total_count || 0);
+              const limit = 20;
+              const page = 1;
               return {
-                credentials: await getRequestedVerifyExperiences({ page: 1, limit: 10 }),
+                credentials: { items, total_count, limit, page },
               };
             },
             async lazy() {
@@ -381,7 +388,7 @@ export const blueprint: RouteObject[] = [
           },
 
           {
-            path: 'connections',
+            path: 'connections/*',
             loader: async () => {
               const connections = await getConnections({ page: 1, limit: 10, 'filter.status': 'CONNECTED' });
               return { connections };

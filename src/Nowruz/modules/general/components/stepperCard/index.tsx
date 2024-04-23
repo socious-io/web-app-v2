@@ -26,6 +26,7 @@ export const StepperCard: React.FC<StepperCardProps> = props => {
     verified = 'unverified',
     customIcon,
     verifyButton,
+    claimButton,
   } = props;
   const [seeMore, setSeeMore] = useState(false);
   const [descriptionStr, setDescriptionStr] = useState(description);
@@ -144,6 +145,19 @@ export const StepperCard: React.FC<StepperCardProps> = props => {
                 customStyle="!p-0 !font-semibold !text-sm !leading-5 !h-5"
               >
                 {verifyButton.label}
+              </Button>
+            </div>
+          )}
+          {claimButton?.display && (
+            <div>
+              <Button
+                variant="text"
+                color="primary"
+                disabled={claimButton.disabled}
+                onClick={claimButton.action}
+                customStyle="!p-0 !font-semibold !text-sm !leading-5 !h-5"
+              >
+                {claimButton.label}
               </Button>
             </div>
           )}

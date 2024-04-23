@@ -4,7 +4,6 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
-import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
@@ -15,9 +14,9 @@ import { OptionType, VerifyEducationModalProps } from './verifyEducationModal.ty
 export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
   open,
   handleClose,
-  education,
+  onVerifyEducation,
   organization,
-  onSendRequest,
+  education,
 }) => {
   const {
     register,
@@ -37,7 +36,8 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
     handleForgotInfo,
     subtitle,
     accountItem,
-  } = useVerifyEducationModal(education, organization, handleClose, onSendRequest);
+    dateErrors,
+  } = useVerifyEducationModal(handleClose, onVerifyEducation, organization, education);
 
   const footerJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
@@ -60,8 +60,12 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
     <Modal
       open={open}
       handleClose={handleClose}
-      icon={<FeaturedIcon type="modern" iconName="shield-tick" theme="gray" size="lg" />}
-      title="Request certificate"
+      title={
+        <div className="flex flex-col items-start">
+          <Icon name="shield-tick" className="p-3 mb-4 border border-solid border-Gray-light-mode-200 rounded-lg" />{' '}
+          Request certificate
+        </div>
+      }
       subTitle={subtitle}
       footer={footerJsx}
       mobileFullHeight
@@ -86,12 +90,12 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
           />
         )}
         <Input
-          id="creadential-name"
+          id="credential-name"
           label="Credential name*"
           required
-          name="creadentialName"
+          name="credentialName"
           register={register}
-          errors={errors['creadentialName']?.message ? [errors['creadentialName']?.message.toString()] : undefined}
+          errors={errors['credentialName']?.message ? [errors['credentialName']?.message.toString()] : undefined}
         />
         <div className="flex gap-4 items-start">
           <SearchDropdown
@@ -106,7 +110,7 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             className="flex-1"
             placeholder="Month"
             isSearchable
-            errors={errors['month']?.label?.message ? [errors['month']?.label?.message.toString()] : undefined}
+            errors={dateErrors ? [dateErrors.toString()] : undefined}
           />
           <SearchDropdown
             id="day"
@@ -119,7 +123,6 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             label="&nbsp;"
             className="flex-1"
             placeholder="Day"
-            errors={errors['day']?.label?.message ? [errors['day']?.label?.message.toString()] : undefined}
           />
           <SearchDropdown
             id="start-year"
@@ -133,7 +136,6 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             className="flex-1"
             placeholder="Year"
             isSearchable
-            errors={errors['year']?.label?.message ? [errors['year']?.label?.message.toString()] : undefined}
           />
         </div>
         <div className="flex flex-col">

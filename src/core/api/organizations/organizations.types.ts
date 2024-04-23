@@ -37,6 +37,7 @@ export interface Organization extends OrganizationReq {
   id: string;
   followers: number;
   followings: number;
+  connections?: number;
   wallet_address?: string;
   impact_points: number;
   image?: Media;

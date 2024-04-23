@@ -11,6 +11,7 @@ import { useDashboard } from './useDashborad';
 
 export const Dashboard = () => {
   const { verified, type, profileData, profileUrl, hoursVolunteered, hoursWorked, name } = useDashboard();
+
   return (
     <>
       <div className=" w-full flex ">

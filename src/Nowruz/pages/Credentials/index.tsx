@@ -3,6 +3,7 @@ import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
 import { KYCModal } from 'src/Nowruz/modules/refer/KYC';
+import { verifyAction } from 'src/Nowruz/modules/refer/referUtils';
 
 import css from './credentials.module.scss';
 import { useCredentials } from './useCredentials';
@@ -17,6 +18,8 @@ export const Credentials = () => {
     handleDismissVerified,
     type,
     activeTabIndex,
+    setConnectUrl,
+    connectUrl,
   } = useCredentials();
 
   return (
@@ -27,7 +30,7 @@ export const Credentials = () => {
             theme="warning"
             primaryBtnLabel="Verify now"
             primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700 p-0" />}
-            primaryBtnAction={() => setOpenVerifiyAlert(true)}
+            primaryBtnAction={() => verifyAction(setConnectUrl, setOpenVerifiyAlert)}
             secondaryBtnLabel="Learn more"
             secondaryBtnLink="https://socious.io/verified-credentials"
             text={type === 'users' ? 'Verify your identity' : 'Verify your organization'}
@@ -66,7 +69,7 @@ export const Credentials = () => {
       </div>
 
       {type === 'users' ? (
-        <KYCModal open={openVerifiyAlert} handleClose={() => setOpenVerifiyAlert(false)} />
+        <KYCModal open={openVerifiyAlert} handleClose={() => setOpenVerifiyAlert(false)} connectUrl={connectUrl} />
       ) : (
         <KYBModal open={openVerifiyAlert} setOpen={setOpenVerifiyAlert} />
       )}

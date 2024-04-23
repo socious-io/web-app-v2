@@ -9,6 +9,7 @@ export const useDashboard = () => {
     profileData: User | Organization;
     impactPointHistory: ImpactPoints;
   };
+
   const { name, type, usernameVal } = getIdentityMeta(profileData);
 
   const profileUrl =

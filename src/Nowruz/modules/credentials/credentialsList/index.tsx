@@ -6,8 +6,9 @@ import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 
 import css from './credentialsList.module.scss';
 import { useCredentialsList } from './useCredentialsList';
-import { CredentialDetails } from '../credentialDetails';
 import { CreditStatus } from '../creditStatus';
+import { EducationDetails } from '../educationDetails';
+import { ExperienceDetails } from '../experienceDetails';
 
 export const CredentialList = () => {
   const {
@@ -17,17 +18,18 @@ export const CredentialList = () => {
     onApprove,
     onReject,
     onView,
-    setOpenModal,
+    handleCloseModal,
     openModal,
     experience,
+    education,
     onUpdateExperience,
+    onUpdateEducation,
     avatarInfo,
     selectedCredential,
     onSelectCredential,
     userProfile,
     verified,
   } = useCredentialsList();
-
   return (
     <div className="flex flex-col">
       {!userProfile && (
@@ -35,16 +37,16 @@ export const CredentialList = () => {
           <Button
             color="inherit"
             variant="outlined"
-            disabled={!selectedCredential}
-            onClick={() => onApprove(selectedCredential)}
+            disabled={!selectedCredential.id}
+            onClick={() => onApprove(selectedCredential.id, selectedCredential.name === 'experience')}
           >
             Approve
           </Button>
           <Button
             color="inherit"
             variant="outlined"
-            disabled={!selectedCredential}
-            onClick={() => onReject(selectedCredential)}
+            disabled={!selectedCredential.id}
+            onClick={() => onReject(selectedCredential.id, selectedCredential.name === 'experience')}
           >
             Decline
           </Button>
@@ -68,13 +70,13 @@ export const CredentialList = () => {
                 {!userProfile && (
                   <Checkbox
                     id={item.id}
-                    checked={selectedCredential === item.id}
-                    onChange={() => onSelectCredential(item.id)}
+                    checked={selectedCredential.id === item.id}
+                    onChange={() => onSelectCredential(item.id, 'experience' in item)}
                     disabled={item.status !== 'PENDING' || !verified}
                   />
                 )}
                 {userProfile ? (
-                  <Avatar size="40px" type={'organizations'} />
+                  <Avatar size="40px" type={'organizations'} img={item.org_image?.url} />
                 ) : (
                   <Avatar size="40px" type={'users'} img={item.avatar?.url} />
                 )}
@@ -88,7 +90,7 @@ export const CredentialList = () => {
                   </span>
                 </div>
               </div>
-              <div className="flex-1">Work Certificate</div>
+              <div className="flex-1">{'experience' in item ? 'Work Certificate' : 'Educational Certificate'}</div>
               <div className={css.col}>
                 <div className="flex">
                   {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" theme="secondary" />}
@@ -113,7 +115,7 @@ export const CredentialList = () => {
                     <Button
                       color="primary"
                       variant="text"
-                      onClick={() => onView(item)}
+                      onClick={() => onView(item, 'experience' in item)}
                       customStyle="!text-sm !font-semibold"
                     >
                       View
@@ -122,7 +124,7 @@ export const CredentialList = () => {
                       <Button
                         color="secondary"
                         variant="text"
-                        onClick={() => onReject(item.id)}
+                        onClick={() => onReject(item.id, 'experience' in item)}
                         customStyle="!text-sm !font-semibold"
                       >
                         Decline
@@ -137,14 +139,26 @@ export const CredentialList = () => {
       <div className={css.paginationBox}>
         <Pagination count={totalPage} onChange={(e, p) => setPage(p)} />
       </div>
-      <CredentialDetails
-        open={openModal}
-        handleClose={() => setOpenModal(false)}
-        experience={experience}
-        onUpdateExperience={onUpdateExperience}
-        avatarInfo={avatarInfo}
-        readonly={experience?.credential?.status !== 'PENDING'}
-      />
+      {!!experience && (
+        <ExperienceDetails
+          open={openModal.name === 'experience' && openModal.open}
+          handleClose={handleCloseModal}
+          experience={experience}
+          onUpdateExperience={onUpdateExperience}
+          avatarInfo={avatarInfo}
+          readonly={experience?.credential?.status !== 'PENDING'}
+        />
+      )}
+      {!!education && (
+        <EducationDetails
+          open={openModal.name === 'education' && openModal.open}
+          handleClose={handleCloseModal}
+          education={education}
+          onUpdateEducation={onUpdateEducation}
+          avatarInfo={avatarInfo}
+          readonly={education?.credential?.status !== 'PENDING'}
+        />
+      )}
     </div>
   );
 };
