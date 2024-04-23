@@ -6,6 +6,9 @@ export async function payments(params: PaginateReq): Promise<PaymentsRes> {
   return (await get<PaymentsRes>('payments', { params })).data;
 }
 
+export async function payment(id: string): Promise<PaymentsRes> {
+  return (await get<PaymentsRes>(`payments/${id}`)).data;
+}
 export async function cards(params: FilterReq): Promise<CardsRes> {
   return (await get<CardsRes>('payments/cards', { params })).data;
 }
