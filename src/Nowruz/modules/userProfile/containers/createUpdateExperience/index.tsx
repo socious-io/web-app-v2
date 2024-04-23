@@ -50,7 +50,8 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     handleSubmit,
     onSave,
     onDelete,
-    dateError,
+    startDateErrors,
+    endDateErrors,
     volunteer,
     handleCheckVolunteer,
   } = useCreateUpdateExperience(handleClose, experience);
@@ -169,7 +170,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label?.message.toString()] : undefined}
+          errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -184,7 +185,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['startYear']?.label?.message ? [errors['startYear']?.label?.message.toString()] : undefined}
           isDisabled={readonly}
         />
       </div>
@@ -201,7 +201,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           placeholder="Month"
           className="flex-1"
           isSearchable
-          errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label?.message.toString()] : undefined}
+          errors={endDateErrors ? [endDateErrors.toString()] : undefined}
           isDisabled={currentlyWorking || readonly}
         />
         <SearchDropdown
@@ -216,7 +216,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={dateError ? [dateError] : undefined} //{errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
           isDisabled={currentlyWorking || readonly}
         />
       </div>

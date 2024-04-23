@@ -2,20 +2,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
-  createOrganization,
   Education,
   EducationsReq,
-  Organization,
   OrganizationReq,
+  createOrganization,
   updateEducations,
   updateOrganization,
 } from 'src/core/api';
 import { getDaysInMonth, getUTCDate, monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
-import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import * as yup from 'yup';
-
-import { OptionType } from './verifyEducationModal.types';
 
 const schema = yup.object().shape({
   credentialName: yup
@@ -24,73 +20,19 @@ const schema = yup.object().shape({
     .required('Required')
     .min(2, 'Must be 2-50 characters')
     .max(50, 'Must be 2-50 characters'),
-  email: yup.string().email().required('Required'),
-  forgotInfo: yup.boolean(),
-  month: yup
-    .object()
-    .shape({
-      label: yup.string(),
-      value: yup.string(),
-    })
-    .when('forgotInfo', {
-      is: true,
-      then: schema =>
-        schema.shape({
-          label: yup.string(),
-          value: yup.string(),
-        }),
-      otherwise: schema =>
-        schema.shape({
-          label: yup.string().required('Required'),
-          value: yup.string(),
-        }),
-    }),
-  day: yup
-    .object()
-    .shape({
-      label: yup.string(),
-      value: yup.string(),
-    })
-    .when('forgotInfo', {
-      is: true,
-      then: schema =>
-        schema.shape({
-          label: yup.string(),
-          value: yup.string(),
-        }),
-      otherwise: schema =>
-        schema.shape({
-          label: yup.string().required('Please indicate a day'),
-          value: yup.string(),
-        }),
-    }),
-  year: yup
-    .object()
-    .shape({
-      label: yup.string(),
-      value: yup.string(),
-    })
-    .when('forgotInfo', {
-      is: true,
-      then: schema =>
-        schema.shape({
-          label: yup.string(),
-          value: yup.string(),
-        }),
-      otherwise: schema =>
-        schema.shape({
-          label: yup.string().required('Required'),
-          value: yup.string(),
-        }),
-    }),
-  message: yup.string().required('Required'),
+  month: yup.object().shape({ label: yup.string().required('Required'), value: yup.string() }),
+  day: yup.object().shape({ label: yup.string().required('Please indicate a day'), value: yup.string() }),
+  year: yup.object().shape({ label: yup.string().required('Required'), value: yup.string() }),
 });
 
-export const useVerifyEducationModal = (
+interface OptionType {
+  value: string;
+  label: string;
+}
+export const useEducationDetails = (
   handleClose: () => void,
-  onVerifyEducation: (id: string, message?: string, exact_info?: boolean) => void,
-  organization: Organization,
   education: Education,
+  onUpdateEducation?: (experience: Education) => void,
 ) => {
   const {
     register,
@@ -98,9 +40,8 @@ export const useVerifyEducationModal = (
     formState: { errors },
     getValues,
     setValue,
-    reset,
-    trigger,
     watch,
+    reset,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -144,20 +85,17 @@ export const useVerifyEducationModal = (
   };
 
   const initializeValues = () => {
-    const awardedDate = education.end_at ? new Date(getUTCDate(education.end_at)) : undefined;
+    const awardedDate = education?.end_at ? new Date(getUTCDate(education.end_at)) : undefined;
 
     const initialVal = {
-      credentialName: education.degree || '',
-      email: organization.email || '',
-      message: '',
-      forgotInfo: false,
+      credentialName: education?.degree || '',
       month: {
         label: awardedDate ? monthNames[awardedDate.getMonth()] : '',
-        value: awardedDate ? awardedDate.getMonth() : '',
+        value: awardedDate ? awardedDate.getMonth().toString() : '',
       },
       day: {
-        label: '',
-        value: '',
+        label: awardedDate?.getDate() || '',
+        value: awardedDate?.getDate() || '',
       },
       year: {
         label: awardedDate?.getFullYear() || '',
@@ -183,6 +121,7 @@ export const useVerifyEducationModal = (
   const onSelectMonth = (month: OptionType) => {
     setValue('month', month, { shouldValidate: true });
   };
+
   const onSelectDay = (day: OptionType) => {
     setValue('day', day, { shouldValidate: true });
   };
@@ -191,22 +130,17 @@ export const useVerifyEducationModal = (
     setValue('year', year, { shouldValidate: true });
   };
 
-  const handleForgotInfo = (value: boolean) => {
-    setValue('forgotInfo', value, { shouldValidate: true });
-    trigger(['day', 'month', 'year']);
-  };
-
-  // apply backend API
   const onSend = async () => {
-    const { month, year, day, email, credentialName, message, forgotInfo } = getValues();
+    const { month, year, day, credentialName } = getValues();
     const startedDate = education.start_at ? new Date(getUTCDate(education.start_at)) : undefined;
     const title = education?.title || '';
     const grade = education?.grade || '';
     const description = education?.description || '';
 
-    let organizationId = organization.id;
+    let organizationId = education.org?.id;
     if (!organizationId) {
-      organizationId = (await createOrganization({ name: organization.name, email: 'org@socious.io' }, false)).id;
+      organizationId = (await createOrganization({ name: education.org?.name || '', email: 'org@socious.io' }, false))
+        .id;
     }
 
     const startDate = new Date(
@@ -226,32 +160,17 @@ export const useVerifyEducationModal = (
     if (year.value) {
       const endDate = new Date(Number(year.value), Number(month.value || 0), Number(day.value || 1)).toISOString();
       payload.end_at = endDate;
-    } else if (!year.value && !day.value && !month.value) {
-      payload.end_at = '';
     }
 
     payload = removedEmptyProps(payload) as EducationsReq;
-    await updateEducations(education.id, payload);
-    if (!organization.verified) {
-      const org = { name: organization.name, email } as OrganizationReq;
-      updateOrganization(organization.id, org);
+    const updatedEducation = await updateEducations(education.id, payload);
+    if (!education.org.verified) {
+      const org = { name: education.org.name, email: education.org.email } as OrganizationReq;
+      updateOrganization(education.org.id, org);
     }
-    onVerifyEducation(education.id, message, !forgotInfo);
+    onUpdateEducation?.(updatedEducation);
     handleClose();
-    return;
   };
-
-  const subtitle = organization.verified
-    ? `Confirm the below information to send your request to ${organization?.name}`
-    : `${organization?.name} is not registered organization. Confirm your information and send your request.`;
-
-  const accountItem = {
-    id: organization.id,
-    name: organization.name,
-    type: 'organizations',
-    username: organization.shortname,
-    img: organization.image?.url || '',
-  } as AccountItem;
 
   return {
     register,
@@ -262,15 +181,11 @@ export const useVerifyEducationModal = (
     month: getValues().month,
     day: getValues().day,
     year: getValues().year,
-    forgotInfo: getValues().forgotInfo,
+    onSelectMonth,
+    onSelectDay,
+    onSelectYear,
     handleSubmit,
     onSend,
-    onSelectDay,
-    onSelectMonth,
-    onSelectYear,
-    handleForgotInfo,
-    subtitle,
-    accountItem,
     dateErrors,
   };
 };

@@ -1,12 +1,23 @@
 import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
 import { PaginateRes } from '../types';
-import { Experience, User } from '../users/users.types';
+import { Education, Experience, User } from '../users/users.types';
 
 export interface CredentialExperienceRes {
   id: string;
   status: 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
   experience: Experience;
+  user: User;
+  org: Organization;
+  avatar?: Media;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface CredentialEducationRes {
+  id: string;
+  status: 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
+  education: Education;
   user: User;
   org: Organization;
   avatar?: Media;
@@ -21,6 +32,9 @@ export interface ClaimVCRes {
 
 export interface CredentialExperiencePaginateRes extends PaginateRes {
   items: CredentialExperienceRes[];
+}
+export interface CredentialEducationPaginateRes extends PaginateRes {
+  items: CredentialEducationRes[];
 }
 
 export interface RequestVerificationRes {
