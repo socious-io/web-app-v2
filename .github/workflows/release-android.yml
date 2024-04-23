@@ -65,6 +65,7 @@ jobs:
           sed -i 's|ANDROID_KEY_STORE_PASSWORD|${{ secrets.ANDROID_KEY_STORE_PASSWORD }}|g' fastlane/Fastfile
           echo "${{ secrets.ANDROID_KEY_STORE_BASE64 }}" > AndroidKeystore.jks.base64
           cat AndroidKeystore.jks.base64 | base64 --decode > app/AndroidKeystore.jks
+          sed -i 's|GITHUB_WORKSPACE|${{ github.workspace }}|g' fastlane/Fastfile
           fastlane release
       
       - name: Upload binaries to release
