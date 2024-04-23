@@ -2,11 +2,8 @@ name: CD - Release - Android
 
 on:
   push:
-    branches:
-      - ci
-
-    # tags:
-    #   - v1.*
+    tags:
+      - v*
 
 jobs:
   setup-fastlane:
@@ -60,7 +57,6 @@ jobs:
           cp -R fastlane/android-config android
           mv android/android-config android/fastlane
           cd android
-          keytool
           sed -i 's|ANDROID_KEY_ALIAS|'${{ secrets.ANDROID_KEY_ALIAS }}'|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_PASSWORD|'${{ secrets.ANDROID_KEY_PASSWORD }}'|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_PASSWORD|'${{ secrets.ANDROID_KEY_STORE_PASSWORD }}'|g' fastlane/Fastfile
@@ -68,17 +64,15 @@ jobs:
           keytool -genkey -storepass "${{ secrets.ANDROID_KEY_STORE_PASSWORD }}" -keypass "${{ secrets.ANDROID_KEY_PASSWORD }}" -alias ${{ secrets.ANDROID_KEY_ALIAS }} -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=${{ vars.KeytoolFirstName }} ${{ vars.KeytoolLastName }}, OU=${{ vars.KeytoolOrganizationUnit }}, O=${{ vars.KeytoolOrganization }}, L=${{ vars.KeytoolCityOrLocality }}, S=${{ vars.KeytoolStateOrProvience }}, C=${{ vars.KeytoolTwoLetterCountryCode}}" -keystore build-release.keystore
           fastlane release
           
-          
-      # fastlane release
-      # - name: Upload binaries to release
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: ./android/app/release/app-release.apk
-      #     asset_name: Socious-${{ github.ref_name }}.apk
-      #     tag: ${{ github.ref }}
-      #     overwrite: true
-      #     body: "This is my release text"
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./android/app/release/app-release.apk
+          asset_name: Socious-${{ github.ref_name }}.apk
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "Example Release Text"
 
       
 
