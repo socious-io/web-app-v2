@@ -30,6 +30,24 @@ platform :android do
     # You can also use other beta testing services here
   end
 
+  desc "Build a new version of the App"
+  lane :release do
+    gradle(task: 'clean')
+    gradle(
+      task: 'bundle',
+      build_type: 'Release',
+      print_command: false,
+      properties: {
+        "android.injected.signing.store.file" => "/AndroidKeystore.jks",
+        "android.injected.signing.store.password" => ANDROID_KEY_STORE_PASSWORD,
+        "android.injected.signing.key.alias" => "ANDROID_KEY_ALIAS",
+        "android.injected.signing.key.password" => ANDROID_KEY_PASSWORD
+      }
+    )
+  end
+
+  # "android.injected.version.code" => current_build_number
+  
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean assembleRelease")

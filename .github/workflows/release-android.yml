@@ -60,9 +60,11 @@ jobs:
           cp -R fastlane/android-config android
           mv android/android-config android/fastlane
           cd android
-          fastlane beta
-          cd app/build/outputs/apk/release
-          ls
+          sed 's/ANDROID_KEY_ALIAS/${{ secrets.ANDROID_KEY_ALIAS }}' fastlane/Fastfile
+          sed 's/ANDROID_KEY_PASSWORD/${{ secrets.ANDROID_KEY_PASSWORD }}' fastlane/Fastfile
+          sed 's/ANDROID_KEY_STORE_PASSWORD/${{ secrets.ANDROID_KEY_STORE_PASSWORD }}' fastlane/Fastfile
+          cat fastlane/Fastfile
+          fastlane release
       
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
