@@ -12,6 +12,7 @@ export interface CredentialExperienceRes {
   avatar?: Media;
   created_at: Date;
   updated_at: Date;
+  org_image?: Media;
 }
 
 export interface CredentialEducationRes {

@@ -17,6 +17,8 @@ export const Credentials = () => {
     handleDismissVerified,
     type,
     activeTabIndex,
+    verifyAction,
+    connectUrl,
   } = useCredentials();
 
   return (
@@ -27,7 +29,7 @@ export const Credentials = () => {
             theme="warning"
             primaryBtnLabel="Verify now"
             primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700 p-0" />}
-            primaryBtnAction={() => setOpenVerifiyAlert(true)}
+            primaryBtnAction={verifyAction}
             secondaryBtnLabel="Learn more"
             secondaryBtnLink="https://socious.io/verified-credentials"
             text={type === 'users' ? 'Verify your identity' : 'Verify your organization'}
@@ -66,7 +68,7 @@ export const Credentials = () => {
       </div>
 
       {type === 'users' ? (
-        <VerifyModal open={openVerifiyAlert} handleClose={() => setOpenVerifiyAlert(false)} />
+        <VerifyModal open={openVerifiyAlert} handleClose={() => setOpenVerifiyAlert(false)} connectUrl={connectUrl} />
       ) : (
         <KYBModal open={openVerifiyAlert} setOpen={setOpenVerifiyAlert} />
       )}
