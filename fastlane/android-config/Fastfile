@@ -23,7 +23,10 @@ platform :android do
 
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
-    gradle(task: "clean assembleRelease")
+    gradle(
+      task: 'bundle',
+      build_type: 'Release'
+    )
     # crashlytics
   
     # sh "your_script.sh"
