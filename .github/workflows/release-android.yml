@@ -62,10 +62,10 @@ jobs:
           cd android
           keytool
           sed -i 's|ANDROID_KEY_ALIAS|${{ secrets.ANDROID_KEY_ALIAS }}|g' fastlane/Fastfile
-          sed -i 's|ANDROID_KEY_PASSWORD|${{ secrets.ANDROID_KEY_PASSWORD }}|g' fastlane/Fastfile
-          sed -i 's|ANDROID_KEY_STORE_PASSWORD|${{ secrets.ANDROID_KEY_STORE_PASSWORD }}|g' fastlane/Fastfile
-          keytool -genkey -storepass ${{ secrets.ANDROID_KEY_STORE_PASSWORD }} -keypass ${{ secrets.ANDROID_KEY_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }} -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=${{ vars.KeytoolFirstName }} ${{ vars.KeytoolLastName }}, OU=${{ vars.KeytoolOrganizationUnit }}, O=${{ vars.KeytoolOrganization }}, L=${{ vars.KeytoolCityOrLocality }}, S=${{ vars.KeytoolStateOrProvience }}, C=${{ vars.KeytoolTwoLetterCountryCode}}" -keystore build-release.keystore
+          sed -i 's|ANDROID_KEY_PASSWORD|ljksdf5645|g' fastlane/Fastfile
+          sed -i 's|ANDROID_KEY_STORE_PASSWORD|ljksdf5645|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_LOCATION|${{ github.workspace }}/android/build-release.keystore|g' fastlane/Fastfile
+          keytool -genkey -storepass ljksdf5645 -keypass ljksdf5645 -alias ${{ secrets.ANDROID_KEY_ALIAS }} -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=${{ vars.KeytoolFirstName }} ${{ vars.KeytoolLastName }}, OU=${{ vars.KeytoolOrganizationUnit }}, O=${{ vars.KeytoolOrganization }}, L=${{ vars.KeytoolCityOrLocality }}, S=${{ vars.KeytoolStateOrProvience }}, C=${{ vars.KeytoolTwoLetterCountryCode}}" -keystore build-release.keystore
           fastlane release
           
           
