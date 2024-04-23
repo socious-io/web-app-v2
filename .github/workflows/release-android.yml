@@ -63,8 +63,8 @@ jobs:
           sed -i 's|ANDROID_KEY_ALIAS|${{ secrets.ANDROID_KEY_ALIAS }}|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_PASSWORD|${{ secrets.ANDROID_KEY_PASSWORD }}|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_PASSWORD|${{ secrets.ANDROID_KEY_STORE_PASSWORD }}|g' fastlane/Fastfile
-          echo "${{ secrets.ANDROID_KEY_STORE_ENCRYPTED_GPG_ARMOR }}" > AndroidKeystore.jks.asc
-          gpg -d --passphrase 1234 --batch AndroidKeystore.jks.asc > AndroidKeystore.jks
+          echo "${{ secrets.ANDROID_KEY_STORE_BASE64 }}" > AndroidKeystore.jks.base64
+          base64 --decode -i AndroidKeystore.jks.base64 -o AndroidKeystore.jks.jks
           cat fastlane/Fastfile
           cat AndroidKeystore.jks
           fastlane release
