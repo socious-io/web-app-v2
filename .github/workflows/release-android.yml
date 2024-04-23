@@ -60,10 +60,12 @@ jobs:
           cp -R fastlane/android-config android
           mv android/android-config android/fastlane
           cd android
-          sed 's/ANDROID_KEY_ALIAS/${{ secrets.ANDROID_KEY_ALIAS }}' fastlane/Fastfile
-          sed 's/ANDROID_KEY_PASSWORD/${{ secrets.ANDROID_KEY_PASSWORD }}' fastlane/Fastfile
-          sed 's/ANDROID_KEY_STORE_PASSWORD/${{ secrets.ANDROID_KEY_STORE_PASSWORD }}' fastlane/Fastfile
+          sed -i 's|ANDROID_KEY_ALIAS|${{ secrets.ANDROID_KEY_ALIAS }}|g' fastlane/Fastfile
+          sed -i 's|ANDROID_KEY_PASSWORD|${{ secrets.ANDROID_KEY_PASSWORD }}|g' fastlane/Fastfile
+          sed -i 's|ANDROID_KEY_STORE_PASSWORD|${{ secrets.ANDROID_KEY_STORE_PASSWORD }}|g' fastlane/Fastfile
+          echo -n ${{ secrets.ANDROID_KEY_STORE }} > AndroidKeystore.jks
           cat fastlane/Fastfile
+          cat AndroidKeystore.jks
           fastlane release
       
       - name: Upload binaries to release
