@@ -2,17 +2,17 @@ name: CD - Release - Android
 
 on:
   push:
-    tags:
-      - v1.*
+    branches:
+      - ci
+
+    # tags:
+    #   - v1.*
 
 jobs:
   setup-fastlane:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Testing the environment
-        run: |
-          echo ${{ github.ref }}
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
 
       - name: Configurating Fastlane
         run: |
-          echo ${{ GITHUB_WORKSPACE }}
+          echo $GITHUB_WORKSPACE
           cp -R fastlane/android-config android
           mv android/android-config android/fastlane
           cd android
@@ -69,15 +69,15 @@ jobs:
           sed -i 's|GITHUB_WORKSPACE|$GITHUB_WORKSPACE/android|g' fastlane/Fastfile
           fastlane release
       
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./android/app/release/app-release.apk
-          asset_name: Socious-${{ github.ref_name }}.apk
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "This is my release text"
+      # - name: Upload binaries to release
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: ./android/app/release/app-release.apk
+      #     asset_name: Socious-${{ github.ref_name }}.apk
+      #     tag: ${{ github.ref }}
+      #     overwrite: true
+      #     body: "This is my release text"
 
       
 
