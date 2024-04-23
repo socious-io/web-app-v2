@@ -4,19 +4,28 @@ import { Card } from 'src/Nowruz/modules/dashboard/card';
 import { OrgCards } from 'src/Nowruz/modules/dashboard/orgCards';
 import { UserCards } from 'src/Nowruz/modules/dashboard/userCards';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
+import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
 import { TopBannerNotVerified } from 'src/Nowruz/modules/general/components/TopBannerNotVerified';
 import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
 
 import { useDashboard } from './useDashborad';
 
 export const Dashboard = () => {
-  const { verified, type, profileData, profileUrl, hoursVolunteered, hoursWorked, name } = useDashboard();
+  const { verified, type, profileData, profileUrl, hoursVolunteered, hoursWorked, name, verificationStatus } =
+    useDashboard();
 
   return (
     <>
       <div className=" w-full flex ">
         <div className="w-full h-full flex flex-col">
-          {!verified && (
+          {!verified && verificationStatus === 'PENDING' && (
+            <TopBanner
+              theme="warning"
+              text="Verification pending"
+              supportingText="We reviewing your submitted documents, we will notify you once it is complete."
+            />
+          )}
+          {!verified && verificationStatus !== 'PENDING' && (
             <TopBannerNotVerified
               supportingText={
                 type === 'users'
@@ -25,6 +34,7 @@ export const Dashboard = () => {
               }
             />
           )}
+
           <div className=" flex flex-col gap-8 py-8 px-4 md:px-8">
             <div className="flex flex-col gap-1">
               <Typography variant="h3" className="text-Gray-light-mode-900">

@@ -21,6 +21,7 @@ export const useDashboard = () => {
   const verified =
     type === 'users' ? (currentIdentity?.meta as UserMeta).identity_verified : (profileData as Organization).verified;
 
+  const verificationStatus = currentIdentity?.verification_status;
   let hoursWorked = 0;
   let hoursVolunteered = 0;
 
@@ -44,5 +45,6 @@ export const useDashboard = () => {
     hoursVolunteered,
     hoursWorked,
     name,
+    verificationStatus,
   };
 };

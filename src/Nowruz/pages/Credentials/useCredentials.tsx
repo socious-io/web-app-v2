@@ -9,8 +9,6 @@ import { RootState } from 'src/store';
 export const useCredentials = () => {
   const { hash } = useLocation();
   const [hideVerifyBanner, setHideVerifyBanner] = useState(localStorage.getItem('hideVerifiedBanner') === 'true');
-  const [openVerifiyAlert, setOpenVerifiyAlert] = useState(false);
-  const [connectUrl, setConnectUrl] = useState<string>('');
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(item => item.current),
   );
@@ -19,6 +17,8 @@ export const useCredentials = () => {
     type === 'users'
       ? (currentIdentity?.meta as UserMeta).identity_verified
       : (currentIdentity?.meta as OrgMeta)?.verified;
+
+  const verificationStatus = currentIdentity?.verification_status;
 
   const tabs = [
     { label: 'Issued', content: <IssuedList /> },
@@ -38,13 +38,10 @@ export const useCredentials = () => {
   return {
     tabs,
     verified,
-    openVerifiyAlert,
-    setOpenVerifiyAlert,
     hideVerifyBanner,
     handleDismissVerified,
     type,
     activeTabIndex: activeTabIndex[hash] || 0,
-    connectUrl,
-    setConnectUrl,
+    verificationStatus,
   };
 };

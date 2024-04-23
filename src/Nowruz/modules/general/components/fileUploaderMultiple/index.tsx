@@ -81,11 +81,11 @@ export const FileUploaderMultiple: React.FC<FileUploaderMultipleProps> = ({
                   </div>
                 ))}
               </div>
-              {uploading && (
-                <div className="w-full">
-                  <LinearProgress variant="determinate" value={progress} />
-                </div>
-              )}
+            </div>
+          )}
+          {uploading && (
+            <div className="w-full">
+              <LinearProgress variant="determinate" value={progress} />
             </div>
           )}
         </div>

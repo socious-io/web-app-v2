@@ -79,6 +79,7 @@ export const useFileUploader = (
 
       setUploading(true);
       const res = await Promise.all(requests);
+
       setUploaded([...uploaded, ...res]);
       setFiles([...files, ...acceptedFiles]);
     } catch (e) {
