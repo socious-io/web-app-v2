@@ -102,6 +102,7 @@ export interface User {
   skills: string[];
   followers: number;
   followings: number;
+  connections?: number;
   wallet_address?: string;
   proofspace_connect_id?: string;
   phone?: string;

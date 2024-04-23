@@ -388,7 +388,7 @@ export const blueprint: RouteObject[] = [
           },
 
           {
-            path: 'connections',
+            path: 'connections/*',
             loader: async () => {
               const connections = await getConnections({ page: 1, limit: 10, 'filter.status': 'CONNECTED' });
               return { connections };

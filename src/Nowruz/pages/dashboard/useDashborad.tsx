@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { checkVerification, ImpactPoints, Organization, requestVerification, User } from 'src/core/api';
+import { ImpactPoints, Organization, requestVerification, User } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 
 export const useDashboard = () => {
@@ -8,6 +8,7 @@ export const useDashboard = () => {
     profileData: User | Organization;
     impactPointHistory: ImpactPoints;
   };
+
   const { name, type, usernameVal } = getIdentityMeta(profileData);
 
   const profileUrl =
