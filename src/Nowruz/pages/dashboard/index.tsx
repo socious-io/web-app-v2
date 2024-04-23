@@ -1,50 +1,28 @@
 import { Typography } from '@mui/material';
 import { Organization, User } from 'src/core/api';
-import { Icon } from 'src/Nowruz/general/Icon';
-import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
 import { Card } from 'src/Nowruz/modules/dashboard/card';
 import { OrgCards } from 'src/Nowruz/modules/dashboard/orgCards';
 import { UserCards } from 'src/Nowruz/modules/dashboard/userCards';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
-import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
-import { VerifyModal } from 'src/Nowruz/modules/refer/verifyModal';
+import { TopBannerNotVerified } from 'src/Nowruz/modules/general/components/TopBannerNotVerified';
 import { Impact } from 'src/Nowruz/modules/userProfile/components/impact';
 
 import { useDashboard } from './useDashborad';
 
 export const Dashboard = () => {
-  const {
-    verified,
-    type,
-    verifyAction,
-    profileData,
-    profileUrl,
-    hoursVolunteered,
-    hoursWorked,
-    openVerifyModal,
-    setOpenVerifyModal,
-    connectUrl,
-    name,
-  } = useDashboard();
+  const { verified, type, profileData, profileUrl, hoursVolunteered, hoursWorked, name } = useDashboard();
 
   return (
     <>
       <div className=" w-full flex ">
         <div className="w-full h-full flex flex-col">
           {!verified && (
-            <TopBanner
-              text={type === 'users' ? 'Verify your identity' : 'Verify your organization'}
+            <TopBannerNotVerified
               supportingText={
                 type === 'users'
                   ? 'In order to access referrals, you need to have a Atala PRISM DID and verify your identity.'
                   : 'Get a 50% discount on Socious fee for 1 month.'
               }
-              theme="warning"
-              primaryBtnLabel="Verify now"
-              primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700" />}
-              primaryBtnAction={verifyAction}
-              secondaryBtnLabel="Learn more"
-              secondaryBtnLink="https://socious.io/verified-credentials"
             />
           )}
           <div className=" flex flex-col gap-8 py-8 px-4 md:px-8">
@@ -96,12 +74,6 @@ export const Dashboard = () => {
           <ProfileCard identity={profileData} labelShown={false} rounded={false} />
         </div>
       </div>
-
-      {type === 'users' ? (
-        <VerifyModal open={openVerifyModal} handleClose={() => setOpenVerifyModal(false)} connectUrl={connectUrl} />
-      ) : (
-        <KYBModal open={openVerifyModal} setOpen={setOpenVerifyModal} />
-      )}
     </>
   );
 };
