@@ -61,9 +61,9 @@ jobs:
           mv android/android-config android/fastlane
           cd android
           keytool
-          ANDROID_KEY_ALIAS=$(echo -n "${{ secrets.ANDROID_KEY_ALIAS }}") && sed -i 's|ANDROID_KEY_ALIAS|'${ANDROID_KEY_ALIAS}'|g' fastlane/Fastfile
-          ANDROID_KEY_PASSWORD=$(echo -n "${{ secrets.ANDROID_KEY_PASSWORD }}") && sed -i 's|ANDROID_KEY_PASSWORD|'${ANDROID_KEY_PASSWORD}'|g' fastlane/Fastfile
-          ANDROID_KEY_STORE_PASSWORD=$(echo -n "${{ secrets.ANDROID_KEY_STORE_PASSWORD }}") && sed -i 's|ANDROID_KEY_STORE_PASSWORD|'${ANDROID_KEY_STORE_PASSWORD}'|g' fastlane/Fastfile
+          sed -i 's|ANDROID_KEY_ALIAS|'${{ secrets.ANDROID_KEY_ALIAS }}'|g' fastlane/Fastfile
+          sed -i 's|ANDROID_KEY_PASSWORD|'${{ secrets.ANDROID_KEY_PASSWORD }}'|g' fastlane/Fastfile
+          sed -i 's|ANDROID_KEY_STORE_PASSWORD|'${{ secrets.ANDROID_KEY_STORE_PASSWORD }}'|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_LOCATION|${{ github.workspace }}/android/build-release.keystore|g' fastlane/Fastfile
           keytool -genkey -storepass "${{ secrets.ANDROID_KEY_STORE_PASSWORD }}" -keypass "${{ secrets.ANDROID_KEY_PASSWORD }}" -alias ${{ secrets.ANDROID_KEY_ALIAS }} -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=${{ vars.KeytoolFirstName }} ${{ vars.KeytoolLastName }}, OU=${{ vars.KeytoolOrganizationUnit }}, O=${{ vars.KeytoolOrganization }}, L=${{ vars.KeytoolCityOrLocality }}, S=${{ vars.KeytoolStateOrProvience }}, C=${{ vars.KeytoolTwoLetterCountryCode}}" -keystore build-release.keystore
           fastlane release
