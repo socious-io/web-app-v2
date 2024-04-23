@@ -71,7 +71,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+          file: ./android/app/release/app-release.apk
           asset_name: Socious-${{ github.ref_name }}.apk
           tag: ${{ github.ref }}
           overwrite: true
