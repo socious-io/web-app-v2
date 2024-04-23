@@ -53,7 +53,7 @@
     "firebase": "^9.22.2",
     "i18next-browser-languagedetector": "^7.1.0",
     "iso-country-currency": "^0.6.0",
-    "js-base64": "^3.7.5",
+    "js-base64": "^3.7.7",
     "js-cookie": "^3.0.1",
     "markdown-to-jsx": "^7.4.7",
     "moment": "^2.29.4",
