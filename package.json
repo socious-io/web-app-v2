@@ -12,6 +12,7 @@
     "build:icons": "npx @capacitor/assets generate --iconBackgroundColor '#183E3B' --splashBackgroundColor '#183E3B'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "cypress:update": "cypress run --env updateSnapshots=true",
     "story": "storybook dev -p 6006",
     "story:build": "storybook build",
     "prepare": "husky install",
