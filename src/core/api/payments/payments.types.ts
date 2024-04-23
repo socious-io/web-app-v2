@@ -1,3 +1,4 @@
+import { Mission } from '../jobs/jobs.types';
 import { Identity } from '../site/site.types';
 import { PaginateRes, PaymentCurrency, PaymentService, SuccessRes } from '../types';
 
@@ -49,6 +50,7 @@ export interface Payment {
 
   payer_identity: Identity;
   receiver_identity: Identity;
+  mission?: Mission;
 }
 
 export interface Card extends CardReq {

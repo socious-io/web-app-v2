@@ -7,10 +7,8 @@ import {
   stripeProfile,
   jobCategories as jobCategoriesReq,
   jobQuestions,
-  userPaidMissions,
   profile,
   job,
-  getMission,
   otherProfileByUsername,
   badges,
   impactPoints,
@@ -18,6 +16,7 @@ import {
   getRequestedVerifyExperiences,
   connections as getConnections,
   payments,
+  payment,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -309,8 +308,9 @@ export const blueprint: RouteObject[] = [
                 path: ':id',
                 loader: async ({ params }) => {
                   if (params.id) {
-                    const mission = await getMission(params.id);
-                    return { mission };
+                    const requests = [payment(params.id), stripeProfile({}), stripeProfile({ is_jp: true })];
+                    const [paymentRes, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
+                    return { paymentRes, stripeProfileRes, jpStripeProfileRes };
                   }
                 },
                 async lazy() {
