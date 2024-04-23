@@ -51,11 +51,7 @@ export const useCredentialsList = () => {
   const filteredRequested = (
     items: CredentialExperiencePaginateRes['items'] | CredentialEducationPaginateRes['items'],
   ) => {
-    if (userProfile) {
-      return items.filter(item => item.status === 'PENDING' || item.status === 'REJECTED');
-    } else {
-      return items.filter(item => item.status !== 'ISSUED');
-    }
+    return items.filter(item => item.status === 'PENDING' || item.status === 'REJECTED');
   };
   const [credentialsList, setCredentialsList] = useState(filteredRequested(credentials.items));
 
@@ -134,6 +130,7 @@ export const useCredentialsList = () => {
     const updatedList = filteredExperience.find(list => list.experience?.id === updatedExperience?.id);
     updatedList?.org && setExperience({ ...updatedExperience, org: updatedList.org });
     setCredentialsList(filteredExperience);
+    experience?.credential && onApprove(experience?.credential.id, true);
   };
 
   const onUpdateEducation = (updatedEducation: Education) => {
@@ -148,6 +145,7 @@ export const useCredentialsList = () => {
     const updatedList = filteredEducation.find(list => list.education?.id === updatedEducation?.id);
     updatedList?.org && setEducation({ ...updatedEducation, org: updatedList.org });
     setCredentialsList(filteredEducation);
+    education?.credential && onApprove(education?.credential.id, false);
   };
 
   const onSelectCredential = (id: string, isExperience: boolean) => {

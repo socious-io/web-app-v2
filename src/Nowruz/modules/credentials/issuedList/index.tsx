@@ -71,7 +71,7 @@ export const IssuedList = () => {
                   </span>
                 </div>
               </div>
-              <div className="flex-1">Work Certificate</div>
+              <div className="flex-1">{'experience' in item ? 'Work Certificate' : 'Educational Certificate'}</div>
               <div className={css.col}>
                 <div className="flex">
                   {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" theme="secondary" />}

@@ -32,11 +32,7 @@ export const useIssuedList = () => {
   const filteredIssued = (
     items: CredentialExperiencePaginateRes['items'] | CredentialEducationPaginateRes['items'],
   ) => {
-    if (userProfile) {
-      return items.filter(item => item.status === 'APPROVED' || item.status === 'CLAIMED');
-    } else {
-      return items.filter(item => item.status === 'ISSUED');
-    }
+    return items.filter(item => item.status === 'APPROVED' || item.status === 'CLAIMED' || item.status === 'ISSUED');
   };
   const [issuedList, setIssuedList] = useState(filteredIssued(credentials.items));
 
