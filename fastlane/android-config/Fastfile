@@ -33,8 +33,7 @@ platform :android do
   desc "Build a new version of the App"
   lane :release do
     gradle(
-      task: 'assemble',
-      build_type: 'Release',
+      task: 'clean assembleRelease',
       print_command: false,
       properties: {
         "android.injected.signing.store.file" => "ANDROID_KEY_STORE_LOCATION",
