@@ -18,20 +18,33 @@ export const Dashboard = () => {
     <>
       <div className=" w-full flex ">
         <div className="w-full h-full flex flex-col">
-          {!verified && verificationStatus === 'PENDING' && (
-            <TopBanner
-              theme="warning"
-              text="Verification pending"
-              supportingText="We reviewing your submitted documents, we will notify you once it is complete."
-            />
+          {!verified ? (
+            verificationStatus === 'PENDING' && type === 'organizations' ? (
+              <TopBanner
+                theme="warning"
+                text="Verification pending"
+                supportingText="We reviewing your submitted documents, we will notify you once it is complete."
+              />
+            ) : (
+              <TopBannerNotVerified
+                supportingText={
+                  type === 'users'
+                    ? 'In order to claim your certificates, please verify your identity.'
+                    : 'Get your organization verified to issue credentials.'
+                }
+              />
+            )
+          ) : (
+            ''
           )}
-          {!verified && verificationStatus !== 'PENDING' && (
-            <TopBannerNotVerified
-              supportingText={
-                type === 'users'
-                  ? 'In order to access referrals, you need to have a Atala PRISM DID and verify your identity.'
-                  : 'Get a 50% discount on Socious fee for 1 month.'
-              }
+
+          {verified && !hideVerifyBanner && (
+            <TopBanner
+              theme="success"
+              text="Your identity has been verified"
+              supportingText="You can now claim your certificates."
+              secondaryBtnLabel="Dismiss"
+              secondaryBtnAction={handleDismissVerified}
             />
           )}
 
