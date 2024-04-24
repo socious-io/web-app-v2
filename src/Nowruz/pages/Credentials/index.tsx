@@ -12,22 +12,26 @@ export const Credentials = () => {
   return (
     <>
       <div className="w-full flex flex-col">
-        {!verified && verificationStatus === 'PENDING' && (
-          <TopBanner
-            theme="warning"
-            text="Verification pending"
-            supportingText="We reviewing your submitted documents, we will notify you once it is complete."
-          />
+        {!verified ? (
+          verificationStatus === 'PENDING' && type === 'organizations' ? (
+            <TopBanner
+              theme="warning"
+              text="Verification pending"
+              supportingText="We reviewing your submitted documents, we will notify you once it is complete."
+            />
+          ) : (
+            <TopBannerNotVerified
+              supportingText={
+                type === 'users'
+                  ? 'In order to claim your certificates, please verify your identity.'
+                  : 'Get your organization verified to issue credentials.'
+              }
+            />
+          )
+        ) : (
+          ''
         )}
-        {!verified && verificationStatus !== 'PENDING' && (
-          <TopBannerNotVerified
-            supportingText={
-              type === 'users'
-                ? 'In order to claim your certificates, please verify your identity.'
-                : 'Get your organization verified to issue credentials.'
-            }
-          />
-        )}
+
         {verified && !hideVerifyBanner && (
           <TopBanner
             theme="success"
