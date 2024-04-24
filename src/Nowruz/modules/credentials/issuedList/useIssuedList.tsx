@@ -10,6 +10,7 @@ import {
   getRequestedVerifyEducations,
   CredentialEducationPaginateRes,
   claimEducationVC,
+  UserMeta,
 } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { RootState } from 'src/store';
@@ -18,9 +19,11 @@ export const useIssuedList = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(item => item.current),
   );
-  const verified = (currentIdentity?.meta as OrgMeta)?.verified;
   const { credentials } = useLoaderData() as { credentials: CredentialExperiencePaginateRes };
   const userProfile = currentIdentity?.type === 'users';
+  const verified = userProfile
+    ? (currentIdentity?.meta as UserMeta)?.identity_verified
+    : (currentIdentity?.meta as OrgMeta)?.verified;
   const isMobile = isTouchDevice();
   const [page, setPage] = useState(1);
   const [selectedCredential, setSelectedCredential] = useState<{ name: 'experience' | 'education'; id: string }>({
@@ -32,11 +35,7 @@ export const useIssuedList = () => {
   const filteredIssued = (
     items: CredentialExperiencePaginateRes['items'] | CredentialEducationPaginateRes['items'],
   ) => {
-    if (userProfile) {
-      return items.filter(item => item.status === 'APPROVED' || item.status === 'CLAIMED');
-    } else {
-      return items.filter(item => item.status === 'ISSUED');
-    }
+    return items.filter(item => item.status === 'APPROVED' || item.status === 'CLAIMED' || item.status === 'ISSUED');
   };
   const [issuedList, setIssuedList] = useState(filteredIssued(credentials.items));
 

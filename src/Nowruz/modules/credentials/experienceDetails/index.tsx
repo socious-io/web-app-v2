@@ -229,7 +229,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        {experience ? 'Save' : 'Add experience'}
+        Send
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
         Cancel

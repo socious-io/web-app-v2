@@ -15,6 +15,7 @@ import {
   CredentialEducationRes,
   Education,
   approveVerifyEducation,
+  UserMeta,
 } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { RootState } from 'src/store';
@@ -23,11 +24,13 @@ export const useCredentialsList = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(item => item.current),
   );
-  const verified = (currentIdentity?.meta as OrgMeta)?.verified;
   const { credentials } = useLoaderData() as {
     credentials: CredentialExperiencePaginateRes | CredentialEducationPaginateRes;
   };
   const userProfile = currentIdentity?.type === 'users';
+  const verified = userProfile
+    ? (currentIdentity?.meta as UserMeta)?.identity_verified
+    : (currentIdentity?.meta as OrgMeta)?.verified;
   const isMobile = isTouchDevice();
   const [page, setPage] = useState(1);
   const [openModal, setOpenModal] = useState<{ name: 'experience' | 'education'; open: boolean }>({
@@ -51,11 +54,7 @@ export const useCredentialsList = () => {
   const filteredRequested = (
     items: CredentialExperiencePaginateRes['items'] | CredentialEducationPaginateRes['items'],
   ) => {
-    if (userProfile) {
-      return items.filter(item => item.status === 'PENDING' || item.status === 'REJECTED');
-    } else {
-      return items.filter(item => item.status !== 'ISSUED');
-    }
+    return items.filter(item => item.status === 'PENDING' || item.status === 'REJECTED');
   };
   const [credentialsList, setCredentialsList] = useState(filteredRequested(credentials.items));
 
@@ -134,6 +133,7 @@ export const useCredentialsList = () => {
     const updatedList = filteredExperience.find(list => list.experience?.id === updatedExperience?.id);
     updatedList?.org && setExperience({ ...updatedExperience, org: updatedList.org });
     setCredentialsList(filteredExperience);
+    experience?.credential && onApprove(experience?.credential.id, true);
   };
 
   const onUpdateEducation = (updatedEducation: Education) => {
@@ -148,6 +148,7 @@ export const useCredentialsList = () => {
     const updatedList = filteredEducation.find(list => list.education?.id === updatedEducation?.id);
     updatedList?.org && setEducation({ ...updatedEducation, org: updatedList.org });
     setCredentialsList(filteredEducation);
+    education?.credential && onApprove(education?.credential.id, false);
   };
 
   const onSelectCredential = (id: string, isExperience: boolean) => {
