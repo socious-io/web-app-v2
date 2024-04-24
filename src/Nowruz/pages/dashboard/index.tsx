@@ -38,16 +38,6 @@ export const Dashboard = () => {
             ''
           )}
 
-          {verified && !hideVerifyBanner && (
-            <TopBanner
-              theme="success"
-              text="Your identity has been verified"
-              supportingText="You can now claim your certificates."
-              secondaryBtnLabel="Dismiss"
-              secondaryBtnAction={handleDismissVerified}
-            />
-          )}
-
           <div className=" flex flex-col gap-8 py-8 px-4 md:px-8">
             <div className="flex flex-col gap-1">
               <Typography variant="h3" className="text-Gray-light-mode-900">
