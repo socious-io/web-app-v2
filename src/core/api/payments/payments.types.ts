@@ -33,7 +33,7 @@ export interface Payment {
   currency: PaymentCurrency;
   ref_trx?: string;
   reference?: string;
-  referrers_fee?: number;
+  referrers_fee?: boolean;
   service: PaymentService;
   source: string;
   source_type?: string;

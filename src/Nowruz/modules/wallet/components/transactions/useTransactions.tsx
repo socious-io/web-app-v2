@@ -36,9 +36,11 @@ export const useTransactions = () => {
       );
 
       return {
-        name,
-        profileImage: profileImage?.toString(),
-        userType: type as UserType,
+        name: item.referrers_fee ? 'Socious' : name,
+        profileImage: item.referrers_fee
+          ? 'https://socious-new.s3.ap-northeast-1.amazonaws.com/ad4ae46f5dc138d8bc63928890bc64e0.png'
+          : profileImage?.toString(),
+        userType: item.referrers_fee ? 'organizations' : (type as UserType),
         amount: `${symbol}${item.amount}`,
         date: toRelativeTime(item.created_at.toString()),
         currency,
