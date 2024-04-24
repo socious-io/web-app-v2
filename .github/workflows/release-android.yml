@@ -2,8 +2,10 @@ name: CD - Release - Android
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - ci
+#     tags:
+#       - v*
 
 jobs:
   setup-fastlane:
