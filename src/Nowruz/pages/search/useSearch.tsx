@@ -116,12 +116,7 @@ export const useSearch = () => {
     (item: Job | Organization | User) => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
-          <div
-            onClick={e => {
-              if (e.target === e.currentTarget) handleNavigate(item as Organization | User);
-            }}
-            className="cursor-pointer"
-          >
+          <div onClick={() => handleNavigate(item as Organization | User)} className="cursor-pointer">
             <SearchResultProfile identity={item as User | Organization} />
           </div>
         );
