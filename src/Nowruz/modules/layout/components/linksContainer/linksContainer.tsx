@@ -7,11 +7,12 @@ import { useLinksContainer } from './useLinksContainer';
 import { LinkItem } from '../linkItem/LinkItem';
 
 export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen }) => {
-  const { filteredMenu, userIsLoggedIn, navigateFunction, navigateToOnboarding } = useLinksContainer(setOpen);
+  const { filteredMenu, userIsLoggedIn, onLogoClick, navigateFunction, navigateToOnboarding } =
+    useLinksContainer(setOpen);
 
   return (
     <div className="flex flex-col justify-start items-center w-full h-fit pt-8 gap-6">
-      <div className="w-full h-fit py-0 pl-6 pr-5 cursor-pointer" onClick={() => navigateFunction('/jobs')}>
+      <div className="w-full h-fit py-0 pl-6 pr-5 cursor-pointer" onClick={onLogoClick}>
         <img
           className="hidden md:block"
           src={open ? '/icons/nowruz/logo-white.svg' : '/icons/nowruz/logoMark-white.svg'}
