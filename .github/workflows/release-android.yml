@@ -30,12 +30,27 @@ jobs:
 
       - name: Making Android Release Code
         run: |
+          echo 'STORYBOOK_FIGMA_ACCESS_TOKEN=${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}' >> .env
+          echo 'VITE_ACCESS_EXPIRE=${{ vars.ACCESS_EXPIRE }}' >> .env
+          echo 'VITE_APP_URL=${{ vars.APP_URL }}' >> .env
+          echo 'VITE_BASE_URL=${{ vars.BASE_URL }}' >> .env
+          echo 'VITE_CLIENT_SECRET_TOKEN_CLIENT_ID=${{ secrets.CLIENT_SECRET_TOKEN_CLIENT_ID }}' >> .env
+          echo 'VITE_CLIENT_SECRET_TOKEN_REDIRECT_URL=${{ vars.CLIENT_SECRET_TOKEN_REDIRECT_URL }}' >> .env
+          echo 'VITE_DAPP_ENV=${{ vars.DAPP_ENV }}' >> .env
+          echo 'VITE_ENV=${{ vars.ENV }}' >> .env
+          echo 'VITE_GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}' >> .env
+          echo 'VITE_GOOGLE_RECAPTCHA_SITE_KEY=${{ secrets.GOOGLE_RECAPTCHA_SITE_KEY }}' >> .env
+          echo 'VITE_JP_STRIPE_PUBLIC_KEY=${{ secrets.JP_STRIPE_PUBLIC_KEY }}' >> .env
+          echo 'VITE_LOG_DISCORD_WEBHOOK=${{ secrets.LOG_DISCORD_WEBHOOK }}' >> .env
+          echo 'VITE_REFRESH_EXPIRE=${{ vars.REFRESH_EXPIRE }}' >> .env
+          echo 'VITE_SOCKET_URL=${{ vars.SOCKET_URL }}' >> .env
+          echo 'VITE_STRIPE_PUBLIC_KEY=${{ vars.STRIPE_PUBLIC_KEY }}' >> .env
           npm run make:android
 
       - name: Configurating Bundler
         run: |
           gem install bundler
-          cp Gemfile ./android
+          cp Gemfile android
 
       - name: Installing Fastlane with Bundler
         run: |
