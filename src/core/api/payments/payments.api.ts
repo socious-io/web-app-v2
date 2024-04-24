@@ -1,4 +1,4 @@
-import { CardReq, CardsRes, PaymentsRes, Card, PayReq, PayoutRes, TokenRes } from './payments.types';
+import { CardReq, CardsRes, PaymentsRes, Card, PayReq, PayoutRes, TokenRes, Payment } from './payments.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq, FilterReq } from '../types';
 
@@ -6,6 +6,9 @@ export async function payments(params: PaginateReq): Promise<PaymentsRes> {
   return (await get<PaymentsRes>('payments', { params })).data;
 }
 
+export async function payment(id: string): Promise<Payment> {
+  return (await get<Payment>(`payments/${id}`)).data;
+}
 export async function cards(params: FilterReq): Promise<CardsRes> {
   return (await get<CardsRes>('payments/cards', { params })).data;
 }
