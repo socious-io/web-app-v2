@@ -16,16 +16,8 @@ export const KYBModal: React.FC<KYBModalProps> = ({ open, setOpen }) => {
     success: false,
   });
 
-  useEffect(() => {
-    setopenModals({
-      desc: true,
-      upload: false,
-      success: false,
-    });
-  }, [open]);
-
   const handleClose = () => {
-    setopenModals({ desc: false, upload: false, success: false });
+    setopenModals({ desc: true, upload: false, success: false });
     setOpen(false);
   };
 
