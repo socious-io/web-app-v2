@@ -3,13 +3,13 @@ import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
 
-interface VerifyModalProps {
+interface KYCModalProps {
   open: boolean;
   handleClose: () => void;
   connectUrl: string;
 }
 
-export const VerifyModal: React.FC<VerifyModalProps> = ({ open, handleClose, connectUrl }) => {
+export const KYCModal: React.FC<KYCModalProps> = ({ open, handleClose, connectUrl }) => {
   const footerJsx = (
     <div className=" w-full p-6 ">
       <Button

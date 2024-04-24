@@ -4,7 +4,7 @@ import css from './connections.module.scss';
 import { useConnections } from './useConnections';
 
 export const Connctions = () => {
-  const { tabs } = useConnections();
+  const { tabs, activeIndex } = useConnections();
   return (
     <div className={css.container}>
       <div>
@@ -13,7 +13,7 @@ export const Connctions = () => {
           <h2 className={css.subtitle}>Your network</h2>
         </div>
       </div>
-      <HorizontalTabs tabs={tabs} />
+      <HorizontalTabs tabs={tabs} activeIndex={activeIndex} />
     </div>
   );
 };
