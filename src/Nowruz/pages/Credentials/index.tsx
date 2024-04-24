@@ -1,46 +1,34 @@
-import { Icon } from 'src/Nowruz/general/Icon';
-import { KYBModal } from 'src/Nowruz/modules/credentials/KYB';
 import { HorizontalTabs } from 'src/Nowruz/modules/general/components/horizontalTabs';
 import { TopBanner } from 'src/Nowruz/modules/general/components/topBanner';
-import { KYCModal } from 'src/Nowruz/modules/refer/KYC';
-import { verifyAction } from 'src/Nowruz/modules/refer/referUtils';
+import { TopBannerNotVerified } from 'src/Nowruz/modules/general/components/TopBannerNotVerified';
 
 import css from './credentials.module.scss';
 import { useCredentials } from './useCredentials';
 
 export const Credentials = () => {
-  const {
-    tabs,
-    verified,
-    setOpenVerifiyAlert,
-    openVerifiyAlert,
-    hideVerifyBanner,
-    handleDismissVerified,
-    type,
-    activeTabIndex,
-    setConnectUrl,
-    connectUrl,
-  } = useCredentials();
+  const { tabs, verified, hideVerifyBanner, handleDismissVerified, type, activeTabIndex, verificationStatus } =
+    useCredentials();
 
   return (
     <>
       <div className="w-full flex flex-col">
-        {!verified ? (
+        {!verified && verificationStatus === 'PENDING' && (
           <TopBanner
             theme="warning"
-            primaryBtnLabel="Verify now"
-            primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700 p-0" />}
-            primaryBtnAction={() => verifyAction(setConnectUrl, setOpenVerifiyAlert)}
-            secondaryBtnLabel="Learn more"
-            secondaryBtnLink="https://socious.io/verified-credentials"
-            text={type === 'users' ? 'Verify your identity' : 'Verify your organization'}
+            text="Verification pending"
+            supportingText="We reviewing your submitted documents, we will notify you once it is complete."
+          />
+        )}
+        {!verified && verificationStatus !== 'PENDING' && (
+          <TopBannerNotVerified
             supportingText={
               type === 'users'
                 ? 'In order to claim your certificates, please verify your identity.'
                 : 'Get your organization verified to issue credentials.'
             }
           />
-        ) : !hideVerifyBanner ? (
+        )}
+        {verified && !hideVerifyBanner && (
           <TopBanner
             theme="success"
             text="Your identity has been verified"
@@ -48,9 +36,8 @@ export const Credentials = () => {
             secondaryBtnLabel="Dismiss"
             secondaryBtnAction={handleDismissVerified}
           />
-        ) : (
-          ''
         )}
+
         <div className={css.container}>
           <div className={css.header}>
             <div className={css.left}>
@@ -67,12 +54,6 @@ export const Credentials = () => {
           <HorizontalTabs tabs={tabs} activeIndex={activeTabIndex} />
         </div>
       </div>
-
-      {type === 'users' ? (
-        <KYCModal open={openVerifiyAlert} handleClose={() => setOpenVerifiyAlert(false)} connectUrl={connectUrl} />
-      ) : (
-        <KYBModal open={openVerifiyAlert} setOpen={setOpenVerifiyAlert} />
-      )}
     </>
   );
 };

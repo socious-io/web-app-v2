@@ -3,16 +3,19 @@ import pdf from 'public/icons/nowruz/file-pdf.svg';
 import png from 'public/icons/nowruz/file-png.svg';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { PostMediaUploadRes, uploadMediaWithProgress } from 'src/core/api';
 
 export const useFileUploader = (
   fileTypes: string[],
   maxFileNumbers: number,
   maxSize: number,
-  files: File[],
-  setFiles: (newVal: File[]) => void,
+  uploaded: PostMediaUploadRes[],
+  setUploaded: (newVal: PostMediaUploadRes[]) => void,
 ) => {
   const [error, setError] = useState('');
-  const [totalSize, setTotalSize] = useState(0);
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [files, setFiles] = useState<File[]>([]);
 
   const getAcceptedFileTypes = () => {
     const types = [
@@ -60,25 +63,36 @@ export const useFileUploader = (
     if (fileType === 'application/pdf') return pdf;
     if (fileType === 'image/jpeg') return jpg;
   };
-  const onDrop = (acceptedFiles: File[]) => {
-    const newUploadedSize = acceptedFiles.map(f => f.size).reduce((a, b) => a + b, 0);
-    const newTotal = totalSize + newUploadedSize;
-    if (newTotal > maxSize * 1024 * 1024) {
-      setError(`Max file size is ${maxSize}mb`);
-      return;
-    }
+  const onDrop = async (acceptedFiles: File[]) => {
+    try {
+      setProgress(0);
+      setError('');
+      const requests: Promise<PostMediaUploadRes>[] = [];
+      acceptedFiles.forEach(f => {
+        if (f.size > maxSize * 1024 * 1024) {
+          setError(`Max file size is ${maxSize}mb`);
+          return;
+        } else {
+          requests.push(uploadMediaWithProgress(f, setProgress));
+        }
+      });
 
-    setTotalSize(newTotal);
-    setFiles([...files, ...acceptedFiles]);
+      setUploading(true);
+      const res = await Promise.all(requests);
+
+      setUploaded([...uploaded, ...res]);
+      setFiles([...files, ...acceptedFiles]);
+    } catch (e) {
+      setError('Internal error in uploading files');
+      console.log('error in uploading files', e);
+    }
+    setUploading(false);
   };
 
   const deleteFile = (deletedIndex: number) => {
     const filtered = files.filter((_, index) => index !== deletedIndex);
     setFiles(filtered);
-    const size = filtered.map(f => f.size).reduce((a, b) => a + b, 0);
-    setTotalSize(size);
-    if (totalSize > maxSize * 1000000) setError(`Max file size is ${maxSize}mb`);
-    else setError('');
+    setUploaded(uploaded.filter(item => files.map(f => f.name).includes(item.filename)));
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -86,7 +100,17 @@ export const useFileUploader = (
     accept: getAcceptedFileTypes(),
     maxFiles: maxFileNumbers,
   });
-  // const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  return { getRootProps, getInputProps, getSubtitle, error, readableFileSize, getFileIcon, totalSize, deleteFile };
+  return {
+    getRootProps,
+    getInputProps,
+    getSubtitle,
+    error,
+    readableFileSize,
+    getFileIcon,
+    deleteFile,
+    uploading,
+    progress,
+    files,
+  };
 };

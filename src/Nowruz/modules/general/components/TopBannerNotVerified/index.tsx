@@ -19,7 +19,9 @@ export const TopBannerNotVerified: React.FC<TopBannerNotVerifiedProps> = ({ supp
         theme="warning"
         primaryBtnLabel="Verify now"
         primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700 p-0" />}
-        primaryBtnAction={() => verifyAction(setConnectUrl, setOpenVerifyModal)}
+        primaryBtnAction={
+          type === 'users' ? () => verifyAction(setConnectUrl, setOpenVerifyModal) : () => setOpenVerifyModal(true)
+        }
         secondaryBtnLabel="Learn more"
         secondaryBtnLink="https://socious.io/verified-credentials"
         text={type === 'users' ? 'Verify your identity' : 'Verify your organization'}

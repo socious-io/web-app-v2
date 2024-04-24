@@ -3,9 +3,11 @@ import { Organization } from '../organizations/organizations.types';
 import { PaginateRes } from '../types';
 import { Education, Experience, User } from '../users/users.types';
 
+export type CredentailStatus = 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
+
 export interface CredentialExperienceRes {
   id: string;
-  status: 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
+  status: CredentailStatus;
   experience: Experience;
   user: User;
   org: Organization;
@@ -17,7 +19,7 @@ export interface CredentialExperienceRes {
 
 export interface CredentialEducationRes {
   id: string;
-  status: 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
+  status: CredentailStatus;
   education: Education;
   user: User;
   org: Organization;
@@ -50,6 +52,22 @@ export interface RequestVerificationRes {
   updated_at: Date;
 }
 
+export interface OrgRequestVerificationRes {
+  id: string;
+  identity_id: string;
+  status: CredentailStatus;
+  created_at: Date;
+  updated_at: Date;
+  documents: [
+    {
+      id: string;
+      media_id: string;
+      verification_id: string;
+      created_at: Date;
+      updated_at: Date;
+    },
+  ];
+}
 export interface RequestVerificationStatusRes {
   message: string;
   verified: boolean;

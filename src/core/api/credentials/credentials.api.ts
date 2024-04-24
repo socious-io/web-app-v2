@@ -8,6 +8,7 @@ import {
   RequestVerificationStatusRes,
   CredentialEducationRes,
   CredentialEducationPaginateRes,
+  OrgRequestVerificationRes,
 } from './credentials.types';
 import { PaginateReq } from '../types';
 
@@ -66,4 +67,8 @@ export async function requestVerification(): Promise<RequestVerificationRes> {
 
 export async function checkVerification(): Promise<RequestVerificationStatusRes> {
   return (await get<RequestVerificationStatusRes>(`/credentials/verifications`, {})).data;
+}
+
+export async function requestOrgVerification(documents: string[]): Promise<OrgRequestVerificationRes> {
+  return (await post<OrgRequestVerificationRes>(`/credentials/verifications/org`, { documents })).data;
 }
