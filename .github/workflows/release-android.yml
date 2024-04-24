@@ -27,7 +27,7 @@ jobs:
 
       - name: Install Node.js dependencies
         run: |
-          apt install tree
+          sudo apt-get install -y tree
           tree
           npm cache clean --force
           npm install
