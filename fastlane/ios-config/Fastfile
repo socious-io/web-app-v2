@@ -25,7 +25,7 @@ platform :ios do
   lane :beta do
     setup_ci
     build_app(scheme: "App")
-    enable_automatic_code_signing(path: "my_project.xcodeproj")
+    enable_automatic_code_signing(path: "App.xcodeproj")
     upload_to_testflight
     # crashlytics
   
