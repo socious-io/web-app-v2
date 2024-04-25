@@ -45,9 +45,9 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           value={filters.location}
           loadOptions={searchCities}
           defaultOptions
-          isClearable
+          isClearable={!!filters.location?.value}
           icon="search-lg"
-          hasDropdownIcon={true}
+          hasDropdownIcon={!filters.location?.value}
           placeholder="Select a location"
           onChange={onSelectCity}
         />
