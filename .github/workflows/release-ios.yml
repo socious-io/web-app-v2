@@ -75,11 +75,11 @@ jobs:
           bundle update
           bundle install
 
-      - name: Configurating Fastlane
-        run: |
-          export LC_ALL=en_US.UTF-8
-          export LANG=en_US.UTF-8
-          cp -R fastlane/ios-config ios
-          mv ios/ios-config ios/fastlane
-          cd ios
-          fastlane beta --verbose
+      # - name: Configurating Fastlane
+      #   run: |
+      #     export LC_ALL=en_US.UTF-8
+      #     export LANG=en_US.UTF-8
+      #     cp -R fastlane/ios-config ios
+      #     mv ios/ios-config ios/fastlane
+      #     cd ios
+      #     fastlane beta --verbose
