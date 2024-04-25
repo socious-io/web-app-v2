@@ -13,42 +13,38 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-default_platform(:android)
+default_platform(:ios)
 
-platform :android do
+platform :ios do
   desc "Runs all the tests"
   lane :test do
-    gradle(task: "test")
+    
   end
 
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
-    gradle(task: 'assembleRelease')
     # crashlytics
   
     # sh "your_script.sh"
     # You can also use other beta testing services here
   end
 
+  desc "Submit a new Beta Build to Test Flight"
+  lane :beta do
+    sync_code_signing(type: "appstore")    # see code signing guide for more information
+    build_app(scheme: "MyApp")
+    upload_to_testflight
+  end
+
   desc "Build a new version of the App"
   lane :release do
-    gradle(
-      task: 'clean assembleRelease',
-      print_command: false,
-      properties: {
-        "android.injected.signing.store.file" => "ANDROID_KEY_STORE_LOCATION",
-        "android.injected.signing.store.password" => "ANDROID_KEY_STORE_PASSWORD",
-        "android.injected.signing.key.alias" => "ANDROID_KEY_ALIAS",
-        "android.injected.signing.key.password" => "ANDROID_KEY_PASSWORD"
-      }
-    )
+
   end
 
   # "android.injected.version.code" => current_build_number
   
-  desc "Deploy a new version to the Google Play"
+  desc "Deploy a new version to the App Store"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
+
   end
 end
