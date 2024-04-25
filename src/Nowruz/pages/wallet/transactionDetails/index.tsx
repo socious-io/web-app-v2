@@ -15,7 +15,7 @@ export const TransactionDetails = () => {
     return (
       <div className="flex flex-col">
         <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">{title}</span>
-        {subtitles.map((item) => (
+        {subtitles.map(item => (
           <span key={item} className=" text-sm font-normal leading-5 text-Gray-light-mode-600">
             {item}
           </span>
@@ -53,7 +53,7 @@ export const TransactionDetails = () => {
         <div className="flex flex-col">
           <div className={css.bordered}>
             <div className="flex gap-3">
-              <Avatar size="40px" type={detail.avatarType} img={detail.avatar} />
+              <Avatar size="40px" type={detail.avatarType} img={detail.avatar?.toString()} />
               {renderItems(detail.name, [detail.date])}
             </div>
             <span className=" hidden md:flex text-sm font-medium leading-5 text-Gray-light-mode-900">

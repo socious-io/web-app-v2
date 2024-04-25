@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface VerifyButton {
+export interface ActionButton {
   display: boolean;
   label: string;
   disabled: boolean;
@@ -23,5 +23,6 @@ export interface StepperCardProps {
   handleDelete?: () => void;
   DisplayVerificationStatus?: boolean;
   verified?: 'verified' | 'unverified' | 'pending';
-  verifyButton?: VerifyButton;
+  verifyButton?: ActionButton;
+  claimButton?: ActionButton;
 }

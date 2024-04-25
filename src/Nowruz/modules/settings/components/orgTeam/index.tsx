@@ -1,14 +1,13 @@
 import { Divider } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
-import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
 import css from './orgTeam.module.scss';
 import { useOrgTeam } from './useOrgTeam';
+import LeaveDeleteMember from '../leaveDeleteMember';
 
 export const OrgTeam = () => {
   const {
@@ -19,12 +18,12 @@ export const OrgTeam = () => {
     handleAddMembers,
     teamMembers,
     handleDelete,
-    openAlert,
-    setOpenAlert,
-    toDeleteName,
-    handleClickDelete,
     loadMore,
     hasMore,
+    selectedMember,
+    openModal,
+    handleOpenModal,
+    handleCloseModal,
   } = useOrgTeam();
   return (
     <>
@@ -109,7 +108,7 @@ export const OrgTeam = () => {
                         <Button
                           variant="text"
                           color="secondary"
-                          onClick={() => handleClickDelete(item.id, item.name)}
+                          onClick={() => handleOpenModal(item.id, item.name)}
                           disabled={teamMembers.length === 1}
                         >
                           Delete
@@ -123,7 +122,7 @@ export const OrgTeam = () => {
           </div>
         </div>
       </div>
-      <AlertModal
+      {/* <AlertModal
         open={openAlert}
         onClose={() => setOpenAlert(false)}
         title="Delete member"
@@ -135,6 +134,25 @@ export const OrgTeam = () => {
         submitButtonTheme="primary"
         submitButtonLabel="Delete"
         onSubmit={handleDelete}
+      /> */}
+      <LeaveDeleteMember
+        open={openModal}
+        handleClose={handleCloseModal}
+        title="Delete member?"
+        subtitle={`Are you sure you want to delete ${selectedMember.name}? They will not be able to manage your organization anymore.`}
+        buttons={[
+          {
+            children: 'Cancel',
+            color: 'secondary',
+            variant: 'outlined',
+            onClick: handleCloseModal,
+          },
+          {
+            children: 'Delete',
+            color: 'error',
+            onClick: () => handleDelete(selectedMember.id),
+          },
+        ]}
       />
     </>
   );
