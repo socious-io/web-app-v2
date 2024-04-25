@@ -23,7 +23,7 @@ platform :ios do
 
   desc "Submit a new Beta Build to Test Flight"
   lane :beta do
-    sync_code_signing(type: "appstore")    # see code signing guide for more information
+    setup_ci
     build_app(scheme: "MyApp")
     upload_to_testflight
     # crashlytics
