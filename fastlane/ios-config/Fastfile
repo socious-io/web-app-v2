@@ -24,7 +24,8 @@ platform :ios do
   desc "Submit a new Beta Build to Test Flight"
   lane :beta do
     setup_ci
-    build_app(scheme: "MyApp")
+    build_app(scheme: "App")
+    enable_automatic_code_signing(path: "my_project.xcodeproj")
     upload_to_testflight
     # crashlytics
   
