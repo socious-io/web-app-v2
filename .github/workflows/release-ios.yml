@@ -43,4 +43,4 @@ jobs:
 
       - name: Install Xcode command line tools (macOS)
         run: |
-          xcode-select --install
+          Software Update
