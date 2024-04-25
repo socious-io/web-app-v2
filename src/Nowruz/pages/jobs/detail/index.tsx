@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { CurrentIdentity, getOrganization, Job, Organization, QuestionsRes } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { getIdentityMeta } from 'src/core/utils';
 import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
@@ -22,6 +23,7 @@ export const JobDetail = () => {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
   };
+  const navigate = useNavigate();
 
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
@@ -32,6 +34,8 @@ export const JobDetail = () => {
   const [beforeApplied, setBeforeApplied] = useState(jobDetail.applied);
   const [openApply, setOpenApply] = useState(false);
   const [openExternalApply, setOpenExternalApply] = useState(false);
+
+  const { usernameVal } = getIdentityMeta(organization);
 
   useEffect(() => {
     getOrganization(jobDetail.identity_meta.id).then(res => setOrganization(res));
@@ -49,6 +53,12 @@ export const JobDetail = () => {
   const handleCloseApplyModal = (applied: boolean) => {
     setOpenApply(false);
     if (setJustApplied) setJustApplied(applied);
+  };
+
+  const onProfileCardClick = () => {
+    if (usernameVal) {
+      navigate(`/profile/organizations/${usernameVal}/view`);
+    }
   };
 
   const userJSX = () => (
@@ -100,7 +110,7 @@ export const JobDetail = () => {
         </div>
 
         <JobDetailDescription jobDescription={jobDetail.description} />
-        <ProfileCard identity={organization} />
+        <ProfileCard identity={organization} onProfileCardClick={onProfileCardClick} />
         <div className={css.expandable}>
           <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 115 : 700} text={organization?.mission || ''} />
         </div>

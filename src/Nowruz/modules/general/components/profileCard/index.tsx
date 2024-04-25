@@ -18,8 +18,14 @@ interface ProfileCardProps {
   identity?: User | Organization;
   labelShown?: boolean;
   rounded?: boolean;
+  onProfileCardClick?: () => void;
 }
-const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, rounded = true }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({
+  identity,
+  labelShown = true,
+  rounded = true,
+  onProfileCardClick,
+}) => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   );
@@ -33,7 +39,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
       {labelShown && (
         <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">{`About ${name}`}</span>
       )}
-      <div className={`flex flex-col border border-solid border-Gray-light-mode-200 ${rounded ? 'rounded-xl' : ''}`}>
+      <div
+        className={`flex flex-col border border-solid border-Gray-light-mode-200 ${rounded ? 'rounded-xl' : ''} ${
+          onProfileCardClick && 'cursor-pointer'
+        }`}
+        onClick={onProfileCardClick}
+      >
         <ProfileCardHeader
           name={name}
           type={type as UserType}
