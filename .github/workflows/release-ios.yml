@@ -30,19 +30,23 @@ jobs:
           cache-name: cache-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: node_modules
+          path: |
+            node_modules
+            ios
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install Node.js dependencies
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: Install Node.js dependencies
         run: |
           npm cache clean --force
           npm install
 
-      - name: Making iOS Release Code
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: Making iOS Release Code
         run: |
           echo 'STORYBOOK_FIGMA_ACCESS_TOKEN=${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}' >> .env
           echo 'VITE_ACCESS_EXPIRE=${{ vars.ACCESS_EXPIRE }}' >> .env
