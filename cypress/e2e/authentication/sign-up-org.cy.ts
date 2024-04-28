@@ -143,7 +143,9 @@ describe('Sign up', () => {
 
     //Select industry (FIXME: name or data-* instead of id)
     cy.get('#industry').click();
-    cy.get('input[aria-labelledby="searchDropdown-industry"]').type('A');
+    // cy.get('input[aria-labelledby="searchDropdown-industry"]').type('A');
+    cy.get('#react-select-3-input').type('A');
+
     cy.get('#industry-option-0').click();
 
     cy.get('#size').click();
