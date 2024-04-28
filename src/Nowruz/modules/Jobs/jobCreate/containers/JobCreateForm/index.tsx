@@ -79,10 +79,10 @@ export const JobCreateForm = () => {
     jobLocation,
   } = useJobCreateForm();
 
-  const renderInfo = (title: string, description: string) => (
+  const renderInfo = (title: string, description?: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
-      <div className={css.infoDescription}>{description}</div>
+      {description && <div className={css.infoDescription}>{description}</div>}
     </div>
   );
   const renderAmountFields = () => {
@@ -95,8 +95,9 @@ export const JobCreateForm = () => {
           onChange={e => onChangePaymentMin(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
-          prefix="$"
+          prefix={paymentScheme === 'FIXED' ? '$' : '$/hr'}
           errors={errors['paymentMin']?.message ? [errors['paymentMin']?.message.toString()] : undefined}
+          noBorderPrefix
         />
         <div className="flex items-center mx-2">to</div>
         <Input
@@ -106,8 +107,9 @@ export const JobCreateForm = () => {
           onChange={e => onChangePaymentMax(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
-          prefix="$"
+          prefix={paymentScheme === 'FIXED' ? '$' : '$/hr'}
           errors={errors['paymentMax']?.message ? [errors['paymentMax']?.message.toString()] : undefined}
+          noBorderPrefix
         />
       </div>
     );
@@ -219,7 +221,7 @@ export const JobCreateForm = () => {
           </div>
         </div>
         <div className={css.row}>
-          {renderInfo('Location', 'Job titles must describe one position')}
+          {renderInfo('Location')}
           <div className={css.componentsContainer}>
             {jobLocation && (
               <RadioGroup

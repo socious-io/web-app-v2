@@ -1,5 +1,15 @@
 @import 'src/components/_primitives.scss';
 
-.header {
-  @apply flex flex-col gap-5;
+.modalContent {
+    @apply text-sm text-Gray-light-mode-600 mt-8;
+
+    ul {
+        padding: 0 1rem;
+        line-height: 20px;
+
+        & > li {
+            text-align: justify;
+            list-style-type: disc;
+        }
+    }
 }

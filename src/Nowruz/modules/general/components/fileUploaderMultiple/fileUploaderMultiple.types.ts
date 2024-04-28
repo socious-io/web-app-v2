@@ -1,10 +1,12 @@
+import { PostMediaUploadRes } from 'src/core/api';
+
 export interface FileUploaderMultipleProps {
   fileTypes: string[];
   maxFileNumbers?: number;
   maxSize?: number;
   customStyle?: string;
-  files: File[];
-  setFiles: (newVal: File[]) => void;
+  uploaded: PostMediaUploadRes[];
+  setUploaded: (newVal: PostMediaUploadRes[]) => void;
   loading: boolean;
 }
 

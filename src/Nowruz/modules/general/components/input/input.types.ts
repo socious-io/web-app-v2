@@ -24,5 +24,6 @@ export interface InputProps extends DefaultProps {
   postfix?: string | ReactNode;
   postfixDropdown?: DropdownProps;
   noBorderPostfix?: boolean;
+  noBorderPrefix?: boolean;
   onEnter?: (search: string) => void;
 }

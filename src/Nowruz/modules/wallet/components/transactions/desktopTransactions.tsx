@@ -15,13 +15,13 @@ export const DesktopTransactions = () => {
         <>
           <table>
             <tr>
-              {headers.map((h) => (
+              {headers.map(h => (
                 <th key={h} className={css.header}>
                   {h}
                 </th>
               ))}
             </tr>
-            {list.map((item) => (
+            {list.map(item => (
               <tr key={item.transactionId} className={css.row} onClick={() => navigateToDetails(item.missionId)}>
                 <td className={css.cell}>
                   <div className="flex gap-3 items-center">
@@ -30,7 +30,7 @@ export const DesktopTransactions = () => {
                   </div>
                 </td>
                 <td className={css.cell}>{item.date}</td>
-                {/* <td className={css.cell}>{item.type}</td> */}
+                <td className={css.cell}>{item.type}</td>
                 <td className={css.cell}>{item.currency}</td>
                 <td className={css.cell}>{item.amount}</td>
               </tr>

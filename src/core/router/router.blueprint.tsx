@@ -7,16 +7,17 @@ import {
   stripeProfile,
   jobCategories as jobCategoriesReq,
   jobQuestions,
-  userPaidMissions,
   profile,
   job,
-  getMission,
   otherProfileByUsername,
   badges,
   impactPoints,
   getOrganizationByShortName,
   getRequestedVerifyExperiences,
   connections as getConnections,
+  payments,
+  payment,
+  getRequestedVerifyEducations,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -154,8 +155,14 @@ export const blueprint: RouteObject[] = [
             path: 'credentials',
 
             loader: async () => {
+              const experiences = await getRequestedVerifyExperiences({ page: 1, limit: 10 });
+              const educations = await getRequestedVerifyEducations({ page: 1, limit: 10 });
+              const items = [...(experiences?.items || []), ...(educations?.items || [])];
+              const total_count = (experiences?.total_count || 0) + (educations?.total_count || 0);
+              const limit = 20;
+              const page = 1;
               return {
-                credentials: await getRequestedVerifyExperiences({ page: 1, limit: 10 }),
+                credentials: { items, total_count, limit, page },
               };
             },
             async lazy() {
@@ -289,12 +296,13 @@ export const blueprint: RouteObject[] = [
                 path: '',
                 loader: async () => {
                   const requests = [
-                    userPaidMissions({ page: 1, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' }),
+                    payments({ page: 1, limit: 10 }),
+                    // userPaidMissions({ page: 1, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' }),
                     stripeProfile({}),
                     stripeProfile({ is_jp: true }),
                   ];
-                  const [missionsList, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
-                  return { missionsList, stripeProfileRes, jpStripeProfileRes };
+                  const [paymentRes, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
+                  return { paymentRes, stripeProfileRes, jpStripeProfileRes };
                 },
                 async lazy() {
                   const { Wallet } = await import('src/Nowruz/pages/wallet');
@@ -307,8 +315,9 @@ export const blueprint: RouteObject[] = [
                 path: ':id',
                 loader: async ({ params }) => {
                   if (params.id) {
-                    const mission = await getMission(params.id);
-                    return { mission };
+                    const requests = [payment(params.id), stripeProfile({}), stripeProfile({ is_jp: true })];
+                    const [paymentRes, stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
+                    return { paymentRes, stripeProfileRes, jpStripeProfileRes };
                   }
                 },
                 async lazy() {
@@ -381,7 +390,7 @@ export const blueprint: RouteObject[] = [
           },
 
           {
-            path: 'connections',
+            path: 'connections/*',
             loader: async () => {
               const connections = await getConnections({ page: 1, limit: 10, 'filter.status': 'CONNECTED' });
               return { connections };

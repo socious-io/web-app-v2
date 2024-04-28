@@ -1,7 +1,7 @@
-import { MissionsRes, StripeProfileRes } from 'src/core/api';
+import { PaymentsRes, StripeProfileRes } from 'src/core/api';
 
 export interface Resolver {
-  missionsList: MissionsRes;
+  paymentRes: PaymentsRes;
   stripeProfileRes: StripeProfileRes;
   jpStripeProfileRes: StripeProfileRes;
 }
