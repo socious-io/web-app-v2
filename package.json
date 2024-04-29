@@ -94,7 +94,7 @@
     "@storybook/react-vite": "^7.5.0",
     "@storybook/testing-library": "^0.2.2",
     "@swc/core": "^1.4.17",
-    "@swc/jest": "^0.2.24",
+    "@swc/jest": "^0.2.36",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^13.4.0",
