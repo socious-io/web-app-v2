@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Applicant, rejectApplicant } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
 
 export const useApplicantAction = (
   applicants: Array<Applicant>,
@@ -12,6 +13,7 @@ export const useApplicantAction = (
 ) => {
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [openSelectedRejectAlert, setOpenSelectedRejectAlert] = useState(false);
   const [offer, setOffer] = useState(false);
   const [applicant, setApplicant] = useState({} as Applicant);
   const [success, setSuccess] = useState<boolean>(false);
@@ -20,7 +22,7 @@ export const useApplicantAction = (
   const navigate = useNavigate();
 
   const onClickName = (id: string) => {
-    const details = applicants.find((applicant) => applicant.user.id === id);
+    const details = applicants.find(applicant => applicant.user.id === id);
     setOpen(true);
     setApplicant(details as Applicant);
   };
@@ -32,13 +34,13 @@ export const useApplicantAction = (
   };
 
   const onMessage = (id: string) => {
-    const details = applicants.find((applicant) => applicant.id === id);
+    const details = applicants.find(applicant => applicant.id === id);
     const participantId = details?.user.id;
     navigate(`../../chats?participantId=${participantId}`);
   };
 
   const onOffer = (id: string) => {
-    const details = applicants.find((applicant) => applicant.id === id);
+    const details = applicants.find(applicant => applicant.id === id);
     setOffer(true);
     setApplicant(details as Applicant);
   };
@@ -50,8 +52,37 @@ export const useApplicantAction = (
     onRefetch(true);
   };
 
+  const handleRejectMultiple = async (selectedIds: string[]) => {
+    try {
+      const requests = selectedIds.map(id => rejectApplicant(id));
+      const res = await Promise.all(requests);
+    } catch (e) {
+      console.log('error in multiple applications rejection', e);
+    }
+    setOpenAlert(false);
+    onRefetch(true);
+  };
+
   const columns = useMemo<ColumnDef<Applicant>[]>(
     () => [
+      {
+        id: 'select-col',
+        header: ({ table }) => (
+          <Checkbox
+            id="chk-select-all"
+            checked={table.getIsAllRowsSelected()}
+            onChange={table.getToggleAllRowsSelectedHandler()} //or getToggleAllPageRowsSelectedHandler
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            id={`chk-select-${row.id}`}
+            checked={row.getIsSelected()}
+            disabled={!row.getCanSelect()}
+            onChange={row.getToggleSelectedHandler()}
+          />
+        ),
+      },
       {
         id: 'name',
         header: <p className="text-xs">Name</p>,
@@ -240,5 +271,8 @@ export const useApplicantAction = (
     onMessage,
     handleCloseSuccess,
     success,
+    setOpenSelectedRejectAlert,
+    openSelectedRejectAlert,
+    handleRejectMultiple,
   };
 };
