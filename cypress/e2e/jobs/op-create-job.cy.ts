@@ -9,7 +9,7 @@ import {
   ORGANIZATION_USERNAME,
   USERNAME,
 } from '../authentication/constants';
-import { CATEGORIES, PROJECTS, SKILLS } from '../authentication/mocks';
+import { CATEGORIES, LOCATIONS, PROJECTS, SKILLS } from '../authentication/mocks';
 import { OrganizationUser, generateRandomEmail } from '../authentication/utilities';
 
 const SIGNINGUP_EMAIL = generateRandomEmail();
@@ -45,6 +45,7 @@ describe('Create Job', () => {
     cy.intercept('GET', `${API_SERVER}/skills*`, req => req.reply(SKILLS));
     cy.intercept('GET', `${API_SERVER}/projects/categories*`, req => req.reply(CATEGORIES));
     cy.intercept('POST', `${API_SERVER}/projects`, req => req.reply(200, CREATED_JOB)).as('createJob');
+    cy.intercept('GET', `${API_SERVER}/geo/locations*`, req => req.reply(LOCATIONS));
   });
   Cypress.on('uncaught:exception', () => {
     // returning false here prevents Cypress from
