@@ -45,6 +45,9 @@ export const useOrganizationContact = () => {
   });
   const dispatch = useDispatch();
 
+  const savedReferrer = localStorage.getItem('referrer');
+  const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
+
   const onSubmit: SubmitHandler<Inputs> = async data => {
     const { orgName, orgType, social_causes, bio, city, country, email, size, shortname, industry } = state;
     try {
@@ -66,8 +69,11 @@ export const useOrganizationContact = () => {
           },
           ['', null],
         ),
+        true,
+        referrerUser?.id,
       );
       localStorage.removeItem('registerFor');
+      localStorage.removeItem('referrer');
       reset();
 
       const new_identities = await identities();
