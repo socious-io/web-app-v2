@@ -1,60 +1,65 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { CurrentIdentity, Mission, MissionsRes, StripeProfileRes, userPaidMissions } from 'src/core/api';
+import { CurrentIdentity, Payment, payments } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
+import { UserType } from 'src/core/types';
+import { getIdentityMeta } from 'src/core/utils';
+import dapp from 'src/dapp';
 import { RootState } from 'src/store';
 
-import { PaymentDataType } from './transactions.types';
-import dapp from 'src/dapp';
+import { PaymentDataType, Resolver } from './transactions.types';
 
 export const useTransactions = () => {
-  const { missionsList } = useLoaderData() as {
-    missionsList: MissionsRes;
-    stripeProfileRes: StripeProfileRes;
-    jpStripeProfileRes: StripeProfileRes;
-  };
+  const { paymentRes } = useLoaderData() as Resolver;
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
-  const type = currentIdentity?.type;
+
   const PER_PAGE = 10;
   const navigate = useNavigate();
 
-  const mapDataToColumns = (missions: Mission[]) => {
-    const result: PaymentDataType[] = missions.map(item => {
-      const symbol = item.offer.currency === 'JPY' ? '¥' : item.offer.currency === 'USD' ? '$' : '';
-      let currency = item.offer?.currency || '';
-      if (item.offer?.crypto_currency_address) {
+  const mapDataToColumns = (payments: Payment[]) => {
+    const result: PaymentDataType[] = payments.map(item => {
+      const symbol = item.currency === 'JPY' ? '¥' : item.currency === 'USD' ? '$' : '';
+      let currency = item.currency.toString() || '';
+      if (item.service === 'CRYPTO') {
         dapp.NETWORKS.map(n => {
-          const token = n.tokens.find(t => item.offer.crypto_currency_address === t.address);
+          const token = n.tokens.find(t => item.meta.token === t.address);
           if (token) currency = token.symbol;
         });
       }
 
+      const paymentType = currentIdentity?.id === item.payer_identity.id ? 'Paid' : 'Received';
+      const { name, profileImage, type } = getIdentityMeta(
+        paymentType === 'Paid' ? item.receiver_identity : item.payer_identity,
+      );
+
       return {
-        name: type === 'users' ? item.assigner.meta.name : item.assignee.meta.name,
-        profileImage: type === 'users' ? item.assigner.meta.image : item.assignee.meta.avatar,
-        userType: type === 'users' ? 'organizations' : 'users',
-        amount: type === 'users' ? `${symbol}${item.payment.amount}` : `${symbol}${item.amount}`,
-        date: toRelativeTime(item.payment.created_at.toString()),
+        name: item.referrers_fee ? 'Socious' : name,
+        profileImage: item.referrers_fee
+          ? 'https://socious-new.s3.ap-northeast-1.amazonaws.com/ad4ae46f5dc138d8bc63928890bc64e0.png'
+          : profileImage?.toString(),
+        userType: item.referrers_fee ? 'organizations' : (type as UserType),
+        amount: `${symbol}${item.amount}`,
+        date: toRelativeTime(item.created_at.toString()),
         currency,
-        type: '', //type === 'users' ? 'Payment received' : 'Payment sent',
+        type: paymentType === 'Paid' ? 'Payment sent' : 'Payment received',
         missionId: item.id,
-        transactionId: item.escrow.id,
-        mobileAmount: !!symbol ? `${symbol}${item.payment?.amount}` : `${currency} ${item.payment?.amount}`,
+        transactionId: item.transaction_id,
+        mobileAmount: item.service === 'CRYPTO' ? `${currency} ${item.amount}` : `${symbol}${item.amount}`,
       };
     });
     return result;
   };
 
-  const [list, setList] = useState<PaymentDataType[]>(mapDataToColumns(missionsList.items));
-  const [page, setPage] = useState(missionsList.page);
-  const [total, setTotal] = useState(missionsList.total_count);
-  const headers = ['Transaction', 'Date', 'Currency', 'Amount'];
+  const [list, setList] = useState<PaymentDataType[]>(mapDataToColumns(paymentRes.items));
+  const [page, setPage] = useState(paymentRes.page);
+  const [total, setTotal] = useState(paymentRes.total_count);
+  const headers = ['Transaction', 'Date', 'Type', 'Currency', 'Amount'];
 
   const loadMore = async () => {
-    const res = await userPaidMissions({ page: page, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' });
+    const res = await payments({ page: page, limit: PER_PAGE });
     const newList = mapDataToColumns(res.items);
     setList(newList);
     setTotal(res.total_count);

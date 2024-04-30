@@ -12,12 +12,22 @@ export const FileUploaderMultiple: React.FC<FileUploaderMultipleProps> = ({
   maxFileNumbers = 1,
   maxSize = 10,
   customStyle,
-  files,
-  setFiles,
+  uploaded,
+  setUploaded,
   loading,
 }) => {
-  const { getRootProps, getInputProps, getSubtitle, error, readableFileSize, getFileIcon, totalSize, deleteFile } =
-    useFileUploader(fileTypes, maxFileNumbers, maxSize, files, setFiles);
+  const {
+    getRootProps,
+    getInputProps,
+    getSubtitle,
+    error,
+    readableFileSize,
+    getFileIcon,
+    deleteFile,
+    uploading,
+    progress,
+    files,
+  } = useFileUploader(fileTypes, maxFileNumbers, maxSize, uploaded, setUploaded);
 
   return (
     <>
@@ -71,9 +81,11 @@ export const FileUploaderMultiple: React.FC<FileUploaderMultipleProps> = ({
                   </div>
                 ))}
               </div>
-              <div className="w-full">
-                <LinearProgress variant="determinate" value={totalSize / (10000 * maxSize)} />
-              </div>
+            </div>
+          )}
+          {uploading && (
+            <div className="w-full">
+              <LinearProgress variant="determinate" value={progress} />
             </div>
           )}
         </div>

@@ -6,6 +6,7 @@ import {
   Organization,
   User,
   UserMeta,
+  claimExperienceVC,
   otherProfileByUsername,
   removeExperiences,
   requestVerifyExperience,
@@ -90,6 +91,11 @@ export const useExperience = () => {
     setOpenModal({ name: 'claim', open: true });
   };
 
+  const handleClaimVC = async () => {
+    const { url } = await claimExperienceVC(credentialId);
+    window.open(url, '_blank');
+  };
+
   return {
     user,
     myProfile,
@@ -106,6 +112,6 @@ export const useExperience = () => {
     reqModelShow,
     userVerified,
     handleOpenClaimModal,
-    credentialId,
+    handleClaimVC,
   };
 };

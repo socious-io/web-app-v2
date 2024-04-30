@@ -41,10 +41,10 @@ describe('Sign up', () => {
       else req.reply(401, { message: 'unauthorized' });
     });
     cy.intercept('GET', `${API_SERVER}/skills*`, req => req.reply(SKILLS));
-    cy.intercept('GET', `${API_SERVER}/geo/locations*`, req => req.reply(LOCATIONS));
     cy.intercept('GET', `${API_SERVER}/orgs/d/industries*`, req => req.reply(INDUSTRIES));
     cy.intercept('POST', `${API_SERVER}/orgs?auto_member=true`, req => req.reply(200, { message: 'success' }));
     cy.intercept('GET', `${API_SERVER}/orgs/by-shortname/*`, req => req.reply(200, organizationUser.get()));
+    cy.intercept('GET', `${API_SERVER}/geo/locations*`, req => req.reply(LOCATIONS));
     cy.intercept('POST', `${API_SERVER}/user/change-password-direct*`, req => req.reply(200, { message: 'success' }));
     cy.intercept('POST', `${API_SERVER}/user/update/profile*`, req => req.reply(200, { message: 'success' }));
     cy.intercept('GET', `${API_SERVER}/user/profile*`, req => req.reply(200, { message: 'success' }));

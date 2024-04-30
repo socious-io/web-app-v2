@@ -28,8 +28,8 @@ export const IssuedList = () => {
           <Button
             color="inherit"
             variant="outlined"
-            disabled={!selectedCredential}
-            onClick={() => onArchive(selectedCredential)}
+            disabled={!selectedCredential.id}
+            onClick={() => onArchive(selectedCredential.id, selectedCredential.name === 'experience')}
           >
             Archive
           </Button>
@@ -52,8 +52,8 @@ export const IssuedList = () => {
               <div className="flex flex-[2_2_0%] justify-start items-center gap-3">
                 <Checkbox
                   id={item.id}
-                  checked={selectedCredential === item.id}
-                  onChange={() => onSelectCredential(item.id)}
+                  checked={selectedCredential.id === item.id}
+                  onChange={() => onSelectCredential(item.id, 'experience' in item)}
                   disabled={!verified}
                 />
                 {userProfile ? (
@@ -71,7 +71,7 @@ export const IssuedList = () => {
                   </span>
                 </div>
               </div>
-              <div className="flex-1">Work Certificate</div>
+              <div className="flex-1">{'experience' in item ? 'Work Certificate' : 'Educational Certificate'}</div>
               <div className={css.col}>
                 <div className="flex">
                   {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" theme="secondary" />}
@@ -95,7 +95,7 @@ export const IssuedList = () => {
                       <Button
                         color="primary"
                         variant="text"
-                        onClick={() => onClaim(item.id)}
+                        onClick={() => onClaim(item.id, 'experience' in item)}
                         customStyle="!text-sm !font-semibold"
                       >
                         Claim
@@ -105,7 +105,7 @@ export const IssuedList = () => {
                     <Button
                       color="secondary"
                       variant="text"
-                      onClick={() => onArchive(item.id)}
+                      onClick={() => onArchive(item.id, 'experience' in item)}
                       customStyle="!text-sm !font-semibold"
                     >
                       Archive

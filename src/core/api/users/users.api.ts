@@ -17,6 +17,8 @@ import {
   ImpactPoints,
   ExperienceReq,
   UserProfile,
+  EducationsReq,
+  Education,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -85,6 +87,18 @@ export async function updateExperiences(id: string, payload: ExperienceReq): Pro
 
 export async function removeExperiences(id: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/experiences/remove/${id}`, {})).data;
+}
+
+export async function addEducations(payload: EducationsReq): Promise<Education> {
+  return (await post<Education>('user/educations', payload)).data;
+}
+
+export async function updateEducations(id: string, payload: EducationsReq): Promise<Education> {
+  return (await post<Education>(`user/educations/update/${id}`, payload)).data;
+}
+
+export async function removeEducations(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`user/educations/remove/${id}`, {})).data;
 }
 
 export async function changePassword(payload: ChangePasswordReq): Promise<SuccessRes> {

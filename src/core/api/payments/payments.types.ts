@@ -1,3 +1,5 @@
+import { Mission } from '../jobs/jobs.types';
+import { Identity } from '../site/site.types';
 import { PaginateRes, PaymentCurrency, PaymentService, SuccessRes } from '../types';
 
 export interface CardReq {
@@ -23,16 +25,32 @@ export interface CardsRes extends PaginateRes {
 
 export interface Payment {
   id: string;
+  identity_id: string;
   amount: number;
-  currency: PaymentCurrency;
-  service: PaymentService;
-  transaction_id: string;
-  source: string;
-  verified_at?: Date;
   created_at: Date;
+  canceled_at?: Date;
+  crypto_currency_address?: string;
+  currency: PaymentCurrency;
+  ref_trx?: string;
+  reference?: string;
+  referrers_fee?: boolean;
+  service: PaymentService;
+  source: string;
+  source_type?: string;
+  transaction_id: string;
+  verified_at?: Date;
+
   meta: {
-    id: string;
+    id?: string;
+    offer_id: string;
+    project_id: string;
+    token?: string;
+    txHash?: string;
   };
+
+  payer_identity: Identity;
+  receiver_identity: Identity;
+  mission?: Mission;
 }
 
 export interface Card extends CardReq {
