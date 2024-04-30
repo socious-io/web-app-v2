@@ -115,6 +115,14 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     });
   }
 
+  const onLogoClick = () => {
+    if (currentIdentity?.type === 'organizations') {
+      navigateFunction(`/dashboard/${(currentIdentity?.meta as OrgMeta).shortname}/org`);
+    } else {
+      navigateFunction('/dashboard/user');
+    }
+  };
+
   const navigateFunction = async (route: string) => {
     localStorage.removeItem('page');
     localStorage.removeItem('searchPage');
@@ -142,5 +150,5 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     navigate('/sign-up/user/onboarding');
   };
 
-  return { filteredMenu, userIsLoggedIn, navigateFunction, navigateToOnboarding };
+  return { filteredMenu, userIsLoggedIn, onLogoClick, navigateFunction, navigateToOnboarding };
 };
