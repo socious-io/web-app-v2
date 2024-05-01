@@ -1,5 +1,5 @@
 import { Cell, ColumnDef } from '@tanstack/react-table';
-import { Dispatch, SetStateAction, useMemo, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Applicant, rejectApplicant } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
@@ -17,9 +17,23 @@ export const useApplicantAction = (
   const [offer, setOffer] = useState(false);
   const [applicant, setApplicant] = useState({} as Applicant);
   const [success, setSuccess] = useState<boolean>(false);
+  const [columnVisibility, setColumnVisibility] = useState({
+    select: false,
+  });
   const currentSelectedId = useRef<string>();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentTab === 'applicants')
+      setColumnVisibility({
+        select: true,
+      });
+    else
+      setColumnVisibility({
+        select: false,
+      });
+  }, [currentTab]);
 
   const onClickName = (id: string) => {
     const details = applicants.find(applicant => applicant.user.id === id);
@@ -54,19 +68,20 @@ export const useApplicantAction = (
 
   const handleRejectMultiple = async (selectedIds: string[]) => {
     try {
+      //TODO: replace this with a single API whenever BE is ready
       const requests = selectedIds.map(id => rejectApplicant(id));
       const res = await Promise.all(requests);
     } catch (e) {
       console.log('error in multiple applications rejection', e);
     }
-    setOpenAlert(false);
+    setOpenSelectedRejectAlert(false);
     onRefetch(true);
   };
 
   const columns = useMemo<ColumnDef<Applicant>[]>(
     () => [
       {
-        id: 'select-col',
+        id: 'select',
         header: ({ table }) => (
           <Checkbox
             id="chk-select-all"
@@ -274,5 +289,6 @@ export const useApplicantAction = (
     setOpenSelectedRejectAlert,
     openSelectedRejectAlert,
     handleRejectMultiple,
+    columnVisibility,
   };
 };

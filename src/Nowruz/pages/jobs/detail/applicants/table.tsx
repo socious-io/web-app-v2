@@ -7,6 +7,7 @@ import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { EmptyState } from 'src/Nowruz/modules/general/components/EmptyState';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 import { OrgOfferModal } from 'src/Nowruz/modules/Jobs/containers/OrgOfferModal';
 
@@ -37,26 +38,44 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
     setOpenSelectedRejectAlert,
     openSelectedRejectAlert,
     handleRejectMultiple,
+    columnVisibility,
   } = useApplicantAction(applicants, currentTab, onRefetch);
 
   const table = useReactTable({
     data: applicants,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    state: {
+      columnVisibility,
+    },
   });
 
   return applicants.length ? (
     <div className="hidden md:block border-Gray-light-mode-200 border-solid border-b rounded-lg">
-      <div className="py-2.5 px-4 flex">
-        <Button
-          variant="outlined"
-          color="secondary"
-          customStyle="py-2.5 px-4 "
-          onClick={() => setOpenSelectedRejectAlert(true)}
-          disabled={!table.getSelectedRowModel().rows.length}
-        >
-          Reject
-        </Button>
+      <div className="p-4 flex items-center">
+        {currentTab === 'applicants' && (
+          <Button
+            variant="outlined"
+            color="secondary"
+            customStyle="py-2.5 px-4"
+            onClick={() => setOpenSelectedRejectAlert(true)}
+            disabled={!table.getSelectedRowModel().rows.length}
+          >
+            Reject
+          </Button>
+        )}
+        <div className="w-[400px] mr-0 ml-auto">
+          <Input
+            id="search-input"
+            name="search"
+            //value={searchTerm}
+            //onChange={(e) => setSearchTerm(e.target.value)}
+            // onClick={() => setOpenSearchModal(true)}
+            placeholder="Search for candidates"
+            startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
+            autoComplete="off"
+          />
+        </div>
       </div>
       <table className="w-full">
         <thead className="border-Gray-light-mode-200 border-solid border-b border-t-0 border-l-0 border-r-0">
