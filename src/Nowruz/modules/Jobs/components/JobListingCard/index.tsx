@@ -42,10 +42,10 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
       value: string;
       label: string;
     }[],
-  ) => options.filter((option) => values.includes(option.value));
+  ) => options.filter(option => values.includes(option.value));
   useEffect(() => {
     if (job.skills)
-      skillsToCategoryAdaptor().then((data) => {
+      skillsToCategoryAdaptor().then(data => {
         setSkills(getOptionsFromValues(job.skills || [], data));
       });
   }, [job]);
@@ -61,68 +61,77 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
     <div className={`${css.jobCard} cursor-pointer md:cursor-default`} onClick={handleClick}>
       <div className={css.cardHeader}>
         <div className={css.orgInfo}>
-            <Avatar type="organizations" size="56px" img={job.identity_meta?.image} iconSize={32} />
-            <div className={css.jobHeading}>
-              <a className={css.jobTitle} onClick={handleTitleClick}>
-                {job.title}
-              </a>
-              <div className={css.subTitle}>
-                <span className={css.orgTitle}>{job.identity_meta?.name}{'\u30FB'}{toRelativeTime(job.updated_at?.toString() || '')}</span>
-              </div>
+          <Avatar type="organizations" size="56px" img={job.identity_meta?.image} iconSize={32} />
+          <div className={css.jobHeading}>
+            <a className={css.jobTitle} onClick={handleTitleClick}>
+              {job.title}
+            </a>
+            <div className={css.subTitle}>
+              <span className={css.orgTitle}>
+                {job.identity_meta?.name}
+                {'\u30FB'}
+                {toRelativeTime(job.updated_at?.toString() || '')}
+              </span>
             </div>
+          </div>
         </div>
       </div>
       <div className={css.cardInfo}>
-            <div className={css.chips}>
-              {socialCausesToCategory(job.causes_tags).map(({ label }) => (
-                <Chip key={label} label={label} theme="primary" shape="round" size="md" />
-              ))}
-              {skills.map(({ label }) => (
-                <Chip key={label} label={label} theme="grey_blue" shape="round" size="md" />
-              ))}
-            </div>
-            <div className={css.jobDescription}>
-              <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 85 : 175} text={job.description || ''} seeMoreButton={false} />
-            </div>
-            <div className={css.jobFeatures}>
-              {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}
-              {renderJobFeatures(
-                'mouse',
-                PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === job.remote_preference)?.label,
-              )}
-              {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === job.project_type)?.label)}
-              {renderJobFeatures(
-                'hourglass-03',
-                PROJECT_LENGTH_V3.find((level) => level.value === job.project_length)?.label,
-              )}
-              {renderJobFeatures(
-                'target-02',
-                EXPERIENCE_LEVEL_V2.find((level) => level.value === job.experience_level)?.label,
-              )}
-              {job.payment_type === 'PAID' &&
-                job.payment_scheme === 'FIXED' &&
-                renderJobFeatures(
-                  'currency-dollar-circle',
-                  ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
-                  '(Fixed-price)',
-                )}
-              {job.payment_type === 'PAID' &&
-                job.payment_scheme === 'HOURLY' &&
-                renderJobFeatures(
-                  'currency-dollar-circle',
-                  ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
-                )}
-              {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
+        <div className={css.chips}>
+          {socialCausesToCategory(job.causes_tags).map(({ label }) => (
+            <Chip key={label} label={label} theme="primary" shape="round" size="md" />
+          ))}
+          {skills.map(({ label }) => (
+            <Chip key={label} label={label} theme="grey_blue" shape="round" size="md" />
+          ))}
+        </div>
+        <div className={css.jobDescription}>
+          <ExpandableText
+            isMarkdown
+            expectedLength={isTouchDevice() ? 85 : 175}
+            text={job.description || ''}
+            seeMoreButton={false}
+          />
+        </div>
+        <div className={css.jobFeatures}>
+          {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}
+          {renderJobFeatures(
+            'mouse',
+            PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === job.remote_preference)?.label,
+          )}
+          {renderJobFeatures('calendar', PROJECT_TYPE_V2.find(level => level.value === job.project_type)?.label)}
+          {renderJobFeatures(
+            'hourglass-03',
+            PROJECT_LENGTH_V3.find(level => level.value === job.project_length)?.label,
+          )}
+          {renderJobFeatures(
+            'target-02',
+            EXPERIENCE_LEVEL_V2.find(level => level.value === job.experience_level)?.label,
+          )}
+          {job.payment_type === 'PAID' &&
+            job.payment_range_lower &&
+            job.payment_range_higher &&
+            renderJobFeatures(
+              'currency-dollar-circle',
+              ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
+              `${job.payment_scheme === 'FIXED' ? '(Fixed-price)' : ''}`,
+            )}
 
-              {job.payment_type === 'VOLUNTEER' &&
-                job.payment_scheme === 'HOURLY' && job.commitment_hours_lower && job.commitment_hours_higher &&
-                renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs/week`)}
-              {job.payment_type === 'VOLUNTEER' &&
-                job.payment_scheme === 'FIXED' && job.commitment_hours_lower && job.commitment_hours_higher &&
-                renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs`)}
+          {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
 
-              {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
-            </div>
+          {job.payment_type === 'VOLUNTEER' &&
+            job.payment_scheme === 'HOURLY' &&
+            job.commitment_hours_lower &&
+            job.commitment_hours_higher &&
+            renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs/week`)}
+          {job.payment_type === 'VOLUNTEER' &&
+            job.payment_scheme === 'FIXED' &&
+            job.commitment_hours_lower &&
+            job.commitment_hours_higher &&
+            renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs`)}
+
+          {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
+        </div>
       </div>
       <div className={css.cardFooter}>
         <Link href={`/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
