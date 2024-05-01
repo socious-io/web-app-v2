@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Select, { components } from 'react-select';
+import Select, { ClearIndicatorProps, components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import { Icon } from 'src/Nowruz/general/Icon';
@@ -48,6 +48,14 @@ const CustomSingleValue = (props: any) => {
         {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
       </div>
     </components.SingleValue>
+  );
+};
+
+const CustomClearIndicator = (props: ClearIndicatorProps) => {
+  return (
+    <components.ClearIndicator {...props}>
+      <Icon name="x-close" fontSize={20} color="#667085" className="cursor-pointer" />
+    </components.ClearIndicator>
   );
 };
 // React select in async mode doesn't send extra data to the CustomSingleValue.Doing this cause only accessed label and using label
@@ -104,12 +112,14 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           components={{
             Option: props => <CustomOption {...props} value={selectedVal} />,
             Control: props => <CustomControl {...props} icon={icon} />,
-            DropdownIndicator: () => (
-              <div className={css.dropdown}>
-                {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
-              </div>
-            ),
+            DropdownIndicator: () =>
+              hasDropdownIcon && (
+                <div className={css.dropdown}>
+                  <Icon name="chevron-down" fontSize={20} color="#667085" />
+                </div>
+              ),
             SingleValue: CustomSingleValue,
+            ClearIndicator: CustomClearIndicator,
           }}
           styles={{
             singleValue: (provided, state) => ({
@@ -140,12 +150,14 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           components={{
             Option: props => <CustomOption {...props} value={selectedVal} />,
             Control: props => <CustomControl ref={selectRef} {...props} icon={icon} />,
-            DropdownIndicator: () => (
-              <div className={css.dropdown}>
-                {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
-              </div>
-            ),
+            DropdownIndicator: () =>
+              hasDropdownIcon && (
+                <div className={css.dropdown}>
+                  <Icon name="chevron-down" fontSize={20} color="#667085" />
+                </div>
+              ),
             SingleValue: CustomSingleValue,
+            ClearIndicator: CustomClearIndicator,
           }}
           styles={{
             singleValue: (provided, state) => ({
@@ -178,12 +190,14 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           components={{
             Option: props => <CustomOption {...props} value={selectedVal} />,
             Control: props => <CustomControl {...props} icon={icon} />,
-            DropdownIndicator: () => (
-              <div className={css.dropdown}>
-                {hasDropdownIcon && <Icon name="chevron-down" fontSize={20} color="#667085" />}
-              </div>
-            ),
+            DropdownIndicator: () =>
+              hasDropdownIcon && (
+                <div className={css.dropdown}>
+                  <Icon name="chevron-down" fontSize={20} color="#667085" />
+                </div>
+              ),
             SingleValue: CustomSingleValue,
+            ClearIndicator: CustomClearIndicator,
           }}
           styles={{
             singleValue: (provided, state) => ({
