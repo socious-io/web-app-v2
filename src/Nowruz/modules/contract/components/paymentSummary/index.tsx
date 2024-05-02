@@ -19,7 +19,8 @@ export const PaymentSummary: React.FC<PaymentSummaryProps> = ({
   currency,
   hasFeeDiscount,
 }) => {
-  const sociousPercent = Math.trunc((sociousFee / amount) * 1000) / 10;
+  const originalSociousFee = hasFeeDiscount ? sociousFee * 2 : sociousFee;
+  const sociousPercent = Math.trunc((originalSociousFee / amount) * 1000) / 10;
   const stripePercent = Math.trunc((stripeFee / amount) * 1000) / 10;
   const symbol = currency === 'JPY' ? '¥' : currency === 'USD' ? '$' : '';
 
@@ -41,10 +42,10 @@ export const PaymentSummary: React.FC<PaymentSummaryProps> = ({
       <Divider />
       <div className="flex flex-col gap-2">
         {amount ? renderItems('Job payment', amount) : ''}
-        {sociousFee ? renderItems(`Socious commission (${sociousPercent}%)`, sociousFee) : ''}
+        {sociousFee ? renderItems(`Socious fee (${sociousPercent}%)`, originalSociousFee) : ''}
         {sociousFee &&
           hasFeeDiscount &&
-          renderItems('Discount on Socious fee (50%)', sociousFee / 2, 'text-Success-600')}
+          renderItems('Discount on Socious fee (50%)', originalSociousFee - sociousFee, 'text-Success-600')}
         {stripeFee ? renderItems(`Stripe fees (${stripePercent}%)`, stripeFee) : ''}
       </div>
       <Divider />
