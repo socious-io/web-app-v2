@@ -22,7 +22,8 @@ interface JobListingCardProps {
   job: Job;
 }
 export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
-  const { skills, handleTitleClick, handleClick, handleMarkJob, savedPage, jobListingPage } = useJobListingCard(job);
+  const { skills, handleTitleClick, handleClick, handleMarkJob, displayBookmark, displayNotInterested } =
+    useJobListingCard(job);
   const renderJobFeatures = (iconName: string, feature?: string, subtitle?: string) => {
     if (!feature) return;
     return (
@@ -51,7 +52,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
             </div>
           </div>
         </div>
-        {jobListingPage && (
+        {displayNotInterested && (
           <IconButton
             iconName="thumbs-down"
             size="medium"
@@ -64,7 +65,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
             }}
           />
         )}
-        {(savedPage || jobListingPage) && (
+        {displayBookmark && (
           <IconButton
             iconName="bookmark"
             size="medium"
@@ -135,7 +136,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
         </div>
       </div>
       <div className={css.cardFooter}>
-        {jobListingPage && (
+        {displayNotInterested && (
           <button
             className={css.notInterestedBtn}
             onClick={e => {

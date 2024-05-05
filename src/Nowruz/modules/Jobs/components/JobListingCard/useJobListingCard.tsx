@@ -8,6 +8,10 @@ export const useJobListingCard = (job: Job) => {
   const path = useLocation().pathname;
   const savedPage = path.includes('saved');
   const jobListingPage = path.endsWith('jobs');
+  const recommendedPage = path.includes('recommended');
+
+  const displayBookmark = savedPage || jobListingPage || recommendedPage;
+  const displayNotInterested = jobListingPage || recommendedPage;
 
   const [skills, setSkills] = useState<
     {
@@ -45,5 +49,5 @@ export const useJobListingCard = (job: Job) => {
     }
   };
 
-  return { skills, handleTitleClick, handleClick, handleMarkJob, savedPage, jobListingPage };
+  return { skills, handleTitleClick, handleClick, handleMarkJob, displayBookmark, displayNotInterested };
 };

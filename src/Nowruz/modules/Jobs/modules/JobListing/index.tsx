@@ -8,7 +8,7 @@ import { useJobListing } from './useJobListing';
 import { JobListingCard } from '../../components/JobListingCard';
 
 export const JobsListing = () => {
-  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading, savedPage } = useJobListing();
+  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading, savedPage, recommended } = useJobListing();
 
   return (
     <div className={css.container}>
@@ -20,6 +20,22 @@ export const JobsListing = () => {
         </div>
       ) : (
         <>
+          {!savedPage && !!recommended && (
+            <>
+              <div className={css.header}>
+                <div className={css.title}>Recommended for you</div>
+                <div className="flex items-start justify-between">
+                  <div className={css.subTitle}>Based on your profile and search history</div>
+                  <Button variant="text" color="primary" customStyle="p-0 !text-sm !font-semibold !leading-5 !h-5">
+                    See all recommendations
+                  </Button>
+                </div>
+              </div>
+              <div className="my-6">
+                <JobListingCard job={recommended} />
+              </div>
+            </>
+          )}
           {!savedPage && (
             <div className={css.header}>
               <div className={css.title}>All jobs</div>

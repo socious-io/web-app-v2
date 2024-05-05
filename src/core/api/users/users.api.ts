@@ -1,5 +1,5 @@
 import { post, get } from 'src/core/api/http';
-import { ApplicantsRes, MissionsRes, OffersRes } from 'src/core/api/jobs/jobs.types';
+import { ApplicantsRes, JobsRes, MissionsRes, OffersRes } from 'src/core/api/jobs/jobs.types';
 import { FilterReq, PaginateReq, SuccessRes } from 'src/core/api/types';
 
 import {
@@ -128,4 +128,8 @@ export async function userOffers(params: PaginateReq): Promise<OffersRes> {
 
 export async function userApplicants(params: FilterReq): Promise<ApplicantsRes> {
   return (await get<ApplicantsRes>(`user/applicants`, { params })).data;
+}
+
+export async function recommendedJobs(username: string, params?: PaginateReq): Promise<JobsRes> {
+  return (await get<JobsRes>(`user/${username}/recommend/jobs`)).data;
 }
