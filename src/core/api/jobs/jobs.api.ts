@@ -16,6 +16,7 @@ import {
   Offer,
   Mission,
   HourlyWorkReq,
+  JobMark,
 } from './jobs.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq, FilterReq } from '../types';
@@ -152,4 +153,12 @@ export async function feedbackMission(id: string, content?: string): Promise<Suc
 
 export async function contestMission(id: string, content?: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`missions/${id}/contest`, { content })).data;
+}
+
+export async function markJob(id: string, markAs: JobMark): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`projects/${id}/mark?mark_as=${markAs}`, {})).data;
+}
+
+export async function removeMark(markId: string) {
+  return (await post<SuccessRes>(`projects/mark/${markId}/delete`, {})).data;
 }

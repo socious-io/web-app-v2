@@ -244,3 +244,5 @@ export interface Escrow {
   refound_at?: Date;
   release_id?: string;
 }
+
+export type JobMark = 'SAVE' | 'NOT_INTERESTED';
