@@ -22,7 +22,7 @@ interface JobListingCardProps {
   job: Job;
 }
 export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
-  const { skills, handleTitleClick, handleClick, handleMarkJob } = useJobListingCard(job);
+  const { skills, handleTitleClick, handleClick, handleMarkJob, savedPage, jobListingPage } = useJobListingCard(job);
   const renderJobFeatures = (iconName: string, feature?: string, subtitle?: string) => {
     if (!feature) return;
     return (
@@ -51,24 +51,31 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
             </div>
           </div>
         </div>
-        <IconButton
-          iconName="thumbs-down"
-          size="medium"
-          iconSize={20}
-          iconColor={variables.color_grey_600}
-          customStyle="md:hidden"
-          // onClick={handleSaveJob}
-        />
-        <IconButton
-          iconName="bookmark"
-          size="medium"
-          iconSize={20}
-          iconColor={variables.color_grey_600}
-          onClick={e => {
-            e.stopPropagation();
-            handleMarkJob('SAVE');
-          }}
-        />
+        {jobListingPage && (
+          <IconButton
+            iconName="thumbs-down"
+            size="medium"
+            iconSize={20}
+            iconColor={variables.color_grey_600}
+            customStyle="md:hidden"
+            onClick={e => {
+              e.stopPropagation();
+              handleMarkJob('NOT_INTERESTED');
+            }}
+          />
+        )}
+        {(savedPage || jobListingPage) && (
+          <IconButton
+            iconName="bookmark"
+            size="medium"
+            iconSize={20}
+            iconColor={variables.color_grey_600}
+            onClick={e => {
+              e.stopPropagation();
+              handleMarkJob('SAVE');
+            }}
+          />
+        )}
       </div>
       <div className={css.cardInfo}>
         <div className={css.chips}>
@@ -128,16 +135,17 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
         </div>
       </div>
       <div className={css.cardFooter}>
-        <button
-          className={css.notInterestedBtn}
-          onClick={e => {
-            e.stopPropagation();
-            handleMarkJob('NOT_INTERESTED');
-          }}
-        >
-          {' '}
-          Not interested
-        </button>
+        {jobListingPage && (
+          <button
+            className={css.notInterestedBtn}
+            onClick={e => {
+              e.stopPropagation();
+              handleMarkJob('NOT_INTERESTED');
+            }}
+          >
+            Not interested
+          </button>
+        )}
         <Link href={`/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
       </div>
     </div>

@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
 import { Job, JobMark, markJob } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
 export const useJobListingCard = (job: Job) => {
+  const path = useLocation().pathname;
+  const savedPage = path.includes('saved');
+  const jobListingPage = path.endsWith('jobs');
+
   const [skills, setSkills] = useState<
     {
       value: string;
@@ -41,5 +45,5 @@ export const useJobListingCard = (job: Job) => {
     }
   };
 
-  return { skills, handleTitleClick, handleClick, handleMarkJob };
+  return { skills, handleTitleClick, handleClick, handleMarkJob, savedPage, jobListingPage };
 };

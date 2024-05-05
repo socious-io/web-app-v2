@@ -8,7 +8,7 @@ import { useJobListing } from './useJobListing';
 import { JobListingCard } from '../../components/JobListingCard';
 
 export const JobsListing = () => {
-  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading } = useJobListing();
+  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading, savedPage } = useJobListing();
 
   return (
     <div className={css.container}>
@@ -20,11 +20,13 @@ export const JobsListing = () => {
         </div>
       ) : (
         <>
-          <div className={css.header}>
-            <div className={css.title}>All jobs</div>
-            <div className={css.subTitle}>Discover our most recent jobs</div>
-          </div>
-          {jobsList.map((job) => (
+          {!savedPage && (
+            <div className={css.header}>
+              <div className={css.title}>All jobs</div>
+              <div className={css.subTitle}>Discover our most recent jobs</div>
+            </div>
+          )}
+          {jobsList.map(job => (
             <div key={job.id} className="mt-6">
               <JobListingCard job={job} />
             </div>

@@ -162,3 +162,7 @@ export async function markJob(id: string, markAs: JobMark): Promise<SuccessRes> 
 export async function removeMark(markId: string) {
   return (await post<SuccessRes>(`projects/mark/${markId}/delete`, {})).data;
 }
+
+export async function markedJobs(params: FilterReq): Promise<JobsRes> {
+  return (await get<JobsRes>('projects/mark', { params })).data;
+}
