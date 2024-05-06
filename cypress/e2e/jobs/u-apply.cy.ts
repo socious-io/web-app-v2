@@ -1,5 +1,5 @@
 import { API_SERVER, APP_URL, FIRSTNAME, LASTNAME, USERNAME } from '../authentication/constants';
-import { PROJECT, SENT_APPLICATION, UPLOAD } from '../authentication/mocks';
+import { PROJECT, PROJECTS, SENT_APPLICATION, UPLOAD } from '../authentication/mocks';
 import { User, generateRandomEmail } from '../authentication/utilities';
 
 const SIGNINGUP_EMAIL = generateRandomEmail();
@@ -10,7 +10,7 @@ describe('User Application', () => {
     cy.intercept('GET', `${API_SERVER}/identities*`, req => {
       req.reply(user.getIdentity());
     });
-    cy.intercept('GET', `${API_SERVER}/projects/*`, req => req.reply(200, PROJECT)).as('getProject');
+    cy.intercept('GET', `${API_SERVER}/projects*`, req => req.reply(200, PROJECTS)).as('getProjects');
     cy.intercept('GET', `${API_SERVER}/skills*`, req => req.reply(200, { message: 'success' })).as('getSkills');
     cy.intercept('GET', `${API_SERVER}/notifications*`, req => req.reply(200, { message: 'success' })).as(
       'getNotifications',
@@ -18,6 +18,7 @@ describe('User Application', () => {
     cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
       'getUnreadChatsCount',
     );
+
     cy.intercept('POST', `${API_SERVER}/projects/*/applicants`, req => req.reply(200, SENT_APPLICATION)).as(
       'sendApplication',
     );
@@ -33,7 +34,7 @@ describe('User Application', () => {
     cy.visit(`${APP_URL}/jobs`);
 
     // Go to the job details
-    cy.contains('a', 'Read more').click();
+    cy.get('#job-listing-div').contains('a', 'Read more').click();
     cy.url().should('include', '/jobs/');
 
     // wait for router to switch page
