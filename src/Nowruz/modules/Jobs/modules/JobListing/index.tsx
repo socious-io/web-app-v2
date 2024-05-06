@@ -1,5 +1,6 @@
 import { Skeleton } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 
@@ -8,6 +9,7 @@ import { useJobListing } from './useJobListing';
 import { JobListingCard } from '../../components/JobListingCard';
 
 export const JobsListing = () => {
+  const navigate = useNavigate();
   const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading, savedPage, recommended } = useJobListing();
 
   return (
@@ -26,7 +28,12 @@ export const JobsListing = () => {
                 <div className={css.title}>Recommended for you</div>
                 <div className="flex items-start justify-between">
                   <div className={css.subTitle}>Based on your profile and search history</div>
-                  <Button variant="text" color="primary" customStyle="p-0 !text-sm !font-semibold !leading-5 !h-5">
+                  <Button
+                    variant="text"
+                    color="primary"
+                    customStyle="p-0 !text-sm !font-semibold !leading-5 !h-5"
+                    onClick={() => navigate('./recommended')}
+                  >
                     See all recommendations
                   </Button>
                 </div>

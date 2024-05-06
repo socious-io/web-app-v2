@@ -293,6 +293,21 @@ export const blueprint: RouteObject[] = [
                   };
                 },
               },
+              {
+                path: 'recommended',
+                loader: async () => {
+                  const page = Number(localStorage.getItem('page') || 1);
+                  //TODO: replace jobs API with recommended API
+                  const data = await jobs({ page, status: 'ACTIVE', limit: 3 });
+                  return data;
+                },
+                async lazy() {
+                  const { RecommendedList } = await import('src/Nowruz/pages/jobs/recommendedList');
+                  return {
+                    Component: Protect(RecommendedList, 'users'),
+                  };
+                },
+              },
             ],
           },
           {
