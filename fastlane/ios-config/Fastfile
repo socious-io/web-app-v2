@@ -141,11 +141,11 @@ platform :ios do
   desc "Submit a new Beta Build to Test Flight"
   lane :beta do
     update_project_team(
-      path: "./App/App.xcodeproj",
+      path: "./App/App.xcworkspace",
       teamid: "52CW5QW5D2"
     )
     match
-    build_app(scheme: "App", project:"./App/App.xcodeproj")
+    build_app(scheme: "App", project:"./App/App.xcworkspace")
     upload_to_testflight
     # update_code_signing_settings(
     #   use_automatic_signing: true,
