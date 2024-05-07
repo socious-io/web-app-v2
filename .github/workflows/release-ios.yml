@@ -81,7 +81,9 @@ jobs:
           export LANG=en_US.UTF-8
           cp -R fastlane/ios-config ios
           mv ios/ios-config ios/fastlane
-          cd ios
+          cd ios/App
+          pod install
+          cd ..
           fastlane match appstore --readonly
           fastlane beta --verbose
         env:

@@ -145,7 +145,7 @@ platform :ios do
       teamid: "52CW5QW5D2"
     )
     match
-    build_app(scheme: "App", project:"./App/App.xcworkspace")
+    build_app(scheme: "App", project:"./App/App.xcodeproj")
     upload_to_testflight
     # update_code_signing_settings(
     #   use_automatic_signing: true,
