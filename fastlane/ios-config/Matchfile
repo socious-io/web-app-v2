@@ -1,7 +1,6 @@
 type("appstore") # The default type, can be: appstore, adhoc, enterprise or development
 storage_mode("git")
 app_identifier(["jp.socious.network"])
-username("seira0819@gmail.com")
 # username("user@fastlane.tools") # Your Apple Developer Portal username
 
 # For all available options run `fastlane match --help`
