@@ -140,6 +140,10 @@ platform :ios do
 
   desc "Submit a new Beta Build to Test Flight"
   lane :beta do
+    update_project_team(
+      path: "./App/App.xcodeproj",
+      teamid: "52CW5QW5D2"
+    )
     build_app(scheme: "App", project:"./App/App.xcodeproj")
     match
     upload_to_testflight
