@@ -35,6 +35,10 @@ const schema = yup
       is: employmentType => employmentType.value === 'PART_TIME',
       then: schema => schema.required('Required'),
     }),
+    totalHours: yup.string().when('employmentType', {
+      is: employmentType => employmentType.value === 'ONE_OFF',
+      then: schema => schema.required('Required'),
+    }),
     startMonth: yup.object().shape({
       label: yup.string().required('Required'),
       value: yup.string(),
@@ -227,6 +231,7 @@ export const useExperienceDetails = (
       },
       employmentType: { value: experience?.employment_type || '', label: empTypeLabel },
       weeklyHours: experience?.weekly_hours?.toString() || '',
+      totalHours: experience?.total_hours?.toString() || '',
     };
     reset(initialVal);
   };
@@ -318,6 +323,7 @@ export const useExperienceDetails = (
       city,
       employmentType,
       weeklyHours,
+      totalHours,
     } = getValues();
 
     let organizationId = org.value;
@@ -340,6 +346,7 @@ export const useExperienceDetails = (
       country,
       city: city.label,
       weekly_hours: weeklyHours ? parseFloat(weeklyHours) : null,
+      total_hours: totalHours ? parseFloat(totalHours) : null,
     };
     if (employmentType.value) payload.employment_type = employmentType.value;
     if (endYear.value) {

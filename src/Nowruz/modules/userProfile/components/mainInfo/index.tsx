@@ -89,7 +89,7 @@ export const MainInfo = () => {
       {profileType === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
       {org.industry && renderData('Industry', 'globe-04', org.industry)}
       {size && renderData('Size', 'users-01', size)}
-      {org.website && <Website url={org.website ?? ''} />}
+      {org.website && <Website url={org.website ?? ''} truncate />}
     </div>
   );
 };

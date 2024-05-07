@@ -59,7 +59,7 @@ export const Dashboard = () => {
             )}
             {type === 'users' && (
               <div className="grid grid-cols-2 md:grid-cols-3 grid-rows-4 md:grid-rows-2 gap-4">
-                <div className="row-span-2 col-span-2 md:col-span-1">
+                <div className="row-span-1 md:row-span-2 col-span-2 md:col-span-1">
                   <Impact myProfile={true} point={profileData.impact_points} />
                 </div>
                 <div className="row-span-1 col-span-1">

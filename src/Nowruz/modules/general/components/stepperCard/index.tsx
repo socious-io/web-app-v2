@@ -122,7 +122,7 @@ export const StepperCard: React.FC<StepperCardProps> = props => {
             {supprtingText}
           </Typography>
         </div>
-        <div className="flex flex-col gap-5 mb-5">
+        <div className="flex flex-col items-start gap-5 mb-5">
           {!!descriptionStr && (
             <div>
               <Typography variant="h5" color={variables.color_grey_600}>
@@ -139,7 +139,7 @@ export const StepperCard: React.FC<StepperCardProps> = props => {
             <div>
               <Button
                 variant="text"
-                color="primary"
+                color={verifyButton.disabled ? 'inherit' : 'primary'}
                 disabled={verifyButton.disabled}
                 onClick={verifyButton.action}
                 customStyle="!p-0 !font-semibold !text-sm !leading-5 !h-5"
@@ -152,7 +152,7 @@ export const StepperCard: React.FC<StepperCardProps> = props => {
             <div>
               <Button
                 variant="text"
-                color="primary"
+                color={claimButton.disabled ? 'inherit' : 'primary'}
                 disabled={claimButton.disabled}
                 onClick={claimButton.action}
                 customStyle="!p-0 !font-semibold !text-sm !leading-5 !h-5"

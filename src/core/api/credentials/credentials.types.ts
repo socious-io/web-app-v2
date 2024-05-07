@@ -26,6 +26,7 @@ export interface CredentialEducationRes {
   avatar?: Media;
   created_at: Date;
   updated_at: Date;
+  org_image?: Media;
 }
 
 export interface ClaimVCRes {

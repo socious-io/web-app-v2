@@ -32,8 +32,8 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
     screeningQuestions: QuestionsRes;
   };
 
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   const [openAlert, setOpenAlert] = useState(false);
@@ -102,19 +102,21 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
       {renderJobLocation()}
       {renderJobFeatures(
         'mouse',
-        PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === jobDetail.remote_preference)?.label,
+        PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === jobDetail.remote_preference)?.label,
       )}
-      {renderJobFeatures('calendar', PROJECT_TYPE_V2.find((level) => level.value === jobDetail.project_type)?.label)}
+      {renderJobFeatures('calendar', PROJECT_TYPE_V2.find(level => level.value === jobDetail.project_type)?.label)}
       {renderJobFeatures(
         'hourglass-03',
-        PROJECT_LENGTH_V3.find((level) => level.value === jobDetail.project_length)?.label,
+        PROJECT_LENGTH_V3.find(level => level.value === jobDetail.project_length)?.label,
       )}
 
       {renderJobFeatures(
         'target-02',
-        EXPERIENCE_LEVEL_V2.find((level) => level.value === jobDetail.experience_level)?.label,
+        EXPERIENCE_LEVEL_V2.find(level => level.value === jobDetail.experience_level)?.label,
       )}
       {jobDetail.payment_type === 'PAID' &&
+        jobDetail.payment_range_lower &&
+        jobDetail.payment_range_higher &&
         renderJobFeatures(
           'currency-dollar-circle',
           ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
