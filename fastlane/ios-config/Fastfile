@@ -94,13 +94,13 @@ default_platform(:ios)
 
 #  # build the app
 #  gym(
-#    scheme: "example-scheme", # replace with name of your project’s scheme
+#    scheme: "example-scheme", # replace with name of your project's scheme
 #    output_name: output_name,
 #    configuration: "Release",
 #    export_options: {
 #      method: export_method,
 #      provisioningProfiles: {
-#        app_identifier => profile_name # here you can add any additional bundle identifiers and their associated provisioning profiles if you’re also building an app extension or other bundle identifier
+#        app_identifier => profile_name # here you can add any additional bundle identifiers and their associated provisioning profiles if you're also building an app extension or other bundle identifier
 #      }
 #    }
 #  )
@@ -124,16 +124,6 @@ platform :ios do
 
   before_all do
     setup_ci
-    load_asc_api_token
-  end
-
-  desc "Runs all the tests"
-  lane :test do
-    
-  end
-
-  desc "Load ASC API Key information to use in subsequent lanes"
-  lane :load_asc_api_key do
     app_store_connect_api_key(
       key_id: ENV["ASC_KEY_ID"],
       issuer_id: ENV["ASC_ISSUER_ID"],
@@ -143,12 +133,21 @@ platform :ios do
     )
   end
 
+  desc "Runs all the tests"
+  lane :test do
+    
+  end
+
   desc "Submit a new Beta Build to Test Flight"
   lane :beta do
-    setup_ci
-    build_app(scheme: "App")
+    build_app(scheme: "App", project:"./App/App.xcodeproj")
     match
     upload_to_testflight
+    # update_code_signing_settings(
+    #   use_automatic_signing: true,
+    #   team_id: "Bla Bla",
+    #   path: "./Wolke.xcodeproj"
+    # )
     # crashlytics
   
     # sh "your_script.sh"
