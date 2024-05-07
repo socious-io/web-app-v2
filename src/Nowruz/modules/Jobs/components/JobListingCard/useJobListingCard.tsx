@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
-import { Job, JobMark, markJob } from 'src/core/api';
+import { Job, JobMark, markJob, removeMark } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
-export const useJobListingCard = (job: Job) => {
-  const path = useLocation().pathname;
-  const savedPage = path.includes('saved');
-  const jobListingPage = path.endsWith('jobs');
+export const useJobListingCard = (job: Job, saveAction?: () => void) => {
+  const [jobVal, setJobVal] = useState(job);
 
   const [skills, setSkills] = useState<
     {
@@ -31,19 +29,38 @@ export const useJobListingCard = (job: Job) => {
   }, [job]);
   const navigate = useNavigate();
   const handleClick = () => {
-    if (isTouchDevice()) navigate(`/jobs/${job.id}`);
+    if (isTouchDevice() && !jobVal.not_interested) navigate(`/jobs/${job.id}`);
   };
   const handleTitleClick = () => {
-    navigate(`/jobs/${job.id}`);
+    if (!jobVal.not_interested) navigate(`/jobs/${job.id}`);
   };
 
-  const handleMarkJob = async (mark: JobMark) => {
+  const handleBookmark = async () => {
     try {
-      await markJob(job.id, mark);
+      if (jobVal.saved) {
+        await removeMark(job.id);
+        setJobVal({ ...jobVal, saved: false });
+        if (saveAction) await saveAction();
+      } else {
+        await markJob(job.id, 'SAVE');
+        setJobVal({ ...jobVal, saved: true });
+      }
     } catch (e) {
-      console.log('error in saving job', e);
+      console.log('error in bookmark click', e);
     }
   };
 
-  return { skills, handleTitleClick, handleClick, handleMarkJob, savedPage, jobListingPage };
+  const handleNotInterested = async () => {
+    try {
+      if (jobVal.saved) {
+        const res = await removeMark(job.id);
+      }
+      const res = await markJob(job.id, 'NOT_INTERESTED');
+      setJobVal({ ...jobVal, saved: false, not_interested: true });
+    } catch (e) {
+      console.log('error in bookmark click', e);
+    }
+  };
+
+  return { skills, handleTitleClick, handleClick, jobVal, handleBookmark, handleNotInterested };
 };

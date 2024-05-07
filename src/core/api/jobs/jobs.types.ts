@@ -115,6 +115,8 @@ export interface Job extends JobReq {
   updated_at?: Date;
   deleted_at?: Date;
   expires_at?: Date;
+  saved?: boolean;
+  not_interested?: boolean;
 }
 
 export interface JobCategoriesRes {
