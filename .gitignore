@@ -39,3 +39,7 @@ storybook-static
 
 ios
 android
+
+# Ruby Bundle Files
+.bundle
+vendor
