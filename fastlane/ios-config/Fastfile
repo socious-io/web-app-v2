@@ -141,7 +141,7 @@ platform :ios do
   desc "Submit a new Beta Build to Test Flight"
   lane :beta do
     update_project_team(
-      path: "./App/App.xcworkspace",
+      path: "./App/App.xcodeproj",
       teamid: "52CW5QW5D2"
     )
     match
