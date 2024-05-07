@@ -144,8 +144,8 @@ platform :ios do
       path: "./App/App.xcodeproj",
       teamid: "52CW5QW5D2"
     )
-    build_app(scheme: "App", project:"./App/App.xcodeproj")
     match
+    build_app(scheme: "App", project:"./App/App.xcodeproj")
     upload_to_testflight
     # update_code_signing_settings(
     #   use_automatic_signing: true,
