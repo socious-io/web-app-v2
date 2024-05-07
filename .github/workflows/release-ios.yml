@@ -86,7 +86,7 @@ jobs:
           fastlane match appstore
           fastlane beta --verbose
         env:
-          MATCH_GIT_URL: ${{ secrets.FASTLANE_MATCH_GIT_URL }}
+          MATCH_GIT_URL: ${{ vars.FASTLANE_MATCH_GIT_URL }}
           MATCH_PASSWORD: ${{ secrets.IOS_MATCH_PASSWORD }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.FASTLANE_SECRETS_GIT_PAT_TOKEN }}
           ASC_KEY_ID: ${{ secrets.IOS_ASC_KEY_ID }}

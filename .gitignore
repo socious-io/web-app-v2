@@ -43,3 +43,4 @@ android
 # Ruby Bundle Files
 .bundle
 vendor
+Gemfile.lock
