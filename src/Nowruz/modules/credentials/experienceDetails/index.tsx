@@ -135,6 +135,17 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           disabled={readonly}
         />
       )}
+      {employmentTypeVal?.value === 'ONE_OFF' && (
+        <Input
+          id="total-hours"
+          name="totalHours"
+          register={register}
+          label="Estimated total hours*"
+          postfix="hrs"
+          noBorderPostfix
+          disabled={readonly}
+        />
+      )}
       <div className="flex gap-4 items-start">
         <SearchDropdown
           id="start-month"
