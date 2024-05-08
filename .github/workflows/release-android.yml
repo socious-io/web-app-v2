@@ -84,8 +84,13 @@ jobs:
       - name: Deploying to Google Play
         run: |
           cd android
-
+          echo replacing FASTLANE_SUPPLY_JSON_KEY_PRIVATE_ID
+          sed -i 's|FASTLANE_SUPPLY_JSON_KEY_PRIVATE_ID|'${{ secrets.FASTLANE_SUPPLY_JSON_KEY_PRIVATE_ID }}'|g' fastlane/json-key.json
+          echo replacing FASTLANE_SUPPLY_JSON_KEY_PRIVATE_KEY
+          sed -i 's|FASTLANE_SUPPLY_JSON_KEY_PRIVATE_KEY|'${{ secrets.FASTLANE_SUPPLY_JSON_KEY_PRIVATE_KEY }}'|g' fastlane/json-key.json
+          echo replacing FASTLANE_SUPPLY_JSON_KEY_CLIENT_ID
           sed -i 's|FASTLANE_SUPPLY_JSON_KEY_CLIENT_ID|'${{ vars.FASTLANE_SUPPLY_JSON_KEY_CLIENT_ID }}'|g' fastlane/json-key.json
+          echo replacing FASTLANE_SUPPLY_JSON_KEY_CLIENT_EMAIL
           sed -i 's|FASTLANE_SUPPLY_JSON_KEY_CLIENT_EMAIL|'${{ vars.FASTLANE_SUPPLY_JSON_KEY_CLIENT_EMAIL }}'|g' fastlane/json-key.json
           fastlane deploy --verbose
           
