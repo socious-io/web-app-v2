@@ -48,7 +48,6 @@ platform :android do
   lane :deploy do
     upload_to_play_store(
       apk: './app/build/outputs/apk/release/app-release.apk'
-      
     )
   end
 
