@@ -46,7 +46,10 @@ platform :android do
 
   desc "Deploy the new version to Playstore"
   lane :deploy do
-    upload_to_playstore
+    upload_to_play_store(
+      apk: './app/build/outputs/apk/release/app-release.apk'
+      
+    )
   end
 
   # "android.injected.version.code" => current_build_number
