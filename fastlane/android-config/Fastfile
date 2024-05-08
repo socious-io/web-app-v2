@@ -31,7 +31,7 @@ platform :android do
   end
 
   desc "Build a new version of the App"
-  lane :release do
+  lane :build do
     gradle(
       task: 'clean assembleRelease',
       print_command: false,
@@ -42,6 +42,11 @@ platform :android do
         "android.injected.signing.key.password" => "ANDROID_KEY_PASSWORD"
       }
     )
+  end
+
+  desc "Deploy the new version of the App to Playstore"
+  lane :deploy do
+    upload_to_playstore
   end
 
   # "android.injected.version.code" => current_build_number

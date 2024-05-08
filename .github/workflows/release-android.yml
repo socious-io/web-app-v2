@@ -2,8 +2,10 @@ name: CD - Release - Android
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - ci
+    # tags:
+    #   - v*
 
 jobs:
   setup-fastlane:
@@ -77,17 +79,28 @@ jobs:
           sed -i 's|ANDROID_KEY_STORE_PASSWORD|'${{ secrets.ANDROID_KEY_STORE_PASSWORD }}'|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_LOCATION|${{ github.workspace }}/android/build-release.keystore|g' fastlane/Fastfile
           keytool -genkey -storepass "${{ secrets.ANDROID_KEY_STORE_PASSWORD }}" -keypass "${{ secrets.ANDROID_KEY_PASSWORD }}" -alias ${{ secrets.ANDROID_KEY_ALIAS }} -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=${{ vars.KeytoolFirstName }} ${{ vars.KeytoolLastName }}, OU=${{ vars.KeytoolOrganizationUnit }}, O=${{ vars.KeytoolOrganization }}, L=${{ vars.KeytoolCityOrLocality }}, S=${{ vars.KeytoolStateOrProvience }}, C=${{ vars.KeytoolTwoLetterCountryCode}}" -keystore build-release.keystore
-          fastlane release --verbose
+          fastlane build --verbose
+
+      - name: Deploying to Google Play
+        run: |
+          cd android
+          sed -i 's|FASTLANE_SUPPLY_JSON_KEY_PRIVATE_ID|'${{ secrets.FASTLANE_SUPPLY_JSON_KEY_PRIVATE_ID }}'|g' fastlane/json-key.json
+          sed -i 's|FASTLANE_SUPPLY_JSON_KEY_PRIVATE_KEY|'${{ secrets.FASTLANE_SUPPLY_JSON_KEY_PRIVATE_KEY }}'|g' fastlane/json-key.json
+          sed -i 's|FASTLANE_SUPPLY_JSON_KEY_CLIENT_ID|'${{ vars.FASTLANE_SUPPLY_JSON_KEY_CLIENT_ID }}'|g' fastlane/json-key.json
+          sed -i 's|FASTLANE_SUPPLY_JSON_KEY_CLIENT_EMAIL|'${{ vars.FASTLANE_SUPPLY_JSON_KEY_CLIENT_EMAIL }}'|g' fastlane/json-key.json
+          fastlane deploy --verbose
           
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./android/app/build/outputs/apk/release/app-release.apk
-          asset_name: Socious.apk
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "Example Release Text"
+          
+      #     fastlane release --verbose -> Configurating Fastlane
+      # - name: Upload binaries to release
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: ./android/app/build/outputs/apk/release/app-release.apk
+      #     asset_name: Socious.apk
+      #     tag: ${{ github.ref }}
+      #     overwrite: true
+      #     body: "Example Release Text"
 
       
 

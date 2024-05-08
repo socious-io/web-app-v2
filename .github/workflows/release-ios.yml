@@ -2,8 +2,10 @@ name: CD - Release - iOS
 
 on:
   push:
-    branches:
-      - ci
+    tags:
+      - v*
+    # branches:
+    #   - ci
 
 jobs:
   setup-fastlane:
