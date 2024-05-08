@@ -93,6 +93,10 @@ jobs:
           echo replacing FASTLANE_SUPPLY_JSON_KEY_PRIVATE_KEY
           sed -i 's|FASTLANE_SUPPLY_JSON_KEY_PRIVATE_KEY|"${{ secrets.FASTLANE_SUPPLY_JSON_KEY_PRIVATE_KEY }}"|g' fastlane/json-key.json
           sed -i 's|RUNNER_WORKSPACE|${{ github.workspace }}|g' fastlane/Appfile
+          cd fastlane
+          ls -al
+          pwd
+          cat json-key.json
           fastlane deploy --verbose
           
           
