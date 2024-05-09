@@ -67,7 +67,7 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Configurating Fastlane
+      - name: Configurating Fastlane for Gradles
         run: |
           export LC_ALL=en_US.UTF-8
           export LANG=en_US.UTF-8
@@ -78,16 +78,31 @@ jobs:
           sed -i 's|ANDROID_KEY_PASSWORD|'${{ secrets.ANDROID_KEY_PASSWORD }}'|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_PASSWORD|'${{ secrets.ANDROID_KEY_STORE_PASSWORD }}'|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_LOCATION|${{ github.workspace }}/android/build-release.keystore|g' fastlane/Fastfile
-          keytool -genkey -storepass "${{ secrets.ANDROID_KEY_STORE_PASSWORD }}" -keypass "${{ secrets.ANDROID_KEY_PASSWORD }}" -alias ${{ secrets.ANDROID_KEY_ALIAS }} -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=${{ vars.KeytoolFirstName }} ${{ vars.KeytoolLastName }}, OU=${{ vars.KeytoolOrganizationUnit }}, O=${{ vars.KeytoolOrganization }}, L=${{ vars.KeytoolCityOrLocality }}, S=${{ vars.KeytoolStateOrProvience }}, C=${{ vars.KeytoolTwoLetterCountryCode}}" -keystore build-release.keystore
-          fastlane build --verbose
 
-      - name: Deploying to Google Play
+      - name: Generate Android Key for Signing the App    
+        run: |
+          cd android
+          keytool -genkey -storepass "${{ secrets.ANDROID_KEY_STORE_PASSWORD }}" -keypass "${{ secrets.ANDROID_KEY_PASSWORD }}" -alias ${{ secrets.ANDROID_KEY_ALIAS }} -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=${{ vars.KeytoolFirstName }} ${{ vars.KeytoolLastName }}, OU=${{ vars.KeytoolOrganizationUnit }}, O=${{ vars.KeytoolOrganization }}, L=${{ vars.KeytoolCityOrLocality }}, S=${{ vars.KeytoolStateOrProvience }}, C=${{ vars.KeytoolTwoLetterCountryCode}}" -keystore build-release.keystore
+
+      # - name: Building Assemble release (.APK)
+      #   run: |
+      #     cd android
+      #     fastlane build --verbose
+
+      - name: Building Bundle release (.AAB)
+        run: |
+          fastlane release --verbose
+
+      - name: Configuring Google Play Credentials
         run: |
           cd android
           echo ${{ secrets.FASTLANE_SUPPLY_JSON_KEY_BASE64 }} >> fastlane/json-key.json-base64
           cat fastlane/json-key.json-base64 | base64 --decode > fastlane/json-key.json
           sed -i 's|RUNNER_WORKSPACE|${{ github.workspace }}|g' fastlane/Appfile
-          ls -al fastlane
+
+      - name: Deploying to Google Play
+        run: |
+          cd android
           fastlane deploy --verbose
           
           
@@ -96,7 +111,7 @@ jobs:
       #   uses: svenstaro/upload-release-action@v2
       #   with:
       #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: ./android/app/build/outputs/apk/release/app-release.apk
+      #     file: ./android/app/build/outputs/apk/release/app-release.apk # AAB -> ./android/app/build/outputs/bundle/app-release.aab
       #     asset_name: Socious.apk
       #     tag: ${{ github.ref }}
       #     overwrite: true

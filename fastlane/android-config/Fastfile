@@ -30,7 +30,7 @@ platform :android do
     # You can also use other beta testing services here
   end
 
-  desc "Build a new version of the App"
+  desc "Build a development new version of the App"
   lane :build do
     gradle(
       task: 'clean assembleRelease',
@@ -44,10 +44,24 @@ platform :android do
     )
   end
 
+  desc "Build a release new version of the App"
+  lane :release do
+    gradle(
+      task: 'clean bundleRelease',
+      print_command: false,
+      properties: {
+        "android.injected.signing.store.file" => "ANDROID_KEY_STORE_LOCATION",
+        "android.injected.signing.store.password" => "ANDROID_KEY_STORE_PASSWORD",
+        "android.injected.signing.key.alias" => "ANDROID_KEY_ALIAS",
+        "android.injected.signing.key.password" => "ANDROID_KEY_PASSWORD"
+      }
+    )
+  end
+
   desc "Deploy the new version to Playstore"
   lane :deploy do
     upload_to_play_store(
-      apk: './app/build/outputs/apk/release/app-release.apk'
+      aab: './app/build/outputs/bundle/app-release.aab'
     )
   end
 
