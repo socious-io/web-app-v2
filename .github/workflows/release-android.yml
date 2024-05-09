@@ -1,11 +1,14 @@
 name: CD - Release - Android
 
 on:
+  release:
+    types: [published, unpublished, created, edited, prereleased, released]
   push:
+    tags:
+      - v*
     branches:
       - ci
-    # tags:
-    #   - v*
+    
 
 jobs:
   setup-fastlane:
@@ -14,78 +17,90 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-
-      - name: Setup Ruby, JRuby and TruffleRuby
-        uses: ruby/setup-ruby@v1.174.0
-        with:
-          ruby-version: '3.3' # Not needed with a .ruby-version file
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - name: Install Node.js dependencies
+      - name: Echo Release
         run: |
-          npm cache clean --force
-          npm install
+          echo ${{ github.event.release.tag_name }}
+          echo ${{ github.event.release.body }}
+          echo ${{ github.event.release.prerelease }}
 
-      - name: Making Android Release Code
+      - if: ${{ github.event.release.prerelease == true }}
+        name: Echo Pre Release
         run: |
-          echo 'STORYBOOK_FIGMA_ACCESS_TOKEN=${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}' >> .env
-          echo 'VITE_ACCESS_EXPIRE=${{ vars.ACCESS_EXPIRE }}' >> .env
-          echo 'VITE_APP_URL=${{ vars.APP_URL }}' >> .env
-          echo 'VITE_BASE_URL=${{ vars.BASE_URL }}' >> .env
-          echo 'VITE_CLIENT_SECRET_TOKEN_CLIENT_ID=${{ secrets.CLIENT_SECRET_TOKEN_CLIENT_ID }}' >> .env
-          echo 'VITE_CLIENT_SECRET_TOKEN_REDIRECT_URL=${{ vars.CLIENT_SECRET_TOKEN_REDIRECT_URL }}' >> .env
-          echo 'VITE_DAPP_ENV=${{ vars.DAPP_ENV }}' >> .env
-          echo 'VITE_ENV=${{ vars.ENV }}' >> .env
-          echo 'VITE_GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}' >> .env
-          echo 'VITE_GOOGLE_RECAPTCHA_SITE_KEY=${{ secrets.GOOGLE_RECAPTCHA_SITE_KEY }}' >> .env
-          echo 'VITE_JP_STRIPE_PUBLIC_KEY=${{ secrets.JP_STRIPE_PUBLIC_KEY }}' >> .env
-          echo 'VITE_LOG_DISCORD_WEBHOOK=${{ secrets.LOG_DISCORD_WEBHOOK }}' >> .env
-          echo 'VITE_REFRESH_EXPIRE=${{ vars.REFRESH_EXPIRE }}' >> .env
-          echo 'VITE_SOCKET_URL=${{ vars.SOCKET_URL }}' >> .env
-          echo 'VITE_STRIPE_PUBLIC_KEY=${{ vars.STRIPE_PUBLIC_KEY }}' >> .env
-          npm run make:android
+          echo This is a prerelease
 
-      - name: Configurating Bundler
-        run: |
-          gem install bundler
-          cp Gemfile android
+      #
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '20'
 
-      - name: Installing Fastlane with Bundler
-        run: |
-          cd android
-          bundle update
-          bundle install
+      # - name: Setup Ruby, JRuby and TruffleRuby
+      #   uses: ruby/setup-ruby@v1.174.0
+      #   with:
+      #     ruby-version: '3.3' # Not needed with a .ruby-version file
+      #     bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - name: Setup Java JDK
-        uses: actions/setup-java@v4.2.1
-        with:
-          distribution: 'oracle' # See 'Supported distributions' for available options
-          java-version: '17'
-          cache: 'gradle'
+      # - name: Install Node.js dependencies
+      #   run: |
+      #     npm cache clean --force
+      #     npm install
 
-      - name: Configurating Fastlane for Gradles
-        run: |
-          export LC_ALL=en_US.UTF-8
-          export LANG=en_US.UTF-8
-          cp -R fastlane/android-config android
-          mv android/android-config android/fastlane
-          cd android
-          sed -i 's|ANDROID_KEY_ALIAS|'${{ secrets.ANDROID_KEY_ALIAS }}'|g' fastlane/Fastfile
-          sed -i 's|ANDROID_KEY_PASSWORD|"${{ secrets.ANDROID_KEY_PASSWORD }}"|g' fastlane/Fastfile
-          sed -i 's|ANDROID_KEY_STORE_PASSWORD|"${{ secrets.ANDROID_KEY_STORE_PASSWORD }}"|g' fastlane/Fastfile
-          sed -i 's|ANDROID_KEY_STORE_LOCATION|${{ github.workspace }}/android/build-release.keystore|g' fastlane/Fastfile
-          sed -i 's|"|'\''|g' fastlane/Fastfile
-          cat fastlane/Fastfile
+      # - name: Making Android Release Code
+      #   run: |
+      #     echo 'STORYBOOK_FIGMA_ACCESS_TOKEN=${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}' >> .env
+      #     echo 'VITE_ACCESS_EXPIRE=${{ vars.ACCESS_EXPIRE }}' >> .env
+      #     echo 'VITE_APP_URL=${{ vars.APP_URL }}' >> .env
+      #     echo 'VITE_BASE_URL=${{ vars.BASE_URL }}' >> .env
+      #     echo 'VITE_CLIENT_SECRET_TOKEN_CLIENT_ID=${{ secrets.CLIENT_SECRET_TOKEN_CLIENT_ID }}' >> .env
+      #     echo 'VITE_CLIENT_SECRET_TOKEN_REDIRECT_URL=${{ vars.CLIENT_SECRET_TOKEN_REDIRECT_URL }}' >> .env
+      #     echo 'VITE_DAPP_ENV=${{ vars.DAPP_ENV }}' >> .env
+      #     echo 'VITE_ENV=${{ vars.ENV }}' >> .env
+      #     echo 'VITE_GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}' >> .env
+      #     echo 'VITE_GOOGLE_RECAPTCHA_SITE_KEY=${{ secrets.GOOGLE_RECAPTCHA_SITE_KEY }}' >> .env
+      #     echo 'VITE_JP_STRIPE_PUBLIC_KEY=${{ secrets.JP_STRIPE_PUBLIC_KEY }}' >> .env
+      #     echo 'VITE_LOG_DISCORD_WEBHOOK=${{ secrets.LOG_DISCORD_WEBHOOK }}' >> .env
+      #     echo 'VITE_REFRESH_EXPIRE=${{ vars.REFRESH_EXPIRE }}' >> .env
+      #     echo 'VITE_SOCKET_URL=${{ vars.SOCKET_URL }}' >> .env
+      #     echo 'VITE_STRIPE_PUBLIC_KEY=${{ vars.STRIPE_PUBLIC_KEY }}' >> .env
+      #     npm run make:android
 
-      - name: Extracting Android Key for Signing the App    
-        run: |
-          cd android
-          echo ${{ secrets.ANDROID_KEY_STORE_BASE64 }} >> build-release.keystore-base64
-          cat build-release.keystore-base64 | base64 --decode > build-release.keystore
+      # - name: Configurating Bundler
+      #   run: |
+      #     gem install bundler
+      #     cp Gemfile android
+
+      # - name: Installing Fastlane with Bundler
+      #   run: |
+      #     cd android
+      #     bundle update
+      #     bundle install
+
+      # - name: Setup Java JDK
+      #   uses: actions/setup-java@v4.2.1
+      #   with:
+      #     distribution: 'oracle' # See 'Supported distributions' for available options
+      #     java-version: '17'
+      #     cache: 'gradle'
+
+      # - name: Configurating Fastlane for Gradles
+      #   run: |
+      #     export LC_ALL=en_US.UTF-8
+      #     export LANG=en_US.UTF-8
+      #     cp -R fastlane/android-config android
+      #     mv android/android-config android/fastlane
+      #     cd android
+      #     sed -i 's|ANDROID_KEY_ALIAS|'${{ secrets.ANDROID_KEY_ALIAS }}'|g' fastlane/Fastfile
+      #     sed -i 's|ANDROID_KEY_PASSWORD|"${{ secrets.ANDROID_KEY_PASSWORD }}"|g' fastlane/Fastfile
+      #     sed -i 's|ANDROID_KEY_STORE_PASSWORD|"${{ secrets.ANDROID_KEY_STORE_PASSWORD }}"|g' fastlane/Fastfile
+      #     sed -i 's|ANDROID_KEY_STORE_LOCATION|${{ github.workspace }}/android/build-release.keystore|g' fastlane/Fastfile
+      #     sed -i 's|"|'\''|g' fastlane/Fastfile
+
+      # - name: Extracting Android Key for Signing the App    
+      #   run: |
+      #     cd android
+      #     echo ${{ secrets.ANDROID_KEY_STORE_BASE64 }} >> build-release.keystore-base64
+      #     cat build-release.keystore-base64 | base64 --decode > build-release.keystore
+      #
 
       # - name: Generate Android Key for Signing the App    
       #   run: |
@@ -97,23 +112,25 @@ jobs:
       #     cd android
       #     fastlane build --verbose
 
-      - name: Configuring Google Play Credentials
-        run: |
-          cd android
-          echo ${{ secrets.FASTLANE_SUPPLY_JSON_KEY_BASE64 }} >> fastlane/json-key.json-base64
-          cat fastlane/json-key.json-base64 | base64 --decode > fastlane/json-key.json
-          sed -i 's|RUNNER_WORKSPACE|${{ github.workspace }}|g' fastlane/Appfile
-          sed -i 's|RUNNER_WORKSPACE|${{ github.workspace }}|g' fastlane/Fastfile
+      #
+      # - name: Configuring Google Play Credentials
+      #   run: |
+      #     cd android
+      #     echo ${{ secrets.FASTLANE_SUPPLY_JSON_KEY_BASE64 }} >> fastlane/json-key.json-base64
+      #     cat fastlane/json-key.json-base64 | base64 --decode > fastlane/json-key.json
+      #     sed -i 's|RUNNER_WORKSPACE|${{ github.workspace }}|g' fastlane/Appfile
+      #     sed -i 's|RUNNER_WORKSPACE|${{ github.workspace }}|g' fastlane/Fastfile
 
-      - name: Building Android application bundle (.AAB)
-        run: |
-          cd android
-          fastlane release --verbose
+      # - name: Building Android application bundle (.AAB)
+      #   run: |
+      #     cd android
+      #     fastlane release --verbose
 
-      - name: Deploying to Google Play
-        run: |
-          cd android
-          fastlane deploy --verbose
+      # - name: Deploying to Google Play
+      #   run: |
+      #     cd android
+      #     fastlane deploy --verbose
+      #
           
       # - name: Upload binaries to release
       #   uses: svenstaro/upload-release-action@v2
