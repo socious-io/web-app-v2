@@ -2,8 +2,9 @@ name: CD - Release - Android
 
 on:
   release:
-    types: [published, unpublished, created, edited, prereleased, released]
-    
+    types: [prereleased, released]
+
+
 
 jobs:
   setup-fastlane:
@@ -15,8 +16,9 @@ jobs:
       - name: Echo Release
         run: |
           echo ${{ github.event.release.tag_name }}
-          echo '${{ github.event.release.body }}'
           echo ${{ github.event.release.prerelease }}
+          echo '${{ github.event.release.name }}'
+          echo '${{ github.event.release.body }}'
 
       - if: ${{ github.event.release.prerelease == true }}
         name: Echo Pre Release
