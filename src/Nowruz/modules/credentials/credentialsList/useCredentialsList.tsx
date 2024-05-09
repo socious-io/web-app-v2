@@ -16,6 +16,7 @@ import {
   Education,
   approveVerifyEducation,
   UserMeta,
+  rejectVerifyEducation,
 } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { RootState } from 'src/store';
@@ -90,7 +91,7 @@ export const useCredentialsList = () => {
 
   const onReject = async (id: string, isExperience: boolean) => {
     try {
-      isExperience ? await rejectVerifyExperience(id) : await rejectVerifyExperience(id);
+      isExperience ? await rejectVerifyExperience(id) : await rejectVerifyEducation(id);
       await fetchMore(page, true);
       setSelectedCredential({ ...selectedCredential, id: '' });
     } catch (e) {
