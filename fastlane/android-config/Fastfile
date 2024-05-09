@@ -61,7 +61,7 @@ platform :android do
   desc "Deploy the new version to Playstore"
   lane :deploy do
     upload_to_play_store(
-      aab: 'RUNNER_WORKSPACE/android/app/build/outputs/bundle/app-release.aab'
+      aab: 'RUNNER_WORKSPACE/android/app/build/outputs/bundle/release/app-release.aab'
     )
   end
 

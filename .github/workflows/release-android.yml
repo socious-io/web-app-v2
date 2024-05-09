@@ -93,7 +93,6 @@ jobs:
         run: |
           cd android
           fastlane release --verbose
-          ls -al app/build/outputs/bundle/release
 
       - name: Configuring Google Play Credentials
         run: |
