@@ -15,7 +15,7 @@ jobs:
       - name: Echo Release
         run: |
           echo ${{ github.event.release.tag_name }}
-          echo ${{ github.event.release.body }}
+          echo '${{ github.event.release.body }}'
           echo ${{ github.event.release.prerelease }}
 
       - if: ${{ github.event.release.prerelease == true }}
