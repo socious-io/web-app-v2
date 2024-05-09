@@ -37,8 +37,8 @@ storybook-static
 
 .eslintcache
 
-ios
-android
+ios/*
+android/*
 
 # Ruby Bundle Files
 .bundle
