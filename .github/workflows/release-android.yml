@@ -15,8 +15,7 @@ jobs:
       - name: Echo Release
         run: |
           echo ${{ github.event.release.tag_name }}
-          ${{ github.event.release.body }} >> CHANGE_LOG
-          cat CHANGE_LOG
+          echo '${{ github.event.release.body }}'
           echo ${{ github.event.release.prerelease }}
 
       - if: ${{ github.event.release.prerelease == true }}
