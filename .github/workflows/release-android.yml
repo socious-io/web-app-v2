@@ -78,7 +78,7 @@ jobs:
           sed -i 's|ANDROID_KEY_PASSWORD|"${{ secrets.ANDROID_KEY_PASSWORD }}"|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_PASSWORD|"${{ secrets.ANDROID_KEY_STORE_PASSWORD }}"|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_LOCATION|${{ github.workspace }}/android/build-release.keystore|g' fastlane/Fastfile
-          sed 's|"|'\''|g' fastlane/Fastfile
+          sed -i 's|"|'\''|g' fastlane/Fastfile
           cat fastlane/Fastfile
 
       - name: Extracting Android Key for Signing the App    
