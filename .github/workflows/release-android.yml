@@ -75,8 +75,8 @@ jobs:
           mv android/android-config android/fastlane
           cd android
           sed -i 's|ANDROID_KEY_ALIAS|'${{ secrets.ANDROID_KEY_ALIAS }}'|g' fastlane/Fastfile
-          sed -i 's|ANDROID_KEY_PASSWORD|'x#$2'|g' fastlane/Fastfile
-          sed -i 's|ANDROID_KEY_STORE_PASSWORD|'x#$2'|g' fastlane/Fastfile
+          sed -i 's|ANDROID_KEY_PASSWORD|"x#$2"|g' fastlane/Fastfile
+          sed -i 's|ANDROID_KEY_STORE_PASSWORD|"x#$2"|g' fastlane/Fastfile
           sed -i 's|ANDROID_KEY_STORE_LOCATION|${{ github.workspace }}/android/build-release.keystore|g' fastlane/Fastfile
           cat fastlane/Fastfile
 
