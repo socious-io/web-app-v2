@@ -45,7 +45,7 @@ end
 
 before_all do
   lane_context[:ANDROID_PREVIOUS_BUILD_NUMBER] = get_latest_version_code()
-  lane_context[:ANDROID_PREVIOUS_VERSION_NUMBER] = "8.0.3"
+  lane_context[:ANDROID_PREVIOUS_VERSION_NUMBER] = "VN"
   lane_context[:ANDROID_DEPLOY_TRACK] = "production"
   lane_context[:ANDROID_DEPLOY_RELEASE_STATUS] = "draft"
 end
