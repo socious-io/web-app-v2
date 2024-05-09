@@ -89,11 +89,11 @@ jobs:
       #     cd android
       #     fastlane build --verbose
 
-      - name: Building Bundle release (.AAB)
+      - name: Building Android application bundle (.AAB)
         run: |
           cd android
           fastlane release --verbose
-          ls -al app/build/outputs/bundle
+          ls -al app/build/outputs/bundle/release
 
       - name: Configuring Google Play Credentials
         run: |
