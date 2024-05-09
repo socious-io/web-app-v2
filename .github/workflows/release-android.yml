@@ -3,7 +3,6 @@ name: CD - Release - Android
 on:
   release:
     types: [published, unpublished, created, edited, prereleased, released]
-  push:
     tags:
       - v*
     branches:
