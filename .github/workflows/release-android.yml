@@ -91,6 +91,7 @@ jobs:
 
       - name: Building Bundle release (.AAB)
         run: |
+          cd android
           fastlane release --verbose
 
       - name: Configuring Google Play Credentials
