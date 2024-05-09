@@ -15,23 +15,51 @@
 
 default_platform(:android)
 
-platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
+lane :get_latest_version_code do
+  #Incrementing Version Code
+  package_name = CredentialsManager::AppfileConfig.try_fetch_value(:package_name)
+  json_key_file = CredentialsManager::AppfileConfig.try_fetch_value(:json_key_file)
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: 'assembleRelease')
-    # crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
+  previous_build_number = google_play_track_version_codes(
+    package_name: package_name,
+    track: lane_context[:ANDROID_DEPLOY_TRACK],
+    json_key: json_key_file,
+  )[0]
+
+  previous_build_number
+end
+
+lane :update_version_code do |options|
+  file_name = "../app/build.gradle"
+  text = File.read(file_name)
+  new_contents = text.gsub(/versionCode 1/, "versionCode %{vc}" % {vc:options[:version_code]})
+  File.open(file_name, "w") {|file| file.puts new_contents }
+end
+
+lane :update_version_name do |options|
+  file_name = "../app/build.gradle"
+  text = File.read(file_name)
+  new_contents = text.gsub(/versionName "1.0"/, "versionName \"%{vn}\"" % {vn:options[:version_name]})
+  File.open(file_name, "w") {|file| file.puts new_contents }
+end
+
+before_all do
+  lane_context[:ANDROID_PREVIOUS_BUILD_NUMBER] = get_latest_version_code()
+  lane_context[:ANDROID_PREVIOUS_VERSION_NUMBER] = "8.0.3"
+  lane_context[:ANDROID_DEPLOY_TRACK] = "production"
+  lane_context[:ANDROID_DEPLOY_RELEASE_STATUS] = "draft"
+end
+
+platform :android do
 
   desc "Build a development new version of the App"
   lane :build do
+    update_version_code(
+      version_code: lane_context[:ANDROID_PREVIOUS_BUILD_NUMBER] + 1
+    )
+    update_version_name(
+      version_name: lane_context[:ANDROID_PREVIOUS_VERSION_NUMBER]
+    )
     gradle(
       task: 'clean assembleRelease',
       print_command: false,
@@ -39,13 +67,21 @@ platform :android do
         "android.injected.signing.store.file" => "ANDROID_KEY_STORE_LOCATION",
         "android.injected.signing.store.password" => ANDROID_KEY_STORE_PASSWORD,
         "android.injected.signing.key.alias" => "ANDROID_KEY_ALIAS",
-        "android.injected.signing.key.password" => ANDROID_KEY_PASSWORD
+        "android.injected.signing.key.password" => ANDROID_KEY_PASSWORD,
+        "android.injected.version.code" => lane_context[:ANDROID_PREVIOUS_BUILD_NUMBER] + 1,
+        "android.injected.version.name" => lane_context[:ANDROID_PREVIOUS_VERSION_NUMBER]
       }
     )
   end
 
   desc "Build a release new version of the App"
   lane :release do
+    update_version_code(
+      version_code: lane_context[:ANDROID_PREVIOUS_BUILD_NUMBER] + 1
+    )
+    update_version_name(
+      version_name: lane_context[:ANDROID_PREVIOUS_VERSION_NUMBER]
+    )
     gradle(
       task: 'clean bundleRelease',
       print_command: false,
@@ -53,7 +89,9 @@ platform :android do
         "android.injected.signing.store.file" => "ANDROID_KEY_STORE_LOCATION",
         "android.injected.signing.store.password" => ANDROID_KEY_STORE_PASSWORD,
         "android.injected.signing.key.alias" => "ANDROID_KEY_ALIAS",
-        "android.injected.signing.key.password" => ANDROID_KEY_PASSWORD
+        "android.injected.signing.key.password" => ANDROID_KEY_PASSWORD,
+        "android.injected.version.code" => lane_context[:ANDROID_PREVIOUS_BUILD_NUMBER] + 1,
+        "android.injected.version.name" => lane_context[:ANDROID_PREVIOUS_VERSION_NUMBER]
       }
     )
   end
@@ -61,10 +99,12 @@ platform :android do
   desc "Deploy the new version to Playstore"
   lane :deploy do
     upload_to_play_store(
-      aab: 'RUNNER_WORKSPACE/android/app/build/outputs/bundle/release/app-release.aab'
+      aab: 'RUNNER_WORKSPACE/android/app/build/outputs/bundle/release/app-release.aab',
+      version_code: lane_context[:ANDROID_PREVIOUS_BUILD_NUMBER] + 1,
+      version_name: lane_context[:ANDROID_PREVIOUS_VERSION_NUMBER],
+      track: lane_context[:ANDROID_DEPLOY_TRACK],
+      release_status: lane_context[:ANDROID_DEPLOY_RELEASE_STATUS]
     )
   end
-
-  # "android.injected.version.code" => current_build_number
   
 end

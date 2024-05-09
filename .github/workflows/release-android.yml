@@ -97,26 +97,24 @@ jobs:
       #     cd android
       #     fastlane build --verbose
 
-      - name: Building Android application bundle (.AAB)
-        run: |
-          cd android
-          fastlane release --verbose
-
       - name: Configuring Google Play Credentials
         run: |
           cd android
           echo ${{ secrets.FASTLANE_SUPPLY_JSON_KEY_BASE64 }} >> fastlane/json-key.json-base64
           cat fastlane/json-key.json-base64 | base64 --decode > fastlane/json-key.json
           sed -i 's|RUNNER_WORKSPACE|${{ github.workspace }}|g' fastlane/Appfile
+          sed -i 's|RUNNER_WORKSPACE|${{ github.workspace }}|g' fastlane/Fastfile
+
+      - name: Building Android application bundle (.AAB)
+        run: |
+          cd android
+          fastlane release --verbose
 
       - name: Deploying to Google Play
         run: |
           cd android
-          sed -i 's|RUNNER_WORKSPACE|${{ github.workspace }}|g' fastlane/Fastfile
           fastlane deploy --verbose
           
-          
-      #     fastlane release --verbose -> Configurating Fastlane
       # - name: Upload binaries to release
       #   uses: svenstaro/upload-release-action@v2
       #   with:
