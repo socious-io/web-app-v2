@@ -93,6 +93,8 @@ jobs:
         run: |
           cd android
           fastlane release --verbose
+        env:
+          GRADLE_AAB_OUTPUT_PATH: ${{ github.workspace }}/android/app/build/outputs/bundle/app-release.aab
 
       - name: Configuring Google Play Credentials
         run: |
