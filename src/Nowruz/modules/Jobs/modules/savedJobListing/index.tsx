@@ -30,7 +30,7 @@ export const SavedJobListing = () => {
         <div className="mt-11">
           <Pagination
             page={page}
-            count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)}
+            count={Math.ceil(total / PER_PAGE) + (total % PER_PAGE && 1)}
             onChange={(e, p) => setPage(p)}
           />
         </div>

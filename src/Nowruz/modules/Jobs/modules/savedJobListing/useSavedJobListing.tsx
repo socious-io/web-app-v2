@@ -34,11 +34,15 @@ export const useSavedJobListing = () => {
   };
 
   const fetchMore = async () => {
-    if (!isMount) {
-      const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: 5 });
-      setTotalCount(data.total_count);
-      if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
-      else setJobsList(data.items);
+    try {
+      if (!isMount) {
+        const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: 5 });
+        setTotalCount(data.total_count);
+        if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
+        else setJobsList(data.items);
+      }
+    } catch (e) {
+      console.log('error in fetching saved jobs', e);
     }
   };
 

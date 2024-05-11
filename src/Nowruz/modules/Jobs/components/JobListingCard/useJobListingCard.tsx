@@ -53,9 +53,9 @@ export const useJobListingCard = (job: Job, saveAction?: () => void) => {
   const handleNotInterested = async () => {
     try {
       if (jobVal.saved) {
-        const res = await removeMark(job.id);
+        await removeMark(job.id);
       }
-      const res = await markJob(job.id, 'NOT_INTERESTED');
+      await markJob(job.id, 'NOT_INTERESTED');
       setJobVal({ ...jobVal, saved: false, not_interested: true });
     } catch (e) {
       console.log('error in bookmark click', e);

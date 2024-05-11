@@ -34,11 +34,15 @@ export const useJobListing = () => {
   };
 
   const fetchMore = async () => {
-    if (!isMount) {
-      const data = await jobs({ page: page, status: 'ACTIVE', limit: PER_PAGE });
-      setTotalCount(data.total_count);
-      if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
-      else setJobsList(data.items);
+    try {
+      if (!isMount) {
+        const data = await jobs({ page: page, status: 'ACTIVE', limit: PER_PAGE });
+        setTotalCount(data.total_count);
+        if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
+        else setJobsList(data.items);
+      }
+    } catch (e) {
+      console.log('error in fetching jobs', e);
     }
   };
 
