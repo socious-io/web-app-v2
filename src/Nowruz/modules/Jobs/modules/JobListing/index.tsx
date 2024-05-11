@@ -49,11 +49,13 @@ export const JobsListing = () => {
             <div className={css.subTitle}>Discover our most recent jobs</div>
           </div>
 
-          {jobsList.map(job => (
-            <div key={job.id} className="mt-6">
-              <JobListingCard job={job} displayNotInterested displaySave />
-            </div>
-          ))}
+          <div id="job-listing-div">
+            {jobsList.map(job => (
+              <div key={job.id} className="mt-6">
+                <JobListingCard job={job} displayNotInterested displaySave />
+              </div>
+            ))}
+          </div>
         </>
       )}
       {!isMobile && (

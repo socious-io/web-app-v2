@@ -9,7 +9,7 @@ describe('User Application', () => {
   beforeEach(() => {
     cy.intercept('GET', `${API_SERVER}/identities*`, req => {
       req.reply(user.getIdentity());
-    });
+    }).as('getIdentities');
     cy.intercept('GET', `${API_SERVER}/projects*`, req => req.reply(200, PROJECTS)).as('getProjects');
     cy.intercept('GET', `${API_SERVER}/skills*`, req => req.reply(200, { message: 'success' })).as('getSkills');
     cy.intercept('GET', `${API_SERVER}/notifications*`, req => req.reply(200, { message: 'success' })).as(
@@ -23,6 +23,7 @@ describe('User Application', () => {
       'sendApplication',
     );
     cy.intercept('POST', `${API_SERVER}/media/upload`, req => req.reply(200, UPLOAD));
+    cy.intercept('GET', `${API_SERVER}/user/**/recommend/jobs*`, req => req.reply(200, PROJECTS)).as('getRecommended');
   });
   Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
@@ -34,6 +35,7 @@ describe('User Application', () => {
     cy.visit(`${APP_URL}/jobs`);
 
     // Go to the job details
+    // cy.wait(6000)
     cy.get('#job-listing-div').contains('a', 'Read more').click();
     cy.url().should('include', '/jobs/');
 
