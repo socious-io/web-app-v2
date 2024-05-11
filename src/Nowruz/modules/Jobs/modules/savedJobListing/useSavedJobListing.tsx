@@ -1,32 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoaderData, useLocation } from 'react-router-dom';
-import {
-  CurrentIdentity,
-  Job,
-  JobsRes,
-  Skill,
-  UserMeta,
-  jobs,
-  markedJobs,
-  recommendedJobs,
-  skills,
-} from 'src/core/api';
+import { Job, JobsRes, Skill, jobs, markedJobs, skills } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { useIsMount } from 'src/Nowruz/modules/general/components/useIsMount';
 import { RootState } from 'src/store';
 import { setSkills } from 'src/store/reducers/skills.reducer';
 
-export const useJobListing = () => {
+export const useSavedJobListing = () => {
   const loaderData = useLoaderData() as JobsRes;
   const skillList = useSelector<RootState, Skill[]>(state => {
     return state.skills.items;
   });
-
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
-    state.identity.entities.find(identity => identity.current),
-  );
-
+  5;
   const dispatch = useDispatch();
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
@@ -35,13 +21,12 @@ export const useJobListing = () => {
   const pageNumber = Number(loaderData.page);
   const [page, setPage] = useState(pageNumber);
   const [loading, setLoading] = useState(true);
-  const [recommended, setRecommended] = useState<Job>();
   const isMount = useIsMount();
 
   const loadPage = async () => {
     setLoading(true);
     try {
-      await Promise.all([fetchMore(), getSkills(), getRecommended()]);
+      await Promise.all([fetchMore(), getSkills()]);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -51,40 +36,26 @@ export const useJobListing = () => {
   const fetchMore = async () => {
     try {
       if (!isMount) {
-        const data = await jobs({ page: page, status: 'ACTIVE', limit: PER_PAGE });
+        const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: 5 });
         setTotalCount(data.total_count);
         if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
         else setJobsList(data.items);
       }
     } catch (e) {
-      console.log('error in fetching jobs', e);
+      console.log('error in fetching saved jobs', e);
     }
   };
 
   const getSkills = async () => {
     if (skillList.length) return;
-    try {
-      const res = await skills({ limit: 500 });
-      await dispatch(setSkills(res.items));
-    } catch (e) {
-      console.log('error in getting skills', e);
-    }
-  };
-
-  const getRecommended = async () => {
-    try {
-      if (!currentIdentity) return;
-      const res = await recommendedJobs((currentIdentity.meta as UserMeta).username);
-      console.log('test log res', res);
-      setRecommended(res.items[0]);
-    } catch (e) {
-      console.log('error in getting recommended jobs', e);
-    }
+    const res = await skills({ limit: 500 });
+    await dispatch(setSkills(res.items));
   };
 
   useEffect(() => {
     loadPage();
     localStorage.setItem('page', page.toString());
   }, [page]);
-  return { page, setPage, jobsList, total: totalCount, PER_PAGE, isMobile, skillList, loading, recommended };
+
+  return { page, setPage, jobsList, total: totalCount, PER_PAGE, isMobile, skillList, loading, loadPage };
 };

@@ -10,7 +10,7 @@ import { JobListingCard } from '../../components/JobListingCard';
 
 export const JobsListing = () => {
   const navigate = useNavigate();
-  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading, savedPage, recommended } = useJobListing();
+  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading, recommended } = useJobListing();
 
   return (
     <div className={css.container}>
@@ -22,7 +22,7 @@ export const JobsListing = () => {
         </div>
       ) : (
         <>
-          {!savedPage && !!recommended && (
+          {!!recommended && (
             <>
               <div className={css.header}>
                 <div className={css.title}>Recommended for you</div>
@@ -39,30 +39,28 @@ export const JobsListing = () => {
                 </div>
               </div>
               <div className="my-6">
-                <JobListingCard job={recommended} />
+                <JobListingCard job={recommended} displayNotInterested displaySave />
               </div>
             </>
           )}
-          {!savedPage && (
-            <div className={css.header}>
-              <div className={css.title}>All jobs</div>
-              <div className={css.subTitle}>Discover our most recent jobs</div>
-            </div>
-          )}
-          <div id="job-listing-div">
-            {jobsList.map(job => (
-              <div key={job.id} className="mt-6">
-                <JobListingCard job={job} />
-              </div>
-            ))}
+
+          <div className={css.header}>
+            <div className={css.title}>All jobs</div>
+            <div className={css.subTitle}>Discover our most recent jobs</div>
           </div>
+
+          {jobsList.map(job => (
+            <div key={job.id} className="mt-6">
+              <JobListingCard job={job} displayNotInterested displaySave />
+            </div>
+          ))}
         </>
       )}
       {!isMobile && (
         <div className="mt-11">
           <Pagination
             page={page}
-            count={Math.floor(total / PER_PAGE) + (total % PER_PAGE && 1)}
+            count={Math.ceil(total / PER_PAGE) + (total % PER_PAGE && 1)}
             onChange={(e, p) => setPage(p)}
           />
         </div>

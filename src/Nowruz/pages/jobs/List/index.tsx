@@ -1,6 +1,7 @@
 import { useLoaderData, useLocation } from 'react-router-dom';
 import { JobsRes } from 'src/core/api';
 import { JobsListing } from 'src/Nowruz/modules/Jobs/modules/JobListing';
+import { SavedJobListing } from 'src/Nowruz/modules/Jobs/modules/savedJobListing';
 
 import css from './list.module.scss';
 
@@ -23,7 +24,7 @@ export const JobsList = () => {
         </div>
       </div>
 
-      <div className={css.list}>{<JobsListing />}</div>
+      <div className={css.list}>{savedPage ? <SavedJobListing /> : <JobsListing />}</div>
     </div>
   );
 };

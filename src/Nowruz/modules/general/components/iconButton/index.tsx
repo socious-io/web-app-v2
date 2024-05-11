@@ -8,6 +8,7 @@ import { IconButtonProps } from './iconButton.types';
 export const IconButton: React.FC<IconButtonProps> = ({
   size = 'medium',
   iconName,
+  img,
   iconSize,
   iconColor,
   handleClick,
@@ -22,7 +23,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       onClick={handleClick}
       {...props}
     >
-      <Icon fontSize={iconSize} name={iconName} color={iconColor} className="!cursor-pointer" />
+      {iconName ? <Icon fontSize={iconSize} name={iconName} color={iconColor} className="!cursor-pointer" /> : img}
     </MUIIconButton>
   );
 };

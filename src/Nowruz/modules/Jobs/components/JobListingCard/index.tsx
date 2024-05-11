@@ -20,10 +20,22 @@ import { useJobListingCard } from './useJobListingCard';
 
 interface JobListingCardProps {
   job: Job;
+  displaySave?: boolean;
+  displayNotInterested?: boolean;
+  saveAction?: () => void;
 }
-export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
-  const { skills, handleTitleClick, handleClick, handleMarkJob, displayBookmark, displayNotInterested } =
-    useJobListingCard(job);
+
+export const JobListingCard: React.FC<JobListingCardProps> = ({
+  job,
+  displaySave = false,
+  displayNotInterested = false,
+  saveAction,
+}) => {
+  const { skills, handleTitleClick, handleClick, jobVal, handleBookmark, handleNotInterested } = useJobListingCard(
+    job,
+    saveAction,
+  );
+
   const renderJobFeatures = (iconName: string, feature?: string, subtitle?: string) => {
     if (!feature) return;
     return (
@@ -35,8 +47,11 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
   };
 
   return (
-    <div className={`${css.jobCard} cursor-pointer md:cursor-default`} onClick={handleClick}>
-      <div className={css.cardHeader}>
+    <div
+      className={`${css.jobCard} ${jobVal.not_interested ? '' : 'cursor-pointer md:cursor-default'}`}
+      onClick={handleClick}
+    >
+      <div className={`${jobVal.not_interested ? 'opacity-50' : ''} ${css.cardHeader}`}>
         <div className={css.orgInfo}>
           <Avatar type="organizations" size="56px" img={job.identity_meta?.image} iconSize={32} />
           <div className={css.jobHeading}>
@@ -52,7 +67,8 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
             </div>
           </div>
         </div>
-        {displayNotInterested && (
+
+        {displayNotInterested && !jobVal.not_interested && (
           <IconButton
             iconName="thumbs-down"
             size="medium"
@@ -61,24 +77,26 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
             customStyle="md:hidden"
             onClick={e => {
               e.stopPropagation();
-              handleMarkJob('NOT_INTERESTED');
+              handleNotInterested();
             }}
           />
         )}
-        {displayBookmark && (
+        {displaySave && (
           <IconButton
-            iconName="bookmark"
+            iconName={jobVal.saved ? '' : 'bookmark'}
+            disabled={jobVal.not_interested}
+            img={jobVal.saved ? <img src="/icons/nowruz/green-bookmark.svg" alt="" /> : ''}
             size="medium"
             iconSize={20}
             iconColor={variables.color_grey_600}
             onClick={e => {
               e.stopPropagation();
-              handleMarkJob('SAVE');
+              handleBookmark();
             }}
           />
         )}
       </div>
-      <div className={css.cardInfo}>
+      <div className={`${jobVal.not_interested ? 'opacity-50' : ''} ${css.cardInfo}`}>
         <div className={css.chips}>
           {socialCausesToCategory(job.causes_tags).map(({ label }) => (
             <Chip key={label} label={label} theme="primary" shape="round" size="md" />
@@ -136,18 +154,22 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({ job }) => {
         </div>
       </div>
       <div className={css.cardFooter}>
-        {displayNotInterested && (
+        {displayNotInterested && !jobVal.not_interested && (
           <button
             className={css.notInterestedBtn}
             onClick={e => {
               e.stopPropagation();
-              handleMarkJob('NOT_INTERESTED');
+              handleNotInterested();
             }}
           >
             Not interested
           </button>
         )}
-        <Link href={`/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
+        {jobVal.not_interested ? (
+          <div className="font-medium text-sm leading-5 text-Success-700">You will not see this job again</div>
+        ) : (
+          <Link href={`/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
+        )}
       </div>
     </div>
   );
