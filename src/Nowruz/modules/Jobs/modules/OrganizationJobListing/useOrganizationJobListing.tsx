@@ -8,7 +8,6 @@ import { RootState } from 'src/store';
 
 export const useOrganizationJobListing = () => {
   const loaderData = useLoaderData() as JobsRes;
-  console.log('test log loaderData.items', loaderData.items);
   const [jobsList, setJobsList] = useState(loaderData.items);
   const [total, setTotal] = useState<number>(loaderData.total_count);
   const [loading, setLoading] = useState<boolean>(false);
