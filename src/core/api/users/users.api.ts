@@ -131,5 +131,5 @@ export async function userApplicants(params: FilterReq): Promise<ApplicantsRes> 
 }
 
 export async function recommendedJobs(username: string, params?: PaginateReq): Promise<JobsRes> {
-  return (await get<JobsRes>(`user/${username}/recommend/jobs`)).data;
+  return (await get<JobsRes>(`user/${username}/recommend/jobs`, { params })).data;
 }

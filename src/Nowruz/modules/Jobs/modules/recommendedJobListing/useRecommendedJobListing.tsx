@@ -14,7 +14,7 @@ export const useRecommendedJobListing = () => {
     if (!currentIdentity) return;
     setLoading(true);
     try {
-      const res = await recommendedJobs((currentIdentity.meta as UserMeta).username);
+      const res = await recommendedJobs((currentIdentity.meta as UserMeta).username, { page: 1, limit: 3 });
       setList(res.items);
     } catch (e) {
       console.log('error in getting recommended jobs', e);
