@@ -14,15 +14,17 @@ export const useImageBio = () => {
   const { state, updateUser } = useUser();
   const isMobile = isTouchDevice();
   const [image, setImage] = useState({ imageUrl: state.avatar?.url, id: '' });
-  const currentIdentity = useSelector<RootState, CurrentIdentity>((state) => {
-    const current = state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity>(state => {
+    const current = state.identity.entities.find(identity => identity.current);
     return current as CurrentIdentity;
   });
   const onUploadImage = async () => {
     const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
     const resp = await uploadImage(webPath);
-    updateUser({ ...state, avatar: resp });
-    setImage({ imageUrl: resp.url, id: resp.id });
+    if (resp) {
+      updateUser({ ...state, avatar: resp });
+      setImage({ imageUrl: resp.url, id: resp.id });
+    }
   };
 
   const removeImage = async () => {
@@ -41,6 +43,8 @@ export const useImageBio = () => {
     );
 
     delete updatedObj.cityLabel;
+    delete updatedObj.orgType;
+
     /* 
       Note: this is just make sure fix miss use state for updating profile and this going to make issue when
       registered for ORG want to complete onboarding for signed up user
@@ -70,7 +74,7 @@ export const useImageBio = () => {
   };
 
   async function uploadImage(url: string) {
-    const blob = await fetch(url).then((resp) => resp.blob());
+    const blob = await fetch(url).then(resp => resp.blob());
     const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
     if (blob.size > MAX_IMAGE_SIZE) {
       setUploadError(`Image should be less than 5MB`);

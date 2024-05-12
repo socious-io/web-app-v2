@@ -16,29 +16,23 @@ const initialState = {
   username: '',
   avatar: '',
   address: '',
-};
-const orgInitialState = {
   orgName: '',
   orgType: { value: 'STARTUP', label: 'Impact Startup' },
-  social_causes: [],
-  bio: '',
   image: '',
-  city: '',
-  country: '',
-  cityLabel: '',
   email: '',
   website: '',
   size: null,
   shortname: '',
   industry: '',
 };
+
 let type = localStorage.getItem('registerFor');
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'UPDATE_USER':
+    case 'UPDATE_USER': {
       const filteredPayload = Object.keys(action.payload).reduce((filtered, key) => {
-        if (state.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(state, key)) {
           filtered[key] = action.payload[key];
         }
         return filtered;
@@ -48,16 +42,20 @@ const reducer = (state, action) => {
         ...state,
         ...filteredPayload,
       };
+    }
     case 'RESET':
       return initialState;
     default:
       return state;
   }
 };
-export const UserContext = React.createContext(type === 'organization' ? orgInitialState : initialState);
+export const UserContext = React.createContext(initialState);
 
-export const UserProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, type === 'organization' ? orgInitialState : initialState);
+export interface UserProviderProps {
+  children: any;
+}
+export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +66,10 @@ export const UserProvider = ({ children }) => {
         console.error(error);
       }
     };
-    if (type !== 'organization') fetchData();
+
+    if (localStorage.getItem('registerFor') === 'organization')
+      dispatch({ type: 'UPDATE_USER', payload: initialState });
+    else fetchData();
   }, []);
   return <UserContext.Provider value={{ state, dispatch }}>{children}</UserContext.Provider>;
 };
@@ -81,7 +82,7 @@ export const useUser = () => {
   }
   const { state, dispatch } = context;
 
-  const updateUser = (updates) => {
+  const updateUser = updates => {
     dispatch({ type: 'UPDATE_USER', payload: updates });
   };
   const reset = () => {

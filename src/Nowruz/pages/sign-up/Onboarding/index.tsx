@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, identities, logout, OrgMeta, UserMeta } from 'src/core/api';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { Causes } from 'src/Nowruz/modules/Auth/containers/onboarding/Causes';
 import { City } from 'src/Nowruz/modules/Auth/containers/onboarding/City';
 import { CreateOrganization } from 'src/Nowruz/modules/Auth/containers/onboarding/CreateOrganization';
@@ -14,11 +15,11 @@ import { OrganizationType } from 'src/Nowruz/modules/Auth/containers/onboarding/
 import { Skills } from 'src/Nowruz/modules/Auth/containers/onboarding/Skills';
 import Steper from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { Welcome } from 'src/Nowruz/modules/Auth/containers/onboarding/Welcome';
-import { UserProvider } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
+import { UserProvider, useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
-import { RootState } from 'src/store';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
+import store, { RootState } from 'src/store';
+import { removeIdentityList, setIdentityList } from 'src/store/reducers/identity.reducer';
 import { setIdentity } from 'src/store/reducers/profile.reducer';
 
 import css from './onboarding.module.scss';
@@ -26,12 +27,13 @@ import css from './onboarding.module.scss';
 export const Onboarding = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const primary = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+
+  const primary = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   useEffect(() => {
-    identities().then(async (resp) => {
+    identities().then(async resp => {
       await dispatch(setIdentityList(resp));
       const user = {
         id: primary?.id,
@@ -63,7 +65,9 @@ export const Onboarding = () => {
       label: 'Log out',
       onClick: () => {
         logout().then(() => {
-          navigate('/intro');
+          store.dispatch(removeIdentityList());
+          nonPermanentStorage.clear();
+          navigate('/sign-in');
         });
       },
     },
