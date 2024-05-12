@@ -1,12 +1,13 @@
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';
-import css from './referCard.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
-import { Input } from '../../general/components/input/input';
-import { Button } from '../../general/components/Button';
-import EmailInvitation from '../emailInvitation';
+
+import css from './referCard.module.scss';
 import { useReferCard } from './useReferCard';
 import { AlertModal } from '../../general/components/AlertModal';
+import { Button } from '../../general/components/Button';
+import { Input } from '../../general/components/input/input';
+import EmailInvitation from '../emailInvitation';
 
 interface ReferCardProps {
   type: 'organization' | 'talent';
@@ -49,7 +50,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
           <div className="py-5 px-4 md:p-6 flex flex-col gap-3">
             <Input className="bg-Base-White" id="copy-url" value={url} postfix={inputJSX} />
             <div className="w-full flex gap-3">
-              <Button
+              {/* <Button
                 fullWidth
                 customStyle="bg-Base-White"
                 variant="outlined"
@@ -66,7 +67,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
               </Button>
               <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
                 <img src="/icons/nowruz/telegram.svg" />
-              </Button>
+              </Button> */}
             </div>
           </div>
         )}
