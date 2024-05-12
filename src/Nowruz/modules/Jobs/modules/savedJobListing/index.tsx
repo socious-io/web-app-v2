@@ -21,21 +21,17 @@ export const SavedJobListing = () => {
         <>
           {jobsList.map(job => (
             <div key={job.id} className="mt-6">
-              <JobListingCard job={job} displaySave saveAction={loadPage} />
+              <JobListingCard job={job} displaySave saveAction={() => setPage(1)} />
             </div>
           ))}
         </>
       )}
       {!isMobile && (
         <div className="mt-11">
-          <Pagination
-            page={page}
-            count={Math.ceil(total / PER_PAGE) + (total % PER_PAGE && 1)}
-            onChange={(e, p) => setPage(p)}
-          />
+          <Pagination page={page} count={Math.ceil(total / PER_PAGE)} onChange={(e, p) => setPage(p)} />
         </div>
       )}
-      {isMobile && (
+      {isMobile && jobsList.length < total && (
         <div className="mt-5 flex items-center justify-center">
           <Button color="primary" variant="text" onClick={() => setPage(page + 1)}>
             See more
