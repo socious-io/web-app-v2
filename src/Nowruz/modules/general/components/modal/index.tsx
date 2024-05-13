@@ -23,6 +23,7 @@ export const Modal: React.FC<ModalProps> = props => {
     customStyle,
     id = '',
     inlineTitle = true,
+    contentClassName = '',
   } = props;
 
   return (
@@ -53,7 +54,7 @@ export const Modal: React.FC<ModalProps> = props => {
               </div>
             )}
             {headerDivider && <Divider className="w-full" />}
-            <div className="w-full overflow-y-auto">{content || children}</div>
+            <div className={`w-full overflow-y-auto ${contentClassName}`}>{content || children}</div>
             {footerDivider && <Divider className="w-full" />}
             {footer}
           </div>
