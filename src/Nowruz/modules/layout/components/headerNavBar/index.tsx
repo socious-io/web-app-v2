@@ -42,8 +42,11 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     setSearchTerm,
   } = useHeaderNavBar();
 
+  const path = useLocation().pathname;
   const searchPlaceholder =
-    useLocation().pathname === '/jobs' && userType === 'users' ? 'Search by title, skill or organization' : 'Search';
+    (path === '/jobs' || path === '/jobs/saved') && userType === 'users'
+      ? 'Search by title, skill or organization'
+      : 'Search';
 
   return (
     <div
@@ -62,7 +65,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           id="search-input"
           name="search"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           onClick={() => setOpenSearchModal(true)}
           placeholder={searchPlaceholder}
           startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}

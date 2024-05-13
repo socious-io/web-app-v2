@@ -14,7 +14,7 @@ export const useSavedJobListing = () => {
   });
   5;
   const dispatch = useDispatch();
-  const PER_PAGE = 10;
+  const PER_PAGE = 5;
   const isMobile = isTouchDevice();
   const [jobsList, setJobsList] = useState<Job[]>(loaderData.items);
   const [totalCount, setTotalCount] = useState(loaderData.total_count);
@@ -23,20 +23,20 @@ export const useSavedJobListing = () => {
   const [loading, setLoading] = useState(true);
   const isMount = useIsMount();
 
-  const loadPage = async () => {
+  const loadPage = async (page: number) => {
     setLoading(true);
     try {
-      await Promise.all([fetchMore(), getSkills()]);
+      await Promise.all([fetchMore(page), getSkills()]);
       setLoading(false);
     } catch (error) {
       setLoading(false);
     }
   };
 
-  const fetchMore = async () => {
+  const fetchMore = async (page: number) => {
     try {
       if (!isMount) {
-        const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: 5 });
+        const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: PER_PAGE });
         setTotalCount(data.total_count);
         if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
         else setJobsList(data.items);
@@ -53,7 +53,7 @@ export const useSavedJobListing = () => {
   };
 
   useEffect(() => {
-    loadPage();
+    loadPage(page);
     localStorage.setItem('page', page.toString());
   }, [page]);
 
