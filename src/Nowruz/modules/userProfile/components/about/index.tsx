@@ -31,7 +31,7 @@ export const About = () => {
         </>
       )}
 
-      {identityType === 'organizations' && <Recommendation />}
+      {/* {identityType === 'organizations' && <Recommendation />} */}
     </div>
   );
 };
