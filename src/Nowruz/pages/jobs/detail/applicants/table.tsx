@@ -25,7 +25,6 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
     open,
     setOpen,
     applicant,
-    columns,
     extractCellId,
     openAlert,
     setOpenAlert,
@@ -38,17 +37,8 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
     setOpenSelectedRejectAlert,
     openSelectedRejectAlert,
     handleRejectMultiple,
-    columnVisibility,
+    table,
   } = useApplicantAction(applicants, currentTab, onRefetch);
-
-  const table = useReactTable({
-    data: applicants,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    state: {
-      columnVisibility,
-    },
-  });
 
   return applicants.length ? (
     <div className="hidden md:block border-Gray-light-mode-200 border-solid border-b rounded-lg">

@@ -1,7 +1,7 @@
-import { Cell, ColumnDef } from '@tanstack/react-table';
+import { Cell, ColumnDef, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Applicant, rejectApplicant } from 'src/core/api';
+import { Applicant, rejectApplicant, rejectMultipleApplicants } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
@@ -65,6 +65,7 @@ export const useApplicantAction = (
     try {
       setOpenAlert(false);
       await rejectApplicant(currentSelectedId?.current);
+
       onRefetch(true);
     } catch (e) {
       console.log('error in rejecting applicant', e);
@@ -73,9 +74,8 @@ export const useApplicantAction = (
 
   const handleRejectMultiple = async (selectedIds: string[]) => {
     try {
-      //TODO: replace this with a single API whenever BE is ready
-      const requests = selectedIds.map(id => rejectApplicant(id));
-      const res = await Promise.all(requests);
+      await rejectMultipleApplicants({ applicants: selectedIds });
+      table.toggleAllRowsSelected(false);
     } catch (e) {
       console.log('error in multiple applications rejection', e);
     }
@@ -91,7 +91,7 @@ export const useApplicantAction = (
           <Checkbox
             id="chk-select-all"
             checked={table.getIsAllRowsSelected()}
-            onChange={table.getToggleAllRowsSelectedHandler()} //or getToggleAllPageRowsSelectedHandler
+            onChange={table.getToggleAllRowsSelectedHandler()}
           />
         ),
         cell: ({ row }) => (
@@ -266,6 +266,15 @@ export const useApplicantAction = (
     return styleClass;
   };
 
+  const table = useReactTable({
+    data: applicants,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    state: {
+      columnVisibility,
+    },
+  });
+
   const onSuccess = () => {
     setSuccess(true);
   };
@@ -281,7 +290,7 @@ export const useApplicantAction = (
     applicant,
     setApplicant,
     onClickName,
-    columns,
+    table,
     extractCellId,
     openAlert,
     setOpenAlert,
@@ -297,6 +306,5 @@ export const useApplicantAction = (
     setOpenSelectedRejectAlert,
     openSelectedRejectAlert,
     handleRejectMultiple,
-    columnVisibility,
   };
 };
