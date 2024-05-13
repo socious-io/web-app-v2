@@ -14,7 +14,6 @@ import { OrganizationJobCard } from '../../components/OrganizationJobCard';
 export const OrganizationJobListing = () => {
   const { filterButtons, page, setPage, total, PER_PAGE, jobsList, loading, navigateToCreateJob } =
     useOrganizationJobListing();
-
   return (
     <div className={css.container}>
       <ButtonGroups buttons={filterButtons} />
@@ -27,8 +26,8 @@ export const OrganizationJobListing = () => {
       )}
 
       {!loading &&
-        jobsList.map((job) => (
-          <div className="mt-6">
+        jobsList.map(job => (
+          <div key={job.id} className="mt-6">
             <OrganizationJobCard job={job} />
           </div>
         ))}
@@ -39,6 +38,7 @@ export const OrganizationJobListing = () => {
             message="No jobs found"
             button={
               <Button
+                id="create-first-job"
                 startIcon={<Icon name="plus" color={variables.color_white} />}
                 color="primary"
                 variant="contained"

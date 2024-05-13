@@ -35,35 +35,35 @@ const organizationUser = new OrganizationUser(
 describe('Sign up (User)', () => {
   beforeEach(() => {
     // Mock the register API call
-    cy.intercept('GET', `${API_SERVER}/identities*`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/identities*`, req => {
       if (req.headers.authorization == `${TOKEN_TYPE} ${ACCESS_TOKEN}`) req.reply(user.getIdentity());
       else req.reply(401, { message: 'unauthorized' });
     });
-    cy.intercept('GET', `${API_SERVER}/skills*`, (req) => req.reply(SKILLS));
-    cy.intercept('GET', `${API_SERVER}/geo/locations*`, (req) => req.reply(LOCATIONS));
-    cy.intercept('GET', `${API_SERVER}/orgs/d/industries*`, (req) => req.reply(INDUSTRIES));
-    cy.intercept('POST', `${API_SERVER}/orgs?auto_member=true`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/orgs/by-shortname/*`, (req) => req.reply(200, organizationUser.get()));
-    cy.intercept('POST', `${API_SERVER}/user/change-password-direct*`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('POST', `${API_SERVER}/user/update/profile*`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/user/profile*`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/notifications*`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/skills*`, req => req.reply(SKILLS));
+    cy.intercept('GET', `${API_SERVER}/geo/locations*`, req => req.reply(LOCATIONS));
+    cy.intercept('GET', `${API_SERVER}/orgs/d/industries*`, req => req.reply(INDUSTRIES));
+    cy.intercept('POST', `${API_SERVER}/orgs?auto_member=true`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('GET', `${API_SERVER}/orgs/by-shortname/*`, req => req.reply(200, organizationUser.get()));
+    cy.intercept('POST', `${API_SERVER}/user/change-password-direct*`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('POST', `${API_SERVER}/user/update/profile*`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('GET', `${API_SERVER}/user/profile*`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('GET', `${API_SERVER}/notifications*`, req => req.reply(200, { message: 'success' })).as(
       'getNotifications',
     );
-    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
       'getUnreadChatsCount',
     );
-    cy.intercept('POST', `${API_SERVER}/auth/preregister*`, (req) =>
+    cy.intercept('POST', `${API_SERVER}/auth/preregister*`, req =>
       req.reply(200, { username: null, shortname: null, message: 'success' }),
     );
-    cy.intercept('POST', `${API_SERVER}/auth/register`, (req) => {
+    cy.intercept('POST', `${API_SERVER}/auth/register`, req => {
       if (req.body.email === EXISTING_EMAIL_ADDRESS) req.reply({ statusCode: 400 });
       else req.reply(200, { message: 'success' });
     });
-    cy.intercept('GET', `${API_SERVER}/user/by-username/**`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/user/by-username/**`, req => {
       return req.reply(200, user.getProfile(socialCauses, skills, CITY));
     });
-    cy.intercept('GET', `${API_SERVER}/auth/otp/confirm*`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/auth/otp/confirm*`, req => {
       const url = new URL(req.url);
       const code = url.searchParams.get('code');
 
@@ -89,7 +89,7 @@ describe('Sign up (User)', () => {
     cy.url().should('include', '/sign-up/user/verification');
 
     // Type in 1 on each input field, Click verify and check the route
-    cy.get('input[type="tel"]').each(($input) => {
+    cy.get('input[type="tel"]').each($input => {
       cy.wrap($input).type('1');
     });
     cy.contains('button', 'Verify email').click();
@@ -116,18 +116,18 @@ describe('Sign up (User)', () => {
     cy.contains('button', 'Complete your profile').click();
 
     //Select 3 social causes
-    socialCauses.forEach((socialCause) => cy.contains('span', socialCause).parent().click());
+    socialCauses.forEach(socialCause => cy.contains('span', socialCause).parent().click());
     cy.contains('button', 'Next: Skills').parent().click();
 
     //Select 3 skill
-    skills.forEach((skill) => cy.contains('span', skill).parent().click());
+    skills.forEach(skill => cy.contains('span', skill).parent().click());
     cy.contains('button', 'Next: Location').parent().click();
 
-    cy.wait(2000);
+    //cy.wait(2000);
 
-    //Select location (FIXME: name or data-* instead of id)
-    cy.get('input#react-select-2-input').type(CITY);
-    cy.get('div#react-select-2-option-0').click();
+    cy.get('input[aria-labelledby="searchDropdown-city"]').type(CITY);
+    cy.get('#city-option-0').click();
+
     cy.contains('button', 'Next: Photo').click();
     cy.contains('button', 'Continue').click();
     cy.url().should('include', '/profile/users/umayanigina/view');
@@ -142,7 +142,7 @@ describe('Sign up (User)', () => {
 
     // Click submit
     cy.contains('button', 'Continue').click();
-    cy.wait(2000);
+    //cy.wait(2000);
     cy.url().should('include', `${APP_URL}/sign-up/user/email`);
   });
 });

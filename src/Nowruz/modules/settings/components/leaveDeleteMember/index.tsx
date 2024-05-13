@@ -30,7 +30,7 @@ const LeaveDeleteMember: React.FC<LeaveDeleteMemberProps> = ({
         {!!buttons.length && (
           <div className="w-full flex flex-col-reverse md:flex-row items-center justify-end gap-3 mt-9">
             {buttons.map((button, index) => (
-              <Button key={index} {...button} className="w-full md:w-auto" />
+              <Button key={index} {...button} customStyle="w-full md:w-auto" />
             ))}
           </div>
         )}

@@ -18,14 +18,15 @@ const CustomControl = (props: any) => {
 };
 
 const CustomOption = (props: any) => {
-  const { innerProps, label, data, value, ...rest } = props;
+  const { innerProps, label, data, value, options, selectId, ...rest } = props;
   const labelValue = handleMultiValueAsync(label).isObject ? handleMultiValueAsync(label).label : label;
   const descriptionValue =
     (handleMultiValueAsync(label).isObject ? handleMultiValueAsync(label).description : data.description) || '';
   const selected = value && value.label ? value.label === label : false;
+  const index = options.findIndex(o => o.value === data.value);
   return (
     <div className="px-1.5">
-      <div {...innerProps} className={`${css.option}`}>
+      <div {...innerProps} className={`${css.option}`} id={`${selectId}-option-${index}`}>
         {selected && <Icon name="check" fontSize={20} color="#667085" />}
         <div className="ml-0 mr-auto flex gap-2 items-center">
           <span style={{ marginRight: '8px' }}>{data.icon}</span>
@@ -110,7 +111,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           options={options}
           noOptionsMessage={() => null}
           components={{
-            Option: props => <CustomOption {...props} value={selectedVal} />,
+            Option: props => <CustomOption selectId={id} {...props} value={selectedVal} />,
             Control: props => <CustomControl {...props} icon={icon} />,
             DropdownIndicator: () =>
               hasDropdownIcon && (
@@ -143,12 +144,13 @@ export const SearchDropdown: React.FC<SelectProps> = ({
         />
       ) : creatable ? (
         <AsyncCreatableSelect
+          id={id}
           cacheOptions
           defaultOptions
           ref={selectRef}
           options={options}
           components={{
-            Option: props => <CustomOption {...props} value={selectedVal} />,
+            Option: props => <CustomOption {...props} value={selectedVal} selectId={id} />,
             Control: props => <CustomControl ref={selectRef} {...props} icon={icon} />,
             DropdownIndicator: () =>
               hasDropdownIcon && (
@@ -188,7 +190,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           options={options}
           noOptionsMessage={() => null}
           components={{
-            Option: props => <CustomOption {...props} value={selectedVal} />,
+            Option: props => <CustomOption {...props} value={selectedVal} selectId={id} />,
             Control: props => <CustomControl {...props} icon={icon} />,
             DropdownIndicator: () =>
               hasDropdownIcon && (
