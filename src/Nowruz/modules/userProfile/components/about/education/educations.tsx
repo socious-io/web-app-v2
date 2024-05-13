@@ -48,33 +48,47 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
         {user?.educations && (
           <div className="md:pr-48 flex flex-col gap-5">
             {user?.educations.map(item => (
-              <StepperCard
-                img={item.org.image?.url || ''}
-                key={item.id}
-                iconName="graduation-hat-01"
-                title={item.org.name}
-                subtitle={getDegree(item)}
-                supprtingText={`${getStringDate(item.start_at)} - ${item.end_at ? getStringDate(item.end_at) : 'Now'}`}
-                editable={myProfile}
-                deletable={myProfile}
-                description={item.description}
-                handleEdit={() => handleEdit(item)}
-                handleDelete={() => handleDelete(item.id)}
-                DisplayVerificationStatus
-                verified={item.credential?.status ? verificationStatus[item.credential?.status] : 'unverified'}
-                verifyButton={{
-                  display: myProfile && (!item.credential || item.credential?.status === 'PENDING'),
-                  label: 'Request certificate',
-                  disabled: !!item.credential,
-                  action: isVerified ? () => onOpenVerifyModal(item) : handleOpenVerifyModal,
-                }}
-                claimButton={{
-                  display: myProfile && item.credential?.status === 'APPROVED',
-                  label: 'Claim certificate',
-                  disabled: !!disabledClaims[item.credential?.id || ''],
-                  action: isVerified ? () => onOpenClaimModal(item.credential?.id) : handleOpenVerifyModal,
-                }}
-              />
+              <>
+                <StepperCard
+                  img={item.org.image?.url || ''}
+                  key={item.id}
+                  iconName="graduation-hat-01"
+                  title={item.org.name}
+                  subtitle={getDegree(item)}
+                  supprtingText={`${getStringDate(item.start_at)} - ${
+                    item.end_at ? getStringDate(item.end_at) : 'Now'
+                  }`}
+                  editable={myProfile}
+                  deletable={myProfile}
+                  description={item.description}
+                  handleEdit={() => handleEdit(item)}
+                  handleDelete={() => handleDelete(item.id)}
+                  DisplayVerificationStatus
+                  verified={item.credential?.status ? verificationStatus[item.credential?.status] : 'unverified'}
+                  verifyButton={{
+                    display: myProfile && (!item.credential || item.credential?.status === 'PENDING'),
+                    label: item.credential ? 'Credential request sent' : 'Request certificate',
+                    disabled: !!item.credential,
+                    action: isVerified ? () => onOpenVerifyModal(item) : handleOpenVerifyModal,
+                  }}
+                  claimButton={{
+                    display:
+                      myProfile && (item.credential?.status === 'APPROVED' || item.credential?.status === 'SENT'),
+                    label: item.credential?.status === 'APPROVED' ? 'Claim certificate' : 'Certificate claimed',
+                    disabled: !!disabledClaims[item.credential?.id || ''] || item.credential?.status === 'SENT',
+                    action: isVerified ? () => onOpenClaimModal(item.credential?.id) : handleOpenVerifyModal,
+                  }}
+                />
+                {myProfile && item.credential?.status === 'REJECTED' && (
+                  <div
+                    className={css.status}
+                    style={{ borderColor: variables.color_error_500, color: variables.color_error_500 }}
+                  >
+                    <Icon name="x-close" color={variables.color_error_500} />
+                    <span>Rejected from {item.org.name}</span>
+                  </div>
+                )}
+              </>
             ))}
           </div>
         )}

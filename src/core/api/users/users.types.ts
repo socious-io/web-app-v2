@@ -57,6 +57,7 @@ export interface ExperienceReq {
   city?: string;
   employment_type?: 'ONE_OFF' | 'PART_TIME' | 'FULL_TIME';
   weekly_hours?: number | null;
+  total_hours?: number | null;
 }
 
 export interface EducationsReq {

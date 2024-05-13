@@ -89,6 +89,7 @@ export const JobCreateForm = () => {
     return (
       <div className="flex justfy-center align-center">
         <Input
+          id="paymentMin"
           name="paymentMin"
           value={paymentMin}
           onChange={e => onChangePaymentMin(e.target.value)}
@@ -100,6 +101,7 @@ export const JobCreateForm = () => {
         />
         <div className="flex items-center mx-2">to</div>
         <Input
+          id="paymentMax"
           name="paymentMax"
           value={paymentMax}
           onChange={e => onChangePaymentMax(e.target.value)}
@@ -116,6 +118,7 @@ export const JobCreateForm = () => {
     return (
       <div className="flex justfy-center align-center">
         <Input
+          id="commitmentHoursLower"
           name="commitmentHoursLower"
           value={commitmentHoursLower}
           onChange={e => onChangeCommitHoursMin(e.target.value)}
@@ -129,6 +132,7 @@ export const JobCreateForm = () => {
         />
         <div className="flex items-center mx-2">to</div>
         <Input
+          id="commitmentHoursHigher"
           name="commitmentHoursHigher"
           value={commitmentHoursHigher}
           onChange={e => onChangeCommitHoursMax(e.target.value)}
@@ -189,6 +193,7 @@ export const JobCreateForm = () => {
           {renderInfo('Job category', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="category"
               name="category"
               value={category}
               placeholder="Select a category"
@@ -291,6 +296,7 @@ export const JobCreateForm = () => {
           {renderInfo('Remote preference', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="preference"
               placeholder="Please select"
               value={preference}
               options={PROJECT_REMOTE_PREFERENCES_V2}
@@ -304,6 +310,7 @@ export const JobCreateForm = () => {
           {renderInfo('Job type', 'Is it a full time job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="job-type"
               value={type}
               placeholder="Please select"
               options={PROJECT_TYPE_V2}
@@ -317,6 +324,7 @@ export const JobCreateForm = () => {
           {renderInfo('Job length', 'How long is the job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="length"
               placeholder="Please select"
               value={length}
               options={PROJECT_LENGTH_V2}
@@ -392,6 +400,7 @@ export const JobCreateForm = () => {
           {renderInfo('Experience level', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="experience-level"
               value={experienceLevel}
               placeholder="Please select"
               options={EXPERIENCE_LEVEL_V2}

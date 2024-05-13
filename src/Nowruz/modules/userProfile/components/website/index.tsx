@@ -8,8 +8,9 @@ import css from './website.module.scss';
 
 export interface WebsiteProps {
   url: string;
+  truncate?: boolean;
 }
-export const Website: React.FC<WebsiteProps> = ({ url }) => {
+export const Website: React.FC<WebsiteProps> = ({ url, truncate = false }) => {
   return (
     <div className="flex flex-col gap-2">
       <Typography variant="subtitle1" className="text-Gray-light-mode-600">
@@ -17,7 +18,7 @@ export const Website: React.FC<WebsiteProps> = ({ url }) => {
       </Typography>
 
       <div className="flex gap-2 items-center">
-        <Typography variant="h6">
+        <Typography variant="h6" className={truncate ? 'truncate' : ''}>
           <Link href={url} label={url} color={variables.color_primary_700} customStyle={css.link} target="_blank" />
         </Typography>
         <Icon name="arrow-up-right" fontSize={20} color={variables.color_primary_700} />

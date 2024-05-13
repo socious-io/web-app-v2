@@ -53,8 +53,8 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
         userIsLoggedIn && currentIdentity?.type === 'users'
           ? [
               { label: 'Find job', route: '/jobs', public: false },
+              { label: 'Saved jobs', route: '/jobs/saved', public: false },
               { label: 'Applied jobs', route: '/jobs/applied', public: false },
-              //{ label: 'Saved jobs', route: '/', public: false },
             ]
           : undefined,
     },

@@ -42,7 +42,7 @@ export class User {
   }
 
   getProfile(social_causes: string[], skills: string[], city: string) {
-    social_causes = social_causes.map((cause) => cause.toUpperCase());
+    social_causes = social_causes.map(cause => cause.toUpperCase());
     return {
       id: 'd1c7109a-0ede-4190-869c-dd62cd7107be',
       username: this.username,
@@ -92,6 +92,7 @@ export class OrganizationUser {
   orgUsername: string;
   city: string;
   socialCauses: string[];
+  name: string;
 
   constructor(
     firstname: string,
@@ -102,6 +103,7 @@ export class OrganizationUser {
     orgUsername: string,
     city: string,
     socialCauses: string[],
+    name?: string,
   ) {
     this.firstname = firstname;
     this.lastname = lastname;
@@ -111,10 +113,39 @@ export class OrganizationUser {
     this.orgUsername = orgUsername;
     this.city = city;
     this.socialCauses = socialCauses;
+    this.name = name || '';
   }
-
+  getIdentity() {
+    return [
+      {
+        current: true,
+        primary: false,
+        id: 'dc454ccd-39f1-4fe5-9948-c731673f755a',
+        type: 'organizations',
+        meta: {
+          id: 'dc454ccd-39f1-4fe5-9948-c731673f755a',
+          city: this.city,
+          name: this.name,
+          email: this.email,
+          image: null,
+          hiring: false,
+          status: 'ACTIVE',
+          address: null,
+          country: null,
+          mission: null,
+          shortname: this.username,
+          description: null,
+          wallet_address: null,
+          verified_impact: false,
+          verified: false,
+        },
+        created_at: '2024-03-21T10:07:49.101Z',
+        verification_status: null,
+      },
+    ];
+  }
   get() {
-    const social_causes = this.socialCauses.map((socialCause) => socialCause.toUpperCase());
+    const social_causes = this.socialCauses.map(socialCause => socialCause.toUpperCase());
     return {
       id: 'deb0e215-e2cd-4d7f-9ae3-bc7141acd3cf',
       name: `${this.firstname} ${this.lastname}`,

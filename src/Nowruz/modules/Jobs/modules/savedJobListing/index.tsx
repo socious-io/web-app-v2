@@ -1,14 +1,13 @@
 import { Skeleton } from '@mui/material';
-import React from 'react';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 
-import css from './job-listing.module.scss';
-import { useJobListing } from './useJobListing';
+import css from './savedJobListing.module.scss';
+import { useSavedJobListing } from './useSavedJobListing';
 import { JobListingCard } from '../../components/JobListingCard';
 
-export const JobsListing = () => {
-  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading } = useJobListing();
+export const SavedJobListing = () => {
+  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading, loadPage } = useSavedJobListing();
 
   return (
     <div className={css.container}>
@@ -20,14 +19,9 @@ export const JobsListing = () => {
         </div>
       ) : (
         <>
-          <div className={css.header}>
-            <div className={css.title}>All jobs</div>
-            <div className={css.subTitle}>Discover our most recent jobs</div>
-          </div>
-
           {jobsList.map(job => (
             <div key={job.id} className="mt-6">
-              <JobListingCard job={job} displayNotInterested displaySave />
+              <JobListingCard job={job} displaySave saveAction={() => setPage(1)} />
             </div>
           ))}
         </>
