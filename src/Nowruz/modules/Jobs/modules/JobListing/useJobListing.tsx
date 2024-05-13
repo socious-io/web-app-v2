@@ -1,17 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoaderData, useLocation } from 'react-router-dom';
-import {
-  CurrentIdentity,
-  Job,
-  JobsRes,
-  Skill,
-  UserMeta,
-  jobs,
-  markedJobs,
-  recommendedJobs,
-  skills,
-} from 'src/core/api';
+import { CurrentIdentity, Job, JobsRes, Skill, UserMeta, jobs, recommendedJobs, skills } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { useIsMount } from 'src/Nowruz/modules/general/components/useIsMount';
 import { RootState } from 'src/store';
@@ -19,13 +9,14 @@ import { setSkills } from 'src/store/reducers/skills.reducer';
 
 export const useJobListing = () => {
   const loaderData = useLoaderData() as JobsRes;
-  const skillList = useSelector<RootState, Skill[]>(state => {
-    return state.skills.items;
-  });
 
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   );
+  const isLoggedIn = !!currentIdentity;
+  const skillList = useSelector<RootState, Skill[]>(state => {
+    return state.skills.items;
+  });
 
   const dispatch = useDispatch();
   const PER_PAGE = 10;
@@ -85,5 +76,17 @@ export const useJobListing = () => {
     loadPage();
     localStorage.setItem('page', page.toString());
   }, [page]);
-  return { page, setPage, jobsList, total: totalCount, PER_PAGE, isMobile, skillList, loading, recommended };
+
+  return {
+    page,
+    setPage,
+    jobsList,
+    total: totalCount,
+    PER_PAGE,
+    isMobile,
+    skillList,
+    loading,
+    recommended,
+    isLoggedIn,
+  };
 };
