@@ -24,6 +24,7 @@ interface JobListingCardProps {
   displayNotInterested?: boolean;
   saveAction?: () => void;
 }
+
 export const JobListingCard: React.FC<JobListingCardProps> = ({
   job,
   displaySave = false,
@@ -66,6 +67,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
             </div>
           </div>
         </div>
+
         {displayNotInterested && !jobVal.not_interested && (
           <IconButton
             iconName="thumbs-down"

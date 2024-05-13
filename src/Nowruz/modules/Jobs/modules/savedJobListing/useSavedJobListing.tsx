@@ -27,10 +27,10 @@ export const useSavedJobListing = () => {
     setLoading(true);
     try {
       await Promise.all([fetchMore(page), getSkills()]);
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
+      console.log('error in page load', error);
     }
+    setLoading(false);
   };
 
   const fetchMore = async (page: number) => {
