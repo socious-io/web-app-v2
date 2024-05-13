@@ -42,10 +42,10 @@ export const useJobListing = () => {
     setLoading(true);
     try {
       await Promise.all([fetchMore(), getSkills(), getRecommended()]);
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
+      console.log('error in page load', error);
     }
+    setLoading(false);
   };
 
   const fetchMore = async () => {
@@ -75,7 +75,6 @@ export const useJobListing = () => {
     try {
       if (!currentIdentity) return;
       const res = await recommendedJobs((currentIdentity.meta as UserMeta).username);
-      console.log('test log res', res);
       setRecommended(res.items[0]);
     } catch (e) {
       console.log('error in getting recommended jobs', e);
