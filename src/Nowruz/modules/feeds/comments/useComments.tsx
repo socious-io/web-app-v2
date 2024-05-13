@@ -6,13 +6,13 @@ import { RootState } from 'src/store';
 import { SelectedEmoji } from './index.types';
 import { useFeedsContext } from '../contexts/feeds.context';
 
-export const useReplies = (postId: string, commentId: string, list: Comment[]) => {
+export const useComments = (postId: string, list: Comment[]) => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
   const currentIdentityId = currentIdentity?.id;
   const { state, dispatch } = useFeedsContext();
-  const { replies } = state || {};
+  const { comments } = state || {};
   const [openEmojiPicker, setOpenEmojiPicker] = useState('');
   const [emojis, setEmojis] = useState<Record<string, SelectedEmoji[]>>({});
   const defaultRecommendedEmojis = [
@@ -22,11 +22,11 @@ export const useReplies = (postId: string, commentId: string, list: Comment[]) =
   ];
 
   useEffect(() => {
-    const repliesWithEmojisMap: Record<string, SelectedEmoji[]> = {};
-    list.forEach(reply => {
-      const replyId = reply.id;
+    const commentsWithEmojisMap: Record<string, SelectedEmoji[]> = {};
+    list.forEach(comment => {
+      const commentId = comment.id;
       const existingEmojis: SelectedEmoji[] = [];
-      (reply.emojis || []).forEach(emoji => {
+      (comment.emojis || []).forEach(emoji => {
         if (!emoji.identity) {
           return { emoji: emoji.emoji, identities: [] };
         }
@@ -46,13 +46,13 @@ export const useReplies = (postId: string, commentId: string, list: Comment[]) =
           mergedEmojis.push(existingEmoji);
         }
       });
-      repliesWithEmojisMap[replyId] = mergedEmojis;
+      commentsWithEmojisMap[commentId] = mergedEmojis;
     });
-    setEmojis(repliesWithEmojisMap);
+    setEmojis(commentsWithEmojisMap);
   }, [list]);
 
-  const reactedCurrentIdentity = (emojiName: string, replyId: string) => {
-    const findIdentity = emojis[replyId]?.find(emoji => {
+  const reactedCurrentIdentity = (emojiName: string, commentId: string) => {
+    const findIdentity = emojis[commentId]?.find(emoji => {
       if (emojiName === emoji.emoji) {
         return emoji.identities.findIndex(identity => identity.id === currentIdentityId) !== -1;
       } else {
@@ -62,10 +62,10 @@ export const useReplies = (postId: string, commentId: string, list: Comment[]) =
     return findIdentity;
   };
 
-  const updateReplyWithEmojis = (replyId: string, newEmojis: SelectedEmoji[]) => {
+  const updateCommentWithEmojis = (commentId: string, newEmojis: SelectedEmoji[]) => {
     //FIXME: it's better the structure of emojis in response of API changed. (BE)
-    const updatedList = list.map(reply => {
-      if (reply.id === replyId) {
+    const updatedList = list.map(comment => {
+      if (comment.id === commentId) {
         const updatedEmojis = newEmojis.flatMap(emoji =>
           emoji.identities.map(identity => ({
             emoji: emoji.emoji,
@@ -73,26 +73,26 @@ export const useReplies = (postId: string, commentId: string, list: Comment[]) =
           })),
         );
         return {
-          ...reply,
+          ...comment,
           emojis: updatedEmojis,
         };
       }
-      return reply;
+      return comment;
     });
 
     dispatch({
-      type: 'replies',
-      value: { ...replies, [commentId]: { ...replies[commentId], items: updatedList as Comment[] } },
+      type: 'comments',
+      value: { ...comments, [postId]: { ...comments[postId], items: updatedList as Comment[] } },
     });
   };
 
-  const onPreviewClick = async (emojiName: string, replyId: string) => {
+  const onPreviewClick = async (emojiName: string, commentId: string) => {
     try {
-      const findIdentity = reactedCurrentIdentity(emojiName, replyId);
+      const findIdentity = reactedCurrentIdentity(emojiName, commentId);
       if (findIdentity) {
-        await unreactPostComment(postId, replyId, emojiName);
+        await unreactPostComment(postId, commentId, emojiName);
         const updatedEmojis =
-          emojis[replyId]?.map(emoji => {
+          emojis[commentId]?.map(emoji => {
             if (emoji.emoji !== emojiName) {
               return emoji;
             } else {
@@ -100,32 +100,32 @@ export const useReplies = (postId: string, commentId: string, list: Comment[]) =
               return { ...emoji, identities: filteredIdentities };
             }
           }) || [];
-        setEmojis({ ...emojis, [replyId]: updatedEmojis });
-        updateReplyWithEmojis(replyId, updatedEmojis);
+        setEmojis({ ...emojis, [commentId]: updatedEmojis });
+        updateCommentWithEmojis(commentId, updatedEmojis);
       } else {
-        await reactPostComment(postId, replyId, emojiName);
-        const updatedEmojis = (emojis[replyId] || []).map(emoji => {
+        await reactPostComment(postId, commentId, emojiName);
+        const updatedEmojis = (emojis[commentId] || []).map(emoji => {
           if (emoji.emoji === emojiName) {
             return { ...emoji, identities: [...emoji.identities, { id: currentIdentityId }] };
           } else {
             return emoji;
           }
         });
-        setEmojis({ ...emojis, [replyId]: updatedEmojis });
-        updateReplyWithEmojis(replyId, updatedEmojis);
+        setEmojis({ ...emojis, [commentId]: updatedEmojis });
+        updateCommentWithEmojis(commentId, updatedEmojis);
       }
     } catch (error) {
-      console.log('error in un/reacting replies', error);
+      console.log('error in un/reacting comments', error);
     }
   };
 
-  const onEmojiSelect = async (emojiName: string, replyId: string) => {
+  const onEmojiSelect = async (emojiName: string, commentId: string) => {
     try {
-      const findIdentity = reactedCurrentIdentity(emojiName, replyId);
+      const findIdentity = reactedCurrentIdentity(emojiName, commentId);
       if (findIdentity) {
-        await unreactPostComment(postId, replyId, emojiName);
+        await unreactPostComment(postId, commentId, emojiName);
         const updatedEmojis =
-          emojis[replyId]?.map(emoji => {
+          emojis[commentId]?.map(emoji => {
             if (emoji.emoji !== emojiName) {
               return emoji;
             } else {
@@ -133,12 +133,12 @@ export const useReplies = (postId: string, commentId: string, list: Comment[]) =
               return { emoji: emoji.emoji, identities: filteredIdentities };
             }
           }) || [];
-        setEmojis({ ...emojis, [replyId]: updatedEmojis });
-        updateReplyWithEmojis(replyId, updatedEmojis);
+        setEmojis({ ...emojis, [commentId]: updatedEmojis });
+        updateCommentWithEmojis(commentId, updatedEmojis);
       } else {
-        await reactPostComment(postId, replyId, emojiName);
+        await reactPostComment(postId, commentId, emojiName);
         const updatedEmojis =
-          emojis[replyId]?.map(emoji => {
+          emojis[commentId]?.map(emoji => {
             if (emoji.emoji === emojiName) {
               return { ...emoji, identities: [...emoji.identities, { id: currentIdentityId }] };
             } else {
@@ -148,11 +148,11 @@ export const useReplies = (postId: string, commentId: string, list: Comment[]) =
         if (!updatedEmojis.some(emoji => emoji.emoji === emojiName)) {
           updatedEmojis.push({ emoji: emojiName, identities: [{ id: currentIdentityId }] });
         }
-        setEmojis({ ...emojis, [replyId]: updatedEmojis });
-        updateReplyWithEmojis(replyId, updatedEmojis);
+        setEmojis({ ...emojis, [commentId]: updatedEmojis });
+        updateCommentWithEmojis(commentId, updatedEmojis);
       }
     } catch (error) {
-      console.log('error in un/reacting replies', error);
+      console.log('error in un/reacting comments', error);
     }
     setOpenEmojiPicker('');
   };
