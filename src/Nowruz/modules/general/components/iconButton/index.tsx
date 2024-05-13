@@ -15,6 +15,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   customStyle,
   ...props
 }) => {
+  // FIXME: Add new icons to icon pack and use Icon instead of img
   return (
     <MUIIconButton
       className={`${css.btn} ${

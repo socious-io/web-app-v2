@@ -293,6 +293,16 @@ export const blueprint: RouteObject[] = [
                   };
                 },
               },
+              {
+                path: 'recommended',
+
+                async lazy() {
+                  const { RecommendedList } = await import('src/Nowruz/pages/jobs/recommendedList');
+                  return {
+                    Component: Protect(RecommendedList, 'users'),
+                  };
+                },
+              },
             ],
           },
           {
