@@ -19,8 +19,9 @@ export const useApplicantAction = (
 
   const navigate = useNavigate();
 
-  const onClickName = (id: string) => {
-    const details = applicants.find((applicant) => applicant.user.id === id);
+  const onClickName = (userId: string, applicationId: string) => {
+    const details = applicants.find(applicant => applicant.user.id === userId);
+    currentSelectedId.current = applicationId;
     setOpen(true);
     setApplicant(details as Applicant);
   };
@@ -32,22 +33,26 @@ export const useApplicantAction = (
   };
 
   const onMessage = (id: string) => {
-    const details = applicants.find((applicant) => applicant.id === id);
+    const details = applicants.find(applicant => applicant.id === id);
     const participantId = details?.user.id;
     navigate(`../../chats?participantId=${participantId}`);
   };
 
   const onOffer = (id: string) => {
-    const details = applicants.find((applicant) => applicant.id === id);
+    const details = applicants.find(applicant => applicant.id === id);
     setOffer(true);
     setApplicant(details as Applicant);
   };
 
   const handleReject = async () => {
     if (!currentSelectedId.current) return;
-    setOpenAlert(false);
-    await rejectApplicant(currentSelectedId?.current);
-    onRefetch(true);
+    try {
+      setOpenAlert(false);
+      await rejectApplicant(currentSelectedId?.current);
+      onRefetch(true);
+    } catch (e) {
+      console.log('error in rejecting applicant', e);
+    }
   };
 
   const columns = useMemo<ColumnDef<Applicant>[]>(
@@ -55,17 +60,20 @@ export const useApplicantAction = (
       {
         id: 'name',
         header: <p className="text-xs">Name</p>,
-        accessorKey: 'user',
+        accessorKey: 'id',
         cell: function render({ getValue }) {
+          const detail = applicants.find(applicant => applicant.id === getValue());
           return (
             <div
               className="flex flex-row justify-start items-center gap-2 cursor-pointer"
-              onClick={() => onClickName(getValue().id)}
+              onClick={() => {
+                onClickName(detail!.user.id, detail!.id);
+              }}
             >
-              <Avatar size="40px" type="users" img={getValue().avatar} />
+              <Avatar size="40px" type="users" img={detail!.user.avatar} />
               <div className="flex flex-col justify-start">
-                <p className="text-Gray-light-mode-900 leading-6 font-medium">{getValue().name}</p>
-                <p className="text-Gray-light-mode-600 text-sm leading-5">@{getValue().username}</p>
+                <p className="text-Gray-light-mode-900 leading-6 font-medium">{detail?.user.name}</p>
+                <p className="text-Gray-light-mode-600 text-sm leading-5">@{detail?.user.username}</p>
               </div>
             </div>
           );
