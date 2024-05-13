@@ -34,16 +34,9 @@ export const useImageBio = () => {
 
   const updateProfile = async () => {
     const avatarImage = state.avatar ? { avatar: image.id } : {};
-    const updatedObj = removeValuesFromObject(
-      {
-        ...state,
-        ...avatarImage,
-      },
-      ['', null],
-    );
+    let updatedObj = { ...avatarImage, ...state, cityLabel: '', orgType: '' };
 
-    delete updatedObj.cityLabel;
-    delete updatedObj.orgType;
+    updatedObj = removeValuesFromObject(updatedObj, ['', null]);
 
     /* 
       Note: this is just make sure fix miss use state for updating profile and this going to make issue when

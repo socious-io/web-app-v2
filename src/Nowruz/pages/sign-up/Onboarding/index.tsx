@@ -33,7 +33,8 @@ export const Onboarding = () => {
   });
 
   useEffect(() => {
-    identities().then(async resp => {
+    const getIdentities = async () => {
+      const resp = await identities();
       await dispatch(setIdentityList(resp));
       const user = {
         id: primary?.id,
@@ -41,10 +42,9 @@ export const Onboarding = () => {
         email: (primary?.meta as UserMeta).email || (primary?.meta as OrgMeta).email,
       };
       await dispatch(setIdentity(user));
-    });
+    };
+    getIdentities();
   }, []);
-
-  //const primary = identities.find((i) => i.primary);
 
   const type = localStorage.getItem('registerFor');
 
@@ -63,12 +63,15 @@ export const Onboarding = () => {
     {
       iconName: 'log-out-01',
       label: 'Log out',
-      onClick: () => {
-        logout().then(() => {
+      onClick: async () => {
+        try {
+          await logout();
           store.dispatch(removeIdentityList());
           nonPermanentStorage.clear();
           navigate('/sign-in');
-        });
+        } catch (e) {
+          console.log('error in logout', e);
+        }
       },
     },
   ];

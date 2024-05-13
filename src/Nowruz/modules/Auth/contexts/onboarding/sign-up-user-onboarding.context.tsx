@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { ReactNode, useContext, useEffect, useReducer } from 'react';
 import { profile } from 'src/core/api';
 
 const initialState = {
@@ -32,7 +32,7 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'UPDATE_USER': {
       const filteredPayload = Object.keys(action.payload).reduce((filtered, key) => {
-        if (Object.prototype.hasOwnProperty.call(state, key)) {
+        if (Object.getOwnPropertyDescriptor(state, key)) {
           filtered[key] = action.payload[key];
         }
         return filtered;
@@ -52,7 +52,7 @@ const reducer = (state, action) => {
 export const UserContext = React.createContext(initialState);
 
 export interface UserProviderProps {
-  children: any;
+  children: ReactNode;
 }
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
