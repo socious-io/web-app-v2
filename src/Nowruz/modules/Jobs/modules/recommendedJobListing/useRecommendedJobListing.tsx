@@ -23,6 +23,7 @@ export const useRecommendedJobListing = () => {
   };
   useEffect(() => {
     getRecommendedList();
+    localStorage.setItem('source', 'recommended');
   }, []);
 
   return { loading, list };
