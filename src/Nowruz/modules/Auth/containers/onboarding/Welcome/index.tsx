@@ -1,5 +1,4 @@
-import { Typography } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { StepsContext } from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 
@@ -17,7 +16,7 @@ export const Welcome = () => {
         </h2>
         <img src="/images/welcome.svg" />
         <div className={css.subtitle}> Complete your profile to find impact jobs</div>
-        <div className={css.footer} >
+        <div className={css.footer}>
           <Button color="primary" block onClick={() => updateSelectedStep(1)}>
             Complete your profile
           </Button>
