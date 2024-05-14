@@ -171,6 +171,11 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
           <Link href={`/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
         )}
       </div>
+      {jobVal.not_interested && (
+        <div className={css.cardFooterMobile}>
+          <div className="font-medium text-sm leading-5 text-Success-700">You will not see this job again</div>
+        </div>
+      )}
     </div>
   );
 };
