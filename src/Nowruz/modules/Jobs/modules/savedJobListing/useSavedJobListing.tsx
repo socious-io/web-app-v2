@@ -55,6 +55,7 @@ export const useSavedJobListing = () => {
   useEffect(() => {
     loadPage(page);
     localStorage.setItem('page', page.toString());
+    localStorage.setItem('source', 'saved');
   }, [page]);
 
   return { page, setPage, jobsList, total: totalCount, PER_PAGE, isMobile, skillList, loading, loadPage };

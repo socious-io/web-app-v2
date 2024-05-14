@@ -41,9 +41,16 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
     if (sourceOrg === 'applied') {
       return `/jobs/applied`;
     }
+    if (sourceOrg === 'recommended') {
+      return '/jobs/recommended';
+    }
+    if (sourceOrg === 'saved') {
+      return '/jobs/saved';
+    }
     if (sourceOrg) {
       return `/profile/organizations/${sourceOrg}/jobs`;
     }
+
     return currentIdentity?.type === 'organizations' ? '/jobs/created' : '/jobs';
   };
 
@@ -56,7 +63,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
   return (
     <>
       <div className={css.container}>
-        <BackLink title="Back to jobs" onBack={() => navigate(getBackLink())} customStyle="w-fit" />
+        <BackLink title="Back" onBack={() => navigate(getBackLink())} customStyle="w-fit" />
         <Avatar
           size="72px"
           type="organizations"

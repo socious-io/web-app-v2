@@ -43,10 +43,9 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
   } = useHeaderNavBar();
 
   const path = useLocation().pathname;
+  const pages = ['/jobs', '/jobs/saved', '/jobs/recommended'];
   const searchPlaceholder =
-    (path === '/jobs' || path === '/jobs/saved') && userType === 'users'
-      ? 'Search by title, skill or organization'
-      : 'Search';
+    pages.includes(path) && userType === 'users' ? 'Search by title, skill or organization' : 'Search';
 
   return (
     <div
