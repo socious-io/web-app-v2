@@ -139,8 +139,8 @@ export const useJobCreateForm = () => {
     resolver: yupResolver(schema),
     mode: 'all',
   });
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const location = useLocation();
   const [isEdit] = useState<boolean>(location.pathname.includes('jobs/edit') ?? false);
@@ -154,12 +154,14 @@ export const useJobCreateForm = () => {
   const [editedQuestion, setEditedQuestion] = useState<QuestionReq>();
   const editedQuestionIndex = useRef<number>();
   const [openCreateQuestion, setOpenCreateQuestion] = useState(false);
-  const catagoriesList = categories.map((item) => ({ label: item.name, value: item.id }));
+  const catagoriesList = categories.map(item => ({ label: item.name, value: item.id }));
   const keytems = Object.keys(SOCIAL_CAUSES);
-  const causesList = keytems.map((i) => {
+  const causesList = keytems.map(i => {
     return { value: SOCIAL_CAUSES[i].value, label: SOCIAL_CAUSES[i].label };
   });
-  let selectedSkills = watch('skills');
+  const selectedSkills = watch('skills');
+  const paymentMax = watch('paymentMax');
+  const paymentMin = watch('paymentMin');
   const paymentTypeOptions = PROJECT_PAYMENT_TYPE.slice().reverse();
 
   const onSelectLength = (length: OptionType) => {
@@ -195,7 +197,7 @@ export const useJobCreateForm = () => {
   };
 
   const cityToOption = (cities: Location[]) => {
-    return cities.map((city) => ({
+    return cities.map(city => ({
       // label: `${city.name}, ${city.region_name}`,
       // countryCode: city.country_code,
       label: JSON.stringify({ label: `${city.name}, ${city.country_name}`, description: city.timezone_utc }),
@@ -215,12 +217,12 @@ export const useJobCreateForm = () => {
     }
   };
   useEffect(() => {
-    skillsToCategoryAdaptor().then((data) => {
+    skillsToCategoryAdaptor().then(data => {
       setSkills(data);
     });
   }, []);
 
-  const onSelectCity = (location) => {
+  const onSelectCity = location => {
     setValue(
       'location',
       { city: location.city, country: location.countryCode, label: `${location.city}, ${location.countryCode}` },
@@ -264,7 +266,7 @@ export const useJobCreateForm = () => {
       project_length: length.value,
       project_type: type.value,
       remote_preference: preference.value,
-      skills: skills.map((item) => item.value),
+      skills: skills.map(item => item.value),
       status: 'ACTIVE',
       title,
       commitment_hours_lower: commitmentHoursLower ? commitmentHoursLower.toString() : '',
@@ -286,7 +288,9 @@ export const useJobCreateForm = () => {
         }
       });
       setOpenSuccessModal(true);
-    } catch (error) {}
+    } catch (error) {
+      console.log('error in updating job', error);
+    }
   };
 
   const onPreview = () => {
@@ -312,19 +316,19 @@ export const useJobCreateForm = () => {
       job: {
         title,
         description: jobDescription,
-        remotePreference: PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === preference)?.label,
+        remotePreference: PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === preference)?.label,
         isCryptoPayment: true,
-        jobLength: PROJECT_LENGTH_V2.find((level) => level.value === length)?.label,
-        jobType: PROJECT_TYPE_V2.find((level) => level.value === type)?.label,
+        jobLength: PROJECT_LENGTH_V2.find(level => level.value === length)?.label,
+        jobType: PROJECT_TYPE_V2.find(level => level.value === type)?.label,
         city: location?.city || 'Anywhere',
         country: location?.country,
         // location: location?.city ? location?.city : 'Anywhere',
         maxPayment: paymentMax,
         minPayment: paymentMin,
-        paymentType: PROJECT_PAYMENT_TYPE.find((level) => level.value === paymentType)?.label,
-        experienceLevel: EXPERIENCE_LEVEL_V2.find((level) => level.value === experienceLevel)?.label,
+        paymentType: PROJECT_PAYMENT_TYPE.find(level => level.value === paymentType)?.label,
+        experienceLevel: EXPERIENCE_LEVEL_V2.find(level => level.value === experienceLevel)?.label,
         socialCause: cause ? SOCIAL_CAUSES[cause].label : '',
-        skills: skills ? skills.map((item) => item.label) : [],
+        skills: skills ? skills.map(item => item.label) : [],
       },
     };
     setPreviewModalProps(previewModalPayload);
@@ -335,11 +339,12 @@ export const useJobCreateForm = () => {
     setValue('skills', skills, { shouldValidate: true });
   };
   const onChangePaymentMin = (value: string) => {
-    setValue('paymentMin', Number(value), { shouldValidate: true });
+    setValue('paymentMin', Number(value) || null, { shouldValidate: true });
     trigger('paymentMax');
   };
+
   const onChangePaymentMax = (value: string) => {
-    setValue('paymentMax', Number(value), { shouldValidate: true });
+    setValue('paymentMax', Number(value) || null, { shouldValidate: true });
     trigger('paymentMin');
   };
   const onChangeCommitHoursMin = (value: string) => {
@@ -382,7 +387,7 @@ export const useJobCreateForm = () => {
 
   const initializeValues = useCallback(
     (job: Job) => {
-      const preferences = PROJECT_REMOTE_PREFERENCES_V2.find((level) => level.value === job.remote_preference)?.label;
+      const preferences = PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === job.remote_preference)?.label;
       const initialVal = {
         title: job?.title || '',
         cause: {
@@ -396,15 +401,15 @@ export const useJobCreateForm = () => {
         description: job.description,
         preference: { label: preferences, value: job.remote_preference },
         type: {
-          label: PROJECT_TYPE_V2.find((type) => type.value === job?.project_type)?.label,
+          label: PROJECT_TYPE_V2.find(type => type.value === job?.project_type)?.label,
           value: job?.project_type || '',
         },
         length: {
-          label: PROJECT_LENGTH_V2.find((length) => length.value === job?.project_length)?.label,
+          label: PROJECT_LENGTH_V2.find(length => length.value === job?.project_length)?.label,
           value: job?.project_length || '',
         },
         experienceLevel: {
-          label: EXPERIENCE_LEVEL_V2.find((experience) => experience.value === job?.experience_level)?.label,
+          label: EXPERIENCE_LEVEL_V2.find(experience => experience.value === job?.experience_level)?.label,
           value: job?.experience_level,
         },
         skills: skillsToCategory(job?.skills),
@@ -464,8 +469,8 @@ export const useJobCreateForm = () => {
     isValid,
     onChangePaymentMax,
     onChangePaymentMin,
-    paymentMin: getValues().paymentMin,
-    paymentMax: getValues().paymentMax,
+    paymentMin,
+    paymentMax,
     paymentTypeOptions,
     paymentType: getValues().paymentType,
     paymentScheme: getValues().paymentScheme,
