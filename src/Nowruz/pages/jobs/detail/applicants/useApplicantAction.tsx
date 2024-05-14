@@ -20,19 +20,13 @@ export const useApplicantAction = (
   const [columnVisibility, setColumnVisibility] = useState({
     select: false,
   });
+
   const currentSelectedId = useRef<string>();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentTab === 'applicants')
-      setColumnVisibility({
-        select: true,
-      });
-    else
-      setColumnVisibility({
-        select: false,
-      });
+    setColumnVisibility({ select: currentTab === 'applicants' });
   }, [currentTab]);
 
   const onClickName = (userId: string, applicationId: string) => {
