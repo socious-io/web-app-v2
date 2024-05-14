@@ -70,11 +70,11 @@ export const useApplicantAction = (
     try {
       await rejectMultipleApplicants({ applicants: selectedIds });
       table.toggleAllRowsSelected(false);
+      onRefetch(true);
     } catch (e) {
       console.log('error in multiple applications rejection', e);
     }
     setOpenSelectedRejectAlert(false);
-    onRefetch(true);
   };
 
   const columns = useMemo<ColumnDef<Applicant>[]>(
