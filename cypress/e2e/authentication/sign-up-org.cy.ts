@@ -36,40 +36,40 @@ const organizationUser = new OrganizationUser(
 describe('Sign up', () => {
   beforeEach(() => {
     // Mock the register API call
-    cy.intercept('GET', `${API_SERVER}/identities*`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/identities*`, req => {
       if (req.headers.authorization == `${TOKEN_TYPE} ${ACCESS_TOKEN}`) req.reply(user.getIdentity());
       else req.reply(401, { message: 'unauthorized' });
     });
-    cy.intercept('GET', `${API_SERVER}/skills*`, (req) => req.reply(SKILLS));
-    cy.intercept('GET', `${API_SERVER}/geo/locations*`, (req) => req.reply(LOCATIONS));
-    cy.intercept('GET', `${API_SERVER}/orgs/d/industries*`, (req) => req.reply(INDUSTRIES));
-    cy.intercept('POST', `${API_SERVER}/orgs?auto_member=true`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/orgs/by-shortname/*`, (req) => req.reply(200, organizationUser.get()));
-    cy.intercept('POST', `${API_SERVER}/user/change-password-direct*`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('POST', `${API_SERVER}/user/update/profile*`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/user/profile*`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/notifications*`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/skills*`, req => req.reply(SKILLS));
+    cy.intercept('GET', `${API_SERVER}/orgs/d/industries*`, req => req.reply(INDUSTRIES));
+    cy.intercept('POST', `${API_SERVER}/orgs?auto_member=true`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('GET', `${API_SERVER}/orgs/by-shortname/*`, req => req.reply(200, organizationUser.get()));
+    cy.intercept('GET', `${API_SERVER}/geo/locations*`, req => req.reply(LOCATIONS));
+    cy.intercept('POST', `${API_SERVER}/user/change-password-direct*`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('POST', `${API_SERVER}/user/update/profile*`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('GET', `${API_SERVER}/user/profile*`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('GET', `${API_SERVER}/notifications*`, req => req.reply(200, { message: 'success' })).as(
       'getNotifications',
     );
-    cy.intercept('GET', `${API_SERVER}/projects*`, (req) => req.reply(200, PROJECTS)).as('getProjects');
-    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/projects*`, req => req.reply(200, PROJECTS)).as('getProjects');
+    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
       'getUnreadChatsCount',
     );
-    cy.intercept('GET', `${API_SERVER}/connections/related/*`, (req) => req.reply(200, { connect: null }));
-    cy.intercept('POST', `${API_SERVER}/auth/preregister*`, (req) =>
+    cy.intercept('GET', `${API_SERVER}/connections/related/*`, req => req.reply(200, { connect: null }));
+    cy.intercept('POST', `${API_SERVER}/auth/preregister*`, req =>
       req.reply(200, { username: null, shortname: null, message: 'success' }),
     );
-    cy.intercept('POST', `${API_SERVER}/auth/register`, (req) => {
+    cy.intercept('POST', `${API_SERVER}/auth/register`, req => {
       if (req.body.email === EXISTING_EMAIL_ADDRESS) req.reply({ statusCode: 400 });
       else req.reply(200, { message: 'success' });
     });
-    cy.intercept('POST', `${API_SERVER}/auth/refresh`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('POST', `${API_SERVER}/auth/refresh`, req => req.reply(200, { message: 'success' })).as(
       'refreshAuthorization',
     );
-    cy.intercept('GET', `${API_SERVER}/user/by-username/**`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/user/by-username/**`, req => {
       return req.reply(200, user.getProfile(socialCauses, skills, CITY));
     });
-    cy.intercept('GET', `${API_SERVER}/auth/otp/confirm*`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/auth/otp/confirm*`, req => {
       const url = new URL(req.url);
       const code = url.searchParams.get('code');
 
@@ -95,7 +95,7 @@ describe('Sign up', () => {
     cy.url().should('include', '/sign-up/user/verification');
 
     // Type in 1 on each input field, Click verify and check the route
-    cy.get('input[type="tel"]').each(($input) => {
+    cy.get('input[type="tel"]').each($input => {
       cy.wrap($input).type('1');
     });
     cy.contains('button', 'Verify email').click();
@@ -127,7 +127,7 @@ describe('Sign up', () => {
     cy.contains('button', 'Next: Social causes').parent().click();
 
     //Select 3 social causes
-    socialCauses.forEach((socialCause) => cy.contains('span', socialCause).parent().click());
+    socialCauses.forEach(socialCause => cy.contains('span', socialCause).parent().click());
     cy.contains('button', 'Next: Logo').parent().click();
     cy.contains('button', 'Next: Contact information').parent().click();
 
@@ -135,19 +135,20 @@ describe('Sign up', () => {
     cy.get('input[name=email]').type(organizationUser.orgEmail);
     cy.get('input[name=username]').type(organizationUser.orgUsername);
 
-    cy.wait(2000);
+    // cy.wait(2000);
 
     //Select location (FIXME: name or data-* instead of id)
-    cy.get('input#react-select-2-input').type(CITY);
-    cy.get('div#react-select-2-option-0').click();
+    cy.get('input[aria-labelledby="searchDropdown-city"]').type(CITY);
+    cy.get('#city-option-0').click();
 
     //Select industry (FIXME: name or data-* instead of id)
-    cy.get('input#react-select-3-input').type('A');
-    cy.get('div#react-select-3-option-0').click();
+    cy.get('#industry').click();
+    cy.get('input[aria-labelledby="searchDropdown-industry"]').focus();
+    cy.get('input[aria-labelledby="searchDropdown-industry"]').type('A');
+    cy.get('#industry-option-0').click();
 
-    //Select Organization size (FIXME: name or data-* instead of id)
-    cy.get('input#react-select-4-input').parent().click();
-    cy.get('div#react-select-4-option-0').click();
+    cy.get('#size').click();
+    cy.get('#size-option-0').click();
 
     cy.contains('button', 'Continue').click();
     cy.url().should('include', '/profile/organizations/my_organization/view');

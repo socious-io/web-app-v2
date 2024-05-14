@@ -1,5 +1,4 @@
-import { Typography } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { StepsContext } from 'src/Nowruz/modules/Auth/containers/onboarding/Stepper';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 

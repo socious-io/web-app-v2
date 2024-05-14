@@ -36,7 +36,7 @@ export const useTransactions = () => {
       );
 
       return {
-        name: item.referrers_fee ? 'Socious' : name,
+        name: item.referrers_fee ? 'Socious Referral' : name,
         profileImage: item.referrers_fee
           ? 'https://socious-new.s3.ap-northeast-1.amazonaws.com/ad4ae46f5dc138d8bc63928890bc64e0.png'
           : profileImage?.toString(),

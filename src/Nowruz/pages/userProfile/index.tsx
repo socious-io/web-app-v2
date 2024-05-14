@@ -15,7 +15,7 @@ export const UserProifle = () => {
         <div className={` ${css.leftCol} hidden md:block`}>
           <MainInfo />
         </div>
-        <div className={css.rightCol}>
+        <div className={`${css.rightCol} w-full md:w-auto`}>
           <HorizontalTabs tabs={tabs} />
         </div>
       </div>

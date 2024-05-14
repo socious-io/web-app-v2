@@ -13,8 +13,17 @@ export async function organizations(params: PaginateReq): Promise<OrganizationsR
   return (await get<OrganizationsRes>('orgs', { params })).data;
 }
 
-export async function createOrganization(payload: OrganizationReq, autoMember = true): Promise<Organization> {
-  return (await post<Organization>(`orgs?auto_member=${autoMember}`, payload)).data;
+export async function createOrganization(
+  payload: OrganizationReq,
+  autoMember = true,
+  referred_by?: string,
+): Promise<Organization> {
+  return (
+    await post<Organization>(
+      `orgs?${referred_by ? `referred_by=${referred_by}&` : ''}auto_member=${autoMember}`,
+      payload,
+    )
+  ).data;
 }
 
 export async function getOrganization(id: string): Promise<Organization> {

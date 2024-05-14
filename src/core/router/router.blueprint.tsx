@@ -18,6 +18,7 @@ import {
   payments,
   payment,
   getRequestedVerifyEducations,
+  markedJobs,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -275,6 +276,30 @@ export const blueprint: RouteObject[] = [
                   const { AppliedList } = await import('src/Nowruz/pages/jobs/Applied');
                   return {
                     Component: Protect(AppliedList, 'users'),
+                  };
+                },
+              },
+              {
+                path: 'saved',
+                loader: async () => {
+                  const page = Number(localStorage.getItem('page') || 1);
+                  const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: 5 });
+                  return data;
+                },
+                async lazy() {
+                  const { JobsList } = await import('src/Nowruz/pages/jobs/List');
+                  return {
+                    Component: Protect(JobsList, 'users'),
+                  };
+                },
+              },
+              {
+                path: 'recommended',
+
+                async lazy() {
+                  const { RecommendedList } = await import('src/Nowruz/pages/jobs/recommendedList');
+                  return {
+                    Component: Protect(RecommendedList, 'users'),
                   };
                 },
               },

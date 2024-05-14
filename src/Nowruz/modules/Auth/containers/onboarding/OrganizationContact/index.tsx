@@ -37,7 +37,7 @@ export const OrganizationContact = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="email"
-          onChange={(e) => updateEmail(e.target.value)}
+          onChange={e => updateEmail(e.target.value)}
           autoComplete="Email"
           label={'Your organization contact email*'}
           value={email}
@@ -52,7 +52,7 @@ export const OrganizationContact = () => {
             label="Choose your organization’s username*"
             name="username"
             value={username}
-            onChange={(e) => updateUsername(e.target.value)}
+            onChange={e => updateUsername(e.target.value)}
             register={register}
             placeholder="organization"
             validMessage="Username available"
@@ -79,7 +79,7 @@ export const OrganizationContact = () => {
           hasDropdownIcon={false}
           label="City*"
           value={cityValue}
-          onChange={(value) => onSelectCity(value)}
+          onChange={value => onSelectCity(value)}
         />
         <SearchDropdown
           id="industry"
@@ -93,20 +93,21 @@ export const OrganizationContact = () => {
           hasDropdownIcon={false}
           label="Organization industry*"
           value={industry === '' ? null : { label: industry }}
-          onChange={(value) => onSelectIndustry(value)}
+          onChange={value => onSelectIndustry(value)}
         />
         <SearchDropdown
+          id="size"
           className="mb-5"
           label="Organization size*"
           placeholder="Select a company size"
           options={ORGANIZATION_SIZE}
           isSearchable={false}
-          onChange={(value) => onSelectSize(value)}
+          onChange={value => onSelectSize(value)}
         />
         <Input
           id="website"
           autoComplete="Website"
-          onChange={(e) => updateWebsite(e.target.value)}
+          onChange={e => updateWebsite(e.target.value)}
           value={website}
           label={'Website'}
           name="website"

@@ -14,15 +14,18 @@ interface NotificationItemProps {
 
 export const NotificationItem: React.FC<NotificationItemProps> = ({ item, onClick }) => {
   const avatarImg = item.data?.identity.meta?.avatar || item.data?.identity.meta?.image || '';
+  const name = item.data.identity.meta?.name;
+  const notifBody = item.data.body.body?.toString() || '';
+  const notifText = notifBody.startsWith(name) ? notifBody.replace(name, '') : notifBody;
   return (
     <div className="flex gap-3 w-full h-fit items-start cursor-pointer" onClick={onClick}>
       <Avatar size="48px" img={avatarImg} type={item.data.identity?.type || 'users'} />
       <div className="w-full h-fit flex flex-col">
         <div className="flex gap-2">
-          <p className={css.name}>{item.data.identity.meta?.name}</p>
+          <p className={css.name}>{name}</p>
           <p className={css.time}>{toRelativeTime(item.created_at.toString())}</p>
         </div>
-        <p className={css.message}>{item.data.body.body?.toString() || ''}</p>
+        <p className={css.message}>{notifText}</p>
       </div>
       {!item.read_at && (
         <div className="w-fit h-fit mr-0 ml-auto">
