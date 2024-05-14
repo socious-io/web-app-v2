@@ -1,5 +1,5 @@
 import { Divider } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
@@ -30,34 +30,29 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
 
   const socialCauses = socialCausesToCategory(job.causes_tags).map(item => item.label);
   const skills = skillsToCategory(job.skills).map(item => item.label);
-  const [returnProps, setReturnProps] = useState({ title: 'Back to jobs', path: '' });
 
   const getBackLink = () => {
     const sourceOrg = localStorage.getItem('source') ?? '';
     if (localStorage.getItem('navigateToSearch') === 'true') {
       const searchTerm = localStorage.getItem('searchTerm');
       const type = localStorage.getItem('type');
-      return { title: 'Back to jobs', path: `/search?q=${searchTerm}&type=${type}&page=1` };
+      return `/search?q=${searchTerm}&type=${type}&page=1`;
     }
     if (sourceOrg === 'applied') {
-      return { title: 'Back to applied jobs', path: `/jobs/applied` };
+      return `/jobs/applied`;
     }
     if (sourceOrg === 'recommended') {
-      return { title: 'Back to recommended jobs', path: '/jobs/recommended' };
+      return '/jobs/recommended';
     }
     if (sourceOrg === 'saved') {
-      return { title: 'Back to saved jobs', path: '/jobs/saved' };
+      return '/jobs/saved';
     }
     if (sourceOrg) {
-      return { title: 'Back to jobs', path: `/profile/organizations/${sourceOrg}/jobs` };
+      return `/profile/organizations/${sourceOrg}/jobs`;
     }
 
-    return { title: 'Back to jobs', path: currentIdentity?.type === 'organizations' ? '/jobs/created' : '/jobs' };
+    return currentIdentity?.type === 'organizations' ? '/jobs/created' : '/jobs';
   };
-
-  useEffect(() => {
-    setReturnProps(getBackLink());
-  }, []);
 
   const onAvatarClick = () => {
     if (usernameVal) {
@@ -68,7 +63,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
   return (
     <>
       <div className={css.container}>
-        <BackLink title={returnProps.title} onBack={() => navigate(returnProps.path)} customStyle="w-fit" />
+        <BackLink title="Back" onBack={() => navigate(getBackLink())} customStyle="w-fit" />
         <Avatar
           size="72px"
           type="organizations"
