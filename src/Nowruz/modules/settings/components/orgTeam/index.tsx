@@ -110,6 +110,7 @@ export const OrgTeam = () => {
                           color="secondary"
                           onClick={() => handleOpenModal(item.id, item.name)}
                           disabled={teamMembers.length === 1}
+                          customStyle="!p-0 !min-w-fit !w-fit !text-sm "
                         >
                           Delete
                         </Button>
