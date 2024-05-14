@@ -73,8 +73,8 @@ export const dappConfig: DappConfig = {
   mainet: [
     {
       chain: milkomeda,
-      logic: '0xA9D4e4351ca77e5a47673f13DD4d0745dE175B38',
-      escrow: '0xA9D4e4351ca77e5a47673f13DD4d0745dE175B38',
+      logic: '0x9Af0dCc68357854a62Df29cE04951C416377310c',
+      escrow: '0x9Af0dCc68357854a62Df29cE04951C416377310c',
       tokens: [
         {
           name: 'USD Coin',
@@ -110,8 +110,8 @@ export const dappConfig: DappConfig = {
     },
     {
       chain: bsc,
-      escrow: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
-      logic: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
+      escrow: '0xB41F3d20E87278d1224922f728dE36dd2A59CE30',
+      logic: '0xB41F3d20E87278d1224922f728dE36dd2A59CE30',
       tokens: [
         {
           name: 'USDC',
