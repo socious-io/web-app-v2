@@ -46,8 +46,8 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
         {currentTab === 'applicants' && (
           <Button
             variant="outlined"
-            color="secondary"
-            customStyle="py-2.5 px-4"
+            color="primary"
+            customStyle="py-2.5 px-4 !text-sm"
             onClick={() => setOpenSelectedRejectAlert(true)}
             disabled={!table.getSelectedRowModel().rows.length}
           >
