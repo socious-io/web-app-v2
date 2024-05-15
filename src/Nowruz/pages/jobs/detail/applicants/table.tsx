@@ -1,13 +1,14 @@
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React, { Dispatch, SetStateAction } from 'react';
 import variables from 'src/components/_exports.module.scss';
-import { Applicant } from 'src/core/api';
+import { ApplicantsRes } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { EmptyState } from 'src/Nowruz/modules/general/components/EmptyState';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Input } from 'src/Nowruz/modules/general/components/input/input';
+import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
 import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 import { OrgOfferModal } from 'src/Nowruz/modules/Jobs/containers/OrgOfferModal';
 
@@ -15,12 +16,13 @@ import { ApplicantDetails } from './applicant';
 import { useApplicantAction } from './useApplicantAction';
 
 interface TableProps {
-  applicants: Array<Applicant>;
+  jobId: string;
+  applicants: ApplicantsRes;
   currentTab: string;
   onRefetch: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch }) => {
+export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch, jobId }) => {
   const {
     open,
     setOpen,
@@ -38,9 +40,16 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
     openSelectedRejectAlert,
     handleRejectMultiple,
     table,
-  } = useApplicantAction(applicants, currentTab, onRefetch);
+    searchTerm,
+    setSearchTerm,
+    page,
+    handleChangePage,
+    applicantsList,
+    total,
+    PER_PAGE,
+  } = useApplicantAction(jobId, applicants, currentTab, onRefetch);
 
-  return applicants.length ? (
+  return applicantsList.length ? (
     <div className="hidden md:block border-Gray-light-mode-200 border-solid border-b rounded-lg">
       <div className="p-4 flex items-center">
         {currentTab === 'applicants' && (
@@ -58,9 +67,8 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
           <Input
             id="search-input"
             name="search"
-            //value={searchTerm}
-            //onChange={(e) => setSearchTerm(e.target.value)}
-            // onClick={() => setOpenSearchModal(true)}
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
             placeholder="Search for candidates"
             startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
             autoComplete="off"
@@ -103,24 +111,12 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch 
           })}
         </tbody>
       </table>
-      <div className="py-2.5 px-4 flex justify-end gap-3">
-        {/* <div
-          onClick={() => {
-            console.log();
-          }}
-          className="py-2.5 px-4 border-Gray-light-mode-200 border-solid border-b rounded-lg"
-        >
-          Previous
+      {applicantsList.length > 0 && (
+        <div className="px-6 pt-3 pb-4">
+          <Pagination page={page} count={Math.ceil(total / PER_PAGE)} onChange={(e, p) => handleChangePage(p)} />
         </div>
-        <div
-          onClick={() => {
-            console.log();
-          }}
-          className="py-2.5 px-4 border-Gray-light-mode-200 border-solid border-b rounded-lg"
-        >
-          Next
-        </div> */}
-      </div>
+      )}
+
       <Overlay open={open} onClose={() => setOpen(false)}>
         <ApplicantDetails
           applicant={applicant}
