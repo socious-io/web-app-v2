@@ -1,9 +1,10 @@
-import { Cell, ColumnDef } from '@tanstack/react-table';
-import { Dispatch, SetStateAction, useMemo, useRef, useState } from 'react';
+import { Cell, ColumnDef, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Applicant, rejectApplicant } from 'src/core/api';
+import { Applicant, rejectApplicant, rejectMultipleApplicants } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
 
 export const useApplicantAction = (
   applicants: Array<Applicant>,
@@ -12,12 +13,21 @@ export const useApplicantAction = (
 ) => {
   const [open, setOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [openSelectedRejectAlert, setOpenSelectedRejectAlert] = useState(false);
   const [offer, setOffer] = useState(false);
   const [applicant, setApplicant] = useState({} as Applicant);
   const [success, setSuccess] = useState<boolean>(false);
+  const [columnVisibility, setColumnVisibility] = useState({
+    select: false,
+  });
+
   const currentSelectedId = useRef<string>();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setColumnVisibility({ select: currentTab === 'applicants' });
+  }, [currentTab]);
 
   const onClickName = (userId: string, applicationId: string) => {
     const details = applicants.find(applicant => applicant.user.id === userId);
@@ -49,14 +59,44 @@ export const useApplicantAction = (
     try {
       setOpenAlert(false);
       await rejectApplicant(currentSelectedId?.current);
+
       onRefetch(true);
     } catch (e) {
       console.log('error in rejecting applicant', e);
     }
   };
 
+  const handleRejectMultiple = async (selectedIds: string[]) => {
+    try {
+      await rejectMultipleApplicants({ applicants: selectedIds });
+      table.toggleAllRowsSelected(false);
+      onRefetch(true);
+    } catch (e) {
+      console.log('error in multiple applications rejection', e);
+    }
+    setOpenSelectedRejectAlert(false);
+  };
+
   const columns = useMemo<ColumnDef<Applicant>[]>(
     () => [
+      {
+        id: 'select',
+        header: ({ table }) => (
+          <Checkbox
+            id="chk-select-all"
+            checked={table.getIsAllRowsSelected()}
+            onChange={table.getToggleAllRowsSelectedHandler()}
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            id={`chk-select-${row.id}`}
+            checked={row.getIsSelected()}
+            disabled={!row.getCanSelect()}
+            onChange={row.getToggleSelectedHandler()}
+          />
+        ),
+      },
       {
         id: 'name',
         header: <p className="text-xs">Name</p>,
@@ -220,6 +260,15 @@ export const useApplicantAction = (
     return styleClass;
   };
 
+  const table = useReactTable({
+    data: applicants,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    state: {
+      columnVisibility,
+    },
+  });
+
   const onSuccess = () => {
     setSuccess(true);
   };
@@ -235,7 +284,7 @@ export const useApplicantAction = (
     applicant,
     setApplicant,
     onClickName,
-    columns,
+    table,
     extractCellId,
     openAlert,
     setOpenAlert,
@@ -248,5 +297,8 @@ export const useApplicantAction = (
     onMessage,
     handleCloseSuccess,
     success,
+    setOpenSelectedRejectAlert,
+    openSelectedRejectAlert,
+    handleRejectMultiple,
   };
 };
