@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Contract } from 'src/core/api';
 
-import { getContractStatus, getContracts } from '../thunks/contracts.thunk';
+import { getContractStatus, getContracts, getContractsByFilter } from '../thunks/contracts.thunk';
 
 interface ContractsState {
   offers: Contract[];
@@ -30,7 +30,7 @@ export const contractsSlice = createSlice({
     },
 
     updateStatus: (state, action) => {
-      const idx = state.offers.findIndex((item) => item.id === action.payload.id);
+      const idx = state.offers.findIndex(item => item.id === action.payload.id);
       state.offers[idx].status = action.payload.offerStatus;
       state.offers[idx].contractStatus = getContractStatus(
         action.payload.type,
@@ -42,13 +42,13 @@ export const contractsSlice = createSlice({
         state.offers[idx].mission = { ...state.offers[idx].mission, status: action.payload.missionStatus };
     },
     updateFeedback: (state, action) => {
-      const idx = state.offers.findIndex((item) => item.id === action.payload.id);
+      const idx = state.offers.findIndex(item => item.id === action.payload.id);
       state.offers[idx].org_feedback = action.payload.orgFeedback;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(getContracts.pending, (state) => {
+      .addCase(getContracts.pending, state => {
         state.status = 'loading';
         state.error = '';
       })
@@ -61,6 +61,22 @@ export const contractsSlice = createSlice({
         state.error = '';
       })
       .addCase(getContracts.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message || '';
+      })
+      .addCase(getContractsByFilter.pending, state => {
+        state.status = 'loading';
+        state.error = '';
+      })
+      .addCase(getContractsByFilter.fulfilled, (state, action) => {
+        state.offers = action.payload.offers;
+        state.page = action.payload.page;
+        state.limit = action.payload.limit;
+        state.totalCount = action.payload.totalCount;
+        state.status = 'succeeded';
+        state.error = '';
+      })
+      .addCase(getContractsByFilter.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || '';
       });

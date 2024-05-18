@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ContractStatus, MissionStatus, OfferStatus, userOffers } from 'src/core/api';
+import { ContractStatus, MissionStatus, OfferStatus, ProjectPaymentType, userMissions, userOffers } from 'src/core/api';
 
 export function getContractStatus(
   identityType: 'users' | 'organizations',
-  paymentType: 'VOLUNTEER' | 'PAID',
+  paymentType: ProjectPaymentType,
   offerStatus: OfferStatus,
   missionStatus?: MissionStatus,
 ): ContractStatus {
@@ -68,10 +68,15 @@ export const getContracts = createAsyncThunk(
   async (params: { page: number; limit: number; identityType: 'users' | 'organizations' }) => {
     const { page, limit, identityType } = params;
     const offers = await userOffers({ page, limit });
-    const contracts = offers.items.map((item) => {
+    const contracts = offers.items.map(item => {
       return {
         ...item,
-        contractStatus: getContractStatus(identityType, item.project.payment_type, item.status, item.mission?.status),
+        contractStatus: getContractStatus(
+          identityType,
+          item.project.payment_type as ProjectPaymentType,
+          item.status,
+          item.mission?.status,
+        ),
       };
     });
     return {
@@ -79,6 +84,56 @@ export const getContracts = createAsyncThunk(
       page,
       limit,
       totalCount: offers.total_count,
+    };
+  },
+);
+
+export const getContractsByFilter = createAsyncThunk(
+  'contracts/getOngoing',
+  async (params: {
+    filter: 'ongoing' | 'archived';
+    page: number;
+    limit: number;
+    identityType: 'users' | 'organizations';
+  }) => {
+    const { page, limit, identityType, filter } = params;
+    const missions = await userMissions(undefined, {
+      page,
+      limit,
+      'filter.status': filter === 'ongoing' ? 'ACTIVE' : 'CONFIRMED,CANCELED,KICKED_OUT',
+    });
+
+    const contracts = missions.items.map(item => {
+      return {
+        contractStatus: getContractStatus(
+          identityType,
+          item.project.payment_type as ProjectPaymentType,
+          item.offer.status,
+          item.status,
+        ),
+        ...item.offer,
+        project: item.project,
+        offerer: item.assigner,
+        recipient: item.assignee,
+        organization: item.organization,
+        applicant: item.applicant,
+        amount: item.amount,
+        fee: item.fee,
+        stripe_fee: item.stripe_fee,
+        total: item.total,
+        payout: item.payout,
+        app_fee: item.app_fee,
+        mission: item,
+        escrow: item.escrow,
+        payment: item.payment,
+      };
+    });
+
+    return {
+      offers: contracts,
+      page,
+      limit,
+      totalCount: missions.total_count,
     };
   },
 );
