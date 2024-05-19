@@ -49,7 +49,7 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
     PER_PAGE,
   } = useApplicantAction(jobId, applicants, currentTab, onRefetch);
 
-  return applicantsList.length ? (
+  return (
     <div className="hidden md:block border-Gray-light-mode-200 border-solid border-b rounded-lg">
       <div className="p-4 flex items-center">
         {currentTab === 'applicants' && (
@@ -75,42 +75,52 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
           />
         </div>
       </div>
-      <table className="w-full">
-        <thead className="border-Gray-light-mode-200 border-solid border-b border-t-0 border-l-0 border-r-0">
-          {table.getHeaderGroups().map(headerGroup => {
-            return (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <th id={header.id} key={header.id} className="px-6 py-3 bg-Gray-light-mode-50 align-middle">
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => {
-            return (
-              <tr
-                key={row.id}
-                className="border-Gray-light-mode-200 border-solid border-b border-t-0 border-l-0 border-r-0"
-              >
-                {row.getVisibleCells().map(cell => {
-                  const styleClass = extractCellId(cell);
-                  return (
-                    <td className={`${styleClass} px-6 py-3 align-middle`} key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {applicantsList.length ? (
+        <table className="w-full">
+          <thead className="border-Gray-light-mode-200 border-solid border-b border-t-0 border-l-0 border-r-0">
+            {table.getHeaderGroups().map(headerGroup => {
+              return (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map(header => {
+                    return (
+                      <th id={header.id} key={header.id} className="px-6 py-3 bg-Gray-light-mode-50 align-middle">
+                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                      </th>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map(row => {
+              return (
+                <tr
+                  key={row.id}
+                  className="border-Gray-light-mode-200 border-solid border-b border-t-0 border-l-0 border-r-0"
+                >
+                  {row.getVisibleCells().map(cell => {
+                    const styleClass = extractCellId(cell);
+                    return (
+                      <td className={`${styleClass} px-6 py-3 align-middle`} key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      ) : (
+        <div className="hidden md:block">
+          <EmptyState
+            icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
+            message={`No ${currentTab} yet`}
+          />
+        </div>
+      )}
+
       {applicantsList.length > 0 && (
         <div className="px-6 pt-3 pb-4">
           <Pagination page={page} count={Math.ceil(total / PER_PAGE)} onChange={(e, p) => handleChangePage(p)} />
@@ -166,13 +176,6 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
           submitButton={false}
         />
       )}
-    </div>
-  ) : (
-    <div className="hidden md:block">
-      <EmptyState
-        icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
-        message={`No ${currentTab} yet`}
-      />
     </div>
   );
 };
