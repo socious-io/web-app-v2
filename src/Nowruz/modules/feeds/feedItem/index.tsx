@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { Identity } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
@@ -14,9 +15,13 @@ import css from './index.module.scss';
 import { FeedItemProps } from './index.types';
 import { useFeedItem } from './useFeedItem';
 import Comments from '../comments';
+import CreatePostModal from '../createPostModal';
 import FeedActions from '../feedActions';
+import RemovePost from '../removePost';
+import ReportPost from '../reportPost';
 import RepostModal from '../repostModal';
 import SendBox from '../sendBox';
+import ThreeDotsMenu from '../threeDotsMenu';
 
 const FeedItem: React.FC<FeedItemProps> = ({
   postId,
@@ -33,6 +38,8 @@ const FeedItem: React.FC<FeedItemProps> = ({
   title = '',
   updateFeedsListLiked,
   updateFeedsListRepost,
+  updateFeedsListEdit,
+  updateFeedsListRemove,
 }) => {
   const navigate = useNavigate();
   const isMobile = isTouchDevice();
@@ -47,6 +54,9 @@ const FeedItem: React.FC<FeedItemProps> = ({
       reply,
       replies,
       openRepostModal,
+      openThreeDotsMenu,
+      threeDotsMenuItems,
+      actionsMenu,
     },
     operations: {
       onLikeClick,
@@ -61,8 +71,13 @@ const FeedItem: React.FC<FeedItemProps> = ({
       onSeeMoreRepliesClick,
       setOpenRepostModal,
       onRepost,
+      onOpenThreeDotsMenu,
+      setOpenThreeDotsMenu,
+      handleCloseActionsMenu,
+      onDeletePost,
+      onReportPost,
     },
-  } = useFeedItem(postId, updateFeedsListLiked, updateFeedsListRepost);
+  } = useFeedItem(postId, updateFeedsListLiked, updateFeedsListRepost, updateFeedsListRemove, userIdentity);
   const { profileImage: currentProfileImage } = getIdentityMeta(currentIdentity);
   const { name, username, usernameVal, profileImage } = getIdentityMeta(userIdentity);
   const {
@@ -86,7 +101,14 @@ const FeedItem: React.FC<FeedItemProps> = ({
     cause: cause || '',
     title,
     content,
-    media,
+    media: media?.url || '',
+  };
+  const editPostData = {
+    postId,
+    cause: Object.values(SOCIAL_CAUSES).find(social => social.label === cause) || null,
+    title,
+    file: media || null,
+    content,
   };
 
   const sharedJSX = (
@@ -115,7 +137,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
       </div>
       <div className="w-full flex flex-col gap-4">
         <div className="flex self-center">
-          <img src={sharedMedia} alt="image-post" className="rounded-lg" />
+          <img src={sharedMedia?.url || ''} alt="image-post" className="rounded-lg" />
         </div>
       </div>
     </>
@@ -144,7 +166,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
               fontSize={20}
               className="text-Gray-light-mode-700"
               cursor="pointer"
-              onClick={() => console.log('three dots menu')}
+              onClick={onOpenThreeDotsMenu}
             />
           </div>
         </div>
@@ -163,7 +185,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
         <div className="w-full flex flex-col gap-4">
           {sharedPost === null && (
             <div className="px-6 flex self-center">
-              <img src={media} alt="image-post" className="rounded-lg" />
+              <img src={media?.url || ''} alt="image-post" className="rounded-lg" />
             </div>
           )}
           {sharedPost !== null && (
@@ -227,12 +249,37 @@ const FeedItem: React.FC<FeedItemProps> = ({
             </div>
           </div>
         </div>
+        <ThreeDotsMenu
+          open={openThreeDotsMenu}
+          handleClose={() => setOpenThreeDotsMenu(false)}
+          menuItems={threeDotsMenuItems}
+        />
       </div>
-      <RepostModal
-        data={repostedData}
-        open={openRepostModal}
-        handleClose={() => setOpenRepostModal(false)}
-        onRepost={onRepost}
+      {repostedData && (
+        <RepostModal
+          data={repostedData}
+          open={openRepostModal}
+          handleClose={() => setOpenRepostModal(false)}
+          onRepost={onRepost}
+        />
+      )}
+      {editPostData && (
+        <CreatePostModal
+          open={actionsMenu.name === 'edit' && actionsMenu.open}
+          handleClose={handleCloseActionsMenu}
+          onCreatePost={editedData => editedData && updateFeedsListEdit(editedData)}
+          data={editPostData}
+        />
+      )}
+      <RemovePost
+        open={actionsMenu.name === 'remove' && actionsMenu.open}
+        handleClose={handleCloseActionsMenu}
+        onDeletePost={onDeletePost}
+      />
+      <ReportPost
+        open={actionsMenu.name === 'report' && actionsMenu.open}
+        handleClose={handleCloseActionsMenu}
+        onReportPost={onReportPost}
       />
     </>
   );

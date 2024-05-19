@@ -10,6 +10,8 @@ const FeedsList: React.FC<FeedsListProps> = ({
   onShowMoreFeeds,
   updateFeedsListLiked,
   updateFeedsListRepost,
+  updateFeedsListEdit,
+  updateFeedsListRemove,
 }) => {
   return (
     <div className="flex flex-col gap-6">
@@ -21,14 +23,11 @@ const FeedsList: React.FC<FeedsListProps> = ({
           date={new Date(item.created_at).toString()}
           cause={item.causes_tags?.length ? SOCIAL_CAUSES[item.causes_tags[0]].label : null}
           content={item.content}
-          media={item.media ? item.media[0].url : ''}
+          media={item.media ? item.media[0] : null}
           likesCount={item.likes}
           commentsCount={item.comments}
           liked={item.liked}
           likedIdentities={item.liked_identities}
-          title={item.title}
-          updateFeedsListLiked={() => updateFeedsListLiked(item.id)}
-          updateFeedsListRepost={updateFeedsListRepost}
           sharedPost={
             item?.shared_post
               ? {
@@ -38,11 +37,16 @@ const FeedsList: React.FC<FeedsListProps> = ({
                     ? SOCIAL_CAUSES[item.shared_post?.causes_tags[0]].label
                     : null,
                   content: item.shared_post?.content || '',
-                  media: item.media ? item.media[0].url : '',
+                  media: item.media ? item.media[0] : null,
                   title: item.shared_post?.title || '',
                 }
               : null
           }
+          updateFeedsListLiked={updateFeedsListLiked}
+          updateFeedsListRepost={updateFeedsListRepost}
+          updateFeedsListEdit={updateFeedsListEdit}
+          updateFeedsListRemove={updateFeedsListRemove}
+          title={item.title}
         />
       ))}
       {showSeeMore && (

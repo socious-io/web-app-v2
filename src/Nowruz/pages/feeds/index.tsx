@@ -17,6 +17,8 @@ export const Feeds = () => {
       onShowMoreFeeds,
       updateFeedsListLiked,
       updateFeedsListRepost,
+      updateFeedsListEdit,
+      updateFeedsListRemove,
     },
   } = UseFeeds();
 
@@ -47,6 +49,8 @@ export const Feeds = () => {
             onShowMoreFeeds={onShowMoreFeeds}
             updateFeedsListLiked={updateFeedsListLiked}
             updateFeedsListRepost={updateFeedsListRepost}
+            updateFeedsListEdit={updateFeedsListEdit}
+            updateFeedsListRemove={updateFeedsListRemove}
           />
         </div>
       </div>
