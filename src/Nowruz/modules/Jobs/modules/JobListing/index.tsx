@@ -26,7 +26,7 @@ export const JobsListing = () => {
             <>
               <div className={css.header}>
                 <div className={css.title}>Recommended for you</div>
-                <div className="flex items-start justify-between">
+                <div className="flex flex-col md:flex-row items-start gap-4 md:justify-between">
                   <div className={css.subTitle}>Based on your profile and search history</div>
                   <Button
                     variant="text"
