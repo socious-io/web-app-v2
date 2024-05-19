@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
-import { createPost, CurrentIdentity, SocialCauses, uploadMedia } from 'src/core/api';
+import { createPost, CurrentIdentity, Media, SocialCauses, updatePost, uploadMedia } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
-import { Form, OptionType } from './index.types';
+import { EditedData, Form, OptionType } from './index.types';
 
 const schema = yup
   .object()
@@ -21,12 +21,22 @@ const schema = yup
         value: yup.string(),
       }),
     content: yup.string().required('Content is required'),
-    file: yup.mixed().nullable().required('You should select an Image'),
+    file: yup
+      .mixed()
+      .nullable()
+      .required('You should select an Image')
+      .test('fileOrString', 'Invalid file or string', value => {
+        return value === null || typeof value === 'string' || value instanceof File;
+      }),
     title: yup.string(),
   })
   .required();
 
-export const useCreatePostModal = (handleClose: () => void, onCreatePost: () => void, data?: Form) => {
+export const useCreatePostModal = (
+  handleClose: () => void,
+  onCreatePost: (data?: EditedData) => void,
+  data?: EditedData,
+) => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
@@ -55,13 +65,14 @@ export const useCreatePostModal = (handleClose: () => void, onCreatePost: () => 
 
   const titleVal = watch('title');
   const contentVal = watch('content');
+  const causeVal = watch('cause');
 
   const initializeValues = () => {
-    const initialVal = {
-      cause: data?.cause,
-      content: data?.content || '',
-      file: data?.file,
-      title: data?.title || '',
+    const initialVal: Form = {
+      cause: data ? data?.cause : null,
+      content: data ? data?.content : '',
+      file: data?.file ? data?.file?.id : '',
+      title: data ? data?.title : '',
     };
     reset(initialVal);
   };
@@ -92,11 +103,30 @@ export const useCreatePostModal = (handleClose: () => void, onCreatePost: () => 
 
   const onSubmitPost: SubmitHandler<Form> = async ({ cause, title, content, file }) => {
     try {
-      if (file) {
-        const { id: mediaId } = (await uploadMedia(file)) || {};
-        await createPost({ causes_tags: [(cause?.value as SocialCauses) || ''], title, content, media: [mediaId] });
+      let mediaId = '';
+      let mediaUrl = '';
+      if (file instanceof File) {
+        const { id, url } = (await uploadMedia(file as File)) || {};
+        mediaId = id;
+        mediaUrl = url;
+      } else if (typeof file === 'string') {
+        mediaId = file;
+        mediaUrl = data?.file?.url || '';
+      } else {
+        return;
       }
-      onCreatePost();
+      if (data) {
+        await updatePost(data.postId, {
+          causes_tags: [(cause?.value as SocialCauses) || ''],
+          title,
+          content,
+          media: [mediaId],
+        });
+        onCreatePost({ ...data, cause, title, content, file: { id: mediaId, url: mediaUrl } as Media });
+      } else {
+        await createPost({ causes_tags: [(cause?.value as SocialCauses) || ''], title, content, media: [mediaId] });
+        onCreatePost();
+      }
       handleClose();
       reset();
     } catch (error) {
@@ -105,7 +135,18 @@ export const useCreatePostModal = (handleClose: () => void, onCreatePost: () => 
   };
 
   return {
-    data: { profileImage, name, username, causesList, titleVal, contentVal, openEmojiPicker, focusElements, errors },
+    data: {
+      profileImage,
+      name,
+      username,
+      causesList,
+      causeVal,
+      titleVal,
+      contentVal,
+      openEmojiPicker,
+      focusElements,
+      errors,
+    },
     operations: {
       onSelectCause,
       onTextChange,

@@ -12,7 +12,18 @@ import { useCreatePostModal } from './useCreatePostModal';
 
 const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, onCreatePost, data }) => {
   const {
-    data: { profileImage, name, username, causesList, titleVal, contentVal, openEmojiPicker, focusElements, errors },
+    data: {
+      profileImage,
+      name,
+      username,
+      causesList,
+      causeVal,
+      titleVal,
+      contentVal,
+      openEmojiPicker,
+      focusElements,
+      errors,
+    },
     operations: {
       onSelectCause,
       onTextChange,
@@ -87,6 +98,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
             options={causesList}
             hasDropdownIcon={false}
             isSearchable
+            value={causeVal}
             onChange={onSelectCause}
             errors={errors['cause']?.label?.message ? [errors['cause']?.label?.message.toString()] : undefined}
           />
