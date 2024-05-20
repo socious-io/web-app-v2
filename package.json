@@ -39,7 +39,7 @@
     "@datadog/browser-rum": "^4.50.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.5",
-    "@hookform/resolvers": "^3.3.2",
+    "@hookform/resolvers": "^3.4.0",
     "@ionic/pwa-elements": "^3.2.2",
     "@mui/material": "^5.14.14",
     "@mui/x-date-pickers": "^7.3.1",
