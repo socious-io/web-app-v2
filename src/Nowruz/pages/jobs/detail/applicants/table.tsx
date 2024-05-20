@@ -41,12 +41,12 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
     handleRejectMultiple,
     table,
     searchTerm,
-    setSearchTerm,
     page,
     handleChangePage,
     applicantsList,
     total,
     PER_PAGE,
+    handleChangeSearchTerm,
   } = useApplicantAction(jobId, applicants, currentTab, onRefetch);
 
   return (
@@ -68,7 +68,7 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
             id="search-input"
             name="search"
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
+            onChange={e => handleChangeSearchTerm(e.target.value)}
             placeholder="Search for candidates"
             startIcon={<Icon fontSize={20} name="search-lg" color={variables.color_grey_500} />}
             autoComplete="off"

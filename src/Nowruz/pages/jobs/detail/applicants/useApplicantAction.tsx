@@ -51,10 +51,15 @@ export const useApplicantAction = (
     setApplicantsList(applicants.items);
   }, [currentTab]);
 
+  const statusObj = {
+    applicants: 'PENDING',
+    offered: 'OFFERED',
+    rejected: 'REJECTED',
+  };
   const searchApplicants = async () => {
     try {
       const currentPage = pages.find(item => item.tab === currentTab);
-      const status = currentTab === 'applicants' ? 'PENDING' : currentTab === 'offered' ? 'OFFERED' : 'REJECTED';
+      const status = statusObj[currentTab];
       const res = await search(
         { type: 'applicants', q: searchTerm, filter: { project_id: jobId, status: status } },
         { page: currentPage?.page, limit: PER_PAGE },
@@ -68,10 +73,6 @@ export const useApplicantAction = (
       console.log('error in search applicants', e);
     }
   };
-
-  useEffect(() => {
-    handleChangePage(1);
-  }, [searchTerm]);
 
   useEffect(() => {
     searchApplicants();
@@ -155,8 +156,7 @@ export const useApplicantAction = (
             <div
               className="flex flex-row justify-start items-center gap-2 cursor-pointer"
               onClick={() => {
-                if (!detail) return;
-                onClickName(detail.user.id, detail.id);
+                detail && onClickName(detail.user.id, detail.id);
               }}
             >
               <Avatar size="40px" type="users" img={detail?.user.avatar || ''} />
@@ -331,6 +331,11 @@ export const useApplicantAction = (
     setPages(pages => pages.map(item => (item.tab === currentTab ? { ...item, page: p } : item)));
   };
 
+  const handleChangeSearchTerm = (value: string) => {
+    setSearchTerm(value);
+    handleChangePage(1);
+  };
+
   return {
     open,
     setOpen,
@@ -354,11 +359,11 @@ export const useApplicantAction = (
     openSelectedRejectAlert,
     handleRejectMultiple,
     searchTerm,
-    setSearchTerm,
     page: pages.find(p => p.tab === currentTab)?.page || 1,
     handleChangePage,
     applicantsList,
     total: totalCounts.find(item => item.tab === currentTab)?.count || 10,
     PER_PAGE,
+    handleChangeSearchTerm,
   };
 };
