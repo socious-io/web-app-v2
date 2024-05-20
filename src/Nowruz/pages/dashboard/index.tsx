@@ -16,7 +16,7 @@ export const Dashboard = () => {
 
   return (
     <>
-      <div className=" w-full flex ">
+      <div className=" w-full h-full flex ">
         <div className="w-full h-full flex flex-col">
           {!verified ? (
             verificationStatus === 'PENDING' && type === 'organizations' ? (
@@ -83,7 +83,7 @@ export const Dashboard = () => {
             )}
           </div>
         </div>
-        <div className="hidden md:flex w-[392px] h-full">
+        <div className="hidden md:flex w-[392px] min-w-[392px] h-full">
           <ProfileCard identity={profileData} labelShown={false} rounded={false} />
         </div>
       </div>
