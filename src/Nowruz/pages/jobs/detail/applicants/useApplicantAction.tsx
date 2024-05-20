@@ -53,7 +53,7 @@ export const useApplicantAction = (
 
   const statusObj = {
     applicants: 'PENDING',
-    offered: 'OFFERED',
+    offered: 'OFFERED,APPROVED,HIRED,CLOSED',
     rejected: 'REJECTED',
   };
   const searchApplicants = async () => {
