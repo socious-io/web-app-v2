@@ -25,14 +25,14 @@ export const Contracts = () => {
           <div className={css.right}></div>
         </div>
 
-        {/* <ButtonGroups buttons={filterButtons} /> */}
+        <ButtonGroups buttons={filterButtons} />
         <div className="flex flex-col gap-6 md:gap-5 w-full max-w-[640px] mt-8">
           {contractList?.map((item: Contract) => (
             <ContractCard key={item.id} contract={item} setOpenOverlay={setOpenOverlayModal} />
           ))}
         </div>
         <div className="mt-11 hidden md:block">
-          <Pagination count={pageCount} onChange={(e, p) => setPage(p)} />
+          <Pagination count={pageCount} page={page} onChange={(e, p) => setPage(p)} />
         </div>
         <div className="mt-11 block md:hidden">
           <PaginationMobile page={page} count={pageCount} handleChange={setPage} />

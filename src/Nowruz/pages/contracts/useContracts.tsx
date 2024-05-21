@@ -1,53 +1,53 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Contract, CurrentIdentity } from 'src/core/api';
+import dapp from 'src/dapp';
 import { ButtonGroupItem } from 'src/Nowruz/modules/general/components/ButtonGroups/buttonGroups.types';
 import store, { RootState } from 'src/store';
-import { getContracts } from 'src/store/thunks/contracts.thunk';
-import dapp from 'src/dapp';
+import { getContracts, getContractsByFilter } from 'src/store/thunks/contracts.thunk';
 
 export const useContracts = () => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
-  const contractList = useSelector<RootState, Contract[]>((state) => {
+  const contractList = useSelector<RootState, Contract[]>(state => {
     return state.contracts.offers;
   });
-  const itemsCount = useSelector<RootState, number>((state) => {
+  const itemsCount = useSelector<RootState, number>(state => {
     return state.contracts.totalCount;
   });
 
-  const currentPage = useSelector<RootState, number>((state) => {
+  const currentPage = useSelector<RootState, number>(state => {
     return state.contracts.page;
   });
   const [page, setPage] = useState(currentPage);
+  const [filter, setFilter] = useState<'all' | 'ongoing' | 'archived'>('all');
   const [openOverlayModal, setOpenOverlayModal] = useState(false);
   const PER_PAGE = 5;
   const pageCount = Math.floor(itemsCount / PER_PAGE) + (itemsCount % PER_PAGE && 1);
-  const fetchMore = async (page: number) => {
-    if (currentIdentity)
+  const fetchMore = async () => {
+    if (!currentIdentity) return;
+    if (filter === 'all')
       await store.dispatch(getContracts({ page, limit: PER_PAGE, identityType: currentIdentity.type }));
+    else
+      await store.dispatch(getContractsByFilter({ filter, page, limit: PER_PAGE, identityType: currentIdentity.type }));
   };
 
-  const { signer, chainId } = dapp.useWeb3();
+  //  const { signer, chainId } = dapp.useWeb3();
 
-  const filterOngoing = async () => {
-    // const missionRes = await userMissions('', { status: 'ACTIVE' });
-    // const offerRes = offerList.filter((item) => missionRes.items.map((m) => m.offer.id).includes(item.id));
-    // setOfferList(offerRes);
+  const handleChangeFilter = (newFilter: 'all' | 'ongoing' | 'archived') => {
+    setPage(1);
+    setFilter(newFilter);
   };
 
-  const filterArchived = async () => {
-    // setOfferList(offerList.filter((item) => item.status === 'CLOSED'));
-  };
   useEffect(() => {
-    fetchMore(page);
-  }, [page]);
+    fetchMore();
+  }, [page, filter]);
 
   const filterButtons: ButtonGroupItem[] = [
-    { label: 'View all', handleClick: () => fetchMore(page) },
-    { label: 'Ongoing', handleClick: () => filterOngoing() },
-    { label: 'Archived', handleClick: () => filterArchived() },
+    { label: 'View all', handleClick: () => handleChangeFilter('all') },
+    { label: 'Ongoing', handleClick: () => handleChangeFilter('ongoing') },
+    { label: 'Archived', handleClick: () => handleChangeFilter('archived') },
   ];
 
   return {
