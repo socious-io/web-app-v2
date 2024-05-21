@@ -51,7 +51,7 @@ export const useNotifications = () => {
         path = `/feeds/${notifRefId}`;
         break;
       case 'APPLICATION':
-        path = `/jobs/${notifRefId}`;
+        path = `/jobs/created/${notifRefId}`;
         break;
       case 'REJECT':
         path = `/jobs/${notifRefId}`;
