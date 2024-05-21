@@ -30,20 +30,25 @@ export const contractsSlice = createSlice({
     },
 
     updateStatus: (state, action) => {
-      const idx = state.offers.findIndex(item => item.id === action.payload.id);
-      state.offers[idx].status = action.payload.offerStatus;
-      state.offers[idx].contractStatus = getContractStatus(
-        action.payload.type,
-        action.payload.paymentType,
-        action.payload.offerStatus,
-        action.payload.missionStatus,
+      state.offers = state.offers.map(item =>
+        item.id === action.payload.id
+          ? {
+              ...item,
+              contractStatus: getContractStatus(
+                action.payload.type,
+                action.payload.paymentType,
+                action.payload.offerStatus,
+                action.payload.missionStatus,
+              ),
+              mission: { ...item.mission, status: action.payload.missionStatus || item.mission },
+            }
+          : item,
       );
-      if (action.payload.missionStatus)
-        state.offers[idx].mission = { ...state.offers[idx].mission, status: action.payload.missionStatus };
     },
     updateFeedback: (state, action) => {
-      const idx = state.offers.findIndex(item => item.id === action.payload.id);
-      state.offers[idx].org_feedback = action.payload.orgFeedback;
+      state.offers = state.offers.map(item =>
+        item.id === action.payload.id ? { ...item, org_feedback: action.payload.orgFeedback } : item,
+      );
     },
   },
   extraReducers: builder => {

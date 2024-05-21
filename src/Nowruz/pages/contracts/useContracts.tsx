@@ -29,14 +29,8 @@ export const useContracts = () => {
     if (!currentIdentity) return;
     if (filter === 'all')
       await store.dispatch(getContracts({ page, limit: PER_PAGE, identityType: currentIdentity.type }));
-    else if (filter === 'ongoing')
-      await store.dispatch(
-        getContractsByFilter({ filter: 'ongoing', page, limit: PER_PAGE, identityType: currentIdentity.type }),
-      );
     else
-      await store.dispatch(
-        getContractsByFilter({ filter: 'archived', page, limit: PER_PAGE, identityType: currentIdentity.type }),
-      );
+      await store.dispatch(getContractsByFilter({ filter, page, limit: PER_PAGE, identityType: currentIdentity.type }));
   };
 
   //  const { signer, chainId } = dapp.useWeb3();
