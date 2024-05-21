@@ -42,7 +42,7 @@
     "@hookform/resolvers": "^3.3.2",
     "@ionic/pwa-elements": "^3.2.2",
     "@mui/material": "^5.14.14",
-    "@mui/x-date-pickers": "^7.3.1",
+    "@mui/x-date-pickers": "^7.5.0",
     "@reduxjs/toolkit": "^1.9.1",
     "@storybook/addon-designs": "^7.0.7",
     "@stripe/stripe-js": "^2.1.0",
