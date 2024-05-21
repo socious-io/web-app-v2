@@ -1,12 +1,13 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import variables from 'src/components/_exports.module.scss';
-import { Applicant } from 'src/core/api';
+import { Applicant, ApplicantsRes } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { EmptyState } from 'src/Nowruz/modules/general/components/EmptyState';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { PaginationMobile } from 'src/Nowruz/modules/general/components/paginationMobile';
 import { Overlay } from 'src/Nowruz/modules/general/components/slideoutMenu';
 import { OrgOfferModal } from 'src/Nowruz/modules/Jobs/containers/OrgOfferModal';
 
@@ -14,12 +15,13 @@ import { ApplicantDetails } from './applicant';
 import { useApplicantAction } from './useApplicantAction';
 
 interface CardsProps {
-  applicants: Array<Applicant>;
+  applicants: ApplicantsRes;
   currentTab: string;
   onRefetch: Dispatch<SetStateAction<boolean>>;
+  jobId: string;
 }
 
-export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch }) => {
+export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch, jobId }) => {
   const {
     open,
     setOpen,
@@ -36,14 +38,19 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
     onSuccess,
     handleCloseSuccess,
     success,
-  } = useApplicantAction(applicants, currentTab, onRefetch);
-  return applicants.length ? (
+    applicantsList,
+    page,
+    handleChangePage,
+    PER_PAGE,
+    total,
+  } = useApplicantAction(jobId, applicants, currentTab, onRefetch);
+  return applicantsList.length ? (
     <div className="flex flex-col gap-4 px-4 md:hidden">
-      {applicants.map((applicant) => (
+      {applicantsList.map(applicant => (
         <div key={applicant.id} className="border border-solid border-Gray-light-mode-200 rounded-lg">
           <div
             className="flex flex-row justify-start items-center gap-2 p-4 cursor-pointer"
-            onClick={() => onClickName(applicant.user.id)}
+            onClick={() => onClickName(applicant.user.id, applicant.id)}
           >
             <Avatar size="40px" type="users" img={applicant.user.avatar?.url} />
             <div className="flex flex-col justify-start">
@@ -91,6 +98,11 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch 
           </div>
         </div>
       ))}
+      {applicantsList.length > 0 && (
+        <div className="mt-2 px-4 pt-4 border border-solid border-x-0 border-b-0 border-t-Gray-light-mode-200">
+          <PaginationMobile page={page} count={Math.ceil(total / PER_PAGE)} handleChange={handleChangePage} />
+        </div>
+      )}
       <Overlay open={open} onClose={() => setOpen(false)}>
         <ApplicantDetails
           applicant={applicant}

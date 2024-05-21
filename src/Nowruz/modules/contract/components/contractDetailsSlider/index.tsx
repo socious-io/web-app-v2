@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserType } from 'src/core/types';
 import PaymentCrypto from 'src/Nowruz/modules/contract/components/PaymentCrypto';
 import { PaymentFiat } from 'src/Nowruz/modules/contract/components/paymentFiat';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
@@ -17,6 +18,7 @@ export const ContractDetailsSlider: React.FC<{ web3?: any }> = ({ web3 }) => {
     name,
     profileImage,
     type,
+    identityType,
     tabs,
     displayMessage,
     message,
@@ -56,7 +58,7 @@ export const ContractDetailsSlider: React.FC<{ web3?: any }> = ({ web3 }) => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-6 ">
-            <Avatar size="72px" type="organizations" img={profileImage} />
+            <Avatar size="72px" type={(type || 'users') as UserType} img={profileImage} />
             <div className="flex flex-col">
               <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">
                 {contract.project.title}
@@ -107,13 +109,13 @@ export const ContractDetailsSlider: React.FC<{ web3?: any }> = ({ web3 }) => {
         />
       )}
       {openPaymentModal &&
-        type === 'organizations' &&
+        identityType === 'organizations' &&
         contract.status === 'APPROVED' &&
         contract.payment_mode === 'FIAT' && (
           <PaymentFiat offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
         )}
       {openPaymentModal &&
-        type === 'organizations' &&
+        identityType === 'organizations' &&
         contract.status === 'APPROVED' &&
         contract.payment_mode === 'CRYPTO' && (
           <PaymentCrypto offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />

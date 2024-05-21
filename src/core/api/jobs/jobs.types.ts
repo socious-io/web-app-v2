@@ -247,4 +247,9 @@ export interface Escrow {
   release_id?: string;
 }
 
+export interface RejectReq {
+  feedback?: string;
+  applicants: string[];
+}
+
 export type JobMark = 'SAVE' | 'NOT_INTERESTED';

@@ -53,10 +53,12 @@ export const useTransactionDetailes = () => {
   const identity = paymentType === 'Paid' ? payment.receiver_identity : payment.payer_identity;
 
   const detail = {
-    name,
-    avatar: profileImage,
-    email: identity.meta.email,
-    avatarType: identity.type,
+    name: payment.referrers_fee ? 'Socious Referral' : name,
+    avatar: payment.referrers_fee
+      ? 'https://socious-new.s3.ap-northeast-1.amazonaws.com/ad4ae46f5dc138d8bc63928890bc64e0.png'
+      : profileImage,
+    email: payment.referrers_fee ? 'info@socious.io' : identity.meta.email,
+    avatarType: payment.referrers_fee ? 'organizations' : identity.type,
     date: toRelativeTime(payment.created_at.toString()),
     amount: payment.amount,
     transactionId: payment.transaction_id,
