@@ -36,7 +36,7 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
     if (tab === 'rejected') {
       status.push('REJECTED');
     }
-    const activeData = data.filter((applicant) => status.includes(applicant.status));
+    const activeData = data.filter(applicant => status.includes(applicant.status));
     return (
       <>
         <Cards applicants={activeData} currentTab={tab} onRefetch={setRefetch} />
@@ -46,7 +46,7 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
   }, []);
 
   const tabs = useMemo(() => {
-    const applicantsCount = applicants.filter((a) => a.status === 'PENDING');
+    const applicantsCount = applicants.filter(a => a.status === 'PENDING');
     return [
       {
         label: 'Overview',

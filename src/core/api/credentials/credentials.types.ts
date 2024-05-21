@@ -1,17 +1,32 @@
 import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
 import { PaginateRes } from '../types';
-import { Experience, User } from '../users/users.types';
+import { Education, Experience, User } from '../users/users.types';
+
+export type CredentailStatus = 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
 
 export interface CredentialExperienceRes {
   id: string;
-  status: 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
+  status: CredentailStatus;
   experience: Experience;
   user: User;
   org: Organization;
   avatar?: Media;
   created_at: Date;
   updated_at: Date;
+  org_image?: Media;
+}
+
+export interface CredentialEducationRes {
+  id: string;
+  status: CredentailStatus;
+  education: Education;
+  user: User;
+  org: Organization;
+  avatar?: Media;
+  created_at: Date;
+  updated_at: Date;
+  org_image?: Media;
 }
 
 export interface ClaimVCRes {
@@ -21,6 +36,9 @@ export interface ClaimVCRes {
 
 export interface CredentialExperiencePaginateRes extends PaginateRes {
   items: CredentialExperienceRes[];
+}
+export interface CredentialEducationPaginateRes extends PaginateRes {
+  items: CredentialEducationRes[];
 }
 
 export interface RequestVerificationRes {
@@ -35,6 +53,22 @@ export interface RequestVerificationRes {
   updated_at: Date;
 }
 
+export interface OrgRequestVerificationRes {
+  id: string;
+  identity_id: string;
+  status: CredentailStatus;
+  created_at: Date;
+  updated_at: Date;
+  documents: [
+    {
+      id: string;
+      media_id: string;
+      verification_id: string;
+      created_at: Date;
+      updated_at: Date;
+    },
+  ];
+}
 export interface RequestVerificationStatusRes {
   message: string;
   verified: boolean;

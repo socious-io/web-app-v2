@@ -1,5 +1,5 @@
 import { post, get } from 'src/core/api/http';
-import { ApplicantsRes, MissionsRes, OffersRes } from 'src/core/api/jobs/jobs.types';
+import { ApplicantsRes, JobsRes, MissionsRes, OffersRes } from 'src/core/api/jobs/jobs.types';
 import { FilterReq, PaginateReq, SuccessRes } from 'src/core/api/types';
 
 import {
@@ -17,6 +17,8 @@ import {
   ImpactPoints,
   ExperienceReq,
   UserProfile,
+  EducationsReq,
+  Education,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -87,6 +89,18 @@ export async function removeExperiences(id: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/experiences/remove/${id}`, {})).data;
 }
 
+export async function addEducations(payload: EducationsReq): Promise<Education> {
+  return (await post<Education>('user/educations', payload)).data;
+}
+
+export async function updateEducations(id: string, payload: EducationsReq): Promise<Education> {
+  return (await post<Education>(`user/educations/update/${id}`, payload)).data;
+}
+
+export async function removeEducations(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`user/educations/remove/${id}`, {})).data;
+}
+
 export async function changePassword(payload: ChangePasswordReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/change-password`, payload)).data;
 }
@@ -114,4 +128,8 @@ export async function userOffers(params: PaginateReq): Promise<OffersRes> {
 
 export async function userApplicants(params: FilterReq): Promise<ApplicantsRes> {
   return (await get<ApplicantsRes>(`user/applicants`, { params })).data;
+}
+
+export async function recommendedJobs(username: string, params?: PaginateReq): Promise<JobsRes> {
+  return (await get<JobsRes>(`user/${username}/recommend/jobs`, { params })).data;
 }

@@ -34,7 +34,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
     reqModelShow,
     userVerified,
     handleOpenClaimModal,
-    credentialId,
+    handleClaimVC,
   } = useExperience();
 
   return (
@@ -67,38 +67,27 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
                   deletable={myProfile}
                   handleEdit={() => handleEdit(item)}
                   handleDelete={() => handleDelete(item.id)}
+                  verifyButton={{
+                    display: myProfile && (!item.credential || item.credential?.status === 'PENDING'),
+                    label: item.credential ? 'Verification pending' : 'Verify experience',
+                    disabled: !!item.credential,
+                    action: () => onOpenVerifyModal(item),
+                  }}
+                  claimButton={{
+                    display:
+                      myProfile && (item.credential?.status === 'APPROVED' || item.credential?.status === 'SENT'),
+                    label: item.credential?.status === 'APPROVED' ? 'Claim certificate' : 'Certificate claimed',
+                    disabled: !!disabledClaims[item.credential?.id || ''] || item.credential?.status === 'SENT',
+                    action: userVerified ? () => handleOpenClaimModal(item.credential?.id) : handleOpenVerifyModal,
+                  }}
                 />
-                {/* FIXME: Need to fix this button style should be go in to StepperCard */}
-                {myProfile && (!item.credential || item.credential?.status === 'PENDING') && (
-                  <Button
-                    variant="text"
-                    color="secondary"
-                    disabled={!!item.credential}
-                    className={css.addBtn}
-                    onClick={() => onOpenVerifyModal(item)}
-                  >
-                    Verify experience
-                  </Button>
-                )}
-                {myProfile && item.credential?.status === 'APPROVED' && (
-                  <Button
-                    variant="text"
-                    color="secondary"
-                    disabled={!!disabledClaims[item.credential.id]}
-                    className={css.addBtn}
-                    key={item.credential.id}
-                    onClick={userVerified ? () => handleOpenClaimModal(item.credential?.id) : handleOpenVerifyModal}
-                  >
-                    Claim
-                  </Button>
-                )}
                 {myProfile && item.credential?.status === 'REJECTED' && (
                   <div
                     className={css.status}
                     style={{ borderColor: variables.color_error_500, color: variables.color_error_500 }}
                   >
                     <Icon name="x-close" color={variables.color_error_500} />
-                    <span>rejected from {item.org.name}</span>
+                    <span>Rejected from {item.org.name}</span>
                   </div>
                 )}
               </>
@@ -119,7 +108,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
       <ClaimCertificateModal
         open={openModal.name === 'claim' && openModal.open}
         handleClose={handleClose}
-        credentialId={credentialId}
+        handleClaimVC={handleClaimVC}
       />
       <CreateUpdateExperience
         open={(openModal.name === 'add' || openModal.name === 'edit') && openModal.open}
@@ -129,12 +118,14 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
           experience?.credential && ['APPROVED', 'SENT', 'CLAIMED'].includes(experience.credential?.status || '')
         }
       />
-      <VerifyExperience
-        open={openModal.name === 'verify' && openModal.open}
-        handleClose={handleClose}
-        experience={experience}
-        onVerifyExperience={handleRequestVerify}
-      />
+      {!!experience && (
+        <VerifyExperience
+          open={openModal.name === 'verify' && openModal.open}
+          handleClose={handleClose}
+          experience={experience}
+          onVerifyExperience={handleRequestVerify}
+        />
+      )}
     </>
   );
 };

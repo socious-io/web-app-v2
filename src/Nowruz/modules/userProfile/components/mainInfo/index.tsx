@@ -16,22 +16,22 @@ import { Location } from '../location';
 import { Website } from '../website';
 
 export const MainInfo = () => {
-  const identity = useSelector<RootState, User | Organization | undefined>((state) => {
+  const identity = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   });
 
-  const profileType = useSelector<RootState, 'users' | 'organizations'>((state) => {
+  const profileType = useSelector<RootState, 'users' | 'organizations'>(state => {
     return state.profile.type;
   });
 
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const myProfile = currentIdentity?.id === identity?.id;
   const org = identity as Organization;
   const user = identity as User;
-  const size = ORGANIZATION_SIZE.find((sizes) => sizes.value === org.size)?.label.split(' ')[0];
-  const socialCauses = socialCausesToCategory(identity?.social_causes).map((item) => item.label);
+  const size = ORGANIZATION_SIZE.find(sizes => sizes.value === org.size)?.label.split(' ')[0];
+  const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
   const bioJSX = (
     <div>
       <Typography className={css.textMd}>{identity?.bio}</Typography>
@@ -56,8 +56,16 @@ export const MainInfo = () => {
 
   const connectionJSX = (
     <div className="flex gap-2">
-      <Link href="" label={`${identity?.followings} connections`} customStyle={`${css.textSM} text-brand-700`} />
-      <Link href="" label={`${identity?.followers} followers`} customStyle={`${css.textSM} text-brand-700`} />
+      <Link
+        href="/connections?active=0"
+        label={`${identity?.connections} connections`}
+        customStyle={`${css.textSM} text-brand-700`}
+      />
+      <Link
+        href="/connections?active=2"
+        label={`${identity?.followers} followers`}
+        customStyle={`${css.textSM} text-brand-700`}
+      />
     </div>
   );
   return (
@@ -81,7 +89,7 @@ export const MainInfo = () => {
       {profileType === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
       {org.industry && renderData('Industry', 'globe-04', org.industry)}
       {size && renderData('Size', 'users-01', size)}
-      {org.website && <Website url={org.website ?? ''} />}
+      {org.website && <Website url={org.website ?? ''} truncate />}
     </div>
   );
 };

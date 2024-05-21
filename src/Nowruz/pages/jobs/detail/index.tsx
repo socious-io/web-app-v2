@@ -1,30 +1,32 @@
 import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { CurrentIdentity, getOrganization, Job, Organization, QuestionsRes } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { getIdentityMeta } from 'src/core/utils';
 import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
 import ProfileCard from 'src/Nowruz/modules/general/components/profileCard';
+import { ApplyExternalPartyModal } from 'src/Nowruz/modules/Jobs/components/applyExternalPartyModal';
+import { ApplyModal } from 'src/Nowruz/modules/Jobs/components/applyModal';
 import { JobDetailAbout } from 'src/Nowruz/modules/Jobs/components/jobDetailAbout';
 import { JobDetailDescription } from 'src/Nowruz/modules/Jobs/components/jobDetailDescription';
 import { JobDetailHeader } from 'src/Nowruz/modules/Jobs/components/jobDetailHeader';
 import { RootState } from 'src/store';
 
 import css from './jobDetail.module.scss';
-import { ApplyModal } from 'src/Nowruz/modules/Jobs/components/applyModal';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { ApplyExternalPartyModal } from 'src/Nowruz/modules/Jobs/components/applyExternalPartyModal';
 
 export const JobDetail = () => {
   const { jobDetail } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
   };
+  const navigate = useNavigate();
 
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   const [organization, setOrganization] = useState<Organization>();
@@ -33,9 +35,11 @@ export const JobDetail = () => {
   const [openApply, setOpenApply] = useState(false);
   const [openExternalApply, setOpenExternalApply] = useState(false);
 
+  const { usernameVal } = getIdentityMeta(organization);
+
   useEffect(() => {
-    getOrganization(jobDetail.identity_meta.id).then((res) => setOrganization(res));
-    nonPermanentStorage.get('openApplyModal').then((res) => {
+    getOrganization(jobDetail.identity_meta.id).then(res => setOrganization(res));
+    nonPermanentStorage.get('openApplyModal').then(res => {
       if (currentIdentity && res && !jobDetail.applied) handleOpenApplyModal();
       nonPermanentStorage.remove('openApplyModal');
     });
@@ -51,6 +55,12 @@ export const JobDetail = () => {
     if (setJustApplied) setJustApplied(applied);
   };
 
+  const onProfileCardClick = () => {
+    if (usernameVal) {
+      navigate(`/profile/organizations/${usernameVal}/view`);
+    }
+  };
+
   const userJSX = () => (
     <div className="flex flex-col md:flex-row-reverse gap-8 md:gap-16">
       <div className="flex px-4 md:hidden">
@@ -58,7 +68,7 @@ export const JobDetail = () => {
           <div className={css.section1}>
             <FeaturedIconOutlined iconName="check-circle" size="md" theme="primary" />
             <Typography variant="subtitle2" className="text-Brand-700">
-              You application has been successfully submitted
+              Your application has been successfully submitted
             </Typography>
           </div>
         )}
@@ -85,7 +95,7 @@ export const JobDetail = () => {
             <div className={css.section1}>
               <FeaturedIconOutlined iconName="check-circle" size="md" theme="primary" />
               <Typography variant="subtitle2" className="text-Brand-700">
-                You application has been successfully submitted
+                Your application has been successfully submitted
               </Typography>
             </div>
           )}
@@ -100,7 +110,7 @@ export const JobDetail = () => {
         </div>
 
         <JobDetailDescription jobDescription={jobDetail.description} />
-        <ProfileCard identity={organization} />
+        <ProfileCard identity={organization} onProfileCardClick={onProfileCardClick} />
         <div className={css.expandable}>
           <ExpandableText isMarkdown expectedLength={isTouchDevice() ? 115 : 700} text={organization?.mission || ''} />
         </div>

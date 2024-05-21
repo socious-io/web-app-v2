@@ -34,12 +34,13 @@ export const removeEmptyArrays = (obj: null | undefined | Record<string | number
 };
 
 export const removeValuesFromObject = (obj: any, valuesToRemove: Array<string | null | undefined | number>) => {
+  const output = {};
   for (const key in obj) {
-    if (valuesToRemove.includes(obj[key])) {
-      delete obj[key];
+    if (!valuesToRemove.includes(obj[key])) {
+      output[key] = obj[key];
     }
   }
-  return obj;
+  return output;
 };
 
 export const checkUsernameConditions = (username: string) => {

@@ -42,7 +42,8 @@ export const useEmailForm = () => {
         .then(() => localStorage.setItem('email', email))
         .then(() => navigate('../verification'))
         .catch(handleError());
-      localStorage.removeItem('referrer');
+
+      if (localStorage.getItem('registerFor') === 'user') localStorage.removeItem('referrer');
     }
   };
 

@@ -1,29 +1,31 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { CurrentIdentity, Mission, StripeProfileRes, payoutByMission } from 'src/core/api';
+import { CurrentIdentity, Payment, StripeProfileRes, payoutByMission } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
+import { getIdentityMeta } from 'src/core/utils';
 import dapp from 'src/dapp';
 import { RootState } from 'src/store';
 
 export const useTransactionDetailes = () => {
-  const { mission, stripeProfileRes, jpStripeProfileRes } = useLoaderData() as {
-    mission: Mission;
+  const { paymentRes, stripeProfileRes, jpStripeProfileRes } = useLoaderData() as {
+    paymentRes: Payment[];
     stripeProfileRes: StripeProfileRes;
     jpStripeProfileRes: StripeProfileRes;
   };
 
+  const payment = paymentRes[0];
   const accounts = [];
-  if (stripeProfileRes?.external_accounts?.data.length > 0) accounts.push(...stripeProfileRes?.external_accounts.data);
+  if (stripeProfileRes?.external_accounts?.data.length > 0) accounts.push(...stripeProfileRes.external_accounts.data);
   if (jpStripeProfileRes?.external_accounts?.data.length > 0)
-    accounts.push(...jpStripeProfileRes?.external_accounts.data);
+    accounts.push(...jpStripeProfileRes.external_accounts.data);
 
   const navigate = useNavigate();
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
-  const isUser = currentIdentity?.type === 'users';
 
+  const isUser = currentIdentity?.type === 'users';
   const [openWithdraw, setOpenWithdraw] = useState(false);
   const [disablePayout, setDisablePayout] = useState(true);
 
@@ -35,37 +37,45 @@ export const useTransactionDetailes = () => {
     navigate('/payments');
   };
 
-  let currency = mission.offer?.currency || '';
-  if (mission.offer?.crypto_currency_address) {
-    dapp.NETWORKS.map((n) => {
-      const token = n.tokens.find((t) => mission.offer.crypto_currency_address === t.address);
+  let currency = payment.currency.toString() || '';
+  if (payment.service === 'CRYPTO') {
+    dapp.NETWORKS.map(n => {
+      const token = n.tokens.find(t => payment.meta.token === t.address);
       if (token) currency = token.symbol;
     });
   }
 
+  const paymentType = currentIdentity?.id === payment.payer_identity.id ? 'Paid' : 'Received';
+  const { name, profileImage } = getIdentityMeta(
+    paymentType === 'Paid' ? payment.receiver_identity : payment.payer_identity,
+  );
+
+  const identity = paymentType === 'Paid' ? payment.receiver_identity : payment.payer_identity;
+
   const detail = {
-    name: isUser ? mission.assigner.meta.name : mission.assignee.meta.name,
-    avatar: isUser ? mission.assigner.meta.image : mission.assignee.meta.avatar,
-    email: isUser ? mission.assigner.meta.email : mission.assignee.meta.email,
-    avatarType: isUser ? 'organizations' : 'users',
-    date: toRelativeTime(mission.payment.created_at.toString()),
-    amount: mission.payment.amount,
-    transactionId: mission.escrow.id,
-    symbol: mission.offer.currency === 'JPY' ? '¥' : mission.offer.currency === 'USD' ? '$' : '',
+    name,
+    avatar: profileImage,
+    email: identity.meta.email,
+    avatarType: identity.type,
+    date: toRelativeTime(payment.created_at.toString()),
+    amount: payment.amount,
+    transactionId: payment.transaction_id,
+    symbol: payment.currency === 'JPY' ? '¥' : payment.currency === 'USD' ? '$' : '',
     currency,
   };
 
   function checkDisablePayout() {
     const currentDate = Number(new Date());
-    const createdDate = Number(mission.escrow?.created_at);
+    const createdDate = Number(payment.created_at);
     const diffTime = Math.abs(currentDate - createdDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    setDisablePayout(!accounts?.length || mission.escrow?.release_id != null || diffDays < 5);
+    setDisablePayout(!payment.mission?.id || !accounts?.length || payment.verified_at != null || diffDays < 5);
   }
 
   const withdrawFund = async () => {
     try {
-      await payoutByMission(mission.id);
+      if (!payment.mission?.id) return;
+      await payoutByMission(payment.mission.id);
       setDisablePayout(true);
       setOpenWithdraw(false);
     } catch {
@@ -73,5 +83,5 @@ export const useTransactionDetailes = () => {
     }
   };
 
-  return { handleBack, detail, isUser, disablePayout, openWithdraw, setOpenWithdraw, accounts, withdrawFund };
+  return { handleBack, detail, disablePayout, openWithdraw, setOpenWithdraw, accounts, withdrawFund, isUser };
 };

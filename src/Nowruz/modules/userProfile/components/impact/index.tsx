@@ -10,9 +10,9 @@ import { RootState } from 'src/store';
 import css from './impact.module.scss';
 import { ImpactProps } from './impact.types';
 
-export const Impact: React.FC<ImpactProps> = (props) => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+export const Impact: React.FC<ImpactProps> = props => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
   const user = currentIdentity?.meta as UserMeta;
   const { point = 0, myProfile, customContainerStyle } = props;
@@ -27,7 +27,7 @@ export const Impact: React.FC<ImpactProps> = (props) => {
         <div className={css.title}>Impact points</div>
       </div>
       {myProfile && <div className={css.helperText}>Measure and track your impact</div>}
-      <div className="flex items-end">
+      <div className="flex items-end mb-4">
         <span className={css.pointNumber}>{Math.round(point)}</span>
         <span className={css.pointUnit}>pts</span>
       </div>

@@ -12,8 +12,8 @@ export const useOrganizationJobListing = () => {
   const [total, setTotal] = useState<number>(loaderData.total_count);
   const [loading, setLoading] = useState<boolean>(false);
   const [filter, setFilter] = useState<'all' | 'archived'>('all');
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   const navigate = useNavigate();

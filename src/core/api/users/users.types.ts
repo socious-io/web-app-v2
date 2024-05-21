@@ -57,6 +57,17 @@ export interface ExperienceReq {
   city?: string;
   employment_type?: 'ONE_OFF' | 'PART_TIME' | 'FULL_TIME';
   weekly_hours?: number | null;
+  total_hours?: number | null;
+}
+
+export interface EducationsReq {
+  org_id: string;
+  title: string;
+  description?: string;
+  degree?: string;
+  grade?: string;
+  start_at: string;
+  end_at?: string;
 }
 
 export interface ChangePasswordReq {
@@ -92,6 +103,7 @@ export interface User {
   skills: string[];
   followers: number;
   followings: number;
+  connections?: number;
   wallet_address?: string;
   proofspace_connect_id?: string;
   phone?: string;
@@ -107,7 +119,7 @@ export interface User {
   experiences?: Experience[] | null;
   created_at: Date;
   geoname_id?: string;
-  educations?: AdditionalRes[];
+  educations?: Education[] | null;
   recommendations?: AdditionalRes[];
   portfolios?: AdditionalRes[];
   certificates?: AdditionalRes[];
@@ -132,6 +144,13 @@ export interface Experience extends ExperienceReq {
   org: Organization;
   job_category: Category;
   created_at: Date;
+  credential?: Credential;
+  message?: string;
+}
+
+export interface Education extends EducationsReq {
+  id: string;
+  org: Organization;
   credential?: Credential;
   message?: string;
 }

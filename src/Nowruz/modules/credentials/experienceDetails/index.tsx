@@ -7,17 +7,17 @@ import { Input } from 'src/Nowruz/modules/general/components/input/input';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
-import { useCredentialDetails } from './useCredentialDetails';
+import { useExperienceDetails } from './useExperienceDetails';
 
-interface CredentialDetailsProps {
+interface ExperienceDetailsProps {
   open: boolean;
   handleClose: () => void;
-  experience?: Experience;
+  experience: Experience;
   onUpdateExperience?: (experience: Experience) => void;
   avatarInfo?: { url: string; first_name: string; last_name: string; username: string } | null;
   readonly?: boolean;
 }
-export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
+export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
   open,
   handleClose,
   experience,
@@ -52,10 +52,11 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
     onSelectEndYear,
     handleSubmit,
     onSave,
-    dateError,
+    startDateErrors,
+    endDateErrors,
     volunteer,
     handleCheckVolunteer,
-  } = useCredentialDetails(handleClose, experience, onUpdateExperience);
+  } = useExperienceDetails(handleClose, experience, onUpdateExperience);
 
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
@@ -128,8 +129,19 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           id="weekly-hours"
           name="weeklyHours"
           register={register}
-          label="Estimated weekly hours"
+          label="Estimated weekly hours*"
           postfix="hrs/week"
+          noBorderPostfix
+          disabled={readonly}
+        />
+      )}
+      {employmentTypeVal?.value === 'ONE_OFF' && (
+        <Input
+          id="total-hours"
+          name="totalHours"
+          register={register}
+          label="Estimated total hours*"
+          postfix="hrs"
           noBorderPostfix
           disabled={readonly}
         />
@@ -147,7 +159,7 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['startMonth']?.label?.message ? [errors['startMonth']?.label?.message.toString()] : undefined}
+          errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -161,7 +173,6 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           label="&nbsp;"
           className="flex-1"
           placeholder="Day"
-          errors={errors['startDay']?.label?.message ? [errors['startDay']?.label?.message.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -176,7 +187,6 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['startYear']?.label?.message ? [errors['startYear']?.label?.message.toString()] : undefined}
           isDisabled={readonly}
         />
       </div>
@@ -193,7 +203,7 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           placeholder="Month"
           className="flex-1"
           isSearchable
-          errors={errors['endMonth']?.label?.message ? [errors['endMonth']?.label?.message.toString()] : undefined}
+          errors={endDateErrors ? [endDateErrors.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -207,7 +217,6 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           }}
           placeholder="Day"
           className="flex-1"
-          errors={errors['endDay']?.label?.message ? [errors['endDay']?.label?.message.toString()] : undefined}
           isDisabled={readonly}
         />
         <SearchDropdown
@@ -222,7 +231,6 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={dateError ? [dateError] : undefined} //{errors['endYear']?.message ? [errors['endYear']?.message.toString()] : undefined}
           isDisabled={readonly}
         />
       </div>
@@ -232,7 +240,7 @@ export const CredentialDetails: React.FC<CredentialDetailsProps> = ({
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        {experience ? 'Save' : 'Add experience'}
+        Send
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
         Cancel

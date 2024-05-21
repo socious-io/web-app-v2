@@ -79,33 +79,37 @@ export const JobCreateForm = () => {
     jobLocation,
   } = useJobCreateForm();
 
-  const renderInfo = (title: string, description: string) => (
+  const renderInfo = (title: string, description?: string) => (
     <div className={css.info}>
       <div className={css.infoTitle}>{title}</div>
-      <div className={css.infoDescription}>{description}</div>
+      {description && <div className={css.infoDescription}>{description}</div>}
     </div>
   );
   const renderAmountFields = () => {
     return (
       <div className="flex justfy-center align-center">
         <Input
+          id="paymentMin"
           name="paymentMin"
           value={paymentMin}
-          onChange={(e) => onChangePaymentMin(e.target.value)}
+          onChange={e => onChangePaymentMin(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
-          prefix="$"
+          prefix={paymentScheme === 'FIXED' ? '$' : '$/hr'}
           errors={errors['paymentMin']?.message ? [errors['paymentMin']?.message.toString()] : undefined}
+          noBorderPrefix
         />
         <div className="flex items-center mx-2">to</div>
         <Input
+          id="paymentMax"
           name="paymentMax"
           value={paymentMax}
-          onChange={(e) => onChangePaymentMax(e.target.value)}
+          onChange={e => onChangePaymentMax(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
-          prefix="$"
+          prefix={paymentScheme === 'FIXED' ? '$' : '$/hr'}
           errors={errors['paymentMax']?.message ? [errors['paymentMax']?.message.toString()] : undefined}
+          noBorderPrefix
         />
       </div>
     );
@@ -114,9 +118,10 @@ export const JobCreateForm = () => {
     return (
       <div className="flex justfy-center align-center">
         <Input
+          id="commitmentHoursLower"
           name="commitmentHoursLower"
           value={commitmentHoursLower}
-          onChange={(e) => onChangeCommitHoursMin(e.target.value)}
+          onChange={e => onChangeCommitHoursMin(e.target.value)}
           postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
           placeholder="0"
           className={css.priceInputs}
@@ -127,9 +132,10 @@ export const JobCreateForm = () => {
         />
         <div className="flex items-center mx-2">to</div>
         <Input
+          id="commitmentHoursHigher"
           name="commitmentHoursHigher"
           value={commitmentHoursHigher}
-          onChange={(e) => onChangeCommitHoursMax(e.target.value)}
+          onChange={e => onChangeCommitHoursMax(e.target.value)}
           placeholder="0"
           className={css.priceInputs}
           postfix={paymentScheme === 'FIXED' ? 'hrs' : 'hrs/week'}
@@ -165,7 +171,7 @@ export const JobCreateForm = () => {
               icon="search-lg"
               options={causesList}
               isSearchable
-              onChange={(option) => onSelectCause(option)}
+              onChange={option => onSelectCause(option)}
               errors={errors['cause']?.message ? [errors['cause']?.message.toString()] : undefined}
             />
           </div>
@@ -187,12 +193,13 @@ export const JobCreateForm = () => {
           {renderInfo('Job category', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="category"
               name="category"
               value={category}
               placeholder="Select a category"
               options={catagoriesList}
               isSearchable
-              onChange={(option) => onSelectCategory(option)}
+              onChange={option => onSelectCategory(option)}
               errors={errors['category']?.message ? [errors['category']?.message.toString()] : undefined}
             />
           </div>
@@ -214,7 +221,7 @@ export const JobCreateForm = () => {
           </div>
         </div>
         <div className={css.row}>
-          {renderInfo('Location', 'Job titles must describe one position')}
+          {renderInfo('Location')}
           <div className={css.componentsContainer}>
             {jobLocation && (
               <RadioGroup
@@ -239,7 +246,7 @@ export const JobCreateForm = () => {
                           icon="search-lg"
                           hasDropdownIcon={false}
                           label="Location*"
-                          onChange={(value) => {
+                          onChange={value => {
                             onSelectCity(value);
                           }}
                         />
@@ -247,7 +254,7 @@ export const JobCreateForm = () => {
                     ),
                   },
                 ]}
-                onChange={(option) => onSelectJobLocation(option.value.toString())}
+                onChange={option => onSelectJobLocation(option.value.toString())}
               />
             )}
             {!jobLocation && (
@@ -272,7 +279,7 @@ export const JobCreateForm = () => {
                           icon="search-lg"
                           hasDropdownIcon={false}
                           label="Location*"
-                          onChange={(value) => {
+                          onChange={value => {
                             onSelectCity(value);
                           }}
                         />
@@ -280,7 +287,7 @@ export const JobCreateForm = () => {
                     ),
                   },
                 ]}
-                onChange={(option) => onSelectJobLocation(option.value.toString())}
+                onChange={option => onSelectJobLocation(option.value.toString())}
               />
             )}
           </div>
@@ -289,11 +296,12 @@ export const JobCreateForm = () => {
           {renderInfo('Remote preference', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="preference"
               placeholder="Please select"
               value={preference}
               options={PROJECT_REMOTE_PREFERENCES_V2}
               isSearchable
-              onChange={(option) => onSelectPreference(option)}
+              onChange={option => onSelectPreference(option)}
               errors={errors['preference']?.message ? [errors['preference']?.message.toString()] : undefined}
             />
           </div>
@@ -302,11 +310,12 @@ export const JobCreateForm = () => {
           {renderInfo('Job type', 'Is it a full time job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="job-type"
               value={type}
               placeholder="Please select"
               options={PROJECT_TYPE_V2}
               isSearchable
-              onChange={(option) => onSelectType(option)}
+              onChange={option => onSelectType(option)}
               errors={errors['type']?.message ? [errors['type']?.message.toString()] : undefined}
             />
           </div>
@@ -315,11 +324,12 @@ export const JobCreateForm = () => {
           {renderInfo('Job length', 'How long is the job?')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="length"
               placeholder="Please select"
               value={length}
               options={PROJECT_LENGTH_V2}
               isSearchable
-              onChange={(option) => onSelectLength(option)}
+              onChange={option => onSelectLength(option)}
               errors={errors['length']?.message ? [errors['length']?.message.toString()] : undefined}
             />
           </div>
@@ -332,7 +342,7 @@ export const JobCreateForm = () => {
                 items={paymentTypeOptions}
                 defaultValue={paymentType}
                 errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
-                onChange={(option) => onSelectPaymentType(option.value)}
+                onChange={option => onSelectPaymentType(option.value)}
               />
             </div>
           </div>
@@ -345,7 +355,7 @@ export const JobCreateForm = () => {
                 items={paymentTypeOptions}
                 defaultValue={paymentType}
                 errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
-                onChange={(option) => onSelectPaymentType(option.value.toString())}
+                onChange={option => onSelectPaymentType(option.value.toString())}
               />
             </div>
           </div>
@@ -357,7 +367,7 @@ export const JobCreateForm = () => {
             <div className={css.componentsContainer}>
               <RadioGroup
                 name="paidOption"
-                onChange={(option) => onSelectPaymentScheme(option.value.toString())}
+                onChange={option => onSelectPaymentScheme(option.value.toString())}
                 items={[
                   { label: 'Fixed', value: 'FIXED', children: renderAmountFields() },
                   { label: 'Hourly', value: 'HOURLY', children: renderAmountFields() },
@@ -375,7 +385,7 @@ export const JobCreateForm = () => {
             <div className={css.componentsContainer}>
               <RadioGroup
                 name="volunteeredOption"
-                onChange={(option) => onSelectPaymentScheme(option.value)}
+                onChange={option => onSelectPaymentScheme(option.value)}
                 items={[
                   { label: 'Fixed', value: 'FIXED', children: renderHoursFields() },
                   { label: 'Hourly', value: 'HOURLY', children: renderHoursFields() },
@@ -390,11 +400,12 @@ export const JobCreateForm = () => {
           {renderInfo('Experience level', '')}
           <div className={css.componentsContainer}>
             <SearchDropdown
+              id="experience-level"
               value={experienceLevel}
               placeholder="Please select"
               options={EXPERIENCE_LEVEL_V2}
               isSearchable
-              onChange={(option) => onSelectExperienceLevel(option)}
+              onChange={option => onSelectExperienceLevel(option)}
               errors={errors['experienceLevel']?.message ? [errors['experienceLevel']?.message.toString()] : undefined}
             />
           </div>

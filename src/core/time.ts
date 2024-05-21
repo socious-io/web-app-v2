@@ -50,3 +50,10 @@ export const getDaysInMonth = (month: number, year: number) => {
 };
 
 export const getUTCDate = (date: string) => (date.endsWith('Z') ? date : `${date}Z`);
+
+export const getStringDate = (date: string) => {
+  const dateFormat = new Date(getUTCDate(date));
+  const month = monthShortNames[dateFormat.getMonth()];
+  const year = dateFormat.getFullYear().toString();
+  return `${month} ${year}`;
+};

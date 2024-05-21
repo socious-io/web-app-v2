@@ -22,13 +22,12 @@ export const CreateOrganization = () => {
           id="name"
           value={orgName}
           label="Your organization name*"
-          variant="outlined"
           placeholder="Enter your organization name"
-          onChange={(e) => updateOrgName(e.target.value)}
+          onChange={e => updateOrgName(e.target.value)}
         />
       </div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-44 ${css.footer}`}>
-        <Button disabled={!!!isValidForm} color="primary" block onClick={goNextPage}>
+        <Button disabled={!isValidForm} color="primary" block onClick={goNextPage}>
           Next: Organization type
         </Button>
       </div>

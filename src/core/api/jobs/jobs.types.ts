@@ -115,6 +115,8 @@ export interface Job extends JobReq {
   updated_at?: Date;
   deleted_at?: Date;
   expires_at?: Date;
+  saved?: boolean;
+  not_interested?: boolean;
 }
 
 export interface JobCategoriesRes {
@@ -244,3 +246,10 @@ export interface Escrow {
   refound_at?: Date;
   release_id?: string;
 }
+
+export interface RejectReq {
+  feedback?: string;
+  applicants: string[];
+}
+
+export type JobMark = 'SAVE' | 'NOT_INTERESTED';

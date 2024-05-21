@@ -16,6 +16,8 @@ import {
   Offer,
   Mission,
   HourlyWorkReq,
+  JobMark,
+  RejectReq,
 } from './jobs.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq, FilterReq } from '../types';
@@ -82,6 +84,10 @@ export async function applicant(id: string): Promise<Applicant> {
 
 export async function rejectApplicant(id: string): Promise<Applicant> {
   return (await post<Applicant>(`applicants/${id}/reject`, {})).data;
+}
+
+export async function rejectMultipleApplicants(param: RejectReq): Promise<Applicant[]> {
+  return (await post<Applicant[]>(`applicants/reject`, param)).data;
 }
 export async function getOffer(id: string): Promise<Offer> {
   return (await get<Offer>(`offers/${id}`)).data;
@@ -152,4 +158,16 @@ export async function feedbackMission(id: string, content?: string): Promise<Suc
 
 export async function contestMission(id: string, content?: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`missions/${id}/contest`, { content })).data;
+}
+
+export async function markJob(id: string, markAs: JobMark): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`projects/${id}/mark?mark_as=${markAs}`, {})).data;
+}
+
+export async function removeMark(projectId: string) {
+  return (await post<SuccessRes>(`projects/${projectId}/mark/delete`, {})).data;
+}
+
+export async function markedJobs(params: FilterReq): Promise<JobsRes> {
+  return (await get<JobsRes>('projects/mark', { params })).data;
 }
