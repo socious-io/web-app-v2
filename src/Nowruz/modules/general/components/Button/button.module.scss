@@ -32,7 +32,7 @@
     &:global(.MuiButton-root) {
         &:disabled {
             background-color: $color-primary-200;
-            color: $color-primary-700;
+            color: $color-white;
         }
     }
 
@@ -83,6 +83,22 @@
             background-color: $color-grey-300;
             color: $color-white;
             cursor: not-allowed;
+        }
+    }
+
+    &:global(.MuiButton-textSecondary) {
+        background-color: transparent;
+        border: none;
+        color: $color-grey-600;
+
+        &:hover {
+            background-color: $color-grey-50;
+            color: $color-grey-700;
+        }
+
+        &:disabled {
+            background-color: transparent;
+            color: $color-grey-300;
         }
     }
 }

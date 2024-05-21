@@ -23,7 +23,7 @@ import css from './jobDetailAbout.module.scss';
 interface JobDetailAboutProps {
   isUser: boolean;
   applied?: boolean;
-  handleOpenApplyModal: () => void;
+  handleOpenApplyModal?: () => void;
 }
 
 export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, applied, handleOpenApplyModal }) => {
