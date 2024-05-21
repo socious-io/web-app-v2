@@ -76,9 +76,6 @@ export const Dashboard = () => {
                 <div className="row-span-1 col-span-1">
                   <Card iconName="clock" cardText={'Hours volunteered'} number={hoursVolunteered} unit="hrs" />
                 </div>
-                {/* <div className="row-span-1 col-span-1">
-            <Card iconName="currency-dollar" cardText={'Donated'} number={`$${donated}`} />
-          </div> */}
               </div>
             )}
           </div>
