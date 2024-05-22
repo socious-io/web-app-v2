@@ -13,7 +13,6 @@ import { useContracts } from './useContracts';
 export const Contracts = () => {
   const { filterButtons, pageCount, setPage, contractList, page, openOverlayModal, setOpenOverlayModal } =
     useContracts();
-  const web3 = useWeb3();
   return (
     <>
       <div className={css.container}>
@@ -40,7 +39,7 @@ export const Contracts = () => {
       </div>
       {openOverlayModal && (
         <Overlay open={openOverlayModal} onClose={() => setOpenOverlayModal(false)}>
-          <ContractDetailsSlider web3={web3} />
+          <ContractDetailsSlider />
         </Overlay>
       )}
     </>

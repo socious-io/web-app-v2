@@ -82,8 +82,8 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, closeReviewModal
       )}
       <AlertModal
         open={openSuccessModal}
-        onClose={() => handleCloseSuccessModal}
-        onSubmit={() => handleCloseSuccessModal}
+        onClose={handleCloseSuccessModal}
+        onSubmit={handleCloseSuccessModal}
         message="Your review has been successfully submitted"
         title="Review submitted"
       />

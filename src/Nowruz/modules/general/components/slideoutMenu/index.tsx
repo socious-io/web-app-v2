@@ -13,7 +13,7 @@ export const Overlay: React.FC<OverlayProps> = ({ open, onClose, children, title
   const ref = useRef();
   useEffect(() => {
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (ref.current && event.target.type !== 'button' && !ref.current.contains(event.target)) {
         onClose();
       }
     }
