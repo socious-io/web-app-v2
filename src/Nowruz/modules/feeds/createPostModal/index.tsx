@@ -1,8 +1,8 @@
-import EmojiPicker from '@emoji-mart/react';
 import React from 'react';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import CustomEmojiPicker from 'src/Nowruz/modules/general/components/EmojiPicker';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
 
@@ -110,21 +110,19 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
           />
         </div>
         {openEmojiPicker && (
-          <div className="max-w-[358px] max-h-[300px] overflow-y-auto absolute bottom-0 left-0 sm:left-24 z-10 border border-solid border-Gray-light-mode-200 rounded-t-lg">
-            <EmojiPicker
-              open={openEmojiPicker}
-              theme="light"
-              previewPosition="none"
-              onEmojiSelect={value => {
-                if (focusElements.title) {
-                  onTextChange('title', titleVal ? titleVal + value.native : value.native);
-                } else {
-                  onTextChange('content', contentVal ? contentVal + value.native : value.native);
-                }
-                setOpenEmojiPicker(false);
-              }}
-            />
-          </div>
+          <CustomEmojiPicker
+            open={openEmojiPicker}
+            handleClose={() => setOpenEmojiPicker(false)}
+            onEmojiSelect={value => {
+              if (focusElements.title) {
+                onTextChange('title', titleVal ? titleVal + value.native : value.native);
+              } else {
+                onTextChange('content', contentVal ? contentVal + value.native : value.native);
+              }
+              setOpenEmojiPicker(false);
+            }}
+            customStyle="sm:left-24 rounded-none rounded-t-lg"
+          />
         )}
       </Modal>
     </form>

@@ -1,4 +1,3 @@
-import EmojiPicker from '@emoji-mart/react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CurrentIdentity } from 'src/core/api';
@@ -9,6 +8,7 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
+import CustomEmojiPicker from 'src/Nowruz/modules/general/components/EmojiPicker';
 import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import { RootState } from 'src/store';
@@ -105,17 +105,15 @@ const RepostModal: React.FC<RepostModalProps> = ({ data, open, handleClose, onRe
         </div>
       </div>
       {openEmojiPicker && (
-        <div className="max-w-[358px] max-h-[300px] overflow-y-auto absolute bottom-9 left-9 z-10 border border-solid border-Gray-light-mode-200 rounded-lg">
-          <EmojiPicker
-            open={openEmojiPicker}
-            theme="light"
-            previewPosition="none"
-            onEmojiSelect={value => {
-              setContentRepost(prev => (prev ? prev + value.native : value.native));
-              setOpenEmojiPicker(false);
-            }}
-          />
-        </div>
+        <CustomEmojiPicker
+          open={openEmojiPicker}
+          handleClose={() => setOpenEmojiPicker(false)}
+          onEmojiSelect={value => {
+            setContentRepost(prev => (prev ? prev + value.native : value.native));
+            setOpenEmojiPicker(false);
+          }}
+          customStyle="bottom-8 left-8"
+        />
       )}
     </Modal>
   );
