@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 import { ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity, cancelOffer, confirmMission, hireOffer } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
+import { UserType } from 'src/core/types';
+import { getIdentityMeta, navigateToProfile } from 'src/core/utils';
 import dapp from 'src/dapp';
 import { useWeb3 } from 'src/dapp/dapp.connect';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
+import { MenuItem } from 'src/Nowruz/modules/general/components/threeDotButton/threeDotButton.types';
 import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
@@ -29,8 +31,8 @@ export const useSliderAwaiting = (contract: Contract) => {
     label: '',
   });
   const [openAlert, setOpenAlert] = useState(false);
-
-  const { name } = getIdentityMeta(identityType === 'users' ? contract.offerer : contract.recipient);
+  const displayDispute = contract.mission?.status === 'COMPLETE';
+  const { name, username, type } = getIdentityMeta(identityType === 'users' ? contract.offerer : contract.recipient);
 
   const initialize = () => {
     if (identityType === 'users') {
@@ -151,5 +153,23 @@ export const useSliderAwaiting = (contract: Contract) => {
     }
     setPrimaryBtn({ ...primaryBtn, disabled: false });
   };
-  return { onConfirm, primaryBtn, secondaryBtn, alertMsg, openAlert, setOpenAlert };
+
+  const menuItems: MenuItem[] = [
+    {
+      iconName: 'building-06',
+      title: `${name}'s profile`,
+      onClick: () => {
+        navigateToProfile(username, type as UserType);
+      },
+    },
+    {
+      iconName: 'message-alert-circle',
+      title: 'Initiate a dispute',
+      // TODO: add open dispute modal
+      onClick: () => {
+        console.log('TODO: add open dispute modal');
+      },
+    },
+  ];
+  return { onConfirm, primaryBtn, secondaryBtn, alertMsg, openAlert, setOpenAlert, displayDispute, menuItems };
 };

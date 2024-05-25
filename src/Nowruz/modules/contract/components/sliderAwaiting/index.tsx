@@ -3,6 +3,7 @@ import { Contract, CurrentIdentity, cancelOffer, confirmMission, hireOffer } fro
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { ThreeDotButton } from 'src/Nowruz/modules/general/components/threeDotButton';
 
 import { useSliderAwaiting } from './useSliderAwaiting';
 
@@ -13,7 +14,8 @@ interface SliderAwaitingProps {
 }
 
 export const SliderAwaiting: React.FC<SliderAwaitingProps> = ({ contract, disableMessage, redirectToChat }) => {
-  const { onConfirm, primaryBtn, secondaryBtn, alertMsg, openAlert, setOpenAlert } = useSliderAwaiting(contract);
+  const { onConfirm, primaryBtn, secondaryBtn, alertMsg, openAlert, setOpenAlert, displayDispute, menuItems } =
+    useSliderAwaiting(contract);
 
   return (
     <>
@@ -27,6 +29,7 @@ export const SliderAwaiting: React.FC<SliderAwaitingProps> = ({ contract, disabl
               {secondaryBtn.label}
             </Button>
           )}
+          {displayDispute && <ThreeDotButton menuItems={menuItems} />}
         </div>
         {primaryBtn.display && (
           <Button variant="contained" color="primary" onClick={primaryBtn.action} disabled={primaryBtn.disabled}>

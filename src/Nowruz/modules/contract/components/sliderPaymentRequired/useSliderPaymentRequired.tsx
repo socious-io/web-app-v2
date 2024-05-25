@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity, Offer, cancelOffer, getOffer } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
 

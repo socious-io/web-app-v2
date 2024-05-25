@@ -1,7 +1,10 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity, cancelMission, completeMission, dropMission } from 'src/core/api';
+import { UserType } from 'src/core/types';
+import { getIdentityMeta, navigateToProfile } from 'src/core/utils';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
+import { MenuItem } from 'src/Nowruz/modules/general/components/threeDotButton/threeDotButton.types';
 import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
@@ -10,44 +13,29 @@ export const useSliderOngoing = (contract: Contract) => {
     state.identity.entities.find(identity => identity.current),
   );
   const identityType = identity?.type;
-  const [displayAlert, setDisplayAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState<ReactNode>();
-  const [primaryBtn, setPrimaryBtn] = useState<{ display: boolean; label?: string; action?: () => void }>({
-    display: false,
-    label: '',
-  });
-  const [secondaryBtn, setSecondaryBtn] = useState<{ display: boolean; label?: string; action?: () => void }>({
-    display: false,
-    label: '',
-  });
+  const { name, username, type } = getIdentityMeta(identityType === 'users' ? contract.offerer : contract.recipient);
+
+  const displayAlert = contract.project.payment_type !== 'VOLUNTEER';
+  const alertMessage =
+    identityType === 'users' ? (
+      <AlertMessage
+        theme="primary"
+        iconName="check-circle"
+        title="Your job has been confirmed"
+        subtitle="Once you have finished your work please click on <b>complete</b> button."
+      />
+    ) : (
+      <AlertMessage
+        theme="primary"
+        iconName="alert-circle"
+        title="Payment was done successfully"
+        subtitle={`${name} can now start the job`}
+      />
+    );
+  const displayComplete = identityType === 'users';
+
   const [openAlert, setOpenAlert] = useState(false);
   const dispatch = useDispatch();
-  const initialize = () => {
-    setAlertMessage(
-      identityType === 'users' ? (
-        <AlertMessage
-          theme="primary"
-          iconName="check-circle"
-          title="Your job has been confirmed"
-          subtitle="Once you have finished your work please click on <b>complete</b> button."
-        />
-      ) : (
-        <AlertMessage
-          theme="primary"
-          iconName="alert-circle"
-          title="Payment was done successfully"
-          subtitle={`${name} can now start the job`}
-        />
-      ),
-    );
-    setDisplayAlert(contract.project.payment_type !== 'VOLUNTEER');
-    setPrimaryBtn({ display: identityType === 'users', label: 'Complete', action: () => setOpenAlert(true) });
-    setSecondaryBtn({ display: true, label: 'Stop', action: identityType === 'users' ? handleStop : handleStopByOP });
-  };
-
-  useEffect(() => {
-    initialize();
-  }, []);
 
   const handleComplete = async () => {
     setOpenAlert(false);
@@ -101,5 +89,27 @@ export const useSliderOngoing = (contract: Contract) => {
     }
   };
 
-  return { displayAlert, alertMessage, primaryBtn, secondaryBtn, openAlert, setOpenAlert, handleComplete };
+  const menuItems: MenuItem[] = [
+    {
+      iconName: 'building-06',
+      title: `${name}'s profile`,
+      onClick: () => {
+        navigateToProfile(username, type as UserType);
+      },
+    },
+    {
+      iconName: 'message-alert-circle',
+      title: 'Initiate a dispute',
+      // TODO: add open dispute modal
+      onClick: () => {
+        console.log('TODO: add open dispute modal');
+      },
+    },
+    {
+      iconName: 'x-circle',
+      title: 'End contract',
+      onClick: identityType === 'users' ? handleStop : handleStopByOP,
+    },
+  ];
+  return { displayAlert, alertMessage, displayComplete, openAlert, setOpenAlert, handleComplete, menuItems };
 };

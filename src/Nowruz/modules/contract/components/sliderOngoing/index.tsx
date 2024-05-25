@@ -3,6 +3,7 @@ import { Contract } from 'src/core/api';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
+import { ThreeDotButton } from 'src/Nowruz/modules/general/components/threeDotButton';
 
 import { useSliderOngoing } from './useSliderOngoing';
 
@@ -12,29 +13,22 @@ interface SliderOngoingProps {
   redirectToChat: () => void;
 }
 export const SliderOngoing: React.FC<SliderOngoingProps> = ({ disableMessage, redirectToChat, contract }) => {
-  const { primaryBtn, secondaryBtn, displayAlert, alertMessage, openAlert, setOpenAlert, handleComplete } =
+  const { displayComplete, displayAlert, alertMessage, openAlert, setOpenAlert, handleComplete, menuItems } =
     useSliderOngoing(contract);
   return (
     <>
       <div className="flex flex-col gap-4">
         <div className="flex gap-3">
-          {!disableMessage && (
-            <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat} disabled={disableMessage}>
-              Message
+          {displayComplete && (
+            <Button variant="contained" color="primary" fullWidth onClick={() => setOpenAlert(true)}>
+              Complete
             </Button>
           )}
-          {secondaryBtn.display && (
-            <Button variant="outlined" color="secondary" fullWidth onClick={secondaryBtn.action}>
-              {secondaryBtn.label}
-            </Button>
-          )}
-        </div>
-        {primaryBtn.display && (
-          <Button variant="contained" color="primary" onClick={primaryBtn.action}>
-            {primaryBtn.label}
+          <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat} disabled={disableMessage}>
+            Message
           </Button>
-        )}
-
+          <ThreeDotButton menuItems={menuItems} />
+        </div>
         {displayAlert && alertMessage}
       </div>
       {openAlert && (
