@@ -75,16 +75,12 @@ export const IssuedList = () => {
               <div className={css.col}>
                 <div className="flex">
                   {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" theme="secondary" />}
-                  {item.status === 'APPROVED' && <CreditStatus icon="check" label="Approved" theme="primary" />}
+                  {item.status === 'APPROVED' && <CreditStatus icon="check-circle" label="Accepted" theme="success" />}
                   {item.status === 'SENT' && (
-                    <CreditStatus
-                      icon="check"
-                      label={userProfile ? 'Received' : 'Sent'}
-                      theme={userProfile ? 'secondary' : 'success'}
-                    />
+                    <CreditStatus icon={userProfile ? 'arrow-down' : 'arrow-up'} label="Issued" theme="secondary" />
                   )}
-                  {item.status === 'REJECTED' && <CreditStatus icon="x-close" label="Rejected" theme="error" />}
-                  {item.status === 'CLAIMED' && <CreditStatus icon="check" label="Claimed" theme="success" />}
+                  {item.status === 'REJECTED' && <CreditStatus icon="alert-circle" label="Declined" theme="error" />}
+                  {item.status === 'CLAIMED' && <CreditStatus icon="check-circle" label="Claimed" theme="success" />}
                 </div>
               </div>
               <div className={css.col}>{formatDate(item.created_at)}</div>
