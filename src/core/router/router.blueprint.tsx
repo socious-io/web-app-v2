@@ -471,6 +471,15 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          {
+            path: 'contribute',
+            async lazy() {
+              const { Contribute } = await import('src/Nowruz/pages/contribute');
+              return {
+                Component: Protect(Contribute, 'users'),
+              };
+            },
+          },
         ],
       },
     ],
