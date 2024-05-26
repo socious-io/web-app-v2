@@ -12,7 +12,7 @@ import css from './contribute.module.scss';
 
 export const Contribute = () => {
   const { user } = useLoaderData() as { user: UserProfile };
-  const eligible = user.impact_points >= 1; // 10000
+  const eligible = user.impact_points >= 10000;
   const renderCheckItems = (title: string, desc: string) => {
     return (
       <div className="flex gap-3 items-start">
