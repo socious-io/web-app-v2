@@ -1,109 +1,116 @@
 @import 'src/components/_primitives.scss';
 
 .chip-sm {
-  height: 1.375rem;
-  padding: 0.125rem 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem; // To replace with constant spacing
-  font-size: 0.75rem;  // To replace with constant text size
-  font-weight: 500;
-  line-height: 1.125rem;
+    min-height: 1.375rem;
+    height: fit-content;
+    padding: 0.125rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem; // To replace with constant spacing
+    font-size: 0.75rem; // To replace with constant text size
+    font-weight: 500;
+    line-height: 1.125rem;
 }
 
 .chip-md {
-  height: 1.5rem;
-  padding: 0.125rem 0.625rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.375rem; // To replace with constant spacing
-  font-size: 0.875rem;  // To replace with constant text size
-  font-weight: 500;
-  line-height: 1.25rem;
+    min-height: 1.5rem;
+    height: fit-content;
+    padding: 0.125rem 0.625rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem; // To replace with constant spacing
+    font-size: 0.875rem; // To replace with constant text size
+    font-weight: 500;
+    line-height: 1.25rem;
 }
 
 .chip-lg {
-  height: 1.75rem;
-  padding: 0.25rem 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.375rem; // To replace with constant spacing
-  font-size: 0.875rem; // To replace with constant text size
-  font-weight: 500;
-  line-height: 1.25rem;
+    min-height: 1.75rem;
+    height: fit-content;
+    padding: 0.25rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem; // To replace with constant spacing
+    font-size: 0.875rem; // To replace with constant text size
+    font-weight: 500;
+    line-height: 1.25rem;
 }
 
 .primary-theme {
-  background-color: $color-primary-50;
-  color: $color-primary-700 !important;
-  border: 1.5px solid $color-primary-200;
+    background-color: $color-primary-50;
+    color: $color-primary-700 !important;
+    border: 1.5px solid $color-primary-200;
 }
 
 .secondary-theme {
-  background-color: $color-white;
-  color: $color-grey-700;
-  border: 1.5px solid $color-grey-300;
-  box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
+    background-color: $color-white;
+    color: $color-grey-700;
+    border: 1.5px solid $color-grey-300;
+    box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
 }
 
 .success-theme {
-  background-color: $color-white;
-  color: $color-success-600 !important;
-  border: 1.5px solid $color-success-600;
+    background-color: $color-white;
+    color: $color-success-600 !important;
+    border: 1.5px solid $color-success-600;
 }
 
 .error-theme {
-  background-color: $color-white;
-  color: $color-error-600 !important;
-  border: 1.5px solid $color-error-600;
+    background-color: $color-white;
+    color: $color-error-600 !important;
+    border: 1.5px solid $color-error-600;
 }
 
 .grey_blue-theme {
-  background-color: $color-grey-blue-50;
-  color: $color-grey-blue-700;
-  border: 1.5px solid $color-grey-blue-200;
-  box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
+    background-color: $color-grey-blue-50;
+    color: $color-grey-blue-700;
+    border: 1.5px solid $color-grey-blue-200;
+    box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
 }
+
 .round {
-  border-radius: 16px;
+    border-radius: 16px;
 }
 
 .sharp {
-  border-radius: 6px;
+    border-radius: 6px;
 }
 
 .primary-transparent {
-  background-color: transparent;
-  color: $color-primary-600;
-  border: 1.5px solid $color-primary-600;
+    background-color: transparent;
+    color: $color-primary-600;
+    border: 1.5px solid $color-primary-600;
 }
 
 .secondary-transparent {
-  background-color: transparent;
-  color: $color-grey-600;
-  border: 1.5px solid $color-grey-600;
+    background-color: transparent;
+    color: $color-grey-600;
+    border: 1.5px solid $color-grey-600;
 }
+
 .grey_blue-transparent {
-  background-color: transparent;
-  color: $color-grey-blue-600;
-  border: 1.5px solid $color-grey-blue-600;
+    background-color: transparent;
+    color: $color-grey-blue-600;
+    border: 1.5px solid $color-grey-blue-600;
 }
+
 .error-transparent {
-  background-color: transparent;
-  color: $color-error-600;
-  border: 1.5px solid $color-error-600;
+    background-color: transparent;
+    color: $color-error-600;
+    border: 1.5px solid $color-error-600;
 }
+
 .warning-transparent {
-  background-color: transparent;
-  color: $color-warning-600;
-  border: 1.5px solid $color-warning-600;
+    background-color: transparent;
+    color: $color-warning-600;
+    border: 1.5px solid $color-warning-600;
 }
 
 .success-transparent {
-  background-color: transparent;
-  color: $color-success-600;
-  border: 1.5px solid $color-success-600;
+    background-color: transparent;
+    color: $color-success-600;
+    border: 1.5px solid $color-success-600;
 }

@@ -76,6 +76,10 @@
             flex-wrap: wrap;
         }
 
+        .jobDescription {
+            width: 100%;
+        }
+
         .jobDescription * {
             line-height: 1.5rem;
             color: $color-grey-600;

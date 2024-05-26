@@ -5,7 +5,7 @@ import { dialog } from 'src/core/dialog/dialog';
 import { useIconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown/useIconDropDown';
 import { RootState } from 'src/store';
 
-export const useNotifications = () => {
+export const useNotifications = (handleClose: () => void) => {
   const { switchAccount } = useIconDropDown();
   const navigate = useNavigate();
   const identities = useSelector<RootState, CurrentIdentity[]>(state => {
@@ -103,6 +103,7 @@ export const useNotifications = () => {
         path = '';
         break;
     }
+    handleClose();
     navigate(path);
   };
 
