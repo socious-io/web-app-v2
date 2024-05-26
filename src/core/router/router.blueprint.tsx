@@ -472,7 +472,15 @@ export const blueprint: RouteObject[] = [
             },
           },
           {
-            path: 'contribute',
+            path: '/:id/contribute',
+            loader: async ({ params }) => {
+              if (params.id) {
+                const user = await otherProfileByUsername(params.id);
+                return {
+                  user,
+                };
+              }
+            },
             async lazy() {
               const { Contribute } = await import('src/Nowruz/pages/contribute');
               return {
