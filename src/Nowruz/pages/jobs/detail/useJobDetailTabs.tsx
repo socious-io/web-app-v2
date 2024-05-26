@@ -72,7 +72,7 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
   const getApplicants = useCallback(async () => {
     const requests = [
       jobApplicants(jobDetail.id, { page: 1, limit: PER_PAGE, status: 'PENDING' }),
-      jobApplicants(jobDetail.id, { page: 1, limit: PER_PAGE, status: 'OFFERED' }),
+      jobApplicants(jobDetail.id, { page: 1, limit: PER_PAGE, status: 'OFFERED,APPROVED,HIRED,CLOSED' }),
       jobApplicants(jobDetail.id, { page: 1, limit: PER_PAGE, status: 'REJECTED' }),
     ];
     const [pendingRes, offeredRes, rejectedRes] = await Promise.all(requests);
