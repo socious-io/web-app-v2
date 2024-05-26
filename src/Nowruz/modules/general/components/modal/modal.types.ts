@@ -16,4 +16,5 @@ export interface ModalProps {
   customStyle?: string;
   id?: string;
   inlineTitle?: boolean;
+  contentClassName?: string;
 }

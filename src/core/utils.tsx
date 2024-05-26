@@ -94,7 +94,7 @@ export const getIdentityMeta = (identity: User | Organization | Identity | undef
       usernameVal: user.username,
       name: user.name || `${user.first_name} ${user.last_name}`,
       profileImage: user.avatar?.url || String(user.avatar) || '',
-      type: 'users',
+      type: 'users' as Identity['type'],
       website: undefined,
     };
   }
@@ -106,7 +106,7 @@ export const getIdentityMeta = (identity: User | Organization | Identity | undef
     usernameVal: org.shortname,
     name: org.name,
     profileImage: org.image?.url || String(org.image) || '',
-    type: 'organizations',
+    type: 'organizations' as Identity['type'],
     website: org.website,
   };
 };

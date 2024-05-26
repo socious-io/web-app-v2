@@ -1,0 +1,13 @@
+@import 'src/components/_primitives.scss';
+
+.card {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    background: $color-white;
+    border: 1px solid $color-grey-200;
+    border-radius: 12px;
+    box-shadow: $shadow-xs;
+    padding: 1.5rem 0 1rem 0;
+    gap: 1.5rem;
+}
