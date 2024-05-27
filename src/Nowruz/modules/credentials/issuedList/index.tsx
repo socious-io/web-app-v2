@@ -20,7 +20,6 @@ export const IssuedList = () => {
     onClaim,
     onArchive,
   } = useIssuedList();
-
   return (
     <div className="flex flex-col">
       {userProfile && (
@@ -75,7 +74,9 @@ export const IssuedList = () => {
               <div className={css.col}>
                 <div className="flex">
                   {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" theme="secondary" />}
-                  {item.status === 'APPROVED' && <CreditStatus icon="check-circle" label="Accepted" theme="success" />}
+                  {item.status === 'APPROVED' && (
+                    <CreditStatus icon={userProfile ? 'arrow-down' : 'arrow-up'} label="Issued" theme="secondary" />
+                  )}
                   {item.status === 'SENT' && (
                     <CreditStatus icon={userProfile ? 'arrow-down' : 'arrow-up'} label="Issued" theme="secondary" />
                   )}
