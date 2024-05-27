@@ -35,10 +35,10 @@ export const TopBanner: React.FC<TopBannerProps> = ({
     theme === 'warning' ? variables.color_warning_700 : theme === 'success' ? variables.color_success_700 : '';
   return (
     <div
-      className="w-full pb-2 p-4 xl:px-6 xl:py-1 flex flex-col xl:flex-row xl:items-center justify-between gap-2"
+      className="w-full pb-2 p-4  xl:px-6 xl:py-1 flex flex-col xl:flex-row xl:items-center justify-between gap-2"
       style={{ backgroundColor: bgColor, borderBottom: `1px solid ${borderBottomColor}` }}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col xl:flex-row  xl:items-center gap-4">
         <div className="w-fit h-fit">
           <FeaturedIconOutlined
             theme={theme}
@@ -46,7 +46,7 @@ export const TopBanner: React.FC<TopBannerProps> = ({
             size="md"
           />
         </div>
-        <div className="flex flex-col lg:flex-row gap-[2px] lg:gap-1.5">
+        <div className="flex flex-col xl:flex-row gap-[2px] xl:gap-1.5">
           <span className="text-sm font-semibold leading-5" style={{ color: textColor }}>
             {text}
           </span>
