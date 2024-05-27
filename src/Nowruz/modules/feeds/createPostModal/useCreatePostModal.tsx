@@ -46,6 +46,8 @@ export const useCreatePostModal = (
     title: false,
     content: false,
   });
+  const [loading, setLoading] = useState(false);
+
   const {
     handleSubmit,
     formState: { errors },
@@ -98,6 +100,7 @@ export const useCreatePostModal = (
   };
 
   const onSubmitPost: SubmitHandler<Form> = async ({ cause, title, content, file }) => {
+    setLoading(true);
     try {
       let mediaId = '';
       let mediaUrl = '';
@@ -133,6 +136,7 @@ export const useCreatePostModal = (
     } catch (error) {
       console.log('error in creating post', error);
     }
+    setLoading(false);
   };
 
   return {
@@ -146,6 +150,7 @@ export const useCreatePostModal = (
       contentVal,
       openEmojiPicker,
       focusElements,
+      loading,
       errors,
     },
     operations: {

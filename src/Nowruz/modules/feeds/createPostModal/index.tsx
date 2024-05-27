@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import React from 'react';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
@@ -22,6 +23,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
       contentVal,
       openEmojiPicker,
       focusElements,
+      loading,
       errors,
     },
     operations: {
@@ -72,7 +74,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
           </span>
         )}
         <Button color="primary" type="submit">
-          Post
+          {loading ? <CircularProgress size="20px" sx={{ color: 'white' }} /> : 'Post'}
         </Button>
       </div>
     </div>
