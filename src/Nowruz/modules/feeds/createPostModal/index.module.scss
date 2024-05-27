@@ -1,0 +1,28 @@
+@import 'src/components/_primitives.scss';
+
+.textarea {
+    font-family: sans-serif, 'Apple Color Emoji';
+    border: 0;
+    word-break: break-all;
+    &::placeholder {
+        color: $color-grey-500;
+    }
+}
+
+.file {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+
+    input {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 24px;
+        height: 24px;
+        opacity: 0;
+        cursor: pointer;
+    }
+}

@@ -53,7 +53,7 @@ export const useApplicantAction = (
 
   const statusObj = {
     applicants: 'PENDING',
-    offered: 'OFFERED',
+    offered: 'OFFERED,APPROVED,HIRED,CLOSED',
     rejected: 'REJECTED',
   };
   const searchApplicants = async () => {
@@ -362,7 +362,7 @@ export const useApplicantAction = (
     page: pages.find(p => p.tab === currentTab)?.page || 1,
     handleChangePage,
     applicantsList,
-    total: totalCounts.find(item => item.tab === currentTab)?.count || 10,
+    total: totalCounts.find(item => item.tab === currentTab)?.count || 0,
     PER_PAGE,
     handleChangeSearchTerm,
   };
