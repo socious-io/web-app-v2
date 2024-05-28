@@ -2,7 +2,8 @@ import { CapacitorConfig } from '@capacitor/cli';
 import { Capacitor } from '@capacitor/core';
 
 function defineHostname() {
-  return Capacitor.getPlatform() === 'ios' ? 'socious.io' : 'capacitor.native';
+  const platform = Capacitor.getPlatform();
+  return platform === 'ios' || platform === 'android' ? 'socious.io' : 'capacitor.native';
 }
 
 const config: CapacitorConfig = {
