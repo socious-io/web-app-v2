@@ -26,7 +26,7 @@ const FeedsList: React.FC<FeedsListProps> = ({
           media={item.media ? item.media[0] : null}
           likesCount={item.likes}
           commentsCount={item.comments}
-          liked={item.liked}
+          liked={item.likes > 0}
           likedIdentities={item.liked_identities}
           sharedPost={
             item?.shared_post

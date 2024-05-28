@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
-import { CurrentIdentity, Post, posts, SocialCauses } from 'src/core/api';
+import { CurrentIdentity, Identity, Post, posts, SocialCauses } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { EditedData } from 'src/Nowruz/modules/feeds/createPostModal/index.types';
 import { RootState } from 'src/store';
@@ -58,6 +58,9 @@ export const UseFeeds = () => {
       if (item.id === id) {
         return {
           ...item,
+          liked_identities: (item.liked
+            ? item.liked_identities?.filter(identity => identity.id !== currentIdentity?.id)
+            : [currentIdentity, ...(item?.liked_identities || [])]) as Identity[],
           liked: !item.liked,
           likes: item.liked ? item.likes - 1 : item.likes + 1,
         };

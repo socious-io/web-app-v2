@@ -196,13 +196,15 @@ const FeedItem: React.FC<FeedItemProps> = ({
           <div className="px-6 flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-Gray-light-mode-600">
               {!!likedIdentities?.length && <AvatarGroup identities={likedIdentities} length={3} />}
-              {likesCount} likes
+              {likesCount} {likesCount <= 1 ? 'like' : 'likes'}
             </div>
-            <span className="text-sm text-Gray-light-mode-600">{commentsCount} comments</span>
+            <span className="text-sm text-Gray-light-mode-600">
+              {commentsCount} {commentsCount <= 1 ? 'comment' : 'comments'}
+            </span>
           </div>
           <div className="px-6 pt-4 flex flex-col border-0 border-t border-solid border-Gray-light-mode-200">
             <FeedActions
-              liked={liked}
+              liked={likedIdentities?.some(identity => identity.id === currentIdentity?.id)}
               onLikeClick={onLikeClick}
               onCommentClick={() => onCommentClick(commentsCount)}
               onRepostClick={() => setOpenRepostModal(true)}
