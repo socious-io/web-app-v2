@@ -2,6 +2,7 @@ import React from 'react';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 
 import { FeedsListProps } from './index.types';
+import { useFeedsContext } from '../contexts/feeds.context';
 import FeedItem from '../feedItem';
 
 const FeedsList: React.FC<FeedsListProps> = ({
@@ -13,6 +14,9 @@ const FeedsList: React.FC<FeedsListProps> = ({
   updateFeedsListEdit,
   updateFeedsListRemove,
 }) => {
+  const { state } = useFeedsContext();
+  const { comments } = state;
+
   return (
     <div className="flex flex-col gap-6">
       {list.map(item => (
@@ -25,7 +29,7 @@ const FeedsList: React.FC<FeedsListProps> = ({
           content={item.content}
           media={item.media ? item.media[0] : null}
           likesCount={item.likes}
-          commentsCount={item.comments}
+          commentsCount={comments[item.id]?.total_count || item.comments}
           liked={item.likes > 0}
           likedIdentities={item.liked_identities}
           sharedPost={
