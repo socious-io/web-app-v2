@@ -18,16 +18,23 @@ export const UseFeeds = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [currentPosts, setCurrentPosts] = useState(postsResponse.items || []);
   const [currentPage, setCurrentPage] = useState(page);
+  const [showSnackbar, setShowSnackbar] = useState(false);
   const showSeeMore = currentPosts.length < total_count;
 
-  const handleOpenCreateModal = () => setOpenCreateModal(true);
+  const handleOpenCreateModal = () => {
+    setShowSnackbar(false);
+    setOpenCreateModal(true);
+  };
 
   const handleCloseCreateModal = () => setOpenCreateModal(false);
 
   const onCreatePost = async () => {
     try {
       const { items } = (await posts({ page })) || [];
-      if (items.length) setCurrentPosts(items);
+      if (items.length) {
+        setCurrentPosts(items);
+        setShowSnackbar(true);
+      }
     } catch (error) {
       console.log('error in fetching posts', error);
     }
@@ -92,7 +99,7 @@ export const UseFeeds = () => {
   };
 
   return {
-    data: { profileImage, openCreateModal, posts: currentPosts, showSeeMore },
+    data: { profileImage, openCreateModal, posts: currentPosts, showSeeMore, showSnackbar },
     operations: {
       handleOpenCreateModal,
       handleCloseCreateModal,
@@ -102,6 +109,7 @@ export const UseFeeds = () => {
       updateFeedsListRepost,
       updateFeedsListEdit,
       updateFeedsListRemove,
+      setShowSnackbar,
     },
   };
 };
