@@ -14,6 +14,10 @@ const config: CapacitorConfig = {
     hostname: defineHostname(),
     androidScheme: 'https',
   },
+  ios: {
+    contentInset: 'always',
+  },
+
   plugins: {
     CapacitorCookies: {
       enabled: true,

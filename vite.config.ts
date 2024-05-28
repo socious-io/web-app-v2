@@ -8,4 +8,9 @@ export default defineConfig({
   optimizeDeps: {
     exclude: [`@ionic/pwa-elements/loader`],
   },
+  build: {
+    rollupOptions: {
+      external: ['@emoji-mart/react'],
+    },
+  },
 });

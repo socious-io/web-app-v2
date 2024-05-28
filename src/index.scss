@@ -60,6 +60,7 @@ body {
 .sidebar,
 #notification {
     padding-top: env(safe-area-inset-top) !important;
+
     .backdrop {
         background-color: rgba($color-grey-900, 0.5);
     }
