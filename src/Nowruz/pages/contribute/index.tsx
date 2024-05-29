@@ -1,18 +1,17 @@
 import { Divider } from '@mui/material';
 import { ReactNode } from 'react';
-import { useLoaderData } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
-import { UserProfile } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 
 import css from './contribute.module.scss';
+import { useContribute } from './useContribute';
 
 export const Contribute = () => {
-  const { user } = useLoaderData() as { user: UserProfile };
-  const eligible = user.impact_points >= 10000;
+  const { checkItems, steps, eligible } = useContribute();
+
   const renderCheckItems = (title: string, desc: string) => {
     return (
       <div className="flex gap-3 items-start">
@@ -108,18 +107,7 @@ export const Contribute = () => {
           </Button>
           <div className="text-xl font-semibold leading-[30px] text-Gray-light-mode-900">Why become a contributor?</div>
           <div className="flex flex-col gap-5 pl-4">
-            {renderCheckItems(
-              'Shape the platform:',
-              ' Your contributions directly influence the user experience and help maintain a trustworthy and engaging environment for all Socious members.',
-            )}
-            {renderCheckItems(
-              'Develop valuable skills:',
-              ' Participating as a contributor allows you to develop your problem-solving and decision-making abilities.',
-            )}
-            {renderCheckItems(
-              'Earn rewards:',
-              ' To recognize your time and effort, contributors are eligible for rewards such as impact points, exclusive access to features, or other incentives based on their level of involvement.',
-            )}
+            {checkItems.map(item => renderCheckItems(item.title, item.desc))}
           </div>
           {
             // TODO: onClick open join modal
@@ -130,44 +118,7 @@ export const Contribute = () => {
             )
           }
           <div className="text-xl font-semibold leading-[30px] text-Gray-light-mode-900">How to get started </div>
-          <div className="flex  flex-col">
-            {renderSteps(
-              0,
-              'Reach 10,000 Impact Points',
-              'To become a Socious Contributor, you must first earn 10,000 impact points through your active participation and valuable contributions to the platform. This milestone demonstrates your commitment to the Socious community and ensures that our contributor pool consists of dedicated and experienced members.',
-            )}
-            {renderSteps(
-              1,
-              'Opt-In to the Contributor Pool',
-              <div className={css.text}>
-                <p>
-                  Click the &quot;Join Now&quot; button to opt-in to the Socious Contributor Pool. By opting in, you
-                  agree to abide by the Contributor Guidelines and are ready to take on the responsibilities of a
-                  contributor. As a member of the contributor pool, you&apos;ll be eligible to be randomly selected for
-                  available tasks that match your skills and interests. Some of the exciting opportunities you may be
-                  invited to participate in include:
-                </p>
-                <ul className="list-disc mt-4 ml-8">
-                  <li>
-                    Reviewing dispute cases as a juror, ensuring fair and unbiased resolution for all parties involved.
-                  </li>
-                  <li>
-                    Moderating user-generated content to maintain a safe and respectful platform environment. (Coming
-                    Soon)
-                  </li>
-                  <li>
-                    Verifying user profiles to prevent fraud and maintain trust within the Socious community. (Coming
-                    Soon)
-                  </li>
-                </ul>
-              </div>,
-            )}
-            {renderSteps(
-              2,
-              'Start contributing',
-              `Once you've opted in, you will be granted access to the Contributor Dashboard. As new contributor roles become available, you'll have the opportunity to expand your involvement and make an even greater impact on the Socious platform.`,
-            )}
-          </div>
+          <div className="flex  flex-col">{steps.map((item, index) => renderSteps(index, item.title, item.desc))}</div>
           {
             // TODO: onClick open join modal
             eligible && (
