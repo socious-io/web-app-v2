@@ -1,6 +1,6 @@
 import { CurrentIdentity, Device, DeviceReq, SearchReq, Skill, SkillRes } from './site.types';
 import { post, get } from '../http';
-import { JobsRes } from '../jobs/jobs.types';
+import { ApplicantsRes, JobsRes } from '../jobs/jobs.types';
 import { OrganizationsRes } from '../organizations/organizations.types';
 import { PostsRes } from '../posts/posts.types';
 import { PaginateReq, PaginateRes, SuccessRes } from '../types';
@@ -17,6 +17,8 @@ export async function search(payload: SearchReq, params: PaginateReq) {
       return data as PostsRes;
     case 'users':
       return data as UsersRes;
+    case 'applicants':
+      return data as ApplicantsRes;
     default:
       return data;
   }

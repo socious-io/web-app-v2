@@ -322,7 +322,6 @@ export const blueprint: RouteObject[] = [
                 loader: async () => {
                   const requests = [
                     payments({ page: 1, limit: 10 }),
-                    // userPaidMissions({ page: 1, 'filter.p.payment_type': 'PAID', 'filter.status': 'CONFIRMED' }),
                     stripeProfile({}),
                     stripeProfile({ is_jp: true }),
                   ];

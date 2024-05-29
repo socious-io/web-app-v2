@@ -20,29 +20,31 @@ import {
   stripeProfile,
 } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
+import { getIdentityMeta } from 'src/core/utils';
+import dapp from 'src/dapp';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
 import { ContractDetailTab } from '../contractDetailTab';
-import dapp from 'src/dapp';
 
 export const useContractDetailsSlider = (web3?: any) => {
-  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const identity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
+  const identityType = identity?.type;
 
   const navigate = useNavigate();
-  const selectedOfferId = useSelector<RootState, string | undefined>((state) => {
+  const selectedOfferId = useSelector<RootState, string | undefined>(state => {
     return state.contracts.selectedOfferId;
   });
-  const contract = useSelector<RootState, Contract>((state) => {
-    return state.contracts.offers.find((item) => item.id === selectedOfferId);
+  const contract = useSelector<RootState, Contract>(state => {
+    return state.contracts.offers.find(item => item.id === selectedOfferId);
   });
 
   const checkMessageButtonStatus = async () => {
-    if (type === 'organizations') {
+    if (identityType === 'organizations') {
       setDisableMessageButton(false);
       return;
     }
@@ -51,9 +53,9 @@ export const useContractDetailsSlider = (web3?: any) => {
     setDisableMessageButton(!res);
   };
 
-  const type = identity?.type;
-  const name = type === 'users' ? contract.offerer.meta.name : contract.recipient.meta.name;
-  const profileImage = type === 'users' ? contract.offerer.meta.image : contract.recipient.meta.avatar;
+  const { name, profileImage, type } = getIdentityMeta(
+    identityType === 'users' ? contract.offerer : contract.recipient,
+  );
 
   const tabs = [
     { label: 'Details', content: <ContractDetailTab contract={contract} /> },
@@ -110,7 +112,7 @@ export const useContractDetailsSlider = (web3?: any) => {
   }, [contract]);
 
   const initializeAcceptOfferFiat = async () => {
-    await stripeProfile({ is_jp: contract.currency === 'JPY' }).then((r) => {
+    await stripeProfile({ is_jp: contract.currency === 'JPY' }).then(r => {
       const { data } = r?.external_accounts || {};
 
       if (data?.length > 0) {
@@ -154,7 +156,7 @@ export const useContractDetailsSlider = (web3?: any) => {
     else if (contract.payment_mode === 'CRYPTO') initializeAcceptOfferCrypto();
   };
   const inititalize = async () => {
-    let alertMsg = null;
+    let alertMsg: ReactNode | null = null;
     switch (contract.contractStatus) {
       case 'Offer sent':
         alertMsg = (
@@ -180,19 +182,19 @@ export const useContractDetailsSlider = (web3?: any) => {
             <AlertMessage
               theme="primary"
               iconName="check-circle"
-              title={type === 'users' ? 'You have accepted this offer' : `${name} has accepted this offer`}
+              title={identityType === 'users' ? 'You have accepted this offer' : `${name} has accepted this offer`}
               subtitle={
-                type === 'users'
+                identityType === 'users'
                   ? `We are just waiting for the final confirmation from ${name} to start the job.`
                   : ' We are just waiting for the final confirmation from you to start the job. '
               }
             />
           );
-          if (type === 'users') setAllStates(true, alertMsg, false, '', false, '');
+          if (identityType === 'users') setAllStates(true, alertMsg, false, '', false, '');
           else setAllStates(true, alertMsg, true, 'Confirm', true, 'Cancel', hadleHireVolunteer, withdrawOfferByOP);
         } else if (contract.mission?.status === 'COMPLETE') {
           //completed by Umaya, waiting fot OP confirmation
-          if (type === 'users') {
+          if (identityType === 'users') {
             alertMsg = (
               <AlertMessage
                 theme="warning"
@@ -220,7 +222,7 @@ export const useContractDetailsSlider = (web3?: any) => {
           <AlertMessage
             theme="gray"
             iconName="alert-circle"
-            title={type === 'users' ? 'you have declined this offer' : `${name} has declined this offer`}
+            title={identityType === 'users' ? 'you have declined this offer' : `${name} has declined this offer`}
             subtitle=""
           />
         );
@@ -247,7 +249,7 @@ export const useContractDetailsSlider = (web3?: any) => {
         );
         break;
       case 'Ongoing':
-        if (type === 'users') {
+        if (identityType === 'users') {
           alertMsg = (
             <AlertMessage
               theme="primary"
@@ -274,7 +276,7 @@ export const useContractDetailsSlider = (web3?: any) => {
         }
         break;
       case 'Kicked out':
-        if (type === 'users') {
+        if (identityType === 'users') {
           alertMsg = (
             <AlertMessage
               theme="gray"
@@ -298,7 +300,7 @@ export const useContractDetailsSlider = (web3?: any) => {
             <AlertMessage
               theme="gray"
               iconName="alert-circle"
-              title={type === 'users' ? `${name} has canceled this offer` : 'You have canceled this offer'}
+              title={identityType === 'users' ? `${name} has canceled this offer` : 'You have canceled this offer'}
               subtitle=""
             />
           );
@@ -309,7 +311,9 @@ export const useContractDetailsSlider = (web3?: any) => {
             <AlertMessage
               theme="gray"
               iconName="alert-circle"
-              title={type === 'users' ? 'You have canceled this contract' : `${name} has canceled this contract`}
+              title={
+                identityType === 'users' ? 'You have canceled this contract' : `${name} has canceled this contract`
+              }
               subtitle=""
             />
           );
@@ -325,10 +329,9 @@ export const useContractDetailsSlider = (web3?: any) => {
               theme="primary"
               iconName="info-circle"
               title="Job completed"
-              subtitle={`Completed on ${isoToStandard(contract.mission.updated_at.toString())}`}
+              subtitle={`Completed on ${isoToStandard(contract.mission!.updated_at.toString())}`}
             />
           );
-
           if (!contract.org_feedback) {
             setAllStates(true, alertMsg, false, '', true, 'Review', undefined, handleReview);
           } else setAllStates(true, alertMsg, false, '', false, '');
@@ -343,47 +346,70 @@ export const useContractDetailsSlider = (web3?: any) => {
     setOpenSelectCardModal(true);
   };
 
-  const handleAcceptOffer = async () => {
+  const handleAcceptOffer = () => {
     try {
       dispatch(
-        updateStatus({ type, paymentType: contract.project.payment_type, id: contract.id, offerStatus: 'APPROVED' }),
+        updateStatus({
+          identityType,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'APPROVED',
+        }),
       );
       acceptOffer(contract.id);
-      setOpenSelectCardModal(false);
-      setOpenWalletModal(false);
-    } catch (error) {}
+    } catch (error) {
+      console.log('error in accepting offer', error);
+    }
+    setOpenSelectCardModal(false);
+    setOpenWalletModal(false);
   };
-  const handleDecline = async () => {
-    dispatch(
-      updateStatus({ type, paymentType: contract.project.payment_type, id: contract.id, offerStatus: 'WITHDRAWN' }),
-    );
-    rejectOffer(contract.id);
+  const handleDecline = () => {
+    try {
+      dispatch(
+        updateStatus({
+          identityType,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'WITHDRAWN',
+        }),
+      );
+      rejectOffer(contract.id);
+    } catch (e) {
+      console.log('error in declining offer', e);
+    }
   };
-
   const hadleHireVolunteer = async () => {
-    await hireOffer(contract.id);
-    dispatch(
-      updateStatus({
-        type,
-        paymentType: contract.project.payment_type,
-        id: contract.id,
-        offerStatus: 'HIRED',
-        missionStatus: 'ACTIVE',
-      }),
-    );
-    return;
+    try {
+      await hireOffer(contract.id);
+      dispatch(
+        updateStatus({
+          identityType,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'HIRED',
+          missionStatus: 'ACTIVE',
+        }),
+      );
+      return;
+    } catch (e) {
+      console.log('error in hiring', e);
+    }
   };
   const handleStop = async () => {
-    dispatch(
-      updateStatus({
-        type,
-        paymentType: contract.project.payment_type,
-        id: contract.id,
-        offerStatus: 'CLOSED',
-        missionStatus: 'CANCELED',
-      }),
-    );
-    if (contract.mission) cancelMission(contract.mission.id);
+    try {
+      dispatch(
+        updateStatus({
+          identityType,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'CLOSED',
+          missionStatus: 'CANCELED',
+        }),
+      );
+      if (contract.mission) cancelMission(contract.mission.id);
+    } catch (e) {
+      console.log('error in stopping contract', e);
+    }
   };
   const handleOpenCompleteConfirm = () => {
     setAlertTitle('Submit job completion?');
@@ -394,87 +420,119 @@ export const useContractDetailsSlider = (web3?: any) => {
   };
   const handleComplete = async () => {
     setOpenAlert(false);
-    dispatch(
-      updateStatus({
-        type,
-        paymentType: contract.project.payment_type,
-        id: contract.id,
-        offerStatus: 'CLOSED',
-        missionStatus: 'COMPLETE',
-      }),
-    );
-    if (contract.mission) completeMission(contract.mission.id);
+    try {
+      dispatch(
+        updateStatus({
+          identityType,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'CLOSED',
+          missionStatus: 'COMPLETE',
+        }),
+      );
+      if (contract.mission) completeMission(contract.mission.id);
+    } catch (e) {
+      console.log('error in completing contract', e);
+    }
     setOpenAlert(false);
   };
 
   const handleOpenPaymentModal = async () => {
-    const res = await getOffer(contract.id);
-    setPaymentOffer(res);
+    try {
+      const res = await getOffer(contract.id);
+      setPaymentOffer(res);
+    } catch (e) {
+      console.log('error in openning payment modal', e);
+    }
     setOpenPaymentModal(true);
   };
 
   const handleClosePaymentModal = (paymentSuccess: boolean) => {
-    if (paymentSuccess) {
-      dispatch(
-        updateStatus({
-          type,
-          paymentType: contract.project.payment_type,
-          id: contract.id,
-          offerStatus: 'HIRED',
-          missionStatus: 'ACTIVE',
-        }),
-      );
+    try {
+      if (paymentSuccess) {
+        dispatch(
+          updateStatus({
+            identityType,
+            paymentType: contract.project.payment_type,
+            id: contract.id,
+            offerStatus: 'HIRED',
+            missionStatus: 'ACTIVE',
+          }),
+        );
+      }
+    } catch (e) {
+      console.log('error in closing payment modal', e);
     }
+
     setOpenPaymentModal(false);
   };
   const handleStopByOP = async () => {
-    dispatch(
-      updateStatus({
-        type,
-        paymentType: contract.project.payment_type,
-        id: contract.id,
-        offerStatus: 'CLOSED',
-        missionStatus: 'KICKED_OUT',
-      }),
-    );
-    if (contract.mission) dropMission(contract.mission.id);
-  };
-
-  const withdrawOfferByOP = async () => {
-    dispatch(
-      updateStatus({ type, paymentType: contract.project.payment_type, id: contract.id, offerStatus: 'CANCELED' }),
-    );
-    cancelOffer(contract.id);
-  };
-
-  const onConfirm = async () => {
-    if (!contract.mission) return;
-    setOpenAlert(false);
-    setPrimaryButtonDisabled(true);
-    let allowConfirm = true;
-    if (contract.payment_mode === 'CRYPTO') {
-      if (web3.signer && web3.chainId) {
-        await dapp.withdrawnEscrow({
-          signer: web3.signer,
-          chainId: web3.chainId,
-          escrowId: contract?.payment?.meta.id as string,
-        });
-      } else {
-        allowConfirm = false;
-        await web3.open();
-      }
-    }
-    if (allowConfirm) {
-      await confirmMission(contract.mission.id);
+    try {
       dispatch(
         updateStatus({
-          type,
+          identityType,
           paymentType: contract.project.payment_type,
           id: contract.id,
           offerStatus: 'CLOSED',
-          missionStatus: 'CONFIRMED',
+          missionStatus: 'KICKED_OUT',
         }),
       );
+      if (contract.mission) dropMission(contract.mission.id);
+    } catch (e) {
+      console.log('error in stopping contract by organization', e);
+    }
+  };
+
+  const withdrawOfferByOP = async () => {
+    try {
+      dispatch(
+        updateStatus({
+          identityType,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'CANCELED',
+        }),
+      );
+      cancelOffer(contract.id);
+    } catch (e) {
+      console.log('error in withdrawing offer by organization', e);
+    }
+  };
+
+  const onConfirm = async () => {
+    try {
+      if (!contract.mission) return;
+      setOpenAlert(false);
+      setPrimaryButtonDisabled(true);
+
+      let allowConfirm = true;
+
+      if (contract.payment_mode === 'CRYPTO') {
+        if (web3.signer && web3.chainId) {
+          await dapp.withdrawnEscrow({
+            signer: web3.signer,
+            chainId: web3.chainId,
+            escrowId: contract?.payment?.meta.id as string,
+          });
+        } else {
+          allowConfirm = false;
+          await web3.open();
+        }
+      }
+      if (allowConfirm) {
+        await confirmMission(contract.mission.id);
+        dispatch(
+          updateStatus({
+            identityType,
+            paymentType: contract.project.payment_type,
+            id: contract.id,
+            offerStatus: 'CLOSED',
+            missionStatus: 'CONFIRMED',
+          }),
+        );
+      }
+    } catch (e) {
+      console.log('error in confirming mission', e);
     }
     setPrimaryButtonDisabled(false);
   };
@@ -497,13 +555,14 @@ export const useContractDetailsSlider = (web3?: any) => {
   };
 
   const redirectToChat = () => {
-    const participantId = type === 'users' ? contract.offerer.meta.id : contract.recipient.meta.id;
+    const participantId = identityType === 'users' ? contract.offerer.meta.id : contract.recipient.meta.id;
     navigate(`../chats?participantId=${participantId}`);
   };
   return {
     name,
     profileImage,
     type,
+    identityType,
     tabs,
     displayMessage,
     message,
