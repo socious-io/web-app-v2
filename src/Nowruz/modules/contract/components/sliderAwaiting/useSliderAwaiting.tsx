@@ -45,7 +45,9 @@ export const useSliderAwaiting = (contract: Contract) => {
           theme="primary"
           iconName="check-circle"
           title={identityType === 'users' ? 'You have accepted this offer' : `${name} has accepted this offer`}
-          subtitle={`We are just waiting for the final confirmation from ${name} to start the job.`}
+          subtitle={`We are just waiting for the final confirmation from ${
+            identityType === 'users' ? name : 'you'
+          } to start the job.`}
         />,
       );
       if (identityType === 'organizations') {
