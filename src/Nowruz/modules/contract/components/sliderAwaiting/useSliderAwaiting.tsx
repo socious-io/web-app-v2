@@ -65,7 +65,9 @@ export const useSliderAwaiting = (contract: Contract) => {
           subtitle={
             identityType === 'users'
               ? `Awaiting confirmation from <b>${name}</b>`
-              : `<b>${name}</b> has marked this job completed. Confirm so they can receive payment.`
+              : `<b>${name}</b> has marked this job completed.${
+                  contract.project.payment_type === 'VOLUNTEER' ? '' : ' Confirm so they can receive payment.'
+                }`
           }
         />,
       );

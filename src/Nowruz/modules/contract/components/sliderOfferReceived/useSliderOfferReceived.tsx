@@ -72,7 +72,9 @@ export const useSliderOfferReceived = (contract: Contract) => {
   };
 
   const handleAcceptClick = () => {
-    if (contract.payment_mode === 'FIAT') setOpenModal({ name: 'selectCard', open: true });
+    if (contract.project.payment_type === 'VOLUNTEER') {
+      handleAcceptOffer();
+    } else if (contract.payment_mode === 'FIAT') setOpenModal({ name: 'selectCard', open: true });
     else setOpenModal({ name: 'wallet', open: true });
   };
 
