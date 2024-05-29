@@ -33,6 +33,7 @@ export const useExperience = () => {
   const [disabledClaims, setDisabledClaims] = useState<{ [key: string]: boolean }>({});
   const [reqModelShow, setReqModelShow] = useState(false);
   const [credentialId, setCredentialId] = useState('');
+  const [claimUrl, setClaimUrl] = useState('');
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -81,19 +82,24 @@ export const useExperience = () => {
     }
   };
 
-  const handleOpenClaimModal = (id?: string) => {
+  const handleOpenClaimModal = async (id?: string) => {
     if (!id) return;
     setCredentialId(id);
     setDisabledClaims(prevState => ({
       ...prevState,
       [id]: true,
     }));
+    try {
+      const { url } = await claimExperienceVC(id);
+      setClaimUrl(url);
+    } catch (error) {
+      console.log('error in claiming experience VC', error);
+    }
     setOpenModal({ name: 'claim', open: true });
   };
 
-  const handleClaimVC = async () => {
-    const { url } = await claimExperienceVC(credentialId);
-    window.open(url, '_blank');
+  const handleClaimVC = () => {
+    window.open(claimUrl, '_blank');
   };
 
   return {
@@ -113,5 +119,6 @@ export const useExperience = () => {
     userVerified,
     handleOpenClaimModal,
     handleClaimVC,
+    claimUrl,
   };
 };
