@@ -44,3 +44,4 @@ android/*
 .bundle
 vendor
 Gemfile.lock
+GoogleService-Info.plist
