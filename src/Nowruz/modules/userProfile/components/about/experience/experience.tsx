@@ -35,6 +35,7 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
     userVerified,
     handleOpenClaimModal,
     handleClaimVC,
+    claimUrl,
   } = useExperience();
 
   return (
@@ -105,11 +106,14 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
         closeButtonLabel="Close"
         submitButton={false}
       />
-      <ClaimCertificateModal
-        open={openModal.name === 'claim' && openModal.open}
-        handleClose={handleClose}
-        handleClaimVC={handleClaimVC}
-      />
+      {claimUrl && (
+        <ClaimCertificateModal
+          open={openModal.name === 'claim' && openModal.open}
+          link={claimUrl}
+          handleClose={handleClose}
+          handleClaimVC={handleClaimVC}
+        />
+      )}
       <CreateUpdateExperience
         open={(openModal.name === 'add' || openModal.name === 'edit') && openModal.open}
         handleClose={handleClose}

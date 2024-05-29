@@ -28,6 +28,7 @@ export const useEducation = () => {
   const [openCertificate, setOpenCertificate] = useState(false);
   const [disabledClaims, setDisabledClaims] = useState<{ [key: string]: boolean }>({});
   const [credentialId, setCredentialId] = useState('');
+  const [claimUrl, setClaimUrl] = useState('');
   const isVerified = (user as User).identity_verified;
   const myProfile = currentIdentity?.id === user?.id;
   const dispatch = useDispatch();
@@ -77,19 +78,24 @@ export const useEducation = () => {
     }
   };
 
-  const onOpenClaimModal = (id?: string) => {
+  const onOpenClaimModal = async (id?: string) => {
     if (!id) return;
     setCredentialId(id);
     setDisabledClaims(prevState => ({
       ...prevState,
       [id]: true,
     }));
+    try {
+      const { url } = await claimEducationVC(id);
+      setClaimUrl(url);
+    } catch (error) {
+      console.log('error in claiming education VC', error);
+    }
     setOpenModal({ name: 'claim', open: true });
   };
 
-  const handleClaimVC = async () => {
-    const { url } = await claimEducationVC(credentialId);
-    window.open(url, '_blank');
+  const handleClaimVC = () => {
+    window.open(claimUrl, '_blank');
   };
 
   return {
@@ -112,5 +118,6 @@ export const useEducation = () => {
     credentialId,
     disabledClaims,
     handleClaimVC,
+    claimUrl,
   };
 };
