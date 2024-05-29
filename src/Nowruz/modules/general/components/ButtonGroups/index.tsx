@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import css from './buttonGroups.module.scss';
 import { ButtonGroupsProps } from './buttonGroups.types';
 
-export const ButtonGroups: React.FC<ButtonGroupsProps> = (props) => {
-  const { buttons } = props;
-  const [active, setActive] = useState(0);
+export const ButtonGroups: React.FC<ButtonGroupsProps> = props => {
+  const { buttons, activeIndex } = props;
+  const [active, setActive] = useState(activeIndex || 0);
 
   const handleClick = async (index: number) => {
     await buttons[index].handleClick();

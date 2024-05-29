@@ -11,7 +11,8 @@ import css from './contracts.module.scss';
 import { useContracts } from './useContracts';
 
 export const Contracts = () => {
-  const { filterButtons, pageCount, contractList, page, openSlider, updatePageNumber, closeSlider } = useContracts();
+  const { filterButtons, pageCount, contractList, page, openSlider, updatePageNumber, closeSlider, activeFilter } =
+    useContracts();
   return (
     <>
       <div className={css.container}>
@@ -23,7 +24,7 @@ export const Contracts = () => {
           <div className={css.right}></div>
         </div>
 
-        <ButtonGroups buttons={filterButtons} />
+        <ButtonGroups buttons={filterButtons} activeIndex={activeFilter} />
         <div className="flex flex-col gap-6 md:gap-5 w-full max-w-[640px] mt-8">
           {contractList?.map((item: Contract) => <ContractCard key={item.id} contract={item} />)}
         </div>
