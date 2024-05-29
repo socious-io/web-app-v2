@@ -60,11 +60,8 @@ export const contractsSlice = createSlice({
     updatePage: (state, action) => {
       state.page = action.payload;
     },
-    handleOpenSlider: state => {
-      state.openSlider = true;
-    },
-    handleCloseSlider: state => {
-      state.openSlider = false;
+    handleDisplaySlider: (state, action) => {
+      state.openSlider = action.payload;
     },
   },
   extraReducers: builder => {
@@ -104,12 +101,5 @@ export const contractsSlice = createSlice({
   },
 });
 
-export const {
-  setSelected,
-  updateStatus,
-  updateFeedback,
-  updateFilter,
-  updatePage,
-  handleOpenSlider,
-  handleCloseSlider,
-} = contractsSlice.actions;
+export const { setSelected, updateStatus, updateFeedback, updateFilter, updatePage, handleDisplaySlider } =
+  contractsSlice.actions;

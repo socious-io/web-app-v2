@@ -6,7 +6,7 @@ import { getIdentityMeta, navigateToProfile } from 'src/core/utils';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { MenuItem } from 'src/Nowruz/modules/general/components/threeDotButton/threeDotButton.types';
 import store, { RootState } from 'src/store';
-import { handleCloseSlider, updateStatus } from 'src/store/reducers/contracts.reducer';
+import { handleDisplaySlider, updateStatus } from 'src/store/reducers/contracts.reducer';
 import { getContractsByFilter } from 'src/store/thunks/contracts.thunk';
 
 export const useSliderOngoing = (contract: Contract) => {
@@ -40,24 +40,27 @@ export const useSliderOngoing = (contract: Contract) => {
   const [openAlert, setOpenAlert] = useState(false);
   const dispatch = useDispatch();
 
+  const updateState = async (missionStatus: 'COMPLETE' | 'CANCELED' | 'KICKED_OUT') => {
+    if (filter === 'ongoing') {
+      dispatch(handleDisplaySlider(false));
+      await store.dispatch(getContractsByFilter({ filter, page, limit: 5, identityType: identityType as UserType }));
+    } else {
+      dispatch(
+        updateStatus({
+          type: identityType,
+          paymentType: contract.project.payment_type,
+          id: contract.id,
+          offerStatus: 'CLOSED',
+          missionStatus: missionStatus,
+        }),
+      );
+    }
+  };
   const handleComplete = async () => {
     setOpenAlert(false);
     try {
       if (contract.mission) completeMission(contract.mission.id);
-      if (filter === 'ongoing') {
-        dispatch(handleCloseSlider());
-        await store.dispatch(getContractsByFilter({ filter, page, limit: 5, identityType: identityType as UserType }));
-      } else {
-        dispatch(
-          updateStatus({
-            type: identityType,
-            paymentType: contract.project.payment_type,
-            id: contract.id,
-            offerStatus: 'CLOSED',
-            missionStatus: 'COMPLETE',
-          }),
-        );
-      }
+      await updateState('COMPLETE');
     } catch (e) {
       console.log('error in completing contract', e);
     }
@@ -66,20 +69,7 @@ export const useSliderOngoing = (contract: Contract) => {
   const handleStop = async () => {
     try {
       if (contract.mission) cancelMission(contract.mission.id);
-      if (filter === 'ongoing') {
-        dispatch(handleCloseSlider());
-        await store.dispatch(getContractsByFilter({ filter, page, limit: 5, identityType: identityType as UserType }));
-      } else {
-        dispatch(
-          updateStatus({
-            type: identityType,
-            paymentType: contract.project.payment_type,
-            id: contract.id,
-            offerStatus: 'CLOSED',
-            missionStatus: 'CANCELED',
-          }),
-        );
-      }
+      await updateState('CANCELED');
     } catch (e) {
       console.log('error in stopping contract', e);
     }
@@ -88,20 +78,7 @@ export const useSliderOngoing = (contract: Contract) => {
   const handleStopByOP = async () => {
     try {
       if (contract.mission) await dropMission(contract.mission.id);
-      if (filter === 'ongoing') {
-        dispatch(handleCloseSlider());
-        await store.dispatch(getContractsByFilter({ filter, page, limit: 5, identityType: identityType as UserType }));
-      } else {
-        dispatch(
-          updateStatus({
-            type: identityType,
-            paymentType: contract.project.payment_type,
-            id: contract.id,
-            offerStatus: 'CLOSED',
-            missionStatus: 'KICKED_OUT',
-          }),
-        );
-      }
+      await updateState('KICKED_OUT');
     } catch (e) {
       console.log('error in stopping contract by organization', e);
     }

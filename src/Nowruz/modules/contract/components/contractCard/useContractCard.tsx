@@ -6,7 +6,7 @@ import dapp from 'src/dapp';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
-import { handleOpenSlider, setSelected } from 'src/store/reducers/contracts.reducer';
+import { handleDisplaySlider, setSelected } from 'src/store/reducers/contracts.reducer';
 
 export const useContractCard = (contract: Contract) => {
   const [contractVal, setContractVal] = useState(contract);
@@ -119,7 +119,7 @@ export const useContractCard = (contract: Contract) => {
 
   const handleOpenOverlayModal = async () => {
     dispatch(setSelected(contract.id));
-    dispatch(handleOpenSlider());
+    dispatch(handleDisplaySlider(true));
   };
 
   const badge = BadgeData();
