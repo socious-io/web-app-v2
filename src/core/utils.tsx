@@ -1,4 +1,5 @@
 import { Credential, Identity, OrgMeta, Organization, User, UserMeta } from './api';
+import { UserType } from './types';
 
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
   if (value) {
@@ -117,4 +118,12 @@ export const verificationStatus: Record<Credential['status'], 'verified' | 'unve
   CLAIMED: 'verified',
   PENDING: 'pending',
   REJECTED: 'unverified',
+};
+
+export const navigateToProfile = (username: string, type: UserType) => {
+  const usernameVal = username.replaceAll('@', '');
+  if (username) {
+    if (type === 'users') window.location.href = `/profile/users/${usernameVal}/view`;
+    else window.location.href = `/profile/organizations/${usernameVal}/view`;
+  }
 };

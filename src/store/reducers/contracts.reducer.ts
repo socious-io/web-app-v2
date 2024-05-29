@@ -34,6 +34,7 @@ export const contractsSlice = createSlice({
         item.id === action.payload.id
           ? {
               ...item,
+              status: action.payload.offerStatus,
               contractStatus: getContractStatus(
                 action.payload.type,
                 action.payload.paymentType,

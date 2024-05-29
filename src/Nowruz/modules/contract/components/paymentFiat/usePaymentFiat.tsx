@@ -21,7 +21,7 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
   }, []);
 
   useEffect(() => {
-    const options = cardList.map((i) => {
+    const options = cardList.map(i => {
       const iconPath = `/icons/nowruz/pay-icons/${i.meta.brand.toLowerCase().replaceAll(' ', '')}.svg`;
       return {
         value: i.id,
@@ -40,6 +40,7 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
   const proceedFiatPayment = async () => {
     if (!offerId) return;
     setPaymentDisabled(true);
+
     try {
       await payByOffer(offerId, {
         service: 'STRIPE',
