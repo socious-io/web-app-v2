@@ -88,7 +88,7 @@ export const IssuedList = () => {
               {verified &&
                 (userProfile ? (
                   <div className={css.col}>
-                    {item.status === 'APPROVED' && (
+                    {['APPROVED', 'SENT'].includes(item.status) && (
                       <Button
                         color="primary"
                         variant="text"
