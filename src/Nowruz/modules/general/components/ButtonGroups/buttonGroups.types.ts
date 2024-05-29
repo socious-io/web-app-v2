@@ -5,4 +5,5 @@ export type ButtonGroupItem = {
 
 export interface ButtonGroupsProps {
   buttons: ButtonGroupItem[];
+  activeIndex?: number;
 }

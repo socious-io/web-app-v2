@@ -8,9 +8,9 @@ import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
 
-export const ContractCard: React.FC<ContractCardProps> = ({ contract, setOpenOverlay }) => {
+export const ContractCard: React.FC<ContractCardProps> = ({ contract }) => {
   const { type, badge, name, profileImageUrl, currencyIconName, formatCurrency, contractVal, handleOpenOverlayModal } =
-    useContractCard(contract, setOpenOverlay);
+    useContractCard(contract);
   return (
     <>
       <div

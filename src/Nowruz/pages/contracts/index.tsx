@@ -11,7 +11,7 @@ import css from './contracts.module.scss';
 import { useContracts } from './useContracts';
 
 export const Contracts = () => {
-  const { filterButtons, pageCount, setPage, contractList, page, openOverlayModal, setOpenOverlayModal } =
+  const { filterButtons, pageCount, contractList, page, openSlider, updatePageNumber, closeSlider, activeFilter } =
     useContracts();
   return (
     <>
@@ -24,21 +24,19 @@ export const Contracts = () => {
           <div className={css.right}></div>
         </div>
 
-        <ButtonGroups buttons={filterButtons} />
+        <ButtonGroups buttons={filterButtons} activeIndex={activeFilter} />
         <div className="flex flex-col gap-6 md:gap-5 w-full max-w-[640px] mt-8">
-          {contractList?.map((item: Contract) => (
-            <ContractCard key={item.id} contract={item} setOpenOverlay={setOpenOverlayModal} />
-          ))}
+          {contractList?.map((item: Contract) => <ContractCard key={item.id} contract={item} />)}
         </div>
         <div className="mt-11 hidden md:block">
-          <Pagination count={pageCount} page={page} onChange={(e, p) => setPage(p)} />
+          <Pagination count={pageCount} page={page} onChange={(e, p) => updatePageNumber(p)} />
         </div>
         <div className="mt-11 block md:hidden">
-          <PaginationMobile page={page} count={pageCount} handleChange={setPage} />
+          <PaginationMobile page={page} count={pageCount} handleChange={updatePageNumber} />
         </div>
       </div>
-      {openOverlayModal && (
-        <Overlay open={openOverlayModal} onClose={() => setOpenOverlayModal(false)}>
+      {openSlider && (
+        <Overlay open={openSlider} onClose={closeSlider}>
           <ContractDetailsSlider />
         </Overlay>
       )}
