@@ -6,12 +6,12 @@ import dapp from 'src/dapp';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 import { RootState } from 'src/store';
-import { setSelected } from 'src/store/reducers/contracts.reducer';
+import { handleOpenSlider, setSelected } from 'src/store/reducers/contracts.reducer';
 
-export const useContractCard = (contract: Contract, setOpenOverlay: (val: boolean) => void) => {
+export const useContractCard = (contract: Contract) => {
   const [contractVal, setContractVal] = useState(contract);
-  const identity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const identity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   const type = identity?.type;
@@ -25,8 +25,8 @@ export const useContractCard = (contract: Contract, setOpenOverlay: (val: boolea
     let unit = contract.currency;
 
     if (!unit && contract.crypto_currency_address) {
-      dapp.NETWORKS.map((n) => {
-        const token = n.tokens.filter((t) => contract.crypto_currency_address === t.address)[0];
+      dapp.NETWORKS.map(n => {
+        const token = n.tokens.filter(t => contract.crypto_currency_address === t.address)[0];
         if (token) unit = token.symbol;
       });
     }
@@ -119,7 +119,7 @@ export const useContractCard = (contract: Contract, setOpenOverlay: (val: boolea
 
   const handleOpenOverlayModal = async () => {
     dispatch(setSelected(contract.id));
-    setOpenOverlay(true);
+    dispatch(handleOpenSlider());
   };
 
   const badge = BadgeData();

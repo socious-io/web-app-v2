@@ -5,14 +5,17 @@ import { UserType } from 'src/core/types';
 import { getIdentityMeta, navigateToProfile } from 'src/core/utils';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { MenuItem } from 'src/Nowruz/modules/general/components/threeDotButton/threeDotButton.types';
-import { RootState } from 'src/store';
-import { updateStatus } from 'src/store/reducers/contracts.reducer';
+import store, { RootState } from 'src/store';
+import { handleCloseSlider, updateStatus } from 'src/store/reducers/contracts.reducer';
+import { getContractsByFilter } from 'src/store/thunks/contracts.thunk';
 
 export const useSliderOngoing = (contract: Contract) => {
   const identity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   );
+  const page = useSelector<RootState, number>(state => state.contracts.page);
   const identityType = identity?.type;
+  const filter = useSelector<RootState, 'all' | 'ongoing' | 'archived'>(state => state.contracts.filter);
   const { name, username, type } = getIdentityMeta(identityType === 'users' ? contract.offerer : contract.recipient);
 
   const displayAlert = contract.project.payment_type !== 'VOLUNTEER';
@@ -40,16 +43,21 @@ export const useSliderOngoing = (contract: Contract) => {
   const handleComplete = async () => {
     setOpenAlert(false);
     try {
-      dispatch(
-        updateStatus({
-          type: identityType,
-          paymentType: contract.project.payment_type,
-          id: contract.id,
-          offerStatus: 'CLOSED',
-          missionStatus: 'COMPLETE',
-        }),
-      );
       if (contract.mission) completeMission(contract.mission.id);
+      if (filter === 'ongoing') {
+        dispatch(handleCloseSlider());
+        await store.dispatch(getContractsByFilter({ filter, page, limit: 5, identityType: identityType as UserType }));
+      } else {
+        dispatch(
+          updateStatus({
+            type: identityType,
+            paymentType: contract.project.payment_type,
+            id: contract.id,
+            offerStatus: 'CLOSED',
+            missionStatus: 'COMPLETE',
+          }),
+        );
+      }
     } catch (e) {
       console.log('error in completing contract', e);
     }
@@ -57,16 +65,21 @@ export const useSliderOngoing = (contract: Contract) => {
   };
   const handleStop = async () => {
     try {
-      dispatch(
-        updateStatus({
-          type: identityType,
-          paymentType: contract.project.payment_type,
-          id: contract.id,
-          offerStatus: 'CLOSED',
-          missionStatus: 'CANCELED',
-        }),
-      );
       if (contract.mission) cancelMission(contract.mission.id);
+      if (filter === 'ongoing') {
+        dispatch(handleCloseSlider());
+        await store.dispatch(getContractsByFilter({ filter, page, limit: 5, identityType: identityType as UserType }));
+      } else {
+        dispatch(
+          updateStatus({
+            type: identityType,
+            paymentType: contract.project.payment_type,
+            id: contract.id,
+            offerStatus: 'CLOSED',
+            missionStatus: 'CANCELED',
+          }),
+        );
+      }
     } catch (e) {
       console.log('error in stopping contract', e);
     }
@@ -74,16 +87,21 @@ export const useSliderOngoing = (contract: Contract) => {
 
   const handleStopByOP = async () => {
     try {
-      dispatch(
-        updateStatus({
-          type: identityType,
-          paymentType: contract.project.payment_type,
-          id: contract.id,
-          offerStatus: 'CLOSED',
-          missionStatus: 'KICKED_OUT',
-        }),
-      );
-      if (contract.mission) dropMission(contract.mission.id);
+      if (contract.mission) await dropMission(contract.mission.id);
+      if (filter === 'ongoing') {
+        dispatch(handleCloseSlider());
+        await store.dispatch(getContractsByFilter({ filter, page, limit: 5, identityType: identityType as UserType }));
+      } else {
+        dispatch(
+          updateStatus({
+            type: identityType,
+            paymentType: contract.project.payment_type,
+            id: contract.id,
+            offerStatus: 'CLOSED',
+            missionStatus: 'KICKED_OUT',
+          }),
+        );
+      }
     } catch (e) {
       console.log('error in stopping contract by organization', e);
     }

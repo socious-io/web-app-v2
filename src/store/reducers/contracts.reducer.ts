@@ -10,8 +10,9 @@ interface ContractsState {
   totalCount: number;
   error: string;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
-
   selectedOfferId?: string;
+  filter: 'all' | 'ongoing' | 'archived';
+  openSlider: boolean;
 }
 const initialState = {
   offers: [],
@@ -20,6 +21,8 @@ const initialState = {
   totalCount: 0,
   error: '',
   status: 'idle',
+  filter: 'all',
+  openSlider: false,
 } as ContractsState;
 export const contractsSlice = createSlice({
   name: 'contracts',
@@ -46,10 +49,22 @@ export const contractsSlice = createSlice({
           : item,
       );
     },
+    updateFilter: (state, action) => {
+      state.filter = action.payload;
+    },
     updateFeedback: (state, action) => {
       state.offers = state.offers.map(item =>
         item.id === action.payload.id ? { ...item, org_feedback: action.payload.orgFeedback } : item,
       );
+    },
+    updatePage: (state, action) => {
+      state.page = action.payload;
+    },
+    handleOpenSlider: state => {
+      state.openSlider = true;
+    },
+    handleCloseSlider: state => {
+      state.openSlider = false;
     },
   },
   extraReducers: builder => {
@@ -89,4 +104,12 @@ export const contractsSlice = createSlice({
   },
 });
 
-export const { setSelected, updateStatus, updateFeedback } = contractsSlice.actions;
+export const {
+  setSelected,
+  updateStatus,
+  updateFeedback,
+  updateFilter,
+  updatePage,
+  handleOpenSlider,
+  handleCloseSlider,
+} = contractsSlice.actions;
