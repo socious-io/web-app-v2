@@ -13,18 +13,14 @@ import { EditedData, Form, OptionType } from './index.types';
 const schema = yup
   .object()
   .shape({
-    cause: yup
-      .object()
-      .nullable()
-      .shape({
-        label: yup.string().required('Required'),
-        value: yup.string(),
-      }),
+    cause: yup.object().shape({
+      label: yup.string().required('Required'),
+      value: yup.string(),
+    }),
     content: yup.string().required('Content is required'),
     file: yup
       .mixed()
       .nullable()
-      .required('You should select an Image')
       .test('fileOrString', 'Invalid file or string', value => {
         return value === null || typeof value === 'string' || value instanceof File;
       }),
@@ -69,10 +65,10 @@ export const useCreatePostModal = (
 
   const initializeValues = () => {
     const initialVal: Form = {
-      cause: data ? data?.cause : null,
-      content: data ? data?.content : '',
-      file: data?.file ? data?.file?.id : '',
-      title: data ? data?.title : '',
+      cause: data?.cause || null,
+      content: data?.content || '',
+      file: data?.file?.id || '',
+      title: data?.title || '',
     };
     reset(initialVal);
   };
@@ -120,11 +116,16 @@ export const useCreatePostModal = (
           causes_tags: [(cause?.value as SocialCauses) || ''],
           title,
           content,
-          media: [mediaId],
+          media: mediaId ? [mediaId] : null,
         });
         onCreatePost({ ...data, cause, title, content, file: { id: mediaId, url: mediaUrl } as Media });
       } else {
-        await createPost({ causes_tags: [(cause?.value as SocialCauses) || ''], title, content, media: [mediaId] });
+        await createPost({
+          causes_tags: [(cause?.value as SocialCauses) || ''],
+          title,
+          content,
+          media: mediaId ? [mediaId] : null,
+        });
         onCreatePost();
       }
       handleClose();

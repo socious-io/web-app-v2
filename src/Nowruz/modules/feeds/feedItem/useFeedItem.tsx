@@ -16,6 +16,7 @@ import {
   unfollow,
   unlikePost,
 } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
 import { ReplyInfo } from '../comments/index.types';
@@ -33,6 +34,7 @@ export const useFeedItem = (
     return state.identity.entities.find(identity => identity.current);
   });
   const currentIdentityId = currentIdentity?.id;
+  const { name: userIdentityName } = getIdentityMeta(userIdentity);
   const { state, dispatch } = useFeedsContext();
   const { comments, replies } = state;
   const [showCommentSection, setShowCommentSection] = useState(false);
@@ -258,11 +260,15 @@ export const useFeedItem = (
       : [
           { iconName: 'link-03', title: 'Copy link to post', onClick: () => console.log('copy post') },
           {
-            iconName: 'x-circle',
-            title: `${followed ? 'Unfollow' : 'Follow'} ${userIdentity.meta?.name || ''}`,
+            iconName: followed ? 'x-circle' : 'plus-circle',
+            title: `${followed ? 'Unfollow' : 'Follow'} ${userIdentityName || ''}`,
             onClick: () => onFollowOrUnfollow(followed),
           },
-          { iconName: 'flag-02', title: 'Report post', onClick: () => setActionsMenu({ name: 'report', open: true }) },
+          {
+            iconName: 'flag-02',
+            title: 'Report this post',
+            onClick: () => setActionsMenu({ name: 'report', open: true }),
+          },
         ];
 
   return {

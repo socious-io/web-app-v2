@@ -135,11 +135,11 @@ const FeedItem: React.FC<FeedItemProps> = ({
           customStyle="flex flex-col gap-4 text-sm text-Gray-light-mode-700 leading-5 emoji-font break-all"
         />
       </div>
-      <div className="w-full flex flex-col gap-4">
-        <div className="flex self-center">
-          <img src={sharedMedia?.url || ''} alt="image-post" className="rounded-lg" />
+      {sharedMedia?.url && (
+        <div className="flex items-center justify-center">
+          <img src={sharedMedia.url} alt="image-shared" className="rounded-lg" />
         </div>
-      </div>
+      )}
     </>
   );
 
@@ -183,9 +183,9 @@ const FeedItem: React.FC<FeedItemProps> = ({
           />
         </div>
         <div className="w-full flex flex-col gap-4">
-          {sharedPost === null && (
+          {sharedPost === null && media?.url && (
             <div className="px-6 flex self-center">
-              <img src={media?.url || ''} alt="image-post" className="rounded-lg" />
+              <img src={media.url} alt="image-post" className="rounded-lg" />
             </div>
           )}
           {sharedPost !== null && (

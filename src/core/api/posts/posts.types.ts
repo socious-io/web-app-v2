@@ -5,7 +5,7 @@ import { SocialCauses, PaginateRes } from '../types';
 export interface PostReq {
   causes_tags: SocialCauses[];
   content: string;
-  media: string[];
+  media?: string[] | null;
   title?: string;
   hashtags?: string[];
 }

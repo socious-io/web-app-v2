@@ -99,9 +99,11 @@ const RepostModal: React.FC<RepostModalProps> = ({ data, open, handleClose, onRe
               customStyle="flex flex-col gap-4 text-sm text-Gray-light-mode-700 leading-5 emoji-font break-all"
             />
           </div>
-          <div className="flex self-center">
-            <img src={media} alt="image-post" className="rounded-lg" />
-          </div>
+          {media && (
+            <div className="flex self-center">
+              <img src={media} alt="image-repost" className="rounded-lg" />
+            </div>
+          )}
         </div>
       </div>
       {openEmojiPicker && (
