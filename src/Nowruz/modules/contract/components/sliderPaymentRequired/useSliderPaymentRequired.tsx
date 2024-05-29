@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity, Offer, cancelOffer, getOffer } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
@@ -13,6 +14,8 @@ export const useSliderPaymentRequired = (contract: Contract) => {
     state.identity.entities.find(identity => identity.current),
   );
   const identityType = identity?.type;
+
+  const { name } = getIdentityMeta(identityType === 'users' ? contract.offerer : contract.recipient);
 
   const withdrawOfferByOP = async () => {
     try {
@@ -63,9 +66,10 @@ export const useSliderPaymentRequired = (contract: Contract) => {
   return {
     withdrawOfferByOP,
     handleOpenPaymentModal,
-    identityType,
-    openPaymentModal,
     paymentOffer,
     handleClosePaymentModal,
+    openPaymentModal,
+    name,
+    displayPaymentModal: openPaymentModal && identityType === 'organizations' && contract.status === 'APPROVED',
   };
 };

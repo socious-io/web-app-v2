@@ -1,3 +1,4 @@
+// FIXME: use ThreeDotsMenu component
 import { MenuItem, MenuList } from '@mui/material';
 import React from 'react';
 import variables from 'src/components/_exports.module.scss';

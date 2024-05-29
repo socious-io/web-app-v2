@@ -23,15 +23,11 @@ export const SliderOfferReceived: React.FC<SliderOfferReceivedProps> = ({
     handleDecline,
     handleAcceptOffer,
     disableAcceptBtn,
-    openSelectCardModal,
-    openWalletModal,
     stripeAccounts,
     handleAcceptClick,
     displayAlert,
-    openAddCardModal,
-    setOpenAddCardModal,
-    setOpenSelectCardModal,
-    setOpenWalletModal,
+    openModal,
+    setOpenModal,
   } = useSliderOfferReceived(contract);
   return (
     <>
@@ -42,7 +38,7 @@ export const SliderOfferReceived: React.FC<SliderOfferReceivedProps> = ({
           </Button>
 
           <Button variant="outlined" color="secondary" fullWidth onClick={handleDecline}>
-            Decline{' '}
+            Decline
           </Button>
         </div>
         <Button variant="contained" color="primary" onClick={handleAcceptClick} disabled={disableAcceptBtn}>
@@ -57,28 +53,33 @@ export const SliderOfferReceived: React.FC<SliderOfferReceivedProps> = ({
           >
             <button
               className="cursor-pointer border-none underline text-sm leading-5 font-semibold text-Warning-700"
-              onClick={() => setOpenAddCardModal(true)}
+              onClick={() => setOpenModal({ name: 'addCard', open: true })} //setOpenAddCardModal(true)}
             >
               Add a payout account
             </button>
           </AlertMessage>
         )}
       </div>
-      {openAddCardModal && (
-        <AddCardModalUser offer={contract} open={openAddCardModal} handleClose={() => setOpenAddCardModal(false)} />
+
+      {openModal?.name === 'addCard' && openModal.open && (
+        <AddCardModalUser
+          offer={contract}
+          open={openModal?.name === 'addCard' && openModal.open}
+          handleClose={() => setOpenModal({ name: 'addCard', open: false })}
+        />
       )}
-      {openSelectCardModal && (
+      {openModal?.name === 'selectCard' && openModal.open && (
         <SelectBankAccountUser
-          open={openSelectCardModal}
-          handleClose={() => setOpenSelectCardModal(false)}
+          open={openModal?.name === 'selectCard' && openModal.open}
+          handleClose={() => setOpenModal({ name: 'selectCard', open: false })}
           accounts={stripeAccounts}
           handleAccept={handleAcceptOffer}
         />
       )}
-      {openWalletModal && (
+      {openModal?.name === 'wallet' && openModal?.open && (
         <WalletModal
-          open={openWalletModal}
-          handleClose={() => setOpenWalletModal(false)}
+          open={openModal?.name === 'wallet' && openModal?.open}
+          handleClose={() => setOpenModal({ name: 'wallet', open: false })}
           handleAccept={handleAcceptOffer}
           walletAddress={contract.recipient?.meta.wallet_address}
         />

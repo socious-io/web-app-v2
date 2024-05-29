@@ -38,20 +38,18 @@ export const SliderAwaiting: React.FC<SliderAwaitingProps> = ({ contract, disabl
         )}
         {alertMsg}
       </div>
-      {openAlert && (
-        <AlertModal
-          open={openAlert}
-          onClose={() => setOpenAlert(false)}
-          onSubmit={onConfirm}
-          message="Do you want to confirm job completion?"
-          title="Confirm completion"
-          customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />}
-          closeButtn={true}
-          closeButtonLabel="Cancel"
-          submitButton={true}
-          submitButtonLabel="Confirm"
-        />
-      )}
+      <AlertModal
+        open={openAlert}
+        onClose={() => setOpenAlert(false)}
+        onSubmit={onConfirm}
+        message="Do you want to confirm job completion?"
+        title="Confirm completion"
+        customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />}
+        closeButtn={true}
+        closeButtonLabel="Cancel"
+        submitButton={true}
+        submitButtonLabel="Confirm"
+      />
     </>
   );
 };

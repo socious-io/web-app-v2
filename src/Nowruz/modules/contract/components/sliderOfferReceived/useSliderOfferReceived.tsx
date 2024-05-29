@@ -12,11 +12,9 @@ export const useSliderOfferReceived = (contract: Contract) => {
   const identityType = identity?.type;
 
   const [disableAcceptBtn, setDisableAcceptBtn] = useState(true);
-  const [openSelectCardModal, setOpenSelectCardModal] = useState(false);
-  const [openWalletModal, setOpenWalletModal] = useState(false);
   const [stripeAccounts, setStripeAccounts] = useState<StripeAccount[]>([]);
   const [displayAlert, setDisplayAlert] = useState(false);
-  const [openAddCardModal, setOpenAddCardModal] = useState(false);
+  const [openModal, setOpenModal] = useState<{ name?: 'selectCard' | 'wallet' | 'addCard'; open: boolean }>();
 
   const handleAcceptOffer = () => {
     try {
@@ -32,8 +30,7 @@ export const useSliderOfferReceived = (contract: Contract) => {
     } catch (error) {
       console.log('error in accepting offer', error);
     }
-    setOpenSelectCardModal(false);
-    setOpenWalletModal(false);
+    setOpenModal({ open: false });
   };
 
   const inititalize = async () => {
@@ -75,22 +72,18 @@ export const useSliderOfferReceived = (contract: Contract) => {
   };
 
   const handleAcceptClick = () => {
-    if (contract.payment_mode === 'FIAT') setOpenSelectCardModal(true);
-    else setOpenWalletModal(true);
+    if (contract.payment_mode === 'FIAT') setOpenModal({ name: 'selectCard', open: true });
+    else setOpenModal({ name: 'wallet', open: true });
   };
 
   return {
     handleDecline,
     handleAcceptOffer,
     disableAcceptBtn,
-    openSelectCardModal,
-    setOpenSelectCardModal,
-    openWalletModal,
-    setOpenWalletModal,
     stripeAccounts,
     displayAlert,
-    openAddCardModal,
-    setOpenAddCardModal,
     handleAcceptClick,
+    openModal,
+    setOpenModal,
   };
 };

@@ -45,11 +45,7 @@ export const useSliderAwaiting = (contract: Contract) => {
           theme="primary"
           iconName="check-circle"
           title={identityType === 'users' ? 'You have accepted this offer' : `${name} has accepted this offer`}
-          subtitle={
-            identityType === 'users'
-              ? `We are just waiting for the final confirmation from ${name} to start the job.`
-              : ' We are just waiting for the final confirmation from you to start the job. '
-          }
+          subtitle={`We are just waiting for the final confirmation from ${name} to start the job.`}
         />,
       );
       if (identityType === 'organizations') {
@@ -96,7 +92,6 @@ export const useSliderAwaiting = (contract: Contract) => {
           missionStatus: 'ACTIVE',
         }),
       );
-      return;
     } catch (e) {
       console.log('error in hiring', e);
     }

@@ -20,10 +20,11 @@ export const SliderPaymentRequired: React.FC<SliderPaymentRequiredProps> = ({
   const {
     withdrawOfferByOP,
     handleOpenPaymentModal,
-    identityType,
     openPaymentModal,
+    displayPaymentModal,
     paymentOffer,
     handleClosePaymentModal,
+    name,
   } = useSliderPaymentRequired(contract);
   return (
     <>
@@ -51,18 +52,11 @@ export const SliderPaymentRequired: React.FC<SliderPaymentRequiredProps> = ({
           subtitle={`${name} has accepted your offer. Proceed to payment to start this job.`}
         />
       </div>
-      {openPaymentModal &&
-        identityType === 'organizations' &&
-        contract.status === 'APPROVED' &&
-        contract.payment_mode === 'FIAT' && (
-          <PaymentFiat offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
-        )}
-      {openPaymentModal &&
-        identityType === 'organizations' &&
-        contract.status === 'APPROVED' &&
-        contract.payment_mode === 'CRYPTO' && (
-          <PaymentCrypto offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
-        )}
+      {displayPaymentModal && contract.payment_mode === 'FIAT' ? (
+        <PaymentFiat offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
+      ) : (
+        <PaymentCrypto offer={paymentOffer} open={openPaymentModal} handleClose={handleClosePaymentModal} />
+      )}
     </>
   );
 };
