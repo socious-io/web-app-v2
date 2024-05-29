@@ -33,10 +33,11 @@ platforms:
                   [
                     'remote-notification'
                   ]
-          - replace: true
-            entries:
-              - Key: Value
-            file: GoogleService-Info.plist
+        copy:
+          - src: ../../GoogleService-Info.plist
+            dest: App/GoogleService-Info.plist
+          - src: ../../fastlane/ios-config/AppDelegate.swift
+            dest: App/AppDelegate.swift
 
         entitlements:
           - aps-environment: 'development'
