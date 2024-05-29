@@ -5,7 +5,7 @@ import { NotificationProps } from './notifications.type';
 import { useNotifications } from './useNotifications';
 
 export const Notifications: React.FC<NotificationProps> = ({ handleClose, list }) => {
-  const { mapTypeToRoute } = useNotifications();
+  const { mapTypeToRoute } = useNotifications(handleClose);
   return (
     <div className="py-6 w-full h-full flex flex-col gap-8">
       {list?.map(item => (

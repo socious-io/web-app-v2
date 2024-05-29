@@ -5,7 +5,7 @@ import { dialog } from 'src/core/dialog/dialog';
 import { useIconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown/useIconDropDown';
 import { RootState } from 'src/store';
 
-export const useNotifications = () => {
+export const useNotifications = (handleClose: () => void) => {
   const { switchAccount } = useIconDropDown();
   const navigate = useNavigate();
   const identities = useSelector<RootState, CurrentIdentity[]>(state => {
@@ -51,7 +51,7 @@ export const useNotifications = () => {
         path = `/feeds/${notifRefId}`;
         break;
       case 'APPLICATION':
-        path = `/jobs/${notifRefId}`;
+        path = `/jobs/created/${notifRefId}`;
         break;
       case 'REJECT':
         path = `/jobs/${notifRefId}`;
@@ -103,6 +103,7 @@ export const useNotifications = () => {
         path = '';
         break;
     }
+    handleClose();
     navigate(path);
   };
 

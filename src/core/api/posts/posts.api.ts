@@ -1,4 +1,4 @@
-import { CommentReq, CommentsRes, Post, PostReq, PostsRes, PostReportReq } from './posts.types';
+import { Comment, CommentReq, CommentsRes, Post, PostReq, PostsRes, PostReportReq } from './posts.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq } from '../types';
 
@@ -52,4 +52,20 @@ export async function likePostComment(postId: string, commentId: string): Promis
 
 export async function unlikePostComment(postId: string, commentId: string): Promise<Comment> {
   return (await post<Comment>(`posts/${postId}/comments/${commentId}/unlike`, {})).data;
+}
+
+export async function reactPostComment(postId: string, commentId: string, emoji: string): Promise<Comment> {
+  return (await post<Comment>(`posts/${postId}/comments/${commentId}/react`, { emoji })).data;
+}
+
+export async function unreactPostComment(postId: string, commentId: string, emoji: string): Promise<Comment> {
+  return (await post<Comment>(`posts/${postId}/comments/${commentId}/unreact`, { emoji })).data;
+}
+
+export async function sharePost(postId: string, payload: CommentReq): Promise<Post> {
+  return (await post<Post>(`posts/${postId}/share`, payload)).data;
+}
+
+export async function getRepliesPostComment(commentId: string, params: PaginateReq): Promise<CommentsRes> {
+  return (await get<CommentsRes>(`posts/comments/${commentId}`, { params })).data;
 }

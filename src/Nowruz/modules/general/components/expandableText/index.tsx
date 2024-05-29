@@ -8,10 +8,12 @@ import { TextClickableURLs } from '../textClickableUrls';
 
 export const ExpandableText: React.FC<ExpandableTextProps> = ({
   text,
+  seeMoreText = 'see more',
   expectedLength = 200,
   clickableUrls = true,
   isMarkdown = false,
   seeMoreButton = true,
+  customStyle = '',
 }) => {
   const initialText = text.length > expectedLength ? text.slice(0, expectedLength) + '...' : text;
   const [maintext, setMainText] = useState(text);
@@ -49,14 +51,15 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
   };
 
   return (
-    <div className={css.expect}>
+    <div className={`${css.expect} ${customStyle}`}>
       {renderText()}
-      {seeMoreButton && printWhen(
-        <span className={css.expect__seeMore} onClick={toggleExpect}>
-          see more
-        </span>,
-        shouldViewMore,
-      )}
+      {seeMoreButton &&
+        printWhen(
+          <span className={css.expect__seeMore} onClick={toggleExpect}>
+            {seeMoreText}
+          </span>,
+          shouldViewMore,
+        )}
     </div>
   );
 };

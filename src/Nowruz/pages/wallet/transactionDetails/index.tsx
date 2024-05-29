@@ -13,7 +13,7 @@ export const TransactionDetails = () => {
 
   const renderItems = (title: string, subtitles: string[]) => {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full break-words">
         <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">{title}</span>
         {subtitles.map(item => (
           <span key={item} className=" text-sm font-normal leading-5 text-Gray-light-mode-600">
