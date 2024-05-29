@@ -13,6 +13,8 @@ vars:
     default: 6
   ANDROID_VERSION_CODE:
     default: 31
+  IOS_DEVELOPMENT_TEAM_ID:
+    default: 596H9K48FY
 
 
 platforms:
@@ -25,6 +27,10 @@ platforms:
         productName: $PRODUCT_NAME
         displayName: $DISPLAY_NAME
 
+        # strings:
+        #   - file: ../App.xcodeproj/project.pbxproj
+        #     set:
+        #       "DEVELOPMENT_TEAM": "DEVELOPMENT_TEAM"
         plist:
           - replace: false
             entries:
