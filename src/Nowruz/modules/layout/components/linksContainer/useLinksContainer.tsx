@@ -70,14 +70,15 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
       route: '',
       iconName: 'users-01',
       public: false,
-      children: userIsLoggedIn
-        ? currentIdentity?.type === 'users'
-          ? [
-              { label: 'Feeds', route: '/feeds', public: false },
-              { label: 'Connections', route: '/connections', public: false },
-            ]
-          : [{ label: 'Connections', route: '/connections', public: false }]
-        : [],
+      // children: userIsLoggedIn
+      //   ? currentIdentity?.type === 'users'
+      //     ? [
+      //         { label: 'Feeds', route: '/feeds', public: false },
+      //         { label: 'Connections', route: '/connections', public: false },
+      //       ]
+      //     : [{ label: 'Connections', route: '/connections', public: false }]
+      //   : [],
+      children: userIsLoggedIn ? [{ label: 'Connections', route: '/connections', public: false }] : [],
     },
 
     {
