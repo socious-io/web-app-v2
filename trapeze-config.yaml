@@ -10,11 +10,12 @@ vars:
   VERSION:
     default: 8.1.0
   IOS_BUILD_NUMBER:
-    default: 8
+    default: 9
   ANDROID_VERSION_CODE:
-    default: 34
+    default: 35
   IOS_DEVELOPMENT_TEAM_ID:
     default: 596H9K48FY
+
 platforms:
   ios:
     targets:
@@ -27,6 +28,7 @@ platforms:
 
         buildSettings:
           DEVELOPMENT_TEAM: $IOS_DEVELOPMENT_TEAM_ID
+          TARGETED_DEVICE_FAMILY: 1 #1: iPhone ,2:iPhone&iPad, 3:iPad
 
         plist:
           - replace: false
