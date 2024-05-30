@@ -12,7 +12,7 @@ vars:
   IOS_BUILD_NUMBER:
     default: 8
   ANDROID_VERSION_CODE:
-    default: 33
+    default: 34
   IOS_DEVELOPMENT_TEAM_ID:
     default: 596H9K48FY
 platforms:
