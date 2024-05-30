@@ -10,13 +10,11 @@ vars:
   VERSION:
     default: 8.1.0
   IOS_BUILD_NUMBER:
-    default: 7
+    default: 8
   ANDROID_VERSION_CODE:
-    default: 31
+    default: 33
   IOS_DEVELOPMENT_TEAM_ID:
     default: 596H9K48FY
-
-
 platforms:
   ios:
     targets:
@@ -50,7 +48,6 @@ platforms:
               [
                 'zakaio://platform.proofspace.id'
               ]
-
   android:
     packageName: $ANDROID_PACKAGE_NAME
     versionName: $VERSION
