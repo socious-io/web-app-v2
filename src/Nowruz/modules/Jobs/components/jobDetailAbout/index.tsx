@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { config } from 'src/config';
@@ -23,7 +23,7 @@ import css from './jobDetailAbout.module.scss';
 interface JobDetailAboutProps {
   isUser: boolean;
   applied?: boolean;
-  handleOpenApplyModal: () => void;
+  handleOpenApplyModal?: () => void;
 }
 
 export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, applied, handleOpenApplyModal }) => {
@@ -38,7 +38,8 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
 
   const [openAlert, setOpenAlert] = useState(false);
 
-  const url = window.location.href.replace('created/', '');
+  // FIXME: .env URLs should not have slash at the end
+  const url = `${config.appBaseURL}jobs/${jobDetail.id}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(url);

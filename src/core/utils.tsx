@@ -1,4 +1,5 @@
 import { Credential, Identity, OrgMeta, Organization, User, UserMeta } from './api';
+import { UserType } from './types';
 
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
   if (value) {
@@ -93,8 +94,8 @@ export const getIdentityMeta = (identity: User | Organization | Identity | undef
       username: `@${user.username}`,
       usernameVal: user.username,
       name: user.name || `${user.first_name} ${user.last_name}`,
-      profileImage: user.avatar?.url || user.avatar || '',
-      type: 'users',
+      profileImage: user.avatar?.url || (user.avatar && String(user.avatar)) || '',
+      type: 'users' as Identity['type'],
       website: undefined,
     };
   }
@@ -105,8 +106,8 @@ export const getIdentityMeta = (identity: User | Organization | Identity | undef
     username: `@${org.shortname}`,
     usernameVal: org.shortname,
     name: org.name,
-    profileImage: org.image?.url || org.image || '',
-    type: 'organizations',
+    profileImage: org.image?.url || (org.image && String(org.image)) || '',
+    type: 'organizations' as Identity['type'],
     website: org.website,
   };
 };
@@ -117,4 +118,12 @@ export const verificationStatus: Record<Credential['status'], 'verified' | 'unve
   CLAIMED: 'verified',
   PENDING: 'pending',
   REJECTED: 'unverified',
+};
+
+export const navigateToProfile = (username: string, type: UserType) => {
+  const usernameVal = username.replaceAll('@', '');
+  if (username) {
+    if (type === 'users') window.location.href = `/profile/users/${usernameVal}/view`;
+    else window.location.href = `/profile/organizations/${usernameVal}/view`;
+  }
 };

@@ -11,7 +11,7 @@ const CustomControl = (props: any) => {
   const { icon, children } = props;
   return (
     <components.Control {...props} className={css.input}>
-      {<Icon className={css.startIcon} name={icon} fontSize={20} color="#667085" />}
+      {icon && <Icon className={css.startIcon} name={icon} fontSize={20} color="#667085" />}
       {children}
     </components.Control>
   );

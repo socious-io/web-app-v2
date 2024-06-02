@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Applicant, Job, jobApplicants } from 'src/core/api';
+import { Applicant, ApplicantsRes, Job, jobApplicants } from 'src/core/api';
 import Badge from 'src/Nowruz/modules/general/components/Badge';
 import { JobDetailAbout } from 'src/Nowruz/modules/Jobs/components/jobDetailAbout';
 import { JobDetailDescription } from 'src/Nowruz/modules/Jobs/components/jobDetailDescription';
@@ -9,7 +9,16 @@ import { Table } from './applicants/table';
 import css from './jobDetail.module.scss';
 
 export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
-  const [applicants, setApplicants] = useState([] as Applicant[]);
+  const PER_PAGE = 10;
+  const initialVal: ApplicantsRes = {
+    items: [] as Applicant[],
+    page: 1,
+    limit: PER_PAGE,
+    total_count: 0,
+  };
+  const [pending, setPending] = useState<ApplicantsRes>(initialVal);
+  const [rejected, setRejected] = useState<ApplicantsRes>(initialVal);
+  const [offered, setOffered] = useState<ApplicantsRes>(initialVal);
   const [refetch, setRefetch] = useState(false);
 
   const overviewJSX = () => {
@@ -25,28 +34,18 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
     );
   };
 
-  const applicantsJSX = useCallback((data: Array<Applicant>, tab: string) => {
-    const status: Array<string> = [];
-    if (tab === 'applicants') {
-      status.push('PENDING');
-    }
-    if (tab === 'offered') {
-      status.push('OFFERED', 'APPROVED');
-    }
-    if (tab === 'rejected') {
-      status.push('REJECTED');
-    }
-    const activeData = data.filter(applicant => status.includes(applicant.status));
+  const applicantsJSX = useCallback((data: ApplicantsRes, tab: string) => {
     return (
       <>
-        <Cards applicants={activeData} currentTab={tab} onRefetch={setRefetch} />
-        <Table applicants={activeData} currentTab={tab} onRefetch={setRefetch} />
+        <Cards applicants={data} currentTab={tab} onRefetch={setRefetch} jobId={jobDetail.id} />
+        <Table applicants={data} currentTab={tab} onRefetch={setRefetch} jobId={jobDetail.id} />
       </>
     );
   }, []);
 
   const tabs = useMemo(() => {
-    const applicantsCount = applicants.filter(a => a.status === 'PENDING');
+    const applicantsCount = pending.items;
+
     return [
       {
         label: 'Overview',
@@ -63,16 +62,24 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
             )}
           </>
         ),
-        content: applicantsJSX(applicants, 'applicants'),
+        content: applicantsJSX(pending, 'applicants'),
       },
-      { label: 'Offered', content: applicantsJSX(applicants, 'offered') },
-      { label: 'Rejected', content: applicantsJSX(applicants, 'rejected') },
+      { label: 'Offered', content: applicantsJSX(offered, 'offered') },
+      { label: 'Rejected', content: applicantsJSX(rejected, 'rejected') },
     ];
-  }, [applicants, applicantsJSX]);
+  }, [offered, rejected, pending, applicantsJSX]);
 
   const getApplicants = useCallback(async () => {
-    const data = await jobApplicants(jobDetail.id, { page: 1, limit: 100 });
-    setApplicants(data.items);
+    const requests = [
+      jobApplicants(jobDetail.id, { page: 1, limit: PER_PAGE, status: 'PENDING' }),
+      jobApplicants(jobDetail.id, { page: 1, limit: PER_PAGE, status: 'OFFERED,APPROVED,HIRED,CLOSED' }),
+      jobApplicants(jobDetail.id, { page: 1, limit: PER_PAGE, status: 'REJECTED' }),
+    ];
+    const [pendingRes, offeredRes, rejectedRes] = await Promise.all(requests);
+
+    setPending(pendingRes);
+    setOffered(offeredRes);
+    setRejected(rejectedRes);
   }, [jobDetail.id]);
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { CredentailStatus, PaginateRes } from 'src/core/api';
 
 export interface SearchReq {
-  type: 'projects' | 'users' | 'posts' | 'organizations';
+  type: 'projects' | 'users' | 'posts' | 'organizations' | 'applicants';
   q: string;
   filter: any;
 }
