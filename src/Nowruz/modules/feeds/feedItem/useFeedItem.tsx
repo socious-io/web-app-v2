@@ -2,14 +2,21 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   CurrentIdentity,
+  Identity,
   Post,
   createPostComment,
+  filterFollowings,
+  follow,
   getRepliesPostComment,
   likePost,
   postComments,
+  removePost,
+  reportPost,
   sharePost,
+  unfollow,
   unlikePost,
 } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
 import { ReplyInfo } from '../comments/index.types';
@@ -17,13 +24,17 @@ import { useFeedsContext } from '../contexts/feeds.context';
 
 export const useFeedItem = (
   postId: string,
-  updateFeedsListLiked: () => void,
+  updateFeedsListLiked: (postId: string) => void,
   updateFeedsListRepost: (response: Post) => void,
+  updateFeedsListRemove: (postId: string) => void,
+  userIdentity: Identity,
 ) => {
+  const limit = 10;
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
   const currentIdentityId = currentIdentity?.id;
+  const { name: userIdentityName } = getIdentityMeta(userIdentity);
   const { state, dispatch } = useFeedsContext();
   const { comments, replies } = state;
   const [showCommentSection, setShowCommentSection] = useState(false);
@@ -32,11 +43,16 @@ export const useFeedItem = (
   const [comment, setComment] = useState('');
   const [reply, setReply] = useState('');
   const [openRepostModal, setOpenRepostModal] = useState(false);
-  const limit = 10;
+  const [openThreeDotsMenu, setOpenThreeDotsMenu] = useState(false);
+  const [actionsMenu, setActionsMenu] = useState<{ name: 'edit' | 'remove' | 'report'; open: boolean }>({
+    name: 'edit',
+    open: false,
+  });
   const [currentPage, setCurrentPage] = useState<{ comments: number; replies: number }>({
     comments: 1,
     replies: 1,
   });
+  const [followed, setFollowed] = useState(false);
 
   const onLikeClick = async (liked: boolean) => {
     try {
@@ -48,7 +64,7 @@ export const useFeedItem = (
     } catch (error) {
       console.log('error in un/linking post', error);
     }
-    updateFeedsListLiked();
+    updateFeedsListLiked(postId);
   };
 
   const onCommentClick = async (commentsCount: number) => {
@@ -130,6 +146,18 @@ export const useFeedItem = (
     }
   };
 
+  const onOpenThreeDotsMenu = async () => {
+    if (currentIdentityId !== userIdentity.id) {
+      try {
+        const { items } = (await filterFollowings({ id: userIdentity.id, type: 'users', page: 1, limit: 10 })) || [];
+        setFollowed(!!items.length);
+      } catch (error) {
+        console.log('error in fetching following', error);
+      }
+    }
+    setOpenThreeDotsMenu(true);
+  };
+
   const onShowReplies = async (commentId: string) => {
     try {
       const res = await getRepliesPostComment(commentId, { page: 1, limit: 10 });
@@ -181,6 +209,68 @@ export const useFeedItem = (
     }
   };
 
+  const handleCloseActionsMenu = () => setActionsMenu({ ...actionsMenu, open: false });
+
+  const onDeletePost = async () => {
+    try {
+      await removePost(postId);
+      handleCloseActionsMenu();
+      updateFeedsListRemove(postId);
+    } catch (error) {
+      console.log('error in removing post', error);
+    }
+  };
+
+  const onReportPost = async (comment: string) => {
+    try {
+      await reportPost(postId, { comment, blocked: true });
+      handleCloseActionsMenu();
+      updateFeedsListRemove(postId);
+    } catch (error) {
+      console.log('error in reporting post', error);
+    }
+  };
+
+  const onFollowOrUnfollow = async (followed: boolean) => {
+    if (followed) {
+      try {
+        await unfollow(userIdentity.id);
+        updateFeedsListRemove(postId);
+        setFollowed(false);
+      } catch (error) {
+        console.log('error in unfollowing ', error);
+      }
+    } else {
+      try {
+        await follow(userIdentity.id);
+        setFollowed(true);
+      } catch (error) {
+        console.log('error in following ', error);
+      }
+    }
+  };
+
+  const threeDotsMenuItems =
+    currentIdentityId === userIdentity.id
+      ? [
+          { iconName: 'link-03', title: 'Copy link to post', onClick: () => console.log('copy post') },
+          { iconName: 'pencil-01', title: 'Edit post', onClick: () => setActionsMenu({ name: 'edit', open: true }) },
+          { iconName: 'trash-01', title: 'Remove post', onClick: () => setActionsMenu({ name: 'remove', open: true }) },
+        ]
+      : [
+          { iconName: 'link-03', title: 'Copy link to post', onClick: () => console.log('copy post') },
+          {
+            iconName: followed ? 'x-circle' : 'plus-circle',
+            title: `${followed ? 'Unfollow' : 'Follow'} ${userIdentityName || ''}`,
+            onClick: () => onFollowOrUnfollow(followed),
+          },
+          {
+            iconName: 'flag-02',
+            title: 'Report this post',
+            onClick: () => setActionsMenu({ name: 'report', open: true }),
+          },
+        ];
+
   return {
     data: {
       currentIdentity,
@@ -192,6 +282,9 @@ export const useFeedItem = (
       reply,
       replies,
       openRepostModal,
+      openThreeDotsMenu,
+      threeDotsMenuItems,
+      actionsMenu,
     },
     operations: {
       onLikeClick,
@@ -206,6 +299,11 @@ export const useFeedItem = (
       onSeeMoreRepliesClick,
       setOpenRepostModal,
       onRepost,
+      onOpenThreeDotsMenu,
+      setOpenThreeDotsMenu,
+      handleCloseActionsMenu,
+      onDeletePost,
+      onReportPost,
     },
   };
 };

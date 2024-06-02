@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
-import { CurrentIdentity, Post, posts } from 'src/core/api';
+import { CurrentIdentity, Post, posts, SocialCauses } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
+import { EditedData } from 'src/Nowruz/modules/feeds/createPostModal/index.types';
 import { RootState } from 'src/store';
 
 import { Resolver } from './index.types';
@@ -65,6 +66,31 @@ export const UseFeeds = () => {
     setCurrentPosts(current);
   };
 
+  const updateFeedsListEdit = (data: EditedData) => {
+    const { cause, title = '', content, file } = data;
+    const clone = [...currentPosts];
+    const mappedClone = clone.map(item => {
+      if (item.id === data.postId) {
+        return {
+          ...item,
+          causes_tags: cause ? ([cause.value] as SocialCauses[]) : null,
+          title,
+          content,
+          media: file ? [file] : null,
+        } as Post;
+      } else {
+        return item;
+      }
+    });
+    setCurrentPosts(mappedClone);
+  };
+
+  const updateFeedsListRemove = (id: string) => {
+    const clone = [...currentPosts];
+    const filteredClone = clone.filter(item => item.id !== id);
+    setCurrentPosts(filteredClone);
+  };
+
   return {
     data: { profileImage, openCreateModal, posts: currentPosts, showSeeMore },
     operations: {
@@ -74,6 +100,8 @@ export const UseFeeds = () => {
       onShowMoreFeeds,
       updateFeedsListLiked,
       updateFeedsListRepost,
+      updateFeedsListEdit,
+      updateFeedsListRemove,
     },
   };
 };

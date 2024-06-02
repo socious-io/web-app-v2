@@ -1,0 +1,30 @@
+@import 'src/components/_primitives.scss';
+
+.menuList {
+    display: flex;
+    width: 15rem;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 0.5rem;
+    position: absolute;
+    top: 4.5rem;
+    right: 1.5rem;
+    border: 1px solid $color-grey-200;
+    box-shadow: $shadow-lg;
+    padding: 0;
+    background-color: $color-white;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.menuItem {
+    width: 100%;
+    padding: 1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    font-size: 14px;
+    font-weight: 500;
+    color: $color-grey-700;
+}

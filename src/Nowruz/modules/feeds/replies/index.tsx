@@ -1,9 +1,9 @@
-import EmojiPicker from '@emoji-mart/react';
 import React from 'react';
 import { toRelativeTime } from 'src/core/relative-time';
 import { getIdentityMeta } from 'src/core/utils';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import CustomEmojiPicker from 'src/Nowruz/modules/general/components/EmojiPicker';
 import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
 
 import { RepliesProps } from './index.types';
@@ -56,14 +56,11 @@ const Replies: React.FC<RepliesProps> = ({ postId, commentId, list, showSeeMore,
                   ))}
               </div>
               {openEmojiPicker === item.id && (
-                <div className="max-w-[358px] max-h-[300px] overflow-y-auto absolute bottom-0 left-0 z-10 border border-solid border-Gray-light-mode-200 rounded-lg">
-                  <EmojiPicker
-                    open={openEmojiPicker}
-                    theme="light"
-                    previewPosition="none"
-                    onEmojiSelect={emoji => onEmojiSelect(emoji.native, item.id)}
-                  />
-                </div>
+                <CustomEmojiPicker
+                  open={!!openEmojiPicker}
+                  handleClose={() => setOpenEmojiPicker('')}
+                  onEmojiSelect={emoji => onEmojiSelect(emoji.native, item.id)}
+                />
               )}
             </div>
           </div>

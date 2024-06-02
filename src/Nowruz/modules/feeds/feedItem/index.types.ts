@@ -1,4 +1,6 @@
-import { Identity, Post } from 'src/core/api';
+import { Identity, Media, Post } from 'src/core/api';
+
+import { EditedData } from '../createPostModal/index.types';
 
 export interface FeedItemProps {
   postId: string;
@@ -6,7 +8,7 @@ export interface FeedItemProps {
   date: string;
   cause: string | null;
   content: string;
-  media: string;
+  media: Media | null;
   likesCount: number;
   commentsCount: number;
   liked: boolean;
@@ -16,10 +18,12 @@ export interface FeedItemProps {
     date: string;
     cause: string | null;
     content: string;
-    media: string;
+    media: Media | null;
     title?: string;
   } | null;
-  title?: string;
-  updateFeedsListLiked: () => void;
+  updateFeedsListLiked: (postId: string) => void;
   updateFeedsListRepost: (response: Post) => void;
+  updateFeedsListEdit: (data: EditedData) => void;
+  updateFeedsListRemove: (postId: string) => void;
+  title?: string;
 }
