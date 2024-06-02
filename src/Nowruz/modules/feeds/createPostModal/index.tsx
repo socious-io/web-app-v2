@@ -1,11 +1,14 @@
 import { CircularProgress } from '@mui/material';
 import React from 'react';
+import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import CustomEmojiPicker from 'src/Nowruz/modules/general/components/EmojiPicker';
+import { IconButton } from 'src/Nowruz/modules/general/components/iconButton';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
 import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
+import UploadBox from 'src/Nowruz/modules/general/components/uploadBox';
 
 import css from './index.module.scss';
 import { CreatePostModalProps } from './index.types';
@@ -21,6 +24,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
       causeVal,
       titleVal,
       contentVal,
+      selectedFile,
       openEmojiPicker,
       focusElements,
       loading,
@@ -30,6 +34,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
       onSelectCause,
       onTextChange,
       onUploadImage,
+      onRemoveSelectedFile,
       setFocusElements,
       setOpenEmojiPicker,
       handleSubmit,
@@ -68,10 +73,8 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
         {/* <Icon name="bar-chart-10" fontSize={24} className="text-Gray-light-mode-500" cursor="pointer" /> */}
       </div>
       <div className="flex items-center gap-4">
-        {(errors.content?.message || errors.file?.message) && (
-          <span className="text-Error-700 text-sm">
-            {errors.content?.message?.toString() || errors.file?.message?.toString()}
-          </span>
+        {errors.content?.message && (
+          <span className="text-Error-700 text-sm">{errors.content?.message?.toString()}</span>
         )}
         <Button color="primary" type="submit">
           {loading ? <CircularProgress size="20px" sx={{ color: 'white' }} /> : 'Post'}
@@ -119,9 +122,24 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
             onChange={e => onTextChange('content', e.target.value)}
             className={`${css.textarea} text-md`}
             placeholder="Write your post"
-            rows={6}
+            rows={1}
             onFocus={() => setFocusElements({ title: false, content: true })}
           />
+          {selectedFile ? (
+            <div className="relative rounded-default overflow-hidden flex items-center justify-center">
+              <img src={selectedFile as string} alt="selected-image" />
+              <IconButton
+                size="medium"
+                iconName="x-close"
+                iconSize={20}
+                iconColor={variables.color_white}
+                customStyle="absolute top-4 right-4 !rounded-full !bg-[#565856]"
+                handleClick={onRemoveSelectedFile}
+              />
+            </div>
+          ) : (
+            <UploadBox onUpload={onUploadImage} errorMessage={errors.file?.message?.toString() || ''} />
+          )}
         </div>
         {openEmojiPicker && (
           <CustomEmojiPicker
