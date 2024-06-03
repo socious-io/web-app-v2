@@ -1,30 +1,24 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity } from 'src/core/api';
-import dapp from 'src/dapp';
 import { ButtonGroupItem } from 'src/Nowruz/modules/general/components/ButtonGroups/buttonGroups.types';
 import store, { RootState } from 'src/store';
+import { handleDisplaySlider, updateFilter, updatePage } from 'src/store/reducers/contracts.reducer';
 import { getContracts, getContractsByFilter } from 'src/store/thunks/contracts.thunk';
 
 export const useContracts = () => {
+  const dispatch = useDispatch();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
   const contractList = useSelector<RootState, Contract[]>(state => {
     return state.contracts.offers;
   });
-  const itemsCount = useSelector<RootState, number>(state => {
-    return state.contracts.totalCount;
-  });
 
-  const currentPage = useSelector<RootState, number>(state => {
-    return state.contracts.page;
-  });
-  const [page, setPage] = useState(currentPage);
-  const [filter, setFilter] = useState<'all' | 'ongoing' | 'archived'>('all');
-  const [openOverlayModal, setOpenOverlayModal] = useState(false);
+  const { filter, page, openSlider, totalCount } = useSelector<RootState, any>(state => state.contracts);
+  const activeFilter = ['all', 'ongoing', 'archived'].findIndex(item => item === filter);
   const PER_PAGE = 5;
-  const pageCount = Math.floor(itemsCount / PER_PAGE) + (itemsCount % PER_PAGE && 1);
+  const pageCount = Math.ceil(totalCount / PER_PAGE);
   const fetchMore = async () => {
     if (!currentIdentity) return;
     if (filter === 'all')
@@ -33,11 +27,9 @@ export const useContracts = () => {
       await store.dispatch(getContractsByFilter({ filter, page, limit: PER_PAGE, identityType: currentIdentity.type }));
   };
 
-  //  const { signer, chainId } = dapp.useWeb3();
-
   const handleChangeFilter = (newFilter: 'all' | 'ongoing' | 'archived') => {
-    setPage(1);
-    setFilter(newFilter);
+    updatePageNumber(1);
+    dispatch(updateFilter(newFilter));
   };
 
   useEffect(() => {
@@ -50,14 +42,22 @@ export const useContracts = () => {
     { label: 'Archived', handleClick: () => handleChangeFilter('archived') },
   ];
 
+  const updatePageNumber = (page: number) => {
+    dispatch(updatePage(page));
+  };
+
+  const closeSlider = () => {
+    dispatch(handleDisplaySlider(false));
+  };
   return {
     filterButtons,
     operations: {},
     pageCount,
-    setPage,
     page,
     contractList,
-    openOverlayModal,
-    setOpenOverlayModal,
+    openSlider,
+    updatePageNumber,
+    closeSlider,
+    activeFilter,
   };
 };

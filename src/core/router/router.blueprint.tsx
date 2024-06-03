@@ -19,6 +19,7 @@ import {
   payment,
   getRequestedVerifyEducations,
   markedJobs,
+  posts,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -488,6 +489,16 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          // {
+          //   path: 'feeds',
+          //   loader: async () => await posts({ page: 1, limit: 10 }),
+          //   async lazy() {
+          //     const { Feeds } = await import('src/Nowruz/pages/feeds');
+          //     return {
+          //       Component: Protect(Feeds, 'users'),
+          //     };
+          //   },
+          // },
         ],
       },
     ],

@@ -33,6 +33,7 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
     onOpenClaimModal,
     disabledClaims,
     handleClaimVC,
+    claimUrl,
   } = useEducation();
 
   return (
@@ -93,11 +94,14 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
           </div>
         )}
       </div>
-      <ClaimCertificateModal
-        open={openModal.name === 'claim' && openModal.open}
-        handleClose={handleClose}
-        handleClaimVC={handleClaimVC}
-      />
+      {claimUrl && (
+        <ClaimCertificateModal
+          open={openModal.name === 'claim' && openModal.open}
+          link={claimUrl}
+          handleClose={handleClose}
+          handleClaimVC={handleClaimVC}
+        />
+      )}
       <CreateUpdateEducation
         open={(openModal.name === 'add' || openModal.name === 'edit') && openModal.open}
         handleClose={handleClose}

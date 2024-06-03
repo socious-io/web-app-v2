@@ -74,3 +74,17 @@ body {
         width: 100%;
     }
 }
+
+.emoji-font {
+    font-family: sans-serif, 'Apple Color Emoji';
+}
+
+.see-more {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0em;
+    color: $color-primary-700;
+    text-transform: none;
+    cursor: pointer;
+}
