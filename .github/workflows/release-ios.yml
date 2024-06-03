@@ -2,10 +2,10 @@ name: CD - Release - iOS
 
 on:
   push:
-    tags:
-      - v*
-    # branches:
-    #   - ci
+    # tags:
+    #   - v*
+    branches:
+      - ci
 
 jobs:
   setup-fastlane:
@@ -132,7 +132,7 @@ jobs:
           echo -n "$IOS_APPSTORE_AUTH_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_${{ secrets.IOS_APPSTORE_AUTH_KEY_ID }}.p8
           echo "After saving: "
           ls ~/private_keys
-          
+
       - name: "Upload file to test flight using CLI"
         env:
           SCHEME: App
