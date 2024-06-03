@@ -104,7 +104,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@trapezedev/configure": "^7.0.10",
-    "@trapezedev/project": "^7.0.10",
     "@types/jest": "^29.5.12",
     "@types/js-cookie": "^3.0.3",
     "@types/ramda": "^0.28.23",

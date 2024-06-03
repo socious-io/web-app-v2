@@ -44,6 +44,10 @@ jobs:
           echo 'VITE_SOCKET_URL=${{ vars.SOCKET_URL }}' >> .env
           echo 'VITE_STRIPE_PUBLIC_KEY=${{ vars.STRIPE_PUBLIC_KEY }}' >> .env
           npm run make:android
+          
+      - name: Generating Assets
+        run: |
+          build:icons
 
       - name: Setup Ruby, JRuby and TruffleRuby
         uses: ruby/setup-ruby@v1.174.0
