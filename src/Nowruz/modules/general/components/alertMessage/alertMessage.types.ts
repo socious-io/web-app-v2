@@ -14,4 +14,5 @@ export interface AlertMessageProps {
   secondaryButtonLabel?: string;
   secondaryButtonAction?: () => void;
   children?: ReactNode;
+  colOrderMobileView?: boolean;
 }

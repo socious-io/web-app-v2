@@ -472,6 +472,23 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
+          {
+            path: '/:id/contribute',
+            loader: async ({ params }) => {
+              if (params.id) {
+                const user = await otherProfileByUsername(params.id);
+                return {
+                  user,
+                };
+              }
+            },
+            async lazy() {
+              const { Contribute } = await import('src/Nowruz/pages/contribute');
+              return {
+                Component: Protect(Contribute, 'users'),
+              };
+            },
+          },
           // {
           //   path: 'feeds',
           //   loader: async () => await posts({ page: 1, limit: 10 }),
