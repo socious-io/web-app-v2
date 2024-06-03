@@ -104,11 +104,13 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       - name: Building iOS App
-        run: xcodebuild -scheme "App" clean archive -archivePath "Actions" -configuration "Release Production"
+        run: |
+          cd ios/App
+          xcodebuild -scheme "App" clean archive -archivePath "Actions" -configuration "Release Production"
 
       - name: export ipa
         env:
-          EXPORT_PLIST: ${{ secrets. IOS_EXPORT_PRODUCTION}}
+          EXPORT_PLIST: ${{ secrets.IOS_EXPORT_PRODUCTION}}
         run: |
           # crete export options
           EXPORT_PLIST_PATH=$RUNNER_TEMP/ExportOptions.plist
