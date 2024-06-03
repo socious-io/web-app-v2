@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { UserProfile } from 'src/core/api';
 
@@ -5,6 +6,8 @@ import css from './contribute.module.scss';
 export const useContribute = () => {
   const { user } = useLoaderData() as { user: UserProfile };
   const eligible = user.impact_points >= 10000;
+  const [openModal, setOpenModal] = useState(false);
+  const [accepted, setAccepted] = useState(false);
 
   const checkItems = [
     {
@@ -54,5 +57,5 @@ export const useContribute = () => {
       desc: "Once you've opted in, you will be granted access to the Contributor Dashboard. As new contributor roles become available, you'll have the opportunity to expand your involvement and make an even greater impact on the Socious platform.",
     },
   ];
-  return { checkItems, steps, eligible };
+  return { checkItems, steps, eligible, openModal, setOpenModal, accepted, setAccepted };
 };

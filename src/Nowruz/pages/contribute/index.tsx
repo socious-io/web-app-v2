@@ -4,13 +4,15 @@ import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { AlertMessage } from 'src/Nowruz/modules/general/components/alertMessage';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
+import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
+import { Modal } from 'src/Nowruz/modules/general/components/modal';
 
 import css from './contribute.module.scss';
 import { useContribute } from './useContribute';
 
 export const Contribute = () => {
-  const { checkItems, steps, eligible } = useContribute();
+  const { checkItems, steps, eligible, openModal, setOpenModal, accepted, setAccepted } = useContribute();
 
   const renderCheckItems = (title: string, desc: string) => {
     return (
@@ -62,6 +64,18 @@ export const Contribute = () => {
       </div>
     );
   };
+
+  const modalFooter = (
+    <div className="w-full flex flex-col md:flex-row-reverse gap-3 pt-6 pb-4 px-4 md:pt-8 md:pb-6 md:px-6">
+      {/* TODO: Call API in click */}
+      <Button variant="contained" color="primary" fullWidth disabled={!accepted}>
+        Join now
+      </Button>
+      <Button variant="outlined" color="primary" fullWidth onClick={() => setOpenModal(false)}>
+        Cancel
+      </Button>
+    </div>
+  );
   return (
     <div>
       <div className="w-full h-40 md:h-60 bg-no-repeat bg-cover bg-[url('/images/dispute_contributor.jpeg')]" />
@@ -109,26 +123,43 @@ export const Contribute = () => {
           <div className="flex flex-col gap-5 pl-4">
             {checkItems.map(item => renderCheckItems(item.title, item.desc))}
           </div>
-          {
-            // TODO: onClick open join modal
-            eligible && (
-              <Button variant="contained" color="primary" customStyle=" mx-auto">
-                Join now
-              </Button>
-            )
-          }
+          {eligible && (
+            <Button variant="contained" color="primary" customStyle=" mx-auto" onClick={() => setOpenModal(true)}>
+              Join now
+            </Button>
+          )}
           <div className="text-xl font-semibold leading-[30px] text-Gray-light-mode-900">How to get started </div>
           <div className="flex  flex-col">{steps.map((item, index) => renderSteps(index, item.title, item.desc))}</div>
-          {
-            // TODO: onClick open join modal
-            eligible && (
-              <Button variant="contained" color="primary" customStyle=" mx-auto">
-                Join now
-              </Button>
-            )
-          }
+          {eligible && (
+            <Button variant="contained" color="primary" customStyle=" mx-auto" onClick={() => setOpenModal(true)}>
+              Join now
+            </Button>
+          )}
         </div>
       </div>
+      <Modal
+        open={openModal}
+        handleClose={() => setOpenModal(false)}
+        title="Join the Socious Contributor program"
+        subTitle="You've unlocked the opportunity to make an even greater impact on the Socious platform. By opting in, you agree to abide by the Contributor Guidelines and take on the responsibilities of a valued member of our contributor community."
+        footer={modalFooter}
+        mobileCentered
+        mobileFullHeight={false}
+        headerDivider={false}
+        footerDivider={false}
+        customStyle="md:max-w-[400px]"
+        closeButtonClassName="hidden"
+      >
+        <div className="px-4 md:px-6">
+          <Checkbox
+            id="agreement-chk"
+            label="I have read, understand, and agree to abide by the Socious Contributor Guidelines."
+            checked={accepted}
+            onChange={e => setAccepted(e.target.checked)}
+            value
+          />
+        </div>
+      </Modal>
     </div>
   );
 };

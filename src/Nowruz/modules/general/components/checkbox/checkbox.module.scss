@@ -1,67 +1,77 @@
 @import 'src/components/_primitives.scss';
+
 .container {
-  display: flex;
-  flex-direction: row;
-  padding: 0;
-  align-items: center;
-  justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    align-items: center;
+    justify-content: flex-start;
 }
+
 .label {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: 0em;
-  color: $color-grey-700;
-  cursor: pointer;
-  margin-left: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    color: $color-grey-700;
+    cursor: pointer;
 }
 
 .icon {
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
 }
+
 .iconNotChecked {
-  border-color: $color_grey_300;
+    border-color: $color_grey_300;
 }
+
 .iconChecked {
-  border-color: $color_grey_600;
-  background-color: $color-primary-50;
+    border-color: $color_grey_600;
+    background-color: $color-primary-50;
 }
 
 .circleIconNotChecked {
-  border: 1px solid $color-grey-300;
-  background-color: $color-white;
+    border: 1px solid $color-grey-300;
+    background-color: $color-white;
 }
 
 .circleIconChecked {
-  border: 1px solid $color-primary-600;
-  background-color: $color-primary-600;
+    border: 1px solid $color-primary-600;
+    background-color: $color-primary-600;
+}
+
+.checkboxContainer {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
 }
 
 .checkboxContainer:hover .iconChecked {
-  background-color: $color-primary-100;
+    background-color: $color-primary-100;
 }
+
 .checkboxContainer:focus-within .iconChecked {
-  background-color: $color-primary-50;
-  box-shadow: 0px 0px 0px 4px $color-primary-100;
+    background-color: $color-primary-50;
+    box-shadow: 0px 0px 0px 4px $color-primary-100;
 }
 
 .checkboxContainer:hover .iconNotChecked,
 .checkboxContainer:hover .circleIconNotChecked {
-  background-color: $color-primary-100;
-  border-color: $color-primary-600;
+    background-color: $color-primary-100;
+    border-color: $color-primary-600;
 }
 
 .checkboxContainer:focus-within .iconNotChecked,
 .checkboxContainer:focus-within .circleIconNotChecked {
-  background-color: $color-white;
-  border-color: $color-primary-300;
-  box-shadow: 0px 0px 0px 4px $color-primary-100;
+    background-color: $color-white;
+    border-color: $color-primary-300;
+    box-shadow: 0px 0px 0px 4px $color-primary-100;
 }
 
 .checkboxContainer:focus-within .circleIconChecked {
-  box-shadow: 0px 0px 0px 4px $color-primary-100;
+    box-shadow: 0px 0px 0px 4px $color-primary-100;
 }
