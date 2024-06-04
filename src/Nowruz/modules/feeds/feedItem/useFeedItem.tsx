@@ -253,12 +253,12 @@ export const useFeedItem = (
   const threeDotsMenuItems =
     currentIdentityId === userIdentity.id
       ? [
-          { iconName: 'link-03', title: 'Copy link to post', onClick: () => console.log('copy post') },
+          // { iconName: 'link-03', title: 'Copy link to post', onClick: () => console.log('copy post') },
           { iconName: 'pencil-01', title: 'Edit post', onClick: () => setActionsMenu({ name: 'edit', open: true }) },
           { iconName: 'trash-01', title: 'Remove post', onClick: () => setActionsMenu({ name: 'remove', open: true }) },
         ]
       : [
-          { iconName: 'link-03', title: 'Copy link to post', onClick: () => console.log('copy post') },
+          // { iconName: 'link-03', title: 'Copy link to post', onClick: () => console.log('copy post') },
           {
             iconName: followed ? 'x-circle' : 'plus-circle',
             title: `${followed ? 'Unfollow' : 'Follow'} ${userIdentityName || ''}`,

@@ -3,13 +3,15 @@ import { FeedsProvider } from 'src/Nowruz/modules/feeds/contexts/feeds.context';
 import CreatePostModal from 'src/Nowruz/modules/feeds/createPostModal';
 import FeedsList from 'src/Nowruz/modules/feeds/feedsList';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
+import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
+import CustomSnackbar from 'src/Nowruz/modules/general/components/Snackbar';
 
 import css from './index.module.scss';
 import { UseFeeds } from './useFeeds';
 
 export const Feeds = () => {
   const {
-    data: { profileImage, openCreateModal, posts, showSeeMore },
+    data: { profileImage, openCreateModal, posts, showSeeMore, showSnackbar },
     operations: {
       handleOpenCreateModal,
       handleCloseCreateModal,
@@ -19,6 +21,7 @@ export const Feeds = () => {
       updateFeedsListRepost,
       updateFeedsListEdit,
       updateFeedsListRemove,
+      setShowSnackbar,
     },
   } = UseFeeds();
 
@@ -55,6 +58,13 @@ export const Feeds = () => {
         </div>
       </div>
       <CreatePostModal open={openCreateModal} handleClose={handleCloseCreateModal} onCreatePost={onCreatePost} />
+      <CustomSnackbar
+        open={showSnackbar}
+        onClose={() => setShowSnackbar(false)}
+        autoHideDuration={6000}
+        icon={<FeaturedIconOutlined iconName="check-circle" size="md" theme="primary" />}
+        text="Post successfully published"
+      />
     </FeedsProvider>
   );
 };

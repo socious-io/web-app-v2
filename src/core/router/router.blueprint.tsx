@@ -489,16 +489,16 @@ export const blueprint: RouteObject[] = [
               };
             },
           },
-          // {
-          //   path: 'feeds',
-          //   loader: async () => await posts({ page: 1, limit: 10 }),
-          //   async lazy() {
-          //     const { Feeds } = await import('src/Nowruz/pages/feeds');
-          //     return {
-          //       Component: Protect(Feeds, 'users'),
-          //     };
-          //   },
-          // },
+          {
+            path: 'feeds',
+            loader: async () => await posts({ page: 1, limit: 10 }),
+            async lazy() {
+              const { Feeds } = await import('src/Nowruz/pages/feeds');
+              return {
+                Component: Protect(Feeds, 'users'),
+              };
+            },
+          },
         ],
       },
     ],

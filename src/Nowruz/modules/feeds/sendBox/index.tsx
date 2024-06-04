@@ -47,10 +47,10 @@ const SendBox: React.FC<SendBoxProps> = ({
             cursor="pointer"
             onClick={() => setOpenEmojiPicker(true)}
           />
-          <div className={css.file}>
+          {/* <div className={css.file}>
             <Icon name="image-03" fontSize={24} className="text-Gray-light-mode-500" cursor="pointer" />
             <input id="file" name="file" type="file" />
-          </div>
+          </div> */}
           <Button color="primary" onClick={onSend}>
             {buttonText}
           </Button>
