@@ -31,8 +31,11 @@ export const useSliderAwaiting = (contract: Contract) => {
     label: '',
   });
   const [openAlert, setOpenAlert] = useState(false);
+  const [openInitiateDisputeModal, setOpenInitiateDisputeModal] = useState(false);
   const displayDispute = contract.mission?.status === 'COMPLETE';
   const { name, username, type } = getIdentityMeta(identityType === 'users' ? contract.offerer : contract.recipient);
+  const respondentId = identityType === 'users' ? contract.offerer.id : contract.recipient.id;
+  const missionId = contract.mission?.id || '';
 
   const initialize = () => {
     if (identityType === 'users') {
@@ -164,11 +167,21 @@ export const useSliderAwaiting = (contract: Contract) => {
     {
       iconName: 'message-alert-circle',
       title: 'Initiate a dispute',
-      // TODO: add open dispute modal
-      onClick: () => {
-        console.log('TODO: add open dispute modal');
-      },
+      onClick: () => setOpenInitiateDisputeModal(true),
     },
   ];
-  return { onConfirm, primaryBtn, secondaryBtn, alertMsg, openAlert, setOpenAlert, displayDispute, menuItems };
+  return {
+    onConfirm,
+    primaryBtn,
+    secondaryBtn,
+    alertMsg,
+    openAlert,
+    setOpenAlert,
+    displayDispute,
+    menuItems,
+    openInitiateDisputeModal,
+    setOpenInitiateDisputeModal,
+    respondentId,
+    missionId,
+  };
 };
