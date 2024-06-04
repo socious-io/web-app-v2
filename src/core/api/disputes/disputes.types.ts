@@ -55,3 +55,8 @@ export interface Dispute {
 export interface DisputesRes extends PaginateRes {
   items: Dispute[];
 }
+
+export interface RespondDisputeReq {
+  message: string;
+  evidences: string[];
+}
