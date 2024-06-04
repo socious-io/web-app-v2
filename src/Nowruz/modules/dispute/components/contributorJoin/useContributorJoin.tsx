@@ -1,5 +1,10 @@
+import { useState } from 'react';
+
 import css from './contributorJoin.module.scss';
 export const useContributorJoin = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const [accepted, setAccepted] = useState(false);
+
   const checkItems = [
     {
       title: 'Shape the platform:',
@@ -48,5 +53,5 @@ export const useContributorJoin = () => {
       desc: "Once you've opted in, you will be granted access to the Contributor Dashboard. As new contributor roles become available, you'll have the opportunity to expand your involvement and make an even greater impact on the Socious platform.",
     },
   ];
-  return { checkItems, steps };
+  return { checkItems, steps, openModal, setOpenModal, accepted, setAccepted };
 };

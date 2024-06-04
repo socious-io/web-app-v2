@@ -69,7 +69,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
               <CircleIcon checked={false} size={size} />
             )
           }
-          sx={{ padding: '0' }}
+          sx={{ padding: '2px 0 0 0' }}
           {...props}
         />
         {label && (

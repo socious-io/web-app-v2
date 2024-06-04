@@ -42,3 +42,6 @@ export * from './credentials/credentials.types';
 
 export * from './referrers/referrers.api';
 export * from './referrers/referrers.types';
+
+export * from './disputes/disputes.api';
+export * from './disputes/dispute.types';
