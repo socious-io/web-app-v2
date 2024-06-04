@@ -41,7 +41,7 @@ const FeedsList: React.FC<FeedsListProps> = ({
                     ? SOCIAL_CAUSES[item.shared_post?.causes_tags[0]].label
                     : null,
                   content: item.shared_post?.content || '',
-                  media: item.media ? item.media[0] : null,
+                  media: item.shared_post?.media ? item.shared_post.media[0] : null,
                   title: item.shared_post?.title || '',
                 }
               : null

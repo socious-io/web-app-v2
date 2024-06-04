@@ -183,7 +183,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
           />
         </div>
         <div className="w-full flex flex-col gap-4">
-          {sharedPost === null && media?.url && (
+          {media?.url && (
             <div className="px-6 flex self-center">
               <img src={media.url} alt="image-post" className="rounded-lg" />
             </div>
