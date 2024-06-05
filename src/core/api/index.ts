@@ -44,4 +44,4 @@ export * from './referrers/referrers.api';
 export * from './referrers/referrers.types';
 
 export * from './disputes/disputes.api';
-export * from './disputes/dispute.types';
+export * from './disputes/disputes.types';

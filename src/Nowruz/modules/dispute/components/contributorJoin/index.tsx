@@ -136,7 +136,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
           <div className="text-xl font-semibold leading-[30px] text-Gray-light-mode-900">How to get started </div>
           <div className="flex  flex-col">{steps.map((item, index) => renderSteps(index, item.title, item.desc))}</div>
           {eligible && (
-            <Button variant="contained" color="primary" customStyle=" mx-auto">
+            <Button variant="contained" color="primary" customStyle=" mx-auto" onClick={() => setOpenModal(true)}>
               Join now
             </Button>
           )}
