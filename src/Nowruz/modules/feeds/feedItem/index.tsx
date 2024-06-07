@@ -196,10 +196,10 @@ const FeedItem: React.FC<FeedItemProps> = ({
           <div className="px-6 flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-Gray-light-mode-600">
               {!!likedIdentities?.length && <AvatarGroup identities={likedIdentities} length={3} />}
-              {likesCount} {likesCount <= 1 ? 'like' : 'likes'}
+              {!!likesCount && `${likesCount} ${likesCount > 1 ? 'likes' : 'like'}`}
             </div>
             <span className="text-sm text-Gray-light-mode-600">
-              {commentsCount} {commentsCount <= 1 ? 'comment' : 'comments'}
+              {!!commentsCount && `${commentsCount} ${commentsCount > 1 ? 'comments' : 'comment'}`}
             </span>
           </div>
           <div className="px-6 pt-4 flex flex-col border-0 border-t border-solid border-Gray-light-mode-200">
