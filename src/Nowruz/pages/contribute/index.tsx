@@ -6,7 +6,7 @@ import { useContribute } from './useContribute';
 export const Contribute = () => {
   const { eligible, joined, newlyJoined, setNewlyJoined, setJoined } = useContribute();
 
-  if (joined || newlyJoined) return <ContributorDashboard newlyJoined={newlyJoined} setJoined={setJoined} />;
+  if (joined) return <ContributorDashboard newlyJoined={newlyJoined} setJoined={setJoined} />;
 
-  return <ContributorJoin eligible={eligible} setNewlyJoined={setNewlyJoined} />;
+  return <ContributorJoin eligible={eligible} setNewlyJoined={setNewlyJoined} setJoined={setJoined} />;
 };

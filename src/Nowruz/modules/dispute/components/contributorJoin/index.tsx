@@ -14,10 +14,14 @@ import { useContributorJoin } from './useContributorJoin';
 interface ContributorJoinProps {
   eligible: boolean;
   setNewlyJoined: (val: boolean) => void;
+  setJoined: (val: boolean) => void;
 }
 
-export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setNewlyJoined }) => {
-  const { checkItems, steps, openModal, setOpenModal, accepted, setAccepted } = useContributorJoin();
+export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setNewlyJoined, setJoined }) => {
+  const { checkItems, steps, openModal, setOpenModal, accepted, setAccepted, handleJoin } = useContributorJoin(
+    setJoined,
+    setNewlyJoined,
+  );
 
   const renderCheckItems = (title: string, desc: string) => {
     return (
@@ -72,8 +76,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
 
   const modalFooter = (
     <div className="w-full flex flex-col md:flex-row-reverse gap-3 pt-6 pb-4 px-4 md:pt-8 md:pb-6 md:px-6">
-      {/* TODO: Call API in click */}
-      <Button variant="contained" color="primary" fullWidth disabled={!accepted} onClick={() => setNewlyJoined(true)}>
+      <Button variant="contained" color="primary" fullWidth disabled={!accepted} onClick={handleJoin}>
         Join now
       </Button>
       <Button variant="outlined" color="primary" fullWidth onClick={() => setOpenModal(false)}>

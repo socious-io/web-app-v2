@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { JoinContribution } from 'src/core/api';
 
 import css from './contributorJoin.module.scss';
-export const useContributorJoin = () => {
+export const useContributorJoin = (setJoined: (val: boolean) => void, setNewlyJoined: (val: boolean) => void) => {
   const [openModal, setOpenModal] = useState(false);
   const [accepted, setAccepted] = useState(false);
 
@@ -53,5 +54,17 @@ export const useContributorJoin = () => {
       desc: "Once you've opted in, you will be granted access to the Contributor Dashboard. As new contributor roles become available, you'll have the opportunity to expand your involvement and make an even greater impact on the Socious platform.",
     },
   ];
-  return { checkItems, steps, openModal, setOpenModal, accepted, setAccepted };
+
+  const handleJoin = async () => {
+    try {
+      const res = await JoinContribution();
+      if (res.message === 'success') {
+        setJoined(true);
+        setNewlyJoined(true);
+      }
+    } catch (e) {
+      console.log('error in joining contribution', e);
+    }
+  };
+  return { checkItems, steps, openModal, setOpenModal, accepted, setAccepted, handleJoin };
 };

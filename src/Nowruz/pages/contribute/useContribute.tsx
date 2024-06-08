@@ -7,7 +7,7 @@ export const useContribute = () => {
   const eligible = user.impact_points >= 10000;
 
   // TODO: setJoined based on this proprty in profile res: is_contributor whenever BE is ready
-  const [joined, setJoined] = useState(true);
+  const [joined, setJoined] = useState(false);
 
   const [newlyJoined, setNewlyJoined] = useState(false);
 
