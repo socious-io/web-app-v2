@@ -104,10 +104,22 @@
 }
 
 .error {
+    color: $color-white;
+
     &:global(.MuiButton-root) {
+        background-color: $color-error-600;
+
+        &:hover {
+            background-color: $color-error-700;
+        }
+
+        &:focus {
+            background-color: $color-error-600;
+            box-shadow: $focus-ring-error-shadow-xs;
+        }
+
         &:disabled {
             background-color: $color-error-200;
-            color: $color-white;
             cursor: not-allowed;
         }
     }

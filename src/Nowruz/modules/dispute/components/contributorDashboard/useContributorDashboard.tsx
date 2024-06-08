@@ -2,14 +2,15 @@ import { Cell, ColumnDef, getCoreRowModel, useReactTable } from '@tanstack/react
 import { useEffect, useMemo, useState } from 'react';
 import variables from 'src/components/_exports.module.scss';
 import { Dispute } from 'src/core/api';
-import { disputes } from 'src/core/api/disputes/disputes.api';
+import { disputes, LeaveContribution } from 'src/core/api/disputes/disputes.api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
 
-export const useContributorDashboard = () => {
+export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
   const [stopNotif, setStopNotif] = useState(false);
   const [list, setList] = useState<Dispute[]>([]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const getDisputes = async () => {
@@ -125,5 +126,14 @@ export const useContributorDashboard = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  return { stopNotif, setStopNotif, list, table };
+  const handleLeave = async () => {
+    try {
+      const res = await LeaveContribution();
+      if (res.message === 'success') setJoined(false);
+    } catch (e) {
+      console.log('error in leaving contribution', e);
+    }
+  };
+
+  return { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave };
 };

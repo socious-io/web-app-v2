@@ -4,10 +4,12 @@ import { UserProfile } from 'src/core/api';
 
 export const useContribute = () => {
   const { user } = useLoaderData() as { user: UserProfile };
-  const eligible = true; // user.impact_points >= 10000;
-  const joined = true;
+  const eligible = user.impact_points >= 10000;
+
+  // TODO: setJoined based on this proprty in profile res: is_contributor whenever BE is ready
+  const [joined, setJoined] = useState(true);
 
   const [newlyJoined, setNewlyJoined] = useState(false);
 
-  return { eligible, joined, newlyJoined, setNewlyJoined };
+  return { eligible, newlyJoined, setNewlyJoined, joined, setJoined };
 };
