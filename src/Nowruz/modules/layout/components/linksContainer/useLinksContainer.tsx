@@ -60,9 +60,15 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     },
     {
       label: 'Contracts',
-      route: '/contracts',
+      route: '',
       iconName: 'file-02',
       public: false,
+      children: userIsLoggedIn
+        ? [
+            { label: 'Overview', route: '/contracts', public: false },
+            { label: 'Disputes', route: '/disputes', public: false },
+          ]
+        : [],
     },
 
     {
