@@ -18,3 +18,7 @@ export async function JoinContribution(): Promise<SuccessRes> {
 export async function LeaveContribution(): Promise<SuccessRes> {
   return (await post<SuccessRes>('contributions/leave', {})).data;
 }
+
+export async function dispute(id: string): Promise<Dispute> {
+  return (await get<Dispute>(`disputes/${id}`)).data;
+}
