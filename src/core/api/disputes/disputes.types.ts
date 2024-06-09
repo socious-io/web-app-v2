@@ -10,6 +10,8 @@ export interface DisputeEvent {
   type: 'MESSAGE' | 'RESPONSE' | 'WITHDRAW' | 'VOTE';
   vote_side: null;
   evidences: Media[];
+  createDate: Date;
+  creator: Identity;
 }
 
 export interface DisputeReq {
@@ -24,7 +26,7 @@ export interface Dispute {
   title: string;
   state: 'AWAITING_RESPONSE' | 'PENDING_REVIEW' | 'RESOLVED' | 'WITHDRAWN';
   code: string;
-  direction: 'received' | 'submitted';
+  direction: 'received' | 'submitted' | 'juror';
   claimant: Identity;
   respondent: Identity;
   events: DisputeEvent[];
