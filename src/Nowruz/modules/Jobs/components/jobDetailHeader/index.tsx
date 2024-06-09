@@ -18,7 +18,7 @@ import css from './jobDetailHeader.module.scss';
 interface JobDetailHeaderProps {
   job: Job;
   applied?: boolean;
-  handleOpenApplyModal: () => void;
+  handleOpenApplyModal?: () => void;
 }
 
 export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, handleOpenApplyModal }) => {
