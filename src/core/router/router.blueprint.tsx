@@ -495,7 +495,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { Feeds } = await import('src/Nowruz/pages/feeds');
               return {
-                Component: Protect(Feeds, 'users'),
+                Component: Protect(Feeds, 'both'),
               };
             },
           },

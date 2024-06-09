@@ -18,11 +18,11 @@ export const UseFeeds = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [currentPosts, setCurrentPosts] = useState(postsResponse.items || []);
   const [currentPage, setCurrentPage] = useState(page);
-  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState<{ create: boolean; edit: boolean }>({ create: false, edit: false });
   const showSeeMore = currentPosts.length < total_count;
 
   const handleOpenCreateModal = () => {
-    setShowSnackbar(false);
+    setShowSnackbar({ create: false, edit: false });
     setOpenCreateModal(true);
   };
 
@@ -33,7 +33,7 @@ export const UseFeeds = () => {
       const { items } = (await posts({ page })) || [];
       if (items.length) {
         setCurrentPosts(items);
-        setShowSnackbar(true);
+        setShowSnackbar({ create: true, edit: false });
       }
     } catch (error) {
       console.log('error in fetching posts', error);
@@ -92,6 +92,7 @@ export const UseFeeds = () => {
         return item;
       }
     });
+    setShowSnackbar({ create: false, edit: true });
     setCurrentPosts(mappedClone);
   };
 

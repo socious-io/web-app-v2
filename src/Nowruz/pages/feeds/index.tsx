@@ -59,11 +59,11 @@ export const Feeds = () => {
       </div>
       <CreatePostModal open={openCreateModal} handleClose={handleCloseCreateModal} onCreatePost={onCreatePost} />
       <CustomSnackbar
-        open={showSnackbar}
-        onClose={() => setShowSnackbar(false)}
+        open={showSnackbar.create || showSnackbar.edit}
+        onClose={() => setShowSnackbar({ create: false, edit: false })}
         autoHideDuration={6000}
         icon={<FeaturedIconOutlined iconName="check-circle" size="md" theme="primary" />}
-        text="Post successfully published"
+        text={`Post successfully ${showSnackbar.create ? 'published' : 'updated'}`}
       />
     </FeedsProvider>
   );

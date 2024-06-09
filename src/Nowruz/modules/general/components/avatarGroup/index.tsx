@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserMeta } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 
 import { AvatarGroupProps } from './index.types';
 import { Avatar } from '../avatar/avatar';
@@ -12,15 +12,18 @@ const AvatarGroup: React.FC<AvatarGroupProps> = ({
 }) => {
   return (
     <div className="flex items-center">
-      {identities.slice(0, length).map(identity => (
-        <Avatar
-          key={identity.id}
-          size={size}
-          type={identity.type || 'users'}
-          img={(identity.meta as UserMeta)?.avatar}
-          customStyle={`ml-[-8px] ${customStyle}`}
-        />
-      ))}
+      {identities.slice(0, length).map(identity => {
+        const { profileImage } = getIdentityMeta(identity);
+        return (
+          <Avatar
+            key={identity.id}
+            size={size}
+            type={identity.type || 'users'}
+            img={profileImage || ''}
+            customStyle={`ml-[-8px] ${customStyle}`}
+          />
+        );
+      })}
     </div>
   );
 };
