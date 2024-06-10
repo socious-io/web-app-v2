@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
-import { CurrentIdentity, Dispute } from 'src/core/api';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { Dispute, withdrawDispute, dispute as getDisputeApi } from 'src/core/api';
 import { addDaysToDate, formatDateToCustomUTC } from 'src/core/time';
-import { RootState } from 'src/store';
 
 export const useDisputeDetail = () => {
   const WAIT_TO_RESPOND_DAYS = 3;
   const { disputeRes } = useLoaderData() as { disputeRes: Dispute };
+  const [openModal, setOpenModal] = useState(false);
   const [dispute, setDispute] = useState(disputeRes);
   const [alertInfo, setAlertInfo] = useState<{
     title: string;
@@ -15,14 +14,13 @@ export const useDisputeDetail = () => {
     subtitle: string;
     theme: 'warning' | 'gray';
   }>({ title: '', subtitleName: '', subtitle: '', theme: 'warning' });
-  const identity = useSelector<RootState, CurrentIdentity | undefined>(state =>
-    state.identity.entities.find(item => item.current),
-  );
 
+  const navigate = useNavigate();
+  const displayActionButtons = dispute.state === 'AWAITING_RESPONSE' && dispute.direction === 'submitted';
   const getAlertStatus = () => {
     switch (dispute.state) {
       case 'AWAITING_RESPONSE':
-        if (identity?.id === dispute.claimant.id)
+        if (dispute.direction === 'submitted')
           setAlertInfo({
             title: 'Awaiting response from respondent',
             subtitleName: dispute.respondent.meta.name,
@@ -36,13 +34,47 @@ export const useDisputeDetail = () => {
       case 'PENDING_REVIEW':
       case 'RESOLVED':
       case 'WITHDRAWN':
+        setAlertInfo({
+          title: 'Dispute withdrawn',
+          subtitleName: '',
+          subtitle: `${
+            dispute.direction === 'submitted' ? 'You' : dispute.claimant.meta.name
+          } withdrew this dispute on ${formatDateToCustomUTC(dispute.updated_at)}`,
+          theme: 'gray',
+        });
         break;
     }
   };
 
+  const handleWithdraw = async () => {
+    try {
+      await withdrawDispute(dispute.id);
+      const res = await getDisputeApi(dispute.id);
+      setDispute(res);
+    } catch (e) {
+      console.log('error in withdrawing dispute');
+    }
+    setOpenModal(false);
+  };
+
   useEffect(() => {
     getAlertStatus();
-  }, []);
+  }, [dispute]);
 
-  return { dispute, alertInfo };
+  const redirectToChat = () => {
+    let id = '';
+    switch (dispute.direction) {
+      case 'submitted':
+        id = dispute.respondent.id;
+        break;
+      case 'received':
+        id = dispute.claimant.id;
+        break;
+      case 'juror':
+        break;
+    }
+    id && navigate(`/chats?participantId=${id}`);
+  };
+
+  return { dispute, alertInfo, openModal, setOpenModal, displayActionButtons, handleWithdraw, redirectToChat };
 };

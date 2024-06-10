@@ -24,7 +24,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivide
 
         <div className="w-1/2 flex-1 ">{displayDivider && <Divider orientation="vertical" />}</div>
       </div>
-      <div className="flex flex-col gap-3 w-full">
+      <div className="flex flex-col gap-3 w-full pb-8">
         <div className="flex flex-col">
           <div className="flex gap-2">
             <span className="text-sm font-medium leading-5 text-Gray-light-mode-700">{myEvent ? 'You' : name}</span>
@@ -39,7 +39,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivide
             )}
           </div>
         </div>
-        {event.message && (
+        {!!event.message && (
           <div className="border border-solid border-Gray-light-mode-200 rounded-default rounded-tl-none px-3 py-2.5 ">
             <ExpandableText
               text={event.message}
@@ -49,14 +49,13 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivide
             />
           </div>
         )}
-        {event.evidences.length && (
+        {!!event.evidences.length && (
           <div className="flex flex-wrap gap-5">
             {event.evidences?.map(item => {
               const file = getFileIcon(item.url);
               return (
                 <div key={item.id} className="flex gap-3">
                   <img src={file.icon} alt="" />
-
                   <a
                     href={item.url}
                     download
@@ -64,7 +63,6 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivide
                     className="text-sm font-medium leading-5 text-Gray-light-mode-900 cursor-pointer"
                     rel="noreferrer"
                   >
-                    {' '}
                     {file.name}
                   </a>
                 </div>
