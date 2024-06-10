@@ -24,6 +24,7 @@ import {
   CurrentIdentity,
   OrgMeta,
   disputes,
+  invitations,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -516,20 +517,41 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: '/:id/contribute',
-            loader: async ({ params }) => {
-              if (params.id) {
-                const user = await otherProfileByUsername(params.id);
-                return {
-                  user,
-                };
-              }
-            },
-            async lazy() {
-              const { Contribute } = await import('src/Nowruz/pages/contribute');
-              return {
-                Component: Protect(Contribute, 'users'),
-              };
-            },
+            children: [
+              {
+                path: '',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const user = await otherProfileByUsername(params.id);
+                    return {
+                      user,
+                    };
+                  }
+                },
+                async lazy() {
+                  const { Contribute } = await import('src/Nowruz/pages/contribute');
+                  return {
+                    Component: Protect(Contribute, 'users'),
+                  };
+                },
+              },
+              {
+                path: 'center',
+                loader: async () => {
+                  const [jurorDisputes, jurorInvitations] = await Promise.all([
+                    disputes({ limit: 10, page: 1, 'filter.direction': 'juror' }),
+                    invitations({ limit: 10, page: 1 }),
+                  ]);
+                  return { jurorDisputes, jurorInvitations };
+                },
+                async lazy() {
+                  const { ContributeCenter } = await import('src/Nowruz/pages/contribute/contributeCenter');
+                  return {
+                    Component: Protect(ContributeCenter, 'users'),
+                  };
+                },
+              },
+            ],
           },
           {
             path: 'feeds',
