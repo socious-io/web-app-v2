@@ -14,8 +14,7 @@ export const DisputeDetail = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(item => item.current),
   );
-  const { dispute, alertInfo, openModal, setOpenModal, displayActionButtons, handleWithdraw, redirectToChat } =
-    useDisputeDetail();
+  const { dispute, alertInfo, openModal, setOpenModal, primaryBtn, secondaryBtn, handleWithdraw } = useDisputeDetail();
   return (
     <>
       <div className="pt-8 pb-12 px-4 md:px-8 flex flex-col gap-8">
@@ -26,7 +25,6 @@ export const DisputeDetail = () => {
               // TODO: add back to dispute list
               // onBack={}
               block={false}
-              //  customStyle?: string;
             />
           </div>
           <div className="flex flex-col gap-4 md:gap-6">
@@ -34,16 +32,20 @@ export const DisputeDetail = () => {
               <span className="text-2xl font-semibold leading-8 text-Gray-light-mode-900">{dispute.code}</span>
               <span className="text-base font-normal leading-6 text-Gray-light-mode-600">{dispute.title}</span>
             </div>
-            {displayActionButtons && (
-              <div className="flex flex-col gap-3 md:hidden">
-                <Button variant="outlined" color="primary" onClick={() => setOpenModal(true)}>
-                  Withdraw
+
+            <div className="flex flex-col gap-3 md:hidden">
+              {secondaryBtn?.display && (
+                <Button variant="outlined" color="primary" onClick={secondaryBtn.action}>
+                  {secondaryBtn.label}
                 </Button>
-                <Button variant="contained" color="primary" onClick={redirectToChat}>
-                  Message
+              )}
+              {primaryBtn?.display && (
+                <Button variant="contained" color="primary" onClick={primaryBtn.action}>
+                  {primaryBtn.label}
                 </Button>
-              </div>
-            )}
+              )}
+            </div>
+
             {alertInfo.title && (
               <div
                 className={`flex flex-col md:flex-row gap-4 rounded-xl p-4 items-start border border-solid border-Gray-light-mode-300 shadow-Shadows/shadow-xs  `}
@@ -76,16 +78,18 @@ export const DisputeDetail = () => {
                 <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">xxxxxxxxxxxxxx</span>
               </div>
             </div>
-            {displayActionButtons && (
-              <div className="hidden md:flex mt-8 md:flex-col gap-3">
-                <Button variant="outlined" color="primary" onClick={() => setOpenModal(true)}>
-                  Withdraw
+            <div className="hidden md:flex mt-8 md:flex-col gap-3">
+              {secondaryBtn?.display && (
+                <Button variant="outlined" color="primary" onClick={secondaryBtn.action}>
+                  {secondaryBtn.label}
                 </Button>
-                <Button variant="contained" color="primary" onClick={redirectToChat}>
-                  Message
+              )}
+              {primaryBtn?.display && (
+                <Button variant="contained" color="primary" onClick={primaryBtn.action}>
+                  {primaryBtn.label}
                 </Button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           <div className="flex flex-1 flex-col">

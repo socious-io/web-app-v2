@@ -506,7 +506,7 @@ export const blueprint: RouteObject[] = [
                 async lazy() {
                   const { DisputeDetail } = await import('src/Nowruz/pages/disputes/disputeDetail');
                   return {
-                    Component: Protect(DisputeDetail, 'users'),
+                    Component: Protect(DisputeDetail, 'both'),
                   };
                 },
               },

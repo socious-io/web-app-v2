@@ -15,12 +15,15 @@ export const useDisputeDetail = () => {
     theme: 'warning' | 'gray';
   }>({ title: '', subtitleName: '', subtitle: '', theme: 'warning' });
 
+  const [primaryBtn, setPrimaryBtn] = useState<{ label: string; display: boolean; action?: () => void }>();
+  const [secondaryBtn, setSecondaryBtn] = useState<{ label: string; display: boolean; action?: () => void }>();
+
   const navigate = useNavigate();
-  const displayActionButtons = dispute.state === 'AWAITING_RESPONSE' && dispute.direction === 'submitted';
-  const getAlertStatus = () => {
+
+  const initialize = () => {
     switch (dispute.state) {
       case 'AWAITING_RESPONSE':
-        if (dispute.direction === 'submitted')
+        if (dispute.direction === 'submitted') {
           setAlertInfo({
             title: 'Awaiting response from respondent',
             subtitleName: dispute.respondent.meta.name,
@@ -29,10 +32,44 @@ export const useDisputeDetail = () => {
             )} to respond to your dispute.`,
             theme: 'warning',
           });
+          setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
+          setSecondaryBtn({ label: 'Withdraw', display: true, action: () => setOpenModal(true) });
+        } else if (dispute.direction === 'received') {
+          setAlertInfo({
+            title: 'Awaiting response from you',
+            subtitleName: '',
+            subtitle: `You have until ${formatDateToCustomUTC(
+              addDaysToDate(dispute.created_at, WAIT_TO_RESPOND_DAYS),
+            )} to respond to your dispute. Failure to respond may result in a default judgment in favor of the claimant.`,
+            theme: 'warning',
+          });
+          setPrimaryBtn({
+            label: 'Submit response',
+            display: true,
+            // TODO: add open response modal
+            //action: () => { }
+          });
+          setSecondaryBtn({ label: 'Message', display: true, action: redirectToChat });
+        }
         break;
-      // TODO: complete function based on dispute status in later tickets
       case 'PENDING_REVIEW':
+        setAlertInfo({
+          title: 'Pending review from jurors',
+          subtitleName: '',
+          subtitle: `Your response has been successfully recorded and is now awaiting for review from jurors. Once assigned, jurors have 7 days to reach a decision.`,
+          theme: 'warning',
+        });
+        setPrimaryBtn({
+          label: 'Message',
+          display: true,
+          action: redirectToChat,
+        });
+        setSecondaryBtn({ label: '', display: false });
+        // TODO: complete function based on dispute status in later tickets
+        break;
       case 'RESOLVED':
+        // TODO: complete function based on dispute status in later tickets
+        break;
       case 'WITHDRAWN':
         setAlertInfo({
           title: 'Dispute withdrawn',
@@ -42,6 +79,8 @@ export const useDisputeDetail = () => {
           } withdrew this dispute on ${formatDateToCustomUTC(dispute.updated_at)}`,
           theme: 'gray',
         });
+        setPrimaryBtn({ label: '', display: false });
+        setSecondaryBtn({ label: '', display: false });
         break;
     }
   };
@@ -58,7 +97,7 @@ export const useDisputeDetail = () => {
   };
 
   useEffect(() => {
-    getAlertStatus();
+    initialize();
   }, [dispute]);
 
   const redirectToChat = () => {
@@ -76,5 +115,5 @@ export const useDisputeDetail = () => {
     id && navigate(`/chats?participantId=${id}`);
   };
 
-  return { dispute, alertInfo, openModal, setOpenModal, displayActionButtons, handleWithdraw, redirectToChat };
+  return { dispute, alertInfo, openModal, setOpenModal, primaryBtn, secondaryBtn, handleWithdraw };
 };
