@@ -14,8 +14,7 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
 
   useEffect(() => {
     const getDisputes = async () => {
-      // TODO: filter dispute and get those with 'jury' direction
-      const res = await disputes({ page: 1, limit: 5 });
+      const res = await disputes({ page: 1, limit: 5, 'filter.direction': 'juror' });
       setList(res.items);
     };
     getDisputes();

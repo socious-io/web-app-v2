@@ -24,7 +24,7 @@ export interface Dispute {
   title: string;
   state: 'AWAITING_RESPONSE' | 'PENDING_REVIEW' | 'RESOLVED' | 'WITHDRAWN';
   code: string;
-  direction: 'received' | 'submitted';
+  direction: 'received' | 'submitted' | 'juror';
   claimant: Identity;
   respondent: Identity;
   events: DisputeEvent[];
