@@ -90,8 +90,8 @@ export const useExperience = () => {
       [id]: true,
     }));
     try {
-      const { url } = await claimExperienceVC(id);
-      setClaimUrl(url);
+      const { short_url } = await claimExperienceVC(id);
+      setClaimUrl(short_url);
     } catch (error) {
       console.log('error in claiming experience VC', error);
     }

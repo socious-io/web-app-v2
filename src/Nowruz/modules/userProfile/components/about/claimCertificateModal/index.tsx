@@ -13,6 +13,7 @@ interface ClaimCertificateModalProps {
   handleClose: () => void;
   handleClaimVC: () => void;
 }
+
 export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
   open,
   link,
@@ -67,7 +68,7 @@ export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
                 className="cursor-pointer"
               />
             </Link>
-            <Link to="https://wallet.socious.io/andriod" target="_blank">
+            <Link to="https://wallet.socious.io/android" target="_blank">
               <img
                 src="/images/download-googleplay.svg"
                 alt="google-play"

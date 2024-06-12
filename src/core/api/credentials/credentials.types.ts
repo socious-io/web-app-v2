@@ -32,6 +32,7 @@ export interface CredentialEducationRes {
 export interface ClaimVCRes {
   id: string;
   url: string;
+  short_url: string;
 }
 
 export interface CredentialExperiencePaginateRes extends PaginateRes {
@@ -47,6 +48,7 @@ export interface RequestVerificationRes {
   identity_id: string;
   connection_id: string;
   connection_url: string;
+  short_url: string;
   present_id: string;
   body: null;
   created_at: Date;
