@@ -12,10 +12,11 @@ import { useTimelineItem } from './useTimelineItem';
 export interface TimelineItemProps {
   event: DisputeEvent;
   displayDivider?: boolean;
+  disputeDirection: 'received' | 'submitted' | 'juror';
 }
 
-export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivider = true }) => {
-  const { name, type, profileImage, myEvent, getEventTitle, getFileIcon } = useTimelineItem(event);
+export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivider = true, disputeDirection }) => {
+  const { name, type, profileImage, myEvent, getEventTitle, getFileIcon } = useTimelineItem(event, disputeDirection);
   const title = getEventTitle();
   return (
     <div className="w-full flex gap-3">
@@ -29,15 +30,14 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivide
           <div className="flex gap-2">
             <span className="text-sm font-medium leading-5 text-Gray-light-mode-700">{myEvent ? 'You' : name}</span>
             <span className="text-xs font-medium leading-[18px] text-Gray-light-mode-600">
-              {toRelativeTime(event.createDate.toString())}
+              {toRelativeTime(event.created_at.toString())}
             </span>
           </div>
-          <div className="flex">
-            <span className="text-sm font-medium leading-5 text-Gray-light-mode-600">{title.text}</span>
-            {title.supportingText && (
-              <span className="text-sm font-medium leading-5 text-Brand-700">{title.supportingText}</span>
-            )}
-          </div>
+
+          <span className="text-sm font-medium leading-5 text-Gray-light-mode-600">
+            {`${title.text} `}
+            {title.supportingText && <span className="text-Brand-700">{title.supportingText}</span>}
+          </span>
         </div>
         {!!event.message && (
           <div className="border border-solid border-Gray-light-mode-200 rounded-default rounded-tl-none px-3 py-2.5 ">

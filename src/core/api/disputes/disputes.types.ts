@@ -10,7 +10,7 @@ export interface DisputeEvent {
   type: 'MESSAGE' | 'RESPONSE' | 'WITHDRAW' | 'VOTE';
   vote_side: null;
   evidences: Media[];
-  createDate: Date;
+  created_at: Date;
   creator: Identity;
 }
 
@@ -24,7 +24,7 @@ export interface DisputeReq {
 export interface Dispute {
   id: string;
   title: string;
-  state: 'AWAITING_RESPONSE' | 'PENDING_REVIEW' | 'RESOLVED' | 'WITHDRAWN';
+  state: 'AWAITING_RESPONSE' | 'PENDING_REVIEW' | 'DECISION_SUBMITTED' | 'WITHDRAWN';
   code: string;
   direction: 'received' | 'submitted' | 'juror';
   claimant: Identity;
@@ -32,6 +32,18 @@ export interface Dispute {
   events: DisputeEvent[];
   created_at: Date;
   updated_at: Date;
+  contract: {
+    id: string;
+    name: string;
+  };
+  category: {
+    id: string;
+    name: string;
+  };
+  jury: {
+    voted: number;
+    members: number;
+  };
 }
 
 export interface DisputesRes extends PaginateRes {

@@ -26,3 +26,6 @@ export async function LeaveContribution(): Promise<SuccessRes> {
 export async function withdrawDispute(id: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`disputes/${id}/withdraw`, {})).data;
 }
+export async function vote(id: string, vote_side: 'CLAIMANT' | 'RESPONDENT'): Promise<Dispute> {
+  return (await post<Dispute>(`disputes/${id}/vote?vote_side=${vote_side}`, {})).data;
+}

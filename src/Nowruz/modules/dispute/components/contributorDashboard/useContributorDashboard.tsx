@@ -49,11 +49,11 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
         },
       },
       {
-        id: 'code',
+        id: 'category',
         header: <p className="text-xs">Category</p>,
-        accessorKey: 'code',
+        accessorKey: 'category',
         cell: function render({ getValue }) {
-          return <div className="flex justify-start items-center"></div>;
+          return <div className="flex justify-start items-center">{getValue()}</div>;
         },
       },
       {
@@ -101,19 +101,19 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
         },
       },
       {
-        id: 'id',
+        id: 'contract-id',
         header: <p className="text-xs">Contract ID</p>,
-        accessorKey: 'id',
+        accessorKey: 'contract',
         cell: function render({ getValue }) {
-          return <div className="flex justify-start items-center"></div>;
+          return <div className="flex justify-start items-center">{getValue().id}</div>;
         },
       },
       {
-        id: 'id',
+        id: 'contract-name',
         header: <p className="text-xs">Contract name</p>,
-        accessorKey: 'id',
+        accessorKey: 'contract',
         cell: function render({ getValue }) {
-          return <div className="flex justify-start items-center"></div>;
+          return <div className="flex justify-start items-center">{getValue().name}</div>;
         },
       },
     ],

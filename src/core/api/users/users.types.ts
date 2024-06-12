@@ -132,6 +132,7 @@ export interface UserProfile extends User {
   follower: boolean;
   connection_status: ConnectStatus | null;
   connection_id: string;
+  is_contributor: boolean;
 }
 
 export interface Language extends LanguageReq {
