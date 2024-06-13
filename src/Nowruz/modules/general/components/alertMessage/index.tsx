@@ -5,9 +5,18 @@ import css from './alertMessage.module.scss';
 import { AlertMessageProps } from './alertMessage.types';
 import { FeaturedIconOutlined } from '../featuredIconOutlined';
 
-export const AlertMessage: React.FC<AlertMessageProps> = ({ theme, iconName, title, subtitle, children }) => {
+export const AlertMessage: React.FC<AlertMessageProps> = ({
+  theme,
+  iconName,
+  title,
+  subtitle,
+  children,
+  colOrderMobileView,
+}) => {
   return (
-    <div className={`${css.container} ${css[`container-${theme}`]}`}>
+    <div
+      className={`${css.container} ${css[`container-${theme}`]} ${colOrderMobileView ? ' flex-col md:flex-row' : ''}`}
+    >
       <FeaturedIconOutlined iconName={iconName} size="md" theme={theme} />
       <div className="flex flex-col gap-1">
         <span className={`${css.title} ${css[`title-${theme}`]}`}>{title}</span>

@@ -55,7 +55,7 @@ const ReportPost: React.FC<ReportPostProps> = ({ open, handleClose, onReportPost
       customStyle="max-w-[480px]"
       contentClassName="px-4 md:px-6 flex flex-col"
     >
-      <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">Repost this post</span>
+      <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">Report this post</span>
       <p className="text-sm text-Gray-light-mode-600 mt-1">
         Are you sure you want to report this post?
         <br /> Select a reason that applies.

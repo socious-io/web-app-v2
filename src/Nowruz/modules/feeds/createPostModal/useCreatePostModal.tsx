@@ -46,6 +46,9 @@ export const useCreatePostModal = (
     title: false,
     content: false,
   });
+  const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState('');
+
   const {
     handleSubmit,
     formState: { errors },
@@ -70,6 +73,7 @@ export const useCreatePostModal = (
       file: data?.file?.id || '',
       title: data?.title || '',
     };
+    data?.file?.url && setSelectedFile(data.file.url);
     reset(initialVal);
   };
 
@@ -82,22 +86,32 @@ export const useCreatePostModal = (
   const onUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
     const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-    const fileExtension = (e.target.files && e.target.files[0]?.name.split('.').pop()?.toLowerCase()) || '';
+    const file = e.target.files?.[0];
     clearErrors('file');
-    if (!e.target.files || e.target.files.length === 0) {
+    setSelectedFile('');
+    if (!file) {
       setValue('file', null);
       return;
-    } else if (e.target.files[0].size > MAX_IMAGE_SIZE) {
-      setError('file', { message: 'Image should be less than 5MB' });
-      setValue('file', null);
-      return;
-    } else if (!allowedExtensions.includes(fileExtension)) {
-      setError('file', { message: 'Image should has jpg/jpeg/png/gif format' });
     }
-    setValue('file', e.target.files[0]);
+    const fileExtension = file?.name.split('.').pop()?.toLowerCase() || '';
+    if (file.size > MAX_IMAGE_SIZE) {
+      setError('file', { message: 'This image too big, maximum file size is 10MB.' });
+      setValue('file', null);
+    } else if (!allowedExtensions.includes(fileExtension)) {
+      setError('file', { message: 'Image should have jpg/jpeg/png/gif format' });
+    } else {
+      setValue('file', file);
+      setSelectedFile(URL.createObjectURL(file));
+    }
+  };
+
+  const onRemoveSelectedFile = () => {
+    setValue('file', null);
+    setSelectedFile('');
   };
 
   const onSubmitPost: SubmitHandler<Form> = async ({ cause, title, content, file }) => {
+    setLoading(true);
     try {
       let mediaId = '';
       let mediaUrl = '';
@@ -109,7 +123,7 @@ export const useCreatePostModal = (
         mediaId = file;
         mediaUrl = data?.file?.url || '';
       } else {
-        return;
+        mediaId = '';
       }
       if (data) {
         await updatePost(data.postId, {
@@ -129,10 +143,12 @@ export const useCreatePostModal = (
         onCreatePost();
       }
       handleClose();
+      setSelectedFile('');
       reset();
     } catch (error) {
       console.log('error in creating post', error);
     }
+    setLoading(false);
   };
 
   return {
@@ -144,14 +160,17 @@ export const useCreatePostModal = (
       causeVal,
       titleVal,
       contentVal,
+      selectedFile,
       openEmojiPicker,
       focusElements,
+      loading,
       errors,
     },
     operations: {
       onSelectCause,
       onTextChange,
       onUploadImage,
+      onRemoveSelectedFile,
       setFocusElements,
       setOpenEmojiPicker,
       handleSubmit,

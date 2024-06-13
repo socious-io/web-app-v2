@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity, identities, OrgMeta } from 'src/core/api';
+import { CurrentIdentity, identities, OrgMeta, UserMeta } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import Badge from 'src/Nowruz/modules/general/components/Badge';
@@ -70,15 +70,12 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
       route: '',
       iconName: 'users-01',
       public: false,
-      // children: userIsLoggedIn
-      //   ? currentIdentity?.type === 'users'
-      //     ? [
-      //         { label: 'Feeds', route: '/feeds', public: false },
-      //         { label: 'Connections', route: '/connections', public: false },
-      //       ]
-      //     : [{ label: 'Connections', route: '/connections', public: false }]
-      //   : [],
-      children: userIsLoggedIn ? [{ label: 'Connections', route: '/connections', public: false }] : [],
+      children: userIsLoggedIn
+        ? [
+            { label: 'Feeds', route: '/feeds', public: false },
+            { label: 'Connections', route: '/connections', public: false },
+          ]
+        : [],
     },
 
     {
@@ -102,13 +99,22 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     },
   ];
 
-  if (currentIdentity?.type === 'users')
-    menu.push({
-      label: 'Refer and earn',
-      route: '/referral',
-      iconName: 'star-06',
-      public: false,
-    });
+  if (currentIdentity?.type === 'users') {
+    menu.push(
+      {
+        label: 'Refer and earn',
+        route: '/referral',
+        iconName: 'star-06',
+        public: false,
+      },
+      {
+        label: 'Contributor',
+        route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
+        iconName: 'heart-hand',
+        public: false,
+      },
+    );
+  }
   let filteredMenu = userIsLoggedIn ? menu : menu.filter(item => item.public);
 
   // filter menu for role items

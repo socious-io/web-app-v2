@@ -49,7 +49,7 @@ export const useApplicantAction = (
     setSearchTerm('');
     setColumnVisibility({ select: currentTab === 'applicants' });
     setApplicantsList(applicants.items);
-  }, [currentTab]);
+  }, [currentTab, applicants]);
 
   const statusObj = {
     applicants: 'PENDING',

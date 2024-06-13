@@ -48,7 +48,6 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
     PER_PAGE,
     handleChangeSearchTerm,
   } = useApplicantAction(jobId, applicants, currentTab, onRefetch);
-
   return (
     <div className="hidden md:block border-Gray-light-mode-200 border-solid border-b rounded-lg">
       <div className="p-4 flex items-center">

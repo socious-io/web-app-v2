@@ -63,7 +63,7 @@ const RepostModal: React.FC<RepostModalProps> = ({ data, open, handleClose, onRe
       footer={footerModalJSX}
       headerDivider={false}
       contentClassName="h-full"
-      customStyle="relative"
+      customStyle="relative md:!max-h-[400px]"
     >
       <div className="p-6 pt-0 flex flex-col gap-4">
         <textarea
