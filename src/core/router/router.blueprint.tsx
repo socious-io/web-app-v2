@@ -816,18 +816,8 @@ function DefaultRoute() {
 }
 
 function ErrorBoundary() {
-  const flag = 'refreshed';
-  const refreshed = localStorage.getItem(flag);
-
-  if (!refreshed) {
-    localStorage.setItem(flag, `${new Date().getTime()}`);
-    window.location.reload();
-    return <></>;
-  }
-
   const error: any = useRouteError();
   if (error?.response?.status === 401) return <Navigate to="/intro" />;
-  console.log(error);
   return <FallBack />;
 }
 
