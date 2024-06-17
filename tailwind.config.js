@@ -512,15 +512,7 @@ export default {
       '4xl': '1.5rem',
       full: '9999px',
     },
-    // spacing: {
-    //   xxs: '2px',
-    //   xs: '4px',
-    //   sm: '6px',
-    //   md: '8px',
-    //   lg: '12px',
-    //   xl: '16px',
 
-    // },
     extend: {
       spacing: {
         '2xl': '20px',

@@ -22,7 +22,13 @@ export interface DisputeReq {
 export interface Dispute {
   id: string;
   title: string;
-  state: 'AWAITING_RESPONSE' | 'PENDING_REVIEW' | 'RESOLVED' | 'WITHDRAWN';
+  state:
+    | 'AWAITING_RESPONSE'
+    | 'JUROR_SELECTION'
+    | 'JUROR_RESELECTION'
+    | 'PENDING_REVIEW'
+    | 'WITHDRAWN'
+    | 'DECISION_SUBMITTED';
   code: string;
   direction: 'received' | 'submitted' | 'juror';
   claimant: Identity;
