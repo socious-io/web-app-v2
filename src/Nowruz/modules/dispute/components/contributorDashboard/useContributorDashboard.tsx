@@ -35,9 +35,9 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
         return { label: 'Awaiting response', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
       // TODO: check new status results in design
       case 'JUROR_SELECTION':
-        return { label: 'Juror Selection', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
+        return { label: 'Juror selection', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
       case 'JUROR_RESELECTION':
-        return { label: 'Juror Reselection', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
+        return { label: 'Juror selection', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
       case 'PENDING_REVIEW':
         return { label: 'Pending review', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
       case 'DECISION_SUBMITTED':
