@@ -24,6 +24,7 @@ export const Modal: React.FC<ModalProps> = props => {
     id = '',
     inlineTitle = true,
     contentClassName = '',
+    closeButtonClassName = '',
   } = props;
 
   return (
@@ -43,7 +44,10 @@ export const Modal: React.FC<ModalProps> = props => {
                   {subTitle && <h2 className={css.subtitle}>{subTitle}</h2>}
                 </div>
               )}
-              <IconButton className={`absolute top-3 right-3 ${css.closeBtn}`} onClick={handleClose}>
+              <IconButton
+                className={`absolute top-3 right-3 ${css.closeBtn} ${closeButtonClassName}`}
+                onClick={handleClose}
+              >
                 <Icon name="x-close" fontSize={24} color={variables.color_grey_500} />
               </IconButton>
             </div>
