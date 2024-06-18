@@ -10,7 +10,7 @@ import { useSubmitDecisionModal } from './useSubmitDecisionModal';
 interface SubmitDecisionProps {
   disputeId: string;
   open: boolean;
-  handleClose: () => void;
+  handleClose: (submitted: boolean) => void;
   setDispute: (val: Dispute) => void;
   claimant: Identity;
   respondent: Identity;
@@ -28,6 +28,7 @@ export const SubmitDecision: React.FC<SubmitDecisionProps> = ({
     claimant,
     respondent,
     setDispute,
+    handleClose,
   );
   const footerJsx = (
     <div className=" w-full flex flex-col gap-3 p-4 md:p-6 mb-0 mt-auto">
@@ -35,7 +36,7 @@ export const SubmitDecision: React.FC<SubmitDecisionProps> = ({
         Submit Decision
       </Button>
 
-      <Button variant="outlined" color="primary" fullWidth onClick={handleClose}>
+      <Button variant="outlined" color="primary" fullWidth onClick={() => handleClose(false)}>
         Cancel
       </Button>
     </div>
@@ -43,7 +44,7 @@ export const SubmitDecision: React.FC<SubmitDecisionProps> = ({
   return (
     <Modal
       open={open}
-      handleClose={handleClose}
+      handleClose={() => handleClose(false)}
       icon={<FeaturedIcon iconName="message-alert-circle" size="lg" theme="gray" type="modern" />}
       title="Submit your decision"
       subTitle="As a juror, please carefully review the evidence and arguments presented by both the claimant and the respondent. After considering the facts of the case, select the party you believe has the stronger position based on the information provided."

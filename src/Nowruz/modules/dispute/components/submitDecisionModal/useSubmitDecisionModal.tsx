@@ -7,6 +7,7 @@ export const useSubmitDecisionModal = (
   claimant: Identity,
   respondent: Identity,
   setDispute: (value: Dispute) => void,
+  handleClose: (submitted: boolean) => void,
 ) => {
   const [selected, setSelected] = useState<'CLAIMANT' | 'RESPONDENT'>('CLAIMANT');
 
@@ -17,6 +18,7 @@ export const useSubmitDecisionModal = (
     try {
       const res = await vote(disputeId, selected);
       setDispute(res);
+      handleClose(true);
     } catch (error) {
       console.log('error in submitting decision', error);
     }

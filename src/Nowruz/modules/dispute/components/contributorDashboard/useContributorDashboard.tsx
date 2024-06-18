@@ -20,15 +20,27 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
     getDisputes();
   }, []);
 
-  const getChipValues = (status: 'AWAITING_RESPONSE' | 'PENDING_REVIEW' | 'RESOLVED' | 'WITHDRAWN') => {
+  const getChipValues = (
+    status:
+      | 'AWAITING_RESPONSE'
+      | 'JUROR_SELECTION'
+      | 'JUROR_RESELECTION'
+      | 'PENDING_REVIEW'
+      | 'WITHDRAWN'
+      | 'DECISION_SUBMITTED',
+  ) => {
     type ThemeColor = 'primary' | 'secondary' | 'grey_blue' | 'error' | 'warning' | 'success';
     switch (status) {
       case 'AWAITING_RESPONSE':
         return { label: 'Awaiting response', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
+      case 'JUROR_SELECTION':
+        return { label: 'Juror selection', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
+      case 'JUROR_RESELECTION':
+        return { label: 'Juror selection', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
       case 'PENDING_REVIEW':
         return { label: 'Pending review', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
-      case 'RESOLVED':
-        return { label: 'Resolved', theme: 'success' as ThemeColor, color: variables.success_600 };
+      case 'DECISION_SUBMITTED':
+        return { label: 'Decision submitted', theme: 'success' as ThemeColor, color: variables.success_600 };
       case 'WITHDRAWN':
         return { label: 'Withdrawn', theme: 'secondary' as ThemeColor, color: variables.color_grey_600 };
     }

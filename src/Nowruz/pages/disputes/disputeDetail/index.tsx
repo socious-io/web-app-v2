@@ -20,6 +20,7 @@ export const DisputeDetail = () => {
     secondaryBtn,
     handleWithdraw,
     redirectToChat,
+    handleCloseSubmit,
   } = useDisputeDetail();
   return (
     <>
@@ -94,14 +95,19 @@ export const DisputeDetail = () => {
                 </Button>
               )}
             </div>
+            {/* TODO: ADD anonymous chat function */}
             {dispute.direction === 'juror' && (
               <div className="flex flex-col gap-3 mt-8">
+                <Button variant="text" color="primary" customStyle="flex gap-2 !h-fit !p-0" fullWidth>
+                  <span className="underline text-base font-medium leading-6">Chat with jurors</span>
+                  <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
+                </Button>
                 <Button
                   variant="text"
                   color="primary"
                   customStyle="flex gap-2 !h-fit !p-0"
                   fullWidth
-                  onClick={() => redirectToChat('claimant')}
+                  //onClick={() => redirectToChat('claimant')}
                 >
                   <span className="underline text-base font-medium leading-6">Chat with the claimant only</span>
                   <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
@@ -111,7 +117,7 @@ export const DisputeDetail = () => {
                   color="primary"
                   customStyle="flex gap-2 !h-fit !p-0"
                   fullWidth
-                  onClick={() => redirectToChat('respondent')}
+                  //onClick={() => redirectToChat('respondent')}
                 >
                   <span className="underline text-base font-medium leading-6">Chat with the respondent only</span>
                   <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
@@ -154,11 +160,30 @@ export const DisputeDetail = () => {
         <SubmitDecision
           disputeId={dispute.id}
           open={openModal.name === 'submitDecision' && openModal.open}
-          handleClose={() => setOpenModal({ open: false })}
+          handleClose={handleCloseSubmit}
           setDispute={setDispute}
           claimant={dispute.claimant}
           respondent={dispute.respondent}
         />
+      )}
+      {openModal.name === 'impactPoint' && openModal.open && (
+        <AlertModal
+          open={openModal.name === 'impactPoint' && openModal.open}
+          onClose={() => setOpenModal({ open: false })}
+          title="Decision submitted"
+          message="Thank you for submitting your decision as a juror. The final outcome will be determined once all jurors have voted.<br/> We appreciate your participation in the Socious dispute resolution process."
+          customIcon={<FeaturedIcon iconName="stars-02" size="lg" type="light-circle" theme="success" />}
+          closeButtn={false}
+          submitButton={false}
+        >
+          <div className="p-6 border border-solid border-Gray-light-mode-200 rounded-xl flex flex-col gap-2">
+            <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">You’ve earned</span>
+            <div className="flex gap-2 items-end">
+              <span className="text-5xl font-semibold text-Gray-light-mode-900">100</span>
+              <span className="text-base font-normal leading-6 text-Gray-light-mode-600">impact points</span>
+            </div>
+          </div>
+        </AlertModal>
       )}
     </>
   );

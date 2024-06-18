@@ -7,7 +7,9 @@ export const useDisputeDetail = () => {
   const WAIT_TO_RESPOND_DAYS = 3;
   const WAIT_TO_DECISIOON_DAYS = 7;
   const { disputeRes } = useLoaderData() as { disputeRes: Dispute };
-  const [openModal, setOpenModal] = useState<{ name?: 'withdraw' | 'submitDecision'; open: boolean }>({ open: false });
+  const [openModal, setOpenModal] = useState<{ name?: 'withdraw' | 'submitDecision' | 'impactPoint'; open: boolean }>({
+    open: false,
+  });
   const [dispute, setDispute] = useState(disputeRes);
   const [alertInfo, setAlertInfo] = useState<{
     title: string;
@@ -54,112 +56,123 @@ export const useDisputeDetail = () => {
           setPrimaryBtn({
             label: 'Submit response',
             display: true,
-            // TODO: add open response modal
-            //action: () => { }
+            action: () => {
+              setOpenModal({ name: 'submitDecision', open: true });
+            },
           });
           setSecondaryBtn({ label: 'Message', display: true, action: redirectToChat });
         }
         break;
-      case 'PENDING_REVIEW':
-        if (dispute.jury.members < 3) {
-          switch (dispute.direction) {
-            case 'juror':
-              setAlertInfo({
-                title: "You've been selected as a juror",
-                subtitleName: '',
-                subtitle:
-                  "Thank you for accepting the invitation to serve as a juror. We'll notify you once two more jurors have been selected to start the review.",
-                theme: 'warning',
-                icon: 'alert-circle',
-              });
-              setPrimaryBtn({ label: '', display: false });
-              setSecondaryBtn({ label: '', display: false });
-              break;
-            case 'received':
-              setAlertInfo({
-                title: 'Pending review from jurors',
-                subtitleName: '',
-                subtitle: `Your response has been successfully recorded and is now awaiting for review from jurors. Once assigned, jurors have 7 days to reach a decision.`,
-                theme: 'warning',
-                icon: 'alert-circle',
-              });
-              setPrimaryBtn({
-                label: 'Message',
-                display: true,
-                action: redirectToChat,
-              });
-              setSecondaryBtn({ label: '', display: false });
-              break;
-            case 'submitted':
-              setAlertInfo({
-                title: 'Pending review by jurors',
-                subtitleName: dispute.respondent.meta.name,
-                subtitle: ` has submitted a response.</br>Your dispute is now awaiting for review from jurors, once assigned they will have 7 days to reach a decision.`,
-                theme: 'warning',
-                icon: 'alert-circle',
-              });
-              setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
-              setSecondaryBtn({
-                label: 'Withdraw',
-                display: true,
-                action: () => setOpenModal({ name: 'withdraw', open: true }),
-              });
-              break;
-          }
-        } else {
-          switch (dispute.direction) {
-            case 'juror':
-              setAlertInfo({
-                title: 'Pending review by jurors',
-                subtitleName: '',
-                subtitle: `The jury selection process is now complete, you will be collaborating with two other jurors to review the case materials and reach a fair decision.You have until ${formatDateToCustomUTC(
-                  addDaysToDate(dispute.updated_at, WAIT_TO_DECISIOON_DAYS),
-                )} to make a decision. If you don't submit before this date, another juror will be selected.`,
-                theme: 'warning',
-                icon: 'alert-circle',
-              });
-              setPrimaryBtn({
-                label: 'Submit decision',
-                display: true,
-                action: () => setOpenModal({ name: 'submitDecision', open: true }),
-              });
-              setSecondaryBtn({ label: '', display: false });
-              break;
-            case 'received':
-              setAlertInfo({
-                title: 'Pending review by jurors',
-                subtitleName: '',
-                subtitle: `3 jurors have been selected. They have until ${formatDateToCustomUTC(
-                  addDaysToDate(dispute.updated_at, WAIT_TO_DECISIOON_DAYS),
-                )} to reach a decision.`,
-                theme: 'warning',
-                icon: 'alert-circle',
-              });
-              setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
-              setSecondaryBtn({ label: '', display: false });
-              break;
-            case 'submitted':
-              setAlertInfo({
-                title: 'Pending review by jurors',
-                subtitleName: '',
-                subtitle: `3 jurors have been selected. They have until ${formatDateToCustomUTC(
-                  addDaysToDate(dispute.updated_at, WAIT_TO_DECISIOON_DAYS),
-                )} to reach a decision.`,
-                theme: 'warning',
-                icon: 'alert-circle',
-              });
-              setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
-              setSecondaryBtn({
-                label: 'Withdraw',
-                display: true,
-                action: () => setOpenModal({ name: 'withdraw', open: true }),
-              });
-              break;
-          }
+      case 'JUROR_SELECTION':
+        switch (dispute.direction) {
+          case 'juror':
+            setAlertInfo({
+              title: "You've been selected as a juror",
+              subtitleName: '',
+              subtitle:
+                "Thank you for accepting the invitation to serve as a juror. We'll notify you once two more jurors have been selected to start the review.",
+              theme: 'warning',
+              icon: 'alert-circle',
+            });
+            setPrimaryBtn({ label: '', display: false });
+            setSecondaryBtn({ label: '', display: false });
+            break;
+          case 'received':
+            setAlertInfo({
+              title: 'Pending review from jurors',
+              subtitleName: '',
+              subtitle: `Your response has been successfully recorded and is now awaiting for review from jurors. Once assigned, jurors have 7 days to reach a decision.`,
+              theme: 'warning',
+              icon: 'alert-circle',
+            });
+            setPrimaryBtn({
+              label: 'Message',
+              display: true,
+              action: redirectToChat,
+            });
+            setSecondaryBtn({ label: '', display: false });
+            break;
+          case 'submitted':
+            setAlertInfo({
+              title: 'Pending review by jurors',
+              subtitleName: dispute.respondent.meta.name,
+              subtitle: ` has submitted a response.</br>Your dispute is now awaiting for review from jurors, once assigned they will have 7 days to reach a decision.`,
+              theme: 'warning',
+              icon: 'alert-circle',
+            });
+            setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
+            setSecondaryBtn({
+              label: 'Withdraw',
+              display: true,
+              action: () => setOpenModal({ name: 'withdraw', open: true }),
+            });
+            break;
         }
-
         break;
-
+      case 'JUROR_RESELECTION':
+        setAlertInfo({
+          title: 'Pending review by jurors',
+          subtitleName: '',
+          subtitle:
+            'Unfortunately, one or more jurors did not submit their decision within the allocated time frame. As a result, the case will be reassigned to a new juror to ensure a fair and timely resolution.',
+          theme: 'warning',
+          icon: 'alert-circle',
+        });
+        setSecondaryBtn({ label: '', display: false });
+        if (dispute.direction === 'juror') setPrimaryBtn({ label: '', display: false });
+        else setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
+        break;
+      case 'PENDING_REVIEW':
+        switch (dispute.direction) {
+          case 'juror':
+            setAlertInfo({
+              title: 'Pending review by jurors',
+              subtitleName: '',
+              subtitle: `The jury selection process is now complete, you will be collaborating with two other jurors to review the case materials and reach a fair decision.You have until ${formatDateToCustomUTC(
+                addDaysToDate(dispute.updated_at, WAIT_TO_DECISIOON_DAYS),
+              )} to make a decision. If you don't submit before this date, another juror will be selected.`,
+              theme: 'warning',
+              icon: 'alert-circle',
+            });
+            setPrimaryBtn({
+              label: 'Submit decision',
+              display: true,
+              action: () => setOpenModal({ name: 'submitDecision', open: true }),
+            });
+            setSecondaryBtn({ label: '', display: false });
+            break;
+          case 'received':
+            setAlertInfo({
+              title: 'Pending review by jurors',
+              subtitleName: '',
+              subtitle: `3 jurors have been selected. They have until ${formatDateToCustomUTC(
+                addDaysToDate(dispute.updated_at, WAIT_TO_DECISIOON_DAYS),
+              )} to reach a decision.`,
+              theme: 'warning',
+              icon: 'alert-circle',
+            });
+            setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
+            setSecondaryBtn({ label: '', display: false });
+            break;
+          case 'submitted':
+            setAlertInfo({
+              title: 'Pending review by jurors',
+              subtitleName: '',
+              subtitle: `3 jurors have been selected. They have until ${formatDateToCustomUTC(
+                addDaysToDate(dispute.updated_at, WAIT_TO_DECISIOON_DAYS),
+              )} to reach a decision.`,
+              theme: 'warning',
+              icon: 'alert-circle',
+            });
+            setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
+            setSecondaryBtn({
+              label: 'Withdraw',
+              display: true,
+              action: () => setOpenModal({ name: 'withdraw', open: true }),
+            });
+            break;
+        }
+        break;
       case 'DECISION_SUBMITTED':
         if (dispute.direction === 'juror') {
           setAlertInfo({
@@ -229,6 +242,11 @@ export const useDisputeDetail = () => {
     }
     id && navigate(`/chats?participantId=${id}`);
   };
+
+  const handleCloseSubmit = (submitted: boolean) => {
+    if (submitted) setOpenModal({ name: 'impactPoint', open: true });
+    else setOpenModal({ name: 'submitDecision', open: false });
+  };
   return {
     dispute,
     setDispute,
@@ -239,5 +257,6 @@ export const useDisputeDetail = () => {
     secondaryBtn,
     handleWithdraw,
     redirectToChat,
+    handleCloseSubmit,
   };
 };
