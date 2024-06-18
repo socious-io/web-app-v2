@@ -190,6 +190,8 @@ export interface Offer extends OfferReq {
   mission?: Mission;
   org_referrer_wallet?: string;
   contributor_referrer_wallet?: string;
+  org_fee_discount: boolean;
+  contributor_fee_discount: boolean;
 }
 export type ContractStatus =
   | 'Offer sent'

@@ -17,4 +17,5 @@ export interface ModalProps {
   id?: string;
   inlineTitle?: boolean;
   contentClassName?: string;
+  closeButtonClassName?: string;
 }
