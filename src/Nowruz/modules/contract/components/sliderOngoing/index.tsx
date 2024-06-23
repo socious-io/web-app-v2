@@ -6,6 +6,7 @@ import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon
 import { ThreeDotButton } from 'src/Nowruz/modules/general/components/threeDotButton';
 
 import { useSliderOngoing } from './useSliderOngoing';
+import InitiateDisputeModal from '../initiateDisputeModal';
 
 interface SliderOngoingProps {
   contract: Contract;
@@ -13,8 +14,19 @@ interface SliderOngoingProps {
   redirectToChat: () => void;
 }
 export const SliderOngoing: React.FC<SliderOngoingProps> = ({ disableMessage, redirectToChat, contract }) => {
-  const { displayComplete, displayAlert, alertMessage, openAlert, setOpenAlert, handleComplete, menuItems } =
-    useSliderOngoing(contract);
+  const {
+    displayComplete,
+    displayAlert,
+    alertMessage,
+    openAlert,
+    setOpenAlert,
+    handleComplete,
+    menuItems,
+    openInitiateDisputeModal,
+    setOpenInitiateDisputeModal,
+    respondentId,
+    missionId,
+  } = useSliderOngoing(contract);
   return (
     <>
       <div className="flex flex-col gap-4">
@@ -45,6 +57,12 @@ export const SliderOngoing: React.FC<SliderOngoingProps> = ({ disableMessage, re
           submitButtonLabel="Confirm"
         />
       )}
+      <InitiateDisputeModal
+        open={openInitiateDisputeModal}
+        handleClose={() => setOpenInitiateDisputeModal(false)}
+        respondentId={respondentId}
+        missionId={missionId}
+      />
     </>
   );
 };

@@ -7,6 +7,9 @@ export interface FileUploaderMultipleProps {
   customStyle?: string;
   uploaded: PostMediaUploadRes[];
   setUploaded: (newVal: PostMediaUploadRes[]) => void;
+  onDeleteFile?: (deletedIndex: number) => void;
+  setShowFiles?: (files: File[]) => void;
+  showFiles?: File[];
   loading: boolean;
 }
 
