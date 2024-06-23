@@ -57,3 +57,18 @@ export const getStringDate = (date: string) => {
   const year = dateFormat.getFullYear().toString();
   return `${month} ${year}`;
 };
+
+export const addDaysToDate = (date: string | Date, days: number) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
+
+export const formatDateToCustomUTC = (date: string | Date) => {
+  const currentDate = new Date(date);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' } as Intl.DateTimeFormatOptions;
+  const datePart = currentDate.toLocaleDateString('en-US', options);
+  const timePart = currentDate.toISOString().split('T')[1].split('.')[0].slice(0, 5);
+  const formattedTime = `${timePart} UTC`;
+  return `${datePart} ${formattedTime}`;
+};

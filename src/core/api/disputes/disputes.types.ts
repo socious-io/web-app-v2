@@ -1,8 +1,15 @@
-import { UserType } from 'src/core/types';
-
 import { Media } from '../media/media.types';
 import { Identity } from '../site/site.types';
 import { PaginateRes } from '../types';
+
+export interface DisputeReq {
+  category: string;
+  respondent_id: string;
+  mission_id: string;
+  title: string;
+  description: string;
+  evidences: string[];
+}
 
 export interface DisputeEvent {
   id: string;
@@ -10,13 +17,6 @@ export interface DisputeEvent {
   type: 'MESSAGE' | 'RESPONSE' | 'WITHDRAW' | 'VOTE';
   vote_side: null;
   evidences: Media[];
-}
-
-export interface DisputeReq {
-  respondent_id: string;
-  title: string;
-  description: string;
-  evidences?: string[];
 }
 
 export interface Dispute {

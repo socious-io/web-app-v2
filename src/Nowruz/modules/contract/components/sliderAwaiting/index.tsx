@@ -6,6 +6,7 @@ import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon
 import { ThreeDotButton } from 'src/Nowruz/modules/general/components/threeDotButton';
 
 import { useSliderAwaiting } from './useSliderAwaiting';
+import InitiateDisputeModal from '../initiateDisputeModal';
 
 interface SliderAwaitingProps {
   contract: Contract;
@@ -14,8 +15,20 @@ interface SliderAwaitingProps {
 }
 
 export const SliderAwaiting: React.FC<SliderAwaitingProps> = ({ contract, disableMessage, redirectToChat }) => {
-  const { onConfirm, primaryBtn, secondaryBtn, alertMsg, openAlert, setOpenAlert, displayDispute, menuItems } =
-    useSliderAwaiting(contract);
+  const {
+    onConfirm,
+    primaryBtn,
+    secondaryBtn,
+    alertMsg,
+    openAlert,
+    setOpenAlert,
+    displayDispute,
+    menuItems,
+    openInitiateDisputeModal,
+    setOpenInitiateDisputeModal,
+    respondentId,
+    missionId,
+  } = useSliderAwaiting(contract);
 
   return (
     <>
@@ -49,6 +62,12 @@ export const SliderAwaiting: React.FC<SliderAwaitingProps> = ({ contract, disabl
         closeButtonLabel="Cancel"
         submitButton={true}
         submitButtonLabel="Confirm"
+      />
+      <InitiateDisputeModal
+        open={openInitiateDisputeModal}
+        handleClose={() => setOpenInitiateDisputeModal(false)}
+        respondentId={respondentId}
+        missionId={missionId}
       />
     </>
   );
