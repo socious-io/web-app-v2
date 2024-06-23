@@ -4,6 +4,16 @@ import { Media } from '../media/media.types';
 import { Identity } from '../site/site.types';
 import { PaginateRes } from '../types';
 
+export type DisputeState =
+  | 'AWAITING_RESPONSE'
+  | 'JUROR_SELECTION'
+  | 'JUROR_RESELECTION'
+  | 'PENDING_REVIEW'
+  | 'WITHDRAWN'
+  | 'DECISION_SUBMITTED';
+
+export type DisputeDirection = 'received' | 'submitted' | 'juror';
+
 export interface DisputeEvent {
   id: string;
   message: string;
@@ -24,15 +34,9 @@ export interface DisputeReq {
 export interface Dispute {
   id: string;
   title: string;
-  state:
-    | 'AWAITING_RESPONSE'
-    | 'JUROR_SELECTION'
-    | 'JUROR_RESELECTION'
-    | 'PENDING_REVIEW'
-    | 'WITHDRAWN'
-    | 'DECISION_SUBMITTED';
+  state: DisputeState;
   code: string;
-  direction: 'received' | 'submitted' | 'juror';
+  direction: DisputeDirection;
   claimant: Identity;
   respondent: Identity;
   events: DisputeEvent[];
@@ -42,10 +46,7 @@ export interface Dispute {
     id: string;
     name: string;
   };
-  category: {
-    id: string;
-    name: string;
-  };
+  category: string;
   jury: {
     voted: number;
     members: number;

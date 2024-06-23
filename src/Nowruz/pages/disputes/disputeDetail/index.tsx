@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { SubmitDecision } from 'src/Nowruz/modules/dispute/components/submitDecisionModal';
 import { TimelineItem } from 'src/Nowruz/modules/dispute/components/timelineItem';
@@ -22,17 +23,13 @@ export const DisputeDetail = () => {
     redirectToChat,
     handleCloseSubmit,
   } = useDisputeDetail();
+  const navigate = useNavigate();
   return (
     <>
       <div className="pt-8 pb-12 px-4 md:px-8 flex flex-col gap-8">
         <div className="flex flex-col">
           <div className="mb-5 w-fit">
-            <BackLink
-              title="Back to disputes"
-              // TODO: add back to dispute list
-              // onBack={}
-              block={false}
-            />
+            <BackLink title="Back to disputes" onBack={() => navigate('/disputes')} block={false} />
           </div>
           <div className="flex flex-col gap-4 md:gap-6">
             <div className="flex flex-col gap-1">
@@ -138,53 +135,49 @@ export const DisputeDetail = () => {
           </div>
         </div>
       </div>
-      {openModal.name === 'withdraw' && openModal.open && (
-        <AlertModal
-          open={openModal.name === 'withdraw' && openModal.open}
-          onClose={() => setOpenModal({ open: false })}
-          title="Withdraw dispute"
-          message="Are you sure you want to withdraw this dispute? This action cannot be undone."
-          customIcon={<FeaturedIcon iconName="alert-circle" size="lg" type="light-circle" theme="error" />}
-          closeButtn={true}
-          closeButtonLabel="Cancel"
-          submitButton={true}
-          submitButtonTheme="error"
-          submitButtonLabel="Withdraw Dispute"
-          customClassName="md:!w-[544px]"
-          primaryBtnClassName="w-full md:w-fit"
-          secondaryBtnClassName="w-full md:w-fit"
-          onSubmit={handleWithdraw}
-        />
-      )}
-      {openModal.name === 'submitDecision' && openModal.open && (
-        <SubmitDecision
-          disputeId={dispute.id}
-          open={openModal.name === 'submitDecision' && openModal.open}
-          handleClose={handleCloseSubmit}
-          setDispute={setDispute}
-          claimant={dispute.claimant}
-          respondent={dispute.respondent}
-        />
-      )}
-      {openModal.name === 'impactPoint' && openModal.open && (
-        <AlertModal
-          open={openModal.name === 'impactPoint' && openModal.open}
-          onClose={() => setOpenModal({ open: false })}
-          title="Decision submitted"
-          message="Thank you for submitting your decision as a juror. The final outcome will be determined once all jurors have voted.<br/> We appreciate your participation in the Socious dispute resolution process."
-          customIcon={<FeaturedIcon iconName="stars-02" size="lg" type="light-circle" theme="success" />}
-          closeButtn={false}
-          submitButton={false}
-        >
-          <div className="p-6 border border-solid border-Gray-light-mode-200 rounded-xl flex flex-col gap-2">
-            <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">You’ve earned</span>
-            <div className="flex gap-2 items-end">
-              <span className="text-5xl font-semibold text-Gray-light-mode-900">100</span>
-              <span className="text-base font-normal leading-6 text-Gray-light-mode-600">impact points</span>
-            </div>
+      <AlertModal
+        open={openModal.name === 'withdraw' && openModal.open}
+        onClose={() => setOpenModal({ open: false })}
+        title="Withdraw dispute"
+        message="Are you sure you want to withdraw this dispute? This action cannot be undone."
+        customIcon={<FeaturedIcon iconName="alert-circle" size="lg" type="light-circle" theme="error" />}
+        closeButtn={true}
+        closeButtonLabel="Cancel"
+        submitButton={true}
+        submitButtonTheme="error"
+        submitButtonLabel="Withdraw Dispute"
+        customClassName="md:!w-[544px]"
+        primaryBtnClassName="w-full md:w-fit"
+        secondaryBtnClassName="w-full md:w-fit"
+        onSubmit={handleWithdraw}
+      />
+
+      <SubmitDecision
+        disputeId={dispute.id}
+        open={openModal.name === 'submitDecision' && openModal.open}
+        handleClose={handleCloseSubmit}
+        setDispute={setDispute}
+        claimant={dispute.claimant}
+        respondent={dispute.respondent}
+      />
+
+      <AlertModal
+        open={openModal.name === 'impactPoint' && openModal.open}
+        onClose={() => setOpenModal({ open: false })}
+        title="Decision submitted"
+        message="Thank you for submitting your decision as a juror. The final outcome will be determined once all jurors have voted.<br/> We appreciate your participation in the Socious dispute resolution process."
+        customIcon={<FeaturedIcon iconName="stars-02" size="lg" type="light-circle" theme="success" />}
+        closeButtn={false}
+        submitButton={false}
+      >
+        <div className="p-6 border border-solid border-Gray-light-mode-200 rounded-xl flex flex-col gap-2">
+          <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">You’ve earned</span>
+          <div className="flex gap-2 items-end">
+            <span className="text-5xl font-semibold text-Gray-light-mode-900">100</span>
+            <span className="text-base font-normal leading-6 text-Gray-light-mode-600">impact points</span>
           </div>
-        </AlertModal>
-      )}
+        </div>
+      </AlertModal>
     </>
   );
 };
