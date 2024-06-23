@@ -1,4 +1,6 @@
+import { QRCodeSVG } from 'qrcode.react';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/Nowruz/modules/general/components/modal';
@@ -53,6 +55,32 @@ export const KYCModal: React.FC<KYCModalProps> = ({ open, handleClose, connectUr
           <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">
             2. Verify your identity with Veriff, our KYC partner.
           </span>
+        </div>
+        <div className="bg-Gray-light-mode-50 rounded-default p-4 flex items-center justify-center">
+          <QRCodeSVG value={connectUrl} size={200} />
+        </div>
+        <div className="flex flex-col gap-4">
+          <span className="text-sm leading-5 text-Gray-light-mode-600">Download the Socious Wallet app</span>
+          <div className="flex items-center gap-4">
+            <Link to="https://wallet.socious.io/ios" target="_blank">
+              <img
+                src="/images/download-appstore.svg"
+                alt="app-store"
+                height={40}
+                width={135}
+                className="cursor-pointer"
+              />
+            </Link>
+            <Link to="https://wallet.socious.io/android" target="_blank">
+              <img
+                src="/images/download-googleplay.svg"
+                alt="google-play"
+                height={40}
+                width={135}
+                className="cursor-pointer"
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </Modal>
