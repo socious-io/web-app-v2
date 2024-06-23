@@ -107,11 +107,18 @@ export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newl
                   </tbody>
                 </table>
               </div>
+              <div className="w-full flex justify-center mt-6">
+                {/* TODO: onClick redirect to dispute resolution center */}
+                <Button variant="text" color="primary" customStyle="underline hover:underline">
+                  See all disputes
+                </Button>
+              </div>
             </div>
           ) : (
             <EmptyList />
           )}
         </div>
+
         <div className="flex flex-col gap-4 px-4 md:px-8 ">
           <span className={css.title}>Contributor resources</span>
           <Button variant="text" color="primary" customStyle="!p-0 flex flex-row gap-2 w-fit">

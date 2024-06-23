@@ -1,9 +1,9 @@
 import { get, post } from 'src/core/api/http';
 
 import { Dispute, DisputeReq, DisputesRes } from './disputes.types';
-import { PaginateReq, SuccessRes } from '../types';
+import { FilterReq, PaginateReq, SuccessRes } from '../types';
 
-export async function disputes(params: PaginateReq): Promise<DisputesRes> {
+export async function disputes(params: FilterReq): Promise<DisputesRes> {
   return (await get<DisputesRes>('disputes', { params })).data;
 }
 

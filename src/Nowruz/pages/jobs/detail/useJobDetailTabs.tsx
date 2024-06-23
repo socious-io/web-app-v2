@@ -45,7 +45,6 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
 
   const tabs = useMemo(() => {
     const applicantsCount = pending.items;
-
     return [
       {
         label: 'Overview',
@@ -76,7 +75,6 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
       jobApplicants(jobDetail.id, { page: 1, limit: PER_PAGE, status: 'REJECTED' }),
     ];
     const [pendingRes, offeredRes, rejectedRes] = await Promise.all(requests);
-
     setPending(pendingRes);
     setOffered(offeredRes);
     setRejected(rejectedRes);

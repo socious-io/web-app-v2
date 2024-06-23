@@ -518,7 +518,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { Feeds } = await import('src/Nowruz/pages/feeds');
               return {
-                Component: Protect(Feeds, 'users'),
+                Component: Protect(Feeds, 'both'),
               };
             },
           },
@@ -839,18 +839,8 @@ function DefaultRoute() {
 }
 
 function ErrorBoundary() {
-  const flag = 'refreshed';
-  const refreshed = localStorage.getItem(flag);
-
-  if (!refreshed) {
-    localStorage.setItem(flag, `${new Date().getTime()}`);
-    window.location.reload();
-    return <></>;
-  }
-
   const error: any = useRouteError();
   if (error?.response?.status === 401) return <Navigate to="/intro" />;
-  console.log(error);
   return <FallBack />;
 }
 

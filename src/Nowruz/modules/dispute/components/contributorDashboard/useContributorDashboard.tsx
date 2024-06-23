@@ -14,7 +14,7 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
 
   useEffect(() => {
     const getDisputes = async () => {
-      const res = await disputes({ page: 1, limit: 5 });
+      const res = await disputes({ page: 1, limit: 5, 'filter.direction': 'juror' });
       setList(res.items);
     };
     getDisputes();
@@ -25,6 +25,7 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
     switch (status) {
       case 'AWAITING_RESPONSE':
         return { label: 'Awaiting response', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
+
       case 'JUROR_SELECTION':
         return { label: 'Juror selection', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
       case 'JUROR_RESELECTION':
@@ -33,7 +34,6 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
         return { label: 'Pending review', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
       case 'DECISION_SUBMITTED':
         return { label: 'Decision submitted', theme: 'success' as ThemeColor, color: variables.color_success_600 };
-
       case 'WITHDRAWN':
         return { label: 'Withdrawn', theme: 'secondary' as ThemeColor };
     }
@@ -106,7 +106,7 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
         },
       },
       {
-        id: 'contract-id',
+        id: 'contract_id',
         header: <p className="text-xs">Contract ID</p>,
         accessorKey: 'contract',
         cell: function render({ getValue }) {
@@ -114,7 +114,7 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
         },
       },
       {
-        id: 'contract-name',
+        id: 'contract_name',
         header: <p className="text-xs">Contract name</p>,
         accessorKey: 'contract',
         cell: function render({ getValue }) {

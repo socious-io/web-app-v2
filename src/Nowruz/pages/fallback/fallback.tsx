@@ -3,6 +3,15 @@ import { Button } from 'src/Nowruz/modules/general/components/Button';
 import css from './fallback.module.scss';
 
 const FallBack = () => {
+  const flag = 'refreshed';
+  const refreshed = sessionStorage.getItem(flag);
+
+  if (!refreshed) {
+    sessionStorage.setItem(flag, `${new Date().getTime()}`);
+    window.location.reload();
+    return <></>;
+  }
+
   return (
     <div className={css.container}>
       <div className={css.errorCode}>500</div>

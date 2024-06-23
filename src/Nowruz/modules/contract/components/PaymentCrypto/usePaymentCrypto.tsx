@@ -37,8 +37,8 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
       return;
     }
 
-    const applyOrgFeeDiscount = !!offer.org_referrer_wallet;
-    const applyContFeeDiscount = !!offer.contributor_referrer_wallet;
+    const applyOrgFeeDiscount = !!offer.org_referrer_wallet && offer.org_fee_discount;
+    const applyContFeeDiscount = !!offer.contributor_referrer_wallet && offer.contributor_fee_discount;
 
     setDisabledPayment(true);
     try {

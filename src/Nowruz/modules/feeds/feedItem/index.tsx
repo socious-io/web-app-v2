@@ -78,7 +78,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
       onReportPost,
     },
   } = useFeedItem(postId, updateFeedsListLiked, updateFeedsListRepost, updateFeedsListRemove, userIdentity);
-  const { profileImage: currentProfileImage } = getIdentityMeta(currentIdentity);
+  const { profileImage: currentProfileImage, type: currentType } = getIdentityMeta(currentIdentity);
   const { name, username, usernameVal, profileImage } = getIdentityMeta(userIdentity);
   const {
     userIdentity: sharedUserIdentity,
@@ -92,6 +92,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
     profileImage: sharedAvatar,
     name: sharedName,
     username: sharedUsername,
+    type: sharedType,
   } = getIdentityMeta(sharedUserIdentity as Identity);
   const repostedData = {
     profileImage: (profileImage as string) || '',
@@ -115,7 +116,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
     <>
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Avatar size="3rem" type="users" img={(sharedAvatar as string) || ''} />
+          <Avatar size="3rem" type={sharedType || 'users'} img={(sharedAvatar as string) || ''} />
           <div className="flex flex-col text-md font-semibold text-Gray-light-mode-900">
             {sharedName}
             <span className="font-normal text-Gray-light-mode-500">{sharedUsername}</span>
@@ -150,7 +151,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
           <div className="flex items-center gap-3">
             <Avatar
               size="3rem"
-              type="users"
+              type={currentType || 'users'}
               img={(profileImage as string) || ''}
               onClick={() => navigate(`/profile/users/${usernameVal}/view`)}
             />
@@ -196,10 +197,10 @@ const FeedItem: React.FC<FeedItemProps> = ({
           <div className="px-6 flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-Gray-light-mode-600">
               {!!likedIdentities?.length && <AvatarGroup identities={likedIdentities} length={3} />}
-              {likesCount} {likesCount <= 1 ? 'like' : 'likes'}
+              {!!likesCount && `${likesCount} ${likesCount > 1 ? 'likes' : 'like'}`}
             </div>
             <span className="text-sm text-Gray-light-mode-600">
-              {commentsCount} {commentsCount <= 1 ? 'comment' : 'comments'}
+              {!!commentsCount && `${commentsCount} ${commentsCount > 1 ? 'comments' : 'comment'}`}
             </span>
           </div>
           <div className="px-6 pt-4 flex flex-col border-0 border-t border-solid border-Gray-light-mode-200">
