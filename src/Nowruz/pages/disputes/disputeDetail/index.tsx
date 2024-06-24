@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'src/Nowruz/general/Icon';
+import RespondDisputeModal from 'src/Nowruz/modules/contract/components/respondDisputeModal';
 import { SubmitDecision } from 'src/Nowruz/modules/dispute/components/submitDecisionModal';
 import { TimelineItem } from 'src/Nowruz/modules/dispute/components/timelineItem';
 import { AlertModal } from 'src/Nowruz/modules/general/components/AlertModal';
@@ -22,6 +23,7 @@ export const DisputeDetail = () => {
     handleWithdraw,
     redirectToChat,
     handleCloseSubmit,
+    handleRespond,
   } = useDisputeDetail();
   const navigate = useNavigate();
   return (
@@ -159,6 +161,13 @@ export const DisputeDetail = () => {
         setDispute={setDispute}
         claimant={dispute.claimant}
         respondent={dispute.respondent}
+      />
+
+      <RespondDisputeModal
+        disputeId={dispute.id}
+        open={openModal.name === 'response' && openModal.open}
+        handleClose={() => setOpenModal({ ...openModal, open: false })}
+        onSubmitRespond={handleRespond}
       />
 
       <AlertModal

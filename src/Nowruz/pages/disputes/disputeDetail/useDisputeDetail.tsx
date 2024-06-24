@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { Dispute, withdrawDispute, dispute as getDisputeApi } from 'src/core/api';
+import { Dispute, withdrawDispute, dispute as getDisputeApi, Identity } from 'src/core/api';
 import { addDaysToDate, formatDateToCustomUTC } from 'src/core/time';
 
 export const useDisputeDetail = () => {
   const WAIT_TO_RESPOND_DAYS = 3;
   const WAIT_TO_DECISIOON_DAYS = 7;
   const { disputeRes } = useLoaderData() as { disputeRes: Dispute };
-  const [openModal, setOpenModal] = useState<{ name?: 'withdraw' | 'submitDecision' | 'impactPoint'; open: boolean }>({
+  const [openModal, setOpenModal] = useState<{
+    name?: 'withdraw' | 'submitDecision' | 'impactPoint' | 'response';
+    open: boolean;
+  }>({
     open: false,
   });
   const [dispute, setDispute] = useState(disputeRes);
@@ -56,10 +59,9 @@ export const useDisputeDetail = () => {
           setPrimaryBtn({
             label: 'Submit response',
             display: true,
-            // TODO: open response modal
-            // action: () => {
-            //   setOpenModal({ name: 'response', open: true });
-            // },
+            action: () => {
+              setOpenModal({ name: 'response', open: true });
+            },
           });
           setSecondaryBtn({ label: 'Message', display: true, action: redirectToChat });
         }
@@ -264,6 +266,9 @@ export const useDisputeDetail = () => {
     if (submitted) setOpenModal({ name: 'impactPoint', open: true });
     else setOpenModal({ name: 'submitDecision', open: false });
   };
+
+  const handleRespond = (newDispute: Dispute) => setDispute(newDispute);
+
   return {
     dispute,
     setDispute,
@@ -275,5 +280,6 @@ export const useDisputeDetail = () => {
     handleWithdraw,
     redirectToChat,
     handleCloseSubmit,
+    handleRespond,
   };
 };
