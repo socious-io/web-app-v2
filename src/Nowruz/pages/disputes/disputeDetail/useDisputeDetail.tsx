@@ -56,9 +56,10 @@ export const useDisputeDetail = () => {
           setPrimaryBtn({
             label: 'Submit response',
             display: true,
-            action: () => {
-              setOpenModal({ name: 'submitDecision', open: true });
-            },
+            // TODO: open response modal
+            // action: () => {
+            //   setOpenModal({ name: 'response', open: true });
+            // },
           });
           setSecondaryBtn({ label: 'Message', display: true, action: redirectToChat });
         }
@@ -119,8 +120,24 @@ export const useDisputeDetail = () => {
           icon: 'alert-circle',
         });
         setSecondaryBtn({ label: '', display: false });
-        if (dispute.direction === 'juror') setPrimaryBtn({ label: '', display: false });
-        else setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
+        switch (dispute.direction) {
+          case 'juror':
+            setPrimaryBtn({ label: '', display: false });
+            break;
+          case 'submitted':
+            setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
+            setSecondaryBtn({
+              label: 'Withdraw',
+              display: true,
+              action: () => setOpenModal({ name: 'withdraw', open: true }),
+            });
+            break;
+          case 'received':
+            setPrimaryBtn({ label: 'Message', display: true, action: redirectToChat });
+            setSecondaryBtn({ label: '', display: false });
+            break;
+        }
+
         break;
       case 'PENDING_REVIEW':
         switch (dispute.direction) {
