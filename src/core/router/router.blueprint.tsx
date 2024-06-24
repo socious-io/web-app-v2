@@ -21,6 +21,8 @@ import {
   markedJobs,
   posts,
   dispute,
+  CurrentIdentity,
+  OrgMeta,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -830,7 +832,16 @@ function Protect<T extends object>(Component: ComponentType<T>, allowedIdentity:
 
 function DefaultRoute() {
   const status = useSelector((state: RootState) => state.identity.status);
-  if (status === 'succeeded') return <Navigate to="/jobs" />;
+  const current = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(item => item.current),
+  );
+
+  if (status === 'succeeded')
+    return (
+      <Navigate
+        to={current?.type === 'users' ? '/dashboard/user' : `/dashboard/${(current?.meta as OrgMeta).shortname}/org`}
+      />
+    );
 
   if (status === 'loading') return <div></div>;
   if (status === 'failed') return <Navigate to="/intro" />;
