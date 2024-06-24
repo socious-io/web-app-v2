@@ -80,7 +80,7 @@ export const Dashboard = () => {
             )}
           </div>
         </div>
-        <div className="hidden md:flex w-[392px] min-w-[392px] h-full">
+        <div className="hidden lg:flex w-[392px] min-w-[392px] h-full">
           <ProfileCard identity={profileData} labelShown={false} rounded={false} />
         </div>
       </div>
