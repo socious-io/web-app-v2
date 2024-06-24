@@ -7,6 +7,10 @@ export async function disputes(params: FilterReq): Promise<DisputesRes> {
   return (await get<DisputesRes>('disputes', { params })).data;
 }
 
+export async function dispute(id: string): Promise<Dispute> {
+  return (await get<Dispute>(`disputes/${id}`)).data;
+}
+
 export async function issueDispute(payload: DisputeReq): Promise<Dispute> {
   return (await post<Dispute>('disputes', payload)).data;
 }
@@ -17,4 +21,11 @@ export async function JoinContribution(): Promise<SuccessRes> {
 
 export async function LeaveContribution(): Promise<SuccessRes> {
   return (await post<SuccessRes>('contributions/leave', {})).data;
+}
+
+export async function withdrawDispute(id: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>(`disputes/${id}/withdraw`, {})).data;
+}
+export async function vote(id: string, vote_side: 'CLAIMANT' | 'RESPONDENT'): Promise<Dispute> {
+  return (await post<Dispute>(`disputes/${id}/vote?vote_side=${vote_side}`, {})).data;
 }

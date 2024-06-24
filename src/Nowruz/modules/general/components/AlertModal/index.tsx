@@ -21,10 +21,13 @@ export const AlertModal: React.FC<AlertModalProps> = ({
   customIcon,
   children,
   disableSubmitButton = false,
+  customClassName,
+  primaryBtnClassName,
+  secondaryBtnClassName,
 }) => {
   return (
     <Modal open={open} onClose={onClose} className={css.modal}>
-      <div className={css.container}>
+      <div className={`${css.container} ${customClassName}`}>
         <div className="flex justify-between">
           {customIcon ? (
             customIcon
@@ -51,12 +54,19 @@ export const AlertModal: React.FC<AlertModalProps> = ({
               onClick={onSubmit}
               fullWidth
               disabled={disableSubmitButton}
+              customStyle={primaryBtnClassName}
             >
               {submitButtonLabel}
             </Button>
           )}
           {closeButtn && (
-            <Button color="secondary" variant="outlined" onClick={onClose} fullWidth>
+            <Button
+              color="secondary"
+              variant="outlined"
+              onClick={onClose}
+              fullWidth
+              customStyle={secondaryBtnClassName}
+            >
               {closeButtonLabel}
             </Button>
           )}

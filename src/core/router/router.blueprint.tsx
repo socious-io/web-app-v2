@@ -20,6 +20,7 @@ import {
   getRequestedVerifyEducations,
   markedJobs,
   posts,
+  dispute,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -488,6 +489,28 @@ export const blueprint: RouteObject[] = [
                 Component: Protect(Contribute, 'users'),
               };
             },
+          },
+          {
+            path: '/disputes',
+            children: [
+              {
+                path: ':id',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const disputeRes = await dispute(params.id);
+                    return {
+                      disputeRes,
+                    };
+                  }
+                },
+                async lazy() {
+                  const { DisputeDetail } = await import('src/Nowruz/pages/disputes/disputeDetail');
+                  return {
+                    Component: Protect(DisputeDetail, 'both'),
+                  };
+                },
+              },
+            ],
           },
           {
             path: 'feeds',
