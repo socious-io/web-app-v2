@@ -1,6 +1,6 @@
 import { Media } from '../media/media.types';
 import { Identity } from '../site/site.types';
-import { PaginateRes } from '../types';
+import { PaginateReq, PaginateRes } from '../types';
 
 export type DisputeState =
   | 'AWAITING_RESPONSE'
@@ -8,9 +8,11 @@ export type DisputeState =
   | 'JUROR_RESELECTION'
   | 'PENDING_REVIEW'
   | 'WITHDRAWN'
-  | 'DECISION_SUBMITTED';
+  | 'DECISION_SUBMITTED'
+  | 'CLOSED';
 
 export type DisputeDirection = 'received' | 'submitted' | 'juror';
+
 export interface DisputeReq {
   category: string;
   respondent_id: string;
@@ -29,7 +31,6 @@ export interface DisputeEvent {
   created_at: Date;
   creator: Identity;
 }
-
 export interface Dispute {
   id: string;
   title: string;
@@ -39,6 +40,10 @@ export interface Dispute {
   claimant: Identity;
   respondent: Identity;
   events: DisputeEvent[];
+  jury: {
+    voted: number;
+    members: number;
+  };
   created_at: Date;
   updated_at: Date;
   contract: {
@@ -46,10 +51,6 @@ export interface Dispute {
     name: string;
   };
   category: string;
-  jury: {
-    voted: number;
-    members: number;
-  };
 }
 
 export interface DisputesRes extends PaginateRes {
@@ -59,4 +60,8 @@ export interface DisputesRes extends PaginateRes {
 export interface RespondDisputeReq {
   message: string;
   evidences: string[];
+}
+
+export interface FilterReq extends PaginateReq {
+  [key: string]: any;
 }

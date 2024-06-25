@@ -72,3 +72,11 @@ export const formatDateToCustomUTC = (date: string | Date) => {
   const formattedTime = `${timePart} UTC`;
   return `${datePart} ${formattedTime}`;
 };
+
+export const formatDateSlash = (date: string | Date) => {
+  const currentDate = new Date(date);
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  return `${year}/${month}/${day}`;
+};
