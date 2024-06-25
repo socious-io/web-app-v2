@@ -57,9 +57,7 @@ export const useImageBio = () => {
           username: currentIdentity.meta?.username,
         },
       });
-    } else {
-      navigate(`/profile/users/${currentIdentity.meta?.username}/view`);
-    }
+    } else navigate('/dashboard/user');
   };
 
   const updateBio = (bio: string) => {

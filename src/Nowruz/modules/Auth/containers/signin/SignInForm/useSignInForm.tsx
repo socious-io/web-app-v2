@@ -68,7 +68,9 @@ export const useSignInForm = () => {
     store.dispatch(setIdentityList(ids));
     const userProfile = await profile();
     // checking ids if less than 2 it means didn't registered for org and can be skip
-    const userLandingPath = checkOnboardingMandatoryFields(userProfile) ? '/sign-up/user/onboarding' : '/jobs';
+    const userLandingPath = checkOnboardingMandatoryFields(userProfile)
+      ? '/sign-up/user/onboarding'
+      : '/dashboard/user';
     navigate(path ? path : userLandingPath);
     return loginResp;
   }
