@@ -10,12 +10,13 @@ import { AvatarProfileProps } from './avatarProfile.types';
 
 export const AvatarProfile: React.FC<AvatarProfileProps> = props => {
   const { size, imgUrl, type, verified = false, text, handleClick } = props;
-  const verifiedTick = size === 'small' ? smallTick : size === 'medium' ? mediumTick : largeTick;
-  const iconSizes = [
-    { size: 'small', iconSize: 36 },
-    { size: 'medium', iconSize: 48 },
-    { size: 'large', iconSize: 80 },
-  ];
+
+  const sizeItems = {
+    small: { iconSize: 36, tick: smallTick },
+    medium: { iconSize: 48, tick: mediumTick },
+    large: { iconSize: 80, tick: largeTick },
+  };
+
   const getContent = () => {
     if (imgUrl) return <img className={css.imgContainer} src={imgUrl} alt="" />;
     if (text) {
@@ -24,7 +25,7 @@ export const AvatarProfile: React.FC<AvatarProfileProps> = props => {
     return (
       <Icon
         name={type === 'users' ? 'user-01' : 'building-05'}
-        fontSize={iconSizes.find(item => item.size === size)?.iconSize}
+        fontSize={sizeItems[size].iconSize}
         color={variables.color_grey_600}
         className="!cursor-pointer"
         containerClass="cursor-pointer"
@@ -37,7 +38,7 @@ export const AvatarProfile: React.FC<AvatarProfileProps> = props => {
       onClick={handleClick}
     >
       {getContent()}
-      {verified && <img src={verifiedTick} alt="" className={css.tick} />}
+      {verified && <img src={sizeItems[size].tick} alt="" className={css.tick} />}
     </div>
   );
 };
