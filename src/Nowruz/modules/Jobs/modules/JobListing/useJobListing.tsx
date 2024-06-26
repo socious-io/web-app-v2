@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoaderData, useLocation } from 'react-router-dom';
 import { CurrentIdentity, Job, JobsRes, Skill, UserMeta, jobs, recommendedJobs, skills } from 'src/core/api';
@@ -28,6 +28,9 @@ export const useJobListing = () => {
   const [loading, setLoading] = useState(true);
   const [recommended, setRecommended] = useState<Job>();
   const isMount = useIsMount();
+
+  const scrollRef = useRef<null | HTMLDivElement>(null);
+  const executeScroll = () => scrollRef.current && scrollRef.current.scrollIntoView();
 
   const loadPage = async () => {
     setLoading(true);
@@ -77,6 +80,12 @@ export const useJobListing = () => {
     localStorage.setItem('page', page.toString());
   }, [page]);
 
+  useEffect(() => {
+    executeScroll();
+  }, [jobsList]);
+
+  const scrollIndex = isMobile ? (page - 1) * PER_PAGE - 1 : 0;
+
   return {
     page,
     setPage,
@@ -88,5 +97,7 @@ export const useJobListing = () => {
     loading,
     recommended,
     isLoggedIn,
+    scrollRef,
+    scrollIndex,
   };
 };
