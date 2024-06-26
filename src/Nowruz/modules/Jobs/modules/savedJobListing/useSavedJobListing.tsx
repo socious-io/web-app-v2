@@ -62,7 +62,7 @@ export const useSavedJobListing = () => {
   }, [page]);
 
   useEffect(() => {
-    if (isMobile && page > 1) executeScroll();
+    executeScroll();
   }, [jobsList]);
 
   const scrollIndex = isMobile ? (page - 1) * PER_PAGE - 1 : 0;
