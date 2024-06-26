@@ -7,7 +7,7 @@ export const verifyAction = async (
   setOpenVerifyModal: (val: boolean) => void,
 ) => {
   const vc = await requestVerification();
-  setConnectUrl(vc.connection_url);
+  setConnectUrl(vc.short_url);
   setOpenVerifyModal(true);
 
   const interval = setInterval(async () => {
