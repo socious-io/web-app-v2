@@ -9,7 +9,7 @@ const SuccessRespondDispute: React.FC<SuccessRespondDisputeProps> = ({
   open,
   handleClose,
   disputeId,
-  respondentName,
+  claimantName,
 }) => {
   const isMobile = isTouchDevice();
   return (
@@ -26,7 +26,7 @@ const SuccessRespondDispute: React.FC<SuccessRespondDisputeProps> = ({
       contentClassName="px-6 pb-6 md:px-12"
     >
       <div className="text-sm leading-5 md:px-7 text-Gray-light-mode-700">
-        <span className="font-semibold text-Brand-700">{respondentName} </span>
+        <span className="font-semibold text-Brand-700">{claimantName} </span>
         will be notified of your response and will have the opportunity to review the information you provided.
       </div>
     </Modal>
