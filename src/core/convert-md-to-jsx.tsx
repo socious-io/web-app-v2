@@ -27,5 +27,10 @@ const options = {
 export function convertMarkdownToJSX(value: string): JSX.Element {
   if (!value) return <></>;
   const modifiedVal = value.replaceAll('<br/>', '  \n');
-  return <Markdown options={options}>{modifiedVal}</Markdown>;
+  try {
+    return <Markdown options={options}>{modifiedVal}</Markdown>;
+  } catch (error) {
+    console.error('Markdown rendering failed:', error);
+    return <pre>{modifiedVal}</pre>;
+  }
 }
