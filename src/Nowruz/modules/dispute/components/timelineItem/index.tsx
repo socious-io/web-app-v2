@@ -1,6 +1,6 @@
 import { Divider } from '@mui/material';
 import React from 'react';
-import { DisputeEvent } from 'src/core/api';
+import { DisputeEvent, Identity } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
 import { UserType } from 'src/core/types';
@@ -13,10 +13,20 @@ export interface TimelineItemProps {
   event: DisputeEvent;
   displayDivider?: boolean;
   disputeDirection: 'received' | 'submitted' | 'juror';
+  respondent: Identity;
 }
 
-export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivider = true, disputeDirection }) => {
-  const { name, type, profileImage, myEvent, getEventTitle, getFileIcon } = useTimelineItem(event, disputeDirection);
+export const TimelineItem: React.FC<TimelineItemProps> = ({
+  event,
+  displayDivider = true,
+  disputeDirection,
+  respondent,
+}) => {
+  const { name, type, profileImage, myEvent, getEventTitle, getFileIcon } = useTimelineItem(
+    event,
+    disputeDirection,
+    respondent,
+  );
   const title = getEventTitle();
   return (
     <div className="w-full flex gap-3">
@@ -25,7 +35,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivide
 
         <div className="w-1/2 flex-1 ">{displayDivider && <Divider orientation="vertical" />}</div>
       </div>
-      <div className="flex flex-col gap-3 w-full pb-8">
+      <div className="flex flex-col gap-3 flex-1 pb-8">
         <div className="flex flex-col">
           <div className="flex gap-2">
             <span className="text-sm font-medium leading-5 text-Gray-light-mode-700">{myEvent ? 'You' : name}</span>
@@ -46,6 +56,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivide
               isMarkdown
               expectedLength={isTouchDevice() ? 140 : 240}
               seeMoreText="See more"
+              customStyle="text-Gray-light-mode-600 text-sm font-normal leading-5"
             />
           </div>
         )}
@@ -60,7 +71,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ event, displayDivide
                     href={item.url}
                     download
                     target="_blank"
-                    className="text-sm font-medium leading-5 text-Gray-light-mode-900 cursor-pointer"
+                    className={`text-sm font-medium leading-5 text-Gray-light-mode-900 cursor-pointer break-words break-all whitespace-normal`}
                     rel="noreferrer"
                   >
                     {file.name}
