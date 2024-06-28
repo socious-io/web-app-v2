@@ -126,12 +126,14 @@ export const DisputeDetail = () => {
           </div>
 
           <div className="flex flex-1 flex-col">
+            <div className="mb-6 md:mb-8 font-semibold text-2xl leading-8 text-Gray-light-mode-900">Timeline</div>
             {dispute.events.map((item, index) => (
               <TimelineItem
                 key={item.id}
                 event={item}
                 displayDivider={index < dispute.events.length - 1}
                 disputeDirection={dispute.direction}
+                respondent={dispute.respondent}
               />
             ))}
           </div>

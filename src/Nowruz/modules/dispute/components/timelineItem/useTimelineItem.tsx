@@ -1,9 +1,13 @@
 import { useSelector } from 'react-redux';
-import { CurrentIdentity, DisputeEvent, dispute } from 'src/core/api';
+import { CurrentIdentity, DisputeEvent, Identity, dispute } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
-export const useTimelineItem = (event: DisputeEvent, disputeDirection: 'received' | 'submitted' | 'juror') => {
+export const useTimelineItem = (
+  event: DisputeEvent,
+  disputeDirection: 'received' | 'submitted' | 'juror',
+  respondent: Identity,
+) => {
   const { type, profileImage, name } = getIdentityMeta(event.creator);
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(item => item.current),
@@ -20,8 +24,8 @@ export const useTimelineItem = (event: DisputeEvent, disputeDirection: 'received
     switch (event.type) {
       case 'MESSAGE':
         return {
-          text: 'Filed a dispute against',
-          supportingText: disputeDirection === 'received' ? 'you' : name,
+          text: `Filed a dispute against ${disputeDirection === 'received' ? 'you' : ''}`,
+          supportingText: disputeDirection === 'received' ? '' : respondent.meta.name,
         };
       case 'RESPONSE':
         return {
