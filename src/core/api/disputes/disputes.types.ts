@@ -31,6 +31,7 @@ export interface DisputeEvent {
   created_at: Date;
   creator: Identity;
 }
+
 export interface Dispute {
   id: string;
   title: string;
@@ -60,6 +61,28 @@ export interface DisputesRes extends PaginateRes {
 export interface RespondDisputeReq {
   message: string;
   evidences: string[];
+}
+
+export type InvitationStatus = 'INVITED' | 'ACCEPTED' | 'DECLINED' | 'EXPIRED';
+
+export type InvitationDispute = {
+  id: string;
+  title: string;
+  code: string;
+  category: string;
+  contract: { id: string; name: string };
+};
+
+export interface Invitation {
+  id: string;
+  dispute: InvitationDispute;
+  status: InvitationStatus;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface InvitationsRes extends PaginateRes {
+  items: Invitation[];
 }
 
 export interface FilterReq extends PaginateReq {

@@ -118,6 +118,13 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
         route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
         iconName: 'heart-hand',
         public: false,
+        children: [
+          {
+            label: 'Dispute resolution',
+            route: `/${(currentIdentity.meta as UserMeta).username}/contribute/center`,
+            public: false,
+          },
+        ],
       },
     );
   }

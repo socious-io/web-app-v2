@@ -85,7 +85,7 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
 
   const table = useReactTable({
     data: disputesList,
-    columns,
+    columns: mode === 'juror' ? columns.filter(col => col.header !== labelAvatarField) : columns,
     getCoreRowModel: getCoreRowModel(),
   });
 

@@ -1,6 +1,6 @@
 import { get, post } from 'src/core/api/http';
 
-import { Dispute, DisputeReq, DisputesRes, RespondDisputeReq } from './disputes.types';
+import { Dispute, DisputeReq, DisputesRes, InvitationsRes, RespondDisputeReq } from './disputes.types';
 import { FilterReq, SuccessRes } from '../types';
 
 export async function disputes(params: FilterReq): Promise<DisputesRes> {
@@ -32,4 +32,8 @@ export async function vote(id: string, vote_side: 'CLAIMANT' | 'RESPONDENT'): Pr
 
 export async function respondDispute(payload: RespondDisputeReq, disputedId: string): Promise<Dispute> {
   return (await post<Dispute>(`disputes/${disputedId}/response`, payload)).data;
+}
+
+export async function invitations(params: FilterReq): Promise<InvitationsRes> {
+  return (await get<InvitationsRes>('disputes/invitations', { params })).data;
 }
