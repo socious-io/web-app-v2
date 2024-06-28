@@ -62,7 +62,7 @@ const RespondDisputeModal: React.FC<RespondDisputeModalProps> = ({ open, handleC
         id="message"
         name="message"
         placeholder="Provide your detailed response to the dispute here. Address the concerns raised by the claimant and explain your side of the story. Be clear, concise, and factual in your response."
-        label="Your message*"
+        label="Your response*"
         required
         multiline
         customHeight="200px"
@@ -77,8 +77,8 @@ const RespondDisputeModal: React.FC<RespondDisputeModalProps> = ({ open, handleC
       <div className="flex flex-col leading-6 text-sm font-semibold text-Gray-light-mode-700">
         Supporting evidence*
         <span className="font-normal text-sm leading-5 text-Gray-light-mode-500">
-          Upload any relevant documents, screenshots, delivered work or written communications, that support your claim.
-          Please ensure all personal information is redacted or anonymized.
+          Upload any relevant documents, screenshots, delivered work or written communications, that support your
+          position. Please ensure all personal information is redacted or anonymized.
         </span>
       </div>
       <FileUploaderMultiple
@@ -118,7 +118,7 @@ const RespondDisputeModal: React.FC<RespondDisputeModalProps> = ({ open, handleC
           checked={sharedInfo}
           onChange={e => handleCheckbox(e.target)}
         />
-        I understand that the submitted information will be shared with the respondent and relevant parties involved in
+        I understand that the submitted information will be shared with the claimant and relevant parties involved in
         the resolution process and adheres to the platform&apos;s guidelines for dispute submission.
       </div>
     </>
@@ -156,9 +156,9 @@ const RespondDisputeModal: React.FC<RespondDisputeModalProps> = ({ open, handleC
       {openSuccessModal.disputeId && (
         <SuccessRespondDispute
           open={openSuccessModal.open}
-          handleClose={() => setOpenSuccessModal({ open: false, disputeId: '', respondentName: '' })}
+          handleClose={() => setOpenSuccessModal({ open: false, disputeId: '', claimantName: '' })}
           disputeId={openSuccessModal.disputeId}
-          respondentName={openSuccessModal.respondentName}
+          claimantName={openSuccessModal.claimantName}
         />
       )}
     </>

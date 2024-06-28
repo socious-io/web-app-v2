@@ -26,8 +26,8 @@ export const useRespondDisputeModal = (
   const [openSuccessModal, setOpenSuccessModal] = useState<{
     open: boolean;
     disputeId: string;
-    respondentName: string;
-  }>({ open: false, disputeId: '', respondentName: '' });
+    claimantName: string;
+  }>({ open: false, disputeId: '', claimantName: '' });
   const schema = generateSchema(step);
   const {
     register,
@@ -85,7 +85,7 @@ export const useRespondDisputeModal = (
         setShowFiles([]);
         onSubmitRespond(res);
         handleClose();
-        setOpenSuccessModal({ open: true, disputeId, respondentName: res.respondent.meta?.name || '' });
+        setOpenSuccessModal({ open: true, disputeId, claimantName: res.claimant.meta?.name || '' });
       } catch (e) {
         console.log('error in initiating dispute', e);
       }
