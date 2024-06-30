@@ -356,6 +356,23 @@ export const blueprint: RouteObject[] = [
                   };
                 },
               },
+              {
+                path: 'contributor/:id',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const disputeRes = await dispute(params.id);
+                    return {
+                      disputeRes,
+                    };
+                  }
+                },
+                async lazy() {
+                  const { DisputeDetail } = await import('src/Nowruz/pages/disputes/disputeDetail');
+                  return {
+                    Component: Protect(DisputeDetail, 'both'),
+                  };
+                },
+              },
             ],
           },
           {

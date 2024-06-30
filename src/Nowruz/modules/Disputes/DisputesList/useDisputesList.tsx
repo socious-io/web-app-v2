@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CurrentIdentity, DisputeDirection, DisputesRes, DisputeState, disputes } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { StatusProps } from 'src/Nowruz/modules/general/components/Status/index.types';
@@ -8,6 +8,7 @@ import { RootState } from 'src/store';
 
 export const useDisputesList = (list: DisputesRes, mode: DisputeDirection) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const isMobile = isTouchDevice();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
@@ -44,8 +45,8 @@ export const useDisputesList = (list: DisputesRes, mode: DisputeDirection) => {
     else setDisputesList(data.items);
   };
 
-  const navigateToDetailDispute = (disputeId: string) => navigate(`/disputes/${disputeId}`);
-
+  const navigateToDetailDispute = (disputeId: string) =>
+    navigate(`/disputes${location.pathname.includes('contribute') ? '/contributor' : ''}/${disputeId}`);
   return {
     labelAvatarField: labelAvatarField[mode],
     generateStatus,

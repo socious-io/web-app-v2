@@ -1,5 +1,6 @@
 import { Cell, ColumnDef, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
 import { Dispute, DisputeDirection, DisputeState } from 'src/core/api';
 import { disputes, LeaveContribution } from 'src/core/api/disputes/disputes.api';
@@ -11,6 +12,7 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
   const [stopNotif, setStopNotif] = useState(false);
   const [list, setList] = useState<Dispute[]>([]);
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getDisputes = async () => {
@@ -140,5 +142,9 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
     }
   };
 
-  return { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave };
+  const handleSeeAllDisputes = () => {
+    navigate('center');
+  };
+
+  return { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave, handleSeeAllDisputes };
 };
