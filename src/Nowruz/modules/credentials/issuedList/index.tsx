@@ -73,12 +73,24 @@ export const IssuedList = () => {
               <div className="flex-1">{'experience' in item ? 'Work Certificate' : 'Educational Certificate'}</div>
               <div className={css.col}>
                 <div className="flex">
-                  {item.status === 'PENDING' && <Status icon="clock" label="Pending" theme="secondary" />}
+                  {item.status === 'PENDING' && (
+                    <Status icon="clock" label="Pending" theme="secondary" transparent={true} />
+                  )}
                   {item.status === 'APPROVED' && (
-                    <Status icon={userProfile ? 'arrow-down' : 'arrow-up'} label="Issued" theme="secondary" />
+                    <Status
+                      icon={userProfile ? 'arrow-down' : 'arrow-up'}
+                      label="Issued"
+                      theme="secondary"
+                      transparent={true}
+                    />
                   )}
                   {item.status === 'SENT' && (
-                    <Status icon={userProfile ? 'arrow-down' : 'arrow-up'} label="Issued" theme="secondary" />
+                    <Status
+                      icon={userProfile ? 'arrow-down' : 'arrow-up'}
+                      label="Issued"
+                      theme="secondary"
+                      transparent={true}
+                    />
                   )}
                   {item.status === 'REJECTED' && <Status icon="alert-circle" label="Declined" theme="error" />}
                   {item.status === 'CLAIMED' && <Status icon="check-circle" label="Claimed" theme="success" />}
