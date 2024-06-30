@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import { Dispute, withdrawDispute, dispute as getDisputeApi, Identity } from 'src/core/api';
+import { useSelector } from 'react-redux';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import { Dispute, withdrawDispute, dispute as getDisputeApi, Identity, CurrentIdentity, UserMeta } from 'src/core/api';
 import { addDaysToDate, formatDateToCustomUTC } from 'src/core/time';
+import { RootState } from 'src/store';
 
 export const useDisputeDetail = () => {
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(item => item.current),
+  );
+
   const WAIT_TO_RESPOND_DAYS = 3;
   const WAIT_TO_DECISIOON_DAYS = 7;
+  const location = useLocation();
+
   const { disputeRes } = useLoaderData() as { disputeRes: Dispute };
   const [openModal, setOpenModal] = useState<{
     name?: 'withdraw' | 'submitDecision' | 'impactPoint' | 'response';
@@ -269,6 +277,13 @@ export const useDisputeDetail = () => {
 
   const handleRespond = (newDispute: Dispute) => setDispute(newDispute);
 
+  const handleBack = () => {
+    const path = location.pathname.includes('contributor')
+      ? `/${(currentIdentity?.meta as UserMeta).username}/contribute/center`
+      : '/disputes';
+    navigate(path);
+  };
+
   return {
     dispute,
     setDispute,
@@ -281,5 +296,6 @@ export const useDisputeDetail = () => {
     redirectToChat,
     handleCloseSubmit,
     handleRespond,
+    handleBack,
   };
 };

@@ -49,8 +49,8 @@ export const useInvitationsList = (list: InvitationsRes) => {
     const currentRow: Invitation = invitationsList[rowId];
     const currentStatus = currentRow.status;
     const actionOnStatus: Record<InvitationStatus, () => void> = {
-      ACCEPTED: () => navigate(`/disputes/${currentRow.dispute.id}`),
-      DECLINED: () => navigate(`/disputes/${currentRow.dispute.id}`),
+      ACCEPTED: () => navigate(`/disputes/contributor/${currentRow.dispute.id}`),
+      DECLINED: () => navigate(`/disputes/contributor/${currentRow.dispute.id}`),
       INVITED: () =>
         setOpenModal({
           name: 'invitation',

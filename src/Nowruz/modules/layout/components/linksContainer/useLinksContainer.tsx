@@ -115,10 +115,15 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
       },
       {
         label: 'Contributor',
-        route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
+        route: '',
         iconName: 'heart-hand',
         public: false,
         children: [
+          {
+            label: 'Contributor Dashboard',
+            route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
+            public: false,
+          },
           {
             label: 'Dispute resolution',
             route: `/${(currentIdentity.meta as UserMeta).username}/contribute/center`,

@@ -16,7 +16,7 @@ interface ContributorDashboardProps {
 }
 
 export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newlyJoined, setJoined }) => {
-  const { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave } =
+  const { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave, handleSeeAllDisputes } =
     useContributorDashboard(setJoined);
   const footerJsx = (
     <div className="w-full px-4 md:px-6 pb-4 md:pb-6 flex flex-col gap-3 md:flex-row-reverse">
@@ -108,8 +108,12 @@ export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newl
                 </table>
               </div>
               <div className="w-full flex justify-center mt-6">
-                {/* TODO: onClick redirect to dispute resolution center */}
-                <Button variant="text" color="primary" customStyle="underline hover:underline">
+                <Button
+                  variant="text"
+                  color="primary"
+                  customStyle="underline hover:underline"
+                  onClick={handleSeeAllDisputes}
+                >
                   See all disputes
                 </Button>
               </div>

@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { Icon } from 'src/Nowruz/general/Icon';
 import RespondDisputeModal from 'src/Nowruz/modules/contract/components/respondDisputeModal';
 import { SubmitDecision } from 'src/Nowruz/modules/dispute/components/submitDecisionModal';
@@ -24,14 +23,14 @@ export const DisputeDetail = () => {
     redirectToChat,
     handleCloseSubmit,
     handleRespond,
+    handleBack,
   } = useDisputeDetail();
-  const navigate = useNavigate();
   return (
     <>
       <div className="pt-8 pb-12 px-4 md:px-8 flex flex-col gap-8">
         <div className="flex flex-col">
           <div className="mb-5 w-fit">
-            <BackLink title="Back to disputes" onBack={() => navigate('/disputes')} block={false} />
+            <BackLink title="Back to disputes" onBack={handleBack} block={false} />
           </div>
           <div className="flex flex-col gap-4 md:gap-6">
             <div className="flex flex-col gap-1">
