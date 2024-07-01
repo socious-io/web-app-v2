@@ -19,16 +19,14 @@ export const City = () => {
         <SearchDropdown
           id="city"
           placeholder="Search for a city"
-          cacheOptions
           value={value}
           isAsync
           loadOptions={searchCities}
-          defaultOptions
           className="my-5"
           icon="search-lg"
           hasDropdownIcon={false}
           label="Location*"
-          onChange={(value) => {
+          onChange={value => {
             onSelectCity(value);
           }}
         />

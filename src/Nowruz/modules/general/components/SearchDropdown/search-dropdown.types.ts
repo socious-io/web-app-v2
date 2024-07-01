@@ -8,4 +8,5 @@ export interface SelectProps extends Props {
   icon?: string;
   hasDropdownIcon?: boolean;
   border?: boolean;
+  loadOptions?: (inputValue: string, callback: (options: any) => void) => void;
 }
