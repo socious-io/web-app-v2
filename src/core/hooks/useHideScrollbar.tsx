@@ -8,7 +8,6 @@ const useHideScrollbar = (active: boolean, onlyMobile = false): void => {
     };
     if (isActive()) {
       const scrollbarWidth = window.innerWidth - document.body.clientWidth;
-      console.log(scrollbarWidth);
       if (active) {
         document.body.style.overflow = 'hidden';
         if (scrollbarWidth) document.body.style.paddingRight = `${scrollbarWidth}px`;
