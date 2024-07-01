@@ -18,7 +18,7 @@ export interface Notification {
 
 export interface Data {
   id: string;
-  body: Body;
+  body: Body & { title: string };
   text: string;
   type: string;
   media?: string;
