@@ -85,7 +85,7 @@ export const useRespondDisputeModal = (
         setShowFiles([]);
         onSubmitRespond(res);
         handleClose();
-        setOpenSuccessModal({ open: true, disputeId, claimantName: res.claimant.meta?.name || '' });
+        setOpenSuccessModal({ open: true, disputeId: res.code, claimantName: res.claimant.meta?.name || '' });
       } catch (e) {
         console.log('error in initiating dispute', e);
       }
