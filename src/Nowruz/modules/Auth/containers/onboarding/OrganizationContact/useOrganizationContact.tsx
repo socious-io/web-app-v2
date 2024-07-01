@@ -13,6 +13,7 @@ import {
   searchLocation,
   identities,
   CurrentIdentity,
+  OrganizationReq,
 } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { checkUsernameConditions, removeValuesFromObject } from 'src/core/utils';
@@ -64,26 +65,23 @@ export const useOrganizationContact = () => {
     const { orgName, orgType, social_causes, bio, city, country, email, size, shortname, industry } = state;
     try {
       const websiteUrl = state.website ? 'https://' + state.website : '';
-      await createOrganization(
-        removeValuesFromObject(
-          {
-            name: orgName,
-            type: orgType.value,
-            size: size.value,
-            social_causes,
-            bio,
-            email,
-            website: websiteUrl,
-            city,
-            country,
-            shortname: shortname.toLowerCase(),
-            industry,
-          },
-          ['', null],
-        ),
-        true,
-        referrerUser?.id,
-      );
+      const orgReqParam = removeValuesFromObject(
+        {
+          name: orgName,
+          type: orgType.value,
+          size: size.value,
+          social_causes,
+          bio,
+          email,
+          website: websiteUrl,
+          city,
+          country,
+          shortname: shortname.toLowerCase(),
+          industry,
+        },
+        ['', null],
+      ) as OrganizationReq;
+      await createOrganization(orgReqParam, true, referrerUser?.id);
       localStorage.removeItem('registerFor');
       localStorage.removeItem('referrer');
       reset();

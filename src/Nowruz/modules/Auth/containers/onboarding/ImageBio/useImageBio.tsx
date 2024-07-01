@@ -2,7 +2,7 @@ import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity, profile, uploadMedia, updateProfile as updateProfileApi } from 'src/core/api';
+import { CurrentIdentity, profile, uploadMedia, updateProfile as updateProfileApi, UserMeta } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
@@ -54,7 +54,7 @@ export const useImageBio = () => {
     if (isMobile) {
       navigate(`/sign-up/user/notification`, {
         state: {
-          username: currentIdentity.meta?.username,
+          username: (currentIdentity.meta as UserMeta).username,
         },
       });
     } else navigate('/dashboard/user');

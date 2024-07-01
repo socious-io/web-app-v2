@@ -70,10 +70,8 @@ export const OrganizationContact = () => {
         <SearchDropdown
           id="city"
           placeholder="Search for a city"
-          cacheOptions
           isAsync
           loadOptions={searchCities}
-          defaultOptions
           className="my-5"
           icon="search-lg"
           hasDropdownIcon={false}
@@ -84,10 +82,8 @@ export const OrganizationContact = () => {
         <SearchDropdown
           id="industry"
           placeholder="Search an industry"
-          cacheOptions
           isAsync
           loadOptions={searchIndustries}
-          defaultOptions
           className="my-5"
           icon="search-lg"
           hasDropdownIcon={false}
