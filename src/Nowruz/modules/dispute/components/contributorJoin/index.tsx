@@ -46,7 +46,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
       </div>
     );
     const incomplete = (
-      <div className="w-8 h-8 rounded-2xl border border-solid border-Gray-light-mode-300 bg-Gray-light-mode-200 flex items-center justify-center">
+      <div className="w-8 h-8 rounded-2xl border-2 border-solid border-Gray-light-mode-200  flex items-center justify-center">
         <Dot size="medium" color={variables.color_grey_300} shadow={false} />
       </div>
     );
@@ -55,15 +55,13 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
     const dividerColors = [variables.color_primary_700, variables.color_grey_200];
     return (
       <div className="w-full flex gap-4">
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1 pb-1">
           {eligible ? icons[step] : incomplete}
           {step < 2 && (
-            <div className="w-1/2 flex-1 pb-1 ">
-              <Divider
-                orientation="vertical"
-                sx={{ borderColor: eligible ? dividerColors[step] : variables.color_grey_200, borderRightWidth: '2px' }}
-              />
-            </div>
+            <div
+              className="w-1/2 flex-1  border-r-2 border-l-0 border-y-0 border-solid"
+              style={{ borderColor: eligible ? dividerColors[step] : variables.color_grey_200 }}
+            />
           )}
         </div>
         <div className="flex flex-col gap-0.5 pt-1 pb-8">
@@ -121,12 +119,12 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
             safety of the Socious community.
           </div>
 
-          <Button variant="text" color="primary" customStyle="!p-0 flex flex-row gap-2">
+          {/* <Button variant="text" color="primary" customStyle="!p-0 flex flex-row gap-2">
             <div className={`${css.bold} text-Brand-700 underline`}>
               Learn more about the Socious Contributor Program
             </div>
             <Icon name="arrow-right" fontSize={20} className="text-Brand-700" />
-          </Button>
+          </Button> */}
           <div className="text-xl font-semibold leading-[30px] text-Gray-light-mode-900">Why become a contributor?</div>
           <div className="flex flex-col gap-5 pl-4">
             {checkItems.map(item => renderCheckItems(item.title, item.desc))}

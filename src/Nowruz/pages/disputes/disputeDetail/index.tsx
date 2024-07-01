@@ -72,7 +72,7 @@ export const DisputeDetail = () => {
           <div className="w-full md:w-[360px] rounded-xl border border-solid border-Gray-light-mode-200 bg-Gray-light-mode-50 p-6 flex flex-col">
             <span className="mb-4 text-base font-semibold leading-6 text-Gray-light-mode-700">Contract disputed</span>
             <div className="rounded-xl border border-solid border-Gray-light-mode-200 bg-Base-White">
-              <div className="h-[72px] px-6 py-4 flex flex-col border border-solid border-y-0 border-t-0 border-Gray-light-mode-200">
+              <div className="px-6 py-4 flex flex-col border border-solid border-t-0 border-Gray-light-mode-200">
                 <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">Contract ID</span>
                 <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">{dispute.contract.id}</span>
               </div>
