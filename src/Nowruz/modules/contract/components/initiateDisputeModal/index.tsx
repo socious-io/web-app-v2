@@ -16,13 +16,12 @@ import { useInitiateDisputeModal } from './useInitiateDisputeModal';
 
 const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handleClose, respondentId, missionId }) => {
   const {
-    data: { register, errors, files, showFiles, step, category, confirmInfo, sharedInfo, openSuccessModal },
+    data: { register, errors, files, showFiles, step, category, openSuccessModal },
     operations: {
       handleUpload,
       handleDeleteUpload,
       setShowFiles,
       onSelectCategory,
-      handleCheckbox,
       handleSubmit,
       onSubmit,
       setOpenSuccessModal,
@@ -122,26 +121,17 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
   const stepThree = (
     <>
       <div className="flex flex-row items-start gap-2 font-normal text-sm leading-5 text-Gray-light-mode-500">
-        <Checkbox
-          id="confirmInfo"
-          name="confirmInfo"
-          label=""
-          checked={confirmInfo}
-          onChange={e => handleCheckbox(e.target)}
-        />
-        I hereby confirm that the information provided in this form is true and accurate to the best of my knowledge.
+        <Checkbox id="confirmInfo" name="confirmInfo" label="" required register={register} />I hereby confirm that the
+        information provided in this form is true and accurate to the best of my knowledge.
       </div>
       <div className="flex flex-row items-start gap-2 font-normal text-sm leading-5 text-Gray-light-mode-500">
-        <Checkbox
-          id="sharedInfo"
-          name="sharedInfo"
-          label=""
-          checked={sharedInfo}
-          onChange={e => handleCheckbox(e.target)}
-        />
-        I understand that the submitted information will be shared with the respondent and relevant parties involved in
-        the resolution process and adheres to the platform&apos;s guidelines for dispute submission.
+        <Checkbox id="sharedInfo" name="sharedInfo" label="" required register={register} />I understand that the
+        submitted information will be shared with the respondent and relevant parties involved in the resolution process
+        and adheres to the platform&apos;s guidelines for dispute submission.
       </div>
+      {(errors.confirmInfo?.message || errors.sharedInfo?.message) && (
+        <span className="text-Error-700 text-sm">Both statements must be agreed to before proceeding</span>
+      )}
     </>
   );
 
