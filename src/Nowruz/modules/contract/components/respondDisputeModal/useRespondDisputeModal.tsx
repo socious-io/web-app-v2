@@ -10,8 +10,8 @@ const generateSchema = (step: number) =>
   yup.object().shape({
     message: step === 0 ? yup.string().required('Required') : yup.string(),
     evidences: step === 1 ? yup.array().defined().min(1, 'Required').max(10, 'too many files') : yup.array(),
-    confirmInfo: yup.boolean(),
-    sharedInfo: yup.boolean(),
+    confirmInfo: step === 2 ? yup.boolean().oneOf([true], 'Required') : yup.boolean(),
+    sharedInfo: step === 2 ? yup.boolean().oneOf([true], 'Required') : yup.boolean(),
   });
 
 export const useRespondDisputeModal = (
@@ -34,15 +34,12 @@ export const useRespondDisputeModal = (
     formState: { errors },
     handleSubmit,
     setValue,
-    watch,
     clearErrors,
     reset,
   } = useForm<Form>({
     mode: 'all',
     resolver: yupResolver(schema),
   });
-  const confirmInfo = watch('confirmInfo');
-  const sharedInfo = watch('sharedInfo');
 
   const initializeValues = () => {
     const initialVal = {
@@ -69,10 +66,6 @@ export const useRespondDisputeModal = (
     handleUpload(filteredFiles);
   };
 
-  const handleCheckbox = (target: React.ChangeEvent<HTMLInputElement>['target']) => {
-    setValue(target.name as 'confirmInfo' | 'sharedInfo', target.checked);
-  };
-
   const onSubmit = async (formData: Form) => {
     if (step < 2) {
       setStep(prev => prev + 1);
@@ -97,12 +90,11 @@ export const useRespondDisputeModal = (
   };
 
   return {
-    data: { register, errors, files, showFiles, step, confirmInfo, sharedInfo, openSuccessModal },
+    data: { register, errors, files, showFiles, step, openSuccessModal },
     operations: {
       handleUpload,
       handleDeleteUpload,
       setShowFiles,
-      handleCheckbox,
       handleSubmit,
       onSubmit,
       setOpenSuccessModal,

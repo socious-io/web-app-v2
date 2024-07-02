@@ -8,8 +8,8 @@ export type Form = {
   title: string;
   description: string;
   evidences: string[];
-  confirmInfo?: boolean;
-  sharedInfo?: boolean;
+  confirmInfo: boolean;
+  sharedInfo: boolean;
 };
 
 export interface InitiateDisputeModalProps {

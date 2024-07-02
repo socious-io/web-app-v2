@@ -3,6 +3,7 @@ export interface CheckboxProps extends DefaultProps {
   id: string;
   label?: string;
   required?: boolean;
+  register?: any;
   errors?: string[];
   isValid?: boolean;
   type?: 'checkBox' | 'checkCircle';
