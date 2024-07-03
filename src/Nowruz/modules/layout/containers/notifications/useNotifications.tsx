@@ -32,6 +32,11 @@ export const useNotifications = (handleClose: () => void) => {
         linkButton: { label: 'View Details', href: `/${usernameVal}/contribute/center` },
         identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
       },
+      REACH_10K_IMPACT_POINT: {
+        hasSubText: true,
+        linkButton: { label: 'View Details', href: `/${usernameVal}/contribute` },
+        identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
+      },
     };
     const { linkButton, hasSubText, identity } = mapRoute[item.data.type] || {};
     return { linkButton, hasSubText, identity };
@@ -124,6 +129,7 @@ export const useNotifications = (handleClose: () => void) => {
       case 'DISPUTE_INITIATED':
       case 'DISPUTE_NEW_RESPONSE':
       case 'DISPUTE_JUROR_CONTRIBUTION_INVITED':
+      case 'REACH_10K_IMPACT_POINT':
         return;
       default:
         path = '';
