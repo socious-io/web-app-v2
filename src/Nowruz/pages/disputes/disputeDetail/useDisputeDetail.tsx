@@ -18,9 +18,7 @@ export const useDisputeDetail = () => {
   const [openModal, setOpenModal] = useState<{
     name?: 'withdraw' | 'submitDecision' | 'impactPoint' | 'response';
     open: boolean;
-  }>({
-    open: false,
-  });
+  }>({ open: false });
   const [dispute, setDispute] = useState(disputeRes);
   const [alertInfo, setAlertInfo] = useState<{
     title: string;
@@ -236,6 +234,30 @@ export const useDisputeDetail = () => {
         setPrimaryBtn({ label: '', display: false });
         setSecondaryBtn({ label: '', display: false });
         break;
+      case 'CLOSED':
+        if (dispute.direction === 'juror') {
+          setAlertInfo({
+            title: 'Decision submitted',
+            subtitleName: '',
+            subtitle: `You decision has been submitted on April 12, 2024 00:00 UTC.`,
+            theme: 'success',
+            icon: 'check-circle',
+          });
+          setPrimaryBtn({ label: '', display: false });
+          setSecondaryBtn({ label: '', display: false });
+        } else {
+          setAlertInfo({
+            title: 'Closed',
+            subtitleName: '',
+            subtitle: `The jurors have decided to file against you on April 14, 2024 00:00 UTC.`,
+            theme: 'gray',
+            icon: 'info-circle',
+          });
+          setPrimaryBtn({ label: '', display: false });
+          setSecondaryBtn({ label: '', display: false });
+        }
+
+        break;
     }
   };
 
@@ -284,6 +306,11 @@ export const useDisputeDetail = () => {
     navigate(path);
   };
 
+  const handleCloseImpactPoint = async () => {
+    const res = await getDisputeApi(dispute.id);
+    setDispute(res);
+    setOpenModal({ open: false });
+  };
   return {
     dispute,
     setDispute,
@@ -297,5 +324,6 @@ export const useDisputeDetail = () => {
     handleCloseSubmit,
     handleRespond,
     handleBack,
+    handleCloseImpactPoint,
   };
 };
