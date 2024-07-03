@@ -72,7 +72,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
           {identity.country && (
             <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
           )}
-          {website && <Website url={website} />}
+          {website && <Website url={website} truncate />}
         </div>
       </div>
     </div>

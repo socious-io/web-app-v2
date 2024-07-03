@@ -43,7 +43,7 @@ export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identi
           {identity?.country && (
             <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
           )}
-          {website && <Website url={website} />}
+          {website && <Website url={website} truncate />}
         </div>
       </div>
     </div>
