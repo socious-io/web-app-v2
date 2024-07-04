@@ -4,9 +4,9 @@ import { ContributorJoin } from 'src/Nowruz/modules/dispute/components/contribut
 import { useContribute } from './useContribute';
 
 export const Contribute = () => {
-  const { eligible, joined, newlyJoined, setNewlyJoined, setJoined } = useContribute();
+  const { eligible, joined, newlyJoined, setNewlyJoined } = useContribute();
 
-  if (joined) return <ContributorDashboard newlyJoined={newlyJoined} setJoined={setJoined} />;
+  if (joined) return <ContributorDashboard newlyJoined={newlyJoined} />;
 
-  return <ContributorJoin eligible={eligible} setNewlyJoined={setNewlyJoined} setJoined={setJoined} />;
+  return <ContributorJoin eligible={eligible} setNewlyJoined={setNewlyJoined} />;
 };

@@ -14,12 +14,11 @@ import { useContributorJoin } from './useContributorJoin';
 interface ContributorJoinProps {
   eligible: boolean;
   setNewlyJoined: (val: boolean) => void;
-  setJoined: (val: boolean) => void;
 }
 
-export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setNewlyJoined, setJoined }) => {
+export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setNewlyJoined }) => {
   const { checkItems, steps, openModal, setOpenModal, accepted, setAccepted, handleJoin, isContributor } =
-    useContributorJoin(setJoined, setNewlyJoined);
+    useContributorJoin(setNewlyJoined);
 
   const renderCheckItems = (title: string, desc: string) => {
     return (
@@ -111,23 +110,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
               colOrderMobileView
             />
           )}
-          {/* {eligible ? (
-            <AlertMessage
-              theme="success"
-              iconName="check-circle"
-              title="Congratulations on reaching 10,000 impact points!"
-              subtitle="You're now invited to join our Socious Contributor community and make an even bigger impact on our platform. Click to join now!"
-              colOrderMobileView
-            />
-          ) : (
-            <AlertMessage
-              theme="warning"
-              iconName="alert-circle"
-              title="Keep Going to unlock the Socious Contributor program!"
-              subtitle="You're making great progress! Reach 10,000 impact points to join our exclusive Contributor program and make an even bigger impact on the Socious platform."
-              colOrderMobileView
-            />
-          )} */}
+
           <div className={css.supprtingText}>
             As a Socious Contributor, you&apos;ll have the unique opportunity to play an active role in various aspects
             of our platform, including dispute resolution, content moderation, and profile verification. By joining our

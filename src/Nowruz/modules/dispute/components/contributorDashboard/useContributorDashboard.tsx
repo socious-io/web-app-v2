@@ -7,8 +7,10 @@ import { disputes, LeaveContribution } from 'src/core/api/disputes/disputes.api'
 import { toRelativeTime } from 'src/core/relative-time';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
+import store from 'src/store';
+import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
-export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
+export const useContributorDashboard = () => {
   const [stopNotif, setStopNotif] = useState(false);
   const [list, setList] = useState<Dispute[]>([]);
   const [openModal, setOpenModal] = useState(false);
@@ -136,7 +138,9 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
   const handleLeave = async () => {
     try {
       const res = await LeaveContribution();
-      if (res.message === 'success') setJoined(false);
+      if (res.message === 'success') {
+        store.dispatch(currentIdentities());
+      }
     } catch (e) {
       console.log('error in leaving contribution', e);
     }
