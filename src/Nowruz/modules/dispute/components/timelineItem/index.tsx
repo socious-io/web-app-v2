@@ -30,13 +30,12 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
   const title = getEventTitle();
   return (
     <div className="w-full flex gap-3">
-      <div className="flex flex-col w-fit">
+      <div className="flex flex-col gap-1 w-fit pb-1">
         <Avatar type={type as UserType} img={profileImage} />
-
-        <div className="w-1/2 flex-1 ">{displayDivider && <Divider orientation="vertical" />}</div>
+        <div className="w-1/2 flex-1  border-r-2 border-l-0 border-y-0 border-solid border-Gray-light-mode-200" />
       </div>
       <div className="flex flex-col gap-3 flex-1 pb-8">
-        <div className="flex flex-col">
+        <div className="flex flex-col h-12 max-h-12 min-h-12 justify-center">
           <div className="flex gap-2">
             <span className="text-sm font-medium leading-5 text-Gray-light-mode-700">{myEvent ? 'You' : name}</span>
             <span className="text-xs font-medium leading-[18px] text-Gray-light-mode-600">
