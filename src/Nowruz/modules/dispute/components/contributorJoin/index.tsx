@@ -84,7 +84,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
   );
   return (
     <div>
-      <div className="w-full h-40 md:h-60 bg-no-repeat bg-cover bg-[url('/images/dispute_contributor.jpeg')]" />
+      <div className="w-full h-40 md:h-60 bg-no-repeat bg-cover bg-[url('/images/dispute-contributor.png')]" />
       <div className="px-4 md:px-8 pb-12 flex flex-col gap-8">
         <div className="pt-5 pb-4 md:py-6 border border-solid border-x-0 border-t-0 border-b-Gray-light-mode-200 flex flex-col gap-1">
           <span className=" text-3xl font-semibold leading-[38px] text-Gray-light-mode-900">
