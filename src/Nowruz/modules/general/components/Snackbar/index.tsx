@@ -8,10 +8,10 @@ const CustomSnackbar: React.FC<CustomSnackbarProps> = ({
   open,
   onClose,
   anchorOrigin = { vertical: 'top', horizontal: 'center' },
-  text,
+  children,
   icon,
   containerClassName = '',
-  textClassName = '',
+  contentClassName = '',
   ...props
 }) => {
   return (
@@ -19,9 +19,9 @@ const CustomSnackbar: React.FC<CustomSnackbarProps> = ({
       <SnackbarContent
         className={`bg-Base-White flex items-start md:items-center py-0 px-2 rounded-xl min-w-[320px] ${containerClassName}`}
         message={
-          <div className="flex flex-col items-start gap-2 md:flex-row md:items-center">
+          <div className={`flex flex-col items-start gap-2 md:flex-row md:items-center ${contentClassName}`}>
             {icon}
-            <span className={`text-sm font-semibold text-Gray-light-mode-900 ${textClassName}`}>{text}</span>
+            {children}
           </div>
         }
         action={[
