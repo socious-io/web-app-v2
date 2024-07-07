@@ -203,7 +203,7 @@ export const useDisputeDetail = () => {
           setAlertInfo({
             title: 'Decision submitted',
             subtitleName: '',
-            subtitle: `You decision has been submitted on April 12, 2024 00:00 UTC.`,
+            subtitle: `You decision has been submitted on ${formatDateToCustomUTC(dispute.updated_at)}`,
             theme: 'success',
             icon: 'check-circle',
           });
@@ -213,7 +213,7 @@ export const useDisputeDetail = () => {
           setAlertInfo({
             title: 'Closed',
             subtitleName: '',
-            subtitle: `The jurors have decided to file against you on April 14, 2024 00:00 UTC.`,
+            subtitle: `The jurors have decided to file against you on ${formatDateToCustomUTC(dispute.updated_at)}`,
             theme: 'gray',
             icon: 'info-circle',
           });

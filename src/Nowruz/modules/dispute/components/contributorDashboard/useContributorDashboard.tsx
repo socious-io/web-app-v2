@@ -40,6 +40,8 @@ export const useContributorDashboard = () => {
         return { label: 'Decision submitted', theme: 'success' as ThemeColor, color: variables.color_success_600 };
       case 'WITHDRAWN':
         return { label: 'Withdrawn', theme: 'secondary' as ThemeColor };
+      case 'CLOSED':
+        return { label: 'Closed', theme: 'secondary' as ThemeColor };
     }
   };
 

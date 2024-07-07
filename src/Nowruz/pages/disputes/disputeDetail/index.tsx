@@ -1,3 +1,4 @@
+import { Icon } from 'src/Nowruz/general/Icon';
 import RespondDisputeModal from 'src/Nowruz/modules/contract/components/respondDisputeModal';
 import { SubmitDecision } from 'src/Nowruz/modules/dispute/components/submitDecisionModal';
 import { TimelineItem } from 'src/Nowruz/modules/dispute/components/timelineItem';
@@ -6,6 +7,7 @@ import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
+import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import { useDisputeDetail } from './useDisputeDetail';
 
@@ -93,18 +95,20 @@ export const DisputeDetail = () => {
                 </Button>
               )}
             </div>
-            {/* TODO: ADD anonymous chat function */}
             {dispute.direction === 'juror' && (
-              <div className="flex flex-col gap-3 mt-8">
-                <Button
-                  variant="text"
-                  color="primary"
-                  customStyle="flex gap-2 !h-fit !p-0"
-                  fullWidth
-                  onClick={() => window.open('https://socious.io/contact', '_blank')}
+              <div className="flex flex-col gap-3 items-center">
+                <a
+                  className=" flex gap-2 !h-fit !p-0 cursor-pointer"
+                  href="https://socious.io/contact"
+                  target="_blank"
+                  rel="noreferrer"
                 >
-                  get support
-                </Button>
+                  <span className="font-medium text-base leading-6 underline text-Brand-700 ">get support</span>
+                  <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
+                </a>
+
+                {/* TODO: ADD anonymous chat function */}
+
                 {/* <Button variant="text" color="primary" customStyle="flex gap-2 !h-fit !p-0" fullWidth>
                   <span className="underline text-base font-medium leading-6">Chat with jurors</span>
                   <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
