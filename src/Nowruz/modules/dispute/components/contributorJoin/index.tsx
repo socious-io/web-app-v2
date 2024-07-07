@@ -43,7 +43,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
       </div>
     );
     const incomplete = (
-      <div className="w-8 h-8 rounded-2xl border-2 border-solid border-Gray-light-mode-200  flex items-center justify-center">
+      <div className="w-8 h-8 rounded-2xl border-2 border-solid border-Gray-light-mode-200 bg-Gray-light-mode-50 flex items-center justify-center">
         <Dot size="medium" color={variables.color_grey_300} shadow={false} />
       </div>
     );
@@ -56,8 +56,8 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
           {eligible ? icons[step] : incomplete}
           {step < 2 && (
             <div
-              className="w-1/2 flex-1  border-r-2 border-l-0 border-y-0 border-solid"
-              style={{ borderColor: eligible ? dividerColors[step] : variables.color_grey_200 }}
+              className="w-0.5 flex-1 rounded-default self-center"
+              style={{ backgroundColor: eligible ? dividerColors[step] : variables.color_grey_200 }}
             />
           )}
         </div>
