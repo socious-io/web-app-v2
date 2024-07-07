@@ -27,7 +27,6 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
     open,
     setOpen,
     applicant,
-    extractCellId,
     openAlert,
     setOpenAlert,
     handleReject,
@@ -49,7 +48,7 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
     handleChangeSearchTerm,
   } = useApplicantAction(jobId, applicants, currentTab, onRefetch);
   return (
-    <div className="hidden md:block border-Gray-light-mode-200 border-solid border-b rounded-lg">
+    <div className="hidden md:block border border-Gray-light-mode-200 border-solid rounded-lg">
       <div className="p-4 flex items-center">
         {currentTab === 'applicants' && (
           <Button
@@ -99,9 +98,8 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
                   className="border-Gray-light-mode-200 border-solid border-b border-t-0 border-l-0 border-r-0"
                 >
                   {row.getVisibleCells().map(cell => {
-                    const styleClass = extractCellId(cell);
                     return (
-                      <td className={`${styleClass} px-6 py-3 align-middle`} key={cell.id}>
+                      <td className="px-6 py-3 align-middle truncate" key={cell.id}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     );
@@ -116,6 +114,7 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
           <EmptyState
             icon={<Icon name="users-01" fontSize={24} color={variables.color_grey_700} />}
             message={`No ${currentTab} yet`}
+            className="border-0 border-t !rounded-none rounded-t-xl"
           />
         </div>
       )}

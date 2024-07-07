@@ -72,7 +72,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
               <button className={`${css.subtitle} cursor-pointer`} onClick={onAvatarClick}>
                 {job.identity_meta.name}
               </button>
-              <span className={css.subtitle}>{` . ${toRelativeTime(job.created_at.toString())}`}</span>
+              <span className={css.subtitle}>{` ・ ${toRelativeTime(job.created_at.toString())}`}</span>
             </div>
           </div>
           <div className="flex gap-2 flex-wrap">
