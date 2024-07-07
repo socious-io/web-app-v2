@@ -12,12 +12,11 @@ import { useContributorDashboard } from './useContributorDashboard';
 
 interface ContributorDashboardProps {
   newlyJoined: boolean;
-  setJoined: (val: boolean) => void;
 }
 
-export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newlyJoined, setJoined }) => {
+export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newlyJoined }) => {
   const { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave, handleSeeAllDisputes } =
-    useContributorDashboard(setJoined);
+    useContributorDashboard();
   const footerJsx = (
     <div className="w-full px-4 md:px-6 pb-4 md:pb-6 flex flex-col gap-3 md:flex-row-reverse">
       <Button variant="contained" color="error" customStyle="w-full md:w-fit" onClick={handleLeave}>

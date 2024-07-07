@@ -7,6 +7,7 @@ import { BackLink } from 'src/Nowruz/modules/general/components/BackLink';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { FeaturedIcon } from 'src/Nowruz/modules/general/components/featuredIcon-new';
 import { FeaturedIconOutlined } from 'src/Nowruz/modules/general/components/featuredIconOutlined';
+import { Link } from 'src/Nowruz/modules/general/components/link';
 
 import { useDisputeDetail } from './useDisputeDetail';
 
@@ -24,6 +25,7 @@ export const DisputeDetail = () => {
     handleCloseSubmit,
     handleRespond,
     handleBack,
+    handleCloseImpactPoint,
   } = useDisputeDetail();
   return (
     <>
@@ -93,10 +95,21 @@ export const DisputeDetail = () => {
                 </Button>
               )}
             </div>
-            {/* TODO: ADD anonymous chat function */}
             {dispute.direction === 'juror' && (
-              <div className="flex flex-col gap-3 mt-8">
-                <Button variant="text" color="primary" customStyle="flex gap-2 !h-fit !p-0" fullWidth>
+              <div className="flex flex-col gap-3 items-center">
+                <a
+                  className=" flex gap-2 !h-fit !p-0 cursor-pointer"
+                  href="https://socious.io/contact"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="font-medium text-base leading-6 underline text-Brand-700 ">get support</span>
+                  <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
+                </a>
+
+                {/* TODO: ADD anonymous chat function */}
+
+                {/* <Button variant="text" color="primary" customStyle="flex gap-2 !h-fit !p-0" fullWidth>
                   <span className="underline text-base font-medium leading-6">Chat with jurors</span>
                   <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
                 </Button>
@@ -105,7 +118,7 @@ export const DisputeDetail = () => {
                   color="primary"
                   customStyle="flex gap-2 !h-fit !p-0"
                   fullWidth
-                  //onClick={() => redirectToChat('claimant')}
+                //onClick={() => redirectToChat('claimant')}
                 >
                   <span className="underline text-base font-medium leading-6">Chat with the claimant only</span>
                   <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
@@ -115,11 +128,11 @@ export const DisputeDetail = () => {
                   color="primary"
                   customStyle="flex gap-2 !h-fit !p-0"
                   fullWidth
-                  //onClick={() => redirectToChat('respondent')}
+                //onClick={() => redirectToChat('respondent')}
                 >
                   <span className="underline text-base font-medium leading-6">Chat with the respondent only</span>
                   <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
-                </Button>
+                </Button> */}
               </div>
             )}
           </div>
@@ -173,9 +186,9 @@ export const DisputeDetail = () => {
 
       <AlertModal
         open={openModal.name === 'impactPoint' && openModal.open}
-        onClose={() => setOpenModal({ open: false })}
+        onClose={handleCloseImpactPoint}
         title="Decision submitted"
-        message="Thank you for submitting your decision as a juror. The final outcome will be determined once all jurors have voted.<br/> We appreciate your participation in the Socious dispute resolution process."
+        message="Thank you for submitting your decision as a juror. The final outcome will be determined once all jurors have voted.<br/>We appreciate your participation in the Socious dispute resolution process."
         customIcon={<FeaturedIcon iconName="stars-02" size="lg" type="light-circle" theme="success" />}
         closeButtn={false}
         submitButton={false}

@@ -14,14 +14,11 @@ import { useContributorJoin } from './useContributorJoin';
 interface ContributorJoinProps {
   eligible: boolean;
   setNewlyJoined: (val: boolean) => void;
-  setJoined: (val: boolean) => void;
 }
 
-export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setNewlyJoined, setJoined }) => {
-  const { checkItems, steps, openModal, setOpenModal, accepted, setAccepted, handleJoin } = useContributorJoin(
-    setJoined,
-    setNewlyJoined,
-  );
+export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setNewlyJoined }) => {
+  const { checkItems, steps, openModal, setOpenModal, accepted, setAccepted, handleJoin, isContributor } =
+    useContributorJoin(setNewlyJoined);
 
   const renderCheckItems = (title: string, desc: string) => {
     return (
@@ -95,7 +92,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
           </span>
         </div>
         <div className="w-full lg:max-w-[768px] flex flex-col gap-8 items-start">
-          {eligible ? (
+          {eligible && isContributor === null && (
             <AlertMessage
               theme="success"
               iconName="check-circle"
@@ -103,7 +100,8 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
               subtitle="You're now invited to join our Socious Contributor community and make an even bigger impact on our platform. Click to join now!"
               colOrderMobileView
             />
-          ) : (
+          )}
+          {!eligible && (
             <AlertMessage
               theme="warning"
               iconName="alert-circle"
@@ -112,6 +110,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
               colOrderMobileView
             />
           )}
+
           <div className={css.supprtingText}>
             As a Socious Contributor, you&apos;ll have the unique opportunity to play an active role in various aspects
             of our platform, including dispute resolution, content moderation, and profile verification. By joining our

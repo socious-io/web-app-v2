@@ -44,7 +44,14 @@ export const AlertModal: React.FC<AlertModalProps> = ({
           />
         </div>
         <div className={css.title}>{title}</div>
-        <div className={css.message}>{message}</div>
+        <div className={css.messageContainer}>
+          {message.split('<br/>').map(substr => (
+            <div key={substr} className={css.message}>
+              {substr}
+            </div>
+          ))}
+        </div>
+
         {children && <div className="w-full overflow-y-auto">{children}</div>}
         <div className="w-full flex flex-col md:flex-row-reverse gap-3">
           {submitButton && (

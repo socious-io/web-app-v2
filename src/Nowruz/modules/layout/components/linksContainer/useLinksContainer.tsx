@@ -22,6 +22,7 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     return state.chat.unreadCount;
   });
   const userIsLoggedIn = !!currentIdentity;
+  const joinedContributors = currentIdentity?.type === 'users' && (currentIdentity.meta as UserMeta).is_contributor;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -124,12 +125,17 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
             route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
             public: false,
           },
-          {
-            label: 'Dispute resolution',
-            route: `/${(currentIdentity.meta as UserMeta).username}/contribute/center`,
-            public: false,
-          },
-        ],
+        ].concat(
+          joinedContributors
+            ? [
+                {
+                  label: 'Dispute resolution',
+                  route: `/${(currentIdentity.meta as UserMeta).username}/contribute/center`,
+                  public: false,
+                },
+              ]
+            : [],
+        ),
       },
     );
   }
