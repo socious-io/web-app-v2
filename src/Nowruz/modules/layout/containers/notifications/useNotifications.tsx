@@ -37,6 +37,21 @@ export const useNotifications = (handleClose: () => void) => {
         linkButton: { label: 'View Details', href: `/${usernameVal}/contribute` },
         identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
       },
+      DISPUTE_JUROR_SELECTION_COMPLETED_TO_JURORS: {
+        hasSubText: true,
+        linkButton: { label: 'View Details', href: `/${usernameVal}/contribute` },
+        identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
+      },
+      DISPUTE_CLOSED_TO_LOSER_PARTY: {
+        hasSubText: true,
+        linkButton: { label: 'View Details', href: `/disputes/${item.ref_id}` },
+        identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
+      },
+      DISPUTE_JUROR_SELECTION_COMPLETED_TO_PARTIES: {
+        hasSubText: true,
+        linkButton: { label: 'View Details', href: `/disputes/${item.ref_id}` },
+        identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
+      },
     };
     const { linkButton, hasSubText, identity } = mapRoute[item.data.type] || {};
     return { linkButton, hasSubText, identity };
@@ -92,15 +107,6 @@ export const useNotifications = (handleClose: () => void) => {
       case 'ASSIGNER_CONFIRMED':
         path = `/contracts`;
         break;
-      // case 'ASSIGNEE_CANCELED':
-      //   path = `/jobs/created/${notifRefId}/overview?tab=Offered`;
-      //   break;
-      // case 'ASSIGNER_CANCELED':
-      //   path = `/jobs/applied/${notifRefId}?tab=Applied`;
-      //   break;
-      // case 'ASSIGNER_CONFIRMED':
-      //   path = `/jobs/applied/${notifRefId}?tab=Hired`;
-      //   break;
       case 'CONNECT':
         path = `/profile/${notifIdentityType}/${username}/view`;
         break;
@@ -129,6 +135,8 @@ export const useNotifications = (handleClose: () => void) => {
       case 'DISPUTE_INITIATED':
       case 'DISPUTE_NEW_RESPONSE':
       case 'DISPUTE_JUROR_CONTRIBUTION_INVITED':
+      case 'DISPUTE_JUROR_SELECTION_COMPLETED_TO_JURORS':
+      case 'DISPUTE_CLOSED_TO_LOSER_PARTY':
       case 'REACH_10K_IMPACT_POINT':
         return;
       default:
