@@ -36,7 +36,7 @@
     "@capacitor/preferences": "^4.0.2",
     "@capacitor/push-notifications": "^4.1.2",
     "@capacitor/toast": "^4.1.0",
-    "@datadog/browser-rum": "^5.21.0",
+    "@datadog/browser-rum": "^5.22.0",
     "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.5",
