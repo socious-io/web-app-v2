@@ -55,10 +55,9 @@ export const OrganizationLogo = () => {
         value={bio}
         label="Headline"
         customHeight="128px"
-        variant="outlined"
         placeholder="eg."
         multiline
-        onChange={(e) => updateBio(e.target.value)}
+        onChange={e => updateBio(e.target.value)}
       />
       <div className={css.counter}>{bioCounter}/160</div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>

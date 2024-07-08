@@ -14,14 +14,11 @@ import { useContributorJoin } from './useContributorJoin';
 interface ContributorJoinProps {
   eligible: boolean;
   setNewlyJoined: (val: boolean) => void;
-  setJoined: (val: boolean) => void;
 }
 
-export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setNewlyJoined, setJoined }) => {
-  const { checkItems, steps, openModal, setOpenModal, accepted, setAccepted, handleJoin } = useContributorJoin(
-    setJoined,
-    setNewlyJoined,
-  );
+export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setNewlyJoined }) => {
+  const { checkItems, steps, openModal, setOpenModal, accepted, setAccepted, handleJoin, isContributor } =
+    useContributorJoin(setNewlyJoined);
 
   const renderCheckItems = (title: string, desc: string) => {
     return (
@@ -46,7 +43,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
       </div>
     );
     const incomplete = (
-      <div className="w-8 h-8 rounded-2xl border border-solid border-Gray-light-mode-300 bg-Gray-light-mode-200 flex items-center justify-center">
+      <div className="w-8 h-8 rounded-2xl border-2 border-solid border-Gray-light-mode-200 bg-Gray-light-mode-50 flex items-center justify-center">
         <Dot size="medium" color={variables.color_grey_300} shadow={false} />
       </div>
     );
@@ -55,15 +52,13 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
     const dividerColors = [variables.color_primary_700, variables.color_grey_200];
     return (
       <div className="w-full flex gap-4">
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1 pb-1">
           {eligible ? icons[step] : incomplete}
           {step < 2 && (
-            <div className="w-1/2 flex-1 pb-1 ">
-              <Divider
-                orientation="vertical"
-                sx={{ borderColor: eligible ? dividerColors[step] : variables.color_grey_200, borderRightWidth: '2px' }}
-              />
-            </div>
+            <div
+              className="w-0.5 flex-1 rounded-default self-center"
+              style={{ backgroundColor: eligible ? dividerColors[step] : variables.color_grey_200 }}
+            />
           )}
         </div>
         <div className="flex flex-col gap-0.5 pt-1 pb-8">
@@ -86,7 +81,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
   );
   return (
     <div>
-      <div className="w-full h-40 md:h-60 bg-no-repeat bg-cover bg-[url('/images/dispute_contributor.jpeg')]" />
+      <div className="w-full h-40 md:h-60 bg-no-repeat bg-cover bg-[url('/images/dispute-contributor.png')]" />
       <div className="px-4 md:px-8 pb-12 flex flex-col gap-8">
         <div className="pt-5 pb-4 md:py-6 border border-solid border-x-0 border-t-0 border-b-Gray-light-mode-200 flex flex-col gap-1">
           <span className=" text-3xl font-semibold leading-[38px] text-Gray-light-mode-900">
@@ -97,7 +92,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
           </span>
         </div>
         <div className="w-full lg:max-w-[768px] flex flex-col gap-8 items-start">
-          {eligible ? (
+          {eligible && isContributor === null && (
             <AlertMessage
               theme="success"
               iconName="check-circle"
@@ -105,7 +100,8 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
               subtitle="You're now invited to join our Socious Contributor community and make an even bigger impact on our platform. Click to join now!"
               colOrderMobileView
             />
-          ) : (
+          )}
+          {!eligible && (
             <AlertMessage
               theme="warning"
               iconName="alert-circle"
@@ -114,6 +110,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
               colOrderMobileView
             />
           )}
+
           <div className={css.supprtingText}>
             As a Socious Contributor, you&apos;ll have the unique opportunity to play an active role in various aspects
             of our platform, including dispute resolution, content moderation, and profile verification. By joining our
@@ -121,12 +118,12 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
             safety of the Socious community.
           </div>
 
-          <Button variant="text" color="primary" customStyle="!p-0 flex flex-row gap-2">
+          {/* <Button variant="text" color="primary" customStyle="!p-0 flex flex-row gap-2">
             <div className={`${css.bold} text-Brand-700 underline`}>
               Learn more about the Socious Contributor Program
             </div>
             <Icon name="arrow-right" fontSize={20} className="text-Brand-700" />
-          </Button>
+          </Button> */}
           <div className="text-xl font-semibold leading-[30px] text-Gray-light-mode-900">Why become a contributor?</div>
           <div className="flex flex-col gap-5 pl-4">
             {checkItems.map(item => renderCheckItems(item.title, item.desc))}

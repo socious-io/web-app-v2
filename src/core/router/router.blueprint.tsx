@@ -20,6 +20,11 @@ import {
   getRequestedVerifyEducations,
   markedJobs,
   posts,
+  dispute,
+  CurrentIdentity,
+  OrgMeta,
+  disputes,
+  invitations,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
@@ -168,7 +173,7 @@ export const blueprint: RouteObject[] = [
               };
             },
             async lazy() {
-              const { Credentials } = await import('src/Nowruz/pages/Credentials');
+              const { Credentials } = await import('src/Nowruz/pages/credentials');
               return {
                 Component: Protect(Credentials, 'both'),
               };
@@ -314,6 +319,61 @@ export const blueprint: RouteObject[] = [
                 Component: Protect(Contracts, 'both'),
               };
             },
+          },
+          {
+            path: 'disputes',
+            children: [
+              {
+                path: '',
+                loader: async () => {
+                  const [submittedDisputes, receivedDisputes] = await Promise.all([
+                    disputes({ limit: 10, page: 1, 'filter.direction': 'submitted' }),
+                    disputes({ limit: 10, page: 1, 'filter.direction': 'received' }),
+                  ]);
+                  return { submittedDisputes, receivedDisputes };
+                },
+                async lazy() {
+                  const { Disputes } = await import('src/Nowruz/pages/disputes');
+                  return {
+                    Component: Protect(Disputes, 'both'),
+                  };
+                },
+              },
+              {
+                path: ':id',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const disputeRes = await dispute(params.id);
+                    return {
+                      disputeRes,
+                    };
+                  }
+                },
+                async lazy() {
+                  const { DisputeDetail } = await import('src/Nowruz/pages/disputes/disputeDetail');
+                  return {
+                    Component: Protect(DisputeDetail, 'both'),
+                  };
+                },
+              },
+              {
+                path: 'contributor/:id',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const disputeRes = await dispute(params.id);
+                    return {
+                      disputeRes,
+                    };
+                  }
+                },
+                async lazy() {
+                  const { DisputeDetail } = await import('src/Nowruz/pages/disputes/disputeDetail');
+                  return {
+                    Component: Protect(DisputeDetail, 'both'),
+                  };
+                },
+              },
+            ],
           },
           {
             path: 'payments',
@@ -474,20 +534,41 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: '/:id/contribute',
-            loader: async ({ params }) => {
-              if (params.id) {
-                const user = await otherProfileByUsername(params.id);
-                return {
-                  user,
-                };
-              }
-            },
-            async lazy() {
-              const { Contribute } = await import('src/Nowruz/pages/contribute');
-              return {
-                Component: Protect(Contribute, 'users'),
-              };
-            },
+            children: [
+              {
+                path: '',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const user = await otherProfileByUsername(params.id);
+                    return {
+                      user,
+                    };
+                  }
+                },
+                async lazy() {
+                  const { Contribute } = await import('src/Nowruz/pages/contribute');
+                  return {
+                    Component: Protect(Contribute, 'users'),
+                  };
+                },
+              },
+              {
+                path: 'center',
+                loader: async () => {
+                  const [jurorDisputes, jurorInvitations] = await Promise.all([
+                    disputes({ limit: 10, page: 1, 'filter.direction': 'juror' }),
+                    invitations({ limit: 10, page: 1 }),
+                  ]);
+                  return { jurorDisputes, jurorInvitations };
+                },
+                async lazy() {
+                  const { ContributeCenter } = await import('src/Nowruz/pages/contribute/contributeCenter');
+                  return {
+                    Component: Protect(ContributeCenter, 'users'),
+                  };
+                },
+              },
+            ],
           },
           {
             path: 'feeds',
@@ -807,7 +888,16 @@ function Protect<T extends object>(Component: ComponentType<T>, allowedIdentity:
 
 function DefaultRoute() {
   const status = useSelector((state: RootState) => state.identity.status);
-  if (status === 'succeeded') return <Navigate to="/jobs" />;
+  const current = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(item => item.current),
+  );
+
+  if (status === 'succeeded')
+    return (
+      <Navigate
+        to={current?.type === 'users' ? '/dashboard/user' : `/dashboard/${(current?.meta as OrgMeta).shortname}/org`}
+      />
+    );
 
   if (status === 'loading') return <div></div>;
   if (status === 'failed') return <Navigate to="/intro" />;

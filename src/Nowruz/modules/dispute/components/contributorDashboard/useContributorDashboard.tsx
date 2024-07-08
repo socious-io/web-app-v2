@@ -1,16 +1,20 @@
 import { Cell, ColumnDef, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
-import { Dispute } from 'src/core/api';
+import { Dispute, DisputeDirection, DisputeState } from 'src/core/api';
 import { disputes, LeaveContribution } from 'src/core/api/disputes/disputes.api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
 import { Dot } from 'src/Nowruz/modules/general/components/dot';
+import store from 'src/store';
+import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
-export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
+export const useContributorDashboard = () => {
   const [stopNotif, setStopNotif] = useState(false);
   const [list, setList] = useState<Dispute[]>([]);
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getDisputes = async () => {
@@ -20,20 +24,12 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
     getDisputes();
   }, []);
 
-  const getChipValues = (
-    status:
-      | 'AWAITING_RESPONSE'
-      | 'JUROR_SELECTION'
-      | 'JUROR_RESELECTION'
-      | 'PENDING_REVIEW'
-      | 'WITHDRAWN'
-      | 'DECISION_SUBMITTED',
-  ) => {
+  const getChipValues = (status: DisputeState) => {
     type ThemeColor = 'primary' | 'secondary' | 'grey_blue' | 'error' | 'warning' | 'success';
     switch (status) {
       case 'AWAITING_RESPONSE':
         return { label: 'Awaiting response', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
-      // TODO: check new status results in design
+
       case 'JUROR_SELECTION':
         return { label: 'Juror selection', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
       case 'JUROR_RESELECTION':
@@ -41,9 +37,11 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
       case 'PENDING_REVIEW':
         return { label: 'Pending review', theme: 'warning' as ThemeColor, color: variables.color_warning_600 };
       case 'DECISION_SUBMITTED':
-        return { label: 'Decision Submitted', theme: 'success' as ThemeColor, color: variables.success_600 };
+        return { label: 'Decision submitted', theme: 'success' as ThemeColor, color: variables.color_success_600 };
       case 'WITHDRAWN':
-        return { label: 'Withdrawn', theme: 'secondary' as ThemeColor, color: variables.color_grey_600 };
+        return { label: 'Withdrawn', theme: 'secondary' as ThemeColor };
+      case 'CLOSED':
+        return { label: 'Closed', theme: 'secondary' as ThemeColor };
     }
   };
 
@@ -106,7 +104,7 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
                 theme={theme}
                 shape="round"
                 transparent
-                startIcon={<Dot size="small" color={color} shadow={false} />}
+                startIcon={color ? <Dot size="small" color={color} shadow={false} /> : ''}
                 size="sm"
               />
             </div>
@@ -142,11 +140,17 @@ export const useContributorDashboard = (setJoined: (val: boolean) => void) => {
   const handleLeave = async () => {
     try {
       const res = await LeaveContribution();
-      if (res.message === 'success') setJoined(false);
+      if (res.message === 'success') {
+        store.dispatch(currentIdentities());
+      }
     } catch (e) {
       console.log('error in leaving contribution', e);
     }
   };
 
-  return { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave };
+  const handleSeeAllDisputes = () => {
+    navigate('center');
+  };
+
+  return { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave, handleSeeAllDisputes };
 };

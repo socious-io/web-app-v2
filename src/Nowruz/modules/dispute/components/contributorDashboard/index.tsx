@@ -12,12 +12,11 @@ import { useContributorDashboard } from './useContributorDashboard';
 
 interface ContributorDashboardProps {
   newlyJoined: boolean;
-  setJoined: (val: boolean) => void;
 }
 
-export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newlyJoined, setJoined }) => {
-  const { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave } =
-    useContributorDashboard(setJoined);
+export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newlyJoined }) => {
+  const { stopNotif, setStopNotif, list, table, openModal, setOpenModal, handleLeave, handleSeeAllDisputes } =
+    useContributorDashboard();
   const footerJsx = (
     <div className="w-full px-4 md:px-6 pb-4 md:pb-6 flex flex-col gap-3 md:flex-row-reverse">
       <Button variant="contained" color="error" customStyle="w-full md:w-fit" onClick={handleLeave}>
@@ -108,8 +107,12 @@ export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newl
                 </table>
               </div>
               <div className="w-full flex justify-center mt-6">
-                {/* TODO: onClick redirect to dispute resolution center */}
-                <Button variant="text" color="primary" customStyle="underline hover:underline">
+                <Button
+                  variant="text"
+                  color="primary"
+                  customStyle="underline hover:underline"
+                  onClick={handleSeeAllDisputes}
+                >
                   See all disputes
                 </Button>
               </div>
@@ -119,7 +122,7 @@ export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newl
           )}
         </div>
 
-        <div className="flex flex-col gap-4 px-4 md:px-8 ">
+        {/* <div className="flex flex-col gap-4 px-4 md:px-8 ">
           <span className={css.title}>Contributor resources</span>
           <Button variant="text" color="primary" customStyle="!p-0 flex flex-row gap-2 w-fit">
             <div className={`${css.bold} text-Brand-700 underline text-start`}>
@@ -127,7 +130,7 @@ export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newl
             </div>
             <Icon name="arrow-right" fontSize={20} className="text-Brand-700" />
           </Button>
-        </div>
+        </div> */}
         <div className="flex flex-col gap-4 px-4 md:px-8">
           <span className={css.title}>Leave</span>
           <Button

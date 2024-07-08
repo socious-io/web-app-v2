@@ -86,8 +86,8 @@ export const useEducation = () => {
       [id]: true,
     }));
     try {
-      const { url } = await claimEducationVC(id);
-      setClaimUrl(url);
+      const { short_url } = await claimEducationVC(id);
+      setClaimUrl(short_url);
     } catch (error) {
       console.log('error in claiming education VC', error);
     }

@@ -8,53 +8,29 @@ import { Icon } from 'src/Nowruz/general/Icon';
 import css from './avatarProfile.module.scss';
 import { AvatarProfileProps } from './avatarProfile.types';
 
-export const AvatarProfile: React.FC<AvatarProfileProps> = (props) => {
+export const AvatarProfile: React.FC<AvatarProfileProps> = props => {
   const { size, imgUrl, type, verified = false, text, handleClick } = props;
-  const verifiedTick = size === 'small' ? smallTick : size === 'medium' ? mediumTick : largeTick;
+
+  const sizeItems = {
+    small: { iconSize: 36, tick: smallTick },
+    medium: { iconSize: 48, tick: mediumTick },
+    large: { iconSize: 80, tick: largeTick },
+  };
+
   const getContent = () => {
     if (imgUrl) return <img className={css.imgContainer} src={imgUrl} alt="" />;
     if (text) {
-      if (size === 'small') return <span className={css.textSm}>{text}</span>;
-      if (size === 'medium') return <span className={css.textMd}>{text}</span>;
-      if (size === 'large') return <span className={css.textLg}>{text}</span>;
+      return <span className={css[`text-${size}`]}>{text}</span>;
     }
-    if (type === 'users') {
-      if (size === 'small')
-        return (
-          <Icon
-            name="user-01"
-            fontSize={36}
-            color={variables.color_grey_600}
-            className="!cursor-pointer"
-            containerClass="cursor-pointer"
-          />
-        );
-      if (size === 'medium')
-        return (
-          <Icon
-            name="user-01"
-            fontSize={48}
-            color={variables.color_grey_600}
-            className="!cursor-pointer"
-            containerClass="cursor-pointer"
-          />
-        );
-      if (size === 'large')
-        return (
-          <Icon
-            name="user-01"
-            fontSize={80}
-            color={variables.color_grey_600}
-            className="!cursor-pointer"
-            containerClass="cursor-pointer"
-          />
-        );
-    }
-    if (type === 'organizations') {
-      if (size === 'small') return <Icon name="building-01" fontSize={36} color={variables.color_grey_600} />;
-      if (size === 'medium') return <Icon name="building-01" fontSize={48} color={variables.color_grey_600} />;
-      if (size === 'large') return <Icon name="building-01" fontSize={80} color={variables.color_grey_600} />;
-    }
+    return (
+      <Icon
+        name={type === 'users' ? 'user-01' : 'building-05'}
+        fontSize={sizeItems[size].iconSize}
+        color={variables.color_grey_600}
+        className="!cursor-pointer"
+        containerClass="cursor-pointer"
+      />
+    );
   };
   return (
     <div
@@ -62,7 +38,7 @@ export const AvatarProfile: React.FC<AvatarProfileProps> = (props) => {
       onClick={handleClick}
     >
       {getContent()}
-      {verified && <img src={verifiedTick} alt="" className={css.tick} />}
+      {verified && <img src={sizeItems[size].tick} alt="" className={css.tick} />}
     </div>
   );
 };

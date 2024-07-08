@@ -14,7 +14,7 @@ import {
   ORGANIZATION_EMAIL,
   ORGANIZATION_USERNAME,
 } from './constants';
-import { INDUSTRIES, LOCATIONS, PROJECTS, SKILLS } from './mocks';
+import { IMPACT_POINTS, INDUSTRIES, LOCATIONS, PROJECTS, SKILLS } from './mocks';
 import { OrganizationUser, User, generateRandomEmail } from './utilities';
 
 const SIGNINGUP_EMAIL = generateRandomEmail();
@@ -50,6 +50,9 @@ describe('Sign up', () => {
     cy.intercept('GET', `${API_SERVER}/user/profile*`, req => req.reply(200, { message: 'success' }));
     cy.intercept('GET', `${API_SERVER}/notifications*`, req => req.reply(200, { message: 'success' })).as(
       'getNotifications',
+    );
+    cy.intercept('GET', `${API_SERVER}/user/impact-points*`, req => req.reply(200, IMPACT_POINTS)).as(
+      'getImpactPoints',
     );
     cy.intercept('GET', `${API_SERVER}/projects*`, req => req.reply(200, PROJECTS)).as('getProjects');
     cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
@@ -151,6 +154,6 @@ describe('Sign up', () => {
     cy.get('#size-option-0').click();
 
     cy.contains('button', 'Continue').click();
-    cy.url().should('include', '/profile/organizations/my_organization/view');
+    cy.url().should('include', 'dashboard/user');
   });
 });

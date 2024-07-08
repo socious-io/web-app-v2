@@ -9,12 +9,12 @@ import {
   VALID_EMAIL,
   VALID_PASSWORD,
 } from './constants';
-import { IDENTITIES, PROJECT, PROJECTS } from './mocks';
+import { IDENTITIES, IMPACT_POINTS, PROJECT, PROJECTS } from './mocks';
 
 describe('Sign in', () => {
   beforeEach(() => {
     // Mock the register API call
-    cy.intercept('POST', `${API_SERVER}/auth/login`, (req) => {
+    cy.intercept('POST', `${API_SERVER}/auth/login`, req => {
       if (req.body.email === INVALID_EMAIL || req.body.password === INVALID_PASSWORD)
         req.reply({
           statusCode: 400,
@@ -30,7 +30,7 @@ describe('Sign in', () => {
         });
     });
 
-    cy.intercept('GET', `${API_SERVER}/identities*`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/identities*`, req => {
       if (req.headers.authorization === `${TOKEN_TYPE} ${ACCESS_TOKEN}`) req.reply(IDENTITIES);
       else return req.reply(401, { error: 'Unauthorized' });
     });
@@ -40,22 +40,23 @@ describe('Sign in', () => {
       body: { message: 'success' },
     });
 
-    cy.intercept('GET', `${API_SERVER}/projects*`, (req) => req.reply(200, PROJECTS)).as('getProjects');
-    cy.intercept('GET', `${API_SERVER}/projects/*`, (req) => req.reply(200, PROJECT)).as('getProject');
-    // cy.intercept('GET', `${API_SERVER}/projects/*/questions`, (req) => req.reply(200, { message: 'success' })).as(
-    //   'getProjectQuestions',
-    // );
-    cy.intercept('GET', `${API_SERVER}/notifications*`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/projects*`, req => req.reply(200, PROJECTS)).as('getProjects');
+    cy.intercept('GET', `${API_SERVER}/projects/*`, req => req.reply(200, PROJECT)).as('getProject');
+
+    cy.intercept('GET', `${API_SERVER}/user/impact-points*`, req => req.reply(200, IMPACT_POINTS)).as(
+      'getImpactPoints',
+    );
+    cy.intercept('GET', `${API_SERVER}/notifications*`, req => req.reply(200, { message: 'success' })).as(
       'getNotifications',
     );
-    cy.intercept('GET', `${API_SERVER}/user/profile*`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/user/profile*`, req => req.reply(200, { message: 'success' })).as(
       'getUserProfile',
     );
-    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
       'getUnreadChatsCount',
     );
-    cy.intercept('GET', `${API_SERVER}/skills*`, (req) => req.reply(200, { message: 'success' })).as('getSkills');
-    cy.intercept('POST', `${API_SERVER}/auth/refresh`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/skills*`, req => req.reply(200, { message: 'success' })).as('getSkills');
+    cy.intercept('POST', `${API_SERVER}/auth/refresh`, req => req.reply(200, { message: 'success' })).as(
       'refreshAuthorization',
     );
   });
@@ -95,7 +96,7 @@ describe('Sign in', () => {
     // Check if the login was successful
     cy.getCookies()
       .should('have.length', 4)
-      .then((cookies) => {
+      .then(cookies => {
         expect(cookies[1]).to.have.property('name', 'access_token');
         expect(cookies[1]).to.have.property('value', ACCESS_TOKEN);
 
@@ -105,7 +106,8 @@ describe('Sign in', () => {
         expect(cookies[3]).to.have.property('name', 'token_type');
         expect(cookies[3]).to.have.property('value', TOKEN_TYPE);
       });
-    cy.url().should('include', `${APP_URL}/jobs`);
+
+    cy.url().should('include', `${APP_URL}/dashboard/user`);
   });
 
   it('fails to log in with invalid credentials', () => {

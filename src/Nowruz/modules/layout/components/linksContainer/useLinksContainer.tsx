@@ -22,6 +22,7 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     return state.chat.unreadCount;
   });
   const userIsLoggedIn = !!currentIdentity;
+  const joinedContributors = currentIdentity?.type === 'users' && (currentIdentity.meta as UserMeta).is_contributor;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -60,9 +61,15 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     },
     {
       label: 'Contracts',
-      route: '/contracts',
+      route: '',
       iconName: 'file-02',
       public: false,
+      children: userIsLoggedIn
+        ? [
+            { label: 'Overview', route: '/contracts', public: false },
+            { label: 'Disputes', route: '/disputes', public: false },
+          ]
+        : [],
     },
 
     {
@@ -109,9 +116,26 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
       },
       {
         label: 'Contributor',
-        route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
+        route: '',
         iconName: 'heart-hand',
         public: false,
+        children: [
+          {
+            label: 'Contributor Dashboard',
+            route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
+            public: false,
+          },
+        ].concat(
+          joinedContributors
+            ? [
+                {
+                  label: 'Dispute resolution',
+                  route: `/${(currentIdentity.meta as UserMeta).username}/contribute/center`,
+                  public: false,
+                },
+              ]
+            : [],
+        ),
       },
     );
   }

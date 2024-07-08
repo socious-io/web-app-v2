@@ -11,11 +11,13 @@ export const useFileUploader = (
   maxSize: number,
   uploaded: PostMediaUploadRes[],
   setUploaded: (newVal: PostMediaUploadRes[]) => void,
+  setShowFiles?: (files: File[]) => void,
+  showFiles?: File[],
 ) => {
   const [error, setError] = useState('');
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<File[]>(showFiles || []);
 
   const getAcceptedFileTypes = () => {
     const types = [
@@ -81,6 +83,7 @@ export const useFileUploader = (
       const res = await Promise.all(requests);
 
       setUploaded([...uploaded, ...res]);
+      setShowFiles?.([...files, ...acceptedFiles]);
       setFiles([...files, ...acceptedFiles]);
     } catch (e) {
       setError('Internal error in uploading files');
@@ -92,6 +95,7 @@ export const useFileUploader = (
   const deleteFile = (deletedIndex: number) => {
     const filtered = files.filter((_, index) => index !== deletedIndex);
     setFiles(filtered);
+    setShowFiles?.(filtered);
     setUploaded(uploaded.filter(item => files.map(f => f.name).includes(item.filename)));
   };
 

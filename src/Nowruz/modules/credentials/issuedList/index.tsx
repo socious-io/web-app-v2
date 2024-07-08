@@ -3,10 +3,10 @@ import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
+import Status from 'src/Nowruz/modules/general/components/Status';
 
 import css from './issuedList.module.scss';
 import { useIssuedList } from './useIssuedList';
-import { CreditStatus } from '../creditStatus';
 
 export const IssuedList = () => {
   const {
@@ -73,15 +73,27 @@ export const IssuedList = () => {
               <div className="flex-1">{'experience' in item ? 'Work Certificate' : 'Educational Certificate'}</div>
               <div className={css.col}>
                 <div className="flex">
-                  {item.status === 'PENDING' && <CreditStatus icon="clock" label="Pending" theme="secondary" />}
+                  {item.status === 'PENDING' && (
+                    <Status icon="clock" label="Pending" theme="secondary" transparent={true} />
+                  )}
                   {item.status === 'APPROVED' && (
-                    <CreditStatus icon={userProfile ? 'arrow-down' : 'arrow-up'} label="Issued" theme="secondary" />
+                    <Status
+                      icon={userProfile ? 'arrow-down' : 'arrow-up'}
+                      label="Issued"
+                      theme="secondary"
+                      transparent={true}
+                    />
                   )}
                   {item.status === 'SENT' && (
-                    <CreditStatus icon={userProfile ? 'arrow-down' : 'arrow-up'} label="Issued" theme="secondary" />
+                    <Status
+                      icon={userProfile ? 'arrow-down' : 'arrow-up'}
+                      label="Issued"
+                      theme="secondary"
+                      transparent={true}
+                    />
                   )}
-                  {item.status === 'REJECTED' && <CreditStatus icon="alert-circle" label="Declined" theme="error" />}
-                  {item.status === 'CLAIMED' && <CreditStatus icon="check-circle" label="Claimed" theme="success" />}
+                  {item.status === 'REJECTED' && <Status icon="alert-circle" label="Declined" theme="error" />}
+                  {item.status === 'CLAIMED' && <Status icon="check-circle" label="Claimed" theme="success" />}
                 </div>
               </div>
               <div className={css.col}>{formatDate(item.created_at)}</div>

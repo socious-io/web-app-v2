@@ -69,7 +69,7 @@ export const TopBanner: React.FC<TopBannerProps> = ({
           ) : (
             <Button
               variant="text"
-              color="error"
+              color="inherit"
               customStyle={`font-semibold text-sm leading-5 ${
                 theme === 'warning' ? 'text-Warning-600' : theme === 'success' ? 'text-Success-600' : ''
               }  p-0`}
@@ -81,7 +81,7 @@ export const TopBanner: React.FC<TopBannerProps> = ({
         {!!primaryBtnLabel && (
           <Button
             variant="text"
-            color="error"
+            color="inherit"
             customStyle={`!font-semibold !text-sm leading-5 ${
               theme === 'warning' ? 'text-Warning-700' : theme === 'success' ? 'text-Success-700' : ''
             }  flex gap-2 items-center p-0`}

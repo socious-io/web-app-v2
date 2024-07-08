@@ -1,5 +1,4 @@
 import { Skeleton } from '@mui/material';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { Pagination } from 'src/Nowruz/modules/general/components/Pagination';
@@ -10,7 +9,19 @@ import { JobListingCard } from '../../components/JobListingCard';
 
 export const JobsListing = () => {
   const navigate = useNavigate();
-  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading, recommended, isLoggedIn } = useJobListing();
+  const {
+    page,
+    setPage,
+    total,
+    PER_PAGE,
+    jobsList,
+    isMobile,
+    loading,
+    recommended,
+    isLoggedIn,
+    scrollRef,
+    scrollIndex,
+  } = useJobListing();
 
   return (
     <div className={css.container}>
@@ -50,8 +61,8 @@ export const JobsListing = () => {
           </div>
 
           <div id="job-listing-div">
-            {jobsList.map(job => (
-              <div key={job.id} className="mt-6">
+            {jobsList.map((job, index) => (
+              <div key={job.id} ref={index === scrollIndex ? scrollRef : null} className="mt-6">
                 <JobListingCard job={job} displayNotInterested={isLoggedIn} displaySave={isLoggedIn} />
               </div>
             ))}

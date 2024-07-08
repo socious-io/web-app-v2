@@ -35,9 +35,11 @@ const CircleIcon: React.FC<IconProps> = ({ checked, size }) => {
 };
 
 export const Checkbox: React.FC<CheckboxProps> = ({
+  name,
   id,
   label,
   required,
+  register,
   errors,
   isValid,
   type = 'checkBox',
@@ -70,6 +72,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
             )
           }
           sx={{ padding: '2px 0 0 0' }}
+          {...(register ? register(name) : {})}
           {...props}
         />
         {label && (

@@ -64,15 +64,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
     <>
       <div className={css.container}>
         <BackLink title="Back" onBack={() => navigate(getBackLink())} customStyle="w-fit" />
-        <Avatar
-          size="72px"
-          type="organizations"
-          img={job.identity_meta.image}
-          hasBorder
-          isVerified={false}
-          onClick={onAvatarClick}
-          iconCustomStyle="cursor-pointer"
-        />
+        <Avatar size="72px" type="organizations" img={job.identity_meta.image} hasBorder isVerified={false} />
         <div className="w-full flex flex-col gap-4">
           <div className="flex flex-col">
             <h1 className={css.jobTitle}>{job.title}</h1>

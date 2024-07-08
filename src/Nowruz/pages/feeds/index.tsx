@@ -63,8 +63,11 @@ export const Feeds = () => {
         onClose={() => setShowSnackbar({ create: false, edit: false })}
         autoHideDuration={6000}
         icon={<FeaturedIconOutlined iconName="check-circle" size="md" theme="primary" />}
-        text={`Post successfully ${showSnackbar.create ? 'published' : 'updated'}`}
-      />
+      >
+        <span className="text-sm font-semibold text-Gray-light-mode-900">
+          Post successfully {showSnackbar.create ? 'published' : 'updated'}
+        </span>
+      </CustomSnackbar>
     </FeedsProvider>
   );
 };

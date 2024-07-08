@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import { JoinContribution } from 'src/core/api';
+import { useSelector } from 'react-redux';
+import { CurrentIdentity, JoinContribution, UserMeta } from 'src/core/api';
+import store, { RootState } from 'src/store';
+import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
 import css from './contributorJoin.module.scss';
-export const useContributorJoin = (setJoined: (val: boolean) => void, setNewlyJoined: (val: boolean) => void) => {
+export const useContributorJoin = (setNewlyJoined: (val: boolean) => void) => {
   const [openModal, setOpenModal] = useState(false);
   const [accepted, setAccepted] = useState(false);
+  const identity = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(item => item.current),
+  );
+  const isContributor = (identity?.meta as UserMeta).is_contributor;
 
   const checkItems = [
     {
@@ -59,12 +66,12 @@ export const useContributorJoin = (setJoined: (val: boolean) => void, setNewlyJo
     try {
       const res = await JoinContribution();
       if (res.message === 'success') {
-        setJoined(true);
+        store.dispatch(currentIdentities());
         setNewlyJoined(true);
       }
     } catch (e) {
       console.log('error in joining contribution', e);
     }
   };
-  return { checkItems, steps, openModal, setOpenModal, accepted, setAccepted, handleJoin };
+  return { checkItems, steps, openModal, setOpenModal, accepted, setAccepted, handleJoin, isContributor };
 };

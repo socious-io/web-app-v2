@@ -15,4 +15,7 @@ export interface AlertModalProps {
   submitButtonTheme?: 'error' | 'primary' | 'secondary';
   submitButtonLabel?: string;
   children?: ReactNode;
+  customClassName?: string;
+  primaryBtnClassName?: string;
+  secondaryBtnClassName?: string;
 }

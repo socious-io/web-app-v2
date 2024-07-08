@@ -52,6 +52,12 @@
     box-shadow: 0px 1px 2px 0px rgba(14, 24, 41, 0.05);
 }
 
+.warning-theme {
+    background-color: $color-white;
+    color: $color-warning-600 !important;
+    border: 1.5px solid $color-warning-600;
+}
+
 .success-theme {
     background-color: $color-white;
     color: $color-success-600 !important;
@@ -87,7 +93,7 @@
 
 .secondary-transparent {
     background-color: transparent;
-    color: $color-grey-600;
+    color: $color-grey-700;
     border: 1.5px solid $color-grey-600;
 }
 

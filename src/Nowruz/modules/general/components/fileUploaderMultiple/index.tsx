@@ -14,6 +14,9 @@ export const FileUploaderMultiple: React.FC<FileUploaderMultipleProps> = ({
   customStyle,
   uploaded,
   setUploaded,
+  onDeleteFile,
+  setShowFiles,
+  showFiles,
   loading,
 }) => {
   const {
@@ -27,7 +30,9 @@ export const FileUploaderMultiple: React.FC<FileUploaderMultipleProps> = ({
     uploading,
     progress,
     files,
-  } = useFileUploader(fileTypes, maxFileNumbers, maxSize, uploaded, setUploaded);
+  } = useFileUploader(fileTypes, maxFileNumbers, maxSize, uploaded, setUploaded, setShowFiles, showFiles);
+  //FIXME: handling everything from outside not inside
+  const currentFiles = showFiles?.length ? showFiles : files;
 
   return (
     <>
@@ -55,10 +60,10 @@ export const FileUploaderMultiple: React.FC<FileUploaderMultipleProps> = ({
               {error}
             </Typography>
           )}
-          {!!files.length && (
+          {!!currentFiles.length && (
             <div className="flex flex-col gap-3">
               <div className="max-h-40  flex flex-col gap-3 overflow-y-auto p-4 rounded-xl border border-solid border-Gray-light-mode-200">
-                {files.map((item, index) => (
+                {currentFiles.map((item, index) => (
                   <div key={`${item.name}-${index}`} className="flex gap-4">
                     <div>
                       <img src={getFileIcon(item.type)} alt="" />
@@ -70,7 +75,10 @@ export const FileUploaderMultiple: React.FC<FileUploaderMultipleProps> = ({
                           name="trash-01"
                           fontSize={20}
                           color={variables.color_grey_500}
-                          onClick={() => deleteFile(index)}
+                          onClick={() => {
+                            deleteFile(index);
+                            onDeleteFile?.(index);
+                          }}
                           className="!cursor-pointer"
                         />
                       </div>

@@ -3,12 +3,22 @@ import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createOrganization, getIndustries, Location, preRegister, searchLocation, identities } from 'src/core/api';
+import {
+  createOrganization,
+  getIndustries,
+  Location,
+  preRegister,
+  searchLocation,
+  identities,
+  CurrentIdentity,
+  OrganizationReq,
+} from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { checkUsernameConditions, removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/Nowruz/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
+import { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import * as yup from 'yup';
 
@@ -48,30 +58,30 @@ export const useOrganizationContact = () => {
   const savedReferrer = localStorage.getItem('referrer');
   const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
 
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
+    state.identity.entities.find(identity => identity.current),
+  );
   const onSubmit: SubmitHandler<Inputs> = async data => {
     const { orgName, orgType, social_causes, bio, city, country, email, size, shortname, industry } = state;
     try {
       const websiteUrl = state.website ? 'https://' + state.website : '';
-      await createOrganization(
-        removeValuesFromObject(
-          {
-            name: orgName,
-            type: orgType.value,
-            size: size.value,
-            social_causes,
-            bio,
-            email,
-            website: websiteUrl,
-            city,
-            country,
-            shortname: shortname.toLowerCase(),
-            industry,
-          },
-          ['', null],
-        ),
-        true,
-        referrerUser?.id,
-      );
+      const orgReqParam = removeValuesFromObject(
+        {
+          name: orgName,
+          type: orgType.value,
+          size: size.value,
+          social_causes,
+          bio,
+          email,
+          website: websiteUrl,
+          city,
+          country,
+          shortname: shortname.toLowerCase(),
+          industry,
+        },
+        ['', null],
+      ) as OrganizationReq;
+      await createOrganization(orgReqParam, true, referrerUser?.id);
       localStorage.removeItem('registerFor');
       localStorage.removeItem('referrer');
       reset();
@@ -85,7 +95,7 @@ export const useOrganizationContact = () => {
             username: shortname,
           },
         });
-      } else navigate(`/profile/organizations/${shortname}/view`);
+      } else navigate(`${currentIdentity?.type === 'users' ? '/dashboard/user' : `/dashboard/${shortname}/org`}`);
     } catch (error) {
       console.log('error in creating new organization', error);
     }

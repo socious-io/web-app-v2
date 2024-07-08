@@ -40,6 +40,7 @@ export interface UserMeta {
   open_to_volunteer: boolean;
   identity_verified: boolean;
   verification_status: null | 'PENDING' | 'APPROVED' | 'REJECTED';
+  is_contributor?: boolean;
 }
 
 export interface OrgMeta {

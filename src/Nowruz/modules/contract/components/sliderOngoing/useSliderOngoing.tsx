@@ -17,6 +17,8 @@ export const useSliderOngoing = (contract: Contract) => {
   const identityType = identity?.type;
   const filter = useSelector<RootState, 'all' | 'ongoing' | 'archived'>(state => state.contracts.filter);
   const { name, username, type } = getIdentityMeta(identityType === 'users' ? contract.offerer : contract.recipient);
+  const respondentId = identityType === 'users' ? contract.offerer.id : contract.recipient.id;
+  const missionId = contract.mission?.id || '';
 
   const displayAlert = contract.project.payment_type !== 'VOLUNTEER';
   const alertMessage =
@@ -38,6 +40,7 @@ export const useSliderOngoing = (contract: Contract) => {
   const displayComplete = identityType === 'users';
 
   const [openAlert, setOpenAlert] = useState(false);
+  const [openInitiateDisputeModal, setOpenInitiateDisputeModal] = useState(false);
   const dispatch = useDispatch();
 
   const updateState = async (missionStatus: 'COMPLETE' | 'CANCELED' | 'KICKED_OUT') => {
@@ -95,10 +98,7 @@ export const useSliderOngoing = (contract: Contract) => {
     {
       iconName: 'message-alert-circle',
       title: 'Initiate a dispute',
-      // TODO: add open dispute modal
-      onClick: () => {
-        console.log('TODO: add open dispute modal');
-      },
+      onClick: () => setOpenInitiateDisputeModal(true),
     },
     {
       iconName: 'x-circle',
@@ -106,5 +106,17 @@ export const useSliderOngoing = (contract: Contract) => {
       onClick: identityType === 'users' ? handleStop : handleStopByOP,
     },
   ];
-  return { displayAlert, alertMessage, displayComplete, openAlert, setOpenAlert, handleComplete, menuItems };
+  return {
+    displayAlert,
+    alertMessage,
+    displayComplete,
+    openAlert,
+    setOpenAlert,
+    handleComplete,
+    menuItems,
+    openInitiateDisputeModal,
+    setOpenInitiateDisputeModal,
+    respondentId,
+    missionId,
+  };
 };

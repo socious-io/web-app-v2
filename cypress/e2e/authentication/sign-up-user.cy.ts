@@ -13,7 +13,7 @@ import {
   ORGANIZATION_EMAIL,
   ORGANIZATION_USERNAME,
 } from './constants';
-import { INDUSTRIES, LOCATIONS, SKILLS } from './mocks';
+import { IMPACT_POINTS, INDUSTRIES, LOCATIONS, SKILLS } from './mocks';
 import { OrganizationUser, User, generateRandomEmail } from './utilities';
 
 const SIGNINGUP_EMAIL = generateRandomEmail();
@@ -52,6 +52,9 @@ describe('Sign up (User)', () => {
     );
     cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
       'getUnreadChatsCount',
+    );
+    cy.intercept('GET', `${API_SERVER}/user/impact-points*`, req => req.reply(200, IMPACT_POINTS)).as(
+      'getImpactPoints',
     );
     cy.intercept('POST', `${API_SERVER}/auth/preregister*`, req =>
       req.reply(200, { username: null, shortname: null, message: 'success' }),
@@ -130,7 +133,7 @@ describe('Sign up (User)', () => {
 
     cy.contains('button', 'Next: Photo').click();
     cy.contains('button', 'Continue').click();
-    cy.url().should('include', '/profile/users/umayanigina/view');
+    cy.url().should('include', '/dashboard/user');
   });
 
   it('it should check if email already exists', () => {

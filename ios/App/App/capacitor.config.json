@@ -2,9 +2,6 @@
 	"appId": "jp.socious.network",
 	"appName": "Socious",
 	"webDir": "dist",
-	"ios": {
-		"contentInset": "always"
-	},
 	"bundledWebRuntime": false,
 	"server": {
 		"hostname": "capacitor.native",
@@ -26,12 +23,20 @@
 		"FirebaseMessagingPlugin",
 		"FirebaseMessagingPlugin",
 		"ActionSheetPlugin",
+		"ActionSheetPlugin",
+		"AppPlugin",
 		"AppPlugin",
 		"CAPCameraPlugin",
+		"CAPCameraPlugin",
+		"DialogPlugin",
 		"DialogPlugin",
 		"HapticsPlugin",
+		"HapticsPlugin",
+		"PreferencesPlugin",
 		"PreferencesPlugin",
 		"PushNotificationsPlugin",
+		"PushNotificationsPlugin",
+		"ToastPlugin",
 		"ToastPlugin"
 	]
 }

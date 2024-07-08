@@ -7,13 +7,13 @@ import { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 export const useIconDropDown = () => {
-  const user = useSelector<RootState, User | Organization | undefined>((state) => {
+  const user = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   });
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
-  const allIdentities = useSelector<RootState, CurrentIdentity[]>((state) => {
+  const allIdentities = useSelector<RootState, CurrentIdentity[]>(state => {
     return state.identity.entities;
   });
   const myProfile = currentIdentity?.id === user?.id;
@@ -24,16 +24,12 @@ export const useIconDropDown = () => {
   const switchAccount = async (accountId: string) => {
     await nonPermanentStorage.set({ key: 'identity', value: accountId });
     identities()
-      .then((resp) => dispatch(setIdentityList(resp)))
-      .then((resp) => {
-        const current = resp.payload.find((item) => item.id === accountId);
-
-        const type =
-          current?.type === 'users'
-            ? `users/${(current.meta as UserMeta).username}`
-            : `organizations/${(current?.meta as OrgMeta).shortname}`;
-
-        navigate(`profile/${type}/view`);
+      .then(resp => dispatch(setIdentityList(resp)))
+      .then(resp => {
+        const current = resp.payload.find(item => item.id === accountId);
+        const route =
+          current?.type === 'users' ? '/dashboard/user' : `/dashboard/${(current?.meta as OrgMeta).shortname}/org`;
+        navigate(route);
       })
       .then(() => setOpen(false));
   };
@@ -41,7 +37,7 @@ export const useIconDropDown = () => {
   const navigateToOnboarding = async () => {
     if (currentIdentity?.type === 'organizations') {
       localStorage.setItem('registerFor', 'user');
-      const userAccount = allIdentities.find((a) => a.type === 'users');
+      const userAccount = allIdentities.find(a => a.type === 'users');
       await nonPermanentStorage.set({ key: 'identity', value: userAccount!.id });
       const identityList = await identities();
       dispatch(setIdentityList(identityList));
