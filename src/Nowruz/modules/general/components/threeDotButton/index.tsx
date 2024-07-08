@@ -24,7 +24,7 @@ export const ThreeDotButton: React.FC<ThreeDotButtonProps> = ({ menuItems }) => 
       {openMenu && (
         <MenuList autoFocusItem className={css.menuList} onMouseLeave={() => setOpenMenu(false)}>
           {menuItems.map(item => (
-            <MenuItem key={item.title} className={css.menuItem} onClick={item.onClick} disableRipple>
+            <MenuItem key={item.title} className={css.menuItem} onClick={item.onClick} disableRipple disableTouchRipple>
               <Icon name={item.iconName} fontSize={16} className="text-Gray-light-mode-500" />
               <span>{item.title}</span>
             </MenuItem>

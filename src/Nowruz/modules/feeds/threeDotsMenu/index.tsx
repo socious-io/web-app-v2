@@ -14,7 +14,7 @@ const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ open, handleClose, menuIt
     open && (
       <MenuList autoFocusItem className={css.menuList} ref={ref}>
         {menuItems.map(item => (
-          <MenuItem key={item.title} className={css.menuItem} onClick={item.onClick}>
+          <MenuItem key={item.title} className={css.menuItem} onClick={item.onClick} disableRipple disableTouchRipple>
             <Icon name={item.iconName} fontSize={16} className="text-Gray-light-mode-700" />
             <span>{item.title}</span>
           </MenuItem>
