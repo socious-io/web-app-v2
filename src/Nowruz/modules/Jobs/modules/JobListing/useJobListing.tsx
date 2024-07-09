@@ -25,15 +25,13 @@ export const useJobListing = () => {
   const [searchParam] = useSearchParams();
   const pageNumber = Number(searchParam.get('page') || 1);
   const [page, setPage] = useState(pageNumber);
-  let scrollIndex = isMobile ? Number(searchParam.get('scrollIndex') || (page - 1) * PER_PAGE - 1) : 0;
+  const [scrollIndex, setscrollIndex] = useState(Number(searchParam.get('scrollIndex') || -1));
   const [loading, setLoading] = useState(false);
   const [recommended, setRecommended] = useState<Job>();
   const prevPage = useRef(1);
   const scrollRef = useRef<null | HTMLDivElement>(null);
 
-  const executeScroll = () => {
-    scrollRef.current && scrollRef.current.scrollIntoView();
-  };
+  const executeScroll = () => scrollRef.current && scrollRef.current.scrollIntoView();
 
   const loadPage = async () => {
     setLoading(true);
@@ -48,10 +46,12 @@ export const useJobListing = () => {
   const fetchMore = async () => {
     try {
       if (prevPage.current === page - 1) {
+        // if see more is clicked
         const data = await jobs({ page: page, status: 'ACTIVE', limit: PER_PAGE });
         setTotalCount(data.total_count);
         setJobsList([...jobsList, ...data.items]);
       } else {
+        // if page is changed through URL
         const data = await jobs({ page: 1, status: 'ACTIVE', limit: PER_PAGE * page });
         setJobsList(data.items);
         setTotalCount(data.total_count);
@@ -95,15 +95,13 @@ export const useJobListing = () => {
   }, [loaderData]);
 
   useEffect(() => {
-    if (isMobile && !loading) {
-      scrollIndex = (page - 1) * PER_PAGE - 1;
-      executeScroll();
-    }
+    if (!loading) executeScroll();
   }, [loading]);
 
   const handleChangeMobilePage = () => {
     prevPage.current = page;
     setPage(page + 1);
+    setscrollIndex(page * PER_PAGE - 1);
   };
 
   return {
