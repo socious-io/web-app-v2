@@ -17,8 +17,10 @@ import {
   approveVerifyEducation,
   UserMeta,
   rejectVerifyEducation,
+  CredentialStatus,
 } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { StatusProps } from 'src/modules/general/components/Status/index.types';
 import { RootState } from 'src/store';
 
 export const useCredentialsList = () => {
@@ -51,6 +53,13 @@ export const useCredentialsList = () => {
     id: '',
   });
   const totalPage = Math.ceil(credentials?.total_count / credentials?.limit) || 1;
+  const generateStatus: Record<Exclude<CredentialStatus, 'ISSUED'>, StatusProps> = {
+    PENDING: { icon: 'clock', label: 'Pending', theme: 'secondary', transparent: true },
+    APPROVED: { icon: userProfile ? 'arrow-down' : 'arrow-up', label: 'Accepted', theme: 'success' },
+    SENT: { icon: userProfile ? 'arrow-down' : 'arrow-up', label: 'Issued', theme: 'secondary', transparent: true },
+    REJECTED: { icon: 'alert-circle', label: 'Declined', theme: 'error' },
+    CLAIMED: { icon: 'check-circle', label: 'Claimed', theme: 'success' },
+  };
 
   const filteredRequested = (
     items: CredentialExperiencePaginateRes['items'] | CredentialEducationPaginateRes['items'],
@@ -167,7 +176,9 @@ export const useCredentialsList = () => {
     credentialsList,
     setCredentialsList,
     totalPage,
+    generateStatus,
     isMobile,
+    page,
     setPage,
     onApprove,
     onReject,
