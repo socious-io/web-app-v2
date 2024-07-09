@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
+import { Navigate, RouteObject, createBrowserRouter, useRouteError, useSearchParams } from 'react-router-dom';
 import {
   jobs,
   chats,
@@ -244,8 +244,8 @@ export const blueprint: RouteObject[] = [
               },
               {
                 path: '',
-                loader: async () => {
-                  const page = Number(localStorage.getItem('page') || 1);
+                loader: async ({ request }) => {
+                  const page = Number(new URL(request.url).searchParams.get('page') || 1);
                   const data = await jobs({ page, status: 'ACTIVE', limit: 10 });
                   return data;
                 },
@@ -256,6 +256,7 @@ export const blueprint: RouteObject[] = [
                   };
                 },
               },
+
               {
                 path: ':id',
                 loader: async ({ params }) => {

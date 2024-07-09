@@ -21,6 +21,7 @@ export const JobsListing = () => {
     isLoggedIn,
     scrollRef,
     scrollIndex,
+    handleChangeMobilePage,
   } = useJobListing();
 
   return (
@@ -63,7 +64,13 @@ export const JobsListing = () => {
           <div id="job-listing-div">
             {jobsList.map((job, index) => (
               <div key={job.id} ref={index === scrollIndex ? scrollRef : null} className="mt-6">
-                <JobListingCard job={job} displayNotInterested={isLoggedIn} displaySave={isLoggedIn} />
+                <JobListingCard
+                  job={job}
+                  displayNotInterested={isLoggedIn}
+                  displaySave={isLoggedIn}
+                  page={page}
+                  scrollIndex={index}
+                />
               </div>
             ))}
           </div>
@@ -76,7 +83,7 @@ export const JobsListing = () => {
       )}
       {isMobile && jobsList.length < total && (
         <div className="mt-5 flex items-center justify-center">
-          <Button color="primary" variant="text" onClick={() => setPage(page + 1)}>
+          <Button color="primary" variant="text" onClick={handleChangeMobilePage}>
             See more
           </Button>
         </div>

@@ -4,7 +4,7 @@ import { skillsToCategoryAdaptor } from 'src/core/adaptors';
 import { Job, JobMark, markJob, removeMark } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
-export const useJobListingCard = (job: Job, saveAction?: () => void) => {
+export const useJobListingCard = (job: Job, page: number, scrollIndex: number, saveAction?: () => void) => {
   const [jobVal, setJobVal] = useState(job);
 
   const [skills, setSkills] = useState<
@@ -29,7 +29,7 @@ export const useJobListingCard = (job: Job, saveAction?: () => void) => {
   }, [job]);
   const navigate = useNavigate();
   const handleClick = () => {
-    if (isTouchDevice() && !jobVal.not_interested) navigate(`/jobs/${job.id}`);
+    if (isTouchDevice() && !jobVal.not_interested) navigate(`/jobs/${job.id}?page=${page}&scrollIndex=${scrollIndex}`);
   };
   const handleTitleClick = () => {
     if (!jobVal.not_interested) navigate(`/jobs/${job.id}`);

@@ -1,7 +1,7 @@
 import { Divider } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Job } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
@@ -31,6 +31,10 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
   const socialCauses = socialCausesToCategory(job.causes_tags).map(item => item.label);
   const skills = skillsToCategory(job.skills).map(item => item.label);
 
+  const [searchParam] = useSearchParams();
+  const pageNumber = Number(searchParam.get('page') || 1);
+  const scrollIndex = Number(searchParam.get('scrollIndex') || 0);
+
   const getBackLink = () => {
     const sourceOrg = localStorage.getItem('source') ?? '';
     if (localStorage.getItem('navigateToSearch') === 'true') {
@@ -50,8 +54,9 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
     if (sourceOrg) {
       return `/profile/organizations/${sourceOrg}/jobs`;
     }
-
-    return currentIdentity?.type === 'organizations' ? '/jobs/created' : '/jobs';
+    return currentIdentity?.type === 'organizations'
+      ? '/jobs/created'
+      : `/jobs?page=${pageNumber}&scrollIndex=${scrollIndex}`;
   };
 
   const onAvatarClick = () => {
