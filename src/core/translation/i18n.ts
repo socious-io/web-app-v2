@@ -24,5 +24,3 @@ i18next
       escapeValue: false,
     },
   });
-//console.log(generateTranslationFile('en'));
-//console.log(i18next.t('MACHINE_LEARNING'));
