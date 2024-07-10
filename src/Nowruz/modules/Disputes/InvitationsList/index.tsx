@@ -57,7 +57,11 @@ const InvitationsList: React.FC<InvitationsListProps> = ({ list }) => {
         id: 'status',
         header: 'Status',
         accessorKey: 'status',
-        cell: ({ getValue }: { getValue: Getter<InvitationStatus> }) => <Status {...generateStatus[getValue()]} />,
+        cell: ({ getValue }: { getValue: Getter<InvitationStatus> }) => (
+          <div className="flex justify-start items-center">
+            <Status {...generateStatus[getValue()]} />
+          </div>
+        ),
       },
       {
         id: 'contract_id',
