@@ -2,11 +2,14 @@ import i18next from 'i18next';
 import detector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-import { generateTranslationFile } from './locales/en/translation';
+import { generateTranslationFile } from './locales/translation';
 
 const resources = {
   en: {
-    translation: generateTranslationFile(),
+    translation: generateTranslationFile('en'),
+  },
+  jp: {
+    translation: generateTranslationFile('jp'),
   },
 };
 
@@ -21,3 +24,5 @@ i18next
       escapeValue: false,
     },
   });
+//console.log(generateTranslationFile('en'));
+//console.log(i18next.t('MACHINE_LEARNING'));

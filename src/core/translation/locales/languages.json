@@ -1,0 +1,22 @@
+{
+  "BASIC": {
+    "en": "BASIC",
+    "jp": "基本"
+  },
+  "CONVERSANT": {
+    "en": "Intermediate",
+    "jp": "中級"
+  },
+  "PROFICIENT": {
+    "en": "Proficient",
+    "jp": "熟練"
+  },
+  "FLUENT": {
+    "en": "Fluent",
+    "jp": "流暢"
+  },
+  "NATIVE": {
+    "en": "Native",
+    "jp": "母語"
+  }
+}

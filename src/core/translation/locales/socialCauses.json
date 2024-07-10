@@ -1,0 +1,242 @@
+{
+  "SOCIAL": {
+    "en": "Social Issues (General)",
+    "jp": "社会問題（一般）"
+  },
+  "POVERTY": {
+    "en": "Poverty",
+    "jp": "貧困"
+  },
+  "HOMELESSNESS": {
+    "en": "Homelessness",
+    "jp": "ホームレス"
+  },
+  "HUNGER": {
+    "en": "Hunger",
+    "jp": "飢餓"
+  },
+  "HEALTH": {
+    "en": "Health",
+    "jp": "健康"
+  },
+  "SUBSTANCE_ABUSE": {
+    "en": "Substance Abuse",
+    "jp": "薬物乱用"
+  },
+  "MENTAL": {
+    "en": "Mental Health",
+    "jp": "メンタルヘルス"
+  },
+  "BULLYING": {
+    "en": "Bullying",
+    "jp": "いじめ"
+  },
+  "SECURITY": {
+    "en": "Security",
+    "jp": "安全"
+  },
+  "EDUCATION": {
+    "en": "Education",
+    "jp": "教育"
+  },
+  "GENDER_EQUALITY": {
+    "en": "Gender Equality",
+    "jp": "ジェンダー平等"
+  },
+  "GENDER_BASED_VIOLENCE": {
+    "en": "Gender-Based Violence",
+    "jp": "性別に基づく暴力"
+  },
+  "SEXUAL_VIOLENCE": {
+    "en": "Sexual Violence",
+    "jp": "性的暴力"
+  },
+  "DOMESTIC_VIOLENCE": {
+    "en": "Domestic Violence",
+    "jp": "家庭内暴力"
+  },
+  "WATER_SANITATION": {
+    "en": "Water and Sanitation",
+    "jp": "水と衛生"
+  },
+  "SUSTAINABLE_ENERGY": {
+    "en": "Sustainable Energy",
+    "jp": "持続可能なエネルギー"
+  },
+  "DECENT_WORK": {
+    "en": "Decent Work",
+    "jp": "ディーセントワーク"
+  },
+  "INEQUALITY": {
+    "en": "Inequality",
+    "jp": "不平等"
+  },
+  "MINORITY": {
+    "en": "Minority",
+    "jp": "少数派"
+  },
+  "MULTICULTURALISM": {
+    "en": "Multiculturalism",
+    "jp": "多文化主義"
+  },
+  "DIVERSITY_INCLUSION": {
+    "en": "Diversity and Inclusion",
+    "jp": "多様性と包摂"
+  },
+  "INDIGENOUS_PEOPLES": {
+    "en": "Indigenous Peoples",
+    "jp": "先住民族"
+  },
+  "DISABILITY": {
+    "en": "Disability",
+    "jp": "障害"
+  },
+  "LGBTQI": {
+    "en": "LGBTQI+",
+    "jp": "LGBTQI+"
+  },
+  "REFUGEE": {
+    "en": "Refugee",
+    "jp": "難民"
+  },
+  "MIGRANTS": {
+    "en": "Migrants",
+    "jp": "移民"
+  },
+  "ORPHANS": {
+    "en": "Orphans",
+    "jp": "孤児"
+  },
+  "CHILD_PROTECTION": {
+    "en": "Child Protection",
+    "jp": "児童保護"
+  },
+  "COMMUNITY_DEVELOPMENT": {
+    "en": "Community Development",
+    "jp": "地域開発"
+  },
+  "DEPOPULATION": {
+    "en": "Depopulation",
+    "jp": "人口減少"
+  },
+  "OVERPOPULATION": {
+    "en": "Overpopulation",
+    "jp": "人口過剰"
+  },
+  "HUMAN_RIGHTS": {
+    "en": "Human Rights",
+    "jp": "人権"
+  },
+  "SUSTAINABILITY": {
+    "en": "Sustainability",
+    "jp": "持続可能性"
+  },
+  "RESPONSIBLE_CONSUMPTION": {
+    "en": "Responsible Consumption",
+    "jp": "責任ある消費"
+  },
+  "CLIMATE_CHANGE": {
+    "en": "Climate Change",
+    "jp": "気候変動"
+  },
+  "NATURAL_DISASTERS": {
+    "en": "Natural Disasters",
+    "jp": "自然災害"
+  },
+  "BIODIVERSITY": {
+    "en": "Biodiversity (Life on Land)",
+    "jp": "生物多様性（陸上生物）"
+  },
+  "ANIMAL_RIGHTS": {
+    "en": "Animal Rights",
+    "jp": "動物の権利"
+  },
+  "ARMED_CONFLICT": {
+    "en": "Armed Conflict",
+    "jp": "武力紛争"
+  },
+  "PEACEBUILDING": {
+    "en": "Peacebuilding",
+    "jp": "平和構築"
+  },
+  "DEMOCRACY": {
+    "en": "Democracy",
+    "jp": "民主主義"
+  },
+  "CIVIC_ENGAGEMENT": {
+    "en": "Civic Engagement",
+    "jp": "市民参加"
+  },
+  "JUSTICE": {
+    "en": "Justice",
+    "jp": "正義"
+  },
+  "GOVERNANCE": {
+    "en": "Governance",
+    "jp": "統治"
+  },
+  "CRIME_PREVENTION": {
+    "en": "Crime Prevention",
+    "jp": "犯罪予防"
+  },
+  "CORRUPTION": {
+    "en": "Corruption",
+    "jp": "汚職"
+  },
+  "OTHER": {
+    "en": "Other",
+    "jp": "その他"
+  },
+  "RURAL_DEVELOPMENT": {
+    "en": "Rural Development",
+    "jp": "農村開発"
+  },
+  "VEGANISM": {
+    "en": "Veganism",
+    "jp": "ヴィーガニズム"
+  },
+  "BLACK_LIVES_MATTER": {
+    "en": "Black Lives Matter",
+    "jp": "ブラック・ライヴズ・マター"
+  },
+  "ISLAMOPHOBIA": {
+    "en": "Islamophobia",
+    "jp": "イスラム恐怖症"
+  },
+  "ANTI_SEMITISM": {
+    "en": "Anti-Semitism",
+    "jp": "反ユダヤ主義"
+  },
+  "ABORTION": {
+    "en": "Abortion",
+    "jp": "中絶"
+  },
+  "EUTHANASIA": {
+    "en": "Euthanasia",
+    "jp": "安楽死"
+  },
+  "NEURODIVERSITY": {
+    "en": "Neurodiversity",
+    "jp": "神経多様性"
+  },
+  "SUSTAINABLE_COMMUNITIES": {
+    "en": "Sustainable Communities",
+    "jp": "持続可能なコミュニティ"
+  },
+  "BIODIVERSITY_LIFE_BELOW_WATER": {
+    "en": "Biodiversity (Life Below Water)",
+    "jp": "生物多様性（海洋生物）"
+  },
+  "PEACE_JUSTICE": {
+    "en": "Peace & Justice",
+    "jp": "平和と正義"
+  },
+  "COLLABORATION_FOR_IMPACT": {
+    "en": "Collaboration for impact",
+    "jp": "インパクトのための協力"
+  },
+  "INNOVATION": {
+    "en": "Innovation",
+    "jp": "イノベーション"
+  }
+}

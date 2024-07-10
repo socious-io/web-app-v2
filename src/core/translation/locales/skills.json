@@ -1,0 +1,862 @@
+{
+  ".NET_FRAMEWORK": {
+    "en": ".NET Framework",
+    "jp": ".NET Framework"
+  },
+  "AGILE_METHODOLOGIES": {
+    "en": "Agile Methodologies",
+    "jp": "アジャイル手法"
+  },
+  "AWS": {
+    "en": "Amazon Web Services (AWS)",
+    "jp": "Amazon Web Services (AWS)"
+  },
+  "ANDROID": {
+    "en": "Android",
+    "jp": "Android"
+  },
+  "ANGULARJS": {
+    "en": "AngularJS",
+    "jp": "AngularJS"
+  },
+  "ARCGIS": {
+    "en": "ArcGIS",
+    "jp": "ArcGIS"
+  },
+  "AWS_LAMBDA": {
+    "en": "AWS Lambda",
+    "jp": "AWS Lambda"
+  },
+  "BASH": {
+    "en": "Bash",
+    "jp": "Bash"
+  },
+  "C": {
+    "en": "C",
+    "jp": "C"
+  },
+  "C#": {
+    "en": "C#",
+    "jp": "C#"
+  },
+  "C++": {
+    "en": "C++",
+    "jp": "C++"
+  },
+  "CSS": {
+    "en": "CSS",
+    "jp": "CSS"
+  },
+  "DjpNGO": {
+    "en": "Djpngo",
+    "jp": "Djpngo"
+  },
+  "DREAMWEAVER": {
+    "en": "Dreamweaver",
+    "jp": "Dreamweaver"
+  },
+  "ECLIPSE": {
+    "en": "Eclipse",
+    "jp": "Eclipse"
+  },
+  "GIT": {
+    "en": "Git",
+    "jp": "Git"
+  },
+  "GOOGLE_ANALYTICS": {
+    "en": "Google Analytics",
+    "jp": "Google Analytics"
+  },
+  "GCP": {
+    "en": "Google Cloud Platform (GCP)",
+    "jp": "Google Cloud Platform (GCP)"
+  },
+  "HADOOP": {
+    "en": "Hadoop",
+    "jp": "Hadoop"
+  },
+  "HTML": {
+    "en": "HTML",
+    "jp": "HTML"
+  },
+  "jpVA": {
+    "en": "jpva",
+    "jp": "jpva"
+  },
+  "jpVASCRIPT": {
+    "en": "jpvaScript",
+    "jp": "jpvaScript"
+  },
+  "JQUERY": {
+    "en": "JQuery",
+    "jp": "JQuery"
+  },
+  "JSON": {
+    "en": "JSON",
+    "jp": "JSON"
+  },
+  "KOTLIN": {
+    "en": "Kotlin",
+    "jp": "Kotlin"
+  },
+  "MACHINE_LEARNING": {
+    "en": "Machine Learning",
+    "jp": "機械学習"
+  },
+  "MATLAB": {
+    "en": "MATLAB",
+    "jp": "MATLAB"
+  },
+  "MAVEN": {
+    "en": "Maven",
+    "jp": "Maven"
+  },
+  "MICROSOFT_T-SQL": {
+    "en": "Microsoft T-SQL",
+    "jp": "Microsoft T-SQL"
+  },
+  "MONGODB": {
+    "en": "MongoDB",
+    "jp": "MongoDB"
+  },
+  "NODE.JS": {
+    "en": "Node.js",
+    "jp": "Node.js"
+  },
+  "NOSQL": {
+    "en": "NoSQL",
+    "jp": "NoSQL"
+  },
+  "OBJECTIVE-C": {
+    "en": "Objective-C",
+    "jp": "Objective-C"
+  },
+  "OBJECT-ORIENTED_PROGRAMMING": {
+    "en": "Object-Oriented Programming",
+    "jp": "オブジェクト指向プログラミング"
+  },
+  "PHP": {
+    "en": "PHP",
+    "jp": "PHP"
+  },
+  "PYTHON": {
+    "en": "Python",
+    "jp": "Python"
+  },
+  "R_PROGRAMMING": {
+    "en": "R Programming",
+    "jp": "Rプログラミング"
+  },
+  "REACT.JS": {
+    "en": "React.JS",
+    "jp": "React.JS"
+  },
+  "REST_API": {
+    "en": "REST API",
+    "jp": "REST API"
+  },
+  "RHINO_3D": {
+    "en": "Rhino 3D",
+    "jp": "Rhino 3D"
+  },
+  "RUBY-ON-RAILS": {
+    "en": "Ruby-on-Rails",
+    "jp": "Ruby-on-Rails"
+  },
+  "SCALA": {
+    "en": "Scala",
+    "jp": "Scala"
+  },
+  "SEO": {
+    "en": "Search Engine Optimization (SEO)",
+    "jp": "検索エンジン最適化 (SEO)"
+  },
+  "SPRING_FRAMEWORK": {
+    "en": "Spring Framework",
+    "jp": "Spring Framework"
+  },
+  "SWIFT": {
+    "en": "Swift",
+    "jp": "Swift"
+  },
+  "UNITY": {
+    "en": "Unity",
+    "jp": "Unity"
+  },
+  "VBA": {
+    "en": "Visual Basic for Applications (VBA)",
+    "jp": "Visual Basic for Applications (VBA)"
+  },
+  "WINDOWS_SERVER": {
+    "en": "Windows Server",
+    "jp": "Windows Server"
+  },
+  "WORDPRESS": {
+    "en": "Wordpress",
+    "jp": "Wordpress"
+  },
+  "XML": {
+    "en": "XML",
+    "jp": "XML"
+  },
+  "ADOBE_ACROBAT": {
+    "en": "Adobe Acrobat",
+    "jp": "Adobe Acrobat"
+  },
+  "GOOGLE_ADS": {
+    "en": "Google Ads",
+    "jp": "Google Ads"
+  },
+  "MICROSOFT_ACCESS": {
+    "en": "Microsoft Access",
+    "jp": "Microsoft Access"
+  },
+  "MICROSOFT_AZURE": {
+    "en": "Microsoft Azure",
+    "jp": "Microsoft Azure"
+  },
+  "MICROSOFT_EXCEL": {
+    "en": "Microsoft Excel",
+    "jp": "Microsoft Excel"
+  },
+  "MICROSOFT_OUTLOOK": {
+    "en": "Microsoft Outlook",
+    "jp": "Microsoft Outlook"
+  },
+  "MICROSOFT_POWER_BI": {
+    "en": "Microsoft Power BI",
+    "jp": "Microsoft Power BI"
+  },
+  "MICROSOFT_POWERPOINT": {
+    "en": "Microsoft PowerPoint",
+    "jp": "Microsoft PowerPoint"
+  },
+  "MICROSOFT_PROJECT": {
+    "en": "Microsoft Project",
+    "jp": "Microsoft Project"
+  },
+  "MICROSOFT_SHAREPOINT": {
+    "en": "Microsoft SharePoint",
+    "jp": "Microsoft SharePoint"
+  },
+  "MICROSOFT_VISIO": {
+    "en": "Microsoft Visio",
+    "jp": "Microsoft Visio"
+  },
+  "MICROSOFT_WORD": {
+    "en": "Microsoft Word",
+    "jp": "Microsoft Word"
+  },
+  "QUICKBOOKS": {
+    "en": "QuickBooks",
+    "jp": "QuickBooks"
+  },
+  "ADOBE_ANIMATE": {
+    "en": "Adobe Animate",
+    "jp": "Adobe Animate"
+  },
+  "ADOBE_ILLUSTRATOR": {
+    "en": "Adobe Illustrator",
+    "jp": "Adobe Illustrator"
+  },
+  "ADOBE_LIGHTROOM": {
+    "en": "Adobe Lightroom",
+    "jp": "Adobe Lightroom"
+  },
+  "ADOBE_PHOTOSHOP": {
+    "en": "Adobe Photoshop",
+    "jp": "Adobe Photoshop"
+  },
+  "ADOBE_PREMIER_PRO": {
+    "en": "Adobe Premier Pro",
+    "jp": "Adobe Premier Pro"
+  },
+  "ADOBE_XD": {
+    "en": "Adobe XD",
+    "jp": "Adobe XD"
+  },
+  "AFTER_EFFECTS": {
+    "en": "After Effects",
+    "jp": "After Effects"
+  },
+  "AUTOCAD": {
+    "en": "AutoCAD",
+    "jp": "AutoCAD"
+  },
+  "AUTODESK_FUSION_360": {
+    "en": "Autodesk Fusion 360",
+    "jp": "Autodesk Fusion 360"
+  },
+  "AUTODESK_INVENTOR": {
+    "en": "Autodesk Inventor",
+    "jp": "Autodesk Inventor"
+  },
+  "AVID_MEDIA_COMPOSER": {
+    "en": "Avid Media Composer",
+    "jp": "Avid Media Composer"
+  },
+  "FINAL_CUT_PRO": {
+    "en": "Final Cut Pro",
+    "jp": "Final Cut Pro"
+  },
+  "IMOVIE": {
+    "en": "iMovie",
+    "jp": "iMovie"
+  },
+  "INDESIGN": {
+    "en": "InDesign",
+    "jp": "InDesign"
+  },
+  "KEYNOTE": {
+    "en": "Keynote",
+    "jp": "Keynote"
+  },
+  "LOGIC_PRO": {
+    "en": "Logic Pro",
+    "jp": "Logic Pro"
+  },
+  "PRO_TOOLS": {
+    "en": "Pro Tools",
+    "jp": "Pro Tools"
+  },
+  "REVIT": {
+    "en": "Revit",
+    "jp": "Revit"
+  },
+  "SKETCHUP": {
+    "en": "SketchUp",
+    "jp": "SketchUp"
+  },
+  "SOLIDWORKS": {
+    "en": "SOLIDWORKS",
+    "jp": "SOLIDWORKS"
+  },
+  "DART": {
+    "en": "Dart",
+    "jp": "Dart"
+  },
+  "REACT_NATIVE": {
+    "en": "React Native",
+    "jp": "React Native"
+  },
+  "FLUTTER": {
+    "en": "Flutter",
+    "jp": "Flutter"
+  },
+  "PROGRAMMING": {
+    "en": "Programming",
+    "jp": "プログラミング"
+  },
+  "ALGORITHMS": {
+    "en": "Algorithms",
+    "jp": "アルゴリズム"
+  },
+  "AI": {
+    "en": "Artificial Intelligence (AI)",
+    "jp": "人工知能 (AI)"
+  },
+  "DATA_SCIENCE": {
+    "en": "Data Science",
+    "jp": "データサイエンス"
+  },
+  "SOFTWARE_ENGINEERING": {
+    "en": "Software Engineering",
+    "jp": "ソフトウェアエンジニアリング"
+  },
+  "DATA_MINING": {
+    "en": "Data Mining",
+    "jp": "データマイニング"
+  },
+  "SHELL_SCRIPTING": {
+    "en": "Shell Scripting",
+    "jp": "シェルスクリプト"
+  },
+  "SOFTWARE_DEVELOPMENT": {
+    "en": "Software Development",
+    "jp": "ソフトウェア開発"
+  },
+  "COMPUTER_SCIENCE": {
+    "en": "Computer Science",
+    "jp": "コンピュータサイエンス"
+  },
+  "RUBY": {
+    "en": "Ruby",
+    "jp": "Ruby"
+  },
+  "LINUX": {
+    "en": "Linux",
+    "jp": "Linux"
+  },
+  "NATURAL_LANGUAGE_PROCESSING": {
+    "en": "Natural Language Processing",
+    "jp": "自然言語処理"
+  },
+  "APACHE_SPARK": {
+    "en": "Apache Spark",
+    "jp": "Apache Spark"
+  },
+  "APACHE_PIG": {
+    "en": "Apache Pig",
+    "jp": "Apache Pig"
+  },
+  "OPEN_CV": {
+    "en": "Open CV",
+    "jp": "Open CV"
+  },
+  "UNSUPERVISED_LEARNING": {
+    "en": "Unsupervised Learning",
+    "jp": "教師なし学習"
+  },
+  "COLLABORATIVE_FILTERING": {
+    "en": "Collaborative Filtering",
+    "jp": "協調フィルタリング"
+  },
+  "GOOGLE_AD_MANAGER": {
+    "en": "Google Ad Manager",
+    "jp": "Google Ad Manager"
+  },
+  "GOOGLE_ADSENSE": {
+    "en": "Google AdSense",
+    "jp": "Google AdSense"
+  },
+  "GOOGLE_ADMOB": {
+    "en": "Google AdMob",
+    "jp": "Google AdMob"
+  },
+  "WEB_DEVELOPMENT": {
+    "en": "Web Development",
+    "jp": "ウェブ開発"
+  },
+  "DIGITAL_MARKETING": {
+    "en": "Digital Marketing",
+    "jp": "デジタルマーケティング"
+  },
+  "MARKETING": {
+    "en": "Marketing",
+    "jp": "マーケティング"
+  },
+  "CRM": {
+    "en": "Customer Relationship Management (CRM)",
+    "jp": "顧客関係管理 (CRM)"
+  },
+  "UI_UX_DESIGN": {
+    "en": "UI & UX Design",
+    "jp": "UI & UX デザイン"
+  },
+  "UI_DESIGN": {
+    "en": "User Interface (UI) Design",
+    "jp": "ユーザーインターフェース (UI) デザイン"
+  },
+  "UX_DESIGN": {
+    "en": "User Experience (UX) Design",
+    "jp": "ユーザーエクスペリエンス (UX) デザイン"
+  },
+  "BUSINESS_DEVELOPMENT": {
+    "en": "Business Development",
+    "jp": "ビジネス開発"
+  },
+  "CSR": {
+    "en": "Corporate Social Responsibility (CSR)",
+    "jp": "企業の社会的責任 (CSR)"
+  },
+  "GRAPHIC_DESIGN": {
+    "en": "Graphic Design",
+    "jp": "グラフィックデザイン"
+  },
+  "SOCIAL_MEDIA_MARKETING": {
+    "en": "Social Media Marketing",
+    "jp": "ソーシャルメディアマーケティング"
+  },
+  "EDITING": {
+    "en": "Editing",
+    "jp": "編集"
+  },
+  "SOCIAL_ENTREPRENEURSHIP": {
+    "en": "Social Entrepreneurship",
+    "jp": "社会起業"
+  },
+  "PHOTOGRAPHY": {
+    "en": "Photography",
+    "jp": "写真撮影"
+  },
+  "PROJECT_MANAGEMENT": {
+    "en": "Project Management",
+    "jp": "プロジェクト管理"
+  },
+  "EVENT_MANAGEMENT": {
+    "en": "Event Management",
+    "jp": "イベント管理"
+  },
+  "INTERNATIONAL_DEVELOPMENT": {
+    "en": "International Development",
+    "jp": "国際開発"
+  },
+  "BRAND_MANAGEMENT": {
+    "en": "Brand Management",
+    "jp": "ブランド管理"
+  },
+  "STATISTICAL_DATA_ANALYSIS": {
+    "en": "Statistical Data Analysis",
+    "jp": "統計データ分析"
+  },
+  "QUANTITATIVE_RESEARCH": {
+    "en": "Quantitative Research",
+    "jp": "数量的調査"
+  },
+  "QUALITATIVE_RESEARCH": {
+    "en": "Qualitative Research",
+    "jp": "質的調査"
+  },
+  "RESEARCH": {
+    "en": "Research",
+    "jp": "研究"
+  },
+  "DATA_MODELING": {
+    "en": "Data Modeling",
+    "jp": "データモデリング"
+  },
+  "MANAGEMENT": {
+    "en": "Management",
+    "jp": "管理"
+  },
+  "FUNDRAISING": {
+    "en": "Fundraising",
+    "jp": "資金調達"
+  },
+  "CAPACITY_BUILDING": {
+    "en": "Capacity Building",
+    "jp": "能力構築"
+  },
+  "LEADERSHIP": {
+    "en": "Leadership",
+    "jp": "リーダーシップ"
+  },
+  "PUBLIC_SPEAKING": {
+    "en": "Public Speaking",
+    "jp": "公の場での話し方"
+  },
+  "COACHING": {
+    "en": "Coaching Investing",
+    "jp": "指導投資"
+  },
+  "CAREER_COUNSELING": {
+    "en": "Career Counseling",
+    "jp": "キャリアカウンセリング"
+  },
+  "STRATEGIC_PARTNERSHIPS": {
+    "en": "Strategic Partnerships",
+    "jp": "戦略的パートナーシップ"
+  },
+  "ADVOCACY": {
+    "en": "Advocacy",
+    "jp": "アドボカシー"
+  },
+  "SALES": {
+    "en": "Sales",
+    "jp": "販売"
+  },
+  "GAMIFICATION": {
+    "en": "Gamification",
+    "jp": "ゲーミフィケーション"
+  },
+  "FINANCIAL_ANALYSIS": {
+    "en": "Financial Analysis",
+    "jp": "財務分析"
+  },
+  "MANAGEMENT_CONSULTING": {
+    "en": "Management Consulting",
+    "jp": "経営コンサルティング"
+  },
+  "INVESTMENT_BANKING": {
+    "en": "Investment Banking",
+    "jp": "投資銀行業務"
+  },
+  "PROGRAM_MANAGEMENT": {
+    "en": "Program Management",
+    "jp": "プログラム管理"
+  },
+  "PRODUCT_MANAGEMENT": {
+    "en": "Product Management",
+    "jp": "プロダクト管理"
+  },
+  "MICROSOFT_OFFICE": {
+    "en": "Microsoft Office",
+    "jp": "Microsoft Office"
+  },
+  "CAD": {
+    "en": "Computer Aided Design (CAD)",
+    "jp": "CAD (コンピュータ支援設計)"
+  },
+  "STRATEGY": {
+    "en": "Strategy",
+    "jp": "戦略"
+  },
+  "ANSYS": {
+    "en": "Ansys",
+    "jp": "Ansys"
+  },
+  "CATIA": {
+    "en": "CATIA",
+    "jp": "CATIA"
+  },
+  "SIMULINK": {
+    "en": "Simulink",
+    "jp": "Simulink"
+  },
+  "BLOOMBERG_TERMINAL": {
+    "en": "Bloomberg Terminal",
+    "jp": "Bloomberg Terminal"
+  },
+  "SUSTAINABLE_FINANCE": {
+    "en": "Sustainable Finance",
+    "jp": "持続可能なファイナンス"
+  },
+  "ESG": {
+    "en": "Environmental, Social, and Corporate Governance (ESG)",
+    "jp": "環境・社会・ガバナンス（ESG）"
+  },
+  "ESG_INVESTING": {
+    "en": "ESG Investing",
+    "jp": "ESG投資"
+  },
+  "RESPONSIBLE_INVESTING": {
+    "en": "Responsible Investing",
+    "jp": "責任投資"
+  },
+  "DATA_ANALAYSIS": {
+    "en": "Data Analysis",
+    "jp": "データ分析"
+  },
+  "RENEWABLE_ENERGY": {
+    "en": "Renewable Energy",
+    "jp": "再生可能エネルギー"
+  },
+  "SOCIAL_IMPACT_ASSESSMENT": {
+    "en": "Social Impact Assessment",
+    "jp": "社会的影響評価"
+  },
+  "ENVIRONMENTAL_IMPACT_ASSESSMENT": {
+    "en": "Environmental Impact Assessment",
+    "jp": "環境影響評価"
+  },
+  "SUSTAINABILITY": {
+    "en": "Sustainability",
+    "jp": "持続可能性"
+  },
+  "STRATEGIC_COMMUNICATIONS": {
+    "en": "Strategic Communications",
+    "jp": "戦略的コミュニケーション"
+  },
+  "PR": {
+    "en": "PR",
+    "jp": "広報"
+  },
+  "SDGS": {
+    "en": "Sustainable Development Goals (SDGs)",
+    "jp": "持続可能な開発目標（SDGs）"
+  },
+  "DESIGN_THINKING": {
+    "en": "Design Thinking",
+    "jp": "デザイン思考"
+  },
+  "HCD": {
+    "en": "Human Centered Design (HCD)",
+    "jp": "ヒューマンセンタードデザイン (HCD)"
+  },
+  "SUSTAINABLE_DEVELOPMENT": {
+    "en": "Sustainable Development",
+    "jp": "持続可能な開発"
+  },
+  "AEM": {
+    "en": "Adobe Experience Manager (AEM)",
+    "jp": "Adobe Experience Manager (AEM)"
+  },
+  "COMMUNICATION": {
+    "en": "Communication",
+    "jp": "コミュニケーション"
+  },
+  "CUSTOMER_SERVICE": {
+    "en": "Customer Service",
+    "jp": "顧客サービス"
+  },
+  "TRAINING": {
+    "en": "Training",
+    "jp": "トレーニング"
+  },
+  "NEGOTIATION": {
+    "en": "Negotiation",
+    "jp": "交渉"
+  },
+  "NETWORKING": {
+    "en": "Networking",
+    "jp": "ネットワーキング"
+  },
+  "TESTING": {
+    "en": "Testing",
+    "jp": "テスト"
+  },
+  "WRITING": {
+    "en": "Writing",
+    "jp": "執筆"
+  },
+  "ADVERTISING": {
+    "en": "Advertising",
+    "jp": "広告"
+  },
+  "DATABASES": {
+    "en": "Databases",
+    "jp": "データベース"
+  },
+  "TECHNOLOGY": {
+    "en": "Technology",
+    "jp": "テクノロジー"
+  },
+  "FINANCE": {
+    "en": "Finance",
+    "jp": "ファイナンス"
+  },
+  "RETAIL": {
+    "en": "Retail",
+    "jp": "小売"
+  },
+  "ACCOUNTING": {
+    "en": "Accounting",
+    "jp": "会計"
+  },
+  "SOCIAL_MEDIA": {
+    "en": "Social Media",
+    "jp": "ソーシャルメディア"
+  },
+  "ENGINEERING": {
+    "en": "Engineering",
+    "jp": "エンジニアリング"
+  },
+  "PROBLEM_SOLVING": {
+    "en": "Problem Solving",
+    "jp": "問題解決"
+  },
+  "MARKETING_STRATEGY": {
+    "en": "Marketing Strategy",
+    "jp": "マーケティング戦略"
+  },
+  "RECRUITING": {
+    "en": "Recruiting",
+    "jp": "採用"
+  },
+  "ORDER_FULFILLMENT": {
+    "en": "Order Fulfillment",
+    "jp": "受注処理"
+  },
+  "CORPORATE_LAW": {
+    "en": "Corporate Law",
+    "jp": "企業法務"
+  },
+  "HUMAN_RESOURCES": {
+    "en": "Human Resources",
+    "jp": "人事"
+  },
+  "PEOPLE_MANAGEMENT": {
+    "en": "People Management",
+    "jp": "人材管理"
+  },
+  "MANUFACTURING": {
+    "en": "Manufacturing",
+    "jp": "製造"
+  },
+  "INTERNAL_AUDIT": {
+    "en": "Internal Audit",
+    "jp": "内部監査"
+  },
+  "PRODUCT_DEVELOPMENT": {
+    "en": "Product Development",
+    "jp": "製品開発"
+  },
+  "AUDITING": {
+    "en": "Auditing",
+    "jp": "監査"
+  },
+  "PRESENTATIONS": {
+    "en": "Presentations",
+    "jp": "プレゼンテーション"
+  },
+  "CONSTRUCTION": {
+    "en": "Construction",
+    "jp": "建設"
+  },
+  "REAL_ESTATE": {
+    "en": "Real Estate",
+    "jp": "不動産"
+  },
+  "SALES_MANAGEMENT": {
+    "en": "Sales Management",
+    "jp": "販売管理"
+  },
+  "TEAM_BUILDING": {
+    "en": "Team Building",
+    "jp": "チームビルディング"
+  },
+  "HEALTHCARE": {
+    "en": "Healthcare",
+    "jp": "医療"
+  },
+  "COMPLIANCE": {
+    "en": "Compliance",
+    "jp": "コンプライアンス"
+  },
+  "LEGAL": {
+    "en": "Legal",
+    "jp": "法務"
+  },
+  "INNOVATION": {
+    "en": "Innovation",
+    "jp": "イノベーション"
+  },
+  "MENTORING": {
+    "en": "Mentoring",
+    "jp": "メンタリング"
+  },
+  "COMMERCIAL_REAL_ESTATE": {
+    "en": "Commercial Real Estate",
+    "jp": "商業不動産"
+  },
+  "IT": {
+    "en": "Information Technology (IT)",
+    "jp": "情報技術 (IT)"
+  },
+  "PROCESS_IMPROVEMENT": {
+    "en": "Process Improvement",
+    "jp": "プロセス改善"
+  },
+  "CHANGE_MANAGEMENT": {
+    "en": "Change Management",
+    "jp": "変革管理"
+  },
+  "HEAVY_EQUIPMENT": {
+    "en": "Heavy Equipment",
+    "jp": "重機械"
+  },
+  "FACILITIES_MANAGEMENT": {
+    "en": "Facilities Management",
+    "jp": "施設管理"
+  },
+  "UAT": {
+    "en": "User Acceptance Testing (UAT)",
+    "jp": "ユーザ受入テスト (UAT)"
+  },
+  "IMPACT_INVESTING": {
+    "en": "Impact Investing",
+    "jp": "インパクト投資"
+  },
+  "BLOCKCHAIN_DEVELOPMENT": {
+    "en": "Blockchain Development",
+    "jp": "ブロックチェーン開発"
+  },
+  "HASKELL": {
+    "en": "Haskell",
+    "jp": "Haskell"
+  },
+  "PLUTUS": {
+    "en": "Plutus",
+    "jp": "Plutus"
+  }
+}
