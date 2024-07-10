@@ -288,9 +288,9 @@ export const blueprint: RouteObject[] = [
               },
               {
                 path: 'saved',
-                loader: async () => {
-                  const page = Number(localStorage.getItem('page') || 1);
-                  const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: 5 });
+                loader: async ({ request }) => {
+                  const page = Number(new URL(request.url).searchParams.get('page') || 1);
+                  const data = await markedJobs({ page, 'filter.marked_as': 'SAVE', limit: 5 });
                   return data;
                 },
                 async lazy() {

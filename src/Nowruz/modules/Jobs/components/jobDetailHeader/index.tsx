@@ -49,7 +49,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
       return '/jobs/recommended';
     }
     if (sourceOrg === 'saved') {
-      return '/jobs/saved';
+      return `/jobs/saved?page=${pageNumber}&scrollIndex=${scrollIndex}`;
     }
     if (sourceOrg) {
       return `/profile/organizations/${sourceOrg}/jobs`;
