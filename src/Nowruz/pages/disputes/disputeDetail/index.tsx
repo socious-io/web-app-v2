@@ -74,7 +74,7 @@ export const DisputeDetail = () => {
           <div className="w-full md:w-[360px] rounded-xl border border-solid border-Gray-light-mode-200 bg-Gray-light-mode-50 p-6 flex flex-col">
             <span className="mb-4 text-base font-semibold leading-6 text-Gray-light-mode-700">Contract disputed</span>
             <div className="rounded-xl border border-solid border-Gray-light-mode-200 bg-Base-White">
-              <div className="px-6 py-4 flex flex-col border border-solid border-t-0 border-Gray-light-mode-200">
+              <div className="px-6 py-4 flex flex-col border border-solid border-0 border-b border-Gray-light-mode-200">
                 <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">Contract ID</span>
                 <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">{dispute.contract.id}</span>
               </div>
@@ -98,12 +98,12 @@ export const DisputeDetail = () => {
             {dispute.direction === 'juror' && (
               <div className="flex flex-col gap-3 items-center">
                 <a
-                  className=" flex gap-2 !h-fit !p-0 cursor-pointer"
+                  className=" flex gap-2 !h-fit !p-0 cursor-pointer font-medium text-base leading-6 text-Brand-700"
                   href="https://socious.io/contact"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <span className="font-medium text-base leading-6 underline text-Brand-700 ">get support</span>
+                  get support
                   <Icon name="arrow-narrow-up-right" fontSize={20} className="text-Brand-700" />
                 </a>
 
