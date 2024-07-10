@@ -12,6 +12,7 @@ import { NavBar } from './components/navBar';
 export const Layout = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const scrollbarWidth = window.innerWidth - document.body.clientWidth;
   useHideScrollbar(open);
 
   const logOut = async () => {
@@ -24,7 +25,10 @@ export const Layout = () => {
   return (
     <div className="w-full h-dvh relative">
       <div className="w-full h-full relative flex flex-col md:pl-20">
-        <div className="w-full fixed top-0 right-0 z-20 bg-Base-White ">
+        <div
+          className="w-full fixed top-0 right-0 z-20 bg-Base-White"
+          style={{ marginRight: open ? `${scrollbarWidth}px` : '0' }}
+        >
           <HeaderNavBar setOpen={setOpen} logout={logOut} />
         </div>
         <div className="w-full h-[calc(100%-64px)] mt-16 md:mt-[72px] md:h-[calc(100%-72px)]">
