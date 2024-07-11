@@ -65,7 +65,11 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
         id: 'state',
         header: 'Status',
         accessorKey: 'state',
-        cell: ({ getValue }: { getValue: Getter<DisputeState> }) => <Status {...generateStatus[getValue()]} />,
+        cell: ({ getValue }: { getValue: Getter<DisputeState> }) => (
+          <div className="flex justify-start items-center">
+            <Status {...generateStatus[getValue()]} />
+          </div>
+        ),
       },
       {
         id: 'contract_id',

@@ -61,21 +61,15 @@ export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newl
           <span className={`${css.title} px-4 md:px-8`}>Latest disputes</span>
           {list.length ? (
             <div className="px-0 md:px-8">
-              <div className=" w-fit md:w-full border border-solid border-Gray-light-mode-200 md:rounded-xl shadow-Shadows/shadow-sm ">
-                <table className="w-full">
-                  <thead className="bg-Gray-light-mode-50 h-11">
+              <div className={css['table']}>
+                <table className="w-full rounded-lg">
+                  <thead className={css['header']}>
                     {table.getHeaderGroups().map(headerGroup => {
                       return (
                         <tr key={headerGroup.id}>
-                          {headerGroup.headers.map((header, index) => {
+                          {headerGroup.headers.map(header => {
                             return (
-                              <th
-                                id={header.id}
-                                key={header.id}
-                                className={`px-6 py-3 align-middle text-xs font-medium text-Gray-light-mode-600 ${
-                                  index === 0 && 'rounded-tl-xl'
-                                } ${index === headerGroup.headers.length - 1 && 'rounded-tr-xl'}`}
-                              >
+                              <th id={header.id} key={header.id} className={css['header__item']}>
                                 {header.isPlaceholder
                                   ? null
                                   : flexRender(header.column.columnDef.header, header.getContext())}
@@ -92,10 +86,7 @@ export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newl
                         <tr key={row.id}>
                           {row.getVisibleCells().map(cell => {
                             return (
-                              <td
-                                className={`px-6 py-3 align-middle text-sm font-normal leading-5 text-Gray-light-mode-600`}
-                                key={cell.id}
-                              >
+                              <td className={css['col']} key={cell.id}>
                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                               </td>
                             );

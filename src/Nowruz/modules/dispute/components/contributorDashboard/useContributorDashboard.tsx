@@ -1,8 +1,9 @@
-import { Cell, ColumnDef, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, getCoreRowModel, Getter, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
-import { Dispute, DisputeDirection, DisputeState } from 'src/core/api';
+import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
+import { Dispute, DisputeState } from 'src/core/api';
 import { disputes, LeaveContribution } from 'src/core/api/disputes/disputes.api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Chip } from 'src/Nowruz/modules/general/components/Chip';
@@ -49,53 +50,34 @@ export const useContributorDashboard = () => {
     () => [
       {
         id: 'code',
-        header: <p className="text-xs">Dispute ID</p>,
+        header: 'Dispute ID',
         accessorKey: 'code',
-        cell: function render({ getValue }) {
-          return (
-            <div className="flex justify-start items-center">
-              <p className="text-Gray-light-mode-600 text-sm leading-5">{getValue()}</p>
-            </div>
-          );
-        },
+        cell: ({ getValue }: { getValue: Getter<string> }) => getValue(),
       },
       {
         id: 'category',
-        header: <p className="text-xs">Category</p>,
+        header: 'Category',
         accessorKey: 'category',
-        cell: function render({ getValue }) {
-          return <div className="flex justify-start items-center">{getValue()}</div>;
-        },
+        cell: ({ getValue }: { getValue: Getter<string> }) =>
+          DISPUTE_CATEGORY.find(category => category.value === getValue())?.label,
       },
       {
         id: 'title',
-        header: <p className="text-xs">Dispute title</p>,
+        header: 'Dispute title',
         accessorKey: 'title',
-        cell: function render({ getValue }) {
-          return (
-            <div className="flex justify-start items-center">
-              <p className="text-Gray-light-mode-600 text-sm leading-5">{getValue()}</p>
-            </div>
-          );
-        },
+        cell: ({ getValue }: { getValue: Getter<string> }) => getValue(),
       },
       {
         id: 'created_at',
-        header: <p className="text-xs">Submitted date</p>,
+        header: 'Submitted date',
         accessorKey: 'created_at',
-        cell: function render({ getValue }) {
-          return (
-            <div className="flex justify-start items-center">
-              <p className="text-Gray-light-mode-600 text-sm leading-5">{toRelativeTime(getValue())}</p>
-            </div>
-          );
-        },
+        cell: ({ getValue }: { getValue: Getter<Date> }) => toRelativeTime(getValue()),
       },
       {
         id: 'state',
-        header: <p className="text-xs">Status</p>,
+        header: 'Status',
         accessorKey: 'state',
-        cell: function render({ getValue }) {
+        cell: ({ getValue }: { getValue: Getter<DisputeState> }) => {
           const { label, color, theme } = getChipValues(getValue());
           return (
             <div className="flex justify-start items-center">
@@ -113,19 +95,15 @@ export const useContributorDashboard = () => {
       },
       {
         id: 'contract_id',
-        header: <p className="text-xs">Contract ID</p>,
+        header: 'Contract ID',
         accessorKey: 'contract',
-        cell: function render({ getValue }) {
-          return <div className="flex justify-start items-center">{getValue().id}</div>;
-        },
+        cell: ({ getValue }: { getValue: Getter<{ id: string; name: string }> }) => getValue().id,
       },
       {
         id: 'contract_name',
-        header: <p className="text-xs">Contract name</p>,
+        header: 'Contract name',
         accessorKey: 'contract',
-        cell: function render({ getValue }) {
-          return <div className="flex justify-start items-center">{getValue().name}</div>;
-        },
+        cell: ({ getValue }: { getValue: Getter<{ id: string; name: string }> }) => getValue().name,
       },
     ],
     [list],
