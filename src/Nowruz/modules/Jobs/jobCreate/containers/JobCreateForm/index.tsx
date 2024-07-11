@@ -77,6 +77,7 @@ export const JobCreateForm = () => {
     location,
     onSelectJobLocation,
     jobLocation,
+    handleBack,
   } = useJobCreateForm();
 
   const renderInfo = (title: string, description?: string) => (
@@ -151,7 +152,7 @@ export const JobCreateForm = () => {
   return (
     <div>
       <div className={css.back}>
-        <BackLink title="Back" />
+        <BackLink title="Back" onBack={handleBack} />
       </div>
       <form>
         <JobCreateHeader

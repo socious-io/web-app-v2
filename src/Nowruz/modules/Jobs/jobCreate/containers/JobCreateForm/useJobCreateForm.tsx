@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import { useLoaderData, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
@@ -144,6 +144,9 @@ export const useJobCreateForm = () => {
   });
   const location = useLocation();
   const [isEdit] = useState<boolean>(location.pathname.includes('jobs/edit') ?? false);
+  const [searchParam] = useSearchParams();
+  const jobsPage = Number(searchParam.get('page') || 1);
+  const jobsFilter = searchParam.get('filter') || 'all';
   const navigate = useNavigate();
   const [openPreview, setOpenPreview] = useState(false);
   const [previewModalProps, setPreviewModalProps] = useState<any>();
@@ -439,6 +442,10 @@ export const useJobCreateForm = () => {
     }
   }, [jobDetail, isEdit, initializeValues, setValue]);
 
+  const handleBack = () => {
+    navigate(`/jobs/created?page=${jobsPage}&filter=${jobsFilter}`);
+  };
+
   return {
     register,
     handleSubmit,
@@ -497,5 +504,6 @@ export const useJobCreateForm = () => {
     location: getValues().location,
     onSelectJobLocation,
     jobLocation: getValues().jobLocation,
+    handleBack,
   };
 };

@@ -34,28 +34,29 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
   const [searchParam] = useSearchParams();
   const pageNumber = Number(searchParam.get('page') || 1);
   const scrollIndex = Number(searchParam.get('scrollIndex') || 0);
+  const filter = searchParam.get('filter') || 'all';
 
   const getBackLink = () => {
-    const sourceOrg = localStorage.getItem('source') ?? '';
+    const source = localStorage.getItem('source') ?? '';
     if (localStorage.getItem('navigateToSearch') === 'true') {
       const searchTerm = localStorage.getItem('searchTerm');
       const type = localStorage.getItem('type');
       return `/search?q=${searchTerm}&type=${type}&page=1`;
     }
-    if (sourceOrg === 'applied') {
+    if (source === 'applied') {
       return `/jobs/applied`;
     }
-    if (sourceOrg === 'recommended') {
+    if (source === 'recommended') {
       return '/jobs/recommended';
     }
-    if (sourceOrg === 'saved') {
+    if (source === 'saved') {
       return `/jobs/saved?page=${pageNumber}&scrollIndex=${scrollIndex}`;
     }
-    if (sourceOrg) {
-      return `/profile/organizations/${sourceOrg}/jobs`;
+    if (source) {
+      return `/profile/organizations/${source}/jobs`;
     }
     return currentIdentity?.type === 'organizations'
-      ? '/jobs/created'
+      ? `/jobs/created?page=${pageNumber}&filter=${filter}`
       : `/jobs?page=${pageNumber}&scrollIndex=${scrollIndex}`;
   };
 

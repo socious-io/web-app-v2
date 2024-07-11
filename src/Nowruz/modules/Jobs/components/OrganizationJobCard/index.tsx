@@ -1,4 +1,4 @@
-import { Skeleton } from '@mui/material';
+import { Button, Skeleton } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import variables from 'src/components/_exports.module.scss';
@@ -12,8 +12,10 @@ import css from './organization-job-card.module.scss';
 
 interface OrganizationJobCardProps {
   job: Job;
+  page: number;
+  filter: 'all' | 'archived';
 }
-export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job }) => {
+export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job, page, filter }) => {
   const [loading, setLoading] = useState(false);
   const [applicants, setApplicants] = useState([] as Applicant[]);
   const isActive = job.status === 'ACTIVE';
@@ -35,10 +37,10 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
 
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/jobs/created/${job.id}`);
+    navigate(`/jobs/created/${job.id}?page=${page}&filter=${filter}`);
   };
   const handleEdit = () => {
-    navigate(`/jobs/edit/${job.id}`);
+    navigate(`/jobs/edit/${job.id}?page=${page}&filter=${filter}`);
   };
   return (
     <div className={`${css.container} cursor-pointer`} onClick={handleClick}>
@@ -49,13 +51,12 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
               <div className={css.jobTitle}>{job.title}</div>
               <div className={css.subTitle}>Posted on {isoToStandard(job.updated_at?.toString() || '')}</div>
             </div>
-            {/* <div>Action button placeholder</div> */}
             <div className={css.right}>
               <IconButton
                 iconName="pencil-01"
                 iconSize={20}
                 iconColor={variables.color_grey_600}
-                handleClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
                   handleEdit();
                 }}
@@ -71,8 +72,8 @@ export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job })
                 {!applicants.length ? 'No applicants' : `${applicants.length} ${applicantsLabel}`}
               </p>
               <div className={css.avatars}>
-                {applicants.slice(0, 3).map((applicant) => (
-                  <div className={css.avatarItem}>
+                {applicants.slice(0, 3).map(applicant => (
+                  <div key={applicant.id} className={css.avatarItem}>
                     <Avatar type="users" size="20px" img={applicant.user.avatar as unknown as string} />
                   </div>
                 ))}

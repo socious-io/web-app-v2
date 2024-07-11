@@ -214,11 +214,6 @@ export const blueprint: RouteObject[] = [
               },
               {
                 path: 'created',
-                loader: async () => {
-                  const page = Number(localStorage.getItem('page') || 1);
-                  const data = await jobs({ page: page, status: 'ACTIVE', limit: 5 });
-                  return data;
-                },
                 async lazy() {
                   const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
                   return {

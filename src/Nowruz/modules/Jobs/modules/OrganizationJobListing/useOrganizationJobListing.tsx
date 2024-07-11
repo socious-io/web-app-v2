@@ -1,17 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData, useNavigate } from 'react-router-dom';
-import { CurrentIdentity, JobsRes, jobs } from 'src/core/api';
+import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
+import { CurrentIdentity, FilterReq, Job, JobsRes, jobs } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { ButtonGroupItem } from 'src/Nowruz/modules/general/components/ButtonGroups/buttonGroups.types';
 import { RootState } from 'src/store';
 
 export const useOrganizationJobListing = () => {
-  const loaderData = useLoaderData() as JobsRes;
-  const [jobsList, setJobsList] = useState(loaderData.items);
-  const [total, setTotal] = useState<number>(loaderData.total_count);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [filter, setFilter] = useState<'all' | 'archived'>('all');
+  const [jobsList, setJobsList] = useState<Job[]>([]);
+  const [total, setTotal] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  type Filter = 'all' | 'archived';
+  const [searchParam] = useSearchParams();
+  const [filter, setFilter] = useState<Filter>((searchParam.get('filter') as Filter) || 'all');
+  const pageNumber = Number(searchParam.get('page') || 1);
+  const [page, setPage] = useState(pageNumber);
+
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
@@ -20,24 +25,24 @@ export const useOrganizationJobListing = () => {
 
   const getJobsData = async () => {
     setLoading(true);
-    const payload = {
-      identity_id: currentIdentity?.id,
-      page: page,
-      limit: 5,
-    };
-    if (filter === 'archived') payload.status = 'EXPIRE';
-    const res = await jobs(payload);
-    if (isMobile && page > 1) {
-      setJobsList([...jobsList, ...res.items]);
-    } else setJobsList([...res.items]);
-    setTotal(res.total_count);
+    try {
+      const payload: FilterReq = {
+        identity_id: currentIdentity?.id,
+        page: page,
+        limit: 5,
+      };
+      if (filter === 'archived') payload.status = 'EXPIRE';
+      const res = await jobs(payload);
+      setJobsList([...res.items]);
+      setTotal(res.total_count);
+    } catch (e) {
+      console.log('error in fetching created jobs', e);
+    }
     setLoading(false);
   };
 
   const PER_PAGE = 5;
   const isMobile = isTouchDevice();
-  const pageNumber = Number(loaderData.page);
-  const [page, setPage] = useState(pageNumber);
 
   const filterButtons: ButtonGroupItem[] = [
     {
@@ -61,8 +66,8 @@ export const useOrganizationJobListing = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('page', page.toString());
     getJobsData();
+    if (page !== pageNumber) navigate(`/jobs/created?page=${page}&filter=${filter}`);
   }, [page, filter]);
 
   return {
@@ -75,5 +80,6 @@ export const useOrganizationJobListing = () => {
     isMobile,
     loading,
     navigateToCreateJob,
+    filter,
   };
 };
