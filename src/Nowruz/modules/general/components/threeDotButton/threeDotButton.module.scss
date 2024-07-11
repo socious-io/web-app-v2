@@ -26,7 +26,9 @@
     justify-content: flex-start;
     gap: 8px;
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
         background-color: $color-grey-50;
     }
 

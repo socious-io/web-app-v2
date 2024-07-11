@@ -277,38 +277,6 @@ export const useApplicantAction = (
     [applicantsList],
   );
 
-  const extractCellId = (cell: Cell<Applicant, unknown>) => {
-    let styleClass = '';
-
-    switch (cell.id.split('_')[1]) {
-      case 'name':
-        styleClass = 'w-4/12';
-        break;
-      case 'applied':
-        styleClass = 'w-1/12';
-        break;
-      // case 'points':
-      //   styleClass = 'w-1/12';
-      //   break;
-      case 'location':
-        styleClass = 'w-3/12';
-        break;
-      case 'timezone':
-        styleClass = 'w-2/12';
-        break;
-      // case 'experience':
-      //   styleClass = 'w-1/12';
-      //   break;
-      case 'actions':
-        styleClass = 'w-2/12';
-        break;
-      default:
-        break;
-    }
-
-    return styleClass;
-  };
-
   const table = useReactTable({
     data: applicantsList,
     columns,
@@ -343,7 +311,6 @@ export const useApplicantAction = (
     setApplicant,
     onClickName,
     table,
-    extractCellId,
     openAlert,
     setOpenAlert,
     handleReject,
