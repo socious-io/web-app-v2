@@ -164,7 +164,6 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     localStorage.removeItem('type');
     localStorage.removeItem('source');
     localStorage.removeItem('profileJobPage');
-    localStorage.removeItem('appliedJobPage');
     navigate(route);
     if (isTouchDevice()) setOpen(false);
   };

@@ -268,12 +268,6 @@ export const blueprint: RouteObject[] = [
               },
               {
                 path: 'applied',
-                // loader: async () => {
-                //   localStorage.setItem('source', 'applied');
-                //   localStorage.removeItem('navigateToSearch');
-                //   //const data = await userApplicants({ status: 'PENDING', page: page, limit: 10 });
-                //   //return data;
-                // },
                 async lazy() {
                   const { AppliedList } = await import('src/Nowruz/pages/jobs/Applied');
                   return {

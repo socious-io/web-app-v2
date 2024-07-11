@@ -29,7 +29,8 @@ export const useJobListingCard = (job: Job, page: number, scrollIndex: number, s
   }, [job]);
   const navigate = useNavigate();
   const handleClick = () => {
-    if (isTouchDevice() && !jobVal.not_interested) navigate(`/jobs/${job.id}?page=${page}&scrollIndex=${scrollIndex}`);
+    if (isTouchDevice() && !jobVal.not_interested)
+      navigate(`/jobs/${job.id}${page ? `?page=${page}` : ''}${scrollIndex ? `&scrollIndex=${scrollIndex}` : ''}`);
   };
   const handleTitleClick = () => {
     if (!jobVal.not_interested) navigate(`/jobs/${job.id}`);

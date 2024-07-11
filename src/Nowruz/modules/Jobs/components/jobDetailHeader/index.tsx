@@ -44,7 +44,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
       return `/search?q=${searchTerm}&type=${type}&page=1`;
     }
     if (source === 'applied') {
-      return `/jobs/applied`;
+      return `/jobs/applied?page=${pageNumber}`;
     }
     if (source === 'recommended') {
       return '/jobs/recommended';
