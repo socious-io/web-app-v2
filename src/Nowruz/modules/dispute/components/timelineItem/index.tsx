@@ -1,8 +1,8 @@
-import { Divider } from '@mui/material';
 import React from 'react';
 import { DisputeEvent, Identity } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
+import { truncateFromMiddle } from 'src/core/stringTransformation';
 import { UserType } from 'src/core/types';
 import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
 import { ExpandableText } from 'src/Nowruz/modules/general/components/expandableText';
@@ -65,6 +65,8 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
           <div className="flex flex-wrap gap-5">
             {event.evidences?.map(item => {
               const file = getFileIcon(item.url);
+              const fileName = file.name?.split('.')[0] || '';
+              const fileFormat = file.name?.split('.')[1] || '';
               return (
                 <div key={item.id} className="flex gap-3">
                   <img src={file.icon} alt="" />
@@ -75,7 +77,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
                     className={`text-sm font-medium leading-5 text-Gray-light-mode-900 cursor-pointer break-words break-all whitespace-normal`}
                     rel="noreferrer"
                   >
-                    {file.name}
+                    {fileName && fileFormat ? truncateFromMiddle(fileName, 10, 4) + '.' + fileFormat : file.name}
                   </a>
                 </div>
               );
