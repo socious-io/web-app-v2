@@ -11,7 +11,7 @@ import css from './list.module.scss';
 export const Search = () => {
   const {
     data: { page, searchResult, total, PER_PAGE, readableType, q, sliderFilterOpen, filter, countryName },
-    operations: { setPage, card, handleCloseOrApplyFilter, onApply, onClose },
+    operations: { setPage, card, handleCloseOrApplyFilter, onApply, onClose, handleChangeMobilePage },
   } = useSearch();
 
   const headerClass = `${css.header}`;
@@ -30,7 +30,7 @@ export const Search = () => {
         </div>
       </div>
       <div className={css.list}>
-        {searchResult.items?.map((item) => (
+        {searchResult.items?.map(item => (
           <div key={item.id} className="mt-6">
             {card(item)}
           </div>
@@ -42,11 +42,13 @@ export const Search = () => {
           )}
         </div>
 
-        <div className="mt-5 flex items-center justify-center block md:hidden">
-          <Button color="primary" variant="text" onClick={() => setPage(page + 1)}>
-            See more
-          </Button>
-        </div>
+        {(searchResult.items?.length ?? 0) < total && (
+          <div className="mt-5 flex items-center justify-center md:hidden">
+            <Button color="primary" variant="text" onClick={handleChangeMobilePage}>
+              See more
+            </Button>
+          </div>
+        )}
       </div>
       <Overlay
         open={sliderFilterOpen}

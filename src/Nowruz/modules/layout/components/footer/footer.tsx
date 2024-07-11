@@ -16,7 +16,6 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
   const navigate = useNavigate();
   const navigateFunction = (route: string) => {
     localStorage.removeItem('page');
-    localStorage.removeItem('searchPage');
     localStorage.removeItem('navigateToSearch');
     localStorage.removeItem('filter');
     localStorage.removeItem('searchTerm');

@@ -427,20 +427,20 @@ export const blueprint: RouteObject[] = [
                   };
                 },
                 loader: async ({ request }) => {
-                  const page = Number(localStorage.getItem('searchPage')) || 1;
-
-                  const url = new URL(request.url);
-                  const q = url.searchParams.get('q') || '';
-                  const type = (url.searchParams.get('type') ?? 'projects') as
+                  const { searchParams } = new URL(request.url);
+                  const page = Number(searchParams.get('page') || 1);
+                  const q = searchParams.get('q') || '';
+                  const type = (searchParams.get('type') ?? 'projects') as
                     | 'projects'
                     | 'users'
                     | 'posts'
                     | 'organizations';
+
                   localStorage.setItem('type', type || 'projects');
                   localStorage.setItem('searchTerm', q || '');
                   localStorage.setItem('navigateToSearch', 'true');
                   const body = {
-                    filter: {},
+                    filter: JSON.parse(localStorage.getItem('filter') || '{}'),
                     type,
                     q,
                   };

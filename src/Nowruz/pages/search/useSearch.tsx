@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'src/core/api';
@@ -26,15 +26,16 @@ export const useSearch = () => {
   const [searchParams] = useSearchParams();
   const type = searchParams.get('type');
   const q = searchParams.get('q');
+  const pageNumber = Number(searchParams.get('page') || 1);
 
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
   const [searchResult, setSearchResult] = useState({} as JobsRes | UsersRes | OrganizationsRes);
-  const [page, setPage] = useState(data.page);
+  const [page, setPage] = useState(pageNumber);
   const [sliderFilterOpen, setSliderFilterOpen] = useState(false);
-  const savedFilter = JSON.parse(localStorage.getItem('filter') || '{}') as FilterReq;
-  const [filter, setFilter] = useState<FilterReq>(savedFilter);
+  const filter = JSON.parse(localStorage.getItem('filter') || '{}') as FilterReq;
   const [countryName, setCountryName] = useState<string | undefined>('');
+  const prevPage = useRef(0);
 
   const navigate = useNavigate();
 
@@ -61,17 +62,30 @@ export const useSearch = () => {
     };
   };
 
-  const fetchMore = async (page: number) => {
-    const body = {
-      filter: filter ? removeValuesFromObject(filterNeeded(filter), ['', null, undefined]) : {},
-      type,
-    } as any;
-    if (q?.trim()) {
-      Object.assign(body, { q });
+  const fetchMore = async () => {
+    try {
+      const body = {
+        filter: filter ? removeValuesFromObject(filterNeeded(filter), ['', null, undefined]) : {},
+        type,
+      } as any;
+      if (q?.trim()) {
+        Object.assign(body, { q });
+      }
+      if (prevPage.current === page - 1 && searchResult.items?.length === (page - 1) * PER_PAGE) {
+        // if see more is clicked
+        const data = await searchReq(body, { limit: 10, page });
+        setSearchResult({
+          ...data,
+          items: [...searchResult.items, ...data.items],
+        });
+      } else {
+        // if page is changed through URL
+        const data = await searchReq(body, { limit: PER_PAGE * page, page: 1 });
+        setSearchResult(data);
+      }
+    } catch (e) {
+      console.log('error in fetching search result', e);
     }
-    const data = await searchReq(body, { limit: 10, page });
-    if (isMobile && page > 1) setSearchResult({ ...searchResult, ...data });
-    else setSearchResult(data);
   };
 
   const handleCloseOrApplyFilter = () => {
@@ -83,12 +97,13 @@ export const useSearch = () => {
   };
 
   const onApply = async (filterRaw: FilterReq) => {
-    setFilter(filterRaw);
+    localStorage.setItem('filter', JSON.stringify(filterRaw));
     if (filterRaw.location && !!filterRaw?.country?.length) {
       const label = `${filterRaw.location.label}, ${getCountryName(filterRaw.country[0])}`;
       setCountryName(label);
     }
-    setPage(1);
+    if (page !== 1) setPage(1);
+    else navigate(`/search?q=${q}&type=${type}&page=1`);
     handleCloseOrApplyFilter();
   };
 
@@ -121,25 +136,27 @@ export const useSearch = () => {
           </div>
         );
       }
-      return <JobListingCard job={item as Job} />;
+      return <JobListingCard job={item as Job} page={page} />;
     },
-    [type],
+    [type, page],
   );
 
   useEffect(() => {
-    fetchMore(page);
-    localStorage.setItem('searchPage', page.toString());
-    localStorage.setItem('filter', JSON.stringify(filter));
-  }, [page, filter]);
+    if (isMobile) fetchMore();
+    else {
+      navigate(`/search?q=${q}&type=${type}&page=${page}`);
+    }
+  }, [page]);
 
   useEffect(() => {
-    if (data.items.length) {
-      setSearchResult(data);
-      const savedFilter = JSON.parse(localStorage.getItem('filter') || '{}') as FilterReq;
-      setFilter(savedFilter);
-      setCountryName('');
-    }
+    setSearchResult(data);
+    setCountryName('');
   }, [data]);
+
+  const handleChangeMobilePage = () => {
+    prevPage.current = page;
+    setPage(page + 1);
+  };
 
   return {
     data: {
@@ -160,6 +177,7 @@ export const useSearch = () => {
       onApply,
       onClose,
       getCountryName,
+      handleChangeMobilePage,
     },
   };
 };
