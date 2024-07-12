@@ -47,7 +47,10 @@ export const IssuedList = () => {
         </div>
         <div className="flex flex-col">
           {issuedList.map(item => (
-            <div key={item.id} className="flex items-center text-sm font-normal text-left px-6 py-4">
+            <div
+              key={item.id}
+              className="flex items-center text-sm font-normal text-left px-6 py-4 border border-solid border-x-0 border-b-0 border-Gray-light-mode-200"
+            >
               <div className="flex flex-[2_2_0%] justify-start items-center gap-3">
                 <Checkbox
                   id={item.id}
@@ -62,10 +65,10 @@ export const IssuedList = () => {
                 )}
 
                 <div className="flex flex-col">
-                  <span className="leading-7 text-Gray-light-mode-900">
+                  <span className="leading-5 text-sm font-normal text-Gray-light-mode-900">
                     {userProfile ? item.org.name : `${item.user.first_name} ${item.user.last_name}`}
                   </span>
-                  <span className="text-sm font-medium leading-5 text-Gray-light-mode-600">
+                  <span className="leading-5 text-sm font-normal text-Gray-light-mode-600">
                     {userProfile ? `@${item.org.shortname}` : `@${item.user.username}`}
                   </span>
                 </div>
