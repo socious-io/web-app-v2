@@ -23,6 +23,8 @@ interface JobListingCardProps {
   displaySave?: boolean;
   displayNotInterested?: boolean;
   saveAction?: () => void;
+  page?: number;
+  scrollIndex?: number;
 }
 
 export const JobListingCard: React.FC<JobListingCardProps> = ({
@@ -30,9 +32,13 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
   displaySave = false,
   displayNotInterested = false,
   saveAction,
+  page = 1,
+  scrollIndex = 0,
 }) => {
   const { skills, handleTitleClick, handleClick, jobVal, handleBookmark, handleNotInterested } = useJobListingCard(
     job,
+    page,
+    scrollIndex,
     saveAction,
   );
 
@@ -168,7 +174,11 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
         {jobVal.not_interested ? (
           <div className="font-medium text-sm leading-5 text-Success-700">You will not see this job again</div>
         ) : (
-          <Link href={`/jobs/${job.id}`} label={`Read more`} customStyle={css.readMore} />
+          <Link
+            href={`/jobs/${job.id}?page=${page}&scrollIndex=${scrollIndex}`}
+            label={`Read more`}
+            customStyle={css.readMore}
+          />
         )}
       </div>
       {jobVal.not_interested && (

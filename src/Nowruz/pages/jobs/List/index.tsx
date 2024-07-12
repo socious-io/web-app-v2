@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
-import { CurrentIdentity, JobsRes } from 'src/core/api';
+import { useLoaderData, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { CurrentIdentity, jobs, JobsRes } from 'src/core/api';
 import { Icon } from 'src/Nowruz/general/Icon';
 import { Button } from 'src/Nowruz/modules/general/components/Button';
 import { JobsListing } from 'src/Nowruz/modules/Jobs/modules/JobListing';
@@ -18,10 +18,6 @@ export const JobsList = () => {
   const userJobs = useLoaderData() as JobsRes;
   const path = useLocation().pathname;
   const savedPage = path.includes('saved');
-
-  useEffect(() => {
-    if (currentIdentity?.type === 'organizations') navigate('/jobs/created');
-  }, []);
 
   const saveButton = (
     <Button

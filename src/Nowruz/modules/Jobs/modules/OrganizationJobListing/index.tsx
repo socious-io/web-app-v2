@@ -12,7 +12,7 @@ import { useOrganizationJobListing } from './useOrganizationJobListing';
 import { OrganizationJobCard } from '../../components/OrganizationJobCard';
 
 export const OrganizationJobListing = () => {
-  const { filterButtons, page, setPage, total, PER_PAGE, jobsList, loading, navigateToCreateJob } =
+  const { filterButtons, page, setPage, total, PER_PAGE, jobsList, loading, navigateToCreateJob, filter } =
     useOrganizationJobListing();
   return (
     <div className={css.container}>
@@ -28,7 +28,7 @@ export const OrganizationJobListing = () => {
       {!loading &&
         jobsList.map(job => (
           <div key={job.id} className="mt-6">
-            <OrganizationJobCard job={job} />
+            <OrganizationJobCard job={job} page={page} filter={filter} />
           </div>
         ))}
       {jobsList.length === 0 && !loading && (

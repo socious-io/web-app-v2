@@ -1,7 +1,7 @@
 import { Divider } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Job } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
@@ -31,27 +31,33 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
   const socialCauses = socialCausesToCategory(job.causes_tags).map(item => item.label);
   const skills = skillsToCategory(job.skills).map(item => item.label);
 
+  const [searchParam] = useSearchParams();
+  const pageNumber = Number(searchParam.get('page') || 1);
+  const scrollIndex = Number(searchParam.get('scrollIndex') || 0);
+  const filter = searchParam.get('filter') || 'all';
+
   const getBackLink = () => {
-    const sourceOrg = localStorage.getItem('source') ?? '';
+    const source = localStorage.getItem('source') ?? '';
     if (localStorage.getItem('navigateToSearch') === 'true') {
       const searchTerm = localStorage.getItem('searchTerm');
       const type = localStorage.getItem('type');
-      return `/search?q=${searchTerm}&type=${type}&page=1`;
+      return `/search?q=${searchTerm}&type=${type}&page=${pageNumber}`;
     }
-    if (sourceOrg === 'applied') {
-      return `/jobs/applied`;
+    if (source === 'applied') {
+      return `/jobs/applied?page=${pageNumber}`;
     }
-    if (sourceOrg === 'recommended') {
+    if (source === 'recommended') {
       return '/jobs/recommended';
     }
-    if (sourceOrg === 'saved') {
-      return '/jobs/saved';
+    if (source === 'saved') {
+      return `/jobs/saved?page=${pageNumber}&scrollIndex=${scrollIndex}`;
     }
-    if (sourceOrg) {
-      return `/profile/organizations/${sourceOrg}/jobs`;
+    if (source) {
+      return `/profile/organizations/${source}/jobs`;
     }
-
-    return currentIdentity?.type === 'organizations' ? '/jobs/created' : '/jobs';
+    return currentIdentity?.type === 'organizations'
+      ? `/jobs/created?page=${pageNumber}&filter=${filter}`
+      : `/jobs?page=${pageNumber}&scrollIndex=${scrollIndex}`;
   };
 
   const onAvatarClick = () => {

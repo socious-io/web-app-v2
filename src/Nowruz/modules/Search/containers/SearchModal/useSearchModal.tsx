@@ -27,7 +27,6 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     setList([]);
     setSelectedItem(null);
     fetchSearchResult(searchTerm);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTab]);
 
   const fetchSearchResult = async (q: string) => {
@@ -43,13 +42,11 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
   };
 
   const navigateFullSearch = () => {
-    localStorage.removeItem('searchPage');
     localStorage.removeItem('navigateToSearch');
     localStorage.removeItem('filter');
     localStorage.removeItem('searchTerm');
     localStorage.removeItem('type');
     props.onClose();
-
     navigate(`/search?q=${searchTerm}&type=${selectedTab}&page=1`);
   };
 

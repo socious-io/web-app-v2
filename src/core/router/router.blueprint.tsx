@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
+import { Navigate, RouteObject, createBrowserRouter, useRouteError, useSearchParams } from 'react-router-dom';
 import {
   jobs,
   chats,
@@ -214,11 +214,6 @@ export const blueprint: RouteObject[] = [
               },
               {
                 path: 'created',
-                loader: async () => {
-                  const page = Number(localStorage.getItem('page') || 1);
-                  const data = await jobs({ page: page, status: 'ACTIVE', limit: 5 });
-                  return data;
-                },
                 async lazy() {
                   const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
                   return {
@@ -244,8 +239,8 @@ export const blueprint: RouteObject[] = [
               },
               {
                 path: '',
-                loader: async () => {
-                  const page = Number(localStorage.getItem('page') || 1);
+                loader: async ({ request }) => {
+                  const page = Number(new URL(request.url).searchParams.get('page') || 1);
                   const data = await jobs({ page, status: 'ACTIVE', limit: 10 });
                   return data;
                 },
@@ -256,6 +251,7 @@ export const blueprint: RouteObject[] = [
                   };
                 },
               },
+
               {
                 path: ':id',
                 loader: async ({ params }) => {
@@ -272,12 +268,6 @@ export const blueprint: RouteObject[] = [
               },
               {
                 path: 'applied',
-                // loader: async () => {
-                //   localStorage.setItem('source', 'applied');
-                //   localStorage.removeItem('navigateToSearch');
-                //   //const data = await userApplicants({ status: 'PENDING', page: page, limit: 10 });
-                //   //return data;
-                // },
                 async lazy() {
                   const { AppliedList } = await import('src/Nowruz/pages/jobs/Applied');
                   return {
@@ -287,9 +277,9 @@ export const blueprint: RouteObject[] = [
               },
               {
                 path: 'saved',
-                loader: async () => {
-                  const page = Number(localStorage.getItem('page') || 1);
-                  const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: 5 });
+                loader: async ({ request }) => {
+                  const page = Number(new URL(request.url).searchParams.get('page') || 1);
+                  const data = await markedJobs({ page, 'filter.marked_as': 'SAVE', limit: 5 });
                   return data;
                 },
                 async lazy() {
@@ -437,20 +427,20 @@ export const blueprint: RouteObject[] = [
                   };
                 },
                 loader: async ({ request }) => {
-                  const page = Number(localStorage.getItem('searchPage')) || 1;
-
-                  const url = new URL(request.url);
-                  const q = url.searchParams.get('q') || '';
-                  const type = (url.searchParams.get('type') ?? 'projects') as
+                  const { searchParams } = new URL(request.url);
+                  const page = Number(searchParams.get('page') || 1);
+                  const q = searchParams.get('q') || '';
+                  const type = (searchParams.get('type') ?? 'projects') as
                     | 'projects'
                     | 'users'
                     | 'posts'
                     | 'organizations';
+
                   localStorage.setItem('type', type || 'projects');
                   localStorage.setItem('searchTerm', q || '');
                   localStorage.setItem('navigateToSearch', 'true');
                   const body = {
-                    filter: {},
+                    filter: JSON.parse(localStorage.getItem('filter') || '{}'),
                     type,
                     q,
                   };

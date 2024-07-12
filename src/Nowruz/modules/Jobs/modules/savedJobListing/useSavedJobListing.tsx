@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoaderData, useLocation } from 'react-router-dom';
+import { useLoaderData, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { Job, JobsRes, Skill, jobs, markedJobs, skills } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { useIsMount } from 'src/Nowruz/modules/general/components/useIsMount';
@@ -9,6 +9,7 @@ import { setSkills } from 'src/store/reducers/skills.reducer';
 
 export const useSavedJobListing = () => {
   const loaderData = useLoaderData() as JobsRes;
+  const navigate = useNavigate();
   const skillList = useSelector<RootState, Skill[]>(state => {
     return state.skills.items;
   });
@@ -18,11 +19,12 @@ export const useSavedJobListing = () => {
   const isMobile = isTouchDevice();
   const [jobsList, setJobsList] = useState<Job[]>(loaderData.items);
   const [totalCount, setTotalCount] = useState(loaderData.total_count);
-  const pageNumber = Number(loaderData.page);
+  const [searchParam] = useSearchParams();
+  const pageNumber = Number(searchParam.get('page') || 1);
   const [page, setPage] = useState(pageNumber);
-  const [loading, setLoading] = useState(true);
-  const isMount = useIsMount();
-
+  const [scrollIndex, setscrollIndex] = useState(Number(searchParam.get('scrollIndex') || -1));
+  const [loading, setLoading] = useState(false);
+  const prevPage = useRef(1);
   const scrollRef = useRef<null | HTMLDivElement>(null);
   const executeScroll = () => scrollRef.current && scrollRef.current.scrollIntoView();
 
@@ -38,11 +40,14 @@ export const useSavedJobListing = () => {
 
   const fetchMore = async (page: number) => {
     try {
-      if (!isMount) {
+      if (prevPage.current === page - 1) {
         const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: PER_PAGE });
         setTotalCount(data.total_count);
-        if (isMobile && page > 1) setJobsList([...jobsList, ...data.items]);
-        else setJobsList(data.items);
+        setJobsList([...jobsList, ...data.items]);
+      } else {
+        const data = await markedJobs({ page: page, 'filter.marked_as': 'SAVE', limit: PER_PAGE * page });
+        setJobsList(data.items);
+        setTotalCount(data.total_count);
       }
     } catch (e) {
       console.log('error in fetching saved jobs', e);
@@ -56,17 +61,25 @@ export const useSavedJobListing = () => {
   };
 
   useEffect(() => {
-    loadPage(page);
-    localStorage.setItem('page', page.toString());
     localStorage.setItem('source', 'saved');
+    if (isMobile) loadPage(page);
+    else if (page !== pageNumber) navigate(`/jobs/saved?page=${page}`);
   }, [page]);
 
   useEffect(() => {
-    executeScroll();
-  }, [jobsList]);
+    setJobsList(loaderData.items);
+    setTotalCount(loaderData.total_count);
+  }, [loaderData]);
 
-  const scrollIndex = isMobile ? (page - 1) * PER_PAGE - 1 : 0;
+  useEffect(() => {
+    if (!loading) executeScroll();
+  }, [loading]);
 
+  const handleChangeMobilePage = () => {
+    prevPage.current = page;
+    setPage(page + 1);
+    setscrollIndex(page * PER_PAGE - 1);
+  };
   return {
     page,
     setPage,
@@ -79,5 +92,6 @@ export const useSavedJobListing = () => {
     loadPage,
     scrollRef,
     scrollIndex,
+    handleChangeMobilePage,
   };
 };

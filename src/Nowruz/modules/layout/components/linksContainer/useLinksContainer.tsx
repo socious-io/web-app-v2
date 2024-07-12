@@ -163,14 +163,12 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
 
   const navigateFunction = async (route: string) => {
     localStorage.removeItem('page');
-    localStorage.removeItem('searchPage');
     localStorage.removeItem('navigateToSearch');
     localStorage.removeItem('filter');
     localStorage.removeItem('searchTerm');
     localStorage.removeItem('type');
     localStorage.removeItem('source');
     localStorage.removeItem('profileJobPage');
-    localStorage.removeItem('appliedJobPage');
     navigate(route);
     if (isTouchDevice()) setOpen(false);
   };

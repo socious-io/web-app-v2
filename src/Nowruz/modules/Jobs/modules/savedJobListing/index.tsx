@@ -7,7 +7,18 @@ import { useSavedJobListing } from './useSavedJobListing';
 import { JobListingCard } from '../../components/JobListingCard';
 
 export const SavedJobListing = () => {
-  const { page, setPage, total, PER_PAGE, jobsList, isMobile, loading, scrollRef, scrollIndex } = useSavedJobListing();
+  const {
+    page,
+    setPage,
+    total,
+    PER_PAGE,
+    jobsList,
+    isMobile,
+    loading,
+    scrollRef,
+    scrollIndex,
+    handleChangeMobilePage,
+  } = useSavedJobListing();
 
   return (
     <div className={css.container}>
@@ -21,7 +32,7 @@ export const SavedJobListing = () => {
         <>
           {jobsList.map((job, index) => (
             <div key={job.id} className="mt-6" ref={index === scrollIndex ? scrollRef : null}>
-              <JobListingCard job={job} displaySave saveAction={() => setPage(1)} />
+              <JobListingCard job={job} displaySave saveAction={() => setPage(1)} page={page} scrollIndex={index} />
             </div>
           ))}
         </>
@@ -33,7 +44,7 @@ export const SavedJobListing = () => {
       )}
       {isMobile && jobsList.length < total && (
         <div className="mt-5 flex items-center justify-center">
-          <Button color="primary" variant="text" onClick={() => setPage(page + 1)}>
+          <Button color="primary" variant="text" onClick={handleChangeMobilePage}>
             See more
           </Button>
         </div>

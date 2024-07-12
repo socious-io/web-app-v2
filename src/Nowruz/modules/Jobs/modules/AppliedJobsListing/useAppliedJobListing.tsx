@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Applicant, Skill, skills, userApplicants } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import { RootState } from 'src/store';
 import { setSkills } from 'src/store/reducers/skills.reducer';
 
 export const useAppliedJobListing = () => {
-  const skillList = useSelector<RootState, Skill[]>((state) => {
+  const skillList = useSelector<RootState, Skill[]>(state => {
     return state.skills.items;
   });
   const dispatch = useDispatch();
   const PER_PAGE = 10;
-  const isMobile = isTouchDevice();
-  const [applicants, setApplicants] = useState<Applicant[]>([] as Applicant[]);
+  const [appliedList, setAppliedList] = useState<Applicant[]>([] as Applicant[]);
   const [totalCount, setTotalCount] = useState<number>(0);
-  const [page, setPage] = useState<number>(Number(localStorage.getItem('appliedJobPage')) ?? 1);
+  const [searchParam] = useSearchParams();
+  const pageNumber = Number(searchParam.get('page') || 1);
+  const [page, setPage] = useState<number>(pageNumber);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const loadPage = async () => {
     setLoading(true);
@@ -28,12 +30,9 @@ export const useAppliedJobListing = () => {
   };
 
   const fetchMore = async () => {
-    const currentPage = Number(localStorage.getItem('appliedJobPage')) ?? 1;
-    const data = await userApplicants({ page: currentPage, status: 'PENDING', limit: PER_PAGE });
-    setPage(data.page);
+    const data = await userApplicants({ page, status: 'PENDING', limit: PER_PAGE });
     setTotalCount(data.total_count);
-    if (isMobile && page > 1) setApplicants([...applicants, ...data.items]);
-    else setApplicants(data.items);
+    setAppliedList(data.items);
   };
 
   const getSkills = async () => {
@@ -44,10 +43,10 @@ export const useAppliedJobListing = () => {
 
   useEffect(() => {
     localStorage.setItem('source', 'applied');
-    localStorage.setItem('appliedJobPage', page.toString());
     localStorage.removeItem('navigateToSearch');
     loadPage();
+    if (page !== pageNumber) navigate(`/jobs/applied?page=${page}`);
   }, [page]);
 
-  return { page, setPage, applicants, totalCount, PER_PAGE, skillList, loading };
+  return { page, setPage, appliedList, totalCount, PER_PAGE, skillList, loading };
 };
