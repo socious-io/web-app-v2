@@ -1,10 +1,10 @@
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { Overlay } from 'src/modules/general/components/slideoutMenu';
 import { FilterSlider } from 'src/modules/Search/components/FilterSlider';
 import { useSearch } from 'src/pages/search/useSearch';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './list.module.scss';
 

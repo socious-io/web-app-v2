@@ -1,11 +1,11 @@
 import { IconButton as MUIIconButton } from '@mui/material';
-import variables from 'src/components/_exports.module.scss';
 import { ConnectRequestModal } from 'src/modules/connections/connectRequestModal';
 import { ThreeDotsButton } from 'src/modules/connections/threeDotsButton';
 import { AlertMessage } from 'src/modules/general/components/alertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { EditInfoModal } from 'src/modules/userProfile/containers/editInfo';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import DesktopHeader from './desktopHeader';
 import { MobileHeader } from './mobileHeader';

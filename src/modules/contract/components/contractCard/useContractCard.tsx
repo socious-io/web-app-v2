@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import variables from 'src/components/_exports.module.scss';
 import { Contract, CurrentIdentity } from 'src/core/api';
 import dapp from 'src/dapp';
 import { Dot } from 'src/modules/general/components/dot';
 import { Icon } from 'src/modules/general/components/Icon';
 import { RootState } from 'src/store';
 import { handleDisplaySlider, setSelected } from 'src/store/reducers/contracts.reducer';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 export const useContractCard = (contract: Contract) => {
   const [contractVal, setContractVal] = useState(contract);

@@ -1,5 +1,4 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
@@ -9,6 +8,7 @@ import { FileUploaderMultiple } from 'src/modules/general/components/fileUploade
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { InitiateDisputeModalProps } from './index.types';
 import SuccessInitiateDispute from './successInitiateDispute';

@@ -1,10 +1,10 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { Organization, User } from 'src/core/api';
 import { ChipList } from 'src/modules/general/components/chipList';
 import { Location } from 'src/modules/userProfile/components/location';
 import { Website } from 'src/modules/userProfile/components/website';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { Header } from './header';
 import { useSearchResultProfile } from './useSearchResultProfile';

@@ -1,6 +1,5 @@
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React, { Dispatch, SetStateAction } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { ApplicantsRes } from 'src/core/api';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
@@ -11,6 +10,7 @@ import { Input } from 'src/modules/general/components/input/input';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { Overlay } from 'src/modules/general/components/slideoutMenu';
 import { OrgOfferModal } from 'src/modules/Jobs/containers/OrgOfferModal';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { ApplicantDetails } from './applicant';
 import { useApplicantAction } from './useApplicantAction';

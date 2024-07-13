@@ -2,8 +2,8 @@ import largeTick from 'public/icons/nowruz/verified-tick-lg.svg';
 import mediumTick from 'public/icons/nowruz/verified-tick-md.svg';
 import smallTick from 'public/icons/nowruz/verified-tick-sm.svg';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/modules/general/components/Icon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './avatarProfile.module.scss';
 import { AvatarProfileProps } from './avatarProfile.types';

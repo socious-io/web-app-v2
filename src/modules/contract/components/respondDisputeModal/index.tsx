@@ -1,5 +1,4 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Dot } from 'src/modules/general/components/dot';
@@ -7,6 +6,7 @@ import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { FileUploaderMultiple } from 'src/modules/general/components/fileUploaderMultiple';
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { RespondDisputeModalProps } from './index.types';
 import SuccessRespondDispute from './successRespondDispute';

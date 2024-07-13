@@ -1,10 +1,10 @@
 import Divider from '@mui/material/Divider';
-import variables from 'src/components/_exports.module.scss';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Input } from 'src/modules/general/components/input/input';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './image-bio.module.scss';
 import { useImageBio } from './useImageBio';

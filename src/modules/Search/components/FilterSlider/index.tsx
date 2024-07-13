@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 // import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
@@ -11,6 +10,7 @@ import MultiSelect from 'src/modules/general/components/multiSelect/multiSelect'
 import { RadioGroup } from 'src/modules/general/components/RadioGroup';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import { FilterReq } from 'src/pages/search/useSearch';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useFilterSlider } from './useFilterSlider';
 

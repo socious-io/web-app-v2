@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/modules/general/components/Icon';
 import { ResultList } from 'src/modules/Search/components/ResultList';
 import { SearchInput } from 'src/modules/Search/components/SearchInput';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './search-modal.module.scss';
 import { SearchModalProps } from './SearchModal.types';

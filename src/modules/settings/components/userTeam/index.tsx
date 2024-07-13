@@ -1,9 +1,9 @@
 import { Divider } from '@mui/material';
-import variables from 'src/components/_exports.module.scss';
 import { OrgMeta } from 'src/core/api';
 import { AccountItem } from 'src/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Button } from 'src/modules/general/components/Button';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './userTeam.module.scss';
 import { useUserTeam } from './useUserTeam';

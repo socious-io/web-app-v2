@@ -1,6 +1,6 @@
 import { RadioGroup } from '@mui/material';
 // import { Check } from 'public/icons/nowruz/check';
-// import variables from 'src/components/_exports.module.scss';
+// import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './cardRadioButton.module.scss';
 import { CardRadioButtonProps } from './cardRadioButton.types';

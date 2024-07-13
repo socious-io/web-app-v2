@@ -1,9 +1,9 @@
-import variables from 'src/components/_exports.module.scss';
 import { CertificateMeta } from 'src/core/api/additionals/additionals.types';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { StepperCard } from 'src/modules/general/components/stepperCard';
 import CreateUpdateCertificate from 'src/modules/userProfile/containers/createUpdateCertificate';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useCertificate } from './useCertificates.types';
 import css from '../about.module.scss';

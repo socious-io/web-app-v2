@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Link } from 'src/modules/general/components/link';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './website.module.scss';
 

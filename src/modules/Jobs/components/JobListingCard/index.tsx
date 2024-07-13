@@ -1,5 +1,4 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
@@ -14,6 +13,7 @@ import { ExpandableText } from 'src/modules/general/components/expandableText';
 import { Icon } from 'src/modules/general/components/Icon';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import { Link } from 'src/modules/general/components/link';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './job-listing-card.module.scss';
 import { useJobListingCard } from './useJobListingCard';

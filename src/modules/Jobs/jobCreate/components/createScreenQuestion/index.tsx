@@ -1,9 +1,9 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import { Input } from 'src/modules/general/components/input/input';
 import { RadioGroup } from 'src/modules/general/components/RadioGroup';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { CreateScreenQuestionProps } from './createScreenQuestion.types';
 import css from './createScreenQuestions.module.scss';

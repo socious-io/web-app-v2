@@ -1,11 +1,11 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/modules/general/components/Icon';
 import { IconDropDown } from 'src/modules/general/components/iconDropDown';
 import { Input } from 'src/modules/general/components/input/input';
 import { Overlay } from 'src/modules/general/components/slideoutMenu';
 import { SearchModal } from 'src/modules/Search/containers/SearchModal';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './headerNavBar.module.scss';
 import { useHeaderNavBar } from './useHeaderNavBar';

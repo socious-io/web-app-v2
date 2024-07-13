@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { ReportPostProps } from './index.types';
 

@@ -1,7 +1,7 @@
 import { Backdrop, Typography } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './signinModal.module.scss';
 import { SignInForm } from '../../containers/signin';

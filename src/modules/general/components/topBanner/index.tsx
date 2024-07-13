@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import variables from 'src/components/_exports.module.scss';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { Button } from '../Button';
 import { FeaturedIconOutlined } from '../featuredIconOutlined';

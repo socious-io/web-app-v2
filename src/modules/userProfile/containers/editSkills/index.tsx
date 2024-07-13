@@ -1,8 +1,8 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { Modal } from 'src/modules/general/components/modal';
 import MultiSelect from 'src/modules/general/components/multiSelect/multiSelect';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useEditSkills } from './useEditSkills';
 

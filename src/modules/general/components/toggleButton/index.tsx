@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 import * as React from 'react';
-import variables from 'src/components/_exports.module.scss';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 const CustomSwitch = styled(Switch)(({ theme, size }) => ({
   width: size === 'small' ? 36 : 44,

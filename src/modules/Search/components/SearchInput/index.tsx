@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useRef } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/modules/general/components/Icon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './search-input.module.scss';
 import { SearchInputProps } from './SearchInput.types';

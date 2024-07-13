@@ -1,8 +1,8 @@
 import { Typography, CircularProgress } from '@mui/material';
-import variables from 'src/components/_exports.module.scss';
 import { BackLink } from 'src/modules/general/components/BackLink';
 import { Button } from 'src/modules/general/components/Button';
 import { OTP } from 'src/modules/general/components/otp/otp';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './otpForm.module.scss';
 import { useOtpForm } from './useOtpForm';

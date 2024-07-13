@@ -1,6 +1,6 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/modules/general/components/Icon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './featued-icon.module.scss';
 import { FeaturedIconProps } from './FeaturedIcon.types';

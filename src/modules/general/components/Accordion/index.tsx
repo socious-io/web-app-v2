@@ -1,7 +1,7 @@
 import { AccordionSummary as MuiAccordionSummary, Accordion as MuiAccordion } from '@mui/material';
 import React, { useState } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/modules/general/components/Icon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './index.module.scss';
 import { AccordionProps } from './index.types';

@@ -1,7 +1,7 @@
 import { Stepper as MUIStepper, Step, StepConnector, StepLabel, Typography, stepConnectorClasses } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
-import variables from 'src/components/_exports.module.scss';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './stepper.module.scss';
 import { StepperProps } from './stepper.types';

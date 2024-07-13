@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import variables from 'src/components/_exports.module.scss';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { UserType } from 'src/core/types';
@@ -9,6 +8,7 @@ import { getIdentityMeta } from 'src/core/utils';
 import { Location } from 'src/modules/userProfile/components/location';
 import { Website } from 'src/modules/userProfile/components/website';
 import { RootState } from 'src/store';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { ProfileCardHeader } from './profileCardHeader';
 import { Button } from '../Button';

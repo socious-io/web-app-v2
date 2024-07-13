@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import variables from 'src/components/_exports.module.scss';
 import { CurrentIdentity, UserMeta } from 'src/core/api';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { RootState } from 'src/store';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './impact.module.scss';
 import { ImpactProps } from './impact.types';

@@ -1,12 +1,12 @@
 import { Divider } from '@mui/material';
 import React, { ReactNode } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { AlertMessage } from 'src/modules/general/components/alertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Dot } from 'src/modules/general/components/dot';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Modal } from 'src/modules/general/components/modal';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './contributorJoin.module.scss';
 import { useContributorJoin } from './useContributorJoin';

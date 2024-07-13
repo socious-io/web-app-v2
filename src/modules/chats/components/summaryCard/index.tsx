@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { toRelativeTime } from 'src/core/relative-time';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Dot } from 'src/modules/general/components/dot';
 import { useSeeMore } from 'src/modules/general/utils';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { SummaryCardProps } from './summaryCard.types';
 

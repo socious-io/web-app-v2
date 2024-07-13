@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Applicant, ApplicantsRes } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
@@ -10,6 +9,7 @@ import { Icon } from 'src/modules/general/components/Icon';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 import { Overlay } from 'src/modules/general/components/slideoutMenu';
 import { OrgOfferModal } from 'src/modules/Jobs/containers/OrgOfferModal';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { ApplicantDetails } from './applicant';
 import { useApplicantAction } from './useApplicantAction';

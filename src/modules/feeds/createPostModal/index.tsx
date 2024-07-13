@@ -1,6 +1,5 @@
 import { CircularProgress } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import CustomEmojiPicker from 'src/modules/general/components/EmojiPicker';
@@ -9,6 +8,7 @@ import { IconButton } from 'src/modules/general/components/iconButton';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import UploadBox from 'src/modules/general/components/uploadBox';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './index.module.scss';
 import { CreatePostModalProps } from './index.types';

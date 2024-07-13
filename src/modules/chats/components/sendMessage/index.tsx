@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import { Input } from 'src/modules/general/components/input/input';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './sendMessage.module.scss';
 

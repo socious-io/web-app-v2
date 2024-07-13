@@ -1,8 +1,8 @@
-import variables from 'src/components/_exports.module.scss';
 import { RecommendationMeta } from 'src/core/api/additionals/additionals.types';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { StepperCard } from 'src/modules/general/components/stepperCard';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useRecommedation } from './useRecommendation';
 import css from '../about.module.scss';

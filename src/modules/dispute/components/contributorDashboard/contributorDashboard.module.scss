@@ -1,4 +1,4 @@
-@import 'src/components/_primitives.scss';
+@import 'src/styles/constants/_primitives.scss';
 
 .table {
     @apply w-fit md:min-w-full flex flex-col border border-solid border-Gray-light-mode-200 rounded-lg shadow-Shadows/shadow-sm;

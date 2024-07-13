@@ -1,10 +1,10 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Notification } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Dot } from 'src/modules/general/components/dot';
 import { Link } from 'src/modules/general/components/link';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './notificationItem.module.scss';
 

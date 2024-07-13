@@ -1,9 +1,9 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Input } from 'src/modules/general/components/input/input';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './referCard.module.scss';
 import { useReferCard } from './useReferCard';

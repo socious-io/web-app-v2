@@ -1,10 +1,10 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Organization, User } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { AvatarProfile } from 'src/modules/general/components/avatarProfile';
 import { Dot } from 'src/modules/general/components/dot';
 import { IconButton } from 'src/modules/general/components/iconButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './profileHeader.module.scss';
 

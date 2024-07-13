@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import variables from 'src/components/_exports.module.scss';
 import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
@@ -8,6 +7,7 @@ import { ChipList } from 'src/modules/general/components/chipList';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Link } from 'src/modules/general/components/link';
 import { RootState } from 'src/store';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './mainInfo.module.scss';
 import { Impact } from '../impact';

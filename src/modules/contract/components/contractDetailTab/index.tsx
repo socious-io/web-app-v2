@@ -1,9 +1,9 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Contract } from 'src/core/api';
 import dapp from 'src/dapp';
 import { ExpandableText } from 'src/modules/general/components/expandableText';
 import { Icon } from 'src/modules/general/components/Icon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 interface ContractDetailTabProps {
   contract: Contract;

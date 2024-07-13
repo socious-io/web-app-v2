@@ -1,10 +1,10 @@
 import { MenuItem, MenuList } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Icon } from 'src/modules/general/components/Icon';
 import { IconButton } from 'src/modules/general/components/iconButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './connectionTabThreeDotButton.module.scss';
 import { MenuItemType, ConnectionTabThreeDotsButtonProps } from './connectionTabthreeDotsButton.types';

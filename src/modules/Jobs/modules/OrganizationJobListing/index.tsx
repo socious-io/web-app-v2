@@ -1,11 +1,11 @@
 import { Skeleton } from '@mui/material';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { ButtonGroups } from 'src/modules/general/components/ButtonGroups';
 import { EmptyState } from 'src/modules/general/components/EmptyState';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './organization-job-listing.module.css';
 import { useOrganizationJobListing } from './useOrganizationJobListing';

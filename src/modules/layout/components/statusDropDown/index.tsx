@@ -1,10 +1,10 @@
 import { event } from 'cypress/types/jquery';
 import { useState, useRef, useEffect } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { Dot } from 'src/modules/general/components/dot';
 import { Icon } from 'src/modules/general/components/Icon';
 import { ToggleButton } from 'src/modules/general/components/toggleButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './statusDropDown.module.scss';
 

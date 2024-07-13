@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { OrganizationJobListing } from 'src/modules/Jobs/modules/OrganizationJobListing';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './list.module.scss';
 

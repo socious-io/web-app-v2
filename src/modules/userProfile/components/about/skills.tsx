@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import variables from 'src/components/_exports.module.scss';
 import { skillsToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { ChipList } from 'src/modules/general/components/chipList';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import { EditSkills } from 'src/modules/userProfile/containers/editSkills';
 import { RootState } from 'src/store';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './about.module.scss';
 

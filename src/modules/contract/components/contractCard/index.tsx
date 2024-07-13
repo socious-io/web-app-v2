@@ -1,9 +1,9 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Chip } from 'src/modules/general/components/Chip';
 import { Icon } from 'src/modules/general/components/Icon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import variables from 'src/components/_exports.module.scss';
 import { SendMessage } from 'src/modules/chats/components/sendMessage';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { IconButton } from 'src/modules/general/components/iconButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { ChatDetailsProps } from './chatDetails.types';
 import { useChatDetails } from './useChatDetails';

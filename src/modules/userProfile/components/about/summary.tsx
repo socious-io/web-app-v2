@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import variables from 'src/components/_exports.module.scss';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import { useSeeMore } from 'src/modules/general/utils';
 import { EditSummary } from 'src/modules/userProfile/containers/editSummery';
 import { RootState } from 'src/store';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './about.module.scss';
 

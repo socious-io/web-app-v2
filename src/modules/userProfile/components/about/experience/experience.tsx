@@ -1,5 +1,4 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { verificationStatus } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
@@ -8,6 +7,7 @@ import { Icon } from 'src/modules/general/components/Icon';
 import { StepperCard } from 'src/modules/general/components/stepperCard';
 import { CreateUpdateExperience } from 'src/modules/userProfile/containers/createUpdateExperience';
 import { VerifyExperience } from 'src/modules/userProfile/containers/verifyExperience';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useExperience } from './useExperience';
 import css from '../about.module.scss';

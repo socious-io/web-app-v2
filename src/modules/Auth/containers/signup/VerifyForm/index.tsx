@@ -1,8 +1,8 @@
 import { CircularProgress, Typography } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import { OTP } from 'src/modules/general/components/otp/otp';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useVerifyForm } from './useVerifyForm';
 import css from './verifyForm.module.scss';

@@ -1,5 +1,4 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { getStringDate } from 'src/core/time';
 import { verificationStatus } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
@@ -7,6 +6,7 @@ import { Icon } from 'src/modules/general/components/Icon';
 import { StepperCard } from 'src/modules/general/components/stepperCard';
 import { CreateUpdateEducation } from 'src/modules/userProfile/containers/createUpdateEducation';
 import { VerifyEducationModal } from 'src/modules/userProfile/containers/verifyEducationModal';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useEducation } from './useEducation';
 import css from '../about.module.scss';

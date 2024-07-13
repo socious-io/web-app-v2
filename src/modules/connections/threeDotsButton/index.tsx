@@ -1,8 +1,8 @@
 import { MenuItem, MenuList } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/modules/general/components/Icon';
 import { IconButton } from 'src/modules/general/components/iconButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './threeDotButton.module.scss';
 import { ThreeDotsButtonProps } from './threeDotsButton.types';

@@ -1,6 +1,6 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Icon, IconProps } from 'src/modules/general/components/Icon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './cardRadioButton.module.scss';
 

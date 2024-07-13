@@ -1,7 +1,6 @@
 import { ColumnDef, getCoreRowModel, Getter, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import variables from 'src/components/_exports.module.scss';
 import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
 import { Dispute, DisputeState } from 'src/core/api';
 import { disputes, LeaveContribution } from 'src/core/api/disputes/disputes.api';
@@ -10,6 +9,7 @@ import { Chip } from 'src/modules/general/components/Chip';
 import { Dot } from 'src/modules/general/components/dot';
 import store from 'src/store';
 import { currentIdentities } from 'src/store/thunks/identity.thunks';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 export const useContributorDashboard = () => {
   const [stopNotif, setStopNotif] = useState(false);

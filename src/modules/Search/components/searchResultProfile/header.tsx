@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Organization, User } from 'src/core/api';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { AvatarProfile } from 'src/modules/general/components/avatarProfile';
@@ -9,6 +8,7 @@ import { Chip } from 'src/modules/general/components/Chip';
 import { Dot } from 'src/modules/general/components/dot';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Input } from 'src/modules/general/components/input/input';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useSearchResultProfile } from './useSearchResultProfile';
 

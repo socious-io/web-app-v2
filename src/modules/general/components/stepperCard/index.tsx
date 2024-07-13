@@ -1,10 +1,10 @@
 import { Divider, Typography, Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Icon } from 'src/modules/general/components/Icon';
 import { IconButton } from 'src/modules/general/components/iconButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './stepperCard.module.scss';
 import { StepperCardProps } from './stepperCard.types';

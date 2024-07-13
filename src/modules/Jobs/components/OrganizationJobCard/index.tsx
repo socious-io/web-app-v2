@@ -1,12 +1,12 @@
 import { Button, Skeleton } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import variables from 'src/components/_exports.module.scss';
 import { Applicant, Job, jobApplicants } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Chip } from 'src/modules/general/components/Chip';
 import { IconButton } from 'src/modules/general/components/iconButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './organization-job-card.module.scss';
 

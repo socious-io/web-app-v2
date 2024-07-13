@@ -1,6 +1,6 @@
 import { Tooltip as MUITooltip, TooltipProps, styled, tooltipClasses } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { CustomTooltipProps } from './Tooltip.types';
 

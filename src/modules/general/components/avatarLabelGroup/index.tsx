@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { AvatarLabelGroupProps } from './avatarLabelGroup.types';
 

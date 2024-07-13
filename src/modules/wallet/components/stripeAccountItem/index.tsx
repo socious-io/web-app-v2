@@ -1,6 +1,4 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
-import { IconButton } from 'src/modules/general/components/iconButton';
 
 interface StripeAccountItemProps {
   bankName: string;

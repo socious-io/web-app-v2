@@ -1,6 +1,6 @@
-import variables from 'src/components/_exports.module.scss';
 import { Button } from 'src/modules/general/components/Button';
 import MultiSelect from 'src/modules/general/components/multiSelect/multiSelect';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './causes.module.scss';
 import { useCauses } from './useCauses';

@@ -1,6 +1,5 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import variables from 'src/components/_exports.module.scss';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { ChatDetails } from 'src/modules/chats/components/chatDetails';
 import { NewChat } from 'src/modules/chats/components/newChat';
@@ -8,6 +7,7 @@ import { SummaryCard } from 'src/modules/chats/components/summaryCard';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { IconButton } from 'src/modules/general/components/iconButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './chats.module.scss';
 import { useChats } from './useChats';

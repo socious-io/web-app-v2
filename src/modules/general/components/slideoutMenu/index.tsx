@@ -1,8 +1,8 @@
 import { Slide, Typography } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { BackLink } from 'src/modules/general/components/BackLink';
 import { CloseButton } from 'src/modules/general/components/closeButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './sildeoutMenu.module.scss';
 import { OverlayProps } from './slideoutMenu.types';

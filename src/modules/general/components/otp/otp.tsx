@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import OtpInput from 'react-otp-input';
-import variables from 'src/components/_exports.module.scss';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './otp.module.scss';
 import { OTPProps } from './otp.types';

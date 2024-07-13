@@ -1,6 +1,6 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { IconButton } from 'src/modules/general/components/iconButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './screenQuestions.module.scss';
 import { ScreenQuestionProps } from './screenQuestions.type';

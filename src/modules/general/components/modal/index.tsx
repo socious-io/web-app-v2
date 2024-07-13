@@ -1,7 +1,7 @@
 import { Backdrop, Divider, IconButton } from '@mui/material';
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { Icon } from 'src/modules/general/components/Icon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './modal.module.scss';
 import { ModalProps } from './modal.types';

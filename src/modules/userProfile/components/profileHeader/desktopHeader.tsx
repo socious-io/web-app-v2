@@ -1,5 +1,4 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
 import { ConnectStatus, Organization, User } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { ThreeDotsButton } from 'src/modules/connections/threeDotsButton';
@@ -9,6 +8,7 @@ import { Chip } from 'src/modules/general/components/Chip';
 import { Dot } from 'src/modules/general/components/dot';
 import { Icon } from 'src/modules/general/components/Icon';
 import { IconButton } from 'src/modules/general/components/iconButton';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './profileHeader.module.scss';
 

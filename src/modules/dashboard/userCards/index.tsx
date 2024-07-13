@@ -1,5 +1,5 @@
 import React from 'react';
-import variables from 'src/components/_exports.module.scss';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import { DashboardCard } from '../dashboardCard';
 
