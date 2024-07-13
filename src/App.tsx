@@ -9,7 +9,7 @@ import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
 import { setupInterceptors } from './core/api';
 import { DeepLinks } from './core/deepLinks';
-import { Spinner } from './Nowruz/modules/general/components/spinner/spinner';
+import { Spinner } from './modules/general/components/spinner/spinner';
 import store from './store';
 
 import 'src/core/translation/i18n';

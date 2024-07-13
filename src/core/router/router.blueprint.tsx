@@ -27,8 +27,8 @@ import {
   invitations,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
-import { Layout as NowruzLayout } from 'src/Nowruz/modules/layout';
-import FallBack from 'src/Nowruz/pages/fallback/fallback';
+import { Layout as NowruzLayout } from 'src/modules/layout';
+import FallBack from 'src/pages/fallback/fallback';
 import store, { RootState } from 'src/store';
 import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
@@ -37,7 +37,7 @@ export const blueprint: RouteObject[] = [
   {
     path: 'captcha',
     async lazy() {
-      const { Captcha } = await import('src/Nowruz/pages/captcha');
+      const { Captcha } = await import('src/pages/captcha');
       return {
         Component: Captcha,
       };
@@ -69,7 +69,7 @@ export const blueprint: RouteObject[] = [
                       }
                     },
                     async lazy() {
-                      const { UserProifle } = await import('src/Nowruz/pages/userProfile');
+                      const { UserProifle } = await import('src/pages/userProfile');
                       return {
                         Component: UserProifle,
                       };
@@ -82,7 +82,7 @@ export const blueprint: RouteObject[] = [
                       return { badges: userBadges, impactPointHistory };
                     },
                     async lazy() {
-                      const { Impact } = await import('src/Nowruz/pages/impact');
+                      const { Impact } = await import('src/pages/impact');
                       return {
                         Component: Impact,
                       };
@@ -120,7 +120,7 @@ export const blueprint: RouteObject[] = [
                       }
                     },
                     async lazy() {
-                      const { OrgProfile } = await import('src/Nowruz/pages/orgProfile');
+                      const { OrgProfile } = await import('src/pages/orgProfile');
                       return {
                         Component: OrgProfile,
                       };
@@ -148,7 +148,7 @@ export const blueprint: RouteObject[] = [
                       }
                     },
                     async lazy() {
-                      const { OrgProfile } = await import('src/Nowruz/pages/orgProfile');
+                      const { OrgProfile } = await import('src/pages/orgProfile');
                       return {
                         Component: OrgProfile,
                       };
@@ -173,7 +173,7 @@ export const blueprint: RouteObject[] = [
               };
             },
             async lazy() {
-              const { Credentials } = await import('src/Nowruz/pages/credentials');
+              const { Credentials } = await import('src/pages/credentials');
               return {
                 Component: Protect(Credentials, 'both'),
               };
@@ -190,7 +190,7 @@ export const blueprint: RouteObject[] = [
                   return { jobCategories };
                 },
                 async lazy() {
-                  const { CreateJob } = await import('src/Nowruz/pages/jobs/Create');
+                  const { CreateJob } = await import('src/pages/jobs/Create');
                   return {
                     Component: CreateJob,
                   };
@@ -206,7 +206,7 @@ export const blueprint: RouteObject[] = [
                   }
                 },
                 async lazy() {
-                  const { EditJob } = await import('src/Nowruz/pages/jobs/Edit');
+                  const { EditJob } = await import('src/pages/jobs/Edit');
                   return {
                     Component: EditJob,
                   };
@@ -215,7 +215,7 @@ export const blueprint: RouteObject[] = [
               {
                 path: 'created',
                 async lazy() {
-                  const { CreatedList } = await import('src/Nowruz/pages/jobs/Created');
+                  const { CreatedList } = await import('src/pages/jobs/Created');
                   return {
                     Component: Protect(CreatedList, 'organizations'),
                   };
@@ -231,7 +231,7 @@ export const blueprint: RouteObject[] = [
                   }
                 },
                 async lazy() {
-                  const { CreatedDetail } = await import('src/Nowruz/pages/jobs/detail/Created');
+                  const { CreatedDetail } = await import('src/pages/jobs/detail/Created');
                   return {
                     Component: Protect(CreatedDetail, 'organizations'),
                   };
@@ -245,7 +245,7 @@ export const blueprint: RouteObject[] = [
                   return data;
                 },
                 async lazy() {
-                  const { JobsList } = await import('src/Nowruz/pages/jobs/List');
+                  const { JobsList } = await import('src/pages/jobs/List');
                   return {
                     Component: JobsList,
                   };
@@ -262,14 +262,14 @@ export const blueprint: RouteObject[] = [
                   }
                 },
                 async lazy() {
-                  const { JobDetail } = await import('src/Nowruz/pages/jobs/detail');
+                  const { JobDetail } = await import('src/pages/jobs/detail');
                   return { Component: JobDetail };
                 },
               },
               {
                 path: 'applied',
                 async lazy() {
-                  const { AppliedList } = await import('src/Nowruz/pages/jobs/Applied');
+                  const { AppliedList } = await import('src/pages/jobs/Applied');
                   return {
                     Component: Protect(AppliedList, 'users'),
                   };
@@ -283,7 +283,7 @@ export const blueprint: RouteObject[] = [
                   return data;
                 },
                 async lazy() {
-                  const { JobsList } = await import('src/Nowruz/pages/jobs/List');
+                  const { JobsList } = await import('src/pages/jobs/List');
                   return {
                     Component: Protect(JobsList, 'users'),
                   };
@@ -293,7 +293,7 @@ export const blueprint: RouteObject[] = [
                 path: 'recommended',
 
                 async lazy() {
-                  const { RecommendedList } = await import('src/Nowruz/pages/jobs/recommendedList');
+                  const { RecommendedList } = await import('src/pages/jobs/recommendedList');
                   return {
                     Component: Protect(RecommendedList, 'users'),
                   };
@@ -304,7 +304,7 @@ export const blueprint: RouteObject[] = [
           {
             path: 'contracts',
             async lazy() {
-              const { Contracts } = await import('src/Nowruz/pages/contracts');
+              const { Contracts } = await import('src/pages/contracts');
               return {
                 Component: Protect(Contracts, 'both'),
               };
@@ -323,7 +323,7 @@ export const blueprint: RouteObject[] = [
                   return { submittedDisputes, receivedDisputes };
                 },
                 async lazy() {
-                  const { Disputes } = await import('src/Nowruz/pages/disputes');
+                  const { Disputes } = await import('src/pages/disputes');
                   return {
                     Component: Protect(Disputes, 'both'),
                   };
@@ -340,7 +340,7 @@ export const blueprint: RouteObject[] = [
                   }
                 },
                 async lazy() {
-                  const { DisputeDetail } = await import('src/Nowruz/pages/disputes/disputeDetail');
+                  const { DisputeDetail } = await import('src/pages/disputes/disputeDetail');
                   return {
                     Component: Protect(DisputeDetail, 'both'),
                   };
@@ -357,7 +357,7 @@ export const blueprint: RouteObject[] = [
                   }
                 },
                 async lazy() {
-                  const { DisputeDetail } = await import('src/Nowruz/pages/disputes/disputeDetail');
+                  const { DisputeDetail } = await import('src/pages/disputes/disputeDetail');
                   return {
                     Component: Protect(DisputeDetail, 'both'),
                   };
@@ -380,7 +380,7 @@ export const blueprint: RouteObject[] = [
                   return { paymentRes, stripeProfileRes, jpStripeProfileRes };
                 },
                 async lazy() {
-                  const { Wallet } = await import('src/Nowruz/pages/wallet');
+                  const { Wallet } = await import('src/pages/wallet');
                   return {
                     Component: Protect(Wallet, 'both'),
                   };
@@ -396,7 +396,7 @@ export const blueprint: RouteObject[] = [
                   }
                 },
                 async lazy() {
-                  const { TransactionDetails } = await import('src/Nowruz/pages/wallet/transactionDetails');
+                  const { TransactionDetails } = await import('src/pages/wallet/transactionDetails');
                   return { Component: TransactionDetails };
                 },
               },
@@ -409,7 +409,7 @@ export const blueprint: RouteObject[] = [
               return { summary };
             },
             async lazy() {
-              const { Chats } = await import('src/Nowruz/pages/chats');
+              const { Chats } = await import('src/pages/chats');
               return {
                 Component: Protect(Chats, 'both'),
               };
@@ -421,7 +421,7 @@ export const blueprint: RouteObject[] = [
               {
                 path: '',
                 async lazy() {
-                  const { Search } = await import('src/Nowruz/pages/search');
+                  const { Search } = await import('src/pages/search');
                   return {
                     Component: Search,
                   };
@@ -457,7 +457,7 @@ export const blueprint: RouteObject[] = [
           {
             path: 'settings',
             async lazy() {
-              const { Setting } = await import('src/Nowruz/pages/setting/index');
+              const { Setting } = await import('src/pages/setting/index');
               return {
                 Component: Setting,
               };
@@ -471,7 +471,7 @@ export const blueprint: RouteObject[] = [
               return { connections };
             },
             async lazy() {
-              const { Connctions } = await import('src/Nowruz/pages/connections');
+              const { Connctions } = await import('src/pages/connections');
               return {
                 Component: Protect(Connctions, 'both'),
               };
@@ -487,7 +487,7 @@ export const blueprint: RouteObject[] = [
                   return { profileData, impactPointHistory };
                 },
                 async lazy() {
-                  const { Dashboard } = await import('src/Nowruz/pages/dashboard');
+                  const { Dashboard } = await import('src/pages/dashboard');
                   return {
                     Component: Protect(Dashboard, 'users'),
                   };
@@ -505,7 +505,7 @@ export const blueprint: RouteObject[] = [
                   }
                 },
                 async lazy() {
-                  const { Dashboard } = await import('src/Nowruz/pages/dashboard');
+                  const { Dashboard } = await import('src/pages/dashboard');
                   return {
                     Component: Protect(Dashboard, 'organizations'),
                   };
@@ -516,7 +516,7 @@ export const blueprint: RouteObject[] = [
           {
             path: 'referral',
             async lazy() {
-              const { Refer } = await import('src/Nowruz/pages/refer');
+              const { Refer } = await import('src/pages/refer');
               return {
                 Component: Protect(Refer, 'users'),
               };
@@ -536,7 +536,7 @@ export const blueprint: RouteObject[] = [
                   }
                 },
                 async lazy() {
-                  const { Contribute } = await import('src/Nowruz/pages/contribute');
+                  const { Contribute } = await import('src/pages/contribute');
                   return {
                     Component: Protect(Contribute, 'users'),
                   };
@@ -552,7 +552,7 @@ export const blueprint: RouteObject[] = [
                   return { jurorDisputes, jurorInvitations };
                 },
                 async lazy() {
-                  const { ContributeCenter } = await import('src/Nowruz/pages/contribute/contributeCenter');
+                  const { ContributeCenter } = await import('src/pages/contribute/contributeCenter');
                   return {
                     Component: Protect(ContributeCenter, 'users'),
                   };
@@ -564,7 +564,7 @@ export const blueprint: RouteObject[] = [
             path: 'feeds',
             loader: async () => await posts({ page: 1, limit: 10 }),
             async lazy() {
-              const { Feeds } = await import('src/Nowruz/pages/feeds');
+              const { Feeds } = await import('src/pages/feeds');
               return {
                 Component: Protect(Feeds, 'both'),
               };
@@ -584,7 +584,7 @@ export const blueprint: RouteObject[] = [
           {
             path: 'email',
             async lazy() {
-              const { Email } = await import('src/Nowruz/pages/sign-up/Email');
+              const { Email } = await import('src/pages/sign-up/Email');
               return {
                 Component: Email,
               };
@@ -593,7 +593,7 @@ export const blueprint: RouteObject[] = [
           {
             path: 'verification',
             async lazy() {
-              const { Verify } = await import('src/Nowruz/pages/sign-up/Verify');
+              const { Verify } = await import('src/pages/sign-up/Verify');
               return {
                 Component: Verify,
               };
@@ -602,7 +602,7 @@ export const blueprint: RouteObject[] = [
           {
             path: 'password',
             async lazy() {
-              const { ChoosePassword } = await import('src/Nowruz/pages/sign-up/ChoosePassword');
+              const { ChoosePassword } = await import('src/pages/sign-up/ChoosePassword');
               return {
                 Component: ChoosePassword,
               };
@@ -617,7 +617,7 @@ export const blueprint: RouteObject[] = [
               };
             },
             async lazy() {
-              const { Details } = await import('src/Nowruz/pages/sign-up/Details');
+              const { Details } = await import('src/pages/sign-up/Details');
               return {
                 Component: Details,
               };
@@ -626,7 +626,7 @@ export const blueprint: RouteObject[] = [
           {
             path: 'congrats',
             async lazy() {
-              const { Congrats } = await import('src/Nowruz/pages/sign-up/Congrats');
+              const { Congrats } = await import('src/pages/sign-up/Congrats');
               return {
                 Component: Congrats,
               };
@@ -644,7 +644,7 @@ export const blueprint: RouteObject[] = [
           {
             path: 'notification',
             async lazy() {
-              const { AllowNotification } = await import('src/Nowruz/pages/AllowNotification');
+              const { AllowNotification } = await import('src/pages/AllowNotification');
               return {
                 Component: AllowNotification,
               };
@@ -657,7 +657,7 @@ export const blueprint: RouteObject[] = [
               return null;
             },
             async lazy() {
-              const { Onboarding } = await import('src/Nowruz/pages/sign-up/Onboarding');
+              const { Onboarding } = await import('src/pages/sign-up/Onboarding');
               return {
                 Component: Onboarding,
               };
@@ -717,7 +717,7 @@ export const blueprint: RouteObject[] = [
       {
         path: 'email',
         async lazy() {
-          const { Email } = await import('src/Nowruz/pages/forget-password/email');
+          const { Email } = await import('src/pages/forget-password/email');
           return {
             Component: Email,
           };
@@ -726,7 +726,7 @@ export const blueprint: RouteObject[] = [
       {
         path: 'otp/*',
         async lazy() {
-          const { Otp } = await import('src/Nowruz/pages/forget-password/otp');
+          const { Otp } = await import('src/pages/forget-password/otp');
           return {
             Component: Otp,
           };
@@ -735,7 +735,7 @@ export const blueprint: RouteObject[] = [
       {
         path: 'password/*',
         async lazy() {
-          const { Password } = await import('src/Nowruz/pages/forget-password/password');
+          const { Password } = await import('src/pages/forget-password/password');
           return {
             Component: Password,
           };
@@ -744,7 +744,7 @@ export const blueprint: RouteObject[] = [
       {
         path: 'reset-completed',
         async lazy() {
-          const { ResetCompleted } = await import('src/Nowruz/pages/forget-password/resetCompleted');
+          const { ResetCompleted } = await import('src/pages/forget-password/resetCompleted');
           return {
             Component: ResetCompleted,
           };
@@ -801,7 +801,7 @@ export const blueprint: RouteObject[] = [
       };
     },
     async lazy() {
-      const { NotificationDeepLink } = await import('src/Nowruz/pages/notificationDeepLink');
+      const { NotificationDeepLink } = await import('src/pages/notificationDeepLink');
       return {
         Component: NotificationDeepLink,
       };
@@ -810,7 +810,7 @@ export const blueprint: RouteObject[] = [
   {
     path: '/intro',
     async lazy() {
-      const { Intro } = await import('src/Nowruz/pages/Intro');
+      const { Intro } = await import('src/pages/Intro');
       return {
         Component: Intro,
       };
@@ -819,7 +819,7 @@ export const blueprint: RouteObject[] = [
   {
     path: '/sign-in',
     async lazy() {
-      const { SignIn } = await import('src/Nowruz/pages/sign-in');
+      const { SignIn } = await import('src/pages/sign-in');
       return {
         Component: SignIn,
       };
@@ -831,7 +831,7 @@ export const blueprint: RouteObject[] = [
       {
         path: 'google',
         async lazy() {
-          const { GoogleOauth2 } = await import('src/Nowruz/pages/oauth/google');
+          const { GoogleOauth2 } = await import('src/pages/oauth/google');
           return {
             Component: GoogleOauth2,
           };
@@ -842,7 +842,7 @@ export const blueprint: RouteObject[] = [
   {
     path: 'privacy-policy',
     async lazy() {
-      const { PrivacyPolicy } = await import('src/Nowruz/pages/privacyPolicy/privacyPolicy');
+      const { PrivacyPolicy } = await import('src/pages/privacyPolicy/privacyPolicy');
       return {
         Component: PrivacyPolicy,
       };
@@ -851,7 +851,7 @@ export const blueprint: RouteObject[] = [
   {
     path: 'terms-conditions',
     async lazy() {
-      const { TermsConditions } = await import('src/Nowruz/pages/termsConditions/termsConditions');
+      const { TermsConditions } = await import('src/pages/termsConditions/termsConditions');
       return {
         Component: TermsConditions,
       };

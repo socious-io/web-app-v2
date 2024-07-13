@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { StoryFn } from '@storybook/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { IconDropDown } from 'src/Nowruz/modules/general/components/iconDropDown';
+import { IconDropDown } from 'src/modules/general/components/iconDropDown';
 
 const imgUrl = 'https://socious-new.s3.ap-northeast-1.amazonaws.com/f9d1522cb673fa3d64e4243bd423e2bc.jpg';
 const accounts = [
@@ -62,7 +62,7 @@ const Mockstore = ({ identityState, profileState, children }) => (
             setIdentityList: (state, action) => {
               state.entities = action.payload;
               if (action.payload.length) state.status = 'succeeded';
-              const identity = state.entities.find((identity) => identity.current);
+              const identity = state.entities.find(identity => identity.current);
               if (identity && identity.meta) {
                 state.avatarImage =
                   'avatar' in identity.meta
@@ -90,7 +90,7 @@ export default {
   excludeStories: ['MockedIdentity', 'MockedProfile'],
 } as const;
 
-const Template: StoryFn = (args) => {
+const Template: StoryFn = args => {
   return (
     <MemoryRouter initialEntries={['/']}>
       <Mockstore identityState={MockedIdentity} profileState={MockedProfile}>

@@ -1,4 +1,4 @@
-import { Input } from 'src/Nowruz/modules/general/components/input/input';
+import { Input } from 'src/modules/general/components/input/input';
 const options = [
   { value: 'A', label: 'USDT', icon: <img width="20px" height="20px" src="/icons/star.svg" /> },
   { value: 'B', label: 'BTC', icon: <img width="20px" height="20px" src="/icons/star.svg" /> },

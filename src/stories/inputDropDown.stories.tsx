@@ -1,9 +1,9 @@
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
-import { Icon } from 'src/Nowruz/general/Icon';
-import { Avatar } from 'src/Nowruz/modules/general/components/avatar/avatar';
-import { InputDropDown } from 'src/Nowruz/modules/general/components/inputDropDown';
-import { InputDropDownItem } from 'src/Nowruz/modules/general/components/inputDropDown/inputDropDown.types';
+import { Avatar } from 'src/modules/general/components/avatar/avatar';
+import { Icon } from 'src/modules/general/components/Icon';
+import { InputDropDown } from 'src/modules/general/components/inputDropDown';
+import { InputDropDownItem } from 'src/modules/general/components/inputDropDown/inputDropDown.types';
 
 export default {
   title: 'General/SearchDropDown-V2',
@@ -30,7 +30,7 @@ const items: InputDropDownItem[] = [
   { label: 'Kiwi', value: 'kiwi' },
 ];
 
-const Template: StoryFn = (args) => {
+const Template: StoryFn = args => {
   const [selected, setSelected] = useState<InputDropDownItem>();
   return (
     <div style={{ width: '400px' }}>

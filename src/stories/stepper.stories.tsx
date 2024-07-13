@@ -4,8 +4,8 @@ import { Passcode } from 'public/icons/nowruz/passcode';
 import { Star02 } from 'public/icons/nowruz/star-02';
 import { User01 } from 'public/icons/nowruz/user-01';
 import { useState } from 'react';
-import { Stepper } from 'src/Nowruz/modules/general/components/stepper/stepper';
-import { StepInfo } from 'src/Nowruz/modules/general/components/stepper/stepper.types';
+import { Stepper } from 'src/modules/general/components/stepper/stepper';
+import { StepInfo } from 'src/modules/general/components/stepper/stepper.types';
 
 export default {
   title: 'General/stepper',
@@ -19,7 +19,7 @@ const steps: StepInfo[] = [
   { title: 'Congartulations', desc: 'Start making an impact', icon: Star02 },
 ];
 
-const Template: StoryFn = (args) => {
+const Template: StoryFn = args => {
   const [activeStep, setActiveStep] = useState(2);
   return <Stepper activeStep={activeStep} steps={steps} {...args} />;
 };
