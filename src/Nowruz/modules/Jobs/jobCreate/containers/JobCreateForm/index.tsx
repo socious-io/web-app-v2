@@ -18,6 +18,7 @@ import { JobPreviewModal } from 'src/Nowruz/modules/Jobs/jobCreate/components/Jo
 import { ScreenQuestion } from 'src/Nowruz/modules/Jobs/jobCreate/components/screenQuestion';
 
 import css from './job-create-form.module.scss';
+import { OptionNumber, OptionType } from './jobCreateForm.types';
 import { useJobCreateForm } from './useJobCreateForm';
 export const JobCreateForm = () => {
   const {
@@ -171,8 +172,8 @@ export const JobCreateForm = () => {
               icon="search-lg"
               options={causesList}
               isSearchable
-              onChange={option => onSelectCause(option)}
-              errors={errors['cause']?.message ? [errors['cause']?.message.toString()] : undefined}
+              onChange={option => onSelectCause(option as OptionType)}
+              errors={errors['cause']?.value?.message ? [errors['cause']?.value.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -199,8 +200,8 @@ export const JobCreateForm = () => {
               placeholder="Select a category"
               options={catagoriesList}
               isSearchable
-              onChange={option => onSelectCategory(option)}
-              errors={errors['category']?.message ? [errors['category']?.message.toString()] : undefined}
+              onChange={option => onSelectCategory(option as OptionType)}
+              errors={errors['category']?.value?.message ? [errors['category']?.value?.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -225,7 +226,7 @@ export const JobCreateForm = () => {
           <div className={css.componentsContainer}>
             {jobLocation && (
               <RadioGroup
-                errors={errors.location?.choice?.message ? [errors.location?.choice?.message.toString()] : undefined}
+                errors={errors.location?.label?.message ? [errors.location?.label?.message.toString()] : undefined}
                 defaultValue={jobLocation}
                 items={[
                   { label: 'Anywhere', value: 'Anywhere' },
@@ -237,11 +238,9 @@ export const JobCreateForm = () => {
                         <SearchDropdown
                           id="city"
                           placeholder="Search for a city"
-                          cacheOptions
                           value={location}
                           isAsync
                           loadOptions={searchCities}
-                          defaultOptions
                           className="my-5"
                           icon="search-lg"
                           hasDropdownIcon={false}
@@ -259,7 +258,7 @@ export const JobCreateForm = () => {
             )}
             {!jobLocation && (
               <RadioGroup
-                errors={errors.location?.choice?.message ? [errors.location?.choice?.message.toString()] : undefined}
+                errors={errors.jobLocation?.message ? [errors.jobLocation?.message.toString()] : undefined}
                 items={[
                   { label: 'Anywhere', value: 'Anywhere' },
                   {
@@ -271,10 +270,8 @@ export const JobCreateForm = () => {
                           id="city"
                           value={location}
                           placeholder="Search for a city"
-                          cacheOptions
                           isAsync
                           loadOptions={searchCities}
-                          defaultOptions
                           className="my-5"
                           icon="search-lg"
                           hasDropdownIcon={false}
@@ -301,8 +298,10 @@ export const JobCreateForm = () => {
               value={preference}
               options={PROJECT_REMOTE_PREFERENCES_V2}
               isSearchable
-              onChange={option => onSelectPreference(option)}
-              errors={errors['preference']?.message ? [errors['preference']?.message.toString()] : undefined}
+              onChange={option => onSelectPreference(option as OptionType)}
+              errors={
+                errors['preference']?.value?.message ? [errors['preference']?.value?.message.toString()] : undefined
+              }
             />
           </div>
         </div>
@@ -315,8 +314,8 @@ export const JobCreateForm = () => {
               placeholder="Please select"
               options={PROJECT_TYPE_V2}
               isSearchable
-              onChange={option => onSelectType(option)}
-              errors={errors['type']?.message ? [errors['type']?.message.toString()] : undefined}
+              onChange={option => onSelectType(option as OptionType)}
+              errors={errors['type']?.value?.message ? [errors['type']?.value?.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -329,8 +328,8 @@ export const JobCreateForm = () => {
               value={length}
               options={PROJECT_LENGTH_V2}
               isSearchable
-              onChange={option => onSelectLength(option)}
-              errors={errors['length']?.message ? [errors['length']?.message.toString()] : undefined}
+              onChange={option => onSelectLength(option as OptionType)}
+              errors={errors['length']?.value?.message ? [errors['length']?.value?.message.toString()] : undefined}
             />
           </div>
         </div>
@@ -342,7 +341,7 @@ export const JobCreateForm = () => {
                 items={paymentTypeOptions}
                 defaultValue={paymentType}
                 errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
-                onChange={option => onSelectPaymentType(option.value)}
+                onChange={option => onSelectPaymentType(option.value.toString())}
               />
             </div>
           </div>
@@ -385,7 +384,7 @@ export const JobCreateForm = () => {
             <div className={css.componentsContainer}>
               <RadioGroup
                 name="volunteeredOption"
-                onChange={option => onSelectPaymentScheme(option.value)}
+                onChange={option => onSelectPaymentScheme(option.value.toString())}
                 items={[
                   { label: 'Fixed', value: 'FIXED', children: renderHoursFields() },
                   { label: 'Hourly', value: 'HOURLY', children: renderHoursFields() },
@@ -405,8 +404,12 @@ export const JobCreateForm = () => {
               placeholder="Please select"
               options={EXPERIENCE_LEVEL_V2}
               isSearchable
-              onChange={option => onSelectExperienceLevel(option)}
-              errors={errors['experienceLevel']?.message ? [errors['experienceLevel']?.message.toString()] : undefined}
+              onChange={option => onSelectExperienceLevel(option as OptionNumber)}
+              errors={
+                errors['experienceLevel']?.value?.message
+                  ? [errors['experienceLevel']?.value?.message.toString()]
+                  : undefined
+              }
             />
           </div>
         </div>
