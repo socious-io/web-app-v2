@@ -1,0 +1,53 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.container {
+    border: 1px solid $color-grey-200;
+    border-radius: 12px;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    position: relative;
+    cursor: pointer;
+
+    .file {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .title {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px;
+        color: $color-primary-700;
+
+        &--gray {
+            font-weight: 400;
+            color: $color-grey-600;
+        }
+
+        &--error {
+            font-size: 18px;
+            font-weight: 600;
+            color: $color-primary-900;
+        }
+    }
+
+    .subtitle {
+        color: $color-grey-600;
+        font-weight: 400;
+        font-size: 12px;
+
+        &--error {
+            font-size: 14px;
+            color: $color-grey-600;
+        }
+    }
+}

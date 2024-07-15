@@ -1,0 +1,43 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.subtitle {
+    color: $color-grey-600;
+    margin-bottom: 48px;
+    margin-top: 32px;
+    text-align: center;
+    @media (max-width: 600px) {
+        margin-bottom: 100px;
+    }
+}
+
+.title {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38px;
+    margin-bottom: 24px;
+    color: $color-grey-900;
+    text-align: center;
+}
+.description {
+    color: $color-grey-600;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    margin-bottom: 32px;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding-bottom: 40px;
+    padding-right: 16px;
+    padding-left: 16px;
+    @media (min-width: 600px) {
+        position: static;
+    }
+}

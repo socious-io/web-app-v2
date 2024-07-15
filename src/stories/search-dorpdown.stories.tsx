@@ -1,13 +1,13 @@
 import React from 'react';
 import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
-import { SearchDropdown } from 'src/Nowruz/modules/general/components/SearchDropdown';
+import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 
 export default {
   title: 'General/SearchDropdown',
   component: SearchDropdown,
 };
 
-const Template = (args) => <SearchDropdown {...args} />;
+const Template = args => <SearchDropdown {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
