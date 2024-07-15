@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react';
 import React from 'react';
-import { Icon } from 'src/Nowruz/general/Icon';
+import { Icon } from 'src/modules/general/components/Icon';
 // Use docs/icons-reference.html for icons refrence
 
 export default {
@@ -8,7 +8,7 @@ export default {
   component: Icon,
 } as Meta;
 
-const Template: Story = (args) => <Icon {...args} />;
+const Template: Story = args => <Icon {...args} />;
 
 export const IconComponent = Template.bind({});
 IconComponent.args = {

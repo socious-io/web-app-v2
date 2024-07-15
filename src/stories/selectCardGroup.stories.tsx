@@ -1,7 +1,7 @@
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
-import SelectCardGroup from 'src/Nowruz/modules/general/components/selectCardGroup';
-import { SelectCardGroupItem } from 'src/Nowruz/modules/general/components/selectCardGroup/selectCardGroup.type';
+import SelectCardGroup from 'src/modules/general/components/selectCardGroup';
+import { SelectCardGroupItem } from 'src/modules/general/components/selectCardGroup/selectCardGroup.type';
 
 export default {
   title: 'onboarding/SelectCardGroup',
@@ -17,7 +17,7 @@ const items = [
   { value: '6', label: 'Public Institution' },
   { value: '7', label: 'Other' },
 ];
-const Template: StoryFn = (args) => {
+const Template: StoryFn = args => {
   const [selected, setSelected] = useState<SelectCardGroupItem>();
   const handleSelect = (value: SelectCardGroupItem) => {
     setSelected(value);

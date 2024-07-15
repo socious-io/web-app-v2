@@ -1,4 +1,4 @@
-import { Checkbox } from 'src/Nowruz/modules/general/components/checkbox/checkbox';
+import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 
 export default { title: 'General/Checkbox', component: Checkbox };
 export const Defalult = {

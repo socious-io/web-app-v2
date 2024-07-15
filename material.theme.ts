@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import variables from 'src/components/_exports.module.scss';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 export const theme = createTheme({
   palette: {

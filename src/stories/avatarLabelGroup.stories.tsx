@@ -1,6 +1,6 @@
 import { StoryFn } from '@storybook/react';
-import { AccountItem } from 'src/Nowruz/modules/general/components/avatarDropDown/avatarDropDown.types';
-import { AvatarLabelGroup } from 'src/Nowruz/modules/general/components/avatarLabelGroup';
+import { AccountItem } from 'src/modules/general/components/avatarDropDown/avatarDropDown.types';
+import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 
 export default {
   title: 'General/AvatarLabelGroup',
@@ -16,7 +16,7 @@ const account: AccountItem = {
   selected: true,
 };
 
-const Template: StoryFn = (args) => {
+const Template: StoryFn = args => {
   return <AvatarLabelGroup account={account} {...args} />;
 };
 const imgUrl = 'https://socious-new.s3.ap-northeast-1.amazonaws.com/f9d1522cb673fa3d64e4243bd423e2bc.jpg';
