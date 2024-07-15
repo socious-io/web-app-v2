@@ -20,10 +20,8 @@ export const NewChat: React.FC<NewChatProps> = ({ handleClose, onSend }) => {
         <SearchDropdown
           id="contact"
           placeholder="Type a name..."
-          cacheOptions
           isAsync
           loadOptions={searchFollowings}
-          defaultOptions
           className="w-full"
           hasDropdownIcon={false}
           value={selectedContact}

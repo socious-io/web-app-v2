@@ -69,7 +69,7 @@ export const useOrganizationContact = () => {
         {
           name: orgName,
           type: orgType.value,
-          size: size.value,
+          size: size?.value,
           social_causes,
           bio,
           email,
@@ -188,7 +188,7 @@ export const useOrganizationContact = () => {
     updateUser({ ...state, website });
   };
   const isFormValid =
-    state.city !== '' && state.size !== null && state.emali !== '' && state.industry !== '' && state.shortname !== '';
+    state.city !== '' && state.size !== null && state.email !== '' && state.industry !== '' && state.shortname !== '';
 
   const cityValue = state?.cityLabel ? { label: state.cityLabel } : state?.city ? { label: state.city } : null;
   return {

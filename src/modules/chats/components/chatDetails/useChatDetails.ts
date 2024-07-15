@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Chat, CurrentIdentity, Message, chatMessages, createChatMessage } from 'src/core/api';
+import { Chat, CurrentIdentity, Message, OrgMeta, UserMeta, chatMessages, createChatMessage } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
 export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: (val: Chat[]) => void) => {
@@ -14,11 +15,12 @@ export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: 
   const chat = chats.find(item => item.id === selectedChatId);
   const participant = chat?.participants[0];
   const account = {
-    id: participant?.identity_meta.id,
-    img: participant?.identity_meta.image || participant?.identity_meta.avatar || '',
-    type: participant?.identity_type,
-    name: participant?.identity_meta.name,
-    username: participant?.identity_meta.username || participant?.identity_meta.shortname || '',
+    id: participant?.identity_meta?.id || '',
+    img: (participant?.identity_meta as UserMeta).avatar || (participant?.identity_meta as OrgMeta).image || '',
+    type: participant?.identity_type || 'users',
+    name: participant?.identity_meta?.name || '',
+    username:
+      (participant?.identity_meta as UserMeta).username || (participant?.identity_meta as OrgMeta).shortname || '',
   };
 
   const updateUnreadCount = () => {

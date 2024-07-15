@@ -1,7 +1,34 @@
 import React, { ReactNode, useContext, useEffect, useReducer } from 'react';
-import { profile } from 'src/core/api';
+import { Media, profile } from 'src/core/api';
 
-const initialState = {
+interface State {
+  bio: string;
+  city: string;
+  country: string;
+  cityLabel: string;
+  first_name: string;
+  last_name: string;
+  mission: string;
+  mobile_country_code: string;
+  phone: string;
+  skills: string[];
+  social_causes: string[];
+  username: string;
+  avatar: Media;
+  address: string;
+  orgName: string;
+  orgType: { value: string; label: string };
+  image: Media;
+  email: string;
+  website: string;
+  size: { value: string; label: string } | null;
+  shortname: string;
+  industry: string;
+}
+
+type Action = { type: 'UPDATE_USER'; payload: Partial<State> } | { type: 'RESET' };
+
+const initialState: State = {
   bio: '',
   city: '',
   country: '',
@@ -11,24 +38,36 @@ const initialState = {
   mission: '',
   mobile_country_code: '',
   phone: '',
-  skills: [],
-  social_causes: [],
+  skills: [] as string[],
+  social_causes: [] as string[],
   username: '',
-  avatar: '',
   address: '',
   orgName: '',
   orgType: { value: 'STARTUP', label: 'Impact Startup' },
-  image: '',
+  image: {
+    id: '',
+    identity_id: '',
+    filename: '',
+    url: '',
+    created_at: '',
+  },
   email: '',
   website: '',
   size: null,
   shortname: '',
   industry: '',
+  avatar: {
+    id: '',
+    identity_id: '',
+    filename: '',
+    url: '',
+    created_at: '',
+  },
 };
 
 let type = localStorage.getItem('registerFor');
 
-const reducer = (state, action) => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'UPDATE_USER': {
       const filteredPayload = Object.keys(action.payload).reduce((filtered, key) => {
@@ -49,7 +88,12 @@ const reducer = (state, action) => {
       return state;
   }
 };
-export const UserContext = React.createContext(initialState);
+
+interface UserContextProps {
+  state: State;
+  dispatch: React.Dispatch<Action>;
+}
+export const UserContext = React.createContext<UserContextProps | undefined>(undefined);
 
 export interface UserProviderProps {
   children: ReactNode;

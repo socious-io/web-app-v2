@@ -82,7 +82,8 @@ export const useUserDetails = () => {
       dispatch(setIdentityList(currentIdentities));
       navigate('../congrats');
     } catch (error) {
-      dialog.alert({ title: 'error', message: error.message });
+      dialog.alert({ title: 'error', message: String(error) });
+
       return;
     }
   };

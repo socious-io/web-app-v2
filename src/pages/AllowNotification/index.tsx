@@ -1,7 +1,8 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { CurrentIdentity, Notification } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { UserType } from 'src/core/types';
+import { getIdentityMeta } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';
 import { IconDropDown } from 'src/modules/general/components/iconDropDown';
@@ -18,9 +19,8 @@ export const AllowNotification = () => {
     return state.identity.entities;
   });
   const primary = identities.find(i => i.primary);
-  const accounts = [
-    { id: '1', type: 'users', name: primary?.meta.name, username: primary?.meta.username, img: primary?.meta.avatar },
-  ];
+  const { name, username, profileImage } = getIdentityMeta(primary);
+  const accounts = [{ id: '1', type: 'users' as UserType, name, username, img: profileImage }];
 
   return (
     <div className="flex flex-col h-screen justify-between items-center">

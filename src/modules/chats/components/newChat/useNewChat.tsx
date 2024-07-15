@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { connectionStatus, filterFollowings } from 'src/core/api';
+import { OrgMeta, UserMeta, connectionStatus, filterFollowings } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 
 export const useNewChat = () => {
-  const [selectedContact, setselectedContact] = useState();
+  const [selectedContact, setselectedContact] = useState<{ value: string; label: string }>();
 
   const searchFollowings = async (searchText: string, cb) => {
     try {
@@ -12,11 +13,11 @@ export const useNewChat = () => {
         const items = res.items.filter(i => i.mutual && i.following);
         cb(
           items.map(i => {
-            const img = i.identity_meta.image || i.identity_meta.avatar || '';
-            const type = i.identity_type;
+            const { profileImage, name, type } = getIdentityMeta(i);
+            const img = profileImage;
             return {
-              value: i.identity_meta.id,
-              label: i.identity_meta.name,
+              value: i.identity_meta?.id,
+              label: name,
               icon: img ? (
                 <img src={img} width={24} height={24} alt="" className="rounded-2xl" />
               ) : (

@@ -24,7 +24,7 @@ export const useVerifyForm = () => {
   function resendCode() {
     setLoading(true);
     const email = localStorage.getItem('email');
-    resendVerifyCode({ email }).then(() => setLoading(false));
+    if (email) resendVerifyCode({ email }).then(() => setLoading(false));
   }
   return { onSubmit, otpValue, setOtpValue, email, resendCode, isValid, loading };
 };

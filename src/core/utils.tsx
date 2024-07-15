@@ -35,7 +35,7 @@ export const removeEmptyArrays = (obj: null | undefined | Record<string | number
 };
 
 export const removeValuesFromObject = (obj: any, valuesToRemove: Array<string | null | undefined | number>) => {
-  const output = {};
+  const output: any = {};
   for (const key in obj) {
     if (!valuesToRemove.includes(obj[key])) {
       output[key] = obj[key];
@@ -87,6 +87,29 @@ export const getIdentityMeta = (identity: User | Organization | Identity | undef
     };
   }
 
+  if ('identity_meta' in identity) {
+    if (identity.identity_type === 'users') {
+      const user = identity.identity_meta as UserMeta;
+      return {
+        username: `@${user.username}`,
+        usernameVal: user.username,
+        name: user.name,
+        profileImage: user.avatar,
+        type: identity.identity_type,
+        website: undefined,
+      };
+    }
+    const org = identity.identity_meta as OrgMeta;
+    return {
+      username: `@${org.shortname}`,
+      usernameVal: org.shortname,
+      name: org.name,
+      profileImage: org.image,
+      type: identity.identity_type,
+      website: undefined,
+    };
+  }
+
   // if identity type is 'User'
   if ('first_name' in identity || 'username' in identity) {
     const user = identity as User;
@@ -118,6 +141,7 @@ export const verificationStatus: Record<Credential['status'], 'verified' | 'unve
   CLAIMED: 'verified',
   PENDING: 'pending',
   REJECTED: 'unverified',
+  ISSUED: 'verified',
 };
 
 export const navigateToProfile = (username: string, type: UserType) => {
