@@ -61,7 +61,7 @@ export const DisputeDetail = () => {
                 <FeaturedIconOutlined iconName={alertInfo.icon} size="md" theme={alertInfo.theme} />
                 <div className="flex flex-col gap-1">
                   <div className="text-sm font-semibold leading-5 text-Gray-light-mode-700">{alertInfo.title}</div>
-                  <div className={'text-sm font-normal left-5 text-Gray-light-mode-600'}>
+                  <div className="text-sm font-normal left-5 text-Gray-light-mode-600 leading-5 whitespace-pre-line">
                     <span className="text-Brand-700">{alertInfo.subtitleName}</span>
                     {alertInfo.subtitle}
                   </div>
