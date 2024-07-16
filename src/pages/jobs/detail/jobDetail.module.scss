@@ -6,19 +6,20 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
         padding-bottom: 64px;
     }
 }
 
 .content {
-    width: 100%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     flex: 1;
     gap: 32px;
     padding: 0px 0px 0px 32px;
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
+        width: 100%;
         padding: 0px 16px;
         gap: 24px;
     }
@@ -30,7 +31,7 @@
     flex-direction: column;
     flex: 1;
     gap: 32px;
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
         padding: 0px 16px;
         gap: 24px;
     }

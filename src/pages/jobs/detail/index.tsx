@@ -72,7 +72,7 @@ export const JobDetail = () => {
         )}
       </div>
 
-      <div className="md:mr-16">
+      <div className="md:pr-8">
         <JobDetailAbout
           isUser={true}
           applied={justApplied || beforeApplied}
