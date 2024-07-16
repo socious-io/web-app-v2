@@ -63,29 +63,6 @@ export const getIdentityMeta = (identity: User | Organization | Identity | undef
       website: undefined,
     };
   // if type of identity is 'Identity'
-  if ('meta' in identity) {
-    // 'organizations' | 'users';
-    if (identity.type === 'users') {
-      const user = identity.meta as UserMeta;
-      return {
-        username: `@${user.username}`,
-        usernameVal: user.username,
-        name: user.name,
-        profileImage: user.avatar,
-        type: identity.type,
-        website: undefined,
-      };
-    }
-    const org = identity.meta as OrgMeta;
-    return {
-      username: `@${org.shortname}`,
-      usernameVal: org.shortname,
-      name: org.name,
-      profileImage: org.image,
-      type: identity.type,
-      website: undefined,
-    };
-  }
 
   if ('identity_meta' in identity) {
     if (identity.identity_type === 'users') {
@@ -106,6 +83,30 @@ export const getIdentityMeta = (identity: User | Organization | Identity | undef
       name: org.name,
       profileImage: org.image,
       type: identity.identity_type,
+      website: undefined,
+    };
+  }
+
+  if ('meta' in identity) {
+    // 'organizations' | 'users';
+    if (identity.type === 'users') {
+      const user = identity.meta as UserMeta;
+      return {
+        username: `@${user.username}`,
+        usernameVal: user.username,
+        name: user.name,
+        profileImage: user.avatar,
+        type: identity.type,
+        website: undefined,
+      };
+    }
+    const org = identity.meta as OrgMeta;
+    return {
+      username: `@${org.shortname}`,
+      usernameVal: org.shortname,
+      name: org.name,
+      profileImage: org.image,
+      type: identity.type,
       website: undefined,
     };
   }

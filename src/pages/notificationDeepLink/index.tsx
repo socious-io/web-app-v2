@@ -15,7 +15,7 @@ export const NotificationDeepLink = () => {
     try {
       const res = await getNotificationApi(notificationId);
       setNotification(res);
-    } catch (error) {
+    } catch (error: any) {
       if (error.response?.data.error === 'Not matched') {
         dispatch(removeIdentityList());
         await logout();

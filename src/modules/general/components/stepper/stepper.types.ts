@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import { SvgProps } from 'public/icons/nowruz/svg.types';
 
 export interface StepperProps {
   activeStep: number;
@@ -9,5 +9,5 @@ export interface StepperProps {
 export type StepInfo = {
   title: string;
   desc: string;
-  icon: ComponentType<unknown>;
+  icon: React.FC<SvgProps>;
 };

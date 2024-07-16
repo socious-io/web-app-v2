@@ -21,7 +21,7 @@ export const useNewChat = () => {
               icon: img ? (
                 <img src={img} width={24} height={24} alt="" className="rounded-2xl" />
               ) : (
-                <Avatar type={type} size="24px" iconSize={18} />
+                <Avatar type={type || 'users'} size="24px" iconSize={18} />
               ),
             };
           }),

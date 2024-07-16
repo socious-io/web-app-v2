@@ -44,9 +44,9 @@ export const profileSlice = createSlice({
       state.missions = action.payload;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(updateUserProfile.pending, (state) => {
+      .addCase(updateUserProfile.pending, state => {
         state.status = 'loading';
       })
       .addCase(updateUserProfile.fulfilled, (state, action) => {
@@ -57,6 +57,7 @@ export const profileSlice = createSlice({
           follower: state.identity?.follower || false,
           connection_status: state.identity?.connection_status || 'PENDING',
           connection_id: state.identity?.connection_id || '',
+          is_contributor: (state.identity as UserProfile).is_contributor,
         };
         state.type = 'users';
       })
@@ -64,7 +65,7 @@ export const profileSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(updateOrgProfile.pending, (state) => {
+      .addCase(updateOrgProfile.pending, state => {
         state.status = 'loading';
       })
       .addCase(updateOrgProfile.fulfilled, (state, action) => {

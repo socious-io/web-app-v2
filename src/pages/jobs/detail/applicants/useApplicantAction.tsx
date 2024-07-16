@@ -1,4 +1,4 @@
-import { Cell, ColumnDef, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { Cell, ColumnDef, getCoreRowModel, Getter, useReactTable } from '@tanstack/react-table';
 import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -8,6 +8,7 @@ import {
   rejectApplicant,
   rejectMultipleApplicants,
   search,
+  User,
 } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
@@ -148,7 +149,7 @@ export const useApplicantAction = (
       },
       {
         id: 'name',
-        header: <p className="text-xs">Name</p>,
+        header: 'Name',
         accessorKey: 'id',
         cell: function render({ getValue }) {
           const detail = applicantsList.find(applicant => applicant.id === getValue());
@@ -159,7 +160,7 @@ export const useApplicantAction = (
                 detail && onClickName(detail.user.id, detail.id);
               }}
             >
-              <Avatar size="40px" type="users" img={detail?.user.avatar || ''} />
+              <Avatar size="40px" type="users" img={String(detail?.user.avatar || '')} />
               <div className="flex flex-col justify-start">
                 <p className="text-Gray-light-mode-900 leading-6 font-medium">{detail?.user.name}</p>
                 <p className="text-Gray-light-mode-600 text-sm leading-5">@{detail?.user.username}</p>
@@ -170,9 +171,9 @@ export const useApplicantAction = (
       },
       {
         id: 'applied',
-        header: <p className="text-xs">Applied</p>,
+        header: 'Applied',
         accessorKey: 'created_at',
-        cell: function render({ getValue }) {
+        cell: ({ getValue }: { getValue: Getter<string> }) => {
           return (
             <div className="flex justify-start items-center">
               <p className="text-Gray-light-mode-600 text-sm leading-5">{toRelativeTime(getValue())}</p>
@@ -182,7 +183,7 @@ export const useApplicantAction = (
       },
       // {
       //   id: 'points',
-      //   header: <p className="text-xs">Impact points</p>,
+      //   header: 'Impact points',
       //   cell: function render() {
       //     return (
       //       <div className="flex justify-center items-center">
@@ -193,16 +194,15 @@ export const useApplicantAction = (
       // },
       {
         id: 'location',
-        header: <p className="text-xs">Location</p>,
+        header: 'Location',
         accessorKey: 'user',
-
-        cell: function render({ renderValue }) {
+        cell: ({ getValue }: { getValue: Getter<User> }) => {
           return (
             <div className="flex justify-start items-center">
-              {renderValue().address ? (
-                <p className="text-Gray-light-mode-600 font-medium leading-5 text-sm">{`${renderValue().address}, ${
-                  renderValue().city
-                }, ${renderValue().country}`}</p>
+              {getValue().address ? (
+                <p className="text-Gray-light-mode-600 font-medium leading-5 text-sm">{`${getValue().address}, ${
+                  getValue().city
+                }, ${getValue().country}`}</p>
               ) : (
                 <></>
               )}
@@ -212,7 +212,7 @@ export const useApplicantAction = (
       },
       {
         id: 'timezone',
-        header: <p className="text-xs">Timezone</p>,
+        header: 'Timezone',
         accessorKey: 'created_at',
 
         cell: function render({ getValue }) {
@@ -228,7 +228,7 @@ export const useApplicantAction = (
       },
       // {
       //   id: 'experience',
-      //   header: <p className="text-xs">Experience</p>,
+      //   header: 'Experience',
       //   cell: function render() {
       //     return (
       //       <div className="flex justify-center items-center">
@@ -240,12 +240,8 @@ export const useApplicantAction = (
       {
         id: 'actions',
         accessorKey: 'id',
-        header: (
-          <p className="text-xs">
-            <br />
-          </p>
-        ),
-        cell: function render({ getValue }) {
+        header: '',
+        cell: ({ getValue }: { getValue: Getter<string> }) => {
           return (
             <div className="flex justify-center items-center gap-3">
               <p
