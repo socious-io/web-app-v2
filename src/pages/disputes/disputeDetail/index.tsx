@@ -1,3 +1,4 @@
+import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
 import RespondDisputeModal from 'src/modules/contract/components/respondDisputeModal';
 import { SubmitDecision } from 'src/modules/dispute/components/submitDecisionModal';
 import { TimelineItem } from 'src/modules/dispute/components/timelineItem';
@@ -77,6 +78,12 @@ export const DisputeDetail = () => {
               <div className="px-6 py-4 flex flex-col border border-solid border-0 border-b border-Gray-light-mode-200">
                 <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">Contract ID</span>
                 <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">{dispute.contract.id}</span>
+              </div>
+              <div className="px-6 py-4 flex flex-col border border-solid border-0 border-b border-Gray-light-mode-200">
+                <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">Category</span>
+                <span className="text-sm font-normal leading-5 text-Gray-light-mode-600 truncate">
+                  {DISPUTE_CATEGORY.find(category => category.value === dispute.category)?.label}
+                </span>
               </div>
               <div className="h-[72px] px-6 py-4 flex flex-col">
                 <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">Contract name</span>
