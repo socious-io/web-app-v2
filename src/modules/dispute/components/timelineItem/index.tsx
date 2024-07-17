@@ -38,7 +38,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
       </div>
       <div className="flex flex-col gap-3 flex-1 pb-8">
         <div className="flex flex-col h-12 max-h-12 min-h-12 justify-center">
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <span className="text-sm font-medium leading-5 text-Gray-light-mode-700">{myEvent ? 'You' : name}</span>
             <span className="text-xs font-medium leading-[18px] text-Gray-light-mode-600">
               {toRelativeTime(event.created_at.toString())}
