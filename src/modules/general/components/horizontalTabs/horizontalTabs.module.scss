@@ -10,6 +10,11 @@
     scrollbar-width: none;
 }
 
+.tabContainer::-webkit-scrollbar {
+    display: none;
+    /* Safari*/
+}
+
 .tab {
     height: 100%;
     width: fit-content;
@@ -24,6 +29,7 @@
     display: flex;
     justify-content: center;
 }
+
 .tabActive {
     border-bottom: 2px solid $color-primary-700;
     color: $color-primary-700;
