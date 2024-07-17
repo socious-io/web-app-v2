@@ -18,7 +18,7 @@ import { ScreenQuestion } from 'src/modules/Jobs/jobCreate/components/screenQues
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './job-create-form.module.scss';
-import { OptionNumber, OptionType } from './jobCreateForm.types';
+import { OptionNumber } from './jobCreateForm.types';
 import { useJobCreateForm } from './useJobCreateForm';
 export const JobCreateForm = () => {
   const {
@@ -173,7 +173,7 @@ export const JobCreateForm = () => {
               icon="search-lg"
               options={causesList}
               isSearchable
-              onChange={option => onSelectCause(option as OptionType)}
+              onChange={onSelectCause}
               errors={errors['cause']?.value?.message ? [errors['cause']?.value.message.toString()] : undefined}
             />
           </div>
@@ -201,7 +201,7 @@ export const JobCreateForm = () => {
               placeholder="Select a category"
               options={catagoriesList}
               isSearchable
-              onChange={option => onSelectCategory(option as OptionType)}
+              onChange={onSelectCategory}
               errors={errors['category']?.value?.message ? [errors['category']?.value?.message.toString()] : undefined}
             />
           </div>
@@ -299,7 +299,7 @@ export const JobCreateForm = () => {
               value={preference}
               options={PROJECT_REMOTE_PREFERENCES_V2}
               isSearchable
-              onChange={option => onSelectPreference(option as OptionType)}
+              onChange={onSelectPreference}
               errors={
                 errors['preference']?.value?.message ? [errors['preference']?.value?.message.toString()] : undefined
               }
@@ -315,7 +315,7 @@ export const JobCreateForm = () => {
               placeholder="Please select"
               options={PROJECT_TYPE_V2}
               isSearchable
-              onChange={option => onSelectType(option as OptionType)}
+              onChange={onSelectType}
               errors={errors['type']?.value?.message ? [errors['type']?.value?.message.toString()] : undefined}
             />
           </div>
@@ -329,7 +329,7 @@ export const JobCreateForm = () => {
               value={length}
               options={PROJECT_LENGTH_V2}
               isSearchable
-              onChange={option => onSelectLength(option as OptionType)}
+              onChange={onSelectLength}
               errors={errors['length']?.value?.message ? [errors['length']?.value?.message.toString()] : undefined}
             />
           </div>

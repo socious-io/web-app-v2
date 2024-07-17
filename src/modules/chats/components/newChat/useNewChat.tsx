@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { OrgMeta, UserMeta, connectionStatus, filterFollowings } from 'src/core/api';
+import { useState } from 'react';
+import { filterFollowings } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 
@@ -14,12 +14,11 @@ export const useNewChat = () => {
         cb(
           items.map(i => {
             const { profileImage, name, type } = getIdentityMeta(i);
-            const img = profileImage;
             return {
               value: i.identity_meta?.id,
               label: name,
-              icon: img ? (
-                <img src={img} width={24} height={24} alt="" className="rounded-2xl" />
+              icon: profileImage ? (
+                <img src={profileImage} width={24} height={24} alt="" className="rounded-2xl" />
               ) : (
                 <Avatar type={type || 'users'} size="24px" iconSize={18} />
               ),

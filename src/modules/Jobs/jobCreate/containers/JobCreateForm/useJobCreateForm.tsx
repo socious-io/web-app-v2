@@ -37,7 +37,7 @@ import { Question } from 'src/core/types';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
-import { Inputs, OptionType, OptionNumber } from './jobCreateForm.types';
+import { Inputs, OptionNumber } from './jobCreateForm.types';
 
 const schema = yup.object().shape({
   title: yup.string().min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters').required(),
@@ -73,7 +73,7 @@ const schema = yup.object().shape({
     .of(
       yup.object().shape({
         label: yup.string().required(),
-        value: yup.string().required(),
+        value: yup.string().required('Required'),
       }),
     )
     .required('Required'),
@@ -145,22 +145,22 @@ export const useJobCreateForm = () => {
   const paymentMin = watch('paymentMin');
   const paymentTypeOptions = PROJECT_PAYMENT_TYPE.slice().reverse();
 
-  const onSelectLength = (length: OptionType) => {
+  const onSelectLength = length => {
     setValue('length', length, { shouldValidate: true });
   };
-  const onSelectCause = (cause: OptionType) => {
+  const onSelectCause = cause => {
     setValue('cause', cause, { shouldValidate: true });
   };
-  const onSelectCategory = (category: OptionType) => {
+  const onSelectCategory = category => {
     setValue('category', category, { shouldValidate: true });
   };
-  const onSelectType = (type: OptionType) => {
+  const onSelectType = type => {
     setValue('type', type, { shouldValidate: true });
   };
   const onSelectPaymentScheme = (paymentScheme: string) => {
     setValue('paymentScheme', paymentScheme, { shouldValidate: true });
   };
-  const onSelectPreference = (preference: OptionType) => {
+  const onSelectPreference = preference => {
     setValue('preference', preference, { shouldValidate: true });
   };
   const onSelectPaymentType = (paymentType: string) => {
@@ -316,7 +316,7 @@ export const useJobCreateForm = () => {
     setOpenPreview(true);
   };
 
-  const onSelectSkills = (skills: Array<OptionType>) => {
+  const onSelectSkills = skills => {
     setValue('skills', skills, { shouldValidate: true });
   };
   const onChangePaymentMin = (value: string) => {
