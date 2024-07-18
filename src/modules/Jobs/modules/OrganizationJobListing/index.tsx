@@ -7,7 +7,7 @@ import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 import variables from 'src/styles/constants/_exports.module.scss';
 
-import css from './organization-job-listing.module.css';
+import css from './organization-job-listing.module.scss';
 import { useOrganizationJobListing } from './useOrganizationJobListing';
 import { OrganizationJobCard } from '../../components/OrganizationJobCard';
 

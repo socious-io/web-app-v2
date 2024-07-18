@@ -48,7 +48,7 @@ export const Modal: React.FC<ModalProps> = props => {
                 className={`absolute top-3 right-3 ${css.closeBtn} ${closeButtonClassName}`}
                 onClick={handleClose}
               >
-                <Icon name="x-close" fontSize={24} color={variables.color_grey_500} />
+                <Icon name="x-close" fontSize={24} color={variables.color_grey_500} cursor="pointer" />
               </IconButton>
             </div>
             {!inlineTitle && (

@@ -1,4 +1,4 @@
-import { CredentailStatus, PaginateRes } from 'src/core/api';
+import { CredentialStatus, PaginateRes } from 'src/core/api';
 import { UserType } from 'src/core/types';
 
 export interface SearchReq {
@@ -22,7 +22,7 @@ export interface Identity {
   type: 'organizations' | 'users';
   meta: OrgMeta | UserMeta;
   created_at: Date;
-  verification_status: CredentailStatus;
+  verification_status: CredentialStatus;
   identity_meta?: UserMeta | OrgMeta;
   identity_type?: UserType;
 }
