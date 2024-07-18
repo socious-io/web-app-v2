@@ -68,11 +68,9 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
       <SearchDropdown
         required
         id="location"
-        cacheOptions
         value={city}
         isAsync
         loadOptions={searchCities}
-        defaultOptions
         className="my-5"
         icon="search-lg"
         hasDropdownIcon={false}
@@ -85,11 +83,9 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
       <SearchDropdown
         required
         id="industry"
-        cacheOptions
         value={industry}
         isAsync
         loadOptions={searchIndustries}
-        defaultOptions
         className="my-5"
         icon="search-lg"
         hasDropdownIcon={false}
@@ -144,6 +140,7 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
         errors={errors['socialCauses']?.message ? [errors['socialCauses']?.message.toString()] : undefined}
         displayDefaultBadges={false}
       />
+      <Input id="website" label="Website" name="website" register={register} />
     </form>
   );
 

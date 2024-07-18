@@ -32,6 +32,7 @@ const schema = yup
       value: yup.string(),
     }),
     summary: yup.string().required('Required'),
+    website: yup.string(),
     socialCauses: yup
       .array()
       .of(
@@ -77,6 +78,7 @@ export const useEditInfoOrg = (handleClose: () => void) => {
       city: { label: org.city, value: org.city },
       country: org.country,
       summary: org.mission,
+      website: org?.website || '',
       industry: { label: org.industry, value: org.industry },
       size: org.size
         ? { label: ORGANIZATION_SIZE.find(item => item.value === org.size)?.label, value: org.size }
@@ -121,6 +123,7 @@ export const useEditInfoOrg = (handleClose: () => void) => {
       city: { label: org.city, value: org.city },
       country: org.country,
       summary: org.mission,
+      website: org?.website || '',
       industry: { label: org.industry, value: org.industry },
       size: org.size
         ? { label: ORGANIZATION_SIZE.find(item => item.value === org.size)?.label, value: org.size }
@@ -186,7 +189,7 @@ export const useEditInfoOrg = (handleClose: () => void) => {
     setValue('size', { value: orgSize.value, label: orgSize.label }, { shouldValidate: true });
   };
   const saveOrg = async () => {
-    const { name, username, city, country, summary, socialCauses, industry, size } = getValues();
+    const { name, username, city, country, summary, website, socialCauses, industry, size } = getValues();
     const updatedOrg = {
       ...org,
       name: name.trim(),
@@ -194,6 +197,7 @@ export const useEditInfoOrg = (handleClose: () => void) => {
       city: city.label,
       country: country,
       mission: summary,
+      website,
       social_causes: socialCauses?.map(item => item.value),
       industry: industry.label,
       size: size.value,

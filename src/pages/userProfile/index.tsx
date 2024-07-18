@@ -11,7 +11,7 @@ export const UserProifle = () => {
   return (
     <div className="w-full">
       <ProfileHeader />
-      <div className={`${css.content} py-0 px-4 md:px-8`}>
+      <div className={`${css.content} p-4 pt-0 md:p-8 md:pt-0`}>
         <div className={` ${css.leftCol} hidden md:block`}>
           <MainInfo />
         </div>
