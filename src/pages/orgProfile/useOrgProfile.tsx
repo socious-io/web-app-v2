@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLoaderData, useLocation } from 'react-router-dom';
 import { OrganizationProfile } from 'src/core/api';
+import { ValueContainer } from 'src/modules/preferences/valueContainer';
 import { About } from 'src/modules/userProfile/components/about';
 import { OrganizationJobs } from 'src/modules/userProfile/components/jobs';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
@@ -24,6 +25,7 @@ export const useOrgProfile = () => {
   const tabs = [
     { label: 'About', content: <About /> },
     { label: 'Jobs', content: <OrganizationJobs /> },
+    { label: 'Preferences', content: <ValueContainer /> },
   ];
 
   return { tabs, active };
