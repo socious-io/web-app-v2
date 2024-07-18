@@ -105,7 +105,8 @@ export const useDisputeDetail = () => {
             setAlertInfo({
               title: 'Pending review by jurors',
               subtitleName: dispute.respondent.meta.name,
-              subtitle: ` has submitted a response.</br>Your dispute is now awaiting for review from jurors, once assigned they will have 7 days to reach a decision.`,
+              subtitle: ` has submitted a response.
+              Your dispute is now awaiting for review from jurors, once assigned they will have 7 days to reach a decision.`,
               theme: 'warning',
               icon: 'alert-circle',
             });

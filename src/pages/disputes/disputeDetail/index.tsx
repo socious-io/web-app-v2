@@ -1,3 +1,4 @@
+import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
 import RespondDisputeModal from 'src/modules/contract/components/respondDisputeModal';
 import { SubmitDecision } from 'src/modules/dispute/components/submitDecisionModal';
 import { TimelineItem } from 'src/modules/dispute/components/timelineItem';
@@ -60,7 +61,7 @@ export const DisputeDetail = () => {
                 <FeaturedIconOutlined iconName={alertInfo.icon} size="md" theme={alertInfo.theme} />
                 <div className="flex flex-col gap-1">
                   <div className="text-sm font-semibold leading-5 text-Gray-light-mode-700">{alertInfo.title}</div>
-                  <div className={'text-sm font-normal left-5 text-Gray-light-mode-600'}>
+                  <div className="text-sm font-normal left-5 text-Gray-light-mode-600 leading-5 whitespace-pre-line">
                     <span className="text-Brand-700">{alertInfo.subtitleName}</span>
                     {alertInfo.subtitle}
                   </div>
@@ -77,6 +78,12 @@ export const DisputeDetail = () => {
               <div className="px-6 py-4 flex flex-col border border-solid border-0 border-b border-Gray-light-mode-200">
                 <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">Contract ID</span>
                 <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">{dispute.contract.id}</span>
+              </div>
+              <div className="px-6 py-4 flex flex-col border border-solid border-0 border-b border-Gray-light-mode-200">
+                <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">Category</span>
+                <span className="text-sm font-normal leading-5 text-Gray-light-mode-600 truncate">
+                  {DISPUTE_CATEGORY.find(category => category.value === dispute.category)?.label}
+                </span>
               </div>
               <div className="h-[72px] px-6 py-4 flex flex-col">
                 <span className="text-sm font-medium leading-5 text-Gray-light-mode-900">Contract name</span>
