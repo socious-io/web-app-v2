@@ -1,3 +1,5 @@
+import { UserType } from 'src/core/types';
+
 import { Identity } from '../site/site.types';
 import { PaginateRes } from '../types';
 
@@ -66,6 +68,7 @@ export interface Participant extends Identity {
   all_read: boolean;
   last_read_id: string;
   last_read_at: Date;
+  identity_type?: UserType;
 }
 
 export interface ParticipantRes extends PaginateRes {

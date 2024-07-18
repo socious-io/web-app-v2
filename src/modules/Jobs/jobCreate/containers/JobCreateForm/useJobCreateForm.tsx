@@ -11,11 +11,20 @@ import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { skillsToCategory, skillsToCategoryAdaptor } from 'src/core/adaptors';
 import {
+  Category,
   CurrentIdentity,
   Job,
+  JobCategoriesRes,
+  JobReq,
   Location,
   OrgMeta,
+  ProjectLengthType,
+  ProjectPaymentSchemeType,
+  ProjectPaymentType,
+  ProjectRemotePreferenceType,
+  ProjectType,
   QuestionReq,
+  SocialCauses,
   addQuestionJob,
   createJob,
   jobQuestions,
@@ -24,64 +33,30 @@ import {
   updateJob,
   updateQuestionJob,
 } from 'src/core/api';
+import { Question } from 'src/core/types';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
-type LocationInput =
-  | {
-      city: string;
-      country: string;
-      label: string;
-    }
-  | undefined;
+import { Inputs, OptionNumber } from './jobCreateForm.types';
 
-interface OptionType {
-  value: string;
-  label: string;
-}
-
-interface OptionNumber {
-  value: number;
-  label: string;
-}
-
-type Inputs = {
-  title: string;
-  cause: OptionType;
-  description: string;
-  category: OptionType;
-  paymentMin: number | null;
-  paymentMax: number | null;
-  commitmentHoursLower: number | null;
-  commitmentHoursHigher: number | null;
-  skills: Array<{ label: string; value: string }>;
-  preference: OptionType;
-  type: OptionType;
-  length: OptionType;
-  location?: LocationInput;
-  paymentType: string;
-  paymentScheme: string;
-  experienceLevel: OptionNumber;
-  jobLocation: string;
-};
 const schema = yup.object().shape({
   title: yup.string().min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters').required(),
   cause: yup.object().shape({
     label: yup.string().required(),
-    value: yup.string().required(),
+    value: yup.string().required('Required'),
   }),
   description: yup.string().required('Required'),
   category: yup.object().shape({
     label: yup.string().required(),
-    value: yup.string().required(),
+    value: yup.string().required('Required'),
   }),
   experienceLevel: yup.object().shape({
     label: yup.string().required(),
-    value: yup.number().required(),
+    value: yup.number().required('Required'),
   }),
   length: yup.object().shape({
     label: yup.string().required(),
-    value: yup.string().required(),
+    value: yup.string().required('Required'),
   }),
   paymentMin: yup.number().nullable().lessThan(yup.ref('paymentMax'), 'Max price must be higher than min price'),
   paymentMax: yup.number().nullable().moreThan(yup.ref('paymentMin'), 'Max price must be higher than min price'),
@@ -97,19 +72,19 @@ const schema = yup.object().shape({
     .array()
     .of(
       yup.object().shape({
-        label: yup.string(),
-        value: yup.string(),
+        label: yup.string().required(),
+        value: yup.string().required('Required'),
       }),
     )
     .required('Required'),
   preference: yup.object().shape({
-    label: yup.string(),
-    value: yup.string(),
+    label: yup.string().required(),
+    value: yup.string().required('Required'),
   }),
   paymentType: yup.string().required('Required'),
   type: yup.object().shape({
     label: yup.string().required(),
-    value: yup.string().required(),
+    value: yup.string().required('Required'),
   }),
   paymentScheme: yup.string().required('Required'),
   location: yup
@@ -124,8 +99,10 @@ const schema = yup.object().shape({
 });
 
 export const useJobCreateForm = () => {
-  const { categories } = useLoaderData().jobCategories || {};
-  const jobDetail = useLoaderData().jobDetail as Job;
+  const loaderData = useLoaderData() as { jobCategories: { categories: Category[] }; jobDetail?: Job };
+  const { categories } = loaderData.jobCategories;
+  const { jobDetail } = loaderData;
+
   const {
     register,
     handleSubmit,
@@ -135,10 +112,11 @@ export const useJobCreateForm = () => {
     formState: { errors, isDirty, isValid },
     trigger,
     reset,
-  } = useForm<Inputs>({
+  } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
   });
+
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
@@ -153,7 +131,7 @@ export const useJobCreateForm = () => {
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [skills, setSkills] = useState<Array<{ label: string; value: string }>>([]);
 
-  const [questions, setQuestions] = useState<QuestionReq[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [editedQuestion, setEditedQuestion] = useState<QuestionReq>();
   const editedQuestionIndex = useRef<number>();
   const [openCreateQuestion, setOpenCreateQuestion] = useState(false);
@@ -167,22 +145,22 @@ export const useJobCreateForm = () => {
   const paymentMin = watch('paymentMin');
   const paymentTypeOptions = PROJECT_PAYMENT_TYPE.slice().reverse();
 
-  const onSelectLength = (length: OptionType) => {
+  const onSelectLength = length => {
     setValue('length', length, { shouldValidate: true });
   };
-  const onSelectCause = (cause: OptionType) => {
+  const onSelectCause = cause => {
     setValue('cause', cause, { shouldValidate: true });
   };
-  const onSelectCategory = (category: OptionType) => {
+  const onSelectCategory = category => {
     setValue('category', category, { shouldValidate: true });
   };
-  const onSelectType = (type: OptionType) => {
+  const onSelectType = type => {
     setValue('type', type, { shouldValidate: true });
   };
   const onSelectPaymentScheme = (paymentScheme: string) => {
     setValue('paymentScheme', paymentScheme, { shouldValidate: true });
   };
-  const onSelectPreference = (preference: OptionType) => {
+  const onSelectPreference = preference => {
     setValue('preference', preference, { shouldValidate: true });
   };
   const onSelectPaymentType = (paymentType: string) => {
@@ -234,7 +212,7 @@ export const useJobCreateForm = () => {
   };
 
   const addQuestion = (q: QuestionReq) => {
-    setQuestions(questions.concat(q));
+    setQuestions(questions.concat(q as Question));
     setOpenCreateQuestion(false);
   };
   const onSubmit: SubmitHandler<Inputs> = async ({
@@ -256,20 +234,20 @@ export const useJobCreateForm = () => {
     commitmentHoursHigher,
   }) => {
     const locationResult = location?.city !== 'Anywhere' ? { city: location?.city, country: location?.country } : {};
-    const jobPayload = {
-      causes_tags: [cause.value],
+    const jobPayload: JobReq = {
+      causes_tags: [cause.value as SocialCauses],
       description,
-      experience_level: experienceLevel.value.toString(),
+      experience_level: experienceLevel.value,
       job_category_id: category.value,
       payment_currency: 'USD',
       payment_range_higher: paymentMax ? paymentMax.toString() : '',
       payment_range_lower: paymentMin ? paymentMin.toString() : '',
-      payment_scheme: paymentScheme,
-      payment_type: paymentType,
-      project_length: length.value,
-      project_type: type.value,
-      remote_preference: preference.value,
-      skills: skills.map(item => item.value),
+      payment_scheme: paymentScheme as ProjectPaymentSchemeType,
+      payment_type: paymentType as ProjectPaymentType,
+      project_length: length.value as ProjectLengthType,
+      project_type: type.value as ProjectType,
+      remote_preference: preference.value as ProjectRemotePreferenceType,
+      skills: skills.map(item => item.value || ''),
       status: 'ACTIVE',
       title,
       commitment_hours_lower: commitmentHoursLower ? commitmentHoursLower.toString() : '',
@@ -278,16 +256,16 @@ export const useJobCreateForm = () => {
     };
 
     try {
-      const res = isEdit ? await updateJob(jobDetail?.id, jobPayload) : await createJob(jobPayload);
-      questions.forEach(async (q: QuestionReq) => {
+      const res = isEdit && jobDetail?.id ? await updateJob(jobDetail.id, jobPayload) : await createJob(jobPayload);
+      questions.forEach(async (q: Question) => {
         if (q?.id) {
           await updateQuestionJob(q?.project_id, q?.id, {
             question: q.question,
             required: q.required,
-            options: q.options,
+            options: q.options || undefined,
           });
         } else {
-          await addQuestionJob(res.id, q);
+          await addQuestionJob(res.id, q as QuestionReq);
         }
       });
       setOpenSuccessModal(true);
@@ -319,18 +297,18 @@ export const useJobCreateForm = () => {
       job: {
         title,
         description: jobDescription,
-        remotePreference: PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === preference)?.label,
+        remotePreference: PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === preference.value)?.label || '',
         isCryptoPayment: true,
-        jobLength: PROJECT_LENGTH_V2.find(level => level.value === length)?.label,
-        jobType: PROJECT_TYPE_V2.find(level => level.value === type)?.label,
+        jobLength: PROJECT_LENGTH_V2.find(level => level.value === length.value)?.label,
+        jobType: PROJECT_TYPE_V2.find(level => level.value === type.value)?.label,
         city: location?.city || 'Anywhere',
         country: location?.country,
         // location: location?.city ? location?.city : 'Anywhere',
         maxPayment: paymentMax,
         minPayment: paymentMin,
         paymentType: PROJECT_PAYMENT_TYPE.find(level => level.value === paymentType)?.label,
-        experienceLevel: EXPERIENCE_LEVEL_V2.find(level => level.value === experienceLevel)?.label,
-        socialCause: cause ? SOCIAL_CAUSES[cause].label : '',
+        experienceLevel: EXPERIENCE_LEVEL_V2.find(level => level.value === experienceLevel.value)?.label,
+        socialCause: cause ? SOCIAL_CAUSES[cause.label].label : '',
         skills: skills ? skills.map(item => item.label) : [],
       },
     };
@@ -338,7 +316,7 @@ export const useJobCreateForm = () => {
     setOpenPreview(true);
   };
 
-  const onSelectSkills = (skills: Array<OptionType>) => {
+  const onSelectSkills = skills => {
     setValue('skills', skills, { shouldValidate: true });
   };
   const onChangePaymentMin = (value: string) => {
@@ -374,7 +352,7 @@ export const useJobCreateForm = () => {
   };
 
   const openEditQuestionForm = (index: number) => {
-    setEditedQuestion(questions[index]);
+    setEditedQuestion(questions[index] as QuestionReq);
     editedQuestionIndex.current = index;
     setOpenCreateQuestion(true);
   };
@@ -390,11 +368,12 @@ export const useJobCreateForm = () => {
 
   const initializeValues = useCallback(
     (job: Job) => {
-      const preferences = PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === job.remote_preference)?.label;
+      const preferences =
+        PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === job.remote_preference)?.label || '';
       const initialVal = {
         title: job?.title || '',
         cause: {
-          label: SOCIAL_CAUSES[job?.causes_tags?.[0]].label || '',
+          label: job?.causes_tags?.[0] ? SOCIAL_CAUSES[job.causes_tags[0]].label : '',
           value: job?.causes_tags?.[0] || '',
         },
         category: {
@@ -419,11 +398,11 @@ export const useJobCreateForm = () => {
         paymentType: job?.payment_type,
         paymentScheme: job?.payment_scheme,
         location: job?.city ? { city: job.city, country: job.country, label: `${job.city}, ${job.country}` } : {},
-        paymentMin: job?.payment_range_lower || null,
-        paymentMax: job?.payment_range_higher || null,
+        paymentMin: Number(job?.payment_range_lower) || null,
+        paymentMax: Number(job?.payment_range_higher) || null,
         jobLocation: job.city ? 'Country / City' : 'Anywhere',
-        commitmentHoursLower: job?.commitment_hours_lower || null,
-        commitmentHoursHigher: job?.commitment_hours_higher ?? null,
+        commitmentHoursLower: Number(job?.commitment_hours_lower) || null,
+        commitmentHoursHigher: Number(job?.commitment_hours_higher) ?? null,
       };
       reset(initialVal);
     },
@@ -431,8 +410,9 @@ export const useJobCreateForm = () => {
   );
 
   const getQuestions = async () => {
+    if (!jobDetail) return;
     const res = await jobQuestions(jobDetail.id);
-    setQuestions(res.questions as unknown as QuestionReq[]);
+    setQuestions(res.questions);
   };
 
   useEffect(() => {

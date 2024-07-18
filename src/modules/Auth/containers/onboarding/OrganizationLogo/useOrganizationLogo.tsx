@@ -1,10 +1,7 @@
 import { Camera } from '@capacitor/camera';
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, uploadMedia } from 'src/core/api';
-import { updateProfile as updateProfileApi } from 'src/core/api';
-import { removeValuesFromObject } from 'src/core/utils';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { useUser } from 'src/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { RootState } from 'src/store';
@@ -18,10 +15,16 @@ export const useOrganizationLogo = () => {
     return current as CurrentIdentity;
   });
   const onUploadImage = async () => {
-    const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
-    const resp = await uploadImage(webPath);
-    updateUser({ ...state, image: resp });
-    setImage({ imageUrl: resp.url, id: resp.id });
+    try {
+      const { webPath } = await Camera.pickImages({ limit: 1 }).then(({ photos }) => photos[0]);
+      const resp = await uploadImage(webPath);
+      if (resp) {
+        updateUser({ ...state, image: resp });
+        setImage({ imageUrl: resp.url, id: resp.id });
+      }
+    } catch (e) {
+      console.log('error in uploading image', e);
+    }
   };
 
   const removeImage = async () => {

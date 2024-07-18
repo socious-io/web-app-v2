@@ -2,9 +2,15 @@ import { useContext, useEffect, useState } from 'react';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { useUser } from 'src/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
+import { MultiSelectItem } from 'src/modules/general/components/multiSelect/multiSelect.types';
+
+interface Option {
+  value: string;
+  label: string;
+}
 export const useSkills = () => {
-  const [value, setValue] = useState([]);
-  const [items, setItems] = useState([]);
+  const [value, setValue] = useState<MultiSelectItem[]>([]);
+  const [items, setItems] = useState<Option[]>([]);
   const { state, updateUser } = useUser();
 
   const { updateSelectedStep } = useContext(StepsContext);

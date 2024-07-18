@@ -84,7 +84,3 @@ export interface Invitation {
 export interface InvitationsRes extends PaginateRes {
   items: Invitation[];
 }
-
-export interface FilterReq extends PaginateReq {
-  [key: string]: any;
-}

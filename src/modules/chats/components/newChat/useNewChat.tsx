@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
-import { connectionStatus, filterFollowings } from 'src/core/api';
+import { useState } from 'react';
+import { filterFollowings } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 
 export const useNewChat = () => {
-  const [selectedContact, setselectedContact] = useState();
+  const [selectedContact, setselectedContact] = useState<{ value: string; label: string }>();
 
   const searchFollowings = async (searchText: string, cb) => {
     try {
@@ -12,15 +13,14 @@ export const useNewChat = () => {
         const items = res.items.filter(i => i.mutual && i.following);
         cb(
           items.map(i => {
-            const img = i.identity_meta.image || i.identity_meta.avatar || '';
-            const type = i.identity_type;
+            const { profileImage, name, type } = getIdentityMeta(i);
             return {
-              value: i.identity_meta.id,
-              label: i.identity_meta.name,
-              icon: img ? (
-                <img src={img} width={24} height={24} alt="" className="rounded-2xl" />
+              value: i.identity_meta?.id,
+              label: name,
+              icon: profileImage ? (
+                <img src={profileImage} width={24} height={24} alt="" className="rounded-2xl" />
               ) : (
-                <Avatar type={type} size="24px" iconSize={18} />
+                <Avatar type={type || 'users'} size="24px" iconSize={18} />
               ),
             };
           }),

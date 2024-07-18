@@ -2,7 +2,14 @@ import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity, profile, uploadMedia, updateProfile as updateProfileApi, UserMeta } from 'src/core/api';
+import {
+  CurrentIdentity,
+  profile,
+  uploadMedia,
+  updateProfile as updateProfileApi,
+  UserMeta,
+  UpdateProfileReq,
+} from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
@@ -33,8 +40,8 @@ export const useImageBio = () => {
   };
 
   const updateProfile = async () => {
-    const avatarImage = state.avatar ? { avatar: image.id } : {};
-    let updatedObj = { ...avatarImage, ...state, cityLabel: '', orgType: '' };
+    const avatarImage = state.avatar ? image.id : '';
+    let updatedObj = { ...state, avatar: avatarImage, cityLabel: '', orgType: '' };
 
     updatedObj = removeValuesFromObject(updatedObj, ['', null]);
 
@@ -46,8 +53,8 @@ export const useImageBio = () => {
     if (!updatedObj.username) {
       const p = await profile();
       updatedObj.username = p.username;
-      updatedObj.first_name = p.first_name;
-      updatedObj.last_name = p.last_name;
+      updatedObj.first_name = p.first_name || '';
+      updatedObj.last_name = p.last_name || '';
     }
 
     await updateProfileApi(updatedObj);

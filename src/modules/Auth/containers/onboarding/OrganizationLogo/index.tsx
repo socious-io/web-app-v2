@@ -23,7 +23,7 @@ export const OrganizationLogo = () => {
         </div>
       </div>
       <div className="flex justify-center mt-5">
-        <Avatar size="96px" type="organizations" img={imageUrl} iconSize={47} />
+        <Avatar size="96px" type="organizations" img={imageUrl || ''} iconSize={47} />
       </div>
       <div className="mt-5 md:hidden">
         <Button

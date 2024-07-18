@@ -1,7 +1,7 @@
-import { QuestionReq } from 'src/core/api';
+import { Question } from 'src/core/types';
 
 export interface ScreenQuestionProps {
-  question: QuestionReq;
+  question: Question;
   index: number;
   handleDelete: (index: number) => void;
   handleEdit: (index: number) => void;

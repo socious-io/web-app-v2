@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 import { toRelativeTime } from 'src/core/relative-time';
+import { getIdentityMeta } from 'src/core/utils';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Dot } from 'src/modules/general/components/dot';
 import { useSeeMore } from 'src/modules/general/utils';
@@ -13,12 +14,13 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
     data: { copyProccessed },
   } = useSeeMore(chat.last_message?.text || '', 50);
 
+  const { profileImage, username, type } = getIdentityMeta(chat.participants[0]);
   const account = {
-    id: chat.participants[0].identity_meta.id,
-    img: chat.participants[0].identity_meta.avatar || chat.participants[0].identity_meta.image || '',
-    type: chat.participants[0].identity_type,
-    name: chat.participants[0].identity_meta.name || '',
-    username: chat.participants[0].identity_meta.username || chat.participants[0].identity_meta.shortname || '',
+    id: chat.participants[0].identity_meta?.id || '',
+    img: profileImage,
+    type: type || 'users',
+    name: chat.participants[0].identity_meta?.name || '',
+    username: username,
   };
 
   return (

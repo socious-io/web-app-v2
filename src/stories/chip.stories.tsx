@@ -1,5 +1,4 @@
 import { Meta, Story } from '@storybook/react';
-import React from 'react';
 import { Chip } from 'src/modules/general/components/Chip';
 
 export default {
@@ -7,7 +6,7 @@ export default {
   component: Chip,
 } as Meta;
 
-const Template: Story = args => <Chip size="md" {...args} />;
+const Template: Story = args => <Chip size="md" label="Primary" {...args} />;
 
 export const PrimaryChip = Template.bind({});
 PrimaryChip.args = {

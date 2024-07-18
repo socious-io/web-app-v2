@@ -44,7 +44,9 @@ export const contractsSlice = createSlice({
                 action.payload.offerStatus,
                 action.payload.missionStatus,
               ),
-              mission: { ...item.mission, status: action.payload.missionStatus || item.mission },
+              mission: item.mission
+                ? { ...item.mission, status: action.payload.missionStatus || item.mission }
+                : undefined,
             }
           : item,
       );

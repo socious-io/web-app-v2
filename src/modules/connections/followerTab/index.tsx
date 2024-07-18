@@ -26,7 +26,7 @@ export const FollowerTab = () => {
   return (
     <div className={css.container}>
       {followerList.map(item => {
-        const { username, profileImage, type, name } = getIdentityMeta(item.identity_meta);
+        const { username, profileImage, type, name } = getIdentityMeta(item);
         const accountItem = {
           id: item.identity_meta?.id || '',
           img: profileImage || '',

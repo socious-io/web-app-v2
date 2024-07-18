@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { CurrentIdentity, Payment, StripeProfileRes, payoutByMission } from 'src/core/api';
+import { CurrentIdentity, Payment, StripeAccount, StripeProfileRes, payoutByMission } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { getIdentityMeta } from 'src/core/utils';
 import dapp from 'src/dapp';
@@ -15,7 +15,7 @@ export const useTransactionDetailes = () => {
   };
 
   const payment = paymentRes[0];
-  const accounts = [];
+  const accounts: StripeAccount[] = [];
   if (stripeProfileRes?.external_accounts?.data.length > 0) accounts.push(...stripeProfileRes.external_accounts.data);
   if (jpStripeProfileRes?.external_accounts?.data.length > 0)
     accounts.push(...jpStripeProfileRes.external_accounts.data);

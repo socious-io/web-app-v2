@@ -11,6 +11,6 @@ const Template: Story<SearchInputProps> = args => <SearchInput {...args} />;
 
 export const Preview = Template.bind({});
 Preview.args = {
-  onChange: e => console.log(e.target.value),
+  onChange: e => console.log(e),
   placeholder: 'Search jobs, people, organizations',
 };
