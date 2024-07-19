@@ -54,7 +54,6 @@ export const useThreeDotsButton = (otherIdentityId: string) => {
   const handleBlock = async () => {
     try {
       const res = await block(otherIdentityId);
-      console.log('test log block ', res);
       if (res.status === 'BLOCKED') {
         navigateToProfile();
       }
@@ -85,7 +84,6 @@ export const useThreeDotsButton = (otherIdentityId: string) => {
   const handleFollow = async () => {
     try {
       const res = await follow(otherIdentityId);
-      console.log('test log follow', res);
       if (res?.id) {
         const payload = {
           connection_id: connectionId,

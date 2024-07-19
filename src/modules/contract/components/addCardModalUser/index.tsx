@@ -34,7 +34,7 @@ const AddCardModalUser: React.FC<AddCardModalUserProps> = ({ open, handleClose, 
             icon="search-lg"
             options={COUNTRIES}
             isSearchable
-            onChange={option => onSelectCountry(option.value)}
+            onChange={onSelectCountry}
             //
           />
           <div className="flex flex-col md:flex-row-reverse gap-3 md:mt-2">

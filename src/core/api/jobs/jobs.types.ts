@@ -68,7 +68,7 @@ export interface OfferReq {
   assignment_total: number;
   weekly_limit?: number;
   total_hours?: number;
-  currency?: Currency;
+  currency?: Currency | string;
   crypto_currency_address?: string;
 }
 

@@ -9,8 +9,17 @@ import { ContractCardProps } from './contractCard.types';
 import { useContractCard } from './useContractCard';
 
 export const ContractCard: React.FC<ContractCardProps> = ({ contract }) => {
-  const { type, badge, name, profileImageUrl, currencyIconName, formatCurrency, contractVal, handleOpenOverlayModal } =
-    useContractCard(contract);
+  const {
+    type,
+    badge,
+    name,
+    profileImageUrl,
+    currencyIconName,
+    formatCurrency,
+    contractVal,
+    handleOpenOverlayModal,
+    contractCurrency,
+  } = useContractCard(contract);
   return (
     <>
       <div
@@ -32,20 +41,20 @@ export const ContractCard: React.FC<ContractCardProps> = ({ contract }) => {
         <div className="flex flex-col gap-5 md:flex-row">
           {formatCurrency ? (
             <div className="flex gap-2 items-center">
-              {['USD', 'JPY'].includes(contractVal?.currency) ? (
-                <Icon name={currencyIconName} fontSize={20} color={variables.color_grey_500} />
+              {['USD', 'JPY'].includes(contractCurrency) ? (
+                <Icon name={currencyIconName || ''} fontSize={20} color={variables.color_grey_500} />
               ) : (
-                contractVal?.currency && (
+                contractCurrency && (
                   <img
                     src={`/icons/crypto/${contractVal?.currency?.toString()}.svg`}
                     width={20}
-                    alt={`${contractVal?.currency.toString()}`}
+                    alt={`${contractCurrency}`}
                   />
                 )
               )}
 
               <span className="font-medium text-base leading-6 text-Gray-light-mode-700">
-                {formatCurrency} {`${contractVal.currency}`}
+                {formatCurrency} {`${contractCurrency}`}
               </span>
               <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`(Fixed-price)`}</span>
             </div>
