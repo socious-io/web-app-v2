@@ -1,0 +1,23 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.header {
+    margin-bottom: 1.25rem;
+    gap: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    &__title {
+        font-weight: 600;
+        color: $color-grey-900;
+        font-size: 1.25rem;
+        line-height: 1.875rem;
+    }
+
+    &__subtitle {
+        font-weight: 400;
+        color: $color-grey-600;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+}
