@@ -7,8 +7,7 @@ import { Checkbox } from '../../general/components/checkbox/checkbox';
 import { Input } from '../../general/components/input/input';
 
 export const ValueAccordion: React.FC<ValueAccordionProps> = ({ items, title }) => {
-  const { otherChecked, setOtherChecked, description, setDescription, error, handleChangeDesc, letterCount } =
-    useValueAccordion();
+  const { otherChecked, setOtherChecked, description, error, handleChangeDesc, letterCount } = useValueAccordion();
   return (
     <Accordion title={title} expand={false} hasBorder={false}>
       <div className="flex flex-col gap-4">
@@ -33,10 +32,11 @@ export const ValueAccordion: React.FC<ValueAccordionProps> = ({ items, title }) 
           <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Other</span>
         </div>
         {otherChecked && (
-          <div className="p-6 w-full h-full flex flex-col gap-[6px]">
+          <div className="w-full h-full flex flex-col gap-[6px]">
             <Input
               id="description"
-              label="Enter a description..."
+              label=""
+              placeholder="Enter a description..."
               name="description"
               required
               errors={error ? [error] : undefined}

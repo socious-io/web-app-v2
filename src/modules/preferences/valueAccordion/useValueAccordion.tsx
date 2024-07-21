@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-export const useValueAccordion = () => {
+import { ValueAccordionItem } from './valueAccordion.types';
+
+export const useValueAccordion = (items: ValueAccordionItem[]) => {
   const [otherChecked, setOtherChecked] = useState(false);
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
