@@ -18,6 +18,7 @@
     border-width: 1px 0 0;
     font-size: 16px;
     font-weight: 600;
+    line-height: 1.5rem;
 
     &:global(.MuiAccordionSummary-root) {
         &:global(.Mui-expanded) {
@@ -32,6 +33,13 @@
                 margin: inherit;
             }
         }
+    }
+
+    .accordionSubtitle {
+        font-weight: 400;
+        font-size: 0.875rem;
+        list-style: 1.25rem;
+        color: $color-grey-600;
     }
 }
 
