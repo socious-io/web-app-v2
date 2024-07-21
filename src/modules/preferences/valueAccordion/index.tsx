@@ -10,14 +10,14 @@ export const ValueAccordion: React.FC<ValueAccordionProps> = ({ items, title }) 
   const { otherChecked, setOtherChecked, description, setDescription, error, handleChangeDesc, letterCount } =
     useValueAccordion();
   return (
-    <Accordion title={title} expand={false}>
+    <Accordion title={title} expand={false} hasBorder={false}>
       <div className="flex flex-col gap-4">
         {items.map(item => (
           <div key={item.title} className="flex gap-3 items-start">
             <Checkbox id={item.title} size="medium" label="" type="checkBox" />
             <div className="flex flex-col gap-0.5">
               <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{item.title}</span>
-              <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{item.subtitile}</span>
+              <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{item.subtitle}</span>
             </div>
           </div>
         ))}
@@ -46,7 +46,7 @@ export const ValueAccordion: React.FC<ValueAccordionProps> = ({ items, title }) 
               customHeight="94px"
               maxRows={7}
             />
-            <div className="text-sm font-normal leading-5 text-Gray-light-mode-600">{`${letterCount}/160`}</div>
+            <div className="text-sm font-normal leading-5 text-Gray-light-mode-600 text-right">{`${letterCount}/160`}</div>
           </div>
         )}
       </div>

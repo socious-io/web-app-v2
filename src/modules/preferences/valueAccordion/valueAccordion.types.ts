@@ -1,6 +1,6 @@
 export interface ValueAccordionItem {
   title: string;
-  subtitile: string;
+  subtitle: string;
 }
 
 export interface ValueAccordionProps {
