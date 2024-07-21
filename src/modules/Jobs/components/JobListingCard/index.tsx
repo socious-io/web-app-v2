@@ -146,9 +146,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
               ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
               `${job.payment_scheme === 'FIXED' ? '(Fixed-price)' : ''}`,
             )}
-
           {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
-
           {job.payment_type === 'VOLUNTEER' &&
             job.payment_scheme === 'HOURLY' &&
             job.commitment_hours_lower &&
@@ -159,8 +157,8 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
             job.commitment_hours_lower &&
             job.commitment_hours_higher &&
             renderJobFeatures('clock', ` ${job.commitment_hours_lower}~${job.commitment_hours_higher} hrs`)}
-
-          {/* {renderJobFeatures('cryptocurrency-01', 'Crypto OK')} */}
+          {/* FIXME: crypto option from BE */}
+          {false && renderJobFeatures('cryptocurrency-01', 'Crypto OK')}
         </div>
       </div>
       <div className={css.cardFooter}>

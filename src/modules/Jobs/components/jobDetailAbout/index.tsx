@@ -133,6 +133,8 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
           'clock',
           ` ${jobDetail.commitment_hours_lower}~${jobDetail.commitment_hours_higher} hrs/week`,
         )}
+      {/* FIXME: crypto option from BE */}
+      {false && renderJobFeatures('cryptocurrency-01', 'Crypto OK')}
     </div>
   );
   return (
