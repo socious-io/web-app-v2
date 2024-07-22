@@ -14,6 +14,7 @@ import {
   getOrganization,
   User,
   Organization,
+  Participant,
 } from 'src/core/api';
 import { socket } from 'src/core/socket';
 import { getIdentityMeta } from 'src/core/utils';
@@ -41,7 +42,7 @@ export const useChats = () => {
   });
 
   const openChatWithParticipantId = async (id: string) => {
-    let chat = chats.find(item => item.participants.map(p => p.identity_meta.id).includes(id));
+    let chat = chats.find(item => item.participants.map(p => p.identity_meta?.id).includes(id));
     if (!chat) {
       const created = await createChat({
         name: 'nameless',
@@ -49,30 +50,34 @@ export const useChats = () => {
         participants: [id],
       });
 
-      let participantDeatils: User | Organization | null = null;
+      let participantDetails: User | Organization | null = null;
       try {
-        participantDeatils = await getOrganization(id);
+        participantDetails = await getOrganization(id);
       } catch {
-        participantDeatils = await otherProfile(id);
+        participantDetails = await otherProfile(id);
       }
-      const { name, type, profileImage, username } = getIdentityMeta(participantDeatils);
-      const newParticipant = {
-        identity_meta: {
-          id: participantDeatils.id,
-          address: participantDeatils.address,
-          email: participantDeatils.email,
-          name: name,
-        },
+      const { name, type, profileImage, username } = getIdentityMeta(participantDetails);
+      const identityMeta = {
+        ...participantDetails,
+        city: participantDetails.city || '',
+        country: participantDetails.country || '',
+        mission: participantDetails.mission || '',
+        name: name || '',
+        avatar: profileImage,
+        username: username,
+        image: profileImage || '',
+        shortname: username,
+      };
+      const newParticipant: Participant = {
+        id: participantDetails.id,
+        created_at: participantDetails.created_at,
         identity_type: type,
         type: 'MEMBER',
+        all_read: false,
+        meta: identityMeta,
+        identity_meta: identityMeta,
       };
-      if (type === 'users') {
-        newParticipant.identity_meta.avatar = profileImage;
-        newParticipant.identity_meta.username = username;
-      } else {
-        newParticipant.identity_meta.image = profileImage;
-        newParticipant.identity_meta.shortname = username;
-      }
+
       chat = {
         ...created,
         participants: [newParticipant],
@@ -100,7 +105,7 @@ export const useChats = () => {
 
   const handleNewChat = async (receiverId: string, text: string) => {
     if (!receiverId || !currentIdentity) return;
-    const foundChat = chats.find(item => item.participants[0].identity_meta.id === receiverId);
+    const foundChat = chats.find(item => item.participants[0].identity_meta?.id === receiverId);
     if (foundChat) {
       await createChatMessage(foundChat.id, { text });
       setSelectedChat(foundChat);
