@@ -36,7 +36,7 @@ export const useRespondDisputeModal = (
     setValue,
     clearErrors,
     reset,
-  } = useForm<Form>({
+  } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
   });

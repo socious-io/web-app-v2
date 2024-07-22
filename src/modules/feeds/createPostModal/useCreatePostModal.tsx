@@ -57,7 +57,7 @@ export const useCreatePostModal = (
     setValue,
     watch,
     reset,
-  } = useForm<Form>({
+  } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
   });

@@ -15,7 +15,7 @@ export const ContractDetailsSlider = () => {
             <Avatar size="72px" type={(type || 'users') as UserType} img={profileImage} />
             <div className="flex flex-col">
               <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">
-                {contract.project.title}
+                {contract?.project.title}
               </span>
               <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{name}</span>
             </div>
