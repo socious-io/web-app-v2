@@ -1,19 +1,19 @@
 @charset "UTF-8";
 
 @font-face {
-  font-family: 'untitled-font-3';
-  src: url('fonts/untitled-font-3.eot');
+  font-family: 'icons';
+  src: url('fonts/icons.eot');
   src:
-    url('fonts/untitled-font-3.eot?#iefix') format('embedded-opentype'),
-    url('fonts/untitled-font-3.woff') format('woff'),
-    url('fonts/untitled-font-3.ttf') format('truetype'),
-    url('fonts/untitled-font-3.svg#untitled-font-3') format('svg');
+    url('fonts/icons.eot?#iefix') format('embedded-opentype'),
+    url('fonts/icons.woff') format('woff'),
+    url('fonts/icons.ttf') format('truetype'),
+    url('fonts/icons.svg#icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 [data-icon]:before {
-  font-family: 'untitled-font-3' !important;
+  font-family: 'icons' !important;
   content: attr(data-icon);
   font-style: normal !important;
   font-weight: normal !important;
@@ -27,7 +27,7 @@
 
 [class^='icon-']:before,
 [class*=' icon-']:before {
-  font-family: 'untitled-font-3' !important;
+  font-family: 'icons' !important;
   font-style: normal !important;
   font-weight: normal !important;
   font-variant: normal !important;
@@ -46,45 +46,6 @@
 }
 .icon-alarm-clock-plus:before {
   content: '\63';
-}
-.icon-streamline-umbrella-weather:before {
-  content: '\64';
-}
-.icon-streamline-sync:before {
-  content: '\65';
-}
-.icon-streamline-suitcase-travel:before {
-  content: '\66';
-}
-.icon-stamp-streamline:before {
-  content: '\67';
-}
-.icon-speech-streamline-talk-user:before {
-  content: '\68';
-}
-.icon-shoes-snickers-streamline:before {
-  content: '\69';
-}
-.icon-settings-streamline-2:before {
-  content: '\6a';
-}
-.icon-settings-streamline-1:before {
-  content: '\6b';
-}
-.icon-settings-streamline:before {
-  content: '\6c';
-}
-.icon-remote-control-streamline:before {
-  content: '\6d';
-}
-.icon-notebook-streamline:before {
-  content: '\6e';
-}
-.icon-paint-bucket-streamline:before {
-  content: '\6f';
-}
-.icon-painting-pallet-streamline:before {
-  content: '\70';
 }
 .icon-alarm-clock-off:before {
   content: '\71';
@@ -733,9 +694,6 @@
 }
 .icon-check-circle:before {
   content: '\e089';
-}
-.icon-check-done-01:before {
-  content: '\e08a';
 }
 .icon-check-circle-broken:before {
   content: '\e08b';
@@ -2423,9 +2381,6 @@
 .icon-moon-02:before {
   content: '\e2bc';
 }
-.icon-minimize-01:before {
-  content: '\e2bd';
-}
 .icon-minimize-02:before {
   content: '\e2be';
 }
@@ -3592,4 +3547,52 @@
 }
 .icon-user-plus-02:before {
   content: '\e442';
+}
+.icon-bookmark-filled:before {
+  content: '\65';
+}
+.icon-heart-filled:before {
+  content: '\64';
+}
+.icon-bank-1:before {
+  content: '\66';
+}
+.icon-tick:before {
+  content: '\67';
+}
+.icon-twitter:before {
+  content: '\68';
+}
+.icon-wallet-06-filled:before {
+  content: '\69';
+}
+.icon-linkedin:before {
+  content: '\6a';
+}
+.icon-star-filled:before {
+  content: '\6b';
+}
+.icon-minimize-01:before {
+  content: '\6c';
+}
+.icon-check-circle-filled:before {
+  content: '\6d';
+}
+.icon-wallet-connect-01:before {
+  content: '\6f';
+}
+.icon-wallet-connect-02:before {
+  content: '\70';
+}
+.icon-check-verified-02-filled:before {
+  content: '\6e';
+}
+.icon-check-done-01:before {
+  content: '\e2bd';
+}
+.icon-telegram:before {
+  content: '\e08a';
+}
+.icon-whatsapp:before {
+  content: '\e443';
 }
