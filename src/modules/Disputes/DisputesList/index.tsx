@@ -95,42 +95,44 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
 
   return disputesList.length ? (
     <div className={css['table']}>
-      <table className="w-full rounded-lg">
-        <thead className={css['header']}>
-          {table.getHeaderGroups().map(headerGroup => {
-            return (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <th id={header.id} key={header.id} className={css['header__item']}>
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => {
-            return (
-              <tr
-                key={row.id}
-                onClick={() => navigateToDetailDispute(disputesList[row.id].id)}
-                className="cursor-pointer"
-              >
-                {row.getVisibleCells().map(cell => {
-                  return (
-                    <td className={css['col']} key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="block overflow-auto">
+        <table className="w-full rounded-lg">
+          <thead className={css['header']}>
+            {table.getHeaderGroups().map(headerGroup => {
+              return (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map(header => {
+                    return (
+                      <th id={header.id} key={header.id} className={css['header__item']}>
+                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                      </th>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map(row => {
+              return (
+                <tr
+                  key={row.id}
+                  onClick={() => navigateToDetailDispute(disputesList[row.id].id)}
+                  className="cursor-pointer"
+                >
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <td className={css['col']} key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       <div className={`${css.paginationBox} hidden md:block`}>
         <Pagination page={page} count={totalPage} onChange={(e, p) => setPage(p)} />
       </div>
