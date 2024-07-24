@@ -10,10 +10,12 @@ import {
   transparency,
   workLifeBalance,
 } from './contants';
+import { useValueContainer } from './useValueContainer';
 import { ValueAccordion } from '../valueAccordion';
 
 export const ValueContainer = () => {
   const { t } = useTranslation();
+  const { loaderData } = useValueContainer();
 
   return (
     <div className="flex flex-col">
@@ -22,13 +24,13 @@ export const ValueContainer = () => {
         <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{t('values-h2')}</span>
       </div>
       <div className="py-6">
-        <ValueAccordion items={workLifeBalance} title={t('Work-life-balance-title')} />
+        {/* <ValueAccordion items={workLifeBalance} title={t('Work-life-balance-title')} />
         <ValueAccordion items={benefits} title={t('benefits-title')} />
         <ValueAccordion items={growth} title={t('growth-title')} />
         <ValueAccordion items={diversity} title={t('diversity-title')} />
         <ValueAccordion items={environmentalImpacts} title={t('environmental-impact-title')} />
         <ValueAccordion items={socialImpacts} title={t('social-impact-title')} />
-        <ValueAccordion items={transparency} title={t('transparency-title')} />
+        <ValueAccordion items={transparency} title={t('transparency-title')} /> */}
       </div>
     </div>
   );

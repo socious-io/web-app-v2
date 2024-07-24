@@ -190,3 +190,27 @@ export interface Credential {
   created_at: Date;
   updated_at: Date;
 }
+export type PreferenceValue =
+  | 'ON'
+  | 'OFF'
+  | 'STRONG_HIGH'
+  | 'MODERATE_HIGH'
+  | 'NEUTRAL'
+  | 'STRONG_LOW'
+  | 'MODERATE_LOW';
+export interface PreferenceReq {
+  title: string;
+  value: PreferenceValue;
+  description?: string;
+}
+
+export interface Preference extends PreferenceReq {
+  id: string;
+  identity_id: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PreferencesRes {
+  items: Preference[];
+}

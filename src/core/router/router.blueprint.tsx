@@ -25,6 +25,7 @@ import {
   OrgMeta,
   disputes,
   invitations,
+  preferences,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/modules/layout';
@@ -103,7 +104,10 @@ export const blueprint: RouteObject[] = [
 
                     loader: async ({ params }) => {
                       if (params.id) {
-                        const organization = await getOrganizationByShortName(params.id);
+                        const [organization, preferencesRes] = await Promise.all([
+                          getOrganizationByShortName(params.id),
+                          preferences(),
+                        ]);
                         const page = Number(localStorage.getItem('profileJobPage'));
                         localStorage.setItem('source', organization.shortname);
                         localStorage.removeItem('navigateToSearch');
@@ -113,9 +117,11 @@ export const blueprint: RouteObject[] = [
                           limit: 2,
                           identity_id: organization.id,
                         });
+
                         return {
                           organization,
                           orgJobs,
+                          preferencesRes,
                         };
                       }
                     },

@@ -25,6 +25,7 @@ export const useOrgProfile = () => {
   const tabs = [
     { label: 'About', content: <About /> },
     { label: 'Jobs', content: <OrganizationJobs /> },
+    // TODO: Use <ValueContainer/> inside the preferences component (developed by Sanaz) and then put the preferences component in tab
     { label: 'Preferences', content: <ValueContainer /> },
   ];
 

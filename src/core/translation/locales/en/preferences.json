@@ -30,6 +30,7 @@
     "health-insurance-desc": "Comprehensive health, dental, and vision insurance plans.",
     "health-safety-measures": "Health and Safety Measures",
     "health-safety-measures-desc": "Especially important in the current context, ensuring a safe and healthy workplace.",
+    "work-life-balance-other": "Other",
     "benefits-title": "Fair compensation and benefits",
     "competitive-salary": "Competitive Salary",
     "competitive-salary-desc": "Compensation that matches the industry and regional standards for similar roles, ensuring competitive and fair pay.",
@@ -49,6 +50,7 @@
     "flexible-spending-accounts-desc": "For healthcare, dependent care, or transportation costs.",
     "EAP": "Employee Assistance Programs (EAP)",
     "EAP-desc": "Confidential counseling and support services.",
+    "fair-compensation-other": "Other",
     "growth-title": "Growth and learning",
     "professional-development": "Professional Development",
     "professional-development-desc": "Funding for courses, conferences, workshops, or tuition reimbursement, as well as internal training opportunities.",
@@ -177,5 +179,6 @@
     "corporate-ethics-training": "Corporate Ethics Training",
     "corporate-ethics-training-desc": "Regular training for employees on ethical conduct and compliance.",
     "corporate-governance-standards": "Corporate Governance Standards",
-    "corporate-governance-standards-desc": "Adherence to high standards of corporate governance, including board responsibilities and ethical management."
+    "corporate-governance-standards-desc": "Adherence to high standards of corporate governance, including board responsibilities and ethical management.",
+    "others": "Others"
 }
