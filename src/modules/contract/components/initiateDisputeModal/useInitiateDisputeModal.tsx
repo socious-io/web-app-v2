@@ -89,10 +89,10 @@ export const useInitiateDisputeModal = (
       const { title, description, evidences, category } = formData || {};
       try {
         const { respondent, code, created_at } = await issueDispute({
-          category: category.value,
-          title,
-          description,
-          evidences,
+          category: category.value || '',
+          title: title || '',
+          description: description || '',
+          evidences: evidences || [],
           respondent_id: respondentId,
           mission_id: missionId,
         });

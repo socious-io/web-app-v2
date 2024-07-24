@@ -6,7 +6,8 @@ import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
 import { Identity } from '../site/site.types';
-import { LanguageCode, SDG, PaginateRes, ConnectStatus } from '../types';
+import { LanguageCode, SDG, PaginateRes, ConnectStatus, ProjectType } from '../types';
+
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
@@ -55,7 +56,7 @@ export interface ExperienceReq {
   job_category_id?: string;
   country?: string;
   city?: string;
-  employment_type?: 'ONE_OFF' | 'PART_TIME' | 'FULL_TIME';
+  employment_type?: ProjectType;
   weekly_hours?: number | null;
   total_hours?: number | null;
 }

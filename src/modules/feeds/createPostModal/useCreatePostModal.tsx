@@ -68,7 +68,7 @@ export const useCreatePostModal = (
 
   const initializeValues = () => {
     const initialVal: Form = {
-      cause: data?.cause || null,
+      cause: data?.cause,
       content: data?.content || '',
       file: data?.file?.id || '',
       title: data?.title || '',

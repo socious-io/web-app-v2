@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Offer, hireOffer, payByOffer } from 'src/core/api';
+import { Offer, OrgMeta, hireOffer, payByOffer } from 'src/core/api';
 import dapp from 'src/dapp';
 
 export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => void, offer?: Offer) => {
@@ -51,7 +51,7 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
         contributor,
         token: offer.crypto_currency_address,
         projectId: offer.project_id,
-        verifiedOrg: offer.offerer.meta.verified_impact || false,
+        verifiedOrg: (offer.offerer.meta as OrgMeta).verified_impact || false,
         addressReferringOrg: offer.org_referrer_wallet,
         addressReferringCont: offer.contributor_referrer_wallet,
         applyOrgFeeDiscount,
@@ -61,7 +61,7 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
       // this is paramater need to sync with backend to make Hire available
       await payByOffer(offer.id, {
         service: 'CRYPTO',
-        source: account,
+        source: account?.toString() || '',
         txHash: result.txHash,
         meta: result,
       });

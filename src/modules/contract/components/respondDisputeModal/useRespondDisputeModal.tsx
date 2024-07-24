@@ -72,7 +72,7 @@ export const useRespondDisputeModal = (
     } else {
       const { message, evidences } = formData || {};
       try {
-        const res = await respondDispute({ message, evidences }, disputeId);
+        const res = await respondDispute({ message: message || '', evidences: evidences || [] }, disputeId);
         reset();
         setFiles([]);
         setShowFiles([]);

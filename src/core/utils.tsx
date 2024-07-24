@@ -1,4 +1,4 @@
-import { Credential, Identity, OrgMeta, Organization, User, UserMeta } from './api';
+import { Credential, Identity, OrgMeta, Organization, Participant, User, UserMeta } from './api';
 import { UserType } from './types';
 
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
@@ -52,7 +52,7 @@ export const checkUsernameConditions = (username: string) => {
   if (username.length < 6 || username.length > 24) return 'Must be between 6 and 24 characters.';
 };
 
-export const getIdentityMeta = (identity: User | Organization | Identity | undefined) => {
+export const getIdentityMeta = (identity: User | Organization | Identity | UserMeta | OrgMeta | undefined) => {
   if (!identity)
     return {
       username: '',

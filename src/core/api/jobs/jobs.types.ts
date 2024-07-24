@@ -216,6 +216,9 @@ export interface Contract extends Offer {
   mission?: Mission;
   escrow?: Escrow;
   payment?: Payment;
+  org_feedback?: {
+    mission_id?: string;
+  };
 }
 
 export interface Mission {
