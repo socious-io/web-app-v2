@@ -37,7 +37,7 @@ export function socialCausesToCategory(categories: string[] = []) {
     return [];
   }
   return categories.map(cat => {
-    return SOCIAL_CAUSES[cat];
+    return SOCIAL_CAUSES[cat] || cat;
   });
 }
 

@@ -79,7 +79,7 @@ export const useCreatePostModal = (
 
   useEffect(() => initializeValues(), [data]);
 
-  const onSelectCause = (option: OptionType) => setValue('cause', option);
+  const onSelectCause = option => setValue('cause', option);
 
   const onTextChange = (name: 'title' | 'content', value: string) => setValue(name, value);
 

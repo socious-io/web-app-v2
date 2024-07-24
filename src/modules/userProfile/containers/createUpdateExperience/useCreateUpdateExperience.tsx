@@ -8,6 +8,7 @@ import {
   ExperienceReq,
   Location,
   Organization,
+  ProjectType,
   User,
   addExperiences,
   createOrganization,
@@ -198,11 +199,14 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       country: experience?.country || '',
       startMonth: {
         label: startDate ? monthNames[startDate.getMonth()] : '',
-        value: startDate ? startDate.getMonth() : '',
+        value: startDate ? startDate.getMonth().toString() : '',
       },
-      startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
-      endMonth: { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth() : '' },
-      endYear: { label: endDate?.getFullYear() || '', value: endDate?.getFullYear() || '' },
+      startYear: { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' },
+      endMonth: {
+        label: endDate ? monthNames[endDate.getMonth()] : '',
+        value: endDate ? endDate.getMonth().toString() : '',
+      },
+      endYear: { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' },
       description: experience?.description || '',
       currentlyWorking: experience ? !experience?.end_at : false,
       org: {
@@ -369,13 +373,13 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       country,
       city: city.label,
     };
-    if (employmentType.value) payload.employment_type = employmentType.value;
+    if (employmentType.value) payload.employment_type = employmentType.value as ProjectType;
     if (!currentlyWorking && endYear.value) {
       const endDate = new Date(Number(endYear.value), Number(endMonth.value || 0), 1).toISOString();
       payload.end_at = endDate;
     }
 
-    payload = removedEmptyProps(payload);
+    payload = removedEmptyProps(payload) as ExperienceReq;
     if (experience) await updateExperiences(experience.id, payload);
     else await addExperiences(payload);
     const updated = await otherProfileByUsername(user?.username || '');

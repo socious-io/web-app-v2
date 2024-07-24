@@ -94,11 +94,14 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
       field: education?.title || '',
       startMonth: {
         label: startDate ? monthNames[startDate.getMonth()] : '',
-        value: startDate ? startDate.getMonth() : '',
+        value: startDate ? startDate.getMonth().toString() : '',
       },
-      startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
-      endMonth: { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth() : '' },
-      endYear: { label: endDate?.getFullYear() || '', value: endDate?.getFullYear() || '' },
+      startYear: { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' },
+      endMonth: {
+        label: endDate ? monthNames[endDate.getMonth()] : '',
+        value: endDate ? endDate.getMonth().toString() : '',
+      },
+      endYear: { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' },
       grade: education?.grade || '',
       description: education?.description || '',
     };

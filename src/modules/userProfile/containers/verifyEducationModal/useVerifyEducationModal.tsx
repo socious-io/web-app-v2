@@ -153,15 +153,15 @@ export const useVerifyEducationModal = (
       forgotInfo: false,
       month: {
         label: awardedDate ? monthNames[awardedDate.getMonth()] : '',
-        value: awardedDate ? awardedDate.getMonth() : '',
+        value: awardedDate ? awardedDate.getMonth().toString() : '',
       },
       day: {
         label: '',
         value: '',
       },
       year: {
-        label: awardedDate?.getFullYear() || '',
-        value: awardedDate?.getFullYear() || '',
+        label: awardedDate?.getFullYear().toString() || '',
+        value: awardedDate?.getFullYear().toString() || '',
       },
     };
     reset(initialVal);
