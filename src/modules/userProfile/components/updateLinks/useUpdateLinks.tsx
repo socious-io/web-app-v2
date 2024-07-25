@@ -5,10 +5,13 @@ export const UseUpdatelinks = (links: AdditionalRes[] | null, setLinks: (newVal:
     let linksObj = links?.length ? [...links] : [];
     const newLink = {
       id: links?.length.toString() || '0',
+      identity_id: '',
       created_at: new Date(),
+      update_at: new Date(),
       type: 'PORTFOLIO',
       title: '',
       url: '',
+      enabled: null,
     };
     linksObj = linksObj.concat(newLink);
     setLinks(linksObj);

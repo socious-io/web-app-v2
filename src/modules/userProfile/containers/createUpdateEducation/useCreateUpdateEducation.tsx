@@ -175,20 +175,20 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
     }
   };
 
-  const onSelectSchool = (newCompanyVal: OptionType) => {
+  const onSelectSchool = newCompanyVal => {
     const newValue = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
     setValue('school', { ...newCompanyVal, value: newValue }, { shouldValidate: true });
   };
-  const onSelectStartMonth = (month: OptionType) => {
+  const onSelectStartMonth = month => {
     setValue('startMonth', month, { shouldValidate: true });
   };
-  const onSelectEndMonth = (month: OptionType) => {
+  const onSelectEndMonth = month => {
     setValue('endMonth', month, { shouldValidate: true });
   };
-  const onSelectStartYear = (year: OptionType) => {
+  const onSelectStartYear = year => {
     setValue('startYear', year, { shouldValidate: true });
   };
-  const onSelectEndYear = (year: OptionType) => {
+  const onSelectEndYear = year => {
     setValue('endYear', year, { shouldValidate: true });
   };
 

@@ -52,8 +52,8 @@ export interface AdditionalReq {
 export interface AdditionalRes extends AdditionalReq {
   identity_id: string;
   id: string;
-  image: Media;
-  sub_image: Media;
+  image?: Media;
+  sub_image?: Media;
   create_at: Date;
   update_at: Date;
   credential?: Credential;

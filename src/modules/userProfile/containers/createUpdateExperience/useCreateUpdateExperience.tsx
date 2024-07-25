@@ -254,7 +254,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     initializeValues();
   }, [experience]);
 
-  const onChangeCategory = (newCategory: OptionType) => {
+  const onChangeCategory = newCategory => {
     setValue('jobCategory', newCategory, { shouldValidate: true });
   };
   const orgToOption = (orgs: Organization[], searchText: string) => {
@@ -282,7 +282,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     }
   };
 
-  const onSelectCompany = (newCompanyVal: OptionType) => {
+  const onSelectCompany = newCompanyVal => {
     const value = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
     setValue('org', { value, label: newCompanyVal.label }, { shouldValidate: true });
   };
@@ -311,20 +311,20 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     setValue('country', location.countryCode, { shouldValidate: true });
   };
 
-  const onSelectEmplymentType = (newType: OptionType) => {
+  const onSelectEmplymentType = newType => {
     setValue('employmentType', newType, { shouldValidate: true });
   };
 
-  const onSelectStartMonth = (month: OptionType) => {
+  const onSelectStartMonth = month => {
     setValue('startMonth', month, { shouldValidate: true });
   };
-  const onSelectEndMonth = (month: OptionType) => {
+  const onSelectEndMonth = month => {
     setValue('endMonth', month, { shouldValidate: true });
   };
-  const onSelectStartYear = (year: OptionType) => {
+  const onSelectStartYear = year => {
     setValue('startYear', year, { shouldValidate: true });
   };
-  const onSelectEndYear = (year: OptionType) => {
+  const onSelectEndYear = year => {
     setValue('endYear', year, { shouldValidate: true });
   };
 
