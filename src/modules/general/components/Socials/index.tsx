@@ -2,21 +2,24 @@
 import React from 'react';
 
 import { SocialsProps } from './Socials.types';
+import { Icon } from '../Icon';
 
+//FIXME: fill color later according to design
 const socials = [
-  { name: 'twitter', image: '/icons/twitter.svg' },
-  { name: 'linkedin', image: '/icons/linkedin.svg' },
+  { name: 'twitter', color: '' },
+  { name: 'linkedin', color: '' },
 ];
 export const Socials: React.FC<SocialsProps> = ({ items }) => {
   const linkIcons = items.map(item => ({
     url: item.url,
-    icon: socials[socials.findIndex(social => social.name === item.name)].image,
+    icon: item.name,
+    color: socials.find(social => social.name === item.name)?.color || '',
   }));
   return (
     <div className="flex justify-center">
       {linkIcons.map(item => (
         <a key={item.url} href={item.url} className="mr-4">
-          <img src={item.icon} width={'20px'} height={'20px'} />
+          <Icon name={item.icon} fontSize={20} color={item.color} />
         </a>
       ))}
     </div>

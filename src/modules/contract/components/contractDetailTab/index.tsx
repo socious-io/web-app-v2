@@ -46,7 +46,7 @@ export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ contract }
             : ''}
           {contract.project.payment_type === 'VOLUNTEER' ? (
             <div className="flex gap-1.5">
-              <img src="/icons/nowruz/red-heart.svg" alt="" />
+              <Icon name="heart-filled" fontSize={20} className="text-Burgundy-600" />
               <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Volunteer</span>
             </div>
           ) : (
