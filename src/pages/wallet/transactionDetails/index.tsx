@@ -2,6 +2,7 @@ import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { BackLink } from 'src/modules/general/components/BackLink';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
+import { Icon } from 'src/modules/general/components/Icon';
 import { Modal } from 'src/modules/general/components/modal';
 
 import css from './transactionDetails.module.scss';
@@ -91,7 +92,7 @@ export const TransactionDetails = () => {
             <div className="flex flex-col gap-1.5">
               <span className={css.modalRowTitles}>Transfer to</span>
               <div className={css.withdrawAccount}>
-                <img src="/icons/bank.svg" alt="" />
+                <Icon name="bank-1" fontSize={25} />
                 <div className="flex flex-col">
                   <span className={css.modalRowTitles}>{accounts[0].bank_name}</span>
                   <span className={css.modalSubtitles}>{accounts[0].account}</span>

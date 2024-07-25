@@ -14,11 +14,12 @@ const FeedActions: React.FC<FeedActionsProps> = ({
     <div className="flex">
       <div className="flex-1 flex justify-center">
         <div className="flex gap-2 text-sm text-Gray-light-mode-600 cursor-pointer" onClick={() => onLikeClick(liked)}>
-          {liked ? (
-            <img src="/icons/nowruz/red-heart.svg" alt="" />
-          ) : (
-            <Icon name="heart" fontSize={20} className="text-Gray-light-mode-600" cursor="pointer" />
-          )}
+          <Icon
+            name={liked ? 'heart-filled' : 'heart'}
+            fontSize={20}
+            className={liked ? 'text-Error-700' : 'text-Gray-light-mode-600'}
+            cursor="pointer"
+          />
           <span className="hidden md:inline">Like</span>
         </div>
       </div>

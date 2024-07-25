@@ -85,7 +85,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
                   type === 'organization' ? variables.color_wild_blue_500 : variables.color_dark_vanilla_500,
               }}
             >
-              <img src="/icons/nowruz/check.svg" alt="" />
+              <Icon name="tick" fontSize={10} className="text-Base-White" />
             </div>
             <span className="text-sm font-normal text-Gray-light-mode-600">
               {type === 'organization'
@@ -102,7 +102,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
                   type === 'organization' ? variables.color_wild_blue_500 : variables.color_dark_vanilla_500,
               }}
             >
-              <img src="/icons/nowruz/check.svg" alt="" />
+              <Icon name="tick" fontSize={10} className="text-Base-White" />
             </div>
             <span className="text-sm font-normal text-Gray-light-mode-600">
               50% discount on Socious fees for the first month
