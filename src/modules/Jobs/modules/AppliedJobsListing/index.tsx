@@ -8,7 +8,6 @@ import { JobListingCard } from '../../components/JobListingCard';
 
 export const AppliedJobsListing = () => {
   const { appliedList, page, totalCount, setPage, PER_PAGE } = useAppliedJobListing();
-
   return (
     <div className={css.container}>
       {appliedList.map((item: Applicant) => (
