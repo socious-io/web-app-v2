@@ -149,6 +149,17 @@ export const useContractDetailsSlider = () => {
     const participantId = identityType === 'users' ? contract.offerer.meta.id : contract.recipient.meta.id;
     navigate(`../chats?participantId=${participantId}`);
   };
+
+  const navigateToHomePage = () => {
+    if (identityType === 'users') {
+      const { usernameVal } = getIdentityMeta(contract.offerer);
+      navigate(`/profile/organizations/${usernameVal}/view`);
+    } else {
+      const { usernameVal } = getIdentityMeta(contract.recipient);
+      navigate(`/profile/users/${usernameVal}/view`);
+    }
+  };
+
   return {
     name,
     profileImage,
@@ -156,5 +167,6 @@ export const useContractDetailsSlider = () => {
     tabs,
     sliderComponent,
     contract,
+    navigateToHomePage,
   };
 };
