@@ -5,7 +5,7 @@ import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
 import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
-import { JobCategoriesRes, Location, searchLocation } from 'src/core/api';
+import { JobCategoriesRes, Location, openToVolunteer, searchLocation } from 'src/core/api';
 import { Item } from 'src/modules/general/components/CheckboxGroup/index.types';
 import { MultiSelectItem } from 'src/modules/general/components/multiSelect/multiSelect.types';
 import { FilterReq } from 'src/pages/search/useSearch';
@@ -35,6 +35,10 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     }));
   };
 
+  useEffect(() => {
+    dispatch({ type: 'reset', payload: null });
+  }, [type]);
+
   const searchCities = async (searchText: string, cb: any) => {
     try {
       if (searchText) {
@@ -50,7 +54,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     dispatch({ type, payload: value });
   };
 
-  const onSelectCity = (location: { value: number; label: string; countryCode: string }) => {
+  const onSelectCity = location => {
     const { value, label, countryCode } = location || {};
     dispatch({ type: 'location', payload: { label, value, countryCode } });
   };
@@ -59,12 +63,16 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     dispatch({ type, payload: value });
   };
 
-  const onSelectSearchDropdown = (type: 'preference' | 'jobCategory', value: { label: string; value: string }) => {
+  const onSelectSearchDropdown = (type: 'preference' | 'jobCategory', value) => {
     dispatch({ type, payload: value });
   };
 
-  const onSelectPaymentType = (value: { label: string; value: string }) => {
+  const onSelectPaymentType = value => {
     dispatch({ type: 'paymentType', payload: value });
+  };
+
+  const onChangeOpenToVolunteer = () => {
+    dispatch({ type: 'openToVolunteer', payload: !filters.openToVolunteer });
   };
 
   const handleApply = () => {
@@ -78,6 +86,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       jobLength,
       experienceLevel,
       paymentType,
+      openToVolunteer,
     } = filters || {};
     const { value, label, countryCode } = location || {};
     const isValidLocation = countryCode && label && value;
@@ -86,16 +95,17 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       ...(causes.length > 0 && { causes_tags: causes.map((c: LabelValue) => c.value) }),
       ...(skills.length > 0 && { skills: skills.map((s: LabelValue) => s.value) }),
       // ...(organizationSize.length > 0 && { organizationSize: organizationSize.map((o: LabelValue) => o.value) }),
-      ...(countryCode && { country: [countryCode] }),
-      ...(label && { city: [label.split(',')[0]] }),
-      ...(isValidLocation && {
-        location: { value, label, countryCode },
-      }),
+      ...(countryCode && { country: countryCode }),
+      ...(label && { city: label.split(',')[0] }),
+      // ...(isValidLocation && {
+      //   location: { value, label, countryCode },
+      // }),
       ...(preference && { remote_preference: preference.value }),
       ...(jobCategory && { job_category_id: jobCategory.value }),
       ...(jobLength.length > 0 && { project_length: jobLength.map((j: LabelValue) => j.value) }),
       ...(experienceLevel.length > 0 && { experience_level: experienceLevel.map((e: LabelValue) => e.value) }),
       ...(paymentType && { payment_type: type !== 'organization' ? paymentType.value : '' }),
+      ...(openToVolunteer && { open_to_volunteer: openToVolunteer }),
     };
     onApply(filter);
   };
@@ -131,9 +141,13 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       dispatch({ type: 'jobLength', payload: getOptionsFromValues(filter.project_length || [], PROJECT_LENGTH_V2) });
     }
     if (filter.experience_level?.length) {
+      const strExperienceLevel = filter.experience_level ? filter.experience_level.map(item => item.toString()) : [];
+      const strValue = EXPERIENCE_LEVEL_V2.map(item => {
+        return { value: item.value.toString(), label: item.label };
+      });
       dispatch({
         type: 'experienceLevel',
-        payload: getOptionsFromValues(filter.experience_level || [], EXPERIENCE_LEVEL_V2),
+        payload: getOptionsFromValues(strExperienceLevel, strValue),
       });
     }
     if (filter.payment_type) {
@@ -172,6 +186,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       onSelectSearchDropdown,
       onSelectPaymentType,
       handleApply,
+      onChangeOpenToVolunteer,
     },
   };
 };

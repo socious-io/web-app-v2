@@ -1,3 +1,4 @@
+import { openToVolunteer } from 'src/core/api';
 import { Item } from 'src/modules/general/components/CheckboxGroup/index.types';
 
 type LabelValue = { label: string; value: string };
@@ -12,6 +13,7 @@ export type FiltersType = {
   jobLength: Item[];
   experienceLevel: Item[];
   paymentType: LabelValue;
+  openToVolunteer: boolean | null;
 };
 
 export const initialFilters: FiltersType = {
@@ -24,10 +26,24 @@ export const initialFilters: FiltersType = {
   jobLength: [],
   experienceLevel: [],
   paymentType: { label: 'Paid', value: 'PAID' },
+  openToVolunteer: null,
 };
 
-export function filtersReducer(filters: FiltersType, action: { type: keyof FiltersType; payload: any }) {
+export function filtersReducer(filters: FiltersType, action: { type: keyof FiltersType | 'reset'; payload: any }) {
   switch (action.type) {
+    case 'reset':
+      return {
+        causes: [],
+        skills: [],
+        organizationSize: [],
+        location: null,
+        preference: null,
+        jobCategory: null,
+        jobLength: [],
+        experienceLevel: [],
+        paymentType: null,
+        openToVolunteer: null,
+      };
     case 'causes':
       return { ...filters, causes: action.payload };
     case 'skills':
@@ -46,6 +62,8 @@ export function filtersReducer(filters: FiltersType, action: { type: keyof Filte
       return { ...filters, experienceLevel: action.payload };
     case 'paymentType':
       return { ...filters, paymentType: action.payload };
+    case 'openToVolunteer':
+      return { ...filters, openToVolunteer: action.payload };
     default:
       console.log('Not valid', action.payload);
       return filters;
