@@ -3,6 +3,7 @@ import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import { BackLink } from 'src/modules/general/components/BackLink';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 export const Succeed = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const Succeed = () => {
       <IntroHeader
         title="Password reset"
         description="Your password has been successfully reset. Click below to log in magically."
-        logo={<FeaturedIcon src="/icons/check-circle.svg" />}
+        logo={<FeaturedIcon iconName="check-circle" iconColor={variables.color_grey_700} />}
       />
       <Button color="primary" onClick={navigateToJobs} fullWidth>
         Continue

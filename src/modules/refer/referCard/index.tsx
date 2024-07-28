@@ -63,10 +63,10 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
                 <Icon name="share-01" fontSize={24} className="text-Gray-light-mode-700" />
               </Button>
               <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
-                <img src="/icons/nowruz/whatsapp.svg" />
+                <Icon name="whatsapp" fontSize={24} color="#00c538" />
               </Button>
               <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
-                <img src="/icons/nowruz/telegram.svg" />
+                <Icon name="telegram" fontSize={24} color="#26a5e5" />
               </Button> */}
             </div>
           </div>

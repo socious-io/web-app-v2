@@ -5,7 +5,7 @@ interface StripeAccountItemProps {
   accountNumber: string;
 }
 export const StripeAccountItem: React.FC<StripeAccountItemProps> = ({ bankName, accountNumber }) => {
-  // const iconPath = `/icons/nowruz/pay-icons/${card.meta.brand.toLowerCase().replaceAll(' ', '')}.svg`;
+  // const iconPath = `/icons/pay-icons/${card.meta.brand.toLowerCase().replaceAll(' ', '')}.svg`;
 
   return (
     <div className="flex justify-between py-4">

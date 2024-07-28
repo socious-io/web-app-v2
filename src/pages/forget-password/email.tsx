@@ -1,6 +1,7 @@
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import { EmailForm } from 'src/modules/Auth/containers/forgetPassword/EmailForm';
 import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 export const Email = () => {
   return (
@@ -8,7 +9,7 @@ export const Email = () => {
       <IntroHeader
         title="Forgot password?"
         description="No worries, we’ll send you reset instructions."
-        logo={<FeaturedIcon src="/icons/nowruz/key-01.svg" />}
+        logo={<FeaturedIcon iconName="key-01" iconColor={variables.color_grey_700} />}
       />
       <EmailForm />
     </div>

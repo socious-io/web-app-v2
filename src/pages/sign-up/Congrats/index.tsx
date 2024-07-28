@@ -6,6 +6,7 @@ import { steps } from 'src/modules/Auth/statics/sign-up-steps';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';
 import { Stepper } from 'src/modules/general/components/stepper/stepper';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 export const Congrats = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export const Congrats = () => {
         <IntroHeader
           title={translate('sign-up-congrats')}
           description={translate('sign-up-congrats-desc')}
-          logo={<FeaturedIcon src="/icons/check-circle.svg" />}
+          logo={<FeaturedIcon iconName="check-circle" iconColor={variables.color_grey_700} />}
         />
         <div className="mt-8">
           <Button onClick={routeToNextPage} color="primary" block>

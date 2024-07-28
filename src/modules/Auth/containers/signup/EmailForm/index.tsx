@@ -1,4 +1,4 @@
-import { Google } from 'public/icons/nowruz/google';
+import React from 'react';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 
@@ -9,7 +9,7 @@ interface EmailFormProps {
 }
 
 export const EmailForm: React.FC<EmailFormProps> = ({ eventId }) => {
-  const { register, errors, onSubmit, handleSubmit, navigate, translate } = useEmailForm(eventId);
+  const { register, errors, onSubmit, handleSubmit, translate } = useEmailForm(eventId);
 
   const type = localStorage.getItem('registerFor');
   return (

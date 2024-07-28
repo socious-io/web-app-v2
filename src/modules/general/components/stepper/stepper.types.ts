@@ -1,4 +1,4 @@
-import { SvgProps } from 'public/icons/nowruz/svg.types';
+import { SvgProps } from 'public/icons/dynamic/svg.types';
 
 export interface StepperProps {
   activeStep: number;
