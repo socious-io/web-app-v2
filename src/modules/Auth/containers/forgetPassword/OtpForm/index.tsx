@@ -10,7 +10,7 @@ import { useOtpForm } from './useOtpForm';
 export const OtpForm = () => {
   const { otpVal, setOtpVal, sendOtp, resendOtp, onBack, isValid, loading } = useOtpForm();
   return (
-    <div className="flex flex-col gap-8 justify-center items-center ">
+    <div className="flex flex-col gap-8 justify-center items-center">
       <div className="mt-8">
         <OTP
           value={otpVal}
@@ -23,7 +23,7 @@ export const OtpForm = () => {
       <Button color="primary" disabled={!otpVal.length} onClick={sendOtp} fullWidth>
         {loading ? <CircularProgress size="32px" sx={{ color: variables.color_white }} /> : 'Verify email'}
       </Button>
-      <div>
+      <div className="flex flex-col items-center">
         <Typography variant="caption" color={variables.color_grey_600}>
           Didn’t receive the email?
         </Typography>

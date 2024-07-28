@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import { PasswordForm } from 'src/modules/Auth/containers/forgetPassword/PasswordForm';
 import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 export const Password = () => {
   const [searchParams] = useSearchParams();
@@ -12,7 +13,7 @@ export const Password = () => {
       <IntroHeader
         title="Set new password"
         description={`We sent a verification link to ${email}`}
-        logo={<FeaturedIcon src="/icons/nowruz/lock-01.svg" />}
+        logo={<FeaturedIcon iconName="lock-01" iconColor={variables.color_grey_700} />}
       />
       <PasswordForm />
     </div>

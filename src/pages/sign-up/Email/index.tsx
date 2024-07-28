@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
-import { Google } from 'public/icons/nowruz/google';
-import { Logo } from 'public/icons/nowruz/logo';
+import { Google } from 'public/icons/dynamic/google';
+import { Logo } from 'public/icons/dynamic/logo';
 import { useNavigate } from 'react-router-dom';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/modules/Auth/containers/ServiceIntro';

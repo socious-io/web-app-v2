@@ -15,9 +15,9 @@ export const useTimelineItem = (
   const myEvent = currentIdentity?.id === event.creator.id;
 
   const fileIcons = [
-    { type: 'jpg', icon: '/icons/nowruz/file-jpg.svg' },
-    { type: 'pdf', icon: '/icons/nowruz/file-pdf.svg' },
-    { type: 'png', icon: '/icons/nowruz/file-png.svg' },
+    { type: 'jpg', icon: '/icons/file-jpg.svg' },
+    { type: 'pdf', icon: '/icons/file-pdf.svg' },
+    { type: 'png', icon: '/icons/file-png.svg' },
   ];
 
   const getEventTitle = () => {

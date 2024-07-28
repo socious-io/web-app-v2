@@ -1,4 +1,4 @@
-import { Google } from 'public/icons/nowruz/google';
+import { Google } from 'public/icons/dynamic/google';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';

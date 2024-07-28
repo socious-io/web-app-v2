@@ -1,4 +1,4 @@
-import { Logo } from 'public/icons/nowruz/logo';
+import { Logo } from 'public/icons/dynamic/logo';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';

@@ -1,4 +1,4 @@
-import { Google } from 'public/icons/nowruz/google';
+import { Google } from 'public/icons/dynamic/google';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 
