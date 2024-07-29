@@ -75,12 +75,13 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
 
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
-    const start = currentYear - 40;
+    const start = 1970;
     const options: OptionType[] = [];
-    for (let i = start; i <= currentYear; i++) {
+    for (let i = currentYear; i >= start; i--) {
       const year = i.toString();
       options.push({ value: year, label: year });
     }
+
     setYears(options);
   };
 
