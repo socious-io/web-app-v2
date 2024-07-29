@@ -85,7 +85,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.7",
     "@capacitor/assets": "^3.0.5",
-    "@capacitor/cli": "^6.0.0",
+    "@capacitor/cli": "^6.1.1",
     "@storybook/addon-a11y": "^7.6.7",
     "@storybook/addon-essentials": "^8.1.6",
     "@storybook/addon-interactions": "^8.0.10",
