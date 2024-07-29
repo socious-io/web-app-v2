@@ -46,30 +46,26 @@ export const useOrganizationJobListing = () => {
   const PER_PAGE = 5;
   const isMobile = isTouchDevice();
 
+  const handleClick = (filter: 'all' | 'active' | 'archived') => {
+    setFilter(filter);
+    setPage(1);
+  };
+
   const filterButtons: ButtonGroupItem[] = [
     {
       label: 'View all',
       value: 'all',
-      handleClick: () => {
-        setFilter('all');
-        setPage(1);
-      },
+      handleClick: () => handleClick('all'),
     },
     {
       label: 'Active',
       value: 'active',
-      handleClick: () => {
-        setFilter('active');
-        setPage(1);
-      },
+      handleClick: () => handleClick('active'),
     },
     {
       label: 'Archived',
       value: 'archived',
-      handleClick: () => {
-        setFilter('archived');
-        setPage(1);
-      },
+      handleClick: () => handleClick('archived'),
     },
   ];
 
