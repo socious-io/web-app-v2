@@ -36,11 +36,11 @@ export const Avatar: React.FC<AvatarProps> = props => {
   };
   return (
     <div
-      onClick={props.onClick}
+      onClick={onClick}
       style={{ width: size, height: size, minWidth: size, minHeight: size }}
       className={`${css.container} ${customStyle} ${hasBorder ? css.avatarBorder : ''}`}
     >
-      <div onClick={props.onClick} style={style} className={css.imageContainer}>
+      <div onClick={onClick} style={style} className={css.imageContainer}>
         {img ? (
           <img className={`${css.img} ${iconCustomStyle}`} src={img} alt="" />
         ) : (
