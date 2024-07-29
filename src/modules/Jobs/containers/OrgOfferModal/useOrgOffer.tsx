@@ -14,16 +14,14 @@ import * as yup from 'yup';
 
 type Inputs = {
   title: string;
-  paymentType: ProjectPaymentType;
-  paymentTerm: ProjectPaymentSchemeType;
   hours: number;
-  total: number;
-  paymentMethod: PaymentService;
+  total?: number;
+  paymentMethod?: string;
   description: string;
 };
 const schema = yup.object().shape({
   title: yup.string().required('Required').min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
-  paymentType: yup.string(),
+  paymentType: yup.string().required('Required'),
   paymentTerm: yup.string(),
   paymentMethod: yup.string(),
   hours: yup
@@ -67,7 +65,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     mode: 'all',
     resolver: yupResolver(schema),
     defaultValues: {
-      paymentType: 'PAID',
+      paymentType: 'PAID' as ProjectPaymentType,
       paymentMethod: 'FIAT' as 'STRIPE',
       paymentTerm: 'FIXED',
     },
@@ -94,8 +92,8 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
   const onSelectPaymentType = paymentType => {
     setValue('paymentType', paymentType);
   };
-  const onSelectPaymentTerm = paymentType => {
-    setValue('paymentTerm', paymentType);
+  const onSelectPaymentTerm = paymentTerm => {
+    setValue('paymentTerm', paymentTerm);
   };
   const onSelectPaymentMethod = paymentMethod => {
     setValue('paymentMethod', paymentMethod);
@@ -110,7 +108,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
   };
 
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
-    let netTotal = total;
+    let netTotal = total || 0;
 
     if (isNonPaid) {
       netTotal = 0;
@@ -123,7 +121,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
       return;
     }
 
-    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && total < 22) {
+    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && netTotal < 22) {
       setError('total', {
         message: 'Offer amount on Fiat should have a minimum value of 22',
       });

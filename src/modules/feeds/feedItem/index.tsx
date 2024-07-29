@@ -106,7 +106,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
   };
   const editPostData = {
     postId,
-    cause: Object.values(SOCIAL_CAUSES).find(social => social.label === cause) || null,
+    cause: Object.values(SOCIAL_CAUSES).find(social => social.label === cause),
     title,
     file: media || null,
     content,
