@@ -52,11 +52,8 @@ export const OrgTeam = () => {
                   id={`member-${index}`}
                   value={addedMembers[index].value ? addedMembers[index] : undefined}
                   placeholder="Select team member"
-                  cacheOptions
                   isAsync
                   loadOptions={searchMembers}
-                  defaultOptions
-                  // className="my-5"
                   icon="user-01"
                   hasDropdownIcon={true}
                   label=""

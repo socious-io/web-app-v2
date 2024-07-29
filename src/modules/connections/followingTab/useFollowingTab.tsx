@@ -40,7 +40,8 @@ export const useFollowingTab = () => {
     try {
       const lst = [...followingList];
       const idx = lst.findIndex(item => item.id === followingId);
-      if (lst[idx].identity_meta?.id) await unfollow(lst[idx].identity_meta.id);
+      if (!lst[idx].identity_meta?.id) return;
+      await unfollow(lst[idx].identity_meta.id);
       lst[idx].following = false;
       setFollowingList(lst);
       setOpenAlert(false);

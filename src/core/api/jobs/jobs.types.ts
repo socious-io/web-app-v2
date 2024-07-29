@@ -59,6 +59,7 @@ export interface ApplyReq {
   cv_name: string;
   share_contact_info: boolean;
   answers?: Answer[];
+  attachment?: string;
 }
 
 export interface OfferReq {
@@ -163,7 +164,7 @@ export interface Applicant {
 
   user: User;
   project: Job;
-  organization: Organization;
+  organization: Identity;
 
   created_at: Date;
   updated_at: Date;

@@ -10,7 +10,7 @@ import { OverlayProps } from './slideoutMenu.types';
 export const Overlay: React.FC<OverlayProps> = ({ open, onClose, children, title, subtitle }) => {
   const headerStyle = `${css.header} ${title || subtitle ? css.headerOverwrite : ``}`;
   const closeCustom = `${title || subtitle ? `${css.closeButtonOverwrite}` : ``}`;
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     function handleClickOutside(event) {
       //FIXME: add useDetectOutside

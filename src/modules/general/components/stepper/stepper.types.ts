@@ -9,5 +9,5 @@ export interface StepperProps {
 export type StepInfo = {
   title: string;
   desc: string;
-  icon: React.FC<SvgProps>;
+  icon: string;
 };

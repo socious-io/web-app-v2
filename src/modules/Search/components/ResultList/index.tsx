@@ -5,14 +5,14 @@ import { Chip } from 'src/modules/general/components/Chip';
 
 import css from './result-list.module.scss';
 import { ResultListProps } from './ResultList.types';
-import { Item } from '../../containers/SearchModal/SearchModal.types';
+import { SearchItem } from '../../containers/SearchModal/SearchModal.types';
 export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
   const selectedRef = useRef(null);
   const [selectedRowIndex] = useState(null);
   const [hoveredRowIndex] = useState<null | number>(null);
   const navigate = useNavigate();
 
-  const onClickRow = (item: Item) => {
+  const onClickRow = (item: SearchItem) => {
     let path = '';
     switch (item.type) {
       case 'projects':
@@ -38,12 +38,18 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
             className={`${css.rows} ${selectedRowIndex === index ? css.selected : ''}  ${
               hoveredRowIndex === index ? css.selected : ''
             }`}
-            onClick={() => onClickRow(item as Item)}
+            onClick={() => onClickRow(item as SearchItem)}
           >
             <AvatarLabelGroup
               removeFull={true}
               customStyle="w-auto"
-              account={{ name: item.title, id: item.id, username: item.username, type: item.type, img: item.image }}
+              account={{
+                name: item.title,
+                id: item.id,
+                username: item.username,
+                type: item.type === 'projects' ? 'organizations' : 'users',
+                img: item.image,
+              }}
             />
             {item.isAvailable && (
               <div className={css.chip}>

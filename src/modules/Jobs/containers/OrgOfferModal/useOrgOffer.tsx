@@ -22,7 +22,7 @@ type Inputs = {
   description: string;
 };
 const schema = yup.object().shape({
-  title: yup.string().min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
+  title: yup.string().required('Required').min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
   paymentType: yup.string(),
   paymentTerm: yup.string(),
   paymentMethod: yup.string(),
@@ -47,7 +47,13 @@ const schema = yup.object().shape({
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
   const { chainId, isConnected } = Dapp.useWeb3();
-  const [tokens, setTokens] = useState([]);
+  const [tokens, setTokens] = useState<
+    {
+      value: string;
+      label: string;
+      address: string;
+    }[]
+  >([]);
   const [selected, setSelected] = useState<string>();
 
   const {
@@ -57,7 +63,8 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     setError,
     watch,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm({
+    mode: 'all',
     resolver: yupResolver(schema),
     defaultValues: {
       paymentType: 'PAID',
@@ -65,6 +72,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
       paymentTerm: 'FIXED',
     },
   });
+
   useEffect(() => {
     const getTokens = async () => {
       if (isConnected) {
@@ -83,13 +91,13 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     getTokens();
   }, [isConnected, chainId]);
 
-  const onSelectPaymentType = (paymentType: ProjectPaymentType) => {
+  const onSelectPaymentType = paymentType => {
     setValue('paymentType', paymentType);
   };
-  const onSelectPaymentTerm = (paymentType: ProjectPaymentSchemeType) => {
+  const onSelectPaymentTerm = paymentType => {
     setValue('paymentTerm', paymentType);
   };
-  const onSelectPaymentMethod = (paymentMethod: PaymentService) => {
+  const onSelectPaymentMethod = paymentMethod => {
     setValue('paymentMethod', paymentMethod);
   };
   const isCrypto = watch('paymentMethod') === 'CRYPTO';

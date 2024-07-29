@@ -5,7 +5,7 @@ import { SearchInput } from 'src/modules/Search/components/SearchInput';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './search-modal.module.scss';
-import { SearchModalProps } from './SearchModal.types';
+import { SearchModalProps, TabValue } from './SearchModal.types';
 import { useSearchModal } from './useSearchModal';
 import { Modal } from '../../components/Modal/modal';
 import { ResultNotFound } from '../../components/ResultNotFound';
@@ -30,7 +30,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
   });
   const width = isMobile ? '100%' : '760px';
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (open && inputRef.current) {
@@ -56,7 +56,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
         </div>
         <div className={css.container}>
           <div className={css.tabsRow}>
-            <TabPreview tabs={tabs} onSelect={tab => setSelectedTab(tab.value)} defaultTabIndex={0} />
+            <TabPreview tabs={tabs} onSelect={tab => setSelectedTab(tab.value as TabValue)} defaultTabIndex={0} />
           </div>
           <div className={css.searchInput}>
             <SearchInput

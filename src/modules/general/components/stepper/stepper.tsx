@@ -5,7 +5,7 @@ import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './stepper.module.scss';
 import { StepperProps } from './stepper.types';
-import { StepperIconWrapper } from './stepperIcon';
+import { FeaturedIcon } from '../featuredIcon-new';
 
 export const Stepper: React.FC<StepperProps> = props => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -77,7 +77,7 @@ export const Stepper: React.FC<StepperProps> = props => {
     >
       {steps.map((item, index) => (
         <Step key={item.title}>
-          <StepLabel
+          {/* <StepLabel
             StepIconComponent={() => (
               <StepperIconWrapper
                 step={index}
@@ -87,13 +87,13 @@ export const Stepper: React.FC<StepperProps> = props => {
                 Component={item.icon}
               />
             )}
+          > */}
+          <StepLabel
+            className={index > activeStep ? 'opacity-60' : ''}
+            StepIconComponent={() => <FeaturedIcon type="modern" size="md" iconName={item.icon} theme="gray" />}
           >
             {
-              <div
-                className={`${dir === 'horizontal' ? css.titleDivHorizontal : css.titleDivVertical} ${
-                  index > activeStep && 'opacity-60'
-                }`}
-              >
+              <div className={`${dir === 'horizontal' ? css.titleDivHorizontal : css.titleDivVertical}`}>
                 <Typography variant="subtitle2" color={variables.color_grey_700}>
                   {item.title}
                 </Typography>

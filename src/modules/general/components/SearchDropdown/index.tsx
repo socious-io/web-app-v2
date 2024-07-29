@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
-import Select, { ClearIndicatorProps, components } from 'react-select';
+import Select, { ClearIndicatorProps, components, GroupBase } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import StateManagedSelect from 'react-select/dist/declarations/src/stateManager';
 import { Icon } from 'src/modules/general/components/Icon';
 
 import css from './search-dropdown.module.scss';
@@ -85,7 +86,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   ...props
 }) => {
   const selectedVal = props.value || '';
-  const selectRef = useRef<HTMLSelectElement>(null);
+  const selectRef = useRef<any>(null);
   const handleLabelClick = () => {
     if (selectRef.current) {
       selectRef.current.focus();

@@ -6,7 +6,7 @@ export interface OptionType {
 }
 
 export type Form = {
-  cause: OptionType | undefined | null;
+  cause?: OptionType;
   content: string;
   file?: any;
   title?: string;

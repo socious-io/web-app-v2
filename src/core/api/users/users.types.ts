@@ -6,7 +6,7 @@ import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
 import { Identity } from '../site/site.types';
-import { LanguageCode, SDG, PaginateRes, ConnectStatus, ProjectType } from '../types';
+import { LanguageCode, SDG, PaginateRes, ConnectStatus, ProjectType, LanguageLevel } from '../types';
 
 // -------------------- Requests ----------------------
 
@@ -43,7 +43,7 @@ export interface UpdateWalletReq {
 
 export interface LanguageReq {
   name: LanguageCode;
-  level: 'BASIC' | 'CONVERSANT' | 'PROFICIENT' | 'FLUENT' | 'NATIVE';
+  level: LanguageLevel;
 }
 
 export interface ExperienceReq {
