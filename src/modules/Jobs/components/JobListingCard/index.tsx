@@ -25,6 +25,7 @@ interface JobListingCardProps {
   saveAction?: () => void;
   page?: number;
   scrollIndex?: number;
+  hasDescription?: boolean;
 }
 
 export const JobListingCard: React.FC<JobListingCardProps> = ({
@@ -34,6 +35,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
   saveAction,
   page = 1,
   scrollIndex = 0,
+  hasDescription = true,
 }) => {
   const { skills, handleTitleClick, handleClick, jobVal, handleBookmark, handleNotInterested } = useJobListingCard(
     job,
@@ -111,14 +113,16 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
             <Chip key={label} label={label} theme="grey_blue" shape="round" size="md" />
           ))}
         </div>
-        <div className={css.jobDescription}>
-          <ExpandableText
-            isMarkdown
-            expectedLength={isTouchDevice() ? 85 : 175}
-            text={job.description || ''}
-            seeMoreButton={false}
-          />
-        </div>
+        {hasDescription && (
+          <div className={css.jobDescription}>
+            <ExpandableText
+              isMarkdown
+              expectedLength={isTouchDevice() ? 85 : 175}
+              text={job.description || ''}
+              seeMoreButton={false}
+            />
+          </div>
+        )}
         <div className={css.jobFeatures}>
           {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}
           {renderJobFeatures(
