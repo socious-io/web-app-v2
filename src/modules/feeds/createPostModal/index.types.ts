@@ -1,14 +1,14 @@
 import { Media } from 'src/core/api';
 
 export interface OptionType {
-  value: string;
-  label: string;
+  value?: string;
+  label?: string;
 }
 
 export type Form = {
-  cause: OptionType | null;
+  cause?: OptionType;
   content: string;
-  file: File | string | null;
+  file?: any;
   title?: string;
 };
 

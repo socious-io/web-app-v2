@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLoaderData } from 'react-router-dom';
-import { Answer, Job, applyJob } from 'src/core/api';
+import { Answer, ApplyReq, Job, applyJob } from 'src/core/api';
 import { QuestionsRes } from 'src/core/types';
 import { removedEmptyProps } from 'src/core/utils';
 import * as yup from 'yup';
@@ -59,16 +59,16 @@ export const useApplyModal = (handleClose: (applied: boolean) => void) => {
     if (errors.length) return;
 
     const { coverLetter, linkName, linkUrl } = getValues();
-    let payload = {
+    let payload: ApplyReq = {
       cover_letter: coverLetter,
       cv_link: linkUrl ? 'https://' + linkUrl : '',
-      cv_name: linkName,
+      cv_name: linkName || '',
       share_contact_info: true,
       attachment: attachments[0],
       answers: answers,
     };
 
-    payload = removedEmptyProps(payload);
+    payload = removedEmptyProps(payload) as ApplyReq;
 
     await applyJob(jobDetail.id, payload);
     handleClose(true);

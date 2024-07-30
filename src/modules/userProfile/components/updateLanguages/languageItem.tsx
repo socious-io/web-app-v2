@@ -14,7 +14,10 @@ interface LanguageItemProps {
   errors: Error[];
 }
 export const LanguageItem: React.FC<LanguageItemProps> = ({ language, editLanguage, deleteLanguage, errors }) => {
-  const { name, level, onSelectLanguage, onSelectLevel, languageOptions, levelOptions } = useLanguageItem(language);
+  const { name, level, onSelectLanguage, onSelectLevel, languageOptions, levelOptions } = useLanguageItem(
+    language,
+    editLanguage,
+  );
   const error = errors.find(e => e.id === language.id);
   return (
     <div className="flex flex-col w-full">
@@ -26,10 +29,7 @@ export const LanguageItem: React.FC<LanguageItemProps> = ({ language, editLangua
           options={languageOptions}
           icon="search-lg"
           hasDropdownIcon={false}
-          onChange={value => {
-            onSelectLanguage(value);
-            editLanguage(language.id, value.value, level.value);
-          }}
+          onChange={onSelectLanguage}
           className="flex-1"
           isSearchable
           errors={[error?.messages || '']}
@@ -41,10 +41,7 @@ export const LanguageItem: React.FC<LanguageItemProps> = ({ language, editLangua
           options={levelOptions}
           className="flex-1"
           hasDropdownIcon
-          onChange={value => {
-            onSelectLevel(value);
-            editLanguage(language.id, name.value, value.value);
-          }}
+          onChange={onSelectLevel}
           isSearchable
         />
         <IconButton onClick={() => deleteLanguage(language.id)}>

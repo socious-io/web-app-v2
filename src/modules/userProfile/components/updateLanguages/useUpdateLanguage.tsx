@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { LanguageCode } from 'src/core/api';
+import { LanguageCode, LanguageLevel } from 'src/core/api';
 import { Error, LanguageProps } from 'src/modules/userProfile/containers/editInfo/editInfo.types';
 
 export const UseUpdateLanguage = (
@@ -44,7 +44,7 @@ export const UseUpdateLanguage = (
     const idx = langs.findIndex(l => l.id === id);
     if (idx > -1) {
       langs[idx].name = name;
-      langs[idx].level = level;
+      langs[idx].level = level as LanguageLevel;
     }
     setLanguages(langs);
   };

@@ -7,7 +7,7 @@ import { ReferCard } from 'src/modules/refer/referCard';
 import { RootState } from 'src/store';
 
 export const Refer = () => {
-  const verified = useSelector<RootState, boolean>(
+  const verified = useSelector<RootState, boolean | undefined>(
     state => (state.identity.entities.find(item => item.current)?.meta as UserMeta).identity_verified,
   );
 

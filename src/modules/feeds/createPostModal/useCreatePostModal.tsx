@@ -57,7 +57,7 @@ export const useCreatePostModal = (
     setValue,
     watch,
     reset,
-  } = useForm<Form>({
+  } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
   });
@@ -68,7 +68,7 @@ export const useCreatePostModal = (
 
   const initializeValues = () => {
     const initialVal: Form = {
-      cause: data?.cause || null,
+      cause: data?.cause,
       content: data?.content || '',
       file: data?.file?.id || '',
       title: data?.title || '',
@@ -79,7 +79,7 @@ export const useCreatePostModal = (
 
   useEffect(() => initializeValues(), [data]);
 
-  const onSelectCause = (option: OptionType) => setValue('cause', option);
+  const onSelectCause = option => setValue('cause', option);
 
   const onTextChange = (name: 'title' | 'content', value: string) => setValue(name, value);
 

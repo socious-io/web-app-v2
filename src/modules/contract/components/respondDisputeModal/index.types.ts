@@ -1,10 +1,10 @@
 import { Dispute } from 'src/core/api';
 
 export type Form = {
-  message: string;
-  evidences: string[];
-  confirmInfo: boolean;
-  sharedInfo: boolean;
+  message?: string;
+  evidences?: string[];
+  confirmInfo?: boolean;
+  sharedInfo?: boolean;
 };
 
 export interface RespondDisputeModalProps {

@@ -94,12 +94,12 @@ export const useEducationDetails = (
         value: awardedDate ? awardedDate.getMonth().toString() : '',
       },
       day: {
-        label: awardedDate?.getDate() || '',
-        value: awardedDate?.getDate() || '',
+        label: awardedDate?.getDate().toString() || '',
+        value: awardedDate?.getDate().toString() || '',
       },
       year: {
-        label: awardedDate?.getFullYear() || '',
-        value: awardedDate?.getFullYear() || '',
+        label: awardedDate?.getFullYear().toString() || '',
+        value: awardedDate?.getFullYear().toString() || '',
       },
     };
     reset(initialVal);
@@ -118,15 +118,15 @@ export const useEducationDetails = (
     getDayOptions();
   }, [monthVal, yearVal]);
 
-  const onSelectMonth = (month: OptionType) => {
+  const onSelectMonth = month => {
     setValue('month', month, { shouldValidate: true });
   };
 
-  const onSelectDay = (day: OptionType) => {
+  const onSelectDay = day => {
     setValue('day', day, { shouldValidate: true });
   };
 
-  const onSelectYear = (year: OptionType) => {
+  const onSelectYear = year => {
     setValue('year', year, { shouldValidate: true });
   };
 

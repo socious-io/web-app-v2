@@ -5,6 +5,7 @@ import { PROJECT_TYPE } from 'src/constants/PROJECT_TYPES';
 import {
   Experience,
   ExperienceReq,
+  ProjectType,
   createOrganization,
   jobCategories as jobCategoriesApi,
   updateExperiences,
@@ -205,24 +206,24 @@ export const useExperienceDetails = (
       country: experience?.country || '',
       startMonth: {
         label: startDate ? monthNames[startDate.getMonth()] : '',
-        value: startDate ? startDate.getMonth() : '',
+        value: startDate ? startDate.getMonth().toString() : '',
       },
       startDay: {
-        label: startDate?.getDate() || '',
-        value: startDate?.getDate() || '',
+        label: startDate?.getDate().toString() || '',
+        value: startDate?.getDate().toString() || '',
       },
-      startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
+      startYear: { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' },
       endMonth: {
         label: endDate ? monthNames[endDate.getMonth()] : monthNames[currentDate.getUTCMonth()],
-        value: endDate ? endDate.getMonth() : currentDate.getUTCMonth(),
+        value: endDate ? endDate.getMonth().toString() : currentDate.getUTCMonth().toString(),
       },
       endDay: {
-        label: endDate?.getDate() || currentDate.getUTCDate(),
-        value: endDate?.getDate() || currentDate.getUTCDate(),
+        label: endDate?.getDate().toString() || currentDate.getUTCDate().toString(),
+        value: endDate?.getDate().toString() || currentDate.getUTCDate().toString(),
       },
       endYear: {
-        label: endDate?.getFullYear() || currentDate.getUTCFullYear(),
-        value: endDate?.getFullYear() || currentDate.getUTCFullYear(),
+        label: endDate?.getFullYear().toString() || currentDate.getUTCFullYear().toString(),
+        value: endDate?.getFullYear().toString() || currentDate.getUTCFullYear().toString(),
       },
       description: experience?.description || '',
       org: {
@@ -274,31 +275,31 @@ export const useExperienceDetails = (
     initializeValues();
   }, [experience]);
 
-  const onChangeCategory = (newCategory: OptionType) => {
+  const onChangeCategory = newCategory => {
     setValue('jobCategory', newCategory, { shouldValidate: true });
   };
 
-  const onSelectEmplymentType = (newType: OptionType) => {
+  const onSelectEmplymentType = newType => {
     setValue('employmentType', newType, { shouldValidate: true });
   };
 
-  const onSelectStartMonth = (month: OptionType) => {
+  const onSelectStartMonth = month => {
     setValue('startMonth', month, { shouldValidate: true });
   };
 
-  const onSelectStartDay = (day: OptionType) => {
+  const onSelectStartDay = day => {
     setValue('startDay', day, { shouldValidate: true });
   };
-  const onSelectEndMonth = (month: OptionType) => {
+  const onSelectEndMonth = month => {
     setValue('endMonth', month, { shouldValidate: true });
   };
-  const onSelectEndDay = (day: OptionType) => {
+  const onSelectEndDay = day => {
     setValue('endDay', day, { shouldValidate: true });
   };
-  const onSelectStartYear = (year: OptionType) => {
+  const onSelectStartYear = year => {
     setValue('startYear', year, { shouldValidate: true });
   };
-  const onSelectEndYear = (year: OptionType) => {
+  const onSelectEndYear = year => {
     setValue('endYear', year, { shouldValidate: true });
   };
 
@@ -348,7 +349,7 @@ export const useExperienceDetails = (
       weekly_hours: weeklyHours ? parseFloat(weeklyHours) : null,
       total_hours: totalHours ? parseFloat(totalHours) : null,
     };
-    if (employmentType.value) payload.employment_type = employmentType.value;
+    if (employmentType.value) payload.employment_type = employmentType.value as ProjectType;
     if (endYear.value) {
       const endDate = new Date(
         Number(endYear.value),
@@ -358,7 +359,7 @@ export const useExperienceDetails = (
       payload.end_at = endDate;
     }
 
-    payload = removedEmptyProps(payload);
+    payload = removedEmptyProps(payload) as ExperienceReq;
     const updatedExperience = await updateExperiences(experience.id, payload);
     onUpdateExperience?.(updatedExperience);
     handleClose();

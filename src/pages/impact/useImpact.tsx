@@ -11,20 +11,17 @@ export const useImpact = () => {
     return state.profile.identity;
   });
   const { impactPointHistory } = useLoaderData() as { badges: Badges; impactPointHistory: ImpactPoints };
-  console.log(impactPointHistory);
 
   useEffect(() => {
     let totalHours: { type: 'paid' | 'volunteered'; hours: number }[] = [];
     if (impactPointHistory) {
       totalHours = impactPointHistory.items
-        .filter(item => item.offer !== null)
+        .filter(item => !!item.offer)
         .map(item => {
-          if (item.offer) {
-            if ((item?.offer?.currency && ['USD', 'YEN'].includes(item?.offer?.currency)) || item.offer.currency) {
-              return { type: 'paid', hours: item.offer.total_hours };
-            } else {
-              return { type: 'volunteered', hours: item.offer.total_hours };
-            }
+          if ((item?.offer?.currency && ['USD', 'YEN'].includes(item?.offer?.currency)) || item.offer.currency) {
+            return { type: 'paid', hours: item.offer.total_hours };
+          } else {
+            return { type: 'volunteered', hours: item.offer.total_hours };
           }
         });
 

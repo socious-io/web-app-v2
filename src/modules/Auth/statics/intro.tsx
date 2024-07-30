@@ -24,7 +24,6 @@ export const onboardingOptons = [
     title: 'I am seeking impact work',
     description: 'Discover roles that matter and join forces with changemakers',
     icon: { name: 'user-01', fontSize: 21 },
-
     value: 'user',
   },
   {

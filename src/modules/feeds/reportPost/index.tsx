@@ -44,6 +44,10 @@ const ReportPost: React.FC<ReportPostProps> = ({ open, handleClose, onReportPost
     </div>
   );
 
+  const handleChange = value => {
+    setComment(value?.value || '');
+  };
+
   return (
     <Modal
       open={open}
@@ -67,7 +71,7 @@ const ReportPost: React.FC<ReportPostProps> = ({ open, handleClose, onReportPost
           placeholder="Reason to report"
           options={reportOptions}
           value={reportOptions.find(option => option.value === comment)}
-          onChange={value => setComment(value?.value || '')}
+          onChange={handleChange}
           errors={!comment ? ['Please select a reason to report'] : undefined}
         />
       </div>

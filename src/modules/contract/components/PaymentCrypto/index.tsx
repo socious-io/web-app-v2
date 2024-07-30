@@ -43,7 +43,7 @@ export const PaymentCrypto: React.FC<PaymentCryptoProps> = ({ open, handleClose,
     <div className="w-full p-4 md:p-6 flex flex-col items-center gap-5">
       {isConnected ? <Dapp.Connect /> : <ConnectButton handleClick={() => openConnect()} />}
       <PaymentSummary
-        currency={unit}
+        currency={unit.toString()}
         amount={offer?.amount || 0}
         sociousFee={offer?.fee || 0}
         stripeFee={offer?.stripe_fee || 0}

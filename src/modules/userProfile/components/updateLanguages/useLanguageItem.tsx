@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Languages } from 'src/constants/constants';
+import { LanguageCode } from 'src/core/api';
 import { LanguageProps } from 'src/modules/userProfile/containers/editInfo/editInfo.types';
 
 interface OptionType {
@@ -8,7 +9,10 @@ interface OptionType {
   label: string;
 }
 
-export const useLanguageItem = (language: LanguageProps) => {
+export const useLanguageItem = (
+  language: LanguageProps,
+  editLanguage: (id: string, name: LanguageCode, level: string) => void,
+) => {
   const { t } = useTranslation();
   const mapToLanguage = (langCode: keyof typeof Languages | undefined) => {
     if (!langCode) return '';
@@ -33,13 +37,16 @@ export const useLanguageItem = (language: LanguageProps) => {
     return { value: item, label: t(item) };
   });
 
-  const onSelectLanguage = (lang: OptionType) => {
+  const onSelectLanguage = lang => {
     setName({ value: lang.value, label: lang.label });
+    editLanguage(language.id, lang.value, level.value);
   };
 
-  const onSelectLevel = (lvl: OptionType) => {
+  const onSelectLevel = lvl => {
     setLevel(lvl);
+    editLanguage(language.id, name.value as LanguageCode, lvl.value);
   };
+
   return {
     name,
     level,

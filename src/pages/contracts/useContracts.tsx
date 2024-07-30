@@ -21,6 +21,8 @@ export const useContracts = () => {
   const pageCount = Math.ceil(totalCount / PER_PAGE);
   const fetchMore = async () => {
     if (!currentIdentity) return;
+    dispatch(handleDisplaySlider(false));
+
     if (filter === 'all')
       await store.dispatch(getContracts({ page, limit: PER_PAGE, identityType: currentIdentity.type }));
     else

@@ -45,13 +45,12 @@ export const JobInfoCard: React.FC<JobInfoCardProps> = ({ payload }) => {
     { icon: jobLength ? 'hourglass-03' : '', title: jobLength },
     { icon: experienceLevel ? 'target-02' : '', title: experienceLevel },
   ];
-  const item =
-    paymentType === 'Volunteer'
-      ? { icon: 'heart', title: 'Volunteer' }
-      : minPayment && maxPayment
-        ? { icon: 'currency-dollar-circle', title: `${minPayment}~${maxPayment} USD` }
-        : {};
-  items.push(item);
+  if (paymentType === 'Volunteer') {
+    items.push({ icon: 'heart', title: 'Volunteer' });
+  } else if (minPayment && maxPayment) {
+    items.push({ icon: 'currency-dollar-circle', title: `${minPayment}~${maxPayment} USD` });
+  }
+
   return (
     <div className={css.jobCard}>
       {city && renderLocation()}

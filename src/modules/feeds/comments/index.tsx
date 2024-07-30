@@ -24,11 +24,10 @@ const Comments: React.FC<CommentsProps> = ({
     data: { emojis, openEmojiPicker },
     operations: { setOpenEmojiPicker, onPreviewClick, onEmojiSelect },
   } = useComments(postId, list);
-
   return (
     <>
       {list.map(item => {
-        const { profileImage, type, name } = getIdentityMeta(item.identity_meta);
+        const { type, name, profileImage } = getIdentityMeta(item.identity_meta);
         return (
           <div key={item.id} className="flex gap-3 items-start">
             <Avatar type={type || 'users'} size="2rem" img={(profileImage as string) || ''} />

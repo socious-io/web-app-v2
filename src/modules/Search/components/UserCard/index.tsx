@@ -12,7 +12,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
     <div className={`${css.container}`}>
       <div className={css.gradient} />
       <div className={css.avatar}>
-        <Avatar hasBorder isVerified={user.isVerified} size="72px" type="users" img={user.image} iconSize={47} />
+        <Avatar hasBorder isVerified={user.isVerified} size="72px" type="users" img={user.image || ''} iconSize={47} />
       </div>
       <div className="mt-12">
         {user.isAvailable && (

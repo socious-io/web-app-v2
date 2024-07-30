@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Contract, CurrentIdentity } from 'src/core/api';
+import { Contract, CurrentIdentity, OrgMeta, UserMeta } from 'src/core/api';
 import dapp from 'src/dapp';
 import { Dot } from 'src/modules/general/components/dot';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -17,7 +17,8 @@ export const useContractCard = (contract: Contract) => {
   const type = identity?.type;
 
   const name = type === 'users' ? contractVal.offerer.meta.name : contractVal.recipient.meta.name;
-  const profileImageUrl = type === 'users' ? contractVal.offerer.meta.image : contractVal.recipient.meta.avatar;
+  const profileImageUrl =
+    type === 'users' ? (contractVal.offerer.meta as OrgMeta).image : (contractVal.recipient.meta as UserMeta).avatar;
 
   const dispatch = useDispatch();
 
@@ -62,7 +63,8 @@ export const useContractCard = (contract: Contract) => {
     }
   })();
 
-  const BadgeData = () => {
+  type BadgeTheme = 'warning' | 'secondary' | 'success' | 'error' | 'primary' | 'grey_blue' | undefined;
+  const BadgeData = (): { theme: BadgeTheme; icon: ReactNode } => {
     switch (contractVal.contractStatus) {
       case 'Offer received':
         return {
@@ -123,6 +125,7 @@ export const useContractCard = (contract: Contract) => {
   };
 
   const badge = BadgeData();
+  const contractCurrency = String(contractVal?.currency || '');
 
   return {
     badge,
@@ -133,5 +136,6 @@ export const useContractCard = (contract: Contract) => {
     formatCurrency,
     contractVal,
     handleOpenOverlayModal,
+    contractCurrency,
   };
 };

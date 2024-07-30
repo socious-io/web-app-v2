@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import css from './result-not-found.module.scss';
@@ -22,7 +23,7 @@ export const useResultNotFound = () => {
   };
 
   const generateMessage = (type: string, searchTerm: string) => {
-    let message = null;
+    let message: ReactNode | null = null;
 
     message = (
       <div className={css.message}>

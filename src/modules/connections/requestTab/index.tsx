@@ -25,6 +25,7 @@ export const RequestTab = () => {
   } = useRequestTab();
 
   const requester = selectedRequest?.requester;
+  const { profileImage, username } = getIdentityMeta(requester);
 
   const footerJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
@@ -105,10 +106,10 @@ export const RequestTab = () => {
           <AvatarLabelGroup
             account={{
               id: requester?.id || '',
-              img: requester?.meta.avatar || requester?.meta.image || '',
+              img: profileImage,
               type: requester?.type || 'users',
               name: requester?.meta.name || '',
-              username: requester?.meta.username || requester?.meta.shortname,
+              username: username,
             }}
             customStyle="!px-0"
           />

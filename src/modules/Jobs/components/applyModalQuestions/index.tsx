@@ -56,8 +56,8 @@ const ApplyModalQuestions: React.FC<ApplyModalQuestionsProps> = ({ answers, setA
               })}
               onChange={type => handleSelectOption(question.id, Number(type.value), type.label)}
               errors={
-                questionErrors.find(e => e.id === question.id)
-                  ? [questionErrors.find(e => e.id === question.id).message]
+                questionErrors.find(e => e.id === question.id)?.message
+                  ? [questionErrors.find(e => e.id === question.id)?.message || '']
                   : undefined
               }
               defaultValue={answers.find(a => a.id === question.id)?.selected_option}
@@ -69,7 +69,7 @@ const ApplyModalQuestions: React.FC<ApplyModalQuestionsProps> = ({ answers, setA
               onChange={e => handleTypeAnswer(question.id, e.target.value)}
               errors={
                 questionErrors.find(e => e.id === question.id)
-                  ? [questionErrors.find(e => e.id === question.id).message]
+                  ? [questionErrors.find(e => e.id === question.id)?.message || '']
                   : undefined
               }
             />

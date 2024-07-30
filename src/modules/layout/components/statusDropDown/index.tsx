@@ -20,7 +20,7 @@ interface StatusDropDownProps {
 export const StatusDropDown: React.FC<StatusDropDownProps> = props => {
   const [open, setOpen] = useState(false);
   const { type, openToWork, openToVolunteer, hiring, handleHiring, handleOpenToVolunteer, handleOpenToWork } = props;
-  const newRef = useRef(null);
+  const newRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick);
     return () => {

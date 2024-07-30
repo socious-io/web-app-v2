@@ -65,9 +65,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           label="Start date*"
           options={months}
           hasDropdownIcon
-          onChange={value => {
-            onSelectStartMonth(value);
-          }}
+          onChange={onSelectStartMonth}
           className="flex-1"
           placeholder="Month"
           isSearchable

@@ -1,15 +1,15 @@
 interface OptionType {
-  value: string;
-  label: string;
+  value?: string;
+  label?: string;
 }
 
 export type Form = {
   category: OptionType;
-  title: string;
-  description: string;
-  evidences: string[];
-  confirmInfo: boolean;
-  sharedInfo: boolean;
+  title?: string;
+  description?: string;
+  evidences?: string[];
+  confirmInfo?: boolean;
+  sharedInfo?: boolean;
 };
 
 export interface InitiateDisputeModalProps {

@@ -62,7 +62,7 @@ export const Intro = () => {
               items={onboardingOptons}
               selectedValue={selectedOnboarding}
               setSelectedValue={value => {
-                setSelectedOnboarding(value);
+                setSelectedOnboarding(value as 'organization' | 'user');
               }}
             />
             <div className="mt-6">

@@ -44,7 +44,6 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           isAsync
           value={filters.location}
           loadOptions={searchCities}
-          defaultOptions
           isClearable={!!filters.location?.value}
           icon="search-lg"
           hasDropdownIcon={!filters.location?.value}
@@ -110,7 +109,6 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
         isAsync
         value={filters.location}
         loadOptions={searchCities}
-        defaultOptions
         className="mb-6"
         icon="search-lg"
         hasDropdownIcon={true}

@@ -8,9 +8,9 @@ export const useAddCardModalUser = (offer: Offer) => {
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const onSelectCountry = value => {
-    if (value !== selectedCountry) setStripeLink('');
-    setSelectedCountry(value);
+  const onSelectCountry = country => {
+    if (country.value !== selectedCountry) setStripeLink('');
+    setSelectedCountry(country.value);
   };
 
   const getStripeLink = async (country: string) => {

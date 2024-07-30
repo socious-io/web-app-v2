@@ -112,7 +112,7 @@ export const CreateScreenQuestion: React.FC<CreateScreenQuestionProps> = ({
           variant="contained"
           color="primary"
           onClick={handleSubmit(onSubmit)}
-          disabled={!isValid || optionError}
+          disabled={!isValid || !!optionError}
         >
           {editedQuestion ? 'Edit question' : 'Add question'}
         </Button>

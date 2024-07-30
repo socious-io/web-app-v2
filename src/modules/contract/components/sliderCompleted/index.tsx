@@ -19,6 +19,7 @@ export const SliderCompleted: React.FC<SliderCompletedProps> = ({ contract, disa
   const identityType = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   )?.type;
+
   return (
     <>
       <div className="flex flex-col gap-4">

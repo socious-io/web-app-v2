@@ -25,7 +25,6 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
     setOpenAddCardModal,
     setCardList,
   } = usePaymentFiat(handleClose, offer?.id || '');
-
   const footerJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse p-4 md:p-6 gap-3">
       <Button
@@ -63,7 +62,7 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
         Add a new card
       </Button>
       <PaymentSummary
-        currency={offer?.currency || ''}
+        currency={offer?.currency?.toString() || ''}
         amount={offer?.amount || 0}
         sociousFee={offer?.fee || 0}
         stripeFee={offer?.stripe_fee || 0}
@@ -85,7 +84,7 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
       />
       {openAddCardModal && offer && (
         <AddCardModal
-          currency={offer.currency}
+          currency={offer?.currency?.toString()}
           open={openAddCardModal}
           handleClose={() => setOpenAddCardModal(false)}
           setCardsList={setCardList}

@@ -50,7 +50,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     dispatch({ type, payload: value });
   };
 
-  const onSelectCity = (location: { value: number; label: string; countryCode: string }) => {
+  const onSelectCity = location => {
     const { value, label, countryCode } = location || {};
     dispatch({ type: 'location', payload: { label, value, countryCode } });
   };
@@ -59,11 +59,11 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     dispatch({ type, payload: value });
   };
 
-  const onSelectSearchDropdown = (type: 'preference' | 'jobCategory', value: { label: string; value: string }) => {
+  const onSelectSearchDropdown = (type: 'preference' | 'jobCategory', value) => {
     dispatch({ type, payload: value });
   };
 
-  const onSelectPaymentType = (value: { label: string; value: string }) => {
+  const onSelectPaymentType = value => {
     dispatch({ type: 'paymentType', payload: value });
   };
 
@@ -131,9 +131,13 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       dispatch({ type: 'jobLength', payload: getOptionsFromValues(filter.project_length || [], PROJECT_LENGTH_V2) });
     }
     if (filter.experience_level?.length) {
+      const strLevels = filter.experience_level?.map(item => item.toString()) || [];
+      const strLevelV2 = EXPERIENCE_LEVEL_V2.map(item => {
+        return { value: item.value.toString(), label: item.label };
+      });
       dispatch({
         type: 'experienceLevel',
-        payload: getOptionsFromValues(filter.experience_level || [], EXPERIENCE_LEVEL_V2),
+        payload: getOptionsFromValues(strLevels, strLevelV2),
       });
     }
     if (filter.payment_type) {

@@ -20,8 +20,7 @@ export const LinkItem: React.FC<LinkItemProps> = props => {
           <Icon
             name={iconName}
             fontSize={24}
-            className="text-Gray-light-mode-500 md:text-Brand-300 !cursor-pointer"
-            style={{ pointerEvents: 'none' }}
+            className="text-Gray-light-mode-500 md:text-Brand-300 !cursor-pointer pointer-events-none"
           />
         )}
         {menuOpen && (

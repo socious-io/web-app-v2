@@ -9,6 +9,7 @@ import {
   getOrganizationMembers,
   removeOrganizationMember,
 } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { AccountItem } from 'src/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { RootState } from 'src/store';
@@ -77,14 +78,17 @@ export const useOrgTeam = () => {
   }, []);
 
   const followingToOption = (followings: Following[]) => {
-    return followings.map(following => ({
-      label: JSON.stringify({
-        label: following.identity_meta?.name || '',
-        description: following.identity_meta?.username ? `@${following.identity_meta?.username}` : '',
-      }),
-      value: following.identity_meta?.id,
-      icon: <Avatar img={following.identity_meta?.avatar || ''} type="users" size="24px" />,
-    }));
+    return followings.map(following => {
+      const { name, username, profileImage } = getIdentityMeta(following);
+      return {
+        label: JSON.stringify({
+          label: name,
+          description: username,
+        }),
+        value: following.identity_meta?.id,
+        icon: <Avatar img={profileImage} type="users" size="24px" />,
+      };
+    });
   };
 
   const searchMembers = async (searchText: string, cb) => {

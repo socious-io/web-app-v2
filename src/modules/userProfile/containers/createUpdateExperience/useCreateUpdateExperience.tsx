@@ -8,6 +8,7 @@ import {
   ExperienceReq,
   Location,
   Organization,
+  ProjectType,
   User,
   addExperiences,
   createOrganization,
@@ -198,11 +199,14 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       country: experience?.country || '',
       startMonth: {
         label: startDate ? monthNames[startDate.getMonth()] : '',
-        value: startDate ? startDate.getMonth() : '',
+        value: startDate ? startDate.getMonth().toString() : '',
       },
-      startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
-      endMonth: { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth() : '' },
-      endYear: { label: endDate?.getFullYear() || '', value: endDate?.getFullYear() || '' },
+      startYear: { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' },
+      endMonth: {
+        label: endDate ? monthNames[endDate.getMonth()] : '',
+        value: endDate ? endDate.getMonth().toString() : '',
+      },
+      endYear: { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' },
       description: experience?.description || '',
       currentlyWorking: experience ? !experience?.end_at : false,
       org: {
@@ -250,7 +254,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     initializeValues();
   }, [experience]);
 
-  const onChangeCategory = (newCategory: OptionType) => {
+  const onChangeCategory = newCategory => {
     setValue('jobCategory', newCategory, { shouldValidate: true });
   };
   const orgToOption = (orgs: Organization[], searchText: string) => {
@@ -278,7 +282,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     }
   };
 
-  const onSelectCompany = (newCompanyVal: OptionType) => {
+  const onSelectCompany = newCompanyVal => {
     const value = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
     setValue('org', { value, label: newCompanyVal.label }, { shouldValidate: true });
   };
@@ -307,20 +311,20 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     setValue('country', location.countryCode, { shouldValidate: true });
   };
 
-  const onSelectEmplymentType = (newType: OptionType) => {
+  const onSelectEmplymentType = newType => {
     setValue('employmentType', newType, { shouldValidate: true });
   };
 
-  const onSelectStartMonth = (month: OptionType) => {
+  const onSelectStartMonth = month => {
     setValue('startMonth', month, { shouldValidate: true });
   };
-  const onSelectEndMonth = (month: OptionType) => {
+  const onSelectEndMonth = month => {
     setValue('endMonth', month, { shouldValidate: true });
   };
-  const onSelectStartYear = (year: OptionType) => {
+  const onSelectStartYear = year => {
     setValue('startYear', year, { shouldValidate: true });
   };
-  const onSelectEndYear = (year: OptionType) => {
+  const onSelectEndYear = year => {
     setValue('endYear', year, { shouldValidate: true });
   };
 
@@ -369,13 +373,13 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       country,
       city: city.label,
     };
-    if (employmentType.value) payload.employment_type = employmentType.value;
+    if (employmentType.value) payload.employment_type = employmentType.value as ProjectType;
     if (!currentlyWorking && endYear.value) {
       const endDate = new Date(Number(endYear.value), Number(endMonth.value || 0), 1).toISOString();
       payload.end_at = endDate;
     }
 
-    payload = removedEmptyProps(payload);
+    payload = removedEmptyProps(payload) as ExperienceReq;
     if (experience) await updateExperiences(experience.id, payload);
     else await addExperiences(payload);
     const updated = await otherProfileByUsername(user?.username || '');

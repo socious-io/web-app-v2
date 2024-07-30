@@ -37,8 +37,8 @@ const schema = yup
       .array()
       .of(
         yup.object().shape({
-          label: yup.string(),
-          value: yup.string(),
+          label: yup.string().required(),
+          value: yup.string().required(),
         }),
       )
       .min(1, 'Select at least one social cause'),

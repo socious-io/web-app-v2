@@ -2,8 +2,8 @@ import { OutlinedInputProps as DefaultProps } from '@mui/material';
 import { ReactNode } from 'react';
 import { Props } from 'react-select';
 
-type Option = { value: string; label: string; icon?: ReactNode };
-interface DropdownProps extends Props {
+export type Option = { value: string; label: string; icon?: ReactNode };
+interface DropdownProps extends Omit<Props<Option, boolean>, 'onChange'> {
   options: Option[];
   minWidth?: string;
   onChange?: (currency: string) => void;
