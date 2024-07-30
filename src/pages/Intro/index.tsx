@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { Logo } from 'public/icons/nowruz/logo';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
@@ -47,13 +48,13 @@ export const Intro = () => {
   if (status === 'loading') return <div></div>;
 
   if (status === 'succeeded') return <Navigate to="/jobs" />;
-
+  const { t } = useTranslation();
   return (
     <div className="flex h-screen px-4 sm:p-0">
       <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
         <div className="form-container">
           <IntroHeader
-            title="Get started"
+            title="Get Started"
             description="Select your path: Are you purpose-driven talent seeking to make an impact, or an organization driving change?"
             logo={<Logo width={48} height={48} />}
           />

@@ -1,0 +1,403 @@
+{
+  "section_title": "Socious Web App 3.1",
+  "page_title": "Social",
+  "heading": "_Unpublished base components",
+  "supporting_text": "These are the base components that are not published. Edit these components to quickly make changes to the main published components to the right. Learn more about using components here.",
+  "jobs": [
+    {
+      "title": "Product Designer",
+      "categories": ["Ocean Protection", "Climate change", "Interaction Design", "Figma", "UX Design"],
+      "description": "We are looking for a Product Designer able to understand our business requirements and any technical limitations, as well as be responsible for conceiving and conducting user research, interviews, and surveys, and translating them into user flows, customer journey maps, wireframes, mockups, and prototypes. Responsibilities - Translate concepts into user flows, wireframes, mockups, and prototypes that lead to intuitive user experiences. - Make strategic design and user-experience decisions related to core, and new, functions and features. - Collaborate with other team members and stakeholders. Requirements - Three or more years of UX design experience. Preference will be given to candidates who have experience designing complex solutions for environmental problems. - Expertise in Figma - A clear understanding of the importance of user-centered design and design thinking. - Be excited about collaborating and communicating closely with teams and other stakeholders via a distributed model, to regularly deliver design solutions for approval.",
+      "details": {
+        "location": "Anywhere",
+        "remote": "Remote",
+        "type": "Part-time",
+        "duration": "<1 month",
+        "experience_level": "Intermediate",
+        "compensation": {
+          "amount": "1,000~5,000 USD",
+          "type": "Fixed-price"
+        },
+        "commitment": "40~60 hrs",
+        "hours_per_week": "5~15 hrs/week",
+        "payment_method": "Crypto OK",
+        "posted": "1 day ago"
+      },
+      "actions": {
+        "not_interested": "Not interested",
+        "read_more": "Read more"
+      }
+    },
+    {
+      "title": "Product Designer",
+      "categories": ["Ocean Protection"],
+      "description": "We are looking for a Product Designer able to understand our business requirements and any technical limitations, as well as be responsible for conceiving and conducting user research, interviews, and surveys, and translating them into user flows, customer journey maps, wireframes, mockups, and prototypes. Responsibilities - Translate concepts into user flows, wireframes, mockups, and prototypes that lead to intuitive user experiences. Make strategic design and user-experience decisions related to core, and new, functions and features. Collaborate with other team members and stakeholders. Requirements - Three or more years of UX design experience. Preference will be given to candidates who have experience designing complex solutions for environmental problems. Expertise in Figma A clear understanding of the importance of user-centered design and design thinking. Be excited about collaborating and communicating closely with teams and other stakeholders via a distributed model, to regularly deliver design solutions for approval.",
+      "details": {
+        "location": "Anywhere",
+        "remote": "Remote",
+        "type": "Volunteer",
+        "duration": "<1 month",
+        "experience_level": "Intermediate",
+        "compensation": {
+          "amount": "10~50 USD/hr",
+          "type": "Hourly-price"
+        },
+        "commitment": "40~60 hrs",
+        "hours_per_week": "5~15 hrs/week",
+        "payment_method": "Crypto OK",
+        "posted": "1 week ago"
+      },
+      "actions": {
+        "not_interested": "Not interested",
+        "read_more": "Read more"
+      }
+    }
+  ],
+  "filters": {
+    "location_options": ["Country / City", "In my timezone", "Search for a city", "Select a timezone"],
+    "payment_types": ["Paid", "Volunteer"],
+    "commitment_options": ["Less than a day", "1 - 3 months", "3 - 6 months", "More than 6 months"],
+    "experience_levels": ["No experience", "Entry", "Intermediate", "Expert"],
+    "skills": ["Search a skill", "UX/UI Design", "Adobe XD"],
+    "categories": ["Social Issues (General)", "Blockchain development", "Sales", "Poverty"],
+    "organization_preferences": {
+      "organization_type": ["Organization", "Organization type"],
+      "organization_size": ["1-10 employees", "11-50 employees", "51-200 employees", "201-500 employees", "501-1000 employees", "1000+ employees"]
+    },
+    "payment_options": ["Crypto available"],
+    "compensation_ranges": ["Less than $100", "$100 to $500", "$500 to $1,000", "$1,000 to $5,000", "$5,000+"]
+  },
+  "job_preferences": {
+    "types": ["Full-time", "Part-time", "One-off"],
+    "locations": ["Remote", "Hybrid"]
+  },
+  "jobs_listing": {
+    "total_jobs": "70,689 impact jobs",
+    "saved_jobs": "Recommended for you",
+    "filters": ["Social causes", "Skills", "Location"],
+    "location_options": ["Search a city, region or country"]
+  },
+  "modal_options": {
+    "reject_applicant": "Reject application",
+    "save_search": "Save this job search",
+    "send_offer": {
+      "types": ["Volunteer-Fixed", "Volunteer-Hourly", "Paid-Fixed", "Paid-Hourly"]
+    }
+  },
+  "profile_options": {
+    "account_setup": ["Create a talent account", "Complete your profile"],
+    "verification": ["Verify email", "Check your email"]
+  },
+  "additional_info": {
+    "payment_options": {
+      "types": ["Fixed", "Hourly"],
+      "ranges": ["1,000~5,000 USD", "10~50 USD/hr"]
+    },
+    "timezone_options": {
+      "within": "±",
+      "hours": "0 hours"
+    },
+    "organization": {
+      "details": {
+        "website": "oceanprotection.com",
+        "address": "San Francisco, USA",
+        "about": "Our organization works to create and support marine protected areas. We bring together a team of people with diverse perspectives, cultures, and geographies who are committed to protecting our one and only ocean from human-caused stressors and the impacts of climate change. We believe that conservation solutions work best when they begin at the community level, where real change can be done. Led by the inspiring vision of Harry Peterson, we develop innovative solutions and provide educational resources, engage in community dialogues, and support sustainable practices. Together, we envision a future where marine areas are not just protected but revered, setting a global benchmark for conservation."
+      }
+    },
+    "validation_messages": {
+      "character_limit": "Must be 2-50 characters",
+      "required": "Required"
+    }
+  },
+  "ui_text": {
+    "buttons": {
+      "apply": "Apply now",
+      "save": "Save",
+      "read_more": "Read more",
+      "search": "Search",
+      "clear": "Clear",
+      "confirm": "Confirm",
+      "submit": "Submit",
+      "login": "Login",
+      "sign_up": "Sign up",
+      "resend": "Click to resend"
+    },
+    "labels": {
+      "search_by": "Search by title, skill, or organization",
+      "payment_type": "Payment type",
+      "payment_terms": "Payment terms / range",
+      "commitment": "Commitment",
+      "screening_questions": "Screening questions",
+      "wallet": "WalletConnect",
+      "balance": "Balance: 2,000.18 USDC Max",
+      "title": "Title",
+      "due_date": "Due date",
+      "estimated_hours": "Estimated total hours",
+      "payment_method": "Payment method",
+      "total_commitment": "Total commitment",
+      "weekly_commitment": "Weekly commitment",
+      "location": "Location",
+      "job_type": "Job type",
+      "job_length": "Job length",
+      "experience_level": "Experience level",
+      "job_description": "Job description",
+      "job_title": "Job title",
+      "job_category": "Job category",
+      "social_cause": "Select a social cause",
+      "organization": "Organization preferences",
+      "organization_type": "Organization type",
+      "organization_size": "Organization size",
+      "timezone": "Timezone",
+      "filter_by": "Filter by",
+      "saved_search": "Select saved search",
+      "social_causes": "Social causes",
+      "portfolio": "Portfolio",
+      "resume": "Resume",
+      "credentials": "Credentials",
+      "referrals": "Refer and earn",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "messages": {
+      "no_jobs_found": "No jobs found",
+      "job_published": "Job published",
+      "changes_saved": "Changes saved",
+      "applicant_rejected": "Applicant rejected",
+      "application_submitted": "Your application has been successfully submitted",
+      "check_email": "Check your email",
+      "email_verification": "Email verification",
+      "account_created": "Your account has been successfully created",
+      "welcome": "Welcome to Socious"
+    },
+    "placeholders": {
+      "enter_name": "Enter a name",
+      "enter_email": "Enter your email",
+      "portfolio_url": "e.g., Portfolio",
+      "job_title": "e.g., Product Manager",
+      "job_description": "Write a few sentences about the job",
+      "message": "Message*",
+      "link_name": "Link name",
+      "url": "https://",
+      "example": "www.example.com"
+    }
+  },
+  "applicant": {
+    "name": "Umaya Nigina",
+    "username": "@unigina123",
+    "applied": "4 days ago",
+    "impact_points": "Addis Ababa, Ethiopia",
+    "location": "Paris, France",
+    "timezone": "UTC+3.00",
+    "experience": "Experience",
+    "hire": "Hire",
+    "message": "Message",
+    "view_profile": "View profile",
+    "rejected": "You have rejected this applicant 1 week ago.",
+    "cover_letter": "I am excited to be applying for the Product Designer position at Ocean Protection. I have a Bachelor of Fine Arts in Graphic Design and more than three years of experience as a product designer. I am confident that my skills and experience will make me the perfect candidate for this role. In my previous role at InovaTech, I was responsible for designing and developing a wide range of digital products, from B2C to B2B. I have experience with a variety of design processes, and I am confident in my ability to design products that are both aesthetically pleasing and functional. I am also experienced in creating prototypes and presenting my designs to clients and stakeholders. Most importantly, I am passionate about designing products that improve people’s lives. I am always looking for ways to simplify and improve the user experience, and I firmly believe that good design should be accessible to everyone. I am excited to join Ocean Protection and continue working on products that make a difference in people’s lives. Thank you for your time and consideration. I look forward to hearing from you soon.",
+    "resume": {
+      "file_type": "PDF",
+      "name": "Resume 2023 Updated",
+      "size": "720 KB"
+    },
+    "portfolio": "umayanigina.com",
+    "actions": {
+      "back": "Back",
+      "apply_now": "Apply now",
+      "copy": "Copy",
+      "apply": "Apply",
+      "save": "Save"
+    }
+  },
+  "related_jobs": "Related jobs",
+  "about_this_job": "About this job",
+  "share": "Share",
+  "saved_jobs": {
+    "title": "Saved jobs",
+    "description": "Your saved jobs",
+    "options": ["We have two options: either save a job or mark it as “Not interested”."]
+  },
+  "applied_jobs": {
+    "title": "Applied jobs",
+    "description": "Your applied jobs",
+    "status": ["Applied 1 day ago", "Applied 1 week ago"]
+  },
+  "active_job_details": {
+    "title": "Dashboard",
+    "options": ["Find work", "Applied jobs", "Contracts", "Communities", "Messages", "Payments", "Credentials", "Refer and earn", "Settings", "Logout"],
+    "display": "Display 10 jobs before loading more",
+    "job_status": ["You will not see this job again"],
+    "job_search": {
+      "title": "Jobs search",
+      "description": "42 jobs found in the United States",
+      "search_options": ["Search for Designer"],
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "details": "Page 1 of 10"
+      }
+    }
+  },
+  "recommendations": {
+    "title": "Recommendations",
+    "description": "Your saved jobs",
+    "filters": ["Filter jobs by social causes, skills, and more"]
+  },
+  "application_flow": {
+    "log_in": {
+      "title": "Log in to your account",
+      "description": "To continue, please sign in or register",
+      "buttons": ["Create an account", "Login"]
+    },
+    "create_account": {
+      "title": "Create a talent account",
+      "description": "Start making an impact now.",
+      "fields": {
+        "email": "Email*",
+        "enter_email": "Enter your email",
+        "continue_with_google": "Continue with Google",
+        "already_have_account": "Already have an account?",
+        "log_in": "Log in"
+      },
+      "messages": {
+        "welcome_back": "Welcome back! Please enter your details.",
+        "password": "Password",
+        "enter_password": "••••••••",
+        "keep_logged_in": "Keep me logged in",
+        "forgot_password": "Forgot password",
+        "dont_have_account": "Don’t have an account?",
+        "sign_up": "Sign up",
+        "check_email": "Check your email",
+        "verification_link": "We sent a verification link to umaya.nigina@gmail.com",
+        "verify_email": "Verify email",
+        "didnt_receive_email": "Didn’t receive the email?",
+        "click_to_resend": "Click to resend",
+        "choose_password": "Choose a password",
+        "secure_password": "Choose a secure password",
+        "your_details": "Your details",
+        "enter_name": "Enter your name",
+        "congratulations": "Congratulations",
+        "start_impact": "Start making an impact",
+        "account_created": "You’ve successfully created your account",
+        "first_name": "First name*",
+        "last_name": "Last name*",
+        "username": "Username*",
+        "username_available": "Username available",
+        "must_be_at_least_8_characters": "Must be at least 8 characters",
+        "must_contain_special_character": "Must contain one special character"
+      }
+    },
+    "profile": {
+      "title": "Complete your profile",
+      "description": "Complete your profile to find impact jobs",
+      "note": "If the user is going to its profile it will be redirected to onboarding for now"
+    }
+  },
+  "create_job_flow": {
+    "titles": {
+      "create_paid_fixed": "Create job (Paid-Fixed)",
+      "create_volunteer_fixed": "Create job (Volunteer-Fixed)",
+      "create_volunteer_hourly": "Create job (Volunteer-Hourly)",
+      "create_paid_hourly": "Create job (Paid-Hourly)",
+      "edit_paid_fixed": "Edit job (Paid-Fixed)",
+      "edit_volunteer_fixed": "Edit job (Volunteer-Fixed)",
+      "edit_volunteer_hourly": "Edit job (Volunteer-Hourly)",
+      "edit_paid_hourly": "Edit job (Paid-Hourly)",
+      "apply_paid_fixed": "Apply job (Paid-Fixed)",
+      "apply_paid_hourly": "Apply job (Paid-Hourly)",
+      "apply_volunteer_fixed": "Apply job (Volunteer-Fixed)",
+      "send_offer_paid_fixed": "Send offer (Paid-Fixed)",
+      "send_offer_volunteer_fixed": "Send offer (Volunteer-Fixed)",
+      "send_offer_paid_hourly": "Send offer (Paid-Hourly)",
+      "send_offer_volunteer_hourly": "Send offer (Volunteer-Hourly)",
+      "check_applicants": "Check Applicants"
+    },
+    "steps": {
+      "create_new_job": "Create a new job",
+      "preview": "Preview",
+      "publish": "Publish",
+      "select": "Please select",
+      "publish_job": "Publish job",
+      "job_preview": "Job preview",
+      "edit_job": "Edit job",
+      "delete_job": "Delete job",
+      "unsaved_changes": "Unsaved changes",
+      "confirm": "Confirm",
+      "save_changes": "Do you want to save or discard changes?",
+      "hire_now": "Hire now",
+      "reject": "Reject",
+      "apply": "Apply",
+      "log_in_to_apply": "Log in to your account",
+      "description": "Description",
+      "estimated_total_hours": "Estimated total hours*",
+      "contract_title": "Contract title*",
+      "send_offer": "Send an offer",
+      "send_offer_to": "An offer will be sent to Umaya Nigina",
+      "offer_sent": "Offer sent",
+      "congratulations": "Congratulations! You have successfully sent an offer to Umaya Nigina.",
+      "re_hire": "Re-Hire"
+    },
+    "messages": {
+      "unsaved_changes": "Do you want to save or discard changes?",
+      "save_changes": "Do you want to save or discard changes?",
+      "no_applicants_yet": "No applicants yet",
+      "apply_job_non_logged_user": "Automatic trigger if not applied yet",
+      "reject_application": "Are you sure you want to reject this application? This action cannot be undone.",
+      "job_published": "This job has been published. Organization members will be able to edit this job and republish changes.",
+      "changes_saved": "Changes saved. Organization members will be able to edit this job and republish changes.",
+      "applicant_rejected": "You have rejected this applicant 1 week ago."
+    },
+    "ui_text": {
+      "buttons": {
+        "create_job": "Create job",
+        "preview": "Preview",
+        "publish": "Publish",
+        "apply": "Apply",
+        "send_offer": "Send offer",
+        "confirm": "Confirm",
+        "save_changes": "Save changes",
+        "discard_changes": "Discard changes",
+        "back": "Back",
+        "edit_job": "Edit job",
+        "delete_job": "Delete job",
+        "send_offer_now": "Send offer now"
+      },
+      "fields": {
+        "description": "Description",
+        "estimated_total_hours": "Estimated total hours*",
+        "contract_title": "Contract title*",
+        "offer_amount": "Offer amount*",
+        "hourly_rate": "Hourly rate*",
+        "weekly_limit": "Weekly limit*",
+        "weekly_commitment*": "Weekly commitment*",
+        "due_date": "Due date",
+        "job_title": "Job title",
+        "job_description": "Job description",
+        "job_category": "Job category",
+        "job_type": "Job type",
+        "job_length": "Job length",
+        "experience_level": "Experience level",
+        "skills": "Skills",
+        "location": "Location",
+        "remote_preference": "Remote preference",
+        "payment_type": "Payment type",
+        "payment_terms": "Payment terms / range",
+        "commitment": "Commitment",
+        "screening_questions": "Screening questions",
+        "social_cause": "Select a social cause",
+        "total_commitment": "Total commitment",
+        "weekly_commitment": "Weekly commitment",
+        "payment_method": "Payment method",
+        "organization": "Organization preferences",
+        "organization_type": "Organization type",
+        "organization_size": "Organization size",
+        "timezone": "Timezone",
+        "portfolio_url": "Portfolio URL",
+        "resume": "Resume",
+        "credentials": "Credentials",
+        "referrals": "Refer and earn",
+        "settings": "Settings",
+        "logout": "Logout"
+      }
+    }
+  }
+}

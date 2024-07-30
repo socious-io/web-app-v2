@@ -1,0 +1,552 @@
+{
+  "web_title": "VCとしての職務履歴",
+  "symbol": "->",
+  "page_title_one": "経験を追加",
+  "adding_experience_to_user_portfolio": "{first_name}は彼女のプロファイルに未検証の経験を追加しています",
+  "user_fullname": "{fullname}",
+  "user_status": "仕事を探しています",
+  "username": "@{username}",
+  "impact_points": {
+    "title": "インパクトポイント",
+    "measure": "あなたのインパクトを測定し追跡する",
+    "points": "{points} ポイント",
+    "see_impact": "私のインパクトを見る"
+  },
+  "occupation_description": "👋 UX/UIデザイナー、持続可能性と社会的インパクトに情熱を持っています",
+  "connections": {
+    "number_of_connections": "{num_connections}つながり",
+    "number_of_followers": "{num_followers}フォロワー"
+  },
+  "social_impact_skills": [
+    "{social_impact_one}",
+    "{social_impact_two}",
+    "{social_impact_three}",
+    "{social_impact_four}",
+    "{social_impact_five}"
+  ],
+  "volunteer_status": "ボランティア募集中",
+  "location": {
+    "title": "場所",
+    "user_location": "{user_location}"
+  },
+  "languages": [
+    {"language": "{language1}", "proficiency": "{proficiency1}"},
+    {"language": "{language2}", "proficiency": "{proficiency2}"}
+  ],
+  "portfolio": {
+    "title": "ポートフォリオ",
+    "user_website": "{website}"
+  },
+  "social_header": "ソーシャル",
+  "about_header": "概要",
+  "reviews_header": "レビュー",
+  "summary": {
+    "title": "サマリー",
+    "description": "私たち一人ひとりが社会/環境問題を解決することに参加することができます。それは大きな行動だけでなく、日常の小さな貢献も含まれます。私はUX/UIデザインの専門知識と創造的な問題解決への情熱を持ってそれを行いたいと考えています...詳細を見る"
+  },
+  "skills": {
+    "title": "スキル",
+    "list": [
+      "{skills_one}",
+      "{skills_two}",
+      "{skills_three}",
+      "{skills_four}",
+      "{skills_five}",
+      "{skills_six}",
+      "{skills_seven}"
+    ],
+    "unverified": "(未検証)"
+  },
+  "experience": {
+    "company_one": {
+      "name": "{company_one_name}",
+      "date_work": "{company_one_month_start} {company_one_year_start} - {company_one_month_end} {company_one_year_end}",
+      "description": "{company_one_name}でビジュアルデザイナーとしての短いながらも影響力のある在籍期間中、私は世界中の難民を保護し支援する組織の重要な仕事をサポートする特権を�っていました。多様な専門家チームと協力して、組織のミッションを伝える視覚的に魅力的な資料を作成するために、私の創造的なスキルを活用しました...詳細を見る"
+    },
+    "verify_experience_message": "経験を検証する",
+    "add_education_button": "教育を追加",
+    "education": {
+      "degree": "{education_one_major}の学士",
+      "name": "{education_one_name}, {education_one_location}",
+      "time": "{education_one_month_start} {education_one_year_start} - {education_one_month_end} {education_one_year_end}",
+      "description": "アディスアベバ大学での学部生活では、グラフィックデザイン専攻で美術学士号を追求しました。この包括的なプログラムは、デザインの原則、タイポグラフィ、視覚的コミュニケーション、創造的問題解決において確固たる基盤を提供しました...詳細を見る"
+    }
+  },
+  "certificates": {
+    "title": "証明書",
+    "add_certificate_button": "証明書を追加する",
+    "certificate_one": {
+      "title": "インタラクション＆UI/UXデザイン",
+      "university": "アート大学アカデミー",
+      "issued": "発行 {certificate_one_month} {certificate_one_year}",
+      "description": "アート大学アカデミーによって提供されたこの集中的なオンライン認証プログラムは、UXデザイン手法、ユーザーリサーチ技術、ワイヤーフレーミング、プロトタイピング、ユーザーテストに焦点を当てていました。このコースは、ユーザー中心のデジタルエクスペリエンスの設計における実践的な経験を提供し、直感的で魅力的なインターフェースを作成するために必要なスキルを装備しました...詳細を見る"
+    },
+    "verify_certificate_button": "証明書を検証する",
+    "certificate_two": {
+      "title": "UXデザイン認証",
+      "university": "インタラクションデザイン財団",
+      "issued": "発行 {certificate_two_month} {certificate_two_year}",
+      "description": "インタラクションデザイン財団によって提供されたUXデザイン認証プログラムは、ユーザー中心のデザイン原則、ユーザーリサーチ方法論、インタラクションデザインについての深い理解を私に与えました。実践的な課題とケーススタディを通じて、直感的でユーザーフレンドリーなデジタル体験を作成する専門知識を得ました...詳細を見る"
+    }
+  },
+  "recommendations": {
+    "title": "推薦",
+    "ask_recommendation_button": "推薦を求める",
+    "recommendation_one": {
+      "name": "{recommendation_one_name}",
+      "date": "{num_days_one} 日前",
+      "status": "{recommendation_one_status}",
+      "description": "{company_one_name}での{user_first_name}の仕事を見てきましたが、彼女が何をしているのかに対して真の情熱を持っているのは明らかです。彼女のデザインは新鮮で大胆で、組織のミッションの精神を真に捉えています。次に彼女が何をするのか楽しみにしています！"
+    },
+    "recommendation_two": {
+      "name": "{recommendation_two_name}",
+      "description": "{user_first_name}はデザイナー以上のものです。彼女はデザインを通じて物語を紡ぐストーリーテラーであり、私たちのミッションを巧みに作品に織り込み、私たちの声を増幅しています。デザインの美的および機能的側面への深い理解と、私たちの原因への顕著な献身が、視覚を超えた影響を残しています。それは組織の魂に響き渡ります。彼女をチームに持っていたことは幸運でしたし、彼女が将来素晴らしいことを成し遂げることは明らかです。"
+    }
+  },
+  "search_header": "検索",
+  "current_status_button": "ステータス",
+  "experience_description": "{company_one_name}でビジュアルデザイナーとしての短いながらも影響力のある在籍期間中、私は組織の重要な仕事をサポートする特権を持っていました...詳細を見る",
+  "verify_education_button": "教育を検証する",
+  "job_title_header": "職名*",
+  "job_title_description": "職名を入力してください",
+  "job_category_header": "職種カテゴリ",
+  "job_category_description": "職種カテゴリを検索してください",
+  "company_name_header": "会社名*",
+  "company_name_description": "{company_one_name}",
+  "location_description": "市を検索してください",
+  "volunteer_experience_header": "ボランティア経験はありますか？",
+  "tick_box_yes": "はい",
+  "employment_type_header": "雇用形態",
+  "employment_type_description": "選択してください",
+  "tick_box_employment_role": "現在この役割で働いています",
+  "experience_start_date": "開始日*",
+  "experience_start_date_month_dropbox": "月",
+  "experience_start_date_year_dropbox": "年",
+  "experience_end_date": "終了日*",
+  "experience_description_header": "説明",
+  "experience_description_details": "例：Stripeのカスタマーサクセスチームに参加し、彼らのチェックアウト製品の拡大を支援しました。主に新しい顧客のオンボーディングと苦情の解決に焦点を当てました。",
+  "experience_cancel_button": "キャンセル",
+  "experience_search_company_description": "会社を検索してください",
+  "experience_job_details": {
+    "title": "{experience_job_title}",
+    "location": "{experience_job_location}",
+    "employment_type": "{experience_job_employment_type}",
+    "start_month": "{experience_job_start_month}",
+    "start_year": "{experience_job_start_year}",
+    "description_one": "{company_one_name}でUX/UIデザイナーとして情熱と推進力を持って活動していた私は、世界の海洋についての認識を高め、持続可能な慣行を促進することを目指して、ユーザー中心のデジタル体験を作成するための重要な役割を果たしました。機能横断的なチームと緊密に協力し、ユーザーを引き込み教育する革新的なソリューションの設計と実装を主導しました。",
+    "date": "{experience_job_start_month} {experience_job_start_year} - {experience_job_end_month} {experience_job_end_year}",
+    "description_two": "{company_one_name}でプロダクトデザイナーとして情熱と推進力を持って活動していた私は、世界の海洋についての認識を高め、持続可能な慣行を促進することを目指して、ユーザー中心のデジタル体験を作成するための重要な役割を果たしました。機能横断的なチームと緊密に協力し、革新的なソリューションの設計と実装を主導しました...詳細を見る",
+    "description_three": "{company_one_name}でプロダクトデザイナーとして情熱と推進力を持って活動していた私は、世界の海洋についての認識を高めることを目指して、ユーザー中心のデジタル体験を作成するための重要な役割を果たしました...詳細を見る"
+  },
+  "verification": {
+    "page_title": "検証リクエスト",
+    "title": "外部組織に検証リクエストを送信する",
+    "description": "{user_first_name}は、Sociousに存在しない組織である{company_one_name}に、彼女の経験を検証するリクエストを送信しています。彼女は{company_one_name}のCEOであり以前の上司である{company_one_hiring_manager_first_name}にメールを送っています。",
+    "verify_experience_description": "{company_one_name}は登録された組織ではありません。情報を確認し、経験を検証するリクエストを送信してください。",
+    "weekly_hours_send_to_header": "送信先*",
+    "receiver_email": "メールアドレスを入力してください",
+    "job_category": "職種カテゴリ*",
+    "choose_category": "カテゴリを検索してください",
+    "employment_type": "雇用形態*",
+    "weekly_hours": "推定週勤務時間*",
+    "time_type": "時間/週",
+    "start_month": "7月",
+    "required_message": "必須",
+    "start_day": "日",
+    "exact_info_button": "正確な情報を覚えていません",
+    "exact_description_one": "この情報はリクエストされます",
+    "message_header": "メッセージ*",
+    "message_description": "メッセージを入力してください...",
+    "send_button": "送信",
+    "exact_description_two": "あなたの雇用主にこれらの詳細を記入してもらいます。",
+    "company_one_email": "{company_one_email}",
+    "email_content": "こんにちは {company_one_hiring_manager_first_name}、私と一緒に働いた経験を検証していただけますか？ よろしくお願いします、{user_first_name}",
+    "verification_pending": "検証保留中",
+    "verification_details": "あなたのリクエストの詳細",
+    "verification_account": "@OceanProtection",
+    "credentials": {
+      "title": "資格情報",
+      "details": "発行されたりリクエストされたりしたすべての資格情報はこちらです。",
+      "issued": "発行済み",
+      "requested": "リクエスト済み",
+      "archive": "アーカイブ",
+      "withdraw_button": "撤回",
+      "name_header": "名前",
+      "type_header": "資格タイプ",
+      "type_details": "職務証明書",
+      "issued_date_header": "発行日",
+      "issued_date_details": "{work_cert_month} {work_cert_day}, {work_cert_year}",
+      "previous_button": "前",
+      "next_button": "次",
+      "page_number": "1ページの1",
+      "status_details": "撤回済み"
+    }
+  },
+  "request_received": {
+    "page_title": "リクエスト受領",
+    "title": "リクエスト受領（外部組織）",
+    "details": "{company_one_name}の{company_one_hiring_manager_first_name}が{user_first_name}からのリクエストをメールで受け取っています。",
+    "email_contents": "こんにちは、{user_first_name} Niginaがあなたの組織のプロダクトデザイナーとしての経験を確認するデジタル証明書のリクエストを送りました。確認するために、今すぐSociousに登録してください！",
+    "register_now_button": "今すぐ登録",
+    "thank_you_message": "ありがとう、Sociousチーム",
+    "address_details": "© 2023 Socious Inc., 日本東京都中央区日本橋3-2-14-1F"
+  },
+  "verify_experience": {
+    "page_title": "経験を検証する",
+    "sign_up_pages": {
+      "title": "サインアップページ",
+      "details": "{company_one_name}の{company_one_hiring_manager_first_name}がSociousで組織を登録しています。",
+      "create_account": {
+        "header": "アカウントを作成する",
+        "detail": "{user_first_name}があなたを招待しました！",
+        "work_email_header": "あなたの職場のメール*",
+        "work_email": "{work_email}",
+        "continue_button": "続ける",
+        "existing_account_detail": "すでにアカウントをお持ちですか？",
+        "log_in_button": "ログイン",
+        "agreement_tos": "続行することで、当社の利用規約およびプライバシーポリシーに同意するものとします。",
+        "copyright_mark": "© Socious Global Inc. 2023",
+        "review_example": "Sociousは私のスタートアップの採用プロセスを効率化し、時間とお金を節約しながら熱心でスキルのある候補者を見つけました。",
+        "reviewer": {
+          "fullname": "{reviewer_fullname}",
+          "position": "{reviewer_position}",
+          "company": "{reviewer_company}"
+        },
+        "check_email": {
+          "header": "メールを確認する",
+          "verification_link_email": "{work_email}に検証リンクを送りました",
+          "verify_email_button": "メールを検証する",
+          "did_not_receive_email_message": "メールが届きませんでしたか？",
+          "resend_verify_email_button": "クリックして再送信",
+          "email_verification_header": "メール検証",
+          "email_verification_details": "メールを確認してください"
+        },
+        "create_password": {
+          "header": "パスワードを選択する",
+          "details": "安全なパスワードを選択してください",
+          "your_details_header": "あなたの詳細",
+          "your_details_details": "あなたの名前を入力してください",
+          "congratulations": {
+            "header": "おめでとうございます",
+            "details": "影響を与え始めましょう"
+          },
+          "account_password": "••••••••",
+          "password_detail_one": "最低8文字必要です",
+          "password_detail_two": "特殊文字を1つ含める必要があります",
+          "account_first_name": "名前*",
+          "account_first_name_input": "{company_one_hiring_manager_first_name}",
+          "account_last_name": "姓*",
+          "account_last_name_input": "{company_one_hiring_manager_last_name}",
+          "account_username": "ユーザー名*",
+          "account_username_input": "{company_one_hiring_manager_username}",
+          "username_creation_status": "利用可能なユーザー名",
+          "username_created_success_one": "あなたのアカウントが正常に作成されました",
+          "username_created_success_two": "あなたは正常にアカウントを作成しました"
+        }
+      }
+    }
+  },
+  "kyb": {
+    "page_title": "KYB",
+    "details": "{company_one_name}の{company_one_hiring_manager_first_name}が資格を発行する許可を得るために組織を検証しています。",
+    "verify_organization": "組織を検証する",
+    "organization_verification_info": "資格を発行するために組織を検証してください。",
+    "send_organization_details": "組織の詳細を送信する",
+    "company_registration": {
+      "send_company_registration": "組織名とともに会社登録書類（会社証明書/同等のもの）を送ってください",
+      "wait_for_processing": "処理を待つ",
+      "processing_time": "当社の検証チームは、検証リクエストを処理するのに1-3日かかります。",
+      "verification_complete": "検証完了",
+      "verification_complete_info": "検証が成功すると、メールと通知が送られ、その後資格を発行することができます。",
+      "upload_company_document": "会社登録書類、証明書または同等のものをアップロードしてください。",
+      "drag_and_drop": "またはドラッグアンドドロップ",
+      "document_info": "PDF、PNG、JPG (最大2MB)",
+      "file_example": {
+        "file_name": "Company Details.pdf",
+        "file_size": "200 KB",
+        "upload_percentage": "10%"
+      },
+      "documents_sent": {
+        "message": "あなたの書類が送信されました",
+        "info": "当社の検証チームは、検証リクエストを処理するのに1-3日かかります。検証が成功すると、メールと通知が送られます。"
+      },
+      "issue_with_application": {
+        "message": "あなたの申請に問題がありました",
+        "info": "問題が緊急の場合は、直接お問い合わせください。info@socious.ioまでメールで当社のチームが連絡を取ります。"
+      },
+      "requested_date": "リクエスト日",
+      "verification_issue": "検証問題",
+      "reviewing_documents": "提出された書類を検討しています。完了次第お知らせします。",
+      "more_details": "詳細",
+      "view": "表示",
+      "decline": "拒否",
+      "verification_successful": {
+        "message": "あなたの組織は正常に検証されました",
+        "info": "資格を発行することができます。",
+        "dismiss": "無視する"
+      }
+    }
+  },
+  "onboarding": {
+    "section_title": "Socious Web App 3.1",
+    "page_title": "オンボーディング",
+    "details": "サインアップ後にオンボーディングが開始され、スキップすることができます",
+    "welcome": "Sociousへようこそ",
+    "create_organization": "組織を作成して採用を開始する",
+    "organization_info": {
+      "title": "組織を作成する",
+      "about": "あなたの組織については何ですか？",
+      "select_causes": {
+        "info": "最大5つの社会的原因を選択する",
+        "label": "少なくとも1つの原因を選択*",
+        "list": [
+          "気候変動",
+          "持続可能性",
+          "生物多様性"
+        ],
+        "hint": "最大5つの原因",
+        "next_logo": "次: ロゴ"
+      },
+      "back": "戻る",
+      "create_button": "組織を作成する",
+      "category": {
+        "info": "あなたの組織を最もよく表すカテゴリを選択してください",
+        "options": [
+          "インパクトスタートアップ",
+          "ソーシャルビジネス",
+          "非営利/慈善団体",
+          "ソーシャル協同組合",
+          "インパクト投資基金/財団",
+          "公共機関",
+          "政府間組織",
+          "教育機関",
+          "医療機関",
+          "宗教団体",
+          "商業企業",
+          "その他"
+        ],
+        "next_social_causes": "次: 社会的原因"
+      },
+      "enter_name": {
+        "info": "あなたの組織の名前を入力してください",
+        "label": "あなたの組織の名前*",
+        "next_organization_type": "次: 組織タイプ"
+      },
+      "tell_us_more": {
+        "info": "あなたの組織についてもっと教えてください",
+        "add_logo": "あなたのロゴと短い説明を追加する",
+        "upload_logo": {
+          "info": "SVG、PNG、JPG、またはGIF (最大2MB)",
+          "file_type": "GIF",
+          "file_example": {
+            "file_name": "Logo.gif",
+            "file_size": "1.2 MB",
+            "upload_percentage": "100%"
+          },
+          "headline": {
+            "label": "見出し",
+            "text": "人々が革新の力を解放し、海を保護することを可能にします。"
+          },
+          "next_contact_info": "次: 連絡先情報",
+          "upload_button": "アップロード"
+        }
+      },
+      "contact_info": {
+        "add_contact": "連絡先情報を追加する",
+        "fields": {
+          "organization_email": {
+            "label": "あなたの組繗のメール*",
+            "value": "contact@aau.edu.et"
+          },
+          "organization_username": {
+            "label": "あなたの組繗のユーザー名を選択*",
+            "value": "AddisAbabaUniversity",
+            "hint": "有効なユーザー名"
+          },
+          "city": {
+            "label": "市*",
+            "value": "サンフランシスコ、USA"
+          },
+          "timezone": "UTC-7.00",
+          "organization_industry": {
+            "label": "組織業界*",
+            "value": "高等教育"
+          },
+          "organization_size": {
+            "label": "組繗のサイズ*",
+            "value": "11-50人の従業員"
+          },
+          "website_url": {
+            "label": "ウェブサイト",
+            "value": "www.aau.edu.et/"
+          }
+        }
+      }
+    }
+  },
+  "organization_profile": {
+    "name": "海洋保護",
+    "username": "@OceanProtection",
+    "view_profile": "プロファイルを見る",
+    "edit_profile": "プロファイルを編集する",
+    "description": "人々が革新の力を解放し、海を保護することを可能にします。",
+    "website": "oceanprotection.com",
+    "notifications": {
+      "title": "通知",
+      "time": "2分前",
+      "text": "あなたの組織で彼女の教育を確認するデジタル証明書のリクエストを送りました。"
+    },
+    "messages": {
+      "title": "メッセージ",
+      "recent": "最近",
+      "groups": "グループ",
+      "message_time": "5分前",
+      "message_preview": "彼女の経験を検証するリクエストを送りました",
+      "today": "今日",
+      "subtext": "木曜日 11:40am",
+      "send_message": "メッセージを送る",
+      "approve": "承認する"
+    }
+  },
+  "credential": {
+    "title": "教育証明書",
+    "request_details": "リクエストの詳細",
+    "additional_info_optional": "追加情報（任意）",
+    "additional_info_example": "グラフィックデザインで最優等生および特別表彰を受けたAlle School of Fine Arts and Design",
+    "additional_info_hint": "成績、学部、学科などのその他の情報を追加してください...",
+    "date_of_birth_required": "生年月日*",
+    "issue_credential": "資��を発行する",
+    "revoke": "取り消す",
+    "recipient": "受取人",
+    "created_date": "作成日",
+    "delete": "削除",
+    "sent": "送信済み",
+    "page_details": "10ページ中1ページ",
+    "credential_details": {
+      "title": "資格の詳細",
+      "degree": "学位",
+      "awarded_date": "授与日",
+      "additional_info": "追加情報",
+      "date_of_birth": "生年月日"
+    },
+    "education_verified": {
+      "page_title": "教育が検証されました",
+      "info": "Umayaのアディスアベバ大学での教育が検証されました。"
+    },
+    "vc_acceptance": "UmayaはOPからのVCを受け入れます",
+    "scan": "スキャン",
+    "settings": "設定",
+    "kyc": "KYC",
+    "issue_date": "2024年2月24日発行",
+    "verified": "検証済み",
+    "vc_request_received": "UmayaはSocious WalletでVCリクエストを受け取りました",
+    "accept_credential": "資格を受け入れる",
+    "accept": "受け入れる",
+    "edit_education": "教育を編集する",
+    "credential_required": "資格*",
+    "delete_education": "教育を削除する",
+    "save": "保存",
+    "request_approved": "あなたのリクエストを承認し、デジタル証明書を発行しました。今すぐ請求します。",
+    "organization_username": "@AddisAbabaUniversity",
+    "claimed": "請求済み",
+    "accepted": "承認済み",
+    "claim": "請求",
+    "received": "受け取りました",
+    "claim_certificate": "教育証明書を請求する",
+    "blockchain_technology_info": "Sociousはブロックチェーン技術を使用して、資格を透明かつ追跡可能にします。",
+    "claim_certificate_info": "証明書を請求することにより、あなたは資格の完全な制御と所有権を維持します。あなたは雇用主、教育機関、または資格の証明が必要な他の人々と直接デジタルウォレットから共有することができます。",
+    "learn_more": "詳しくは",
+    "how_to_get_certificate": {
+      "title": "証明書の取得方法",
+      "instructions": [
+        "Socious Walletを開く",
+        "以下のQRコードをスキャンする",
+        "証明書を受け取るための招待を承諾する"
+      ],
+      "open_wallet_app": "Socious Walletアプリを開く"
+    },
+    "verified_status": "(検証済み)",
+    "certificate_claimed": "証明書が請求されました",
+    "claim_certificate_button": "証明書を請求する",
+    "verification_check": "アディスアベバ大学のAbebech DestaがSociousでUmayaのリクエストを確認しています。",
+    "verify_now": "今すぐ検証する",
+    "credential_accepted": {
+      "page_title": "資格が受け入れられました",
+      "heading": "資格が請求されました",
+      "info": "アディスアベバ大学のAbebech DestaがUmayaが彼女の資格を受け入れたかどうかを確認しています。",
+      "notification": "あなたの証明書が請求されました"
+    },
+    "identity_verification": {
+      "info": "Umayaは彼女の身元を確認します",
+      "get_verified": "検証を受ける",
+      "request_certificates_info": "あなたは今、デジタル証明書を要求することができます。",
+      "veriff_credential_sharing": "UmayaはVeriffの資格をSociousアプリと共有します",
+      "share_credential": "共有する資格を選択してください：",
+      "choose_credential": "共有したい資格を選択してください：",
+      "confirm_information": "以下の情報を確認して、アディスアベバ大学にリクエストを送信してください。",
+      "send_verification_request": {
+        "title": "既存の組織に検証リクエストを送信する",
+        "info": "これはあなたの成果が透明で誰にでも検証可能であることを意味します。これを実現するために、あなたが要求している資格の正当な所有者であることを確認する必要があります。この検証は詐欺を防ぎ、あなたの資格の価値を守るのに役立ちます。私たちはあなたの個人情報を保存することなく、あなたの身元を検証するためにデジタルID技術の力を利用します。",
+        "steps": "アプリのオンボーディングプロセスを通じて、Atala Prism上に分散型IDを作成します。KYCパートナーであるVeriffを使用して、あなたの身元を検証します。",
+        "addis_ababa_university": "アディスアベバ大学"
+      },
+      "no_work_certificate": "対応する職務証明書がない場合。（これには証明書の状態が「保留中」、「拒否」、「撤回」、「発行済み」などを含みます）",
+      "show_after_certificate_claimed": "証明書が請求された後にのみ表示します。この後、Umayaは説明を除いて情報を編集することはできません。理由として、Umayaが情報を編集すると、修正された情報は検証されていないためです。",
+      "declined": "拒否されました",
+      "umaya_requested_tab": "Umayaが要求したタブ",
+      "request_pending_approval": "OP（情報が欠落しているか、Umayaが「正確な情報を覚えていない」とクリックしたとき）からの承認を保留しているリクエスト",
+      "request_withdrawn": "Umayaによってリクエストが撤回されました",
+      "request_declined": "OPによってリクエストが拒否されました",
+      "work_certificate_issued": "職務証明書が発行され、Umayaによって請求可能です",
+      "credential_revoked": "資格が取り消されました（現在の範囲外）",
+      "umaya_issued_tab": "Umayaが発行したタブ",
+      "credential_revoked_status": "取り消されました",
+      "credential_claimed_status": "資格が請求されました",
+      "approval_moves_to_issued_tab": "注意: 資格リクエストが承認されると、発行タブに移動します",
+      "issued_credentials_archive": "注意: 発行された資格のみアーカイブに移動できます",
+      "op_requested_tab": "OPが要求したタブ",
+      "op_request_pending": "OPからの承認を保留しているリクエスト",
+      "credential_sent_to_umaya": "Umayaに資格が送信されました",
+      "op_issued_tab": "OPが発行したタブ",
+      "credential_accepted_status": "資格が受け入れられました"
+    }
+  },
+  "request_verification": {
+    "page_title": "資格チェックリクエスト",
+    "info": "{company_one_name}は{user_first_name}の資格をチェックするリクエストをしています。",
+    "share": "共有",
+    "connect": "接続",
+    "see_impact": "インパクトを見る",
+    "check_credential": "資格をチェックする",
+    "give_recommendation": "推薦を与える",
+    "request_check_credential": {
+      "title": "資格をチェックするリクエスト",
+      "button": "リクエスト"
+    },
+    "qr_code_check": {
+      "page_title": "QRコードをチェックする",
+      "info": "{company_one_name}は{user_first_name}のQRコードを彼らのQRコードと照合して検証しています。",
+      "share_experience": "{company_one_name}でのプロダクトデザイナーとしての経験をあなたと共有します",
+      "message_preview": "プロダクトデザイナーとしての経験をあなたと共有します...",
+      "shared_experience": "{company_one_name}でのプロダクトデザイナーとしての経験をあなたと共有しました",
+      "check_instructions": "以下のQRコードをスキャンしてチェックしてください",
+      "scan_qr_code": "QRコードをスキャンする",
+      "scan_successful": "スキャン成功",
+      "certificate_authenticity": {
+        "message": "この証明書は本物です！",
+        "organization": "組織",
+        "check": "ここで、Socious Walletは2つのことを確認しています: 発行したDIDが信頼レジストリ（VCを発行する権限を持つDIDのリスト）にあるかどうか、および検証可能な資格証明が改ざんされていないか（偽造されていない、偽物ではない）かです。上記の2つの条件が満たされた場合、ウォレットは「この証明書は本物です！」というメッセージを返します。"
+      }
+    },
+    "proof_request_check": {
+      "page_title": "証明リクエストをチェックする",
+      "info": "{user_first_name}は彼らの資格のQRコードを共有しています。",
+      "request": "{company_one_name}でのプロダクトデザイナーとしてのあなたの資格をチェックするリクエストを送りました",
+      "connect_share_vc": "{user_first_name}は接続してVCをWalletで共有します",
+      "share_credential": "資格を共有する",
+      "credential_sharing_info": "{company_one_name}からの資格を共有したいです",
+      "no_work_certificate_claimed": "対応する職務証明書が請求されていない場合。（これには証明書の状態が「保留中」、「拒否」、「撤回」、「発行済み」などを含みます）",
+      "edit_restriction": "証明書が請求された後にのみ表示します。この後、{user_first_name}は説明を除いて情報を編集することはできません。理由として、{user_first_name}が情報を編集すると、修正された情報は検証されていないためです。"
+    }
+  }
+}

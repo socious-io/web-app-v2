@@ -1,0 +1,553 @@
+{
+  "web_title": "Work History as VC",
+  "symbol": "->",
+  "page_title_one": "Add experience",
+  "adding_experience_to_user_portfolio": "{first_name} is adding an unverified experience to her profile",
+  "user_fullname": "{fullname}",
+  "user_status": "Available for work",
+  "username": "@{username}",
+  "impact_points": {
+    "title": "Impact points",
+    "measure": "Measure and track your impact",
+    "points": "{points} pts",
+    "see_impact": "See my impact"
+  },
+  "occupation_description": "👋 UX/UI Designer, passionate about sustainability and social impact",
+  "connections": {
+    "number_of_connections": "{num_connections} connections",
+    "number_of_followers": "{num_followers} followers"
+  },
+  "social_impact_skills": [
+    "{social_impact_one}",
+    "{social_impact_two}",
+    "{social_impact_three}",
+    "{social_impact_four}",
+    "{social_impact_five}"
+  ],
+  "volunteer_status": "Open for volunteer",
+  "location": {
+    "title": "Location",
+    "user_location": "{user_location}"
+  },
+  "languages": [
+    {"language": "{language1}", "proficiency": "{proficiency1}"},
+    {"language": "{language2}", "proficiency": "{proficiency2}"}
+  ],
+  "portfolio": {
+    "title": "Portfolio",
+    "user_website": "{website}"
+  },
+  "social_header": "Social",
+  "about_header": "About",
+  "reviews_header": "Reviews",
+  "summary": {
+    "title": "Summary",
+    "description": "Each one of us can participate in solving social/environmental issues. It's not only about big deeds, but also small everyday contributions. I want to do so by bringing in my expertise in UX/UI design and passion for creative problem-solving... see more"
+  },
+  "skills": {
+    "title": "Skills",
+    "list": [
+      "{skills_one}",
+      "{skills_two}",
+      "{skills_three}",
+      "{skills_four}",
+      "{skills_five}",
+      "{skills_six}",
+      "{skills_seven}"
+    ],
+    "unverified": "(unverified)"
+  },
+  "experience": {
+    "company_one": {
+      "name": "{company_one_name}",
+      "date_work": "{company_one_month_start} {company_one_year_start} - {company_one_month_end} {company_one_year_end}",
+      "description": "During my brief but impactful tenure as a Visual Designer at {company_one_name}, I had the privilege of supporting the organization's crucial work in protecting and assisting refugees worldwide. Working alongside a diverse team of professionals, I applied my creative skills to develop visually compelling materials that communicated the organization's mission and... see more"
+    },
+    "verify_experience_message": "Verify experience",
+    "add_education_button": "Add education",
+    "education": {
+      "degree": "Bachelor of {education_one_major}",
+      "name": "{education_one_name}, {education_one_location}",
+      "time": "{education_one_month_start} {education_one_year_start} - {education_one_month_end} {education_one_year_end}",
+      "description": "During my undergraduate studies at Addis Ababa University, I pursued a Bachelor of Fine Arts degree with a specialization in Graphic Design. This comprehensive program provided me with a strong foundation in design principles, typography, visual communication, and creative problem-solving... see more"
+    }
+  },
+  "certificates": {
+    "title": "Certificates",
+    "add_certificate_button": "Add certificate",
+    "certificate_one": {
+      "title": "Interaction & UI/UX Design",
+      "university": "Academy of Art University",
+      "issued": "Issued {certificate_one_month} {certificate_one_year}",
+      "description": "This intensive online certification program offered by the Academy of Art University focused on UX design methodologies, user research techniques, wireframing, prototyping, and user testing. The course provided hands-on experience in designing user-centered digital experiences and equipped me with the necessary skills to create intuitive and engaging interfaces... see more"
+    },
+    "verify_certificate_button": "Verify certificate",
+    "certificate_two": {
+      "title": "UX Design Certification",
+      "university": "Interaction Design Foundation",
+      "issued": "Issued {certificate_two_month} {certificate_two_year}",
+      "description": "The UX Design Certification program offered by the Interaction Design Foundation equipped me with a deep understanding of user-centered design principles, user research methodologies, and interaction design. Through practical assignments and case studies, I gained expertise in creating intuitive and user-friendly digital experiences... see more"
+    }
+  },
+  "recommendations": {
+    "title": "Recommendations",
+    "ask_recommendation_button": "Ask for recommendation",
+    "recommendation_one": {
+      "name": "{recommendation_one_name}",
+      "date": "{num_days_one} days ago",
+      "status": "{recommendation_one_status}",
+      "description": "I've seen {user_first_name}'s work for {company_one_name}, and it's clear she's got a real passion for what she does. Her designs are fresh and bold, truly capturing the spirit of the organization's mission. Can't wait to see what she does next!"
+    },
+    "recommendation_two": {
+      "name": "{recommendation_two_name}",
+      "description": "{user_first_name} is more than a designer; she is a storyteller weaving narratives through her designs, seamlessly incorporating our mission into her work and amplifying our voice. Her deep understanding of the aesthetic and functional aspects of design, combined with a remarkable dedication to our cause, has left an imprint that goes beyond the visuals; it echoes in the very soul of our organization. We've been lucky to have her on our team, and we can tell she's going to do great things in the future."
+    }
+  },
+  "search_header": "Search",
+  "current_status_button": "Status",
+  "experience_description": "During my brief but impactful tenure as a Visual Designer at {company_one_name}, I had the privilege of supporting the organization's crucial work in protecting and assisting... see more",
+  "verify_education_button": "Verify education",
+  "job_title_header": "Job title*",
+  "job_title_description": "Enter job title",
+  "job_category_header": "Job category",
+  "job_category_description": "Search for job category",
+  "company_name_header": "Company*",
+  "company_name_description": "{company_one_name}",
+  "location_description": "Search for city",
+  "volunteer_experience_header": "Volunteer experience?",
+  "tick_box_yes": "Yes",
+  "employment_type_header": "Employment type",
+  "employment_type_description": "Please select",
+  "tick_box_employment_role": "I am currently working in this role",
+  "experience_start_date": "Start date*",
+  "experience_start_date_month_dropbox": "Month",
+  "experience_start_date_year_dropbox": "Year",
+  "experience_end_date": "End date*",
+  "experience_description_header": "Description",
+  "experience_description_details": "e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints.",
+  "experience_cancel_button": "Cancel",
+  "experience_search_company_description": "Search for company",
+  "experience_job_details": {
+    "title": "{experience_job_title}",
+    "location": "{experience_job_location}",
+    "employment_type": "{experience_job_employment_type}",
+    "start_month": "{experience_job_start_month}",
+    "start_year": "{experience_job_start_year}",
+    "description_one": "As a passionate and driven UX/UI Designer at {company_one_name}, I played a pivotal role in crafting user-centered digital experiences aimed at raising awareness about the world's oceans and promoting sustainable practices. Collaborating closely with cross-functional teams, I led the design and implementation of innovative solutions that engaged and educated users.",
+    "date": "{experience_job_start_month} {experience_job_start_year} - {experience_job_end_month} {experience_job_end_year}",
+    "description_two": "As a passionate and driven Product Designer at {company_one_name}, I played a pivotal role in crafting user-centered digital experiences aimed at raising awareness about the world's oceans and promoting sustainable practices. Collaborating closely with cross-functional teams, I led the design and implementation of innovative solutions that engaged and educated... see more",
+    "description_three": "As a passionate and driven Product Designer at {company_one_name}, I played a pivotal role in crafting user-centered digital experiences aimed at raising awareness... see more"
+  },
+  "verification": {
+    "page_title": "Request verification",
+    "title": "Send verification request to external organization",
+    "description": "{user_first_name} is sending a request to {company_one_name}, a non-existing organization on Socious, to verify her experience. She is sending an email to {company_one_hiring_manager_first_name}, CEO of {company_one_name} and her former supervisor.",
+    "verify_experience_description": "{company_one_name} is not a registered organization. Confirm your information and send a request to verify your experience.",
+    "weekly_hours_send_to_header": "Send to*",
+    "receiver_email": "Enter an email",
+    "job_category": "Job category*",
+    "choose_category": "Search a category",
+    "employment_type": "Employment type*",
+    "weekly_hours": "Estimated weekly hours*",
+    "time_type": "hrs/week",
+    "start_month": "Jul",
+    "required_message": "Required",
+    "start_day": "Day",
+    "exact_info_button": "I don’t remember my exact information",
+    "exact_description_one": "This information will be requested",
+    "message_header": "Message*",
+    "message_description": "Type your message...",
+    "send_button": "Send",
+    "exact_description_two": "Your employer will be requested to fill in these details.",
+    "company_one_email": "{company_one_email}",
+    "email_content": "Hi {company_one_hiring_manager_first_name}, Could you verify my experience working with you? Best regards, {user_first_name}",
+    "verification_pending": "Verification pending",
+    "verification_details": "Your request details",
+    "verification_account": "@OceanProtection",
+    "credentials": {
+      "title": "Credentials",
+      "details": "Here are all your credentials issued or requested.",
+      "issued": "Issued",
+      "requested": "Requested",
+      "archive": "Archive",
+      "withdraw_button": "Withdraw",
+      "name_header": "Name",
+      "type_header": "Credential Type",
+      "type_details": "Work Certificate",
+      "issued_date_header": "Issued Date",
+      "issued_date_details": "{work_cert_month} {work_cert_day}, {work_cert_year}",
+      "previous_button": "Previous",
+      "next_button": "Next",
+      "page_number": "Page 1 of 1",
+      "status_details": "Withdrawn"
+    }
+  },
+  "request_received": {
+    "page_title": "Request received",
+    "title": "Request received (external organization)",
+    "details": "{company_one_hiring_manager_first_name} from {company_one_name} is receiving {user_first_name}’s request by email.",
+    "email_contents": "Hello, {user_first_name} Nigina has sent a request for a digital certificate confirming their experience as Product Designer with your organization. To confirm, register on Socious now!",
+    "register_now_button": "Register now",
+    "thank_you_message": "Thank you, Socious team",
+    "address_details": "© 2023 Socious Inc., Nihonbashi 3-2-14-1F, Chuo-ku, Tokyo 103-0027, Japan"
+  },
+  "verify_experience": {
+    "page_title": "Verify Experience",
+    "sign_up_pages": {
+      "title": "Sign up pages",
+      "details": "{company_one_hiring_manager_first_name} from {company_one_name} is registering its organization on Socious.",
+      "create_account": {
+        "header": "Create an account",
+        "detail": "{user_first_name} invited you to join!",
+        "work_email_header": "Your work email*",
+        "work_email": "{work_email}",
+        "continue_button": "Continue",
+        "existing_account_detail": "Already have an account?",
+        "log_in_button": "Log in",
+        "agreement_tos": "By continuing, you accept our Terms of Use and Privacy Policy.",
+        "copyright_mark": "© Socious Global Inc. 2023",
+        "review_example": "Socious streamlined my startup's hiring process, saving time and money while finding skilled, passionate candidates.",
+        "reviewer": {
+          "fullname": "{reviewer_fullname}",
+          "position": "{reviewer_position}",
+          "company": "{reviewer_company}"
+        },
+        "check_email": {
+          "header": "Check your email",
+          "verification_link_email": "We sent a verification link to {work_email}",
+          "verify_email_button": "Verify email",
+          "did_not_receive_email_message": "Didn’t receive the email?",
+          "resend_verify_email_button": "Click to resend",
+          "email_verification_header": "Email verification",
+          "email_verification_details": "Please check your email"
+        },
+        "create_password": {
+          "header": "Choose a password",
+          "details": "Choose a secure password",
+          "your_details_header": "Your details",
+          "your_details_details": "Enter your name",
+          "congratulations": {
+            "header": "Congratulations",
+            "details": "Start making an impact"
+          },
+          "account_password": "••••••••",
+          "password_detail_one": "Must be at least 8 characters",
+          "password_detail_two": "Must contain one special character",
+          "account_first_name": "First name*",
+          "account_first_name_input": "{company_one_hiring_manager_first_name}",
+          "account_last_name": "Last name*",
+          "account_last_name_input": "{company_one_hiring_manager_last_name}",
+          "account_username": "Username*",
+          "account_username_input": "{company_one_hiring_manager_username}",
+          "username_creation_status": "Username available",
+          "username_created_success_one": "Your account has been successfully created",
+          "username_created_success_two": "You’ve successfully created your account"
+        }
+      }
+    }
+  },
+  "kyb": {
+    "page_title": "KYB",
+    "details": "{company_one_hiring_manager_first_name} from {company_one_name} is verifying his organization in order to be allowed to issue credentials.",
+    "verify_organization": "Verify your organization",
+    "organization_verification_info": "Get your organization verified to issue credentials.",
+    "send_organization_details": "Send your organization details",
+    "company_registration": {
+      "send_company_registration": "Send a company registration document such as a company certificate/equivalent along with your organization name",
+      "wait_for_processing": "Wait for processing",
+      "processing_time": "Our verification team will take 1-3 days to process your verification request.",
+      "verification_complete": "Verification complete",
+      "verification_complete_info": "An email and notification will be sent to you upon successful verification and you will then be able to issue credentials.",
+      "upload_company_document": "Please upload your company registration document, like a certificate or equivalent.",
+      "drag_and_drop": "or drag and drop",
+      "document_info": "PDF, PNG, JPG (max. 2MB per file)",
+      "file_example": {
+        "file_name": "Company Details.pdf",
+        "file_size": "200 KB",
+        "upload_percentage": "10%"
+      },
+      "documents_sent": {
+        "message": "Your documents have been sent",
+        "info": "Our verification team will take 1-3 days to process your verification request. An email and notification will be sent to you upon successful verification and you will then be able to issue credentials."
+      },
+      "issue_with_application": {
+        "message": "There was an issue with your application",
+        "info": "Our team will be in contact with you by email. If your request is urgent, please contact us directly at info@socious.io."
+      },
+      "requested_date": "Requested Date",
+      "verification_issue": "Verification issue",
+      "reviewing_documents": "We are reviewing your submitted documents, we will notify you once it is complete.",
+      "more_details": "More details",
+      "view": "View",
+      "decline": "Decline",
+      "verification_successful": {
+        "message": "Your organization has been successfully verified",
+        "info": "You can now issue credentials.",
+        "dismiss": "Dismiss"
+      }
+    }
+  },
+  "onboarding": {
+    "section_title": "Socious Web App 3.1",
+    "page_title": "Onboarding",
+    "details": "Onboarding starts after signup and can be skipped",
+    "welcome": "Welcome to Socious",
+    "create_organization": "Create your organization and start hiring",
+    "organization_info": {
+      "title": "Create your organization",
+      "about": "What is your organization about?",
+      "select_causes": {
+        "info": "Select up to 5 social causes",
+        "label": "Select at least 1 cause*",
+        "list": [
+          "Climate Change",
+          "Sustainability",
+          "Bio",
+          "Biodiversity"
+        ],
+        "hint": "Max 5 causes",
+        "next_logo": "Next: Logo"
+      },
+      "back": "Back",
+      "create_button": "Create organization",
+      "category": {
+        "info": "Please select the category that best describes your organization",
+        "options": [
+          "Impact Startup",
+          "Social Business",
+          "Non-profit / Charity",
+          "Social Co-operative",
+          "Impact Investing Fund / Foundation",
+          "Public Institution",
+          "Intergovernmental Organization",
+          "Educational Institution",
+          "Healthcare Organization",
+          "Religious Organization",
+          "Commercial Enterprises",
+          "Other"
+        ],
+        "next_social_causes": "Next: Social causes"
+      },
+      "enter_name": {
+        "info": "Enter your organization name",
+        "label": "Your organization name*",
+        "next_organization_type": "Next: Organization type"
+      },
+      "tell_us_more": {
+        "info": "Tell us more about your organization",
+        "add_logo": "Add your logo and a short description",
+        "upload_logo": {
+          "info": "SVG, PNG, JPG or GIF (max. 2MB)",
+          "file_type": "GIF",
+          "file_example": {
+            "file_name": "Logo.gif",
+            "file_size": "1.2 MB",
+            "upload_percentage": "100%"
+          },
+          "headline": {
+            "label": "Headline",
+            "text": "Enables people to unleash their innovation power to protect the ocean."
+          },
+          "next_contact_info": "Next: Contact information",
+          "upload_button": "Upload"
+        }
+      },
+      "contact_info": {
+        "add_contact": "Add your contact information",
+        "fields": {
+          "organization_email": {
+            "label": "Your organization’s email*",
+            "value": "contact@aau.edu.et"
+          },
+          "organization_username": {
+            "label": "Choose your organization’s username*",
+            "value": "AddisAbabaUniversity",
+            "hint": "Valid username"
+          },
+          "city": {
+            "label": "City*",
+            "value": "San Francisco, USA"
+          },
+          "timezone": "UTC-7.00",
+          "organization_industry": {
+            "label": "Organization industry*",
+            "value": "Higher Education"
+          },
+          "organization_size": {
+            "label": "Organization size*",
+            "value": "11-50 employees"
+          },
+          "website_url": {
+            "label": "Website",
+            "value": "www.aau.edu.et/"
+          }
+        }
+      }
+    }
+  },
+  "organization_profile": {
+    "name": "Ocean Protection",
+    "username": "@OceanProtection",
+    "view_profile": "View profile",
+    "edit_profile": "Edit profile",
+    "description": "Enables people to unleash their innovation power to protect the ocean.",
+    "website": "oceanprotection.com",
+    "notifications": {
+      "title": "Notifications",
+      "time": "2 mins ago",
+      "text": "Sent a request for a digital certificate confirming her education at your organization."
+    },
+    "messages": {
+      "title": "Messages",
+      "recent": "Recent",
+      "groups": "Groups",
+      "message_time": "5min ago",
+      "message_preview": "Sent you a request to verify her experience",
+      "today": "Today",
+      "subtext": "Thursday 11:40am",
+      "send_message": "Send a message",
+      "approve": "Approve"
+    }
+  },
+  "credential": {
+    "title": "Educational Certificate",
+    "request_details": "Request details",
+    "additional_info_optional": "Additional information (optional)",
+    "additional_info_example": "The Alle School of Fine Arts and Design Summa Cum Laude with Distinction in Graphic Design",
+    "additional_info_hint": "Please add any other information such as grade, faculty, and departments, etc...",
+    "date_of_birth_required": "Date of birth*",
+    "issue_credential": "Issue a credential",
+    "revoke": "Revoke",
+    "recipient": "Recipient",
+    "created_date": "Created Date",
+    "delete": "Delete",
+    "sent": "Sent",
+    "page_details": "Page 1 of 10",
+    "credential_details": {
+      "title": "Credential details",
+      "degree": "Degree",
+      "awarded_date": "Awarded date",
+      "additional_info": "Additional information",
+      "date_of_birth": "Date of birth"
+    },
+    "education_verified": {
+      "page_title": "Education verified",
+      "info": "Umaya’s education at Addis Ababa University has been verified."
+    },
+    "vc_acceptance": "Umaya accepts VC from OP",
+    "scan": "Scan",
+    "settings": "Settings",
+    "kyc": "KYC",
+    "issue_date": "Issued on Feb 24, 2024",
+    "verified": "Verified",
+    "vc_request_received": "Umaya received VC request on Socious Wallet",
+    "accept_credential": "Accept credential",
+    "accept": "Accept",
+    "edit_education": "Edit education",
+    "credential_required": "Credential*",
+    "delete_education": "Delete education",
+    "save": "Save",
+    "request_approved": "Has approved your request and issued you a digital certificate. Claim now.",
+    "organization_username": "@AddisAbabaUniversity",
+    "claimed": "Claimed",
+    "accepted": "Accepted",
+    "claim": "Claim",
+    "received": "Received",
+    "claim_certificate": "Claim your educational certificate",
+    "blockchain_technology_info": "Socious uses blockchain technology to make credentials transparent and traceable.",
+    "claim_certificate_info": "By claiming your certificate, you maintain full control and ownership of your credentials. You can easily share them with employers, educational institutions, or anyone else who requires proof of your qualifications directly from your digital wallet.",
+    "learn_more": "Learn more",
+    "how_to_get_certificate": {
+      "title": "How to get your certificate",
+      "instructions": [
+        "Open your Socious Wallet",
+        "Scan the QR code below",
+        "Accept the invitation to receive your certificate"
+      ],
+      "open_wallet_app": "Open Socious Wallet app"
+    },
+    "verified_status": "(verified)",
+    "certificate_claimed": "Certificate claimed",
+    "claim_certificate_button": "Claim certificate",
+    "verification_check": "Abebech Desta from Addis Ababa University is checking Umaya’s request on Socious.",
+    "verify_now": "Verify now",
+    "credential_accepted": {
+      "page_title": "Credential accepted",
+      "heading": "Credential claimed",
+      "info": "Abebech Desta from Addis Ababa University is checking if Umaya has accepted her credential",
+      "notification": "Has claimed your certificate"
+    },
+    "identity_verification": {
+      "info": "Umaya verify her identity",
+      "get_verified": "Get verified",
+      "request_certificates_info": "You can now request digital certificates.",
+      "veriff_credential_sharing": "Umaya shares her Veriff credential with Socious app",
+      "share_credential": "Share credential",
+      "choose_credential": "Choose the credential you would like to share:",
+      "confirm_information": "Confirm the information below to send your request to Addis Ababa University.",
+      "send_verification_request": {
+        "title": "Send verification request to existing organization",
+        "info": "This means your achievements are transparent and verifiable by anyone. To make this work, we need to confirm you are the rightful owner of the credentials you're requesting. This verification helps prevent fraud and protects the value of your credentials. We leverage the power of digital ID technology to verify your identity without storing your personal details.",
+        "steps": "Go through the app’s onboarding process which will create a decentralized ID on Atala Prism. Verify your identity with Veriff, our KYC partner.",
+        "addis_ababa_university": "Addis Ababa University"
+      },
+      "no_work_certificate": "If there is no corresponding work certificate claimed. (this includes certificate statuses like: “pending”, “declined”, “withdrawn”, “issued” etc.",
+      "show_after_certificate_claimed": "Show only after the certificate is claimed, after this, Umaya can’t edit (except description). Rationale, if Umaya edits the info, the modified info is not verified",
+      "declined": "Declined",
+      "umaya_requested_tab": "Umaya Requested tab",
+      "request_pending_approval": "The request is pending approval from OP (missing information or not when Umaya clicks “I don’t remember my exact information”)",
+      "request_withdrawn": "Request withdrawn by Umaya",
+      "request_declined": "Request declined by OP",
+      "work_certificate_issued": "The work certificate has been issued and is claimable by Umaya",
+      "credential_revoked": "The credential has been revoked (outside the scope for now)",
+      "umaya_issued_tab": "Umaya Issued tab",
+      "credential_revoked_status": "Revoked",
+      "credential_claimed_status": "The credential has been claimed",
+      "approval_moves_to_issued_tab": "Note: once a credential request is approved it moves to Issued tab",
+      "issued_credentials_archive": "Note: only issued credentials can be moved to archive",
+      "op_requested_tab": "OP Requested tab",
+      "op_request_pending": "The request is pending approval from OP",
+      "credential_sent_to_umaya": "The credential has been sent to Umaya",
+      "op_issued_tab": "OP Issued tab",
+      "credential_accepted_status": "The credential has been accepted"
+    }
+  },
+  "request_verification": {
+    "page_title": "Credential check request",
+    "info": "{company_one_name} is requesting to check {user_first_name}’s credential.",
+    "share": "Share",
+    "connect": "Connect",
+    "see_impact": "See impact",
+    "check_credential": "Check credential",
+    "give_recommendation": "Give recommendation",
+    "request_check_credential": {
+      "title": "Request to check credential",
+      "button": "Request"
+    },
+    "qr_code_check": {
+      "page_title": "Check QR code",
+      "info": "{company_one_name} is verifying {user_first_name}’s QR code with their QR code.",
+      "share_experience": "Share with you their experience as Product Designer with {company_one_name}",
+      "message_preview": "Share with you their experience as Product...",
+      "shared_experience": "Shared with you their experience as Product Designer with {company_one_name}",
+      "check_instructions": "To check scan the below QR code",
+      "scan_qr_code": "Scan QR code",
+      "scan_successful": "Scan successful",
+      "certificate_authenticity": {
+        "message": "This certificate is authentic!",
+        "organization": "Organization",
+        "check": "Here, Socious Wallet is checking two things: Whether the DID that issued the verifiable credential is on the Trust Registry (list of DIDs that are authorized to issue VCs) and that the Verifiable Credential is not tampered (not forged, not fake). If the two conditions above are satisfied, the wallet returns a message, “The certificate is authentic!”"
+      }
+    },
+    "proof_request_check": {
+      "page_title": "Check proof request",
+      "info": "{user_first_name} is sharing their credential’s QR code.",
+      "request": "Sent you a request to check your credential as Product Designer with {company_one_name}",
+      "connect_share_vc": "{user_first_name} connects and shares VC on Wallet",
+      "share_credential": "Share credential",
+      "credential_sharing_info": "You want to share a credential from {company_one_name}",
+      "no_work_certificate_claimed": "If there is no corresponding work certificate claimed. (this includes certificate statuses like: “pending”, “declined”, “withdrawn”, “issued” etc.)",
+      "edit_restriction": "Show only after the certificate is claimed, after this, {user_first_name} can’t edit (except description). Rationale, if {user_first_name} edits the info, the modified info is not verified."
+    }
+  }
+}

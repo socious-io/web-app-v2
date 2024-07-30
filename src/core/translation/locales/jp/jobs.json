@@ -1,0 +1,404 @@
+{
+  "section_title": "Socious Web App 3.1",
+  "page_title": "Social",
+  "heading": "_Unpublished base components",
+  "supporting_text": "これらは公開されていないベースコンポーネントです。これらのコンポーネントを編集して、右側のメインの公開済みコンポーネントに迅速に変更を加えます。コンポーネントの使用方法について詳しくはここをご覧ください。",
+  "jobs": [
+    {
+      "title": "Product Designer",
+      "categories": ["Ocean Protection", "Climate change", "Interaction Design", "Figma", "UX Design"],
+      "description": "私たちは、ビジネス要件や技術的制約を理解し、ユーザー調査、インタビュー、アンケートの実施を担当するプロダクトデザイナーを募集しています。これらをユーザーフロー、顧客ジャーニーマップ、ワイヤーフレーム、モックアップ、プロトタイプに変換します。責任 - 概念をユーザーフロー、ワイヤーフレーム、モックアップ、プロトタイプに変換し、直感的なユーザーエクスペリエンスを提供します。 - コア機能や新機能に関連する戦略的なデザインとユーザーエクスペリエンスの決定を行います。 - 他のチームメンバーや利害関係者と協力します。 要件 - UXデザインの経験が3年以上あること。環境問題の複雑なソリューションの設計経験がある候補者を優先します。 - Figmaの専門知識 - ユーザー中心のデザインとデザイン思考の重要性を明確に理解していること。 - チームや他の利害関係者と緊密に協力し、定期的にデザインソリューションを提供することに興奮していること。",
+      "details": {
+        "location": "Anywhere",
+        "remote": "リモート",
+        "type": "パートタイム",
+        "duration": "<1ヶ月",
+        "experience_level": "中級",
+        "compensation": {
+          "amount": "1,000~5,000 USD",
+          "type": "固定価格"
+        },
+        "commitment": "40~60時間",
+        "hours_per_week": "5~15時間/週",
+        "payment_method": "暗号通貨 OK",
+        "posted": "1日前"
+      },
+      "actions": {
+        "not_interested": "興味なし",
+        "read_more": "もっと読む"
+      }
+    },
+    {
+      "title": "Product Designer",
+      "categories": ["Ocean Protection"],
+      "description": "私たちは、ビジネス要件や技術的制約を理解し、ユーザー調査、インタビュー、アンケートの実施を担当するプロダクトデザイナーを募集しています。これらをユーザーフロー、顧客ジャーニーマップ、ワイヤーフレーム、モックアップ、プロトタイプに変換します。責任 - 概念をユーザーフロー、ワイヤーフレーム、モックアップ、プロトタイプに変換し、直感的なユーザーエクスペリエンスを提供します。コア機能や新機能に関連する戦略的なデザインとユーザーエクスペリエンスの決定を行います。他のチームメンバーや利害関係者と協力します。要件 - UXデザインの経験が3年以上あること。環境問題の複雑なソリューションの設計経験がある候補者を優先します。Figmaの専門知識 ユーザー中心のデザインとデザイン思考の重要性を明確に理解していること。チームや他の利害関係者と緊密に協力し、定期的にデザインソリューションを提供することに興奮していること。",
+      "details": {
+        "location": "Anywhere",
+        "remote": "リモート",
+        "type": "ボランティア",
+        "duration": "<1ヶ月",
+        "experience_level": "中級",
+        "compensation": {
+          "amount": "10~50 USD/hr",
+          "type": "時間単価"
+        },
+        "commitment": "40~60時間",
+        "hours_per_week": "5~15時間/週",
+        "payment_method": "暗号通貨 OK",
+        "posted": "1週間前"
+      },
+      "actions": {
+        "not_interested": "興味なし",
+        "read_more": "もっと読む"
+      }
+    }
+  ],
+  "filters": {
+    "location_options": ["国 / 都市", "自分のタイムゾーンで", "都市を検索", "タイムゾーンを選択"],
+    "payment_types": ["有給", "ボランティア"],
+    "commitment_options": ["1日未満", "1 - 3ヶ月", "3 - 6ヶ月", "6ヶ月以上"],
+    "experience_levels": ["経験なし", "エントリー", "中級", "専門家"],
+    "skills": ["スキルを検索", "UX/UIデザイン", "Adobe XD"],
+    "categories": ["社会問題（一般）", "ブロックチェーン開発", "営業", "貧困"],
+    "organization_preferences": {
+      "organization_type": ["組織", "組織の種類"],
+      "organization_size": ["1-10従業員", "11-50従業員", "51-200従業員", "201-500従業員", "501-1000従業員", "1000+従業員"]
+    },
+    "payment_options": ["暗号通貨利用可能"],
+    "compensation_ranges": ["$100未満", "$100から$500", "$500から$1,000", "$1,000から$5,000", "$5,000以上"]
+  },
+  "job_preferences": {
+    "types": ["フルタイム", "パートタイム", "一時的な"],
+    "locations": ["リモート", "ハイブリッド"]
+  },
+  "jobs_listing": {
+    "total_jobs": "70,689のインパクトのある仕事",
+    "saved_jobs": "あなたへのおすすめ",
+    "filters": ["社会的原因", "スキル", "場所"],
+    "location_options": ["都市、地域、または国を検索"]
+  },
+  "modal_options": {
+    "reject_applicant": "応募を拒否",
+    "save_search": "この仕事検索を保存",
+    "send_offer": {
+      "types": ["ボランティア-固定", "ボランティア-時間単価", "有給-固定", "有給-時間単価"]
+    }
+  },
+  "profile_options": {
+    "account_setup": ["タレントアカウントを作成", "プロフィールを完成させる"],
+    "verification": ["メールを確認", "メールをチェック"]
+  },
+  "additional_info": {
+    "payment_options": {
+      "types": ["固定", "時間単価"],
+      "ranges": ["1,000~5,000 USD", "10~50 USD/hr"]
+    },
+    "timezone_options": {
+      "within": "±",
+      "hours": "0時間"
+    },
+    "organization": {
+      "details": {
+        "website": "oceanprotection.com",
+        "address": "サンフランシスコ, USA",
+        "about": "私たちの組織は、海洋保護区の創設と支援に取り組んでいます。さまざまな視点、文化、地理を持つチームを集め、人間のストレス要因や気候変動の影響から唯一の海を守ることに尽力しています。 私たちは、保存ソリューションはコミュニティレベルから始めるのが最も効果的だと信じています。ハリー・ピーターソンの感動的なビジョンに導かれ、革新的なソリューションを開発し、教育リソースを提供し、コミュニティの対話に参加し、持続可能な実践を支援します。私たちは、海洋保護区が保護されるだけでなく、尊敬される未来を展望し、保存のための世界的なベンチマークを設定します。"
+      }
+    },
+    "validation_messages": {
+      "character_limit": "2〜50文字である必要があります",
+      "required": "必須"
+    }
+  },
+  "ui_text": {
+    "buttons": {
+      "apply": "今すぐ応募",
+      "save": "保存",
+      "read_more": "もっと読む",
+      "search": "検索",
+      "clear": "クリア",
+      "confirm": "確認",
+      "submit": "送信",
+      "login": "ログイン",
+      "sign_up": "サインアップ",
+      "resend": "再送信をクリック"
+    },
+    "labels": {
+      "search_by": "タイトル、スキル、または組織で検索",
+      "payment_type": "支払いタイプ",
+      "payment_terms": "支払い条件 / 範囲",
+      "commitment": "コミットメント",
+      "screening_questions": "スクリーニング質問",
+      "wallet": "WalletConnect",
+      "balance": "残高: 2,000.18 USDC 最大",
+      "title": "タイトル",
+      "due_date": "期限",
+      "estimated_hours": "推定総時間",
+      "payment_method": "支払い方法",
+      "total_commitment": "総コミットメント",
+      "weekly_commitment": "週のコミットメント",
+      "location": "場所",
+      "job_type": "仕事の種類",
+      "job_length": "仕事の期間",
+      "experience_level": "経験レベル",
+      "job_description": "仕事の説明",
+      "job_title": "仕事のタイトル",
+      "job_category": "仕事のカテゴリ",
+      "social_cause": "社会的な原因を選択",
+      "organization": "組織の好み",
+      "organization_type": "組織の種類",
+      "organization_size": "組織の規模",
+      "timezone": "タイムゾーン",
+      "filter_by": "フィルター",
+      "saved_search": "保存された検索を選択",
+      "social_causes": "社会的原因",
+      "portfolio": "ポートフォリオ",
+      "resume": "履歴書",
+      "credentials": "資格",
+      "referrals": "紹介して稼ぐ",
+      "settings": "設定",
+      "logout": "ログアウト"
+    },
+    "messages": {
+      "no_jobs_found": "仕事が見つかりません",
+      "job_published": "仕事が公開されました",
+      "changes_saved": "変更が保存されました",
+      "applicant_rejected": "応募者が拒否されました",
+      "application_submitted": "応募が正常に送信されました",
+      "check_email": "メールをチェック",
+      "email_verification": "メール確認",
+      "account_created": "アカウントが正常に作成されました",
+      "welcome": "Sociousへようこそ"
+    },
+    "placeholders": {
+      "enter_name": "名前を入力",
+      "enter_email": "メールアドレスを入力",
+      "portfolio_url": "例: ポートフォリオ",
+      "job_title": "例: プロダクトマネージャー",
+      "job_description": "仕事について数文書いてください",
+      "message": "メッセージ*",
+      "link_name": "リンク名",
+      "url": "https://",
+      "example": "www.example.com"
+    }
+  },
+  "applicant": {
+    "name": "Umaya Nigina",
+    "username": "@unigina123",
+    "applied": "4日前",
+    "impact_points": "アディスアベバ, エチオピア",
+    "location": "パリ, フランス",
+    "timezone": "UTC+3.00",
+    "experience": "経験",
+    "hire": "採用",
+    "message": "メッセージ",
+    "view_profile": "プロフィールを見る",
+    "rejected": "この応募者は1週間前に拒否されました。",
+    "cover_letter": "私はOcean Protectionのプロダクトデザイナーのポジションに応募することに興奮しています。グラフィックデザインの美術学士号を持ち、プロダクトデザイナーとして3年以上の経験があります。私のスキルと経験がこの役割に完璧に適していると確信しています。以前の役職では、InovaTechでさまざまなデジタル製品のデザインと開発を担当していました。私はさまざまなデザインプロセスに精通しており、美的に優れた製品をデザインする能力に自信があります。また、プロトタイプの作成やクライアントや利害関係者へのプレゼンテーションの経験も豊富です。最も重要なのは、人々の生活を改善する製品のデザインに情熱を持っていることです。ユーザーエクスペリエンスを簡素化し改善する方法を常に探しており、良いデザインはすべての人にアクセス可能であるべきだと強く信じています。Ocean Protectionに参加し、人々の生活に影響を与える製品のデザインを続けることを楽しみにしています。お時間をいただきありがとうございます。近日中にお会いできることを楽しみにしています。",
+    "resume": {
+      "file_type": "PDF",
+      "name": "履歴書 2023 更新",
+      "size": "720 KB"
+    },
+    "portfolio": "umayanigina.com",
+    "actions": {
+      "back": "戻る",
+      "apply_now": "今すぐ応募",
+      "copy": "コピー",
+      "apply": "応募",
+      "save": "保存"
+    }
+  },
+  "related_jobs": "関連する仕事",
+  "about_this_job": "この仕事について",
+  "share": "共有",
+  "saved_jobs": {
+    "title": "保存した仕事",
+    "description": "あなたの保存した仕事",
+    "options": ["仕事を保存するか、「興味なし」とマークする2つのオプションがあります。"]
+  },
+  "applied_jobs": {
+    "title": "応募した仕事",
+    "description": "あなたの応募した仕事",
+    "status": ["1日前に応募しました", "1週間前に応募しました"]
+  },
+  "active_job_details": {
+    "title": "ダッシュボード",
+    "options": ["仕事を探す", "応募した仕事", "契約", "コミュニティ", "メッセージ", "支払い", "資格", "紹介して稼ぐ", "設定", "ログアウト"],
+    "display": "さらに読み込む前に10件の仕事を表示",
+    "job_status": ["この仕事は二度と表示されません"],
+    "job_search": {
+      "title": "仕事検索",
+      "description": "アメリカ合衆国で見つかった42件の仕事",
+      "search_options": ["デザイナーを検索"],
+      "pagination": {
+        "previous": "前へ",
+        "next": "次へ",
+        "details": "ページ 1 / 10"
+      }
+    }
+  },
+  "recommendations": {
+    "title": "推奨事項",
+    "description": "あなたの保存した仕事",
+    "filters": ["社会的原因、スキルなどで仕事をフィルターする"]
+  },
+  "application_flow": {
+    "log_in": {
+      "title": "アカウントにログイン",
+      "description": "続行するには、サインインまたは登録してください",
+      "buttons": ["アカウントを作成", "ログイン"]
+    },
+    "create_account": {
+      "title": "タレントアカウントを作成",
+      "description": "今すぐ影響力を発揮し始めましょう。",
+      "fields": {
+        "email": "メールアドレス*",
+        "enter_email": "メールアドレスを入力",
+        "continue_with_google": "Googleで続行",
+        "already_have_account": "既にアカウントをお持ちですか？",
+        "log_in": "ログイン"
+      },
+      "messages": {
+        "welcome_back": "お帰りなさい！詳細を入力してください。",
+        "password": "パスワード",
+        "enter_password": "••••••••",
+        "keep_logged_in": "ログイン状態を維持",
+        "forgot_password": "パスワードを忘れましたか",
+        "dont_have_account": "アカウントを持っていませんか？",
+        "sign_up": "サインアップ",
+        "check_email": "メールをチェック",
+        "verification_link": "検証リンクをumaya.nigina@gmail.comに送信しました",
+        "verify_email": "メールを確認",
+        "didnt_receive_email": "メールが届きませんでしたか？",
+        "click_to_resend": "再送信をクリック",
+        "choose_password": "パスワードを選択",
+        "secure_password": "安全なパスワードを選択",
+        "your_details": "あなたの詳細",
+        "enter_name": "名前を入力",
+        "congratulations": "おめでとうございます",
+        "start_impact": "影響力を発揮し始めましょう",
+        "account_created": "アカウントが正常に作成されました",
+        "first_name": "名*",
+        "last_name": "姓*",
+        "username": "ユーザー名*",
+        "username_available": "ユーザー名が利用可能です",
+        "must_be_at_least_8_characters": "少なくとも8文字である必要があります",
+        "must_contain_special_character": "少なくとも1つの特殊文字を含める必要があります"
+      }
+    },
+    "profile": {
+      "title": "プロフィールを完成させる",
+      "description": "影響力のある仕事を見つけるためにプロフィールを完成させる",
+      "note": "現在、ユーザーがプロフィールに移動すると、オンボーディングにリダイレクトされます"
+    }
+  },
+  "create_job_flow": {
+    "titles": {
+      "create_paid_fixed": "有給の固定仕事を作成",
+      "create_volunteer_fixed": "ボランティアの固定仕事を作成",
+      "create_volunteer_hourly": "ボランティアの時間単価の仕事を作成",
+      "create_paid_hourly": "有給の時間単価の仕事を作成",
+      "edit_paid_fixed": "有給の固定仕事を編集",
+      "edit_volunteer_fixed": "ボランティアの固定仕事を編集",
+      "edit_volunteer_hourly": "ボランティアの時間単価の仕事を編集",
+      "edit_paid_hourly": "有給の時間単価の仕事を編集",
+      "apply_paid_fixed": "有給の固定仕事に応募",
+      "apply_paid_hourly": "有給の時間単価の仕事に応募",
+      "apply_volunteer_fixed": "ボランティアの固定仕事に応募",
+      "send_offer_paid_fixed": "有給の固定仕事のオファーを送信",
+      "send_offer_volunteer_fixed": "ボランティアの固定仕事のオファーを送信",
+      "send_offer_paid_hourly": "有給の時間単価の仕事のオファーを送信",
+      "send_offer_volunteer_hourly": "ボランティアの時間単価の仕事のオファーを送信",
+      "check_applicants": "応募者を確認"
+    },
+    "steps": {
+      "create_new_job": "新しい仕事を作成",
+      "preview": "プレビュー",
+      "publish": "公開",
+      "select": "選択してください",
+      "publish_job": "仕事を公開",
+      "job_preview": "仕事のプレビュー",
+      "edit_job": "仕事を編集",
+      "delete_job": "仕事を削除",
+      "unsaved_changes": "保存されていない変更",
+      "confirm": "確認",
+      "save_changes": "変更を保存または破棄しますか？",
+      "hire_now": "今すぐ採用",
+      "reject": "拒否",
+      "apply": "応募",
+      "log_in_to_apply": "アカウントにログイン",
+      "description": "説明",
+      "estimated_total_hours": "推定総時間*",
+      "contract_title": "契約タイトル*",
+      "send_offer": "オファーを送信",
+      "send_offer_to": "Umaya Niginaにオファーが送信されます",
+      "offer_sent": "オファーが送信されました",
+      "congratulations": "おめでとうございます！Umaya Niginaにオファーを正常に送信しました。",
+      "re_hire": "再採用"
+    },
+    "messages": {
+      "unsaved_changes": "保存されていない変更を保存または破棄しますか？",
+      "save_changes": "保存されていない変更を保存または破棄しますか？",
+      "no_applicants_yet": "まだ応募者はいません",
+      "apply_job_non_logged_user": "まだ応募していない場合は自動トリガー",
+      "reject_application": "この応募を拒否してもよろしいですか？この操作は元に戻せません。",
+      "job_published": "この仕事は公開されました。組織のメンバーはこの仕事を編集して変更を再公開できます。",
+      "changes_saved": "変更が保存されました。組織のメンバーはこの仕事を編集して変更を再公開できます。",
+      "applicant_rejected": "この応募者は1週間前に拒否されました。"
+    },
+    "ui_text": {
+      "buttons": {
+        "create_job": "仕事を作成",
+        "preview": "プレビュー",
+        "publish": "公開",
+        "apply": "応募",
+        "send_offer": "オファーを送信",
+        "confirm": "確認",
+        "save_changes": "変更を保存",
+        "discard_changes": "変更を破棄",
+        "back": "戻る",
+        "edit_job": "仕事を編集",
+        "delete_job": "仕事を削除",
+        "send_offer_now": "今すぐオファーを送信"
+      },
+      "fields": {
+        "description": "説明",
+        "estimated_total_hours": "推定総時間*",
+        "contract_title": "契約タイトル*",
+        "offer_amount": "オファー金額*",
+        "hourly_rate": "時給*",
+        "weekly_limit": "週の上限*",
+        "weekly_commitment*": "週のコミットメント*",
+        "due_date": "期限",
+        "job_title": "仕事のタイトル",
+        "job_description": "仕事の説明",
+        "job_category": "仕事のカテゴリ",
+        "job_type": "仕事の種類",
+        "job_length": "仕事の期間",
+        "experience_level": "経験レベル",
+        "skills": "スキル",
+        "location": "場所",
+        "remote_preference": "リモートの優先順位",
+        "payment_type": "支払いタイプ",
+        "payment_terms": "支払い条件 / 範囲",
+        "commitment": "コミットメント",
+        "screening_questions": "スクリーニング質問",
+        "social_cause": "社会的な原因を選択",
+        "total_commitment": "総コミットメント",
+        "weekly_commitment": "週のコミットメント",
+        "payment_method": "支払い方法",
+        "organization": "組織の好み",
+        "organization_type": "組織の種類",
+        "organization_size": "組織の規模",
+        "timezone": "タイムゾーン",
+        "portfolio_url": "ポートフォリオURL",
+        "resume": "履歴書",
+        "credentials": "資格",
+        "referrals": "紹介して稼ぐ",
+        "settings": "設定",
+        "logout": "ログアウト"
+      }
+    }
+  }
+}  
+
