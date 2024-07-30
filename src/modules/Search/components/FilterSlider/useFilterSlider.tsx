@@ -92,14 +92,15 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     const isValidLocation = countryCode && label && value;
 
     const filter = {
-      ...(causes.length > 0 && { causes_tags: causes.map((c: LabelValue) => c.value) }),
+      ...(causes.length > 0 && type === 'jobs' && { causes_tags: causes.map((c: LabelValue) => c.value) }),
+      ...(causes.length > 0 && type !== 'jobs' && { social_causes: causes.map((c: LabelValue) => c.value) }),
       ...(skills.length > 0 && { skills: skills.map((s: LabelValue) => s.value) }),
       // ...(organizationSize.length > 0 && { organizationSize: organizationSize.map((o: LabelValue) => o.value) }),
       ...(countryCode && { country: countryCode }),
       ...(label && { city: label.split(',')[0] }),
-      // ...(isValidLocation && {
-      //   location: { value, label, countryCode },
-      // }),
+      ...(isValidLocation && {
+        location: { value, label, countryCode },
+      }),
       ...(preference && { remote_preference: preference.value }),
       ...(jobCategory && { job_category_id: jobCategory.value }),
       ...(jobLength.length > 0 && { project_length: jobLength.map((j: LabelValue) => j.value) }),
@@ -118,6 +119,9 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
   useEffect(() => {
     if (filter.causes_tags?.length) {
       dispatch({ type: 'causes', payload: getOptionsFromValues(filter.causes_tags || [], causesItems) });
+    }
+    if (filter.social_causes?.length) {
+      dispatch({ type: 'causes', payload: getOptionsFromValues(filter.social_causes || [], causesItems) });
     }
     if (type !== 'organization' && filter.skills?.length) {
       dispatch({ type: 'skills', payload: getOptionsFromValues(filter.skills ?? [], skillItems) });
@@ -141,13 +145,10 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       dispatch({ type: 'jobLength', payload: getOptionsFromValues(filter.project_length || [], PROJECT_LENGTH_V2) });
     }
     if (filter.experience_level?.length) {
-      const strExperienceLevel = filter.experience_level ? filter.experience_level.map(item => item.toString()) : [];
-      const strValue = EXPERIENCE_LEVEL_V2.map(item => {
-        return { value: item.value.toString(), label: item.label };
-      });
+      const payload = EXPERIENCE_LEVEL_V2.filter(option => (filter.experience_level || []).includes(option.value));
       dispatch({
         type: 'experienceLevel',
-        payload: getOptionsFromValues(strExperienceLevel, strValue),
+        payload,
       });
     }
     if (filter.payment_type) {

@@ -135,7 +135,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           placeholder="Select a location"
           onChange={onSelectCity}
         />
-        <SearchDropdown
+        {/* <SearchDropdown
           id="preference"
           label="Remote preference"
           value={filters.preference}
@@ -144,18 +144,18 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           icon="search-lg"
           hasDropdownIcon={true}
           onChange={value => onSelectSearchDropdown('preference', value)}
-        />
-        <CheckboxGroup
+        /> */}
+        {/* <CheckboxGroup
           id="experience-level"
           label="Experience level"
           items={EXPERIENCE_LEVEL_V2}
           selectedItems={filters.experienceLevel}
           onChange={value => onSelectCheckboxs('experienceLevel', value)}
-        />
-        <div className="flex gap-2">
+        /> */}
+        {/* <div className="flex gap-2">
           <ToggleButton checked={!!filters.openToVolunteer} onChange={onChangeOpenToVolunteer} size="small" />
           <span className="text-sm font-medium leading-5 text-Gray-light-mode-700">Open to volunteer</span>
-        </div>
+        </div> */}
       </div>
     );
   };
