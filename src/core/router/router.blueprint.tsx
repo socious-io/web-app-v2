@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, RouteObject, createBrowserRouter, useRouteError, useSearchParams } from 'react-router-dom';
+import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
 import {
   jobs,
   chats,
@@ -26,7 +26,7 @@ import {
   disputes,
   invitations,
 } from 'src/core/api';
-import { search as searchReq } from 'src/core/api/site/site.api';
+import { events, search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/modules/layout';
 import FallBack from 'src/pages/fallback/fallback';
 import store, { RootState } from 'src/store';
@@ -586,6 +586,15 @@ export const blueprint: RouteObject[] = [
         children: [
           {
             path: 'email',
+            loader: async ({ request }) => {
+              const url = new URL(request.url);
+              const eventName = url.searchParams.get('event_name');
+              if (eventName) {
+                return await events({ limit: 10, page: 1 });
+              } else {
+                return null;
+              }
+            },
             async lazy() {
               const { Email } = await import('src/pages/sign-up/Email');
               return {
@@ -821,6 +830,15 @@ export const blueprint: RouteObject[] = [
   },
   {
     path: '/sign-in',
+    loader: async ({ request }) => {
+      const url = new URL(request.url);
+      const eventName = url.searchParams.get('event_name');
+      if (eventName) {
+        return await events({ limit: 10, page: 1 });
+      } else {
+        return null;
+      }
+    },
     async lazy() {
       const { SignIn } = await import('src/pages/sign-in');
       return {
@@ -833,6 +851,15 @@ export const blueprint: RouteObject[] = [
     children: [
       {
         path: 'google',
+        loader: async ({ request }) => {
+          const url = new URL(request.url);
+          const eventName = url.searchParams.get('event_name');
+          if (eventName) {
+            return await events({ limit: 10, page: 1 });
+          } else {
+            return null;
+          }
+        },
         async lazy() {
           const { GoogleOauth2 } = await import('src/pages/oauth/google');
           return {
