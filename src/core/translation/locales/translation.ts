@@ -55,7 +55,6 @@ export function generateTranslationFile(theLang) {
       educationalcertificateEN,
       impactEN,
       jobsEN,
-      languagesEN,
       loginEN,
       messagingEN,
       navigationEN,
