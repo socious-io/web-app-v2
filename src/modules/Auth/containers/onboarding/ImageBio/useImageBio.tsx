@@ -17,6 +17,8 @@ import { RootState } from 'src/store';
 
 export const useImageBio = () => {
   const navigate = useNavigate();
+  const filter = localStorage.getItem('filter');
+  const { events } = filter ? (JSON.parse(filter) as { events: string[] }) : { events: [] };
   const [uploadError, setUploadError] = useState('');
   const { state, updateUser } = useUser();
   const isMobile = isTouchDevice();
@@ -64,7 +66,13 @@ export const useImageBio = () => {
           username: (currentIdentity.meta as UserMeta).username,
         },
       });
-    } else navigate('/dashboard/user');
+    } else {
+      if (events.length) {
+        navigate('/search?q=&type=users&page=1');
+      } else {
+        navigate('/dashboard/user');
+      }
+    }
   };
 
   const updateBio = (bio: string) => {
