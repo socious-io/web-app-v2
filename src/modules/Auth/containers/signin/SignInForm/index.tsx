@@ -10,8 +10,8 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import { useSignInForm } from './useSignInForm';
 // import { LinkedIn } from 'public/icons/nowruz/linkedin';
 
-export const SignInForm = () => {
-  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried } = useSignInForm();
+export const SignInForm = ({ eventId }) => {
+  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried } = useSignInForm(eventId);
   const navigate = useNavigate();
 
   return (

@@ -30,7 +30,7 @@ const schema = yup
   })
   .required();
 
-export const useSignInForm = () => {
+export const useSignInForm = (event_id: string) => {
   const navigate = useNavigate();
 
   const {
@@ -61,6 +61,25 @@ export const useSignInForm = () => {
     });
   };
 
+  const setEventsFilter = () => {
+    const filter = { events: [event_id] };
+    localStorage.setItem('filter', JSON.stringify(filter));
+  };
+
+  const determineUserLandingPath = (userProfile: User, path?: string | null) => {
+    const hasOnboardingMandatoryFields = checkOnboardingMandatoryFields(userProfile);
+
+    if (path) {
+      return path;
+    }
+
+    if (hasOnboardingMandatoryFields) {
+      return '/sign-up/user/onboarding';
+    }
+
+    return event_id ? '/search?q=&type=users&page=1' : '/dashboard/user';
+  };
+
   async function onLoginSucceed(loginResp: AuthRes) {
     await setAuthParams(loginResp, keepLoggedIn);
     const path = await nonPermanentStorage.get('savedLocation');
@@ -68,10 +87,8 @@ export const useSignInForm = () => {
     store.dispatch(setIdentityList(ids));
     const userProfile = await profile();
     // checking ids if less than 2 it means didn't registered for org and can be skip
-    const userLandingPath = checkOnboardingMandatoryFields(userProfile)
-      ? '/sign-up/user/onboarding'
-      : '/dashboard/user';
-    navigate(path ? path : userLandingPath);
+    event_id && setEventsFilter();
+    navigate(determineUserLandingPath(userProfile, path));
     return loginResp;
   }
   const addListeners = () => {
@@ -122,7 +139,7 @@ export const useSignInForm = () => {
   async function onLogin() {
     const formValues = { email: getValues().email.trim(), password: getValues().password };
     tried();
-    login(formValues)
+    login(formValues, { event_id })
       .then(onLoginSucceed)
       .then(registerPushNotifications)
       .catch(e => {
