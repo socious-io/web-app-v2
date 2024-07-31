@@ -32,6 +32,8 @@ import FallBack from 'src/pages/fallback/fallback';
 import store, { RootState } from 'src/store';
 import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
+import { checkSearchFilters } from '../utils';
+
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
   {
@@ -440,7 +442,7 @@ export const blueprint: RouteObject[] = [
                   localStorage.setItem('searchTerm', q || '');
                   localStorage.setItem('navigateToSearch', 'true');
                   const body = {
-                    filter: JSON.parse(localStorage.getItem('filter') || '{}'),
+                    filter: checkSearchFilters(type || 'projects', JSON.parse(localStorage.getItem('filter') || '{}')),
                     type,
                     q,
                   };

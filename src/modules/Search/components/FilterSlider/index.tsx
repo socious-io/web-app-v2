@@ -9,6 +9,7 @@ import CheckboxGroup from 'src/modules/general/components/CheckboxGroup';
 import MultiSelect from 'src/modules/general/components/multiSelect/multiSelect';
 import { RadioGroup } from 'src/modules/general/components/RadioGroup';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import { ToggleButton } from 'src/modules/general/components/toggleButton';
 import { FilterReq } from 'src/pages/search/useSearch';
 import variables from 'src/styles/constants/_exports.module.scss';
 
@@ -32,6 +33,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
       onSelectSearchDropdown,
       onSelectPaymentType,
       handleApply,
+      onChangeOpenToVolunteer,
     },
   } = useFilterSlider(onApply, filter, type);
 
@@ -44,7 +46,6 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           isAsync
           value={filters.location}
           loadOptions={searchCities}
-          defaultOptions
           isClearable={!!filters.location?.value}
           icon="search-lg"
           hasDropdownIcon={!filters.location?.value}
@@ -110,13 +111,52 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
         isAsync
         value={filters.location}
         loadOptions={searchCities}
-        defaultOptions
         className="mb-6"
         icon="search-lg"
         hasDropdownIcon={true}
         placeholder="Select a location"
         onChange={onSelectCity}
       />
+    );
+  };
+
+  const renderPeopleFilters = () => {
+    return (
+      <div className="flex flex-col gap-6">
+        <SearchDropdown
+          id="location"
+          label="Location"
+          isAsync
+          value={filters.location}
+          loadOptions={searchCities}
+          isClearable={!!filters.location?.value}
+          icon="search-lg"
+          hasDropdownIcon={!filters.location?.value}
+          placeholder="Select a location"
+          onChange={onSelectCity}
+        />
+        {/* <SearchDropdown
+          id="preference"
+          label="Remote preference"
+          value={filters.preference}
+          options={PROJECT_REMOTE_PREFERENCES_V2}
+          isSearchable
+          icon="search-lg"
+          hasDropdownIcon={true}
+          onChange={value => onSelectSearchDropdown('preference', value)}
+        /> */}
+        {/* <CheckboxGroup
+          id="experience-level"
+          label="Experience level"
+          items={EXPERIENCE_LEVEL_V2}
+          selectedItems={filters.experienceLevel}
+          onChange={value => onSelectCheckboxs('experienceLevel', value)}
+        /> */}
+        {/* <div className="flex gap-2">
+          <ToggleButton checked={!!filters.openToVolunteer} onChange={onChangeOpenToVolunteer} size="small" />
+          <span className="text-sm font-medium leading-5 text-Gray-light-mode-700">Open to volunteer</span>
+        </div> */}
+      </div>
     );
   };
 
@@ -165,7 +205,9 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
             onChange={(value) => onSelectCheckboxs('organizationSize', value)}
           />
         </Accordion> */}
-        {type !== 'organization' ? renderJobFilters() : renderOrganizationFilters()}
+        {type === 'organization' && renderOrganizationFilters()}
+        {type === 'jobs' && renderJobFilters()}
+        {type === 'people' && renderPeopleFilters()}
       </div>
       <div
         className="flex justify-end items-center sticky bottom-0 p-4

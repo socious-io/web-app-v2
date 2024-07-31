@@ -10,6 +10,7 @@ import { SearchResultProfile } from 'src/modules/Search/components/searchResultP
 
 export type FilterReq = {
   causes_tags?: Array<string>;
+  social_causes?: Array<string>;
   skills?: Array<string>;
   country?: Array<keyof typeof COUNTRIES_DICT>;
   city?: Array<string>;
