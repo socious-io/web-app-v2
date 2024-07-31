@@ -9,7 +9,7 @@ export const Causes = () => {
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>
-        <h1 className={css.title}>What are you passionated about?</h1>
+        <h1 className={css.title}>What are you passionate about?</h1>
         <h2 className={css.description}>Select up to 5 social causes</h2>
       </div>
       <div className="mt-5">

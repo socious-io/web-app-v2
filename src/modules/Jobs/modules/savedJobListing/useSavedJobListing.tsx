@@ -13,9 +13,8 @@ export const useSavedJobListing = () => {
   const skillList = useSelector<RootState, Skill[]>(state => {
     return state.skills.items;
   });
-  5;
   const dispatch = useDispatch();
-  const PER_PAGE = 5;
+  const PER_PAGE = 10;
   const isMobile = isTouchDevice();
   const [jobsList, setJobsList] = useState<Job[]>(loaderData.items);
   const [totalCount, setTotalCount] = useState(loaderData.total_count);

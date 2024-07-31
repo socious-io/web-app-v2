@@ -9,7 +9,7 @@ export const useOrganizationJobs = () => {
   const [total, setTotal] = useState<number>(orgJobs.total_count);
   const [page, setPage] = useState(Number(orgJobs.page));
 
-  const PER_PAGE = 2;
+  const PER_PAGE = 4;
   const isMobile = isTouchDevice();
 
   const getJobsData = async () => {

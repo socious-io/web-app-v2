@@ -23,6 +23,8 @@ export const useOrganizationJobListing = () => {
   });
 
   const navigate = useNavigate();
+  const PER_PAGE = 10;
+  const isMobile = isTouchDevice();
 
   const getJobsData = async () => {
     setLoading(true);
@@ -30,7 +32,7 @@ export const useOrganizationJobListing = () => {
       const payload: FilterReq = {
         identity_id: currentIdentity?.id,
         page: page,
-        limit: 5,
+        limit: PER_PAGE,
       };
       if (filter === 'archived') payload.status = 'EXPIRE';
       else if (filter === 'active') payload.status = 'ACTIVE';
@@ -42,9 +44,6 @@ export const useOrganizationJobListing = () => {
     }
     setLoading(false);
   };
-
-  const PER_PAGE = 5;
-  const isMobile = isTouchDevice();
 
   const handleClick = (filter: 'all' | 'active' | 'archived') => {
     setFilter(filter);

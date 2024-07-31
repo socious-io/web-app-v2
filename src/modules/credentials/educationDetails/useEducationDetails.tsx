@@ -74,7 +74,7 @@ export const useEducationDetails = (
 
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
-    const start = currentYear - 30;
+    const start = 1970;
     const options: OptionType[] = [];
     for (let i = currentYear; i >= start; i--) {
       const year = i.toString();
