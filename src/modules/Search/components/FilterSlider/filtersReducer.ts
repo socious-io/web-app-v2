@@ -32,18 +32,7 @@ export const initialFilters: FiltersType = {
 export function filtersReducer(filters: FiltersType, action: { type: keyof FiltersType | 'reset'; payload: any }) {
   switch (action.type) {
     case 'reset':
-      return {
-        causes: [],
-        skills: [],
-        organizationSize: [],
-        location: null,
-        preference: null,
-        jobCategory: null,
-        jobLength: [],
-        experienceLevel: [],
-        paymentType: null,
-        openToVolunteer: null,
-      };
+      return { ...initialFilters, paymentType: null };
     case 'causes':
       return { ...filters, causes: action.payload };
     case 'skills':
