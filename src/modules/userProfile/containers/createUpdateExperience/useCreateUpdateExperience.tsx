@@ -196,13 +196,21 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       orgId: experience?.org.id || '',
       city: { value: '', label: experience?.city || experience?.org.city || '' },
       country: experience?.country || '',
-      startMonth: {
-        label: startDate ? monthNames[startDate.getMonth()] : '',
-        value: startDate ? startDate.getMonth() : '',
-      },
-      startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
-      endMonth: { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth() : '' },
-      endYear: { label: endDate?.getFullYear() || '', value: endDate?.getFullYear() || '' },
+      startMonth: startDate
+        ? {
+            label: monthNames[startDate.getMonth()] || '',
+            value: startDate.getMonth().toString() || '',
+          }
+        : null,
+      startYear: startDate
+        ? { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' }
+        : null,
+      endMonth: endDate
+        ? { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth().toString() : '' }
+        : null,
+      endYear: endDate
+        ? { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' }
+        : null,
       description: experience?.description || '',
       currentlyWorking: experience ? !experience?.end_at : false,
       org: {
@@ -221,6 +229,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   const currentlyWorking = watch('currentlyWorking');
 
   const validateDates = () => {
+    const current = new Date();
     if (!currentlyWorking && !endYear?.label) {
       return 'Select currently working or enter end year';
     }
@@ -232,6 +241,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       end = new Date(Number(endYear?.label), Number(endMonth?.value || 0), 2);
     }
     if (end < start) return 'Start date cannot be later than end date';
+    if (end > current || start > current) return 'Selected date cannot be later than current date';
     return;
   };
 
