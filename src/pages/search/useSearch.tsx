@@ -111,8 +111,9 @@ export const useSearch = () => {
 
   const readableType = useMemo(() => {
     if (type === 'projects') return 'jobs';
+    if (type === 'users' && filter.events?.length) return 'event attendees';
     if (type === 'users') return 'people';
-    return 'organization';
+    return 'organizations';
   }, [type]);
 
   const isUser = (item: Organization | User): item is User => {
