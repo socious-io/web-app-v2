@@ -55,6 +55,7 @@ export const useCreateUpdateCertificate = (
     formState: { errors },
     getValues,
     setValue,
+    watch,
     reset,
   } = useForm({
     mode: 'all',
@@ -70,6 +71,9 @@ export const useCreateUpdateCertificate = (
   const [issueYear, setIssueYear] = useState<OptionType | null>();
   const [expMonth, setExpMonth] = useState<OptionType | null>();
   const [expYear, setExpYear] = useState<OptionType | null>();
+  const [dateError, setDateError] = useState('');
+  const issueDateErrors = errors['issueMonth']?.message || errors['issueYear']?.message;
+  const expireDateErrors = errors['expireMonth']?.message || errors['expireYear']?.message || dateError;
 
   const mapMonthNames = () => {
     const options = monthNames.map((m, index) => {
@@ -143,6 +147,28 @@ export const useCreateUpdateCertificate = (
     initializeValues();
   }, [certificate]);
 
+  const issueMonthVal = watch('issueMonth');
+  const expireMonthVal = watch('expireMonth');
+  const issueYearVal = watch('issueYear');
+  const expireYearVal = watch('expireYear');
+
+  const validateDates = () => {
+    if (!issueYearVal || !expireYearVal) return;
+    const start = new Date(Number(issueYearVal), Number(issueMonthVal || 0), 2);
+    const end = expireYearVal ? new Date(Number(expireYearVal), Number(expireMonthVal || 0), 2) : undefined;
+    const current = new Date();
+    if (end && end < start) return 'Start date cannot be later than end date';
+    if ((end && end > current) || start > current) return 'Selected date cannot be later than current date';
+    return;
+  };
+
+  useEffect(() => {
+    const msg = validateDates();
+    if (msg) {
+      setDateError(msg);
+    } else setDateError('');
+  }, [issueMonthVal, issueYearVal, expireMonthVal, expireYearVal]);
+
   const orgToOption = (orgList: Organization[], searchText: string) => {
     let options = [];
     options = orgList.map(s => ({
@@ -174,9 +200,9 @@ export const useCreateUpdateCertificate = (
     const value = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
     setValue('orgId', value, { shouldValidate: true });
     setValue('orgName', newCompanyVal.label, { shouldValidate: true });
-    setValue('orgCity', newCompanyVal.city, { shouldValidate: true });
-    setValue('orgImageId', newCompanyVal.imageId, { shouldValidate: true });
-    setValue('orgImageUrl', newCompanyVal.imageUrl, { shouldValidate: true });
+    newCompanyVal?.city && setValue('orgCity', newCompanyVal.city, { shouldValidate: true });
+    newCompanyVal?.imageId && setValue('orgImageId', newCompanyVal.imageId, { shouldValidate: true });
+    newCompanyVal?.imageUrl && setValue('orgImageUrl', newCompanyVal.imageUrl, { shouldValidate: true });
     setOrgVal({ value: newCompanyVal.value, label: newCompanyVal.label });
   };
 
@@ -283,5 +309,7 @@ export const useCreateUpdateCertificate = (
     handleSubmit,
     onSave,
     onDelete,
+    issueDateErrors,
+    expireDateErrors,
   };
 };
