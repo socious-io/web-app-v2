@@ -24,7 +24,7 @@ export type FilterSliderProps = {
 
 export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, filter }) => {
   const {
-    data: { filters, causesItems, skillItems, categoriesList, paymentTypeOptions },
+    data: { filters, causesItems, skillItems, categoriesList, paymentTypeOptions, eventItems },
     operations: {
       onSelectMultiSelect,
       onSelectCity,
@@ -134,6 +134,19 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           hasDropdownIcon={!filters.location?.value}
           placeholder="Select a location"
           onChange={onSelectCity}
+        />
+        <SearchDropdown
+          id="event"
+          label="Event"
+          icon="search-lg"
+          placeholder="Select an event"
+          value={filters.events}
+          options={eventItems}
+          isSearchable
+          isClearable={!!filters.events}
+          hasDropdownIcon={!filters.events}
+          onChange={value => onSelectSearchDropdown('events', value)}
+          controlClassName="rounded-2xl border border-solid border-Purple-200 bg-Purple-50 text-Purple-700 py-0.5 px-2"
         />
         {/* <SearchDropdown
           id="preference"

@@ -20,6 +20,7 @@ export type FilterReq = {
   experience_level: Array<number>;
   payment_type?: string | number;
   location?: { value: number; label: string; countryCode: string };
+  events?: Array<string>;
 };
 
 export const useSearch = () => {

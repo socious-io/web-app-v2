@@ -1,4 +1,4 @@
-import { CurrentIdentity, Device, DeviceReq, SearchReq, Skill, SkillRes } from './site.types';
+import { CurrentIdentity, Device, DeviceReq, EventsRes, SearchReq, Skill, SkillRes } from './site.types';
 import { post, get } from '../http';
 import { ApplicantsRes, JobsRes } from '../jobs/jobs.types';
 import { OrganizationsRes } from '../organizations/organizations.types';
@@ -45,4 +45,8 @@ export async function removeDevice(fcm: string): Promise<SuccessRes> {
 
 export async function skills(params: PaginateReq): Promise<SkillRes> {
   return (await get<SkillRes>('skills', { params })).data;
+}
+
+export async function events(params: PaginateReq): Promise<EventsRes> {
+  return (await get<EventsRes>('site/events', { params })).data;
 }
