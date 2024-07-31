@@ -114,7 +114,7 @@ export const useSearch = () => {
     if (type === 'users' && filter.events?.length) return 'event attendees';
     if (type === 'users') return 'people';
     return 'organizations';
-  }, [type]);
+  }, [type, filter]);
 
   const isUser = (item: Organization | User): item is User => {
     return (item as User).username !== undefined;
