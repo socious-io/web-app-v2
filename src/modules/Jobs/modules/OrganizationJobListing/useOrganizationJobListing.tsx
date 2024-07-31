@@ -11,7 +11,8 @@ export const useOrganizationJobListing = () => {
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
-  type Filter = 'all' | 'archived';
+  type Filter = 'all' | 'archived' | 'active';
+
   const [searchParam] = useSearchParams();
   const [filter, setFilter] = useState<Filter>((searchParam.get('filter') as Filter) || 'all');
   const pageNumber = Number(searchParam.get('page') || 1);
@@ -34,6 +35,7 @@ export const useOrganizationJobListing = () => {
         limit: PER_PAGE,
       };
       if (filter === 'archived') payload.status = 'EXPIRE';
+      else if (filter === 'active') payload.status = 'ACTIVE';
       const res = await jobs(payload);
       setJobsList([...res.items]);
       setTotal(res.total_count);
@@ -43,20 +45,26 @@ export const useOrganizationJobListing = () => {
     setLoading(false);
   };
 
+  const handleClick = (filter: 'all' | 'active' | 'archived') => {
+    setFilter(filter);
+    setPage(1);
+  };
+
   const filterButtons: ButtonGroupItem[] = [
     {
       label: 'View all',
-      handleClick: () => {
-        setFilter('all');
-        setPage(1);
-      },
+      value: 'all',
+      handleClick: () => handleClick('all'),
+    },
+    {
+      label: 'Active',
+      value: 'active',
+      handleClick: () => handleClick('active'),
     },
     {
       label: 'Archived',
-      handleClick: () => {
-        setFilter('archived');
-        setPage(1);
-      },
+      value: 'archived',
+      handleClick: () => handleClick('archived'),
     },
   ];
 
@@ -69,6 +77,8 @@ export const useOrganizationJobListing = () => {
     if (page !== pageNumber) navigate(`/jobs/created?page=${page}&filter=${filter}`);
   }, [page, filter]);
 
+  const activeIndex = filterButtons.findIndex(btn => btn.value === filter);
+
   return {
     filterButtons,
     page,
@@ -80,5 +90,6 @@ export const useOrganizationJobListing = () => {
     loading,
     navigateToCreateJob,
     filter,
+    activeIndex,
   };
 };

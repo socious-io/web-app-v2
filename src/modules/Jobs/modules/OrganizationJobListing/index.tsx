@@ -12,11 +12,11 @@ import { useOrganizationJobListing } from './useOrganizationJobListing';
 import { OrganizationJobCard } from '../../components/OrganizationJobCard';
 
 export const OrganizationJobListing = () => {
-  const { filterButtons, page, setPage, total, PER_PAGE, jobsList, loading, navigateToCreateJob, filter } =
+  const { filterButtons, page, setPage, total, PER_PAGE, jobsList, loading, navigateToCreateJob, filter, activeIndex } =
     useOrganizationJobListing();
   return (
     <div className={css.container}>
-      <ButtonGroups buttons={filterButtons} />
+      <ButtonGroups buttons={filterButtons} activeIndex={activeIndex} />
       {loading && (
         <div className="flex flex-col gap-4 w-full py-4 mt-6">
           <Skeleton variant="rounded" className="w-6/6" height={150} />
