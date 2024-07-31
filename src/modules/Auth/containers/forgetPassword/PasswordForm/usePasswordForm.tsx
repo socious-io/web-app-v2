@@ -8,6 +8,7 @@ import * as yup from 'yup';
 
 export const usePasswordForm = () => {
   const navigate = useNavigate();
+  const eventName = localStorage.getItem('event_name') || '';
   const [validLength, setValidLength] = useState(false);
   const [specialChar, setSpecialChar] = useState(false);
 
@@ -44,12 +45,12 @@ export const usePasswordForm = () => {
 
   const onChangePassword = () => {
     changePasswordDirect({ password: getValues().password as string })
-      .then(() => navigate(`../reset-completed`))
+      .then(() => navigate('../reset-completed'))
       .catch(handleError());
   };
 
   const onBack = () => {
-    navigate('/sign-in');
+    navigate(`/sign-in${eventName && `?event_name=${eventName}`}`);
   };
 
   return { register, handleSubmit, errors, isValid, onChangePassword, onBack, validLength, specialChar };

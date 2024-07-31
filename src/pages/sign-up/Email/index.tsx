@@ -95,7 +95,7 @@ export const Email = () => {
               variant="outlined"
               onClick={() => {
                 tried();
-                navigate('/oauth/google');
+                navigate(`/oauth/google${eventName && `?event_name=${eventName}`}`);
               }}
               style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '12px' }}
             >
@@ -107,7 +107,11 @@ export const Email = () => {
             <Typography variant="caption" className={css.signupTitle}>
               Already have an account?
             </Typography>
-            <Link href="/sign-in" label="Log in" customStyle="!font-semibold" />
+            <Link
+              href={`/sign-in${eventName && `?event_name=${eventName}`}`}
+              label="Log in"
+              customStyle="!font-semibold"
+            />
           </div>
           <div className="text-center">
             <Typography variant="caption" className={css.signupTitle}>

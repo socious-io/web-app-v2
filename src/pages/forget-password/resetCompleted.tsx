@@ -6,8 +6,10 @@ import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';
 
 export const ResetCompleted = () => {
   const navigate = useNavigate();
+  const eventName = localStorage.getItem('event_name') || '';
   const navigateToLogin = () => {
-    navigate('/sign-in');
+    localStorage.removeItem('event_name');
+    navigate(`/sign-in${eventName && `?event_name=${eventName}`}`);
   };
 
   return (

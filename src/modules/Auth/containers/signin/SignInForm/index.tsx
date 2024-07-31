@@ -10,8 +10,12 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import { useSignInForm } from './useSignInForm';
 // import { LinkedIn } from 'public/icons/nowruz/linkedin';
 
-export const SignInForm = ({ eventId }) => {
-  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried } = useSignInForm(eventId);
+interface SignInFormProps {
+  event: { id: string; name: string };
+}
+
+export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
+  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried } = useSignInForm(event.id);
   const navigate = useNavigate();
 
   return (
@@ -41,7 +45,12 @@ export const SignInForm = ({ eventId }) => {
         <div className="flex flex-row">
           <Checkbox id="Keep_me_logged_in" label={'Keep me logged in'} value={keepLoggedIn} onChange={handleChange} />
           <div className="w-fit mr-0 ml-auto flex items-center">
-            <Link href="/forget-password/email" label="Forgot password" customStyle="!font-semibold" />
+            <Link
+              href="/forget-password/email"
+              label="Forgot password"
+              customStyle="!font-semibold"
+              onClick={() => event.name && localStorage.setItem('event_name', event.name)}
+            />
           </div>
         </div>
 
@@ -54,7 +63,7 @@ export const SignInForm = ({ eventId }) => {
             variant="outlined"
             onClick={() => {
               tried();
-              navigate('/oauth/google');
+              navigate(`/oauth/google${event.name && `?event_name=${event.name}`}`);
             }}
             style={{ display: 'flex', gap: '12px' }}
           >
@@ -73,7 +82,11 @@ export const SignInForm = ({ eventId }) => {
         <Typography variant="caption" color={variables.color_grey_600}>
           Don&apos;t have an account?
         </Typography>
-        <Link label=" Sign up" href="/intro" customStyle="!font-semibold" />
+        <Link
+          label=" Sign up"
+          href={`/intro${event.name && `?event_name=${event.name}`}`}
+          customStyle="!font-semibold"
+        />
       </div>
     </>
   );
