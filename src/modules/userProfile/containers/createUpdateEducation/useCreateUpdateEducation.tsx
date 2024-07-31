@@ -93,13 +93,21 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
       school: { label: education?.org.name || '', value: education?.org.id || '' },
       degree: education?.degree || '',
       field: education?.title || '',
-      startMonth: {
-        label: startDate ? monthNames[startDate.getMonth()] : '',
-        value: startDate ? startDate.getMonth() : '',
-      },
-      startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
-      endMonth: { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth() : '' },
-      endYear: { label: endDate?.getFullYear() || '', value: endDate?.getFullYear() || '' },
+      startMonth: startDate
+        ? {
+            label: monthNames[startDate.getMonth()] || '',
+            value: startDate.getMonth().toString() || '',
+          }
+        : null,
+      startYear: startDate
+        ? { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' }
+        : null,
+      endMonth: endDate
+        ? { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth().toString() : '' }
+        : null,
+      endYear: endDate
+        ? { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' }
+        : null,
       grade: education?.grade || '',
       description: education?.description || '',
     };
@@ -136,7 +144,9 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
     if (!startYear?.label) return;
     const start = new Date(Number(startYear?.label), Number(startMonth?.value || 0), 2);
     const end = endYear?.label ? new Date(Number(endYear?.label), Number(endMonth?.value || 0), 2) : undefined;
+    const current = new Date();
     if (end && end < start) return 'Start date cannot be later than end date';
+    if ((end && end > current) || start > current) return 'Selected date cannot be later than current date';
     return;
   };
 
