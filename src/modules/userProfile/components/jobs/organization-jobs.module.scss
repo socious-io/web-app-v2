@@ -3,17 +3,18 @@
 .organizationJobs {
     .jobListing {
         display: flex;
+        flex-wrap: wrap;
         flex-direction: row;
         justify-content: space-between;
         gap: 1.5rem;
         width: 100%;
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 1024px) {
             flex-direction: column;
         }
 
         .jobItem {
-            width: 50%;
-            @media screen and (max-width: 600px) {
+            width: calc(50% - 0.75rem);
+            @media screen and (max-width: 1024px) {
                 width: 100%;
             }
         }
