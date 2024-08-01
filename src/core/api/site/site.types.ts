@@ -77,3 +77,15 @@ export interface Skill {
 export interface SkillRes extends PaginateRes {
   items: Skill[];
 }
+
+export interface Event {
+  id: string;
+  title: string;
+  description: string;
+  event_at: string;
+  created_at: string;
+}
+
+export interface EventsRes extends PaginateRes {
+  items: Event[];
+}

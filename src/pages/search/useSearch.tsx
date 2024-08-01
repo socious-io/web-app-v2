@@ -20,6 +20,7 @@ export type FilterReq = {
   experience_level: Array<number>;
   payment_type?: string | number;
   location?: { value: number; label: string; countryCode: string };
+  events?: Array<string>;
 };
 
 export const useSearch = () => {
@@ -109,10 +110,13 @@ export const useSearch = () => {
   };
 
   const readableType = useMemo(() => {
-    if (type === 'projects') return 'jobs';
-    if (type === 'users') return 'people';
-    return 'organization';
-  }, [type]);
+    if (type === 'projects') return { title: 'jobs', type: 'jobs' };
+    if (type === 'users') {
+      if (filter.events?.length) return { title: 'event attendees', type: 'people' };
+      return { title: 'people', type: 'people' };
+    }
+    return { title: 'organizations', type: 'organizations' };
+  }, [type, filter]);
 
   const isUser = (item: Organization | User): item is User => {
     return (item as User).username !== undefined;

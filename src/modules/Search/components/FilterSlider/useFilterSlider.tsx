@@ -4,7 +4,7 @@ import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import { eventsToCategoryAdaptor, skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
 import { JobCategoriesRes, Location, openToVolunteer, searchLocation } from 'src/core/api';
 import { Item } from 'src/modules/general/components/CheckboxGroup/index.types';
 import { MultiSelectItem } from 'src/modules/general/components/multiSelect/multiSelect.types';
@@ -20,6 +20,8 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
   const [filters, dispatch] = useReducer(filtersReducer, initialFilters);
   const [causesItems, setCausesItems] = useState<LabelValue[]>([]);
   const [skillItems, setSkillItems] = useState<LabelValue[]>([]);
+  const [eventItems, setEventItems] = useState<LabelValue[]>([]);
+
   categoriesList.current = categories.map(item => ({ label: item.name, value: item.id }));
   const paymentTypeOptions = PROJECT_PAYMENT_TYPE.slice().reverse();
 
@@ -63,7 +65,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     dispatch({ type, payload: value });
   };
 
-  const onSelectSearchDropdown = (type: 'preference' | 'jobCategory', value) => {
+  const onSelectSearchDropdown = (type: 'preference' | 'jobCategory' | 'events', value) => {
     dispatch({ type, payload: value });
   };
 
@@ -87,6 +89,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       experienceLevel,
       paymentType,
       openToVolunteer,
+      events,
     } = filters || {};
     const { value, label, countryCode } = location || {};
     const isValidLocation = countryCode && label && value;
@@ -107,6 +110,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       ...(experienceLevel.length > 0 && { experience_level: experienceLevel.map((e: LabelValue) => e.value) }),
       ...(paymentType && { payment_type: type !== 'organization' ? paymentType.value : '' }),
       ...(openToVolunteer && { open_to_volunteer: openToVolunteer }),
+      ...(events && { events: [events.value] }),
     };
     onApply(filter);
   };
@@ -114,6 +118,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
   useEffect(() => {
     skillsToCategoryAdaptor().then(data => setSkillItems(data));
     setCausesItems(socialCausesToCategoryAdaptor());
+    eventsToCategoryAdaptor().then(data => setEventItems(data));
   }, []);
 
   useEffect(() => {
@@ -133,6 +138,12 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       dispatch({
         type: 'preference',
         payload: PROJECT_REMOTE_PREFERENCES_V2.find(p => p.value === filter.remote_preference),
+      });
+    }
+    if (filter.events && filter.events?.length) {
+      dispatch({
+        type: 'events',
+        payload: eventItems.find(e => e.value === filter.events![0]) || null,
       });
     }
     if (filter.job_category_id) {
@@ -178,6 +189,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       skillItems,
       categoriesList: categoriesList.current,
       paymentTypeOptions,
+      eventItems,
     },
     operations: {
       onSelectMultiSelect,
