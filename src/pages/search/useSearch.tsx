@@ -111,8 +111,10 @@ export const useSearch = () => {
 
   const readableType = useMemo(() => {
     if (type === 'projects') return { title: 'jobs', type: 'jobs' };
-    if (type === 'users' && filter.events?.length) return { title: 'event attendees', type: 'people' };
-    if (type === 'users') return { title: 'people', type: 'people' };
+    if (type === 'users') {
+      if (filter.events?.length) return { title: 'event attendees', type: 'people' };
+      return { title: 'people', type: 'people' };
+    }
     return { title: 'organizations', type: 'organizations' };
   }, [type, filter]);
 
