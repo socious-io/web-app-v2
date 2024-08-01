@@ -1,4 +1,5 @@
 @import 'src/styles/constants/_primitives.scss';
+
 .outline {
     display: flex;
     align-items: center;
@@ -36,6 +37,7 @@
     min-width: 28px;
     border-radius: 24px;
 }
+
 .outer-lg {
     min-height: 42px;
     min-width: 42px;
@@ -51,6 +53,7 @@
     min-width: 32px;
     border-radius: 24px;
 }
+
 .outer-xl {
     height: 46px;
     width: 46px;
@@ -66,49 +69,75 @@
     min-width: 36px;
     border-radius: 24px;
 }
+
 .primary-outer {
     border: 2px solid rgba($color-primary-600, 0.1);
 }
+
 .primary-inner {
     border: 2px solid rgba($color-primary-600, 0.3);
 }
+
 .gray-outer {
     border: 2px solid rgba($color-grey-600, 0.1);
 }
+
 .gray-inner {
     border: 2px solid rgba($color-grey-600, 0.3);
 }
+
 .error-outer {
     border: 2px solid rgba($color-error-600, 0.1);
 }
+
 .error-inner {
     border: 2px solid rgba($color-error-600, 0.3);
 }
+
 .warning-outer {
     border: 2px solid rgba($color-warning-600, 0.1);
 }
+
 .warning-inner {
     border: 2px solid rgba($color-warning-600, 0.3);
 }
+
 .success-outer {
     border: 2px solid rgba($color-success-600, 0.1);
 }
+
 .success-inner {
     border: 2px solid rgba($color-success-600, 0.3);
+}
+
+.purple-outer {
+    border: 2px solid rgba($color-purple-600, 0.1);
+}
+
+.purple-inner {
+    border: 2px solid rgba($color-purple-600, 0.3);
 }
 
 .icon-color-primary {
     color: $color-primary-600;
 }
+
 .icon-color-gray {
     color: $color-grey-600;
 }
+
 .icon-color-error {
     color: $color-error-600;
 }
+
 .icon-color-warning {
     color: $color-warning-600;
 }
+
 .icon-color-success {
     color: $color-success-600;
+}
+
+.icon-color-purple {
+    color: $color-purple-600;
 }
