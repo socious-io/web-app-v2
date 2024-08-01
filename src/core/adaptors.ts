@@ -89,8 +89,8 @@ export async function eventsToCategoryAdaptor() {
 
 export function eventsToCategory(events: Event[] = []) {
   try {
-    return events.map(e => {
-      return { value: e.id, label: e.title };
+    return events.map(event => {
+      return { value: event.id, label: event.title };
     });
   } catch {
     return [];
