@@ -214,3 +214,7 @@ export interface Preference extends PreferenceReq {
 export interface PreferencesRes {
   items: Preference[];
 }
+
+export interface UpdatePreferencReq {
+  preferences: PreferenceReq[];
+}

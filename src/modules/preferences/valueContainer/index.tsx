@@ -1,21 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from 'src/modules/general/components/Button';
 
-import {
-  benefits,
-  diversity,
-  environmentalImpacts,
-  growth,
-  socialImpacts,
-  transparency,
-  workLifeBalance,
-} from './contants';
 import { useValueContainer } from './useValueContainer';
 import { ValueAccordion } from '../valueAccordion';
 
 export const ValueContainer = () => {
   const { t } = useTranslation();
-  const { loaderData } = useValueContainer();
+  const { preferences, setPreferences, onSave } = useValueContainer();
 
   return (
     <div className="flex flex-col">
@@ -24,14 +16,52 @@ export const ValueContainer = () => {
         <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{t('values-h2')}</span>
       </div>
       <div className="py-6">
-        {/* <ValueAccordion items={workLifeBalance} title={t('Work-life-balance-title')} />
-        <ValueAccordion items={benefits} title={t('benefits-title')} />
-        <ValueAccordion items={growth} title={t('growth-title')} />
-        <ValueAccordion items={diversity} title={t('diversity-title')} />
-        <ValueAccordion items={environmentalImpacts} title={t('environmental-impact-title')} />
-        <ValueAccordion items={socialImpacts} title={t('social-impact-title')} />
-        <ValueAccordion items={transparency} title={t('transparency-title')} /> */}
+        <ValueAccordion
+          valueGroup="workLifeBalance"
+          items={preferences}
+          title={t('Work-life-balance-title')}
+          setItems={setPreferences}
+        />
+        <ValueAccordion
+          valueGroup="benefits"
+          items={preferences}
+          title={t('benefits-title')}
+          setItems={setPreferences}
+        />
+        <ValueAccordion
+          valueGroup="diversity"
+          items={preferences}
+          title={t('growth-title')}
+          setItems={setPreferences}
+        />
+        <ValueAccordion
+          valueGroup="environmentalImpacts"
+          items={preferences}
+          title={t('diversity-title')}
+          setItems={setPreferences}
+        />
+        <ValueAccordion
+          valueGroup="growth"
+          items={preferences}
+          title={t('environmental-impact-title')}
+          setItems={setPreferences}
+        />
+        <ValueAccordion
+          valueGroup="socialImpacts"
+          items={preferences}
+          title={t('social-impact-title')}
+          setItems={setPreferences}
+        />
+        <ValueAccordion
+          valueGroup="transparency"
+          items={preferences}
+          title={t('transparency-title')}
+          setItems={setPreferences}
+        />
       </div>
+      <Button variant="contained" color="primary" onClick={onSave}>
+        Save
+      </Button>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, RouteObject, createBrowserRouter, useRouteError, useSearchParams } from 'react-router-dom';
+import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
 import {
   jobs,
   chats,
@@ -25,7 +25,6 @@ import {
   OrgMeta,
   disputes,
   invitations,
-  preferences,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/modules/layout';
@@ -104,10 +103,7 @@ export const blueprint: RouteObject[] = [
 
                     loader: async ({ params }) => {
                       if (params.id) {
-                        const [organization, preferencesRes] = await Promise.all([
-                          getOrganizationByShortName(params.id),
-                          preferences(),
-                        ]);
+                        const organization = await getOrganizationByShortName(params.id);
                         const page = Number(localStorage.getItem('profileJobPage'));
                         localStorage.setItem('source', organization.shortname);
                         localStorage.removeItem('navigateToSearch');
@@ -121,7 +117,6 @@ export const blueprint: RouteObject[] = [
                         return {
                           organization,
                           orgJobs,
-                          preferencesRes,
                         };
                       }
                     },

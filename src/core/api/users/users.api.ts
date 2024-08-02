@@ -19,7 +19,8 @@ import {
   UserProfile,
   EducationsReq,
   Education,
-  PreferencesRes,
+  UpdatePreferencReq,
+  Preference,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -135,6 +136,10 @@ export async function recommendedJobs(username: string, params?: PaginateReq): P
   return (await get<JobsRes>(`user/${username}/recommend/jobs`, { params })).data;
 }
 
-export async function preferences(): Promise<PreferencesRes> {
-  return (await get<PreferencesRes>('preferences', {})).data;
+export async function preferences(): Promise<Preference[]> {
+  return (await get<Preference[]>('preferences', {})).data;
+}
+
+export async function updatePreferences(payload: UpdatePreferencReq): Promise<Preference[]> {
+  return (await post<Preference[]>('preferences', payload)).data;
 }
