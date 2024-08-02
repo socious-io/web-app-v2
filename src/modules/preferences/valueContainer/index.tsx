@@ -7,7 +7,7 @@ import { ValueAccordion } from '../valueAccordion';
 
 export const ValueContainer = () => {
   const { t } = useTranslation();
-  const { preferences, setPreferences, onSave } = useValueContainer();
+  const { preferences, setPreferences, onSave, errors, handleSetError } = useValueContainer();
 
   return (
     <div className="flex flex-col">
@@ -21,42 +21,56 @@ export const ValueContainer = () => {
           items={preferences}
           title={t('Work-life-balance-title')}
           setItems={setPreferences}
+          error={errors['workLifeBalance']}
+          setError={handleSetError}
         />
         <ValueAccordion
           valueGroup="benefits"
           items={preferences}
           title={t('benefits-title')}
           setItems={setPreferences}
+          error={errors['benefits']}
+          setError={handleSetError}
         />
         <ValueAccordion
           valueGroup="diversity"
           items={preferences}
           title={t('growth-title')}
           setItems={setPreferences}
+          error={errors['diversity']}
+          setError={handleSetError}
         />
         <ValueAccordion
           valueGroup="environmentalImpacts"
           items={preferences}
           title={t('diversity-title')}
           setItems={setPreferences}
+          error={errors['environmentalImpacts']}
+          setError={handleSetError}
         />
         <ValueAccordion
           valueGroup="growth"
           items={preferences}
           title={t('environmental-impact-title')}
           setItems={setPreferences}
+          error={errors['growth']}
+          setError={handleSetError}
         />
         <ValueAccordion
           valueGroup="socialImpacts"
           items={preferences}
           title={t('social-impact-title')}
           setItems={setPreferences}
+          error={errors['socialImpacts']}
+          setError={handleSetError}
         />
         <ValueAccordion
           valueGroup="transparency"
           items={preferences}
           title={t('transparency-title')}
           setItems={setPreferences}
+          error={errors['transparency']}
+          setError={handleSetError}
         />
       </div>
       <Button variant="contained" color="primary" onClick={onSave}>

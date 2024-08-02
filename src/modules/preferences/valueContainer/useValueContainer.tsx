@@ -28,6 +28,7 @@ export const useValueContainer = () => {
     });
   };
   const [preferences, setPreferences] = useState<ValueAccordionItem[]>([]);
+  const [errors, setErrors] = useState<Record<ValueGroup, string>>({} as Record<ValueGroup, string>);
 
   useEffect(() => {
     const getPreferences = async () => {
@@ -39,8 +40,11 @@ export const useValueContainer = () => {
 
   const onSave = async () => {
     try {
+      const hasErrors = Object.keys(errors).some(item => !!errors[item]);
+      if (hasErrors) return;
+
       const payload = preferences.map(item => {
-        return { title: item.key, value: item.value };
+        return { title: item.key, value: item.value, description: item.description || null };
       });
       await updatePreferences({ preferences: payload });
     } catch (error) {
@@ -48,9 +52,15 @@ export const useValueContainer = () => {
     }
   };
 
+  const handleSetError = (valueGroup: ValueGroup, error: string) => {
+    setErrors({ ...errors, [valueGroup]: error });
+  };
+
   return {
     preferences,
     setPreferences,
     onSave,
+    errors,
+    handleSetError,
   };
 };

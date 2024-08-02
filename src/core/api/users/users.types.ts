@@ -201,7 +201,7 @@ export type PreferenceValue =
 export interface PreferenceReq {
   title: string;
   value: PreferenceValue;
-  description?: string;
+  description?: string | null;
 }
 
 export interface Preference extends PreferenceReq {

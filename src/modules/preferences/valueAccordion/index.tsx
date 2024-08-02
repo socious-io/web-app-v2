@@ -6,26 +6,35 @@ import Accordion from '../../general/components/Accordion';
 import { Checkbox } from '../../general/components/checkbox/checkbox';
 import { Input } from '../../general/components/input/input';
 
-export const ValueAccordion: React.FC<ValueAccordionProps> = ({ items, title, setItems, valueGroup }) => {
-  const { error, handleChange } = useValueAccordion(items, setItems);
+export const ValueAccordion: React.FC<ValueAccordionProps> = ({
+  items,
+  title,
+  setItems,
+  valueGroup,
+  error,
+  setError,
+}) => {
+  const { handleChange, handleChangeDesc, letterCount } = useValueAccordion(valueGroup, items, setItems, setError);
   return (
     <Accordion title={title} expand={false} hasBorder={false}>
       <div className="flex flex-col gap-4">
         {items
           .filter(item => item.valueGroup === valueGroup)
           .map(item => (
-            <div key={item.title} className="flex gap-3 items-start">
-              <Checkbox
-                id={item.title}
-                checked={item.value === 'ON'}
-                size="medium"
-                label=""
-                type="checkBox"
-                onChange={() => handleChange(item.key)}
-              />
-              <div className="flex flex-col gap-0.5">
-                <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{item.title}</span>
-                <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{item.subtitle}</span>
+            <div key={item.title} className="flex flex-col gap-4">
+              <div className="flex gap-3 items-start">
+                <Checkbox
+                  id={item.title}
+                  checked={item.value === 'ON'}
+                  size="medium"
+                  label=""
+                  type="checkBox"
+                  onChange={() => handleChange(item.key)}
+                />
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-medium text-base leading-6 text-Gray-light-mode-700">{item.title}</span>
+                  <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{item.subtitle}</span>
+                </div>
               </div>
               {item.key.includes('OTHERS') && item.value === 'ON' && (
                 <div className="w-full h-full flex flex-col gap-[6px]">
@@ -37,12 +46,12 @@ export const ValueAccordion: React.FC<ValueAccordionProps> = ({ items, title, se
                     required
                     errors={error ? [error] : undefined}
                     value={item.description}
-                    //  onChange={handleChangeDesc}
+                    onChange={e => handleChangeDesc(item.key, e.target.value)}
                     multiline
                     customHeight="94px"
                     maxRows={7}
                   />
-                  {/* <div className="text-sm font-normal leading-5 text-Gray-light-mode-600 text-right">{`${letterCount}/160`}</div> */}
+                  <div className="text-sm font-normal leading-5 text-Gray-light-mode-600 text-right">{`${letterCount}/160`}</div>
                 </div>
               )}
             </div>

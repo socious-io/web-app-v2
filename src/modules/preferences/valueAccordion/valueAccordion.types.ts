@@ -6,7 +6,7 @@ export interface ValueAccordionItem {
   title: string;
   subtitle: string;
   value: 'ON' | 'OFF';
-  description?: string;
+  description?: string | null;
 }
 
 export interface ValueAccordionProps {
@@ -14,4 +14,6 @@ export interface ValueAccordionProps {
   title: string;
   items: ValueAccordionItem[];
   setItems: (value: ValueAccordionItem[]) => void;
+  error: string;
+  setError: (valueGroup: ValueGroup, error: string) => void;
 }
