@@ -9,7 +9,7 @@ interface OptionType {
 }
 
 export const useLanguageItem = (language: LanguageProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
   const mapToLanguage = (langCode: keyof typeof Languages | undefined) => {
     if (!langCode) return '';
     if (langCode && Languages[langCode]) {

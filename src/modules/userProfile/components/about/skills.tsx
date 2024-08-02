@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { skillsToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
@@ -21,11 +22,12 @@ export const Skills = () => {
 
   const items = user?.skills ? skillsToCategory(user?.skills).map(skill => skill.label) : [];
   const [openEditModal, setOpenEditModal] = useState(false);
+  const { t } = useTranslation('profile');
   return (
     <>
       <div className="w-full flex flex-col gap-5">
         <div className={css.title}>
-          Skills
+          {t('skillsText')}
           {myProfile && (
             <IconButton
               size="medium"

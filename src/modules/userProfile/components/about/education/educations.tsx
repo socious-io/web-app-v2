@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { getStringDate } from 'src/core/time';
 import { verificationStatus } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
@@ -35,15 +36,15 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
     handleClaimVC,
     claimUrl,
   } = useEducation();
-
+  const { t } = useTranslation('profile');
   return (
     <>
       <div className="w-full flex flex-col gap-5">
-        <div className={css.title}>Educations</div>
+        <div className={css.title}>{t('educationText')}</div>
         {myProfile && (
           <Button variant="text" color="primary" className={css.addBtn} onClick={handleAdd}>
             <Icon name="plus" fontSize={20} color={variables.color_primary_700} />
-            Add education
+            {t('addEducation')}
           </Button>
         )}
         {user?.educations && (

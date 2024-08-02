@@ -8,7 +8,7 @@ interface LanguageProps {
   items: Language[];
 }
 export const LanguageJSX: React.FC<LanguageProps> = props => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
   const mapCodeToLanguage = (langCode?: keyof typeof Languages | undefined) => {
     if (langCode && Languages[langCode]) {
       return Languages[langCode];

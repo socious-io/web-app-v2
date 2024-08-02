@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
@@ -36,12 +37,13 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
     bio,
     handleChangeBio,
   } = useEditInfo(handleClose);
+  const { t } = useTranslation('profile');
   const modalContent = (
     <form className={css.editInfoModal}>
       <Input
         required
         id="first-name"
-        label="First name*"
+        label={t('firstNameLabel')}
         name="firstName"
         defaultValue={user?.first_name}
         register={register}
@@ -50,7 +52,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
       <Input
         required
         id="last-name"
-        label="Last name*"
+        label={t('lastNameLabel')}
         name="lastName"
         register={register}
         defaultValue={user?.last_name}
@@ -60,10 +62,10 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         required
         id="username"
         defaultValue={user?.username}
-        label="Username*"
+        label={t('usernameLabel')}
         name="username"
         register={register}
-        validMessage="Username available"
+        validMessage={t('username_available')}
         hints={[
           {
             hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`,
@@ -85,7 +87,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         className="my-5"
         icon="search-lg"
         hasDropdownIcon={false}
-        label="Location*"
+        label={t('locationLabel')}
         onChange={value => {
           onSelectCity(value);
         }}
@@ -96,7 +98,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
           multiline
           customHeight="92px"
           id="bio"
-          label="Headline*"
+          label={t('headlineLabel')}
           name="bio"
           defaultValue={user?.bio}
           value={bio}
@@ -109,9 +111,9 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
       </div>
       <MultiSelect
         id={'social-causes'}
-        searchTitle={'Social causes*'}
+        searchTitle={t('socialCausesLabel')}
         max={5}
-        maxLabel={'Max. 5 causes'}
+        maxLabel={t('max5Causes')}
         items={socialCauseItems.slice(0, 30)}
         placeholder={'Type a social cause'}
         componentValue={socialCauses}
@@ -133,20 +135,19 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(saveUser)}>
-        Save
+        {t('saveText')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={closeModal}>
-        Cancel
+        {t('cancelText')}
       </Button>
     </div>
   );
-
   return (
     <Modal
       open={open}
       handleClose={closeModal}
-      title="Edit Information"
-      subTitle="* required fields"
+      title={t('editInformationText')}
+      subTitle={t('requiredFieldsText')}
       content={modalContent}
       footer={modalFooterJsx}
     />

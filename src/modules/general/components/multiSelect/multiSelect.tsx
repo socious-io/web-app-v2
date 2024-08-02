@@ -1,11 +1,11 @@
 import { Autocomplete, TextField, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Icon } from 'src/modules/general/components/Icon';
 
 import Chip from './chip';
 import css from './multiSelect.module.scss';
 import { MultiSelectProps } from './multiSelect.types';
-
 const MultiSelect: React.FC<MultiSelectProps> = props => {
   const {
     id,
@@ -62,7 +62,7 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
     setSearchVal('');
     setChipItems(items?.filter(i => !componentValue.map(cv => cv.value).includes(i.value)));
   }, [componentValue]);
-
+  const { t } = useTranslation('profile');
   return (
     <div className={css.container}>
       <label htmlFor={id} aria-describedby={id} className={css.searchTitle}>
@@ -126,7 +126,7 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
       {displayDefaultBadges && (
         <div className={css.popularDiv}>
           <Typography variant="caption" className={css.popularLabel}>
-            Popular
+            {t('popular')}
           </Typography>
         </div>
       )}

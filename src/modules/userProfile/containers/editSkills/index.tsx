@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from 'src/modules/general/components/Button';
 import { Modal } from 'src/modules/general/components/modal';
 import MultiSelect from 'src/modules/general/components/multiSelect/multiSelect';
@@ -11,14 +12,15 @@ interface EditSkillsProps {
   handleClose: () => void;
 }
 export const EditSkills: React.FC<EditSkillsProps> = ({ open, handleClose }) => {
+  const { t } = useTranslation('profile');
   const { skills, skillItems, setSkills, errors, closeModal, onSave } = useEditSkills(handleClose);
   const contentJSX = (
     <div className="p-6 w-full h-full">
       <MultiSelect
         id="skills"
-        searchTitle="Select at least 1 skill"
+        searchTitle={t('selectAtLeastOneSkillLabel')}
         items={skillItems}
-        maxLabel={'Max. 10 skills'}
+        maxLabel={t('maxTenSkillsHintText')}
         max={10}
         componentValue={skills}
         setComponentValue={setSkills}
@@ -35,10 +37,10 @@ export const EditSkills: React.FC<EditSkillsProps> = ({ open, handleClose }) => 
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={onSave}>
-        Save
+        {t('saveText')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={closeModal}>
-        Cancel
+        {t('cancelText')}
       </Button>
     </div>
   );
@@ -47,8 +49,8 @@ export const EditSkills: React.FC<EditSkillsProps> = ({ open, handleClose }) => 
     <Modal
       open={open}
       handleClose={closeModal}
-      title="Edit skills"
-      subTitle="Showcase your top skills"
+      title={t('editSkillsText')}
+      subTitle={t('showcaseTopSkillsText')}
       content={contentJSX}
       footer={modalFooterJsx}
     />

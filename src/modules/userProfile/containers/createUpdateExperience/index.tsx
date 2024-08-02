@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Experience } from 'src/core/api';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
@@ -55,23 +56,23 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     volunteer,
     handleCheckVolunteer,
   } = useCreateUpdateExperience(handleClose, experience);
-
+  const { t } = useTranslation('profile');
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="title"
-        label="Job title*"
+        label={t('job_title_header')}
         required
         name="title"
         register={register}
-        placeholder="Enter job title"
+        placeholder={t('enterJobTitleText')}
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
         disabled={readonly}
       />
       <SearchDropdown
         id="job-category"
         value={category}
-        label="Job category"
+        label={t('jobCategoryLabel')}
         options={jobCategories}
         icon="search-lg"
         hasDropdownIcon={false}
@@ -95,7 +96,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
-        label="Company*"
+        label={t('companyLabel')}
         onChange={value => {
           onSelectCompany(value);
         }}
@@ -113,7 +114,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
-        label="Location"
+        label={t('locationLabel')}
         onChange={value => {
           onSelectCity(value);
         }}
@@ -121,10 +122,10 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         isDisabled={readonly}
       />
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium leading-5 text-Gray-light-mode-700">Volunteer experience?</p>
+        <p className="text-sm font-medium leading-5 text-Gray-light-mode-700">{t('volunteerExperienceLabel')}</p>
         <Checkbox
           id="volunteer-experience"
-          label={'Yes'}
+          label={t('yesText')}
           checked={volunteer}
           onChange={e => handleCheckVolunteer(e.target.checked)}
           value
@@ -135,7 +136,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         id="employment-type"
         value={employmentTypeVal}
         placeholder="Please select"
-        label="Employment type*"
+        label={t('employment_type')}
         options={employmentTypes}
         icon="search-lg"
         hasDropdownIcon={false}
@@ -255,8 +256,8 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     <Modal
       open={open}
       handleClose={handleClose}
-      title={experience ? 'Edit experience' : 'Add experience'}
-      subTitle={experience ? '' : 'Share where you’ve worked on your profile.'}
+      title={experience ? t('editExperienceText') : t('addExperienceText')}
+      subTitle={experience ? '' : t('shareWorkProfileText')}
       content={contentJSX}
       footer={modalFooterJsx}
     />

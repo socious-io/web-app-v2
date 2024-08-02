@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { socialCausesToCategory } from 'src/core/adaptors';
@@ -14,7 +15,6 @@ import { Impact } from '../impact';
 import { LanguageJSX } from '../languages';
 import { Location } from '../location';
 import { Website } from '../website';
-
 export const MainInfo = () => {
   const identity = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
@@ -53,17 +53,17 @@ export const MainInfo = () => {
       </div>
     );
   };
-
+  const { t } = useTranslation('profile');
   const connectionJSX = (
     <div className="flex gap-2">
       <Link
         href="/connections?active=0"
-        label={`${identity?.connections} connections`}
+        label={`${identity?.connections} ${t('connectionsText')}`}
         customStyle={`${css.textSM} text-brand-700`}
       />
       <Link
         href="/connections?active=2"
-        label={`${identity?.followers} followers`}
+        label={`${identity?.followers} ${t('followersText')}`}
         customStyle={`${css.textSM} text-brand-700`}
       />
     </div>

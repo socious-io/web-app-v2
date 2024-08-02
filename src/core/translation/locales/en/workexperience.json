@@ -138,7 +138,6 @@
     "description_two": "As a passionate and driven Product Designer at {company_one_name}, I played a pivotal role in crafting user-centered digital experiences aimed at raising awareness about the world's oceans and promoting sustainable practices. Collaborating closely with cross-functional teams, I led the design and implementation of innovative solutions that engaged and educated... see more",
     "description_three": "As a passionate and driven Product Designer at {company_one_name}, I played a pivotal role in crafting user-centered digital experiences aimed at raising awareness... see more"
   },
-  "verification": {
     "page_title": "Request verification",
     "title": "Send verification request to external organization",
     "description": "{user_first_name} is sending a request to {company_one_name}, a non-existing organization on Socious, to verify her experience. She is sending an email to {company_one_hiring_manager_first_name}, CEO of {company_one_name} and her former supervisor.",
@@ -180,8 +179,8 @@
       "next_button": "Next",
       "page_number": "Page 1 of 1",
       "status_details": "Withdrawn"
-    }
-  },
+    },
+  
   "request_received": {
     "page_title": "Request received",
     "title": "Request received (external organization)",

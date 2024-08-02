@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { IconButton } from 'src/modules/general/components/iconButton';
@@ -25,12 +26,12 @@ export const Summary = () => {
   const myProfile = currentIdentity?.id === identity?.id;
   const type = currentIdentity?.type;
   const [openEditModal, setOpenEditModal] = useState(false);
-
+  const { t } = useTranslation('profile');
   return (
     <>
       <div className="w-full flex flex-col gap-5">
         <div className={css.title}>
-          Summary
+          {t('summaryText')}
           {myProfile && (
             <IconButton
               iconName="pencil-01"

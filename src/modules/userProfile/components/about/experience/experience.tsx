@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { verificationStatus } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
@@ -12,7 +13,6 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import { useExperience } from './useExperience';
 import css from '../about.module.scss';
 import { ClaimCertificateModal } from '../claimCertificateModal';
-
 interface ExperienceProps {
   handleOpenVerifyModal: () => void;
 }
@@ -37,15 +37,15 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
     handleClaimVC,
     claimUrl,
   } = useExperience();
-
+  const { t } = useTranslation('profile');
   return (
     <>
       <div className="w-full flex flex-col gap-5">
-        <div className={css.title}>Experience</div>
+        <div className={css.title}>{t('experienceText')}</div>
         {myProfile && (
           <Button variant="text" color="primary" className={css.addBtn} onClick={handleAdd}>
             <Icon name="plus" fontSize={20} color={variables.color_primary_700} />
-            Add experience
+            {t('addExperience')}
           </Button>
         )}
         {user?.experiences && (

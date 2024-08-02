@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, UserMeta } from 'src/core/api';
@@ -20,13 +21,13 @@ export const Impact: React.FC<ImpactProps> = props => {
   const navigateToImpact = () => {
     navigate(`/profile/users/${user.username}/impact`);
   };
-
+  const { t } = useTranslation('profile');
   return (
     <div className={`${css.container} ${customContainerStyle}`}>
       <div className={css.titleDiv}>
-        <div className={css.title}>Impact points</div>
+        <div className={css.title}>{t('impactPointsText')}</div>
       </div>
-      {myProfile && <div className={css.helperText}>Measure and track your impact</div>}
+      {myProfile && <div className={css.helperText}>{t('measureTrackImpactText')}</div>}
       <div className="flex items-end mb-4">
         <span className={css.pointNumber}>{Math.round(point)}</span>
         <span className={css.pointUnit}>pts</span>
@@ -34,7 +35,7 @@ export const Impact: React.FC<ImpactProps> = props => {
       {myProfile && (
         <Button fullWidth variant="outlined" color="secondary" className={css.button} onClick={navigateToImpact}>
           <Icon name="star-06" fontSize={20} color={variables.color_grey_700} />
-          See my impact
+          {t('seeMyImpactText')}
         </Button>
       )}
     </div>

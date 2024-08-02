@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { CertificateMeta } from 'src/core/api/additionals/additionals.types';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -21,14 +22,15 @@ export const Certificates = () => {
     handleDelete,
     setCertificate,
   } = useCertificate();
+  const { t } = useTranslation('profile');
   return (
     <>
       <div className="w-full flex flex-col gap-5">
-        <div className={css.title}>Certificates</div>
+        <div className={css.title}>{t('certificatesText')}</div>
         {myProfile && (
           <Button variant="text" color="primary" className={css.addBtn} onClick={handleAdd}>
             <Icon name="plus" fontSize={20} color={variables.color_primary_700} />
-            Add certificate
+            {t('addCertificate')}
           </Button>
         )}
         {user?.certificates && (

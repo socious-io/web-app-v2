@@ -48,7 +48,7 @@ export const Intro = () => {
   if (status === 'loading') return <div></div>;
 
   if (status === 'succeeded') return <Navigate to="/jobs" />;
-  const { t } = useTranslation();
+  const { t } = useTranslation('profile');
   return (
     <div className="flex h-screen px-4 sm:p-0">
       <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
