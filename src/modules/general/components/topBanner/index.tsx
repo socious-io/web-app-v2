@@ -6,37 +6,57 @@ import { FeaturedIconOutlined } from '../featuredIconOutlined';
 import { Link } from '../link';
 
 interface TopBannerProps {
-  theme: 'success' | 'warning';
+  theme: 'success' | 'warning' | 'purple';
   primaryBtnLabel?: string;
   primaryBtnAction?: () => void;
   secondaryBtnLabel?: string;
   secondaryBtnLink?: string;
   primaryBtnIcon?: ReactNode;
+  primaryButtonStyle?: string;
   secondaryBtnAction?: () => void;
   text: string;
   supportingText: string;
+  customStyle?: string;
 }
+const colors = [
+  {
+    theme: 'warning',
+    bgColor: variables.color_warning_25,
+    borderColor: variables.color_warning_300,
+    textColor: variables.color_warning_700,
+  },
+  {
+    theme: 'success',
+    bgColor: variables.color_success_25,
+    borderColor: variables.color_success_300,
+    textColor: variables.color_success_700,
+  },
+  {
+    theme: 'purple',
+    bgColor: variables.color_purple_50,
+    borderColor: variables.color_purple_200,
+    textColor: variables.color_purple_700,
+  },
+];
+
 export const TopBanner: React.FC<TopBannerProps> = ({
   theme,
   primaryBtnAction,
   primaryBtnLabel,
   primaryBtnIcon,
+  primaryButtonStyle,
   secondaryBtnLabel,
   secondaryBtnAction,
   secondaryBtnLink,
   text,
   supportingText,
+  customStyle,
 }) => {
-  const bgColor =
-    theme === 'warning' ? variables.color_warning_25 : theme === 'success' ? variables.color_success_25 : '';
-  const borderBottomColor =
-    theme === 'warning' ? variables.color_warning_300 : theme === 'success' ? variables.color_success_300 : '';
-  const textColor =
-    theme === 'warning' ? variables.color_warning_700 : theme === 'success' ? variables.color_success_700 : '';
+  const color = colors.find(c => c.theme === theme);
   return (
     <div
-      className="w-full pb-2 p-4  xl:px-6 xl:py-1 flex flex-col xl:flex-row xl:items-center justify-between gap-2"
-      style={{ backgroundColor: bgColor, borderBottom: `1px solid ${borderBottomColor}` }}
+      className={`w-full pb-2 p-4 xl:px-6 xl:py-1 flex flex-col xl:flex-row xl:items-center justify-between gap-2 ${customStyle}`}
+      style={{ backgroundColor: color?.bgColor, borderBottom: `1px solid ${color?.borderColor}` }}
     >
       <div className="flex flex-col xl:flex-row  xl:items-center gap-4">
         <div className="w-fit h-fit">
@@ -47,10 +67,10 @@ export const TopBanner: React.FC<TopBannerProps> = ({
           />
         </div>
         <div className="flex flex-col xl:flex-row gap-[2px] xl:gap-1.5">
-          <span className="text-sm font-semibold leading-5" style={{ color: textColor }}>
+          <span className="text-sm font-semibold leading-5" style={{ color: color?.textColor }}>
             {text}
           </span>
-          <span className="text-sm font-normal leading-5" style={{ color: textColor }}>
+          <span className="text-sm font-normal leading-5" style={{ color: color?.textColor }}>
             {supportingText}
           </span>
         </div>
@@ -84,7 +104,7 @@ export const TopBanner: React.FC<TopBannerProps> = ({
             color="inherit"
             customStyle={`!font-semibold !text-sm leading-5 ${
               theme === 'warning' ? 'text-Warning-700' : theme === 'success' ? 'text-Success-700' : ''
-            }  flex gap-2 items-center p-0`}
+            }  flex gap-2 items-center p-0 ${primaryButtonStyle}`}
             onClick={primaryBtnAction}
           >
             {primaryBtnLabel}

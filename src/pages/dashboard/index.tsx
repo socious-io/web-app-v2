@@ -11,8 +11,18 @@ import { Impact } from 'src/modules/userProfile/components/impact';
 import { useDashboard } from './useDashborad';
 
 export const Dashboard = () => {
-  const { verified, type, profileData, profileUrl, hoursVolunteered, hoursWorked, name, verificationStatus } =
-    useDashboard();
+  const {
+    verified,
+    type,
+    profileData,
+    profileUrl,
+    hoursVolunteered,
+    hoursWorked,
+    name,
+    verificationStatus,
+    event,
+    navigateToSearchEvent,
+  } = useDashboard();
 
   return (
     <>
@@ -37,8 +47,19 @@ export const Dashboard = () => {
           ) : (
             ''
           )}
+          {!!event && (
+            <TopBanner
+              theme="purple"
+              text="Tech for Impact Summit 2024"
+              supportingText="Boost your summit experience by connecting with fellow innovators and change-makers."
+              primaryBtnLabel="Connect now"
+              primaryButtonStyle="!bg-Purple-600 text-Base-White px-4 !h-10 w-full"
+              primaryBtnAction={navigateToSearchEvent}
+              customStyle="xl:py-3"
+            />
+          )}
 
-          <div className=" flex flex-col gap-8 py-8 px-4 md:px-8">
+          <div className=" flex flex-col gap-8 py-8 px-4 md:px-8 ">
             <div className="flex flex-col gap-1">
               <Typography variant="h3" className="text-Gray-light-mode-900">
                 👋 Welcome back, {type === 'users' ? (profileData as User).first_name : name}
