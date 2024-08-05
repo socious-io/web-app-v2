@@ -50,7 +50,7 @@
     "@tanstack/react-table": "^8.17.3",
     "@web3modal/ethers": "^5.0.7",
     "axios": "^1.5.1",
-    "country-flag-icons": "^1.5.9",
+    "country-flag-icons": "^1.5.13",
     "ethers": "^6.13.1",
     "firebase": "^10.12.3",
     "i18next-browser-languagedetector": "^8.0.0",
