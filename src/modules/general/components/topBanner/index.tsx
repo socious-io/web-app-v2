@@ -16,6 +16,7 @@ interface TopBannerProps {
   secondaryBtnAction?: () => void;
   text: string;
   supportingText: string;
+  customStyle?: string;
 }
 const colors = [
   {
@@ -49,11 +50,12 @@ export const TopBanner: React.FC<TopBannerProps> = ({
   secondaryBtnLink,
   text,
   supportingText,
+  customStyle,
 }) => {
   const color = colors.find(c => c.theme === theme);
   return (
     <div
-      className={`w-full pb-2 p-4 xl:px-6 ${theme === 'purple' ? 'xl:py-3' : 'xl:py-1'} flex flex-col xl:flex-row xl:items-center justify-between gap-2`}
+      className={`w-full pb-2 p-4 xl:px-6 xl:py-1 flex flex-col xl:flex-row xl:items-center justify-between gap-2 ${customStyle}`}
       style={{ backgroundColor: color?.bgColor, borderBottom: `1px solid ${color?.borderColor}` }}
     >
       <div className="flex flex-col xl:flex-row  xl:items-center gap-4">

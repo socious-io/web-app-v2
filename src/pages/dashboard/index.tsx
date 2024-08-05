@@ -55,6 +55,7 @@ export const Dashboard = () => {
               primaryBtnLabel="Connect now"
               primaryButtonStyle="!bg-Purple-600 text-Base-White px-4 !h-10 w-full"
               primaryBtnAction={navigateToSearchEvent}
+              customStyle="xl:py-3"
             />
           )}
 
