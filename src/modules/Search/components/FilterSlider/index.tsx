@@ -182,7 +182,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
             searchTitle="Social causes"
             max={5}
             maxLabel=""
-            items={causesItems.slice(0, 30)}
+            items={causesItems}
             componentValue={filters.causes}
             setComponentValue={value => onSelectMultiSelect('causes', value)}
             customHeight="135px"
