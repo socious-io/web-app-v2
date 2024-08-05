@@ -7,7 +7,7 @@ export const useApplicant = (applicant: Applicant, openReject: () => void, close
     navigate(`/profile/users/${applicant.user.username}/view`);
   };
 
-  const attachment = applicant.attachment ? (applicant.attachment as Media) : undefined;
+  const attachment = applicant.attachment as Media;
 
   const handleClickResume = () => {
     window.open(attachment?.url, '_blank', 'rel=noopener noreferrer');

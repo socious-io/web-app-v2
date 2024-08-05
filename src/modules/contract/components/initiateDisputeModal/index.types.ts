@@ -1,6 +1,6 @@
 interface OptionType {
-  value?: string;
-  label?: string;
+  value: string;
+  label: string;
 }
 
 export type Form = {

@@ -21,12 +21,13 @@ export const useFollowingTab = () => {
     try {
       const lst = [...followingList];
       const idx = lst.findIndex(item => item.id === id);
+      if (!lst[idx] || !lst[idx].identity_meta) return;
       if (lst[idx].following) {
-        setName(lst[idx].identity_meta?.name || '');
+        setName(lst[idx].identity_meta.name);
         setFollowingId(lst[idx].id);
         setOpenAlert(true);
       } else {
-        await follow(lst[idx].identity_meta?.id || '');
+        await follow(lst[idx].identity_meta.id);
         lst[idx].following = true;
         setFollowingList(lst);
       }

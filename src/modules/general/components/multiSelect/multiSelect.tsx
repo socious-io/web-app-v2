@@ -38,10 +38,9 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
   }
 
   function handleChange(val: (MultiSelectItem | string)[]) {
+    const lastIndx = val.length - 1;
     const lastItem =
-      typeof val[val.length - 1] === 'string'
-        ? val[val.length - 1].toString()
-        : (val[val.length - 1] as MultiSelectItem).value;
+      typeof val[lastIndx] === 'string' ? val[lastIndx].toString() : (val[lastIndx] as MultiSelectItem).value;
     const newVal = items?.find(
       i =>
         i.label.toLowerCase() === lastItem.toLowerCase() &&

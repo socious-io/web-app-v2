@@ -1,12 +1,12 @@
 import { Media } from 'src/core/api';
 
 export interface OptionType {
-  value?: string;
-  label?: string;
+  value: string;
+  label: string;
 }
 
 export type Form = {
-  cause: OptionType | undefined | null;
+  cause?: OptionType;
   content: string;
   file?: any;
   title?: string;

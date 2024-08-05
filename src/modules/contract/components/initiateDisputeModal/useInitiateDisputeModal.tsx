@@ -11,7 +11,7 @@ const generateSchema = (step: number) =>
   yup.object().shape({
     category: yup.object().shape({
       label: yup.string().required('Required'),
-      value: yup.string(),
+      value: yup.string().required(),
     }),
     title: step === 0 ? yup.string().required('Required') : yup.string(),
     description: step === 0 ? yup.string().required('Required') : yup.string(),
@@ -89,7 +89,7 @@ export const useInitiateDisputeModal = (
       const { title, description, evidences, category } = formData || {};
       try {
         const { respondent, code, created_at } = await issueDispute({
-          category: category.value || '',
+          category: category.value,
           title: title || '',
           description: description || '',
           evidences: evidences || [],
