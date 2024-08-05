@@ -22,7 +22,7 @@ export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => vo
 
   useEffect(() => {
     const options = cardList.map(i => {
-      const iconPath = `/icons/nowruz/pay-icons/${i.meta.brand.toLowerCase().replaceAll(' ', '')}.svg`;
+      const iconPath = `/icons/pay-icons/${i.meta.brand.toLowerCase().replaceAll(' ', '')}.svg`;
       return {
         value: i.id,
         title: `${i.meta.brand} ending in ${i.meta.last4}`,

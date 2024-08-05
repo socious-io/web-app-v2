@@ -1,5 +1,5 @@
 import { TextField, InputAdornment, IconButton } from '@mui/material';
-import { AlertCircle } from 'public/icons/nowruz/alert-circle';
+import { AlertCircle } from 'public/icons/dynamic/alert-circle';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Icon } from 'src/modules/general/components/Icon';
 import { InputDropdown } from 'src/modules/general/components/input/InputDropdown';

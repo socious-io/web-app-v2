@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { Logo } from 'public/icons/nowruz/logo';
+import { Logo } from 'public/icons/dynamic/logo';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Navigate } from 'react-router-dom';

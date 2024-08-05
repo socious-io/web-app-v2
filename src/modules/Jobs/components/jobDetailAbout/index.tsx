@@ -90,7 +90,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
         {jobDetail.country ? (
           <CountryFlag countryCode={jobDetail.country || ''} />
         ) : (
-          <img src="/icons/nowruz/earth.svg" alt="" />
+          <img src="/icons/earth.svg" alt="" />
         )}
 
         <span className={css.subtitle}>{address || 'Anywhere'}</span>

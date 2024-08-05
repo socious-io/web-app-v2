@@ -4,6 +4,7 @@ import { Button } from 'src/modules/general/components/Button';
 
 import { BackLinkProps } from './back-link.types';
 import css from './index.module.scss';
+import { Icon } from '../Icon';
 
 export const BackLink: React.FC<BackLinkProps> = props => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export const BackLink: React.FC<BackLinkProps> = props => {
     <Button
       color="secondary"
       variant="text"
-      startIcon={<img height={24} src="/icons/arrow-left.svg" alt="back-button-icon" />}
+      startIcon={<Icon fontSize={24} name="arrow-left" className="text-Gray-light-mode-600" />}
       onClick={onClick}
       block={block}
       fullWidth

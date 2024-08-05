@@ -30,27 +30,27 @@ export const useNotifications = (handleClose: () => void) => {
       DISPUTE_JUROR_CONTRIBUTION_INVITED: {
         hasSubText: true,
         linkButton: { label: 'View Details', href: `/${usernameVal}/contribute/center` },
-        identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
+        identity: { name: 'Socious Team', avatar: '/images/logo/logo.webp' },
       },
       REACH_10K_IMPACT_POINT: {
         hasSubText: true,
         linkButton: { label: 'View Details', href: `/${usernameVal}/contribute` },
-        identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
+        identity: { name: 'Socious Team', avatar: '/images/logo/logo.webp' },
       },
       DISPUTE_JUROR_SELECTION_COMPLETED_TO_JURORS: {
         hasSubText: true,
         linkButton: { label: 'View Details', href: `/${usernameVal}/contribute` },
-        identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
+        identity: { name: 'Socious Team', avatar: '/images/logo/logo.webp' },
       },
       DISPUTE_CLOSED_TO_LOSER_PARTY: {
         hasSubText: true,
         linkButton: { label: 'View Details', href: `/disputes/${item.ref_id}` },
-        identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
+        identity: { name: 'Socious Team', avatar: '/images/logo/logo.webp' },
       },
       DISPUTE_JUROR_SELECTION_COMPLETED_TO_PARTIES: {
         hasSubText: true,
         linkButton: { label: 'View Details', href: `/disputes/${item.ref_id}` },
-        identity: { name: 'Socious Team', avatar: '/images/logo.webp' },
+        identity: { name: 'Socious Team', avatar: '/images/logo/logo.webp' },
       },
     };
     const { linkButton, hasSubText, identity } = mapRoute[item.data.type] || {};

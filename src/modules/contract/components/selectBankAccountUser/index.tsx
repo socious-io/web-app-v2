@@ -14,7 +14,7 @@ export const SelectBankAccountUser: React.FC<SelectBankAccountUserProps> = ({
   handleAccept,
 }) => {
   const accOptions = accounts.map(acc => {
-    // const iconPath = `/icons/nowruz/pay-icons/${i.meta.brand.toLowerCase().replaceAll(' ', '')}.svg`;
+    // const iconPath = `/icons/pay-icons/${i.meta.brand.toLowerCase().replaceAll(' ', '')}.svg`;
     return {
       value: acc.id,
       title: acc.bank_name,
