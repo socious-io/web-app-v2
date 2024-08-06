@@ -8,6 +8,7 @@ import {
   ExperienceReq,
   Location,
   Organization,
+  ProjectType,
   User,
   addExperiences,
   createOrganization,
@@ -196,21 +197,16 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       orgId: experience?.org.id || '',
       city: { value: '', label: experience?.city || experience?.org.city || '' },
       country: experience?.country || '',
-      startMonth: startDate
-        ? {
-            label: monthNames[startDate.getMonth()] || '',
-            value: startDate.getMonth().toString() || '',
-          }
-        : null,
-      startYear: startDate
-        ? { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' }
-        : null,
-      endMonth: endDate
-        ? { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth().toString() : '' }
-        : null,
-      endYear: endDate
-        ? { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' }
-        : null,
+      startMonth: {
+        label: startDate ? monthNames[startDate.getMonth()] : '',
+        value: startDate ? startDate.getMonth().toString() : '',
+      },
+      startYear: { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' },
+      endMonth: {
+        label: endDate ? monthNames[endDate.getMonth()] : '',
+        value: endDate ? endDate.getMonth().toString() : '',
+      },
+      endYear: { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' },
       description: experience?.description || '',
       currentlyWorking: experience ? !experience?.end_at : false,
       org: {
@@ -379,13 +375,13 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       country,
       city: city.label,
     };
-    if (employmentType.value) payload.employment_type = employmentType.value;
+    if (employmentType.value) payload.employment_type = employmentType.value as ProjectType;
     if (!currentlyWorking && endYear.value) {
       const endDate = new Date(Number(endYear.value), Number(endMonth.value || 0), 1).toISOString();
       payload.end_at = endDate;
     }
 
-    payload = removedEmptyProps(payload);
+    payload = removedEmptyProps(payload) as ExperienceReq;
     if (experience) await updateExperiences(experience.id, payload);
     else await addExperiences(payload);
     const updated = await otherProfileByUsername(user?.username || '');

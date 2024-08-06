@@ -51,12 +51,14 @@ export const Certificates = () => {
           </div>
         )}
       </div>
-      <CreateUpdateCertificate
-        open={openModal}
-        handleClose={handleClose}
-        certificate={certificate}
-        setCertificate={setCertificate}
-      />
+      {certificate && (
+        <CreateUpdateCertificate
+          open={openModal}
+          handleClose={handleClose}
+          certificate={certificate}
+          setCertificate={setCertificate}
+        />
+      )}
     </>
   );
 };

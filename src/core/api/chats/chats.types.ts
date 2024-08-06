@@ -1,7 +1,7 @@
 import { UserType } from 'src/core/types';
 
 import { Identity } from '../site/site.types';
-import { PaginateRes } from '../types';
+import { ChatMemberType, PaginateRes } from '../types';
 
 export interface MessageReq {
   text: string;
@@ -64,11 +64,12 @@ export interface Participation {
   all_read: boolean;
 }
 
-export interface Participant extends Identity {
+export interface Participant extends Omit<Identity, 'type' | 'verification_status'> {
   all_read: boolean;
-  last_read_id: string;
-  last_read_at: Date;
+  last_read_id?: string;
+  last_read_at?: Date;
   identity_type?: UserType;
+  type: ChatMemberType;
 }
 
 export interface ParticipantRes extends PaginateRes {

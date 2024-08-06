@@ -1,5 +1,5 @@
 import React from 'react';
-import { Applicant } from 'src/core/api';
+import { Applicant, Media } from 'src/core/api';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { useSeeMore } from 'src/modules/general/utils';
@@ -24,7 +24,7 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
     operations: { handleSeeMore },
   } = useSeeMore(applicant?.cover_letter ?? '');
 
-  const { handleViewProfile, handleClickResume, questionList, handleMessage, handleReject } = useApplicant(
+  const { handleViewProfile, handleClickResume, questionList, handleMessage, handleReject, attachment } = useApplicant(
     applicant,
     openReject,
     closeDetails,
@@ -33,7 +33,7 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-6 ">
-          <Avatar size="72px" type="users" img={applicant.user.avatar} />
+          <Avatar size="72px" type="users" img={applicant.user.avatar?.toString()} />
           <div className="flex flex-col">
             <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">{applicant.user?.name}</span>
             <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{applicant.user.username}</span>
@@ -77,10 +77,10 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
               )}
             </p>
           </div>
-          {applicant.attachment?.filename && (
+          {attachment && (
             <div className="flex flex-col gap-1 cursor-pointer">
               <p className="text-sm font-medium text-Gray-light-mode-700">Resume</p>
-              <p onClick={handleClickResume}>{applicant.attachment?.filename}</p>
+              <p onClick={handleClickResume}>{attachment.filename}</p>
             </div>
           )}
           {questionList?.map(item => (

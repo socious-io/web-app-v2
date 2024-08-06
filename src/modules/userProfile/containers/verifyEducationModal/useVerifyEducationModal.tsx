@@ -153,19 +153,18 @@ export const useVerifyEducationModal = (
       email: organization.email || '',
       message: '',
       forgotInfo: false,
-      month: awardedDate
-        ? {
-            label: monthNames[awardedDate.getMonth()] || '',
-            value: awardedDate.getMonth().toString() || '',
-          }
-        : null,
-      day: null,
-      year: awardedDate
-        ? {
-            label: awardedDate?.getFullYear().toString() || '',
-            value: awardedDate?.getFullYear().toString() || '',
-          }
-        : null,
+      month: {
+        label: awardedDate ? monthNames[awardedDate.getMonth()] : '',
+        value: awardedDate ? awardedDate.getMonth().toString() : '',
+      },
+      day: {
+        label: '',
+        value: '',
+      },
+      year: {
+        label: awardedDate?.getFullYear().toString() || '',
+        value: awardedDate?.getFullYear().toString() || '',
+      },
     };
     reset(initialVal);
   };

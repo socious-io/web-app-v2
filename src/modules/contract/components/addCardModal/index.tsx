@@ -69,7 +69,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, handleClose, c
     };
     try {
       await addCard(payload, is_jp);
-    } catch (err) {
+    } catch (err: any) {
       setErrorMessage(err.response?.data?.error || 'Failed');
       setOpenErrorModal(true);
       return;

@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { PROJECT_TYPE } from 'src/constants/PROJECT_TYPES';
-import { Experience, ExperienceReq, createOrganization, updateExperiences } from 'src/core/api';
+import { Experience, ExperienceReq, ProjectType, createOrganization, updateExperiences } from 'src/core/api';
 import { getDaysInMonth, monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import * as yup from 'yup';
@@ -193,29 +193,27 @@ export const useVerifyExperience = (
       orgId: experience?.org.id || '',
       city: { value: '', label: experience?.city || experience?.org.city || '' },
       country: experience?.country || '',
-      startMonth: startDate
-        ? {
-            label: monthNames[startDate.getMonth()] || '',
-            value: startDate.getMonth().toString() || '',
-          }
-        : null,
-      startDay: null,
-      startYear: startDate
-        ? { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' }
-        : null,
-      endMonth: endDate
-        ? {
-            label: monthNames[endDate.getMonth()] || monthNames[currentDate.getUTCMonth()],
-            value: endDate.getMonth().toString() || currentDate.getUTCMonth().toString(),
-          }
-        : null,
-      endDay: null,
-      endYear: endDate
-        ? {
-            label: endDate?.getFullYear().toString() || currentDate.getUTCFullYear().toString(),
-            value: endDate?.getFullYear().toString() || currentDate.getUTCFullYear().toString(),
-          }
-        : null,
+      startMonth: {
+        label: startDate ? monthNames[startDate.getMonth()] : '',
+        value: startDate ? startDate.getMonth().toString() : '',
+      },
+      startDay: {
+        label: '',
+        value: '',
+      },
+      startYear: { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' },
+      endMonth: {
+        label: endDate ? monthNames[endDate.getMonth()] : monthNames[currentDate.getUTCMonth()],
+        value: endDate ? endDate.getMonth().toString() : currentDate.getUTCMonth().toString(),
+      },
+      endDay: {
+        label: '',
+        value: '',
+      },
+      endYear: {
+        label: endDate?.getFullYear().toString() || currentDate.getUTCFullYear().toString(),
+        value: endDate?.getFullYear().toString() || currentDate.getUTCFullYear().toString(),
+      },
       description: experience?.description || '',
       org: {
         value: experience?.org.id || '',
@@ -266,22 +264,22 @@ export const useVerifyExperience = (
     initializeValues();
   }, [experience]);
 
-  const onSelectStartMonth = (month: OptionType) => {
+  const onSelectStartMonth = month => {
     setValue('startMonth', month, { shouldValidate: true });
   };
-  const onSelectStartDay = (day: OptionType) => {
+  const onSelectStartDay = day => {
     setValue('startDay', day, { shouldValidate: true });
   };
-  const onSelectEndMonth = (month: OptionType) => {
+  const onSelectEndMonth = month => {
     setValue('endMonth', month, { shouldValidate: true });
   };
-  const onSelectEndDay = (day: OptionType) => {
+  const onSelectEndDay = day => {
     setValue('endDay', day, { shouldValidate: true });
   };
-  const onSelectStartYear = (year: OptionType) => {
+  const onSelectStartYear = year => {
     setValue('startYear', year, { shouldValidate: true });
   };
-  const onSelectEndYear = (year: OptionType) => {
+  const onSelectEndYear = year => {
     setValue('endYear', year, { shouldValidate: true });
   };
 
@@ -329,7 +327,7 @@ export const useVerifyExperience = (
       country,
       city: city.label,
     };
-    if (employmentType.value) payload.employment_type = employmentType.value;
+    if (employmentType.value) payload.employment_type = employmentType.value as ProjectType;
     if (endYear.value) {
       const endDate = new Date(
         Number(endYear.value),
@@ -339,7 +337,7 @@ export const useVerifyExperience = (
       payload.end_at = endDate;
     }
 
-    payload = removedEmptyProps(payload);
+    payload = removedEmptyProps(payload) as ExperienceReq;
     await updateExperiences(experience.id, payload);
     onVerifyExperience(experience.id, message, forgotInfo);
     handleClose();

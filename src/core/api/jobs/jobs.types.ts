@@ -1,5 +1,6 @@
 import { Currency } from 'iso-country-currency';
 
+import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
 import { Payment } from '../payments/payments.types';
 import { Identity } from '../site/site.types';
@@ -68,7 +69,7 @@ export interface OfferReq {
   assignment_total: number;
   weekly_limit?: number;
   total_hours?: number;
-  currency?: Currency;
+  currency?: Currency | string;
   crypto_currency_address?: string;
 }
 
@@ -76,6 +77,9 @@ export interface Answer {
   id: string;
   answer: string;
   selected_option?: number;
+  question_id?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface HourlyWorkReq {
@@ -155,7 +159,7 @@ export interface Applicant {
   cv_link?: string;
   cv_name?: string;
   share_contact_info?: boolean;
-  attachment?: string;
+  attachment?: string | Media;
 
   user: User;
   project: Job;
@@ -164,6 +168,9 @@ export interface Applicant {
   created_at: Date;
   updated_at: Date;
   closed_at?: Date;
+
+  questions?: Question[];
+  answers: Answer[];
 }
 
 export interface Offer extends OfferReq {
@@ -209,6 +216,9 @@ export interface Contract extends Offer {
   mission?: Mission;
   escrow?: Escrow;
   payment?: Payment;
+  org_feedback?: {
+    mission_id?: string;
+  };
 }
 
 export interface Mission {

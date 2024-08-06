@@ -93,21 +93,17 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
       school: { label: education?.org.name || '', value: education?.org.id || '' },
       degree: education?.degree || '',
       field: education?.title || '',
-      startMonth: startDate
-        ? {
-            label: monthNames[startDate.getMonth()] || '',
-            value: startDate.getMonth().toString() || '',
-          }
-        : null,
-      startYear: startDate
-        ? { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' }
-        : null,
-      endMonth: endDate
-        ? { label: endDate ? monthNames[endDate.getMonth()] : '', value: endDate ? endDate.getMonth().toString() : '' }
-        : null,
-      endYear: endDate
-        ? { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' }
-        : null,
+      startMonth: {
+        label: startDate ? monthNames[startDate.getMonth()] : '',
+        value: startDate ? startDate.getMonth().toString() : '',
+      },
+      startYear: { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' },
+      endMonth: {
+        label: endDate ? monthNames[endDate.getMonth()] : '',
+        value: endDate ? endDate.getMonth().toString() : '',
+      },
+      endYear: { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' },
+
       grade: education?.grade || '',
       description: education?.description || '',
     };
