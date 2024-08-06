@@ -39,6 +39,8 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
     handleSubmit,
     onSave,
     onDelete,
+    issueDateErrors,
+    expireDateErrors,
   } = useCreateUpdateCertificate(handleClose, certificate, setCertificate);
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
@@ -71,7 +73,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
         errors={errors['orgName']?.message ? [errors['orgName']?.message.toString()] : undefined}
       />
 
-      <div className="flex gap-4 items-end">
+      <div className="flex gap-4 items-start">
         <SearchDropdown
           id="issue-month"
           value={issueMonth}
@@ -84,11 +86,13 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           className="flex-1"
           placeholder="Month"
           isSearchable
-          errors={errors['issueMonth']?.message ? [errors['issueMonth']?.message.toString()] : undefined}
+          errors={issueDateErrors ? [issueDateErrors.toString()] : undefined}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="issue-year"
           value={issueYear}
+          label="&nbsp;"
           options={years}
           hasDropdownIcon
           onChange={value => {
@@ -97,10 +101,10 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['issueYear']?.message ? [errors['issueYear']?.message.toString()] : undefined}
+          maxMenuHeight={200}
         />
       </div>
-      <div className="flex gap-4 items-end">
+      <div className="flex gap-4 items-start">
         <SearchDropdown
           id="expiration-month"
           value={expMonth}
@@ -113,11 +117,13 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           placeholder="Month"
           className="flex-1"
           isSearchable
-          errors={errors['expireMonth']?.message ? [errors['expireMonth']?.message.toString()] : undefined}
+          errors={expireDateErrors ? [expireDateErrors.toString()] : undefined}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="expiration-year"
           value={expYear}
+          label="&nbsp;"
           options={years}
           hasDropdownIcon
           onChange={value => {
@@ -126,7 +132,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
-          errors={errors['expireYear']?.message ? [errors['expireYear']?.message.toString()] : undefined}
+          maxMenuHeight={200}
         />
       </div>
       <Input

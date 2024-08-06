@@ -163,7 +163,7 @@ export interface Applicant {
 
   user: User;
   project: Job;
-  organization: Organization;
+  organization: Identity;
 
   created_at: Date;
   updated_at: Date;

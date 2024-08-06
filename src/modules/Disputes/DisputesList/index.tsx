@@ -34,9 +34,9 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
           return (
             <div className="flex justify-start items-center gap-3">
               <Avatar size="40px" type={type as 'users' | 'organizations'} img={profileImage} />
-              <div className="flex flex-col text-sm font-normal text-Gray-light-mode-600 leading-5 overflow-hidden">
+              <div className="flex flex-col text-sm font-normal text-Gray-light-mode-600 leading-5 overflow-hidden ">
                 <span className="font-medium text-Gray-light-mode-900 truncate">{name}</span>
-                {username}
+                <span className="truncate">{username}</span>
               </div>
             </div>
           );

@@ -17,7 +17,7 @@ export const useContracts = () => {
 
   const { filter, page, openSlider, totalCount } = useSelector<RootState, any>(state => state.contracts);
   const activeFilter = ['all', 'ongoing', 'archived'].findIndex(item => item === filter);
-  const PER_PAGE = 5;
+  const PER_PAGE = 10;
   const pageCount = Math.ceil(totalCount / PER_PAGE);
   const fetchMore = async () => {
     if (!currentIdentity) return;
