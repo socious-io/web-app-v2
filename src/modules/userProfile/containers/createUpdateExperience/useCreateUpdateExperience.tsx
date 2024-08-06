@@ -1,6 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { T } from 'ramda';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { PROJECT_TYPE } from 'src/constants/PROJECT_TYPES';
 import {
@@ -219,10 +221,10 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   const startYear = watch('startYear');
   const endYear = watch('endYear');
   const currentlyWorking = watch('currentlyWorking');
-
+  const { t } = useTranslation('profile');
   const validateDates = () => {
     if (!currentlyWorking && !endYear?.label) {
-      return 'Select currently working or enter end year';
+      return t('selectCurrentlyWorking');
     }
     if (!startYear?.label) return;
     const start = new Date(Number(startYear?.label), Number(startMonth?.value || 0), 2);

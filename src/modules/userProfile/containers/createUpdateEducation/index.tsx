@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Education } from 'src/core/api';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
@@ -42,7 +43,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
     startDateErrors,
     endDateErrors,
   } = useCreateUpdateEducation(handleClose, education);
-
+  const { t } = useTranslation('profile');
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <SearchDropdown
@@ -55,7 +56,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
         defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
-        label="School*"
+        label={t('schoolLabel')}
         onChange={value => {
           onSelectSchool(value);
         }}
@@ -66,19 +67,19 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
       />
       <Input
         id="degree"
-        label="Credential"
+        label={t('credential')}
         name="degree"
         register={register}
-        placeholder="Credential name"
+        placeholder={t('credentialName')}
         errors={errors['degree']?.message ? [errors['degree']?.message.toString()] : undefined}
         disabled={readonly}
       />
       <Input
         id="field-of-study"
-        label="Field of study*"
+        label={t('fieldOfStudy')}
         name="field"
         register={register}
-        placeholder="Specialities"
+        placeholder={t('specialities')}
         errors={errors['field']?.message ? [errors['field']?.message.toString()] : undefined}
         disabled={readonly}
       />
@@ -87,7 +88,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           required
           id="start-month"
           value={startMonth}
-          label="Start date*"
+          label={t('startDateLabel')}
           options={months}
           hasDropdownIcon
           onChange={value => {
@@ -120,7 +121,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           required
           id="end-month"
           value={endMonth}
-          label="End date"
+          label={t('endDateLabel')}
           options={months}
           hasDropdownIcon
           onChange={value => {
@@ -150,21 +151,21 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
       </div>
       <Input
         id="grade"
-        label="Grade"
+        label={t('Profile_Grade')}
         name="grade"
         register={register}
-        placeholder="Grade"
+        placeholder={t('Profile_Grade')}
         errors={errors['grade']?.message ? [errors['grade']?.message.toString()] : undefined}
         disabled={readonly}
       />
       <Input
         id="description"
         name="description"
-        label="Description"
+        label={t('descriptionLabel')}
         multiline
         customHeight="130px"
         register={register}
-        placeholder="Enter a description..."
+        placeholder={t('enterDescriptionText')}
         disabled={readonly}
       />
     </div>
@@ -172,10 +173,10 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        {education ? 'Save' : 'Add education'}
+        {education ? t('job_title_header') : t('addEducationText')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {t('cancelText')}
       </Button>
       {education && (
         <Button
@@ -193,7 +194,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
     <Modal
       open={open}
       handleClose={handleClose}
-      title={education ? 'Edit education' : 'Add education'}
+      title={education ? t('Profile_Edit_education') : t('addEducationText')}
       content={contentJSX}
       footer={modalFooterJsx}
     />

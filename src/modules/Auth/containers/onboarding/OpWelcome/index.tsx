@@ -1,11 +1,12 @@
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { Button } from 'src/modules/general/components/Button';
 
 import css from './welcome.module.scss';
 export const OpWelcome = () => {
   const { updateSelectedStep } = useContext(StepsContext);
-
+  const { t } = useTranslation('jobs');
   return (
     <div className="flex flex-col items-center max-w-md py-5 px-6">
       <h1 className={css.title}>Welcome to Socious</h1>

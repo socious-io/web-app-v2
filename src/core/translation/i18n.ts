@@ -20,7 +20,6 @@ i18next
   .use(HttpBackend)
   .init({
     backend: { loadPath: '/src/core/translation/locales/{{lng}}/{{ns}}.json' },
-    //ns: ['communities', 'connect', 'contracts', 'dashboard', 'decentdispute', 'educationalcertificate', 'impact', 'jobs', 'languages', 'login', 'messaging', 'navigation', 'notifications', 'payments', 'profile', 'referral', 'reviews', 'searchbar', 'services', 'settings', 'skills', 'socialCauses', 'workexperience'],
     lng: 'jp',
     fallbackLng: 'en',
     interpolation: {
