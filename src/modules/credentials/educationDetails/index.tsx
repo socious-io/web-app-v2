@@ -66,7 +66,7 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
       <div className="flex gap-4 items-start">
         <SearchDropdown
           required
-          id="awarded-month"
+          id="month"
           value={month}
           label="Awarded date*"
           options={months}
@@ -79,9 +79,10 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
           isSearchable
           errors={dateErrors ? [dateErrors.toString()] : undefined}
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
-          id="awarded-day"
+          id="day"
           value={day}
           options={days}
           hasDropdownIcon
@@ -92,10 +93,11 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
           className="flex-1"
           placeholder="Day"
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           required
-          id="awarded-year"
+          id="year"
           label="&nbsp;"
           value={year}
           options={years}
@@ -107,6 +109,7 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
           placeholder="Year"
           isSearchable
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
       </div>
     </div>

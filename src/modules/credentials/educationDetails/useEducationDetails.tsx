@@ -46,11 +46,13 @@ export const useEducationDetails = (
     mode: 'all',
     resolver: yupResolver(schema),
   });
-  const dateErrors = errors['month']?.label?.message || errors['day']?.label?.message || errors['year']?.label?.message;
 
   const [months, setMonths] = useState<OptionType[]>([]);
   const [days, setDays] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
+  const [dateError, setDateError] = useState('');
+  const dateErrors =
+    errors['month']?.label?.message || errors['day']?.label?.message || errors['year']?.label?.message || dateError;
 
   const mapMonthNames = () => {
     const options = monthNames.map((m, index) => {
@@ -61,8 +63,8 @@ export const useEducationDetails = (
 
   const getDayOptions = () => {
     const yearValue = getValues().year?.value || new Date().getFullYear();
-    const monthValue = Number(getValues().month?.value) + 1;
-    const getAllDaysInMonth = monthValue && getDaysInMonth(Number(yearValue), monthValue);
+    const monthValue = Number(getValues().month?.value);
+    const getAllDaysInMonth = monthValue !== undefined && getDaysInMonth(monthValue, Number(yearValue));
     const options = getAllDaysInMonth
       ? Array.from({ length: getAllDaysInMonth }, (_, index) => ({
           label: `${index + 1}`,
@@ -89,18 +91,24 @@ export const useEducationDetails = (
 
     const initialVal = {
       credentialName: education?.degree || '',
-      month: {
-        label: awardedDate ? monthNames[awardedDate.getMonth()] : '',
-        value: awardedDate ? awardedDate.getMonth().toString() : '',
-      },
-      day: {
-        label: awardedDate?.getDate() || '',
-        value: awardedDate?.getDate() || '',
-      },
-      year: {
-        label: awardedDate?.getFullYear() || '',
-        value: awardedDate?.getFullYear() || '',
-      },
+      month: awardedDate
+        ? {
+            label: monthNames[awardedDate.getMonth()] || '',
+            value: awardedDate.getMonth().toString() || '',
+          }
+        : null,
+      day: awardedDate
+        ? {
+            label: awardedDate?.getDate().toString() || '',
+            value: awardedDate?.getDate().toString() || '',
+          }
+        : null,
+      year: awardedDate
+        ? {
+            label: awardedDate?.getFullYear().toString() || '',
+            value: awardedDate?.getFullYear().toString() || '',
+          }
+        : null,
     };
     reset(initialVal);
   };
@@ -112,7 +120,23 @@ export const useEducationDetails = (
   }, [education]);
 
   const monthVal = watch('month');
+  const dayVal = watch('day');
   const yearVal = watch('year');
+
+  const validateDates = () => {
+    if (!yearVal?.label) return;
+    const selectedDate = new Date(Number(yearVal?.label), Number(monthVal?.value || 0), Number(dayVal?.value || 1));
+    const current = new Date();
+    if (selectedDate > current) return 'Selected date cannot be later than current date';
+    return;
+  };
+
+  useEffect(() => {
+    const msg = validateDates();
+    if (msg) {
+      setDateError(msg);
+    } else setDateError('');
+  }, [monthVal, dayVal, yearVal]);
 
   useEffect(() => {
     getDayOptions();

@@ -129,8 +129,9 @@ export const useExperienceDetails = (
 
   const getStartDayOptions = () => {
     const startYearValue = getValues().startYear?.value;
-    const startMonthValue = Number(getValues().startMonth?.value) + 1;
-    const getDaysInMonthStart = startMonthValue && getDaysInMonth(Number(startYearValue), startMonthValue);
+    const startMonthValue = Number(getValues().startMonth?.value);
+    const getDaysInMonthStart =
+      startMonthValue !== undefined && getDaysInMonth(startMonthValue, Number(startYearValue));
     const options = getDaysInMonthStart
       ? Array.from({ length: getDaysInMonthStart }, (_, index) => ({
           label: `${index + 1}`,
@@ -142,8 +143,8 @@ export const useExperienceDetails = (
 
   const getEndDayOptions = () => {
     const endYearValue = getValues().endYear?.value;
-    const endMonthValue = Number(getValues().endMonth?.value) + 1;
-    const getDaysInMonthEnd = endMonthValue && getDaysInMonth(Number(endYearValue), endMonthValue);
+    const endMonthValue = Number(getValues().endMonth?.value);
+    const getDaysInMonthEnd = endMonthValue !== undefined && getDaysInMonth(endMonthValue, Number(endYearValue));
     const options = getDaysInMonthEnd
       ? Array.from({ length: getDaysInMonthEnd }, (_, index) => ({
           label: `${index + 1}`,
@@ -203,27 +204,39 @@ export const useExperienceDetails = (
       orgId: experience?.org.id || '',
       city: { value: '', label: experience?.city || experience?.org.city || '' },
       country: experience?.country || '',
-      startMonth: {
-        label: startDate ? monthNames[startDate.getMonth()] : '',
-        value: startDate ? startDate.getMonth() : '',
-      },
-      startDay: {
-        label: startDate?.getDate() || '',
-        value: startDate?.getDate() || '',
-      },
-      startYear: { label: startDate?.getFullYear() || '', value: startDate?.getFullYear() || '' },
-      endMonth: {
-        label: endDate ? monthNames[endDate.getMonth()] : monthNames[currentDate.getUTCMonth()],
-        value: endDate ? endDate.getMonth() : currentDate.getUTCMonth(),
-      },
-      endDay: {
-        label: endDate?.getDate() || currentDate.getUTCDate(),
-        value: endDate?.getDate() || currentDate.getUTCDate(),
-      },
-      endYear: {
-        label: endDate?.getFullYear() || currentDate.getUTCFullYear(),
-        value: endDate?.getFullYear() || currentDate.getUTCFullYear(),
-      },
+      startMonth: startDate
+        ? {
+            label: monthNames[startDate.getMonth()] || '',
+            value: startDate.getMonth().toString() || '',
+          }
+        : null,
+      startDay: startDate
+        ? {
+            label: startDate?.getDate().toString() || '',
+            value: startDate?.getDate().toString() || '',
+          }
+        : null,
+      startYear: startDate
+        ? { label: startDate?.getFullYear().toString() || '', value: startDate?.getFullYear().toString() || '' }
+        : null,
+      endMonth: endDate
+        ? {
+            label: monthNames[endDate.getMonth()] || monthNames[currentDate.getUTCMonth()],
+            value: endDate.getMonth().toString() || currentDate.getUTCMonth().toString(),
+          }
+        : null,
+      endDay: endDate
+        ? {
+            label: endDate?.getDate().toString() || currentDate.getUTCDate().toString(),
+            value: endDate?.getDate().toString() || currentDate.getUTCDate().toString(),
+          }
+        : null,
+      endYear: endDate
+        ? {
+            label: endDate?.getFullYear().toString() || currentDate.getUTCFullYear().toString(),
+            value: endDate?.getFullYear().toString() || currentDate.getUTCFullYear().toString(),
+          }
+        : null,
       description: experience?.description || '',
       org: {
         value: experience?.org_id || '',
@@ -247,7 +260,9 @@ export const useExperienceDetails = (
     if (!startYear?.label || !endYear?.label) return;
     const start = new Date(Number(startYear?.label), Number(startMonth?.value || 0), Number(startDay?.value || 1));
     const end = new Date(Number(endYear?.label), Number(endMonth?.value || 0), Number(endDay?.value || 1));
+    const current = new Date();
     if (end < start) return 'Start date cannot be later than end date';
+    if (end > current || start > current) return 'Selected date cannot be later than current date';
     return;
   };
 
