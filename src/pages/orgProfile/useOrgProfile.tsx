@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useLoaderData, useLocation } from 'react-router-dom';
 import { JobsRes, OrganizationProfile } from 'src/core/api';
 import Badge from 'src/modules/general/components/Badge';
+import OrgPreferences from 'src/modules/Preferences/OrgPreferences';
 import { About } from 'src/modules/userProfile/components/about';
 import { OrganizationJobs } from 'src/modules/userProfile/components/jobs';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
@@ -24,7 +25,7 @@ export const useOrgProfile = () => {
   }, [location]);
 
   const tabs = [
-    { label: 'About', content: <About /> },
+    { label: 'About', content: <About onOpenPreferences={() => setActive(2)} /> },
     {
       label: (
         <>
@@ -34,6 +35,7 @@ export const useOrgProfile = () => {
       ),
       content: <OrganizationJobs />,
     },
+    { label: 'Preferences', content: <OrgPreferences /> },
   ];
 
   return { tabs, active };

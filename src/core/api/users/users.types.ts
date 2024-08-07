@@ -192,3 +192,19 @@ export interface Credential {
   created_at: Date;
   updated_at: Date;
 }
+
+export type PreferenceValue =
+  | 'ON'
+  | 'OFF'
+  | 'STRONG_HIGH'
+  | 'MODERATE_HIGH'
+  | 'NEUTRAL'
+  | 'MODERATE_LOW'
+  | 'STRONG_LOW'
+  | 'PREFER_NOT_SAY';
+
+export interface Preference {
+  title: string;
+  value: PreferenceValue;
+  description?: string;
+}
