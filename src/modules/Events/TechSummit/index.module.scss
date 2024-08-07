@@ -1,6 +1,6 @@
 .bg {
     @apply h-full flex-1 bg-no-repeat bg-cover hidden md:block;
-    background-image: url('/images/tech-submit.jpeg');
+    background-image: url('/images/tech-submit.png');
 
     &__shadow {
         @apply h-full flex flex-col items-center justify-center text-Base-White text-center;
