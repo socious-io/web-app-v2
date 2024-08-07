@@ -7,14 +7,20 @@ import { useAppliedJobListing } from './useAppliedJobListing';
 import { JobListingCard } from '../../components/JobListingCard';
 
 export const AppliedJobsListing = () => {
-  const { appliedList, page, totalCount, setPage, PER_PAGE } = useAppliedJobListing();
+  const { appliedList, page, totalCount, setPage, PER_PAGE, scrollRef, scrollIndex } = useAppliedJobListing();
   return (
     <div className={css.container}>
-      {appliedList.map((item: Applicant) => (
-        <div key={item?.id} className="mt-6">
-          <JobListingCard job={{ ...item.project, identity_meta: item.organization?.meta }} page={page} />
-        </div>
-      ))}
+      {appliedList.map((item: Applicant, index) => {
+        return (
+          <div key={item?.id} ref={index === scrollIndex ? scrollRef : null} className="mt-6">
+            <JobListingCard
+              job={{ ...item.project, identity_meta: item.organization?.meta }}
+              page={page}
+              scrollIndex={index}
+            />
+          </div>
+        );
+      })}
       {appliedList.length > 0 && totalCount > PER_PAGE && (
         <div className="mt-11 hidden md:block">
           <Pagination page={page} count={Math.ceil(totalCount / PER_PAGE)} onChange={(e, p) => setPage(p)} />

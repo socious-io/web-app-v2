@@ -51,7 +51,7 @@ export const JobsListing = () => {
                 </div>
               </div>
               <div className="my-6">
-                <JobListingCard job={recommended} displayNotInterested displaySave />
+                <JobListingCard job={recommended} page={page} displayNotInterested displaySave />
               </div>
             </>
           )}
