@@ -149,6 +149,7 @@ export const useEducationDetails = (
   };
 
   const onSend = async () => {
+    if (dateError) return;
     const { month, year, day, credentialName } = getValues();
     const startedDate = education.start_at ? new Date(getUTCDate(education.start_at)) : undefined;
     const title = education?.title || '';

@@ -216,6 +216,7 @@ export const useVerifyEducationModal = (
 
   // apply backend API
   const onSend = async () => {
+    if (dateError) return;
     const { month, year, day, email, credentialName, message, forgotInfo } = getValues();
     const startedDate = education.start_at ? new Date(getUTCDate(education.start_at)) : undefined;
     const title = education?.title || '';
