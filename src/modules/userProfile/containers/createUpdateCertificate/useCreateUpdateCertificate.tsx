@@ -224,6 +224,7 @@ export const useCreateUpdateCertificate = (
   };
 
   const onSave = async () => {
+    if (dateError) return;
     const {
       name,
       orgName,
