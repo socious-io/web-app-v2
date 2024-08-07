@@ -46,3 +46,10 @@ export interface ConnectionStatus {
     status: ConnectStatus;
   };
 }
+
+export interface FollowRes {
+  id: string;
+  follower_identity_id: string;
+  following_identity_id: string;
+  created_at: string;
+}

@@ -7,9 +7,9 @@ export const useAddPayoutAccount = () => {
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const onSelectCountry = value => {
-    if (value !== selectedCountry) setStripeLink('');
-    setSelectedCountry(value);
+  const onSelectCountry = option => {
+    if (option.value !== selectedCountry) setStripeLink('');
+    setSelectedCountry(option.value);
   };
 
   const getStripeLink = async (country: string) => {

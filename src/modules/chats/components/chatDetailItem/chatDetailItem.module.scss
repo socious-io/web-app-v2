@@ -1,5 +1,7 @@
 @import 'src/styles/constants/_primitives.scss';
-.myMessage {
+
+@mixin Message {
+    white-space: pre-wrap;
     width: fit-content;
     max-width: 35rem;
     padding: 10px 14px;
@@ -7,26 +9,21 @@
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    border-top-right-radius: 0;
-    background-color: $color-primary-600;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
+}
+
+.myMessage {
+    @include Message;
+    background-color: $color-primary-600;
     color: $color-white;
+    border-top-right-radius: 0;
 }
 
 .otherMessage {
-    width: fit-content;
-    max-width: 35rem;
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    border-top-left-radius: 0;
+    @include Message;
     background-color: $color-grey-100;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
     color: $color-grey-900;
+    border-top-left-radius: 0;
 }

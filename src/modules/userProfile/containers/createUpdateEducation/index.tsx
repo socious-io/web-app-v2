@@ -98,6 +98,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           isSearchable
           errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           required
@@ -113,6 +114,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           placeholder="Year"
           isSearchable
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
       </div>
       <div className="flex gap-4 items-start">
@@ -131,6 +133,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           isSearchable
           errors={endDateErrors ? [endDateErrors.toString()] : undefined}
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           required
@@ -146,6 +149,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           placeholder="Year"
           isSearchable
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
       </div>
       <Input

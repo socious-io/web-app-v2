@@ -161,6 +161,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           isSearchable
           errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="start-day"
@@ -174,6 +175,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           className="flex-1"
           placeholder="Day"
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="start-year"
@@ -188,6 +190,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           placeholder="Year"
           isSearchable
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
       </div>
       <div className="flex gap-4 items-start">
@@ -205,6 +208,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           isSearchable
           errors={endDateErrors ? [endDateErrors.toString()] : undefined}
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="end-day"
@@ -218,6 +222,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           placeholder="Day"
           className="flex-1"
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="end-year"
@@ -232,6 +237,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           placeholder="Year"
           isSearchable
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
       </div>
     </div>

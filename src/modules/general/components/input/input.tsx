@@ -79,7 +79,11 @@ export const Input: React.FC<InputProps> = ({
         </InputAdornment>
       )}
       {postfixDropdown && (
-        <InputDropdown options={postfixDropdown.options} onChange={option => postfixDropdown.onChange(option.value)} />
+        <InputDropdown
+          options={postfixDropdown.options}
+          maxMenuHeight={100}
+          onChange={option => postfixDropdown.onChange(option.value)}
+        />
       )}
     </>
   );

@@ -1,7 +1,7 @@
-import { InvitationsPaginateRes } from 'src/core/api';
+import { InvitationsRes } from 'src/core/api';
 
 export interface InvitationsListProps {
-  list: InvitationsPaginateRes;
+  list: InvitationsRes;
 }
 
 export type DisputeInfo = {

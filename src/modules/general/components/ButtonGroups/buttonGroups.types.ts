@@ -1,5 +1,6 @@
 export type ButtonGroupItem = {
   label: string;
+  value?: string;
   handleClick: () => void;
 };
 

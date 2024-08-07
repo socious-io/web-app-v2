@@ -21,6 +21,7 @@ export const useFollowingTab = () => {
     try {
       const lst = [...followingList];
       const idx = lst.findIndex(item => item.id === id);
+      if (!lst[idx] || !lst[idx].identity_meta) return;
       if (lst[idx].following) {
         setName(lst[idx].identity_meta.name);
         setFollowingId(lst[idx].id);
@@ -40,7 +41,7 @@ export const useFollowingTab = () => {
     try {
       const lst = [...followingList];
       const idx = lst.findIndex(item => item.id === followingId);
-      await unfollow(lst[idx].identity_meta.id);
+      if (lst[idx].identity_meta?.id) await unfollow(lst[idx].identity_meta.id);
       lst[idx].following = false;
       setFollowingList(lst);
       setOpenAlert(false);

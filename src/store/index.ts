@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { chatSlice } from './reducers/chat.reducer';
 import { contractsSlice } from './reducers/contracts.reducer';
+import { eventsSlice } from './reducers/events.reducer';
 import { identitySlice } from './reducers/identity.reducer';
 import { profileSlice } from './reducers/profile.reducer';
 import { skillsSlice } from './reducers/skills.reducer';
@@ -15,6 +16,7 @@ const store = configureStore({
     profile: profileSlice.reducer,
     contracts: contractsSlice.reducer,
     skills: skillsSlice.reducer,
+    events: eventsSlice.reducer,
   },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({

@@ -20,7 +20,9 @@ export const Search = () => {
       <div className={css.headerContainer}>
         <div className={headerClass}>
           <h1 className={css.title}>{`Search for ${q}`}</h1>
-          <h2 className={css.subtitle}>{`${total} ${readableType} found ${countryName ? `in ${countryName}` : ``}`}</h2>
+          <h2
+            className={css.subtitle}
+          >{`${total} ${readableType.title} found ${countryName ? `in ${countryName}` : ``}`}</h2>
         </div>
         <div>
           <Button color="secondary" variant="outlined" className={css.filterButton} onClick={handleCloseOrApplyFilter}>
@@ -54,9 +56,9 @@ export const Search = () => {
         open={sliderFilterOpen}
         onClose={handleCloseOrApplyFilter}
         title="Filter by"
-        subtitle={`Filter ${readableType} by social causes, skills and more`}
+        subtitle={`Filter ${readableType.title} by social causes, skills and more`}
       >
-        <FilterSlider type={readableType} onApply={onApply} onClose={onClose} filter={filter} />
+        <FilterSlider type={readableType.type} onApply={onApply} onClose={onClose} filter={filter} />
       </Overlay>
     </div>
   );

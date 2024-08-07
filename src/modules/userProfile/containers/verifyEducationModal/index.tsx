@@ -111,6 +111,7 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             placeholder="Month"
             isSearchable
             errors={dateErrors ? [dateErrors.toString()] : undefined}
+            maxMenuHeight={200}
           />
           <SearchDropdown
             id="day"
@@ -123,9 +124,10 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             label="&nbsp;"
             className="flex-1"
             placeholder="Day"
+            maxMenuHeight={200}
           />
           <SearchDropdown
-            id="start-year"
+            id="year"
             value={year}
             options={years}
             hasDropdownIcon
@@ -136,6 +138,7 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             className="flex-1"
             placeholder="Year"
             isSearchable
+            maxMenuHeight={200}
           />
         </div>
         <div className="flex flex-col">

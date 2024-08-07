@@ -4,7 +4,7 @@ import { Icon } from 'src/modules/general/components/Icon';
 
 import Chip from './chip';
 import css from './multiSelect.module.scss';
-import { MultiSelectProps } from './multiSelect.types';
+import { MultiSelectItem, MultiSelectProps } from './multiSelect.types';
 
 const MultiSelect: React.FC<MultiSelectProps> = props => {
   const {
@@ -26,7 +26,7 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
   } = props;
   const [chipItems, setChipItems] = useState(items);
   const [searchVal, setSearchVal] = useState('');
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLTextAreaElement>();
 
   function filterItems(val: string) {
     setSearchVal(val);
@@ -38,7 +38,9 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
   }
 
   function handleChange(val: (MultiSelectItem | string)[]) {
-    const lastItem = val[val.length - 1];
+    const lastIndx = val.length - 1;
+    const lastItem =
+      typeof val[lastIndx] === 'string' ? val[lastIndx].toString() : (val[lastIndx] as MultiSelectItem).value;
     const newVal = items?.find(
       i =>
         i.label.toLowerCase() === lastItem.toLowerCase() &&
@@ -51,7 +53,7 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
   function add(value: string, label: string) {
     const existed = componentValue.find(item => item.value === value || item.label === label);
     if (!existed && componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
-    inputRef.current.focus();
+    if (inputRef.current) inputRef.current.focus();
   }
 
   function remove(val: string) {

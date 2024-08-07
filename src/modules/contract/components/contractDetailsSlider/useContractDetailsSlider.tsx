@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Contract, CurrentIdentity, connectionStatus } from 'src/core/api';
+import { ConnectStatus } from 'src/core/types';
 import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
@@ -24,7 +25,7 @@ export const useContractDetailsSlider = () => {
   const selectedOfferId = useSelector<RootState, string | undefined>(state => {
     return state.contracts.selectedOfferId;
   });
-  const contract = useSelector<RootState, Contract>(state => {
+  const contract = useSelector<RootState, Contract | undefined>(state => {
     return state.contracts.offers.find(item => item.id === selectedOfferId);
   });
 
@@ -32,17 +33,21 @@ export const useContractDetailsSlider = () => {
     if (identityType === 'organizations') {
       return false;
     }
-
-    const res = (await connectionStatus(contract?.organization.id)).connect;
+    let res:
+      | {
+          status: ConnectStatus;
+        }
+      | undefined = undefined;
+    if (contract?.organization.id) res = (await connectionStatus(contract?.organization.id)).connect;
     return !res;
   };
 
   const { name, profileImage, type } = getIdentityMeta(
-    identityType === 'users' ? contract.offerer : contract.recipient,
+    identityType === 'users' ? contract?.offerer : contract?.recipient,
   );
 
   const tabs = [
-    { label: 'Details', content: <ContractDetailTab contract={contract} /> },
+    { label: 'Details', content: <ContractDetailTab contract={contract!} /> },
     // { label: 'Activity', content: <div /> },
   ];
 
@@ -58,7 +63,7 @@ export const useContractDetailsSlider = () => {
 
   const initializeComponent = async (disabledMessageButton: boolean) => {
     let alertMsg = '';
-    switch (contract.contractStatus) {
+    switch (contract?.contractStatus) {
       case 'Offer sent':
         setSliderComponent(
           <SliderOfferSent
@@ -146,9 +151,20 @@ export const useContractDetailsSlider = () => {
   };
 
   const redirectToChat = () => {
-    const participantId = identityType === 'users' ? contract.offerer.meta.id : contract.recipient.meta.id;
+    const participantId = identityType === 'users' ? contract?.offerer.meta.id : contract?.recipient.meta.id;
     navigate(`../chats?participantId=${participantId}`);
   };
+
+  const navigateToHomePage = () => {
+    if (identityType === 'users') {
+      const { usernameVal } = getIdentityMeta(contract.offerer);
+      navigate(`/profile/organizations/${usernameVal}/view`);
+    } else {
+      const { usernameVal } = getIdentityMeta(contract.recipient);
+      navigate(`/profile/users/${usernameVal}/view`);
+    }
+  };
+
   return {
     name,
     profileImage,
@@ -156,5 +172,6 @@ export const useContractDetailsSlider = () => {
     tabs,
     sliderComponent,
     contract,
+    navigateToHomePage,
   };
 };

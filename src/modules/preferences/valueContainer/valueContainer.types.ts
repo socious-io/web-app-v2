@@ -1,3 +1,5 @@
+import { Preference } from 'src/core/api';
+
 export type ValueGroup =
   | 'workLifeBalance'
   | 'benefits'
@@ -6,3 +8,7 @@ export type ValueGroup =
   | 'growth'
   | 'socialImpacts'
   | 'transparency';
+
+export interface ValueContainerProps {
+  preferences: Preference[];
+}

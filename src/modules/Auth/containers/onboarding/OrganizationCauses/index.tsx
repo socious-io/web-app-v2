@@ -19,7 +19,7 @@ export const OrganizationCauses = () => {
           searchTitle={'Select at least 1 cause*'}
           max={5}
           maxLabel={'Max. 5 causes'}
-          items={items.slice(0, 30)}
+          items={items}
           placeholder={'Search a cause'}
           componentValue={value}
           setComponentValue={setValue}

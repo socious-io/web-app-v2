@@ -19,4 +19,5 @@ export interface RadioGroupProps {
   preselectIndex?: number;
   defaultValue?: string | number;
   labelClassName?: string;
+  contentClassName?: string;
 }

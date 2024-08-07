@@ -32,6 +32,8 @@ import FallBack from 'src/pages/fallback/fallback';
 import store, { RootState } from 'src/store';
 import { currentIdentities } from 'src/store/thunks/identity.thunks';
 
+import { checkSearchFilters } from '../utils';
+
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
   {
@@ -280,7 +282,7 @@ export const blueprint: RouteObject[] = [
                 path: 'saved',
                 loader: async ({ request }) => {
                   const page = Number(new URL(request.url).searchParams.get('page') || 1);
-                  const data = await markedJobs({ page, 'filter.marked_as': 'SAVE', limit: 5 });
+                  const data = await markedJobs({ page, 'filter.marked_as': 'SAVE', limit: 10 });
                   return data;
                 },
                 async lazy() {
@@ -441,7 +443,7 @@ export const blueprint: RouteObject[] = [
                   localStorage.setItem('searchTerm', q || '');
                   localStorage.setItem('navigateToSearch', 'true');
                   const body = {
-                    filter: JSON.parse(localStorage.getItem('filter') || '{}'),
+                    filter: checkSearchFilters(type || 'projects', JSON.parse(localStorage.getItem('filter') || '{}')),
                     type,
                     q,
                   };

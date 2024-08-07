@@ -77,11 +77,9 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
       <SearchDropdown
         required
         id="location"
-        cacheOptions
         value={city}
         isAsync
         loadOptions={searchCities}
-        defaultOptions
         className="my-5"
         icon="search-lg"
         hasDropdownIcon={false}
@@ -112,9 +110,9 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         searchTitle={'Social causes*'}
         max={5}
         maxLabel={'Max. 5 causes'}
-        items={socialCauseItems.slice(0, 30)}
+        items={socialCauseItems}
         placeholder={'Type a social cause'}
-        componentValue={socialCauses}
+        componentValue={socialCauses || []}
         setComponentValue={changeSocialCauses}
         customHeight="118px"
         popularLabel={false}

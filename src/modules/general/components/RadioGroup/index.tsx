@@ -18,6 +18,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   onChange,
   defaultValue,
   labelClassName = '',
+  contentClassName = '',
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<null | number>();
   return (
@@ -47,7 +48,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
                   }}
                 />
               }
-              label={<span className={css.optionsText}>{item.label}</span>}
+              label={<span className={`${css.optionsText} ${contentClassName}`}>{item.label}</span>}
               sx={{ width: 'fit-content' }}
             />
             {(selectedIndex === index || item.value === defaultValue) && item.children}
