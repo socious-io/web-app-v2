@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { Logo } from 'public/icons/nowruz/logo';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, useSearchParams } from 'react-router-dom';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/modules/Auth/containers/ServiceIntro';
 import { reviews, onboardingOptons } from 'src/modules/Auth/statics/intro';
@@ -17,11 +17,13 @@ export const Intro = () => {
   const status = useSelector((state: RootState) => state.identity.status);
   const [selectedOnboarding, setSelectedOnboarding] = useState<'user' | 'organization'>('user');
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const eventName = searchParams.get('event_name') || '';
 
   const navigateToOnboarding = () => {
     localStorage.setItem('registerFor', selectedOnboarding);
     localStorage.removeItem('referrer');
-    navigate('/sign-up/user/email');
+    navigate(`/sign-up/user/email${eventName && `?event_name=${eventName}`}`);
   };
 
   const renderIntro = () => {
@@ -75,7 +77,11 @@ export const Intro = () => {
             <Typography variant="caption" className={css.signupTitle}>
               Already have an account?
             </Typography>
-            <Link href="/sign-in" label="Log in" customStyle="!font-semibold" />
+            <Link
+              href={`/sign-in${eventName && `?event_name=${eventName}`}`}
+              label="Log in"
+              customStyle="!font-semibold"
+            />
           </div>
         </div>
         <div className={css.copy}>

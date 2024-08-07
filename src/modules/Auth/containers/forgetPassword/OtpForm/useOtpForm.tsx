@@ -7,6 +7,7 @@ export const useOtpForm = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email') || '';
+  const eventName = localStorage.getItem('event_name') || '';
   const [otpVal, setOtpVal] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -36,7 +37,7 @@ export const useOtpForm = () => {
   }
 
   const onBack = () => {
-    navigate('/sign-in');
+    navigate(`/sign-in${eventName && `?event_name=${eventName}`}`);
   };
 
   return { otpVal, setOtpVal, sendOtp, resendOtp, onBack, isValid, loading };

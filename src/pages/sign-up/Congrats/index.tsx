@@ -11,7 +11,7 @@ export const Congrats = () => {
 
   const routeToNextPage = async () => {
     const path = await nonPermanentStorage.get('savedLocation');
-    navigate(path ? path : '/sign-up/user/onboarding');
+    navigate(path || '/sign-up/user/onboarding');
   };
 
   return (

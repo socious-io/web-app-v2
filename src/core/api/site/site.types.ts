@@ -82,8 +82,8 @@ export interface Event {
   id: string;
   title: string;
   description: string;
-  event_at: string;
-  created_at: string;
+  event_at: Date;
+  created_at: Date;
 }
 
 export interface EventsRes extends PaginateRes {
