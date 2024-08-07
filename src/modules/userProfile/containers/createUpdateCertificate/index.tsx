@@ -10,7 +10,7 @@ import { useCreateUpdateCertificate } from './useCreateUpdateCertificate';
 interface CreateUpdateCertificateProps {
   open: boolean;
   handleClose: () => void;
-  certificate: AdditionalRes;
+  certificate: AdditionalRes | undefined;
   setCertificate: (val: AdditionalRes) => void;
 }
 

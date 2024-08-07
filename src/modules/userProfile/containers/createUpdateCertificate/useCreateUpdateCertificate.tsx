@@ -43,7 +43,7 @@ interface OptionType {
 
 export const useCreateUpdateCertificate = (
   handleClose: () => void,
-  certificate: AdditionalRes,
+  certificate: AdditionalRes | undefined,
   setCertificate: (val: AdditionalRes) => void,
 ) => {
   const user = useSelector<RootState, User | Organization | undefined>(state => {
