@@ -10,7 +10,19 @@ import css from './list.module.scss';
 
 export const Search = () => {
   const {
-    data: { page, searchResult, total, PER_PAGE, readableType, q, sliderFilterOpen, filter, countryName },
+    data: {
+      page,
+      searchResult,
+      total,
+      PER_PAGE,
+      readableType,
+      q,
+      sliderFilterOpen,
+      filter,
+      countryName,
+      scrollRef,
+      scrollIndex,
+    },
     operations: { setPage, card, handleCloseOrApplyFilter, onApply, onClose, handleChangeMobilePage },
   } = useSearch();
 
@@ -32,9 +44,9 @@ export const Search = () => {
         </div>
       </div>
       <div className={css.list}>
-        {searchResult.items?.map(item => (
-          <div key={item.id} className="mt-6">
-            {card(item)}
+        {searchResult.items?.map((item, index) => (
+          <div key={item.id} className="mt-6" ref={index === scrollIndex ? scrollRef : null}>
+            {card(item, index)}
           </div>
         ))}
 
