@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Button } from 'src/modules/general/components/Button';
 import MultiSelect from 'src/modules/general/components/multiSelect/multiSelect';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -7,20 +8,23 @@ import { useOrganizationCauses } from './useOrganizationCauses';
 
 export const OrganizationCauses = () => {
   const { items, value, setValue, updateSelectedStep } = useOrganizationCauses();
+  const { t: teducationalcertificate } = useTranslation('educationalcertificate');
+  const { t: tprofile } = useTranslation('profile');
+  const { t: tjobs } = useTranslation('jobs');
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>
-        <h1 className={css.title}>What is your organization about?</h1>
-        <h2 className={css.description}>Select up to 5 social causes</h2>
+        <h1 className={css.title}>{teducationalcertificate('organizationPurposeQuestion')}</h1>
+        <h2 className={css.description}>{teducationalcertificate('selectCausesPrompt')}</h2>
       </div>
       <div className="mt-5">
         <MultiSelect
           id={'social-causes'}
-          searchTitle={'Select at least 1 cause*'}
+          searchTitle={teducationalcertificate('minCauseSelectionLabel')}
           max={5}
-          maxLabel={'Max. 5 causes'}
+          maxLabel={tprofile('max5Causes')}
           items={items.slice(0, 30)}
-          placeholder={'Search a cause'}
+          placeholder={tjobs('SearchCauseButton')}
           componentValue={value}
           setComponentValue={setValue}
           customHeight="200px"

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { CurrentIdentity, JobsRes } from 'src/core/api';
@@ -18,7 +19,7 @@ export const JobsList = () => {
   const userJobs = useLoaderData() as JobsRes;
   const path = useLocation().pathname;
   const savedPage = path.includes('saved');
-
+  const { t } = useTranslation('jobs');
   const saveButton = (
     <Button
       variant="outlined"
@@ -27,7 +28,7 @@ export const JobsList = () => {
       onClick={() => navigate('/jobs/saved')}
     >
       <Icon name="bookmark" fontSize={20} />
-      Saved jobs
+      {t('SavedJobsLabel')}
     </Button>
   );
 
@@ -39,12 +40,12 @@ export const JobsList = () => {
         <>
           <div className={css.header}>
             <div className="flex justify-between items-start">
-              <h1 className={css.title}>{savedPage ? 'Saved jobs' : `${userJobs?.total_count} impact jobs`}</h1>
+              <h1 className={css.title}>
+                {savedPage ? t('SavedJobsLabel') : `${userJobs?.total_count} ${t('JobsListingCount')}`}
+              </h1>
               {!savedPage && <div className="hidden md:block">{saveButton}</div>}
             </div>
-            <h2 className={css.subtitle}>
-              {savedPage ? 'Your saved jobs' : `Find work that matters to you and the world`}
-            </h2>
+            <h2 className={css.subtitle}>{savedPage ? t('YourSavedJobsLabel') : t('JobsListingHint')}</h2>
             {!savedPage && <div className="block md:hidden mt-3">{saveButton}</div>}
           </div>
 

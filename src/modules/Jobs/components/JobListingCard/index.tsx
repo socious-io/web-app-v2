@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
@@ -53,7 +54,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
       </div>
     );
   };
-
+  const { t } = useTranslation('jobs');
   return (
     <div
       className={`${css.jobCard} ${jobVal.not_interested ? '' : 'cursor-pointer md:cursor-default'}`}
@@ -172,7 +173,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
               handleNotInterested();
             }}
           >
-            Not interested
+            {t('NotInterestedButtonText')}
           </button>
         )}
         {jobVal.not_interested ? (
@@ -180,7 +181,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
         ) : (
           <Link
             href={`/jobs/${job.id}?page=${page}&scrollIndex=${scrollIndex}`}
-            label={`Read more`}
+            label={t('ReadMoreButtonText')}
             customStyle={css.readMore}
           />
         )}
