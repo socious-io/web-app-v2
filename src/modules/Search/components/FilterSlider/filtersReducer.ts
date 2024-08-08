@@ -1,4 +1,3 @@
-import { openToVolunteer } from 'src/core/api';
 import { Item } from 'src/modules/general/components/CheckboxGroup/index.types';
 
 type LabelValue = { label: string; value: string };
