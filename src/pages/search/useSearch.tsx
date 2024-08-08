@@ -161,6 +161,7 @@ export const useSearch = () => {
 
   useEffect(() => {
     setSearchResult(data);
+    setPage(data.page);
     setCountryName('');
   }, [data]);
 
