@@ -84,8 +84,9 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
         </Typography>
         <Link
           label=" Sign up"
-          href={`/intro${event.name && `?event_name=${event.name}`}`}
+          href={event.name ? `/sign-up/user/email?event_name=${event.name}` : '/intro'}
           customStyle="!font-semibold"
+          onClick={() => event.name && localStorage.setItem('registerFor', 'user')}
         />
       </div>
     </>

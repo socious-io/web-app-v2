@@ -14,7 +14,7 @@ interface SearchResultProfileProps {
 }
 
 export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identity }) => {
-  const { website } = useSearchResultProfile(identity);
+  const { type, website } = useSearchResultProfile(identity);
   const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
   const events = eventsToCategory((identity as User).events || []).map(item => item.label);
   return (
@@ -34,12 +34,14 @@ export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identi
             fontColor={variables.color_primary_700}
           />
 
-          <ChipList
-            items={events}
-            bgColor={variables.color_purple_50}
-            borderColor={variables.color_purple_200}
-            fontColor={variables.color_purple_700}
-          />
+          {type === 'users' && !!events.length && (
+            <ChipList
+              items={events}
+              bgColor={variables.color_purple_50}
+              borderColor={variables.color_purple_200}
+              fontColor={variables.color_purple_700}
+            />
+          )}
         </div>
         <div className="flex flex-col gap-3">
           {(identity as User).open_to_volunteer && (

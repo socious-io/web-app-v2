@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
-import { socialCausesToCategory } from 'src/core/adaptors';
+import { eventsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { ChipList } from 'src/modules/general/components/chipList';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -32,6 +32,7 @@ export const MainInfo = () => {
   const user = identity as User;
   const size = ORGANIZATION_SIZE.find(sizes => sizes.value === org.size)?.label.split(' ')[0];
   const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
+  const events = eventsToCategory((identity as User).events || []).map(item => item.label);
   const bioJSX = (
     <div>
       <Typography className={css.textMd}>{identity?.bio}</Typography>
@@ -73,12 +74,22 @@ export const MainInfo = () => {
       {profileType === 'users' && <Impact point={identity?.impact_points} myProfile={myProfile} />}
       {identity?.bio && bioJSX}
       {connectionJSX}
-      <ChipList
-        items={socialCauses}
-        bgColor={variables.color_primary_50}
-        borderColor={variables.color_primary_200}
-        fontColor={variables.color_primary_700}
-      />
+      <div className="flex flex-col gap-2">
+        <ChipList
+          items={socialCauses}
+          bgColor={variables.color_primary_50}
+          borderColor={variables.color_primary_200}
+          fontColor={variables.color_primary_700}
+        />
+        {profileType === 'users' && !!events.length && (
+          <ChipList
+            items={events}
+            bgColor={variables.color_purple_50}
+            borderColor={variables.color_purple_200}
+            fontColor={variables.color_purple_700}
+          />
+        )}
+      </div>
       {profileType === 'users' && (identity as User).open_to_volunteer && (
         <div className="flex gap-2">
           <img src="/icons/nowruz/red-heart.svg" alt="" />

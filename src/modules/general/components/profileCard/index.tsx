@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { socialCausesToCategory } from 'src/core/adaptors';
+import { eventsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { UserType } from 'src/core/types';
 import { getIdentityMeta } from 'src/core/utils';
@@ -27,6 +27,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
   const navigate = useNavigate();
   const { name, profileImage, type, website, username } = getIdentityMeta(identity);
   const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
+  const events = eventsToCategory((identity as User).events || []).map(item => item.label);
   if (!identity) return;
   return (
     <div className="flex flex-col gap-5 md:gap-6 h-full w-full">
@@ -61,13 +62,21 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
               >{`${identity.followers} followers`}</Button>
             </div>
           )}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex flex-col gap-2">
             <ChipList
               items={socialCauses}
               bgColor={variables.color_primary_50}
               borderColor={variables.color_primary_200}
               fontColor={variables.color_primary_700}
             />
+            {type === 'users' && !!events.length && (
+              <ChipList
+                items={events}
+                bgColor={variables.color_purple_50}
+                borderColor={variables.color_purple_200}
+                fontColor={variables.color_purple_700}
+              />
+            )}
           </div>
           {identity.country && (
             <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
