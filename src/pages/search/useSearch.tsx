@@ -29,11 +29,17 @@ export const useSearch = () => {
   const type = searchParams.get('type');
   const q = searchParams.get('q');
   const pageNumber = Number(searchParams.get('page') || 1);
+  const scrollIndx = Number(searchParams.get('scrollIndex') || -1);
 
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
   const [searchResult, setSearchResult] = useState({} as JobsRes | UsersRes | OrganizationsRes);
   const [page, setPage] = useState(pageNumber);
+  const [scrollIndex, setscrollIndex] = useState(scrollIndx);
+  const scrollRef = useRef<null | HTMLDivElement>(null);
+
+  const executeScroll = () => scrollRef.current && scrollRef.current.scrollIntoView();
+
   const [sliderFilterOpen, setSliderFilterOpen] = useState(false);
   const filter = JSON.parse(localStorage.getItem('filter') || '{}') as FilterReq;
   const [countryName, setCountryName] = useState<string | undefined>('');
@@ -133,7 +139,7 @@ export const useSearch = () => {
   };
 
   const card = useCallback(
-    (item: Job | Organization | User) => {
+    (item: Job | Organization | User, index: number) => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
           <div onClick={() => handleNavigate(item as Organization | User)} className="cursor-pointer">
@@ -141,7 +147,7 @@ export const useSearch = () => {
           </div>
         );
       }
-      return <JobListingCard job={item as Job} page={page} />;
+      return <JobListingCard job={item as Job} page={page} scrollIndex={index} />;
     },
     [type, page],
   );
@@ -155,12 +161,18 @@ export const useSearch = () => {
 
   useEffect(() => {
     setSearchResult(data);
+    setPage(data.page);
     setCountryName('');
   }, [data]);
+
+  useEffect(() => {
+    executeScroll();
+  }, [searchResult]);
 
   const handleChangeMobilePage = () => {
     prevPage.current = page;
     setPage(page + 1);
+    setscrollIndex(page * PER_PAGE - 1);
   };
 
   return {
@@ -174,6 +186,8 @@ export const useSearch = () => {
       sliderFilterOpen,
       filter,
       countryName,
+      scrollRef,
+      scrollIndex,
     },
     operations: {
       setPage,
