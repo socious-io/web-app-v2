@@ -1,21 +1,28 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import css from './horizontalTabs.module.scss';
 import { HorizontalTabsProps } from './horizontalTabs.types';
 
-export const HorizontalTabs: React.FC<HorizontalTabsProps> = props => {
-  const { tabs, leftAligned = true, containerCustomStyle, activeIndex = 0 } = props;
-
+export const HorizontalTabs: React.FC<HorizontalTabsProps> = ({
+  tabs,
+  leftAligned = true,
+  containerCustomStyle = '',
+  activeIndex = 0,
+  onActiveIndex,
+}) => {
   const [active, setActive] = useState(activeIndex);
-  const [content, setContent] = useState<ReactNode>();
 
   useEffect(() => {
     setActive(activeIndex);
   }, [activeIndex]);
 
-  useEffect(() => {
-    setContent(tabs[active].content);
-  }, [active, tabs]);
+  const handleTabClick = (index: number) => {
+    if (onActiveIndex) {
+      onActiveIndex(index);
+    } else {
+      setActive(index);
+    }
+  };
 
   return (
     <div className={`w-full h-full flex flex-col gap-8 ${containerCustomStyle}`}>
@@ -24,13 +31,13 @@ export const HorizontalTabs: React.FC<HorizontalTabsProps> = props => {
           <div
             key={`${tab.label}-${index.toString()}`}
             className={`${css.tab} ${index === active ? css.tabActive : ''} ${leftAligned ? '' : 'flex-1'}`}
-            onClick={() => setActive(index)}
+            onClick={() => handleTabClick(index)}
           >
             {tab.label}
           </div>
         ))}
       </div>
-      <div className="w-full h-full">{content}</div>
+      <div className="w-full h-full">{tabs[active]?.content}</div>
     </div>
   );
 };

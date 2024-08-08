@@ -14,7 +14,7 @@ export const Disputes = () => {
           <h2 className={css.subtitle}>Manage your disputes here.</h2>
         </div>
       </div>
-      <HorizontalTabs tabs={tabs} activeIndex={0} />
+      <HorizontalTabs tabs={tabs} />
     </div>
   );
 };
