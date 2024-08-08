@@ -10,8 +10,10 @@ import Password from 'src/modules/settings/components/password';
 import { Plan } from 'src/modules/settings/components/plan';
 import { UserTeam } from 'src/modules/settings/components/userTeam';
 import { RootState } from 'src/store';
+import { useTranslation } from 'react-i18next';
 
 export const Setting = () => {
+  const { t } = useTranslation('profile');
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   );
@@ -44,7 +46,7 @@ export const Setting = () => {
 
   if (currentIdentity?.type === 'users')
     tabs.push({
-      label: 'Notifications',
+      label: t('notificationsHeading'),
       content: <Notification />,
     });
 
@@ -60,7 +62,7 @@ export const Setting = () => {
       value: 'Plan',
     });
 
-  if (currentIdentity?.type === 'users') items.push({ label: 'Notifications', value: 'Notification' });
+  if (currentIdentity?.type === 'users') items.push({ label: t('notificationsHeading'), value: t('notificationsHeading') });
 
   const [content, setContent] = useState<ReactNode>();
 

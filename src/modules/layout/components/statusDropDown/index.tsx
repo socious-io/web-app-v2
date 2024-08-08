@@ -5,6 +5,7 @@ import { Dot } from 'src/modules/general/components/dot';
 import { Icon } from 'src/modules/general/components/Icon';
 import { ToggleButton } from 'src/modules/general/components/toggleButton';
 import variables from 'src/styles/constants/_exports.module.scss';
+import { useTranslation } from 'react-i18next';
 
 import css from './statusDropDown.module.scss';
 
@@ -18,6 +19,7 @@ interface StatusDropDownProps {
   handleHiring: () => void;
 }
 export const StatusDropDown: React.FC<StatusDropDownProps> = props => {
+  const { t } = useTranslation('navigation');
   const [open, setOpen] = useState(false);
   const { type, openToWork, openToVolunteer, hiring, handleHiring, handleOpenToVolunteer, handleOpenToWork } = props;
   const newRef = useRef(null);
@@ -50,15 +52,15 @@ export const StatusDropDown: React.FC<StatusDropDownProps> = props => {
                 <div className={css.item}>
                   <ToggleButton checked={openToWork} onChange={handleOpenToWork} size="small" />
                   <div className="flex flex-col">
-                    <p className={css.title}>Open to work</p>
-                    <p className={css.subtitle}>You are available for paid jobs. You will be able to receive offers.</p>
+                    <p className={css.title}>{t('nav_open_to_work')}</p>
+                    <p className={css.subtitle}>{t('nav_available_for_paid')}</p>
                   </div>
                 </div>
                 <div className={css.item}>
                   <ToggleButton checked={openToVolunteer} onChange={handleOpenToVolunteer} size="small" />
                   <div className="flex flex-col">
-                    <p className={css.title}>Open to volunteer</p>
-                    <p className={css.subtitle}>You are available for volunteer jobs.</p>
+                    <p className={css.title}>{t('nav_open_to_vol')}</p>
+                    <p className={css.subtitle}>{t('nav_available_for_vol')}</p>
                   </div>
                 </div>
               </>

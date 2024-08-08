@@ -4,6 +4,7 @@ import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Input } from 'src/modules/general/components/input/input';
 import variables from 'src/styles/constants/_exports.module.scss';
+import { useTranslation } from 'react-i18next';
 
 import css from './referCard.module.scss';
 import { useReferCard } from './useReferCard';
@@ -14,6 +15,7 @@ interface ReferCardProps {
 }
 
 export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
+  const { t } = useTranslation('referral');
   const {
     openEmailModal,
     setOpenEmailModal,
@@ -76,7 +78,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
             type === 'organization' ? 'border-Wild_blue-500' : 'border-Dark_vanilla-500'
           } `}
         >
-          <span className="text-lg font-semibold text-Gray-light-mode-900">You get</span>
+          <span className="text-lg font-semibold text-Gray-light-mode-900">{t('Ref_you_get_text')}</span>
           <div className="flex gap-3">
             <div
               className="h-5 w-5 rounded-lg flex items-center justify-center"
@@ -89,11 +91,11 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
             </div>
             <span className="text-sm font-normal text-Gray-light-mode-600">
               {type === 'organization'
-                ? '1% of every invoice when your referral hires'
-                : '1% of their earnings on Socious'}
+                ? t('Ref_you_get_supporting_text')
+                : t('Ref_refer_talent_earnings_supporting_text')}
             </span>
           </div>
-          <span className="text-lg font-semibold text-Gray-light-mode-900">They get</span>
+          <span className="text-lg font-semibold text-Gray-light-mode-900">{t('Ref_they_get_text')}</span>
           <div className="flex gap-3">
             <div
               className="h-5 w-5 rounded-lg flex items-center justify-center"
@@ -104,9 +106,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
             >
               <img src="/icons/nowruz/check.svg" alt="" />
             </div>
-            <span className="text-sm font-normal text-Gray-light-mode-600">
-              50% discount on Socious fees for the first month
-            </span>
+            <span className="text-sm font-normal text-Gray-light-mode-600">{t('Ref_they_get_supporting_text')}</span>
           </div>
         </div>
       </div>
