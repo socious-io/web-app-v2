@@ -20,7 +20,6 @@ import {
   EducationsReq,
   Education,
   Preference,
-  PreferenceReq,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -140,6 +139,6 @@ export async function preferences(): Promise<Preference[]> {
   return (await get<Preference[]>('preferences', {})).data;
 }
 
-export async function updatePreferences(payload: { preferences: PreferenceReq[] }): Promise<Preference[]> {
+export async function updatePreferences(payload: { preferences: Preference[] }): Promise<Preference[]> {
   return (await post<Preference[]>('preferences', payload)).data;
 }

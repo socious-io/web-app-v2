@@ -1,4 +1,4 @@
-import { ValueGroup } from '../valueContainer/valueContainer.types';
+import { ValueGroup } from 'src/modules/Preferences/OrgPreferences/valueContainer/valueContainer.types';
 
 export interface ValueAccordionItem {
   valueGroup: ValueGroup;

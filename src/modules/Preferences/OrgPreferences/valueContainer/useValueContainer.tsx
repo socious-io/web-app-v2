@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Preference, PreferenceReq, updatePreferences } from 'src/core/api';
+import { Preference, updatePreferences } from 'src/core/api';
+import { ValueAccordionItem } from 'src/modules/Preferences/OrgPreferences/valueAccordion/valueAccordion.types';
 
-import { PREFERENCES_VALUES } from './contants';
+import { PREFERENCES_VALUES } from './constants';
 import { ValueGroup } from './valueContainer.types';
-import { ValueAccordionItem } from '../valueAccordion/valueAccordion.types';
 
 export const useValueContainer = (preferences: Preference[]) => {
-  const mapToValueAccardionItem = (preferenceArray: Preference[]): ValueAccordionItem[] => {
+  const mapToValueAccordionItem = (preferenceArray: Preference[]): ValueAccordionItem[] => {
     return PREFERENCES_VALUES.map(item => {
       const preferenceValue = preferenceArray.find(p => p.title === item.key);
       if (preferenceValue)
@@ -19,10 +19,8 @@ export const useValueContainer = (preferences: Preference[]) => {
           description: preferenceValue.description,
         };
       return {
-        valueGroup: item.group as ValueGroup,
-        key: item.key,
-        title: item.title,
-        subtitle: item.subtitle,
+        ...item,
+        valueGroup: item.group,
         value: 'OFF',
       };
     });
@@ -40,7 +38,7 @@ export const useValueContainer = (preferences: Preference[]) => {
   ];
 
   useEffect(() => {
-    setAccordionItems(mapToValueAccardionItem(preferences));
+    setAccordionItems(mapToValueAccordionItem(preferences));
   }, [preferences]);
 
   const onSave = async () => {
@@ -49,13 +47,13 @@ export const useValueContainer = (preferences: Preference[]) => {
       if (hasErrors) return;
 
       const payload = accordionItems.map(item => {
-        const mappedItem: PreferenceReq = { title: item.key, value: item.value };
+        const mappedItem: Preference = { title: item.key, value: item.value };
         if (item.description) mappedItem.description = item.description;
         return mappedItem;
       });
       await updatePreferences({ preferences: payload });
     } catch (error) {
-      console.log('error in saving preferences');
+      console.log('error in saving value preferences');
     }
   };
 

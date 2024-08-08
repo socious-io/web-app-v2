@@ -10,5 +10,5 @@ export type CultureType = {
   subtitle: string;
   value: string;
   answers: { label: string; value: string }[];
-  description?: string;
+  description?: string | null;
 };

@@ -203,19 +203,8 @@ export type PreferenceValue =
   | 'MODERATE_LOW'
   | 'PREFER_NOT_SAY';
 
-export interface PreferenceReq {
+export interface Preference {
   title: string;
   value: PreferenceValue;
   description?: string | null;
-}
-
-export interface Preference extends PreferenceReq {
-  id: string;
-  identity_id: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface PreferencesRes {
-  items: Preference[];
 }

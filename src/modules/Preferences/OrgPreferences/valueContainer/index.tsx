@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'src/modules/general/components/Button';
+import { ValueAccordion } from 'src/modules/Preferences/OrgPreferences/valueAccordion';
 
 import { useValueContainer } from './useValueContainer';
-import { ValueContainerProps, ValueGroup } from './valueContainer.types';
-import { ValueAccordion } from '../valueAccordion';
+import { ValueContainerProps } from './valueContainer.types';
 
 export const ValueContainer: React.FC<ValueContainerProps> = ({ preferences }) => {
   const { t } = useTranslation();

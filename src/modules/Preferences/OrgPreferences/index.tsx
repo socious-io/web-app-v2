@@ -4,7 +4,7 @@ import CultureAccordions from './CultureAccordions';
 import css from './index.module.scss';
 import Toggles from './Toggles';
 import { useOrgPreferences } from './useOrgPreferences';
-import { ValueContainer } from '../valueContainer';
+import { ValueContainer } from './valueContainer';
 
 const OrgPreferences = () => {
   const { preferences } = useOrgPreferences();

@@ -1,10 +1,10 @@
 import React from 'react';
+import Accordion from 'src/modules/general/components/Accordion';
+import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
+import { Input } from 'src/modules/general/components/input/input';
 
 import { useValueAccordion } from './useValueAccordion';
 import { ValueAccordionProps } from './valueAccordion.types';
-import Accordion from '../../general/components/Accordion';
-import { Checkbox } from '../../general/components/checkbox/checkbox';
-import { Input } from '../../general/components/input/input';
 
 export const ValueAccordion: React.FC<ValueAccordionProps> = ({
   items,

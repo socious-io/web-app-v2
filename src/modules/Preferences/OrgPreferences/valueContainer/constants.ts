@@ -1,8 +1,13 @@
 import i18next from 'i18next';
 
-import { ValueAccordionItem } from '../valueAccordion/valueAccordion.types';
+import { ValueGroup } from './valueContainer.types';
 
-export const PREFERENCES_VALUES = [
+export const PREFERENCES_VALUES: {
+  group: ValueGroup;
+  key: string;
+  title: string;
+  subtitle: string;
+}[] = [
   {
     group: 'workLifeBalance',
     key: 'RELOCATION_ASSISTANCE',
