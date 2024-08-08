@@ -178,7 +178,9 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     filter.project_length,
     filter.experience_level,
     filter.payment_type,
+    filter.events,
     skillItems,
+    eventItems,
     type,
   ]);
 
