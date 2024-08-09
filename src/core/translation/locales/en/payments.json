@@ -89,5 +89,6 @@
     "Payments_Ethereum": "Ethereum",
     "Payments_Polygon": "Polygon",
     "Payments_Crypto": "Crypto",
-    "Payments_Huobi": "Huobi"
+    "Payments_Huobi": "Huobi",
+    "Payments_select_country": "Search a country"
 }

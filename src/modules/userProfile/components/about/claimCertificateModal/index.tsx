@@ -16,12 +16,12 @@ interface ClaimCertificateModalProps {
 }
 
 export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
-  const { t } = useTranslation('referral');
   open,
   link,
   handleClose,
   handleClaimVC,
 }) => {
+  const { t } = useTranslation('referral');
   const footerJsx = (
     <div className="w-full p-6 block md:hidden">
       <Button variant="contained" color="primary" fullWidth onClick={handleClaimVC}>
@@ -46,9 +46,7 @@ export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
           <span className="text-sm leading-5 font-semibold text-Gray-light-mode-600">
             Socious uses blockchain technology to make credentials transparent and traceable.
           </span>
-          <span className="text-sm leading-5 font-normal text-Gray-light-mode-600">
-            {t('Ref_verify_explanation')}
-          </span>
+          <span className="text-sm leading-5 font-normal text-Gray-light-mode-600">{t('Ref_verify_explanation')}</span>
         </div>
         <span className="text-base leading-6 font-semibold text-Gray-light-mode-900">How to get your certificate</span>
         <div className="flex flex-col">

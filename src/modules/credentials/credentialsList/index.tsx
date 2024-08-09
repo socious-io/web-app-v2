@@ -9,6 +9,7 @@ import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 import Status from 'src/modules/general/components/Status';
+import { useTranslation } from 'react-i18next';
 
 import css from './credentialsList.module.scss';
 import { useCredentialsList } from './useCredentialsList';
@@ -16,6 +17,7 @@ import { EducationDetails } from '../educationDetails';
 import { ExperienceDetails } from '../experienceDetails';
 
 export const CredentialList = () => {
+  const { t } = useTranslation('credentials');
   const {
     credentialsList,
     totalPage,
@@ -42,7 +44,7 @@ export const CredentialList = () => {
     () => [
       {
         id: 'name',
-        header: 'Name',
+        header: t('cred_named'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const id = getValue();
@@ -69,7 +71,7 @@ export const CredentialList = () => {
       },
       {
         id: 'type',
-        header: 'Credential Type',
+        header: t('cred_types'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const item = credentialsList.find(list => list.id === getValue()) || {};
@@ -78,7 +80,7 @@ export const CredentialList = () => {
       },
       {
         id: 'status',
-        header: 'Status',
+        header: t('cred_status'),
         accessorKey: 'status',
         cell: ({ getValue }: { getValue: Getter<string> }) => (
           <div className="flex items-center">
@@ -88,7 +90,7 @@ export const CredentialList = () => {
       },
       {
         id: 'date',
-        header: 'Requested Date',
+        header: t('cred_requested_date'),
         accessorKey: 'created_at',
         cell: ({ getValue }: { getValue: Getter<string> }) => formatDate(getValue()),
       },
