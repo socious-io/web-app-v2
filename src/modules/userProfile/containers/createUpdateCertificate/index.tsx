@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { AdditionalRes } from 'src/core/api/additionals/additionals.types';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
@@ -40,21 +41,22 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
     onSave,
     onDelete,
   } = useCreateUpdateCertificate(handleClose, certificate, setCertificate);
+  const { t } = useTranslation('profile');
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="name"
-        label="Name*"
+        label={t('nameLabel')}
         required
         name="name"
         register={register}
-        placeholder="Certificate name"
+        placeholder={t('certificateNameText')}
         errors={errors['name']?.message ? [errors['name']?.message.toString()] : undefined}
       />
       <SearchDropdown
         required
         id="organization"
-        placeholder="Search for organization"
+        placeholder={t('searchOrganizationText')}
         cacheOptions
         value={orgVal}
         isAsync
@@ -63,7 +65,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
         defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
-        label="Issuing organization*"
+        label={t('issuingOrganizationLabel')}
         onChange={value => {
           onSelectOrg(value);
         }}
@@ -75,14 +77,14 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
         <SearchDropdown
           id="issue-month"
           value={issueMonth}
-          label="Issue date"
+          label={t('issueDateLabel')}
           options={months}
           hasDropdownIcon
           onChange={value => {
             onSelectIssueMonth(value);
           }}
           className="flex-1"
-          placeholder="Month"
+          placeholder={t('monthText')}
           isSearchable
           errors={errors['issueMonth']?.message ? [errors['issueMonth']?.message.toString()] : undefined}
         />
@@ -95,7 +97,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
             onSelectIssueYear(value);
           }}
           className="flex-1"
-          placeholder="Year"
+          placeholder={t('yearText')}
           isSearchable
           errors={errors['issueYear']?.message ? [errors['issueYear']?.message.toString()] : undefined}
         />
@@ -104,13 +106,13 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
         <SearchDropdown
           id="expiration-month"
           value={expMonth}
-          label="Expiration date"
+          label={t('expirationDateLabel')}
           options={months}
           hasDropdownIcon
           onChange={value => {
             onSelectExpMonth(value);
           }}
-          placeholder="Month"
+          placeholder={t('monthText')}
           className="flex-1"
           isSearchable
           errors={errors['expireMonth']?.message ? [errors['expireMonth']?.message.toString()] : undefined}
@@ -124,23 +126,23 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
             onSelectExpYear(value);
           }}
           className="flex-1"
-          placeholder="Year"
+          placeholder={t('yearText')}
           isSearchable
           errors={errors['expireYear']?.message ? [errors['expireYear']?.message.toString()] : undefined}
         />
       </div>
       <Input
         id="credential-id"
-        label="Credential ID"
+        label={t('credentialIdLabel')}
         name="credentialId"
         register={register}
-        placeholder="ID"
+        placeholder={t('idText')}
         errors={errors['credentialId']?.message ? [errors['credentialId']?.message.toString()] : undefined}
       />
       <Input
         id="credential-url"
         name="credentialUrl"
-        label="Credential URL"
+        label={t('credentialUrlLabel')}
         register={register}
         placeholder="www.example.com"
         errors={errors['credentialUrl']?.message ? [errors['credentialUrl']?.message.toString()] : undefined}
@@ -149,21 +151,21 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
       <Input
         id="description"
         name="description"
-        label="Description"
+        label={t('descriptionLabel')}
         multiline
         customHeight="130px"
         register={register}
-        placeholder="Enter a description..."
+        placeholder={t('enterDescriptionText')}
       />
     </div>
   );
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        {certificate ? 'Save' : 'Add certificate'}
+        {certificate ? t('saveText') : t('addCertificate')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {t('cancelText')}
       </Button>
       {certificate && (
         <Button
@@ -182,7 +184,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
     <Modal
       open={open}
       handleClose={handleClose}
-      title={certificate ? 'Edit certificate' : 'Add certificate'}
+      title={certificate ? t('editCertificateText') : t('addCertificate')}
       content={contentJSX}
       footer={modalFooterJsx}
     />

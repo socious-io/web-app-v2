@@ -1,4 +1,5 @@
 import { Skeleton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
 import { Pagination } from 'src/modules/general/components/Pagination';
@@ -7,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import css from './job-listing.module.scss';
 import { useJobListing } from './useJobListing';
 import { JobListingCard } from '../../components/JobListingCard';
-
 export const JobsListing = () => {
   const { t } = useTranslation('communities');
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export const JobsListing = () => {
     scrollIndex,
     handleChangeMobilePage,
   } = useJobListing();
-
+  const { t } = useTranslation('jobs');
   return (
     <div className={css.container}>
       {loading ? (
@@ -39,16 +39,16 @@ export const JobsListing = () => {
           {!!recommended && (
             <>
               <div className={css.header}>
-                <div className={css.title}>Recommended for you</div>
+                <div className={css.title}>{t('RecommendedJobsLabel')}</div>
                 <div className="flex flex-col md:flex-row items-start gap-4 md:justify-between">
-                  <div className={css.subTitle}>{t('page7_subsubheader')}</div>
+                  <div className={css.subTitle}>Based on your profile and search history</div>
                   <Button
                     variant="text"
                     color="primary"
                     customStyle="p-0 !text-sm !font-semibold !leading-5 !h-5"
                     onClick={() => navigate('./recommended')}
                   >
-                    See all recommendations
+                    {t('SeeAllRecommendationsButton')}
                   </Button>
                 </div>
               </div>
@@ -86,7 +86,7 @@ export const JobsListing = () => {
       {isMobile && jobsList.length < total && (
         <div className="mt-5 flex items-center justify-center">
           <Button color="primary" variant="text" onClick={handleChangeMobilePage}>
-            See more
+            {t('SeeMoreButton')}
           </Button>
         </div>
       )}

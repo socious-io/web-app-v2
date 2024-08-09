@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
 import { Badges, ImpactPoints, Organization, User } from 'src/core/api';
 import { Overview } from 'src/modules/userProfile/containers/impact/Overview';
 import { RootState } from 'src/store';
-
 export const useImpact = () => {
   const [hours, setHours] = useState<Array<{ type: 'paid' | 'volunteered'; hours: number }>>();
   const identity = useSelector<RootState, User | Organization | undefined>(state => {
@@ -31,9 +31,9 @@ export const useImpact = () => {
       setHours(totalHours);
     }
   }, [impactPointHistory]);
-
+  const { t } = useTranslation('impact');
   const tabs = [
-    { label: 'Overview', content: <Overview hours={hours ?? []} points={identity?.impact_points ?? 0} /> },
+    { label: t('tab.overview'), content: <Overview hours={hours ?? []} points={identity?.impact_points ?? 0} /> },
     // { label: 'Achievements', content: <div /> },
     // { label: 'History', content: <div /> },
   ];

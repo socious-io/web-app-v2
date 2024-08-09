@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, UserMeta } from 'src/core/api';
@@ -18,16 +19,16 @@ export const Impact = () => {
   const {
     data: { tabs },
   } = useImpact();
-
+  const { t } = useTranslation('impact');
   return (
     <div className={css.container}>
       <div className={css.header}>
         <BackLink
-          title="Back to my profile"
+          title={t('action.back_to_profile')}
           onBack={() => navigate(`/profile/users/${user.username}/view`)}
           customStyle="w-fit"
         />
-        <h1 className={css.title}>My impact</h1>
+        <h1 className={css.title}>{t('heading.my_impact')}</h1>
       </div>
 
       <div>

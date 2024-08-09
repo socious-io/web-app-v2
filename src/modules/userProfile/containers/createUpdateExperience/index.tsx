@@ -152,7 +152,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
       />
       <Checkbox
         id="currently-working"
-        label={'I am currently working in this role'}
+        label={t('currentlyWorkingText')}
         checked={currentlyWorking}
         onChange={e => handleCheckWorking(e.target.checked)}
         value
@@ -162,7 +162,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         <SearchDropdown
           id="start-month"
           value={startMonth}
-          label="Start date*"
+          label={t('startDateLabel')}
           options={months}
           hasDropdownIcon
           onChange={value => {
@@ -193,7 +193,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         <SearchDropdown
           id="end-month"
           value={endMonth}
-          label={`End date${!currentlyWorking ? '*' : ''}`}
+          label={t('endDateLabel') + (!currentlyWorking ? '*' : '')}
           options={months}
           hasDropdownIcon
           onChange={value => {
@@ -223,11 +223,11 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
       <Input
         id="description"
         name="description"
-        label="Description"
+        label={t('descriptionLabel')}
         multiline
         customHeight="130px"
         register={register}
-        placeholder="e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints."
+        placeholder={t('experience_description_details')}
       />
     </div>
   );
@@ -235,10 +235,10 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        {experience ? 'Save' : 'Add experience'}
+        {experience ? t('saveText') : t('addExperience')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {t('cancelText')}
       </Button>
       {experience && (
         <Button
@@ -247,7 +247,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           customStyle="ml-0 mr-auto text-Gray-light-mode-600 w-full md:w-fit"
           onClick={onDelete}
         >
-          Delete experience
+          {t('deleteExperienceText')}
         </Button>
       )}
     </div>

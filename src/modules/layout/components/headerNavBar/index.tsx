@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { Icon } from 'src/modules/general/components/Icon';
 import { IconDropDown } from 'src/modules/general/components/iconDropDown';
@@ -12,7 +13,6 @@ import { useHeaderNavBar } from './useHeaderNavBar';
 import { Notifications } from '../../containers/notifications';
 import NotifBellIcon from '../notifBellIcon';
 import { StatusDropDown } from '../statusDropDown';
-
 interface HeaderNavBarProps {
   setOpen: (val: boolean) => void;
   logout: () => void;
@@ -41,11 +41,11 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
     searchTerm,
     setSearchTerm,
   } = useHeaderNavBar();
-
+  const { t } = useTranslation('jobs');
   const path = useLocation().pathname;
   const pages = ['/jobs', '/jobs/saved', '/jobs/recommended'];
   const searchPlaceholder =
-    pages.includes(path) && userType === 'users' ? 'Search by title, skill or organization' : 'Search';
+    pages.includes(path) && userType === 'users' ? t('SearchJobsPlaceholder') : t('SearchButtonLabel');
 
   return (
     <div
