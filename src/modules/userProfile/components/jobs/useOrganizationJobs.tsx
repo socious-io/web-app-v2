@@ -21,9 +21,7 @@ export const useOrganizationJobs = () => {
     };
 
     const res = await jobs(payload);
-    if (isMobile && page > 1) {
-      setJobList([...jobList, ...res.items]);
-    } else setJobList([...res.items]);
+    setJobList(res.items);
     setTotal(res.total_count);
   };
 
