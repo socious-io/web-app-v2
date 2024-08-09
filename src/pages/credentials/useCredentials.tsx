@@ -5,8 +5,10 @@ import { CurrentIdentity, OrgMeta, UserMeta } from 'src/core/api';
 import { CredentialList } from 'src/modules/credentials/credentialsList';
 import { IssuedList } from 'src/modules/credentials/issuedList';
 import { RootState } from 'src/store';
+import { useTranslation } from 'react-i18next';
 
 export const useCredentials = () => {
+  const { t } = useTranslation('credentials');
   const { hash } = useLocation();
   const [hideVerifyBanner, setHideVerifyBanner] = useState(localStorage.getItem('hideVerifiedBanner') === 'true');
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
@@ -21,9 +23,9 @@ export const useCredentials = () => {
   const verificationStatus = currentIdentity?.verification_status;
 
   const tabs = [
-    { label: 'Issued', content: <IssuedList /> },
-    { label: 'Requested', content: <CredentialList /> },
-    { label: 'Archived', content: <></> },
+    { label: t('cred_issued'), content: <IssuedList /> },
+    { label: t('cred_requested'), content: <CredentialList /> },
+    { label: t('cred_archived'), content: <></> },
   ];
   const activeTabIndex = {
     '#issued': 0,

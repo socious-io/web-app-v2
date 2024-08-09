@@ -89,5 +89,6 @@
     "Payments_Ethereum": "Ethereum",
     "Payments_Polygon": "Polygon",
     "Payments_Crypto": "暗号",
-    "Payments_Huobi": "Huobi"
+    "Payments_Huobi": "Huobi",
+    "Payments_select_country": "国を検索"
 }

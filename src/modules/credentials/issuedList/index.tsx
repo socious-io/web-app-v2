@@ -9,11 +9,13 @@ import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 import Status from 'src/modules/general/components/Status';
+import { useTranslation } from 'react-i18next';
 
 import css from './issuedList.module.scss';
 import { useIssuedList } from './useIssuedList';
 
 export const IssuedList = () => {
+  const { t } = useTranslation('credentials');
   const {
     issuedList,
     totalPage,
@@ -32,7 +34,7 @@ export const IssuedList = () => {
     () => [
       {
         id: 'name',
-        header: 'Name',
+        header: t('cred_named'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const id = getValue();
@@ -59,7 +61,7 @@ export const IssuedList = () => {
       },
       {
         id: 'type',
-        header: 'Credential Type',
+        header: t('cred_types'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const item = issuedList.find(list => list.id === getValue()) || {};
@@ -68,7 +70,7 @@ export const IssuedList = () => {
       },
       {
         id: 'status',
-        header: 'Status',
+        header: t('cred_status'),
         accessorKey: 'status',
         cell: ({ getValue }: { getValue: Getter<string> }) => (
           <div className="flex items-center">
@@ -78,7 +80,7 @@ export const IssuedList = () => {
       },
       {
         id: 'date',
-        header: 'Issued Date',
+        header: t('cred_date_header'),
         accessorKey: 'created_at',
         cell: ({ getValue }: { getValue: Getter<string> }) => formatDate(getValue()),
       },
@@ -138,7 +140,7 @@ export const IssuedList = () => {
             disabled={!selectedCredential.id}
             onClick={() => onArchive(selectedCredential.id, selectedCredential.name === 'experience')}
           >
-            Archive
+            {t('cred_archive_button')}
           </Button>
         </div>
       )}

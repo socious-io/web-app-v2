@@ -6,11 +6,13 @@ import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import { useTranslation } from 'react-i18next';
 
 import { AddPayoutAccountProps } from './addPayoutAccount.types';
 import { useAddPayoutAccount } from './useAddPayoutAccount';
 
 export const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handleClose }) => {
+  const { t } = useTranslation('payments');
   const { onSelectCountry, errorMsg, openErrorModal, setOpenErrorModal, stripeLink } = useAddPayoutAccount();
   return (
     <>
@@ -23,14 +25,15 @@ export const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handle
       >
         <div className="flex flex-col p-4 md:p-6 gap-6">
           <div className="flex flex-col gap-1">
-            <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">Add a payout account</div>
+            <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">
+              {t('Payments_AddPayoutAccountText')}
+            </div>
             <div className="font-normal text-sm leading-5 text-Gray-light-mode-600">
-              Socious partners with Stripe for transactions payments. By selecting continue you will be directed to
-              Stripe’s website.
+              {t('Payments_StripePartnershipText')}
             </div>
           </div>
           <SearchDropdown
-            placeholder="Search a country"
+            placeholder={t('Payments_select_country')}
             icon="search-lg"
             options={COUNTRIES}
             isSearchable
@@ -47,10 +50,10 @@ export const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handle
               to={stripeLink}
               target="_blank"
             >
-              Continue
+              {t('Payments_Continue')}
             </Button>
             <Button variant="outlined" color="secondary" fullWidth onClick={handleClose}>
-              Cancel
+              {t('Payments_Cancel')}
             </Button>
           </div>
         </div>

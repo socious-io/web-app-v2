@@ -6,6 +6,7 @@ import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { EditInfoModal } from 'src/modules/userProfile/containers/editInfo';
 import variables from 'src/styles/constants/_exports.module.scss';
+import { useTranslation } from 'react-i18next';
 
 import DesktopHeader from './desktopHeader';
 import { MobileHeader } from './mobileHeader';
@@ -15,6 +16,7 @@ import { EditImageModal } from '../../containers/editImage';
 import { EditInfoOrgModal } from '../../containers/editInfoOrg';
 
 export const ProfileHeader = () => {
+  const { t } = useTranslation('referral');
   const {
     identity,
     identityType,
@@ -50,12 +52,12 @@ export const ProfileHeader = () => {
         <AlertMessage
           theme="warning"
           iconName="alert-circle"
-          title="Verify your identity"
+          title={t('Ref_verify_identity_text')}
           subtitle="In order to access referrals, you need to have a Atala PRISM DID and verify your identity."
         >
           <div className="flex">
             <button className="cursor-pointer border-none text-sm leading-5 font-semibold text-Warning-600">
-              Learn more
+              {t('Ref_learn_more_text')}
             </button>
             <button className="cursor-pointer border-none flex">
               <div className="text-sm leading-5 font-semibold text-Error-700 pl-3 pr-2">Verify now</div>

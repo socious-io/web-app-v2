@@ -8,6 +8,7 @@ import { Icon } from 'src/modules/general/components/Icon';
 import { JobsListing } from 'src/modules/Jobs/modules/JobListing';
 import { SavedJobListing } from 'src/modules/Jobs/modules/savedJobListing';
 import { RootState } from 'src/store';
+import { useTranslation } from 'react-i18next';
 
 import css from './list.module.scss';
 

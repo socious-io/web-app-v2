@@ -6,6 +6,7 @@ import { Dot } from 'src/modules/general/components/dot';
 import { Icon } from 'src/modules/general/components/Icon';
 import { ToggleButton } from 'src/modules/general/components/toggleButton';
 import variables from 'src/styles/constants/_exports.module.scss';
+import { useTranslation } from 'react-i18next';
 
 import css from './statusDropDown.module.scss';
 
@@ -19,6 +20,7 @@ interface StatusDropDownProps {
   handleHiring: () => void;
 }
 export const StatusDropDown: React.FC<StatusDropDownProps> = props => {
+  const { t } = useTranslation('navigation');
   const [open, setOpen] = useState(false);
   const { type, openToWork, openToVolunteer, hiring, handleHiring, handleOpenToVolunteer, handleOpenToWork } = props;
   const newRef = useRef(null);

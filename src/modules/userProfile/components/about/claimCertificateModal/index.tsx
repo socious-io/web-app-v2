@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
+import { useTranslation } from 'react-i18next';
 
 import css from './index.module.scss';
 
@@ -20,6 +21,7 @@ export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
   handleClose,
   handleClaimVC,
 }) => {
+  const { t } = useTranslation('referral');
   const footerJsx = (
     <div className="w-full p-6 block md:hidden">
       <Button variant="contained" color="primary" fullWidth onClick={handleClaimVC}>
@@ -44,9 +46,7 @@ export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
           <span className="text-sm leading-5 font-semibold text-Gray-light-mode-600">
             Socious uses blockchain technology to make credentials transparent and traceable.
           </span>
-          <span className="text-sm leading-5 font-normal text-Gray-light-mode-600">
-            We’ve partnered with Atala Prism through which your decentralized ID can receive verifiable credentials.
-          </span>
+          <span className="text-sm leading-5 font-normal text-Gray-light-mode-600">{t('Ref_verify_explanation')}</span>
         </div>
         <span className="text-base leading-6 font-semibold text-Gray-light-mode-900">How to get your certificate</span>
         <div className="flex flex-col">
@@ -61,7 +61,7 @@ export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
           <QRCodeSVG value={link} size={200} />
         </div>
         <div className="flex flex-col md:items-center gap-4">
-          <span className={css['text--light']}>Download the Socious Wallet app</span>
+          <span className={css['text--light']}>{t('Ref_download_wallet_app_text')}</span>
           <div className="flex items-center gap-4">
             <Link to="https://wallet.socious.io/ios" target="_blank">
               <img

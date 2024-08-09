@@ -1,11 +1,13 @@
 import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
 import { TopBanner } from 'src/modules/general/components/topBanner';
 import { TopBannerNotVerified } from 'src/modules/general/components/TopBannerNotVerified';
+import { useTranslation } from 'react-i18next';
 
 import css from './credentials.module.scss';
 import { useCredentials } from './useCredentials';
 
 export const Credentials = () => {
+  const { t } = useTranslation('credentials');
   const { tabs, verified, hideVerifyBanner, handleDismissVerified, type, activeTabIndex, verificationStatus } =
     useCredentials();
 
@@ -22,9 +24,7 @@ export const Credentials = () => {
           ) : (
             <TopBannerNotVerified
               supportingText={
-                type === 'users'
-                  ? 'In order to claim your certificates, please verify your identity.'
-                  : 'Get your organization verified to issue credentials.'
+                type === 'users' ? t('cred_verification_text') : 'Get your organization verified to issue credentials.'
               }
             />
           )
@@ -45,8 +45,8 @@ export const Credentials = () => {
         <div className={css.container}>
           <div className={css.header}>
             <div className={css.left}>
-              <h1 className={css.title}>Credentials</h1>
-              <h2 className={css.subtitle}>Here all credentials issued or requested</h2>
+              <h1 className={css.title}>{t('cred_header')}</h1>
+              <h2 className={css.subtitle}>{t('cred_info')}</h2>
             </div>
             {/* keep this for possible changes in near future */}
             {/* <div className={css.hidden}>

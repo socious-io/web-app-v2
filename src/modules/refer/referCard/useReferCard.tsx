@@ -4,8 +4,10 @@ import { useLoaderData } from 'react-router-dom';
 import { config } from 'src/config';
 import { CurrentIdentity, User, UserMeta } from 'src/core/api';
 import { RootState } from 'src/store';
+import { useTranslation } from 'react-i18next';
 
 export const useReferCard = (type: 'organization' | 'talent') => {
+  const { t } = useTranslation('referral');
   const user = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   )?.meta as UserMeta;
@@ -13,15 +15,15 @@ export const useReferCard = (type: 'organization' | 'talent') => {
   const [openSentModal, setOpenSentModal] = useState(false);
   const [emails, setEmails] = useState<string[]>([]);
 
-  const title = type === 'organization' ? 'Refer organizations' : 'Refer talent';
+  const title = type === 'organization' ? t('Ref_refer_organizations_text') : t('Ref_refer_talent_text');
   const url =
     type === 'organization'
       ? `${config.appBaseURL}referral/${user.username}/org`
       : `${config.appBaseURL}referral/${user.username}/talent`;
   const subtitle =
     type === 'organization'
-      ? 'Send your link to organizations looking for purpose-driven talent.'
-      : 'Send your link to talent looking for jobs and making a difference.';
+      ? t('Ref_refer_organizations_supporting_text')
+      : t('Ref_refer_talent_supporting_text');
 
   const handleCopy = () => {
     navigator.clipboard.writeText(url);

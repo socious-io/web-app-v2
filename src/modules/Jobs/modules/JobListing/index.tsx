@@ -3,11 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
 import { Pagination } from 'src/modules/general/components/Pagination';
+import { useTranslation } from 'react-i18next';
 
 import css from './job-listing.module.scss';
 import { useJobListing } from './useJobListing';
 import { JobListingCard } from '../../components/JobListingCard';
 export const JobsListing = () => {
+  const { t } = useTranslation('communities');
   const navigate = useNavigate();
   const {
     page,
@@ -39,7 +41,7 @@ export const JobsListing = () => {
               <div className={css.header}>
                 <div className={css.title}>{t('RecommendedJobsLabel')}</div>
                 <div className="flex flex-col md:flex-row items-start gap-4 md:justify-between">
-                  <div className={css.subTitle}>{t('RecommendedJobsHint')}</div>
+                  <div className={css.subTitle}>Based on your profile and search history</div>
                   <Button
                     variant="text"
                     color="primary"
