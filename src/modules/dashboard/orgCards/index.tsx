@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import { DashboardCard } from '../dashboardCard';
@@ -8,6 +9,7 @@ interface OrgCardsProps {
   profileUrl: string;
 }
 export const OrgCards: React.FC<OrgCardsProps> = () => {
+  const { t } = useTranslation('dashboard');
   return (
     <div className="w-full h-fit flex gap-4 overflow-x-scroll">
       {/* {!profileCompleted && (
@@ -23,18 +25,18 @@ export const OrgCards: React.FC<OrgCardsProps> = () => {
       )} */}
       <DashboardCard
         title="Find professionals"
-        description="Discover purpose-driven individuals aligned with your values"
+        description={t('profile.discover_purpose_driven')}
         bgColor={variables.color_dark_vanilla_100}
         redirectUrl="/"
-        buttonLabel="Explore"
+        buttonLabel={t('profile.explore')}
       />
 
       <DashboardCard
-        title="Create job"
+        title={t('profile.create_job')}
         description="Post job to connect with skilled professionals"
         bgColor={variables.color_appricot_100}
         redirectUrl="/jobs/create"
-        buttonLabel="Create job"
+        buttonLabel={t('profile.create_job')}
       />
     </div>
   );

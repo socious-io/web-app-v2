@@ -12,6 +12,9 @@ const resources = {
   jp: {
     translation: generateTranslationFile('jp'),
   },
+  spa: {
+    translation: generateTranslationFile('spa'),
+  },
 };
 
 i18next

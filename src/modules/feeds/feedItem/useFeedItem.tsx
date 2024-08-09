@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import {
   CurrentIdentity,
@@ -29,6 +30,7 @@ export const useFeedItem = (
   updateFeedsListRemove: (postId: string) => void,
   userIdentity: Identity,
 ) => {
+  const { t } = useTranslation('communities');
   const limit = 10;
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
@@ -266,7 +268,7 @@ export const useFeedItem = (
           },
           {
             iconName: 'flag-02',
-            title: 'Report this post',
+            title: t('report_post'),
             onClick: () => setActionsMenu({ name: 'report', open: true }),
           },
         ];

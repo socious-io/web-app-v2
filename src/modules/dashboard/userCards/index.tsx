@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import { DashboardCard } from '../dashboardCard';
@@ -8,34 +9,36 @@ interface UserCardsProps {
   profileUrl: string;
 }
 export const UserCards: React.FC<UserCardsProps> = ({ profileCompleted, profileUrl }) => {
+  const { t } = useTranslation('dashboard');
+
   return (
     <div className="w-full h-fit flex gap-4 overflow-x-scroll">
       {!profileCompleted ? (
         <DashboardCard
-          title="Complete your profile"
-          description="Get discovered by organizations"
+          title={t('profile.complete_your_profile')}
+          description={t('talent_dashboard.get_discovered')}
           bgColor={variables.color_wild_blue_100}
           redirectUrl={profileUrl}
-          buttonLabel="Edit profile"
-          supportingText1="Add a summary"
-          supportingText2="Add your experience"
+          buttonLabel={t('profile.edit')}
+          supportingText1={t('talent_dashboard.add_summary')}
+          supportingText2={t('talent_dashboard.add_experience')}
         />
       ) : (
         <DashboardCard
-          title="Refer and earn"
-          description="Help us make an impact and earn rewards by sharing Socious with  potential talent and organizations."
+          title={t('talent_dashboard.refer_earn')}
+          description={t('talent_dashboard.refer_earn_description')}
           bgColor={variables.color_wild_blue_100}
           redirectUrl="/referral"
-          buttonLabel="Refer now"
+          buttonLabel={t('talent_dashboard.refer_now')}
           buttonIcon="star-06"
         />
       )}
       <DashboardCard
-        title="Find jobs"
-        description="Explore opportunities aligned with your values"
+        title={t('talent_dashboard.find_jobs')}
+        description={t('talent_dashboard.explore_opportunities')}
         bgColor={variables.color_dark_vanilla_100}
         redirectUrl="/jobs"
-        buttonLabel="Find jobs"
+        buttonLabel={t('talent_dashboard.find_jobs')}
       />
 
       {/* <DashboardCard

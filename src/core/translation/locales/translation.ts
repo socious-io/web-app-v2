@@ -41,6 +41,7 @@ import searchbarJP from './jp/searchbar.json';
 import servicesJP from './jp/services.json';
 import settingsJP from './jp/settings.json';
 import workexperienceJP from './jp/workexperience.json';
+import profileSPA from './spa/profile.json';
 export function generateTranslationFile(theLang) {
   if (theLang == 'en') {
     return Object.assign(
@@ -94,5 +95,8 @@ export function generateTranslationFile(theLang) {
       settingsJP,
       workexperienceJP,
     );
+  }
+  if (theLang == 'spa') {
+    return Object.assign({}, profileSPA);
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { toRelativeTime } from 'src/core/relative-time';
 import { getIdentityMeta } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
@@ -24,6 +25,8 @@ const Comments: React.FC<CommentsProps> = ({
     data: { emojis, openEmojiPicker },
     operations: { setOpenEmojiPicker, onPreviewClick, onEmojiSelect },
   } = useComments(postId, list);
+
+  const { t } = useTranslation('communities');
 
   return (
     <>
@@ -68,7 +71,7 @@ const Comments: React.FC<CommentsProps> = ({
                   className="text-sm text-Gray-light-mode-600 cursor-pointer ml-1"
                   onClick={() => onReply({ replyTo: name || '', commentId: item.id })}
                 >
-                  Reply
+                  {t('reply_to_comment')}
                 </span>
               </div>
               {openEmojiPicker === item.id && (
@@ -90,7 +93,7 @@ const Comments: React.FC<CommentsProps> = ({
               ) : (
                 (replies[item.id] || item.replied) && (
                   <span className="see-more text-center" onClick={() => onShowReplies?.(item.id)}>
-                    Show replies
+                    {t('show_replies')}
                   </span>
                 )
               )}
@@ -100,7 +103,7 @@ const Comments: React.FC<CommentsProps> = ({
       })}
       {showSeeMoreComments && (
         <span className="see-more text-center" onClick={onSeeMoreCommentsClick}>
-          See more
+          {t('discover_see_more')}
         </span>
       )}
     </>

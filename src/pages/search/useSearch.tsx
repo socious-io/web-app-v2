@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'src/core/api';
@@ -38,6 +39,8 @@ export const useSearch = () => {
   const prevPage = useRef(0);
 
   const navigate = useNavigate();
+
+  const { t } = useTranslation('search');
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {

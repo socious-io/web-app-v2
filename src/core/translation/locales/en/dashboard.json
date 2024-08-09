@@ -5,7 +5,7 @@
   "page.dashboard.title": "Dashboard",
   "heading.organization_dashboard": "Organization dashboard",
   "organization_dashboard.status": "{user} is checking {org} dashboard",
-  "welcome_message_1": "👋 Welcome back, {org}",
+  "welcome_message_1": "👋 Welcome back,",
   "profile.complete_your_profile": "Complete your profile",
   "profile.add_culture": "Add your organization culture",
   "profile.add_social_media": "Add social media",
@@ -68,5 +68,6 @@
   "user.impact_points.hours_total": "{user.impact_points.hours_total}",
   "user.impact_points.donated_0": "{user.impact_points.donated_0}",
   "talent_dashboard.showcase_offerings": "Showcase your unique offerings and attract clients",
-  "talent_dashboard.create_service": "Create service"
+  "talent_dashboard.create_service": "Create service",
+  "hour_units": "hrs"
 }

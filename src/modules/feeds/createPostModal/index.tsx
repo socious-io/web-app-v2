@@ -1,5 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import CustomEmojiPicker from 'src/modules/general/components/EmojiPicker';
@@ -52,6 +53,8 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
     </div>
   );
 
+  const { t } = useTranslation('communities');
+
   const footerContentJSX = (
     <div className="w-full flex items-center justify-between px-4 py-5 md:p-6">
       <div className="flex items-center gap-4">
@@ -98,7 +101,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
           <SearchDropdown
             id="cause"
             name="cause"
-            placeholder="Select a cause"
+            placeholder={t('select_cause')}
             icon="search-lg"
             options={causesList}
             hasDropdownIcon={false}
@@ -112,7 +115,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
             value={titleVal}
             onChange={e => onTextChange('title', e.target.value)}
             className={`${css.textarea} text-xl font-semibold`}
-            placeholder="Add a title"
+            placeholder={t('add_title')}
             rows={1}
             onFocus={() => setFocusElements({ title: true, content: false })}
           />
@@ -121,7 +124,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ open, handleClose, on
             value={contentVal}
             onChange={e => onTextChange('content', e.target.value)}
             className={`${css.textarea} text-md`}
-            placeholder="Write your post"
+            placeholder={t('write_post')}
             rows={1}
             onFocus={() => setFocusElements({ title: false, content: true })}
           />

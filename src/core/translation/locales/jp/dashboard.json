@@ -5,7 +5,7 @@
   "page.dashboard.title": "ダッシュボード",
   "heading.organization_dashboard": "組織ダッシュボード",
   "organization_dashboard.status": "{user} が {org} ダッシュボードを確認しています",
-  "welcome_message_1": "👋 おかえりなさい, {org}",
+  "welcome_message_1": "👋 おかえりなさい",
   "profile.complete_your_profile": "プロフィールを完成させる",
   "profile.add_culture": "組織の文化を追加する",
   "profile.add_social_media": "ソーシャルメディアを追加する",
@@ -68,5 +68,6 @@
   "user.impact_points.hours_total": "{user.impact_points.hours_total}",
   "user.impact_points.donated_0": "{user.impact_points.donated_0}",
   "talent_dashboard.showcase_offerings": "あなたのユニークな提供を披露し、クライアントを引きつける",
-  "talent_dashboard.create_service": "サービスを作成する"
+  "talent_dashboard.create_service": "サービスを作成する",
+  "hour_units": "時間"
 }

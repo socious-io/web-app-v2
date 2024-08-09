@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
 import { CurrentIdentity, ImpactPoints, Organization, User, UserMeta } from 'src/core/api';
@@ -9,6 +10,7 @@ export const useDashboard = () => {
     profileData: User | Organization;
     impactPointHistory: ImpactPoints;
   };
+  const { t } = useTranslation('dashboard');
 
   const { name, type, usernameVal } = getIdentityMeta(profileData);
 

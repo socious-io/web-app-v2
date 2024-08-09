@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 
 export interface CardProps {
@@ -9,6 +10,7 @@ export interface CardProps {
 
 export const Card: React.FC<CardProps> = props => {
   const { cardText, number, iconName, unit } = props;
+  const { t } = useTranslation('dashboard');
   return (
     <div className="bg-white rounded-lg p-6 border border-solid  border-Gray-light-mode-200">
       <div className="flex flex-col items-start gap-4">

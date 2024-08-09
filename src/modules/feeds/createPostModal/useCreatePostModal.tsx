@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { createPost, CurrentIdentity, Media, SocialCauses, updatePost, uploadMedia } from 'src/core/api';
@@ -66,6 +67,8 @@ export const useCreatePostModal = (
   const contentVal = watch('content');
   const causeVal = watch('cause');
 
+  const { t } = useTranslation('communities');
+
   const initializeValues = () => {
     const initialVal: Form = {
       cause: data?.cause || null,
@@ -95,7 +98,7 @@ export const useCreatePostModal = (
     }
     const fileExtension = file?.name.split('.').pop()?.toLowerCase() || '';
     if (file.size > MAX_IMAGE_SIZE) {
-      setError('file', { message: 'This image too big, maximum file size is 10MB.' });
+      setError('file', { message: t('post_error_message_large_file') });
       setValue('file', null);
     } else if (!allowedExtensions.includes(fileExtension)) {
       setError('file', { message: 'Image should have jpg/jpeg/png/gif format' });
