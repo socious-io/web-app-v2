@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
 import { Pagination } from 'src/modules/general/components/Pagination';
-import { useTranslation } from 'react-i18next';
 
 import css from './job-listing.module.scss';
 import { useJobListing } from './useJobListing';
@@ -25,7 +24,6 @@ export const JobsListing = () => {
     scrollIndex,
     handleChangeMobilePage,
   } = useJobListing();
-  const { t } = useTranslation('jobs');
   return (
     <div className={css.container}>
       {loading ? (

@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from 'src/modules/general/components/Icon';
 import variables from 'src/styles/constants/_exports.module.scss';
-import { useTranslation } from 'react-i18next';
 
 import css from './pagination.module.scss';
 
