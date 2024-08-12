@@ -1,9 +1,10 @@
 import { Divider } from '@mui/material';
-import CultureAccordions from 'src/modules/Preferences/OrgPreferences/CultureAccordions';
 
+import CultureAccordions from './CultureAccordions';
 import css from './index.module.scss';
 import Toggles from './Toggles';
 import { useOrgPreferences } from './useOrgPreferences';
+import { ValueContainer } from './valueContainer';
 
 const OrgPreferences = () => {
   const { preferences } = useOrgPreferences();
@@ -17,6 +18,7 @@ const OrgPreferences = () => {
       <Divider />
       <Toggles preferences={preferences} />
       <CultureAccordions preferences={preferences} />
+      <ValueContainer preferences={preferences} />
     </>
   );
 };

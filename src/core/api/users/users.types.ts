@@ -199,12 +199,12 @@ export type PreferenceValue =
   | 'STRONG_HIGH'
   | 'MODERATE_HIGH'
   | 'NEUTRAL'
-  | 'MODERATE_LOW'
   | 'STRONG_LOW'
+  | 'MODERATE_LOW'
   | 'PREFER_NOT_SAY';
 
 export interface Preference {
   title: string;
   value: PreferenceValue;
-  description?: string;
+  description?: string | null;
 }
