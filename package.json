@@ -83,7 +83,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.9",
+    "@babel/core": "^7.25.2",
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.1.1",
     "@storybook/addon-a11y": "^7.6.7",
