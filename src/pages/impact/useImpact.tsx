@@ -18,7 +18,7 @@ export const useImpact = () => {
       totalHours = impactPointHistory.items
         .filter(item => !!item.offer)
         .map(item => {
-          if ((item?.offer?.currency && ['USD', 'YEN'].includes(item?.offer?.currency)) || item.offer.currency) {
+          if ((item.offer.currency && ['USD', 'YEN'].includes(item.offer.currency)) || item.offer.currency) {
             return { type: 'paid', hours: item.offer.total_hours };
           } else {
             return { type: 'volunteered', hours: item.offer.total_hours };

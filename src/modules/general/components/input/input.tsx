@@ -78,7 +78,7 @@ export const Input: React.FC<InputProps> = ({
           {postfix}
         </InputAdornment>
       )}
-      {postfixDropdown && postfixDropdown.onChange && (
+      {postfixDropdown && (
         <InputDropdown
           options={postfixDropdown.options}
           maxMenuHeight={100}

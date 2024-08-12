@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Chip } from 'src/modules/general/components/Chip';
+import { SearchItem } from 'src/modules/Search/containers/SearchModal/SearchModal.types';
 
 import css from './result-list.module.scss';
 import { ResultListProps } from './ResultList.types';
-import { SearchItem } from '../../containers/SearchModal/SearchModal.types';
 export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
   const selectedRef = useRef(null);
   const [selectedRowIndex] = useState(null);

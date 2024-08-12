@@ -1,5 +1,3 @@
-import { Job, Organization, User } from 'src/core/api';
-
 export interface SearchModalProps {
   onClose: () => void;
   open: boolean;
