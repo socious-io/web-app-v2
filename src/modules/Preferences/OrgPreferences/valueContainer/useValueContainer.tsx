@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { PREFERENCES_VALUES } from 'src/constants/PREFERENCES';
 import { Preference, updatePreferences } from 'src/core/api';
 import { ValueAccordionItem } from 'src/modules/Preferences/OrgPreferences/valueAccordion/valueAccordion.types';
 
-import { PREFERENCES_VALUES } from './constants';
 import { ValueGroup } from './valueContainer.types';
 
 export const useValueContainer = (preferences: Preference[]) => {
