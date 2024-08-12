@@ -57,12 +57,10 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
         required
         id="organization"
         placeholder="Search for organization"
-        cacheOptions
         value={orgVal}
         isAsync
         creatable
         loadOptions={searchOrgs}
-        defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
         label="Issuing organization*"
@@ -80,9 +78,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           label="Issue date"
           options={months}
           hasDropdownIcon
-          onChange={value => {
-            onSelectIssueMonth(value);
-          }}
+          onChange={onSelectIssueMonth}
           className="flex-1"
           placeholder="Month"
           isSearchable
@@ -95,9 +91,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           label="&nbsp;"
           options={years}
           hasDropdownIcon
-          onChange={value => {
-            onSelectIssueYear(value);
-          }}
+          onChange={onSelectIssueYear}
           className="flex-1"
           placeholder="Year"
           isSearchable
@@ -111,9 +105,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           label="Expiration date"
           options={months}
           hasDropdownIcon
-          onChange={value => {
-            onSelectExpMonth(value);
-          }}
+          onChange={onSelectExpMonth}
           placeholder="Month"
           className="flex-1"
           isSearchable
@@ -126,9 +118,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           label="&nbsp;"
           options={years}
           hasDropdownIcon
-          onChange={value => {
-            onSelectExpYear(value);
-          }}
+          onChange={onSelectExpYear}
           className="flex-1"
           placeholder="Year"
           isSearchable

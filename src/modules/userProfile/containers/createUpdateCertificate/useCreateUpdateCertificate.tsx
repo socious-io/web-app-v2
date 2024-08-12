@@ -170,8 +170,7 @@ export const useCreateUpdateCertificate = (
   }, [issueMonthVal, issueYearVal, expireMonthVal, expireYearVal]);
 
   const orgToOption = (orgList: Organization[], searchText: string) => {
-    let options = [];
-    options = orgList.map(s => ({
+    const options = orgList.map(s => ({
       value: s.id,
       label: s.name,
       icon: s.image ? (
@@ -206,19 +205,19 @@ export const useCreateUpdateCertificate = (
     setOrgVal({ value: newCompanyVal.value, label: newCompanyVal.label });
   };
 
-  const onSelectIssueMonth = (month: OptionType) => {
+  const onSelectIssueMonth = month => {
     setValue('issueMonth', month.value, { shouldValidate: true });
     setIssueMonth(month);
   };
-  const onSelectExpMonth = (month: OptionType) => {
+  const onSelectExpMonth = month => {
     setValue('expireMonth', month.value, { shouldValidate: true });
     setExpMonth(month);
   };
-  const onSelectIssueYear = (year: OptionType) => {
+  const onSelectIssueYear = year => {
     setValue('issueYear', year.value, { shouldValidate: true });
     setIssueYear(year);
   };
-  const onSelectExpYear = (year: OptionType) => {
+  const onSelectExpYear = year => {
     setValue('expireYear', year.value, { shouldValidate: true });
     setExpYear(year);
   };

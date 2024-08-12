@@ -5,10 +5,13 @@ export const UseUpdatelinks = (links: AdditionalRes[] | null, setLinks: (newVal:
     let linksObj = links?.length ? [...links] : [];
     const newLink = {
       id: links?.length.toString() || '0',
-      created_at: new Date(),
-      type: 'PORTFOLIO',
+      identity_id: '',
+      create_at: new Date(),
+      update_at: new Date(),
+      type: 'PORTFOLIO' as AdditionalTypes,
       title: '',
       url: '',
+      enabled: null,
     };
     linksObj = linksObj.concat(newLink);
     setLinks(linksObj);
@@ -25,7 +28,7 @@ export const UseUpdatelinks = (links: AdditionalRes[] | null, setLinks: (newVal:
   };
 
   const deleteLink = (id: string) => {
-    const linksObj = links?.filter(l => l.id !== id);
+    const linksObj = links?.filter(l => l.id !== id) || [];
     setLinks(linksObj);
   };
   return { addNewLink, editLink, deleteLink };

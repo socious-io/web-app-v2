@@ -13,10 +13,10 @@ export default {
 } as const;
 
 const steps: StepInfo[] = [
-  { title: 'Email verification', desc: 'Please check your email', icon: Mail01 },
-  { title: 'Choose a password', desc: 'Choose a secure password', icon: Passcode },
-  { title: 'Your details', desc: 'Enter your name', icon: User01 },
-  { title: 'Congartulations', desc: 'Start making an impact', icon: Star02 },
+  { title: 'Email verification', desc: 'Please check your email', icon: 'mail-01' },
+  { title: 'Choose a password', desc: 'Choose a secure password', icon: 'passcode' },
+  { title: 'Your details', desc: 'Enter your name', icon: 'user-01' },
+  { title: 'Congratulations', desc: 'Start making an impact', icon: 'stars-02' },
 ];
 
 const Template: StoryFn = args => {

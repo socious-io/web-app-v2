@@ -59,6 +59,7 @@ export interface ApplyReq {
   cv_name: string;
   share_contact_info: boolean;
   answers?: Answer[];
+  attachment?: string;
 }
 
 export interface OfferReq {

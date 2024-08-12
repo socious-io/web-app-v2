@@ -79,10 +79,10 @@ export const useCreateScreenQuestion = (
       return;
     }
     setOptionError('');
-    const q = { question: questionText, required: isRequired };
+    const q: QuestionReq = { question: questionText, required: !!isRequired };
     if (options.length) q.options = options;
-    if (defaultValue) editedQuestion(q);
-    else addQuestion(q);
+    if (defaultValue && editedQuestion) editedQuestion(q);
+    else if (addQuestion) addQuestion(q);
   };
   return {
     register,

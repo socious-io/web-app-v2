@@ -1,4 +1,4 @@
-import { LanguageCode } from 'src/core/api';
+import { LanguageCode, LanguageLevel } from 'src/core/api';
 
 export interface Error {
   type: string;
@@ -8,7 +8,7 @@ export interface Error {
 export interface LanguageProps {
   id: string;
   name: LanguageCode | undefined;
-  level: 'BASIC' | 'CONVERSANT' | 'PROFICIENT' | 'FLUENT' | 'NATIVE' | undefined;
+  level: LanguageLevel | undefined;
   isNew: boolean;
 }
 

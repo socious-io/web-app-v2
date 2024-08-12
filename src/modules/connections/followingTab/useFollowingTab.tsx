@@ -21,14 +21,16 @@ export const useFollowingTab = () => {
     try {
       const lst = [...followingList];
       const idx = lst.findIndex(item => item.id === id);
-      if (!lst[idx] || !lst[idx].identity_meta) return;
-      if (lst[idx].following) {
-        setName(lst[idx].identity_meta.name);
-        setFollowingId(lst[idx].id);
+      const item = lst.find(item => item.id === id);
+      if (!item || !item.identity_meta) return;
+      if (item.following) {
+        setName(item.identity_meta.name || '');
+        setFollowingId(item.id);
         setOpenAlert(true);
       } else {
-        await follow(lst[idx].identity_meta.id);
-        lst[idx].following = true;
+        await follow(item.identity_meta.id);
+        item.following = true;
+        lst[idx] = item;
         setFollowingList(lst);
       }
     } catch (e) {
@@ -41,8 +43,11 @@ export const useFollowingTab = () => {
     try {
       const lst = [...followingList];
       const idx = lst.findIndex(item => item.id === followingId);
-      if (lst[idx].identity_meta?.id) await unfollow(lst[idx].identity_meta.id);
-      lst[idx].following = false;
+      const item = lst.find(item => item.id === followingId);
+      if (!item || !item.identity_meta) return;
+      await unfollow(item.identity_meta.id);
+      item.following = false;
+      lst[idx] = item;
       setFollowingList(lst);
       setOpenAlert(false);
     } catch (e) {

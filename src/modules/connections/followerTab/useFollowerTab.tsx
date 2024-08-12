@@ -21,13 +21,16 @@ export const useFollowerTab = () => {
     try {
       const lst = [...followerList];
       const idx = lst.findIndex(item => item.id === id);
+      const item = lst.find(item => item.id === id);
+      if (!item || !item.identity_meta) return;
       if (lst[idx].mutual) {
-        if (lst[idx].identity_meta) setName(lst[idx].identity_meta.name);
-        setFollowerId(lst[idx].id);
+        setName(item.identity_meta.name);
+        setFollowerId(item.id);
         setOpenAlert(true);
       } else {
-        if (lst[idx].identity_meta) await follow(lst[idx].identity_meta.id);
-        lst[idx].mutual = true;
+        await follow(item.identity_meta.id);
+        item.mutual = true;
+        lst[idx] = item;
         setFollowerList(lst);
       }
     } catch (e) {
@@ -40,8 +43,11 @@ export const useFollowerTab = () => {
     try {
       const lst = [...followerList];
       const idx = lst.findIndex(item => item.id === followerId);
-      if (lst[idx].identity_meta) await unfollow(lst[idx].identity_meta.id);
-      lst[idx].mutual = false;
+      const item = lst.find(item => item.id === followerId);
+      if (!item || !item.identity_meta) return;
+      await unfollow(item.identity_meta.id);
+      item.mutual = false;
+      lst[idx] = item;
       setFollowerList(lst);
       setOpenAlert(false);
     } catch (e) {

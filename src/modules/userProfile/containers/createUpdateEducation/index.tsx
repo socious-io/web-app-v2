@@ -47,18 +47,14 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <SearchDropdown
         id="school"
-        cacheOptions
         value={schoolVal}
         isAsync
         creatable
         loadOptions={searchSchools}
-        defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
         label="School*"
-        onChange={value => {
-          onSelectSchool(value);
-        }}
+        onChange={onSelectSchool}
         placeholder="Search for school"
         noOptionsMessage={({ inputValue }) => inputValue}
         errors={errors['school']?.label?.message ? [errors['school']?.label.message.toString()] : undefined}
@@ -90,9 +86,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           label="Start date*"
           options={months}
           hasDropdownIcon
-          onChange={value => {
-            onSelectStartMonth(value);
-          }}
+          onChange={onSelectStartMonth}
           className="flex-1"
           placeholder="Month"
           isSearchable
@@ -107,9 +101,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           value={startYear}
           options={years}
           hasDropdownIcon
-          onChange={value => {
-            onSelectStartYear(value);
-          }}
+          onChange={onSelectStartYear}
           className="flex-1"
           placeholder="Year"
           isSearchable
@@ -125,9 +117,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           label="End date"
           options={months}
           hasDropdownIcon
-          onChange={value => {
-            onSelectEndMonth(value);
-          }}
+          onChange={onSelectEndMonth}
           placeholder="Month"
           className="flex-1"
           isSearchable
@@ -142,9 +132,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           value={endYear}
           options={years}
           hasDropdownIcon
-          onChange={value => {
-            onSelectEndYear(value);
-          }}
+          onChange={onSelectEndYear}
           className="flex-1"
           placeholder="Year"
           isSearchable

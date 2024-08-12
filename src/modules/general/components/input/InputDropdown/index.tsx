@@ -16,10 +16,10 @@ export const InputDropdown: React.FC<InputDropdownProps> = ({
   minWidth = '',
   ...props
 }) => {
-  const CustomControl = ({ hasValue, icon, children, ...props }) => {
+  const CustomControl = ({ children, ...props }) => {
     return (
       <components.Control {...props}>
-        {<Icon className={css.startIcon} name={icon} fontSize={20} color="#667085" />}
+        {icon && <Icon className={css.startIcon} name={icon} fontSize={20} color="#667085" />}
         {children}
       </components.Control>
     );
@@ -54,7 +54,7 @@ export const InputDropdown: React.FC<InputDropdownProps> = ({
       className={css.container}
       components={{
         Option: props => <CustomOption {...props} value={selectedVal} />,
-        Control: props => <CustomControl {...props} icon={icon} />,
+        Control: props => <CustomControl {...props} />,
         DropdownIndicator: () => (
           <div className={css.dropdown}>
             <Icon name="chevron-down" fontSize={20} color="#667085" />

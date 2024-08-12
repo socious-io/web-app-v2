@@ -6,7 +6,7 @@ import { InputDropdown } from 'src/modules/general/components/input/InputDropdow
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './input.module.scss';
-import { InputProps } from './input.types';
+import { InputProps, Option } from './input.types';
 
 export const Input: React.FC<InputProps> = ({
   id,
@@ -82,7 +82,7 @@ export const Input: React.FC<InputProps> = ({
         <InputDropdown
           options={postfixDropdown.options}
           maxMenuHeight={100}
-          onChange={option => postfixDropdown.onChange(option.value)}
+          onChange={option => postfixDropdown.onChange?.((option as Option).value)}
         />
       )}
     </>

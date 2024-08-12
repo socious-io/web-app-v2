@@ -46,22 +46,12 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   size = 'small',
   ...props
 }) => {
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === ' ') {
-      // Simulate a click event when Enter is pressed
-      event.preventDefault();
-      event.stopPropagation();
-      event.target.click();
-    }
-  };
-
   return (
     <div className={css.container}>
       <div className={css.checkboxContainer}>
         <MUICheckbox
           id={id}
           disableRipple
-          onKeyDown={handleKeyDown}
           color="default"
           checkedIcon={type === 'checkBox' ? <SquareIcon checked size={size} /> : <CircleIcon checked size={size} />}
           icon={

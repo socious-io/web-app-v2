@@ -86,31 +86,25 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
       />
       <SearchDropdown
         id="company"
-        cacheOptions
         value={companyVal}
         placeholder="Search for company"
         isAsync
         creatable
         loadOptions={searchCompanies}
-        defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
         label="Company*"
-        onChange={value => {
-          onSelectCompany(value);
-        }}
+        onChange={onSelectCompany}
         errors={errors['org']?.label?.message ? [errors['org']?.label?.message.toString()] : undefined}
         isDisabled={readonly}
       />
 
       <SearchDropdown
         id="city"
-        cacheOptions
         value={cityVal}
         placeholder="Search for city"
         isAsync
         loadOptions={searchCities}
-        defaultOptions
         icon="search-lg"
         hasDropdownIcon={false}
         label="Location"
@@ -139,9 +133,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         options={employmentTypes}
         icon="search-lg"
         hasDropdownIcon={false}
-        onChange={value => {
-          onSelectEmplymentType(value);
-        }}
+        onChange={onSelectEmplymentType}
         className="flex-1"
         isSearchable
         errors={
@@ -164,9 +156,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           label="Start date*"
           options={months}
           hasDropdownIcon
-          onChange={value => {
-            onSelectStartMonth(value);
-          }}
+          onChange={onSelectStartMonth}
           className="flex-1"
           placeholder="Month"
           isSearchable
@@ -179,9 +169,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           value={startYear}
           options={years}
           hasDropdownIcon
-          onChange={value => {
-            onSelectStartYear(value);
-          }}
+          onChange={onSelectStartYear}
           label="&nbsp;"
           className="flex-1"
           placeholder="Year"
@@ -197,9 +185,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           label={`End date${!currentlyWorking ? '*' : ''}`}
           options={months}
           hasDropdownIcon
-          onChange={value => {
-            onSelectEndMonth(value);
-          }}
+          onChange={onSelectEndMonth}
           placeholder="Month"
           className="flex-1"
           isSearchable
@@ -213,9 +199,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           value={endYear}
           options={years}
           hasDropdownIcon
-          onChange={value => {
-            onSelectEndYear(value);
-          }}
+          onChange={onSelectEndYear}
           className="flex-1"
           placeholder="Year"
           isSearchable

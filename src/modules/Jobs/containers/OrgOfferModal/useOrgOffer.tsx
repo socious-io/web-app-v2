@@ -14,16 +14,14 @@ import * as yup from 'yup';
 
 type Inputs = {
   title: string;
-  paymentType: ProjectPaymentType;
-  paymentTerm: ProjectPaymentSchemeType;
   hours: number;
-  total: number;
-  paymentMethod: PaymentService;
+  total?: number;
+  paymentMethod?: string;
   description: string;
 };
 const schema = yup.object().shape({
-  title: yup.string().min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
-  paymentType: yup.string(),
+  title: yup.string().required('Required').min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
+  paymentType: yup.string().required('Required'),
   paymentTerm: yup.string(),
   paymentMethod: yup.string(),
   hours: yup
@@ -47,7 +45,13 @@ const schema = yup.object().shape({
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
   const { chainId, isConnected } = Dapp.useWeb3();
-  const [tokens, setTokens] = useState([]);
+  const [tokens, setTokens] = useState<
+    {
+      value: string;
+      label: string;
+      address: string;
+    }[]
+  >([]);
   const [selected, setSelected] = useState<string>();
 
   const {
@@ -57,14 +61,16 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     setError,
     watch,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm({
+    mode: 'all',
     resolver: yupResolver(schema),
     defaultValues: {
-      paymentType: 'PAID',
+      paymentType: 'PAID' as ProjectPaymentType,
       paymentMethod: 'FIAT' as 'STRIPE',
       paymentTerm: 'FIXED',
     },
   });
+
   useEffect(() => {
     const getTokens = async () => {
       if (isConnected) {
@@ -83,13 +89,13 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     getTokens();
   }, [isConnected, chainId]);
 
-  const onSelectPaymentType = (paymentType: ProjectPaymentType) => {
+  const onSelectPaymentType = paymentType => {
     setValue('paymentType', paymentType);
   };
-  const onSelectPaymentTerm = (paymentType: ProjectPaymentSchemeType) => {
-    setValue('paymentTerm', paymentType);
+  const onSelectPaymentTerm = paymentTerm => {
+    setValue('paymentTerm', paymentTerm);
   };
-  const onSelectPaymentMethod = (paymentMethod: PaymentService) => {
+  const onSelectPaymentMethod = paymentMethod => {
     setValue('paymentMethod', paymentMethod);
   };
   const isCrypto = watch('paymentMethod') === 'CRYPTO';
@@ -102,7 +108,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
   };
 
   const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
-    let netTotal = total;
+    let netTotal = total || 0;
 
     if (isNonPaid) {
       netTotal = 0;
@@ -115,7 +121,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
       return;
     }
 
-    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && total < 22) {
+    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && netTotal < 22) {
       setError('total', {
         message: 'Offer amount on Fiat should have a minimum value of 22',
       });

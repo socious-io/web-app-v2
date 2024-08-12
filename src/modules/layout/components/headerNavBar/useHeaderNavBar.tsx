@@ -54,10 +54,11 @@ export const useHeaderNavBar = () => {
       setUserType(currentIdentity.type);
       setImage((currentIdentity.meta as UserMeta).avatar || (currentIdentity.meta as OrgMeta).image || '');
       if (currentIdentity.type === 'users') {
-        setOpenToWork((currentIdentity.meta as UserMeta).open_to_work);
-        setOpenToVolunteer((currentIdentity.meta as UserMeta).open_to_volunteer);
+        const userMeta = currentIdentity.meta as UserMeta;
+        setOpenToWork(!!userMeta.open_to_work);
+        setOpenToVolunteer(!!userMeta.open_to_volunteer);
       } else {
-        setHiring((currentIdentity.meta as OrgMeta).hiring);
+        setHiring(!!(currentIdentity.meta as OrgMeta).hiring);
       }
       getNotification();
     }

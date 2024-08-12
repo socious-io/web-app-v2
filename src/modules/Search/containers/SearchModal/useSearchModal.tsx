@@ -1,24 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { search } from 'src/core/api';
+import { Job, Organization, search, User, UserMeta, UsersRes } from 'src/core/api';
 import { RootState } from 'src/store';
 
-import { Item } from './SearchModal.types';
+import { SearchItem, TabValue } from './SearchModal.types';
 
 export const useSearchModal = (props: { open: boolean; onClose: () => void; setSearchText: (s: string) => void }) => {
-  const [list, setList] = useState<Array<Item>>([]);
+  const [list, setList] = useState<SearchItem[]>([]);
   const identityType = useSelector<RootState, 'users' | 'organizations'>(state => {
     return state.profile.type;
   });
+
   const tabs = [
-    ...(identityType === 'users' ? [{ label: 'Jobs', value: 'projects' }] : []),
-    { label: 'People', value: 'users' },
-    { label: 'Organizations', value: 'organizations' },
+    ...(identityType === 'users' ? [{ label: 'Jobs', value: 'projects' as TabValue }] : []),
+    { label: 'People', value: 'users' as TabValue },
+    { label: 'Organizations', value: 'organizations' as TabValue },
   ];
 
-  const [selectedTab, setSelectedTab] = useState('projects');
-  const [selectedItem, setSelectedItem] = useState<null | Item>();
+  const [selectedTab, setSelectedTab] = useState<TabValue>('projects');
+  const [selectedItem, setSelectedItem] = useState<null | SearchItem>();
   const [searchTerm, setSearchTerm] = useState('');
   const [showNoResult, setShowNoResult] = useState(false);
   const navigate = useNavigate();
@@ -50,42 +51,50 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     navigate(`/search?q=${searchTerm}&type=${selectedTab}&page=1`);
   };
 
-  const searchIntoList = (list: Array<Item>) => {
-    if (!list.length) return undefined;
+  const searchIntoList = (list: Array<User | Organization | Job>) => {
+    if (!list.length) return [];
     switch (selectedTab) {
       case 'users':
-        return list.map(item => ({
-          title: `${item.first_name} ${item.last_name}`,
-          username: item.username,
-          image: item.avatar?.url,
-          isAvailable: item.open_to_work,
-          id: item.id,
-          type: selectedTab,
-          bio: item.bio,
-          isVerified: false,
-        }));
+        return list.map(item => {
+          const userItem = item as User;
+          return {
+            title: `${userItem.first_name} ${userItem.last_name}`,
+            username: userItem.username,
+            image: userItem.avatar?.url || '',
+            isAvailable: userItem.open_to_work,
+            id: userItem.id,
+            type: selectedTab,
+            bio: userItem.bio || '',
+            isVerified: false,
+          };
+        });
       case 'organizations':
-        return list.map(item => ({
-          title: `${item.name}`,
-          username: item?.shortname,
-          image: item.image?.url,
-          isAvailable: item.hiring,
-          id: item.id,
-          type: selectedTab,
-          bio: item.bio,
-          isVerified: item.verified_impact,
-        }));
+        return list.map(item => {
+          const orgItem = item as Organization;
+          return {
+            title: `${orgItem.name}`,
+            username: orgItem?.shortname,
+            image: orgItem.image?.url || '',
+            isAvailable: orgItem.hiring,
+            id: orgItem.id,
+            type: selectedTab,
+            bio: orgItem.bio || '',
+            isVerified: orgItem.verified_impact,
+          };
+        });
       case 'projects':
-        return list.map(item => ({
-          title: `${item.title}`,
-          username: item.identity_meta.name,
-          image: item.identity_meta.image,
-          isAvailable: item.open_to_work,
-          id: item.id,
-          type: selectedTab,
-          bio: item.bio,
-          isVerified: false,
-        }));
+        return list.map(item => {
+          const projectItem = item as Job;
+          return {
+            title: `${projectItem.title}`,
+            username: projectItem.identity_meta.name,
+            image: projectItem.identity_meta.image || '',
+            id: projectItem.id,
+            type: selectedTab,
+            bio: '',
+            isVerified: false,
+          };
+        });
     }
   };
   return {
