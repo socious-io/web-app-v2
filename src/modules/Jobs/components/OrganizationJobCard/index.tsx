@@ -13,7 +13,7 @@ import css from './organization-job-card.module.scss';
 interface OrganizationJobCardProps {
   job: Job;
   page: number;
-  filter: 'all' | 'archived';
+  filter: 'all' | 'archived' | 'active';
 }
 export const OrganizationJobCard: React.FC<OrganizationJobCardProps> = ({ job, page, filter }) => {
   const [loading, setLoading] = useState(false);

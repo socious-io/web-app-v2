@@ -1,5 +1,5 @@
 import React from 'react';
-import { socialCausesToCategory } from 'src/core/adaptors';
+import { eventsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { Organization, User } from 'src/core/api';
 import { ChipList } from 'src/modules/general/components/chipList';
 import { Location } from 'src/modules/userProfile/components/location';
@@ -14,8 +14,9 @@ interface SearchResultProfileProps {
 }
 
 export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identity }) => {
-  const { website } = useSearchResultProfile(identity);
+  const { type, website } = useSearchResultProfile(identity);
   const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
+  const events = eventsToCategory((identity as User).events || []).map(item => item.label);
   return (
     <div className="flex flex-col rounded-xl border border-solid border-Gray-light-mode-200">
       <div onClick={e => e.stopPropagation()}>
@@ -25,13 +26,22 @@ export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identi
         {identity?.bio && (
           <span className="text-base font-normal leading-6 text-Gray-light-mode-700">{identity?.bio}</span>
         )}
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex flex-col gap-2">
           <ChipList
             items={socialCauses}
             bgColor={variables.color_primary_50}
             borderColor={variables.color_grey_200}
             fontColor={variables.color_primary_700}
           />
+
+          {type === 'users' && !!events.length && (
+            <ChipList
+              items={events}
+              bgColor={variables.color_purple_50}
+              borderColor={variables.color_purple_200}
+              fontColor={variables.color_purple_700}
+            />
+          )}
         </div>
         <div className="flex flex-col gap-3">
           {(identity as User).open_to_volunteer && (

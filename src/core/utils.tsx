@@ -1,4 +1,4 @@
-import { Credential, Identity, OrgMeta, Organization, Participant, User, UserMeta } from './api';
+import { Credential, Identity, OrgMeta, Organization, User, UserMeta } from './api';
 import { UserType } from './types';
 
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
@@ -151,4 +151,44 @@ export const navigateToProfile = (username: string, type: UserType) => {
     if (type === 'users') window.location.href = `/profile/users/${usernameVal}/view`;
     else window.location.href = `/profile/organizations/${usernameVal}/view`;
   }
+};
+
+export const checkSearchFilters = (
+  type: 'organizations' | 'projects' | 'users' | 'posts',
+  filter: Record<string, any>,
+) => {
+  let authorizedKeys: string[] = [];
+  switch (type) {
+    case 'organizations':
+      authorizedKeys = ['social_causes', 'city', 'country'];
+      break;
+    case 'projects':
+      authorizedKeys = [
+        'causes_tags',
+        'city',
+        'country',
+        'experience_level',
+        'job_category_id',
+        'payment_type',
+        'project_length',
+        'remote_preference',
+        'skills',
+      ];
+      break;
+    case 'users':
+      authorizedKeys = ['social_causes', 'city', 'country', 'skills', 'events'];
+      break;
+    case 'posts':
+      authorizedKeys = ['causes_tags', 'hashtags', 'identity_tags', 'identity_id'];
+      break;
+  }
+
+  const authorizedFilters: Record<string, any> = {};
+  Object.keys(filter).forEach(key => {
+    if (authorizedKeys.includes(key)) {
+      authorizedFilters[key] = filter[key];
+    }
+  });
+
+  return authorizedFilters;
 };

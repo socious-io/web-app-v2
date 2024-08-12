@@ -15,7 +15,7 @@ const schema = yup
   .shape({
     cause: yup.object().shape({
       label: yup.string().required('Required'),
-      value: yup.string(),
+      value: yup.string().required(),
     }),
     content: yup.string().required('Content is required'),
     file: yup
@@ -68,7 +68,7 @@ export const useCreatePostModal = (
 
   const initializeValues = () => {
     const initialVal: Form = {
-      cause: data?.cause,
+      cause: data?.cause || { label: '', value: '' },
       content: data?.content || '',
       file: data?.file?.id || '',
       title: data?.title || '',

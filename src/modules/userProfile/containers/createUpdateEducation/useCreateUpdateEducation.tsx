@@ -75,12 +75,13 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
 
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
-    const start = currentYear - 40;
+    const start = 1970;
     const options: OptionType[] = [];
-    for (let i = start; i <= currentYear; i++) {
+    for (let i = currentYear; i >= start; i--) {
       const year = i.toString();
       options.push({ value: year, label: year });
     }
+
     setYears(options);
   };
 
@@ -102,6 +103,7 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
         value: endDate ? endDate.getMonth().toString() : '',
       },
       endYear: { label: endDate?.getFullYear().toString() || '', value: endDate?.getFullYear().toString() || '' },
+
       grade: education?.grade || '',
       description: education?.description || '',
     };
@@ -138,7 +140,9 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
     if (!startYear?.label) return;
     const start = new Date(Number(startYear?.label), Number(startMonth?.value || 0), 2);
     const end = endYear?.label ? new Date(Number(endYear?.label), Number(endMonth?.value || 0), 2) : undefined;
+    const current = new Date();
     if (end && end < start) return 'Start date cannot be later than end date';
+    if ((end && end > current) || start > current) return 'Selected date cannot be later than current date';
     return;
   };
 

@@ -22,6 +22,7 @@ export const schema = yup
 
 export const useEmailForm = () => {
   const navigate = useNavigate();
+  const eventName = localStorage.getItem('event_name') || '';
 
   const {
     register,
@@ -48,7 +49,7 @@ export const useEmailForm = () => {
   };
 
   const onBack = () => {
-    navigate('/sign-in');
+    navigate(`/sign-in${eventName && `?event_name=${eventName}`}`);
   };
 
   return { register, handleSubmit, errors, isValid, navigateToOtp, onBack, getValues };

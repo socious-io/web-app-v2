@@ -118,8 +118,9 @@ export const useVerifyExperience = (
 
   const getStartDayOptions = () => {
     const startYearValue = getValues().startYear?.value;
-    const startMonthValue = Number(getValues().startMonth?.value) + 1;
-    const getDaysInMonthStart = startMonthValue && getDaysInMonth(Number(startYearValue), startMonthValue);
+    const startMonthValue = Number(getValues().startMonth?.value);
+    const getDaysInMonthStart =
+      startMonthValue !== undefined && getDaysInMonth(startMonthValue, Number(startYearValue));
     const options = getDaysInMonthStart
       ? Array.from({ length: getDaysInMonthStart }, (_, index) => ({
           label: `${index + 1}`,
@@ -131,8 +132,8 @@ export const useVerifyExperience = (
 
   const getEndDayOptions = () => {
     const endYearValue = getValues().endYear?.value;
-    const endMonthValue = Number(getValues().endMonth?.value) + 1;
-    const getDaysInMonthEnd = endMonthValue && getDaysInMonth(Number(endYearValue), endMonthValue);
+    const endMonthValue = Number(getValues().endMonth?.value);
+    const getDaysInMonthEnd = endMonthValue !== undefined && getDaysInMonth(endMonthValue, Number(endYearValue));
     const options = getDaysInMonthEnd
       ? Array.from({ length: getDaysInMonthEnd }, (_, index) => ({
           label: `${index + 1}`,
@@ -144,7 +145,7 @@ export const useVerifyExperience = (
 
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
-    const start = currentYear - 30;
+    const start = 1970;
     const options: OptionType[] = [];
     for (let i = currentYear; i >= start; i--) {
       const year = i.toString();
@@ -236,7 +237,9 @@ export const useVerifyExperience = (
     if (!startYear?.label || !endYear?.label) return;
     const start = new Date(Number(startYear?.label), Number(startMonth?.value || 0), Number(startDay?.value || 1));
     const end = new Date(Number(endYear?.label), Number(endMonth?.value || 0), Number(endDay?.value || 1));
+    const current = new Date();
     if (end < start) return 'Start date cannot be later than end date';
+    if (end > current || start > current) return 'Selected date cannot be later than current date';
     return;
   };
 

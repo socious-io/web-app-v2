@@ -155,7 +155,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
 
   const getYearOptions = () => {
     const currentYear = new Date().getFullYear();
-    const start = currentYear - 30;
+    const start = 1970;
     const options: OptionType[] = [];
     for (let i = currentYear; i >= start; i--) {
       const year = i.toString();
@@ -225,6 +225,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   const currentlyWorking = watch('currentlyWorking');
 
   const validateDates = () => {
+    const current = new Date();
     if (!currentlyWorking && !endYear?.label) {
       return 'Select currently working or enter end year';
     }
@@ -236,6 +237,7 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
       end = new Date(Number(endYear?.label), Number(endMonth?.value || 0), 2);
     }
     if (end < start) return 'Start date cannot be later than end date';
+    if (end > current || start > current) return 'Selected date cannot be later than current date';
     return;
   };
 

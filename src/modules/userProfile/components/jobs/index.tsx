@@ -16,7 +16,7 @@ export const OrganizationJobs = () => {
       <div className={css.jobListing}>
         {jobs.map(job => (
           <div key={job.id} className={css.jobItem}>
-            <JobListingCard job={job} />
+            <JobListingCard job={job} hasDescription={false} />
           </div>
         ))}
       </div>

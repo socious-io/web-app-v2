@@ -1,0 +1,10 @@
+.bg {
+    @apply h-full flex-1 bg-no-repeat bg-cover hidden md:block;
+    background-image: url('/images/tech-submit.png');
+
+    &__shadow {
+        @apply h-full flex flex-col items-center justify-center text-Base-White text-center;
+        background: linear-gradient(180deg, rgba(0, 10, 32, 0.5) 0%, #310030 100%);
+        padding: 0 2.5rem;
+    }
+}

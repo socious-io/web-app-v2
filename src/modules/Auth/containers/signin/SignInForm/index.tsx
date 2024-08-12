@@ -10,8 +10,12 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import { useSignInForm } from './useSignInForm';
 // import { LinkedIn } from 'public/icons/nowruz/linkedin';
 
-export const SignInForm = () => {
-  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried } = useSignInForm();
+interface SignInFormProps {
+  event: { id: string; name: string };
+}
+
+export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
+  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried } = useSignInForm(event.id);
   const navigate = useNavigate();
 
   return (
@@ -41,7 +45,12 @@ export const SignInForm = () => {
         <div className="flex flex-row">
           <Checkbox id="Keep_me_logged_in" label={'Keep me logged in'} value={keepLoggedIn} onChange={handleChange} />
           <div className="w-fit mr-0 ml-auto flex items-center">
-            <Link href="/forget-password/email" label="Forgot password" customStyle="!font-semibold" />
+            <Link
+              href="/forget-password/email"
+              label="Forgot password"
+              customStyle="!font-semibold"
+              onClick={() => event.name && localStorage.setItem('event_name', event.name)}
+            />
           </div>
         </div>
 
@@ -54,7 +63,7 @@ export const SignInForm = () => {
             variant="outlined"
             onClick={() => {
               tried();
-              navigate('/oauth/google');
+              navigate(`/oauth/google${event.name && `?event_name=${event.name}`}`);
             }}
             style={{ display: 'flex', gap: '12px' }}
           >
@@ -73,7 +82,12 @@ export const SignInForm = () => {
         <Typography variant="caption" color={variables.color_grey_600}>
           Don&apos;t have an account?
         </Typography>
-        <Link label=" Sign up" href="/intro" customStyle="!font-semibold" />
+        <Link
+          label=" Sign up"
+          href={event.name ? `/sign-up/user/email?event_name=${event.name}` : '/intro'}
+          customStyle="!font-semibold"
+          onClick={() => event.name && localStorage.setItem('registerFor', 'user')}
+        />
       </div>
     </>
   );

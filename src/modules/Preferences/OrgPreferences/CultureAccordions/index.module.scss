@@ -1,0 +1,21 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.section {
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+        font-weight: 600;
+        color: $color-grey-900;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+
+    &__subtitle {
+        font-weight: 400;
+        color: $color-grey-600;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+}

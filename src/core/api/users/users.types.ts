@@ -5,7 +5,7 @@ import { Category, Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
-import { Identity } from '../site/site.types';
+import { Identity, Event } from '../site/site.types';
 import { LanguageCode, SDG, PaginateRes, ConnectStatus, ProjectType, LanguageLevel } from '../types';
 
 // -------------------- Requests ----------------------
@@ -126,6 +126,7 @@ export interface User {
   certificates?: AdditionalRes[];
   identity_verified: boolean;
   name?: string;
+  events?: Event[] | null;
 }
 
 export interface UserProfile extends User {
@@ -190,4 +191,20 @@ export interface Credential {
   connection_url?: string;
   created_at: Date;
   updated_at: Date;
+}
+
+export type PreferenceValue =
+  | 'ON'
+  | 'OFF'
+  | 'STRONG_HIGH'
+  | 'MODERATE_HIGH'
+  | 'NEUTRAL'
+  | 'MODERATE_LOW'
+  | 'STRONG_LOW'
+  | 'PREFER_NOT_SAY';
+
+export interface Preference {
+  title: string;
+  value: PreferenceValue;
+  description?: string;
 }

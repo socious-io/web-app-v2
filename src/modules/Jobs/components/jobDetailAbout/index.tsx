@@ -50,7 +50,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
   const onClose = async () => {
     const response = await closeJob(jobDetail.id);
     if (response) {
-      navigate('..');
+      navigate(-1);
     }
   };
 

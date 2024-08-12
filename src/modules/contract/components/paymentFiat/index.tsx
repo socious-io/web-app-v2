@@ -61,14 +61,16 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
         <Icon name="plus" fontSize={20} className="text-Brand-700" />
         Add a new card
       </Button>
-      <PaymentSummary
-        currency={offer?.currency?.toString() || ''}
-        amount={offer?.amount || 0}
-        sociousFee={offer?.fee || 0}
-        stripeFee={offer?.stripe_fee || 0}
-        total={offer?.total || 0}
-        hasFeeDiscount={!!offer?.org_referrer_wallet}
-      />
+      {offer && offer?.currency && (
+        <PaymentSummary
+          currency={offer.currency.toString()}
+          amount={offer.amount || 0}
+          sociousFee={offer.fee || 0}
+          stripeFee={offer.stripe_fee || 0}
+          total={offer.total || 0}
+          hasFeeDiscount={!!offer.org_referrer_wallet}
+        />
+      )}
     </div>
   );
   return (

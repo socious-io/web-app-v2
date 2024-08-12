@@ -38,14 +38,14 @@ const CustomOption = (props: any) => {
   );
 };
 const CustomSingleValue = (props: any) => {
-  const { children, data } = props;
+  const { children, data, controlClassName } = props;
   const labelValue = handleMultiValueAsync(children).isObject ? handleMultiValueAsync(children).label : children;
   const descriptionValue = handleMultiValueAsync(children).isObject
     ? handleMultiValueAsync(children).description
     : data.description;
   return (
     <components.SingleValue {...props}>
-      <div className="flex items-center">
+      <div className={`flex items-center ${controlClassName}`}>
         <span className="overflow-hidden whitespace-no-wrap overflow-ellipsis">{labelValue}</span>
         {descriptionValue && <div className={css.description}>{descriptionValue}</div>}
       </div>
@@ -83,6 +83,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   errors,
   id,
   border = true,
+  controlClassName,
   ...props
 }) => {
   const selectedVal = props.value || '';
@@ -120,7 +121,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
                   <Icon name="chevron-down" fontSize={20} color="#667085" />
                 </div>
               ),
-            SingleValue: CustomSingleValue,
+            SingleValue: props => <CustomSingleValue controlClassName={controlClassName} {...props} />,
             ClearIndicator: CustomClearIndicator,
           }}
           styles={{

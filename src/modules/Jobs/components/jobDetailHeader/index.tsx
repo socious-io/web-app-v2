@@ -41,10 +41,10 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
     if (localStorage.getItem('navigateToSearch') === 'true') {
       const searchTerm = localStorage.getItem('searchTerm');
       const type = localStorage.getItem('type');
-      return `/search?q=${searchTerm}&type=${type}&page=${pageNumber}`;
+      return `/search?q=${searchTerm}&type=${type}&page=${pageNumber}&scrollIndex=${scrollIndex}`;
     }
     if (source === 'applied') {
-      return `/jobs/applied?page=${pageNumber}`;
+      return `/jobs/applied?page=${pageNumber}&scrollIndex=${scrollIndex}`;
     }
     if (source === 'recommended') {
       return '/jobs/recommended';

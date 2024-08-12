@@ -2,6 +2,7 @@ import { Divider } from '@mui/material';
 import { KYCModal } from 'src/modules/refer/KYC';
 
 import { Certificates } from './certificate/certificates';
+import Culture from './Culture';
 import { Educations } from './education/educations';
 import { Experiences } from './experience/experience';
 import { Recommendation } from './recommendaion/recommendation';
@@ -10,8 +11,9 @@ import { Summary } from './summary';
 import { useAbout } from './useAbout';
 import { MainInfo } from '../mainInfo';
 
-export const About = () => {
-  const { connectUrl, handleOpenVerifyModal, identityType, openVerifyModal, setOpenVerifyModal } = useAbout();
+export const About = ({ onOpenPreferences }) => {
+  const { connectUrl, culturePreferences, handleOpenVerifyModal, identityType, openVerifyModal, setOpenVerifyModal } =
+    useAbout();
 
   return (
     <div className="flex flex-col gap-8">
@@ -20,6 +22,12 @@ export const About = () => {
       </div>
       <Summary />
       <Divider />
+      {identityType === 'organizations' && (
+        <>
+          <Culture items={culturePreferences} onOpenPreferences={onOpenPreferences} />
+          <Divider />
+        </>
+      )}
       {identityType === 'users' && (
         <>
           <Skills />

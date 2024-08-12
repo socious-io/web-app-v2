@@ -66,7 +66,7 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
         label="Dispute category*"
         options={DISPUTE_CATEGORY}
         onChange={onSelectCategory}
-        value={category?.value ? category : null}
+        value={category}
         errors={errors['category']?.label?.message ? [errors['category']?.label?.message.toString()] : undefined}
       />
       <Input

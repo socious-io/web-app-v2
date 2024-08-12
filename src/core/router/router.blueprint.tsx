@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, RouteObject, createBrowserRouter, useRouteError, useSearchParams } from 'react-router-dom';
+import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
 import {
   jobs,
   chats,
@@ -26,11 +26,13 @@ import {
   disputes,
   invitations,
 } from 'src/core/api';
-import { search as searchReq } from 'src/core/api/site/site.api';
+import { events, search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/modules/layout';
 import FallBack from 'src/pages/fallback/fallback';
 import store, { RootState } from 'src/store';
 import { currentIdentities } from 'src/store/thunks/identity.thunks';
+
+import { checkSearchFilters } from '../utils';
 
 export const blueprint: RouteObject[] = [
   { path: '/', element: <DefaultRoute /> },
@@ -113,6 +115,7 @@ export const blueprint: RouteObject[] = [
                           limit: 2,
                           identity_id: organization.id,
                         });
+
                         return {
                           organization,
                           orgJobs,
@@ -279,7 +282,7 @@ export const blueprint: RouteObject[] = [
                 path: 'saved',
                 loader: async ({ request }) => {
                   const page = Number(new URL(request.url).searchParams.get('page') || 1);
-                  const data = await markedJobs({ page, 'filter.marked_as': 'SAVE', limit: 5 });
+                  const data = await markedJobs({ page, 'filter.marked_as': 'SAVE', limit: 10 });
                   return data;
                 },
                 async lazy() {
@@ -440,7 +443,7 @@ export const blueprint: RouteObject[] = [
                   localStorage.setItem('searchTerm', q || '');
                   localStorage.setItem('navigateToSearch', 'true');
                   const body = {
-                    filter: JSON.parse(localStorage.getItem('filter') || '{}'),
+                    filter: checkSearchFilters(type || 'projects', JSON.parse(localStorage.getItem('filter') || '{}')),
                     type,
                     q,
                   };
@@ -583,6 +586,15 @@ export const blueprint: RouteObject[] = [
         children: [
           {
             path: 'email',
+            loader: async ({ request }) => {
+              const url = new URL(request.url);
+              const eventName = url.searchParams.get('event_name');
+              if (eventName) {
+                return await events({ limit: 10, page: 1 });
+              } else {
+                return null;
+              }
+            },
             async lazy() {
               const { Email } = await import('src/pages/sign-up/Email');
               return {
@@ -818,6 +830,15 @@ export const blueprint: RouteObject[] = [
   },
   {
     path: '/sign-in',
+    loader: async ({ request }) => {
+      const url = new URL(request.url);
+      const eventName = url.searchParams.get('event_name');
+      if (eventName) {
+        return await events({ limit: 10, page: 1 });
+      } else {
+        return null;
+      }
+    },
     async lazy() {
       const { SignIn } = await import('src/pages/sign-in');
       return {
@@ -830,6 +851,15 @@ export const blueprint: RouteObject[] = [
     children: [
       {
         path: 'google',
+        loader: async ({ request }) => {
+          const url = new URL(request.url);
+          const eventName = url.searchParams.get('event_name');
+          if (eventName) {
+            return await events({ limit: 10, page: 1 });
+          } else {
+            return null;
+          }
+        },
         async lazy() {
           const { GoogleOauth2 } = await import('src/pages/oauth/google');
           return {

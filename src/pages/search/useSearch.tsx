@@ -10,6 +10,7 @@ import { SearchResultProfile } from 'src/modules/Search/components/searchResultP
 
 export type FilterReq = {
   causes_tags?: Array<string>;
+  social_causes?: Array<string>;
   skills?: Array<string>;
   country?: Array<keyof typeof COUNTRIES_DICT>;
   city?: Array<string>;
@@ -19,6 +20,7 @@ export type FilterReq = {
   experience_level: Array<number>;
   payment_type?: string | number;
   location?: { value: number; label: string; countryCode: string };
+  events?: Array<string>;
 };
 
 export const useSearch = () => {
@@ -27,11 +29,17 @@ export const useSearch = () => {
   const type = searchParams.get('type');
   const q = searchParams.get('q');
   const pageNumber = Number(searchParams.get('page') || 1);
+  const scrollIndx = Number(searchParams.get('scrollIndex') || -1);
 
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
   const [searchResult, setSearchResult] = useState({} as JobsRes | UsersRes | OrganizationsRes);
   const [page, setPage] = useState(pageNumber);
+  const [scrollIndex, setscrollIndex] = useState(scrollIndx);
+  const scrollRef = useRef<null | HTMLDivElement>(null);
+
+  const executeScroll = () => scrollRef.current && scrollRef.current.scrollIntoView();
+
   const [sliderFilterOpen, setSliderFilterOpen] = useState(false);
   const filter = JSON.parse(localStorage.getItem('filter') || '{}') as FilterReq;
   const [countryName, setCountryName] = useState<string | undefined>('');
@@ -108,10 +116,13 @@ export const useSearch = () => {
   };
 
   const readableType = useMemo(() => {
-    if (type === 'projects') return 'jobs';
-    if (type === 'users') return 'people';
-    return 'organization';
-  }, [type]);
+    if (type === 'projects') return { title: 'jobs', type: 'jobs' };
+    if (type === 'users') {
+      if (filter.events?.length) return { title: 'event attendees', type: 'people' };
+      return { title: 'people', type: 'people' };
+    }
+    return { title: 'organizations', type: 'organizations' };
+  }, [type, filter]);
 
   const isUser = (item: Organization | User): item is User => {
     return (item as User).username !== undefined;
@@ -128,7 +139,7 @@ export const useSearch = () => {
   };
 
   const card = useCallback(
-    (item: Job | Organization | User) => {
+    (item: Job | Organization | User, index: number) => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
           <div onClick={() => handleNavigate(item as Organization | User)} className="cursor-pointer">
@@ -136,7 +147,7 @@ export const useSearch = () => {
           </div>
         );
       }
-      return <JobListingCard job={item as Job} page={page} />;
+      return <JobListingCard job={item as Job} page={page} scrollIndex={index} />;
     },
     [type, page],
   );
@@ -150,12 +161,18 @@ export const useSearch = () => {
 
   useEffect(() => {
     setSearchResult(data);
+    setPage(data.page);
     setCountryName('');
   }, [data]);
+
+  useEffect(() => {
+    executeScroll();
+  }, [searchResult]);
 
   const handleChangeMobilePage = () => {
     prevPage.current = page;
     setPage(page + 1);
+    setscrollIndex(page * PER_PAGE - 1);
   };
 
   return {
@@ -169,6 +186,8 @@ export const useSearch = () => {
       sliderFilterOpen,
       filter,
       countryName,
+      scrollRef,
+      scrollIndex,
     },
     operations: {
       setPage,

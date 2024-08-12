@@ -162,6 +162,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           isSearchable
           errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="start-year"
@@ -174,6 +175,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           placeholder="Year"
           isSearchable
           isDisabled={readonly}
+          maxMenuHeight={200}
         />
       </div>
       <div className="flex gap-4 items-start">
@@ -189,6 +191,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           isSearchable
           errors={endDateErrors ? [endDateErrors.toString()] : undefined}
           isDisabled={currentlyWorking || readonly}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="end-year"
@@ -201,6 +204,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           placeholder="Year"
           isSearchable
           isDisabled={currentlyWorking || readonly}
+          maxMenuHeight={200}
         />
       </div>
       <Input

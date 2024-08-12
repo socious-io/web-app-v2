@@ -70,6 +70,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           placeholder="Month"
           isSearchable
           errors={startDateErrors ? [startDateErrors.toString()] : undefined}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="start-day"
@@ -82,6 +83,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           label="&nbsp;"
           className="flex-1"
           placeholder="Day"
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="start-year"
@@ -95,6 +97,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
+          maxMenuHeight={200}
         />
       </div>
       <div className="flex gap-4 items-start">
@@ -111,6 +114,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           className="flex-1"
           isSearchable
           errors={endDateErrors ? [endDateErrors.toString()] : undefined}
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="end-day"
@@ -123,6 +127,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           }}
           placeholder="Day"
           className="flex-1"
+          maxMenuHeight={200}
         />
         <SearchDropdown
           id="end-year"
@@ -136,6 +141,7 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           className="flex-1"
           placeholder="Year"
           isSearchable
+          maxMenuHeight={200}
         />
       </div>
       <div className="flex flex-col">

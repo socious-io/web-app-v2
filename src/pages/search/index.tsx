@@ -10,7 +10,19 @@ import css from './list.module.scss';
 
 export const Search = () => {
   const {
-    data: { page, searchResult, total, PER_PAGE, readableType, q, sliderFilterOpen, filter, countryName },
+    data: {
+      page,
+      searchResult,
+      total,
+      PER_PAGE,
+      readableType,
+      q,
+      sliderFilterOpen,
+      filter,
+      countryName,
+      scrollRef,
+      scrollIndex,
+    },
     operations: { setPage, card, handleCloseOrApplyFilter, onApply, onClose, handleChangeMobilePage },
   } = useSearch();
 
@@ -20,7 +32,9 @@ export const Search = () => {
       <div className={css.headerContainer}>
         <div className={headerClass}>
           <h1 className={css.title}>{`Search for ${q}`}</h1>
-          <h2 className={css.subtitle}>{`${total} ${readableType} found ${countryName ? `in ${countryName}` : ``}`}</h2>
+          <h2
+            className={css.subtitle}
+          >{`${total} ${readableType.title} found ${countryName ? `in ${countryName}` : ``}`}</h2>
         </div>
         <div>
           <Button color="secondary" variant="outlined" className={css.filterButton} onClick={handleCloseOrApplyFilter}>
@@ -30,9 +44,9 @@ export const Search = () => {
         </div>
       </div>
       <div className={css.list}>
-        {searchResult.items?.map(item => (
-          <div key={item.id} className="mt-6">
-            {card(item)}
+        {searchResult.items?.map((item, index) => (
+          <div key={item.id} className="mt-6" ref={index === scrollIndex ? scrollRef : null}>
+            {card(item, index)}
           </div>
         ))}
 
@@ -54,9 +68,9 @@ export const Search = () => {
         open={sliderFilterOpen}
         onClose={handleCloseOrApplyFilter}
         title="Filter by"
-        subtitle={`Filter ${readableType} by social causes, skills and more`}
+        subtitle={`Filter ${readableType.title} by social causes, skills and more`}
       >
-        <FilterSlider type={readableType} onApply={onApply} onClose={onClose} filter={filter} />
+        <FilterSlider type={readableType.type} onApply={onApply} onClose={onClose} filter={filter} />
       </Overlay>
     </div>
   );
