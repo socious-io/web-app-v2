@@ -14,7 +14,7 @@ import { IDENTITIES, IMPACT_POINTS, PROJECT, PROJECTS } from './mocks';
 describe('Sign in', () => {
   beforeEach(() => {
     // Mock the register API call
-    cy.intercept('POST', `${API_SERVER}/auth/login`, req => {
+    cy.intercept('POST', `${API_SERVER}/auth/login*`, req => {
       if (req.body.email === INVALID_EMAIL || req.body.password === INVALID_PASSWORD)
         req.reply({
           statusCode: 400,
