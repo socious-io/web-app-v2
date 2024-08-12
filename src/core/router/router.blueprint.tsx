@@ -664,10 +664,10 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'onboarding',
-            loader: async () => {
-              await store.dispatch(currentIdentities());
-              return null;
-            },
+            // loader: async () => {
+            //   await store.dispatch(currentIdentities());
+            //   return null;
+            // },
             async lazy() {
               const { Onboarding } = await import('src/pages/sign-up/Onboarding');
               return {
