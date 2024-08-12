@@ -64,8 +64,8 @@ export const Email = () => {
         <div className="form-container">
           {!referrerUser && (
             <IntroHeader
-              title={intro[eventName]?.title || defaultIntro.title}
-              description={intro[eventName]?.description || defaultIntro.description}
+              title={(type === 'user' && intro[eventName]?.title) || defaultIntro.title}
+              description={(type === 'user' && intro[eventName]?.description) || defaultIntro.description}
               logo={<Logo width={48} height={48} />}
             />
           )}
@@ -89,13 +89,15 @@ export const Email = () => {
             </>
           )}
           <div className="mt-7">
-            <EmailForm eventId={eventId} />
+            <EmailForm eventId={type === 'user' ? eventId : ''} />
             <Button
               color="primary"
               variant="outlined"
               onClick={() => {
                 tried();
-                navigate(`/oauth/google${eventName && `?event_name=${eventName}`}`);
+                type === 'user'
+                  ? navigate(`/oauth/google${eventName && `?event_name=${eventName}`}`)
+                  : navigate('/oauth/google');
               }}
               style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '12px' }}
             >
@@ -131,7 +133,7 @@ export const Email = () => {
         </div>
       </div>
 
-      {intro[eventName]?.component || (
+      {(type === 'user' && intro[eventName]?.component) || (
         <div className="w-1/2 items-center justify-center hidden md:block">
           <div className={`${css.review} `}>
             <div className="px-8">{renderIntro()}</div>
