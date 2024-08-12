@@ -38,5 +38,5 @@ export const useOrgProfile = () => {
     { label: 'Preferences', content: <OrgPreferences /> },
   ];
 
-  return { tabs, active };
+  return { tabs, active, setActive };
 };

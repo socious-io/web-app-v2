@@ -6,7 +6,7 @@ import css from './orgProfile.module.scss';
 import { useOrgProfile } from './useOrgProfile';
 
 export const OrgProfile = () => {
-  const { tabs, active } = useOrgProfile();
+  const { tabs, active, setActive } = useOrgProfile();
 
   return (
     <div className="w-full">
@@ -16,7 +16,7 @@ export const OrgProfile = () => {
           <MainInfo />
         </div>
         <div className={`${css.rightCol} w-full md:w-auto`}>
-          <HorizontalTabs tabs={tabs} activeIndex={active} />
+          <HorizontalTabs tabs={tabs} activeIndex={active} onActiveIndex={setActive} />
         </div>
       </div>
     </div>
