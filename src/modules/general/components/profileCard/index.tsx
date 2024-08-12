@@ -27,8 +27,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
   const navigate = useNavigate();
   const { name, profileImage, type, website, username } = getIdentityMeta(identity);
   const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
-  const events = eventsToCategory((identity as User).events || []).map(item => item.label);
   if (!identity) return;
+  const events = eventsToCategory((identity as User).events || []).map(item => item.label);
   return (
     <div className="flex flex-col gap-5 md:gap-6 h-full w-full">
       {labelShown && (
