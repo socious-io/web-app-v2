@@ -6,3 +6,8 @@ export function convertSnakeCaseToLowerCase(value: string): string {
     return '';
   }
 }
+
+export const truncateFromMiddle = (fullStr: string, frontChars: number, backChars: number, middleStr = '...') => {
+  if (fullStr.length <= frontChars) return fullStr;
+  return fullStr.slice(0, frontChars) + middleStr + fullStr.slice(fullStr.length - backChars);
+};

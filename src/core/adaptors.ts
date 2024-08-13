@@ -1,10 +1,10 @@
 import i18next from 'i18next';
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import store from 'src/store';
+import { setEvents } from 'src/store/reducers/events.reducer';
 import { setSkills } from 'src/store/reducers/skills.reducer';
 
-import { skills } from './api';
+import { events, skills, Event } from './api';
 import { CategoriesResp, Cities } from './types';
 
 export function socialCausesToCategoryAdaptor() {
@@ -25,7 +25,7 @@ export async function skillsToCategoryAdaptor() {
     skillList = (await skills({ limit: 500 })).items;
     await store.dispatch(setSkills(skillList));
   }
-  return skillList.map((item) => {
+  return skillList.map(item => {
     return {
       value: item.name,
       label: i18next.t(item.name),
@@ -37,13 +37,13 @@ export function socialCausesToCategory(categories: string[] = []) {
   if (!categories) {
     return [];
   }
-  return categories.map((cat) => {
-    return SOCIAL_CAUSES[cat];
+  return categories.map(cat => {
+    return SOCIAL_CAUSES[cat] || cat;
   });
 }
 
-export function jobCategoriesToDropdown(categories: CategoriesResp['categories']): DropdownItem[] {
-  return categories.map((item) => {
+export function jobCategoriesToDropdown(categories: CategoriesResp['categories']) {
+  return categories.map(item => {
     return {
       id: item.id,
       label: item.name,
@@ -52,8 +52,8 @@ export function jobCategoriesToDropdown(categories: CategoriesResp['categories']
   });
 }
 
-export function citiesToCategories(cities: Cities[]): DropdownItem[] {
-  return cities.map((city) => {
+export function citiesToCategories(cities: Cities[]) {
+  return cities.map(city => {
     return {
       id: city.id,
       label: city.name,
@@ -65,8 +65,32 @@ export function citiesToCategories(cities: Cities[]): DropdownItem[] {
 
 export function skillsToCategory(skills: string[] = []) {
   try {
-    return skills.map((name) => {
+    return skills.map(name => {
       return { value: name, label: i18next.t(name) };
+    });
+  } catch {
+    return [];
+  }
+}
+
+export async function eventsToCategoryAdaptor() {
+  let eventList = store.getState().events.items;
+  if (!eventList.length) {
+    eventList = (await events({ limit: 10 })).items;
+    await store.dispatch(setEvents(eventList));
+  }
+  return eventList.map(item => {
+    return {
+      value: item.id,
+      label: item.title,
+    };
+  });
+}
+
+export function eventsToCategory(events: Event[] = []) {
+  try {
+    return events.map(event => {
+      return { value: event.id, label: event.title };
     });
   } catch {
     return [];

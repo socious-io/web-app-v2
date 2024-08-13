@@ -1,6 +1,6 @@
 import { StoryFn } from '@storybook/react';
 import { useState } from 'react';
-import { TabPreview } from 'src/Nowruz/modules/Search/components/TabBar';
+import { TabPreview } from 'src/modules/Search/components/TabBar';
 export default {
   title: 'Search/TabBar',
   component: TabPreview,
@@ -10,7 +10,7 @@ const tabs = [
   { label: 'Organization', value: 'Organization' },
   { label: 'Poeple', value: 'Poeple' },
 ];
-const Template: StoryFn = (args) => {
+const Template: StoryFn = args => {
   return <TabPreview tabs={tabs} onSelect={() => console.log()} />;
 };
 

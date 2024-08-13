@@ -5,8 +5,9 @@ import { Category, Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
-import { Identity } from '../site/site.types';
-import { LanguageCode, SDG, PaginateRes, ConnectStatus } from '../types';
+import { Identity, Event } from '../site/site.types';
+import { LanguageCode, SDG, PaginateRes, ConnectStatus, ProjectType, LanguageLevel } from '../types';
+
 // -------------------- Requests ----------------------
 
 export interface ReportReq {
@@ -42,7 +43,7 @@ export interface UpdateWalletReq {
 
 export interface LanguageReq {
   name: LanguageCode;
-  level: 'BASIC' | 'CONVERSANT' | 'PROFICIENT' | 'FLUENT' | 'NATIVE';
+  level: LanguageLevel;
 }
 
 export interface ExperienceReq {
@@ -55,7 +56,7 @@ export interface ExperienceReq {
   job_category_id?: string;
   country?: string;
   city?: string;
-  employment_type?: 'ONE_OFF' | 'PART_TIME' | 'FULL_TIME';
+  employment_type?: ProjectType;
   weekly_hours?: number | null;
   total_hours?: number | null;
 }
@@ -125,6 +126,7 @@ export interface User {
   certificates?: AdditionalRes[];
   identity_verified: boolean;
   name?: string;
+  events?: Event[] | null;
 }
 
 export interface UserProfile extends User {
@@ -189,4 +191,20 @@ export interface Credential {
   connection_url?: string;
   created_at: Date;
   updated_at: Date;
+}
+
+export type PreferenceValue =
+  | 'ON'
+  | 'OFF'
+  | 'STRONG_HIGH'
+  | 'MODERATE_HIGH'
+  | 'NEUTRAL'
+  | 'STRONG_LOW'
+  | 'MODERATE_LOW'
+  | 'PREFER_NOT_SAY';
+
+export interface Preference {
+  title: string;
+  value: PreferenceValue;
+  description?: string | null;
 }

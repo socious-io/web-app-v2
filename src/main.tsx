@@ -6,8 +6,8 @@ import { init } from 'src/core/datadog';
 
 import App from './App';
 import './index.scss';
-import FallBack from './Nowruz/pages/fallback/fallback';
-import { logError } from './Nowruz/pages/fallback/fallback.services';
+import FallBack from './pages/fallback/fallback';
+import { logError } from './pages/fallback/fallback.services';
 
 const VERSION = '7.0.0';
 init(VERSION);

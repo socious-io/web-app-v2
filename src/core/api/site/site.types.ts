@@ -1,4 +1,5 @@
-import { CredentailStatus, PaginateRes } from 'src/core/api';
+import { CredentialStatus, PaginateRes } from 'src/core/api';
+import { UserType } from 'src/core/types';
 
 export interface SearchReq {
   type: 'projects' | 'users' | 'posts' | 'organizations' | 'applicants';
@@ -21,8 +22,9 @@ export interface Identity {
   type: 'organizations' | 'users';
   meta: OrgMeta | UserMeta;
   created_at: Date;
-  verification_status: CredentailStatus;
+  verification_status: CredentialStatus;
   identity_meta?: UserMeta | OrgMeta;
+  identity_type?: UserType;
 }
 
 export interface UserMeta {
@@ -31,15 +33,15 @@ export interface UserMeta {
   name: string;
   email: string;
   avatar?: string;
-  status: string;
-  address: null;
+  status?: string;
+  address?: string | null;
   country: string;
   username: string;
-  open_to_work: boolean;
-  wallet_address: null;
-  open_to_volunteer: boolean;
-  identity_verified: boolean;
-  verification_status: null | 'PENDING' | 'APPROVED' | 'REJECTED';
+  open_to_work?: boolean;
+  wallet_address?: string | null;
+  open_to_volunteer?: boolean;
+  identity_verified?: boolean;
+  verification_status?: null | 'PENDING' | 'APPROVED' | 'REJECTED';
   is_contributor?: boolean;
 }
 
@@ -49,16 +51,16 @@ export interface OrgMeta {
   name: string;
   email: string;
   image: string;
-  hiring: boolean;
-  status: string;
+  hiring?: boolean;
+  status?: string;
   address?: string;
   country: string;
   mission: string;
   shortname: string;
   description?: string;
   wallet_address?: string;
-  verified_impact: boolean;
-  verified: boolean;
+  verified_impact?: boolean;
+  verified?: boolean;
 }
 
 export interface CurrentIdentity extends Identity {
@@ -74,4 +76,16 @@ export interface Skill {
 
 export interface SkillRes extends PaginateRes {
   items: Skill[];
+}
+
+export interface Event {
+  id: string;
+  title: string;
+  description: string;
+  event_at: Date;
+  created_at: Date;
+}
+
+export interface EventsRes extends PaginateRes {
+  items: Event[];
 }

@@ -35,7 +35,7 @@ export const removeEmptyArrays = (obj: null | undefined | Record<string | number
 };
 
 export const removeValuesFromObject = (obj: any, valuesToRemove: Array<string | null | undefined | number>) => {
-  const output = {};
+  const output: any = {};
   for (const key in obj) {
     if (!valuesToRemove.includes(obj[key])) {
       output[key] = obj[key];
@@ -52,7 +52,7 @@ export const checkUsernameConditions = (username: string) => {
   if (username.length < 6 || username.length > 24) return 'Must be between 6 and 24 characters.';
 };
 
-export const getIdentityMeta = (identity: User | Organization | Identity | undefined) => {
+export const getIdentityMeta = (identity: User | Organization | Identity | UserMeta | OrgMeta | undefined) => {
   if (!identity)
     return {
       username: '',
@@ -63,6 +63,30 @@ export const getIdentityMeta = (identity: User | Organization | Identity | undef
       website: undefined,
     };
   // if type of identity is 'Identity'
+
+  if ('identity_meta' in identity) {
+    if (identity.identity_type === 'users') {
+      const user = identity.identity_meta as UserMeta;
+      return {
+        username: `@${user.username}`,
+        usernameVal: user.username,
+        name: user.name,
+        profileImage: user.avatar,
+        type: identity.identity_type,
+        website: undefined,
+      };
+    }
+    const org = identity.identity_meta as OrgMeta;
+    return {
+      username: `@${org.shortname}`,
+      usernameVal: org.shortname,
+      name: org.name,
+      profileImage: org.image,
+      type: identity.identity_type,
+      website: undefined,
+    };
+  }
+
   if ('meta' in identity) {
     // 'organizations' | 'users';
     if (identity.type === 'users') {
@@ -118,6 +142,7 @@ export const verificationStatus: Record<Credential['status'], 'verified' | 'unve
   CLAIMED: 'verified',
   PENDING: 'pending',
   REJECTED: 'unverified',
+  ISSUED: 'verified',
 };
 
 export const navigateToProfile = (username: string, type: UserType) => {
@@ -126,4 +151,44 @@ export const navigateToProfile = (username: string, type: UserType) => {
     if (type === 'users') window.location.href = `/profile/users/${usernameVal}/view`;
     else window.location.href = `/profile/organizations/${usernameVal}/view`;
   }
+};
+
+export const checkSearchFilters = (
+  type: 'organizations' | 'projects' | 'users' | 'posts',
+  filter: Record<string, any>,
+) => {
+  let authorizedKeys: string[] = [];
+  switch (type) {
+    case 'organizations':
+      authorizedKeys = ['social_causes', 'city', 'country'];
+      break;
+    case 'projects':
+      authorizedKeys = [
+        'causes_tags',
+        'city',
+        'country',
+        'experience_level',
+        'job_category_id',
+        'payment_type',
+        'project_length',
+        'remote_preference',
+        'skills',
+      ];
+      break;
+    case 'users':
+      authorizedKeys = ['social_causes', 'city', 'country', 'skills', 'events'];
+      break;
+    case 'posts':
+      authorizedKeys = ['causes_tags', 'hashtags', 'identity_tags', 'identity_id'];
+      break;
+  }
+
+  const authorizedFilters: Record<string, any> = {};
+  Object.keys(filter).forEach(key => {
+    if (authorizedKeys.includes(key)) {
+      authorizedFilters[key] = filter[key];
+    }
+  });
+
+  return authorizedFilters;
 };

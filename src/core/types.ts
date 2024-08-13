@@ -498,8 +498,6 @@ export type MemberIdentity = {
 
 export type Error = { error: string };
 
-export type SearchReq = Pagination<JobItems[]> | Pagination<PostItems[]>;
-
 export type Profile = {
   address: string;
   avatar: null | string;
