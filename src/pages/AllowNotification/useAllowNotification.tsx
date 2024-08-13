@@ -1,12 +1,15 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { logout } from 'src/core/api';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { useSignInForm } from 'src/modules/Auth/containers/signin/SignInForm/useSignInForm';
 
 export const useAllowNotification = () => {
   const type = localStorage.getItem('registerFor');
   const { state } = useLocation();
   const { username } = state || '';
-  const { registerPushNotifications } = useSignInForm();
+  const { registerPushNotifications } = useSignInForm('');
+  const filter = localStorage.getItem('filter');
+  const { events } = filter ? (JSON.parse(filter) as { events: string[] }) : { events: [] };
   const navigate = useNavigate();
 
   const onAllowNotification = async () => {
@@ -15,9 +18,11 @@ export const useAllowNotification = () => {
   };
   const onSkip = () => {
     localStorage.removeItem('registerFor');
-    if (type === 'user') navigate(`/profile/users/${username}/view`);
-    else if (type === 'organization') navigate(`/profile/organizations/${username}/view`);
-    else navigate('/jobs');
+    if (events.length) {
+      navigate('/search?q=&type=users&page=1');
+    } else {
+      navigate('/dashboard/user');
+    }
   };
   const items = [
     {
@@ -25,6 +30,8 @@ export const useAllowNotification = () => {
       label: 'Log out',
       onClick: () => {
         logout().then(() => {
+          localStorage.clear();
+          nonPermanentStorage.clear();
           navigate('/intro');
         });
       },

@@ -17,9 +17,11 @@ export const Layout = () => {
 
   const logOut = async () => {
     store.dispatch(removeIdentityList());
-    logout().then(() => navigate('/sign-in'));
+    await logout();
     setOpen(false);
     nonPermanentStorage.clear();
+    localStorage.clear();
+    navigate('/sign-in');
   };
 
   return (
