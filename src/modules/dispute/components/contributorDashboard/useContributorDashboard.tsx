@@ -1,5 +1,6 @@
 import { ColumnDef, getCoreRowModel, Getter, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
 import { Dispute, DisputeState } from 'src/core/api';
@@ -10,7 +11,6 @@ import { Dot } from 'src/modules/general/components/dot';
 import store from 'src/store';
 import { currentIdentities } from 'src/store/thunks/identity.thunks';
 import variables from 'src/styles/constants/_exports.module.scss';
-
 export const useContributorDashboard = () => {
   const [stopNotif, setStopNotif] = useState(false);
   const [list, setList] = useState<Dispute[]>([]);
@@ -45,37 +45,37 @@ export const useContributorDashboard = () => {
         return { label: 'Closed', theme: 'secondary' as ThemeColor };
     }
   };
-
+  const { t } = useTranslation('decentdispute');
   const columns = useMemo<ColumnDef<Dispute>[]>(
     () => [
       {
         id: 'code',
-        header: 'Dispute ID',
+        header: t('DecDispDisputeID'),
         accessorKey: 'code',
         cell: ({ getValue }: { getValue: Getter<string> }) => getValue(),
       },
       {
         id: 'category',
-        header: 'Category',
+        header: t('DecDispCategory'),
         accessorKey: 'category',
         cell: ({ getValue }: { getValue: Getter<string> }) =>
           DISPUTE_CATEGORY.find(category => category.value === getValue())?.label,
       },
       {
         id: 'title',
-        header: 'Dispute title',
+        header: t('DecDispDisputeTitle'),
         accessorKey: 'title',
         cell: ({ getValue }: { getValue: Getter<string> }) => getValue(),
       },
       {
         id: 'created_at',
-        header: 'Submitted date',
+        header: t('DecDispSubmittedDate'),
         accessorKey: 'created_at',
         cell: ({ getValue }: { getValue: Getter<Date> }) => toRelativeTime(getValue()),
       },
       {
         id: 'state',
-        header: 'Status',
+        header: t('DecDispStatus'),
         accessorKey: 'state',
         cell: ({ getValue }: { getValue: Getter<DisputeState> }) => {
           const { label, color, theme } = getChipValues(getValue());
@@ -95,13 +95,13 @@ export const useContributorDashboard = () => {
       },
       {
         id: 'contract_id',
-        header: 'Contract ID',
+        header: t('DecDispContractID'),
         accessorKey: 'contract',
         cell: ({ getValue }: { getValue: Getter<{ id: string; name: string }> }) => getValue().id,
       },
       {
         id: 'contract_name',
-        header: 'Contract name',
+        header: t('DecDispContractName'),
         accessorKey: 'contract',
         cell: ({ getValue }: { getValue: Getter<{ id: string; name: string }> }) => getValue().name,
       },

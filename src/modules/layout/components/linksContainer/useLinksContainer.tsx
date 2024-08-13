@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, identities, OrgMeta, UserMeta } from 'src/core/api';
@@ -8,12 +9,12 @@ import Badge from 'src/modules/general/components/Badge';
 import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getUnreadCount } from 'src/store/thunks/chat.thunk';
-import { useTranslation } from 'react-i18next';
 
 import { MenuProps } from './linksContainer.types';
 
 export const useLinksContainer = (setOpen: (val: boolean) => void) => {
   const { t } = useTranslation('navigation');
+  const { t: tdispute } = useTranslation('decentdispute');
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
@@ -131,7 +132,7 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
           joinedContributors
             ? [
                 {
-                  label: 'Dispute resolution',
+                  label: tdispute('DecDispDisputeResolution'),
                   route: `/${(currentIdentity.meta as UserMeta).username}/contribute/center`,
                   public: false,
                 },

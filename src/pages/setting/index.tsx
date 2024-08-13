@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CurrentIdentity } from 'src/core/api';
 import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
@@ -10,25 +11,25 @@ import Password from 'src/modules/settings/components/password';
 import { Plan } from 'src/modules/settings/components/plan';
 import { UserTeam } from 'src/modules/settings/components/userTeam';
 import { RootState } from 'src/store';
-import { useTranslation } from 'react-i18next';
 
 export const Setting = () => {
-  const { t } = useTranslation('settings');
+  const { t: tprofile } = useTranslation('profile');
+  const { t: tsettings } = useTranslation('settings');
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   );
   const tabs = [
     {
-      label: t('heading'),
+      label: tsettings('heading'),
       content: <Account />,
       default: true,
     },
     {
-      label: t('team'),
+      label: tsettings('team'),
       content: currentIdentity?.type === 'users' ? <UserTeam /> : <OrgTeam />,
     },
     {
-      label: t('password'),
+      label: tsettings('password'),
       content: <Password />,
     },
 
@@ -46,7 +47,7 @@ export const Setting = () => {
 
   if (currentIdentity?.type === 'users')
     tabs.push({
-      label: t('set_notificationsHeading'),
+      label: tprofile('notificationsHeading'),
       content: <Notification />,
     });
 
@@ -63,7 +64,7 @@ export const Setting = () => {
     });
 
   if (currentIdentity?.type === 'users')
-    items.push({ label: t('notificationsHeading'), value: t('notificationsHeading') });
+    items.push({ label: tprofile('notificationsHeading'), value: tprofile('notificationsHeading') });
 
   const [content, setContent] = useState<ReactNode>();
 
@@ -85,7 +86,7 @@ export const Setting = () => {
       <div className="container">
         <div className="w-full">
           <div className="p-4 md:px-8">
-            <h2 className="gap-5 text-3xl mb-6">{t('page_title')}</h2>
+            <h2 className="gap-5 text-3xl mb-6">{tsettings('page_title')}</h2>
 
             <div className="block md:hidden">
               <SearchDropdown

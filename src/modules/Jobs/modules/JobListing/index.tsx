@@ -23,6 +23,7 @@ export const JobsListing = () => {
     scrollIndex,
     handleChangeMobilePage,
   } = useJobListing();
+  const { t } = useTranslation('jobs');
   return (
     <div className={css.container}>
       {loading ? (

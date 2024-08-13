@@ -1,5 +1,6 @@
 import { ColumnDef, flexRender, getCoreRowModel, Getter, useReactTable } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
 import { Dispute, DisputeState, Identity } from 'src/core/api';
 import { formatDateSlash } from 'src/core/time';
@@ -12,16 +13,15 @@ import Status from 'src/modules/general/components/Status';
 import css from './index.module.scss';
 import { DisputesListProps } from './index.types';
 import { useDisputesList } from './useDisputesList';
-
 const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
   const { labelAvatarField, generateStatus, disputesList, totalPage, page, setPage, navigateToDetailDispute } =
     useDisputesList(list, mode);
-
+  const { t } = useTranslation('decentdispute');
   const columns = useMemo<ColumnDef<Dispute>[]>(
     () => [
       {
         id: 'code',
-        header: 'Dispute ID',
+        header: t('DecDispDisputeID'),
         accessorKey: 'code',
         cell: ({ getValue }: { getValue: Getter<string> }) => `#${getValue()}`,
       },
@@ -44,26 +44,26 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
       },
       {
         id: 'category',
-        header: 'Category',
+        header: t('DecDispCategory'),
         accessorKey: 'category',
         cell: ({ getValue }: { getValue: Getter<string> }) =>
           DISPUTE_CATEGORY.find(category => category.value === getValue())?.label,
       },
       {
         id: 'title',
-        header: 'Dispute title',
+        header: t('DecDispDisputeTitle'),
         accessorKey: 'title',
         cell: ({ getValue }: { getValue: Getter<string> }) => getValue(),
       },
       {
         id: 'created_at',
-        header: 'Submitted date',
+        header: t('DecDispSubmittedDate'),
         accessorKey: 'created_at',
         cell: ({ getValue }: { getValue: Getter<Date> }) => formatDateSlash(getValue()),
       },
       {
         id: 'state',
-        header: 'Status',
+        header: t('DecDispStatus'),
         accessorKey: 'state',
         cell: ({ getValue }: { getValue: Getter<DisputeState> }) => (
           <div className="flex justify-start items-center">
@@ -73,13 +73,13 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
       },
       {
         id: 'contract_id',
-        header: 'Contract ID',
+        header: t('DecDispContractID'),
         accessorKey: 'contract',
         cell: ({ getValue }: { getValue: Getter<{ id: string; name: string }> }) => getValue().id,
       },
       {
         id: 'contract_name',
-        header: 'Contract name',
+        header: t('DecDispContractName'),
         accessorKey: 'contract',
         cell: ({ getValue }: { getValue: Getter<{ id: string; name: string }> }) => getValue().name,
       },
@@ -143,8 +143,8 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
   ) : (
     <div className="w-full h-[350px] border border-solid border-Gray-light-mode-200 shadow-Shadows/shadow-sm leading-6 rounded-xl flex flex-col items-center justify-center">
       <img src="/images/cloud.svg" width={150} height={120} alt="empty-disputes" />
-      <span className="text-md font-semibold text-Gray-light-mode-900 mb-1 mt-4">No disputes found</span>
-      <span className="text-sm font-normal text-Gray-light-mode-600">Here are all your current disputes.</span>
+      <span className="text-md font-semibold text-Gray-light-mode-900 mb-1 mt-4">{t('DecDispNoDisputesFound')}</span>
+      <span className="text-sm font-normal text-Gray-light-mode-600">{t('DecDispCurrentDisputesText')}</span>
     </div>
   );
 };

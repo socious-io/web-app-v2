@@ -1,8 +1,7 @@
 import { Divider } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { Button } from 'src/modules/general/components/Button';
 import { ToggleButton } from 'src/modules/general/components/toggleButton';
-import { useTranslation } from 'react-i18next';
-
 
 import css from './notification.module.scss';
 import { SettingsItem } from './payload.type';
@@ -11,7 +10,6 @@ import { useNotification } from './useNotification';
 const Notification = () => {
   const { t } = useTranslation('settings');
   const { mappedSettings, onSave } = useNotification();
-
   const renderItems = (item: SettingsItem) => {
     return (
       <div className="w-full  flex flex-col">

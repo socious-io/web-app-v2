@@ -1,5 +1,6 @@
 import { event } from 'cypress/types/jquery';
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from 'src/modules/general/components/Button';
 import { Dot } from 'src/modules/general/components/dot';
 import { Icon } from 'src/modules/general/components/Icon';

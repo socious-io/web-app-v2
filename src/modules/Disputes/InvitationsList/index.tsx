@@ -1,5 +1,6 @@
 import { ColumnDef, flexRender, getCoreRowModel, Getter, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
 import { Invitation, InvitationDispute, InvitationStatus } from 'src/core/api';
 import { formatDateSlash } from 'src/core/time';
@@ -12,7 +13,6 @@ import { InvitationsListProps } from './index.types';
 import { useInvitationsList } from './useInvitationsList';
 import ExpiredModal from '../ExpiredModal';
 import InvitationModal from '../InvitationModal';
-
 const InvitationsList: React.FC<InvitationsListProps> = ({ list }) => {
   const {
     generateStatus,
@@ -25,37 +25,37 @@ const InvitationsList: React.FC<InvitationsListProps> = ({ list }) => {
     handleCloseModal,
     onAcceptOrDeclineInvitation,
   } = useInvitationsList(list);
-
+  const { t } = useTranslation('decentdispute');
   const columns = useMemo<ColumnDef<Invitation>[]>(
     () => [
       {
         id: 'code',
-        header: 'Dispute ID',
+        header: t('DecDispDisputeID'),
         accessorKey: 'dispute',
         cell: ({ getValue }: { getValue: Getter<InvitationDispute> }) => getValue().code,
       },
       {
         id: 'category',
-        header: 'Category',
+        header: t('DecDispCategory'),
         accessorKey: 'dispute',
         cell: ({ getValue }: { getValue: Getter<InvitationDispute> }) =>
           DISPUTE_CATEGORY.find(category => category.value === getValue().category)?.label,
       },
       {
         id: 'title',
-        header: 'Dispute title',
+        header: t('DecDispDisputeTitle'),
         accessorKey: 'dispute',
         cell: ({ getValue }: { getValue: Getter<InvitationDispute> }) => getValue().title,
       },
       {
         id: 'created_at',
-        header: 'Submitted date',
+        header: t('DecDispSubmittedDate'),
         accessorKey: 'created_at',
         cell: ({ getValue }: { getValue: Getter<Date> }) => formatDateSlash(getValue()),
       },
       {
         id: 'status',
-        header: 'Status',
+        header: t('DecDispStatus'),
         accessorKey: 'status',
         cell: ({ getValue }: { getValue: Getter<InvitationStatus> }) => (
           <div className="flex justify-start items-center">
@@ -65,13 +65,13 @@ const InvitationsList: React.FC<InvitationsListProps> = ({ list }) => {
       },
       {
         id: 'contract_id',
-        header: 'Contract ID',
+        header: t('DecDispContractID'),
         accessorKey: 'dispute',
         cell: ({ getValue }: { getValue: Getter<InvitationDispute> }) => getValue().contract.id,
       },
       {
         id: 'contract_name',
-        header: 'Contract name',
+        header: t('DecDispContractName'),
         accessorKey: 'dispute',
         cell: ({ getValue }: { getValue: Getter<InvitationDispute> }) => getValue().contract.name,
       },

@@ -1,7 +1,7 @@
+import { useTranslation } from 'react-i18next';
 import { Button } from 'src/modules/general/components/Button/index';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Input } from 'src/modules/general/components/input/input';
-import { useTranslation } from 'react-i18next';
 
 import css from './password.module.scss';
 import { usePassword } from './usePassword';
@@ -19,15 +19,12 @@ const Password = () => {
     isPasswordLengthValid,
     alertContent,
   } = usePassword();
-
   return (
     <>
       <div className="border border-solid border-t-0 border-x-0 pb-5 border-Gray-light-mode-200">
         <div className="w-full items-center">
           <h2 className="grow css.title text-lg font-semibold">{t('password')}</h2>
-          <p className="text-sm font-normal text-Gray-light-mode-600 pt-1">
-          {t('supporting_text_change_password')}{' '}
-          </p>
+          <p className="text-sm font-normal text-Gray-light-mode-600 pt-1">{t('supporting_text_change_password')} </p>
         </div>
       </div>
       <form id="passwordForm" onSubmit={handleSubmit(onSubmit)}>
@@ -60,7 +57,13 @@ const Password = () => {
             <label>{t('new_password')}</label>
             <div className="col-span-2">
               <div>
-                <Input id="password" type="password" name="password" register={register} placeholder={t('new_password')} />
+                <Input
+                  id="password"
+                  type="password"
+                  name="password"
+                  register={register}
+                  placeholder={t('new_password')}
+                />
               </div>
               <div className={`${css.validation} mt-4`}>
                 {

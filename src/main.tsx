@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <meta charSet="UTF-8" />
       <meta name="version" content={VERSION} />
       <link rel="icon" type="image/png" href="/favicon.png" />
-      <title>Socioustitle</title>
+      <title>Socious</title>
     </Helmet>
     <ErrorBoundary fallback={<FallBack />} onError={logError}>
       <App />
