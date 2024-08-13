@@ -13,22 +13,22 @@ import { RootState } from 'src/store';
 import { useTranslation } from 'react-i18next';
 
 export const Setting = () => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation('settings');
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   );
   const tabs = [
     {
-      label: 'Account',
+      label: t('heading'),
       content: <Account />,
       default: true,
     },
     {
-      label: 'Team',
+      label: t('team'),
       content: currentIdentity?.type === 'users' ? <UserTeam /> : <OrgTeam />,
     },
     {
-      label: 'Password',
+      label: t('password'),
       content: <Password />,
     },
 
@@ -46,7 +46,7 @@ export const Setting = () => {
 
   if (currentIdentity?.type === 'users')
     tabs.push({
-      label: t('notificationsHeading'),
+      label: t('set_notificationsHeading'),
       content: <Notification />,
     });
 
@@ -62,7 +62,8 @@ export const Setting = () => {
       value: 'Plan',
     });
 
-  if (currentIdentity?.type === 'users') items.push({ label: t('notificationsHeading'), value: t('notificationsHeading') });
+  if (currentIdentity?.type === 'users')
+    items.push({ label: t('notificationsHeading'), value: t('notificationsHeading') });
 
   const [content, setContent] = useState<ReactNode>();
 
@@ -84,7 +85,7 @@ export const Setting = () => {
       <div className="container">
         <div className="w-full">
           <div className="p-4 md:px-8">
-            <h2 className="gap-5 text-3xl mb-6">Settings</h2>
+            <h2 className="gap-5 text-3xl mb-6">{t('page_title')}</h2>
 
             <div className="block md:hidden">
               <SearchDropdown

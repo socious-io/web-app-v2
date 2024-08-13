@@ -8,7 +8,6 @@ import css from './job-listing.module.scss';
 import { useJobListing } from './useJobListing';
 import { JobListingCard } from '../../components/JobListingCard';
 export const JobsListing = () => {
-  const { t } = useTranslation('communities');
   const navigate = useNavigate();
   const {
     page,

@@ -1,12 +1,15 @@
 import { Divider } from '@mui/material';
 import { Button } from 'src/modules/general/components/Button';
 import { ToggleButton } from 'src/modules/general/components/toggleButton';
+import { useTranslation } from 'react-i18next';
+
 
 import css from './notification.module.scss';
 import { SettingsItem } from './payload.type';
 import { useNotification } from './useNotification';
 
 const Notification = () => {
+  const { t } = useTranslation('settings');
   const { mappedSettings, onSave } = useNotification();
 
   const renderItems = (item: SettingsItem) => {
@@ -41,16 +44,16 @@ const Notification = () => {
     <>
       <div>
         <div className="w-full pb-8 items-center">
-          <h2 className="grow css.title text-lg font-semibold">Notification settings</h2>
+          <h2 className="grow css.title text-lg font-semibold">{t('notification_settings')}</h2>
           <p className="text-sm font-normal text-Gray-light-mode-600 pt-1">
-            We may still send you important notifications about your account outside of your notification settings.
+            {t('supporting_text_notification_settings')}
           </p>
         </div>
       </div>
 
       {!!mappedSettings.length && mappedSettings.map(item => renderItems(item))}
       <Button variant="contained" color="primary" customStyle="w-full md:w-fit mr-0 ml-auto" onClick={onSave}>
-        Save
+        {t('save')}
       </Button>
     </>
   );

@@ -8,11 +8,13 @@ import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import variables from 'src/styles/constants/_exports.module.scss';
+import { useTranslation } from 'react-i18next';
 
 import css from './chats.module.scss';
 import { useChats } from './useChats';
 
 export const Chats = () => {
+  const { t } = useTranslation('messaging');
   const {
     count,
     chats,
@@ -34,7 +36,7 @@ export const Chats = () => {
     <div className={css.summary}>
       <div className="w-full py-5 px-6 flex justify-between items-center">
         <div className="flex gap-2">
-          <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">Messages</span>
+          <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">{t('messages.heading')}</span>
           {/* <div className="py-0.5 px-1.5 border rounded-sm border-solid border-Gray-light-mode-300 flex items-center justify-center font-medium text-xs leading-[18px] text-Gray-light-mode-700">
             {count}
           </div> */}

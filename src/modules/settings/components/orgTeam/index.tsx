@@ -4,12 +4,16 @@ import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGrou
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import { useTranslation } from 'react-i18next';
+
 
 import css from './orgTeam.module.scss';
 import { useOrgTeam } from './useOrgTeam';
 import LeaveDeleteMember from '../leaveDeleteMember';
 
 export const OrgTeam = () => {
+  const { t } = useTranslation('settings');
+
   const {
     addedMembers,
     searchMembers,
@@ -31,7 +35,7 @@ export const OrgTeam = () => {
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-6 md:flex-row md:gap-8">
             <div className="flex flex-col gap-1">
-              <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">Team management</span>
+              <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">{t('team_management')}</span>
               <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">
                 Manage your team members and their account permissions here.
               </span>

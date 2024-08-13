@@ -25,5 +25,14 @@
         "nav_org_name_owner": "{org name (Owner)}",
         "nav_org_nav": "組織ナビゲーション",
         "nav_hiring": "採用中",
-        "nav_actively_hiring": "現在、プロフェッショナルを積極的に採用中です。"
+        "nav_actively_hiring": "現在、プロフェッショナルを積極的に採用中です。",
+        "nav_find_job": "求人を探す",
+        "nav_saved_job": "保存した求人",
+        "nav_applied_jobs": "応募した求人",
+        "nav_overview": "概要",
+        "nav_dispute": "紛争",
+        "nav_feeds": "フィード",
+        "nav_connections": "つながり",
+        "nav_contributor": "貢献者",
+        "nav_contributor_dash": "貢献者ダッシュボード"
     }

@@ -8,10 +8,12 @@ import Badge from 'src/modules/general/components/Badge';
 import store, { RootState } from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getUnreadCount } from 'src/store/thunks/chat.thunk';
+import { useTranslation } from 'react-i18next';
 
 import { MenuProps } from './linksContainer.types';
 
 export const useLinksContainer = (setOpen: (val: boolean) => void) => {
+  const { t } = useTranslation('navigation');
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
@@ -36,7 +38,7 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
 
   const menu: MenuProps[] = [
     {
-      label: 'Dashboard',
+      label: t('nav_dashboard'),
       route:
         currentIdentity?.type === 'organizations'
           ? `/dashboard/${(currentIdentity?.meta as OrgMeta).shortname}/org`
@@ -45,7 +47,7 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
       public: false,
     },
     {
-      label: 'Jobs',
+      label: t('nav_jobs'),
       route: !userIsLoggedIn || currentIdentity?.type === 'users' ? '/jobs' : '/jobs/created',
       iconName: 'briefcase-01',
       public: true,
@@ -53,53 +55,53 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
       children:
         userIsLoggedIn && currentIdentity?.type === 'users'
           ? [
-              { label: 'Find job', route: '/jobs', public: false },
-              { label: 'Saved jobs', route: '/jobs/saved', public: false },
-              { label: 'Applied jobs', route: '/jobs/applied', public: false },
+              { label: t('nav_find_job'), route: '/jobs', public: false },
+              { label: t('nav_saved_job'), route: '/jobs/saved', public: false },
+              { label: t('nav_applied_jobs'), route: '/jobs/applied', public: false },
             ]
           : undefined,
     },
     {
-      label: 'Contracts',
+      label: t('nav_contracts'),
       route: '',
       iconName: 'file-02',
       public: false,
       children: userIsLoggedIn
         ? [
-            { label: 'Overview', route: '/contracts', public: false },
-            { label: 'Disputes', route: '/disputes', public: false },
+            { label: t('nav_overview'), route: '/contracts', public: false },
+            { label: t('nav_dispute'), route: '/disputes', public: false },
           ]
         : [],
     },
 
     {
-      label: 'Communities',
+      label: t('nav_communities'),
       route: '',
       iconName: 'users-01',
       public: false,
       children: userIsLoggedIn
         ? [
-            { label: 'Feeds', route: '/feeds', public: false },
-            { label: 'Connections', route: '/connections', public: false },
+            { label: t('nav_feeds'), route: '/feeds', public: false },
+            { label: t('nav_connections'), route: '/connections', public: false },
           ]
         : [],
     },
 
     {
-      label: 'Messages',
+      label: t('nav_messages'),
       route: '/chats',
       iconName: 'message-square-01',
       public: false,
       // badgeIcon: unread ? <Badge content={unread.toString()} /> : '',
     },
     {
-      label: 'Payments',
+      label: t('nav_payments'),
       route: '/payments',
       iconName: 'wallet-04',
       public: false,
     },
     {
-      label: 'Credentials',
+      label: t('nav_credentials'),
       route: '/credentials',
       iconName: 'shield-tick',
       public: false,
@@ -109,19 +111,19 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
   if (currentIdentity?.type === 'users') {
     menu.push(
       {
-        label: 'Refer and earn',
+        label: t('nav_refer_and_earn'),
         route: '/referral',
         iconName: 'star-06',
         public: false,
       },
       {
-        label: 'Contributor',
+        label: t('nav_contributor'),
         route: '',
         iconName: 'heart-hand',
         public: false,
         children: [
           {
-            label: 'Contributor Dashboard',
+            label: t('nav_contributor_dash'),
             route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
             public: false,
           },

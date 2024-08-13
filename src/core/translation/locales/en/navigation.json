@@ -25,5 +25,14 @@
         "nav_org_name_owner": "{org name (Owner)}",
         "nav_org_nav": "Organization navigation",
         "nav_hiring": "Hiring",
-        "nav_actively_hiring": "You are currently actively hiring professionals."
+        "nav_actively_hiring": "You are currently actively hiring professionals.",
+        "nav_find_job": "Find jobs",
+        "nav_saved_job": "Saved jobs",
+        "nav_applied_jobs": "Applied jobs",
+        "nav_overview": "Overview",
+        "nav_dispute": "Disputes",
+        "nav_feeds": "Feeds",
+        "nav_connections": "Connections",
+        "nav_contributor": "Contributor",
+        "nav_contributor_dash": "Contributor Dashboard"
     }

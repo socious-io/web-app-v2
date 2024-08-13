@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { RootState } from 'src/store';
+import { useTranslation } from 'react-i18next';
 
 import { LinkItem } from '../linkItem/LinkItem';
 import { LinksContainerProps } from '../linksContainer/linksContainer.types';
@@ -13,6 +14,7 @@ interface FooterProps extends LinksContainerProps {
   logout: () => void;
 }
 export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
+  const { t } = useTranslation('navigation');
   const navigate = useNavigate();
   const navigateFunction = (route: string) => {
     localStorage.removeItem('page');
@@ -43,7 +45,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
 
       {userIsLoggedIn && (
         <LinkItem
-          label="Settings"
+          label={t('nav_settings')}
           navigateFunc={() => {
             navigateFunction('/settings');
           }}
@@ -51,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
           menuOpen={open}
         />
       )}
-      {userIsLoggedIn && <LinkItem label="Logout" navigateFunc={logout} iconName="log-out-01" menuOpen={open} />}
+      {userIsLoggedIn && <LinkItem label={t('nav_log_out')} navigateFunc={logout} iconName="log-out-01" menuOpen={open} />}
 
       {!userIsLoggedIn && (
         <LinkItem

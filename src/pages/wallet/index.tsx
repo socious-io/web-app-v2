@@ -6,12 +6,15 @@ import { DesktopTransactions } from 'src/modules/wallet/components/transactions/
 
 import { useWallet } from './useWallet';
 import css from './wallet.module.scss';
+import { useTranslation } from 'react-i18next';
+
 
 export const Wallet = () => {
+  const { t } = useTranslation('payments');
   const { tabs } = useWallet();
   return (
     <div className="w-full h-full p-4 md:p-8 flex flex-col gap-8">
-      <div className={css.header}>Payments</div>
+      <div className={css.header}>{t('Payments_PageTitle')}</div>
       <div className="flex md:hidden">
         <HorizontalButtonTabs tabs={tabs} />
       </div>
