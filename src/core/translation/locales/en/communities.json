@@ -170,7 +170,7 @@
         "follow_user": "Follow {user}",
         "post_body2": "{post_body2}",
         "page6_header_network": "Network",
-        "page6_subheader": "Your network",
+        "your_network": "Your network",
         "connections_following": "Following",
         "connections_followers": "Followers",
         "connections_requests": "Requests",

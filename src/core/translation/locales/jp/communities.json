@@ -170,7 +170,7 @@
         "follow_user": "{user}をフォロー",
         "post_body2": "{post_body2}",
         "page6_header_network": "ネットワーク",
-        "page6_subheader": "あなたのネットワーク",
+        "your_network": "あなたのネットワーク",
         "connections_following": "フォロー中",
         "connections_followers": "フォロワー",
         "connections_requests": "リクエスト",
