@@ -67,6 +67,7 @@ export const useSearch = () => {
       project_length: filter.project_length,
       experience_level: filter.experience_level,
       payment_type: filter.payment_type,
+      events: filter.events,
     };
   };
 
