@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { AvatarProfile } from '../avatarProfile';
@@ -26,6 +27,8 @@ export const ProfileCardHeader: React.FC<ProfileCardHeaderProps> = ({
   username,
 }) => {
   const navigate = useNavigate();
+
+  const { t } = useTranslation('dashboard');
 
   const navigateToProfile = () => {
     const usernameVal = username.replaceAll('@', '');
@@ -61,7 +64,7 @@ export const ProfileCardHeader: React.FC<ProfileCardHeaderProps> = ({
         {myProfile && (
           <div className="mb-3 flex gap-3">
             <Button variant="contained" color="primary" onClick={navigateToProfile}>
-              View profile
+              {t('profile.view_profile')}
             </Button>
             {/* <Button variant="outlined" color="secondary">
               Edit profile

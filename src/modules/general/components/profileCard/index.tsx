@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { socialCausesToCategory } from 'src/core/adaptors';
@@ -27,6 +28,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
   const navigate = useNavigate();
   const { name, profileImage, type, website, username } = getIdentityMeta(identity);
   const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
+  const { t } = useTranslation('communities');
   if (!identity) return;
   return (
     <div className="flex flex-col gap-5 md:gap-6 h-full w-full">
@@ -49,16 +51,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
         <div className="flex flex-col gap-5 md:gap-6 p-5 md:p-6">
           {myProfile && (
             <div className="flex gap-4">
-              <Button
-                variant="text"
-                color="primary"
-                onClick={() => navigate('/connections?active=0')}
-              >{`${identity.connections} connections`}</Button>
-              <Button
-                variant="text"
-                color="primary"
-                onClick={() => navigate('/connections?active=2')}
-              >{`${identity.followers} followers`}</Button>
+              <Button variant="text" color="primary" onClick={() => navigate('/connections?active=0')}>
+                {`${identity.connections}`} {t('user_connections_count')}
+              </Button>
+              <Button variant="text" color="primary" onClick={() => navigate('/connections?active=2')}>
+                {`${identity.followers} `} {t('user_followers_count')}
+              </Button>
             </div>
           )}
           <div className="flex gap-2 flex-wrap">

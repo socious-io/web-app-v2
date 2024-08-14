@@ -31,7 +31,7 @@ export const Dashboard = () => {
               <TopBannerNotVerified
                 supportingText={
                   type === 'users'
-                    ? 'In order to claim your certificates, please verify your identity.'
+                    ? t('cred_verification_text')
                     : 'Get your organization verified to issue credentials.'
                 }
               />

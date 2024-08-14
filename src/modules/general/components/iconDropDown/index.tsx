@@ -1,5 +1,6 @@
 import { Divider, IconButton, MenuItem, MenuList } from '@mui/material';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { IconListItem } from 'src/modules/general/components/avatarDropDown/iconListItem';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
@@ -23,7 +24,7 @@ export const IconDropDown: React.FC<IconDropDownProps> = props => {
   const currentAccount = accounts.find(a => a.selected);
   const otherAccounts = accounts.filter(a => !a.selected);
   const { open, handleOpen, handleClose, switchAccount, handleClick, navigateToOnboarding } = useIconDropDown();
-
+  const { t } = useTranslation('navigation');
   return (
     <div className="flex flex-col items-end relative">
       <IconButton
@@ -78,7 +79,7 @@ export const IconDropDown: React.FC<IconDropDownProps> = props => {
             >
               <IconListItem
                 iconName="plus"
-                label={currentAccount?.type === 'users' ? 'Create an organization' : 'Create a talent profile'}
+                label={currentAccount?.type === 'users' ? t('nav_create_org') : 'Create a talent profile'}
                 customIconClass="text-Brand-700"
                 customLabelClass={css.createLabel}
               />

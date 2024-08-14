@@ -96,9 +96,9 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
             img={image}
             accounts={accounts}
             iconItems={[
-              { iconName: 'user-circle', label: 'View profile', onClick: navigateToProfile },
-              { iconName: 'settings-01', label: 'Settings', onClick: navigateToSettings },
-              { iconName: 'log-out-01', label: 'Log out', onClick: logout },
+              { iconName: 'user-circle', label: t('ViewProfileButtonLabel'), onClick: navigateToProfile },
+              { iconName: 'settings-01', label: t('Settings'), onClick: navigateToSettings },
+              { iconName: 'log-out-01', label: t('Logout'), onClick: logout },
             ]}
             createItem
           />

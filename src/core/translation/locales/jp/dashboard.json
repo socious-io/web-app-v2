@@ -69,5 +69,6 @@
   "user.impact_points.donated_0": "{user.impact_points.donated_0}",
   "talent_dashboard.showcase_offerings": "あなたのユニークな提供を披露し、クライアントを引きつける",
   "talent_dashboard.create_service": "サービスを作成する",
-  "hour_units": "時間"
+  "hour_units": "時間",
+  "cred_verification_text": "証明書を請求するには、身元を確認してください。"
 }

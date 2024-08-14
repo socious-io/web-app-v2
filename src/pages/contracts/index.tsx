@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Contract } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import useHideScrollbar from 'src/core/hooks/useHideScrollbar';
@@ -16,6 +17,7 @@ export const Contracts = () => {
   const { filterButtons, pageCount, contractList, page, openSlider, updatePageNumber, closeSlider, activeFilter } =
     useContracts();
   const isMobile = isTouchDevice();
+  const { t } = useTranslation('contracts');
 
   isMobile && useHideScrollbar(openSlider);
 
@@ -24,8 +26,8 @@ export const Contracts = () => {
       <div className={css.container}>
         <div className={css.header}>
           <div className={css.left}>
-            <h1 className={css.title}>Contracts</h1>
-            <h2 className={css.subtitle}>Manage your jobs offers and work.</h2>
+            <h1 className={css.title}>{t('contracts_contracts')}</h1>
+            <h2 className={css.subtitle}>{t('contracts_manage_offers_work')}</h2>
           </div>
           <div className={css.right}></div>
         </div>

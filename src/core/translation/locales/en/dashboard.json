@@ -69,5 +69,6 @@
   "user.impact_points.donated_0": "{user.impact_points.donated_0}",
   "talent_dashboard.showcase_offerings": "Showcase your unique offerings and attract clients",
   "talent_dashboard.create_service": "Create service",
-  "hour_units": "hrs"
+  "hour_units": "hrs",
+  "cred_verification_text": "In order to claim your certificates, please verify your identity."
 }

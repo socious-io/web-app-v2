@@ -39,7 +39,7 @@ export const JobsListing = () => {
               <div className={css.header}>
                 <div className={css.title}>{t('RecommendedJobsLabel')}</div>
                 <div className="flex flex-col md:flex-row items-start gap-4 md:justify-between">
-                  <div className={css.subTitle}>Based on your profile and search history</div>
+                  <div className={css.subTitle}>{t('RecommendedJobsHint')}</div>
                   <Button
                     variant="text"
                     color="primary"
@@ -57,8 +57,8 @@ export const JobsListing = () => {
           )}
 
           <div className={css.header}>
-            <div className={css.title}>All jobs</div>
-            <div className={css.subTitle}>Discover our most recent jobs</div>
+            <div className={css.title}>{t('AllJobsLabel')}</div>
+            <div className={css.subTitle}>{t('AllJobsHint')}</div>
           </div>
 
           <div id="job-listing-div">
