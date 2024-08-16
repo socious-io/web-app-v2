@@ -2,7 +2,6 @@ import { Typography } from '@mui/material';
 import React from 'react';
 import { OrgMeta, UserMeta } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
-import { UserType } from 'src/core/types';
 import { getIdentityMeta } from 'src/core/utils';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Dot } from 'src/modules/general/components/dot';
@@ -16,27 +15,19 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
     data: { copyProccessed },
   } = useSeeMore(chat.last_message?.text || '', 50);
 
-  let username = '',
-    profileImage = '',
-    type = 'users' as UserType;
-  if ('shortname' in chat.participants[0]) {
-    const meta = chat.participants[0].meta as OrgMeta;
-    username = meta.shortname;
-    profileImage = meta.image;
-    type = 'organizations';
-  } else {
-    const meta = chat.participants[0].meta as UserMeta;
-    username = meta.username;
-    profileImage = meta.avatar || '';
-    type = 'users';
-  }
+  const {
+    profileImage,
+    username,
+    type = 'users',
+    name,
+  } = getIdentityMeta(chat.participants[0].identity_meta as UserMeta | OrgMeta);
 
   const account = {
     id: chat.participants[0].identity_meta?.id || '',
     img: profileImage,
-    type: type || 'users',
-    name: chat.participants[0].identity_meta?.name || '',
-    username: username,
+    type,
+    name,
+    username,
   };
 
   return (
