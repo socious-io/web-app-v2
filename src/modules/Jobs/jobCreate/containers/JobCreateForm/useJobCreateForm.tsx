@@ -329,11 +329,11 @@ export const useJobCreateForm = () => {
     trigger('paymentMin');
   };
   const onChangeCommitHoursMin = (value: string) => {
-    setValue('commitmentHoursLower', Number(value), { shouldValidate: true });
+    setValue('commitmentHoursLower', Number(value) || null, { shouldValidate: true });
     trigger('commitmentHoursHigher');
   };
   const onChangeCommitHoursMax = (value: string) => {
-    setValue('commitmentHoursHigher', Number(value), { shouldValidate: true });
+    setValue('commitmentHoursHigher', Number(value) || null, { shouldValidate: true });
     trigger('commitmentHoursLower');
   };
 
@@ -402,7 +402,7 @@ export const useJobCreateForm = () => {
         paymentMax: Number(job?.payment_range_higher) || null,
         jobLocation: job.city ? 'Country / City' : 'Anywhere',
         commitmentHoursLower: Number(job?.commitment_hours_lower) || null,
-        commitmentHoursHigher: Number(job?.commitment_hours_higher) ?? null,
+        commitmentHoursHigher: Number(job?.commitment_hours_higher) || null,
       };
       reset(initialVal);
     },
