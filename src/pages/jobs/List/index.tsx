@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { CurrentIdentity, JobsRes } from 'src/core/api';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -34,7 +34,7 @@ export const JobsList = () => {
   return (
     <div className={css.container}>
       {currentIdentity?.type === 'organizations' ? (
-        <></>
+        <Navigate to="/jobs/created" replace />
       ) : (
         <>
           <div className={css.header}>
