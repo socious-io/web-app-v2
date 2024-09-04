@@ -62,3 +62,12 @@ export async function stripeProfile(params: SrtipeProfileReq): Promise<StripePro
 export async function googleOauth(code: string, referrer?: string, event_id?: string): Promise<AuthRes> {
   return (await get<AuthRes>('auth/google', { params: { code, referrer_by: referrer, event_id } })).data;
 }
+
+export async function appleOauth(
+  code: string,
+  id_token: string,
+  referrer?: string,
+  event_id?: string,
+): Promise<AuthRes> {
+  return (await get<AuthRes>('auth/apple', { params: { code, id_token, referrer_by: referrer, event_id } })).data;
+}

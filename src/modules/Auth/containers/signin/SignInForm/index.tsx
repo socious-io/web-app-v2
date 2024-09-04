@@ -70,6 +70,17 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
             <Google />
             Continue with Google
           </Button>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => {
+              tried();
+              navigate(`/oauth/apple${event.name && `?event_name=${event.name}`}`);
+            }}
+            style={{ display: 'flex', gap: '12px' }}
+          >
+            Continue with Apple
+          </Button>
           {/*
             <Button variant="outlined" color="secondary" className={css.button}>
               <LinkedIn />
