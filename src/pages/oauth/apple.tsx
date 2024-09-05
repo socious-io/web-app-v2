@@ -9,7 +9,7 @@ import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 export const AppleOauth2 = () => {
-  const appleLoginURL = `https://appleid.apple.com/auth/authorize?client_id=${config.appleOauthClientId}&redirect_uri=${window.location.href}&response_type=code id_token&state=origin:web&scope=name email&response_mode=form_post&prompt=consent`;
+  const appleLoginURL = `https://appleid.apple.com/auth/authorize?client_id=${config.appleOauthClientId}&redirect_uri=${config.baseURL}/auth/apple&response_type=code id_token&state=origin:web&scope=name email&response_mode=form_post&prompt=consent`;
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
