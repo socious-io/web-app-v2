@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { Apple } from 'public/icons/nowruz/apple';
 import { Google } from 'public/icons/nowruz/google';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
@@ -79,6 +80,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
             }}
             style={{ display: 'flex', gap: '12px' }}
           >
+            <Apple />
             Continue with Apple
           </Button>
           {/*
