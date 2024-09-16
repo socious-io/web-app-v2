@@ -48,7 +48,7 @@
     "@storybook/addon-designs": "^8.0.3",
     "@stripe/stripe-js": "^4.4.0",
     "@tanstack/react-table": "^8.17.3",
-    "@web3modal/ethers": "^5.0.7",
+    "@web3modal/ethers": "^5.1.8",
     "axios": "^1.7.3",
     "country-flag-icons": "^1.5.13",
     "ethers": "^6.13.2",
