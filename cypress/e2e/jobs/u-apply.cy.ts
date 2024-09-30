@@ -1,5 +1,5 @@
 import { API_SERVER, APP_URL, FIRSTNAME, LASTNAME, USERNAME } from '../authentication/constants';
-import { PROJECT, PROJECTS, SENT_APPLICATION, UPLOAD } from '../authentication/mocks';
+import { ORGS, PROJECT, PROJECTS, SENT_APPLICATION, UPLOAD } from '../authentication/mocks';
 import { User, generateRandomEmail } from '../authentication/utilities';
 
 const SIGNINGUP_EMAIL = generateRandomEmail();
@@ -18,7 +18,8 @@ describe('User Application', () => {
     cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
       'getUnreadChatsCount',
     );
-
+    cy.intercept('GET', `${API_SERVER}/projects/*`, req => req.reply(200, PROJECT)).as('getProject');
+    cy.intercept('GET', `${API_SERVER}/orgs/*`, req => req.reply(200, ORGS)).as('getOrg');
     cy.intercept('POST', `${API_SERVER}/projects/*/applicants`, req => req.reply(200, SENT_APPLICATION)).as(
       'sendApplication',
     );
