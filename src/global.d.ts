@@ -2,6 +2,7 @@ declare global {
   interface Window {
     ethereum: any;
     evmproviders: any;
+    cardano: any;
   }
 }
 declare module '*.module.css' {

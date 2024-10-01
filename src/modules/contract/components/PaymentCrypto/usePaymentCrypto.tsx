@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Offer, OrgMeta, hireOffer, payByOffer } from 'src/core/api';
 import dapp from 'src/dapp';
 
+// export const
+
 export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => void, offer?: Offer) => {
   const { chainId, signer, account, isConnected, open } = dapp.useWeb3();
   const [disabledPayment, setDisabledPayment] = useState(!isConnected);
