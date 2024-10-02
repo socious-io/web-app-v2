@@ -1,8 +1,8 @@
 import { StoryFn } from '@storybook/react';
 import { template } from 'cypress/types/lodash';
 import { useState } from 'react';
-import { CardRadioButton } from 'src/Nowruz/modules/general/components/cardRadioButton/cardRadioButton';
-import { CardRadioButtonItem } from 'src/Nowruz/modules/general/components/cardRadioButton/cardRadioButton.types';
+import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
+import { CardRadioButtonItem } from 'src/modules/general/components/cardRadioButton/cardRadioButton.types';
 
 export default {
   title: 'General/Card-Radio-Button',
@@ -23,7 +23,7 @@ const items: CardRadioButtonItem[] = [
     value: 'organization',
   },
 ];
-const Template: StoryFn = (args) => {
+const Template: StoryFn = args => {
   const [selectedValue, setSelectedValue] = useState('');
   return (
     <div style={{ width: '370px' }}>

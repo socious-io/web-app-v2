@@ -1,0 +1,11 @@
+.toggle {
+    @apply flex gap-8 py-6;
+
+    &__header {
+        @apply flex flex-col font-semibold leading-6 text-Gray-light-mode-900 w-[280px];
+    }
+
+    &__subheader {
+        @apply text-sm font-normal leading-6 text-Gray-light-mode-600;
+    }
+}

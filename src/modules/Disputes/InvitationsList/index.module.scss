@@ -1,0 +1,20 @@
+.table {
+    @apply flex flex-col border border-solid border-Gray-light-mode-200 rounded-lg shadow-Shadows/shadow-sm;
+
+    .header {
+        @apply border-0 border-b border-solid border-Gray-light-mode-200 rounded-lg text-xs bg-Gray-light-mode-50 h-11;
+
+        &__item {
+            @apply px-6 py-3 align-middle font-medium text-Gray-light-mode-600;
+        }
+    }
+
+    .col {
+        @apply px-6 py-3 align-middle text-sm font-normal text-Gray-light-mode-600 truncate;
+        max-width: 180px;
+    }
+}
+
+.paginationBox {
+    @apply px-6 py-3 border-0 border-t border-solid border-Gray-light-mode-200 rounded-b-xl;
+}

@@ -3,11 +3,11 @@ import { Organization } from '../organizations/organizations.types';
 import { PaginateRes } from '../types';
 import { Education, Experience, User } from '../users/users.types';
 
-export type CredentailStatus = 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
+export type CredentialStatus = 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'REJECTED' | 'CLAIMED';
 
 export interface CredentialExperienceRes {
   id: string;
-  status: CredentailStatus;
+  status: CredentialStatus;
   experience: Experience;
   user: User;
   org: Organization;
@@ -19,7 +19,7 @@ export interface CredentialExperienceRes {
 
 export interface CredentialEducationRes {
   id: string;
-  status: CredentailStatus;
+  status: CredentialStatus;
   education: Education;
   user: User;
   org: Organization;
@@ -32,6 +32,7 @@ export interface CredentialEducationRes {
 export interface ClaimVCRes {
   id: string;
   url: string;
+  short_url: string;
 }
 
 export interface CredentialExperiencePaginateRes extends PaginateRes {
@@ -47,6 +48,7 @@ export interface RequestVerificationRes {
   identity_id: string;
   connection_id: string;
   connection_url: string;
+  short_url: string;
   present_id: string;
   body: null;
   created_at: Date;
@@ -56,7 +58,7 @@ export interface RequestVerificationRes {
 export interface OrgRequestVerificationRes {
   id: string;
   identity_id: string;
-  status: CredentailStatus;
+  status: CredentialStatus;
   created_at: Date;
   updated_at: Date;
   documents: [

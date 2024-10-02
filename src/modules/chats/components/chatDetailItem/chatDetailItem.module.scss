@@ -1,0 +1,29 @@
+@import 'src/styles/constants/_primitives.scss';
+
+@mixin Message {
+    white-space: pre-wrap;
+    width: fit-content;
+    max-width: 35rem;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.myMessage {
+    @include Message;
+    background-color: $color-primary-600;
+    color: $color-white;
+    border-top-right-radius: 0;
+}
+
+.otherMessage {
+    @include Message;
+    background-color: $color-grey-100;
+    color: $color-grey-900;
+    border-top-left-radius: 0;
+}

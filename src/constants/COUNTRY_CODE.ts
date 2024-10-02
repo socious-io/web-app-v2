@@ -1,6 +1,7 @@
-import { DropdownItem } from 'src/components/atoms/dropdown-v2/dropdown.types';
-
-interface CountryCode extends DropdownItem {
+interface CountryCode {
+  id: number;
+  label: string;
+  value: string;
   code: string;
   name: string;
   emoji: string;

@@ -1,0 +1,42 @@
+{
+	"appId": "jp.socious.network",
+	"appName": "Socious",
+	"webDir": "dist",
+	"bundledWebRuntime": false,
+	"server": {
+		"hostname": "capacitor.native",
+		"androidScheme": "https"
+	},
+	"plugins": {
+		"CapacitorCookies": {
+			"enabled": true
+		},
+		"PushNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"alert"
+			]
+		}
+	},
+	"packageClassList": [
+		"FirebaseMessagingPlugin",
+		"FirebaseMessagingPlugin",
+		"ActionSheetPlugin",
+		"ActionSheetPlugin",
+		"AppPlugin",
+		"AppPlugin",
+		"CAPCameraPlugin",
+		"CAPCameraPlugin",
+		"DialogPlugin",
+		"DialogPlugin",
+		"HapticsPlugin",
+		"HapticsPlugin",
+		"PreferencesPlugin",
+		"PreferencesPlugin",
+		"PushNotificationsPlugin",
+		"PushNotificationsPlugin",
+		"ToastPlugin",
+		"ToastPlugin"
+	]
+}

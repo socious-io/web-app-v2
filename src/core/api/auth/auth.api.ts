@@ -15,8 +15,8 @@ import {
 import { post, get } from '../http';
 import { SuccessRes } from '../types';
 
-export async function login(payload: LoginReq): Promise<AuthRes> {
-  return (await post<AuthRes>('auth/login', payload)).data;
+export async function login(payload: LoginReq, params?: { event_id: string }): Promise<AuthRes> {
+  return (await post<AuthRes>('auth/login', payload, { params })).data;
 }
 
 export async function logout(): Promise<SuccessRes> {
@@ -31,8 +31,8 @@ export async function preRegister(payload: PreRegisterReq): Promise<PreRegisterR
   return (await post<PreRegisterRes>('auth/preregister', payload)).data;
 }
 
-export async function register(payload: RegisterReq, referrer?: string): Promise<SuccessRes> {
-  return (await post<SuccessRes>('auth/register', payload, { params: { referred_by: referrer } })).data;
+export async function register(payload: RegisterReq, referrer?: string, event_id?: string): Promise<SuccessRes> {
+  return (await post<SuccessRes>('auth/register', payload, { params: { referred_by: referrer, event_id } })).data;
 }
 
 export async function otp(payload: OtpReq): Promise<SuccessRes> {
@@ -59,6 +59,6 @@ export async function stripeProfile(params: SrtipeProfileReq): Promise<StripePro
   return (await get<StripeProfileRes>('auth/stripe/profile', { params })).data;
 }
 
-export async function googleOauth(code: string, referrer?: string): Promise<AuthRes> {
-  return (await get<AuthRes>('auth/google', { params: { code, referrer_by: referrer } })).data;
+export async function googleOauth(code: string, referrer?: string, event_id?: string): Promise<AuthRes> {
+  return (await get<AuthRes>('auth/google', { params: { code, referrer_by: referrer, event_id } })).data;
 }
