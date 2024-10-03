@@ -70,7 +70,8 @@ jobs:
 
       - name: Install Node.js dependencies
         run: |
-          npm i --legacy-peer-deps
+          npm cache clean --force
+          npm ci
 
       - name: Making iOS Release Code
         run: |
