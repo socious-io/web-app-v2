@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
+import { translate } from 'src/core/utils';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { useUser } from 'src/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 type SocialCauseVal = {
@@ -12,7 +13,6 @@ export const useCauses = () => {
   const [value, setValue] = useState<SocialCauseVal[]>([]);
   const { state, updateUser } = useUser();
   const { updateSelectedStep } = useContext(StepsContext);
-  const { t: translate } = useTranslation();
   const items = keyItems.map(i => {
     return { value: SOCIAL_CAUSES[i].value, label: translate(SOCIAL_CAUSES[i].value) };
   });
@@ -25,5 +25,5 @@ export const useCauses = () => {
 
   const getOptionsFromValues = values => values.map(value => translate(SOCIAL_CAUSES[value]));
 
-  return { items, value, setValue, updateSelectedStep, translate };
+  return { items, value, setValue, updateSelectedStep };
 };

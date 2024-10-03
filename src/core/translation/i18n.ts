@@ -19,7 +19,7 @@ i18next
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en',
+    lng: 'jp',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'src/core/utils';
 import { KYBModal } from 'src/modules/credentials/KYB';
 import { Icon } from 'src/modules/general/components/Icon';
 import { KYCModal } from 'src/modules/refer/KYC';
@@ -17,14 +18,14 @@ export const TopBannerNotVerified: React.FC<TopBannerNotVerifiedProps> = ({ supp
     <>
       <TopBanner
         theme="warning"
-        primaryBtnLabel="Verify now"
+        primaryBtnLabel={translate('dashboard-verify-now')}
         primaryBtnIcon={<Icon name="arrow-right" fontSize={20} className="text-Warning-700 p-0" />}
         primaryBtnAction={
           type === 'users' ? () => verifyAction(setConnectUrl, setOpenVerifyModal) : () => setOpenVerifyModal(true)
         }
-        secondaryBtnLabel="Learn more"
+        secondaryBtnLabel={translate('dashboard-verify-learn-more')}
         secondaryBtnLink="https://socious.io/verified-credentials"
-        text={type === 'users' ? 'Verify your identity' : 'Verify your organization'}
+        text={type === 'users' ? translate('dashboard-verify-user-title') : translate('dashboard-verify-org-title')}
         supportingText={supportingText}
       />
       {type === 'users' ? (

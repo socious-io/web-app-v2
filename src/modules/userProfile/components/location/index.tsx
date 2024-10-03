@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { translate } from 'src/core/utils';
 import { CountryFlag } from 'src/modules/general/components/countryFlag';
 
 export interface LocationProps {
@@ -23,7 +24,7 @@ export const Location: React.FC<LocationProps> = props => {
   return (
     <div className="flex flex-col gap-2">
       <Typography variant="subtitle1" className="text-Gray-light-mode-600">
-        Location
+        {translate('profile-location')}
       </Typography>
       <div className="flex gap-2 items-center">
         <CountryFlag countryCode={country || ''} />
