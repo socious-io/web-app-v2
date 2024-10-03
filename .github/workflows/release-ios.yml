@@ -6,9 +6,39 @@ on:
     #   - v*
     branches:
       - ci
+  # release:
+  #   types: [prereleased, released]
+
+# echo ${{ github.event.release.tag_name }} -> tagname
+# echo ${{ github.event.release.prerelease }} -> true,false (${{ github.event.release.prerelease == true }})
+# echo '${{ github.event.release.name }}' -> title
+# echo '${{ github.event.release.body }}' -> body
+
+env:
+  CI: false
+  #Github ENVs
+  IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
+  IOS_DEVELOPMENT_TEAM_ID: ${{ vars.IOS_DEVELOPMENT_TEAM_ID }}
+  IOS_DISTRIBUTION_CERT_BASE64: ${{ secrets.IOS_DISTRIBUTION_CERT_BASE64 }}
+  IOS_DISTRIBUTION_CERT_PASSWORD: ${{ secrets.IOS_DISTRIBUTION_CERT_PASSWORD }}
+  IOS_PROVISIONING_PROFILE_BASE64: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 }}
+  IOS_APPSTORECONNECT_AUTH_KEY_BASE64: ${{ secrets.IOS_APPSTORECONNECT_AUTH_KEY_BASE64 }}
+  IOS_APPSTORECONNECT_API_ISSUER: ${{ vars.IOS_APPSTORECONNECT_API_ISSUER }}
+  IOS_APPSTORECONNECT_API_KEY: ${{ secrets.IOS_APPSTORECONNECT_API_KEY }}
+  IOS_APP_APPLE_ID: ${{ vars.IOS_APP_APPLE_ID }}
+  #Workflow ENVs
+  APPSTORECONNECT_AUTH_KEY_PATH: /Users/runner/private_keys
+  MOBILE_PROVISIONING_PATH: ~/Library/MobileDevice/Provisioning\ Profiles
+  SIGNING_CERTIFICATE_PATH: ${{ github.workspace }}/ios/App/signing-certificate.p12
+  BUILDING_PATH: ${{ github.workspace }}/ios/App/build/Socious.ipa
+  KEYCHAIN_PATH: ${{ github.workspace }}/ios/keychain/app-signing.keychain-db
+  KEYCHAIN_PASSWORD: keychain_password
 
 jobs:
-  setup-fastlane:
+  build-ios:
+    name: Building iOS
+    outputs:
+      LATEST_APPSTORE_BUILD_NUMBER: ${{ steps.build-number.outputs.LATEST_APPSTORE_BUILD_NUMBER }}
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -19,11 +49,6 @@ jobs:
         with:
           node-version: '20'
 
-      # - name: Setup Ruby, JRuby and TruffleRuby
-      #   uses: ruby/setup-ruby@v1.174.0
-      #   with:
-      #     ruby-version: '3.3' # Not needed with a .ruby-version file
-      #     bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - name: Setup Cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
@@ -42,139 +67,174 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
-            ${{ runner.os }}-
 
       - name: Install Node.js dependencies
         run: |
           npm cache clean --force
-          npm install
+          npm ci
 
       - name: Making iOS Release Code
         run: |
-          echo 'STORYBOOK_FIGMA_ACCESS_TOKEN=${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}' >> .env
-          echo 'VITE_ACCESS_EXPIRE=${{ vars.ACCESS_EXPIRE }}' >> .env
-          echo 'VITE_APP_URL=${{ vars.APP_URL }}' >> .env
-          echo 'VITE_BASE_URL=${{ vars.BASE_URL }}' >> .env
-          echo 'VITE_CLIENT_SECRET_TOKEN_CLIENT_ID=${{ secrets.CLIENT_SECRET_TOKEN_CLIENT_ID }}' >> .env
-          echo 'VITE_CLIENT_SECRET_TOKEN_REDIRECT_URL=${{ vars.CLIENT_SECRET_TOKEN_REDIRECT_URL }}' >> .env
-          echo 'VITE_DAPP_ENV=${{ vars.DAPP_ENV }}' >> .env
-          echo 'VITE_ENV=${{ vars.ENV }}' >> .env
-          echo 'VITE_GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}' >> .env
-          echo 'VITE_GOOGLE_RECAPTCHA_SITE_KEY=${{ secrets.GOOGLE_RECAPTCHA_SITE_KEY }}' >> .env
-          echo 'VITE_JP_STRIPE_PUBLIC_KEY=${{ secrets.JP_STRIPE_PUBLIC_KEY }}' >> .env
-          echo 'VITE_LOG_DISCORD_WEBHOOK=${{ secrets.LOG_DISCORD_WEBHOOK }}' >> .env
-          echo 'VITE_REFRESH_EXPIRE=${{ vars.REFRESH_EXPIRE }}' >> .env
-          echo 'VITE_SOCKET_URL=${{ vars.SOCKET_URL }}' >> .env
-          echo 'VITE_STRIPE_PUBLIC_KEY=${{ vars.STRIPE_PUBLIC_KEY }}' >> .env
+          npm run build
           npm run make:ios
-          ls ios/App
-
-      - name: Generating Assets
-        run: |
-          npm run build:icons
-      
-      - name: Install the Apple certificate and provisioning profile
         env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 }}
-          P12_PASSWORD: ${{ secrets.IOS_BUILD_CERTIFICATE_PASSWORD }}
-          KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
+          STORYBOOK_FIGMA_ACCESS_TOKEN: ${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}
+          VITE_ACCESS_EXPIRE: ${{ vars.ACCESS_EXPIRE }}
+          VITE_APP_URL: ${{ vars.APP_URL }}
+          VITE_BASE_URL: ${{ vars.BASE_URL }}
+          VITE_CLIENT_SECRET_TOKEN_CLIENT_ID: ${{ secrets.CLIENT_SECRET_TOKEN_CLIENT_ID }}
+          VITE_CLIENT_SECRET_TOKEN_REDIRECT_URL: ${{ vars.CLIENT_SECRET_TOKEN_REDIRECT_URL }}
+          VITE_DAPP_ENV: ${{ vars.DAPP_ENV }}
+          VITE_ENV: ${{ vars.ENV }}
+          VITE_GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+          VITE_GOOGLE_RECAPTCHA_SITE_KEY: ${{ secrets.GOOGLE_RECAPTCHA_SITE_KEY }}
+          VITE_JP_STRIPE_PUBLIC_KEY: ${{ secrets.JP_STRIPE_PUBLIC_KEY }}
+          VITE_LOG_DISCORD_WEBHOOK: ${{ secrets.LOG_DISCORD_WEBHOOK }}
+          VITE_REFRESH_EXPIRE: ${{ vars.REFRESH_EXPIRE }}
+          VITE_SOCKET_URL: ${{ vars.SOCKET_URL }}
+          VITE_STRIPE_PUBLIC_KEY: ${{ vars.STRIPE_PUBLIC_KEY }}
+
+      - name: Extracting App Version
         run: |
-          # create variables
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          echo "APP_VERSION=$(echo '${{ github.event.release.tag_name }}' | cut -c2-)" >> $GITHUB_ENV
 
-          # import certificate and provisioning profile from secrets
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+      - name: Extracting provisioning profile (Distribution)
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo ${{ env.IOS_PROVISIONING_PROFILE_BASE64 }} | base64 --decode > ${{env.MOBILE_PROVISIONING_PATH}}/socious-provisioing-profile-distribution-appstore.mobileprovision
 
-          # create temporary keychain
+      - name: Extracting auth key file (Apple API)
+        env:
+          KEY_PATH: ${{ env.APPSTORECONNECT_AUTH_KEY_PATH }}
+          API_KEY: ${{ env.IOS_APPSTORECONNECT_API_KEY }}
+        run: |
+          KEY_FILE_PATH=$KEY_PATH/AuthKey_$API_KEY.p8
+          mkdir -p $KEY_PATH
+          echo ${{ env.IOS_APPSTORECONNECT_AUTH_KEY_BASE64 }} | base64 --decode > $KEY_FILE_PATH
+
+      - name: Extracting signing certificate
+        run: |
+          echo ${{ env.IOS_DISTRIBUTION_CERT_BASE64 }} | base64 --decode > $SIGNING_CERTIFICATE_PATH
+
+      - name: Extracting and Installing signing certificate (.p12)
+        env:
+          SIGNING_CERTIFICATE_PATH: ${{ env.SIGNING_CERTIFICATE_PATH }}
+          KEYCHAIN_PATH: ${{ env.KEYCHAIN_PATH }}
+          KEYCHAIN_PASSWORD: ${{ env.KEYCHAIN_PASSWORD }}
+          P12_PASSWORD: ${{ env.IOS_DISTRIBUTION_CERT_PASSWORD }}
+        run: |
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-
-          # import certificate to keychain
-          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security import $SIGNING_CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
 
-          # apply provisioning profile
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+      - name: Adding Provisioning Profile UUID to Github Env
+        run: |
+          echo "MOBILE_PROVISIONING_UUID=$(security cms -D -i ${{env.MOBILE_PROVISIONING_PATH}}/socious-provisioing-profile-distribution-appstore.mobileprovision | grep UUID -A1 -m1 | grep string | sed -e 's/<string>//' -e 's/<\/string>//' | xargs)" > $GITHUB_ENV
 
-      - name: Building iOS App
+      - name: Fetching the Appstore Connect latest build number and increment
+        id: build-number
+        env:
+          APP_STORE_CONNECT_ISSUER_ID: ${{ env.IOS_APPSTORECONNECT_API_ISSUER }}
+          APP_STORE_CONNECT_KEY_IDENTIFIER: ${{ env.IOS_APPSTORECONNECT_API_KEY }}
+          APP_STORE_CONNECT_PRIVATE_KEY: '@file:${{ env.APPSTORECONNECT_AUTH_KEY_PATH }}/AuthKey_${{ env.IOS_APPSTORECONNECT_API_KEY }}.p8'
+          BUNDLE_ID: ${{ env.IOS_BUNDLE_ID }}
+          APPLICATION_ID_RESOURCE_ID: ${{ env.IOS_APP_APPLE_ID }}
+        run: |
+          python -m pip install codemagic-cli-tools
+
+          LATEST_APPSTORE_BUILD_NUMBER=$(app-store-connect get-latest-build-number "$APPLICATION_ID_RESOURCE_ID" | awk '{print $1 + 1}')
+
+          echo "LATEST_APPSTORE_BUILD_NUMBER=$LATEST_APPSTORE_BUILD_NUMBER" >> $GITHUB_OUTPUT
+          echo "LATEST_APPSTORE_BUILD_NUMBER=$LATEST_APPSTORE_BUILD_NUMBER" >> $GITHUB_ENV
+
+          app-store-connect get-latest-app-store-build-number "$APPLICATION_ID_RESOURCE_ID"
+          app-store-connect get-latest-testflight-build-number "$APPLICATION_ID_RESOURCE_ID"
+
+      - name: Creating Export.plist
         run: |
           cd ios/App
-          xcodebuild -scheme "App" clean archive -archivePath "Actions" -configuration "Release Production"
+          cp ../../.github/workflows/ios-export.plist Export.plist
+          sed -ie 's/IOS_DEVELOPMENT_TEAM_ID/${{ env.IOS_DEVELOPMENT_TEAM_ID }}/g' Export.plist
+          sed -ie 's/IOS_BUNDLE_ID/${{ env.IOS_BUNDLE_ID }}/g' Export.plist
+          sed -ie 's/MOBILE_PROVISIONING_UUID/${{ env.MOBILE_PROVISIONING_UUID }}/g' Export.plist
 
-      - name: export ipa
+      - name: Configuring apps (using Trapeze)
         env:
-          EXPORT_PLIST: ${{ secrets.IOS_EXPORT_PRODUCTION}}
+          IOS_BUILD_NUMBER: ${{ env.LATEST_APPSTORE_BUILD_NUMBER }}
+          IOS_BUNDLE_ID: ${{ env.IOS_BUNDLE_ID }}
+          IOS_DEVELOPMENT_TEAM_ID: ${{ env.IOS_DEVELOPMENT_TEAM_ID }}
+          VERSION: ${{ env.APP_VERSION }}
         run: |
-          # crete export options
-          EXPORT_PLIST_PATH=$RUNNER_TEMP/ExportOptions.plist
-          echo -n "$EXPORT_PLIST" | base64 --decode --output $EXPORT_PLIST_PATH
-          xcodebuild -exportArchive -archivePath $GITHUB_WORKSPACE/Actions.xcarchive -exportOptionsPlist $EXPORT_PLIST_PATH -exportPath $RUNNER_TEMP/export
-          
-      # - name: Upload iPA
-      #   uses: actions/upload-artifact@master
-      #   with:
-      #     path: $RUNNER_TEMP/export
+          npm run config:apps
 
-      - name: Rename the file, remove whitespace
+      - name: Generating Assets
+        run: |
+          npm run generate:assets
+
+      # On Pre-Relase
+
+      # On Relase
+      - name: Build and archiving the app
+        run: |
+          cd ios/App
+          xcodebuild -scheme App -archivePath ./Actions.xcarchive -configuration Release archive -workspace ./App.xcworkspace PROVISIONING_PROFILE="${{env.MOBILE_PROVISIONING_UUID}}"
+
+      - name: Exporting archive for releasing to Appstore (.IPA)
+        run: |
+          cd ios/App
+          xcodebuild -exportArchive -archivePath ./Actions.xcarchive -exportPath ./build -exportOptionsPlist ./Export.plist PROVISIONING_PROFILE="${{env.MOBILE_PROVISIONING_UUID}}"
+
+      - name: Verifying build for releasing to Appstore (.IPA)
         env:
-          SCHEME: App
+          API_ISSUER: ${{ env.IOS_APPSTORECONNECT_API_ISSUER }}
+          API_KEY: ${{ env.IOS_APPSTORECONNECT_API_KEY }}
         run: |
-          echo Export directory contents:
-          ls $RUNNER_TEMP/export
-          mv "$RUNNER_TEMP/export/$SCHEME.ipa" "$RUNNER_TEMP/export/$SCHEME.ipa"
-          ls $RUNNER_TEMP/export
+          cd ios/App
+          xcrun altool --validate-app -f "./build/Socious.ipa" -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
 
-      - name: Decode auth. api key file and save it
+      - name: Upload bundle (.IPA) to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: '${{ env.BUILDING_PATH }}'
+          asset_name: Socious-${{ github.event.release.tag_name }}.ipa
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: ${{ github.event.release.body }}
+
+      - name: Clean up keychain and provisioning profile
+        run: |
+          security delete-keychain ${{ env.KEYCHAIN_PATH }}
+          rm -rf ${{ env.MOBILE_PROVISIONING_PATH }}
+
+  deploy-appstore:
+    name: Deploy to Apple Appstore
+    runs-on: macos-latest
+    if: github.event.release.prerelease != true
+    needs: [build-ios]
+    env:
+      LATEST_APPSTORE_BUILD_NUMBER: ${{ needs.build-ios.outputs.LATEST_APPSTORE_BUILD_NUMBER }}
+    steps:
+      - uses: robinraju/release-downloader@v1.11
+        with:
+          latest: true
+          fileName: Socious-${{ github.event.release.tag_name }}.ipa
+
+      - name: Extracting auth key file (Apple API)
         env:
-          API_KEY_BASE64: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+          KEY_PATH: ${{ env.APPSTORECONNECT_AUTH_KEY_PATH }}
+          API_KEY: ${{ env.IOS_APPSTORECONNECT_API_KEY }}
         run: |
-          ls ~/private_keys
-          echo -n "$IOS_APPSTORE_AUTH_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_${{ secrets.IOS_APPSTORE_AUTH_KEY_ID }}.p8
-          echo "After saving: "
-          ls ~/private_keys
+          KEY_FILE_PATH=$KEY_PATH/AuthKey_$API_KEY.p8
+          mkdir -p $KEY_PATH
+          echo ${{ env.IOS_APPSTORECONNECT_AUTH_KEY_BASE64 }} | base64 --decode > $KEY_FILE_PATH
 
-      - name: "Upload file to test flight using CLI"
+      - name: Releasing the build to Appstore (.IPA)
         env:
-          SCHEME: App
+          API_ISSUER: ${{ env.IOS_APPSTORECONNECT_API_ISSUER }}
+          API_KEY: ${{ env.IOS_APPSTORECONNECT_API_KEY }}
         run: |
-          echo "Starting upload."
-          ls ~/private_keys
-          xcrun altool --validate-app -f $RUNNER_TEMP/export/$SCHEME.ipa -t ios --apikey ${{ secrets.IOS_APPSTORE_AUTH_KEY_ID}}
-          xcrun altool --upload-app -f $RUNNER_TEMP/export/$SCHEME.ipa -t ios --apikey "${{ secrets.IOS_APPSTORE_AUTH_KEY_ID}}
-
-      # - name: Configurating Bundler
-      #   run: |
-      #     gem install bundler
-      #     cp Gemfile ios
-
-      # - name: Installing Fastlane with Bundler
-      #   run: |
-      #     cd ios
-      #     bundle update
-      #     bundle install
-
-      # - name: Configurating Fastlane
-      #   run: |
-      #     export LC_ALL=en_US.UTF-8
-      #     export LANG=en_US.UTF-8
-      #     cp -R fastlane/ios-config ios
-      #     mv ios/ios-config ios/fastlane
-      #     cd ios/App
-      #     pod install
-      #     cd ..
-      #     fastlane match appstore --readonly
-      #     fastlane beta --verbose
-      #   env:
-      #     MATCH_GIT_URL: ${{ vars.FASTLANE_MATCH_GIT_URL }}
-      #     MATCH_PASSWORD: ${{ secrets.IOS_MATCH_PASSWORD }}
-      #     MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.FASTLANE_SECRETS_GIT_PAT_TOKEN }}
-      #     ASC_KEY_ID: ${{ secrets.IOS_ASC_KEY_ID }}
-      #     ASC_ISSUER_ID: ${{ secrets.IOS_ASC_ISSUER_ID }}
-      #     ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          xcrun altool --upload-app -f ./Socious-${{ github.event.release.tag_name }}.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
