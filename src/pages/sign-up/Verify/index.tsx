@@ -1,5 +1,6 @@
 import { Logo } from 'public/icons/nowruz/logo';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import { VerifyForm } from 'src/modules/Auth/containers/signup/VerifyForm';
 import { steps } from 'src/modules/Auth/statics/sign-up-steps';
@@ -10,13 +11,14 @@ import { Stepper } from 'src/modules/general/components/stepper/stepper';
 import css from './verify.module.scss';
 export const Verify = () => {
   const email = localStorage.getItem('email') as string;
+  const { t: translate } = useTranslation();
 
   return (
     <div className="container mx-auto flex flex-col h-screen pb-16 md:pt-24 pt-12 px-4">
       <div className={`${css.verify} md:pt-24`}>
         <IntroHeader
-          title="Check your email"
-          description={`We sent a verification link to`}
+          title={translate('sign-up-verification-title')}
+          description={translate('sign-up-verification-subtitle')}
           subtitle={email}
           logo={<FeaturedIcon iconName="mail-01" />}
         />

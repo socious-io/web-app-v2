@@ -1,5 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import i18next from 'i18next';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { register as registerReq, preRegister, handleError } from 'src/core/api';
 import * as yup from 'yup';
@@ -9,11 +11,12 @@ type Inputs = {
 const schema = yup.object().shape({
   email: yup
     .string()
-    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'Enter a correct email')
-    .required('Email is required'),
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, i18next.t('sign-up-email-error-correct'))
+    .required(i18next.t('sign-up-email-error-required')),
 });
-export const useEmailForm = (event_id: string) => {
+export const useEmailForm = () => {
   const navigate = useNavigate();
+  const { t: translate } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -27,11 +30,6 @@ export const useEmailForm = (event_id: string) => {
   const savedReferrer = localStorage.getItem('referrer');
   const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
 
-  const setEventsFilter = () => {
-    const filter = { events: [event_id] };
-    localStorage.setItem('filter', JSON.stringify(filter));
-  };
-
   const onSubmit: SubmitHandler<Inputs> = async ({ email }) => {
     const response = await preRegister({ email: email });
     clearErrors('email');
@@ -39,15 +37,12 @@ export const useEmailForm = (event_id: string) => {
     if (response.email === 'EXISTS') {
       setError('email', {
         type: 'manual',
-        message: 'Email already in use. Please sign in or choose another email.',
+        message: translate('sign-up-email-error-duplicate'),
       });
       return;
     } else {
-      registerReq({ email }, referrerUser?.id, event_id)
-        .then(() => {
-          localStorage.setItem('email', email);
-          event_id && setEventsFilter();
-        })
+      registerReq({ email }, referrerUser?.id)
+        .then(() => localStorage.setItem('email', email))
         .then(() => navigate('../verification'))
         .catch(handleError());
 
@@ -55,5 +50,5 @@ export const useEmailForm = (event_id: string) => {
     }
   };
 
-  return { register, handleSubmit, errors, onSubmit, navigate };
+  return { register, handleSubmit, errors, onSubmit, navigate, translate };
 };

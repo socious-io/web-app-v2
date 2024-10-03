@@ -1,4 +1,5 @@
 import React, { useState, ReactNode, createContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BackLink } from 'src/modules/general/components/BackLink';
 
 import css from './stepper.module.scss';
@@ -30,7 +31,7 @@ const Steper: React.FC<Props> = ({ components }) => {
   const handleBack = () => {
     if (hasPrevStep) updateSelectedStep(step - 1);
   };
-
+  const { t } = useTranslation();
   return (
     <StepsContext.Provider value={{ step, updateSelectedStep }}>
       {components.map(({ Component }, index) => {
@@ -38,7 +39,7 @@ const Steper: React.FC<Props> = ({ components }) => {
       })}
       {step > 1 && (
         <div className={css.back}>
-          <BackLink title="Back" onBack={handleBack} block />
+          <BackLink title={t('general-back')} onBack={handleBack} block />
         </div>
       )}
     </StepsContext.Provider>

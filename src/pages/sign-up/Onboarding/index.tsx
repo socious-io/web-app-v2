@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity, identities, logout, OrgMeta, UserMeta } from 'src/core/api';
@@ -27,6 +28,7 @@ import css from './onboarding.module.scss';
 export const Onboarding = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t: translate } = useTranslation();
 
   const primary = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
@@ -62,13 +64,12 @@ export const Onboarding = () => {
   const items = [
     {
       iconName: 'log-out-01',
-      label: 'Log out',
+      label: translate('general-log-out'),
       onClick: async () => {
         try {
           await logout();
           store.dispatch(removeIdentityList());
           nonPermanentStorage.clear();
-          localStorage.clear();
           navigate('/sign-in');
         } catch (e) {
           console.log('error in logout', e);
