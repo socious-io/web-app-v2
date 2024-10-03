@@ -1,3 +1,4 @@
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import MultiSelect from 'src/modules/general/components/multiSelect/multiSelect';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -5,7 +6,7 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import css from './causes.module.scss';
 import { useCauses } from './useCauses';
 export const Causes = () => {
-  const { items, value, setValue, updateSelectedStep, translate } = useCauses();
+  const { items, value, setValue, updateSelectedStep } = useCauses();
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>
