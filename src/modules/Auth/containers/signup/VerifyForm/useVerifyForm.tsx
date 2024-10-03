@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { otpConfirm, resendVerifyCode } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
 
 export const useVerifyForm = () => {
   const navigate = useNavigate();
+  const { t: translate } = useTranslation();
   const email = localStorage.getItem('email') as string;
   const [otpValue, setOtpValue] = useState('');
   const [isValid, setIsValid] = useState(true);
@@ -26,5 +28,5 @@ export const useVerifyForm = () => {
     const email = localStorage.getItem('email');
     if (email) resendVerifyCode({ email }).then(() => setLoading(false));
   }
-  return { onSubmit, otpValue, setOtpValue, email, resendCode, isValid, loading };
+  return { onSubmit, otpValue, setOtpValue, email, resendCode, isValid, loading, translate };
 };

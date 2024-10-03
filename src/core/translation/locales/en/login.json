@@ -1,0 +1,17 @@
+{
+    "login-title": "Log in to your account",
+    "login-subtitle": "Welcome back! Please enter your details.",
+    "login-email": "Email",
+    "login-email-placeholder": "Enter your email",
+    "login-email-error": "Enter a correct email",
+    "login-password": "Password",
+    "login-password-placeholder": "Enter your password",
+    "login-password-error": "Enter a correct password",
+    "login-error-not-matched": "Username or password not matched",
+    "login-checkbox-keep-logged-in": "Keep me logged in",
+    "login-forget-password": "Forgot password",
+    "login-continue": "Continue",
+    "login-continue-google": "Continue with Google",
+    "login-not-account": "Don't have an account?",
+    "login-sign-up": " Sign up"
+}

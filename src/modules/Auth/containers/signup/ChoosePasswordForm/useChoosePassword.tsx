@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { changePasswordDirect } from 'src/core/api';
 import { passwordPattern } from 'src/core/regexs';
@@ -15,6 +16,7 @@ const schema = yup.object().shape({
 });
 export const useChoosePassword = () => {
   const navigate = useNavigate();
+  const { t: translate } = useTranslation();
   const [isPasswordLengthValid, setIsPasswordLengthValid] = useState(false);
   const [isPasswordPatternValid, setIsPasswordPatternValid] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -44,5 +46,14 @@ export const useChoosePassword = () => {
     }
   };
 
-  return { register, handleSubmit, errors, onSubmit, isFormValid, isPasswordLengthValid, isPasswordPatternValid };
+  return {
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
+    isFormValid,
+    isPasswordLengthValid,
+    isPasswordPatternValid,
+    translate,
+  };
 };

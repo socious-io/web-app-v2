@@ -3,10 +3,14 @@ import detector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
 import { generateTranslationFile } from './locales/en/translation';
+import { generateTranslationFile as generateJPTranslationFile } from './locales/jp/translation';
 
 const resources = {
   en: {
     translation: generateTranslationFile(),
+  },
+  jp: {
+    translation: generateJPTranslationFile(),
   },
 };
 

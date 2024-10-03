@@ -1,9 +1,11 @@
 import { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Location, searchLocation } from 'src/core/api';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { useUser } from 'src/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 
 export const useCity = () => {
+  const { t: translate } = useTranslation();
   const { state, updateUser } = useUser();
   const { updateSelectedStep } = useContext(StepsContext);
   const [selectedOption, setSelectedOption] = useState();
@@ -38,5 +40,6 @@ export const useCity = () => {
     selectedOption,
     setSelectedOption,
     value,
+    translate,
   };
 };
