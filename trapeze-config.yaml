@@ -3,16 +3,24 @@ vars:
     default: Socious
   DISPLAY_NAME:
     default: Socious
-  IOS_BUNDLE_ID:
-    default: jp.socious.network
-  ANDROID_PACKAGE_NAME:
-    default: jp.socious.network
   VERSION:
     default: 8.1.0
-  IOS_BUILD_NUMBER:
-    default: 9
   ANDROID_VERSION_CODE:
     default: 35
+  ANDROID_PACKAGE_NAME:
+    default: jp.socious.network
+  ANDROID_KEY_STORE_LOCATION:
+    default: ./android/build-release.keystore
+  ANDROID_KEY_STORE_PASSWORD:
+    default: Password
+  ANDROID_KEY_ALIAS:
+    default: key_number_one
+  ANDROID_KEY_PASSWORD:
+    default: Password
+  IOS_BUILD_NUMBER:
+    default: 9
+  IOS_BUNDLE_ID:
+    default: jp.socious.network
   IOS_DEVELOPMENT_TEAM_ID:
     default: 596H9K48FY
 
@@ -29,6 +37,8 @@ platforms:
         buildSettings:
           DEVELOPMENT_TEAM: $IOS_DEVELOPMENT_TEAM_ID
           TARGETED_DEVICE_FAMILY: 1 #1: iPhone ,2:iPhone&iPad, 3:iPad
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: iPhone Distribution
 
         plist:
           - replace: false
