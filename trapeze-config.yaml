@@ -1,8 +1,8 @@
 vars:
   PRODUCT_NAME:
-    default: Socious
+    default: "Socious"
   DISPLAY_NAME:
-    default: Socious
+    default: "Socious"
   VERSION:
     default: 8.1.0
   ANDROID_VERSION_CODE:
