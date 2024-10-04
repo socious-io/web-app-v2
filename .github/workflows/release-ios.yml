@@ -168,7 +168,7 @@ jobs:
           IOS_DEVELOPMENT_TEAM_ID: ${{ env.IOS_DEVELOPMENT_TEAM_ID }}
           VERSION: ${{ env.APP_VERSION }}
         run: |
-          npm run config:apps
+          npm run config:ios
 
       - name: Generating Assets
         run: |
