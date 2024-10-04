@@ -19,6 +19,7 @@ export const useProfileHeader = () => {
   const myProfile = currentIdentity?.id === identity?.id;
   const isLoggedIn = !!currentIdentity;
   const [openEditInfoModal, setOpenEditInfoModal] = useState(false);
+  const [openQRCodeModal, setOpenQRCodeModal] = useState(false);
   const [openEditInfoOrgModal, setOpenEditInfoOrgModal] = useState(false);
   const [openEditAvatar, setOpenEditAvatar] = useState(false);
   const [openEditHeader, setOpenEditHeader] = useState(false);
@@ -41,6 +42,12 @@ export const useProfileHeader = () => {
     if (identityType === 'users') setOpenEditInfoModal(true);
     else if (identityType === 'organizations') setOpenEditInfoOrgModal(true);
   };
+  const handleOpenQRCodeModal = () => {
+    setOpenQRCodeModal(true);
+  };
+  const closeQRCodeModal = () => {
+    setOpenQRCodeModal(false);
+  };
 
   const handleOpenEditAvatar = async () => {
     setOpenEditAvatar(true);
@@ -61,16 +68,6 @@ export const useProfileHeader = () => {
   const redirectToChat = () => {
     const id = identity?.id;
     navigate(`/chats?participantId=${id}`);
-  };
-
-  const displayShareButton = () => {
-    if (myProfile || !isLoggedIn) return false;
-    if (currentIdentity?.type === 'users') return true;
-    if (identityType === 'organizations') return true;
-    if (identity?.connection_status === 'CONNECTED') {
-      return true;
-    }
-    return false;
   };
 
   const displayConnectButton = () => {
@@ -123,6 +120,9 @@ export const useProfileHeader = () => {
     openEditInfoModal,
     closeEditInfoModal,
     handleOpenEditInfoModal,
+    handleOpenQRCodeModal,
+    closeQRCodeModal,
+    openQRCodeModal,
     openEditAvatar,
     handleOpenEditAvatar,
     handleCloseEditAvatar,
@@ -135,7 +135,6 @@ export const useProfileHeader = () => {
     redirectToChat,
     openConnectRequest,
     setOpenConnectRequest,
-    displayShareButton,
     displayConnectButton,
     displayMessageButton,
     displayThreeDotsButton,
