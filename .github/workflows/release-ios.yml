@@ -172,7 +172,7 @@ jobs:
 
       - name: Generating Assets
         run: |
-          npm run generate:assets
+          npm run build:icons
 
       # On Pre-Relase
 
