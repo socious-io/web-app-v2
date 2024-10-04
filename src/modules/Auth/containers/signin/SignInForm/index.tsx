@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { Apple } from 'public/icons/nowruz/apple';
 import { Google } from 'public/icons/nowruz/google';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
@@ -69,6 +70,18 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
           >
             <Google />
             Continue with Google
+          </Button>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => {
+              tried();
+              navigate(`/oauth/apple${event.name && `?event_name=${event.name}`}`);
+            }}
+            style={{ display: 'flex', gap: '12px' }}
+          >
+            <Apple />
+            Continue with Apple
           </Button>
           {/*
             <Button variant="outlined" color="secondary" className={css.button}>
