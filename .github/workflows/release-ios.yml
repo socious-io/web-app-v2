@@ -1,13 +1,13 @@
 name: CD - Release - iOS
 
 on:
-  push:
-    # tags:
-    #   - v*
-    branches:
-      - ci
-  # release:
-  #   types: [prereleased, released]
+  # push:
+  #   # tags:
+  #   #   - v*
+  #   branches:
+  #     - ci
+  release:
+    types: [prereleased, released]
 
 # echo ${{ github.event.release.tag_name }} -> tagname
 # echo ${{ github.event.release.prerelease }} -> true,false (${{ github.event.release.prerelease == true }})
@@ -166,7 +166,7 @@ jobs:
           IOS_BUILD_NUMBER: ${{ env.LATEST_APPSTORE_BUILD_NUMBER }}
           IOS_BUNDLE_ID: ${{ env.IOS_BUNDLE_ID }}
           IOS_DEVELOPMENT_TEAM_ID: ${{ env.IOS_DEVELOPMENT_TEAM_ID }}
-          # VERSION: ${{ env.APP_VERSION }} UNCOMMENT ME
+          VERSION: ${{ env.APP_VERSION }} UNCOMMENT ME
         run: |
           npm run config:ios
 
@@ -180,7 +180,6 @@ jobs:
       - name: Build and archiving the app
         run: |
           cd ios/App
-          cat App.xcodeproj/project.pbxproj
           xcodebuild -scheme App -archivePath ./Actions.xcarchive -configuration Release archive -workspace ./App.xcworkspace PROVISIONING_PROFILE="${{env.MOBILE_PROVISIONING_UUID}}"
 
       - name: Exporting archive for releasing to Appstore (.IPA)
