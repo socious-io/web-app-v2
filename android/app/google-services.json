@@ -1,0 +1,84 @@
+{
+  "project_info": {
+    "project_number": "876088547885",
+    "project_id": "social-network-dbc4f",
+    "storage_bucket": "social-network-dbc4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876088547885:android:cf931d42213f2c82b236a4",
+        "android_client_info": {
+          "package_name": "com.dissocialnetwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876088547885-boj2v9muhs497urj8ifacij5e6kn07gq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATS8NL8V0t2ozhrHykoVIK_WzkBjVAwBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876088547885-boj2v9muhs497urj8ifacij5e6kn07gq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "876088547885-jtuep37reei0d0q3sbml48f96cm74sfh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jp.socious.network",
+                "app_store_id": "1581904474"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876088547885:android:65c177dff4478d9ab236a4",
+        "android_client_info": {
+          "package_name": "jp.socious.network"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876088547885-boj2v9muhs497urj8ifacij5e6kn07gq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATS8NL8V0t2ozhrHykoVIK_WzkBjVAwBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876088547885-boj2v9muhs497urj8ifacij5e6kn07gq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "876088547885-jtuep37reei0d0q3sbml48f96cm74sfh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jp.socious.network",
+                "app_store_id": "1581904474"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
