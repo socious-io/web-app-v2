@@ -49,9 +49,9 @@ platforms:
                     'remote-notification'
                   ]
         copy:
-          - src: ../../GoogleService-Info.plist #Needs to be added to build phases
+          - src: ../../.github/workflows/android/GoogleService-Info.plist
             dest: App/GoogleService-Info.plist
-          - src: ../../fastlane/ios-config/AppDelegate.swift
+          - src: ../../.github/workflows/ios/AppDelegate.swift
             dest: App/AppDelegate.swift
 
         entitlements:
