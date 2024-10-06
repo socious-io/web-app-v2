@@ -83,7 +83,7 @@ jobs:
 
       - name: Generating Assets
         run: |
-          npm run generate:assets
+          npm run build:icons
 
       - name: Extracting Android Key for Signing the App
         run: |
