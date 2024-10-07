@@ -212,3 +212,22 @@ export interface Preference {
 export interface ReferReq {
   emails: string[];
 }
+export interface ImportRes {
+  id: string;
+  identity_id: string;
+  // TODO: define all possible types
+  type: 'LINKDIN';
+  //TODO: define all possible statuses
+  status: string; //"PENDING"
+  updated_at: Date;
+  created_at: Date;
+  body: {
+    name: string;
+    email: string;
+    skills: string[];
+    summary: string;
+    Languages: LanguageReq[];
+    educations: EducationsReq[];
+    experiences: ExperienceReq[];
+  };
+}
