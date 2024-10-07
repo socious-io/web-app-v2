@@ -131,9 +131,9 @@ export interface JobCategoriesRes {
 export interface Category {
   id: string;
   name: string;
-  hourly_wage_dollars: number;
-  created_at: Date;
-  updated_at: Date;
+  hourly_wage_dollars?: number;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export interface OffersRes extends PaginateRes {

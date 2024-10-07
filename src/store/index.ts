@@ -4,6 +4,7 @@ import { chatSlice } from './reducers/chat.reducer';
 import { contractsSlice } from './reducers/contracts.reducer';
 import { eventsSlice } from './reducers/events.reducer';
 import { identitySlice } from './reducers/identity.reducer';
+import { linkedInSlice } from './reducers/linkedin.reducer';
 import { profileSlice } from './reducers/profile.reducer';
 import { skillsSlice } from './reducers/skills.reducer';
 import { spinnerSlice } from './reducers/spinner.reducer';
@@ -17,6 +18,7 @@ const store = configureStore({
     contracts: contractsSlice.reducer,
     skills: skillsSlice.reducer,
     events: eventsSlice.reducer,
+    linkedin: linkedInSlice.reducer,
   },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({

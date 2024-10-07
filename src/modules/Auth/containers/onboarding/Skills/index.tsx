@@ -6,7 +6,7 @@ import css from './skills.module.scss';
 import { useSkills } from './useSkills';
 
 export const Skills = () => {
-  const { items, value, setValue, updateSelectedStep, translate } = useSkills();
+  const { items, value, setValue, onNextStep, translate } = useSkills();
   return (
     <div className="lg:pt-9 sm:pt-4 px-4">
       <div className={css.header}>
@@ -31,7 +31,7 @@ export const Skills = () => {
         />
       )}
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer} `}>
-        <Button disabled={!value.length} color="primary" block onClick={() => updateSelectedStep(3)}>
+        <Button disabled={!value.length} color="primary" block onClick={onNextStep}>
           {translate('onboarding-user-next-location')}
         </Button>
       </div>
