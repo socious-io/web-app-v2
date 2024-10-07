@@ -33,7 +33,7 @@ export const City = () => {
       </div>
       <div className="flex-grow"></div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>
-        <Button disabled={!isFormValid} color="primary" block onClick={() => updateSelectedStep(4)}>
+        <Button disabled={!isFormValid} color="primary" block onClick={() => updateSelectedStep(5)}>
           Next: Photo
         </Button>
       </div>

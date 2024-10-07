@@ -33,7 +33,7 @@ export const Skills = () => {
         />
       )}
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer} `}>
-        <Button disabled={!value.length} color="primary" block onClick={() => updateSelectedStep(3)}>
+        <Button disabled={!value.length} color="primary" block onClick={() => updateSelectedStep(4)}>
           Next: Location
         </Button>
       </div>
