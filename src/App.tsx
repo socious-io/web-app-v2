@@ -29,6 +29,7 @@ function App() {
     setupInterceptors(store);
     store.dispatch(currentIdentities());
   }, []);
+
   return (
     <StyledEngineProvider injectFirst>
       <Provider store={store}>

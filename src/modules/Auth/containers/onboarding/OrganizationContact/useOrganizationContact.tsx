@@ -1,10 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import i18next from 'i18next';
 import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import {
   createOrganization,
   getIndustries,
@@ -29,9 +32,9 @@ type Inputs = {
 const schema = yup.object().shape({
   email: yup
     .string()
-    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'Enter a correct email')
-    .required('Email is required'),
-  username: yup.string().required('username is required'),
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, i18next.t('onboarding-email-error'))
+    .required(i18next.t('onboarding-email-required')),
+  username: yup.string().required(i18next.t('onboarding-username-required')),
 });
 
 export const useOrganizationContact = () => {
@@ -40,6 +43,7 @@ export const useOrganizationContact = () => {
   const isMobile = isTouchDevice();
   const [isShortnameValid, setIsShortnameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
+  const { t: translate } = useTranslation();
 
   const navigate = useNavigate();
   const {
@@ -97,7 +101,7 @@ export const useOrganizationContact = () => {
         });
       } else navigate(`${currentIdentity?.type === 'users' ? '/dashboard/user' : `/dashboard/${shortname}/org`}`);
     } catch (error) {
-      console.log('error in creating new organization', error);
+      console.log(translate('onboarding-org-create-error'), error);
     }
   };
   const searchCities = async (searchText: string, cb) => {
@@ -107,7 +111,7 @@ export const useOrganizationContact = () => {
         cb(cityToOption(response.items));
       }
     } catch (error) {
-      console.error('Error fetching city data:', error);
+      console.error(translate('onboarding-city-get-error'), error);
     }
   };
   const cityToOption = (cities: Location[]) => {
@@ -124,7 +128,7 @@ export const useOrganizationContact = () => {
         cb(response.items.map(i => ({ value: i.name, label: i.name })));
       }
     } catch (error) {
-      console.error('Error fetching city data:', error);
+      console.error(translate('onboarding-industry-get-error'), error);
     }
   };
   const onSelectIndustry = industry => {
@@ -141,7 +145,7 @@ export const useOrganizationContact = () => {
       setIsusernameValid(false);
       setError('username', {
         type: 'manual',
-        message: 'Username is not available',
+        message: translate('onboarding-username-not-available'),
       });
       setIsShortnameValid(false);
     }
@@ -167,7 +171,7 @@ export const useOrganizationContact = () => {
         setIsusernameValid(false);
         setError('username', {
           type: 'manual',
-          message: 'Username is not available',
+          message: translate('onboarding-username-not-available'),
         });
       }
     }
@@ -191,6 +195,10 @@ export const useOrganizationContact = () => {
     state.city !== '' && state.size !== null && state.email !== '' && state.industry !== '' && state.shortname !== '';
 
   const cityValue = state?.cityLabel ? { label: state.cityLabel } : state?.city ? { label: state.city } : null;
+
+  const orgSizeOptions = ORGANIZATION_SIZE.map(item => {
+    return { value: item.value, label: translate(item.value) };
+  });
   return {
     register,
     handleSubmit,
@@ -214,5 +222,7 @@ export const useOrganizationContact = () => {
     email: state.email,
     username: state.shortname,
     website: state.website,
+    translate,
+    orgSizeOptions,
   };
 };

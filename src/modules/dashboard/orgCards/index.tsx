@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { translate } from 'src/core/utils';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import { DashboardCard } from '../dashboardCard';
@@ -22,19 +24,19 @@ export const OrgCards: React.FC<OrgCardsProps> = () => {
         />
       )} */}
       <DashboardCard
-        title="Find professionals"
-        description="Discover purpose-driven individuals aligned with your values"
+        title={translate('dashboard-find-professional')}
+        description={translate('dashboard-find-professional-desc')}
         bgColor={variables.color_dark_vanilla_100}
         redirectUrl="/"
         buttonLabel="Explore"
       />
 
       <DashboardCard
-        title="Create job"
-        description="Post job to connect with skilled professionals"
+        title={translate('dashboard-create-job')}
+        description={translate('dashboard-create-job-desc')}
         bgColor={variables.color_appricot_100}
         redirectUrl="/jobs/create"
-        buttonLabel="Create job"
+        buttonLabel={translate('dashboard-create-job')}
       />
     </div>
   );

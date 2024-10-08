@@ -1,6 +1,24 @@
+import i18next from 'i18next';
+
 export const steps = [
-  { title: 'Email verification', desc: 'Please check your email', icon: 'mail-01' },
-  { title: 'Choose a password', desc: 'Choose a secure password', icon: 'passcode' },
-  { title: 'Your details', desc: 'Enter your name', icon: 'user-01' },
-  { title: 'Congratulations', desc: 'Start making an impact', icon: 'stars-02' },
+  {
+    title: i18next.t('sign-up-verification-step-0'),
+    desc: i18next.t('sign-up-verification-step-0-desc'),
+    icon: 'mail-01',
+  },
+  {
+    title: i18next.t('sign-up-verification-step-1'),
+    desc: i18next.t('sign-up-verification-step-1-desc'),
+    icon: 'passcode',
+  },
+  {
+    title: i18next.t('sign-up-verification-step-2'),
+    desc: i18next.t('sign-up-verification-step-2-desc'),
+    icon: 'user-01',
+  },
+  {
+    title: i18next.t('sign-up-verification-step-3'),
+    desc: i18next.t('sign-up-verification-step-3-desc'),
+    icon: 'stars-02',
+  },
 ];
