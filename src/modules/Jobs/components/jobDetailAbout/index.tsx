@@ -142,7 +142,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
         <div className="hidden md:block">{detailJSX}</div>
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
-        {!applied && currentIdentity?.type !== 'organizations' && (
+        {!applied && currentIdentity?.type !== 'organizations' && jobDetail.status === 'ACTIVE' && (
           <AuthGuard>
             <Button
               variant="contained"
