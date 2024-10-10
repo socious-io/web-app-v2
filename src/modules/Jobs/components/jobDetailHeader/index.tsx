@@ -93,7 +93,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
               text={job.identity_meta.mission || ''}
             />
           </span> */}
-          {!applied && currentIdentity?.type !== 'organizations' && (
+          {!applied && currentIdentity?.type !== 'organizations' && job.status === 'ACTIVE' && (
             <AuthGuard>
               <Button color="primary" variant="contained" customStyle="md:hidden w-full" onClick={handleOpenApplyModal}>
                 Apply now
