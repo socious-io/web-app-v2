@@ -7,6 +7,7 @@ import { Causes } from 'src/modules/Auth/containers/onboarding/Causes';
 import { City } from 'src/modules/Auth/containers/onboarding/City';
 import { CreateOrganization } from 'src/modules/Auth/containers/onboarding/CreateOrganization';
 import { ImageBio } from 'src/modules/Auth/containers/onboarding/ImageBio';
+import { ImportChoices } from 'src/modules/Auth/containers/onboarding/ImportChoices';
 import { OpWelcome } from 'src/modules/Auth/containers/onboarding/OpWelcome';
 import { OrganizationCauses } from 'src/modules/Auth/containers/onboarding/OrganizationCauses';
 import { OrganizationContact } from 'src/modules/Auth/containers/onboarding/OrganizationContact';
@@ -110,6 +111,7 @@ export const Onboarding = () => {
           <Steper
             components={[
               { Component: <Welcome />, skippable: false },
+              { Component: <ImportChoices />, skippable: false },
               { Component: <Causes />, skippable: false },
               { Component: <Skills />, skippable: false },
               { Component: <City />, skippable: false },

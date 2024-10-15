@@ -1,0 +1,53 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.headerImage {
+    width: 32px;
+    height: 32px;
+
+    @media screen and (min-width: 600px) {
+        width: 131px;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+    @media (min-width: 600px) {
+        max-width: 480px;
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.5rem;
+
+    @media (max-width: 600px) {
+        flex-grow: 1;
+        padding: 1.5rem 1rem;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 28px;
+            color: $color-grey-900;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            color: $color-grey-600;
+        }
+    }
+}

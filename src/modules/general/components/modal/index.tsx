@@ -25,6 +25,7 @@ export const Modal: React.FC<ModalProps> = props => {
     inlineTitle = true,
     contentClassName = '',
     closeButtonClassName = '',
+    customTitleStyle = '',
   } = props;
 
   return (
@@ -39,7 +40,7 @@ export const Modal: React.FC<ModalProps> = props => {
             <div className="w-full flex  gap-4 px-6 pt-6 relative top-0">
               {icon}
               {inlineTitle && (
-                <div className="flex-1 flex flex-col gap-1 justify-center items-start pb-5">
+                <div className={`flex-1 flex flex-col gap-1 justify-center items-start pb-5 ${customTitleStyle}`}>
                   {title && <h1 className={css.title}>{title}</h1>}
                   {subTitle && <h2 className={css.subtitle}>{subTitle}</h2>}
                 </div>
@@ -52,7 +53,9 @@ export const Modal: React.FC<ModalProps> = props => {
               </IconButton>
             </div>
             {!inlineTitle && (
-              <div className="w-full px-6 pt-4 flex flex-col gap-1 justify-center items-start pb-5">
+              <div
+                className={`w-full px-6 pt-4 flex flex-col gap-1 justify-center items-start pb-5 ${customTitleStyle}`}
+              >
                 {title && <h1 className={css.title}>{title}</h1>}
                 {subTitle && <h2 className={css.subtitle}>{subTitle}</h2>}
               </div>
