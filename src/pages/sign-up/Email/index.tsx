@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { Apple } from 'public/icons/nowruz/apple';
 import { Google } from 'public/icons/nowruz/google';
 import { Logo } from 'public/icons/nowruz/logo';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
@@ -103,6 +104,20 @@ export const Email = () => {
             >
               <Google />
               Continue with Google
+            </Button>
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={() => {
+                tried();
+                type === 'user'
+                  ? navigate(`/oauth/apple${eventName && `?event_name=${eventName}`}`)
+                  : navigate('/oauth/apple');
+              }}
+              style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '12px' }}
+            >
+              <Apple />
+              Continue with Apple
             </Button>
           </div>
           <div className="my-5 text-center">
