@@ -100,7 +100,8 @@ export const Email = () => {
                   ? navigate(`/oauth/google${eventName && `?event_name=${eventName}`}`)
                   : navigate('/oauth/google');
               }}
-              style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '12px' }}
+              fullWidth
+              customStyle="flex gap-3 mt-3"
             >
               <Google />
               Continue with Google
@@ -114,7 +115,8 @@ export const Email = () => {
                   ? navigate(`/oauth/apple${eventName && `?event_name=${eventName}`}`)
                   : navigate('/oauth/apple');
               }}
-              style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '12px' }}
+              fullWidth
+              customStyle="flex gap-3 mt-3"
             >
               <Apple />
               Continue with Apple

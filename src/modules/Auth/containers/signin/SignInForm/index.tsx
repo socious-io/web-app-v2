@@ -66,7 +66,8 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
               tried();
               navigate(`/oauth/google${event.name && `?event_name=${event.name}`}`);
             }}
-            style={{ display: 'flex', gap: '12px' }}
+            fullWidth
+            customStyle="flex gap-3 mt-3"
           >
             <Google />
             Continue with Google
@@ -78,7 +79,8 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
               tried();
               navigate(`/oauth/apple${event.name && `?event_name=${event.name}`}`);
             }}
-            style={{ display: 'flex', gap: '12px' }}
+            fullWidth
+            customStyle="flex gap-3 mt-3"
           >
             <Apple />
             Continue with Apple
