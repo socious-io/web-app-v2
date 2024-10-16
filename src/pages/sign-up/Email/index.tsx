@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { Apple } from 'public/icons/nowruz/apple';
 import { Google } from 'public/icons/nowruz/google';
 import { Logo } from 'public/icons/nowruz/logo';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
@@ -99,10 +100,26 @@ export const Email = () => {
                   ? navigate(`/oauth/google${eventName && `?event_name=${eventName}`}`)
                   : navigate('/oauth/google');
               }}
-              style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '12px' }}
+              fullWidth
+              customStyle="flex gap-3 mt-3"
             >
               <Google />
               Continue with Google
+            </Button>
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={() => {
+                tried();
+                type === 'user'
+                  ? navigate(`/oauth/apple${eventName && `?event_name=${eventName}`}`)
+                  : navigate('/oauth/apple');
+              }}
+              fullWidth
+              customStyle="flex gap-3 mt-3"
+            >
+              <Apple />
+              Continue with Apple
             </Button>
           </div>
           <div className="my-5 text-center">
