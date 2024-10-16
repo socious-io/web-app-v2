@@ -21,22 +21,13 @@
 	},
 	"packageClassList": [
 		"FirebaseMessagingPlugin",
-		"FirebaseMessagingPlugin",
-		"ActionSheetPlugin",
 		"ActionSheetPlugin",
 		"AppPlugin",
-		"AppPlugin",
-		"CAPCameraPlugin",
 		"CAPCameraPlugin",
 		"DialogPlugin",
-		"DialogPlugin",
-		"HapticsPlugin",
 		"HapticsPlugin",
 		"PreferencesPlugin",
-		"PreferencesPlugin",
 		"PushNotificationsPlugin",
-		"PushNotificationsPlugin",
-		"ToastPlugin",
 		"ToastPlugin"
 	]
 }
