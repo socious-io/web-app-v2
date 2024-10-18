@@ -57,6 +57,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
               href="/forget-password/email"
               label={translate('login-forget-password')}
               customStyle="!font-semibold"
+              onClick={() => event.name && localStorage.setItem('event_name', event.name)}
             />
           </div>
         </div>
