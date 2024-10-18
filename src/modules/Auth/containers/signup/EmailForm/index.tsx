@@ -4,8 +4,13 @@ import { Input } from 'src/modules/general/components/input/input';
 
 import { useEmailForm } from './useEmailForm';
 
-export const EmailForm = () => {
-  const { register, errors, onSubmit, handleSubmit, translate } = useEmailForm();
+interface EmailFormProps {
+  eventId: string;
+}
+
+export const EmailForm: React.FC<EmailFormProps> = ({ eventId }) => {
+  const { register, errors, onSubmit, handleSubmit, navigate, translate } = useEmailForm(eventId);
+
   const type = localStorage.getItem('registerFor');
   return (
     <>

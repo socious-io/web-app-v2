@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { Apple } from 'public/icons/nowruz/apple';
 import { Google } from 'public/icons/nowruz/google';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
@@ -10,8 +11,14 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import { useSignInForm } from './useSignInForm';
 // import { LinkedIn } from 'public/icons/nowruz/linkedin';
 
-export const SignInForm = () => {
-  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried, translate } = useSignInForm();
+interface SignInFormProps {
+  event: { id: string; name: string };
+}
+
+export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
+  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried, translate } = useSignInForm(
+    event.id,
+  );
   const navigate = useNavigate();
 
   return (
@@ -63,12 +70,25 @@ export const SignInForm = () => {
             variant="outlined"
             onClick={() => {
               tried();
-              navigate('/oauth/google');
+              navigate(`/oauth/google${event.name && `?event_name=${event.name}`}`);
             }}
             style={{ display: 'flex', gap: '12px' }}
           >
             <Google />
             {translate('login-continue-google')}
+          </Button>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => {
+              tried();
+              navigate(`/oauth/apple${event.name && `?event_name=${event.name}`}`);
+            }}
+            fullWidth
+            customStyle="flex gap-3 mt-3"
+          >
+            <Apple />
+            Continue with Apple
           </Button>
           {/*
             <Button variant="outlined" color="secondary" className={css.button}>
@@ -82,7 +102,12 @@ export const SignInForm = () => {
         <Typography variant="caption" color={variables.color_grey_600}>
           {translate('login-not-account')}
         </Typography>
-        <Link label={translate('login-sign-up')} href="/intro" customStyle="!font-semibold" />
+        <Link
+          label={translate('login-sign-up')}
+          href={event.name ? `/sign-up/user/email?event_name=${event.name}` : '/intro'}
+          customStyle="!font-semibold"
+          onClick={() => event.name && localStorage.setItem('registerFor', 'user')}
+        />
       </div>
     </>
   );

@@ -2,11 +2,14 @@ import { Typography } from '@mui/material';
 import { Google } from 'public/icons/nowruz/google';
 import { Logo } from 'public/icons/nowruz/logo';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
+import { EVENTS_QUERIES } from 'src/constants/EVENTS_QUERIES';
+import { EventsRes } from 'src/core/api';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/modules/Auth/containers/ServiceIntro';
 import { EmailForm } from 'src/modules/Auth/containers/signup/EmailForm';
 import { reviews } from 'src/modules/Auth/statics/intro';
+import TechSummit from 'src/modules/Events/TechSummit';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { Link } from 'src/modules/general/components/link';
@@ -21,6 +24,21 @@ export const Email = () => {
   const { tried } = useCaptcha();
   const navigate = useNavigate();
   const { t: translate } = useTranslation();
+  const events = (useLoaderData() as EventsRes) || null;
+  const [searchParams] = useSearchParams();
+  const eventName = searchParams.get('event_name') || '';
+  const eventId = events?.items.find(event => event.title === EVENTS_QUERIES[eventName])?.id || '';
+  const defaultIntro = {
+    title: translate('sign-up-user-email-title'),
+    description: type === 'user' ? translate('sign-up-user-email-subtitle') : translate('sign-up-org-email-subtitle'),
+  };
+  const intro = {
+    tech4impact: {
+      title: translate('login-tech-title'),
+      description: translate('login-tech-subtitle'),
+      component: <TechSummit />,
+    },
+  };
 
   const renderIntro = () => {
     if (type === 'user')
@@ -48,10 +66,8 @@ export const Email = () => {
         <div className="form-container">
           {!referrerUser && (
             <IntroHeader
-              title={translate('sign-up-user-email-title')}
-              description={
-                type === 'user' ? translate('sign-up-user-email-subtitle') : translate('sign-up-org-email-subtitle')
-              }
+              title={(type === 'user' && intro[eventName]?.title) || defaultIntro.title}
+              description={(type === 'user' && intro[eventName]?.description) || defaultIntro.description}
               logo={<Logo width={48} height={48} />}
             />
           )}
@@ -77,13 +93,15 @@ export const Email = () => {
             </>
           )}
           <div className="mt-7">
-            <EmailForm />
+            <EmailForm eventId={type === 'user' ? eventId : ''} />
             <Button
               color="primary"
               variant="outlined"
               onClick={() => {
                 tried();
-                navigate('/oauth/google');
+                type === 'user'
+                  ? navigate(`/oauth/google${eventName && `?event_name=${eventName}`}`)
+                  : navigate('/oauth/google');
               }}
               style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '12px' }}
             >
@@ -95,7 +113,11 @@ export const Email = () => {
             <Typography variant="caption" className={css.signupTitle}>
               {translate('sign-up-have-account')}
             </Typography>
-            <Link href="/sign-in" label={translate('sign-up-sign-in')} customStyle="!font-semibold" />
+            <Link
+              href={`/sign-in${eventName && `?event_name=${eventName}`}`}
+              label={translate('sign-up-sign-in')}
+              customStyle="!font-semibold"
+            />
           </div>
           <div className="text-center">
             <Typography variant="caption" className={css.signupTitle}>
@@ -114,12 +136,13 @@ export const Email = () => {
           </div>
         </div>
       </div>
-
-      <div className="w-1/2 items-center justify-center hidden md:block">
-        <div className={`${css.review} `}>
-          <div className="px-8">{renderIntro()}</div>
+      {(type === 'user' && intro[eventName]?.component) || (
+        <div className="w-1/2 items-center justify-center hidden md:block">
+          <div className={`${css.review} `}>
+            <div className="px-8">{renderIntro()}</div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

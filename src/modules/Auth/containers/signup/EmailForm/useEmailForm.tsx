@@ -14,7 +14,7 @@ const schema = yup.object().shape({
     .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, i18next.t('sign-up-email-error-correct'))
     .required(i18next.t('sign-up-email-error-required')),
 });
-export const useEmailForm = () => {
+export const useEmailForm = (event_id: string) => {
   const navigate = useNavigate();
   const { t: translate } = useTranslation();
   const {
@@ -30,6 +30,11 @@ export const useEmailForm = () => {
   const savedReferrer = localStorage.getItem('referrer');
   const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
 
+  const setEventsFilter = () => {
+    const filter = { events: [event_id] };
+    localStorage.setItem('filter', JSON.stringify(filter));
+  };
+
   const onSubmit: SubmitHandler<Inputs> = async ({ email }) => {
     const response = await preRegister({ email: email });
     clearErrors('email');
@@ -41,8 +46,11 @@ export const useEmailForm = () => {
       });
       return;
     } else {
-      registerReq({ email }, referrerUser?.id)
-        .then(() => localStorage.setItem('email', email))
+      registerReq({ email }, referrerUser?.id, event_id)
+        .then(() => {
+          localStorage.setItem('email', email);
+          event_id && setEventsFilter();
+        })
         .then(() => navigate('../verification'))
         .catch(handleError());
 
