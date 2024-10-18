@@ -1,6 +1,4 @@
 import { Google } from 'public/icons/nowruz/google';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 
@@ -11,7 +9,8 @@ interface EmailFormProps {
 }
 
 export const EmailForm: React.FC<EmailFormProps> = ({ eventId }) => {
-  const { register, errors, onSubmit, handleSubmit, navigate } = useEmailForm(eventId);
+  const { register, errors, onSubmit, handleSubmit, navigate, translate } = useEmailForm(eventId);
+
   const type = localStorage.getItem('registerFor');
   return (
     <>
@@ -19,15 +18,15 @@ export const EmailForm: React.FC<EmailFormProps> = ({ eventId }) => {
         <Input
           id="email"
           autoComplete="Email"
-          label={type === 'user' ? 'Email*' : 'Your work email*'}
+          label={type === 'user' ? translate('sign-up-user-email') : translate('sign-up-org-email')}
           name="email"
           register={register}
-          placeholder="Enter your email"
+          placeholder={translate('sign-up-email-placeholder')}
           errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
         />
         <div className="mt-8 flex flex-col gap-4">
           <Button color="primary" block onClick={handleSubmit(onSubmit)}>
-            Continue
+            {translate('sign-up-continue')}
           </Button>
           {/* <Button
             color="primary"

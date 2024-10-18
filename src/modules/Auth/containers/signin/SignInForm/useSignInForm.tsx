@@ -1,7 +1,9 @@
 import { Capacitor } from '@capacitor/core';
 import { yupResolver } from '@hookform/resolvers/yup';
+import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { AuthRes, User, devices, identities, login, newDevice, profile } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
@@ -23,15 +25,16 @@ const schema = yup
     email: yup
       .string()
       .trim()
-      .email('Enter a correct email')
-      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, 'Enter a correct email')
-      .required('Enter a correct email'),
-    password: yup.string().required('Enter a correct password'),
+      .email(i18next.t('login-email-error'))
+      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i, i18next.t('login-email-error'))
+      .required(i18next.t('login-email-error')),
+    password: yup.string().required(i18next.t('login-password-error')),
   })
   .required();
 
 export const useSignInForm = (event_id: string) => {
   const navigate = useNavigate();
+  const { t: translate } = useTranslation();
 
   const {
     register,
@@ -89,6 +92,10 @@ export const useSignInForm = (event_id: string) => {
     // checking ids if less than 2 it means didn't registered for org and can be skip
     event_id && setEventsFilter();
     navigate(determineUserLandingPath(userProfile, path));
+    const userLandingPath = checkOnboardingMandatoryFields(userProfile)
+      ? '/sign-up/user/onboarding'
+      : '/dashboard/user';
+    navigate(path ? path : userLandingPath);
     return loginResp;
   }
   const addListeners = () => {
@@ -146,7 +153,7 @@ export const useSignInForm = (event_id: string) => {
         if (e?.response?.data.error) {
           setError('password', {
             type: 'manual',
-            message: 'Username or password not matched',
+            message: translate('login-error-not-matched'),
           });
         }
       });
@@ -167,5 +174,6 @@ export const useSignInForm = (event_id: string) => {
     handleChange,
     registerPushNotifications,
     tried,
+    translate,
   };
 };

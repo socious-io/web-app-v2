@@ -1,5 +1,6 @@
 import { Autocomplete, TextField, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Icon } from 'src/modules/general/components/Icon';
 
 import Chip from './chip';
@@ -24,6 +25,7 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
     displayDefaultBadges = true,
     errors,
   } = props;
+  const { t: translate } = useTranslation();
   const [chipItems, setChipItems] = useState(items);
   const [searchVal, setSearchVal] = useState('');
   const inputRef = useRef<HTMLTextAreaElement>();
@@ -128,7 +130,7 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
       {displayDefaultBadges && (
         <div className={css.popularDiv}>
           <Typography variant="caption" className={css.popularLabel}>
-            Popular
+            {translate('general-popular')}
           </Typography>
         </div>
       )}

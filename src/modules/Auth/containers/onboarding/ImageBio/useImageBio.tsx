@@ -1,5 +1,6 @@
 import { Camera } from '@capacitor/camera';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -16,6 +17,7 @@ import { useUser } from 'src/modules/Auth/contexts/onboarding/sign-up-user-onboa
 import { RootState } from 'src/store';
 
 export const useImageBio = () => {
+  const { t: translate } = useTranslation();
   const navigate = useNavigate();
   const filter = localStorage.getItem('filter');
   const { events } = filter ? (JSON.parse(filter) as { events: string[] }) : { events: [] };
@@ -83,7 +85,7 @@ export const useImageBio = () => {
     const blob = await fetch(url).then(resp => resp.blob());
     const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
     if (blob.size > MAX_IMAGE_SIZE) {
-      setUploadError(`Image should be less than 5MB`);
+      setUploadError(translate('onboarding-logo-upload-error-size'));
     } else {
       setUploadError(``);
 
@@ -96,5 +98,5 @@ export const useImageBio = () => {
   const isValidForm = state.bio === '' || state.bio === null;
   const bio = state.bio;
   const bioCounter = state.bio ? state.bio.length : 0;
-  return { onUploadImage, updateBio, image, isValidForm, bio, updateProfile, bioCounter, uploadError };
+  return { onUploadImage, updateBio, image, isValidForm, bio, updateProfile, bioCounter, uploadError, translate };
 };
