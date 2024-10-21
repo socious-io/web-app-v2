@@ -182,7 +182,7 @@ export const CredentialList = () => {
             <tbody>
               {table.getRowModel().rows.map(row => {
                 return (
-                  <tr key={row.id} className="cursor-pointer">
+                  <tr key={row.id} className={css['row']}>
                     {row.getVisibleCells().map(cell => {
                       const item = cell.column.id === 'name' ? cell.row.original : null;
                       return (
