@@ -1,5 +1,5 @@
 import React from 'react';
-import { eventsToCategory, socialCausesToCategory } from 'src/core/adaptors';
+import { eventsToCategory, skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { Organization, User } from 'src/core/api';
 import { ChipList } from 'src/modules/general/components/chipList';
 import { Location } from 'src/modules/userProfile/components/location';
@@ -16,7 +16,8 @@ interface SearchResultProfileProps {
 export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identity }) => {
   const { type, website } = useSearchResultProfile(identity);
   const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
-  const events = eventsToCategory((identity as User).events || []).map(item => item.label);
+  const skills = skillsToCategory((identity as User)?.skills || []).map(item => item.label);
+  const events = eventsToCategory((identity as User)?.events || []).map(item => item.label);
   return (
     <div className="flex flex-col rounded-xl border border-solid border-Gray-light-mode-200">
       <div onClick={e => e.stopPropagation()}>
@@ -33,6 +34,15 @@ export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identi
             borderColor={variables.color_grey_200}
             fontColor={variables.color_primary_700}
           />
+
+          {type === 'users' && !!skills.length && (
+            <ChipList
+              items={skills}
+              bgColor={variables.color_grey_blue_50}
+              borderColor={variables.color_grey_blue_200}
+              fontColor={variables.color_grey_blue_700}
+            />
+          )}
 
           {type === 'users' && !!events.length && (
             <ChipList
