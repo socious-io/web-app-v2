@@ -1,3 +1,7 @@
+import { t } from 'i18next';
+
+export const translate = t;
+
 import { Credential, Identity, OrgMeta, Organization, User, UserMeta } from './api';
 import { UserType } from './types';
 
@@ -46,10 +50,10 @@ export const removeValuesFromObject = (obj: any, valuesToRemove: Array<string | 
 
 export const checkUsernameConditions = (username: string) => {
   if (!username) return;
-  if (!/^[a-z0-9._-]+$/.test(username)) return `Can contain lowercase letters, digits, '.', '_', and '-'.`;
-  if (username.startsWith('.') || username.startsWith('_')) return "Shouldn't start with a period or underscore.";
-  if (/[._]{2,}/.test(username)) return 'No consecutive periods or underscores.';
-  if (username.length < 6 || username.length > 24) return 'Must be between 6 and 24 characters.';
+  if (!/^[a-z0-9._-]+$/.test(username)) return translate('onboarding-username-error-letters');
+  if (username.startsWith('.') || username.startsWith('_')) return translate('onboarding-username-error-start');
+  if (/[._]{2,}/.test(username)) return translate('onboarding-username-error-consecutive');
+  if (username.length < 6 || username.length > 24) return translate('onboarding-username-error-length');
 };
 
 export const getIdentityMeta = (identity: User | Organization | Identity | UserMeta | OrgMeta | undefined) => {

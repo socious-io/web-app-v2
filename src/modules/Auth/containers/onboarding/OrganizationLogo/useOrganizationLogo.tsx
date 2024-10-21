@@ -1,11 +1,13 @@
 import { Camera } from '@capacitor/camera';
 import { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CurrentIdentity, uploadMedia } from 'src/core/api';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { useUser } from 'src/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
 import { RootState } from 'src/store';
 export const useOrganizationLogo = () => {
+  const { t: translate } = useTranslation();
   const [uploadError, setUploadError] = useState('');
   const { state, updateUser } = useUser();
   const { updateSelectedStep } = useContext(StepsContext);
@@ -23,7 +25,7 @@ export const useOrganizationLogo = () => {
         setImage({ imageUrl: resp.url, id: resp.id });
       }
     } catch (e) {
-      console.log('error in uploading image', e);
+      console.log(translate('onboarding-logo-upload-error'), e);
     }
   };
 
@@ -40,7 +42,7 @@ export const useOrganizationLogo = () => {
     const blob = await fetch(url).then(resp => resp.blob());
     const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
     if (blob.size > MAX_IMAGE_SIZE) {
-      setUploadError(`Image should be less than 5MB`);
+      setUploadError(translate('onboarding-logo-upload-error-size'));
     } else {
       setUploadError('');
 
@@ -63,5 +65,6 @@ export const useOrganizationLogo = () => {
     goNextPage,
     imageUrl: state.image?.url ? state.image?.url : null,
     uploadError,
+    translate,
   };
 };

@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import { Apple } from 'public/icons/nowruz/apple';
 import { Google } from 'public/icons/nowruz/google';
 import { Logo } from 'public/icons/nowruz/logo';
+import { useTranslation } from 'react-i18next';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { EVENTS_QUERIES } from 'src/constants/EVENTS_QUERIES';
 import { EventsRes } from 'src/core/api';
@@ -23,18 +24,19 @@ export const Email = () => {
   const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
   const { tried } = useCaptcha();
   const navigate = useNavigate();
+  const { t: translate } = useTranslation();
   const events = (useLoaderData() as EventsRes) || null;
   const [searchParams] = useSearchParams();
   const eventName = searchParams.get('event_name') || '';
   const eventId = events?.items.find(event => event.title === EVENTS_QUERIES[eventName])?.id || '';
   const defaultIntro = {
-    title: 'Create an account',
-    description: type === 'user' ? 'Sign up and start making an impact' : 'Sign up to hire professional',
+    title: translate('sign-up-user-email-title'),
+    description: type === 'user' ? translate('sign-up-user-email-subtitle') : translate('sign-up-org-email-subtitle'),
   };
   const intro = {
     tech4impact: {
-      title: 'Tech for Impact Summit 2024',
-      description: 'Boost your summit network with Socious',
+      title: translate('login-tech-title'),
+      description: translate('login-tech-subtitle'),
       component: <TechSummit />,
     },
   };
@@ -72,7 +74,7 @@ export const Email = () => {
           )}
           {!!referrerUser && (
             <>
-              <IntroHeader title="Create an account" logo={<Logo width={48} height={48} />} />
+              <IntroHeader title={translate('sign-up-user-email-title')} logo={<Logo width={48} height={48} />} />
               <div className={css.referrerContainer}>
                 <div
                   className="flex gap-1.5 w-fit justfy-center align-center items-center
@@ -83,7 +85,9 @@ export const Email = () => {
                     <Avatar size="16px" type="users" img={referrerUser.avatarUrl} />
                   </div>
                   <div className="py-1 pr-3">
-                    <span className={css.referrerText}>{referrerUser.fisrtName} invited you to join!</span>
+                    <span className={css.referrerText}>
+                      {translate('sign-up-referrer-invited', { name: referrerUser.fisrtName })}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -104,7 +108,7 @@ export const Email = () => {
               customStyle="flex gap-3 mt-3"
             >
               <Google />
-              Continue with Google
+              {translate('sign-up-continue-google')}
             </Button>
             <Button
               color="primary"
@@ -124,23 +128,23 @@ export const Email = () => {
           </div>
           <div className="my-5 text-center">
             <Typography variant="caption" className={css.signupTitle}>
-              Already have an account?
+              {translate('sign-up-have-account')}
             </Typography>
             <Link
               href={`/sign-in${eventName && `?event_name=${eventName}`}`}
-              label="Log in"
+              label={translate('sign-up-sign-in')}
               customStyle="!font-semibold"
             />
           </div>
           <div className="text-center">
             <Typography variant="caption" className={css.signupTitle}>
-              By continuing, you accept our
+              {translate('sign-up-accept')}
             </Typography>
-            <Link href="/terms-conditions" label="Terms of Use" target="_blank" />
+            <Link href="/terms-conditions" label={translate('sign-up-term')} target="_blank" />
             <Typography variant="caption" className={css.signupTitle}>
-              {` and`}
+              {translate('sign-up-and')}
             </Typography>
-            <Link href="/privacy-policy" label="Privacy Policy." target="_blank" />
+            <Link href="/privacy-policy" label={translate('sign-up-privacy')} target="_blank" />
           </div>
         </div>
         <div className={css.copy}>
@@ -149,7 +153,6 @@ export const Email = () => {
           </div>
         </div>
       </div>
-
       {(type === 'user' && intro[eventName]?.component) || (
         <div className="w-1/2 items-center justify-center hidden md:block">
           <div className={`${css.review} `}>

@@ -5,14 +5,28 @@ import { Input } from 'src/modules/general/components/input/input';
 import css from './choose-password.module.scss';
 import { useChoosePassword } from './useChoosePassword';
 export const ChoosePasswordForm = () => {
-  const { register, errors, onSubmit, handleSubmit, isFormValid, isPasswordLengthValid, isPasswordPatternValid } =
-    useChoosePassword();
+  const {
+    register,
+    errors,
+    onSubmit,
+    handleSubmit,
+    isFormValid,
+    isPasswordLengthValid,
+    isPasswordPatternValid,
+    translate,
+  } = useChoosePassword();
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mt-8">
-          <Input id="password" type="password" name="password" register={register} placeholder="Choose a password" />
+          <Input
+            id="password"
+            type="password"
+            name="password"
+            register={register}
+            placeholder={translate('sign-up-password')}
+          />
         </div>
         <div className="mt-4">
           <Input
@@ -20,7 +34,7 @@ export const ChoosePasswordForm = () => {
             type="password"
             name="confirm"
             register={register}
-            placeholder="Confirm password"
+            placeholder={translate('sign-up-password-confirm')}
           />
         </div>
         <div>
@@ -30,7 +44,7 @@ export const ChoosePasswordForm = () => {
               src={isPasswordLengthValid ? '/icons/green-check.svg' : '/icons/grey-check.svg'}
               alt="check"
             />
-            Must be at least 8 characters
+            {translate('sign-up-password-error-length')}
           </div>
           <div className={`${css.validation} mt-2 mb-4`}>
             <img
@@ -38,12 +52,12 @@ export const ChoosePasswordForm = () => {
               src={isPasswordPatternValid ? '/icons/green-check.svg' : '/icons/grey-check.svg'}
               alt="check"
             />
-            Must contain one special character
+            {translate('sign-up-password-error-weak')}
           </div>
         </div>
         <div className="mt-8">
           <Button disabled={!isFormValid} color="primary" block onClick={handleSubmit(onSubmit)}>
-            Continue
+            {translate('sign-up-continue')}
           </Button>
         </div>
       </form>

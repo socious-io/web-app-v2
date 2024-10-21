@@ -4,7 +4,8 @@ import { Input } from 'src/modules/general/components/input/input';
 
 import { useUserDetails } from './useUserDetails';
 export const UserDetails = () => {
-  const { register, handleSubmit, onSubmit, errors, isUsernameValid, isFormValid, currentProfile } = useUserDetails();
+  const { register, handleSubmit, onSubmit, errors, isUsernameValid, isFormValid, currentProfile, translate } =
+    useUserDetails();
   const { last_name, first_name } = currentProfile.current;
 
   return (
@@ -13,35 +14,35 @@ export const UserDetails = () => {
         <Input
           id="first-name"
           autoComplete="first"
-          label="First name*"
+          label={translate('sign-up-user-detail-name')}
           name="firstName"
           defaultValue={first_name}
           register={register}
-          placeholder="Your first name"
+          placeholder={translate('sign-up-user-detail-name-placeholder')}
           errors={errors['firstName']?.message ? [errors['firstName']?.message.toString()] : undefined}
         />
         <div className="mt-4">
           <Input
             id="last-name"
-            label="Last name*"
+            label={translate('sign-up-user-detail-last-name')}
             name="lastName"
             defaultValue={last_name}
             register={register}
-            placeholder="Your last name"
+            placeholder={translate('sign-up-user-detail-last-name-placeholder')}
             errors={errors['lastName']?.message ? [errors['lastName']?.message.toString()] : undefined}
           />
         </div>
         <div className="mt-4">
           <Input
             id="username"
-            label="Username*"
+            label={translate('sign-up-user-username')}
             name="username"
             register={register}
-            placeholder="Username"
-            validMessage="Username available"
+            placeholder={translate('sign-up-user-username-placeholder')}
+            validMessage={translate('sign-up-user-username-valid')}
             hints={[
               {
-                hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`,
+                hint: translate('sign-up-user-username-hint'),
                 hide: !isUsernameValid,
               },
             ]}
@@ -52,7 +53,7 @@ export const UserDetails = () => {
         </div>
         <div className="mt-8">
           <Button disabled={!isFormValid} color="primary" block onClick={handleSubmit(onSubmit)}>
-            Continue
+            {translate('sign-up-continue')}
           </Button>
         </div>
       </form>
