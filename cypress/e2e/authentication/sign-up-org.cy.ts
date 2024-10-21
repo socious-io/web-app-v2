@@ -14,7 +14,7 @@ import {
   ORGANIZATION_EMAIL,
   ORGANIZATION_USERNAME,
 } from './constants';
-import { IMPACT_POINTS, INDUSTRIES, LOCATIONS, PROJECTS, SKILLS } from './mocks';
+import { EMPTY_NOTIFICATIONS, IMPACT_POINTS, INDUSTRIES, LOCATIONS, PROJECTS, SKILLS } from './mocks';
 import { OrganizationUser, User, generateRandomEmail } from './utilities';
 
 const SIGNINGUP_EMAIL = generateRandomEmail();
@@ -48,14 +48,14 @@ describe('Sign up', () => {
     cy.intercept('POST', `${API_SERVER}/user/change-password-direct*`, req => req.reply(200, { message: 'success' }));
     cy.intercept('POST', `${API_SERVER}/user/update/profile*`, req => req.reply(200, { message: 'success' }));
     cy.intercept('GET', `${API_SERVER}/user/profile*`, req => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/notifications*`, req => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/notifications*`, req => req.reply(200, EMPTY_NOTIFICATIONS)).as(
       'getNotifications',
     );
     cy.intercept('GET', `${API_SERVER}/user/impact-points*`, req => req.reply(200, IMPACT_POINTS)).as(
       'getImpactPoints',
     );
     cy.intercept('GET', `${API_SERVER}/projects*`, req => req.reply(200, PROJECTS)).as('getProjects');
-    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { count: 0 })).as(
       'getUnreadChatsCount',
     );
     cy.intercept('GET', `${API_SERVER}/connections/related/*`, req => req.reply(200, { connect: null }));

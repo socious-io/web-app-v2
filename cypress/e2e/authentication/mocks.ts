@@ -802,3 +802,10 @@ export const IMPACT_POINTS = {
     },
   ],
 };
+
+export const EMPTY_NOTIFICATIONS = {
+  page: 1,
+  limit: 50,
+  total_count: 0,
+  items: [],
+};
