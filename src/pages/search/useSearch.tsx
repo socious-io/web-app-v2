@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'src/core/api';
@@ -129,21 +129,23 @@ export const useSearch = () => {
     return (item as User).username !== undefined;
   };
 
-  const handleNavigate = (item: Organization | User) => {
+  const handleNavigate = (e: MouseEvent<HTMLDivElement>, item: Organization | User) => {
     let id = '';
     if (isUser(item)) {
       id = item.username;
     } else {
       id = item.shortname;
     }
-    navigate(`/profile/${type}/${id}/view`);
+    const url = `/profile/${type}/${id}/view`;
+    if (e.metaKey || e.ctrlKey) window.open(url);
+    else navigate(url);
   };
 
   const card = useCallback(
     (item: Job | Organization | User, index: number) => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
-          <div onClick={() => handleNavigate(item as Organization | User)} className="cursor-pointer">
+          <div onClick={e => handleNavigate(e, item as Organization | User)} className="cursor-pointer">
             <SearchResultProfile identity={item as User | Organization} />
           </div>
         );
