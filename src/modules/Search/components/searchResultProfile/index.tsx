@@ -20,7 +20,7 @@ export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identi
   const events = eventsToCategory((identity as User)?.events || []).map(item => item.label);
   return (
     <div className="flex flex-col rounded-xl border border-solid border-Gray-light-mode-200">
-      <div onClick={e => e.stopPropagation()}>
+      <div>
         <Header identity={identity} />
       </div>
       <div className="py-6 px-4 md:px-6 flex flex-col gap-5">
