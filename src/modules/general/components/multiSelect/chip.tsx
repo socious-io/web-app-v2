@@ -12,13 +12,13 @@ const Chip: React.FC<CustomChipProps> = props => {
   };
   return (
     <div
-      className={`${css.chip} ${customStyle}`}
+      className={`${css['chip']} ${customStyle}`}
       style={{ borderColor: borderColor ? borderColor : '', backgroundColor: bgColor || '' }}
       onClick={() => onClick(label)}
       onKeyDown={handleEnter}
       tabIndex={0}
     >
-      <span className={`${css.chipLabel} !font-medium`} style={{ color: fontColor || '' }}>
+      <span className={`${css['chip__label']} !font-medium`} style={{ color: fontColor || '' }}>
         {label}
       </span>
       <div style={{ marginRight: 0, marginLeft: 'auto' }}>{icon}</div>
