@@ -92,7 +92,7 @@ export const MainInfo = () => {
       </div>
       {profileType === 'users' && (identity as User).open_to_volunteer && (
         <div className="flex gap-2">
-          <img src="/icons/nowruz/red-heart.svg" alt="" />
+          <Icon name="heart-filled" fontSize={20} className="text-Burgundy-600" />
           <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Open to volunteer</span>
         </div>
       )}

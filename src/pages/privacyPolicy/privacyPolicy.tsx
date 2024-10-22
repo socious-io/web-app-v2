@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Icon } from 'src/modules/general/components/Icon';
 
 import css from './privacyPolicy.module.scss';
 
@@ -8,7 +9,7 @@ export const PrivacyPolicy = () => {
     <div className={css.container}>
       <div className={css.header}>
         <div onClick={() => navigate(-1)}>
-          <img src="/icons/chevron-left.svg" alt="" />
+          <Icon name="chevron-left" fontSize={32} />
         </div>
       </div>
       <span>

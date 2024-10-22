@@ -1,8 +1,10 @@
+import { Icon } from 'src/modules/general/components/Icon';
 import { Input } from 'src/modules/general/components/input/input';
+
 const options = [
-  { value: 'A', label: 'USDT', icon: <img width="20px" height="20px" src="/icons/star.svg" /> },
-  { value: 'B', label: 'BTC', icon: <img width="20px" height="20px" src="/icons/star.svg" /> },
-  { value: 'C', label: 'LGBT', icon: <img width="20px" height="20px" src="/icons/star.svg" /> },
+  { value: 'A', label: 'USDT', icon: <Icon name="star-filled" fontSize={20} className="text-Warning-300" /> },
+  { value: 'B', label: 'BTC', icon: <Icon name="star-filled" fontSize={20} className="text-Warning-300" /> },
+  { value: 'C', label: 'LGBT', icon: <Icon name="star-filled" fontSize={20} className="text-Warning-300" /> },
 ];
 
 export default { title: 'General/Input', component: Input };

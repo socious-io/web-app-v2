@@ -15,10 +15,10 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
       <div className="w-full h-fit py-0 pl-6 pr-5 cursor-pointer" onClick={onLogoClick}>
         <img
           className="hidden md:block"
-          src={open ? '/icons/nowruz/logo-white.svg' : '/icons/nowruz/logoMark-white.svg'}
+          src={open ? '/images/logo/logo-text-white.svg' : '/images/logo/logo-white.svg'}
           alt=""
         />
-        <img className="block md:hidden" src="/icons/nowruz/logo-primary.svg" alt="" />
+        <img className="block md:hidden" src="/images/logo/logo-text.svg" alt="" />
       </div>
       {userIsLoggedIn && (
         <div className="md:hidden w-full h-fit px-4">

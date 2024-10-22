@@ -15,7 +15,7 @@ export const reviews = {
   },
 };
 
-export const onboardingOptons = [
+export const onboardingOptions = [
   {
     title: i18next.t('intro-user-option-title'),
     description: i18next.t('intro-user-option-desc'),

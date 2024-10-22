@@ -1,4 +1,4 @@
-import { Logo } from 'public/icons/nowruz/logo';
+import { Logo } from 'public/icons/dynamic/logo';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, useLoaderData, useSearchParams } from 'react-router-dom';

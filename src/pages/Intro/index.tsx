@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material';
-import { Logo } from 'public/icons/nowruz/logo';
+import { Logo } from 'public/icons/dynamic/logo';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/modules/Auth/containers/ServiceIntro';
-import { reviews, onboardingOptons } from 'src/modules/Auth/statics/intro';
+import { reviews, onboardingOptions } from 'src/modules/Auth/statics/intro';
 import { Button } from 'src/modules/general/components/Button';
 import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
 import { Link } from 'src/modules/general/components/link';
@@ -59,7 +59,7 @@ export const Intro = () => {
           />
           <div className="mt-7">
             <CardRadioButton
-              items={onboardingOptons}
+              items={onboardingOptions}
               selectedValue={selectedOnboarding}
               setSelectedValue={value => {
                 setSelectedOnboarding(value);

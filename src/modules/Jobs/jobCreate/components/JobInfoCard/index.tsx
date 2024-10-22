@@ -31,7 +31,7 @@ export const JobInfoCard: React.FC<JobInfoCardProps> = ({ payload }) => {
     return (
       <div className="flex">
         {city === 'Anywhere' ? (
-          <img src="/icons/nowruz/earth.svg" alt="" />
+          <img src="/icons/earth.svg" alt="" />
         ) : (
           <Icon name="marker-pin-01" fontSize={20} className="mr-1.5" color={variables.color_grey_500} />
         )}

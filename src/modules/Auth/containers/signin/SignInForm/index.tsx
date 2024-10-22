@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
-import { Apple } from 'public/icons/nowruz/apple';
-import { Google } from 'public/icons/nowruz/google';
+import { Apple } from 'public/icons/dynamic/apple';
+import { Google } from 'public/icons/dynamic/google';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
@@ -9,7 +9,7 @@ import { Link } from 'src/modules/general/components/link';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useSignInForm } from './useSignInForm';
-// import { LinkedIn } from 'public/icons/nowruz/linkedin';
+// import { LinkedIn } from 'public/icons/dynamic/linkedin';
 
 interface SignInFormProps {
   event: { id: string; name: string };

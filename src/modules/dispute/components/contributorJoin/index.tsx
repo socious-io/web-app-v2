@@ -33,7 +33,7 @@ export const ContributorJoin: React.FC<ContributorJoinProps> = ({ eligible, setN
   };
 
   const renderSteps = (step: number, title: string, desc: ReactNode) => {
-    const checked = <img src="/icons/circle-tick-green.svg" className="w-8 h-8 max-w-8" />;
+    const checked = <Icon name="check-circle-filled" fontSize={32} className="text-Brand-600" />;
     const current = (
       <div
         className="w-8 h-8 rounded-2xl  bg-Brand-600 flex items-center justify-center"

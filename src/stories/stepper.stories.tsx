@@ -1,8 +1,8 @@
 import { StoryFn } from '@storybook/react';
-import { Mail01 } from 'public/icons/nowruz/mail-01';
-import { Passcode } from 'public/icons/nowruz/passcode';
-import { Star02 } from 'public/icons/nowruz/star-02';
-import { User01 } from 'public/icons/nowruz/user-01';
+import { Mail01 } from 'public/icons/dynamic/mail-01';
+import { Passcode } from 'public/icons/dynamic/passcode';
+import { Star02 } from 'public/icons/dynamic/star-02';
+import { User01 } from 'public/icons/dynamic/user-01';
 import { useState } from 'react';
 import { Stepper } from 'src/modules/general/components/stepper/stepper';
 import { StepInfo } from 'src/modules/general/components/stepper/stepper.types';

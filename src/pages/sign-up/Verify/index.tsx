@@ -1,4 +1,4 @@
-import { Logo } from 'public/icons/nowruz/logo';
+import { Logo } from 'public/icons/dynamic/logo';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';

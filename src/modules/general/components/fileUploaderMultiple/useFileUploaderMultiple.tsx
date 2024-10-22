@@ -1,6 +1,6 @@
-import jpg from 'public/icons/nowruz/file-jpg.svg';
-import pdf from 'public/icons/nowruz/file-pdf.svg';
-import png from 'public/icons/nowruz/file-png.svg';
+import jpg from 'public/icons/file-jpg.svg';
+import pdf from 'public/icons/file-pdf.svg';
+import png from 'public/icons/file-png.svg';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { PostMediaUploadRes, uploadMediaWithProgress } from 'src/core/api';

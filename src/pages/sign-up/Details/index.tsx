@@ -1,11 +1,10 @@
-import { Logo } from 'public/icons/nowruz/logo';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import { UserDetails } from 'src/modules/Auth/containers/signup/UserDetails';
 import { steps } from 'src/modules/Auth/statics/sign-up-steps';
 import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';
 import { Stepper } from 'src/modules/general/components/stepper/stepper';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 export const Details = () => {
   const { t: translate } = useTranslation();
@@ -15,7 +14,7 @@ export const Details = () => {
         <IntroHeader
           title={translate('sign-up-detail-title')}
           description=""
-          logo={<FeaturedIcon src="/icons/user-outlined.svg" />}
+          logo={<FeaturedIcon iconName="user-01" iconColor={variables.color_grey_700} />}
         />
         <div className="mt-5">
           <UserDetails />

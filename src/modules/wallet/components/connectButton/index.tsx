@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'src/modules/general/components/Icon';
 
 import css from './connectButton.module.scss';
 
@@ -8,7 +9,7 @@ interface ConnectButtonProps {
 export const ConnectButton: React.FC<ConnectButtonProps> = ({ handleClick }) => {
   return (
     <button className={css.btn} onClick={handleClick}>
-      <img src="/icons/nowruz/wallet.svg" alt="" />
+      <Icon name="wallet-connect-01" fontSize={20} color="#0099FF" />
       WalletConnect
     </button>
   );
