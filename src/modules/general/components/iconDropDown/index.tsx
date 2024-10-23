@@ -1,5 +1,6 @@
 import { Divider, IconButton, MenuItem, MenuList } from '@mui/material';
 import React from 'react';
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { IconListItem } from 'src/modules/general/components/avatarDropDown/iconListItem';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
@@ -78,7 +79,9 @@ export const IconDropDown: React.FC<IconDropDownProps> = props => {
             >
               <IconListItem
                 iconName="plus"
-                label={currentAccount?.type === 'users' ? 'Create an organization' : 'Create a talent profile'}
+                label={
+                  currentAccount?.type === 'users' ? translate('header-create-org') : translate('header-create-talent')
+                }
                 customIconClass="text-Brand-700"
                 customLabelClass={css.createLabel}
               />
