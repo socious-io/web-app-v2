@@ -1,0 +1,16 @@
+{
+    "header-search-skill": "タイトル、スキル、または組織で検索",
+    "header-search": "検索",
+    "header-status": "ステータス",
+    "header-open-to-work": "仕事を探している",
+    "header-open-to-work-desc": "有給の仕事に対応可能です。オファーを受け取ることができます。",
+    "header-volunteer": "ボランティアに対応可能",
+    "header-volunteer-desc": "ボランティアの仕事に対応可能です。",
+    "header-hiring": "採用中",
+    "header-hiring-desc": "現在、積極的に専門職を採用しています。",
+    "header-create-org": "組織を作成する",
+    "header-create-talent": "人材プロフィールを作成する",
+    "header-view-profile": "プロフィールを見る",
+    "header-settings": "設定",
+    "header-logout": "ログアウト"
+}

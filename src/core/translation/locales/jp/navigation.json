@@ -1,0 +1,23 @@
+{
+    "nav-dashboard": "ダッシュボード",
+    "nav-jobs": "仕事",
+    "nav-find-job": "仕事を探す",
+    "nav-saved-jobs": "保存した仕事",
+    "nav-applied-jobs": "応募した仕事",
+    "nav-contracts": "契約",
+    "nav-overview": "概要",
+    "nav-disputes": "紛争",
+    "nav-communities": "コミュニティ",
+    "nav-feeds": "フィード",
+    "nav-connections": "つながり",
+    "nav-messages": "メッセージ",
+    "nav-payments": "支払い",
+    "nav-credentials": "認証情報",
+    "nav-refer": "紹介して報酬を得る",
+    "nav-contributor": "コントリビューター",
+    "nav-contributor-dashboard": "コントリビューターダッシュボード",
+    "nav-dispute-resolution": "紛争解決",
+    "nav-setting": "設定",
+    "nav-logout": "ログアウト",
+    "nav-login": "ログイン"
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { translate } from 'src/core/utils';
 import { Icon } from 'src/modules/general/components/Icon';
 import { IconDropDown } from 'src/modules/general/components/iconDropDown';
 import { Input } from 'src/modules/general/components/input/input';
@@ -45,7 +46,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
   const path = useLocation().pathname;
   const pages = ['/jobs', '/jobs/saved', '/jobs/recommended'];
   const searchPlaceholder =
-    pages.includes(path) && userType === 'users' ? 'Search by title, skill or organization' : 'Search';
+    pages.includes(path) && userType === 'users' ? translate('header-search-skill') : translate('header-search');
 
   return (
     <div
@@ -96,9 +97,9 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
             img={image}
             accounts={accounts}
             iconItems={[
-              { iconName: 'user-circle', label: 'View profile', onClick: navigateToProfile },
-              { iconName: 'settings-01', label: 'Settings', onClick: navigateToSettings },
-              { iconName: 'log-out-01', label: 'Log out', onClick: logout },
+              { iconName: 'user-circle', label: translate('header-view-profile'), onClick: navigateToProfile },
+              { iconName: 'settings-01', label: translate('header-settings'), onClick: navigateToSettings },
+              { iconName: 'log-out-01', label: translate('header-logout'), onClick: logout },
             ]}
             createItem
           />

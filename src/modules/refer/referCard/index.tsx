@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -31,7 +32,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
   const inputJSX = (
     <button id="copy-button" className={css.copyBtn} onClick={handleCopy}>
       <Icon name="copy-01" fontSize={20} className="text-Gray-light-mode-700" />
-      <span>Copy</span>
+      <span>{translate('referral-copy')}</span>
     </button>
   );
   return (
@@ -76,7 +77,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
             type === 'organization' ? 'border-Wild_blue-500' : 'border-Dark_vanilla-500'
           } `}
         >
-          <span className="text-lg font-semibold text-Gray-light-mode-900">You get</span>
+          <span className="text-lg font-semibold text-Gray-light-mode-900">{translate('referral-you-get')}</span>
           <div className="flex gap-3">
             <div
               className="h-5 w-5 rounded-lg flex items-center justify-center"
@@ -88,12 +89,10 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
               <img src="/icons/nowruz/check.svg" alt="" />
             </div>
             <span className="text-sm font-normal text-Gray-light-mode-600">
-              {type === 'organization'
-                ? '1% of every invoice when your referral hires'
-                : '1% of their earnings on Socious'}
+              {type === 'organization' ? translate('referral-org-desc') : translate('referral-user-desc')}
             </span>
           </div>
-          <span className="text-lg font-semibold text-Gray-light-mode-900">They get</span>
+          <span className="text-lg font-semibold text-Gray-light-mode-900">{translate('referral-they-get')}</span>
           <div className="flex gap-3">
             <div
               className="h-5 w-5 rounded-lg flex items-center justify-center"
@@ -104,9 +103,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
             >
               <img src="/icons/nowruz/check.svg" alt="" />
             </div>
-            <span className="text-sm font-normal text-Gray-light-mode-600">
-              50% discount on Socious fees for the first month
-            </span>
+            <span className="text-sm font-normal text-Gray-light-mode-600">{translate('referral-discount')}</span>
           </div>
         </div>
       </div>
@@ -120,10 +117,10 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
       <AlertModal
         open={openSentModal}
         onClose={() => setOpenSentModal(false)}
-        title="Sent"
-        message="Tell your contacts to check their inbox. Their invite to Socious should be with them shortly."
+        title={translate('referral-sent')}
+        message={translate('referral-tell-contacts')}
         closeButtn={true}
-        closeButtonLabel="Close"
+        closeButtonLabel={translate('referral-close')}
       />
     </>
   );

@@ -1,5 +1,6 @@
 import { event } from 'cypress/types/jquery';
 import { useState, useRef, useEffect } from 'react';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Dot } from 'src/modules/general/components/dot';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -38,7 +39,7 @@ export const StatusDropDown: React.FC<StatusDropDownProps> = props => {
     <div className="w-full h-full flex flex-col items-end relative group" ref={newRef}>
       <Button variant="outlined" className={css.statusButton} color="primary" onClick={() => setOpen(!open)}>
         <Dot size="small" color={variables.color_success_500} shadow shadowColor={variables.color_success_100} />
-        Status
+        {translate('header-status')}
         <Icon name="chevron-down" fontSize={20} color={variables.color_grey_700} className="!cursor-pointer" />
       </Button>
 
@@ -50,15 +51,15 @@ export const StatusDropDown: React.FC<StatusDropDownProps> = props => {
                 <div className={css.item}>
                   <ToggleButton checked={openToWork} onChange={handleOpenToWork} size="small" />
                   <div className="flex flex-col">
-                    <p className={css.title}>Open to work</p>
-                    <p className={css.subtitle}>You are available for paid jobs. You will be able to receive offers.</p>
+                    <p className={css.title}>{translate('header-open-to-work')}</p>
+                    <p className={css.subtitle}>{translate('header-open-to-work-desc')}</p>
                   </div>
                 </div>
                 <div className={css.item}>
                   <ToggleButton checked={openToVolunteer} onChange={handleOpenToVolunteer} size="small" />
                   <div className="flex flex-col">
-                    <p className={css.title}>Open to volunteer</p>
-                    <p className={css.subtitle}>You are available for volunteer jobs.</p>
+                    <p className={css.title}>{translate('header-volunteer')}</p>
+                    <p className={css.subtitle}>{translate('header-volunteer-desc')}</p>
                   </div>
                 </div>
               </>
@@ -67,8 +68,8 @@ export const StatusDropDown: React.FC<StatusDropDownProps> = props => {
               <div className={css.item}>
                 <ToggleButton checked={hiring} onChange={handleHiring} size="small" />
                 <div className="flex flex-col">
-                  <p className={css.title}>Hiring</p>
-                  <p className={css.subtitle}>You are currently actively hiring professionals.</p>
+                  <p className={css.title}>{translate('header-hiring')}</p>
+                  <p className={css.subtitle}>{translate('header-hiring-desc')}</p>
                 </div>
               </div>
             )}
