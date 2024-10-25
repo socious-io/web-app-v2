@@ -4,6 +4,7 @@ import { ChoosePasswordForm } from 'src/modules/Auth/containers/signup/ChoosePas
 import { steps } from 'src/modules/Auth/statics/sign-up-steps';
 import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';
 import { Stepper } from 'src/modules/general/components/stepper/stepper';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 export const ChoosePassword = () => {
   const { t: translate } = useTranslation();
@@ -13,7 +14,7 @@ export const ChoosePassword = () => {
         <IntroHeader
           title={translate('sign-up-password')}
           description=""
-          logo={<FeaturedIcon src="/icons/passcode.svg" />}
+          logo={<FeaturedIcon iconName="passcode" iconColor={variables.color_grey_700} />}
         />
         <ChoosePasswordForm />
       </div>

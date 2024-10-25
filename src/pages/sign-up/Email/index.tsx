@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
-import { Apple } from 'public/icons/nowruz/apple';
-import { Google } from 'public/icons/nowruz/google';
-import { Logo } from 'public/icons/nowruz/logo';
+import { Apple } from 'public/icons/dynamic/apple';
+import { Google } from 'public/icons/dynamic/google';
+import { Logo } from 'public/icons/dynamic/logo';
 import { useTranslation } from 'react-i18next';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { EVENTS_QUERIES } from 'src/constants/EVENTS_QUERIES';

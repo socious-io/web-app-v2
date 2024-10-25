@@ -82,7 +82,11 @@ export const Onboarding = () => {
     return (
       <UserProvider>
         <div className="flex flex-row justify-between py-4 px-8">
-          <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} alt="" />
+          <img
+            className={css.headerImage}
+            src={isMobile ? '/images/logo/logo.svg' : '/images/logo/logo-text.svg'}
+            alt=""
+          />
           <IconDropDown iconItems={items} type="users" accounts={accounts} />
         </div>
         <div className="flex flex-col items-center pb-4 ">
@@ -104,7 +108,7 @@ export const Onboarding = () => {
   return (
     <UserProvider>
       <div className="flex flex-row justify-between py-4 px-8">
-        <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} />
+        <img className={css.headerImage} src={isMobile ? '/images/logo/logo.svg' : '/images/logo/logo-text.svg'} />
         <IconDropDown iconItems={items} type="users" accounts={accounts} />
       </div>
       <div className="flex flex-col items-center pb-4 sb:h-screen">

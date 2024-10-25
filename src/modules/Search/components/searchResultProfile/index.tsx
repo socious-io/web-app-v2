@@ -2,6 +2,7 @@ import React from 'react';
 import { eventsToCategory, skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { Organization, User } from 'src/core/api';
 import { ChipList } from 'src/modules/general/components/chipList';
+import { Icon } from 'src/modules/general/components/Icon';
 import { Location } from 'src/modules/userProfile/components/location';
 import { Website } from 'src/modules/userProfile/components/website';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -56,7 +57,7 @@ export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identi
         <div className="flex flex-col gap-3">
           {(identity as User).open_to_volunteer && (
             <div className="flex gap-2">
-              <img src="/icons/nowruz/red-heart.svg" alt="" />
+              <Icon name="heart-filled" fontSize={20} className="text-Burgundy-600" />
               <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Open to volunteer</span>
             </div>
           )}

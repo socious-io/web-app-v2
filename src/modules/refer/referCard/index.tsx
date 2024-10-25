@@ -63,10 +63,10 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
                 <Icon name="share-01" fontSize={24} className="text-Gray-light-mode-700" />
               </Button>
               <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
-                <img src="/icons/nowruz/whatsapp.svg" />
+                <Icon name="whatsapp" fontSize={24} color="#00c538" />
               </Button>
               <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
-                <img src="/icons/nowruz/telegram.svg" />
+                <Icon name="telegram" fontSize={24} color="#26a5e5" />
               </Button> */}
             </div>
           </div>
@@ -85,7 +85,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
                   type === 'organization' ? variables.color_wild_blue_500 : variables.color_dark_vanilla_500,
               }}
             >
-              <img src="/icons/nowruz/check.svg" alt="" />
+              <Icon name="tick" fontSize={10} className="text-Base-White" />
             </div>
             <span className="text-sm font-normal text-Gray-light-mode-600">
               {type === 'organization'
@@ -102,7 +102,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
                   type === 'organization' ? variables.color_wild_blue_500 : variables.color_dark_vanilla_500,
               }}
             >
-              <img src="/icons/nowruz/check.svg" alt="" />
+              <Icon name="tick" fontSize={10} className="text-Base-White" />
             </div>
             <span className="text-sm font-normal text-Gray-light-mode-600">
               50% discount on Socious fees for the first month

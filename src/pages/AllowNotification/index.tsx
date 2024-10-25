@@ -25,7 +25,7 @@ export const AllowNotification = () => {
   return (
     <div className="flex flex-col h-screen justify-between items-center">
       <div className="flex flex-row justify-between py-4 px-8 w-full">
-        <img className={css.headerImage} src={isMobile ? '/icons/logo.svg' : '/icons/logo-text.svg'} />
+        <img className={css.headerImage} src={isMobile ? '/images/logo/logo.svg' : '/images/logo/logo-text.svg'} />
         <IconDropDown iconItems={items} type={type === 'user' ? 'users' : 'organizations'} accounts={accounts} />
       </div>
       <div className="flex flex-col h-screen justify-between">

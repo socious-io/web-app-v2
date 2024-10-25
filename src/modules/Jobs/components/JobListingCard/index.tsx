@@ -91,12 +91,11 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
         )}
         {displaySave && (
           <IconButton
-            iconName={jobVal.saved ? '' : 'bookmark'}
+            iconName={jobVal.saved ? 'bookmark-filled' : 'bookmark'}
             disabled={jobVal.not_interested}
-            img={jobVal.saved ? <img src="/icons/nowruz/green-bookmark.svg" alt="" /> : ''}
             size="medium"
             iconSize={20}
-            iconColor={variables.color_grey_600}
+            iconColor={jobVal.saved ? variables.color_primary_600 : variables.color_grey_600}
             onClick={e => {
               e.stopPropagation();
               handleBookmark();

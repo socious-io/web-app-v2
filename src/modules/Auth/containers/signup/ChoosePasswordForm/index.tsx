@@ -41,7 +41,7 @@ export const ChoosePasswordForm = () => {
           <div className={`${css.validation} mt-4`}>
             <img
               className="mr-1"
-              src={isPasswordLengthValid ? '/icons/green-check.svg' : '/icons/grey-check.svg'}
+              src={isPasswordLengthValid ? '/icons/check-circle-green.svg' : '/icons/check-circle-grey.svg'}
               alt="check"
             />
             {translate('sign-up-password-error-length')}
@@ -49,7 +49,7 @@ export const ChoosePasswordForm = () => {
           <div className={`${css.validation} mt-2 mb-4`}>
             <img
               className="mr-1"
-              src={isPasswordPatternValid ? '/icons/green-check.svg' : '/icons/grey-check.svg'}
+              src={isPasswordPatternValid ? '/icons/check-circle-green.svg' : '/icons/check-circle-grey.svg'}
               alt="check"
             />
             {translate('sign-up-password-error-weak')}
