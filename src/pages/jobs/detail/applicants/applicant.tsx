@@ -68,7 +68,7 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-sm font-medium text-Gray-light-mode-700">Cover letter</p>
-            <p className="leading-6 break-words">
+            <p className="leading-6 break-words whitespace-pre-wrap">
               {copyProccessed}
               {seeMore && (
                 <span className="cursor-pointer" onClick={handleSeeMore}>
