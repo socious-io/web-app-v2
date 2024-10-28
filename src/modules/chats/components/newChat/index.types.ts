@@ -1,4 +1,4 @@
 export interface NewChatProps {
   handleClose: () => void;
-  onSend: (receipientId: string, message: string) => void;
+  onSend: (recipientId: string, message: string) => void;
 }
