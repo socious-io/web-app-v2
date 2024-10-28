@@ -3,7 +3,7 @@
 .textarea {
     font-family: sans-serif, 'Apple Color Emoji';
     border: 0;
-    word-break: break-all;
+    overflow-wrap: break-word;
     &::placeholder {
         color: $color-grey-500;
     }
