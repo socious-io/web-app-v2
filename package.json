@@ -38,7 +38,7 @@
     "@capacitor/toast": "^6.0.1",
     "@datadog/browser-rum": "^5.28.1",
     "@emoji-mart/react": "^1.1.1",
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@hookform/resolvers": "^3.9.0",
     "@ionic/pwa-elements": "^3.2.2",
