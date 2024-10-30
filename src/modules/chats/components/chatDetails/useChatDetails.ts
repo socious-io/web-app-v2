@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Chat, CurrentIdentity, Message, OrgMeta, UserMeta, chatMessages, createChatMessage } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
 export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: (val: Chat[]) => void) => {
+  const navigate = useNavigate();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
   const [messages, setMessages] = useState<Message[]>([]);
-
   const [page, setPage] = useState(1);
   const [hasMore, sethasMore] = useState(true);
   const chat = chats.find(item => item.id === selectedChatId);
@@ -64,5 +64,11 @@ export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: 
         }
       });
   };
-  return { messages, setMessages, onSend, account, loadMore, hasMore, page };
+
+  const onAvatarClick = () => {
+    if (account.type === 'users') navigate(`/profile/users/${account.username}/view`);
+    else navigate(`/profile/organizations/${account.username}/view`);
+  };
+
+  return { messages, setMessages, onSend, account, loadMore, hasMore, page, onAvatarClick };
 };

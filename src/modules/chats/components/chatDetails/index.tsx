@@ -16,7 +16,7 @@ export const ChatDetails: React.FC<ChatDetailsProps> = ({
   newSocketMessage,
   setChats,
 }) => {
-  const { messages, onSend, account, loadMore, hasMore, page, setMessages } = useChatDetails(
+  const { messages, onSend, account, loadMore, hasMore, page, setMessages, onAvatarClick } = useChatDetails(
     selectedChatId,
     chats,
     setChats,
@@ -49,7 +49,7 @@ export const ChatDetails: React.FC<ChatDetailsProps> = ({
             handleClick={() => setOpenDetails(false)}
           />
         </div>
-        <AvatarLabelGroup account={account} customStyle="!p-0" />
+        <AvatarLabelGroup account={account} customStyle="!p-0" handleClick={onAvatarClick} />
       </div>
       <div id="chat-list-div" className="w-full p-4 md:p-8 flex-1 flex flex-col gap-6 overflow-y-auto">
         <InfiniteScroll
