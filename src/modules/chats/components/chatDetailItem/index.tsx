@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { CurrentIdentity } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
@@ -13,7 +12,8 @@ export const ChatDetailItem: React.FC<ChatDetailItemProps> = ({
   senderAvatar,
   senderName,
   senderType,
-  className,
+  onAvatarClick,
+  className = '',
 }) => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
@@ -34,7 +34,7 @@ export const ChatDetailItem: React.FC<ChatDetailItemProps> = ({
         </div>
       ) : (
         <div className="flex gap-3">
-          <Avatar img={senderAvatar} type={senderType || 'users'} size="40px" />
+          <Avatar img={senderAvatar} type={senderType || 'users'} size="40px" onClick={onAvatarClick} />
           <div className="flex flex-col gap-1.5 items-start">
             <div className="flex justify-between items-center gap-2">
               <span className="font-medium text-sm leading-5 text-Gray-light-mode-700">{senderName}</span>
