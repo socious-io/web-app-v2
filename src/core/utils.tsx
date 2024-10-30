@@ -180,7 +180,7 @@ export const checkSearchFilters = (
       ];
       break;
     case 'users':
-      authorizedKeys = ['social_causes', 'city', 'country', 'skills', 'events'];
+      authorizedKeys = ['social_causes', 'city', 'country', 'skills', 'events', 'languages'];
       break;
     case 'posts':
       authorizedKeys = ['causes_tags', 'hashtags', 'identity_tags', 'identity_id'];

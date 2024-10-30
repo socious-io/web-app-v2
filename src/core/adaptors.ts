@@ -1,10 +1,11 @@
 import i18next from 'i18next';
+import { Languages } from 'src/constants/constants';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import store from 'src/store';
 import { setEvents } from 'src/store/reducers/events.reducer';
 import { setSkills } from 'src/store/reducers/skills.reducer';
 
-import { events, skills, Event } from './api';
+import { events, skills, Event, Language } from './api';
 import { CategoriesResp, Cities } from './types';
 
 export function socialCausesToCategoryAdaptor() {
@@ -95,4 +96,11 @@ export function eventsToCategory(events: Event[] = []) {
   } catch {
     return [];
   }
+}
+
+export function languagesToCategoryAdaptor() {
+  return Object.entries(Languages).map(([value, label]) => ({
+    value,
+    label,
+  }));
 }

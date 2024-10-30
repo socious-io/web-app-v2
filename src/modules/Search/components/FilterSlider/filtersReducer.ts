@@ -14,6 +14,7 @@ export type FiltersType = {
   paymentType: LabelValue;
   openToVolunteer: boolean | null;
   events: LabelValue | null;
+  languages: LabelValue[];
 };
 
 export const initialFilters: FiltersType = {
@@ -28,6 +29,7 @@ export const initialFilters: FiltersType = {
   paymentType: { label: 'Paid', value: 'PAID' },
   openToVolunteer: null,
   events: null,
+  languages: [],
 };
 
 export function filtersReducer(filters: FiltersType, action: { type: keyof FiltersType | 'reset'; payload: any }) {
@@ -56,6 +58,8 @@ export function filtersReducer(filters: FiltersType, action: { type: keyof Filte
       return { ...filters, openToVolunteer: action.payload };
     case 'events':
       return { ...filters, events: action.payload };
+    case 'languages':
+      return { ...filters, languages: action.payload };
     default:
       console.log('Not valid', action.payload);
       return filters;

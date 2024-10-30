@@ -21,6 +21,7 @@ export type FilterReq = {
   payment_type?: string | number;
   location?: { value: number; label: string; countryCode: string };
   events?: Array<string>;
+  languages?: Array<string>;
 };
 
 export const useSearch = () => {
@@ -68,6 +69,7 @@ export const useSearch = () => {
       experience_level: filter.experience_level,
       payment_type: filter.payment_type,
       events: filter.events,
+      languages: filter.languages,
     };
   };
 

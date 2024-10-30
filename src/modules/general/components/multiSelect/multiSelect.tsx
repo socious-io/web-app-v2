@@ -7,75 +7,72 @@ import Chip from './chip';
 import css from './multiSelect.module.scss';
 import { MultiSelectItem, MultiSelectProps } from './multiSelect.types';
 
-const MultiSelect: React.FC<MultiSelectProps> = props => {
-  const {
-    id,
-    searchTitle,
-    items,
-    maxLabel,
-    max,
-    placeholder,
-    componentValue,
-    setComponentValue,
-    customHeight,
-    chipBorderColor,
-    chipBgColor,
-    chipFontColor,
-    chipIconColor,
-    displayDefaultBadges = true,
-    errors,
-  } = props;
+const MultiSelect: React.FC<MultiSelectProps> = ({
+  id,
+  searchTitle,
+  items,
+  maxLabel,
+  max,
+  placeholder,
+  componentValue,
+  setComponentValue,
+  customHeight,
+  chipBorderColor,
+  chipBgColor,
+  chipFontColor,
+  chipIconColor,
+  displayDefaultBadges = true,
+  errors,
+}) => {
   const { t: translate } = useTranslation();
   const [chipItems, setChipItems] = useState(items);
   const [searchVal, setSearchVal] = useState('');
   const inputRef = useRef<HTMLTextAreaElement>();
 
-  function filterItems(val: string) {
+  const filterItems = (val: string) => {
     setSearchVal(val);
     setChipItems(
       items
         ?.filter(item => !componentValue.map(cv => cv.value).includes(item.value))
         .filter(item => item.label.toLowerCase().startsWith(val.toLowerCase())),
     );
-  }
+  };
 
-  function handleChange(val: (MultiSelectItem | string)[]) {
+  const handleChange = (val: (MultiSelectItem | string)[]) => {
     const lastIndx = val.length - 1;
     const lastItem =
       typeof val[lastIndx] === 'string' ? val[lastIndx].toString() : (val[lastIndx] as MultiSelectItem).value;
     const newVal = items?.find(
-      i =>
-        i.label.toLowerCase() === lastItem.toLowerCase() &&
-        !componentValue.map(i => i.label.toLowerCase()).includes(lastItem.toLowerCase()),
+      item =>
+        item.label.toLowerCase() === lastItem.toLowerCase() &&
+        !componentValue.map(cv => cv.label.toLowerCase()).includes(lastItem.toLowerCase()),
     );
     if (newVal) setComponentValue([...componentValue, newVal]);
-    else setChipItems(items?.filter(i => !componentValue?.includes(i)));
-  }
+    else setChipItems(items?.filter(item => !componentValue?.includes(item)));
+  };
 
-  function add(value: string, label: string) {
+  const add = (value: string, label: string) => {
     const existed = componentValue.find(item => item.value === value || item.label === label);
     if (!existed && componentValue?.length < (max || 0)) setComponentValue([...componentValue, { value, label }]);
     if (inputRef.current) inputRef.current.focus();
-  }
+  };
 
-  function remove(val: string) {
-    setComponentValue(componentValue?.filter(item => item.label !== val));
-  }
+  const remove = (val: string) => setComponentValue(componentValue?.filter(item => item.label !== val));
 
   useEffect(() => {
     setSearchVal('');
-    setChipItems(items?.filter(i => !componentValue.map(cv => cv.value).includes(i.value)));
+    setChipItems(items?.filter(item => !componentValue.map(cv => cv.value).includes(item.value)));
   }, [componentValue]);
 
   return (
-    <div className={css.container}>
-      <label htmlFor={id} aria-describedby={id} className={css.searchTitle}>
+    <div className={css['container']}>
+      <label htmlFor={id} aria-describedby={id} className={css['search']}>
         {searchTitle}
       </label>
       <Autocomplete
         id={id}
         value={componentValue}
-        onChange={(event, value) => handleChange(value)}
+        onChange={(_, value) => handleChange(value)}
         clearIcon={false}
         options={[]}
         freeSolo
@@ -97,10 +94,10 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
           ))
         }
         disabled={componentValue?.length >= (max || 0)}
-        onInputChange={(e, newValue) => filterItems(newValue)}
+        onInputChange={(_, newValue) => filterItems(newValue)}
         renderInput={params => {
           return (
-            <div className={css.inputContainer}>
+            <div className={css['input']}>
               <TextField
                 variant="outlined"
                 label=""
@@ -115,42 +112,46 @@ const MultiSelect: React.FC<MultiSelectProps> = props => {
           );
         }}
       />
-      <div className={css.captionDiv}>
-        {errors &&
-          errors.map((e, index) => (
-            <p key={index} className={`${css.errorMsg}`}>
-              {e}
-            </p>
-          ))}
-        <Typography variant="subtitle1" className={css.popularLabel}>
-          {maxLabel}
-        </Typography>
-      </div>
+      <div className={css['content']}>
+        {(errors || maxLabel) && (
+          <div className={css['caption']}>
+            {errors &&
+              errors.map((error, index) => (
+                <p key={index} className={`${css['caption__error']}`}>
+                  {error}
+                </p>
+              ))}
+            <Typography variant="subtitle1" className={css['caption__label']}>
+              {maxLabel}
+            </Typography>
+          </div>
+        )}
 
-      {displayDefaultBadges && (
-        <div className={css.popularDiv}>
-          <Typography variant="caption" className={css.popularLabel}>
-            {translate('general-popular')}
-          </Typography>
-        </div>
-      )}
-      {(displayDefaultBadges || searchVal) && (
-        <div className={css.chipContainer} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
-          {chipItems?.map(i => (
-            <Chip
-              key={i.value}
-              id={i.value}
-              label={i.label}
-              icon={<Icon name="plus" fontSize={12} color={chipIconColor} />}
-              onClick={() => add(i.value, i.label)}
-              bgColor={chipBgColor}
-              borderColor={chipBorderColor}
-              fontColor={chipFontColor}
-              customStyle="m-1"
-            />
-          ))}
-        </div>
-      )}
+        {displayDefaultBadges && (
+          <div className={css['default']}>
+            <Typography variant="caption" className={css['default__label']}>
+              {translate('general-popular')}
+            </Typography>
+          </div>
+        )}
+        {(displayDefaultBadges || searchVal) && (
+          <div className={css['chips']} style={customHeight ? { height: customHeight, overflowY: 'auto' } : {}}>
+            {chipItems?.map(item => (
+              <Chip
+                key={item.value}
+                id={item.value}
+                label={item.label}
+                icon={<Icon name="plus" fontSize={12} color={chipIconColor} />}
+                onClick={() => add(item.value, item.label)}
+                bgColor={chipBgColor}
+                borderColor={chipBorderColor}
+                fontColor={chipFontColor}
+                customStyle="m-1"
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
