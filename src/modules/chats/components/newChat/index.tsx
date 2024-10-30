@@ -1,9 +1,8 @@
-import React from 'react';
 import { SendMessage } from 'src/modules/chats/components/sendMessage';
 import { CloseButton } from 'src/modules/general/components/closeButton';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 
-import { NewChatProps } from './newChat.types';
+import { NewChatProps } from './index.types';
 import { useNewChat } from './useNewChat';
 
 export const NewChat: React.FC<NewChatProps> = ({ handleClose, onSend }) => {
@@ -22,16 +21,16 @@ export const NewChat: React.FC<NewChatProps> = ({ handleClose, onSend }) => {
           placeholder="Type a name..."
           isAsync
           loadOptions={searchFollowings}
+          value={selectedContact}
+          onChange={onSelect}
           className="w-full"
           hasDropdownIcon={false}
-          value={selectedContact}
-          onChange={value => onSelect(value)}
           border={false}
         />
       </div>
-      <div className="px-4 py-5 md:px-6 flex flex-1  overflow-y-auto"></div>
+      <div className="px-4 py-5 md:px-6 flex flex-1 overflow-y-auto" />
       <div className="w-full h-fit px-4 py-6 md:px-8">
-        <SendMessage receipientId={selectedContact?.value || ''} handleCreateChat={onSend} />
+        <SendMessage recipientId={selectedContact?.value || ''} handleCreateChat={onSend} />
       </div>
     </div>
   );
