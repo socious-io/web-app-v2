@@ -18,7 +18,7 @@ export const Summary = () => {
   });
 
   const {
-    data: { seeMore, copyProccessed },
+    data: { seeMore, copyProcessed },
     operations: { handleSeeMore },
   } = useSeeMore(identity?.mission ?? '');
 
@@ -44,7 +44,7 @@ export const Summary = () => {
         </div>
         <div className={css.mission}>
           <p>
-            {copyProccessed}
+            {copyProcessed}
             {seeMore && (
               <span className={css.seeMoreBtn} onClick={handleSeeMore}>
                 see more
