@@ -45,6 +45,9 @@ const schema = yup.object().shape({
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
   const { chainId, isConnected } = Dapp.useWeb3();
+  const [isLaceConnected, setLaceConnected] = useState<boolean>(false);
+  //FIXME(Elaine): there's probably a more elegant way to do this
+
   //FIXME(Elaine): add this right here
   const [tokens, setTokens] = useState<
     {
@@ -87,8 +90,26 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
         setTokens(mapTokens);
       }
     };
+
+    const getLaceConnected = async () => {
+      const lace = window?.cardano?.lace;
+      if (lace === undefined) {
+        setLaceConnected(false);
+        return;
+      }
+      const isEnabled = await lace.isEnabled();
+      setLaceConnected(isEnabled);
+      setTokens([
+        {
+          value: 'ADA (lace)',
+          label: 'ADA (lace)',
+          address: 'ADA (lace)',
+        },
+      ]); //FIXME(Elaine): check whatever schema this is supposed to be, remove debug test
+    };
     getTokens();
-  }, [isConnected, chainId]);
+    getLaceConnected();
+  }, [isConnected, chainId]); //FIXME(Elaine): Do we need to add anything to the dependencies here?
 
   const onSelectPaymentType = paymentType => {
     setValue('paymentType', paymentType);
