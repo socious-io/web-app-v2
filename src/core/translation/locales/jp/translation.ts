@@ -3,6 +3,7 @@ import dashboard from './dashboard.json';
 import general from './general.json';
 import header from './header.json';
 import intro from './intro.json';
+import jobs from './jobs.json';
 import kyc from './kyc.json';
 import languages from './languages.json';
 import login from './login.json';
@@ -36,5 +37,6 @@ export function generateTranslationFile() {
     referral,
     navigation,
     header,
+    jobs,
   );
 }
