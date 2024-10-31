@@ -8,6 +8,7 @@ import {
 import { BrowserProvider, JsonRpcSigner } from 'ethers';
 import React, { useState, useEffect } from 'react';
 import { config } from 'src/config';
+import { LaceButton } from 'src/modules/wallet/components/connectButton';
 
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
@@ -32,6 +33,8 @@ createWeb3Modal({
 });
 
 export const useWeb3 = () => {
+  console.log('Useweb3 invoked');
+
   const [provider, setProvier] = useState<BrowserProvider | undefined>();
   const { address, isConnected, chainId } = useWeb3ModalAccount();
   const { open, close } = useWeb3Modal();
@@ -67,6 +70,11 @@ export const Connect: React.FC = () => {
   return (
     <>
       <w3m-button />
+      <LaceButton
+        handleClick={() => {
+          return;
+        }}
+      />
     </>
   );
 };

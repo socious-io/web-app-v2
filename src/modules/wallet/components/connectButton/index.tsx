@@ -19,15 +19,32 @@ interface LaceButtonProps {
   handleClick: () => void;
 }
 export const LaceButton: React.FC<LaceButtonProps> = ({ handleClick }) => {
-  console.log('window.cardano' + window.cardano.toJSON());
+  const cardano = window?.cardano;
+  console.log('window.cardano: ' + JSON.stringify(Object.getOwnPropertyNames(cardano)));
+  // this is according to CIP-30
   const lace = window?.cardano?.lace;
   if (typeof lace === 'undefined') {
     return; //TODO(Elaine): placeholder? Grayed out? I think desaturated with tooltip would be good
   }
+  console.log('lace properties: ' + JSON.stringify(Object.getOwnPropertyNames(lace)));
+  console.log('lace.isEnabled', lace.isEnabled());
+  console.log('lace.enable', lace.enable);
+  // lace.enable([]); // empty extensions list for now
+  const onClick = async () => {
+    const api = await lace.enable();
+    //FIXME(Elaine): I know this looks like I'm writing Haskell in javascript
+    const usedAddresses = new Set(await api.getUsedAddresses());
+    const unusedAddresses = new Set(await api.getUnusedAddresses());
+    const allAddresses = Array.from(usedAddresses.union(unusedAddresses));
+
+    console.log('allAddresses: ', allAddresses);
+
+    handleClick();
+  };
 
   const laceIcon = lace.icon;
   return (
-    <button className={css.btn} onClick={handleClick}>
+    <button className={css.btn} onClick={onClick}>
       <img src={laceIcon} alt="" />
       LaceConnect
     </button>

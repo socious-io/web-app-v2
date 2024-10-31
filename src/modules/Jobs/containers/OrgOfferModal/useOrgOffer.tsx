@@ -45,6 +45,7 @@ const schema = yup.object().shape({
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
   const { chainId, isConnected } = Dapp.useWeb3();
+  //FIXME(Elaine): add this right here
   const [tokens, setTokens] = useState<
     {
       value: string;
