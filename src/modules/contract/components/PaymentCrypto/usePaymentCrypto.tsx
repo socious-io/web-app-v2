@@ -42,6 +42,7 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
     const applyOrgFeeDiscount = !!offer.org_referrer_wallet && offer.org_fee_discount;
     const applyContFeeDiscount = !!offer.contributor_referrer_wallet && offer.contributor_fee_discount;
 
+    //FIXME(Elaine): here
     setDisabledPayment(true);
     try {
       // put escrow on smart contract
