@@ -47,10 +47,10 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
           <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{subtitle}</span>
         </div>
         {!!verified && (
-          <div className="py-5 px-4 md:p-6 flex flex-col gap-3">
+          <div className="px-4 md:px-6 flex flex-col gap-3">
             <Input className="bg-Base-White" id="copy-url" value={url} postfix={inputJSX} />
             <div className="w-full flex gap-3">
-              {/* <Button
+              <Button
                 fullWidth
                 customStyle="bg-Base-White"
                 variant="outlined"
@@ -59,7 +59,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
               >
                 <Icon name="mail-01" fontSize={24} className="text-Gray-light-mode-700" />
               </Button>
-              <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
+              {/*<Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
                 <Icon name="share-01" fontSize={24} className="text-Gray-light-mode-700" />
               </Button>
               <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
