@@ -337,8 +337,15 @@ export const activeEscrowDatum = (
 };
 
 export type RecipientDepositRedeemer = ConStr0<[PubKeyAddress, Value]>;
-export const recipientDepositRedeemer = (recipient: string, depositAmount: Asset[]) =>
-  initiateEscrowDatum(recipient, depositAmount);
+// export const recipientDepositRedeemer = (recipient: string, depositAmount: Asset[]) =>
+// initiateEscrowDatum(recipient, depositAmount);
+//NOTE(Elaine): Previous version of this relied on the CBOR coincidentally being identical
+// between initiation datum and recipient deposit redeemer. This is no longer the case after fees
+
+export const recipientDepositRedeemer = (recipient: string, depositAmount: Asset[]) => {
+  const { pubKeyHash, stakeCredentialHash } = deserializeAddress(recipient);
+  return conStr0([pubKeyAddress(pubKeyHash, stakeCredentialHash), value(depositAmount)]);
+};
 
 export class MeshEscrowContract extends MeshTxInitiator {
   scriptCbor: string;
@@ -360,12 +367,12 @@ export class MeshEscrowContract extends MeshTxInitiator {
     // }
   };
 
-  initiateEscrow = async (escrowAmount: Asset[]): Promise<string> => {
+  initiateEscrow = async (escrowAmount: Asset[], feeAddress: string, feeAmount: Asset[]): Promise<string> => {
     const { utxos, walletAddress } = await this.getWalletInfoForTx();
 
     await this.mesh
       .txOut(this.scriptAddress, escrowAmount)
-      .txOutInlineDatumValue(initiateEscrowDatum(walletAddress, escrowAmount), 'JSON')
+      .txOutInlineDatumValue(initiateEscrowDatum(walletAddress, escrowAmount, feeAddress, feeAmount), 'JSON')
       .changeAddress(walletAddress)
       .selectUtxosFrom(utxos)
       .complete();
@@ -410,7 +417,10 @@ export class MeshEscrowContract extends MeshTxInitiator {
     const { utxos, walletAddress, collateral } = await this.getWalletInfoForTx();
 
     const inputDatum = deserializeDatum<InitiationDatum>(escrowUtxo.output.plutusData!);
-    const outputDatum = activeEscrowDatum(inputDatum, walletAddress, depositAmount);
+    const feeAddress = inputDatum.fields[2];
+    const feeAmount = MeshValue.fromValue(inputDatum.fields[3]).toAssets();
+    const outputDatum = activeEscrowDatum(inputDatum, walletAddress, depositAmount, String(feeAddress), feeAmount);
+    //NOTE(Elaine): we can get the fee info from the inputDatum
 
     const inputAssets = MeshValue.fromValue(inputDatum.fields[1]).toAssets();
     const escrowAmount = mergeAssets([...depositAmount, ...inputAssets]);
