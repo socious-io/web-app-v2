@@ -1,3 +1,4 @@
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 
 import { useReviewModal } from './useReviewModal';
@@ -9,8 +10,8 @@ export const SubmitModal = handleClose => {
       open={true}
       onClose={() => handleClose(false)}
       onSubmit={() => handleClose(false)}
-      message="Your review has been successfully submitted"
-      title="Review submitted"
+      message={translate('cont-review-submit-msg')}
+      title={translate('cont-review-submit-msg-title')}
     />
   );
 };

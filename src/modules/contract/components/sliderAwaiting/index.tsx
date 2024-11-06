@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Contract, CurrentIdentity, cancelOffer, confirmMission, hireOffer } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
@@ -35,7 +36,7 @@ export const SliderAwaiting: React.FC<SliderAwaitingProps> = ({ contract, disabl
       <div className="flex flex-col gap-4">
         <div className="flex gap-3">
           <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat} disabled={disableMessage}>
-            Message
+            {translate('cont-message')}
           </Button>
           {secondaryBtn.display && (
             <Button variant="outlined" color="secondary" fullWidth onClick={secondaryBtn.action}>

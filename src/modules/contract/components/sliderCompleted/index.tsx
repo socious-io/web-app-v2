@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Contract, CurrentIdentity } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
+import { translate } from 'src/core/utils';
 import { AlertMessage } from 'src/modules/general/components/alertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { RootState } from 'src/store';
@@ -26,12 +27,12 @@ export const SliderCompleted: React.FC<SliderCompletedProps> = ({ contract, disa
         <div className="flex gap-3">
           {!disableMessage && (
             <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat} disabled={disableMessage}>
-              Message
+              {translate('cont-message')}
             </Button>
           )}
           {identityType === 'organizations' && !contract.org_feedback && (
             <Button variant="outlined" color="secondary" fullWidth onClick={() => setOpenReviewModal(true)}>
-              Review
+              {translate('cont-review')}
             </Button>
           )}
         </div>
@@ -39,8 +40,10 @@ export const SliderCompleted: React.FC<SliderCompletedProps> = ({ contract, disa
           <AlertMessage
             theme="primary"
             iconName="info-circle"
-            title="Job completed"
-            subtitle={`Completed on ${isoToStandard(contract.mission!.updated_at.toString())}`}
+            title={translate('cont-job-completed')}
+            subtitle={translate('cont-job-completed-subtitle', {
+              date: isoToStandard(contract.mission!.updated_at.toString()),
+            })}
           />
         )}
       </div>

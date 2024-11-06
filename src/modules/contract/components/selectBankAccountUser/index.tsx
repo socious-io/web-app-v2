@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
 import { CardRadioButtonItem } from 'src/modules/general/components/cardRadioButton/cardRadioButton.types';
@@ -33,9 +34,13 @@ export const SelectBankAccountUser: React.FC<SelectBankAccountUserProps> = ({
       headerDivider={false}
     >
       <div className="flex flex-col p-4 md:p-6 gap-6">
-        <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">Select a payout account</div>
+        <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">
+          {translate('wallet-select-account')}
+        </div>
         <div className="flex flex-col gap-1.5">
-          <div className="font-medium text-sm leading-5 text-Gray-light-mode-700">Transfer to</div>
+          <div className="font-medium text-sm leading-5 text-Gray-light-mode-700">
+            {translate('wallet-transfer-to')}
+          </div>
           <CardRadioButton
             items={options}
             selectedValue={selectedCardId}
@@ -46,10 +51,10 @@ export const SelectBankAccountUser: React.FC<SelectBankAccountUserProps> = ({
         </div>
         <div className="flex flex-col md:flex-row-reverse gap-3 md:mt-2">
           <Button variant="contained" color="primary" disabled={!selectedCardId} fullWidth onClick={handleAccept}>
-            Accept offer
+            {translate('cont-accept-offer')}
           </Button>
           <Button variant="outlined" color="secondary" fullWidth onClick={handleClose}>
-            Cancel
+            {translate('cont-cancel')}
           </Button>
         </div>
       </div>

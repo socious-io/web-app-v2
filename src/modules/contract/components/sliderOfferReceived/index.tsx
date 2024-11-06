@@ -1,5 +1,6 @@
 import React from 'react';
 import { Contract } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { AlertMessage } from 'src/modules/general/components/alertMessage';
 import { Button } from 'src/modules/general/components/Button';
 
@@ -34,28 +35,28 @@ export const SliderOfferReceived: React.FC<SliderOfferReceivedProps> = ({
       <div className="flex flex-col gap-4">
         <div className="flex gap-3">
           <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat} disabled={disableMessage}>
-            Message
+            {translate('cont-message')}
           </Button>
 
           <Button variant="outlined" color="secondary" fullWidth onClick={handleDecline}>
-            Decline
+            {translate('cont-decline')}
           </Button>
         </div>
         <Button variant="contained" color="primary" onClick={handleAcceptClick} disabled={disableAcceptBtn}>
-          Accept
+          {translate('cont-accept')}
         </Button>
         {displayAlert && (
           <AlertMessage
             theme="warning"
             iconName="alert-circle"
-            title="Bank account required"
-            subtitle="To accept this offer you need add a payout account"
+            title={translate('cont-bank-account-alert')}
+            subtitle={translate('cont-bank-account-alert-subtitle')}
           >
             <button
               className="cursor-pointer border-none underline text-sm leading-5 font-semibold text-Warning-700"
               onClick={() => setOpenModal({ name: 'addCard', open: true })} //setOpenAddCardModal(true)}
             >
-              Add a payout account
+              {translate('cont-add-account')}
             </button>
           </AlertMessage>
         )}

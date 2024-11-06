@@ -1,4 +1,5 @@
 import companySize from './companySize.json';
+import contracts from './contracts.json';
 import dashboard from './dashboard.json';
 import general from './general.json';
 import header from './header.json';
@@ -38,5 +39,6 @@ export function generateTranslationFile() {
     navigation,
     header,
     jobs,
+    contracts,
   );
 }
