@@ -77,6 +77,20 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
         const tx = await contract.initiateEscrow(escrowAmount, feeAddress, feeAmount);
         const signedTx = await wallet.signTx(tx);
         const txHash = await wallet.submitTx(signedTx);
+
+        // this is paramater need to sync with backend to make Hire available
+        await payByOffer(offer.id, {
+          service: 'CRYPTO',
+          source: account?.toString() || '',
+          txHash: txHash,
+          meta: {
+            txHash: txHash,
+            id: 42, //FIXME(Elaine): what is this, txout index??
+            token: '', //FIXME(Elaine): It should be empty string for ADA which we're forcing for now
+          },
+        });
+        await hireOffer(offer.id);
+        handleCloseModal(true);
       } catch (err: any) {
         console.log('Error with lace payment: ', err);
       }
