@@ -67,8 +67,7 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
         const feeAmount: Asset[] = [
           {
             unit: 'lovelace',
-            quantity: String((offer.fee || 0) * 1_000_000),
-            //FIXME(Elaine): Check if fee is percentage or fixed. We need *absolute* fee here, not percent
+            quantity: String(Math.floor((offer.fee || 0) * (offer.amount || 0) * 1_000_000)),
           },
         ];
         const feeAddress =
