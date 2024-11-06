@@ -7,7 +7,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths(), wasm(), topLevelAwait()],
+
   optimizeDeps: {
-    exclude: [`@ionic/pwa-elements/loader`],
+    noDiscovery: true,
+    exclude: [`@ionic/pwa-elements/loader`, `@syntect/wasm`],
   },
 });
