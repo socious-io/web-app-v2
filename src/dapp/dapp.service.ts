@@ -26,7 +26,7 @@ import {
 } from '@meshsdk/core';
 import { BrowserWallet, IFetcher, LanguageVersion, MeshTxBuilder, serializePlutusScript, UTxO } from '@meshsdk/core';
 import { applyParamsToScript } from '@meshsdk/core-csl';
-import blueprint from 'aiken-contracts';
+import plutus from 'aiken-contracts';
 import { Contract, parseUnits } from 'ethers';
 
 import { dappConfig } from './dapp.config';
@@ -358,12 +358,12 @@ export class MeshEscrowContract extends MeshTxInitiator {
   }
 
   getScriptCbor = () => {
-    return applyParamsToScript(blueprint.validators[0]!.compiledCode, []);
+    return applyParamsToScript(plutus.validators[0]!.compiledCode, []);
     // switch (this.version) {
     //   case 2:
-    //     return applyParamsToScript(blueprintV2.validators[0]!.compiledCode, []);
+    //     return applyParamsToScript(plutus.validators[0]!.compiledCode, []);
     //   default:
-    //     return applyParamsToScript(blueprintV1.validators[0]!.compiledCode, []);
+    //     return applyParamsToScript(plutus.validators[0]!.compiledCode, []);
     // }
   };
 
