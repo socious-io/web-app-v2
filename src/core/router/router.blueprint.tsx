@@ -906,6 +906,15 @@ export const blueprint: RouteObject[] = [
     },
   },
   {
+    path: '/mesh',
+    async lazy() {
+      const { PageMesh } = await import('src/pages/mesh');
+      return {
+        Component: PageMesh,
+      };
+    },
+  },
+  {
     path: '*',
     element: <div>Page not found :(</div>,
   },
