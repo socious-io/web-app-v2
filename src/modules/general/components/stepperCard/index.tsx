@@ -125,7 +125,7 @@ export const StepperCard: React.FC<StepperCardProps> = props => {
         <div className="flex flex-col items-start gap-5 mb-5">
           {!!descriptionStr && (
             <div>
-              <Typography variant="h5" color={variables.color_grey_600} className="whitespace-pre-wrap">
+              <Typography variant="h5" color={variables.color_grey_600}>
                 {descriptionStr}
               </Typography>
               {seeMore && (
