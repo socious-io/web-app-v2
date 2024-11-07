@@ -88,7 +88,17 @@ export const useWeb3 = () => {
 
   console.log('useWeb3, isLaceConnected: ', isLaceConnected);
   //FIXME(Elaine): Figure out what to do if the user enables both
-  return { account: address || laceAccount, provider, isConnected, isLaceConnected, signer, chainId, open, close };
+  return {
+    account: address || laceAccount,
+    laceAccount,
+    provider,
+    isConnected,
+    isLaceConnected,
+    signer,
+    chainId,
+    open,
+    close,
+  };
 };
 
 export const Connect: React.FC = () => {
