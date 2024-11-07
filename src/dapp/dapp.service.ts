@@ -26,7 +26,7 @@ import {
 } from '@meshsdk/core';
 import { BrowserWallet, IFetcher, LanguageVersion, MeshTxBuilder, serializePlutusScript, UTxO } from '@meshsdk/core';
 import { applyParamsToScript } from '@meshsdk/core-csl';
-import plutus from 'aiken-contracts';
+import { plutus } from 'aiken-contracts';
 import { Contract, parseUnits } from 'ethers';
 
 import { dappConfig } from './dapp.config';
