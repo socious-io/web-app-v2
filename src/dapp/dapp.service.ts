@@ -20,7 +20,7 @@ import {
   serializePlutusScript,
   UTxO,
 } from '@meshsdk/core';
-import plutus from 'aiken-contracts';
+import { plutus } from 'aiken-contracts';
 import { Contract, parseUnits } from 'ethers';
 
 import { dappConfig } from './dapp.config';
