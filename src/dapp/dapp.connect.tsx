@@ -33,8 +33,6 @@ createWeb3Modal({
 });
 
 export const useWeb3 = () => {
-  console.log('Useweb3 invoked');
-
   const [provider, setProvier] = useState<BrowserProvider | undefined>();
   const { address, isConnected, chainId } = useWeb3ModalAccount();
   const { open, close } = useWeb3Modal();
@@ -44,7 +42,6 @@ export const useWeb3 = () => {
   const [laceAccount, setLaceAddress] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    console.log('Useweb3 useEffect invoked');
     const checkNetwork = async (ethers: BrowserProvider) => {
       const net = await ethers.getNetwork();
       const selectd = chains.filter(c => BigInt(c.chainId) === net.chainId);
@@ -67,7 +64,8 @@ export const useWeb3 = () => {
         setIsLaceConnected(false);
         return;
       }
-      await lace.isEnabled().then(setIsLaceConnected);
+      const isEnabled = await lace.isEnabled();
+      await setIsLaceConnected(isEnabled);
 
       if (isLaceConnected) {
         //FIXME(Elaine): deduplicate with LaceButton
@@ -86,7 +84,7 @@ export const useWeb3 = () => {
       ethers.getSigner().then(s => setSigner(s));
       checkNetwork(ethers);
     }
-  }, [address, isConnected, walletProvider]); //FIXME(Elaine): update deps
+  }, [address, laceAccount, isConnected, isLaceConnected, walletProvider]);
 
   console.log('useWeb3, isLaceConnected: ', isLaceConnected);
   //FIXME(Elaine): Figure out what to do if the user enables both
@@ -97,11 +95,7 @@ export const Connect: React.FC = () => {
   return (
     <>
       <w3m-button />
-      <LaceButton
-        handleClick={() => {
-          return;
-        }}
-      />
+      <LaceButton handleClick={() => undefined} />
     </>
   );
 };

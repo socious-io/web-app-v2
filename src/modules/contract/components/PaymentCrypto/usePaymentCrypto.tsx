@@ -41,7 +41,6 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
     const applyOrgFeeDiscount = !!offer.org_referrer_wallet && offer.org_fee_discount;
     const applyContFeeDiscount = !!offer.contributor_referrer_wallet && offer.contributor_fee_discount;
 
-    //FIXME(Elaine): here
     setDisabledPayment(true);
 
     if (isLaceConnected) {
@@ -49,7 +48,7 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
         const blockfrostKey = import.meta.env.VITE_BLOCKFROST_KEY;
         const blockchainProvider = new BlockfrostProvider('<Your-API-Key>');
         const meshTxBuilder = new MeshTxBuilder({ fetcher: blockchainProvider, submitter: blockchainProvider });
-        const wallet = await BrowserWallet.enable('lace'); // FIXME(Elaine): do we rewrite everything with Mesh's own wallet provider or can we just use the stuff we've already written for lace
+        const wallet = await BrowserWallet.enable('lace'); // NOTE(Elaine): do we rewrite everything with Mesh's own wallet provider or can we just use the stuff we've already written for lace
         const contract = new dapp.MeshEscrowContract({
           mesh: meshTxBuilder,
           fetcher: blockchainProvider,

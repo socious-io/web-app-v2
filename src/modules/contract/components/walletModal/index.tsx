@@ -18,7 +18,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, han
     if (isLaceConnected && laceAccount && (!walletAddress || String(walletAddress) !== laceAccount)) {
       updateWallet({ wallet_address: laceAccount });
     }
-  }, [isConnected, account]);
+  }, [isConnected, account, isLaceConnected, laceAccount]);
 
   return (
     <Modal
