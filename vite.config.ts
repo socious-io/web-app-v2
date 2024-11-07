@@ -22,7 +22,6 @@ export default defineConfig({
   },
 
   optimizeDeps: {
-    noDiscovery: true,
     exclude: [`@ionic/pwa-elements/loader`, `@syntect/wasm`],
   },
 });
