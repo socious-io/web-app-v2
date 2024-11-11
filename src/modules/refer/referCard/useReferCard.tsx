@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
 import { config } from 'src/config';
-import { CurrentIdentity, User, UserMeta } from 'src/core/api';
+import { CurrentIdentity, sendRefers, UserMeta } from 'src/core/api';
 import { RootState } from 'src/store';
 
 export const useReferCard = (type: 'organization' | 'talent') => {
@@ -27,11 +26,17 @@ export const useReferCard = (type: 'organization' | 'talent') => {
     navigator.clipboard.writeText(url);
   };
 
-  const sendInviteEmail = () => {
-    setEmails([]);
-    setOpenEmailModal(false);
-    setOpenSentModal(true);
+  const sendInviteEmail = async () => {
+    try {
+      await sendRefers({ emails });
+      setEmails([]);
+      setOpenEmailModal(false);
+      setOpenSentModal(true);
+    } catch (e) {
+      console.log('Error in sending refers:', e);
+    }
   };
+
   return {
     openEmailModal,
     setOpenEmailModal,

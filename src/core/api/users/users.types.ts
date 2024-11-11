@@ -208,3 +208,7 @@ export interface Preference {
   value: PreferenceValue;
   description?: string | null;
 }
+
+export interface ReferReq {
+  emails: string[];
+}
