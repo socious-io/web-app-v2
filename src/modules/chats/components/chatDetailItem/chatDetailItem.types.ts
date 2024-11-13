@@ -5,5 +5,6 @@ export interface ChatDetailItemProps {
   senderAvatar?: string;
   senderName?: string;
   senderType?: 'users' | 'organizations';
+  onAvatarClick?: () => void;
   className?: string;
 }

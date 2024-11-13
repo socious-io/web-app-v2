@@ -1,17 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Chat, CurrentIdentity, Message, OrgMeta, UserMeta, chatMessages, createChatMessage } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
-export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: (val: Chat[]) => void) => {
+export const useChatDetails = (
+  selectedChatId: string,
+  chats: Chat[],
+  setChats: (val: Chat[]) => void,
+  newSocketMessage: Message | null,
+) => {
+  const navigate = useNavigate();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
   const [messages, setMessages] = useState<Message[]>([]);
-
   const [page, setPage] = useState(1);
-  const [hasMore, sethasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
   const chat = chats.find(item => item.id === selectedChatId);
   const participant = chat?.participants[0];
   const account = {
@@ -22,6 +27,34 @@ export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: 
     username:
       (participant?.identity_meta as UserMeta).username || (participant?.identity_meta as OrgMeta).shortname || '',
   };
+  const sortedMessages = messages?.sort((a, b) => (new Date(a.created_at) > new Date(b.created_at) ? 1 : -1));
+
+  useEffect(() => {
+    if (page === 1) {
+      const messageBody = document.getElementById('chat-list-div');
+      if (messageBody) messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    if (newSocketMessage && !messages.find(item => item.id === newSocketMessage.id)) {
+      setMessages([...messages, newSocketMessage]);
+    }
+  }, [newSocketMessage]);
+
+  useEffect(() => {
+    getMessages();
+  }, [selectedChatId]);
+
+  const getMessages = async () => {
+    if (selectedChatId) {
+      setPage(1);
+      setHasMore(true);
+      const res = await chatMessages(selectedChatId, { page: 1 });
+      setMessages(res.items);
+      updateUnreadCount();
+    }
+  };
 
   const updateUnreadCount = () => {
     const chatList = [...chats];
@@ -31,18 +64,6 @@ export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: 
     chatList[index].unread_count = unread.toString();
     setChats(chatList);
   };
-  const getMessages = async () => {
-    if (selectedChatId) {
-      setPage(1);
-      sethasMore(true);
-      const res = await chatMessages(selectedChatId, { page: 1 });
-      setMessages(res.items);
-      updateUnreadCount();
-    }
-  };
-  useEffect(() => {
-    getMessages();
-  }, [selectedChatId]);
 
   const onSend = async (message: string) => {
     if (!selectedChatId || !currentIdentity) return;
@@ -60,9 +81,15 @@ export const useChatDetails = (selectedChatId: string, chats: Chat[], setChats: 
           setPage(page + 1);
           updateUnreadCount();
         } else {
-          sethasMore(false);
+          setHasMore(false);
         }
       });
   };
-  return { messages, setMessages, onSend, account, loadMore, hasMore, page };
+
+  const onAvatarClick = () => {
+    if (account.type === 'users') navigate(`/profile/users/${account.username}/view`);
+    else navigate(`/profile/organizations/${account.username}/view`);
+  };
+
+  return { sortedMessages, onSend, account, loadMore, hasMore, onAvatarClick };
 };

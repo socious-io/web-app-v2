@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { OrgMeta, UserMeta } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { getIdentityMeta } from 'src/core/utils';
@@ -11,23 +11,30 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import { SummaryCardProps } from './summaryCard.types';
 
 export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, isSelected }) => {
+  const navigate = useNavigate();
   const {
-    data: { copyProccessed },
+    data: { copyProcessed },
   } = useSeeMore(chat.last_message?.text || '', 50);
 
   const {
     profileImage,
     username,
+    usernameVal,
     type = 'users',
     name,
-  } = getIdentityMeta(chat.participants[0].identity_meta as UserMeta | OrgMeta);
-
+  } = getIdentityMeta(chat?.participants[0].identity_meta as UserMeta | OrgMeta);
   const account = {
-    id: chat.participants[0].identity_meta?.id || '',
+    id: chat?.participants[0].identity_meta?.id || '',
     img: profileImage,
     type,
     name,
     username,
+    usernameVal,
+  };
+
+  const onAvatarClick = () => {
+    if (account.type === 'users') navigate(`/profile/users/${account.usernameVal}/view`);
+    else navigate(`/profile/organizations/${account.usernameVal}/view`);
   };
 
   return (
@@ -42,7 +49,15 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
             color={Number(chat.unread_count) ? variables.color_primary_600 : 'transparent'}
             shadow={false}
           />
-          <AvatarLabelGroup account={account} customStyle="!w-fit !p-0" />
+          <AvatarLabelGroup
+            account={account}
+            customStyle="!w-fit !p-0"
+            justAvatarClickable
+            handleClick={e => {
+              e?.stopPropagation();
+              onAvatarClick();
+            }}
+          />
         </div>
         <Typography variant="caption" color={variables.color_grey_600}>
           {toRelativeTime(chat.updated_at)}
@@ -50,7 +65,7 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
       </div>
       <div className="pl-5">
         <Typography variant="caption" color={variables.color_grey_600}>
-          {copyProccessed}
+          {copyProcessed}
         </Typography>
       </div>
     </div>
