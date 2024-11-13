@@ -13,6 +13,7 @@ import css from './profileHeader.module.scss';
 import { useProfileHeader } from './useProfileHeader';
 import { EditImageModal } from '../../containers/editImage';
 import { EditInfoOrgModal } from '../../containers/editInfoOrg';
+import { ShareProfile } from '../../containers/shareProfile';
 
 export const ProfileHeader = () => {
   const {
@@ -24,6 +25,9 @@ export const ProfileHeader = () => {
     openEditInfoModal,
     closeEditInfoModal,
     handleOpenEditInfoModal,
+    openQRCodeModal,
+    closeQRCodeModal,
+    handleOpenQRCodeModal,
     openEditAvatar,
     handleOpenEditAvatar,
     handleCloseEditAvatar,
@@ -35,7 +39,6 @@ export const ProfileHeader = () => {
     redirectToChat,
     openConnectRequest,
     setOpenConnectRequest,
-    displayShareButton,
     displayConnectButton,
     displayMessageButton,
     displayThreeDotsButton,
@@ -82,11 +85,11 @@ export const ProfileHeader = () => {
           isLoggedIn={isLoggedIn}
           connectStatus={connectStatus}
           handleOpenEditInfoModal={handleOpenEditInfoModal}
+          handleOpenQRCodeModal={handleOpenQRCodeModal}
           handleOpenEditAvatar={handleOpenEditAvatar}
           type={identityType}
           handleMessage={redirectToChat}
           setOpenConnectRequest={setOpenConnectRequest}
-          displayShareButton={displayShareButton}
           displayConnectButton={displayConnectButton}
           displayMessageButton={displayMessageButton}
           displayThreeDotsButton={displayThreeDotsButton}
@@ -100,45 +103,47 @@ export const ProfileHeader = () => {
         />
       </div>
       <div className="md:hidden">
-        {!myProfile && (
-          <div className={`${css.actionDiv} w-full mb-8 px-4`}>
-            {displayShareButton() && (
-              <Button fullWidth color="primary" variant="outlined" customStyle="h-10 text-sm flex gap-1.5 py-0">
-                <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
-                Share
-              </Button>
-            )}
-            {displayConnectButton() && (
-              <Button
-                fullWidth
-                disabled={connectStatus === 'PENDING'}
-                color="primary"
-                variant="contained"
-                style={{ height: '40px', fontSize: '14px' }}
-                onClick={() => setOpenConnectRequest(true)}
-              >
-                {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
-              </Button>
-            )}
-            {displayMessageButton() && (
-              <Button
-                fullWidth
-                color="primary"
-                variant={displayConnectButton() ? 'outlined' : 'contained'}
-                style={{ height: '40px', fontSize: '14px' }}
-                onClick={redirectToChat}
-              >
-                Message
-              </Button>
-            )}
-
-            {displayThreeDotsButton() && <ThreeDotsButton otherIdentityId={identity?.id || ''} />}
-          </div>
-        )}
+        <div className={`${css.actionDiv} w-full mb-8 px-4`}>
+          <Button
+            fullWidth
+            color="primary"
+            variant="outlined"
+            customStyle="h-10 text-sm flex gap-1.5 py-0"
+            onClick={handleOpenQRCodeModal}
+          >
+            <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
+            Share
+          </Button>
+          {displayConnectButton() && (
+            <Button
+              fullWidth
+              disabled={connectStatus === 'PENDING'}
+              color="primary"
+              variant="contained"
+              style={{ height: '40px', fontSize: '14px' }}
+              onClick={() => setOpenConnectRequest(true)}
+            >
+              {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
+            </Button>
+          )}
+          {displayMessageButton() && (
+            <Button
+              fullWidth
+              color="primary"
+              variant={displayConnectButton() ? 'outlined' : 'contained'}
+              style={{ height: '40px', fontSize: '14px' }}
+              onClick={redirectToChat}
+            >
+              Message
+            </Button>
+          )}
+          {displayThreeDotsButton() && <ThreeDotsButton otherIdentityId={identity?.id || ''} />}
+        </div>
       </div>
       <EditImageModal open={openEditAvatar} handleClose={handleCloseEditAvatar} type="avatar" />
       <EditImageModal open={openEditHeader} handleClose={handleCloseEditHeader} type="header" />
       <EditInfoModal open={openEditInfoModal} handleClose={closeEditInfoModal} />
+      {identity && <ShareProfile open={openQRCodeModal} handleClose={closeQRCodeModal} identity={identity} />}
       <EditInfoOrgModal open={openEditInfoOrgModal} handleClose={closeEditInfoOrgModal} />
       <ConnectRequestModal
         open={openConnectRequest}

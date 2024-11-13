@@ -50,7 +50,7 @@ export const Credentials = () => {
             </div>
             {/* keep this for possible changes in near future */}
             {/* <div className={css.hidden}>
-              <Button color="primary" startIcon={<img src="/icons/plus.svg" alt="plus" style={{ width: '20px' }} />}>
+              <Button color="primary" startIcon={<Icon name="plus" fontSize={20} color="white" />}>
                 Issue a Credential
               </Button>
             </div> */}

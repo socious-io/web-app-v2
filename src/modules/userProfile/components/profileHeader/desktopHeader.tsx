@@ -19,10 +19,10 @@ interface DesktopHeaderProps {
   isLoggedIn: boolean;
   connectStatus: ConnectStatus | null | undefined;
   handleOpenEditInfoModal: () => void;
+  handleOpenQRCodeModal: () => void;
   handleOpenEditAvatar: () => void;
   handleMessage?: () => void;
   setOpenConnectRequest: (val: boolean) => void;
-  displayShareButton: () => boolean;
   displayConnectButton: () => boolean;
   displayMessageButton: () => boolean;
   displayThreeDotsButton: () => boolean;
@@ -33,11 +33,11 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
   isLoggedIn,
   connectStatus,
   handleOpenEditInfoModal,
+  handleOpenQRCodeModal,
   handleOpenEditAvatar,
   type,
   handleMessage,
   setOpenConnectRequest,
-  displayShareButton,
   displayConnectButton,
   displayMessageButton,
   displayThreeDotsButton,
@@ -80,53 +80,49 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
           <div className="text-base font-normal text-Gray-light-mode-500">{username}</div>
         </div>
 
-        {myProfile && (
-          <IconButton
-            size="medium"
-            iconName="pencil-01"
-            iconColor={variables.color_grey_600}
-            iconSize={20}
-            customStyle="mr-2 ml-auto"
-            handleClick={handleOpenEditInfoModal}
-          />
-        )}
-        {!myProfile && (
-          <div className={`${css.actionDiv} right-8 w-fit`}>
-            {displayShareButton() && (
-              <Button
-                color="primary"
-                variant="outlined"
-                style={{ height: '40px', fontSize: '14px', display: 'flex', gap: '6px' }}
-              >
-                <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
-                Share
-              </Button>
-            )}
-            {displayMessageButton() && (
-              <Button
-                color="primary"
-                variant={displayConnectButton() ? 'outlined' : 'contained'}
-                style={{ height: '40px', fontSize: '14px' }}
-                onClick={handleMessage}
-              >
-                Message
-              </Button>
-            )}
-            {displayConnectButton() && (
-              <Button
-                disabled={connectStatus === 'PENDING'}
-                color="primary"
-                variant="contained"
-                style={{ height: '40px', fontSize: '14px' }}
-                onClick={() => setOpenConnectRequest(true)}
-              >
-                {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
-              </Button>
-            )}
-
-            {displayThreeDotsButton() && <ThreeDotsButton otherIdentityId={identity?.id || ''} />}
-          </div>
-        )}
+        <div className={`${css.actionDiv} right-8 w-fit`}>
+          <Button
+            color="primary"
+            variant="outlined"
+            style={{ height: '40px', fontSize: '14px', display: 'flex', gap: '6px' }}
+            onClick={handleOpenQRCodeModal}
+          >
+            <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
+            Share
+          </Button>
+          {displayMessageButton() && (
+            <Button
+              color="primary"
+              variant={displayConnectButton() ? 'outlined' : 'contained'}
+              style={{ height: '40px', fontSize: '14px' }}
+              onClick={handleMessage}
+            >
+              Message
+            </Button>
+          )}
+          {displayConnectButton() && (
+            <Button
+              disabled={connectStatus === 'PENDING'}
+              color="primary"
+              variant="contained"
+              style={{ height: '40px', fontSize: '14px' }}
+              onClick={() => setOpenConnectRequest(true)}
+            >
+              {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
+            </Button>
+          )}
+          {displayThreeDotsButton() && <ThreeDotsButton otherIdentityId={identity?.id || ''} />}
+          {myProfile && (
+            <IconButton
+              size="medium"
+              iconName="pencil-01"
+              iconColor={variables.color_grey_600}
+              iconSize={20}
+              customStyle="mr-2 ml-auto"
+              handleClick={handleOpenEditInfoModal}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

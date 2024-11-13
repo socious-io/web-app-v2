@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import { Organization, User } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { Card } from 'src/modules/dashboard/card';
 import { OrgCards } from 'src/modules/dashboard/orgCards';
 import { UserCards } from 'src/modules/dashboard/userCards';
@@ -32,15 +33,15 @@ export const Dashboard = () => {
             verificationStatus === 'PENDING' && type === 'organizations' ? (
               <TopBanner
                 theme="warning"
-                text="Verification pending"
-                supportingText="We reviewing your submitted documents, we will notify you once it is complete."
+                text={translate('dashboard-verification-pending')}
+                supportingText={translate('dashboard-verification-pending-subtitle')}
               />
             ) : (
               <TopBannerNotVerified
                 supportingText={
                   type === 'users'
-                    ? 'In order to claim your certificates, please verify your identity.'
-                    : 'Get your organization verified to issue credentials.'
+                    ? translate('dashboard-user-not-verified-title')
+                    : translate('dashboard-org-not-verified-title')
                 }
               />
             )
@@ -50,9 +51,9 @@ export const Dashboard = () => {
           {!!event && (
             <TopBanner
               theme="purple"
-              text="Tech for Impact Summit 2024"
-              supportingText="Boost your summit experience by connecting with fellow innovators and change-makers."
-              primaryBtnLabel="Connect now"
+              text={translate('dashboard-tech-banner-title')}
+              supportingText={translate('dashboard-tech-banner-subtitle')}
+              primaryBtnLabel={translate('dashboard-tech-banner-btn-label')}
               primaryButtonStyle="!bg-Purple-600 text-Base-White px-4 !h-10 w-full"
               primaryBtnAction={navigateToSearchEvent}
               customStyle="xl:py-3"
@@ -62,11 +63,11 @@ export const Dashboard = () => {
           <div className=" flex flex-col gap-8 py-8 px-4 md:px-8 ">
             <div className="flex flex-col gap-1">
               <Typography variant="h3" className="text-Gray-light-mode-900">
-                👋 Welcome back, {type === 'users' ? (profileData as User).first_name : name}
+                {translate('dashboard-welcome', { name: type === 'users' ? (profileData as User).first_name : name })}
               </Typography>
               {type === 'users' && (
                 <Typography variant="h5" className="text-Gray-light-mode-600">
-                  Your current impact and activity.
+                  {translate('dashboard-header-subtitle')}
                 </Typography>
               )}
             </div>
@@ -86,16 +87,26 @@ export const Dashboard = () => {
                 <div className="row-span-1 col-span-1">
                   <Card
                     iconName="clock"
-                    cardText={'Total hours contributed'}
+                    cardText={translate('dashboard-total-hours')}
                     number={hoursWorked + hoursVolunteered}
                     unit="hrs"
                   />
                 </div>
                 <div className="row-span-1 col-span-1">
-                  <Card iconName="clock" cardText={'Hours worked'} number={hoursWorked} unit="hrs" />
+                  <Card
+                    iconName="clock"
+                    cardText={translate('dashboard-hours-worked')}
+                    number={hoursWorked}
+                    unit="hrs"
+                  />
                 </div>
                 <div className="row-span-1 col-span-1">
-                  <Card iconName="clock" cardText={'Hours volunteered'} number={hoursVolunteered} unit="hrs" />
+                  <Card
+                    iconName="clock"
+                    cardText={translate('dashboard-hours-volunteer')}
+                    number={hoursVolunteered}
+                    unit="hrs"
+                  />
                 </div>
               </div>
             )}

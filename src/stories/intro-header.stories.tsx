@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react';
-import { Logo } from 'public/icons/nowruz/logo';
+import { Logo } from 'public/icons/dynamic/logo';
 import React from 'react';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import { IntroHeaderProps } from 'src/modules/Auth/components/IntroHeader/IntroHeader.types';

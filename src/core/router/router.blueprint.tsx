@@ -867,6 +867,24 @@ export const blueprint: RouteObject[] = [
           };
         },
       },
+      {
+        path: 'apple',
+        loader: async ({ request }) => {
+          const url = new URL(request.url);
+          const eventName = url.searchParams.get('event_name');
+          if (eventName) {
+            return await events({ limit: 10, page: 1 });
+          } else {
+            return null;
+          }
+        },
+        async lazy() {
+          const { AppleOauth2 } = await import('src/pages/oauth/apple');
+          return {
+            Component: AppleOauth2,
+          };
+        },
+      },
     ],
   },
   {

@@ -90,7 +90,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
         {jobDetail.country ? (
           <CountryFlag countryCode={jobDetail.country || ''} />
         ) : (
-          <img src="/icons/nowruz/earth.svg" alt="" />
+          <img src="/icons/earth.svg" alt="" />
         )}
 
         <span className={css.subtitle}>{address || 'Anywhere'}</span>
@@ -142,7 +142,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
         <div className="hidden md:block">{detailJSX}</div>
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
-        {!applied && currentIdentity?.type !== 'organizations' && (
+        {!applied && currentIdentity?.type !== 'organizations' && jobDetail.status === 'ACTIVE' && (
           <AuthGuard>
             <Button
               variant="contained"

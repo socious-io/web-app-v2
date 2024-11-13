@@ -10,16 +10,17 @@ import css from './image-bio.module.scss';
 import { useImageBio } from './useImageBio';
 
 export const ImageBio = () => {
-  const { updateBio, onUploadImage, image, isValidForm, bio, updateProfile, bioCounter, uploadError } = useImageBio();
+  const { updateBio, onUploadImage, image, isValidForm, bio, updateProfile, bioCounter, uploadError, translate } =
+    useImageBio();
 
   return (
     <div className="flex flex-col items-stretch lg:pt-7 sm:pt-5 px-4">
       <div className={css.header}>
         <div>
-          <h1 className={css.title}>Showcase yourself with a profile photo</h1>
+          <h1 className={css.title}>{translate('onboarding-user-photo-title')}</h1>
         </div>
         <div>
-          <h2 className={css.description}>Add a profile photo to help build trust and highlight who you are.</h2>
+          <h2 className={css.description}>{translate('onboarding-user-photo-subtitle')}</h2>
         </div>
       </div>
       <div className="flex justify-center mt-5">
@@ -34,14 +35,14 @@ export const ImageBio = () => {
           onClick={onUploadImage}
           customStyle={css.uploadButton}
         >
-          Upload
+          {translate('onboarding-logo-upload')}
         </Button>
       </div>
 
       <div className={`${css.uploadContainer} hidden md:flex`} onClick={onUploadImage}>
         <FeaturedIcon iconName="upload-cloud-02" className="mb-2" iconColor={variables.color_grey_600} />
-        <span className={css.uploadText}>Click to upload</span>
-        <span className={css.uploadDetailText}>SVG, PNG, JPG or GIF (max. 5MB)</span>
+        <span className={css.uploadText}>{translate('onboarding-logo-upload-click')}</span>
+        <span className={css.uploadDetailText}>{translate('onboarding-logo-file-types')}</span>
       </div>
       {uploadError && (
         <div className="mt-2">
@@ -54,16 +55,16 @@ export const ImageBio = () => {
       <Input
         id="headline"
         value={bio}
-        label="Headline"
+        label={translate('onboarding-org-bio')}
         customHeight="128px"
-        placeholder="eg."
+        placeholder={translate('onboarding-org-bio-placeholder')}
         multiline
         onChange={e => updateBio(e.target.value)}
       />
       <div className={css.counter}>{bioCounter}/160</div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>
         <Button color="primary" block onClick={updateProfile}>
-          Continue
+          {translate('onboarding-continue')}
         </Button>
       </div>
     </div>

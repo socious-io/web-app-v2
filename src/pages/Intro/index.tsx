@@ -1,11 +1,12 @@
 import { Typography } from '@mui/material';
-import { Logo } from 'public/icons/nowruz/logo';
+import { Logo } from 'public/icons/dynamic/logo';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/modules/Auth/containers/ServiceIntro';
-import { reviews, onboardingOptons } from 'src/modules/Auth/statics/intro';
+import { reviews, onboardingOptions } from 'src/modules/Auth/statics/intro';
 import { Button } from 'src/modules/general/components/Button';
 import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
 import { Link } from 'src/modules/general/components/link';
@@ -17,6 +18,7 @@ export const Intro = () => {
   const status = useSelector((state: RootState) => state.identity.status);
   const [selectedOnboarding, setSelectedOnboarding] = useState<'user' | 'organization'>('user');
   const navigate = useNavigate();
+  const { t: translate } = useTranslation();
 
   const navigateToOnboarding = () => {
     localStorage.setItem('registerFor', selectedOnboarding);
@@ -43,39 +45,37 @@ export const Intro = () => {
       />
     );
   };
-
   if (status === 'loading') return <div></div>;
 
   if (status === 'succeeded') return <Navigate to="/jobs" />;
-
   return (
     <div className="flex h-screen px-4 sm:p-0">
       <div className="w-full md:w-1/2 flex flex-col items-center justify-between">
         <div className="form-container">
           <IntroHeader
-            title="Get started"
-            description="Select your path: Are you purpose-driven talent seeking to make an impact, or an organization driving change?"
+            title={translate('intro-title')}
+            description={translate('intro-description')}
             logo={<Logo width={48} height={48} />}
           />
           <div className="mt-7">
             <CardRadioButton
-              items={onboardingOptons}
+              items={onboardingOptions}
               selectedValue={selectedOnboarding}
               setSelectedValue={value => {
-                setSelectedOnboarding(value as 'organization' | 'user');
+                setSelectedOnboarding(value);
               }}
             />
             <div className="mt-6">
               <Button color="primary" block onClick={navigateToOnboarding}>
-                Continue
+                {translate('intro-continue')}
               </Button>
             </div>
           </div>
           <div className="my-5 text-center">
             <Typography variant="caption" className={css.signupTitle}>
-              Already have an account?
+              {translate('intro-have-account')}
             </Typography>
-            <Link href="/sign-in" label="Log in" customStyle="!font-semibold" />
+            <Link href="/sign-in" label={translate('intro-login')} customStyle="!font-semibold" />
           </div>
         </div>
         <div className={css.copy}>

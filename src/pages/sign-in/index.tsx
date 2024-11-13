@@ -1,4 +1,5 @@
-import { Logo } from 'public/icons/nowruz/logo';
+import { Logo } from 'public/icons/dynamic/logo';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Navigate, useLoaderData, useSearchParams } from 'react-router-dom';
 import { EVENTS_QUERIES } from 'src/constants/EVENTS_QUERIES';
@@ -12,19 +13,21 @@ export const SignIn = () => {
   const events = (useLoaderData() as EventsRes) || null;
   const [searchParams] = useSearchParams();
   const eventName = searchParams.get('event_name') || '';
+  const { t: translate } = useTranslation();
   //TODO: remove this duplicate codes but works fine for now
   const status = useSelector((state: RootState) => state.identity.status);
   if (status === 'loading') return <div></div>;
   if (status === 'succeeded') return <Navigate to="/jobs" />;
+
   const eventId = events?.items.find(event => event.title === EVENTS_QUERIES[eventName])?.id || '';
   const defaultIntro = {
-    title: 'Log in to your account',
-    description: 'Welcome back! Please enter your details.',
+    title: translate('login-title'),
+    description: translate('login-subtitle'),
   };
   const intro = {
     tech4impact: {
-      title: 'Tech for Impact Summit 2024',
-      description: 'Boost your summit network with Socious',
+      title: translate('login-tech-title'),
+      description: translate('login-tech-subtitle'),
       component: <TechSummit />,
     },
   };

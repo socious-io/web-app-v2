@@ -1,0 +1,11 @@
+{
+    "kyc-open-wallet": "Open Socious Wallet app",
+    "kyc-verify-identity": "Verify your identity",
+    "kyc-verify-subtitle": "Verify your identity to access all Socious features",
+    "kyc-desc": "Socious uses blockchain technology to make credentials transparent and traceable.",
+    "kyc-partner": "We’ve partnered with Atala Prism through which your decentralized ID can receive verifiable credentials.",
+    "kyc-how-verify": "How to verify your identity",
+    "kyc-step-1": "1. Go through the app’s onboarding process which will create a decentralized ID on Atala Prism.",
+    "kyc-step-2": "2. Verify your identity with Veriff, our KYC partner.",
+    "kyc-download-app": "Download the Socious Wallet app"
+}
