@@ -1,5 +1,6 @@
 import React from 'react';
 import { Education } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
@@ -56,10 +57,10 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
       <div>{education?.description}</div>
       <Input
         id="credentialName"
-        label="Credential name*"
+        label={translate('cred-name')}
         name="credentialName"
         register={register}
-        placeholder="Credential name"
+        placeholder={translate('cred-name-placeholder')}
         errors={errors['credentialName']?.message ? [errors['credentialName']?.message.toString()] : undefined}
         disabled={readonly}
       />
@@ -68,14 +69,14 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
           required
           id="month"
           value={month}
-          label="Awarded date*"
+          label={translate('cred-award-date')}
           options={months}
           hasDropdownIcon
           onChange={value => {
             onSelectMonth(value);
           }}
           className="flex-1"
-          placeholder="Month"
+          placeholder={translate('cred-month')}
           isSearchable
           errors={dateErrors ? [dateErrors.toString()] : undefined}
           isDisabled={readonly}
@@ -91,7 +92,7 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
           }}
           label="&nbsp;"
           className="flex-1"
-          placeholder="Day"
+          placeholder={translate('cred-day')}
           isDisabled={readonly}
           maxMenuHeight={200}
         />
@@ -106,7 +107,7 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
             onSelectYear(value);
           }}
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('cred-year')}
           isSearchable
           isDisabled={readonly}
           maxMenuHeight={200}
@@ -118,14 +119,20 @@ export const EducationDetails: React.FC<EducationDetailsProps> = ({
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSend)}>
-        Send
+        {translate('cred-send')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {translate('cred-cancel')}
       </Button>
     </div>
   );
   return (
-    <Modal open={open} handleClose={handleClose} title="Request details" content={contentJSX} footer={modalFooterJsx} />
+    <Modal
+      open={open}
+      handleClose={handleClose}
+      title={translate('cred-req-detail')}
+      content={contentJSX}
+      footer={modalFooterJsx}
+    />
   );
 };

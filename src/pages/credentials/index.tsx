@@ -1,3 +1,4 @@
+import { translate } from 'src/core/utils';
 import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
 import { TopBanner } from 'src/modules/general/components/topBanner';
 import { TopBannerNotVerified } from 'src/modules/general/components/TopBannerNotVerified';
@@ -16,16 +17,12 @@ export const Credentials = () => {
           verificationStatus === 'PENDING' && type === 'organizations' ? (
             <TopBanner
               theme="warning"
-              text="Verification pending"
-              supportingText="We reviewing your submitted documents, we will notify you once it is complete."
+              text={translate('cred-ver-pending')}
+              supportingText={translate('cred-ver-pending-desc')}
             />
           ) : (
             <TopBannerNotVerified
-              supportingText={
-                type === 'users'
-                  ? 'In order to claim your certificates, please verify your identity.'
-                  : 'Get your organization verified to issue credentials.'
-              }
+              supportingText={type === 'users' ? translate('cred-verified-user') : translate('cred-verified-org')}
             />
           )
         ) : (
@@ -35,9 +32,9 @@ export const Credentials = () => {
         {verified && !hideVerifyBanner && (
           <TopBanner
             theme="success"
-            text="Your identity has been verified"
-            supportingText="You can now claim your certificates."
-            secondaryBtnLabel="Dismiss"
+            text={translate('cred-verified-banner')}
+            supportingText={translate('cred-verified-banner-desc')}
+            secondaryBtnLabel={translate('cred-dismiss')}
             secondaryBtnAction={handleDismissVerified}
           />
         )}
@@ -45,8 +42,8 @@ export const Credentials = () => {
         <div className={css.container}>
           <div className={css.header}>
             <div className={css.left}>
-              <h1 className={css.title}>Credentials</h1>
-              <h2 className={css.subtitle}>Here all credentials issued or requested</h2>
+              <h1 className={css.title}>{translate('cred-title')}</h1>
+              <h2 className={css.subtitle}>{translate('cred-subtitle')}</h2>
             </div>
             {/* keep this for possible changes in near future */}
             {/* <div className={css.hidden}>

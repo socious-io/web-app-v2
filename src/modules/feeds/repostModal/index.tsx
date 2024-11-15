@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { CurrentIdentity } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { Chip } from 'src/modules/general/components/Chip';
@@ -50,7 +50,7 @@ const RepostModal: React.FC<RepostModalProps> = ({ data, open, handleClose, onRe
         onClick={() => setOpenEmojiPicker(true)}
       />
       <Button color="primary" onClick={() => onRepost(contentRepost)}>
-        Post
+        {translate('feeds-post')}
       </Button>
     </div>
   );
@@ -71,7 +71,7 @@ const RepostModal: React.FC<RepostModalProps> = ({ data, open, handleClose, onRe
           value={contentRepost}
           onChange={e => setContentRepost(e.target.value)}
           className={css.textarea}
-          placeholder="Start writing..."
+          placeholder={translate('feeds-start-writing')}
           rows={1}
         />
         <div className="p-6 flex flex-col gap-6 border border-solid border-Gray-light-mode-200 rounded-default">
@@ -92,7 +92,7 @@ const RepostModal: React.FC<RepostModalProps> = ({ data, open, handleClose, onRe
             {title && <div className="text-xl font-semibold emoji-font break-all">{title}</div>}
             <ExpandableText
               text={content}
-              seeMoreText="See more"
+              seeMoreText={translate('feeds-see-more')}
               isMarkdown
               seeMoreButton
               expectedLength={isMobile ? 225 : 450}

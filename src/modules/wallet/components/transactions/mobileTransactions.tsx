@@ -1,3 +1,4 @@
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 
@@ -34,8 +35,8 @@ export const MobileTransactions = () => {
         <>
           <div className="flex flex-col">
             <div className={css.header}>
-              <span>Transaction</span>
-              <span>Amount</span>
+              <span>{translate('pay-transactions')}</span>
+              <span>{translate('pay-amount')}</span>
             </div>
             {list.map(item =>
               renderTableRow(item.missionId, item.name, item.date, item.mobileAmount, item.userType, item.profileImage),

@@ -14,6 +14,7 @@ import {
   CredentialStatus,
 } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { translate } from 'src/core/utils';
 import { StatusProps } from 'src/modules/general/components/Status/index.types';
 import { RootState } from 'src/store';
 
@@ -34,11 +35,16 @@ export const useIssuedList = () => {
   });
   const totalPage = Math.ceil(credentials?.total_count / credentials?.limit) || 1;
   const generateStatus: Record<Exclude<CredentialStatus, 'ISSUED'>, StatusProps> = {
-    PENDING: { icon: 'clock', label: 'Pending', theme: 'secondary', transparent: true },
-    APPROVED: { icon: userProfile ? 'arrow-down' : 'arrow-up', label: 'Accepted', theme: 'success' },
-    SENT: { icon: userProfile ? 'arrow-down' : 'arrow-up', label: 'Issued', theme: 'secondary', transparent: true },
-    REJECTED: { icon: 'alert-circle', label: 'Declined', theme: 'error' },
-    CLAIMED: { icon: 'check-circle', label: 'Claimed', theme: 'success' },
+    PENDING: { icon: 'clock', label: translate('cred-pending'), theme: 'secondary', transparent: true },
+    APPROVED: { icon: userProfile ? 'arrow-down' : 'arrow-up', label: translate('cred-accepted'), theme: 'success' },
+    SENT: {
+      icon: userProfile ? 'arrow-down' : 'arrow-up',
+      label: translate('cred-issued'),
+      theme: 'secondary',
+      transparent: true,
+    },
+    REJECTED: { icon: 'alert-circle', label: translate('cred-declined'), theme: 'error' },
+    CLAIMED: { icon: 'check-circle', label: translate('cred-claimed'), theme: 'success' },
   };
 
   const filteredIssued = (

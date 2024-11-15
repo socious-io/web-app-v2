@@ -2,7 +2,7 @@ import { ColumnDef, flexRender, getCoreRowModel, Getter, useReactTable } from '@
 import { useMemo } from 'react';
 import { CredentialEducationRes, CredentialExperienceRes } from 'src/core/api';
 import { formatDate } from 'src/core/time';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
@@ -32,7 +32,7 @@ export const IssuedList = () => {
     () => [
       {
         id: 'name',
-        header: 'Name',
+        header: translate('cred-col-name'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const id = getValue();
@@ -59,16 +59,16 @@ export const IssuedList = () => {
       },
       {
         id: 'type',
-        header: 'Credential Type',
+        header: translate('cred-col-type'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const item = issuedList.find(list => list.id === getValue()) || {};
-          return 'experience' in item ? 'Work Certificate' : 'Educational Certificate';
+          return 'experience' in item ? translate('cred-col-work') : translate('cred-col-edu');
         },
       },
       {
         id: 'status',
-        header: 'Status',
+        header: translate('cred-col-status'),
         accessorKey: 'status',
         cell: ({ getValue }: { getValue: Getter<string> }) => (
           <div className="flex items-center">
@@ -78,7 +78,7 @@ export const IssuedList = () => {
       },
       {
         id: 'date',
-        header: 'Issued Date',
+        header: translate('cred-issue-date'),
         accessorKey: 'created_at',
         cell: ({ getValue }: { getValue: Getter<string> }) => formatDate(getValue()),
       },
@@ -102,7 +102,7 @@ export const IssuedList = () => {
                 onClick={() => onClaim(item.id, 'experience' in item)}
                 customStyle="!text-sm !font-semibold"
               >
-                Claim
+                {translate('cred-claim')}
               </Button>
             )}
 
@@ -112,7 +112,7 @@ export const IssuedList = () => {
               onClick={() => onArchive(item.id, 'experience' in item)}
               customStyle="!text-sm !font-semibold"
             >
-              Archive
+              {translate('cred-archive')}
             </Button>
           </div>
         );
@@ -138,7 +138,7 @@ export const IssuedList = () => {
             disabled={!selectedCredential.id}
             onClick={() => onArchive(selectedCredential.id, selectedCredential.name === 'experience')}
           >
-            Archive
+            {translate('cred-archive')}
           </Button>
         </div>
       )}

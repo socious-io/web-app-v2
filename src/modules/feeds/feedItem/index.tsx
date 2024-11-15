@@ -4,7 +4,7 @@ import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import { Identity } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import AvatarGroup from 'src/modules/general/components/avatarGroup';
 import { Chip } from 'src/modules/general/components/Chip';
@@ -176,7 +176,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
           {title && <div className="text-xl font-semibold emoji-font break-all">{title}</div>}
           <ExpandableText
             text={content}
-            seeMoreText="See more"
+            seeMoreText={translate('feeds-see-more')}
             isMarkdown
             seeMoreButton
             expectedLength={isMobile ? 225 : 450}
@@ -197,10 +197,11 @@ const FeedItem: React.FC<FeedItemProps> = ({
           <div className="px-6 flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-Gray-light-mode-600">
               {!!likedIdentities?.length && <AvatarGroup identities={likedIdentities} length={3} />}
-              {!!likesCount && `${likesCount} ${likesCount > 1 ? 'likes' : 'like'}`}
+              {!!likesCount && `${likesCount} ${likesCount > 1 ? translate('feeds-likes') : translate('feeds-like')}`}
             </div>
             <span className="text-sm text-Gray-light-mode-600">
-              {!!commentsCount && `${commentsCount} ${commentsCount > 1 ? 'comments' : 'comment'}`}
+              {!!commentsCount &&
+                `${commentsCount} ${commentsCount > 1 ? translate('feeds-comments') : translate('feeds-comment')}`}
             </span>
           </div>
           <div className="px-6 pt-4 flex flex-col border-0 border-t border-solid border-Gray-light-mode-200">
@@ -229,7 +230,7 @@ const FeedItem: React.FC<FeedItemProps> = ({
                   <SendBox
                     name="comment"
                     userImg={(currentProfileImage as string) || ''}
-                    placeholder="Comment..."
+                    placeholder={translate('feeds-comment-placeholder')}
                     value={comment}
                     onChange={value => setComment(value)}
                     onEmojiSelect={emoji => setComment(prev => prev + emoji)}
@@ -240,9 +241,9 @@ const FeedItem: React.FC<FeedItemProps> = ({
               {showReplySection && (
                 <SendBox
                   name="reply"
-                  buttonText="Reply"
+                  buttonText={translate('feeds-reply')}
                   userImg={(currentProfileImage as string) || ''}
-                  placeholder={`Reply to ${replyInfo?.replyTo}...`}
+                  placeholder={translate('feeds-reply-to', { name: replyInfo?.replyTo })}
                   value={reply}
                   onChange={value => setReply(value)}
                   onEmojiSelect={emoji => setReply(prev => prev + emoji)}

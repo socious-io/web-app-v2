@@ -1,5 +1,6 @@
 import { MenuItem, MenuList } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -24,11 +25,11 @@ export const ConnectionTabThreeDotsButton: React.FC<ConnectionTabThreeDotsButton
   const getConectionStatus = () => {
     const items: MenuItemType[] = [];
 
-    if (following) items.push({ iconName: 'x-circle', title: 'Unfollow', onClick: handleUnfollow });
-    else items.push({ iconName: 'plus-circle', title: 'Follow', onClick: handleFollow });
-    items.push({ iconName: 'user-x-01', title: 'Remove connection', onClick: handleRemoveConnection });
+    if (following) items.push({ iconName: 'x-circle', title: translate('connect-unfollow'), onClick: handleUnfollow });
+    else items.push({ iconName: 'plus-circle', title: translate('connect-follow'), onClick: handleFollow });
+    items.push({ iconName: 'user-x-01', title: translate('connect-remove'), onClick: handleRemoveConnection });
     // items.push({ iconName: 'share-01', title: 'Share profile' });
-    items.push({ iconName: 'archive', title: 'Block', onClick: () => setOpenBlockAlert(true) });
+    items.push({ iconName: 'archive', title: translate('connect-block'), onClick: () => setOpenBlockAlert(true) });
     setMenuItems(items);
   };
 
@@ -61,14 +62,14 @@ export const ConnectionTabThreeDotsButton: React.FC<ConnectionTabThreeDotsButton
       <AlertModal
         open={openBlockAlert}
         onClose={() => setOpenBlockAlert(false)}
-        title="Block"
-        message={`Are you sure you want to block ${name}. You’ll no longer be connected as well.`}
+        title={translate('connect-block')}
+        message={translate('connect-block-alert', { name: name })}
         customIcon={<FeaturedIcon iconName="alert-circle" size="lg" theme="warning" type="light-circle-outlined" />}
         closeButtn={true}
-        closeButtonLabel="Cancel"
+        closeButtonLabel={translate('connect-cancel')}
         submitButton={true}
         submitButtonTheme="primary"
-        submitButtonLabel="Block"
+        submitButtonLabel={translate('connect-block')}
         onSubmit={handleBlock}
       />
     </>
