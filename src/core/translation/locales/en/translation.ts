@@ -1,6 +1,11 @@
+import chats from './chats.json';
 import companySize from './companySize.json';
+import connections from './connections.json';
 import contracts from './contracts.json';
+import credential from './credential.json';
 import dashboard from './dashboard.json';
+import dispute from './disputes.json';
+import feeds from './feeds.json';
 import general from './general.json';
 import header from './header.json';
 import intro from './intro.json';
@@ -11,6 +16,7 @@ import login from './login.json';
 import navigation from './navigation.json';
 import onboarding from './onboarding.json';
 import organization from './organization.json';
+import payment from './payments.json';
 import preferences from './preferences.json';
 import profile from './profile.json';
 import referral from './referral.json';
@@ -40,5 +46,11 @@ export function generateTranslationFile() {
     header,
     jobs,
     contracts,
+    dispute,
+    feeds,
+    connections,
+    chats,
+    payment,
+    credential,
   );
 }

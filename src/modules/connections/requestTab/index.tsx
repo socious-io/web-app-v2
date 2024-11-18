@@ -1,4 +1,4 @@
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
@@ -30,10 +30,10 @@ export const RequestTab = () => {
   const footerJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleAccept}>
-        Accept
+        {translate('connect-accept')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="secondary" onClick={() => handleReject()}>
-        Decline
+        {translate('connect-decline')}
       </Button>
     </div>
   );
@@ -61,7 +61,7 @@ export const RequestTab = () => {
                 style={{ height: '40px', fontSize: '14px' }}
                 onClick={() => handleReject(item.id)}
               >
-                Decline
+                {translate('connect-decline')}
               </Button>
               <Button
                 variant="contained"
@@ -69,7 +69,7 @@ export const RequestTab = () => {
                 style={{ height: '40px', fontSize: '14px' }}
                 onClick={() => handleOpenAcceptModal(item.id)}
               >
-                View
+                {translate('connect-view')}
               </Button>
             </div>
           </div>
@@ -100,7 +100,9 @@ export const RequestTab = () => {
       >
         <div className="flex flex-col gap-5 px-4 md:px-6 py-4">
           <div className="w-full flex flex-col gap-1">
-            <div className="text-lg font-semibold text-Gray-light-mode-900">{`${selectedRequest?.requester.meta.name} has sent you a connection request`}</div>
+            <div className="text-lg font-semibold text-Gray-light-mode-900">
+              {translate('connect-accept-alert', { name: selectedRequest?.requester.meta.name })}
+            </div>
             <div className="text-sm font-normal text-Gray-light-mode-600">{selectedRequest?.text}</div>
           </div>
           <AvatarLabelGroup

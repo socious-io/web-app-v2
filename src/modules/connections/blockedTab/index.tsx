@@ -1,4 +1,4 @@
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Button } from 'src/modules/general/components/Button';
 import { Pagination } from 'src/modules/general/components/Pagination';
@@ -32,7 +32,7 @@ export const BlockedTab = () => {
               style={{ height: '40px', fontSize: '14px' }}
               onClick={() => handleUnblock(item.id)}
             >
-              Unblock
+              {translate('connect-unblock')}
             </Button>
           </div>
         );

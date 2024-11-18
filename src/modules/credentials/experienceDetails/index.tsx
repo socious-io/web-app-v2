@@ -1,5 +1,6 @@
 import React from 'react';
 import { Experience } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
@@ -71,18 +72,18 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
       </div>
       <Input
         id="title"
-        label="Job title*"
+        label={translate('cred-job-title')}
         required
         name="title"
         register={register}
-        placeholder="Enter job title"
+        placeholder={translate('cred-job-title-placeholder')}
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
         disabled={readonly}
       />
       <SearchDropdown
         id="job-category"
         value={category}
-        label="Job category"
+        label={translate('cred-job-cat')}
         options={jobCategories}
         icon="search-lg"
         hasDropdownIcon={false}
@@ -92,14 +93,14 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
         className="flex-1"
         isSearchable
         errors={errors['jobCategory']?.label?.message ? [errors['jobCategory']?.label.message.toString()] : undefined}
-        placeholder="Search for job category"
+        placeholder={translate('cred-job-cat-placeholder')}
         isDisabled={readonly}
       />
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium leading-5 text-Gray-light-mode-700">Volunteer experience?</p>
+        <p className="text-sm font-medium leading-5 text-Gray-light-mode-700">{translate('cred-volunteer')}</p>
         <Checkbox
           id="volunteer-experience"
-          label={'Yes'}
+          label={translate('cred-yes')}
           checked={volunteer}
           onChange={e => handleCheckVolunteer(e.target.checked)}
           value
@@ -109,8 +110,8 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
       <SearchDropdown
         id="employment-type"
         value={employmentTypeVal}
-        placeholder="Please select"
-        label="Employment type*"
+        placeholder={translate('cred-emp-type-placeholder')}
+        label={translate('cred-employment-type')}
         options={employmentTypes}
         icon="search-lg"
         hasDropdownIcon={false}
@@ -127,10 +128,10 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
       {employmentTypeVal?.value === 'PART_TIME' && (
         <Input
           id="weekly-hours"
-          name="weeklyHours"
+          name={translate('cred-week-hours')}
           register={register}
-          label="Estimated weekly hours*"
-          postfix="hrs/week"
+          label={translate('cred-week-hours-label')}
+          postfix={translate('cred-week-hours-postfix')}
           noBorderPostfix
           disabled={readonly}
         />
@@ -140,8 +141,8 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           id="total-hours"
           name="totalHours"
           register={register}
-          label="Estimated total hours*"
-          postfix="hrs"
+          label={translate('cred-total-hours')}
+          postfix={translate('cred-total-hours-postfix')}
           noBorderPostfix
           disabled={readonly}
         />
@@ -150,14 +151,14 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
         <SearchDropdown
           id="start-month"
           value={startMonth}
-          label="Start date*"
+          label={translate('cred-start-date')}
           options={months}
           hasDropdownIcon
           onChange={value => {
             onSelectStartMonth(value);
           }}
           className="flex-1"
-          placeholder="Month"
+          placeholder={translate('cred-month')}
           isSearchable
           errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
@@ -173,7 +174,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           }}
           label="&nbsp;"
           className="flex-1"
-          placeholder="Day"
+          placeholder={translate('cred-day')}
           isDisabled={readonly}
           maxMenuHeight={200}
         />
@@ -187,7 +188,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           }}
           label="&nbsp;"
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('cred-year')}
           isSearchable
           isDisabled={readonly}
           maxMenuHeight={200}
@@ -197,13 +198,13 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
         <SearchDropdown
           id="end-month"
           value={endMonth}
-          label="End date*"
+          label={translate('cred-end-date')}
           options={months}
           hasDropdownIcon
           onChange={value => {
             onSelectEndMonth(value);
           }}
-          placeholder="Month"
+          placeholder={translate('cred-month')}
           className="flex-1"
           isSearchable
           errors={endDateErrors ? [endDateErrors.toString()] : undefined}
@@ -219,7 +220,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           onChange={value => {
             onSelectEndDay(value);
           }}
-          placeholder="Day"
+          placeholder={translate('cred-day')}
           className="flex-1"
           isDisabled={readonly}
           maxMenuHeight={200}
@@ -234,7 +235,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
             onSelectEndYear(value);
           }}
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('cred-year')}
           isSearchable
           isDisabled={readonly}
           maxMenuHeight={200}
@@ -246,10 +247,10 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        Send
+        {translate('cred-send')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {translate('cred-cancel')}
       </Button>
     </div>
   );
@@ -257,7 +258,7 @@ export const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
     <Modal
       open={open}
       handleClose={handleClose}
-      title="Credential details"
+      title={translate('cred-details')}
       content={contentJSX}
       footer={readonly ? <></> : modalFooterJsx}
     />
