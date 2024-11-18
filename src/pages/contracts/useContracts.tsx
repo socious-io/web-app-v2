@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { ButtonGroupItem } from 'src/modules/general/components/ButtonGroups/buttonGroups.types';
 import store, { RootState } from 'src/store';
 import { handleDisplaySlider, updateFilter, updatePage } from 'src/store/reducers/contracts.reducer';
@@ -39,9 +40,9 @@ export const useContracts = () => {
   }, [page, filter]);
 
   const filterButtons: ButtonGroupItem[] = [
-    { label: 'View all', handleClick: () => handleChangeFilter('all') },
-    { label: 'Ongoing', handleClick: () => handleChangeFilter('ongoing') },
-    { label: 'Archived', handleClick: () => handleChangeFilter('archived') },
+    { label: translate('cont-filter-all'), handleClick: () => handleChangeFilter('all') },
+    { label: translate('cont-filter-ongoing'), handleClick: () => handleChangeFilter('ongoing') },
+    { label: translate('cont-filter-archived'), handleClick: () => handleChangeFilter('archived') },
   ];
 
   const updatePageNumber = (page: number) => {

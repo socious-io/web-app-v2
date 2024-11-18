@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity, cancelMission, completeMission, dropMission } from 'src/core/api';
 import { UserType } from 'src/core/types';
-import { getIdentityMeta, navigateToProfile } from 'src/core/utils';
+import { getIdentityMeta, navigateToProfile, translate } from 'src/core/utils';
 import { AlertMessage } from 'src/modules/general/components/alertMessage';
 import { MenuItem } from 'src/modules/general/components/threeDotButton/threeDotButton.types';
 import store, { RootState } from 'src/store';
@@ -26,15 +26,15 @@ export const useSliderOngoing = (contract: Contract) => {
       <AlertMessage
         theme="primary"
         iconName="check-circle"
-        title="Your job has been confirmed"
-        subtitle="Once you have finished your work please click on <b>complete</b> button."
+        title={translate('cont-confirm-alert-msg')}
+        subtitle={translate('cont-confirm-alert-subtitle')}
       />
     ) : (
       <AlertMessage
         theme="primary"
         iconName="alert-circle"
-        title="Payment was done successfully"
-        subtitle={`${name} can now start the job`}
+        title={translate('cont-unsuccessful-payment')}
+        subtitle={translate('cont-start-job', { name: name })}
       />
     );
   const displayComplete = identityType === 'users';
@@ -90,19 +90,19 @@ export const useSliderOngoing = (contract: Contract) => {
   const menuItems: MenuItem[] = [
     {
       iconName: 'building-06',
-      title: `${name}'s profile`,
+      title: translate('cont-profile-title', { name: name }),
       onClick: () => {
         navigateToProfile(username, type as UserType);
       },
     },
     {
       iconName: 'message-alert-circle',
-      title: 'Initiate a dispute',
+      title: translate('cont-initiate-dispute'),
       onClick: () => setOpenInitiateDisputeModal(true),
     },
     {
       iconName: 'x-circle',
-      title: 'End contract',
+      title: translate('cont-end'),
       onClick: identityType === 'users' ? handleStop : handleStopByOP,
     },
   ];
@@ -118,5 +118,6 @@ export const useSliderOngoing = (contract: Contract) => {
     setOpenInitiateDisputeModal,
     respondentId,
     missionId,
+    name,
   };
 };

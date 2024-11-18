@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import store from 'src/store';
 import { setEvents } from 'src/store/reducers/events.reducer';
@@ -6,6 +5,7 @@ import { setSkills } from 'src/store/reducers/skills.reducer';
 
 import { events, skills, Event } from './api';
 import { CategoriesResp, Cities } from './types';
+import { translate } from './utils';
 
 export function socialCausesToCategoryAdaptor() {
   return Object.entries(SOCIAL_CAUSES).map(([, value]) => value);
@@ -28,7 +28,7 @@ export async function skillsToCategoryAdaptor() {
   return skillList.map(item => {
     return {
       value: item.name,
-      label: i18next.t(item.name),
+      label: translate(item.name),
     };
   });
 }
@@ -38,7 +38,7 @@ export function socialCausesToCategory(categories: string[] = []) {
     return [];
   }
   return categories.map(cat => {
-    return SOCIAL_CAUSES[cat] || cat;
+    return { label: translate(cat), value: cat };
   });
 }
 
@@ -66,7 +66,7 @@ export function citiesToCategories(cities: Cities[]) {
 export function skillsToCategory(skills: string[] = []) {
   try {
     return skills.map(name => {
-      return { value: name, label: i18next.t(name) };
+      return { value: name, label: translate(name) };
     });
   } catch {
     return [];

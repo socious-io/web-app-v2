@@ -1,5 +1,6 @@
 import React from 'react';
 import { Contract } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { AlertMessage } from 'src/modules/general/components/alertMessage';
 import { Button } from 'src/modules/general/components/Button';
 
@@ -32,24 +33,24 @@ export const SliderPaymentRequired: React.FC<SliderPaymentRequiredProps> = ({
         <div className="flex gap-3">
           {!disableMessage && (
             <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat} disabled={disableMessage}>
-              Message
+              {translate('cont-message')}
             </Button>
           )}
 
           <Button variant="outlined" color="secondary" fullWidth onClick={withdrawOfferByOP}>
-            Withdraw
+            {translate('cont-withdraw')}
           </Button>
         </div>
 
         <Button variant="contained" color="primary" onClick={handleOpenPaymentModal}>
-          Proceed to payment
+          {translate('cont-proceed-payment')}
         </Button>
 
         <AlertMessage
           theme="warning"
           iconName="alert-circle"
-          title="Payment required"
-          subtitle={`${name} has accepted your offer. Proceed to payment to start this job.`}
+          title={translate('cont-payment-required')}
+          subtitle={translate('cont-payment-required-msg', { name: name })}
         />
       </div>
       {displayPaymentModal && contract.payment_mode === 'FIAT' ? (

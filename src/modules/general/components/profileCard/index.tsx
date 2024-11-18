@@ -32,7 +32,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
   return (
     <div className="flex flex-col gap-5 md:gap-6 h-full w-full">
       {labelShown && (
-        <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">{`About ${name}`}</span>
+        <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">
+          {translate('job-about-company', { name: name })}
+        </span>
       )}
       <div
         className={`h-full flex flex-col border border-solid border-Gray-light-mode-200 ${rounded ? 'rounded-xl' : ''}`}

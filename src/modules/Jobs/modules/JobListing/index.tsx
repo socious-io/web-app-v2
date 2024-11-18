@@ -1,5 +1,6 @@
 import { Skeleton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Pagination } from 'src/modules/general/components/Pagination';
 
@@ -37,16 +38,16 @@ export const JobsListing = () => {
           {!!recommended && (
             <>
               <div className={css.header}>
-                <div className={css.title}>Recommended for you</div>
+                <div className={css.title}>{translate('job-recommended')}</div>
                 <div className="flex flex-col md:flex-row items-start gap-4 md:justify-between">
-                  <div className={css.subTitle}>Based on your profile and search history</div>
+                  <div className={css.subTitle}>{translate('job-profile-based-recommendation')}</div>
                   <Button
                     variant="text"
                     color="primary"
                     customStyle="p-0 !text-sm !font-semibold !leading-5 !h-5"
                     onClick={() => navigate('./recommended')}
                   >
-                    See all recommendations
+                    {translate('job-see-recommendations')}
                   </Button>
                 </div>
               </div>
@@ -57,8 +58,8 @@ export const JobsListing = () => {
           )}
 
           <div className={css.header}>
-            <div className={css.title}>All jobs</div>
-            <div className={css.subTitle}>Discover our most recent jobs</div>
+            <div className={css.title}>{translate('job-all')}</div>
+            <div className={css.subTitle}>{translate('job-discover')}</div>
           </div>
 
           <div id="job-listing-div">
@@ -84,7 +85,7 @@ export const JobsListing = () => {
       {isMobile && jobsList.length < total && (
         <div className="mt-5 flex items-center justify-center">
           <Button color="primary" variant="text" onClick={handleChangeMobilePage}>
-            See more
+            {translate('job-see-more')}
           </Button>
         </div>
       )}

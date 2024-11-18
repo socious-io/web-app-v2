@@ -1,0 +1,55 @@
+{
+    "job-saved": "保存された求人",
+    "job-your-saved": "あなたの保存した求人",
+    "job-find-work": "あなたと世界にとって意義のある仕事を見つけましょう",
+    "job-see-more": "もっと見る",
+    "job-fixed-price": "（固定価格）",
+    "job-not-see": "この求人は再表示されません",
+    "job-read-more": "続きを読む",
+    "job-recommended": "あなたへのおすすめ",
+    "job-profile-based-recommendation": "あなたのプロフィールと検索履歴に基づいています",
+    "job-see-recommendations": "すべてのおすすめを見る",
+    "job-all": "すべての求人",
+    "job-discover": "最新の求人を発見しましょう",
+    "job-not-interested": "興味なし",
+    "job-preference": {
+        "ONSITE": "出社",
+        "REMOTE": "リモート",
+        "HYBRID": "ハイブリッド"
+    },
+    "job-length": {
+        "LESS_THAN_A_DAY": "1日未満",
+        "LESS_THAN_A_MONTH": "1ヶ月未満",
+        "1_3_MONTHS": "1〜3ヶ月",
+        "3_6_MONTHS": "3〜6ヶ月",
+        "6_MONTHS_OR_MORE": "6ヶ月以上"
+    },
+    "job-type": {
+        "ONE_OFF": "単発",
+        "PART_TIME": "パートタイム",
+        "FULL_TIME": "フルタイム"
+    },
+    "job-experience": {
+        "0": "未経験",
+        "1": "エントリー",
+        "2": "中級",
+        "3": "エキスパート"
+    },
+    "job-volunteer": "ボランティア",
+    "job-successful-app": "応募が正常に送信されました",
+    "job-already-applied": "この求人に応募済みです",
+    "job-copy": "コピー",
+    "job-anywhere": "どこでも",
+    "job-about": "この仕事について",
+    "job-apply": "今すぐ応募",
+    "job-close": "閉じる",
+    "job-close-alert": "この求人を閉じますか？アーカイブされます",
+    "job-close-title": "求人を閉じる",
+    "job-desc": "求人の説明",
+    "job-about-company": "{{name}} について",
+    "job-website": "ウェブサイト",
+    "job-back": "戻る",
+    "job-list-title": "{{number}}のインパクト求人",
+    "job-applied": "応募済みの求人",
+    "job-my-applied": "私の応募済みの求人"
+}

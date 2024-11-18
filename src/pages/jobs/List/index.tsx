@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { CurrentIdentity, JobsRes } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { JobsListing } from 'src/modules/Jobs/modules/JobListing';
@@ -27,7 +28,7 @@ export const JobsList = () => {
       onClick={() => navigate('/jobs/saved')}
     >
       <Icon name="bookmark" fontSize={20} />
-      Saved jobs
+      {translate('job-saved')}
     </Button>
   );
 
@@ -39,12 +40,12 @@ export const JobsList = () => {
         <>
           <div className={css.header}>
             <div className="flex justify-between items-start">
-              <h1 className={css.title}>{savedPage ? 'Saved jobs' : `${userJobs?.total_count} impact jobs`}</h1>
+              <h1 className={css.title}>
+                {savedPage ? translate('job-saved') : translate('job-list-title', { number: userJobs?.total_count })}
+              </h1>
               {!savedPage && <div className="hidden md:block">{saveButton}</div>}
             </div>
-            <h2 className={css.subtitle}>
-              {savedPage ? 'Your saved jobs' : `Find work that matters to you and the world`}
-            </h2>
+            <h2 className={css.subtitle}>{savedPage ? translate('job-your-saved') : translate('job-find-work')}</h2>
             {!savedPage && <div className="block md:hidden mt-3">{saveButton}</div>}
           </div>
 

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Contract, CurrentIdentity, connectionStatus } from 'src/core/api';
 import { ConnectStatus } from 'src/core/types';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { RootState } from 'src/store';
 
 import { ContractDetailTab } from '../contractDetailTab';
@@ -92,7 +92,11 @@ export const useContractDetailsSlider = () => {
           <SliderDefault
             disableMessage={disabledMessageButton}
             redirectToChat={redirectToChat}
-            alertMessage={identityType === 'users' ? 'you have declined this offer' : `${name} has declined this offer`}
+            alertMessage={
+              identityType === 'users'
+                ? translate('cont-declined-offer')
+                : translate('cont-user-declined-offer', { name: name })
+            }
           />,
         );
         break;
@@ -116,7 +120,7 @@ export const useContractDetailsSlider = () => {
             disableMessage={disabledMessageButton}
             redirectToChat={redirectToChat}
             alertMessage={
-              identityType === 'users' ? `${name} have stopped this contract` : 'You have stopped this contract'
+              identityType === 'users' ? translate('cont-user-stopped', { name: name }) : translate('cont-stop')
             }
           />,
         );
@@ -125,9 +129,11 @@ export const useContractDetailsSlider = () => {
       case 'Canceled':
         if (contract.mission?.status === 'CANCELED')
           alertMsg =
-            identityType === 'users' ? 'You have canceled this contract' : `${name} has canceled this contract`;
+            identityType === 'users'
+              ? translate('cont-cancel-contract')
+              : translate('cont-user-cancel-contract', { name: name });
         else if (contract.status === 'CANCELED')
-          alertMsg = identityType === 'users' ? `${name} has canceled this offer` : 'You have canceled this offer';
+          alertMsg = identityType === 'users' ? translate('cont-user-cancel-offer') : translate('cont-cancel-offer');
         setSliderComponent(
           <SliderDefault
             disableMessage={disabledMessageButton}

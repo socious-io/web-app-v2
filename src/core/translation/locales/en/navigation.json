@@ -1,0 +1,23 @@
+{
+    "nav-dashboard": "Dashboard",
+    "nav-jobs": "Jobs",
+    "nav-find-job": "Find job",
+    "nav-saved-jobs": "Saved jobs",
+    "nav-applied-jobs": "Applied jobs",
+    "nav-contracts": "Contracts",
+    "nav-overview": "Overview",
+    "nav-disputes": "Disputes",
+    "nav-communities": "Communities",
+    "nav-feeds": "Feeds",
+    "nav-connections": "Connections",
+    "nav-messages": "Messages",
+    "nav-payments": "Payments",
+    "nav-credentials": "Credentials",
+    "nav-refer": "Refer and earn",
+    "nav-contributor": "Contributor",
+    "nav-contributor-dashboard": "Contributor Dashboard",
+    "nav-dispute-resolution": "Dispute resolution",
+    "nav-setting": "Settings",
+    "nav-logout": "Logout",
+    "nav-login": "Login"
+}

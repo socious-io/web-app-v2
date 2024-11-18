@@ -1,5 +1,6 @@
 import React from 'react';
 import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Dot } from 'src/modules/general/components/dot';
@@ -33,9 +34,9 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
     <div className="flex flex-col gap-4">
       <FeaturedIcon iconName="message-alert-circle" type="modern" size="lg" theme="gray" />
       <div className="flex flex-col text-md font-semibold text-Gray-light-mode-900">
-        Initiate a dispute
+        {translate('cont-initiate-dispute')}
         <span className="font-normal text-sm leading-5 text-Gray-light-mode-500">
-          Please provide the necessary information to initiate the dispute resolution process for the selected contract.
+          {translate('cont-dispute-title')}
         </span>
       </div>
     </div>
@@ -49,10 +50,10 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
         fullWidth
         onClick={() => (step === 0 ? handleClose() : backToPreviousStep())}
       >
-        {step === 0 ? 'Cancel' : 'Back'}
+        {step === 0 ? translate('cont-cancel') : translate('cont-back')}
       </Button>
       <Button type="submit" variant="contained" color="primary" fullWidth>
-        {step < 2 ? 'Continue' : 'Submit Dispute'}
+        {step < 2 ? translate('cont-continue') : translate('cont-submit-dispute')}
       </Button>
     </div>
   );
@@ -62,8 +63,8 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
       <SearchDropdown
         id="category"
         name="category"
-        placeholder="Select"
-        label="Dispute category*"
+        placeholder={translate('cont-select')}
+        label={translate('cont-dispute-category')}
         options={DISPUTE_CATEGORY}
         onChange={onSelectCategory}
         value={category}
@@ -72,8 +73,8 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
       <Input
         id="title"
         name="title"
-        placeholder="Provide a concise summary of the dispute"
-        label="Dispute title*"
+        placeholder={translate('cont-dispute-title-placeholder')}
+        label={translate('cont-dispute-title-label')}
         required
         register={register}
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
@@ -81,8 +82,8 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
       <Input
         id="description"
         name="description"
-        placeholder="Describe the dispute in detail, including the events that led to the disagreement and any relevant circumstances."
-        label="Dispute description*"
+        placeholder={translate('cont-dispute-desc-placeholder')}
+        label={translate('cont-dispute-desc')}
         required
         multiline
         customHeight="200px"
@@ -95,10 +96,9 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
   const stepTwo = (
     <>
       <div className="flex flex-col leading-6 text-sm font-semibold text-Gray-light-mode-700">
-        Supporting evidence*
+        {translate('cont-dispute-supporting-evidence')}
         <span className="font-normal text-sm leading-5 text-Gray-light-mode-500">
-          Upload any relevant documents, screenshots, delivered work or written communications, that support your claim.
-          Please ensure all personal information is redacted or anonymized.
+          {translate('cont-dispute-evidence-desc')}
         </span>
       </div>
       <FileUploaderMultiple
@@ -121,16 +121,15 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
   const stepThree = (
     <>
       <div className="flex flex-row items-start gap-2 font-normal text-sm leading-5 text-Gray-light-mode-500">
-        <Checkbox id="confirmInfo" name="confirmInfo" label="" required register={register} />I hereby confirm that the
-        information provided in this form is true and accurate to the best of my knowledge.
+        <Checkbox id="confirmInfo" name="confirmInfo" label="" required register={register} />
+        {translate('cont-dispute-confirm-chk')}
       </div>
       <div className="flex flex-row items-start gap-2 font-normal text-sm leading-5 text-Gray-light-mode-500">
-        <Checkbox id="sharedInfo" name="sharedInfo" label="" required register={register} />I understand that the
-        submitted information will be shared with the respondent and relevant parties involved in the resolution process
-        and adheres to the platform&apos;s guidelines for dispute submission.
+        <Checkbox id="sharedInfo" name="sharedInfo" label="" required register={register} />
+        {translate('cont-dispute-confirm-chk-2')}
       </div>
       {(errors.confirmInfo?.message || errors.sharedInfo?.message) && (
-        <span className="text-Error-700 text-sm">Both statements must be agreed to before proceeding</span>
+        <span className="text-Error-700 text-sm">{translate('cont-dispute-confirm-both')}</span>
       )}
     </>
   );

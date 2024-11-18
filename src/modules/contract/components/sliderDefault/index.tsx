@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'src/core/utils';
 import { AlertMessage } from 'src/modules/general/components/alertMessage';
 import { Button } from 'src/modules/general/components/Button';
 
@@ -14,7 +15,7 @@ export const SliderDefault: React.FC<SliderCanceledProps> = ({ alertMessage, dis
       <div className="flex gap-3">
         {!disableMessage && (
           <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat} disabled={disableMessage}>
-            Message
+            {translate('cont-message')}
           </Button>
         )}
       </div>

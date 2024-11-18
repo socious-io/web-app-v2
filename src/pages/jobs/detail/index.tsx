@@ -5,6 +5,7 @@ import { useLoaderData } from 'react-router-dom';
 import { CurrentIdentity, getOrganization, Job, Organization, QuestionsRes } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
+import { translate } from 'src/core/utils';
 import { ExpandableText } from 'src/modules/general/components/expandableText';
 import { FeaturedIconOutlined } from 'src/modules/general/components/featuredIconOutlined';
 import ProfileCard from 'src/modules/general/components/profileCard';
@@ -58,7 +59,7 @@ export const JobDetail = () => {
           <div className={css.section1}>
             <FeaturedIconOutlined iconName="check-circle" size="md" theme="primary" />
             <Typography variant="subtitle2" className="text-Brand-700">
-              Your application has been successfully submitted
+              {translate('job-successful-app')}
             </Typography>
           </div>
         )}
@@ -66,7 +67,7 @@ export const JobDetail = () => {
           <div className={css.section2}>
             <FeaturedIconOutlined iconName="info-circle" size="md" theme="gray" />
             <Typography variant="subtitle2" className="text-Gray-light-mode-700">
-              You have applied for this job
+              {translate('job-already-applied')}
             </Typography>
           </div>
         )}
@@ -85,7 +86,7 @@ export const JobDetail = () => {
             <div className={css.section1}>
               <FeaturedIconOutlined iconName="check-circle" size="md" theme="primary" />
               <Typography variant="subtitle2" className="text-Brand-700">
-                Your application has been successfully submitted
+                {translate('job-successful-app')}
               </Typography>
             </div>
           )}
@@ -93,7 +94,7 @@ export const JobDetail = () => {
             <div className={css.section2}>
               <FeaturedIconOutlined iconName="info-circle" size="md" theme="gray" />
               <Typography variant="subtitle2" className="text-Gray-light-mode-700">
-                You have applied for this job
+                {translate('job-already-applied')}
               </Typography>
             </div>
           )}
