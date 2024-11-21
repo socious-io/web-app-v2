@@ -1,0 +1,15 @@
+{
+    "org-type-startup": "インパクトスタートアップ",
+    "org-type-social": "ソーシャルビジネス",
+    "org-type-non-profit": "非営利団体 / 慈善団体",
+    "org-type-social-cooperative": "社会的協同組合",
+    "org-type-iif": "インパクト投資ファンド / 財団",
+    "org-type-public": "公共機関",
+    "org-type-inter-gov": "国際機関",
+    "org-type-edu": "教育機関",
+    "org-type-health-care": "医療機関",
+    "org-type-religious": "宗教団体",
+    "org-type-commercial": "営利企業",
+    "org-type-department": "営利企業のインパクト部門",
+    "org-type-other": "その他"
+}

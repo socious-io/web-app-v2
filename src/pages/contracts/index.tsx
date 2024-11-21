@@ -1,6 +1,7 @@
 import { Contract } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import useHideScrollbar from 'src/core/hooks/useHideScrollbar';
+import { translate } from 'src/core/utils';
 import { useWeb3 } from 'src/dapp/dapp.connect';
 import { ContractCard } from 'src/modules/contract/components/contractCard';
 import { ContractDetailsSlider } from 'src/modules/contract/components/contractDetailsSlider';
@@ -24,8 +25,8 @@ export const Contracts = () => {
       <div className={css.container}>
         <div className={css.header}>
           <div className={css.left}>
-            <h1 className={css.title}>Contracts</h1>
-            <h2 className={css.subtitle}>Manage your jobs offers and work.</h2>
+            <h1 className={css.title}>{translate('cont-title')}</h1>
+            <h2 className={css.subtitle}>{translate('cont-subtitle')}</h2>
           </div>
           <div className={css.right}></div>
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { toRelativeTime } from 'src/core/relative-time';
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Chip } from 'src/modules/general/components/Chip';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -56,19 +57,23 @@ export const ContractCard: React.FC<ContractCardProps> = ({ contract }) => {
               <span className="font-medium text-base leading-6 text-Gray-light-mode-700">
                 {formatCurrency} {`${contractCurrency}`}
               </span>
-              <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">{`(Fixed-price)`}</span>
+              <span className="font-normal text-sm leading-5 text-Gray-light-mode-600">
+                {translate('cont-fixed-price')}
+              </span>
             </div>
           ) : contract.project.payment_type === 'VOLUNTEER' ? (
             <div className="flex gap-1.5">
-              <img src="/icons/nowruz/red-heart.svg" alt="" />
-              <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Volunteer</span>
+              <Icon name="heart-filled" fontSize={20} className="text-Burgundy-600" />
+              <span className="font-medium text-base leading-6 text-Gray-light-mode-700">
+                {translate('cont-volunteer')}
+              </span>
             </div>
           ) : (
             ''
           )}
           <div className="md:mr-0 md:ml-auto w-fit">
             <Chip
-              label={contract.contractStatus}
+              label={translate(`cont-status.${contract.contractStatus}`)}
               startIcon={badge?.icon || ''}
               theme={badge?.theme || 'secondary'}
               shape="round"

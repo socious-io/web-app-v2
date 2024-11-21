@@ -66,7 +66,7 @@ const Password = () => {
                   <div>
                     <img
                       className="mr-1"
-                      src={!isPasswordLengthValid ? '/icons/grey-check.svg' : '/icons/green-check.svg'}
+                      src={!isPasswordLengthValid ? '/icons/check-circle-grey.svg' : '/icons/check-circle-green.svg'}
                       alt="check"
                     />
                     Must be at least 8 characters
@@ -76,7 +76,7 @@ const Password = () => {
               <div className={`${css.validation} mt-2`}>
                 <img
                   className="mr-1"
-                  src={!isPasswordPatternValid ? '/icons/grey-check.svg' : '/icons/green-check.svg'}
+                  src={!isPasswordPatternValid ? '/icons/check-circle-grey.svg' : '/icons/check-circle-green.svg'}
                   alt="check"
                 />
                 Must contain one special character
@@ -102,7 +102,7 @@ const Password = () => {
                 <div className={`${css.validation} mt-2 mb-4`}>
                   <img
                     className="mr-1"
-                    src={!errors.confirm ? '/icons/green-check.svg' : '/icons/grey-check.svg'}
+                    src={!errors.confirm ? '/icons/check-circle-green.svg' : '/icons/check-circle-grey.svg'}
                     alt="check"
                   />
                   Passwords match

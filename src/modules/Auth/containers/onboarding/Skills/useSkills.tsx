@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { skillsToCategoryAdaptor } from 'src/core/adaptors';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { useUser } from 'src/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
@@ -9,6 +10,7 @@ interface Option {
   label: string;
 }
 export const useSkills = () => {
+  const { t: translate } = useTranslation();
   const [value, setValue] = useState<MultiSelectItem[]>([]);
   const [items, setItems] = useState<Option[]>([]);
   const { state, updateUser } = useUser();
@@ -26,5 +28,5 @@ export const useSkills = () => {
   }, [value]);
   const getOptionsFromValues = (values, options) => options.filter(option => values.includes(option.value));
 
-  return { items, value, setValue, updateSelectedStep };
+  return { items, value, setValue, updateSelectedStep, translate };
 };

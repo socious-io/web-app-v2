@@ -4,7 +4,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 import { CurrentIdentity, Payment, payments } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { UserType } from 'src/core/types';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import dapp from 'src/dapp';
 import { RootState } from 'src/store';
 
@@ -44,7 +44,7 @@ export const useTransactions = () => {
         amount: `${symbol}${item.amount}`,
         date: toRelativeTime(item.created_at.toString()),
         currency,
-        type: paymentType === 'Paid' ? 'Payment sent' : 'Payment received',
+        type: paymentType === 'Paid' ? translate('pay-sent') : translate('pay-received'),
         missionId: item.id,
         transactionId: item.transaction_id,
         mobileAmount: item.service === 'CRYPTO' ? `${currency} ${item.amount}` : `${symbol}${item.amount}`,
@@ -56,7 +56,13 @@ export const useTransactions = () => {
   const [list, setList] = useState<PaymentDataType[]>(mapDataToColumns(paymentRes.items));
   const [page, setPage] = useState(paymentRes.page);
   const [total, setTotal] = useState(paymentRes.total_count);
-  const headers = ['Transaction', 'Date', 'Type', 'Currency', 'Amount'];
+  const headers = [
+    translate('pay-col-transaction'),
+    translate('pay-col-date'),
+    translate('pay-col-type'),
+    translate('pay-col-currency'),
+    translate('pay-col-amount'),
+  ];
 
   const loadMore = async () => {
     const res = await payments({ page: page, limit: PER_PAGE });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { toRelativeTime } from 'src/core/relative-time';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import CustomEmojiPicker from 'src/modules/general/components/EmojiPicker';
 import { ExpandableText } from 'src/modules/general/components/expandableText';
@@ -67,7 +67,7 @@ const Comments: React.FC<CommentsProps> = ({
                   className="text-sm text-Gray-light-mode-600 cursor-pointer ml-1"
                   onClick={() => onReply({ replyTo: name || '', commentId: item.id })}
                 >
-                  Reply
+                  {translate('feeds-reply')}
                 </span>
               </div>
               {openEmojiPicker === item.id && (
@@ -89,7 +89,7 @@ const Comments: React.FC<CommentsProps> = ({
               ) : (
                 (replies[item.id] || item.replied) && (
                   <span className="see-more text-center" onClick={() => onShowReplies?.(item.id)}>
-                    Show replies
+                    {translate('feeds-show-replies')}
                   </span>
                 )
               )}
@@ -99,7 +99,7 @@ const Comments: React.FC<CommentsProps> = ({
       })}
       {showSeeMoreComments && (
         <span className="see-more text-center" onClick={onSeeMoreCommentsClick}>
-          See more
+          {translate('feeds-see-more')}
         </span>
       )}
     </>

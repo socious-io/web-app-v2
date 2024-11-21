@@ -36,7 +36,7 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
     onSelectSize,
   } = useEditInfoOrg(handleClose);
   const modalContent = (
-    <form className={css.editInfoModal}>
+    <form className={css['modal__form']}>
       <Input
         required
         id="name"
@@ -163,6 +163,7 @@ export const EditInfoOrgModal: React.FC<EditInfoOrgProps> = ({ open, handleClose
       subTitle="* required fields"
       content={modalContent}
       footer={modalFooterJsx}
+      customStyle={css['modal']}
     />
   );
 };

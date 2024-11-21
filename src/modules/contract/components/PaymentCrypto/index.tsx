@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'src/core/utils';
 import Dapp from 'src/dapp';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
@@ -31,10 +32,10 @@ export const PaymentCrypto: React.FC<PaymentCryptoProps> = ({ open, handleClose,
         disabled={disabledPayment}
         onClick={proceedCryptoPayment}
       >
-        Pay now
+        {translate('cont-pay-now')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="secondary" onClick={() => handleClose(false)}>
-        Cancel
+        {translate('cont-cancel')}
       </Button>
     </div>
   );
@@ -58,14 +59,14 @@ export const PaymentCrypto: React.FC<PaymentCryptoProps> = ({ open, handleClose,
       <Modal
         open={open}
         handleClose={() => handleClose(false)}
-        title="Escrow payment"
-        subTitle="Proceed to payment"
+        title={translate('cont-escrow-payment')}
+        subTitle={translate('cont-proceed-payment')}
         content={contentJsx}
         footer={footerJsx}
         mobileFullHeight={false}
       />
       <AlertModal
-        title="Failed"
+        title={translate('cont-failed')}
         message={errorMessage}
         open={openErrorModal}
         onClose={() => setOpenErrorModal(false)}

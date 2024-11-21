@@ -1,4 +1,4 @@
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Button } from 'src/modules/general/components/Button';
@@ -46,7 +46,7 @@ export const FollowerTab = () => {
               customStyle={item.following ? '' : css.followBtn}
               onClick={() => handleClick(item.id)}
             >
-              {item.mutual ? 'Following' : 'Follow'}
+              {item.mutual ? translate('connect-following') : translate('connect-follow')}
             </Button>
           </div>
         );
@@ -64,14 +64,14 @@ export const FollowerTab = () => {
       <AlertModal
         open={openAlert}
         onClose={() => setOpenAlert(false)}
-        title="Unfollow"
-        message={`Are you sure you want to unfollow ${name}?`}
+        title={translate('connect-unfollow')}
+        message={translate('connect-unfollow-alert', { name })}
         customIcon={<FeaturedIcon iconName="alert-circle" size="lg" theme="warning" type="light-circle-outlined" />}
         closeButtn={true}
-        closeButtonLabel="Cancel"
+        closeButtonLabel={translate('connect-cancel')}
         submitButton={true}
         submitButtonTheme="primary"
-        submitButtonLabel="Unfollow"
+        submitButtonLabel={translate('connect-unfollow')}
         onSubmit={handleUnfollow}
       />
     </div>

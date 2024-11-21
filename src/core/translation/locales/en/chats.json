@@ -1,0 +1,10 @@
+{
+    "chat-title": "Messages",
+    "chat-new": "New message",
+    "chat-to": "To:",
+    "chat-send": "Send",
+    "chat-send-placeholder": "Send a message",
+    "chat-error-alert": "You cannot start a chat with the selected contact",
+    "chat-error-alert-title": "Failed",
+    "chat-type-name": "Type a name..."
+}

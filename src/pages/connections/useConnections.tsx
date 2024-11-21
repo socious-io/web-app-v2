@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
+import { translate } from 'src/core/utils';
 import { BlockedTab } from 'src/modules/connections/blockedTab';
 import ConnectionTab from 'src/modules/connections/connectionTab';
 import { FollowerTab } from 'src/modules/connections/followerTab';
@@ -9,11 +10,11 @@ export const useConnections = () => {
   const [searchParams] = useSearchParams();
   const activeIndex = searchParams.get('active') || 0;
   const tabs = [
-    { label: 'Connections', content: <ConnectionTab /> },
-    { label: 'Followings', content: <FollowingTab /> },
-    { label: 'Followers', content: <FollowerTab /> },
-    { label: 'Requests', content: <RequestTab /> },
-    { label: 'Blocked', content: <BlockedTab /> },
+    { label: translate('connect-title'), content: <ConnectionTab /> },
+    { label: translate('connect-followings'), content: <FollowingTab /> },
+    { label: translate('connect-followers'), content: <FollowerTab /> },
+    { label: translate('connect-requests'), content: <RequestTab /> },
+    { label: translate('connect-blocked'), content: <BlockedTab /> },
   ];
 
   return { tabs, activeIndex: Number(activeIndex) };

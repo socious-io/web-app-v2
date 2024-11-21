@@ -2,6 +2,7 @@ import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import React, { useState, useEffect } from 'react';
 import { config } from 'src/config';
 import { addCard, cards } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
@@ -58,7 +59,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, handleClose, c
 
     const res = await stripe.createToken(card);
     if (res.error) {
-      setErrorMessage(res.error.message || 'Failed');
+      setErrorMessage(res.error.message || translate('cont-failed'));
       setOpenErrorModal(true);
     }
     if (!res.token) return;
@@ -70,7 +71,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, handleClose, c
     try {
       await addCard(payload, is_jp);
     } catch (err: any) {
-      setErrorMessage(err.response?.data?.error || 'Failed');
+      setErrorMessage(err.response?.data?.error || translate('cont-failed'));
       setOpenErrorModal(true);
       return;
     }
@@ -82,7 +83,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, handleClose, c
   const footerJSX = (
     <div className="w-full p-4 md:p-6">
       <Button color="primary" variant="contained" onClick={onSubmit} fullWidth>
-        Add
+        {translate('cont-add-btn')}
       </Button>
     </div>
   );
@@ -91,7 +92,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, handleClose, c
       <Modal
         open={open}
         handleClose={handleClose}
-        title="Add a credit card"
+        title={translate('cont-add-credit-card')}
         mobileFullHeight={false}
         footer={footerJSX}
       >
@@ -100,7 +101,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, handleClose, c
         </div>
       </Modal>
       <AlertModal
-        title="Failed"
+        title={translate('cont-failed')}
         message={errorMessage}
         open={openErrorModal}
         onClose={() => setOpenErrorModal(false)}

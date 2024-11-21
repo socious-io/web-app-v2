@@ -1,4 +1,4 @@
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Button } from 'src/modules/general/components/Button';
@@ -53,7 +53,7 @@ export const ConnectionTab = () => {
                 style={{ height: '40px', fontSize: '14px' }}
                 onClick={() => redirectToChat(accountItem.id)}
               >
-                Message
+                {translate('connect-message')}
               </Button>
               <ConnectionTabThreeDotsButton
                 follower={item.follower}
@@ -81,14 +81,14 @@ export const ConnectionTab = () => {
       <AlertModal
         open={openAlert}
         onClose={() => setOpenAlert(false)}
-        title="Remove connection"
-        message={`Are you sure you want to remove ${fullName} as a connection? ${firstName} won’t be notified.`}
+        title={translate('connect-remove')}
+        message={translate('connect-remove-alert', { fullName: fullName, firstName: firstName })}
         customIcon={<FeaturedIcon iconName="alert-circle" size="lg" theme="warning" type="light-circle-outlined" />}
         closeButtn={true}
-        closeButtonLabel="Cancel"
+        closeButtonLabel={translate('connect-cancel')}
         submitButton={true}
         submitButtonTheme="primary"
-        submitButtonLabel="Remove"
+        submitButtonLabel={translate('connect-remove-btn')}
         onSubmit={() => handleRemoveConnection(connectionId)}
       />
     </div>

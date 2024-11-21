@@ -1,7 +1,9 @@
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { BackLink } from 'src/modules/general/components/BackLink';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
+import { Icon } from 'src/modules/general/components/Icon';
 import { Modal } from 'src/modules/general/components/modal';
 
 import css from './transactionDetails.module.scss';
@@ -27,26 +29,28 @@ export const TransactionDetails = () => {
   const footerJSX = (
     <div className="w-full flex flex-col p-4 gap-3 md:flex-row-reverse md:p-6">
       <Button variant="contained" color="primary" fullWidth onClick={withdrawFund}>
-        Withdraw
+        {translate('pay-withdraw')}
       </Button>
       <Button variant="outlined" color="secondary" fullWidth onClick={() => setOpenWithdraw(false)}>
-        Cancel
+        {translate('pay-cancel')}
       </Button>
     </div>
   );
   return (
     <>
       <div className="w-full md:w-[580px] flex flex-col py-8 px-4 md:px-8 gap-8">
-        <div className={css.header}>Payments</div>
-        <BackLink onBack={handleBack} title="Back to transactions history" customStyle="w-fit" />
+        <div className={css.header}>{translate('pay-title')}</div>
+        <BackLink onBack={handleBack} title={translate('pay-back')} customStyle="w-fit" />
         <div className="flex justify-between items-start">
           <div className="flex flex-col">
-            <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">Transaction details</span>
+            <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">
+              {translate('pay-transaction-detail')}
+            </span>
             {/* <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">Payment received</span> */}
           </div>
           {isUser && (
             <Button variant="contained" color="primary" disabled={disablePayout} onClick={() => setOpenWithdraw(true)}>
-              Withdraw
+              {translate('pay-withdraw')}
             </Button>
           )}
         </div>
@@ -66,8 +70,8 @@ export const TransactionDetails = () => {
             </span>
           </div>
           {/* <div className={css.bordered}>{renderItems('Paid to', [detail.name])}</div> */}
-          <div className={css.bordered}>{renderItems('Transaction ID', [detail.transactionId])}</div>
-          <div className={css.bordered}>{renderItems('Contact information', [detail.name, detail.email])}</div>
+          <div className={css.bordered}>{renderItems(translate('pay-transaction-id'), [detail.transactionId])}</div>
+          <div className={css.bordered}>{renderItems(translate('pay-contact'), [detail.name, detail.email])}</div>
         </div>
       </div>
       {openWithdraw && (
@@ -83,15 +87,15 @@ export const TransactionDetails = () => {
           customStyle="max-w-[480px]"
         >
           <div className="pt-4 px-4 md:px-6 flex flex-col gap-5 ">
-            <span className={css.modalTitle}>Withdraw</span>
+            <span className={css.modalTitle}>{translate('pay-withdraw')}</span>
             <div className="flex flex-col gap-1.5">
-              <span className={css.modalRowTitles}>Amount</span>
+              <span className={css.modalRowTitles}>{translate('pay-amount')}</span>
               <span className={css.modalAmount}>{`${detail.symbol}${detail.amount}`}</span>
             </div>
             <div className="flex flex-col gap-1.5">
-              <span className={css.modalRowTitles}>Transfer to</span>
+              <span className={css.modalRowTitles}>{translate('pay-transfer-to')}</span>
               <div className={css.withdrawAccount}>
-                <img src="/icons/bank.svg" alt="" />
+                <Icon name="bank-1" fontSize={25} />
                 <div className="flex flex-col">
                   <span className={css.modalRowTitles}>{accounts[0].bank_name}</span>
                   <span className={css.modalSubtitles}>{accounts[0].account}</span>

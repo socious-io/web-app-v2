@@ -1,5 +1,6 @@
 import React from 'react';
 import { Contract } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import dapp from 'src/dapp';
 import { ExpandableText } from 'src/modules/general/components/expandableText';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -42,12 +43,18 @@ export const ContractDetailTab: React.FC<ContractDetailTabProps> = ({ contract }
             ? renderDetailItems('clock', `${contract.total_hours} ${contract.total_hours === 1 ? 'hour' : 'hours'}`)
             : ''}
           {contract.assignment_total
-            ? renderDetailItems(currencyIcon, `${contract.assignment_total.toString()} ${unit}`, '(fixed-price)')
+            ? renderDetailItems(
+                currencyIcon,
+                `${contract.assignment_total.toString()} ${unit}`,
+                translate('cont-fixed-price'),
+              )
             : ''}
           {contract.project.payment_type === 'VOLUNTEER' ? (
             <div className="flex gap-1.5">
-              <img src="/icons/nowruz/red-heart.svg" alt="" />
-              <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Volunteer</span>
+              <Icon name="heart-filled" fontSize={20} className="text-Burgundy-600" />
+              <span className="font-medium text-base leading-6 text-Gray-light-mode-700">
+                {translate('cont-volunteer')}
+              </span>
             </div>
           ) : (
             ''

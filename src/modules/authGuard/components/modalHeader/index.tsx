@@ -1,4 +1,4 @@
-import { Logo } from 'public/icons/nowruz/logo';
+import { Logo } from 'public/icons/dynamic/logo';
 import React from 'react';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';

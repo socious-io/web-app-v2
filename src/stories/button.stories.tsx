@@ -2,6 +2,7 @@ import { Meta, Story } from '@storybook/react';
 import React from 'react';
 import { Button } from 'src/modules/general/components/Button';
 import { ButtonProps } from 'src/modules/general/components/Button/button.types';
+import { Icon as GeneralIcon } from 'src/modules/general/components/Icon';
 export default {
   title: 'General/Button',
   component: Button,
@@ -35,8 +36,8 @@ export const Icon = Template.bind({});
 Icon.args = {
   color: 'primary',
   variant: 'outlined',
-  startIcon: <img src="/icons/chevron-left.svg" width="15px" height="15px" alt="icon-left" />,
-  endIcon: <img src="/icons/eye-black.svg" width="15px" height="15px" alt="icon-right" />,
+  startIcon: <GeneralIcon name="chevron-left" fontSize={15} />,
+  endIcon: <GeneralIcon name="eye" fontSize={15} />,
 };
 Icon.parameters = {
   design: {

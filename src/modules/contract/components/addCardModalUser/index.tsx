@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
@@ -23,10 +24,11 @@ const AddCardModalUser: React.FC<AddCardModalUserProps> = ({ open, handleClose, 
       >
         <div className="flex flex-col p-4 md:p-6 gap-6">
           <div className="flex flex-col gap-1">
-            <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">Add a payout account</div>
+            <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">
+              {translate('wallet-add-card-title')}
+            </div>
             <div className="font-normal text-sm leading-5 text-Gray-light-mode-600">
-              Socious partners with Stripe for transactions payments. By selecting continue you will be directed to
-              Stripe’s website.
+              {translate('wallet-add-card-subtitle')}
             </div>
           </div>
           <SearchDropdown
@@ -47,10 +49,10 @@ const AddCardModalUser: React.FC<AddCardModalUserProps> = ({ open, handleClose, 
               to={stripeLink}
               target="_blank"
             >
-              Continue
+              {translate('wallet-continue')}
             </Button>
             <Button variant="outlined" color="secondary" fullWidth onClick={handleClose}>
-              Cancel
+              {translate('wallet-cancel')}
             </Button>
           </div>
         </div>
@@ -59,7 +61,7 @@ const AddCardModalUser: React.FC<AddCardModalUserProps> = ({ open, handleClose, 
         open={openErrorModal}
         onClose={() => setOpenErrorModal(false)}
         message={errorMsg}
-        title="Failed"
+        title={translate('wallet-failed')}
         customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />}
         closeButtn={false}
         submitButton={false}

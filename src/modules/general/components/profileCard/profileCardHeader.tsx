@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { translate } from 'src/core/utils';
 
 import { AvatarProfile } from '../avatarProfile';
 import { Button } from '../Button';
@@ -61,7 +62,7 @@ export const ProfileCardHeader: React.FC<ProfileCardHeaderProps> = ({
         {myProfile && (
           <div className="mb-3 flex gap-3">
             <Button variant="contained" color="primary" onClick={navigateToProfile}>
-              View profile
+              {translate('profile-view')}
             </Button>
             {/* <Button variant="outlined" color="secondary">
               Edit profile

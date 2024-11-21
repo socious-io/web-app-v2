@@ -1,7 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import i18next from 'i18next';
 import { debounce } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { User, identities, preRegister, updateProfile } from 'src/core/api';
@@ -16,14 +18,15 @@ type Inputs = {
   lastName: string;
 };
 const schema = yup.object().shape({
-  username: yup.string().required('username is required'),
-  firstName: yup.string().required('first name is required'),
-  lastName: yup.string().required('last name is required'),
+  username: yup.string().required(i18next.t('sign-up-username-error')),
+  firstName: yup.string().required(i18next.t('sign-up-name-error')),
+  lastName: yup.string().required(i18next.t('sign-up-last-name-error')),
 });
 export const useUserDetails = () => {
   const [isUsernameValid, setIsusernameValid] = useState(false);
   const [isUsernameAvailable, setIsusernameAvailable] = useState(false);
   const dispatch = useDispatch();
+  const { t: translate } = useTranslation();
   const resolver = useLoaderData() as { currentProfile: User };
   const currentProfile = useRef<User>(resolver.currentProfile);
 
@@ -61,7 +64,7 @@ export const useUserDetails = () => {
         setIsusernameValid(false);
         setError('username', {
           type: 'manual',
-          message: 'Username is not available',
+          message: translate('sign-up-username-not-available'),
         });
       }
     }
@@ -90,5 +93,5 @@ export const useUserDetails = () => {
 
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
-  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid, currentProfile };
+  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid, currentProfile, translate };
 };

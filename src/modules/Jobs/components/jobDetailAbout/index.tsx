@@ -3,12 +3,9 @@ import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { config } from 'src/config';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
-import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
-import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { closeJob, CurrentIdentity, Job } from 'src/core/api';
 import { QuestionsRes } from 'src/core/types';
+import { translate } from 'src/core/utils';
 import { AuthGuard } from 'src/modules/authGuard';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
@@ -57,7 +54,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
   const inputJSX = (
     <button id="copy-button" className={css.copyBtn} onClick={handleCopy}>
       <Icon name="copy-01" fontSize={20} className="text-Gray-light-mode-700" />
-      <span>Copy</span>
+      <span>{translate('job-copy')}</span>
     </button>
   );
 
@@ -90,10 +87,10 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
         {jobDetail.country ? (
           <CountryFlag countryCode={jobDetail.country || ''} />
         ) : (
-          <img src="/icons/nowruz/earth.svg" alt="" />
+          <img src="/icons/earth.svg" alt="" />
         )}
 
-        <span className={css.subtitle}>{address || 'Anywhere'}</span>
+        <span className={css.subtitle}>{address || translate('job-anywhere')}</span>
       </div>
     );
   };
@@ -103,17 +100,17 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
       {renderJobLocation()}
       {renderJobFeatures(
         'mouse',
-        PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === jobDetail.remote_preference)?.label,
+        jobDetail.remote_preference ? translate(`job-preference.${jobDetail.remote_preference}`) : '',
       )}
-      {renderJobFeatures('calendar', PROJECT_TYPE_V2.find(level => level.value === jobDetail.project_type)?.label)}
+      {renderJobFeatures('calendar', jobDetail.project_type ? translate(`job-type.${jobDetail.project_type}`) : '')}
       {renderJobFeatures(
         'hourglass-03',
-        PROJECT_LENGTH_V3.find(level => level.value === jobDetail.project_length)?.label,
+        jobDetail.project_length ? translate(`job-length.${jobDetail.project_length}`) : '',
       )}
 
       {renderJobFeatures(
         'target-02',
-        EXPERIENCE_LEVEL_V2.find(level => level.value === jobDetail.experience_level)?.label,
+        jobDetail.experience_level ? translate(`job-experience.${jobDetail.experience_level}`) : '',
       )}
       {jobDetail.payment_type === 'PAID' &&
         jobDetail.payment_range_lower &&
@@ -121,10 +118,10 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
         renderJobFeatures(
           'currency-dollar-circle',
           ` ${jobDetail.payment_range_lower}~${jobDetail.payment_range_higher} USD`,
-          '(Fixed-price)',
+          translate('job-fixed-price'),
         )}
 
-      {jobDetail.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
+      {jobDetail.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', translate('job-volunteer'))}
 
       {jobDetail.payment_type === 'VOLUNTEER' &&
         jobDetail.commitment_hours_lower &&
@@ -138,7 +135,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
   return (
     <>
       <div className={css.container}>
-        <span className={css.title}>About this job</span>
+        <span className={css.title}>{translate('job-about')}</span>
         <div className="hidden md:block">{detailJSX}</div>
 
         <Input className="hidden md:block" id="copy-url" value={url} postfix={inputJSX} />
@@ -150,7 +147,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
               customStyle="hidden md:block w-full"
               onClick={handleOpenApplyModal}
             >
-              Apply now
+              {translate('job-apply')}
             </Button>
           </AuthGuard>
         )}
@@ -161,7 +158,7 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
             customStyle="hidden md:block w-full"
             onClick={() => setOpenAlert(true)}
           >
-            Close
+            {translate('job-close')}
           </Button>
         )}
         <div className="md:hidden flex flex-col gap-5 p-5 border border-solid border-Gray-light-mode-200 rounded-default">
@@ -174,14 +171,14 @@ export const JobDetailAbout: React.FC<JobDetailAboutProps> = ({ isUser = true, a
         open={openAlert}
         onClose={() => setOpenAlert(false)}
         onSubmit={onClose}
-        message="Are you sure you want to close this job?It will be archived"
-        title="Close job"
+        message={translate('job-close-alert')}
+        title={translate('job-close-title')}
         customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />}
         closeButtn={true}
         closeButtonLabel="Cancel"
         submitButton={true}
         submitButtonTheme="error"
-        submitButtonLabel="Close job"
+        submitButtonLabel={translate('job-close-title')}
       />
     </>
   );

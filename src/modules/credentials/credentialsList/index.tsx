@@ -2,7 +2,7 @@ import { ColumnDef, flexRender, getCoreRowModel, Getter, useReactTable } from '@
 import { useMemo } from 'react';
 import { CredentialEducationRes, CredentialExperienceRes } from 'src/core/api';
 import { formatDate } from 'src/core/time';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
@@ -42,7 +42,7 @@ export const CredentialList = () => {
     () => [
       {
         id: 'name',
-        header: 'Name',
+        header: translate('cred-col-name'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const id = getValue();
@@ -69,16 +69,16 @@ export const CredentialList = () => {
       },
       {
         id: 'type',
-        header: 'Credential Type',
+        header: translate('cred-col-type'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const item = credentialsList.find(list => list.id === getValue()) || {};
-          return 'experience' in item ? 'Work Certificate' : 'Educational Certificate';
+          return 'experience' in item ? translate('cred-col-work') : translate('cred-col-edu');
         },
       },
       {
         id: 'status',
-        header: 'Status',
+        header: translate('cred-col-status'),
         accessorKey: 'status',
         cell: ({ getValue }: { getValue: Getter<string> }) => (
           <div className="flex items-center">
@@ -88,7 +88,7 @@ export const CredentialList = () => {
       },
       {
         id: 'date',
-        header: 'Requested Date',
+        header: translate('cred-col-req-date'),
         accessorKey: 'created_at',
         cell: ({ getValue }: { getValue: Getter<string> }) => formatDate(getValue()),
       },
@@ -111,7 +111,7 @@ export const CredentialList = () => {
               onClick={() => onView(item, 'experience' in item)}
               customStyle="!text-sm !font-semibold"
             >
-              View
+              {translate('cred-view')}
             </Button>
             {item.status === 'PENDING' && (
               <Button
@@ -120,7 +120,7 @@ export const CredentialList = () => {
                 onClick={() => onReject(item.id, 'experience' in item)}
                 customStyle="!text-sm !font-semibold"
               >
-                Decline
+                {translate('cred-decline')}
               </Button>
             )}
           </div>
@@ -147,7 +147,7 @@ export const CredentialList = () => {
             disabled={!selectedCredential.id}
             onClick={() => onApprove(selectedCredential.id, selectedCredential.name === 'experience')}
           >
-            Approve
+            {translate('cred-approve')}
           </Button>
           <Button
             color="inherit"
@@ -155,7 +155,7 @@ export const CredentialList = () => {
             disabled={!selectedCredential.id}
             onClick={() => onReject(selectedCredential.id, selectedCredential.name === 'experience')}
           >
-            Decline
+            {translate('cred-decline')}
           </Button>
         </div>
       )}
@@ -182,7 +182,7 @@ export const CredentialList = () => {
             <tbody>
               {table.getRowModel().rows.map(row => {
                 return (
-                  <tr key={row.id} className="cursor-pointer">
+                  <tr key={row.id} className={css['row']}>
                     {row.getVisibleCells().map(cell => {
                       const item = cell.column.id === 'name' ? cell.row.original : null;
                       return (

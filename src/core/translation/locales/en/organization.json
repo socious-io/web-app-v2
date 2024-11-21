@@ -1,0 +1,15 @@
+{
+    "org-type-startup": "Impact Startup",
+    "org-type-social": "Social Business",
+    "org-type-non-profit": "Non profit / Charity",
+    "org-type-social-cooperative": "Social Co-operative",
+    "org-type-iif": "Impact Investing Fund / Foundation",
+    "org-type-public": "Public Institution",
+    "org-type-inter-gov": "Intergovernmental Organization",
+    "org-type-edu": "Educational Institution",
+    "org-type-health-care": "Healthcare Organization",
+    "org-type-religious": "Religious Organization",
+    "org-type-commercial": "Commercial Enterprises",
+    "org-type-department": "Impact department for a profit company",
+    "org-type-other": "Other"
+}

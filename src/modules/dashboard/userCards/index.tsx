@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { translate } from 'src/core/utils';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import { DashboardCard } from '../dashboardCard';
@@ -12,30 +14,30 @@ export const UserCards: React.FC<UserCardsProps> = ({ profileCompleted, profileU
     <div className="w-full h-fit flex gap-4 overflow-x-scroll">
       {!profileCompleted ? (
         <DashboardCard
-          title="Complete your profile"
-          description="Get discovered by organizations"
+          title={translate('dashboard-complete-profile')}
+          description={translate('dashboard-get-discovered')}
           bgColor={variables.color_wild_blue_100}
           redirectUrl={profileUrl}
-          buttonLabel="Edit profile"
-          supportingText1="Add a summary"
-          supportingText2="Add your experience"
+          buttonLabel={translate('dashboard-edit-profile')}
+          supportingText1={translate('dashboard-add-summary')}
+          supportingText2={translate('dashboard-add-experience')}
         />
       ) : (
         <DashboardCard
-          title="Refer and earn"
-          description="Help us make an impact and earn rewards by sharing Socious with  potential talent and organizations."
+          title={translate('dashboard-refer-earn')}
+          description={translate('dashboard-refer-earn-desc')}
           bgColor={variables.color_wild_blue_100}
           redirectUrl="/referral"
-          buttonLabel="Refer now"
+          buttonLabel={translate('dashboard-refer-btn')}
           buttonIcon="star-06"
         />
       )}
       <DashboardCard
-        title="Find jobs"
-        description="Explore opportunities aligned with your values"
+        title={translate('dashboard-find-job')}
+        description={translate('dashboard-find-job-desc')}
         bgColor={variables.color_dark_vanilla_100}
         redirectUrl="/jobs"
-        buttonLabel="Find jobs"
+        buttonLabel={translate('dashboard-find-job')}
       />
 
       {/* <DashboardCard

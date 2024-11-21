@@ -1,5 +1,6 @@
 import { Divider, Typography } from '@mui/material';
 import React from 'react';
+import { translate } from 'src/core/utils';
 
 import css from './paymentSummary.module.scss';
 
@@ -38,20 +39,22 @@ export const PaymentSummary: React.FC<PaymentSummaryProps> = ({
   };
   return (
     <div className={css.container}>
-      <h1 className={css.title}>Payment summary</h1>
+      <h1 className={css.title}>{translate('cont-payment-summary')}</h1>
       <Divider />
       <div className="flex flex-col gap-2">
-        {amount ? renderItems('Job payment', amount) : ''}
-        {sociousFee ? renderItems(`Socious fee (${sociousPercent}%)`, originalSociousFee) : ''}
+        {amount ? renderItems(translate('cont-job-payment'), amount) : ''}
+        {sociousFee
+          ? renderItems(translate('cont-socious-fee', { sociousPercent: sociousPercent }), originalSociousFee)
+          : ''}
         {sociousFee &&
           hasFeeDiscount &&
-          renderItems('Discount on Socious fee (50%)', originalSociousFee - sociousFee, 'text-Success-600')}
-        {stripeFee ? renderItems(`Stripe fees (${stripePercent}%)`, stripeFee) : ''}
+          renderItems(translate('cont-socious-discount'), originalSociousFee - sociousFee, 'text-Success-600')}
+        {stripeFee ? renderItems(translate('cont-stripe-fee', { stripePercent: stripePercent }), stripeFee) : ''}
       </div>
       <Divider />
       <div className="flex justify-between">
         <Typography variant="caption" className="text-Gray-light-mode-700">
-          Total payment
+          {translate('cont-total-payment')}
         </Typography>
         <span className={css.sum}>{`${symbol}${total} ${currency}`}</span>
       </div>

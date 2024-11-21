@@ -8,14 +8,12 @@ import { IconButtonProps } from './iconButton.types';
 export const IconButton: React.FC<IconButtonProps> = ({
   size = 'medium',
   iconName,
-  img,
   iconSize,
   iconColor,
   handleClick,
   customStyle,
   ...props
 }) => {
-  // FIXME: Add new icons to icon pack and use Icon instead of img
   return (
     <MUIIconButton
       className={`${css.btn} ${
@@ -24,7 +22,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       onClick={handleClick}
       {...props}
     >
-      {iconName ? <Icon fontSize={iconSize} name={iconName} color={iconColor} className="!cursor-pointer" /> : img}
+      <Icon fontSize={iconSize} name={iconName} color={iconColor} className="!cursor-pointer" />
     </MUIIconButton>
   );
 };

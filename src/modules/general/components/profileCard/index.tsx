@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { eventsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
 import { UserType } from 'src/core/types';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { Location } from 'src/modules/userProfile/components/location';
 import { Website } from 'src/modules/userProfile/components/website';
 import { RootState } from 'src/store';
@@ -26,13 +26,15 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
   const myProfile = currentIdentity?.id === identity?.id;
   const navigate = useNavigate();
   const { name, profileImage, type, website, username } = getIdentityMeta(identity);
-  const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
+  const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => translate(item.value));
   if (!identity) return;
   const events = eventsToCategory((identity as User).events || []).map(item => item.label);
   return (
     <div className="flex flex-col gap-5 md:gap-6 h-full w-full">
       {labelShown && (
-        <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">{`About ${name}`}</span>
+        <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">
+          {translate('job-about-company', { name: name })}
+        </span>
       )}
       <div
         className={`h-full flex flex-col border border-solid border-Gray-light-mode-200 ${rounded ? 'rounded-xl' : ''}`}
@@ -50,16 +52,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
         <div className="flex flex-col gap-5 md:gap-6 p-5 md:p-6">
           {myProfile && (
             <div className="flex gap-4">
-              <Button
-                variant="text"
-                color="primary"
-                onClick={() => navigate('/connections?active=0')}
-              >{`${identity.connections} connections`}</Button>
-              <Button
-                variant="text"
-                color="primary"
-                onClick={() => navigate('/connections?active=2')}
-              >{`${identity.followers} followers`}</Button>
+              <Button variant="text" color="primary" onClick={() => navigate('/connections?active=0')}>
+                {translate('profile-connection-number', { number: identity.connections })}
+              </Button>
+              <Button variant="text" color="primary" onClick={() => navigate('/connections?active=2')}>
+                {translate('profile-follower-number', { number: identity.followers })}
+              </Button>
             </div>
           )}
           <div className="flex flex-col gap-2">

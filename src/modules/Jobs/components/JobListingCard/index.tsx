@@ -1,12 +1,9 @@
 import React from 'react';
-import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
-import { PROJECT_LENGTH_V3 } from 'src/constants/PROJECT_LENGTH';
-import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { PROJECT_TYPE_V2 } from 'src/constants/PROJECT_TYPES';
 import { socialCausesToCategory } from 'src/core/adaptors';
 import { Job } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Chip } from 'src/modules/general/components/Chip';
 import { ExpandableText } from 'src/modules/general/components/expandableText';
@@ -91,12 +88,11 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
         )}
         {displaySave && (
           <IconButton
-            iconName={jobVal.saved ? '' : 'bookmark'}
+            iconName={jobVal.saved ? 'bookmark-filled' : 'bookmark'}
             disabled={jobVal.not_interested}
-            img={jobVal.saved ? <img src="/icons/nowruz/green-bookmark.svg" alt="" /> : ''}
             size="medium"
             iconSize={20}
-            iconColor={variables.color_grey_600}
+            iconColor={jobVal.saved ? variables.color_primary_600 : variables.color_grey_600}
             onClick={e => {
               e.stopPropagation();
               handleBookmark();
@@ -127,16 +123,13 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
           {renderJobFeatures('marker-pin-01', job?.city ? job?.city : 'Anywhere')}
           {renderJobFeatures(
             'mouse',
-            PROJECT_REMOTE_PREFERENCES_V2.find(level => level.value === job.remote_preference)?.label,
+            job.remote_preference ? translate(`job-preference.${job.remote_preference}`) : '',
           )}
-          {renderJobFeatures('calendar', PROJECT_TYPE_V2.find(level => level.value === job.project_type)?.label)}
-          {renderJobFeatures(
-            'hourglass-03',
-            PROJECT_LENGTH_V3.find(level => level.value === job.project_length)?.label,
-          )}
+          {renderJobFeatures('calendar', job.project_type ? translate(`job-type.${job.project_type}`) : '')}
+          {renderJobFeatures('hourglass-03', job.project_length ? translate(`job-length.${job.project_length}`) : '')}
           {renderJobFeatures(
             'target-02',
-            EXPERIENCE_LEVEL_V2.find(level => level.value === job.experience_level)?.label,
+            job.experience_level ? translate(`job-experience.${job.experience_level}`) : '',
           )}
           {job.payment_type === 'PAID' &&
             job.payment_range_lower &&
@@ -144,10 +137,10 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
             renderJobFeatures(
               'currency-dollar-circle',
               ` ${job.payment_range_lower}~${job.payment_range_higher} USD`,
-              `${job.payment_scheme === 'FIXED' ? '(Fixed-price)' : ''}`,
+              `${job.payment_scheme === 'FIXED' ? translate('job-fixed-price') : ''}`,
             )}
 
-          {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', 'Volunteer')}
+          {job.payment_type === 'VOLUNTEER' && renderJobFeatures('heart', translate('job-volunteer'))}
 
           {job.payment_type === 'VOLUNTEER' &&
             job.payment_scheme === 'HOURLY' &&
@@ -172,22 +165,22 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
               handleNotInterested();
             }}
           >
-            Not interested
+            {translate('job-not-interested')}
           </button>
         )}
         {jobVal.not_interested ? (
-          <div className="font-medium text-sm leading-5 text-Success-700">You will not see this job again</div>
+          <div className="font-medium text-sm leading-5 text-Success-700">{translate('job-not-see')}</div>
         ) : (
           <Link
             href={`/jobs/${job.id}?page=${page}&scrollIndex=${scrollIndex}`}
-            label={`Read more`}
+            label={translate('job-read-more')}
             customStyle={css.readMore}
           />
         )}
       </div>
       {jobVal.not_interested && (
         <div className={css.cardFooterMobile}>
-          <div className="font-medium text-sm leading-5 text-Success-700">You will not see this job again</div>
+          <div className="font-medium text-sm leading-5 text-Success-700">{translate('job-not-see')}</div>
         </div>
       )}
     </div>

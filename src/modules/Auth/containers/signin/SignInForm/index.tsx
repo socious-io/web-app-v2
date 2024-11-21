@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
-import { Apple } from 'public/icons/nowruz/apple';
-import { Google } from 'public/icons/nowruz/google';
+import { Apple } from 'public/icons/dynamic/apple';
+import { Google } from 'public/icons/dynamic/google';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
@@ -9,14 +9,16 @@ import { Link } from 'src/modules/general/components/link';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import { useSignInForm } from './useSignInForm';
-// import { LinkedIn } from 'public/icons/nowruz/linkedin';
+// import { LinkedIn } from 'public/icons/dynamic/linkedin';
 
 interface SignInFormProps {
   event: { id: string; name: string };
 }
 
 export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
-  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried } = useSignInForm(event.id);
+  const { register, errors, keepLoggedIn, handleChange, handleSubmit, onLogin, tried, translate } = useSignInForm(
+    event.id,
+  );
   const navigate = useNavigate();
 
   return (
@@ -26,29 +28,34 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
           <Input
             id="email"
             autoComplete="Email"
-            label="Email"
+            label={translate('login-email')}
             name="email"
             register={register}
-            placeholder="Enter your email"
+            placeholder={translate('login-email-placeholder')}
             errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
           />
           <Input
             autoComplete="current-password"
             id="password"
             type="password"
-            label="Password"
+            label={translate('login-password')}
             name="password"
             register={register}
-            placeholder="Enter your password"
+            placeholder={translate('login-password-placeholder')}
             errors={errors['password']?.message ? [errors['password']?.message.toString()] : undefined}
           />
         </div>
         <div className="flex flex-row">
-          <Checkbox id="Keep_me_logged_in" label={'Keep me logged in'} value={keepLoggedIn} onChange={handleChange} />
+          <Checkbox
+            id="Keep_me_logged_in"
+            label={translate('login-checkbox-keep-logged-in')}
+            value={keepLoggedIn}
+            onChange={handleChange}
+          />
           <div className="w-fit mr-0 ml-auto flex items-center">
             <Link
               href="/forget-password/email"
-              label="Forgot password"
+              label={translate('login-forget-password')}
               customStyle="!font-semibold"
               onClick={() => event.name && localStorage.setItem('event_name', event.name)}
             />
@@ -57,7 +64,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
 
         <div className="flex flex-col gap-4">
           <Button color="primary" onClick={handleSubmit(onLogin)}>
-            Continue
+            {translate('login-continue')}
           </Button>
           <Button
             color="primary"
@@ -70,7 +77,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
             customStyle="flex gap-3 mt-3"
           >
             <Google />
-            Continue with Google
+            {translate('login-continue-google')}
           </Button>
           <Button
             color="primary"
@@ -95,10 +102,10 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
 
       <div className="flex flex-row items-center justify-center gap-1">
         <Typography variant="caption" color={variables.color_grey_600}>
-          Don&apos;t have an account?
+          {translate('login-not-account')}
         </Typography>
         <Link
-          label=" Sign up"
+          label={translate('login-sign-up')}
           href={event.name ? `/sign-up/user/email?event_name=${event.name}` : '/intro'}
           customStyle="!font-semibold"
           onClick={() => event.name && localStorage.setItem('registerFor', 'user')}

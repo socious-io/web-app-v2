@@ -1,5 +1,4 @@
-import React from 'react';
-import { Applicant, Media } from 'src/core/api';
+import { Applicant } from 'src/core/api';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { useSeeMore } from 'src/modules/general/utils';
@@ -20,7 +19,7 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
   closeDetails,
 }) => {
   const {
-    data: { seeMore, copyProccessed },
+    data: { seeMore, copyProcessed },
     operations: { handleSeeMore },
   } = useSeeMore(applicant?.cover_letter ?? '');
 
@@ -68,8 +67,8 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <p className="text-sm font-medium text-Gray-light-mode-700">Cover letter</p>
-            <p className="leading-6">
-              {copyProccessed}
+            <p className="leading-6 break-words whitespace-pre-wrap">
+              {copyProcessed}
               {seeMore && (
                 <span className="cursor-pointer" onClick={handleSeeMore}>
                   See more

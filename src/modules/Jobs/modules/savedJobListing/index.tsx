@@ -1,4 +1,5 @@
 import { Skeleton } from '@mui/material';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Pagination } from 'src/modules/general/components/Pagination';
 
@@ -45,7 +46,7 @@ export const SavedJobListing = () => {
       {isMobile && jobsList.length < total && (
         <div className="mt-5 flex items-center justify-center">
           <Button color="primary" variant="text" onClick={handleChangeMobilePage}>
-            See more
+            {translate('job-see-more')}
           </Button>
         </div>
       )}

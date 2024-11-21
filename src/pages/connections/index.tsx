@@ -1,3 +1,4 @@
+import { translate } from 'src/core/utils';
 import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
 
 import css from './connections.module.scss';
@@ -9,8 +10,8 @@ export const Connctions = () => {
     <div className={css.container}>
       <div>
         <div className={css.header}>
-          <h1 className={css.title}>Connections</h1>
-          <h2 className={css.subtitle}>Your network</h2>
+          <h1 className={css.title}>{translate('connect-title')}</h1>
+          <h2 className={css.subtitle}>{translate('connect-network')}</h2>
         </div>
       </div>
       <HorizontalTabs tabs={tabs} activeIndex={activeIndex} />

@@ -20,6 +20,7 @@ import {
   EducationsReq,
   Education,
   Preference,
+  ReferReq,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -141,4 +142,8 @@ export async function preferences(): Promise<Preference[]> {
 
 export async function updatePreferences(payload: { preferences: Preference[] }): Promise<Preference[]> {
   return (await post<Preference[]>('preferences', payload)).data;
+}
+
+export async function sendRefers(payload: ReferReq): Promise<SuccessRes> {
+  return (await post<SuccessRes>('user/emails/refers', payload)).data;
 }

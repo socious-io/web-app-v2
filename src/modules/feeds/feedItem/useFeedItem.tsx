@@ -16,7 +16,7 @@ import {
   unfollow,
   unlikePost,
 } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { RootState } from 'src/store';
 
 import { ReplyInfo } from '../comments/index.types';
@@ -254,19 +254,27 @@ export const useFeedItem = (
     currentIdentityId === userIdentity.id
       ? [
           // { iconName: 'link-03', title: 'Copy link to post', onClick: () => console.log('copy post') },
-          { iconName: 'pencil-01', title: 'Edit post', onClick: () => setActionsMenu({ name: 'edit', open: true }) },
-          { iconName: 'trash-01', title: 'Remove post', onClick: () => setActionsMenu({ name: 'remove', open: true }) },
+          {
+            iconName: 'pencil-01',
+            title: translate('feeds-edit'),
+            onClick: () => setActionsMenu({ name: 'edit', open: true }),
+          },
+          {
+            iconName: 'trash-01',
+            title: translate('feeds-remove'),
+            onClick: () => setActionsMenu({ name: 'remove', open: true }),
+          },
         ]
       : [
           // { iconName: 'link-03', title: 'Copy link to post', onClick: () => console.log('copy post') },
           {
             iconName: followed ? 'x-circle' : 'plus-circle',
-            title: `${followed ? 'Unfollow' : 'Follow'} ${userIdentityName || ''}`,
+            title: `${followed ? translate('feeds-menu-item-unfollow', { name: userIdentityName || '' }) : translate('feeds-menu-item-follow', { name: userIdentityName || '' })}`,
             onClick: () => onFollowOrUnfollow(followed),
           },
           {
             iconName: 'flag-02',
-            title: 'Report this post',
+            title: translate('feeds-report-post'),
             onClick: () => setActionsMenu({ name: 'report', open: true }),
           },
         ];

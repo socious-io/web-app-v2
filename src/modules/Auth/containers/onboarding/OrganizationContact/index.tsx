@@ -27,38 +27,40 @@ export const OrganizationContact = () => {
     email,
     username,
     website,
+    translate,
+    orgSizeOptions,
   } = useOrganizationContact();
   return (
     <div className={`lg:pt-9 sm:pt-14 px-4 ${css.container}`}>
       <div className={css.header}>
-        <h1 className={css.title}>Tell us more about your organization</h1>
-        <h2 className={css.description}>Add your contact information</h2>
+        <h1 className={css.title}>{translate('onboarding-org-logo-title')}</h1>
+        <h2 className={css.description}>{translate('onboarding-org-contact-subtitle')}</h2>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="email"
           onChange={e => updateEmail(e.target.value)}
           autoComplete="Email"
-          label={'Your organization contact email*'}
+          label={translate('onboarding-org-email')}
           value={email}
           name="email"
           register={register}
-          placeholder="Email"
+          placeholder={translate('onboarding-org-email-placeholder')}
           errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
         />
         <div className="mt-5">
           <Input
             id="username"
-            label="Choose your organization’s username*"
+            label={translate('onboarding-org-username')}
             name="username"
             value={username}
             onChange={e => updateUsername(e.target.value)}
             register={register}
-            placeholder="organization"
-            validMessage="Username available"
+            placeholder={translate('onboarding-org-username-placeholder')}
+            validMessage={translate('onboarding-org-username-valid')}
             hints={[
               {
-                hint: `Lowercase letters, digits, '.', '_', and '-'; must be 6-24 characters.`,
+                hint: translate('onboarding-org-username-hint'),
                 hide: !isShortnameValid,
               },
             ]}
@@ -69,34 +71,34 @@ export const OrganizationContact = () => {
         </div>
         <SearchDropdown
           id="city"
-          placeholder="Search for a city"
+          placeholder={translate('onboarding-city-placeholder')}
           isAsync
           loadOptions={searchCities}
           className="my-5"
           icon="search-lg"
           hasDropdownIcon={false}
-          label="City*"
+          label={translate('onboarding-city-label')}
           value={cityValue}
           onChange={value => onSelectCity(value)}
         />
         <SearchDropdown
           id="industry"
-          placeholder="Search an industry"
+          placeholder={translate('onboarding-industry-placeholder')}
           isAsync
           loadOptions={searchIndustries}
           className="my-5"
           icon="search-lg"
           hasDropdownIcon={false}
-          label="Organization industry*"
+          label={translate('onboarding-industry-label')}
           value={industry === '' ? null : { label: industry }}
           onChange={value => onSelectIndustry(value)}
         />
         <SearchDropdown
           id="size"
           className="mb-5"
-          label="Organization size*"
-          placeholder="Select a company size"
-          options={ORGANIZATION_SIZE}
+          label={translate('onboarding-org-size')}
+          placeholder={translate('onboarding-org-placeholder')}
+          options={orgSizeOptions}
           isSearchable={false}
           onChange={value => onSelectSize(value)}
         />
@@ -105,7 +107,7 @@ export const OrganizationContact = () => {
           autoComplete="Website"
           onChange={e => updateWebsite(e.target.value)}
           value={website}
-          label={'Website'}
+          label={translate('onboarding-website-label')}
           name="website"
           register={register}
           placeholder="www.website.com"
@@ -113,7 +115,7 @@ export const OrganizationContact = () => {
         />
         <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>
           <Button disabled={!isFormValid} color="primary" block onClick={handleSubmit(onSubmit)}>
-            Continue
+            {translate('onboarding-continue')}
           </Button>
         </div>
       </form>
