@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createOrganization, Organization, otherProfileByUsername, search, User } from 'src/core/api';
 import { createAdditional, removeAdditional, updateAdditional } from 'src/core/api/additionals/additionals.api';
 import { AdditionalReq, AdditionalRes, CertificateMeta } from 'src/core/api/additionals/additionals.types';
+import { urlPattern } from 'src/core/regexs';
 import { monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
@@ -26,12 +27,7 @@ const schema = yup
     expireMonth: yup.string(),
     expireYear: yup.string(),
     credentialId: yup.string(),
-    credentialUrl: yup
-      .string()
-      .matches(
-        /^$|((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        'Enter correct url!',
-      ),
+    credentialUrl: yup.string().matches(urlPattern, 'Enter correct url!'),
     description: yup.string(),
   })
   .required();
@@ -97,7 +93,7 @@ export const useCreateUpdateCertificate = (
   const initializeValues = () => {
     const meta = certificate ? (certificate.meta as CertificateMeta) : null;
 
-    const intialValue = {
+    const initialValue = {
       name: certificate?.title || '',
       orgId: meta?.organization_id || '',
       orgName: meta?.organization_name || '',
@@ -110,7 +106,7 @@ export const useCreateUpdateCertificate = (
       credentialUrl: meta?.credential_url || '',
     };
 
-    reset(intialValue);
+    reset(initialValue);
 
     setOrgVal(
       meta?.organization_name
