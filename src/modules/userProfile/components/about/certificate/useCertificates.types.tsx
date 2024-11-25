@@ -10,6 +10,7 @@ import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer
 export const useCertificate = () => {
   const [openModal, setOpenModal] = useState(false);
   const [certificate, setCertificate] = useState<AdditionalRes>();
+  const [showAll, setShowAll] = useState(false);
   const user = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   }) as User;
@@ -18,6 +19,9 @@ export const useCertificate = () => {
   });
   const myProfile = currentIdentity?.id === user?.id;
   const dispatch = useDispatch();
+  const MAX_CERTIFICATES = 5;
+  const userCertificates = showAll ? user?.certificates : user?.certificates?.slice(0, MAX_CERTIFICATES);
+  const hasMoreCertificates = (user?.certificates || []).length > MAX_CERTIFICATES;
 
   const getDateText = (item: AdditionalRes) => {
     const meta = item.meta as CertificateMeta;
@@ -61,12 +65,15 @@ export const useCertificate = () => {
     handleClose,
     myProfile,
     getDateText,
-    user,
+    userCertificates,
+    hasMoreCertificates,
     handleAdd,
     handleEdit,
     handleDelete,
     certificate,
     setCertificate,
     getSchool,
+    showAll,
+    setShowAll,
   };
 };
