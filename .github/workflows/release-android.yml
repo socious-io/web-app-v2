@@ -46,16 +46,21 @@ jobs:
           npm run build
           npx cap sync android
         env:
-          REACT_APP_SECRET_KEY: ${{ secrets.REACT_APP_SECRET_KEY }}
-          REACT_APP_PLUTO_PASSWD: ${{ secrets.REACT_APP_PLUTO_PASSWD }}
-          REACT_APP_PLUTO_DB_NAME: ${{ secrets.REACT_APP_PLUTO_DB_NAME }}
-          REACT_APP_MEDIATOR_DID: ${{ secrets.REACT_APP_MEDIATOR_DID }}
-          REACT_APP_BACKUP_AGENT: ${{ vars.REACT_APP_BACKUP_AGENT }}
-          REACT_APP_BACKUP_AGENT_API_KEY: ${{ secrets.REACT_APP_BACKUP_AGENT_API_KEY }}
-          REACT_APP_VERIFF_API_KEY: ${{ secrets.REACT_APP_VERIFF_API_KEY }}
-          REACT_APP_DATADOG_APP_ID: ${{ secrets.REACT_APP_DATADOG_APP_ID }}
-          REACT_APP_DATADOG_CLIENT_TOKEN: ${{ secrets.REACT_APP_DATADOG_CLIENT_TOKEN }}
-          REACT_APP_PLATFORM: android
+          STORYBOOK_FIGMA_ACCESS_TOKEN: ${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}
+          VITE_ACCESS_EXPIRE: ${{ vars.ACCESS_EXPIRE }}
+          VITE_APP_URL: ${{ vars.APP_URL }}
+          VITE_BASE_URL: ${{ vars.BASE_URL }}
+          VITE_CLIENT_SECRET_TOKEN_CLIENT_ID: ${{ secrets.CLIENT_SECRET_TOKEN_CLIENT_ID }}
+          VITE_CLIENT_SECRET_TOKEN_REDIRECT_URL: ${{ vars.CLIENT_SECRET_TOKEN_REDIRECT_URL }}
+          VITE_DAPP_ENV: ${{ vars.DAPP_ENV }}
+          VITE_ENV: ${{ vars.ENV }}
+          VITE_GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+          VITE_GOOGLE_RECAPTCHA_SITE_KEY: ${{ secrets.GOOGLE_RECAPTCHA_SITE_KEY }}
+          VITE_JP_STRIPE_PUBLIC_KEY: ${{ secrets.JP_STRIPE_PUBLIC_KEY }}
+          VITE_LOG_DISCORD_WEBHOOK: ${{ secrets.LOG_DISCORD_WEBHOOK }}
+          VITE_REFRESH_EXPIRE: ${{ vars.REFRESH_EXPIRE }}
+          VITE_SOCKET_URL: ${{ vars.SOCKET_URL }}
+          VITE_STRIPE_PUBLIC_KEY: ${{ vars.STRIPE_PUBLIC_KEY }}
 
       - name: Get the latest version code using
         uses: Vacxe/google-play-cli-kt@0.4.8
