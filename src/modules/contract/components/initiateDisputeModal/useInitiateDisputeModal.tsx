@@ -53,7 +53,7 @@ export const useInitiateDisputeModal = (
 
   const initializeValues = () => {
     const initialVal = {
-      category: { value: '', label: '' },
+      category: undefined,
       title: '',
       description: '',
       evidences: [],
