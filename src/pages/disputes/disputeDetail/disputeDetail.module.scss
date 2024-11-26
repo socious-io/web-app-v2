@@ -1,0 +1,16 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.alert {
+    max-width: 76rem;
+    display: flex;
+    align-items: flex-start;
+    padding: 0.5rem;
+    border: 1px solid $color-grey-300;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-sm;
+
+    @media (max-width: 768px) {
+        max-width: 100%;
+        flex-direction: column;
+    }
+}
