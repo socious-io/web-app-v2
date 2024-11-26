@@ -97,8 +97,7 @@ jobs:
 
       - name: Extracting Google Service plist
         run: |
-          cd ios/App/App
-          echo ${{ env.IOS_GOOGLE_SERVICE_INFO_PLIST_BASE64 }} | base64 --decode > $KEY_FILE_PATH
+          echo ${{ env.IOS_GOOGLE_SERVICE_INFO_PLIST_BASE64 }} | base64 --decode > ios/App/App/GoogleService-Info.plist
 
       - name: Extracting App Version
         run: |
