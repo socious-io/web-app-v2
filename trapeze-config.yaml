@@ -4,9 +4,9 @@ vars:
   DISPLAY_NAME:
     default: Socious
   VERSION:
-    default: 8.1.0
+    default: 10.0.2
   ANDROID_VERSION_CODE:
-    default: 35
+    default: 42
   ANDROID_PACKAGE_NAME:
     default: jp.socious.network
   ANDROID_KEY_STORE_LOCATION:
@@ -48,11 +48,6 @@ platforms:
                   [
                     'remote-notification'
                   ]
-        copy:
-          - src: ../../.github/workflows/android/GoogleService-Info.plist
-            dest: App/GoogleService-Info.plist
-          - src: ../../.github/workflows/ios/AppDelegate.swift
-            dest: App/AppDelegate.swift
 
         entitlements:
           - aps-environment: 'development'

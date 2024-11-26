@@ -23,6 +23,7 @@ env:
   IOS_DISTRIBUTION_CERT_PASSWORD: ${{ secrets.IOS_DISTRIBUTION_CERT_PASSWORD }}
   IOS_PROVISIONING_PROFILE_BASE64: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 }}
   IOS_APPSTORECONNECT_AUTH_KEY_BASE64: ${{ secrets.IOS_APPSTORECONNECT_AUTH_KEY_BASE64 }}
+  IOS_GOOGLE_SERVICE_INFO_PLIST_BASE64: ${{ secrets.IOS_GOOGLE_SERVICE_INFO_PLIST_BASE64 }}
   IOS_APPSTORECONNECT_API_ISSUER: ${{ vars.IOS_APPSTORECONNECT_API_ISSUER }}
   IOS_APPSTORECONNECT_API_KEY: ${{ secrets.IOS_APPSTORECONNECT_API_KEY }}
   IOS_APP_APPLE_ID: ${{ vars.IOS_APP_APPLE_ID }}
@@ -76,7 +77,7 @@ jobs:
       - name: Making iOS Release Code
         run: |
           npm run build
-          npm run make:ios
+          npx cap sync ios
         env:
           STORYBOOK_FIGMA_ACCESS_TOKEN: ${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}
           VITE_ACCESS_EXPIRE: ${{ vars.ACCESS_EXPIRE }}
@@ -93,6 +94,11 @@ jobs:
           VITE_REFRESH_EXPIRE: ${{ vars.REFRESH_EXPIRE }}
           VITE_SOCKET_URL: ${{ vars.SOCKET_URL }}
           VITE_STRIPE_PUBLIC_KEY: ${{ vars.STRIPE_PUBLIC_KEY }}
+
+      - name: Extracting Google Service plist
+        run: |
+          cd ios/App/App
+          echo ${{ env.IOS_GOOGLE_SERVICE_INFO_PLIST_BASE64 }} | base64 --decode > $KEY_FILE_PATH
 
       - name: Extracting App Version
         run: |
@@ -153,10 +159,9 @@ jobs:
           app-store-connect get-latest-app-store-build-number "$APPLICATION_ID_RESOURCE_ID"
           app-store-connect get-latest-testflight-build-number "$APPLICATION_ID_RESOURCE_ID"
 
-      - name: Creating Export.plist
+      - name: Updating Export.plist
         run: |
           cd ios/App
-          cp ../../.github/workflows/ios/ios-export.plist Export.plist
           sed -ie 's/IOS_DEVELOPMENT_TEAM_ID/${{ env.IOS_DEVELOPMENT_TEAM_ID }}/g' Export.plist
           sed -ie 's/IOS_BUNDLE_ID/${{ env.IOS_BUNDLE_ID }}/g' Export.plist
           sed -ie 's/MOBILE_PROVISIONING_UUID/${{ env.MOBILE_PROVISIONING_UUID }}/g' Export.plist
