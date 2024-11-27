@@ -19,7 +19,8 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
   const {
     openModal,
     myProfile,
-    user,
+    userEducations,
+    hasMoreEducations,
     handleClose,
     handleDelete,
     handleAdd,
@@ -34,6 +35,8 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
     disabledClaims,
     handleClaimVC,
     claimUrl,
+    showAll,
+    setShowAll,
   } = useEducation();
 
   return (
@@ -46,9 +49,9 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
             Add education
           </Button>
         )}
-        {user?.educations && (
+        {userEducations && (
           <div className="md:pr-48 flex flex-col gap-5">
-            {user?.educations.map(item => (
+            {userEducations.map(item => (
               <>
                 <StepperCard
                   img={item.org.image?.url || ''}
@@ -91,6 +94,11 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
                 )}
               </>
             ))}
+            {!showAll && hasMoreEducations && (
+              <span className={css.more} onClick={() => setShowAll(true)}>
+                Show all
+              </span>
+            )}
           </div>
         )}
       </div>

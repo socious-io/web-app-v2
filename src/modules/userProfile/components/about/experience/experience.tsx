@@ -19,7 +19,8 @@ interface ExperienceProps {
 
 export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }) => {
   const {
-    user,
+    userExperiences,
+    hasMoreExperiences,
     myProfile,
     openModal,
     experience,
@@ -36,6 +37,8 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
     handleOpenClaimModal,
     handleClaimVC,
     claimUrl,
+    showAll,
+    setShowAll,
   } = useExperience();
 
   return (
@@ -48,9 +51,9 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
             Add experience
           </Button>
         )}
-        {user?.experiences && (
+        {userExperiences && (
           <div className="md:pr-48 flex flex-col gap-5">
-            {user?.experiences.map(item => (
+            {userExperiences.map(item => (
               <>
                 <StepperCard
                   key={item.id}
@@ -93,6 +96,11 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
                 )}
               </>
             ))}
+            {!showAll && hasMoreExperiences && (
+              <span className={css.more} onClick={() => setShowAll(true)}>
+                Show all
+              </span>
+            )}
           </div>
         )}
       </div>

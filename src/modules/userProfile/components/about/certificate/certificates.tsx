@@ -15,11 +15,14 @@ export const Certificates = () => {
     certificate,
     openModal,
     handleClose,
-    user,
+    userCertificates,
+    hasMoreCertificates,
     getDateText,
     handleEdit,
     handleDelete,
     setCertificate,
+    showAll,
+    setShowAll,
   } = useCertificate();
   return (
     <>
@@ -31,9 +34,9 @@ export const Certificates = () => {
             Add certificate
           </Button>
         )}
-        {user?.certificates && (
+        {userCertificates && (
           <div className="md:pr-48 flex flex-col gap-5">
-            {user?.certificates.map(item => (
+            {userCertificates.map(item => (
               <StepperCard
                 key={item.id}
                 iconName="building-05"
@@ -48,6 +51,11 @@ export const Certificates = () => {
                 handleDelete={() => handleDelete(item.id)}
               />
             ))}
+            {!showAll && hasMoreCertificates && (
+              <span className={css.more} onClick={() => setShowAll(true)}>
+                Show all
+              </span>
+            )}
           </div>
         )}
       </div>
