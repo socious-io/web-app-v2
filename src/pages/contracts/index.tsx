@@ -1,8 +1,6 @@
 import { Contract } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
 import useHideScrollbar from 'src/core/hooks/useHideScrollbar';
 import { translate } from 'src/core/utils';
-import { useWeb3 } from 'src/dapp/dapp.connect';
 import { ContractCard } from 'src/modules/contract/components/contractCard';
 import { ContractDetailsSlider } from 'src/modules/contract/components/contractDetailsSlider';
 import { ButtonGroups } from 'src/modules/general/components/ButtonGroups';
@@ -16,9 +14,7 @@ import { useContracts } from './useContracts';
 export const Contracts = () => {
   const { filterButtons, pageCount, contractList, page, openSlider, updatePageNumber, closeSlider, activeFilter } =
     useContracts();
-  const isMobile = isTouchDevice();
-
-  isMobile && useHideScrollbar(openSlider);
+  useHideScrollbar(openSlider, true);
 
   return (
     <>
