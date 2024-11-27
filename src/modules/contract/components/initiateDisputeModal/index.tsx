@@ -102,7 +102,7 @@ const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handl
         </span>
       </div>
       <FileUploaderMultiple
-        fileTypes={['PDF', 'DOC', 'DOCX', 'PNG', 'JPG', 'GIF', 'MOV or MP4']}
+        fileTypes={['PDF', 'DOC', 'DOCX', 'PNG', 'JPG', 'GIF', 'MOV', 'MP4']}
         maxFileNumbers={10}
         maxSize={10}
         uploaded={files}

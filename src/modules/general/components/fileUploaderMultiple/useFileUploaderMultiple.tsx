@@ -45,8 +45,8 @@ export const useFileUploader = (
   };
 
   const getSubtitle = () => {
-    let text = fileTypes.slice(0, fileTypes.length - 1).join();
-    text = `${text} or ${fileTypes[fileTypes.length - 1]} (max. ${maxSize}mb)`;
+    let text = fileTypes.slice(0, fileTypes.length - 1).join(', ');
+    text = `${text} or ${fileTypes[fileTypes.length - 1]} (max. ${maxSize}MB)`;
     return text;
   };
 

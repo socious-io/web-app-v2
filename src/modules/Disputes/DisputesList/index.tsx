@@ -23,7 +23,7 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
         id: 'code',
         header: translate('dispute-id'),
         accessorKey: 'code',
-        cell: ({ getValue }: { getValue: Getter<string> }) => `#${getValue()}`,
+        cell: ({ getValue }: { getValue: Getter<string> }) => getValue(),
       },
       {
         id: mode === 'submitted' ? 'respondent' : 'claimant',
