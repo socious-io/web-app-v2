@@ -1,0 +1,13 @@
+{
+  "service-new": "Add a service",
+  "service-empty": {
+    "title": "Create a new service",
+    "subtitle": "The clearer the service, the faster you'll get hired."
+  },
+  "service-card": {
+    "delivery": "delivery",
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "edit": "Edit"
+  }
+}
