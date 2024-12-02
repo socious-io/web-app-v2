@@ -5,8 +5,8 @@ import { ProfileHeader } from 'src/modules/userProfile/components/profileHeader'
 import css from './userProfile.module.scss';
 import { useUserProfile } from './useUserProfile';
 
-export const UserProifle = () => {
-  const { tabs } = useUserProfile();
+export const UserProfile = () => {
+  const { tabs, activeTabIndex } = useUserProfile();
 
   return (
     <div className="w-full">
@@ -16,7 +16,7 @@ export const UserProifle = () => {
           <MainInfo />
         </div>
         <div className={`${css.rightCol} w-full md:w-auto`}>
-          <HorizontalTabs tabs={tabs} />
+          <HorizontalTabs tabs={tabs} activeIndex={activeTabIndex} />
         </div>
       </div>
     </div>
