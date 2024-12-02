@@ -1,0 +1,133 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.container {
+    padding: 1rem;
+    border: 1px solid $color-grey-200;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-xs;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+
+    @media (max-width: $width-xl) {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    &__right {
+        display: flex;
+        gap: 1.25rem;
+
+        @media (max-width: $width-xl) {
+            flex-direction: column;
+        }
+    }
+
+    .image {
+        width: 12.5rem;
+        height: 9rem;
+        border: 1px solid $color-grey-200;
+        border-radius: 12px;
+
+        @media (max-width: $width-xl) {
+            width: 100%;
+            height: 11.25rem;
+            border-radius: 12px 12px 0 0;
+        }
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.5rem;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        color: $color-primary-700;
+
+        @media (max-width: $width-xl) {
+            padding: 0 1rem;
+        }
+
+        &__bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        &__name {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 28px;
+            color: $color-grey-900;
+        }
+
+        &__skills {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+
+        &__delivery {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            color: $color-grey-700;
+        }
+    }
+
+    &__left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        @media (max-width: $width-xl) {
+            flex-direction: column-reverse;
+            align-items: flex-start;
+        }
+    }
+
+    .actions {
+        display: flex;
+
+        @media (max-width: $width-xl) {
+            width: 100%;
+            justify-content: space-between;
+            border-top: 1px solid $color-grey-200;
+        }
+
+        .button {
+            border-radius: 0 !important;
+            &:hover {
+                background-color: unset !important;
+            }
+
+            @media (max-width: $width-xl) {
+                flex: 1;
+                & + .button {
+                    border-left: 1px solid $color-grey-200;
+                }
+            }
+        }
+    }
+
+    .price {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 30px;
+        color: $color-grey-900;
+
+        @media (max-width: $width-xl) {
+            width: 100%;
+            padding: 1.5rem 1rem;
+        }
+    }
+}
