@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    namespace 'jp.socious.network'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "jp.socious.network"
