@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core';
 import React, { ChangeEvent, useEffect, useRef } from 'react';
 import { Icon } from 'src/modules/general/components/Icon';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -38,7 +39,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({ placeholder, onChange,
           className={css.input}
           onKeyDown={handleOnEnter}
           ref={inputRef}
-          autoFocus
+          autoFocus={Capacitor.getPlatform() !== 'ios'}
           autoComplete="none"
         />
       </div>
