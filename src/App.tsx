@@ -33,10 +33,10 @@ function App() {
   return (
     <StyledEngineProvider injectFirst>
       <Provider store={store}>
+        <DeepLinks />
         <ThemeProvider theme={theme}>
           <RouterProvider router={router.routes} />
         </ThemeProvider>
-        <DeepLinks />
         {/* <ModalPlaceholder /> */}
         <Spinner />
       </Provider>
