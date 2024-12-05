@@ -20,29 +20,23 @@ export const useTimelineItem = (
     { type: 'png', icon: '/icons/file-png.svg' },
   ];
 
-  const getEventTitle = () => {
-    switch (event.type) {
-      case 'MESSAGE':
-        return {
-          text: `Filed a dispute against ${disputeDirection === 'received' ? 'you' : ''}`,
-          supportingText: disputeDirection === 'received' ? '' : respondent.meta.name,
-        };
-      case 'RESPONSE':
-        return {
-          text: '',
-          supportingText: '',
-        };
-      case 'WITHDRAW':
-        return {
-          text: 'Withdrew this dispite',
-          supportingText: '',
-        };
-      case 'VOTE':
-        return {
-          text: '',
-          supportingText: '',
-        };
-    }
+  const title = {
+    MESSAGE: {
+      text: `Filed a dispute against ${disputeDirection === 'received' ? 'you' : ''}`,
+      supportingText: disputeDirection === 'received' ? '' : respondent.meta.name,
+    },
+    RESPONSE: {
+      text: 'Submitted a response',
+      supportingText: '',
+    },
+    WITHDRAW: {
+      text: 'Withdrew this dispute',
+      supportingText: '',
+    },
+    VOTE: {
+      text: '',
+      supportingText: '',
+    },
   };
 
   const getFileIcon = (fileUrl: string) => {
@@ -51,5 +45,5 @@ export const useTimelineItem = (
     return { name: fileName, icon: fileIcon };
   };
 
-  return { name, type, profileImage, myEvent, getEventTitle, getFileIcon };
+  return { name, type, profileImage, myEvent, title: title[event.type], getFileIcon };
 };

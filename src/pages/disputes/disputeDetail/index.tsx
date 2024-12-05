@@ -8,8 +8,8 @@ import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { FeaturedIconOutlined } from 'src/modules/general/components/featuredIconOutlined';
 import { Icon } from 'src/modules/general/components/Icon';
-import { Link } from 'src/modules/general/components/link';
 
+import css from './disputeDetail.module.scss';
 import { useDisputeDetail } from './useDisputeDetail';
 
 export const DisputeDetail = () => {
@@ -55,11 +55,9 @@ export const DisputeDetail = () => {
             </div>
 
             {alertInfo.title && (
-              <div
-                className={`flex flex-col md:flex-row gap-4 rounded-xl p-4 items-start border border-solid border-Gray-light-mode-300 shadow-Shadows/shadow-xs  `}
-              >
+              <div className={css['alert']}>
                 <FeaturedIconOutlined iconName={alertInfo.icon} size="md" theme={alertInfo.theme} />
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 p-2">
                   <div className="text-sm font-semibold leading-5 text-Gray-light-mode-700">{alertInfo.title}</div>
                   <div className="text-sm font-normal left-5 text-Gray-light-mode-600 leading-5 whitespace-pre-line">
                     <span className="text-Brand-700">{alertInfo.subtitleName}</span>

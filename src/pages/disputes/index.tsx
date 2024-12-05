@@ -5,7 +5,7 @@ import css from './disputes.module.scss';
 import { useDisputes } from './useDisputes';
 
 export const Disputes = () => {
-  const { tabs } = useDisputes();
+  const { tabs, activeTabIndex } = useDisputes();
 
   return (
     <div className={css.container}>
@@ -15,7 +15,7 @@ export const Disputes = () => {
           <h2 className={css.subtitle}>{translate('dispute-subtitle')}</h2>
         </div>
       </div>
-      <HorizontalTabs tabs={tabs} />
+      <HorizontalTabs tabs={tabs} activeIndex={activeTabIndex} />
     </div>
   );
 };

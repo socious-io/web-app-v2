@@ -21,7 +21,7 @@ export const useNotifications = (handleClose: () => void) => {
     const mapRoute = {
       DISPUTE_INITIATED: {
         hasSubText: true,
-        linkButton: { label: 'View Details', href: `/disputes/${item.ref_id}` },
+        linkButton: { label: 'View Details', href: `/disputes/${item.ref_id}#received` },
       },
       DISPUTE_NEW_RESPONSE: {
         hasSubText: true,

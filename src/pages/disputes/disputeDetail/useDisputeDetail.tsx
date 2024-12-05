@@ -303,7 +303,7 @@ export const useDisputeDetail = () => {
   const handleBack = () => {
     const path = location.pathname.includes('contributor')
       ? `/${(currentIdentity?.meta as UserMeta).username}/contribute/center`
-      : '/disputes';
+      : `/disputes${location.hash}`;
     navigate(path);
   };
 

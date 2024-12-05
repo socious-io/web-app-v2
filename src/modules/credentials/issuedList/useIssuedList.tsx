@@ -33,6 +33,10 @@ export const useIssuedList = () => {
     name: 'experience',
     id: '',
   });
+  const [openClaimModal, setOpenClaimModal] = useState<{ open: boolean; url: string }>({
+    open: false,
+    url: '',
+  });
   const totalPage = Math.ceil(credentials?.total_count / credentials?.limit) || 1;
   const generateStatus: Record<Exclude<CredentialStatus, 'ISSUED'>, StatusProps> = {
     PENDING: { icon: 'clock', label: translate('cred-pending'), theme: 'secondary', transparent: true },
@@ -84,21 +88,23 @@ export const useIssuedList = () => {
   };
 
   const onClaim = async (id: string, isExperience: boolean) => {
-    let currentUrl = '';
-    if (isExperience) {
-      const { url } = await claimExperienceVC(id);
-      currentUrl = url;
-    } else {
-      const { url } = await claimEducationVC(id);
-      currentUrl = url;
+    if (!id) return;
+    try {
+      const claimVC = isExperience ? claimExperienceVC : claimEducationVC;
+      const { short_url } = await claimVC(id);
+      setOpenClaimModal({ open: true, url: short_url });
+    } catch (error) {
+      console.log(`Error in claiming ${isExperience ? 'experience' : 'education'} VC:`, error);
     }
-    window.open(currentUrl, '_blank');
-    setSelectedCredential({ ...selectedCredential, id: '' });
   };
+
+  const handleClaimVC = () => window.open(openClaimModal.url, '_blank');
 
   const onArchive = async (id: string, isExperience: boolean) => {
     return;
   };
+
+  const handleCloseClaimModal = () => setOpenClaimModal({ open: false, url: '' });
 
   return {
     issuedList,
@@ -114,5 +120,8 @@ export const useIssuedList = () => {
     selectedCredential,
     onSelectCredential,
     onClaim,
+    openClaimModal,
+    handleCloseClaimModal,
+    handleClaimVC,
   };
 };
