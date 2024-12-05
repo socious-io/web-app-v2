@@ -4,7 +4,7 @@
 	"webDir": "dist",
 	"bundledWebRuntime": false,
 	"server": {
-		"hostname": "capacitor.native",
+		"hostname": "app.socious.io",
 		"androidScheme": "https"
 	},
 	"plugins": {
