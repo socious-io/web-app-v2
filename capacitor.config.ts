@@ -12,7 +12,7 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   bundledWebRuntime: false,
   server: {
-    hostname: 'app.socious.io',
+    hostname: 'webapp2.dev.socious.io',
     androidScheme: 'https',
   },
   plugins: {

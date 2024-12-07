@@ -20,15 +20,14 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
+
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="com.googleusercontent.apps.876088547885-uqdkecuvnt300dpmavnabdsuoklpa4e8.apps.googleusercontent.com" />
-                <data android:scheme="https" android:host="app.socious.io" />
-                <data android:scheme="https" android:host="webapp2.dev.socious.io" />
-                
+                <data android:scheme="https" android:host="webapp2.dev.socious.io"/>
             </intent-filter>
+
         </activity>
 
         <provider

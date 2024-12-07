@@ -1,16 +1,16 @@
-import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
-import { useEffect } from 'react';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
+import React, { useEffect } from 'react';
 
-export const DeepLinks = (): JSX.Element => {
-  const proofspace = 'zakaio://platform.proofspace.id/native/execute';
-
+export const DeepLinks: React.FC = () => {
   useEffect(() => {
-    CapacitorApp.addListener('appUrlOpen', (e: URLOpenListenerEvent) => {
-      if (e.url.includes(proofspace)) {
-        window.location.href = '/achievements';
+    const handleAppUrlOpen = (event: URLOpenListenerEvent) => {
+      const slug = event.url.split('.app').pop();
+      if (slug) {
+        window.location.href = slug;
       }
-    });
+    };
+    App.addListener('appUrlOpen', handleAppUrlOpen);
   }, []);
 
-  return <></>;
+  return null;
 };

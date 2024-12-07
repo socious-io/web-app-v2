@@ -14,7 +14,6 @@ export const config = {
   datadogAppId: import.meta.env.VITE_DATADOG_APP_ID,
   datadogClientToken: import.meta.env.VITE_DATADOG_CLIENT_TOKEN,
   googleOauthClientId: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID,
-  googleOauthClientIdAndroid: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID_ANDROID,
   googleOauthClientIdIos: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID_IOS,
   appleOauthClientId: import.meta.env.VITE_APPLE_OAUTH_CLIENT_ID,
   googleRecaptchaSiteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
