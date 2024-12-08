@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { getServicesAdaptor, ServicesRes } from 'src/core/adaptors';
+import { deleteServiceAdaptor, getServicesAdaptor, ServicesRes } from 'src/core/adaptors';
 
 export const useServiceList = () => {
   const { t: translate } = useTranslation();
   const navigate = useNavigate();
   const { services } = useLoaderData() as { services: ServicesRes };
+  const [openDeleteModal, setOpenDeleteModal] = useState('');
   const [page, setPage] = useState(1);
   const [currentServices, setCurrentServices] = useState(services);
   const currentList = currentServices?.items || [];
@@ -20,10 +21,33 @@ export const useServiceList = () => {
 
   const onServiceClick = (serviceId: string) => navigate(`/services/${serviceId}`);
 
-  const onServiceActions = (actionName: string, serviceId: string) => console.log(actionName, serviceId);
+  const onServiceActions = (actionName: 'duplicate' | 'delete' | 'edit', serviceId: string) => {
+    if (actionName === 'delete') setOpenDeleteModal(serviceId);
+    else navigate(`/services/${actionName}/${serviceId}`);
+  };
+
+  const onCreateService = () => navigate('/services/create');
+
+  const onDeleteService = async () => {
+    const serviceId = openDeleteModal || '';
+    if (serviceId) {
+      const { error } = await deleteServiceAdaptor(serviceId);
+      if (error) return;
+      const filteredList = currentList.filter(list => list.id !== serviceId);
+      onChangePage(filteredList.length === 0 && page > 1 ? page - 1 : page);
+      setOpenDeleteModal('');
+    }
+  };
 
   return {
-    data: { translate, services: currentList, page, totalPage },
-    operations: { onChangePage, onServiceClick, onServiceActions },
+    data: { translate, services: currentList, page, totalPage, openDeleteModal },
+    operations: {
+      onChangePage,
+      onServiceClick,
+      onServiceActions,
+      onCreateService,
+      setOpenDeleteModal,
+      onDeleteService,
+    },
   };
 };
