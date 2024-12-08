@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core';
 import React from 'react';
 import Cropper from 'react-easy-crop';
 import { Button } from 'src/modules/general/components/Button';
@@ -25,6 +26,7 @@ export const EditImageModal: React.FC<EditImageModalProps> = ({ open, handleClos
     handleRemovePhoto,
     cropperSize,
   } = useEditImage(handleClose, type);
+  const platform = Capacitor.getPlatform();
 
   const modalFooterJsx = (
     <div className="w-full flex flex-col gap-3  px-4 py-4 md:px-6 md:py-6">
@@ -74,6 +76,7 @@ export const EditImageModal: React.FC<EditImageModalProps> = ({ open, handleClos
       }
       content={cropperContentJsx}
       footer={modalFooterJsx}
+      className={platform === 'ios' ? 'pt-safe' : ''}
     />
   );
 };

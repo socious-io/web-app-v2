@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
@@ -512,8 +513,13 @@ export default {
       '4xl': '1.5rem',
       full: '9999px',
     },
-
     extend: {
+      padding: {
+        safe: '4rem',
+      },
+      margin: {
+        safe: '4rem',
+      },
       spacing: {
         '2xl': '20px',
         '3xl': '24px',
