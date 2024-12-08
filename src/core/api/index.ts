@@ -45,3 +45,6 @@ export * from './referrers/referrers.types';
 
 export * from './disputes/disputes.api';
 export * from './disputes/disputes.types';
+
+export * from './services/services.api';
+export * from './services/services.types';
