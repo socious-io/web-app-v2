@@ -49,6 +49,25 @@ export async function get<T>(
   return http.get<T>(uri, config);
 }
 
+export async function put<T>(uri: string, payload: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  return http.put<T>(uri, removedEmptyProps(payload), config);
+}
+
+export async function patch<T>(uri: string, payload?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  return http.patch<T>(uri, removedEmptyProps(payload), config);
+}
+
+export async function del<T>(uri: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  if (!config) config = {};
+
+  config.params = {
+    t: new Date().getTime(),
+    ...config?.params,
+  };
+
+  return http.delete<T>(uri, config);
+}
+
 export type ErrorSection = 'AUTH' | 'FORGET_PASSWORD';
 
 export type ErrorHandlerParams = {
