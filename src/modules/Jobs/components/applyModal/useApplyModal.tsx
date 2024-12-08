@@ -2,9 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLoaderData } from 'react-router-dom';
-import { Answer, ApplyReq, Job, applyJob } from 'src/core/api';
+import { Answer, ApplyReq, Job, applyJob, uploadMedia } from 'src/core/api';
 import { QuestionsRes } from 'src/core/types';
 import { removedEmptyProps } from 'src/core/utils';
+import { Files } from 'src/modules/general/components/FileUploader/index.types';
 import * as yup from 'yup';
 
 const schema = yup
@@ -34,7 +35,7 @@ export const useApplyModal = (handleClose: (applied: boolean) => void) => {
     screeningQuestions: QuestionsRes;
   };
 
-  const [attachments, setAttachments] = useState<string[]>([]);
+  const [attachments, setAttachments] = useState<Files[]>([]);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [questionErrors, setQuestionErrors] = useState<{ id: string; message: string }[]>([]);
 
@@ -47,6 +48,13 @@ export const useApplyModal = (handleClose: (applied: boolean) => void) => {
     mode: 'all',
     resolver: yupResolver(schema),
   });
+
+  const onDropFiles = async (newFiles: File[]) => {
+    newFiles.forEach(async (file: File) => {
+      const res = await uploadMedia(file);
+      setAttachments([...attachments, { id: res.id, file }]);
+    });
+  };
 
   const apply = async () => {
     const errors: { id: string; message: string }[] = [];
@@ -64,7 +72,7 @@ export const useApplyModal = (handleClose: (applied: boolean) => void) => {
       cv_link: linkUrl ? 'https://' + linkUrl : '',
       cv_name: linkName || '',
       share_contact_info: true,
-      attachment: attachments[0],
+      attachment: attachments[0].id,
       answers: answers,
     };
 
@@ -78,7 +86,8 @@ export const useApplyModal = (handleClose: (applied: boolean) => void) => {
     register,
     handleSubmit,
     errors,
-    setAttachments,
+    attachments,
+    onDropFiles,
     answers,
     setAnswers,
     questionErrors,
