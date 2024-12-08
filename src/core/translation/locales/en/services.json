@@ -9,5 +9,60 @@
     "duplicate": "Duplicate",
     "delete": "Delete",
     "edit": "Edit"
+  },
+  "service-delete": {
+    "title": "Delete service?",
+    "subtitle": "Are you sure you want to delete this service?",
+    "cancel-button": "Cancel",
+    "delete-button": "Delete"
+  },
+  "service-form": {
+    "header": "Create new service",
+    "header-edit": "Edit service",
+    "subheader": "Tell us more about your service",
+    "error-message": "This field is required",
+    "name": "Service name",
+    "name-description": "Add a clear and concise name for the service you want to provide",
+    "name-placeholder": "e.g, Logo Design",
+    "category": "Service category",
+    "category-placeholder": "Select a category",
+    "description": "Description",
+    "description-description": "Enter a description a of what you will be providing",
+    "description-placeholder": "Write a few sentences about your service",
+    "delivery": "Delivery time",
+    "delivery-placeholder": "Select a delivery time",
+    "delivery-options": {
+      "LESS_THAN_A_DAY": "Less than a day",
+      "1_3_DAYS": "1-3 days",
+      "1_WEEK": "1 week",
+      "2_WEEKS": "2 weeks",
+      "LESS_THAN_A_MONTH": "Less than a month",
+      "1_3_MONTHS": "1-3 months",
+      "3_6_MONTHS": "3-6 months",
+      "6_MONTHS_OR_MORE": "More than 6 months"
+    },
+    "hours": "Estimated total hours",
+    "hours-postfix": "hours",
+    "payment": "Payment methods",
+    "payment-fiat": "Price",
+    "payment-crypto": "Your wallet",
+    "payment-crypto-description": "Connect a wallet to enter an price",
+    "skills": "Skills",
+    "skills-description": "Please select at least 1 to 5 skills that are relevant",
+    "skills-placeholder": "Search a skill",
+    "samples": "Work samples",
+    "samples-description": "3 images maximum",
+    "cancel": {
+      "title": "Discard changes?",
+      "subtitle": "You have unsaved changes. Are you sure you want to leave?",
+      "button": "Cancel",
+      "leave-button": "Leave"
+    },
+    "publish": {
+      "title": "Service published",
+      "subtitle": "Your service has been updated successfully",
+      "button": "Publish",
+      "close-button": "Close"
+    }
   }
 }
