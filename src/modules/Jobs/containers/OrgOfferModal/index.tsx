@@ -28,7 +28,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
     preventArrow,
   } = useOrgOffer(applicant, onClose, onSuccess);
 
-  const paymentMode = [...PROJECT_PAYMENT_MODE].reverse();
+  const paymentMode = PROJECT_PAYMENT_MODE;
   const paymentType = [...PROJECT_PAYMENT_TYPE].reverse();
   const paymentScheme = [...PROJECT_PAYMENT_SCHEME].reverse();
 
