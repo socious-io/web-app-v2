@@ -9,9 +9,18 @@ export interface Service {
   delivery: string;
   price: string;
   currency: string;
-  image?: string;
+  images?: string[];
 }
 
 export interface ServicesRes extends PaginateRes {
   items: Service[];
+}
+
+export type PaymentMode = 'FIAT' | 'CRYPTO';
+
+export interface ServiceReq extends Omit<Service, 'skills'> {
+  description: string;
+  hours: string;
+  payment: PaymentMode;
+  skills: string[];
 }
