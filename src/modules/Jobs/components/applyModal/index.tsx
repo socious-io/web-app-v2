@@ -1,7 +1,7 @@
 import { Divider, Typography } from '@mui/material';
 import React from 'react';
 import { Button } from 'src/modules/general/components/Button';
-import { FileUploader } from 'src/modules/general/components/fileUploader';
+import { FileUploader } from 'src/modules/general/components/FileUploader';
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -14,7 +14,8 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
   const {
     register,
     errors,
-    setAttachments,
+    attachments,
+    onDropFiles,
     answers,
     setAnswers,
     questionErrors,
@@ -57,10 +58,10 @@ export const ApplyModal: React.FC<ApplyModalProps> = ({ open, handleClose }) => 
       {renderTitle('Resume')}
 
       <FileUploader
+        files={attachments}
+        onDropFiles={onDropFiles}
         fileTypes={['DOC', 'DOCX', 'PDF']}
-        maxFileSize={10}
         customStyle="w-full h-[126px]"
-        setAttachments={setAttachments}
       />
 
       <Divider />
