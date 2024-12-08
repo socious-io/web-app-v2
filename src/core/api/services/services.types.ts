@@ -53,19 +53,3 @@ export interface ServiceReq {
   work_samples: string[];
   kind: 'SERVICE';
 }
-
-export interface ServiceReq {
-  title: string;
-  description: string;
-  payment_currency: string;
-  skills: string[];
-  job_category_id: string;
-  project_length: string;
-  commitment_hours_lower: string;
-  commitment_hours_higher: string;
-  payment_mode: PaymentMode;
-  payment_range_lower: string;
-  payment_range_higher: string;
-  work_samples: string[];
-  kind: 'SERVICE';
-}
