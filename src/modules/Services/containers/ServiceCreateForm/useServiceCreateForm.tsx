@@ -1,0 +1,244 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useLoaderData, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { PAYMENT_CURRENCIES } from 'src/constants/PAYMENT_CURRENCY';
+import { PROJECT_PAYMENT_MODE } from 'src/constants/PROJECT_PAYMENT_MODE';
+import { SERVICE_LENGTH } from 'src/constants/SERVICE_LENGTH';
+import { createOrUpdateServiceAdaptor, OptionType, PaymentMode, ServiceReq, skillsToCategory } from 'src/core/adaptors';
+import { CurrentIdentity, updateWallet, uploadMedia } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
+import Dapp from 'src/dapp';
+import { Files } from 'src/modules/general/components/FileUploader/index.types';
+import { RootState } from 'src/store';
+import * as yup from 'yup';
+
+import { ServiceForm } from './index.types';
+
+const schema = yup.object().shape({
+  name: yup.string().required('This field is required'),
+  category: yup.object().shape({
+    label: yup.string().required(),
+    value: yup.string().required('This field is required'),
+  }),
+  description: yup.string().required('This field is required'),
+  delivery: yup.object().shape({
+    label: yup.string().required(),
+    value: yup.string().required('This field is required'),
+  }),
+  hours: yup.string().required('This field is required'),
+  payment: yup.string().default('FIAT').required('This field is required'),
+  price: yup.string().required('This field is required'),
+  currency: yup.string().required('This field is required'),
+  skills: yup
+    .array()
+    .of(
+      yup.object().shape({
+        label: yup.string().required(),
+        value: yup.string().required('This field is required'),
+      }),
+    )
+    .required('This field is required'),
+});
+
+export const useServiceCreateForm = () => {
+  const { t: translate } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { id: serviceId = '' } = useParams<{ id: string }>();
+  const {
+    jobCategories: categories = [],
+    skillCategories: skills = [],
+    serviceDetail: service,
+    hasStripeAccounts,
+  } = useLoaderData() as {
+    jobCategories: OptionType[];
+    skillCategories: OptionType[];
+    serviceDetail: ServiceReq;
+    hasStripeAccounts: boolean;
+  };
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
+  });
+  const { usernameVal } = getIdentityMeta(currentIdentity);
+  const walletAddress = currentIdentity?.meta.wallet_address;
+  const { isConnected, open: openConnect, chainId, account } = Dapp.useWeb3();
+  const [tokens, setTokens] = useState<
+    {
+      value: string;
+      label: string;
+      address: string;
+    }[]
+  >([]);
+  const [openModal, setOpenModal] = useState<{ name: 'publish' | 'cancel' | 'stripe' | ''; open: boolean }>({
+    name: '',
+    open: false,
+  });
+  //TODO: default images
+  const [attachments, setAttachments] = useState<Files[]>([]);
+  const attachmentIds = attachments.map(attachment => attachment.id) || [];
+  const serviceLength = SERVICE_LENGTH;
+  const paymentModes = PROJECT_PAYMENT_MODE;
+  const paymentCurrencies = PAYMENT_CURRENCIES;
+  const isEdit = !!location.pathname.includes('services/edit') ?? false;
+  const isDuplicate = !!location.pathname.includes('services/duplicate') ?? false;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    setValue,
+    reset,
+  } = useForm<ServiceForm>({
+    mode: 'all',
+    resolver: yupResolver(schema),
+  });
+  const selectedCategory = getValues('category');
+  const selectedDelivery = getValues('delivery');
+  const selectedPaymentMethod = getValues('payment') || paymentModes[0].value;
+  const selectedCurrency = getValues('currency');
+  const selectedSkills = getValues('skills') || [];
+  const disabledButton = selectedPaymentMethod === 'CRYPTO' && !isConnected;
+
+  useEffect(() => {
+    const getTokens = async () => {
+      if (isConnected) {
+        const selectedNetwork = Dapp.NETWORKS.filter(n => n.chain.chainId === chainId)[0];
+        const mapTokens = selectedNetwork.tokens.map(token => {
+          return {
+            value: token.address,
+            label: token.name,
+            address: token.address,
+          };
+        });
+
+        setTokens(mapTokens);
+      }
+    };
+    getTokens();
+  }, [isConnected, chainId]);
+
+  useEffect(() => {
+    if (
+      currentIdentity?.type === 'users' &&
+      isConnected &&
+      account &&
+      (!walletAddress || String(walletAddress) !== account)
+    ) {
+      updateWallet({ wallet_address: account });
+    }
+  }, [isConnected, account]);
+
+  const initializeValues = useCallback(
+    (service: ServiceReq) => {
+      const initialVal = {
+        name: service?.name || '',
+        category: categories?.find(category => category.value === service?.category),
+        description: service?.description || '',
+        delivery: serviceLength.find(length => length.value === service?.delivery),
+        hours: service?.hours || '',
+        payment: service?.payment || paymentModes[0].value,
+        price: service?.price || '',
+        currency: service?.payment
+          ? service.payment === 'FIAT'
+            ? paymentCurrencies[0].value
+            : tokens[0]?.value
+          : paymentCurrencies[0].value,
+        skills: service?.skills ? skillsToCategory(service.skills) : undefined,
+      };
+      reset(initialVal);
+    },
+    [reset],
+  );
+
+  useEffect(() => {
+    initializeValues(service);
+  }, [service]);
+
+  const handleCloseModal = () => setOpenModal({ name: '', open: false });
+
+  const onCancelClick = () => setOpenModal({ name: 'cancel', open: true });
+
+  const onBack = () => navigate(`/profile/users/${usernameVal}/view#services`);
+
+  const onSelectSearchDropdown = (name: 'category' | 'delivery', option: OptionType) => {
+    setValue(name, option, { shouldValidate: true });
+  };
+
+  const onSelectValue = (name: 'payment' | 'currency', value: string) => {
+    setValue(name, value, { shouldValidate: true });
+  };
+
+  const onSelectSkills = (skills: OptionType[]) => setValue('skills', skills, { shouldValidate: true });
+
+  const onDropFiles = (newFiles: File[]) => {
+    newFiles.forEach(async (file: File) => {
+      const res = await uploadMedia(file);
+      setAttachments(prev => [...prev, { id: res.id, file }]);
+    });
+  };
+
+  const onDeleteFiles = (deletedId: string) => {
+    const filteredFiles = attachments.filter(attachment => attachment.id !== deletedId);
+    setAttachments(filteredFiles);
+  };
+
+  const onSubmit = async (formData: ServiceForm) => {
+    const payload = {
+      ...formData,
+      category: formData.category.value,
+      delivery: formData.delivery.value,
+      payment: formData.payment as PaymentMode,
+      skills: formData.skills.map(skill => skill.value) || [],
+      images: (attachmentIds as string[]) || [],
+    };
+    const { error } = await createOrUpdateServiceAdaptor(payload, serviceId, isDuplicate);
+    if (error) return;
+    else {
+      if (formData.payment === 'FIAT' && !hasStripeAccounts) {
+        setOpenModal({ name: 'stripe', open: true });
+      } else {
+        setOpenModal({ name: 'publish', open: true });
+      }
+    }
+  };
+
+  return {
+    data: {
+      translate,
+      openModal,
+      isEdit,
+      isConnected,
+      categories,
+      serviceLength,
+      paymentModes,
+      paymentCurrencies,
+      tokens,
+      skills,
+      register,
+      errors,
+      selectedCategory,
+      selectedDelivery,
+      selectedPaymentMethod,
+      selectedCurrency,
+      selectedSkills,
+      attachments,
+      disabledButton,
+    },
+    operations: {
+      handleCloseModal,
+      onCancelClick,
+      onBack,
+      openConnect,
+      handleSubmit,
+      onSubmit,
+      onSelectSearchDropdown,
+      onSelectValue,
+      onSelectSkills,
+      onDropFiles,
+      onDeleteFiles,
+    },
+  };
+};
