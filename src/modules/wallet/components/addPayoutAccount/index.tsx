@@ -21,6 +21,7 @@ export const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handle
         icon={<FeaturedIcon iconName="credit-card-down" size="lg" type="modern" theme="gray" />}
         mobileFullHeight={false}
         headerDivider={false}
+        customStyle="md:max-w-[480px]"
       >
         <div className="flex flex-col p-4 md:p-6 gap-6">
           <div className="flex flex-col gap-1">
@@ -37,7 +38,6 @@ export const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handle
             options={COUNTRIES}
             isSearchable
             onChange={onSelectCountry}
-            //
           />
           <div className="flex flex-col md:flex-row-reverse gap-3 md:mt-2">
             <Button
@@ -51,7 +51,7 @@ export const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handle
             >
               {translate('pay-continue')}
             </Button>
-            <Button variant="outlined" color="secondary" fullWidth onClick={handleClose}>
+            <Button variant="outlined" color="info" fullWidth onClick={handleClose}>
               {translate('pay-cancel')}
             </Button>
           </div>
