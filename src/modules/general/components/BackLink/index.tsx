@@ -21,7 +21,7 @@ export const BackLink: React.FC<BackLinkProps> = props => {
     <Button
       color="secondary"
       variant="text"
-      startIcon={<Icon fontSize={24} name="arrow-left" className="text-Gray-light-mode-600" />}
+      startIcon={<Icon fontSize={24} name="arrow-left" className="text-Gray-light-mode-600" cursor="pointer" />}
       onClick={onClick}
       block={block}
       fullWidth
