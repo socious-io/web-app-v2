@@ -1,3 +1,5 @@
+$left-column: 17.5rem;
+
 .content {
     display: flex;
     flex-direction: row;
@@ -6,11 +8,14 @@
 
 .leftCol {
     flex: 1;
+    width: $left-column;
     gap: 24px;
     overflow: hidden;
 }
+
 .rightCol {
     flex: 3;
+    width: calc(100% - $left-column);
 }
 
 .textMd {
