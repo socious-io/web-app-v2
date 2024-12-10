@@ -7,20 +7,30 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
-    "esModuleInterop": false,
+    // "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    // "moduleResolution": "Node",
     "noImplicitAny": false,
     "resolveJsonModule": true,
+    // "isolatedModules": true,
+    // "noEmit": true,
+    // "jsx": "react-jsx"
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "isolatedModules": true,
+    "moduleDetection": "force",
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+
   },
   "include": ["cypress", "src", "**/*.ts", "**/*.tsx", "tailwind.config.js", "postcss.config.js"],
   "typesOnlyInclude": ["**/*.d.ts", "tailwind.config.js", "postcss.config.js"],
   "exclude": ["node_modules"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  // "references": [{ "path": "./tsconfig.node.json" }]
 }
