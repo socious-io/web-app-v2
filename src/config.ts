@@ -1,6 +1,7 @@
 export const config = {
   env: import.meta.env.VITE_ENV,
   baseURL: import.meta.env.VITE_BASE_URL,
+  baseURLV3: import.meta.env.VITE_BASE_URL_V3,
   socketURL: import.meta.env.VITE_SOCKET_URL,
   dappENV: import.meta.env.VITE_DAPP_ENV,
   accessExpire: import.meta.env.VITE_ACCESS_EXPIRE,
