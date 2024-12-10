@@ -4,7 +4,7 @@
 	"webDir": "dist",
 	"bundledWebRuntime": false,
 	"server": {
-		"hostname": "webapp2.dev.socious.io",
+		"hostname": "app.socious.io",
 		"androidScheme": "https"
 	},
 	"plugins": {
