@@ -1,3 +1,4 @@
+import { Identity } from '../site/site.types';
 import { PaginateResV3 } from '../types';
 
 export type Category = {
@@ -32,6 +33,7 @@ export interface Service {
   payment_range_higher: string;
   work_samples: WorkSample[];
   kind: 'SERVICE';
+  identity: Identity;
 }
 
 export type ServicesRes = PaginateResV3<Service>;
