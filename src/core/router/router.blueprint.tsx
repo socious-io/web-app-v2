@@ -318,6 +318,21 @@ export const blueprint: RouteObject[] = [
             path: 'services',
             children: [
               {
+                path: ':id',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const [serviceDetail] = await Promise.all([getServiceAdaptor(params.id)]);
+                    return { serviceDetail: serviceDetail?.data };
+                  }
+                },
+                async lazy() {
+                  const { DetailService } = await import('src/pages/services/detail');
+                  return {
+                    Component: Protect(DetailService, 'both'),
+                  };
+                },
+              },
+              {
                 path: 'create',
                 loader: async () => {
                   const requests = [jobCategoriesReq(), skillsToCategoryAdaptor(), getStripAccountsAdaptor()] as const;
