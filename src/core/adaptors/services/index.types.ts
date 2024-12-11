@@ -9,6 +9,7 @@ export interface Service {
   price: string;
   currency: string;
   images?: string[];
+  account?: { id: string; type: string; name: string; username: string; img?: string };
 }
 
 export interface ServicesRes extends PaginateRes {
@@ -18,6 +19,7 @@ export interface ServicesRes extends PaginateRes {
 export type PaymentMode = 'FIAT' | 'CRYPTO';
 
 export interface ServiceReq extends Omit<Service, 'id'> {
+  id?: string;
   description: string;
   hours: string;
   payment: PaymentMode;

@@ -109,6 +109,7 @@ export const getServiceAdaptor = async (serviceId: string): Promise<AdaptorRes<S
       currency: 'USD',
       skills: ['ADOBE_ILLUSTRATOR', 'ADOBE_PHOTOSHOP', 'GOOGLE_ANALYTICS'],
       images: ['test'],
+      account: { id: '12345', type: 'users', name: 'Sanaz Mahmoudi', username: 'mahmoudisanaz59' },
     };
     return {
       data: res,
