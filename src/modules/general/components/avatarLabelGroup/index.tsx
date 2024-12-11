@@ -21,7 +21,7 @@ export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = ({
       onClick={e => !justAvatarClickable && handleClick?.(e)}
     >
       <Avatar
-        img={account.img}
+        img={account?.img || ''}
         type={account.type}
         size={avatarSize || '40px'}
         onClick={e => justAvatarClickable && handleClick?.(e)}
