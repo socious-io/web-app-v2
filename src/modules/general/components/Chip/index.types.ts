@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface ChipProbs {
+export interface ChipProps {
   label: string;
   theme?: 'primary' | 'secondary' | 'grey_blue' | 'error' | 'warning' | 'success';
   shape?: 'round' | 'sharp';
@@ -10,4 +10,5 @@ export interface ChipProbs {
   endIcon?: ReactNode;
   size?: 'sm' | 'md' | 'lg';
   transparent?: boolean;
+  customStyle?: string;
 }
