@@ -39,22 +39,7 @@ platforms:
           TARGETED_DEVICE_FAMILY: 1 #1: iPhone ,2:iPhone&iPad, 3:iPad
           CODE_SIGN_STYLE: Manual
           CODE_SIGN_IDENTITY: iPhone Distribution
-
-        plist:
-          - replace: false
-            entries:
-              - NSPhotoLibraryUsageDescription: We need access to your photo library to enhance your profile with a picture, share your impactful work, and engage in community activities within the Socious app.
-              - UIBackgroundModes:
-                  [
-                    'remote-notification'
-                  ]
-
-        entitlements:
-          - aps-environment: 'development'
-          - com.apple.developer.associated-domains:
-              [
-                'zakaio://platform.proofspace.id'
-              ]
+          
   android:
     packageName: $ANDROID_PACKAGE_NAME
     versionName: $VERSION
