@@ -8,6 +8,8 @@
     "preview": "vite preview",
     "test": "vite --port 3000 --host 0.0.0.0 --mode test",
     "build": "vite build --mode production",
+    "open:android": "npm run build && npx cap sync android && npx cap open android",
+    "open:ios": "npm run build && npx cap sync ios && npx cap open ios",
     "config:ios": "npx trapeze run trapeze-config.yaml --ios-project ios/App -y",
     "config:android": "npx trapeze run trapeze-config.yaml --android-project android -y",
     "build:icons": "npx @capacitor/assets generate --iconBackgroundColor '#183E3B' --splashBackgroundColor '#183E3B'",
