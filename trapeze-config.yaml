@@ -1,0 +1,78 @@
+vars:
+  PRODUCT_NAME:
+    default: Socious
+  DISPLAY_NAME:
+    default: Socious
+  VERSION:
+    default: 10.0.2
+  ANDROID_VERSION_CODE:
+    default: 42
+  ANDROID_PACKAGE_NAME:
+    default: jp.socious.network
+  ANDROID_KEY_STORE_LOCATION:
+    default: ./android/build-release.keystore
+  ANDROID_KEY_STORE_PASSWORD:
+    default: Password
+  ANDROID_KEY_ALIAS:
+    default: key_number_one
+  ANDROID_KEY_PASSWORD:
+    default: Password
+  IOS_BUILD_NUMBER:
+    default: 9
+  IOS_BUNDLE_ID:
+    default: jp.socious.network
+  IOS_DEVELOPMENT_TEAM_ID:
+    default: 596H9K48FY
+
+platforms:
+  ios:
+    targets:
+      App:
+        bundleId: $IOS_BUNDLE_ID
+        version: $VERSION
+        buildNumber: $IOS_BUILD_NUMBER
+        productName: $PRODUCT_NAME
+        displayName: $DISPLAY_NAME
+
+        buildSettings:
+          DEVELOPMENT_TEAM: $IOS_DEVELOPMENT_TEAM_ID
+          TARGETED_DEVICE_FAMILY: 1 #1: iPhone ,2:iPhone&iPad, 3:iPad
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: iPhone Distribution
+          
+  android:
+    packageName: $ANDROID_PACKAGE_NAME
+    versionName: $VERSION
+    versionCode: $ANDROID_VERSION_CODE
+    gradle:
+      - file: app/build.gradle # Removing buildTypes
+        target:
+          android:
+            buildTypes:
+        replace:
+          '': ''
+      - file: app/build.gradle
+        target:
+          android:
+        insert: |
+          signingConfigs {
+            release {
+              // You need to specify either an absolute path or include the
+              // keystore file in the same directory as the build.gradle file.
+              storeFile file("$ANDROID_KEY_STORE_LOCATION")
+              storePassword "$ANDROID_KEY_STORE_PASSWORD"
+              keyAlias "$ANDROID_KEY_ALIAS"
+              keyPassword "$ANDROID_KEY_PASSWORD"
+            }
+          }
+      - file: app/build.gradle
+        target:
+          android:
+        insert: |
+          buildTypes {
+            release {
+              minifyEnabled false
+              proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+              signingConfig signingConfigs.release
+            }
+          }

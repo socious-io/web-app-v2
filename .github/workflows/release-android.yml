@@ -1,0 +1,170 @@
+name: CD - Release - Android
+
+on:
+  # push:
+  #   # tags:
+  #   #   - v*
+  #   branches:
+  #     - ci
+  release:
+    types: [prereleased, released]
+
+# echo ${{ github.event.release.tag_name }} -> tagname
+# echo ${{ github.event.release.prerelease }} -> true,false (${{ github.event.release.prerelease == true }})
+# echo '${{ github.event.release.name }}' -> title
+# echo '${{ github.event.release.body }}' -> body
+
+
+env:
+  CI: false
+  ANDROID_PACKAGE_NAME: ${{ vars.ANDROID_PACKAGE_NAME }}
+  ANDROID_APK_BUILD_PATH: ./android/app/build/outputs/apk/release/app-release.apk
+  ANDROID_AAB_BUILD_PATH: ./android/app/build/outputs/bundle/release/app-release.aab
+
+jobs:
+  build-android:
+    name: Building Android
+    outputs:
+      LATEST_PLAYSTORE_VERSION_CODE: ${{ steps.version-code.outputs.LATEST_PLAYSTORE_VERSION_CODE }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install Node.js dependencies
+        run: |
+          npm cache clean --force
+          npm ci
+
+      - name: Making Android Release Code
+        run: |
+          npm run build
+          npx cap sync android
+        env:
+          STORYBOOK_FIGMA_ACCESS_TOKEN: ${{ secrets.STORYBOOK_FIGMA_ACCESS_TOKEN }}
+          VITE_ACCESS_EXPIRE: ${{ vars.ACCESS_EXPIRE }}
+          VITE_APP_URL: ${{ vars.APP_URL }}
+          VITE_BASE_URL: ${{ vars.BASE_URL }}
+          VITE_CLIENT_SECRET_TOKEN_CLIENT_ID: ${{ secrets.CLIENT_SECRET_TOKEN_CLIENT_ID }}
+          VITE_CLIENT_SECRET_TOKEN_REDIRECT_URL: ${{ vars.CLIENT_SECRET_TOKEN_REDIRECT_URL }}
+          VITE_DAPP_ENV: ${{ vars.DAPP_ENV }}
+          VITE_ENV: ${{ vars.ENV }}
+          VITE_GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+          VITE_GOOGLE_RECAPTCHA_SITE_KEY: ${{ secrets.GOOGLE_RECAPTCHA_SITE_KEY }}
+          VITE_JP_STRIPE_PUBLIC_KEY: ${{ secrets.JP_STRIPE_PUBLIC_KEY }}
+          VITE_LOG_DISCORD_WEBHOOK: ${{ secrets.LOG_DISCORD_WEBHOOK }}
+          VITE_REFRESH_EXPIRE: ${{ vars.REFRESH_EXPIRE }}
+          VITE_SOCKET_URL: ${{ vars.SOCKET_URL }}
+          VITE_STRIPE_PUBLIC_KEY: ${{ vars.STRIPE_PUBLIC_KEY }}
+
+      - name: Get the latest version code using
+        uses: Vacxe/google-play-cli-kt@0.4.8
+        with:
+          service-account-json: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          package-name: ${{ env.ANDROID_PACKAGE_NAME }}
+          custom-script: 'echo "LATEST_PLAYSTORE_VERSION_CODE=$(google-play-cli bundles list | jq ''.bundles[-1].versionCode'' | awk ''{print $1 + 1}'')" >> $GITHUB_ENV'
+
+      - name: Output the incremented version code and export the version to env
+        id: version-code
+        run: |
+          echo "LATEST_PLAYSTORE_VERSION_CODE=${{ env.LATEST_PLAYSTORE_VERSION_CODE }}" >> $GITHUB_OUTPUT
+          echo "APP_VERSION=$(echo '${{ github.event.release.tag_name }}' | cut -c2-)" >> $GITHUB_ENV
+
+      - name: Configuring apps (using Trapeze)
+        run: |
+          npm run config:android
+        env:
+          ANDROID_KEY_STORE_LOCATION: ${{ github.workspace }}/android/build-release.keystore
+          ANDROID_KEY_STORE_PASSWORD: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_VERSION_CODE: ${{ env.LATEST_PLAYSTORE_VERSION_CODE }} # Incremented version of the LATEST_PLAYSTORE_VERSION_CODE
+          VERSION: ${{ env.APP_VERSION }}
+
+      - name: Generating Assets
+        run: |
+          npm run build:icons
+
+      - name: Extracting Android Key for Signing the App
+        run: |
+          cd android
+          echo ${{ secrets.ANDROID_KEY_STORE_BASE64 }} >> build-release.keystore-base64
+          cat build-release.keystore-base64 | base64 --decode > build-release.keystore
+
+      # - name: Extracting Google Service Account (For using Google Playstore API)
+      #   run: |
+      #     cd android
+      #     echo ${{ secrets.SERVICE_ACCOUNT_JSON_BASE64 }} >> fastlane/service-account.json-base64
+      #     cat fastlane/service-account.json-base64 | base64 --decode > fastlane/service-account.json
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: 'oracle' # See 'Supported distributions' for available options
+          java-version: '21'
+          cache: 'gradle'
+
+      # On Pre-Relase
+      - if: ${{ github.event.release.prerelease == true }}
+        name: Building Assemble release for Github (.APK)
+        run: |
+          cd android
+          ./gradlew assembleRelease
+
+      - if: ${{ github.event.release.prerelease == true }}
+        name: Upload Building Assemble release (.APK) to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.ANDROID_APK_BUILD_PATH }}
+          asset_name: Socious-${{ github.event.release.tag_name }}.apk
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: ${{ github.event.release.body }}
+
+      # On Relase
+      - if: ${{ github.event.release.prerelease != true }}
+        name: Building bundle release for Playstore (.AAB)
+        run: |
+          cd android
+          ./gradlew bundleRelease
+
+      - if: ${{ github.event.release.prerelease != true }}
+        name: Upload bundle release (.AAB) to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.ANDROID_AAB_BUILD_PATH }}
+          asset_name: Socious-${{ github.event.release.tag_name }}.aab
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: ${{ github.event.release.body }}
+
+  deploy-playstore:
+    name: Deploy to Google Playstore
+    runs-on: ubuntu-latest
+    if: github.event.release.prerelease != true
+    needs: [build-android]
+    env:
+      LATEST_PLAYSTORE_VERSION_CODE: ${{ needs.build-android.outputs.LATEST_PLAYSTORE_VERSION_CODE }}
+    steps:
+      - uses: robinraju/release-downloader@v1.11
+        with:
+          latest: true
+          fileName: Socious-${{ github.event.release.tag_name }}.aab
+
+      - name: Upload bundle release (.AAB) to Google Playstore
+        uses: vacxe/google-play-cli-kt@0.4.8
+        with:
+          template: bundles-upload
+          service-account-json: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          package-name: ${{ env.ANDROID_PACKAGE_NAME }}
+          version-code: ${{ env.LATEST_PLAYSTORE_VERSION_CODE }}
+          path-to-bundle: ./Socious-${{ github.event.release.tag_name }}.aab
+          track: ${{ vars.ANDROID_RELEASE_TRACK }} # google-play-cli tracks list --config-file key-data-file.json --package-name jp.socious.network | python -m json.tool
+          status: ${{ vars.ANDROID_RELEASE_STATUS }} # More info: https://developers.google.com/android-publisher/api-ref/rest/v3/edits.tracks#status
