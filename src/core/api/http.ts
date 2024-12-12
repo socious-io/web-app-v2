@@ -6,8 +6,8 @@ import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { hideSpinner, showSpinner } from 'src/store/reducers/spinner.reducer';
 import translate from 'src/translations';
 
-import { refreshToken } from './auth/auth.service';
 import { removedEmptyProps } from '../utils';
+import { refreshToken } from './auth/auth.service';
 
 export const http = axios.create({
   baseURL: config.baseURL,
@@ -29,12 +29,21 @@ export async function post<T>(uri: string, payload: unknown, config?: AxiosReque
   return http.post<T>(uri, removedEmptyProps(payload), config);
 }
 
-export async function get<T>(uri: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+export async function get<T>(
+  uri: string,
+  config?: AxiosRequestConfig,
+  filters?: Record<string, string>,
+): Promise<AxiosResponse<T>> {
   if (!config) config = {};
+  const newFilters = {};
+  for (const key in filters || {}) {
+    newFilters[`filter.${key}`] = filters?.[key];
+  }
 
   config.params = {
     t: new Date().getTime(),
     ...config?.params,
+    ...newFilters,
   };
 
   return http.get<T>(uri, config);
@@ -117,5 +126,5 @@ export function setupInterceptors(store: Store) {
 }
 
 function getErrorSection(request: XMLHttpRequest): string | undefined {
-  return errorSections.filter((s) => request.responseURL.toUpperCase().includes(s))[0];
+  return errorSections.filter(s => request.responseURL.toUpperCase().includes(s))[0];
 }
