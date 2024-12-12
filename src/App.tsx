@@ -36,7 +36,6 @@ function App() {
         <ThemeProvider theme={theme}>
           <RouterProvider router={router.routes} />
         </ThemeProvider>
-        <DeepLinks />
         {/* <ModalPlaceholder /> */}
         <Spinner />
       </Provider>

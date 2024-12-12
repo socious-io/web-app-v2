@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { logout } from 'src/core/api';
+import { DeepLinks } from 'src/core/deepLinks';
 import useHideScrollbar from 'src/core/hooks/useHideScrollbar';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
@@ -39,6 +40,7 @@ export const Layout = () => {
       </div>
 
       <NavBar open={open} setOpen={setOpen} logout={logOut} />
+      <DeepLinks />
     </div>
   );
 };

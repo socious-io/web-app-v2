@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import { Capacitor } from '@capacitor/core';
 import { useEffect } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { config } from 'src/config';
@@ -11,8 +10,10 @@ import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 export const GoogleOauth2 = () => {
-  const googleLoginURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${getClientId()}&redirect_uri=${window.location.href}&response_type=code&scope=email profile&access_type=offline&prompt=consent`;
-
+  //in ios instead of https there is capacitor in the link !!
+  const replaceCapacitor = str => str.replace(/capacitor/g, 'https');
+  const googleCallbackUrl = replaceCapacitor(window.location.href);
+  const googleLoginURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.googleOauthClientId}&redirect_uri=${googleCallbackUrl}&response_type=code&scope=email profile&access_type=offline&prompt=consent`;
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const events = (useLoaderData() as EventsRes) || null;
@@ -30,19 +31,7 @@ export const GoogleOauth2 = () => {
       return value === null || value === '' || (Array.isArray(value) && value.length === 0);
     });
   };
-  const getClientId = (): string => {
-    const platform = Capacitor.getPlatform();
 
-    return platform === 'android'
-      ? config.googleOauthClientIdAndroid
-      : platform === 'ios'
-        ? 'your-ios-client-id'
-        : platform === 'web'
-          ? config.googleOauthClientId
-          : (() => {
-              throw new Error(`Unsupported platform: ${platform}`);
-            })();
-  };
   const hasUserParticularsMandatoryFields = (profile: User) => {
     const particularsFields: (keyof User)[] = ['first_name', 'last_name', 'username'];
 
