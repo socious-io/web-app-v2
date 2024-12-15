@@ -77,7 +77,7 @@ export const useApplyModal = (handleClose: (applied: boolean) => void) => {
       cv_link: linkUrl ? 'https://' + linkUrl : '',
       cv_name: linkName || '',
       share_contact_info: true,
-      attachment: attachments[0].id,
+      attachment: attachments[0]?.id || '',
       answers: answers,
     };
 
