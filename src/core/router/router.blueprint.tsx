@@ -1,6 +1,7 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
+import { getServicesAdaptor } from 'src/core/adaptors';
 import {
   jobs,
   chats,
@@ -29,8 +30,7 @@ import {
 import { events, search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/modules/layout';
 import FallBack from 'src/pages/fallback/fallback';
-import store, { RootState } from 'src/store';
-import { currentIdentities } from 'src/store/thunks/identity.thunks';
+import { RootState } from 'src/store';
 
 import { checkSearchFilters } from '../utils';
 
@@ -60,20 +60,24 @@ export const blueprint: RouteObject[] = [
                     path: 'view',
                     loader: async ({ params }) => {
                       if (params.id) {
-                        const user = await otherProfileByUsername(params.id);
+                        const [user, services] = await Promise.all([
+                          otherProfileByUsername(params.id),
+                          getServicesAdaptor(1, 5, { kind: 'SERVICE' }),
+                        ]);
                         // Keep this, it might be needed in the future
                         // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
                         return {
                           user,
+                          services: services.data,
                           // badges: userBadges,
                           // missions,
                         };
                       }
                     },
                     async lazy() {
-                      const { UserProifle } = await import('src/pages/userProfile');
+                      const { UserProfile } = await import('src/pages/userProfile');
                       return {
-                        Component: UserProifle,
+                        Component: UserProfile,
                       };
                     },
                   },

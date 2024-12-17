@@ -1,11 +1,35 @@
+export * from './services/index.adaptors';
+export * from './services/index.types';
+
+export interface CustomError {
+  response: { data: { error: string } };
+}
+
+export interface SuccessRes {
+  message?: string;
+}
+
+export type AdaptorRes<T = null> = {
+  data: T | null;
+  error: string | null;
+};
+
+export interface PaginateRes {
+  page: number;
+  limit: number;
+  total: number;
+  items: any[];
+}
+
+//FIXME: create a specific directory for each adaptor later
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import store from 'src/store';
 import { setEvents } from 'src/store/reducers/events.reducer';
 import { setSkills } from 'src/store/reducers/skills.reducer';
 
-import { events, skills, Event } from './api';
-import { CategoriesResp, Cities } from './types';
-import { translate } from './utils';
+import { events, skills, Event } from '../api';
+import { CategoriesResp, Cities } from '../types';
+import { translate } from '../utils';
 
 export function socialCausesToCategoryAdaptor() {
   return Object.entries(SOCIAL_CAUSES).map(([, value]) => value);

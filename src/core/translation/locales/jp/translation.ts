@@ -20,6 +20,7 @@ import payments from './payments.json';
 import preferences from './preferences.json';
 import profile from './profile.json';
 import referral from './referral.json';
+import services from './services.json';
 import signup from './signup.json';
 import skills from './skills.json';
 import socialCauses from './socialCauses.json';
@@ -52,5 +53,6 @@ export function generateTranslationFile() {
     chats,
     payments,
     credential,
+    services,
   );
 }
