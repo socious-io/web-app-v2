@@ -69,9 +69,16 @@
     "header": "Back to services",
     "share": "Share",
     "edit": "Edit service",
+    "contact": "Contact me",
     "about": "About this service",
     "fixed": "Fixed-price",
     "purchase": "Purchase",
-    "more": "Read more"
+    "more": "Read more",
+    "order": {
+      "summary": "Order summary",
+      "fee": "Socious fee",
+      "total": "Total",
+      "checkout-button": "Continue to checkout"
+    }
   }
 }
