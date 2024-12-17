@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Applicant, ApplicantsRes } from 'src/core/api';
+import { ApplicantsRes } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
@@ -7,7 +7,7 @@ import { EmptyState } from 'src/modules/general/components/EmptyState';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Icon } from 'src/modules/general/components/Icon';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
-import { Overlay } from 'src/modules/general/components/slideoutMenu';
+import Slider from 'src/modules/general/components/Slider';
 import { OrgOfferModal } from 'src/modules/Jobs/containers/OrgOfferModal';
 import variables from 'src/styles/constants/_exports.module.scss';
 
@@ -103,14 +103,14 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch,
           <PaginationMobile page={page} count={Math.ceil(total / PER_PAGE)} handleChange={handleChangePage} />
         </div>
       )}
-      <Overlay open={open} onClose={() => setOpen(false)}>
+      <Slider open={open} onClose={() => setOpen(false)}>
         <ApplicantDetails
           applicant={applicant}
           openOffer={() => setOffer(true)}
           openReject={() => setOpenAlert(true)}
           closeDetails={() => setOpen(false)}
         />
-      </Overlay>
+      </Slider>
       <AlertModal
         open={openAlert}
         onClose={() => setOpenAlert(false)}
