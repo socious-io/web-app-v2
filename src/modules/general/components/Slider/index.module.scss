@@ -1,0 +1,62 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.container {
+    width: 25rem;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $color-grey-200;
+    box-shadow: $shadow-xl;
+    background-color: $color-white;
+
+    @media (max-width: $width-xl) {
+        width: 100%;
+    }
+}
+
+.header {
+    width: 100%;
+    height: 4.5rem;
+
+    &__content {
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.5rem;
+    }
+
+    &--divider {
+        border-bottom: solid 1px $color-grey-200;
+    }
+}
+
+.title {
+    font-size: 20px;
+    color: $color-grey-900;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: $color-grey-600;
+}
+
+.content {
+    height: 100%;
+    padding: 0 1.5rem;
+    overflow-y: auto;
+
+    @media (max-width: $width-xl) {
+        padding: 0 1rem;
+    }
+}
+
+.close {
+    margin: 0 !important;
+}
