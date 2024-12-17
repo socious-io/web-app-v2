@@ -1,4 +1,4 @@
-import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table';
 import React, { Dispatch, SetStateAction } from 'react';
 import { ApplicantsRes } from 'src/core/api';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
@@ -8,7 +8,7 @@ import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Input } from 'src/modules/general/components/input/input';
 import { Pagination } from 'src/modules/general/components/Pagination';
-import { Overlay } from 'src/modules/general/components/slideoutMenu';
+import Slider from 'src/modules/general/components/Slider';
 import { OrgOfferModal } from 'src/modules/Jobs/containers/OrgOfferModal';
 import variables from 'src/styles/constants/_exports.module.scss';
 
@@ -129,14 +129,14 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
         </div>
       )}
 
-      <Overlay open={open} onClose={() => setOpen(false)}>
+      <Slider open={open} onClose={() => setOpen(false)}>
         <ApplicantDetails
           applicant={applicant}
           openOffer={() => setOffer(true)}
           openReject={() => setOpenAlert(true)}
           closeDetails={() => setOpen(false)}
         />
-      </Overlay>
+      </Slider>
       <AlertModal
         open={openAlert}
         onClose={() => setOpenAlert(false)}

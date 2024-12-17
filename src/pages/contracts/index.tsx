@@ -6,7 +6,7 @@ import { ContractDetailsSlider } from 'src/modules/contract/components/contractD
 import { ButtonGroups } from 'src/modules/general/components/ButtonGroups';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
-import { Overlay } from 'src/modules/general/components/slideoutMenu';
+import Slider from 'src/modules/general/components/Slider';
 
 import css from './contracts.module.scss';
 import { useContracts } from './useContracts';
@@ -39,9 +39,9 @@ export const Contracts = () => {
         </div>
       </div>
       {openSlider && (
-        <Overlay open={openSlider} onClose={closeSlider}>
+        <Slider open={openSlider} onClose={closeSlider}>
           <ContractDetailsSlider />
-        </Overlay>
+        </Slider>
       )}
     </>
   );

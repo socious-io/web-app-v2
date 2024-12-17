@@ -4,7 +4,7 @@ import { translate } from 'src/core/utils';
 import { Icon } from 'src/modules/general/components/Icon';
 import { IconDropDown } from 'src/modules/general/components/iconDropDown';
 import { Input } from 'src/modules/general/components/input/input';
-import { Overlay } from 'src/modules/general/components/slideoutMenu';
+import Slider from 'src/modules/general/components/Slider';
 import { SearchModal } from 'src/modules/Search/containers/SearchModal';
 import variables from 'src/styles/constants/_exports.module.scss';
 
@@ -106,9 +106,9 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
         </div>
       )}
 
-      <Overlay open={openNotifPanel} onClose={() => setOpenNotifPanel(false)} title="Notifications">
+      <Slider open={openNotifPanel} onClose={() => setOpenNotifPanel(false)} title="Notifications">
         <Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />
-      </Overlay>
+      </Slider>
       <SearchModal open={openSearchModal} onClose={() => setOpenSearchModal(false)} setSearchText={setSearchTerm} />
     </div>
   );
