@@ -69,9 +69,16 @@
     "header": "サービス一覧に戻る",
     "share": "共有",
     "edit": "サービスを編集",
+    "contact": "お問い合わせ",
     "about": "このサービスについて",
     "fixed": "固定価格",
     "purchase": "購入",
-    "more": "続きを読む"
+    "more": "続きを読む",
+    "order": {
+      "summary": "注文概要",
+      "fee": "Socious手数料",
+      "total": "合計",
+      "checkout-button": "チェックアウトに進む"
+    }
   }
 }
