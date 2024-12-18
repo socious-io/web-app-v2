@@ -35,52 +35,52 @@ const organizationUser = new OrganizationUser(
 describe('User Application', () => {
   beforeEach(() => {
     // Mock the register API call
-    cy.intercept('GET', `${API_SERVER}/identities*`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/identities*`, req => {
       if (req.headers.authorization == `${TOKEN_TYPE} ${ACCESS_TOKEN}`) req.reply(user.getIdentity());
       else req.reply(401, { message: 'unauthorized' });
     });
-    cy.intercept('POST', `${API_SERVER}/projects/*/applicants`, (req) => req.reply(200, SENT_APPLICATION)).as(
+    cy.intercept('POST', `${API_SERVER}/projects/*/applicants`, req => req.reply(200, SENT_APPLICATION)).as(
       'sendApplication',
     );
-    cy.intercept('GET', `${API_SERVER}/projects/*/questions*`, (req) => req.reply(200, { questions: [] })).as(
+    cy.intercept('GET', `${API_SERVER}/projects/*/questions*`, req => req.reply(200, { questions: [] })).as(
       'getProjectQuestions',
     );
-    cy.intercept('GET', `${API_SERVER}/projects/*`, (req) => req.reply(200, PROJECT)).as('getProject');
-    cy.intercept('GET', `${API_SERVER}/projects*`, (req) => req.reply(200, PROJECTS)).as('getProjects');
-    cy.intercept('GET', `${API_SERVER}/skills*`, (req) => req.reply(SKILLS));
-    cy.intercept('GET', `${API_SERVER}/geo/locations*`, (req) => req.reply(LOCATIONS));
-    cy.intercept('GET', `${API_SERVER}/orgs/d/industries*`, (req) => req.reply(INDUSTRIES));
+    cy.intercept('GET', `${API_SERVER}/projects/*`, req => req.reply(200, PROJECT)).as('getProject');
+    cy.intercept('GET', `${API_SERVER}/projects*`, req => req.reply(200, PROJECTS)).as('getProjects');
+    cy.intercept('GET', `${API_SERVER}/skills*`, req => req.reply(SKILLS));
+    cy.intercept('GET', `${API_SERVER}/geo/locations*`, req => req.reply(LOCATIONS));
+    cy.intercept('GET', `${API_SERVER}/orgs/d/industries*`, req => req.reply(INDUSTRIES));
     cy.intercept(
       'GET',
       RegExp(`${API_SERVER}orgs/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}`, 'ig'),
-      (req) => req.reply(ORGS),
+      req => req.reply(ORGS),
     );
-    cy.intercept('POST', `${API_SERVER}/media/upload`, (req) => req.reply(200, UPLOAD));
-    cy.intercept('POST', `${API_SERVER}/orgs?auto_member=true`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/orgs/by-shortname/*`, (req) => req.reply(200, organizationUser.get()));
-    cy.intercept('POST', `${API_SERVER}/user/change-password-direct*`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('POST', `${API_SERVER}/user/update/profile*`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/user/profile*`, (req) => req.reply(200, { message: 'success' }));
-    cy.intercept('GET', `${API_SERVER}/notifications*`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('POST', `${API_SERVER}/media/upload`, req => req.reply(200, UPLOAD));
+    cy.intercept('POST', `${API_SERVER}/orgs?auto_member=true`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('GET', `${API_SERVER}/orgs/*`, req => req.reply(200, organizationUser.get()));
+    cy.intercept('POST', `${API_SERVER}/user/change-password-direct*`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('POST', `${API_SERVER}/user/update/profile*`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('GET', `${API_SERVER}/user/profile*`, req => req.reply(200, { message: 'success' }));
+    cy.intercept('GET', `${API_SERVER}/notifications*`, req => req.reply(200, { message: 'success' })).as(
       'getNotifications',
     );
-    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
       'getUnreadChatsCount',
     );
-    cy.intercept('POST', `${API_SERVER}/auth/preregister*`, (req) =>
+    cy.intercept('POST', `${API_SERVER}/auth/preregister*`, req =>
       req.reply(200, { username: null, shortname: null, message: 'success' }),
     );
-    cy.intercept('POST', `${API_SERVER}/auth/register`, (req) => {
+    cy.intercept('POST', `${API_SERVER}/auth/register`, req => {
       if (req.body.email === EXISTING_EMAIL_ADDRESS) req.reply({ statusCode: 400 });
       else req.reply(200, { message: 'success' });
     });
-    cy.intercept('GET', `${API_SERVER}/user/by-username/**`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/user/by-username/**`, req => {
       return req.reply(200, user.getProfile(socialCauses, skills, CITY));
     });
-    cy.intercept('POST', `${API_SERVER}/auth/refresh`, (req) => req.reply(200, { message: 'success' })).as(
+    cy.intercept('POST', `${API_SERVER}/auth/refresh`, req => req.reply(200, { message: 'success' })).as(
       'refreshAuthorization',
     );
-    cy.intercept('GET', `${API_SERVER}/auth/otp/confirm*`, (req) => {
+    cy.intercept('GET', `${API_SERVER}/auth/otp/confirm*`, req => {
       const url = new URL(req.url);
       const code = url.searchParams.get('code');
 
@@ -117,6 +117,7 @@ describe('User Application', () => {
 
     // wait for router to switch page
     cy.contains('button', 'Apply now').should('not.be.disabled');
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.contains('button', 'Apply now').parent().parent().scrollIntoView().click({ force: true });
     cy.get('#auth-guard-modal').should('exist');
 
@@ -131,7 +132,7 @@ describe('User Application', () => {
     cy.contains('button', 'Verify email').should('be.disabled');
 
     // Type in 1 on each input field, Click verify and check the route
-    cy.get('input[type="tel"]').each(($input) => {
+    cy.get('input[type="tel"]').each($input => {
       cy.wrap($input).type('1');
     });
     cy.contains('button', 'Verify email').click();
@@ -157,7 +158,7 @@ describe('User Application', () => {
     cy.contains('button', 'Continue').click();
     cy.get('#apply-job').should('exist');
     cy.get('textarea[name=coverLetter]').type('Example Cover Letter');
-    cy.fixture('example.pdf').then((fileContent) => {
+    cy.fixture('example.pdf').then(fileContent => {
       cy.get('input[type="file"]').attachFile({
         fileContent: fileContent.toString(),
         fileName: 'example.pdf',

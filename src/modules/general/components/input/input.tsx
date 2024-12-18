@@ -83,6 +83,7 @@ export const Input: React.FC<InputProps> = ({
           options={postfixDropdown.options}
           maxMenuHeight={100}
           onChange={option => postfixDropdown.onChange?.((option as Option).value)}
+          value={postfixDropdown.value}
         />
       )}
     </>
