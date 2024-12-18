@@ -13,7 +13,7 @@ import {
   AuthRes,
 } from './auth.types';
 import { post, get } from '../http';
-import { SuccessRes } from '../types';
+import { CapacitorPlatform, SuccessRes } from '../types';
 
 export async function login(payload: LoginReq, params?: { event_id: string }): Promise<AuthRes> {
   return (await post<AuthRes>('auth/login', payload, { params })).data;
@@ -59,8 +59,13 @@ export async function stripeProfile(params: SrtipeProfileReq): Promise<StripePro
   return (await get<StripeProfileRes>('auth/stripe/profile', { params })).data;
 }
 
-export async function googleOauth(code: string, referrer?: string, event_id?: string): Promise<AuthRes> {
-  return (await get<AuthRes>('auth/google', { params: { code, referrer_by: referrer, event_id } })).data;
+export async function googleOauth(
+  code: string,
+  referrer?: string,
+  event_id?: string,
+  platform?: CapacitorPlatform,
+): Promise<AuthRes> {
+  return (await get<AuthRes>('auth/google', { params: { code, referrer_by: referrer, event_id, platform } })).data;
 }
 
 export async function appleOauth(
