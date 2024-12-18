@@ -358,13 +358,13 @@ export class MeshEscrowContract extends MeshTxInitiator {
   }
 
   getScriptCbor = () => {
-    return applyParamsToScript(plutus.validators[0]!.compiledCode, []);
-    // switch (this.version) {
-    //   case 2:
-    //     return applyParamsToScript(plutus.validators[0]!.compiledCode, []);
-    //   default:
-    //     return applyParamsToScript(plutus.validators[0]!.compiledCode, []);
-    // }
+    // return applyParamsToScript(plutus.validators[0]!.compiledCode, []);
+    switch (this.version) {
+      case 2:
+        return applyParamsToScript(plutus.validators[0]!.compiledCode, []);
+      default:
+        return applyParamsToScript(plutus.validators[0]!.compiledCode, []);
+    }
   };
 
   initiateEscrow = async (escrowAmount: Asset[], feeAddress: string, feeAmount: Asset[]): Promise<string> => {

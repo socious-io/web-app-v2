@@ -59,7 +59,7 @@ export const useWeb3 = () => {
 
     const checkIsLaceConnected = async () => {
       console.log('checkIsLaceConnected invoked');
-      const lace = window?.cardano?.lace;
+      const lace = window?.cardano?.eternl;
       if (lace === undefined) {
         setIsLaceConnected(false);
         return;
@@ -67,7 +67,7 @@ export const useWeb3 = () => {
       const isEnabled = await lace.isEnabled();
       await setIsLaceConnected(isEnabled);
 
-      if (isLaceConnected) {
+      if (isLaceConnected || isEnabled) {
         //FIXME(Elaine): deduplicate with LaceButton
         const api = await lace.enable(); // should definitionally return instantly because isLaceEnabled
         const usedAddresses = new Set(await api.getUsedAddresses());

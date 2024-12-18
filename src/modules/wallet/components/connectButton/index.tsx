@@ -22,7 +22,8 @@ export const LaceButton: React.FC<LaceButtonProps> = ({ handleClick }) => {
   const cardano = window?.cardano;
   console.log('window.cardano: ' + JSON.stringify(Object.getOwnPropertyNames(cardano)));
   // this is according to CIP-30
-  const lace = window?.cardano?.lace;
+  // const lace = window?.cardano?.lace;
+  const lace = window?.cardano?.eternl;
   if (typeof lace === 'undefined') {
     return; //TODO(Elaine): placeholder? Grayed out? I think desaturated with tooltip would be good
   }

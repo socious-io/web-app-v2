@@ -21,8 +21,8 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
   }
 
   useEffect(() => {
-    setDisabledPayment(!offer || !isConnected);
-  }, [isConnected, offer]);
+    setDisabledPayment(!offer || !isConnected || !isLaceConnected);
+  }, [isConnected, offer, isLaceConnected]);
 
   async function proceedCryptoPayment() {
     if (!offer) return;
@@ -46,9 +46,9 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
     if (isLaceConnected) {
       try {
         const blockfrostKey = import.meta.env.VITE_BLOCKFROST_KEY;
-        const blockchainProvider = new BlockfrostProvider('<Your-API-Key>');
+        const blockchainProvider = new BlockfrostProvider(blockfrostKey);
         const meshTxBuilder = new MeshTxBuilder({ fetcher: blockchainProvider, submitter: blockchainProvider });
-        const wallet = await BrowserWallet.enable('lace'); // NOTE(Elaine): do we rewrite everything with Mesh's own wallet provider or can we just use the stuff we've already written for lace
+        const wallet = await BrowserWallet.enable('eternl'); // NOTE(Elaine): do we rewrite everything with Mesh's own wallet provider or can we just use the stuff we've already written for lace
         const contract = new dapp.MeshEscrowContract({
           mesh: meshTxBuilder,
           fetcher: blockchainProvider,
@@ -59,14 +59,14 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
         const escrowAmount: Asset[] = [
           {
             unit: 'lovelace',
-            quantity: String((offer.amount || 0) * 1_000_000),
+            quantity: String((offer.amount ?? 0) * 1_000_000),
             //FIXME(Elaine): Don't hardcode
           },
         ];
         const feeAmount: Asset[] = [
           {
             unit: 'lovelace',
-            quantity: String(Math.floor((offer.fee || 0) * (offer.amount || 0) * 1_000_000)),
+            quantity: String(Math.floor((offer.fee ?? 0) * (offer.amount ?? 0) * 1_000_000)),
           },
         ];
         const feeAddress =

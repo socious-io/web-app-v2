@@ -945,6 +945,7 @@ function DefaultRoute() {
 
 function ErrorBoundary() {
   const error: any = useRouteError();
+  console.log('error boundry error: ', error);
   if (error?.response?.status === 401) return <Navigate to="/intro" />;
   return <FallBack />;
 }

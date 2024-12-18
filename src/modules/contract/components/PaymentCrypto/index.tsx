@@ -4,7 +4,7 @@ import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
-import { ConnectButton } from 'src/modules/wallet/components/connectButton';
+import { ConnectButton, ConnectButtons } from 'src/modules/wallet/components/connectButton';
 
 import { PaymentCryptoProps } from './paymentCrypto.types';
 import { usePaymentCrypto } from './usePaymentCrypto';
@@ -41,7 +41,16 @@ export const PaymentCrypto: React.FC<PaymentCryptoProps> = ({ open, handleClose,
 
   const contentJsx = (
     <div className="w-full p-4 md:p-6 flex flex-col items-center gap-5">
-      {isConnected ? <Dapp.Connect /> : <ConnectButton handleClick={() => openConnect()} />}
+      {isConnected ? (
+        <Dapp.Connect />
+      ) : (
+        <ConnectButtons
+          handleWalletConnect={() => openConnect()}
+          handleLaceConnect={() => {
+            return;
+          }}
+        />
+      )}
       <PaymentSummary
         currency={unit.toString()}
         amount={offer?.amount || 0}
