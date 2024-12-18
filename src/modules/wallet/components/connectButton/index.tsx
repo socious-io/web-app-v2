@@ -32,9 +32,9 @@ export const LaceButton: React.FC<LaceButtonProps> = ({ handleClick }) => {
     //FIXME(Elaine): I know this looks like I'm writing Haskell in javascript
     //FIXME(Elaine): deduplicate with useWeb3()
     //FIXME(Elaine): select actual wallet if multiple
-    const usedAddresses = new Set(await api.getUsedAddresses());
-    const unusedAddresses = new Set(await api.getUnusedAddresses());
-    const allAddresses = Array.from(usedAddresses.union(unusedAddresses));
+    // const usedAddresses = new Set(await api.getUsedAddresses());
+    // const unusedAddresses = new Set(await api.getUnusedAddresses());
+    // const allAddresses = Array.from(usedAddresses.union(unusedAddresses));
 
     // FIXME(Elaine): probably we can get rid of the handleClick entirely
     handleClick();

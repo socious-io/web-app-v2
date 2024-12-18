@@ -70,10 +70,14 @@ export const useWeb3 = () => {
       if (isLaceConnected || isEnabled) {
         //FIXME(Elaine): deduplicate with LaceButton
         const api = await lace.enable(); // should definitionally return instantly because isLaceEnabled
-        const usedAddresses = new Set(await api.getUsedAddresses());
-        const unusedAddresses = new Set(await api.getUnusedAddresses());
-        const allAddresses = Array.from(usedAddresses.union(unusedAddresses));
-        setLaceAddress(allAddresses[0] as string); //FIXME(Elaine): types
+        const usedAddresses = await api.getUsedAddresses();
+        const unusedAddresses = await api.getUnusedAddresses();
+        // get the first address in usedAddresses, if usedAddresses is non-empty
+        // otherwise, get the first address in unusedAddresses
+
+        const address = usedAddresses.length > 0 ? usedAddresses[0] : unusedAddresses[0];
+
+        setLaceAddress(address as string); //FIXME(Elaine): types
       }
     };
     checkIsLaceConnected();
