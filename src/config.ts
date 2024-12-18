@@ -18,6 +18,7 @@ export const config = {
   googleOauthClientIdIos: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID_IOS,
   appleOauthClientId: import.meta.env.VITE_APPLE_OAUTH_CLIENT_ID,
   googleRecaptchaSiteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
+  appleOauthClientIdIOS: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID_IOS,
 };
 
 export const isTestingEnvironment = config.env === 'test';
