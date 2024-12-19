@@ -14,7 +14,7 @@ import { useServiceList } from './useServiceList';
 
 const ServicesList = () => {
   const {
-    data: { services, page, totalPage, openDeleteModal },
+    data: { myProfile, services, page, totalPage, openDeleteModal },
     operations: {
       onChangePage,
       onServiceClick,
@@ -28,19 +28,22 @@ const ServicesList = () => {
   return services.length ? (
     <>
       <div className="flex flex-col gap-6">
-        <Button
-          color="primary"
-          startIcon={<Icon name="plus" color={variables.color_white} />}
-          customStyle="self-center"
-          onClick={onCreateService}
-        >
-          {translate('service-new')}
-        </Button>
+        {myProfile && (
+          <Button
+            color="primary"
+            startIcon={<Icon name="plus" color={variables.color_white} />}
+            customStyle="self-center"
+            onClick={onCreateService}
+          >
+            {translate('service-new')}
+          </Button>
+        )}
         {services.map(service => (
           <ServiceCard
             key={service.id}
             {...service}
             sample={service.samples ? service.samples[0]?.url : ''}
+            myProfile={myProfile}
             onCardClick={onServiceClick}
             onActions={onServiceActions}
           />
@@ -79,17 +82,19 @@ const ServicesList = () => {
       />
     </>
   ) : (
-    <EmptyBox
-      icon={<FeaturedIcon iconName="search-lg" size="lg" type="modern" theme="gray" />}
-      title={translate('service-empty.title')}
-      subtitle={translate('service-empty.subtitle')}
-      button={{
-        children: translate('service-new'),
-        color: 'primary',
-        startIcon: <Icon name="plus" color={variables.color_white} />,
-        onClick: onCreateService,
-      }}
-    />
+    myProfile && (
+      <EmptyBox
+        icon={<FeaturedIcon iconName="search-lg" size="lg" type="modern" theme="gray" />}
+        title={translate('service-empty.title')}
+        subtitle={translate('service-empty.subtitle')}
+        button={{
+          children: translate('service-new'),
+          color: 'primary',
+          startIcon: <Icon name="plus" color={variables.color_white} />,
+          onClick: onCreateService,
+        }}
+      />
+    )
   );
 };
 
