@@ -76,10 +76,27 @@
     "purchase": "Purchase",
     "more": "Read more",
     "order": {
+      "step-1": "Order details",
+      "step-2": "Confirm and pay",
+      "step-3": "Submit your requirements",
       "summary": "Order summary",
       "fee": "Socious fee",
       "total": "Total",
-      "checkout-button": "Continue to checkout"
+      "checkout-button": "Continue to checkout",
+      "confirm-button": "Confirm and pay",
+      "card-header": "Saved payment options",
+      "card-subheader": "Choose a card",
+      "card-new": "Add a new card",
+      "wallet-header": "Select a wallet",
+      "status": "Status",
+      "number": "Order",
+      "date": "Date",
+      "success-payment": "Thank you for your purchase",
+      "requirements-description": "Submit your requirements to send your order",
+      "requirements-description-placeholder": "Enter a description...",
+      "requirements-files": "Attach files (optional)",
+      "requirements-files-desc": "{{max}} file maximum",
+      "send-button": "Send"
     }
   }
 }
