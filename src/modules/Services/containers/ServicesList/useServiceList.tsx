@@ -1,16 +1,23 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { deleteServiceAdaptor, getServicesAdaptor, ServicesRes } from 'src/core/adaptors';
+import { CurrentIdentity, UserProfile } from 'src/core/api';
+import { RootState } from 'src/store';
 
 export const useServiceList = () => {
   const navigate = useNavigate();
-  const { services } = useLoaderData() as { services: ServicesRes };
+  const { services, user } = useLoaderData() as { services: ServicesRes; user: UserProfile };
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
+  });
   const [openDeleteModal, setOpenDeleteModal] = useState('');
   const [page, setPage] = useState(1);
   const [currentServices, setCurrentServices] = useState(services);
   const currentList = currentServices?.items || [];
   const totalPage = Math.ceil((currentServices?.total_count || 1) / (currentServices?.limit || 5));
   const limit = 5;
+  const myProfile = currentIdentity?.id === user?.id;
 
   const onChangePage = async (newPage: number) => {
     setPage(newPage);
@@ -39,7 +46,7 @@ export const useServiceList = () => {
   };
 
   return {
-    data: { services: currentList, page, totalPage, openDeleteModal },
+    data: { myProfile, services: currentList, page, totalPage, openDeleteModal },
     operations: {
       onChangePage,
       onServiceClick,
