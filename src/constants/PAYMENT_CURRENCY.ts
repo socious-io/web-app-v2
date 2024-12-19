@@ -20,3 +20,8 @@ export const CURRENCY_SIGNS = {
   USDT: '$',
   WADA: '₳',
 };
+
+export const PAYMENT_CURRENCIES = [
+  { label: 'USD', value: 'USD' },
+  { label: 'JPY', value: 'JPY' },
+];

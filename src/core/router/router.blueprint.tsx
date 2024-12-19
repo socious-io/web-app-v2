@@ -1,7 +1,13 @@
 import { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, RouteObject, createBrowserRouter, useRouteError } from 'react-router-dom';
-import { getServicesAdaptor } from 'src/core/adaptors';
+import {
+  getServiceAdaptor,
+  getServicesAdaptor,
+  getStripAccountsAdaptor,
+  jobCategoriesToDropdown,
+  skillsToCategoryAdaptor,
+} from 'src/core/adaptors';
 import {
   jobs,
   chats,
@@ -303,6 +309,111 @@ export const blueprint: RouteObject[] = [
                   const { RecommendedList } = await import('src/pages/jobs/recommendedList');
                   return {
                     Component: Protect(RecommendedList, 'users'),
+                  };
+                },
+              },
+            ],
+          },
+          {
+            path: 'services',
+            children: [
+              {
+                path: ':id',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const [serviceDetail] = await Promise.all([getServiceAdaptor(params.id)]);
+                    return { serviceDetail: serviceDetail?.data };
+                  }
+                },
+                async lazy() {
+                  const { DetailService } = await import('src/pages/services/detail');
+                  return {
+                    Component: Protect(DetailService, 'both'),
+                  };
+                },
+              },
+              {
+                path: ':id/pay',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const [serviceDetail] = await Promise.all([getServiceAdaptor(params.id)]);
+                    return { serviceDetail: serviceDetail?.data };
+                  }
+                },
+                async lazy() {
+                  const { ServicePay } = await import('src/pages/services/pay');
+                  return {
+                    Component: Protect(ServicePay, 'both'),
+                  };
+                },
+              },
+              {
+                path: 'create',
+                loader: async () => {
+                  const requests = [jobCategoriesReq(), skillsToCategoryAdaptor(), getStripAccountsAdaptor()] as const;
+                  const [jobCategories, skillCategories, stripeAccounts] = await Promise.all(requests);
+                  return {
+                    jobCategories: jobCategoriesToDropdown(jobCategories.categories),
+                    skillCategories,
+                    hasStripeAccounts: !!stripeAccounts.data?.length,
+                  };
+                },
+                async lazy() {
+                  const { CreateService } = await import('src/pages/services/create');
+                  return {
+                    Component: Protect(CreateService, 'users'),
+                  };
+                },
+              },
+              {
+                path: 'edit/:id',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const requests = [
+                      jobCategoriesReq(),
+                      skillsToCategoryAdaptor(),
+                      getServiceAdaptor(params.id),
+                      getStripAccountsAdaptor(),
+                    ] as const;
+                    const [jobCategories, skillCategories, serviceDetail, stripeAccounts] = await Promise.all(requests);
+                    return {
+                      jobCategories: jobCategoriesToDropdown(jobCategories.categories),
+                      skillCategories,
+                      serviceDetail: serviceDetail?.data,
+                      hasStripeAccounts: !!stripeAccounts.data?.length,
+                    };
+                  }
+                },
+                async lazy() {
+                  const { CreateService } = await import('src/pages/services/create');
+                  return {
+                    Component: Protect(CreateService, 'users'),
+                  };
+                },
+              },
+              {
+                path: 'duplicate/:id',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const requests = [
+                      jobCategoriesReq(),
+                      skillsToCategoryAdaptor(),
+                      getServiceAdaptor(params.id),
+                      getStripAccountsAdaptor(),
+                    ] as const;
+                    const [jobCategories, skillCategories, serviceDetail, stripeAccounts] = await Promise.all(requests);
+                    return {
+                      jobCategories: jobCategoriesToDropdown(jobCategories.categories),
+                      skillCategories,
+                      serviceDetail: serviceDetail?.data,
+                      hasStripeAccounts: !!stripeAccounts.data?.length,
+                    };
+                  }
+                },
+                async lazy() {
+                  const { CreateService } = await import('src/pages/services/create');
+                  return {
+                    Component: Protect(CreateService, 'users'),
                   };
                 },
               },
