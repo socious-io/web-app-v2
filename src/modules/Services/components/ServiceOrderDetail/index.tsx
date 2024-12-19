@@ -54,7 +54,9 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
               <img src={`/icons/crypto/${currency?.toString()}.svg`} width={20} alt={currency} />
             )}
             {generatePriceFormat(price, currency)}
-            {payment === 'FIAT' && <span className={styles['row--lighter']}>{translate('service-detail.fixed')}</span>}
+            {payment === 'FIAT' && (
+              <span className={styles['card__row--lighter']}>{translate('service-detail.fixed')}</span>
+            )}
           </div>
         </div>
       </div>
