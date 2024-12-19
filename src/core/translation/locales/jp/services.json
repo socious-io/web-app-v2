@@ -78,7 +78,12 @@
       "summary": "注文概要",
       "fee": "Socious手数料",
       "total": "合計",
-      "checkout-button": "チェックアウトに進む"
+      "checkout-button": "チェックアウトに進む",
+      "confirm-button": "確認して支払う",
+      "card-header": "保存された支払いオプション",
+      "card-subheader": "カードを選択",
+      "card-new": "新しいカードを追加",
+      "wallet-header": "ウォレットを選択"
     }
   }
 }

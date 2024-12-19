@@ -78,7 +78,12 @@
       "summary": "Order summary",
       "fee": "Socious fee",
       "total": "Total",
-      "checkout-button": "Continue to checkout"
+      "checkout-button": "Continue to checkout",
+      "confirm-button": "Confirm and pay",
+      "card-header": "Saved payment options",
+      "card-subheader": "Choose a card",
+      "card-new": "Add a new card",
+      "wallet-header": "Select a wallet"
     }
   }
 }
