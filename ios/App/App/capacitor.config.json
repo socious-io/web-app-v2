@@ -28,6 +28,7 @@
 		"HapticsPlugin",
 		"PreferencesPlugin",
 		"PushNotificationsPlugin",
-		"ToastPlugin"
+		"ToastPlugin",
+		"GoogleAuth"
 	]
 }
