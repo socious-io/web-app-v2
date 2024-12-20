@@ -94,4 +94,19 @@
             line-height: 30px;
         }
     }
+
+    .order {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        color: $color-grey-700;
+
+        &__value {
+            font-weight: 400;
+            color: $color-grey-600;
+        }
+    }
 }
