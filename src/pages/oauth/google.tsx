@@ -86,22 +86,23 @@ export const GoogleOauth2 = () => {
   const code = searchParams.get('code');
 
   useEffect(() => {
+    const handleGoogleOauth = (authCodeOrToken, platform) => {
+      googleOauth(authCodeOrToken, referrerUser?.id, eventId, platform)
+        .then(res => onLoginSucceed(res))
+        .catch(() => navigate(`/sign-in?${eventName && `event_name=${eventName}`}`));
+      localStorage.removeItem('referrer');
+    };
+
     if (Capacitor.getPlatform() === 'ios') {
       GoogleAuth.signIn().then(googleUser => {
-        googleOauth(googleUser.authentication.idToken, referrerUser, eventId, 'ios')
-          .then(res => onLoginSucceed(res))
-          .catch(() => navigate(`/sign-in?${eventName && `event_name=${eventName}`}`));
-        localStorage.removeItem('referrer');
+        handleGoogleOauth(googleUser.authentication.idToken, 'ios');
       });
     } else {
       if (!code) {
         window.location.href = googleLoginURL;
         return;
       } else {
-        googleOauth(code, referrerUser?.id, eventId)
-          .then(res => onLoginSucceed(res))
-          .catch(() => navigate(`/sign-in?${eventName && `event_name=${eventName}`}`));
-        localStorage.removeItem('referrer');
+        handleGoogleOauth(code, 'other');
       }
     }
   }, [code]);
