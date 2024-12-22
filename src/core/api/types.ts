@@ -419,3 +419,5 @@ export type LanguageCode =
   | 'ZA'
   | 'ZH'
   | 'ZU';
+
+export type CapacitorPlatform = 'mobile' | 'web' | 'ios' | 'android' | 'all';
