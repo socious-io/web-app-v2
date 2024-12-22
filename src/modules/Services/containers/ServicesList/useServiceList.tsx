@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { deleteServiceAdaptor, getServicesAdaptor, ServicesRes } from 'src/core/adaptors';
+import { deleteServiceAdaptor, getServicesAdaptor, PaymentMode, ServicesRes } from 'src/core/adaptors';
 import { CurrentIdentity, UserProfile } from 'src/core/api';
+import { getSelectedTokenDetail } from 'src/dapp/dapp.service';
 import { RootState } from 'src/store';
 
 export const useServiceList = () => {
@@ -15,9 +16,17 @@ export const useServiceList = () => {
   const [page, setPage] = useState(1);
   const [currentServices, setCurrentServices] = useState(services);
   const currentList = currentServices?.items || [];
-  const totalPage = Math.ceil((currentServices?.total_count || 1) / (currentServices?.limit || 5));
+  const totalPage = Math.ceil((currentServices?.total || 1) / (currentServices?.limit || 5));
   const limit = 5;
   const myProfile = currentIdentity?.id === user?.id;
+
+  const generateCurrencyLabel = (payment: PaymentMode, currency: string) => {
+    if (payment === 'CRYPTO') {
+      return getSelectedTokenDetail(currency).name;
+    } else {
+      return currency;
+    }
+  };
 
   const onChangePage = async (newPage: number) => {
     setPage(newPage);
@@ -48,6 +57,7 @@ export const useServiceList = () => {
   return {
     data: { myProfile, services: currentList, page, totalPage, openDeleteModal },
     operations: {
+      generateCurrencyLabel,
       onChangePage,
       onServiceClick,
       onServiceActions,
