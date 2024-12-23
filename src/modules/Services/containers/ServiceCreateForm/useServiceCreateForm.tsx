@@ -45,7 +45,7 @@ const schema = yup.object().shape({
 
 export const useServiceCreateForm = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { pathname } = useLocation();
   const { id: serviceId = '' } = useParams<{ id: string }>();
   const {
     jobCategories: categories = [],
@@ -75,13 +75,14 @@ export const useServiceCreateForm = () => {
   const serviceLength = translateServiceLength;
   const paymentModes = translatePaymentMode;
   const paymentCurrencies = PAYMENT_CURRENCIES;
-  const isEdit = !!location.pathname.includes('services/edit') ?? false;
-  const isDuplicate = !!location.pathname.includes('services/duplicate') ?? false;
+  const isEdit = !!pathname.includes('services/edit') ?? false;
+  const isDuplicate = !!pathname.includes('services/duplicate') ?? false;
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
+    watch,
     setValue,
     reset,
   } = useForm<ServiceForm>({
@@ -90,8 +91,8 @@ export const useServiceCreateForm = () => {
   });
   const selectedCategory = getValues('category');
   const selectedDelivery = getValues('delivery');
-  const selectedPaymentMethod = getValues('payment') || paymentModes[0].value;
-  const selectedCurrency = getValues('currency');
+  const selectedPaymentMethod = watch('payment') || paymentModes[0].value;
+  const selectedCurrency = getValues('currency') || paymentCurrencies[0].value;
   const selectedSkills = getValues('skills') || [];
   const disabledButton = selectedPaymentMethod === 'CRYPTO' && !isConnected;
 
@@ -106,36 +107,63 @@ export const useServiceCreateForm = () => {
     }
   }, [isConnected, account]);
 
+  const initCurrencyValue = (service: Service) => {
+    if (!service) {
+      return selectedPaymentMethod === 'FIAT' ? paymentCurrencies[0].value : tokens[0]?.value || '';
+    }
+
+    const { payment, currency } = service;
+    const isCryptoPayment = payment === 'CRYPTO';
+    const isFiatPayment = payment === 'FIAT';
+
+    if (isCryptoPayment && selectedPaymentMethod === 'FIAT') {
+      return paymentCurrencies[0].value;
+    }
+    if (isFiatPayment && selectedPaymentMethod === 'CRYPTO' && tokens.length) {
+      return tokens[0]?.value || '';
+    }
+    if (isCryptoPayment && tokens.length) {
+      return tokens.find(token => token.value === currency)?.value || '';
+    }
+    if (isFiatPayment) {
+      return paymentCurrencies.find(curr => curr.value === currency)?.value || '';
+    }
+
+    return '';
+  };
+
   const initializeValues = useCallback(
     (service: Service) => {
-      const defaultDelivery = serviceLength.find(length => length.value === service.delivery);
-      const defaultFiatCurrency = paymentCurrencies.find(currency => currency.value === service.currency)?.value;
-      const defaultCryptoCurrency = tokens.find(token => token.value === service.currency)?.value;
+      const defaultDelivery = serviceLength.find(length => length.value === service?.delivery)?.value || '';
       const initialVal = {
-        name: service.name,
-        category: categories?.find(category => category.value === service.category),
-        description: service.description,
+        name: service?.name || '',
+        category: categories?.find(category => category.value === service?.category),
+        description: service?.description || '',
         delivery: defaultDelivery
           ? {
-              label: translate(`service-form.delivery-options.${defaultDelivery.value}`),
-              value: defaultDelivery.value,
+              label: translate(`service-form.delivery-options.${defaultDelivery}`),
+              value: defaultDelivery,
             }
           : undefined,
-        hours: service.hours,
-        payment: service.payment,
-        price: service.price,
-        currency: service.payment === 'FIAT' ? defaultFiatCurrency : defaultCryptoCurrency,
-        skills: skillsToCategory(service.skills),
+        hours: service?.hours || '',
+        payment: service?.payment || paymentModes[0].value,
+        price: service?.price || '',
+        currency: undefined,
+        skills: service?.skills ? skillsToCategory(service.skills) : undefined,
       };
       setAttachments(service?.samples || []);
       reset(initialVal);
     },
-    [tokens, reset],
+    [reset],
   );
 
   useEffect(() => {
     initializeValues(service);
-  }, [service, tokens]);
+  }, [initializeValues, service]);
+
+  useEffect(() => {
+    setValue('currency', initCurrencyValue(service));
+  }, [service, tokens, selectedPaymentMethod]);
 
   const handleCloseModal = () => setOpenModal({ name: '', open: false });
 
