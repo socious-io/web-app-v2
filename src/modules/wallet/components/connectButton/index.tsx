@@ -8,7 +8,7 @@ interface ConnectButtonProps {
 }
 export const ConnectButton: React.FC<ConnectButtonProps> = ({ handleClick }) => {
   return (
-    <button className={css.btn} onClick={handleClick}>
+    <button type="button" className={css.btn} onClick={handleClick}>
       <Icon name="wallet-connect-01" fontSize={20} color="#0099FF" />
       WalletConnect
     </button>

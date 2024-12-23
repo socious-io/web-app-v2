@@ -71,3 +71,14 @@ export interface WithdrawnParams {
   chainId: number;
   escrowId: string;
 }
+
+export interface FlattenToken {
+  address: string;
+  chain: Chain;
+  decimals: number;
+  escrow: string;
+  logic: string;
+  name: string;
+  network: 'testnet' | 'mainet';
+  symbol: string;
+}

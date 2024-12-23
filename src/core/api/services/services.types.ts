@@ -1,4 +1,4 @@
-import { PaginateRes } from '../types';
+import { PaginateResV3 } from '../types';
 
 export type Category = {
   id: string;
@@ -11,7 +11,10 @@ export type Category = {
 export type WorkSample = {
   filename: string;
   url: string;
+  id: string;
 };
+
+export type PaymentMode = 'FIAT' | 'CRYPTO';
 
 export interface Service {
   id: string;
@@ -24,12 +27,27 @@ export interface Service {
   project_length: string;
   commitment_hours_lower: string;
   commitment_hours_higher: string;
+  payment_mode: PaymentMode;
   payment_range_lower: string;
   payment_range_higher: string;
   work_samples: WorkSample[];
   kind: 'SERVICE';
 }
 
-export interface ServicesRes extends PaginateRes {
-  results: Service[];
+export type ServicesRes = PaginateResV3<Service>;
+
+export interface ServiceReq {
+  title: string;
+  description: string;
+  payment_currency: string;
+  skills: string[];
+  job_category_id: string;
+  project_length: string;
+  commitment_hours_lower: string;
+  commitment_hours_higher: string;
+  payment_mode: PaymentMode;
+  payment_range_lower: string;
+  payment_range_higher: string;
+  work_samples: string[];
+  kind: 'SERVICE';
 }

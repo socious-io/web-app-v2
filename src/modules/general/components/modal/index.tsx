@@ -37,7 +37,7 @@ export const Modal: React.FC<ModalProps> = props => {
               mobileCentered ? css.mobileCentered : mobileFullHeight ? css.mobileFullHeight : css.mobileDefault
             } ${className}`}
           >
-            <div className="w-full flex  gap-4 px-6 pt-6 relative top-0">
+            <div className="w-full flex gap-4 px-4 pt-4 md:px-6 md:pt-6 relative top-0">
               {icon}
               {inlineTitle && (
                 <div className="flex-1 flex flex-col gap-1 justify-center items-start pb-5">

@@ -1,6 +1,12 @@
 {
-    "general-back": "戻る",
-    "general-log-out": "ログアウト",
-    "general-cause-social": "社会問題（一般）",
-    "general-popular": "人気"
+  "general-back": "戻る",
+  "general-log-out": "ログアウト",
+  "general-cause-social": "社会問題（一般）",
+  "general-popular": "人気",
+  "general-file-uploader": {
+    "click": "クリックしてアップロード",
+    "drag": "またはドラッグ＆ドロップ",
+    "or": "または",
+    "max": "最大"
+  }
 }

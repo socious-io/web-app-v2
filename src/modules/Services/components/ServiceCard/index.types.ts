@@ -7,6 +7,7 @@ export interface ServiceCardProps {
   delivery: string;
   price: string;
   currency: string;
+  myProfile: boolean;
   onCardClick: (serviceId: string) => void;
   onActions: (actionName: 'duplicate' | 'delete' | 'edit', serviceId: string) => void;
 }

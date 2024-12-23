@@ -17,6 +17,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   delivery,
   price,
   currency,
+  myProfile,
   onCardClick,
   onActions,
 }) => {
@@ -67,7 +68,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             {category}
             <span className={styles['content__name']}>{name}</span>
           </div>
-          <div className={`${styles['content__actions']} hidden md:flex`}>{actionsJSX}</div>
+          {myProfile && <div className={`${styles['content__actions']} hidden md:flex`}>{actionsJSX}</div>}
         </div>
         <div className={styles['content__skills']}>
           {skills.map(item => (
@@ -85,7 +86,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           </span>
         </div>
       </div>
-      <div className={`${styles['content__actions']} flex md:hidden`}>{actionsJSX}</div>
+      {myProfile && <div className={`${styles['content__actions']} flex md:hidden`}>{actionsJSX}</div>}
     </div>
   );
 };

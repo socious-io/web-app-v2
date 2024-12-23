@@ -1,7 +1,8 @@
-import { AllowanceParams, EscrowActionEventData, EscrowParams, WithdrawnParams } from './dapp.types';
+import { Contract, parseUnits } from 'ethers';
+
 import { dappConfig } from './dapp.config';
 import { NETWORKS } from './dapp.connect';
-import { Contract, parseUnits } from 'ethers';
+import { AllowanceParams, EscrowParams, FlattenToken, WithdrawnParams } from './dapp.types';
 
 export const allowance = async (params: AllowanceParams) => {
   const contract = new Contract(params.token, dappConfig.abis.token, params.signer);
@@ -73,4 +74,27 @@ export const withdrawnEscrow = async (params: WithdrawnParams) => {
   await tx.wait();
 
   return tx.hash;
+};
+
+export const getSelectedTokenDetail = (address: string) => {
+  const flattenedTokens: FlattenToken[] = [];
+
+  for (const [network, chainArray] of Object.entries(dappConfig)) {
+    if (network === 'testnet' || network === 'mainet') {
+      chainArray.forEach(chain => {
+        chain.tokens.forEach(token => {
+          flattenedTokens.push({
+            network,
+            chain: chain.chain,
+            escrow: chain.escrow,
+            logic: chain.logic,
+            ...token,
+          });
+        });
+      });
+    }
+  }
+  const selectedToken = flattenedTokens.find(token => token.address === address);
+
+  return { name: selectedToken?.name, symbol: selectedToken?.symbol };
 };

@@ -14,11 +14,16 @@ export type AdaptorRes<T = null> = {
   error: string | null;
 };
 
-export interface PaginateRes {
+export interface PaginateRes<T> {
   page: number;
   limit: number;
   total: number;
-  items: any[];
+  items: T[];
+}
+
+export interface OptionType {
+  value: string;
+  label: string;
 }
 
 //FIXME: create a specific directory for each adaptor later
@@ -27,8 +32,8 @@ import store from 'src/store';
 import { setEvents } from 'src/store/reducers/events.reducer';
 import { setSkills } from 'src/store/reducers/skills.reducer';
 
-import { events, skills, Event } from '../api';
-import { CategoriesResp, Cities } from '../types';
+import { events, skills, Event, Category } from '../api';
+import { Cities } from '../types';
 import { translate } from '../utils';
 
 export function socialCausesToCategoryAdaptor() {
@@ -66,10 +71,9 @@ export function socialCausesToCategory(categories: string[] = []) {
   });
 }
 
-export function jobCategoriesToDropdown(categories: CategoriesResp['categories']) {
+export function jobCategoriesToDropdown(categories: Category[]) {
   return categories.map(item => {
     return {
-      id: item.id,
       label: item.name,
       value: item.id,
     };
