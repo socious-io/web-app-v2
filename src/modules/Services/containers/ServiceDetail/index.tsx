@@ -23,22 +23,21 @@ const ServiceDetail = () => {
       />
       <div className={styles['content']}>
         <div className={styles['content__left']}>
-          {!!service?.samples?.length && (
+          {!!service.samples?.length && (
             <div className={styles['samples']}>
-              {service.samples?.map((sample, index) => (
+              {service.samples.map((sample, index) => (
                 <img key={index} src={sample.url} alt="Samples" className={styles['samples__img']} />
               ))}
             </div>
           )}
-          {service?.description && (
-            <ExpandableText
-              seeMoreText={translate('service-detail.more')}
-              text={service.description}
-              expectedLength={maxLengthDescription}
-              isMarkdown
-              customStyle={styles['description']}
-            />
-          )}
+          <span className={styles['content__title']}>Description</span>
+          <ExpandableText
+            seeMoreText={translate('service-detail.more')}
+            text={service.description}
+            expectedLength={maxLengthDescription}
+            isMarkdown
+            customStyle={styles['description']}
+          />
         </div>
         <ServiceDetailBox
           customStyle={styles['content__right']}

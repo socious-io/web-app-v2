@@ -6,10 +6,15 @@ $box-width: 22.5rem;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 8.875rem;
     padding-top: 2rem;
 
+    @media (max-width: $width-2xl) {
+        gap: 4.5rem;
+    }
+
     @media (max-width: $width-xl) {
+        gap: 2rem;
         flex-direction: column-reverse;
     }
 
@@ -35,6 +40,13 @@ $box-width: 22.5rem;
         @media (max-width: $width-xl) {
             max-width: 100%;
         }
+    }
+
+    &__title {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 28px;
+        color: $color-grey-900;
     }
 
     .samples {
