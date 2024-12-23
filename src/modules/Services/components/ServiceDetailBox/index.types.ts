@@ -4,7 +4,7 @@ export type ServiceDetail = {
   skills: string[];
   delivery: string;
   price: string;
-  currency: string;
+  currency: { name: string; symbol: string };
   payment: PaymentMode;
 };
 

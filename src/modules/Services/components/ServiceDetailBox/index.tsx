@@ -32,12 +32,16 @@ const ServiceDetailBox: React.FC<ServiceDetailBoxProps> = ({ serviceDetail, onPu
         </div>
         <div className={styles['row']}>
           {payment === 'FIAT' ? (
-            <Icon name="currency-dollar-circle" fontSize={20} color={variables.color_grey_700} />
+            <Icon
+              name={`currency-${currency.name === 'USD' ? 'dollar' : 'yen'}-circle`}
+              fontSize={20}
+              color={variables.color_grey_700}
+            />
           ) : (
-            <img src={`/icons/crypto/${currency?.toString()}.svg`} width={20} alt={currency} />
+            <img src={`/icons/crypto/${currency.symbol}.svg`} width={20} alt={currency.name} />
           )}
-          {CURRENCY_SIGNS[currency] || ''}
-          {price} {currency}
+          {CURRENCY_SIGNS[currency.name] || ''}
+          {price} {currency.name}
           {payment === 'FIAT' && <span className={styles['row--lighter']}>{translate('service-detail.fixed')}</span>}
         </div>
       </div>
