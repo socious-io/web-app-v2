@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Service } from 'src/core/adaptors';
@@ -12,6 +13,7 @@ export const useServiceDetail = () => {
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
+  const [openSlider, setOpenSlider] = useState(false);
   const isOwner = currentIdentity?.id === service?.identity?.id;
   const serviceDetail = {
     skills: service.skills,
@@ -24,14 +26,24 @@ export const useServiceDetail = () => {
     payment: service.payment,
   };
   const maxLengthDescription = isTouchDevice() ? 130 : 1150;
+  const feePercentage = 2;
+  const feeCalculation = parseFloat(service.price) * (feePercentage / 100);
+  const orderPayment = { feePercentage, fee: feeCalculation, total: feeCalculation + parseFloat(service.price) };
 
   const onBack = () => service?.identity && navigate(`/profile/users/${service.identity?.usernameVal}/view#services`);
 
-  const onServiceActions = (actionName: 'share' | 'edit') => {
-    if (actionName === 'edit') navigate(`/services/edit/${service?.id}`);
+  const onServiceActions = (actionName: 'share' | 'contact' | 'edit') => {
+    const actions = {
+      edit: () => navigate(`/services/edit/${service?.id}`),
+      contact: () => navigate(`/chats?participantId=${service.identity?.id}`),
+      share: () => null, // TODO: Handle share later
+    };
+    actions[actionName]();
   };
 
-  const onPurchase = () => console.log('purchase');
+  const onPurchase = () => setOpenSlider(true);
+
+  const onCheckoutService = () => navigate('pay');
 
   return {
     data: {
@@ -40,7 +52,9 @@ export const useServiceDetail = () => {
       serviceDetail,
       isOwner,
       maxLengthDescription,
+      openSlider,
+      orderPayment,
     },
-    operations: { onBack, onServiceActions, onPurchase },
+    operations: { onBack, onServiceActions, onPurchase, setOpenSlider, onCheckoutService },
   };
 };

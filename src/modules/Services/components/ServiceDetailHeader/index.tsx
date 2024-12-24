@@ -8,7 +8,7 @@ import { Button } from 'src/modules/general/components/Button';
 import styles from './index.module.scss';
 import { ServiceDetailHeaderProps } from './index.types';
 
-const ServiceDetailHeader: React.FC<ServiceDetailHeaderProps> = ({ name, account, onBack, onActions }) => {
+const ServiceDetailHeader: React.FC<ServiceDetailHeaderProps> = ({ name, account, isOwner, onBack, onActions }) => {
   return (
     <div className={styles['container']}>
       <BackLink title={translate('service-detail.header')} customStyle="w-fit p-0" onBack={onBack} />
@@ -27,8 +27,13 @@ const ServiceDetailHeader: React.FC<ServiceDetailHeaderProps> = ({ name, account
           >
             {translate('service-detail.share')}
           </Button> */}
-          <Button color="secondary" variant="outlined" onClick={() => onActions('edit')} customStyle="w-full">
-            {translate('service-detail.edit')}
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={() => onActions(isOwner ? 'edit' : 'contact')}
+            customStyle="w-full"
+          >
+            {isOwner ? translate('service-detail.edit') : translate('service-detail.contact')}
           </Button>
         </div>
       </div>
