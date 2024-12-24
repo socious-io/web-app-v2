@@ -1,14 +1,26 @@
+import { Capacitor } from '@capacitor/core';
+import { SignInWithApple, SignInWithAppleResponse, SignInWithAppleOptions } from '@capacitor-community/apple-sign-in';
 import { useEffect } from 'react';
+import { useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { config } from 'src/config';
 import { EVENTS_QUERIES } from 'src/constants/EVENTS_QUERIES';
-import { EventsRes, GoogleAuthRes, User, appleOauth, identities, profile } from 'src/core/api';
+import { AppleAuthResponse, EventsRes, GoogleAuthRes, User, appleOauth, identities, profile } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
+const options: SignInWithAppleOptions = {
+  clientId: 'io.socious.apple-login-dev',
+  redirectURI: 'https://dev.socious.io/api/v2/auth/apple',
+  scopes: 'email name',
+  state: '12345',
+  nonce: 'nonce',
+};
 export const AppleOauth2 = () => {
+  const platform = Capacitor.getPlatform();
+  const [appleResponse, setAppleResponse] = useState<AppleAuthResponse | null>(null);
   const appleLoginURL = `https://appleid.apple.com/auth/authorize?client_id=${config.appleOauthClientId}&redirect_uri=${config.baseURL}/auth/apple&response_type=code id_token&state=origin:web&scope=name email&response_mode=form_post&prompt=consent`;
 
   const [searchParams] = useSearchParams();
@@ -76,15 +88,63 @@ export const AppleOauth2 = () => {
   const code = searchParams.get('code'),
     id_token = searchParams.get('id_token');
 
-  useEffect(() => {
-    if (!code || !id_token) {
-      window.location.href = appleLoginURL;
-      return;
-    } else {
-      appleOauth(code, id_token, referrerUser?.id, eventId)
-        .then(res => onLoginSucceed(res))
-        .catch(() => navigate(`/sign-in?${eventName && `event_name=${eventName}`}`));
+  const appleLogin = async options => {
+    SignInWithApple.authorize(options)
+      .then(result => {
+        setAppleResponse(result.response);
+      })
+      .catch(error => {
+        console.error('Error in apple login', error);
+      });
+  };
+
+  const handleAppleOauth = async (
+    authorizationCode: string,
+    identityToken: string,
+    referrerId: string | undefined,
+    eventId: string | undefined,
+    onLoginSucceed: (res: any) => void,
+    navigate: (path: string) => void,
+    eventName?: string,
+    platform?: string,
+  ) => {
+    try {
+      const res = await appleOauth(authorizationCode, identityToken, referrerId, eventId, platform);
+      onLoginSucceed(res);
+    } catch {
+      navigate(`/sign-in?${eventName ? `event_name=${eventName}` : ''}`);
+    } finally {
       localStorage.removeItem('referrer');
+    }
+  };
+
+  // Seperated different implementaion for platforms in 2 useeffects for better readability
+  useEffect(() => {
+    if (platform === 'ios') {
+      if (appleResponse) {
+        handleAppleOauth(
+          appleResponse.authorizationCode,
+          appleResponse.identityToken,
+          referrerUser?.id,
+          eventId,
+          onLoginSucceed,
+          navigate,
+          eventName,
+          'ios',
+        );
+      } else {
+        appleLogin(options);
+      }
+    }
+  }, [appleResponse]);
+
+  useEffect(() => {
+    if (platform !== 'ios') {
+      if (!code || !id_token) {
+        window.location.href = appleLoginURL;
+        return;
+      }
+      handleAppleOauth(code, id_token, referrerUser?.id, eventId, onLoginSucceed, navigate, eventName, 'web');
     }
   }, [code]);
 

@@ -73,6 +73,8 @@ export async function appleOauth(
   id_token: string,
   referrer?: string,
   event_id?: string,
+  platform?: string,
 ): Promise<AuthRes> {
-  return (await get<AuthRes>('auth/apple', { params: { code, id_token, referrer_by: referrer, event_id } })).data;
+  return (await get<AuthRes>('auth/apple', { params: { code, id_token, referrer_by: referrer, event_id, platform } }))
+    .data;
 }
