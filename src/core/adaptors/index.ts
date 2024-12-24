@@ -31,6 +31,11 @@ export interface OptionType {
   label: string;
 }
 
+export interface OptionType {
+  value: string;
+  label: string;
+}
+
 //FIXME: create a specific directory for each adaptor later
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import store from 'src/store';

@@ -32,6 +32,7 @@ import {
   OrgMeta,
   disputes,
   invitations,
+  cards,
 } from 'src/core/api';
 import { events, search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/modules/layout';
@@ -329,6 +330,21 @@ export const blueprint: RouteObject[] = [
                   const { DetailService } = await import('src/pages/services/detail');
                   return {
                     Component: Protect(DetailService, 'both'),
+                  };
+                },
+              },
+              {
+                path: ':id/pay',
+                loader: async ({ params }) => {
+                  if (params.id) {
+                    const [serviceDetail, cardsList] = await Promise.all([getServiceAdaptor(params.id), cards({})]);
+                    return { serviceDetail: serviceDetail?.data, cards: cardsList.items };
+                  }
+                },
+                async lazy() {
+                  const { ServicePay } = await import('src/pages/services/pay');
+                  return {
+                    Component: Protect(ServicePay, 'both'),
                   };
                 },
               },
