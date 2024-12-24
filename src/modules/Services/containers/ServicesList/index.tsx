@@ -84,19 +84,17 @@ const ServicesList = () => {
       />
     </>
   ) : (
-    myProfile && (
-      <EmptyBox
-        icon={<FeaturedIcon iconName="search-lg" size="lg" type="modern" theme="gray" />}
-        title={translate('service-empty.title')}
-        subtitle={translate('service-empty.subtitle')}
-        button={{
-          children: translate('service-new'),
-          color: 'primary',
-          startIcon: <Icon name="plus" color={variables.color_white} />,
-          onClick: onCreateService,
-        }}
-      />
-    )
+    <EmptyBox
+      icon={<FeaturedIcon iconName="search-lg" size="lg" type="modern" theme="gray" />}
+      title={translate('service-empty.title')}
+      subtitle={translate('service-empty.subtitle')}
+      button={{
+        children: translate('service-new'),
+        color: 'primary',
+        startIcon: <Icon name="plus" color={variables.color_white} />,
+        onClick: onCreateService,
+      }}
+    />
   );
 };
 

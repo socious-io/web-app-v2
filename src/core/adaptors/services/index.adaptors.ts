@@ -7,7 +7,7 @@ import {
   StripeAccount,
   stripeProfile,
 } from 'src/core/api';
-import { translate } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 
 import { AdaptorRes, PaymentMode, Service, ServiceReq, ServicesRes, SuccessRes } from '..';
 
@@ -51,6 +51,7 @@ export const getServicesAdaptor = async (
 export const getServiceAdaptor = async (serviceId: string): Promise<AdaptorRes<Service>> => {
   try {
     const serviceDetail = await service(serviceId);
+    const { name, username, usernameVal, profileImage, type = 'users' } = getIdentityMeta(serviceDetail.identity);
     const data = {
       id: serviceDetail.id,
       name: serviceDetail.title,
@@ -63,6 +64,14 @@ export const getServiceAdaptor = async (serviceId: string): Promise<AdaptorRes<S
       currency: serviceDetail.payment_currency,
       skills: serviceDetail.skills,
       samples: (serviceDetail?.work_samples || []).map(sample => ({ id: sample.id, url: sample.url })),
+      identity: {
+        id: serviceDetail.identity.id,
+        type,
+        name,
+        username,
+        usernameVal,
+        img: profileImage,
+      },
     };
     return {
       data,

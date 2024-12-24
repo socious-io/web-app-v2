@@ -64,5 +64,14 @@
       "button": "Publish",
       "close-button": "Close"
     }
+  },
+  "service-detail": {
+    "header": "Back to services",
+    "share": "Share",
+    "edit": "Edit service",
+    "about": "About this service",
+    "fixed": "Fixed-price",
+    "purchase": "Purchase",
+    "more": "Read more"
   }
 }

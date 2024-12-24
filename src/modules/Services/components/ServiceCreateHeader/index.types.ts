@@ -1,6 +1,6 @@
 export interface ServiceCreateHeaderProps {
   isEdit?: boolean;
   onPublish: () => void;
-  onCancel: () => void;
+  onDiscard: (actionName: 'back' | 'cancel') => void;
   disabled: boolean;
 }

@@ -64,5 +64,14 @@
       "button": "公開",
       "close-button": "閉じる"
     }
+  },
+  "service-detail": {
+    "header": "サービス一覧に戻る",
+    "share": "共有",
+    "edit": "サービスを編集",
+    "about": "このサービスについて",
+    "fixed": "固定価格",
+    "purchase": "購入",
+    "more": "続きを読む"
   }
 }

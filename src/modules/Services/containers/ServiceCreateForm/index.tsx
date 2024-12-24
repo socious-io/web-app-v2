@@ -114,7 +114,7 @@ const ServiceCreateForm = () => {
         <ServiceCreateHeader
           isEdit={isEdit}
           onPublish={handleSubmit(onSubmit)}
-          onCancel={onCancelClick}
+          onDiscard={(name: 'back' | 'cancel') => (name === 'back' ? onBack() : onCancelClick())}
           disabled={disabledButton}
         />
         <div className={styles['row']}>

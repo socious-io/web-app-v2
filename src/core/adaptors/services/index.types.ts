@@ -19,6 +19,7 @@ export interface Service {
   description: string;
   hours: string;
   payment: PaymentMode;
+  identity?: { id: string; type: string; name: string; username: string; usernameVal: string; img?: string };
 }
 
 export type ServicesRes = PaginateRes<Service>;
