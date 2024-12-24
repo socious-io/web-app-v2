@@ -4,7 +4,6 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Service } from 'src/core/adaptors';
 import { CurrentIdentity } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { getSelectedTokenDetail } from 'src/dapp/dapp.service';
 import { RootState } from 'src/store';
 
 export const useServiceDetail = () => {
@@ -19,10 +18,7 @@ export const useServiceDetail = () => {
     skills: service.skills,
     delivery: service.delivery,
     price: service.price,
-    currency:
-      service.payment === 'CRYPTO'
-        ? getSelectedTokenDetail(service.currency)
-        : { name: service.currency, symbol: service.currency },
+    currency: service.currency,
     payment: service.payment,
   };
   const maxLengthDescription = isTouchDevice() ? 130 : 1150;

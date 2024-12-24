@@ -42,11 +42,15 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
           </div>
           <div className={styles['card__row']}>
             {payment === 'FIAT' ? (
-              <Icon name="currency-dollar-circle" fontSize={20} color={variables.color_grey_700} />
+              <Icon
+                name={`currency-${currency.name === 'USD' ? 'dollar' : 'yen'}-circle`}
+                fontSize={20}
+                color={variables.color_grey_700}
+              />
             ) : (
-              <img src={`/icons/crypto/${currency}.svg`} width={20} alt={currency} />
+              <img src={`/icons/crypto/${currency.symbol}.svg`} width={20} alt={currency.name} />
             )}
-            {generatePriceFormat(price, currency)}
+            {generatePriceFormat(price, currency.name)}
             {payment === 'FIAT' && (
               <span className={styles['card__row--lighter']}>{translate('service-detail.fixed')}</span>
             )}
@@ -57,11 +61,11 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
       <div className={styles['payment']}>
         <div className={styles['payment__fee']}>
           {translate('service-detail.order.fee')} ({feePercentage}%)
-          <span>{generatePriceFormat(fee, currency)}</span>
+          <span>{generatePriceFormat(fee, currency.name)}</span>
         </div>
         <div className={styles['payment__total']}>
           {translate('service-detail.order.total')}
-          <span>{generatePriceFormat(total, currency)}</span>
+          <span>{generatePriceFormat(total, currency.name)}</span>
         </div>
       </div>
       <Divider />

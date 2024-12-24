@@ -123,10 +123,10 @@ export const useServiceCreateForm = () => {
       return tokens[0]?.value || '';
     }
     if (isCryptoPayment && tokens.length) {
-      return tokens.find(token => token.value === currency)?.value || '';
+      return tokens.find(token => token.value === currency.address)?.value || '';
     }
     if (isFiatPayment) {
-      return paymentCurrencies.find(curr => curr.value === currency)?.value || '';
+      return paymentCurrencies.find(curr => curr.value === currency.name)?.value || '';
     }
 
     return '';
