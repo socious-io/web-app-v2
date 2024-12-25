@@ -1,7 +1,7 @@
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Pagination } from 'src/modules/general/components/Pagination';
-import { Overlay } from 'src/modules/general/components/slideoutMenu';
+import Slider from 'src/modules/general/components/Slider';
 import { FilterSlider } from 'src/modules/Search/components/FilterSlider';
 import { useSearch } from 'src/pages/search/useSearch';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -64,14 +64,14 @@ export const Search = () => {
           </div>
         )}
       </div>
-      <Overlay
+      <Slider
         open={sliderFilterOpen}
         onClose={handleCloseOrApplyFilter}
         title="Filter by"
         subtitle={`Filter ${readableType.title} by social causes, skills and more`}
       >
         <FilterSlider type={readableType.type} onApply={onApply} onClose={onClose} filter={filter} />
-      </Overlay>
+      </Slider>
     </div>
   );
 };

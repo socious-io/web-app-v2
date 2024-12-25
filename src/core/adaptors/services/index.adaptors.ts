@@ -8,6 +8,7 @@ import {
   stripeProfile,
 } from 'src/core/api';
 import { getIdentityMeta, translate } from 'src/core/utils';
+import { getSelectedTokenDetail } from 'src/dapp/dapp.service';
 
 import { AdaptorRes, PaymentMode, Service, ServiceReq, ServicesRes, SuccessRes } from '..';
 
@@ -27,7 +28,10 @@ export const getServicesAdaptor = async (
           delivery: translate(`service-form.delivery-options.${service.project_length}`),
           skills: (service.skills || []).map(skill => translate(skill)),
           price: service.payment_range_higher,
-          currency: service.payment_currency,
+          currency:
+            service.payment_mode === 'CRYPTO'
+              ? getSelectedTokenDetail(service.payment_currency)
+              : { name: service.payment_currency },
           description: service.description,
           hours: service.commitment_hours_higher,
           payment: service.payment_mode,
@@ -61,7 +65,10 @@ export const getServiceAdaptor = async (serviceId: string): Promise<AdaptorRes<S
       hours: serviceDetail.commitment_hours_higher,
       payment: serviceDetail.payment_mode as PaymentMode,
       price: serviceDetail.payment_range_higher,
-      currency: serviceDetail.payment_currency,
+      currency:
+        serviceDetail.payment_mode === 'CRYPTO'
+          ? getSelectedTokenDetail(serviceDetail.payment_currency)
+          : { name: serviceDetail.payment_currency },
       skills: serviceDetail.skills,
       samples: (serviceDetail?.work_samples || []).map(sample => ({ id: sample.id, url: sample.url })),
       identity: {

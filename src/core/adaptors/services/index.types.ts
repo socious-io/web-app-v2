@@ -7,6 +7,8 @@ export type WorkSample = {
 
 export type PaymentMode = 'FIAT' | 'CRYPTO';
 
+export type CurrencyDetail = { name: string; symbol?: string; address?: string };
+
 export interface Service {
   id: string;
   name: string;
@@ -14,7 +16,7 @@ export interface Service {
   skills: string[];
   delivery: string;
   price: string;
-  currency: string;
+  currency: CurrencyDetail;
   samples?: WorkSample[];
   description: string;
   hours: string;

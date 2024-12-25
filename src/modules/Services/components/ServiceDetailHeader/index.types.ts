@@ -3,6 +3,7 @@ import { AccountItem } from 'src/modules/general/components/avatarDropDown/avata
 export interface ServiceDetailHeaderProps {
   name: string;
   account: AccountItem;
+  isOwner: boolean;
   onBack: () => void;
-  onActions: (actionName: 'edit' | 'share') => void;
+  onActions: (actionName: 'edit' | 'contact' | 'share') => void;
 }

@@ -16,7 +16,6 @@ const ServicesList = () => {
   const {
     data: { myProfile, services, page, totalPage, openDeleteModal },
     operations: {
-      generateCurrencyLabel,
       onChangePage,
       onServiceClick,
       onServiceActions,
@@ -44,7 +43,7 @@ const ServicesList = () => {
             key={service.id}
             {...service}
             sample={service.samples ? service.samples[0]?.url : ''}
-            currency={generateCurrencyLabel(service.payment, service.currency)}
+            currency={service.currency.name}
             myProfile={myProfile}
             onCardClick={onServiceClick}
             onActions={onServiceActions}

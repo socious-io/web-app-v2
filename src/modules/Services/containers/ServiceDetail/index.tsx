@@ -1,16 +1,18 @@
 import { translate } from 'src/core/utils';
 import { AccountItem } from 'src/modules/general/components/avatarDropDown/avatarDropDown.types';
 import { ExpandableText } from 'src/modules/general/components/expandableText';
+import Slider from 'src/modules/general/components/Slider';
 import ServiceDetailBox from 'src/modules/Services/components/ServiceDetailBox';
 import ServiceDetailHeader from 'src/modules/Services/components/ServiceDetailHeader';
+import ServiceOrderDetail from 'src/modules/Services/components/ServiceOrderDetail';
 
 import styles from './index.module.scss';
 import { useServiceDetail } from './useServiceDetail';
 
 const ServiceDetail = () => {
   const {
-    data: { service, account, serviceDetail, isOwner, maxLengthDescription },
-    operations: { onBack, onServiceActions, onPurchase },
+    data: { service, account, serviceDetail, isOwner, maxLengthDescription, openSlider, orderPayment },
+    operations: { onBack, onServiceActions, onPurchase, setOpenSlider, onCheckoutService },
   } = useServiceDetail();
 
   return (
@@ -18,6 +20,7 @@ const ServiceDetail = () => {
       <ServiceDetailHeader
         name={service.name}
         account={account as AccountItem}
+        isOwner={isOwner}
         onBack={onBack}
         onActions={onServiceActions}
       />
@@ -45,6 +48,20 @@ const ServiceDetail = () => {
           onPurchase={!isOwner ? onPurchase : undefined}
         />
       </div>
+      <Slider
+        open={openSlider}
+        onClose={() => setOpenSlider(false)}
+        title={translate('service-detail.order.summary')}
+        headerDivider={false}
+        titleClassName={styles['slider__title']}
+      >
+        <ServiceOrderDetail
+          service={service}
+          orderPayment={orderPayment}
+          buttonName={translate('service-detail.order.checkout-button')}
+          onButtonClick={onCheckoutService}
+        />
+      </Slider>
     </>
   );
 };

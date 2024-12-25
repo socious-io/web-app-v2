@@ -96,5 +96,9 @@ export const getSelectedTokenDetail = (address: string) => {
   }
   const selectedToken = flattenedTokens.find(token => token.address === address);
 
-  return { name: selectedToken?.name || '', symbol: selectedToken?.symbol || '' };
+  return {
+    name: selectedToken?.name || '',
+    symbol: selectedToken?.symbol || '',
+    address: selectedToken?.address || '',
+  };
 };

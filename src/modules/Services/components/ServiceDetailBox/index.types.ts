@@ -1,10 +1,10 @@
-import { PaymentMode } from 'src/core/adaptors';
+import { PaymentMode, CurrencyDetail } from 'src/core/adaptors';
 
 export type ServiceDetail = {
   skills: string[];
   delivery: string;
   price: string;
-  currency: { name: string; symbol: string };
+  currency: CurrencyDetail;
   payment: PaymentMode;
 };
 
