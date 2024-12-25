@@ -1,9 +1,9 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity, cancelMission, completeMission, dropMission } from 'src/core/api';
 import { UserType } from 'src/core/types';
 import { getIdentityMeta, navigateToProfile, translate } from 'src/core/utils';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { MenuItem } from 'src/modules/general/components/threeDotButton/threeDotButton.types';
 import store, { RootState } from 'src/store';
 import { handleDisplaySlider, updateStatus } from 'src/store/reducers/contracts.reducer';

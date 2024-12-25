@@ -1,6 +1,6 @@
 import { flexRender } from '@tanstack/react-table';
 import React from 'react';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Modal } from 'src/modules/general/components/modal';
