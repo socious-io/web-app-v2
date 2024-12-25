@@ -9,7 +9,7 @@ import { FileUploaderProps } from './index.types';
 import { useFileUploader } from './useFileUploader';
 import { FeaturedIcon } from '../featuredIcon-new';
 
-export const FileUploader: React.FC<FileUploaderProps> = ({
+const FileUploader: React.FC<FileUploaderProps> = ({
   files,
   onDropFiles,
   fileTypes,
@@ -88,3 +88,5 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
     </>
   );
 };
+
+export default FileUploader;
