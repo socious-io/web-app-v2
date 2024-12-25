@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Contract, CurrentIdentity } from 'src/core/api';
 import { isoToStandard } from 'src/core/time';
 import { translate } from 'src/core/utils';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { RootState } from 'src/store';
 
