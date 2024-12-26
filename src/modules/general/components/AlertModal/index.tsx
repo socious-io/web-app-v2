@@ -26,7 +26,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
   secondaryBtnClassName,
 }) => {
   return (
-    <Modal open={open} onClose={onClose} className={css.modal}>
+    <Modal open={open} onClose={onClose} className={css.modal} data-ignore-outside-click="true">
       <div className={`${css.container} ${customClassName}`}>
         <div className="flex justify-between">
           {customIcon ? (
