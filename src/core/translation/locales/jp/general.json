@@ -17,5 +17,10 @@
     "continue": "続行",
     "cancel": "キャンセル",
     "failed": "失敗しました"
+  },
+  "general-card": {
+    "remove": "削除",
+    "expiry": "有効期限",
+    "ending": "下4桁"
   }
 }
