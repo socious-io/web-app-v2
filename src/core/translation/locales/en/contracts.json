@@ -2,6 +2,7 @@
   "cont-title": "Contracts",
   "cont-subtitle": "Manage your jobs offers and work.",
   "cont-status": {
+    "Pending": "Pending",
     "Offer sent": "Offer sent",
     "Offer received": "Offer received",
     "Awaiting confirmation": "Awaiting confirmation",
@@ -23,6 +24,7 @@
   "cont-decline": "Decline",
   "cont-accept": "Accept",
   "cont-offer-sent-alert": "You have sent an offer to the applicant",
+  "cont-pending-alert": "Your purchase is pending confirmation from {{seller}}",
   "cont-bank-account-alert": "Bank account required",
   "cont-bank-account-alert-subtitle": "To accept this offer you need add a payout account",
   "cont-add-account": "Add a payout account",
