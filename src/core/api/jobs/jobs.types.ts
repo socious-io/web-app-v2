@@ -212,6 +212,7 @@ export type ContractStatus =
   | 'Withdrawn'
   | 'Kicked out'
   | 'Closed';
+
 export interface Contract extends Offer {
   contractStatus: ContractStatus;
   mission?: Mission;
@@ -220,6 +221,7 @@ export interface Contract extends Offer {
   org_feedback?: {
     mission_id?: string;
   };
+  kind?: 'SERVICE';
 }
 
 export interface Mission {
