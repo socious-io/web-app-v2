@@ -6,10 +6,10 @@ import CardRadioButton from 'src/modules/general/components/CardRadioButton';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Modal } from 'src/modules/general/components/modal';
+import AddCardModal from 'src/modules/general/containers/AddCardModal';
 
 import { PaymentFiatProps } from './paymentFiat.types';
 import { usePaymentFiat } from './usePaymentFiat';
-import { AddCardModal } from '../addCardModal';
 import { PaymentSummary } from '../paymentSummary';
 
 export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClose }) => {
@@ -85,12 +85,12 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
         handleClose={() => handleClose(false)}
         mobileFullHeight={false}
       />
-      {openAddCardModal && offer && (
+      {offer && (
         <AddCardModal
-          currency={offer?.currency?.toString()}
           open={openAddCardModal}
           handleClose={() => setOpenAddCardModal(false)}
           setCardsList={setCardList}
+          currency={offer?.currency?.toString()}
         />
       )}
       <AlertModal

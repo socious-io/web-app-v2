@@ -1,25 +1,20 @@
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { config } from 'src/config';
-import { addCard, cards } from 'src/core/api';
+import { addCard, Card, cards } from 'src/core/api';
 import { translate } from 'src/core/utils';
-import { AlertModal } from 'src/modules/general/components/AlertModal';
-import { Button } from 'src/modules/general/components/Button';
-import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
-import { Modal } from 'src/modules/general/components/modal';
 
-import { AddCardModalProps } from './addCardModal.types';
-
-export const AddCardModal: React.FC<AddCardModalProps> = ({ open, handleClose, currency, setCardsList }) => {
+export const useAddCardModal = (
+  open: boolean,
+  handleClose: () => void,
+  setCardsList: (list: Card[]) => void,
+  currency?: string,
+) => {
   const [stripe, setStripe] = useState<Stripe | null>();
   const [card, setCard] = useState<StripeCardElement | null>();
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const is_jp = currency === 'JPY';
-
-  useEffect(() => {
-    loadStripe(is_jp ? config.jpStripePublicKey : config.stripePublicKey).then(s => setStripe(s));
-  }, []);
 
   const style = {
     base: {
@@ -46,15 +41,19 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, handleClose, c
   };
 
   useEffect(() => {
-    if (stripe) {
+    loadStripe(is_jp ? config.jpStripePublicKey : config.stripePublicKey).then(s => setStripe(s));
+  }, []);
+
+  useEffect(() => {
+    if (stripe && open) {
       const elements = stripe.elements();
       const c = elements.create('card', { style, hidePostalCode: true });
       c?.mount('#card-element');
       setCard(c);
     }
-  }, [stripe]);
+  }, [stripe, open]);
 
-  async function onSubmit() {
+  const onSubmit = async () => {
     if (!card || !stripe) return;
 
     const res = await stripe.createToken(card);
@@ -78,37 +77,13 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ open, handleClose, c
     const cardsRes = await cards({ 'filter.is_jp': is_jp });
     setCardsList(cardsRes.items);
     handleClose();
-  }
+  };
 
-  const footerJSX = (
-    <div className="w-full p-4 md:p-6">
-      <Button color="primary" variant="contained" onClick={onSubmit} fullWidth>
-        {translate('cont-add-btn')}
-      </Button>
-    </div>
-  );
-  return (
-    <>
-      <Modal
-        open={open}
-        handleClose={handleClose}
-        title={translate('cont-add-credit-card')}
-        mobileFullHeight={false}
-        footer={footerJSX}
-      >
-        <div className="p-4 md:p-6 ">
-          <div id="card-element"></div>
-        </div>
-      </Modal>
-      <AlertModal
-        title={translate('cont-failed')}
-        message={errorMessage}
-        open={openErrorModal}
-        onClose={() => setOpenErrorModal(false)}
-        closeButtn={false}
-        submitButton={false}
-        customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />}
-      />
-    </>
-  );
+  return {
+    data: { openErrorModal, errorMessage },
+    operations: {
+      onSubmit,
+      setOpenErrorModal,
+    },
+  };
 };
