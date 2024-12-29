@@ -6,15 +6,11 @@ import { CardRadioButtonItem } from 'src/modules/general/components/CardRadioBut
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
 
-import { SelectBankAccountUserProps } from './selectBankAccountUser.types';
+import { SelectBankAccountUserProps } from './index.types';
 
-export const SelectBankAccountUser: React.FC<SelectBankAccountUserProps> = ({
-  open,
-  handleClose,
-  accounts,
-  handleAccept,
-}) => {
-  const accOptions = accounts.map(acc => {
+const SelectBankAccountUser: React.FC<SelectBankAccountUserProps> = ({ open, handleClose, accounts, handleAccept }) => {
+  const [selectedCardId, setSelectedCardId] = useState('');
+  const options: CardRadioButtonItem[] = accounts.map(acc => {
     // const iconPath = `/icons/pay-icons/${i.meta.brand.toLowerCase().replaceAll(' ', '')}.svg`;
     return {
       value: acc.id,
@@ -23,8 +19,7 @@ export const SelectBankAccountUser: React.FC<SelectBankAccountUserProps> = ({
       // img: <img src={iconPath} alt="" />,
     };
   });
-  const [options] = useState<CardRadioButtonItem[]>(accOptions);
-  const [selectedCardId, setSelectedCardId] = useState('');
+
   return (
     <Modal
       open={open}
@@ -34,13 +29,11 @@ export const SelectBankAccountUser: React.FC<SelectBankAccountUserProps> = ({
       headerDivider={false}
     >
       <div className="flex flex-col p-4 md:p-6 gap-6">
-        <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">
-          {translate('wallet-select-account')}
+        <div className="font-semibold text-lg leading-7 text-Gray-light-mode-900">
+          {translate('cont-select-account')}
         </div>
         <div className="flex flex-col gap-1.5">
-          <div className="font-medium text-sm leading-5 text-Gray-light-mode-700">
-            {translate('wallet-transfer-to')}
-          </div>
+          <div className="font-medium text-sm leading-5 text-Gray-light-mode-700">{translate('cont-transfer-to')}</div>
           <CardRadioButton
             items={options}
             selectedValue={selectedCardId}
@@ -61,3 +54,5 @@ export const SelectBankAccountUser: React.FC<SelectBankAccountUserProps> = ({
     </Modal>
   );
 };
+
+export default SelectBankAccountUser;
