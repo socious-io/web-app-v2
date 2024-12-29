@@ -6,7 +6,7 @@ import { Button } from 'src/modules/general/components/Button';
 import AddPayoutAccount from 'src/modules/general/containers/AddPayoutAccount';
 
 import { useSliderOfferReceived } from './useSliderOfferReceived';
-import { SelectBankAccountUser } from '../selectBankAccountUser';
+import SelectBankAccountUser from '../SelectBankAccountUser';
 import { WalletModal } from '../walletModal';
 
 interface SliderOfferReceivedProps {
@@ -66,14 +66,12 @@ export const SliderOfferReceived: React.FC<SliderOfferReceivedProps> = ({
         handleClose={() => setOpenModal({ name: 'addCard', open: false })}
         offer={contract}
       />
-      {openModal?.name === 'selectCard' && openModal.open && (
-        <SelectBankAccountUser
-          open={openModal?.name === 'selectCard' && openModal.open}
-          handleClose={() => setOpenModal({ name: 'selectCard', open: false })}
-          accounts={stripeAccounts}
-          handleAccept={handleAcceptOffer}
-        />
-      )}
+      <SelectBankAccountUser
+        open={openModal?.name === 'selectCard' && openModal.open}
+        handleClose={() => setOpenModal({ name: 'selectCard', open: false })}
+        accounts={stripeAccounts}
+        handleAccept={handleAcceptOffer}
+      />
       {openModal?.name === 'wallet' && openModal?.open && (
         <WalletModal
           open={openModal?.name === 'wallet' && openModal?.open}
