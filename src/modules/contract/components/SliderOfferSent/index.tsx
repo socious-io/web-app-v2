@@ -1,23 +1,21 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Contract, CurrentIdentity, cancelOffer } from 'src/core/api';
+import { CurrentIdentity, cancelOffer } from 'src/core/api';
 import { translate } from 'src/core/utils';
 import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
-interface SliderSentOfferProps {
-  contract: Contract;
-  disableMessage: boolean;
-  redirectToChat: () => void;
-}
-export const SliderOfferSent: React.FC<SliderSentOfferProps> = ({ contract, disableMessage, redirectToChat }) => {
+import { SliderSentOfferProps } from './index.types';
+
+const SliderOfferSent: React.FC<SliderSentOfferProps> = ({ contract, disableMessage, redirectToChat }) => {
   const dispatch = useDispatch();
   const identity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   );
   const identityType = identity?.type;
+  const isServiceContract = contract?.kind === 'SERVICE';
+
   const withdrawOfferByOP = async () => {
     try {
       dispatch(
@@ -42,18 +40,22 @@ export const SliderOfferSent: React.FC<SliderSentOfferProps> = ({ contract, disa
             {translate('cont-message')}
           </Button>
         )}
-
-        <Button variant="outlined" color="secondary" fullWidth onClick={withdrawOfferByOP}>
-          {translate('cont-withdraw')}
-        </Button>
+        {!isServiceContract && (
+          <Button variant="outlined" color="secondary" fullWidth onClick={withdrawOfferByOP}>
+            {translate('cont-withdraw')}
+          </Button>
+        )}
       </div>
-
       <AlertMessage
-        theme="gray"
+        theme={isServiceContract ? 'warning' : 'gray'}
         iconName="check-circle"
-        title={translate('cont-offer-sent-alert')}
+        title={
+          isServiceContract ? translate('cont-pending-alert', { seller: 'sanaz' }) : translate('cont-offer-sent-alert')
+        }
         containerClassName="!items-center"
       />
     </div>
   );
 };
+
+export default SliderOfferSent;
