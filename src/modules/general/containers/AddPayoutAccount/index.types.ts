@@ -1,7 +1,7 @@
 import { Offer } from 'src/core/api';
 
-export interface AddCardModalUserProps {
+export interface AddPayoutAccountProps {
   open: boolean;
   handleClose: () => void;
-  offer: Offer;
+  offer?: Offer;
 }
