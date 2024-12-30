@@ -22,6 +22,7 @@
 	"packageClassList": [
 		"FirebaseCrashlyticsPlugin",
 		"FirebaseMessagingPlugin",
+		"SignInWithApple",
 		"ActionSheetPlugin",
 		"AppPlugin",
 		"CAPCameraPlugin",

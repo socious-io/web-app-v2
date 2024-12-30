@@ -130,3 +130,12 @@ export interface StripeProfileRes {
   type: string;
   status: string;
 }
+
+export interface AppleAuthResponse {
+  user: string | null;
+  email: string | null;
+  givenName: string | null;
+  familyName: string | null;
+  identityToken: string;
+  authorizationCode: string;
+}
