@@ -1,13 +1,11 @@
 import { PaymentMode } from 'src/core/api';
 
-import { PaginateRes } from '..';
+import { CurrencyDetail, PaginateRes } from '..';
 
 export type WorkSample = {
   id: string;
   url: string;
 };
-
-export type CurrencyDetail = { name: string; symbol?: string; address?: string };
 
 export interface Service {
   id: string;

@@ -1,6 +1,6 @@
 import { Identity } from 'src/core/api';
 
-import { PaymentCurrency, PaymentMode, ProjectPaymentType, CommitmentPeriod } from '../types';
+import { PaymentCurrency, PaymentMode, ProjectPaymentType, CommitmentPeriod, PaginateResV3 } from '../types';
 
 export type CurrencyPayloadMap = {
   FIAT: { card_id: string };
@@ -12,7 +12,6 @@ export type DepositReq<K extends keyof CurrencyPayloadMap> = CurrencyPayloadMap[
 //FIXME: replace it with ContractStatus when the old one is removed
 export type NewContractStatus =
   | 'CREATED'
-  | 'CLIENT_APPROVED'
   | 'SIGNED'
   | 'PROVIDER_CANCELED'
   | 'CLIENT_CANCELED'
@@ -45,8 +44,10 @@ export interface NewContract {
   updated_at: Date;
 }
 
+export type ContractRes = PaginateResV3<NewContract>;
+
 export interface ContractReq {
-  title: string;
+  name: string;
   description: string;
   type: ProjectPaymentType;
   total_amount: number;
