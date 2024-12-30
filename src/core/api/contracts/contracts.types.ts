@@ -1,4 +1,4 @@
-import { PaymentCurrency, PaymentMode, ProjectPaymentType } from '../types';
+import { PaginateResV3, PaymentCurrency, PaymentMode, ProjectPaymentType } from '../types';
 
 export type CurrencyPayloadMap = {
   FIAT: { card_id: string };
@@ -42,3 +42,5 @@ export interface NewContract {
   created_at: Date;
   updated_at: Date;
 }
+
+export type ContractRes = PaginateResV3<NewContract>;
