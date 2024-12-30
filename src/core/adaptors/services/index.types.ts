@@ -1,11 +1,11 @@
+import { PaymentMode } from 'src/core/api';
+
 import { PaginateRes } from '..';
 
 export type WorkSample = {
   id: string;
   url: string;
 };
-
-export type PaymentMode = 'FIAT' | 'CRYPTO';
 
 export type CurrencyDetail = { name: string; symbol?: string; address?: string };
 

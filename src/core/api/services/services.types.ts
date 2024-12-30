@@ -1,21 +1,11 @@
-import { Identity } from '../site/site.types';
-import { PaginateResV3 } from '../types';
-
-export type Category = {
-  id: string;
-  name: string;
-  hourly_wage_dollars: number;
-  created_at: Date;
-  updated_at: Date;
-};
+import { Category, Identity } from '..';
+import { PaginateResV3, PaymentMode } from '../types';
 
 export type WorkSample = {
   filename: string;
   url: string;
   id: string;
 };
-
-export type PaymentMode = 'FIAT' | 'CRYPTO';
 
 export interface Service {
   id: string;

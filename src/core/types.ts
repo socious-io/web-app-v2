@@ -1,3 +1,5 @@
+import { PaymentCurrency, PaymentMode } from './api';
+
 export type UserType = 'users' | 'organizations';
 
 export type LoginReq = {
@@ -354,7 +356,7 @@ export type Offer = {
   offer_message: string;
   assignment_total: number;
   due_date: string;
-  currency?: 'USD' | 'JPY';
+  currency?: PaymentCurrency;
   status: 'HIRED' | 'CLOSED' | 'APPROVED' | 'HIRED';
   project: {
     description: string;
@@ -379,7 +381,7 @@ export type Offer = {
   escrow: {
     address: string;
   };
-  payment_mode: 'FIAT' | 'CRYPTO';
+  payment_mode: PaymentMode;
   crypto_currency_address: string;
   amount: number;
   total: number;

@@ -6,11 +6,12 @@ import {
   deleteService,
   StripeAccount,
   stripeProfile,
+  PaymentMode,
 } from 'src/core/api';
 import { getIdentityMeta, translate } from 'src/core/utils';
 import { getSelectedTokenDetail } from 'src/dapp/dapp.service';
 
-import { AdaptorRes, PaymentMode, Service, ServiceReq, ServicesRes, SuccessRes } from '..';
+import { AdaptorRes, Service, ServiceReq, ServicesRes, SuccessRes } from '..';
 
 export const getServicesAdaptor = async (
   page = 1,

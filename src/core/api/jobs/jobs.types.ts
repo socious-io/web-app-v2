@@ -15,8 +15,8 @@ import {
   PaginateRes,
   ApplicantStatus,
   MissionStatus,
-  PaymentMode,
   OfferStatus,
+  PaymentMode,
 } from '../types';
 import { User } from '../users/users.types';
 
@@ -63,7 +63,7 @@ export interface ApplyReq {
 }
 
 export interface OfferReq {
-  payment_mode: 'CRYPTO' | 'FIAT';
+  payment_mode: PaymentMode;
   offer_rate?: number;
   offer_message: string;
   due_date?: string;
