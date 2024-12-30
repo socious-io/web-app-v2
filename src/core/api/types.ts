@@ -223,6 +223,8 @@ export type PaymentCurrency = 'USD' | 'JPY';
 
 export type PaymentService = 'STRIPE' | 'CRYPTO';
 
+export type PaymentMode = 'FIAT' | 'CRYPTO';
+
 export type LanguageLevel = 'BASIC' | 'CONVERSANT' | 'PROFICIENT' | 'FLUENT' | 'NATIVE';
 
 export type MissionStatus = 'ACTIVE' | 'COMPLETE' | 'CONFIRMED' | 'CANCELED' | 'KICKED_OUT';
@@ -233,7 +235,7 @@ export type ConnectStatus = 'PENDING' | 'CONNECTED' | 'BLOCKED';
 
 export type OAuthProviders = 'STRIPE';
 
-export type PaymentMode = 'ONLINE' | 'OFFLINE';
+export type PaymentChannel = 'ONLINE' | 'OFFLINE';
 
 export type AddressType = 'HOME' | 'MAILING' | 'BILLING';
 
