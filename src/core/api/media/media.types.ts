@@ -8,8 +8,8 @@ export type PostMediaUploadRes = {
 
 export type Media = {
   id: string;
-  identity_id: string;
+  identity_id?: string;
   filename: string;
   url: string;
-  created_at: string;
+  created_at?: string;
 };
