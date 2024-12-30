@@ -12,8 +12,8 @@ import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
 const options: SignInWithAppleOptions = {
-  clientId: 'io.socious.apple-login-dev',
-  redirectURI: 'https://dev.socious.io/api/v2/auth/apple',
+  clientId: config.appleOauthClientId,
+  redirectURI: `${config.baseURL}/auth/apple`,
   scopes: 'email name',
   state: '12345',
   nonce: 'nonce',
@@ -89,13 +89,12 @@ export const AppleOauth2 = () => {
     id_token = searchParams.get('id_token');
 
   const appleLogin = async options => {
-    SignInWithApple.authorize(options)
-      .then(result => {
-        setAppleResponse(result.response);
-      })
-      .catch(error => {
-        console.error('Error in apple login', error);
-      });
+    try {
+      const result = await SignInWithApple.authorize(options);
+      setAppleResponse(result.response);
+    } catch (error) {
+      console.error('Error in apple login', error);
+    }
   };
 
   const handleAppleOauth = async (
