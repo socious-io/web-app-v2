@@ -1,0 +1,13 @@
+{
+  "setting-language": "language",
+  "setting-language-change": "Change Languge",
+  "setting-language-select": "Select your default language.",
+  "setting-buttons": {
+    "save": "save",
+    "cancel": "cancel"
+  },
+  "setting-language-labels": {
+    "en": "English (US)",
+    "jp": "Japanese (JP)"
+  }
+}
