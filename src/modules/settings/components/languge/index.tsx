@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 
@@ -11,12 +12,12 @@ const Languge = () => {
   const languageOptions: LanguageOption[] = [
     {
       value: 'en',
-      label: 'English (US)',
+      label: translate('setting-language-labels.en'),
       icon: <FlagGenerator value="en" />,
     },
     {
       value: 'jp',
-      label: 'Japanese (JP)',
+      label: translate('setting-language-labels.jp'),
       icon: <FlagGenerator value="jp" />,
     },
   ];
@@ -30,14 +31,14 @@ const Languge = () => {
     <>
       <div className="border border-solid border-t-0 border-x-0 pb-5 border-Gray-light-mode-200">
         <div className="w-full items-center">
-          <h2 className="grow css.title text-lg font-semibold">Languge</h2>
+          <h2 className="grow css.title text-lg font-semibold">{translate('setting-language')}</h2>
         </div>
       </div>
       <div className="mt-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
           <div className="flex flex-col ">
-            <label>Change Languge</label>
-            <p className="text-sm font-normal text-Gray-light-mode-600 pt-1">Select your default language.</p>
+            <label>{translate('setting-language-change')}</label>
+            <p className="text-sm font-normal text-Gray-light-mode-600 pt-1">{translate('setting-language-select')}</p>
           </div>
           <div className="col-span-2">
             <div className="w-full md:w-80">
@@ -60,11 +61,11 @@ const Languge = () => {
 
         <div className="flex  justify-end gap-4">
           <Button color="info" onClick={onCancel}>
-            Cancel
+            {translate('setting-buttons.cancel')}
           </Button>
 
           <Button onClick={onSave} color="primary">
-            Save
+            {translate('setting-buttons.save')}
           </Button>
         </div>
       </div>

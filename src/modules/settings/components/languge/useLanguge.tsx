@@ -1,15 +1,18 @@
 import i18next from 'i18next';
 import { useState } from 'react';
+import { translate } from 'src/core/utils';
 
 export const useLanguage = () => {
   const initialLanguage = localStorage.getItem('language') || 'en';
 
   const getLanguageOption = lang => {
-    if (lang === 'en') return { label: 'English (US)', value: 'en' };
-    if (lang === 'jp') return { label: 'Japanese', value: 'jp' };
-    return { label: 'English (US)', value: 'en' };
-  };
+    const languageMap = {
+      en: { label: translate('setting-language-labels.en'), value: 'en' },
+      jp: { label: translate('setting-language-labels.jp'), value: 'jp' },
+    };
 
+    return languageMap[lang] || { label: 'English (US)', value: 'en' };
+  };
   const [selectedLanguage, setSelectedLanguage] = useState(getLanguageOption(initialLanguage));
 
   // Save the initial state
@@ -23,7 +26,6 @@ export const useLanguage = () => {
 
   // Reset the selected language to the last saved state
   const onCancel = () => {
-    console.log('initialState', initialState);
     setSelectedLanguage(initialState);
     i18next.changeLanguage(initialState.value);
   };
