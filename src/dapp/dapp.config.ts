@@ -35,6 +35,15 @@ export const bsc: Chain = {
   testnet: true,
 };
 
+export const sepoliaTestnet: Chain = {
+  chainId: 11155111,
+  name: 'Sepolia Testnet',
+  currency: 'SepoliaETH',
+  rpcUrl: 'https://rpc2.sepolia.org',
+  explorerUrl: 'https://sepolia.etherscan.io',
+  testnet: true,
+};
+
 export const dappConfig: DappConfig = {
   walletConnetProjectId: '40ce0f320baccb067909071c983ca357',
   testnet: [
@@ -65,6 +74,19 @@ export const dappConfig: DappConfig = {
           name: 'Tether',
           symbol: 'USDT',
           address: '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd',
+          decimals: 18,
+        },
+      ],
+    },
+    {
+      chain: sepoliaTestnet,
+      escrow: '0x383fdB2917B1bB02841116811f94159D9263D53d',
+      logic: '0x383fdB2917B1bB02841116811f94159D9263D53d',
+      tokens: [
+        {
+          name: 'USDC',
+          symbol: 'USDC',
+          address: '0x06666b1DbFb62613515cEAE861CAd3d8A9d88451',
           decimals: 18,
         },
       ],
