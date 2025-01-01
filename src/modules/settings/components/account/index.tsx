@@ -2,6 +2,7 @@ import { AnyAction } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { selfDelete } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Input } from 'src/modules/general/components/input/input';
@@ -29,13 +30,13 @@ const Account = () => {
       <div className="hidden">
         <div className={css.borderSection}>
           <div className="flex flex-row w-full pt-8 items-center">
-            <h2 className={css.title}>Account Information</h2>
+            <h2 className={css.title}>{translate('account.info.title')}</h2>
             <div className="flex gap-4">
               <div>
-                <Button color="info">Cancel</Button>
+                <Button color="info">{translate('account.buttons.cancel')}</Button>
               </div>
               <div>
-                <Button color="primary">Save</Button>
+                <Button color="primary">{translate('account.buttons.save')}</Button>
               </div>
             </div>
           </div>
@@ -43,7 +44,7 @@ const Account = () => {
 
         <div className={css.borderSection}>
           <div className="grid grid-cols-5 gap-4">
-            <label>Name</label>
+            <label>{translate('account.fields.name')}</label>
             <div>
               <Input id="name" type="text" />
             </div>
@@ -54,7 +55,7 @@ const Account = () => {
         </div>
         <div className={css.borderSection}>
           <div className="grid grid-cols-5 gap-4">
-            <label>Email Address</label>
+            <label>{translate('account.fields.email')}</label>
             <div className="col-span-2">
               <Input id="email" type="email" />
             </div>
@@ -62,7 +63,7 @@ const Account = () => {
         </div>
         <div className={css.borderSection}>
           <div className="grid grid-cols-5 gap-4">
-            <label>Username</label>
+            <label>{translate('account.fields.username')}</label>
             <div className="col-span-2">
               <Input id="username" prefix="socious.io/" />
             </div>
@@ -70,7 +71,7 @@ const Account = () => {
         </div>
         <div className={css.borderSection}>
           <div className="grid grid-cols-5 gap-4">
-            <label>Role</label>
+            <label>{translate('account.fields.role')}</label>
             <div className="col-span-2">
               <Input id="role" />
             </div>
@@ -78,7 +79,7 @@ const Account = () => {
         </div>
         <div className={css.borderSection}>
           <div className="grid grid-cols-5 gap-4">
-            <label>City</label>
+            <label>{translate('account.fields.city')}</label>
             <div className="col-span-2 ...">
               <SearchDropdown id="location" isAsync icon="search-lg" hasDropdownIcon={false} />
             </div>
@@ -87,7 +88,7 @@ const Account = () => {
       </div>
 
       <div className="text-Error-700 text-sm py-5 cursor-pointer" onClick={() => setModalVisibility(true)}>
-        Close your Account
+        {translate('account.closeAccount.link')}
       </div>
       <Modal
         customStyle={css.modalStyle}
@@ -98,19 +99,18 @@ const Account = () => {
         icon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />}
       >
         <div className="p-6">
-          <div className="text-lg font-semibold pt-5 mb-5">Close account?</div>
+          <div className="text-lg font-semibold pt-5 mb-5">{translate('account.closeAccount.title')}</div>
           <div className="text-sm font-normal text-Gray-light-mode-600">
-            Closing your account will erase all your existing activity on Socious, including connections you’ve made,
-            jobs and contracts.
-            <p className="pt-5">This action is irreversible.</p>
+            {translate('account.closeAccount.description')}
+            <p className="pt-5">{translate('account.closeAccount.irreversible')}</p>
           </div>
           <div className="mt-5">
             <Input
               multiline
-              label="Reason (optional)"
+              label={translate('account.closeAccount.reason')}
               customHeight="160px"
               onChange={onChangeTextHandler}
-              placeholder="Please let us know why you are closing your account."
+              placeholder={translate('account.closeAccount.placeholder')}
             />
           </div>
           <div className="flex mt-8 justify-end gap-2">
@@ -120,10 +120,10 @@ const Account = () => {
               }}
               color="info"
             >
-              Cancel
+              {translate('account.closeAccount.buttons.cancel')}
             </Button>
             <Button onClick={() => closeAccount()} color="error">
-              Permanently delete my account
+              {translate('account.closeAccount.buttons.delete')}
             </Button>
           </div>
         </div>
