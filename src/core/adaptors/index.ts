@@ -3,6 +3,9 @@ export * from './auth/index.adaptors';
 export * from './services/index.adaptors';
 export * from './services/index.types';
 
+export * from './contracts/index.adaptors';
+export * from './contracts/index.types';
+
 export interface CustomError {
   response: { data: { error: string } };
 }
