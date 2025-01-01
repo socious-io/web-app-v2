@@ -1,3 +1,5 @@
+export * from './auth/index.adaptors';
+
 export * from './services/index.adaptors';
 export * from './services/index.types';
 
