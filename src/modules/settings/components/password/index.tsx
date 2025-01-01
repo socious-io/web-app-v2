@@ -1,3 +1,4 @@
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button/index';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Input } from 'src/modules/general/components/input/input';
@@ -22,11 +23,8 @@ const Password = () => {
     <>
       <div className="border border-solid border-t-0 border-x-0 pb-5 border-Gray-light-mode-200">
         <div className="w-full items-center">
-          <h2 className="grow css.title text-lg font-semibold">Password</h2>
-          <p className="text-sm font-normal text-Gray-light-mode-600 pt-1">
-            Please enter your current password to change your password. If you have signed up via Google, please log out
-            and use “forgot password” to reset your password.{' '}
-          </p>
+          <h2 className="grow css.title text-lg font-semibold">{translate('password.title')}</h2>
+          <p className="text-sm font-normal text-Gray-light-mode-600 pt-1">{translate('password.description')}</p>
         </div>
       </div>
       <form id="passwordForm" onSubmit={handleSubmit(onSubmit)}>
@@ -41,7 +39,7 @@ const Password = () => {
 
         <div className={css.borderSection}>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-            <label>Current password</label>
+            <label>{translate('password.labels.currentPassword')}</label>
             <div className="col-span-2">
               <Input
                 id="current_password"
@@ -49,29 +47,33 @@ const Password = () => {
                 register={register}
                 name="current_password"
                 type="password"
-                placeholder="Current password"
+                placeholder={translate('password.placeholders.currentPassword')}
               />
             </div>
           </div>
         </div>
         <div className={css.borderSection}>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-            <label>New password</label>
+            <label>{translate('password.labels.newPassword')}</label>
             <div className="col-span-2">
               <div>
-                <Input id="password" type="password" name="password" register={register} placeholder="New password" />
+                <Input
+                  id="password"
+                  type="password"
+                  name="password"
+                  register={register}
+                  placeholder={translate('password.placeholders.newPassword')}
+                />
               </div>
               <div className={`${css.validation} mt-4`}>
-                {
-                  <div>
-                    <img
-                      className="mr-1"
-                      src={!isPasswordLengthValid ? '/icons/check-circle-grey.svg' : '/icons/check-circle-green.svg'}
-                      alt="check"
-                    />
-                    Must be at least 8 characters
-                  </div>
-                }
+                <div>
+                  <img
+                    className="mr-1"
+                    src={!isPasswordLengthValid ? '/icons/check-circle-grey.svg' : '/icons/check-circle-green.svg'}
+                    alt="check"
+                  />
+                  {translate('password.validations.minLength')}
+                </div>
               </div>
               <div className={`${css.validation} mt-2`}>
                 <img
@@ -79,14 +81,14 @@ const Password = () => {
                   src={!isPasswordPatternValid ? '/icons/check-circle-grey.svg' : '/icons/check-circle-green.svg'}
                   alt="check"
                 />
-                Must contain one special character
+                {translate('password.validations.specialCharacter')}
               </div>
             </div>
           </div>
         </div>
         <div className={css.borderSection}>
           <div className="grid grid-cols-1 lg:grid-cols-5  gap-4 ">
-            <label>Confirm new password</label>
+            <label>{translate('password.labels.confirmPassword')}</label>
             <div className="col-span-2">
               <div>
                 <Input
@@ -95,7 +97,7 @@ const Password = () => {
                   name="confirm"
                   id="confirm"
                   type="password"
-                  placeholder="Confirm new password"
+                  placeholder={translate('password.placeholders.confirmPassword')}
                 />
               </div>
               <div>
@@ -105,7 +107,7 @@ const Password = () => {
                     src={!errors.confirm ? '/icons/check-circle-green.svg' : '/icons/check-circle-grey.svg'}
                     alt="check"
                   />
-                  Passwords match
+                  {translate('password.validations.passwordsMatch')}
                 </div>
               </div>
             </div>
@@ -115,11 +117,11 @@ const Password = () => {
         <div className="grid grid-cols-1 gap-4 place-items-end pt-8">
           <div className="flex gap-4">
             <Button color="info" onClick={() => reset()}>
-              Cancel
+              {translate('password.buttons.cancel')}
             </Button>
 
             <Button disabled={!isFormValid} color="primary" block onClick={handleSubmit(onSubmit)}>
-              Update Password
+              {translate('password.buttons.update')}
             </Button>
           </div>
         </div>
