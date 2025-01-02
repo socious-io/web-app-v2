@@ -1,3 +1,4 @@
+import { translate } from 'src/core/utils';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import variables from 'src/styles/constants/_exports.module.scss';
 
@@ -7,7 +8,7 @@ const Culture: React.FC<CultureProps> = ({ items, onOpenPreferences }) => {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center text-lg text-Gray-light-mode-900 font-semibold">
-        Culture
+        {translate('culture.title')}
         <IconButton
           iconName="pencil-01"
           iconColor={variables.color_grey_600}

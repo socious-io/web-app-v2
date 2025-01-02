@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'src/core/utils';
 import { AvatarLabelGroup } from 'src/modules/general/components/avatarLabelGroup';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
@@ -42,16 +43,19 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
   const footerJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button fullWidth variant="contained" color="primary" onClick={handleSubmit(onSend)}>
-        Send
+        {translate('verifyEducationModal.send')}
       </Button>
       <Button fullWidth variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {translate('verifyEducationModal.cancel')}
       </Button>
     </div>
   );
+
   const avatarJsx = (
     <div className="flex flex-col gap-[6px]">
-      <span className="font-medium text-sm leading-5 text-Gray-light-mode-700">Send to*</span>
+      <span className="font-medium text-sm leading-5 text-Gray-light-mode-700">
+        {translate('verifyEducationModal.sendToLabel')}
+      </span>
       <AvatarLabelGroup account={accountItem} avatarSize={'48px'} customStyle="!p-0" />
     </div>
   );
@@ -62,8 +66,8 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
       handleClose={handleClose}
       title={
         <div className="flex flex-col items-start">
-          <Icon name="shield-tick" className="p-3 mb-4 border border-solid border-Gray-light-mode-200 rounded-lg" />{' '}
-          Request certificate
+          <Icon name="shield-tick" className="p-3 mb-4 border border-solid border-Gray-light-mode-200 rounded-lg" />
+          {translate('verifyEducationModal.requestCertificate')}
         </div>
       }
       subTitle={subtitle}
@@ -80,18 +84,18 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
         ) : (
           <Input
             id="email"
-            label="Send to*"
+            label={translate('verifyEducationModal.emailLabel')}
             required
             name="email"
             register={register}
-            placeholder="Enter an address mail"
+            placeholder={translate('verifyEducationModal.emailPlaceholder')}
             startIcon={<Icon name="user-01" fontSize={20} color={variables.color_grey_500} />}
             errors={errors['email']?.message ? [errors['email']?.message.toString()] : undefined}
           />
         )}
         <Input
           id="credential-name"
-          label="Credential name*"
+          label={translate('verifyEducationModal.credentialNameLabel')}
           required
           name="credentialName"
           register={register}
@@ -101,14 +105,12 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
           <SearchDropdown
             id="month"
             value={month}
-            label="Awarded date*"
+            label={translate('verifyEducationModal.awardedDateLabel')}
             options={months}
             hasDropdownIcon
-            onChange={value => {
-              onSelectMonth(value as OptionType);
-            }}
+            onChange={value => onSelectMonth(value as OptionType)}
             className="flex-1"
-            placeholder="Month"
+            placeholder={translate('verifyEducationModal.monthPlaceholder')}
             isSearchable
             errors={dateErrors ? [dateErrors.toString()] : undefined}
             maxMenuHeight={200}
@@ -118,12 +120,10 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             value={day}
             options={days}
             hasDropdownIcon
-            onChange={value => {
-              onSelectDay(value as OptionType);
-            }}
+            onChange={value => onSelectDay(value as OptionType)}
             label="&nbsp;"
             className="flex-1"
-            placeholder="Day"
+            placeholder={translate('verifyEducationModal.dayPlaceholder')}
             maxMenuHeight={200}
           />
           <SearchDropdown
@@ -131,12 +131,10 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
             value={year}
             options={years}
             hasDropdownIcon
-            onChange={value => {
-              onSelectYear(value as OptionType);
-            }}
+            onChange={value => onSelectYear(value as OptionType)}
             label="&nbsp;"
             className="flex-1"
-            placeholder="Year"
+            placeholder={translate('verifyEducationModal.yearPlaceholder')}
             isSearchable
             maxMenuHeight={200}
           />
@@ -144,23 +142,23 @@ export const VerifyEducationModal: React.FC<VerifyEducationModalProps> = ({
         <div className="flex flex-col">
           <Checkbox
             id="forgot-info"
-            label="I don’t remember my exact information"
+            label={translate('verifyEducationModal.forgotInfo')}
             checked={forgotInfo}
             onChange={e => handleForgotInfo(e.target.checked)}
             value
           />
           <span className="text-sm ml-6 text-Gray-light-mode-600">
-            Your employer will be requested to fill in these details.
+            {translate('verifyEducationModal.forgotInfoHint')}
           </span>
         </div>
         <Input
           id="message"
           name="message"
-          label="Message*"
+          label={translate('verifyEducationModal.messageLabel')}
           multiline
           customHeight="130px"
           register={register}
-          placeholder="Type your message..."
+          placeholder={translate('verifyEducationModal.messagePlaceholder')}
           errors={errors['message']?.message ? [errors['message']?.message.toString()] : undefined}
         />
       </div>

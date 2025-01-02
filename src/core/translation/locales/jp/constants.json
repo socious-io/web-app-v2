@@ -1,0 +1,93 @@
+{
+  "remote-preferences": {
+    "onsite": "現場",
+    "remote": "リモート",
+    "hybrid": "ハイブリッド"
+  },
+  "project-type": {
+    "one-off": "単発",
+    "part-time": "パートタイム",
+    "full-time": "フルタイム"
+  },
+  "service-length": {
+    "less-than-a-day": "1日未満",
+    "1-3-days": "1～3日",
+    "1-week": "1週間",
+    "2-weeks": "2週間",
+    "less-than-a-month": "1か月未満",
+    "1-3-months": "1～3か月",
+    "3-6-months": "3～6か月",
+    "more-than-6-months": "6か月以上"
+  },
+  "dispute-category": {
+    "scope-and-contract-disputes-issues": "範囲と契約に関する問題",
+    "incomplete-or-unsatisfactory-work": "不完全または満足できない作業",
+    "communication-problems": "コミュニケーションの問題",
+    "scope-and-contract-disputes": "範囲と契約の争議",
+    "intellectual-property-and-confidentiality": "知的財産と機密性",
+    "professionalism-and-conduct": "プロフェッショナリズムと行動",
+    "cancellation-and-refunds": "キャンセルと返金",
+    "others": "その他"
+  },
+  "events": {
+    "tec4impact": "インパクト・サミット 2024"
+  },
+  "experience_level": {
+    "no_experience": "経験なし",
+    "entry": "初級",
+    "intermediate": "中級",
+    "expert": "上級"
+  },
+  "organization_size": {
+    "self_employed": "自営業",
+    "1_10_employees": "1～10人の従業員",
+    "11_50_employees": "11～50人の従業員",
+    "51_200_employees": "51～200人の従業員",
+    "201_500_employees": "201～500人の従業員",
+    "501_1000_employees": "501～1000人の従業員",
+    "1001_5000_employees": "1001～5000人の従業員",
+    "5001_10000_employees": "5001～10,000人の従業員",
+    "10001_plus_employees": "10,001人以上の従業員"
+  },
+  "organization_type": {
+    "social_business": "ソーシャルビジネス",
+    "non_profit": "非営利/慈善団体",
+    "social_cooperative": "社会的協同組合",
+    "impact_investing": "インパクト投資ファンド/財団",
+    "public_institution": "公共機関",
+    "intergovernmental": "国際機関（例: 国連）",
+    "impact_department": "営利企業の社会貢献部門（例: CSR）",
+    "other": "その他"
+  },
+  "payment_range": {
+    "label": "支払い範囲"
+  },
+  "commitment": {
+    "label": "コミットメント"
+  },
+  "weekly_hours": {
+    "label": "週の時間数"
+  },
+  "project_length": {
+    "less_than_a_day": "1日未満",
+    "less_than_a_month": "1か月未満",
+    "1_3_months": "1～3か月",
+    "3_6_months": "3～6か月",
+    "more_than_6_months": "6か月以上",
+    "less_than_1_day": "1日未満",
+    "less_than_1_month": "1か月未満"
+  },
+  "payment_scheme": {
+    "hourly": "時給制",
+    "fixed": "固定"
+  },
+  "project_type": {
+    "one_off": "単発",
+    "part_time": "パートタイム",
+    "full_time": "フルタイム"
+  },
+  "payment_type": {
+    "volunteer": "ボランティア",
+    "paid": "有償"
+  }
+}
