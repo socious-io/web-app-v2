@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react';
-import { stripeLink as getStripeLinkApi } from 'src/core/api';
+import { getStripeLink, Offer } from 'src/core/api';
 
-export const useAddPayoutAccount = () => {
+export const useAddPayoutAccount = (offer?: Offer) => {
   const [selectedCountry, setSelectedCountry] = useState('');
   const [stripeLink, setStripeLink] = useState('');
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    if (selectedCountry) generateStripeLink(selectedCountry);
+  }, [selectedCountry]);
 
   const onSelectCountry = option => {
     if (option.value !== selectedCountry) setStripeLink('');
     setSelectedCountry(option.value);
   };
 
-  const getStripeLink = async (country: string) => {
+  const generateStripeLink = async (country: string) => {
     try {
-      const result = await getStripeLinkApi({
+      const result = await getStripeLink({
         country: country,
-        //         is_jp: offer.currency === 'JPY',
+        is_jp: offer?.currency === 'JPY',
         redirect_url: window.location.href,
       });
       const {
@@ -29,9 +33,12 @@ export const useAddPayoutAccount = () => {
     }
   };
 
-  useEffect(() => {
-    if (selectedCountry) getStripeLink(selectedCountry);
-  }, [selectedCountry]);
-
-  return { selectedCountry, onSelectCountry, errorMsg, openErrorModal, setOpenErrorModal, stripeLink };
+  return {
+    data: {
+      stripeLink,
+      errorMsg,
+      openErrorModal,
+    },
+    operations: { onSelectCountry, setOpenErrorModal },
+  };
 };
