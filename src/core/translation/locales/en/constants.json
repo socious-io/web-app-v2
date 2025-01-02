@@ -1,0 +1,93 @@
+{
+  "remote-preferences": {
+    "onsite": "Onsite",
+    "remote": "Remote",
+    "hybrid": "Hybrid"
+  },
+  "project-type": {
+    "one-off": "One-off",
+    "part-time": "Part-time",
+    "full-time": "Full-time"
+  },
+  "service-length": {
+    "less-than-a-day": "Less than a day",
+    "1-3-days": "1-3 days",
+    "1-week": "1 week",
+    "2-weeks": "2 weeks",
+    "less-than-a-month": "Less than a month",
+    "1-3-months": "1-3 months",
+    "3-6-months": "3-6 months",
+    "more-than-6-months": "More than 6 months"
+  },
+  "dispute-category": {
+    "scope-and-contract-disputes-issues": "Scope and Contract Disputes Issues",
+    "incomplete-or-unsatisfactory-work": "Incomplete or Unsatisfactory Work",
+    "communication-problems": "Communication Problems",
+    "scope-and-contract-disputes": "Scope and Contract Disputes",
+    "intellectual-property-and-confidentiality": "Intellectual Property and Confidentiality",
+    "professionalism-and-conduct": "Professionalism and Conduct",
+    "cancellation-and-refunds": "Cancellation and Refunds",
+    "others": "Others"
+  },
+  "events": {
+    "tec4impact": "Tech for Impact Summit 2024"
+  },
+  "experience_level": {
+    "no_experience": "No experience",
+    "entry": "Entry",
+    "intermediate": "Intermediate",
+    "expert": "Expert"
+  },
+  "organization_size": {
+    "self_employed": "Self-employed",
+    "1_10_employees": "1-10 employees",
+    "11_50_employees": "11-50 employees",
+    "51_200_employees": "51-200 employees",
+    "201_500_employees": "201-500 employees",
+    "501_1000_employees": "501-1000 employees",
+    "1001_5000_employees": "1001-5000 employees",
+    "5001_10000_employees": "5001-10,000 employees",
+    "10001_plus_employees": "10,001+ employees"
+  },
+  "organization_type": {
+    "social_business": "Social Business",
+    "non_profit": "Non-profit / Charity",
+    "social_cooperative": "Social Co-operative",
+    "impact_investing": "Impact Investing Funds/Foundations",
+    "public_institution": "Public Institution",
+    "intergovernmental": "Intergovernmental Organization (e.g. UN)",
+    "impact_department": "Impact department of a for profit company (e.g. CSR)",
+    "other": "Other"
+  },
+  "payment_range": {
+    "label": "Payment range"
+  },
+  "commitment": {
+    "label": "Commitment"
+  },
+  "weekly_hours": {
+    "label": "Weekly hours"
+  },
+  "project_length": {
+    "less_than_a_day": "Less than a day",
+    "less_than_a_month": "Less than a month",
+    "1_3_months": "1-3 months",
+    "3_6_months": "3-6 months",
+    "more_than_6_months": "More than 6 months",
+    "less_than_1_day": "<1 day",
+    "less_than_1_month": "<1 month"
+  },
+  "payment_scheme": {
+    "hourly": "Hourly",
+    "fixed": "Fixed"
+  },
+  "project_type": {
+    "one_off": "One-off",
+    "part_time": "Part-time",
+    "full_time": "Full-time"
+  },
+  "payment_type": {
+    "volunteer": "Volunteer",
+    "paid": "Paid"
+  }
+}
