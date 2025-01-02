@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
+import { translate } from 'src/core/utils'; // Assuming translate function is available
 import { IconButton } from 'src/modules/general/components/iconButton';
 import { useSeeMore } from 'src/modules/general/utils';
 import { EditSummary } from 'src/modules/userProfile/containers/editSummery';
@@ -30,7 +31,7 @@ export const Summary = () => {
     <>
       <div className="w-full flex flex-col gap-5">
         <div className={css.title}>
-          Summary
+          {translate('summary.title')}
           {myProfile && (
             <IconButton
               iconName="pencil-01"
@@ -47,7 +48,7 @@ export const Summary = () => {
             {copyProcessed}
             {seeMore && (
               <span className={css.seeMoreBtn} onClick={handleSeeMore}>
-                see more
+                {translate('summary.see-more')}
               </span>
             )}
           </p>

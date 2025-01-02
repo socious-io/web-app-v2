@@ -1,6 +1,7 @@
 import { QRCodeSVG } from 'qrcode.react';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
@@ -23,7 +24,7 @@ export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
   const footerJsx = (
     <div className="w-full p-6 block md:hidden">
       <Button variant="contained" color="primary" fullWidth onClick={handleClaimVC}>
-        Open Socious Wallet app
+        {translate('claimCertificate.openSociousWallet')}
       </Button>
     </div>
   );
@@ -32,7 +33,7 @@ export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
       open={open}
       handleClose={handleClose}
       icon={<FeaturedIcon type="modern" iconName="shield-tick" size="lg" theme="gray" />}
-      title="Claim your certificate"
+      title={translate('claimCertificate.claimYourCertificate')}
       inlineTitle={false}
       footer={footerJsx}
       mobileFullHeight
@@ -42,26 +43,30 @@ export const ClaimCertificateModal: React.FC<ClaimCertificateModalProps> = ({
       <div className="px-4 py-5 md:p-6 flex flex-col gap-5">
         <div className="p-4 flex flex-col gap-1 rounded-xl border border-solid border-Gray-light-mode-300 bg-Gray-light-mode-25">
           <span className="text-sm leading-5 font-semibold text-Gray-light-mode-600">
-            Socious uses blockchain technology to make credentials transparent and traceable.
+            {translate('claimCertificate.sociousUsesBlockchain')}
           </span>
           <span className="text-sm leading-5 font-normal text-Gray-light-mode-600">
-            We’ve partnered with Atala Prism through which your decentralized ID can receive verifiable credentials.
+            {translate('claimCertificate.partneredWithAtala')}
           </span>
         </div>
-        <span className="text-base leading-6 font-semibold text-Gray-light-mode-900">How to get your certificate</span>
+        <span className="text-base leading-6 font-semibold text-Gray-light-mode-900">
+          {translate('claimCertificate.howToGetYourCertificate')}
+        </span>
         <div className="flex flex-col">
-          <span className={css['text--light']}>1. Open your Socious Wallet</span>
-          <span className={`${css['text--light']} hidden md:inline`}>2. Scan the QR code below</span>
+          <span className={css['text--light']}>1. {translate('claimCertificate.openSociousWalletText')}</span>
+          <span className={`${css['text--light']} hidden md:inline`}>
+            2. {translate('claimCertificate.scanQRCode')}
+          </span>
           <span className={css['text--light']}>
             <span className="inline md:hidden">2.</span>
-            <span className="hidden md:inline">3.</span> Accept the request to get your certificate
+            <span className="hidden md:inline">3.</span> {translate('claimCertificate.acceptRequest')}
           </span>
         </div>
         <div className="bg-Gray-light-mode-50 rounded-default p-4 hidden md:flex items-center justify-center">
           <QRCodeSVG value={link} size={200} />
         </div>
         <div className="flex flex-col md:items-center gap-4">
-          <span className={css['text--light']}>Download the Socious Wallet app</span>
+          <span className={css['text--light']}>{translate('claimCertificate.downloadSociousWallet')}</span>
           <div className="flex items-center gap-4">
             <Link to="https://wallet.socious.io/ios" target="_blank">
               <img
