@@ -43,7 +43,7 @@ export const useResultNotFound = () => {
 
   const generatButtonText = (type: string) => {
     let text = '';
-    text = translate('result-not-found.button.view-jobs'); // "View jobs"
+    text = translate('result-not-found.button.view-jobs');
     return text;
   };
 

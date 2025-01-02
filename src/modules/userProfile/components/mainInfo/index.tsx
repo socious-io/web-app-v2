@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { eventsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Organization, User } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { ChipList } from 'src/modules/general/components/chipList';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Link } from 'src/modules/general/components/link';
@@ -59,12 +60,12 @@ export const MainInfo = () => {
     <div className="flex gap-2">
       <Link
         href="/connections?active=0"
-        label={`${identity?.connections} connections`}
+        label={`${identity?.connections} ${translate('main-info.connections')}`}
         customStyle={`${css.textSM} text-brand-700`}
       />
       <Link
         href="/connections?active=2"
-        label={`${identity?.followers} followers`}
+        label={`${identity?.followers} ${translate('main-info.followers')}`}
         customStyle={`${css.textSM} text-brand-700`}
       />
     </div>
@@ -93,13 +94,18 @@ export const MainInfo = () => {
       {profileType === 'users' && (identity as User).open_to_volunteer && (
         <div className="flex gap-2">
           <Icon name="heart-filled" fontSize={20} className="text-Burgundy-600" />
-          <span className="font-medium text-base leading-6 text-Gray-light-mode-700">Open to volunteer</span>
+          <span className="font-medium text-base leading-6 text-Gray-light-mode-700">
+            {translate('main-info.open-to-volunteer')}
+          </span>
         </div>
       )}
+
       {identity?.country && <Location country={identity.country} city={identity?.city} iconName={identity?.country} />}
+
       {profileType === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
-      {org.industry && renderData('Industry', 'globe-04', org.industry)}
-      {size && renderData('Size', 'users-01', size)}
+
+      {org.industry && renderData('main-info.industry', 'globe-04', org.industry)}
+      {size && renderData('main-info.size', 'users-01', size)}
       {org.website && <Website url={org.website ?? ''} truncate />}
     </div>
   );
