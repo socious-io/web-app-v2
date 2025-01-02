@@ -1,7 +1,7 @@
 import React from 'react';
 import { Contract } from 'src/core/api';
 import { translate } from 'src/core/utils';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 
 import { useSliderPaymentRequired } from './useSliderPaymentRequired';

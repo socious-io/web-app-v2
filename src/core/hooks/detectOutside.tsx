@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 const useDetectOutside = (ref, onClick: () => void) => {
   useEffect(() => {
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      const ignoreClick = document.querySelector('[data-ignore-outside-click="true"]');
+      if (ref.current && !ref.current.contains(event.target) && !ignoreClick) {
         onClick();
       }
     }

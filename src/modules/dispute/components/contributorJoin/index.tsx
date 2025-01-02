@@ -1,6 +1,5 @@
-import { Divider } from '@mui/material';
 import React, { ReactNode } from 'react';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Dot } from 'src/modules/general/components/dot';

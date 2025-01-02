@@ -9,5 +9,13 @@
     "or": "または",
     "max": "最大"
   },
-  "general-copy": "コピー"
+  "general-copy": "コピー",
+  "general-payout-account": {
+    "title": "出金アカウントを追加",
+    "subtitle": "SociousはStripeと提携して取引支払いを行っています。「続行」を選択すると、Stripeのウェブサイトにリダイレクトされます。",
+    "country-placeholder": "国を検索",
+    "continue": "続行",
+    "cancel": "キャンセル",
+    "failed": "失敗しました"
+  }
 }

@@ -1,16 +1,8 @@
-import {
-  services,
-  service,
-  createService,
-  updateService,
-  deleteService,
-  StripeAccount,
-  stripeProfile,
-} from 'src/core/api';
+import { services, service, createService, updateService, deleteService, PaymentMode } from 'src/core/api';
 import { getIdentityMeta, translate } from 'src/core/utils';
 import { getSelectedTokenDetail } from 'src/dapp/dapp.service';
 
-import { AdaptorRes, PaymentMode, Service, ServiceReq, ServicesRes, SuccessRes } from '..';
+import { AdaptorRes, Service, ServiceReq, ServicesRes, SuccessRes } from '..';
 
 export const getServicesAdaptor = async (
   page = 1,
@@ -130,23 +122,5 @@ export const deleteServiceAdaptor = async (serviceId: string): Promise<AdaptorRe
   } catch (error) {
     console.error('Error in deleting service', error);
     return { data: null, error: 'Error in deleting service' };
-  }
-};
-
-export const getStripAccountsAdaptor = async (): Promise<AdaptorRes<StripeAccount[]>> => {
-  try {
-    const requests = [stripeProfile({}), stripeProfile({ is_jp: true })];
-    const [stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
-    const stripeAccounts: StripeAccount[] = [
-      ...(stripeProfileRes?.external_accounts?.data || []),
-      ...(jpStripeProfileRes?.external_accounts?.data || []),
-    ];
-    return {
-      data: stripeAccounts,
-      error: null,
-    };
-  } catch (error) {
-    console.error('Error in getting stripe accounts', error);
-    return { data: null, error: 'Error in getting stripe accounts' };
   }
 };

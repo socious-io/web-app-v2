@@ -15,8 +15,8 @@ import {
   PaginateRes,
   ApplicantStatus,
   MissionStatus,
-  PaymentMode,
   OfferStatus,
+  PaymentMode,
 } from '../types';
 import { User } from '../users/users.types';
 
@@ -63,7 +63,7 @@ export interface ApplyReq {
 }
 
 export interface OfferReq {
-  payment_mode: 'CRYPTO' | 'FIAT';
+  payment_mode: PaymentMode;
   offer_rate?: number;
   offer_message: string;
   due_date?: string;
@@ -212,6 +212,7 @@ export type ContractStatus =
   | 'Withdrawn'
   | 'Kicked out'
   | 'Closed';
+
 export interface Contract extends Offer {
   contractStatus: ContractStatus;
   mission?: Mission;
@@ -220,6 +221,7 @@ export interface Contract extends Offer {
   org_feedback?: {
     mission_id?: string;
   };
+  kind?: 'SERVICE';
 }
 
 export interface Mission {

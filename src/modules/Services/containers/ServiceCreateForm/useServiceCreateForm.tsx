@@ -6,8 +6,8 @@ import { useLoaderData, useLocation, useNavigate, useParams } from 'react-router
 import { PAYMENT_CURRENCIES } from 'src/constants/PAYMENT_CURRENCY';
 import { translatePaymentMode } from 'src/constants/PROJECT_PAYMENT_MODE';
 import { translateServiceLength } from 'src/constants/SERVICE_LENGTH';
-import { createOrUpdateServiceAdaptor, OptionType, PaymentMode, Service, skillsToCategory } from 'src/core/adaptors';
-import { CurrentIdentity, updateWallet, uploadMedia } from 'src/core/api';
+import { createOrUpdateServiceAdaptor, OptionType, Service, skillsToCategory } from 'src/core/adaptors';
+import { CurrentIdentity, updateWallet, uploadMedia, PaymentMode } from 'src/core/api';
 import { useTokens } from 'src/core/hooks/useTokens';
 import { getIdentityMeta, translate } from 'src/core/utils';
 import Dapp from 'src/dapp';

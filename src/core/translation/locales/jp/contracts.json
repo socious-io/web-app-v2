@@ -23,6 +23,7 @@
     "cont-decline": "辞退",
     "cont-accept": "承諾",
     "cont-offer-sent-alert": "応募者にオファーを送信しました",
+    "cont-pending-alert": "{{seller}}からの確認待ちで購入が保留されています",
     "cont-bank-account-alert": "銀行口座が必要です",
     "cont-bank-account-alert-subtitle": "このオファーを受け入れるには支払い口座を追加する必要があります",
     "cont-add-account": "支払い口座を追加",

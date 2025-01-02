@@ -11,7 +11,7 @@ import { SliderAwaiting } from '../sliderAwaiting';
 import { SliderCompleted } from '../sliderCompleted';
 import { SliderDefault } from '../sliderDefault';
 import { SliderOfferReceived } from '../sliderOfferReceived';
-import { SliderOfferSent } from '../sliderOfferSent';
+import SliderOfferSent from '../SliderOfferSent';
 import { SliderOngoing } from '../sliderOngoing';
 import { SliderPaymentRequired } from '../sliderPaymentRequired';
 
@@ -163,10 +163,10 @@ export const useContractDetailsSlider = () => {
 
   const navigateToHomePage = () => {
     if (identityType === 'users') {
-      const { usernameVal } = getIdentityMeta(contract.offerer);
+      const { usernameVal } = getIdentityMeta(contract?.offerer);
       navigate(`/profile/organizations/${usernameVal}/view`);
     } else {
-      const { usernameVal } = getIdentityMeta(contract.recipient);
+      const { usernameVal } = getIdentityMeta(contract?.recipient);
       navigate(`/profile/users/${usernameVal}/view`);
     }
   };

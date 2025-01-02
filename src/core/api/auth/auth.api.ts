@@ -51,7 +51,7 @@ export async function otpConfirm(params: OtpConfirmReq): Promise<AuthRes> {
   return (await get<AuthRes>('auth/otp/confirm', { params })).data;
 }
 
-export async function stripeLink(params: AuthStripeReq): Promise<StripeLinkRes> {
+export async function getStripeLink(params: AuthStripeReq): Promise<StripeLinkRes> {
   return (await get<StripeLinkRes>('auth/stripe/connect-link', { params })).data;
 }
 
