@@ -1,11 +1,13 @@
+import { translate } from 'src/core/utils';
+
 export const PROJECT_PAYMENT_TYPE = [
-  { label: 'Volunteer', value: 'VOLUNTEER' },
-  { label: 'Paid', value: 'PAID' },
+  { label: translate('payment_type.volunteer'), value: 'VOLUNTEER' },
+  { label: translate('payment_type.paid'), value: 'PAID' },
 ];
 
 export const PROJECT_PAYMENT_TYPE_DROPDOWN = [
-  { title: 'Volunteer', value: 'VOLUNTEER' },
-  { title: 'Paid', value: 'PAID' },
+  { title: translate('payment_type.volunteer'), value: 'VOLUNTEER' },
+  { title: translate('payment_type.paid'), value: 'PAID' },
 ];
 
 export function translatePaymentType(value: string) {

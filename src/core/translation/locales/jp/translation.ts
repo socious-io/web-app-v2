@@ -1,6 +1,7 @@
 import chats from './chats.json';
 import companySize from './companySize.json';
 import connections from './connections.json';
+import constants from './constants.json';
 import contracts from './contracts.json';
 import credential from './credential.json';
 import dashboard from './dashboard.json';
@@ -20,6 +21,7 @@ import payments from './payments.json';
 import preferences from './preferences.json';
 import profile from './profile.json';
 import referral from './referral.json';
+import search from './search.json';
 import services from './services.json';
 import setting from './setting.json';
 import signup from './signup.json';
@@ -55,5 +57,7 @@ export function generateTranslationFile() {
     credential,
     services,
     setting,
+    search,
+    constants,
   );
 }

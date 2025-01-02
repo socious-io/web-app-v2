@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Job, Organization, search, User, UserMeta, UsersRes } from 'src/core/api';
+import { Job, Organization, search, User } from 'src/core/api';
+import { translate } from 'src/core/utils'; // Added for translations
 import { RootState } from 'src/store';
 
 import { SearchItem, TabValue } from './SearchModal.types';
@@ -13,9 +14,11 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
   });
 
   const tabs = [
-    ...(identityType === 'users' ? [{ label: 'Jobs', value: 'projects' as TabValue }] : []),
-    { label: 'People', value: 'users' as TabValue },
-    { label: 'Organizations', value: 'organizations' as TabValue },
+    ...(identityType === 'users'
+      ? [{ label: translate('search-modal.tabs.jobs'), value: 'projects' as TabValue }]
+      : []),
+    { label: translate('search-modal.tabs.people'), value: 'users' as TabValue },
+    { label: translate('search-modal.tabs.organizations'), value: 'organizations' as TabValue },
   ];
 
   const [selectedTab, setSelectedTab] = useState<TabValue>('projects');

@@ -1,3 +1,5 @@
+import { translate } from 'src/core/utils'; // Assuming translate function is available
+
 export const translatePaymentRange = (
   lower: string,
   higher: string,
@@ -10,19 +12,19 @@ export const translatePaymentRange = (
   const label = `${type}-${scheme}`;
   const rangeLabelValue: Record<string, { value: string; label: string }> = {
     'PAID-FIXED': {
-      label: 'Payment range',
+      label: translate('payment_range.label'),
       value: `$${lower} ~ $${higher}`,
     },
     'PAID-HOURLY': {
-      label: 'Payment range',
+      label: translate('payment_range.label'),
       value: `$${lower} ~ $${higher} / hr`,
     },
     'VOLUNTEER-FIXED': {
-      label: 'Commitment',
+      label: translate('commitment.label'),
       value: `${lower} ~ ${higher} hrs`,
     },
     'VOLUNTEER-HOURLY': {
-      label: 'Weekly hours',
+      label: translate('weekly_hours.label'),
       value: `${lower} ~ ${higher} hrs / week`,
     },
   };
