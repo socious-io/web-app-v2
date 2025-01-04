@@ -18,8 +18,9 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "import", "jsdoc"],
+  "plugins": ["@typescript-eslint", "react", "import", "jsdoc", "i18next"],
   "rules": {
+    "i18next/no-literal-string": 2,
     "semi": "error",
     "eol-last": ["error", "always"],
     "react/react-in-jsx-scope": "off",
