@@ -5,7 +5,8 @@
 	"bundledWebRuntime": false,
 	"server": {
 		"hostname": "app.socious.io",
-		"androidScheme": "https"
+		"androidScheme": "https",
+		"iosScheme": "https"
 	},
 	"plugins": {
 		"CapacitorCookies": {
