@@ -1,38 +1,43 @@
-import { Contract } from 'src/core/api';
+import { Contract } from 'src/core/adaptors';
 import useHideScrollbar from 'src/core/hooks/useHideScrollbar';
 import { translate } from 'src/core/utils';
-import { ContractCard } from 'src/modules/contract/components/contractCard';
-import { ContractDetailsSlider } from 'src/modules/contract/components/contractDetailsSlider';
+import ContractCard from 'src/modules/Contract/components/ContractCard';
+import ContractDetailsSlider from 'src/modules/Contract/containers/ContractDetailsSlider';
 import { ButtonGroups } from 'src/modules/general/components/ButtonGroups';
+import { ButtonGroupItem } from 'src/modules/general/components/ButtonGroups/buttonGroups.types';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 import Slider from 'src/modules/general/components/Slider';
 
-import css from './contracts.module.scss';
+import styles from './index.module.scss';
 import { useContracts } from './useContracts';
 
 export const Contracts = () => {
-  const { filterButtons, pageCount, contractList, page, openSlider, updatePageNumber, closeSlider, activeFilter } =
-    useContracts();
+  const {
+    data: { activeFilter, contractList, pageCount, page, openSlider },
+    operations: { handleChangeFilter, updatePageNumber, closeSlider },
+  } = useContracts();
   useHideScrollbar(openSlider, true);
+
+  const filterButtons: ButtonGroupItem[] = [
+    { label: translate('cont-filter-all'), handleClick: () => handleChangeFilter('all') },
+    { label: translate('cont-filter-ongoing'), handleClick: () => handleChangeFilter('ongoing') },
+    { label: translate('cont-filter-archived'), handleClick: () => handleChangeFilter('archived') },
+  ];
 
   return (
     <>
-      <div className={css.container}>
-        <div className={css.header}>
-          <div className={css.left}>
-            <h1 className={css.title}>{translate('cont-title')}</h1>
-            <h2 className={css.subtitle}>{translate('cont-subtitle')}</h2>
-          </div>
-          <div className={css.right}></div>
+      <div className={styles['container']}>
+        <div className={styles['header']}>
+          <h1 className={styles['title']}>{translate('cont-title')}</h1>
+          <h2 className={styles['subtitle']}>{translate('cont-subtitle')}</h2>
         </div>
-
         <ButtonGroups buttons={filterButtons} activeIndex={activeFilter} />
-        <div className="flex flex-col gap-6 md:gap-5 w-full max-w-[640px] mt-8">
+        <div className={styles['list']}>
           {contractList?.map((item: Contract) => <ContractCard key={item.id} contract={item} />)}
         </div>
         <div className="mt-11 hidden md:block">
-          <Pagination count={pageCount} page={page} onChange={(e, p) => updatePageNumber(p)} />
+          <Pagination count={pageCount} page={page} onChange={(_, p) => updatePageNumber(p)} />
         </div>
         <div className="mt-11 block md:hidden">
           <PaginationMobile page={page} count={pageCount} handleChange={updatePageNumber} />
