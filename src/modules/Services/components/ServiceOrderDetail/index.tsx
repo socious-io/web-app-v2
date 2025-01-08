@@ -1,5 +1,5 @@
 import { CircularProgress, Divider } from '@mui/material';
-import { contractStatus } from 'src/constants/CONTRACTS_STATUS';
+import { CONTRACT_STATUS } from 'src/constants/CONTRACTS_STATUS';
 import { CURRENCY_SIGNS } from 'src/constants/PAYMENT_CURRENCY';
 import { translate } from 'src/core/utils';
 import { AccountItem } from 'src/modules/general/components/avatarDropDown/avatarDropDown.types';
@@ -66,7 +66,7 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
               {status && (
                 <div className={styles['order__label']}>
                   {translate('service-detail.order.status')}
-                  <Status {...contractStatus[status]} />
+                  <Status {...CONTRACT_STATUS[status]} />
                 </div>
               )}
               <div className={styles['order__label']}>
