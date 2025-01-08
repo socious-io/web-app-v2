@@ -285,8 +285,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   };
 
   const onSelectCompany = newCompanyVal => {
-    const value = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
-    setValue('org', { value, label: newCompanyVal.label }, { shouldValidate: true });
+    const value = newCompanyVal?.value === newCompanyVal?.label ? '' : newCompanyVal?.value;
+    setValue('org', { value, label: newCompanyVal?.label }, { shouldValidate: true });
   };
 
   const cityToOption = (cities: Location[]) => {
@@ -309,8 +309,8 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     }
   };
   const onSelectCity = location => {
-    setValue('city', { value: location.city, label: location.city }, { shouldValidate: true });
-    setValue('country', location.countryCode, { shouldValidate: true });
+    setValue('city', { value: location?.city, label: location?.city }, { shouldValidate: true });
+    setValue('country', location?.countryCode, { shouldValidate: true });
   };
 
   const onSelectEmplymentType = newType => {
