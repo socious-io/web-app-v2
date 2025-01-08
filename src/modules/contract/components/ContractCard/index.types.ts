@@ -1,4 +1,4 @@
-import { Contract } from 'src/core/api';
+import { Contract } from 'src/core/adaptors';
 
 export interface ContractCardProps {
   contract: Contract;
