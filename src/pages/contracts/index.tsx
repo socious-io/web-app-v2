@@ -1,8 +1,8 @@
-import { Contract } from 'src/core/api';
+import { Contract } from 'src/core/adaptors';
 import useHideScrollbar from 'src/core/hooks/useHideScrollbar';
 import { translate } from 'src/core/utils';
-import { ContractCard } from 'src/modules/contract/components/contractCard';
-import { ContractDetailsSlider } from 'src/modules/contract/components/contractDetailsSlider';
+import ContractCard from 'src/modules/contract/components/ContractCard';
+import ContractDetailsSlider from 'src/modules/contract/components/ContractDetailsSlider';
 import { ButtonGroups } from 'src/modules/general/components/ButtonGroups';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
