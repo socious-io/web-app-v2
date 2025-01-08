@@ -209,14 +209,12 @@ export const useServiceCreateForm = () => {
       skills: formData.skills.map(skill => skill.value) || [],
       samples: (attachmentIds as string[]) || [],
     };
-    const { error } = await createOrUpdateServiceAdaptor(payload, serviceId, isDuplicate);
-    if (error) return;
-    else {
-      if (formData.payment === 'FIAT' && !hasStripeAccounts) {
-        setOpenModal({ name: 'stripe', open: true });
-      } else {
-        setOpenModal({ name: 'publish', open: true });
-      }
+    if (formData.payment === 'FIAT' && !hasStripeAccounts) {
+      setOpenModal({ name: 'stripe', open: true });
+    } else {
+      const { error } = await createOrUpdateServiceAdaptor(payload, serviceId, isDuplicate);
+      if (error) return;
+      else setOpenModal({ name: 'publish', open: true });
     }
   };
 
