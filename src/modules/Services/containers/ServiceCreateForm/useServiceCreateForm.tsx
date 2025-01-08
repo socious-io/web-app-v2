@@ -28,9 +28,15 @@ const schema = yup.object().shape({
     label: yup.string().required(),
     value: yup.string().required(translate('service-form.error-message')),
   }),
-  hours: yup.string().required(translate('service-form.error-message')),
+  hours: yup
+    .string()
+    .matches(/^[0-9]*\.?[0-9]+$/, translate('service-form.error-positive-message'))
+    .required(translate('service-form.error-message')),
   payment: yup.string().default('FIAT').required(translate('service-form.error-message')),
-  price: yup.string().required(translate('service-form.error-message')),
+  price: yup
+    .string()
+    .matches(/^[0-9]*\.?[0-9]+$/, translate('service-form.error-positive-message'))
+    .required(translate('service-form.error-message')),
   currency: yup.string().required(translate('service-form.error-message')),
   skills: yup
     .array()

@@ -21,6 +21,7 @@
     "header-edit": "サービスを編集",
     "subheader": "サービスについて詳しく教えてください",
     "error-message": "この項目は必須です",
+    "error-positive-message": "値は正の数でなければなりません",
     "name": "サービス名",
     "name-description": "提供するサービスの明確で簡潔な名前を追加してください",
     "name-placeholder": "例：ロゴデザイン",
