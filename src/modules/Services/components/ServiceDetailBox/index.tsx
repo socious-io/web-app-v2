@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { config } from 'src/config';
-import { CURRENCY_SIGNS } from 'src/constants/PAYMENT_CURRENCY';
 import { Button } from 'src/modules/general/components/Button';
 import { Chip } from 'src/modules/general/components/Chip';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -40,7 +39,6 @@ const ServiceDetailBox: React.FC<ServiceDetailBoxProps> = ({ serviceDetail, onPu
           ) : (
             <img src={`/icons/crypto/${currency.symbol}.svg`} width={20} alt={currency.name} />
           )}
-          {CURRENCY_SIGNS[currency.name] || ''}
           {price} {currency.name}
           {payment === 'FIAT' && <span className={styles['row--lighter']}>{translate('service-detail.fixed')}</span>}
         </div>

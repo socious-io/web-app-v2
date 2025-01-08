@@ -43,7 +43,7 @@ const ServicesList = () => {
             key={service.id}
             {...service}
             sample={service.samples ? service.samples[0]?.url : ''}
-            currency={service.currency.name}
+            currency={service.currency}
             myProfile={myProfile}
             onCardClick={onServiceClick}
             onActions={onServiceActions}

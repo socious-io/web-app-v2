@@ -1,3 +1,5 @@
+import { CurrencyDetail, PaymentMode } from 'src/core/adaptors';
+
 export interface ServiceCardProps {
   id: string;
   sample?: string;
@@ -5,8 +7,9 @@ export interface ServiceCardProps {
   category: string;
   skills: string[];
   delivery: string;
+  payment: PaymentMode;
   price: string;
-  currency: string;
+  currency: CurrencyDetail;
   myProfile: boolean;
   onCardClick: (serviceId: string) => void;
   onActions: (actionName: 'duplicate' | 'delete' | 'edit', serviceId: string) => void;

@@ -1,4 +1,3 @@
-import { CURRENCY_SIGNS } from 'src/constants/PAYMENT_CURRENCY';
 import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Chip } from 'src/modules/general/components/Chip';
@@ -15,6 +14,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   category,
   skills,
   delivery,
+  payment,
   price,
   currency,
   myProfile,
@@ -81,8 +81,16 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             {delivery} {translate('service-card.delivery')}
           </div>
           <span className={styles['content__price']}>
-            {CURRENCY_SIGNS[currency] || ''}
-            {price} {currency}
+            {payment === 'FIAT' ? (
+              <Icon
+                name={`currency-${currency.name === 'USD' ? 'dollar' : 'yen'}-circle`}
+                fontSize={20}
+                color={variables.color_grey_700}
+              />
+            ) : (
+              <img src={`/icons/crypto/${currency.symbol}.svg`} width={20} alt={currency.name} />
+            )}
+            {price} {currency.name}
           </span>
         </div>
       </div>
