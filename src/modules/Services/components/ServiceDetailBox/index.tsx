@@ -40,7 +40,6 @@ const ServiceDetailBox: React.FC<ServiceDetailBoxProps> = ({ serviceDetail, onPu
             <img src={`/icons/crypto/${currency.symbol}.svg`} width={20} alt={currency.name} />
           )}
           {price} {currency.name}
-          {payment === 'FIAT' && <span className={styles['row--lighter']}>{translate('service-detail.fixed')}</span>}
         </div>
       </div>
       <CopyLink link={url} onCopy={() => navigator.clipboard.writeText(url)} />
