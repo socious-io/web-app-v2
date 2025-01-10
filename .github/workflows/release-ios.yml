@@ -94,6 +94,8 @@ jobs:
           VITE_REFRESH_EXPIRE: ${{ vars.REFRESH_EXPIRE }}
           VITE_SOCKET_URL: ${{ vars.SOCKET_URL }}
           VITE_STRIPE_PUBLIC_KEY: ${{ vars.STRIPE_PUBLIC_KEY }}
+          VITE_APPLE_OAUTH_CLIENT_ID: ${{ vars.APPLE_OAUTH_CLIENT_ID }}
+          VITE_GOOGLE_OAUTH_CLIENT_ID_IOS: ${{ vars.GOOGLE_OAUTH_CLIENT_ID_IOS }}
 
       - name: Extracting Google Service plist
         run: |
