@@ -4,9 +4,14 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
+	<key>com.apple.developer.applesignin</key>
+	<array>
+		<string>Default</string>
+	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>zakaio://platform.proofspace.id</string>
+		<string>applinks:webapp2.dev.socious.io</string>
+		<string>applinks:app.socious.io</string>
 	</array>
 </dict>
 </plist>

@@ -5,13 +5,13 @@ import { Certificates } from './certificate/certificates';
 import Culture from './Culture';
 import { Educations } from './education/educations';
 import { Experiences } from './experience/experience';
-import { Recommendation } from './recommendaion/recommendation';
 import { Skills } from './skills';
 import { Summary } from './summary';
 import { useAbout } from './useAbout';
 import { MainInfo } from '../mainInfo';
+import { AboutProps } from './index.types';
 
-export const About = ({ onOpenPreferences }) => {
+export const About: React.FC<AboutProps> = ({ onOpenPreferences }) => {
   const { connectUrl, culturePreferences, handleOpenVerifyModal, identityType, openVerifyModal, setOpenVerifyModal } =
     useAbout();
 
@@ -24,7 +24,9 @@ export const About = ({ onOpenPreferences }) => {
       <Divider />
       {identityType === 'organizations' && (
         <>
-          <Culture items={culturePreferences} onOpenPreferences={onOpenPreferences} />
+          {!!culturePreferences.length && onOpenPreferences && (
+            <Culture items={culturePreferences} onOpenPreferences={onOpenPreferences} />
+          )}
           <Divider />
         </>
       )}

@@ -147,19 +147,19 @@ export const ContributorDashboard: React.FC<ContributorDashboardProps> = ({ newl
         footerDivider={false}
         customStyle="md:max-w-[480px]"
       >
-        <div className="px-4 py-5 md:p-6 text-Gray-light-mode-600 font-normal text-sm leading-5">
+        <div className="flex flex-col gap-5 px-4 py-5 md:p-6 text-Gray-light-mode-600 font-normal text-sm leading-5">
           <p>
             We value your contributions and would be sad to see you go! If you need a break, you might consider pausing
             your participation instead.
           </p>
           <p>By pausing your contributor status, you will:</p>
-          <ul className="list-disc my-5 ml-6">
+          <ul className="list-disc ml-6">
             <li>Temporarily stop receiving new task notifications</li>
             <li>Retain your contributor status</li>
             <li>Have the flexibility to resume your participation whenever you&apos;re ready</li>
           </ul>
           <p>If you still wish to opt out, please keep in mind that:</p>
-          <ul className="list-disc mt-5 ml-6">
+          <ul className="list-disc ml-6">
             <li>You will be removed from the Contributor Program and stop receiving all task notifications</li>
             <li>You will lose your contributor status</li>
             <li>You&apos;ll need to go through the opt-in process again if you decide to rejoin in the future</li>

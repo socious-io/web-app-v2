@@ -25,6 +25,7 @@ export const Modal: React.FC<ModalProps> = props => {
     inlineTitle = true,
     contentClassName = '',
     closeButtonClassName = '',
+    className = '',
   } = props;
 
   return (
@@ -32,11 +33,11 @@ export const Modal: React.FC<ModalProps> = props => {
       {open && (
         <Backdrop sx={{ zIndex: theme => theme.zIndex.drawer + 1, width: '100vw' }} open={open} id={id}>
           <div
-            className={`${css.container} ${customStyle} ${
+            className={` ${css.container} ${customStyle} ${
               mobileCentered ? css.mobileCentered : mobileFullHeight ? css.mobileFullHeight : css.mobileDefault
-            }`}
+            } ${className}`}
           >
-            <div className="w-full flex  gap-4 px-6 pt-6 relative top-0">
+            <div className="w-full flex gap-4 px-4 pt-4 md:px-6 md:pt-6 relative top-0">
               {icon}
               {inlineTitle && (
                 <div className="flex-1 flex flex-col gap-1 justify-center items-start pb-5">

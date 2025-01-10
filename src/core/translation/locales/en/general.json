@@ -1,6 +1,13 @@
 {
-    "general-back": "Back",
-    "general-log-out": "Log out",
-    "general-cause-social": "Social Issues (General)",
-    "general-popular": "Popular"
+  "general-back": "Back",
+  "general-log-out": "Log out",
+  "general-cause-social": "Social Issues (General)",
+  "general-popular": "Popular",
+  "general-file-uploader": {
+    "click": "Click to upload",
+    "drag": "or drag and drop",
+    "or": "or",
+    "max": "max"
+  },
+  "general-copy": "Copy"
 }

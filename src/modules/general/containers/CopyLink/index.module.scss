@@ -1,0 +1,13 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.copy,
+.copy--success {
+    display: flex;
+    gap: 0.25rem;
+    cursor: pointer;
+
+    &--success {
+        color: $color-success-700;
+        font-weight: 500;
+    }
+}

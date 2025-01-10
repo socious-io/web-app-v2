@@ -5,16 +5,27 @@ import variables from 'src/styles/constants/_exports.module.scss';
 
 import { AvatarLabelGroupProps } from './avatarLabelGroup.types';
 
-export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = props => {
-  const { account, customStyle, handleClick, avatarSize, removeFull = false } = props;
+export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = ({
+  account,
+  avatarSize,
+  removeFull = false,
+  justAvatarClickable = false,
+  handleClick,
+  customStyle = '',
+}) => {
   const nonFull = removeFull ? '' : 'w-full';
 
   return (
     <div
-      className={`${nonFull} h-fit flex flex-row gap-3 py-3 px-4 ${customStyle} ${handleClick && 'cursor-pointer'}`}
-      onClick={handleClick}
+      className={`${nonFull} h-fit flex flex-row gap-3 py-3 px-4 ${customStyle} ${handleClick && !justAvatarClickable && 'cursor-pointer'}`}
+      onClick={e => !justAvatarClickable && handleClick?.(e)}
     >
-      <Avatar img={account.img} type={account.type} size={avatarSize || '40px'} />
+      <Avatar
+        img={account?.img || ''}
+        type={account.type}
+        size={avatarSize || '40px'}
+        onClick={e => justAvatarClickable && handleClick?.(e)}
+      />
       <div className="flex flex-col">
         <Typography variant="subtitle2" color={variables.color_grey_900}>
           {account.name}

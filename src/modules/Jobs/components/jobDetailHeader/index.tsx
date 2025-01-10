@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Job } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { AuthGuard } from 'src/modules/authGuard';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { BackLink } from 'src/modules/general/components/BackLink';
@@ -69,7 +69,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
   return (
     <>
       <div className={css.container}>
-        <BackLink title="Back" onBack={() => navigate(getBackLink())} customStyle="w-fit" />
+        <BackLink title={translate('job-back')} onBack={() => navigate(getBackLink())} customStyle="w-fit" />
         <Avatar size="72px" type="organizations" img={job.identity_meta.image} hasBorder isVerified={false} />
         <div className="w-full flex flex-col gap-4">
           <div className="flex flex-col">

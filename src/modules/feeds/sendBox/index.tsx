@@ -1,5 +1,6 @@
 import { InputBase } from '@mui/material';
 import React, { useState } from 'react';
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import CustomEmojiPicker from 'src/modules/general/components/EmojiPicker';
@@ -15,8 +16,8 @@ const SendBox: React.FC<SendBoxProps> = ({
   onEmojiSelect,
   onSend,
   name = '',
-  placeholder = 'Write...',
-  buttonText = 'Send',
+  placeholder = translate('feeds-comment-box-placeholder'),
+  buttonText = translate('feeds-comment-send'),
   disabled = false,
   className = '',
 }) => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Contract } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
@@ -26,6 +27,7 @@ export const SliderOngoing: React.FC<SliderOngoingProps> = ({ disableMessage, re
     setOpenInitiateDisputeModal,
     respondentId,
     missionId,
+    name,
   } = useSliderOngoing(contract);
   return (
     <>
@@ -33,11 +35,11 @@ export const SliderOngoing: React.FC<SliderOngoingProps> = ({ disableMessage, re
         <div className="flex gap-3">
           {displayComplete && (
             <Button variant="contained" color="primary" fullWidth onClick={() => setOpenAlert(true)}>
-              Complete
+              {translate('cont-complete-btn')}
             </Button>
           )}
           <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat} disabled={disableMessage}>
-            Message
+            {translate('cont-message')}
           </Button>
           <ThreeDotButton menuItems={menuItems} />
         </div>
@@ -48,13 +50,13 @@ export const SliderOngoing: React.FC<SliderOngoingProps> = ({ disableMessage, re
           open={openAlert}
           onClose={() => setOpenAlert(false)}
           onSubmit={handleComplete}
-          message={`Once ${name} confirms the job completion, you will receive your payment.`}
-          title="Submit job completion?"
+          message={translate('cont-complete-msg', { name: name })}
+          title={translate('cont-complete-confirm')}
           customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="warning" type="light-circle-outlined" />}
           closeButtn={true}
-          closeButtonLabel="Cancel"
+          closeButtonLabel={translate('cont-cancel')}
           submitButton={true}
-          submitButtonLabel="Confirm"
+          submitButtonLabel={translate('cont-confirm')}
         />
       )}
       <InitiateDisputeModal

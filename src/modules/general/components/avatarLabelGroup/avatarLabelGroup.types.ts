@@ -2,8 +2,9 @@ import { AccountItem } from '../avatarDropDown/avatarDropDown.types';
 
 export interface AvatarLabelGroupProps {
   account: AccountItem;
-  customStyle?: string;
-  handleClick?: () => void;
   avatarSize?: string;
   removeFull?: boolean;
+  justAvatarClickable?: boolean;
+  handleClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
+  customStyle?: string;
 }

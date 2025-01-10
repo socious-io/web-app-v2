@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { CurrentIdentity, OrgMeta, UserMeta } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { CredentialList } from 'src/modules/credentials/credentialsList';
 import { IssuedList } from 'src/modules/credentials/issuedList';
 import { RootState } from 'src/store';
@@ -21,9 +22,9 @@ export const useCredentials = () => {
   const verificationStatus = currentIdentity?.verification_status;
 
   const tabs = [
-    { label: 'Issued', content: <IssuedList /> },
-    { label: 'Requested', content: <CredentialList /> },
-    { label: 'Archived', content: <></> },
+    { label: translate('cred-issued'), content: <IssuedList /> },
+    { label: translate('cred-requested'), content: <CredentialList /> },
+    { label: translate('cred-archived'), content: <></> },
   ];
   const activeTabIndex = {
     '#issued': 0,

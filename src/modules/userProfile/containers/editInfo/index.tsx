@@ -37,7 +37,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
     handleChangeBio,
   } = useEditInfo(handleClose);
   const modalContent = (
-    <form className={css.editInfoModal}>
+    <form className={css['modal__form']}>
       <Input
         required
         id="first-name"
@@ -147,6 +147,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
       subTitle="* required fields"
       content={modalContent}
       footer={modalFooterJsx}
+      customStyle={css['modal']}
     />
   );
 };

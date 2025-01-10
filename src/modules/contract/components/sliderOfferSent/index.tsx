@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity, cancelOffer } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { AlertMessage } from 'src/modules/general/components/alertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { RootState } from 'src/store';
@@ -38,16 +39,16 @@ export const SliderOfferSent: React.FC<SliderSentOfferProps> = ({ contract, disa
       <div className="flex gap-3">
         {!disableMessage && (
           <Button variant="outlined" color="secondary" fullWidth onClick={redirectToChat} disabled={disableMessage}>
-            Message
+            {translate('cont-message')}
           </Button>
         )}
 
         <Button variant="outlined" color="secondary" fullWidth onClick={withdrawOfferByOP}>
-          Withdraw
+          {translate('cont-withdraw')}
         </Button>
       </div>
 
-      <AlertMessage theme="gray" iconName="check-circle" title="You have sent an offer to the applicant" subtitle="" />
+      <AlertMessage theme="gray" iconName="check-circle" title={translate('cont-offer-sent-alert')} subtitle="" />
     </div>
   );
 };

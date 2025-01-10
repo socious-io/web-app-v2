@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import { Input } from 'src/modules/general/components/input/input';
@@ -28,7 +29,7 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
           onChange={e => setNewMessage(e.target.value)}
           onKeyDown={enterInput}
           className={css['input']}
-          placeholder="Send a message"
+          placeholder={translate('chat-send-placeholder')}
         />
 
         <Button
@@ -37,7 +38,7 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
           customStyle="absolute right-[14px] bottom-[14px]"
           onClick={handleSendMessage}
         >
-          Send
+          {translate('chat-send')}
         </Button>
       </div>
       <div className="flex md:hidden py-6 gap-3">
@@ -45,7 +46,7 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
           <Input
             value={newMessage}
             onChange={e => setNewMessage(e.target.value)}
-            placeholder="Send a message"
+            placeholder={translate('chat-send-placeholder')}
             onKeyDown={enterInput}
           />
         </div>

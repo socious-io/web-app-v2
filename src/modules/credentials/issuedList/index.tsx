@@ -2,13 +2,14 @@ import { ColumnDef, flexRender, getCoreRowModel, Getter, useReactTable } from '@
 import { useMemo } from 'react';
 import { CredentialEducationRes, CredentialExperienceRes } from 'src/core/api';
 import { formatDate } from 'src/core/time';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 import Status from 'src/modules/general/components/Status';
+import { ClaimCertificateModal } from 'src/modules/userProfile/components/about/claimCertificateModal';
 
 import css from './issuedList.module.scss';
 import { useIssuedList } from './useIssuedList';
@@ -26,13 +27,16 @@ export const IssuedList = () => {
     verified,
     onClaim,
     onArchive,
+    openClaimModal,
+    handleCloseClaimModal,
+    handleClaimVC,
   } = useIssuedList();
 
   const columns = useMemo<ColumnDef<CredentialExperienceRes | CredentialEducationRes>[]>(
     () => [
       {
         id: 'name',
-        header: 'Name',
+        header: translate('cred-col-name'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const id = getValue();
@@ -59,16 +63,16 @@ export const IssuedList = () => {
       },
       {
         id: 'type',
-        header: 'Credential Type',
+        header: translate('cred-col-type'),
         accessorKey: 'id',
         cell: ({ getValue }: { getValue: Getter<string> }) => {
           const item = issuedList.find(list => list.id === getValue()) || {};
-          return 'experience' in item ? 'Work Certificate' : 'Educational Certificate';
+          return 'experience' in item ? translate('cred-col-work') : translate('cred-col-edu');
         },
       },
       {
         id: 'status',
-        header: 'Status',
+        header: translate('cred-col-status'),
         accessorKey: 'status',
         cell: ({ getValue }: { getValue: Getter<string> }) => (
           <div className="flex items-center">
@@ -78,7 +82,7 @@ export const IssuedList = () => {
       },
       {
         id: 'date',
-        header: 'Issued Date',
+        header: translate('cred-issue-date'),
         accessorKey: 'created_at',
         cell: ({ getValue }: { getValue: Getter<string> }) => formatDate(getValue()),
       },
@@ -102,7 +106,7 @@ export const IssuedList = () => {
                 onClick={() => onClaim(item.id, 'experience' in item)}
                 customStyle="!text-sm !font-semibold"
               >
-                Claim
+                {translate('cred-claim')}
               </Button>
             )}
 
@@ -112,7 +116,7 @@ export const IssuedList = () => {
               onClick={() => onArchive(item.id, 'experience' in item)}
               customStyle="!text-sm !font-semibold"
             >
-              Archive
+              {translate('cred-archive')}
             </Button>
           </div>
         );
@@ -129,78 +133,88 @@ export const IssuedList = () => {
   });
 
   return (
-    <div className="flex flex-col">
-      {userProfile && (
-        <div className="flex justify-end">
-          <Button
-            color="inherit"
-            variant="outlined"
-            disabled={!selectedCredential.id}
-            onClick={() => onArchive(selectedCredential.id, selectedCredential.name === 'experience')}
-          >
-            Archive
-          </Button>
-        </div>
-      )}
-      <div className={css['table']}>
-        <div className="block overflow-auto">
-          <table className="w-full rounded-lg">
-            <thead className={css['header']}>
-              {table.getHeaderGroups().map(headerGroup => {
-                return (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => {
-                      return (
-                        <th id={header.id} key={header.id} className={css['header__item']}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(header.column.columnDef.header, header.getContext())}
-                        </th>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.map(row => {
-                return (
-                  <tr key={row.id} className={css['row']}>
-                    {row.getVisibleCells().map(cell => {
-                      const item = cell.column.id === 'name' ? cell.row.original : null;
-                      return (
-                        <td className={css['col']} key={cell.id}>
-                          {cell.column.id === 'name' ? (
-                            <div className="flex justify-start items-center gap-3">
-                              {userProfile && item && (
-                                <Checkbox
-                                  id={item.id}
-                                  checked={selectedCredential.id === item.id}
-                                  onChange={() => onSelectCredential(item.id, 'experience' in item)}
-                                  disabled={!verified}
-                                />
-                              )}
-                              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </div>
-                          ) : (
-                            flexRender(cell.column.columnDef.cell, cell.getContext())
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div className={`${css.paginationBox} hidden md:block`}>
-          <Pagination page={page} count={totalPage} onChange={(e, p) => setPage(p)} />
-        </div>
-        <div className={`${css.paginationBox} block md:hidden`}>
-          <PaginationMobile page={page} count={totalPage} handleChange={setPage} />
+    <>
+      <div className="flex flex-col">
+        {userProfile && (
+          <div className="flex justify-end">
+            <Button
+              color="inherit"
+              variant="outlined"
+              disabled={!selectedCredential.id}
+              onClick={() => onArchive(selectedCredential.id, selectedCredential.name === 'experience')}
+            >
+              {translate('cred-archive')}
+            </Button>
+          </div>
+        )}
+        <div className={css['table']}>
+          <div className="block overflow-auto">
+            <table className="w-full rounded-lg">
+              <thead className={css['header']}>
+                {table.getHeaderGroups().map(headerGroup => {
+                  return (
+                    <tr key={headerGroup.id}>
+                      {headerGroup.headers.map(header => {
+                        return (
+                          <th id={header.id} key={header.id} className={css['header__item']}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(header.column.columnDef.header, header.getContext())}
+                          </th>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </thead>
+              <tbody>
+                {table.getRowModel().rows.map(row => {
+                  return (
+                    <tr key={row.id} className={css['row']}>
+                      {row.getVisibleCells().map(cell => {
+                        const item = cell.column.id === 'name' ? cell.row.original : null;
+                        return (
+                          <td className={css['col']} key={cell.id}>
+                            {cell.column.id === 'name' ? (
+                              <div className="flex justify-start items-center gap-3">
+                                {userProfile && item && (
+                                  <Checkbox
+                                    id={item.id}
+                                    checked={selectedCredential.id === item.id}
+                                    onChange={() => onSelectCredential(item.id, 'experience' in item)}
+                                    disabled={!verified}
+                                  />
+                                )}
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                              </div>
+                            ) : (
+                              flexRender(cell.column.columnDef.cell, cell.getContext())
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className={`${css.paginationBox} hidden md:block`}>
+            <Pagination page={page} count={totalPage} onChange={(e, p) => setPage(p)} />
+          </div>
+          <div className={`${css.paginationBox} block md:hidden`}>
+            <PaginationMobile page={page} count={totalPage} handleChange={setPage} />
+          </div>
         </div>
       </div>
-    </div>
+      {openClaimModal.url && (
+        <ClaimCertificateModal
+          open={openClaimModal.open}
+          link={openClaimModal.url}
+          handleClose={handleCloseClaimModal}
+          handleClaimVC={handleClaimVC}
+        />
+      )}
+    </>
   );
 };

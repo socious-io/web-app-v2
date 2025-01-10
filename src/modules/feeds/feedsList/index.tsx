@@ -1,5 +1,6 @@
 import React from 'react';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
+import { translate } from 'src/core/utils';
 
 import { FeedsListProps } from './index.types';
 import { useFeedsContext } from '../contexts/feeds.context';
@@ -25,7 +26,7 @@ const FeedsList: React.FC<FeedsListProps> = ({
           postId={item.id}
           userIdentity={item.identity_meta}
           date={new Date(item.created_at).toString()}
-          cause={item.causes_tags?.length ? SOCIAL_CAUSES[item.causes_tags[0]].label : null}
+          cause={item.causes_tags?.length ? translate(item.causes_tags[0]) : null}
           content={item.content}
           media={item.media ? item.media[0] : null}
           likesCount={item.likes}
@@ -55,7 +56,7 @@ const FeedsList: React.FC<FeedsListProps> = ({
       ))}
       {showSeeMore && (
         <span className="see-more text-center" onClick={onShowMoreFeeds}>
-          See more
+          {translate('feeds-see-more')}
         </span>
       )}
     </div>

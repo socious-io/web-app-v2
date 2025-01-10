@@ -1,6 +1,7 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { translate } from 'src/core/utils';
 import { ChatDetails } from 'src/modules/chats/components/chatDetails';
 import { NewChat } from 'src/modules/chats/components/newChat';
 import { SummaryCard } from 'src/modules/chats/components/summaryCard';
@@ -34,7 +35,7 @@ export const Chats = () => {
     <div className={css.summary}>
       <div className="w-full py-5 px-6 flex justify-between items-center">
         <div className="flex gap-2">
-          <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">Messages</span>
+          <span className="font-semibold text-lg leading-7 text-Gray-light-mode-900">{translate('chat-title')}</span>
           {/* <div className="py-0.5 px-1.5 border rounded-sm border-solid border-Gray-light-mode-300 flex items-center justify-center font-medium text-xs leading-[18px] text-Gray-light-mode-700">
             {count}
           </div> */}
@@ -118,8 +119,8 @@ export const Chats = () => {
         <AlertModal
           open={openError}
           onClose={() => setOpenError(false)}
-          message={'You cannot start a chat with the selected contact'}
-          title={'Failed'}
+          message={translate('chat-error-alert')}
+          title={translate('chat-error-alert-title')}
           customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />}
           closeButtn={false}
           submitButton={false}

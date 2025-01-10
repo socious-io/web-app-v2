@@ -1,0 +1,85 @@
+{
+  "service-new": "サービスを追加",
+  "service-empty": {
+    "title": "新しいサービスを作成",
+    "subtitle": "サービスが明確であればあるほど、採用される可能性が高まります。"
+  },
+  "service-card": {
+    "delivery": "配達",
+    "duplicate": "複製",
+    "delete": "削除",
+    "edit": "編集"
+  },
+  "service-delete": {
+    "title": "サービスを削除しますか？",
+    "subtitle": "このサービスを削除してもよろしいですか？",
+    "cancel-button": "キャンセル",
+    "delete-button": "削除"
+  },
+  "service-form": {
+    "header": "新しいサービスを作成",
+    "header-edit": "サービスを編集",
+    "subheader": "サービスについて詳しく教えてください",
+    "error-message": "この項目は必須です",
+    "error-positive-message": "値は正の数でなければなりません",
+    "name": "サービス名",
+    "name-description": "提供するサービスの明確で簡潔な名前を追加してください",
+    "name-placeholder": "例：ロゴデザイン",
+    "category": "サービスカテゴリ",
+    "category-placeholder": "カテゴリを選択",
+    "description": "説明",
+    "description-description": "提供する内容について説明を入力してください",
+    "description-placeholder": "サービスについて数文で記述してください",
+    "delivery": "納期",
+    "delivery-placeholder": "納期を選択",
+    "delivery-options": {
+      "LESS_THAN_A_DAY": "1日以内",
+      "1_3_DAYS": "1～3日",
+      "1_WEEK": "1週間",
+      "2_WEEKS": "2週間",
+      "LESS_THAN_A_MONTH": "1か月以内",
+      "1_3_MONTHS": "1～3か月",
+      "3_6_MONTHS": "3～6か月",
+      "6_MONTHS_OR_MORE": "6か月以上"
+    },
+    "hours": "推定合計時間",
+    "hours-postfix": "時間",
+    "payment": "支払い方法",
+    "payment-fiat": "価格",
+    "payment-crypto": "ウォレット",
+    "payment-crypto-description": "価格を入力するためにウォレットを接続してください",
+    "skills": "スキル",
+    "skills-description": "関連するスキルを最低1つから最大5つ選択してください",
+    "skills-placeholder": "スキルを検索",
+    "samples": "作業サンプル",
+    "samples-description": "最大3枚の画像",
+    "cancel": {
+      "title": "変更を破棄しますか？",
+      "subtitle": "保存されていない変更があります。本当に離れますか？",
+      "button": "キャンセル",
+      "leave-button": "離れる"
+    },
+    "publish": {
+      "title": "サービスが公開されました",
+      "subtitle": "サービスが正常に更新されました",
+      "button": "公開",
+      "close-button": "閉じる"
+    }
+  },
+  "service-detail": {
+    "header": "サービス一覧に戻る",
+    "share": "共有",
+    "edit": "サービスを編集",
+    "contact": "お問い合わせ",
+    "about": "このサービスについて",
+    "fixed": "固定価格",
+    "purchase": "購入",
+    "more": "続きを読む",
+    "order": {
+      "summary": "注文概要",
+      "fee": "Socious手数料",
+      "total": "合計",
+      "checkout-button": "チェックアウトに進む"
+    }
+  }
+}

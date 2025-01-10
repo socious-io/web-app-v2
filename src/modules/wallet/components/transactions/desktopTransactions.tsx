@@ -1,3 +1,4 @@
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Pagination } from 'src/modules/general/components/Pagination';
 
@@ -10,7 +11,9 @@ export const DesktopTransactions = () => {
 
   return (
     <div className="flex flex-col gap-6 h-full">
-      <div className="text-lg font-semibold leading-7 text-Gray-light-mode-900">Transactions history</div>
+      <div className="text-lg font-semibold leading-7 text-Gray-light-mode-900">
+        {translate('pay-transactions-history')}
+      </div>
       {list.length ? (
         <>
           <table>

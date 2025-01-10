@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   CurrentIdentity,
@@ -34,7 +34,11 @@ export const useExperience = () => {
   const [reqModelShow, setReqModelShow] = useState(false);
   const [credentialId, setCredentialId] = useState('');
   const [claimUrl, setClaimUrl] = useState('');
+  const [showAll, setShowAll] = useState(false);
   const dispatch = useDispatch();
+  const MAX_EXPERIENCES = 5;
+  const userExperiences = showAll ? user?.experiences : user?.experiences?.slice(0, MAX_EXPERIENCES);
+  const hasMoreExperiences = (user?.experiences || []).length > MAX_EXPERIENCES;
 
   const handleClose = () => {
     setOpenModal({ ...openModal, open: false });
@@ -103,7 +107,8 @@ export const useExperience = () => {
   };
 
   return {
-    user,
+    userExperiences,
+    hasMoreExperiences,
     myProfile,
     openModal,
     experience,
@@ -120,5 +125,7 @@ export const useExperience = () => {
     handleOpenClaimModal,
     handleClaimVC,
     claimUrl,
+    showAll,
+    setShowAll,
   };
 };

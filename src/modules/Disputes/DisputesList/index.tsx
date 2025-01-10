@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
 import { Dispute, DisputeState, Identity } from 'src/core/api';
 import { formatDateSlash } from 'src/core/time';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
@@ -21,9 +21,9 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
     () => [
       {
         id: 'code',
-        header: 'Dispute ID',
+        header: translate('dispute-id'),
         accessorKey: 'code',
-        cell: ({ getValue }: { getValue: Getter<string> }) => `#${getValue()}`,
+        cell: ({ getValue }: { getValue: Getter<string> }) => getValue(),
       },
       {
         id: mode === 'submitted' ? 'respondent' : 'claimant',
@@ -44,26 +44,26 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
       },
       {
         id: 'category',
-        header: 'Category',
+        header: translate('dispute-category'),
         accessorKey: 'category',
         cell: ({ getValue }: { getValue: Getter<string> }) =>
           DISPUTE_CATEGORY.find(category => category.value === getValue())?.label,
       },
       {
         id: 'title',
-        header: 'Dispute title',
+        header: translate('dispute-title-col'),
         accessorKey: 'title',
         cell: ({ getValue }: { getValue: Getter<string> }) => getValue(),
       },
       {
         id: 'created_at',
-        header: 'Submitted date',
+        header: translate('dispute-submitted-date'),
         accessorKey: 'created_at',
         cell: ({ getValue }: { getValue: Getter<Date> }) => formatDateSlash(getValue()),
       },
       {
         id: 'state',
-        header: 'Status',
+        header: translate('dispute-status'),
         accessorKey: 'state',
         cell: ({ getValue }: { getValue: Getter<DisputeState> }) => (
           <div className="flex justify-start items-center">
@@ -73,13 +73,13 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
       },
       {
         id: 'contract_id',
-        header: 'Contract ID',
+        header: translate('dispute-contract-id'),
         accessorKey: 'contract',
         cell: ({ getValue }: { getValue: Getter<{ id: string; name: string }> }) => getValue().id,
       },
       {
         id: 'contract_name',
-        header: 'Contract name',
+        header: translate('dispute-contract-name'),
         accessorKey: 'contract',
         cell: ({ getValue }: { getValue: Getter<{ id: string; name: string }> }) => getValue().name,
       },
@@ -143,8 +143,8 @@ const DisputesList: React.FC<DisputesListProps> = ({ list, mode }) => {
   ) : (
     <div className="w-full h-[350px] border border-solid border-Gray-light-mode-200 shadow-Shadows/shadow-sm leading-6 rounded-xl flex flex-col items-center justify-center">
       <img src="/images/cloud.svg" width={150} height={120} alt="empty-disputes" />
-      <span className="text-md font-semibold text-Gray-light-mode-900 mb-1 mt-4">No disputes found</span>
-      <span className="text-sm font-normal text-Gray-light-mode-600">Here are all your current disputes.</span>
+      <span className="text-md font-semibold text-Gray-light-mode-900 mb-1 mt-4">{translate('dispute-not-found')}</span>
+      <span className="text-sm font-normal text-Gray-light-mode-600">{translate('dispute-all')}</span>
     </div>
   );
 };

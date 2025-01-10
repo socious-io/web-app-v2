@@ -4,8 +4,9 @@
 	"webDir": "dist",
 	"bundledWebRuntime": false,
 	"server": {
-		"hostname": "capacitor.native",
-		"androidScheme": "https"
+		"hostname": "app.socious.io",
+		"androidScheme": "https",
+		"iosScheme": "https"
 	},
 	"plugins": {
 		"CapacitorCookies": {
@@ -20,23 +21,17 @@
 		}
 	},
 	"packageClassList": [
+		"FirebaseCrashlyticsPlugin",
 		"FirebaseMessagingPlugin",
-		"FirebaseMessagingPlugin",
-		"ActionSheetPlugin",
+		"SignInWithApple",
 		"ActionSheetPlugin",
 		"AppPlugin",
-		"AppPlugin",
-		"CAPCameraPlugin",
 		"CAPCameraPlugin",
 		"DialogPlugin",
-		"DialogPlugin",
-		"HapticsPlugin",
 		"HapticsPlugin",
 		"PreferencesPlugin",
-		"PreferencesPlugin",
-		"PushNotificationsPlugin",
 		"PushNotificationsPlugin",
 		"ToastPlugin",
-		"ToastPlugin"
+		"GoogleAuth"
 	]
 }

@@ -1,0 +1,16 @@
+{
+    "header-search-skill": "Search by title, skill or organization",
+    "header-search": "Search",
+    "header-status": "Status",
+    "header-open-to-work": "Open to work",
+    "header-open-to-work-desc": "You are available for paid jobs. You will be able to receive offers.",
+    "header-volunteer": "Open to volunteer",
+    "header-volunteer-desc": "You are available for volunteer jobs.",
+    "header-hiring": "Hiring",
+    "header-hiring-desc": "You are currently actively hiring professionals.",
+    "header-create-org": "Create an organization",
+    "header-create-talent": "Create a talent profile",
+    "header-view-profile": "View profile",
+    "header-settings": "Settings",
+    "header-logout": "Log out"
+}

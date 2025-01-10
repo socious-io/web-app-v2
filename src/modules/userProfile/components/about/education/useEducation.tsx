@@ -29,9 +29,13 @@ export const useEducation = () => {
   const [disabledClaims, setDisabledClaims] = useState<{ [key: string]: boolean }>({});
   const [credentialId, setCredentialId] = useState('');
   const [claimUrl, setClaimUrl] = useState('');
+  const [showAll, setShowAll] = useState(false);
   const isVerified = (user as User).identity_verified;
   const myProfile = currentIdentity?.id === user?.id;
   const dispatch = useDispatch();
+  const MAX_EDUCATIONS = 5;
+  const userEducations = showAll ? user?.educations : user?.educations?.slice(0, MAX_EDUCATIONS);
+  const hasMoreEducations = (user?.educations || []).length > MAX_EDUCATIONS;
 
   const getDegree = (item: Education) => {
     if (!item) return '';
@@ -102,7 +106,8 @@ export const useEducation = () => {
     openModal,
     handleClose,
     myProfile,
-    user,
+    userEducations,
+    hasMoreEducations,
     handleAdd,
     handleEdit,
     handleDelete,
@@ -119,5 +124,7 @@ export const useEducation = () => {
     disabledClaims,
     handleClaimVC,
     claimUrl,
+    showAll,
+    setShowAll,
   };
 };

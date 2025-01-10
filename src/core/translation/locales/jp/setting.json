@@ -1,0 +1,13 @@
+{
+  "setting-language": "言語",
+  "setting-language-change": "言語を変更する",
+  "setting-language-select": "デフォルトの言語を選択してください。",
+  "setting-buttons": {
+    "save": "保存",
+    "cancel": "キャンセル"
+  },
+  "setting-language-labels": {
+    "en": "英語 (US)",
+    "jp": "日本語 (JP)"
+  }
+}

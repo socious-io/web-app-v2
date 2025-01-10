@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CurrentIdentity } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { translate } from 'src/core/utils';
 import { RootState } from 'src/store';
 
 import { LinkItem } from '../linkItem/LinkItem';
@@ -43,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
 
       {userIsLoggedIn && (
         <LinkItem
-          label="Settings"
+          label={translate('nav-setting')}
           navigateFunc={() => {
             navigateFunction('/settings');
           }}
@@ -51,11 +52,13 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
           menuOpen={open}
         />
       )}
-      {userIsLoggedIn && <LinkItem label="Logout" navigateFunc={logout} iconName="log-out-01" menuOpen={open} />}
+      {userIsLoggedIn && (
+        <LinkItem label={translate('nav-logout')} navigateFunc={logout} iconName="log-out-01" menuOpen={open} />
+      )}
 
       {!userIsLoggedIn && (
         <LinkItem
-          label="Login"
+          label={translate('nav-login')}
           navigateFunc={() => {
             navigateFunction('/sign-in');
           }}

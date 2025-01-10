@@ -22,12 +22,11 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
   disputeDirection,
   respondent,
 }) => {
-  const { name, type, profileImage, myEvent, getEventTitle, getFileIcon } = useTimelineItem(
+  const { name, type, profileImage, myEvent, title, getFileIcon } = useTimelineItem(
     event,
     disputeDirection,
     respondent,
   );
-  const title = getEventTitle();
   return (
     <div className="w-full flex gap-3">
       <div className="flex flex-col gap-1 w-fit pb-1">

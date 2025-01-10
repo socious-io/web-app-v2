@@ -1,8 +1,6 @@
+import { Preference } from 'src/core/api';
+
 export interface CultureProps {
-  items: {
-    title: string;
-    value: string;
-    description?: string;
-  }[];
+  items: Preference[];
   onOpenPreferences: () => void;
 }

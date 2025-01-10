@@ -5,6 +5,23 @@ function onlyUnique(value, index, self) {
 }
 
 export const CURRENCIES = getAllISOCodes()
-  .map((item) => item.currency)
+  .map(item => item.currency)
   .filter(onlyUnique)
-  .map((item) => ({ title: item, value: item }));
+  .map(item => ({ title: item, value: item }));
+
+export const CURRENCY_SIGNS = {
+  USD: '$',
+  JPY: '¥',
+  DAI: 'Ξ',
+  Flint: '⨎',
+  mUSDC: 'm$',
+  SC: '∫',
+  USDC: '$',
+  USDT: '$',
+  WADA: '₳',
+};
+
+export const PAYMENT_CURRENCIES = [
+  { label: 'USD', value: 'USD' },
+  { label: 'JPY', value: 'JPY' },
+];

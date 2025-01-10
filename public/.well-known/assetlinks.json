@@ -1,0 +1,13 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "jp.socious.network",
+        "sha256_cert_fingerprints": [
+          "FD:AE:5F:A0:8E:BE:BC:08:F2:00:6E:B0:01:90:11:A9:AA:B4:01:19:1C:7E:F8:10:2B:D5:E6:2B:2E:CE:35:15"
+        ]
+      }
+    }
+  ]
+  

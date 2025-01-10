@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { contestMission, CurrentIdentity, feedbackMission, Offer } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { CardRadioButtonItem } from 'src/modules/general/components/cardRadioButton/cardRadioButton.types';
 import { RootState } from 'src/store';
 import { updateFeedback } from 'src/store/reducers/contracts.reducer';
@@ -18,8 +19,12 @@ export const useReviewModal = (closeReviewModal: () => void) => {
   const [selectedValue, setSelectedValue] = useState('satisfactory');
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const cardOptionList: CardRadioButtonItem[] = [
-    { value: 'satisfactory', title: 'Satisfactory', img: <img src="/icons/thumbs-up.svg" /> },
-    { value: 'unsatisfactory', title: 'Unsatisfactory', img: <img src="/icons/thumbs-down.svg" /> },
+    { value: 'satisfactory', title: translate('cont-review-satisfactory'), img: <img src="/icons/thumbs-up.svg" /> },
+    {
+      value: 'unsatisfactory',
+      title: translate('cont-review-unsatisfactory'),
+      img: <img src="/icons/thumbs-down.svg" />,
+    },
   ];
   const dispatch = useDispatch();
   const {

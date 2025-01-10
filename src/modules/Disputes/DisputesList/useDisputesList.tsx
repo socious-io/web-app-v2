@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CurrentIdentity, DisputeDirection, DisputesRes, DisputeState, disputes } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
+import { translate } from 'src/core/utils';
 import { StatusProps } from 'src/modules/general/components/Status/index.types';
 import { RootState } from 'src/store';
 
@@ -18,17 +19,17 @@ export const useDisputesList = (list: DisputesRes, mode: DisputeDirection) => {
   const [page, setPage] = useState(1);
   const totalPage = Math.ceil(list?.total_count / list?.limit) || 1;
   const labelAvatarField = {
-    submitted: isUser ? 'Client' : 'Respondent',
-    received: 'Claimant',
+    submitted: isUser ? translate('dispute-client') : translate('dispute-respondent'),
+    received: translate('dispute-claimant'),
   };
   const generateStatus: Record<DisputeState, StatusProps> = {
-    AWAITING_RESPONSE: { label: 'Awaiting response', theme: 'warning', icon: 'dot' },
-    JUROR_SELECTION: { label: 'Juror selection', theme: 'warning', icon: 'dot' },
-    JUROR_RESELECTION: { label: 'Juror selection', theme: 'warning', icon: 'dot' },
-    PENDING_REVIEW: { label: 'Pending review', theme: 'warning', icon: 'dot' },
-    DECISION_SUBMITTED: { label: 'Decision submitted', theme: 'success', icon: 'dot' },
-    WITHDRAWN: { label: 'Withdrawn', theme: 'secondary', icon: '' },
-    CLOSED: { label: 'Closed', theme: 'secondary', icon: '' },
+    AWAITING_RESPONSE: { label: translate('dispute-status-awaiting'), theme: 'warning', icon: 'dot' },
+    JUROR_SELECTION: { label: translate('dispute-status-juror-selection'), theme: 'warning', icon: 'dot' },
+    JUROR_RESELECTION: { label: translate('dispute-status-juror-selection'), theme: 'warning', icon: 'dot' },
+    PENDING_REVIEW: { label: translate('dispute-status-pending'), theme: 'warning', icon: 'dot' },
+    DECISION_SUBMITTED: { label: translate('dispute-status-submitted'), theme: 'success', icon: 'dot' },
+    WITHDRAWN: { label: translate('dispute-status-withdrawn'), theme: 'secondary', icon: '' },
+    CLOSED: { label: translate('dispute-status-closed'), theme: 'secondary', icon: '' },
   };
 
   useEffect(() => {

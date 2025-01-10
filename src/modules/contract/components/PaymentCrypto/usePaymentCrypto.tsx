@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Offer, OrgMeta, hireOffer, payByOffer } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import dapp from 'src/dapp';
 
 export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => void, offer?: Offer) => {
@@ -26,13 +27,13 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
   async function proceedCryptoPayment() {
     if (!offer) return;
     if (!signer || !chainId) {
-      setErrorMessage('Wallet is not connected');
+      setErrorMessage(translate('cont-wallet-not-connected'));
       setOpenErrorModal(true);
       return;
     }
 
     if (!contributor) {
-      setErrorMessage('Contributor wallet is not connected');
+      setErrorMessage(translate('cont-contributor-wallet-not-connected'));
       setOpenErrorModal(true);
       return;
     }

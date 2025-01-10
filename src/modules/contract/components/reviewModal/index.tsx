@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
@@ -32,7 +33,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, closeReviewModal
       {!openSuccessModal && (
         <Modal
           open={open}
-          title="Give Review"
+          title={translate('cont-give-review')}
           handleClose={closeReviewModal}
           mobileFullHeight={false}
           customStyle={css.modalWidth}
@@ -42,9 +43,9 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, closeReviewModal
             <form>
               <div className="pt-6 px-6">
                 <div className="mb-5">
-                  <h2 className="text-Gray-light-mode-700 font-semibold text-sm">Review</h2>
+                  <h2 className="text-Gray-light-mode-700 font-semibold text-sm">{translate('cont-review')}</h2>
                   <p className="text-sm font-normal text-Gray-light-mode-600 mb-1">
-                    Share your experience working with {name} for this job.
+                    {translate('cont-give-review-subtitle', { name: name })}
                   </p>
                   <Input
                     required
@@ -53,13 +54,18 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, closeReviewModal
                     register={register}
                     id="content"
                     name="content"
-                    placeholder="Enter your Review ..."
+                    placeholder={translate('cont-review-placeholder')}
                     errors={errors['content']?.message ? [errors['content']?.message.toString()] : undefined}
                   />
                 </div>
                 <div>
-                  <h2 className="text-Gray-light-mode-700 font-semibold text-sm">Your satisfaction</h2>
-                  <p className="text-sm font-normal text-Gray-light-mode-600 mb-2"> How would rate the experience?</p>
+                  <h2 className="text-Gray-light-mode-700 font-semibold text-sm">
+                    {translate('cont-review-satisfaction')}
+                  </h2>
+                  <p className="text-sm font-normal text-Gray-light-mode-600 mb-2">
+                    {' '}
+                    {translate('cont-review-rate-title')}
+                  </p>
                   <CardRadioButton
                     items={cardOptionList}
                     selectedValue={selectedValue}
@@ -69,10 +75,10 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, closeReviewModal
               </div>
               <div className={css.footer}>
                 <Button variant="outlined" color="secondary" fullWidth onClick={closeReviewModal}>
-                  Cancel
+                  {translate('cont-cancel')}
                 </Button>
                 <Button color="primary" fullWidth onClick={handleSubmit(onSubmit)}>
-                  Submit
+                  {translate('cont-review-submit')}
                 </Button>
               </div>
             </form>
@@ -84,8 +90,8 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({ open, closeReviewModal
         open={openSuccessModal}
         onClose={handleCloseSuccessModal}
         onSubmit={handleCloseSuccessModal}
-        message="Your review has been successfully submitted"
-        title="Review submitted"
+        message={translate('cont-review-submit-msg')}
+        title={translate('cont-review-submit-msg-title')}
       />
     </>
   );

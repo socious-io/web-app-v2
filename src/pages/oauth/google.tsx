@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+import { Capacitor } from '@capacitor/core';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { useEffect } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { config } from 'src/config';
@@ -8,9 +11,16 @@ import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
+GoogleAuth.initialize({
+  clientId: config.googleOauthClientIdIos,
+  scopes: ['profile', 'email'],
+  grantOfflineAccess: true,
+});
 export const GoogleOauth2 = () => {
-  const googleLoginURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.googleOauthClientId}&redirect_uri=${window.location.href}&response_type=code&scope=email profile&access_type=offline&prompt=consent`;
-
+  //in ios instead of https there is capacitor in the link !!
+  const replaceCapacitor = str => str.replace(/capacitor/g, 'https');
+  const googleCallbackUrl = replaceCapacitor(window.location.href);
+  const googleLoginURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.googleOauthClientId}&redirect_uri=${googleCallbackUrl}&response_type=code&scope=email profile&access_type=offline&prompt=consent`;
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const events = (useLoaderData() as EventsRes) || null;
@@ -76,14 +86,24 @@ export const GoogleOauth2 = () => {
   const code = searchParams.get('code');
 
   useEffect(() => {
-    if (!code) {
-      window.location.href = googleLoginURL;
-      return;
-    } else {
-      googleOauth(code, referrerUser?.id, eventId)
+    const handleGoogleOauth = (authCodeOrToken, platform) => {
+      googleOauth(authCodeOrToken, referrerUser?.id, eventId, platform)
         .then(res => onLoginSucceed(res))
         .catch(() => navigate(`/sign-in?${eventName && `event_name=${eventName}`}`));
       localStorage.removeItem('referrer');
+    };
+
+    if (Capacitor.getPlatform() === 'ios') {
+      GoogleAuth.signIn().then(googleUser => {
+        handleGoogleOauth(googleUser.authentication.idToken, 'ios');
+      });
+    } else {
+      if (!code) {
+        window.location.href = googleLoginURL;
+        return;
+      } else {
+        handleGoogleOauth(code, 'other');
+      }
     }
   }, [code]);
 

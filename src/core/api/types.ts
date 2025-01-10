@@ -17,6 +17,13 @@ export interface PaginateRes {
   items: any[];
 }
 
+export interface PaginateResV3<T> {
+  page: number;
+  limit: number;
+  total: number;
+  results: T[];
+}
+
 export type SocialCauses =
   | 'SOCIAL'
   | 'POVERTY'
@@ -419,3 +426,5 @@ export type LanguageCode =
   | 'ZA'
   | 'ZH'
   | 'ZU';
+
+export type CapacitorPlatform = 'mobile' | 'web' | 'ios' | 'android' | 'all';

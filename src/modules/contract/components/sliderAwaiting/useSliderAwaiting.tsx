@@ -3,7 +3,7 @@ import { ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity, cancelOffer, confirmMission, hireOffer } from 'src/core/api';
 import { UserType } from 'src/core/types';
-import { getIdentityMeta, navigateToProfile } from 'src/core/utils';
+import { getIdentityMeta, navigateToProfile, translate } from 'src/core/utils';
 import dapp from 'src/dapp';
 import { useWeb3 } from 'src/dapp/dapp.connect';
 import { AlertMessage } from 'src/modules/general/components/alertMessage';
@@ -47,15 +47,17 @@ export const useSliderAwaiting = (contract: Contract) => {
         <AlertMessage
           theme="primary"
           iconName="check-circle"
-          title={identityType === 'users' ? 'You have accepted this offer' : `${name} has accepted this offer`}
-          subtitle={`We are just waiting for the final confirmation from ${
-            identityType === 'users' ? name : 'you'
-          } to start the job.`}
+          title={
+            identityType === 'users'
+              ? translate('cont-awaiting-title-you')
+              : translate('cont-awaiting-title-name', { name: name })
+          }
+          subtitle={translate('cont-awaiting-desc', { name: identityType === 'users' ? name : 'you' })}
         />,
       );
       if (identityType === 'organizations') {
-        setPrimaryBtn({ display: true, label: 'Confirm', action: hadleHireVolunteer });
-        setSecondaryBtn({ display: true, label: 'Cancel', action: withdrawOfferByOP });
+        setPrimaryBtn({ display: true, label: translate('cont-confirm'), action: hadleHireVolunteer });
+        setSecondaryBtn({ display: true, label: translate('cont-cancel'), action: withdrawOfferByOP });
       }
       return;
     }
@@ -66,19 +68,17 @@ export const useSliderAwaiting = (contract: Contract) => {
         <AlertMessage
           theme="warning"
           iconName="alert-circle"
-          title={identityType === 'users' ? 'Completion submitted' : 'Awaiting confirmation'}
+          title={identityType === 'users' ? translate('cont-complete-submit') : translate('cont-awaiting-confirm')}
           subtitle={
             identityType === 'users'
-              ? `Awaiting confirmation from <b>${name}</b>`
-              : `<b>${name}</b> has marked this job completed.${
-                  contract.project.payment_type === 'VOLUNTEER' ? '' : ' Confirm so they can receive payment.'
-                }`
+              ? translate('cont-awaiting-msg', { name: name })
+              : `${translate('cont-awaiting-confirm-msg', { name: name })}${contract.project.payment_type === 'VOLUNTEER' ? '' : translate('cont-awaiting-confirm-msg-rest')}`
           }
         />,
       );
 
       if (identityType === 'organizations') {
-        setPrimaryBtn({ display: true, label: 'Confirm completion', action: () => setOpenAlert(true) });
+        setPrimaryBtn({ display: true, label: translate('cont-confirm-completion'), action: () => setOpenAlert(true) });
       }
     }
   };
@@ -159,14 +159,14 @@ export const useSliderAwaiting = (contract: Contract) => {
   const menuItems: MenuItem[] = [
     {
       iconName: 'building-06',
-      title: `${name}'s profile`,
+      title: translate('cont-profile-title', { name: name }),
       onClick: () => {
         navigateToProfile(username, type as UserType);
       },
     },
     {
       iconName: 'message-alert-circle',
-      title: 'Initiate a dispute',
+      title: translate('cont-initiate-dispute'),
       onClick: () => setOpenInitiateDisputeModal(true),
     },
   ];

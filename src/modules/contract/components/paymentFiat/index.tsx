@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
@@ -34,10 +35,10 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
         onClick={proceedFiatPayment}
         disabled={paymentDisabled}
       >
-        Pay now
+        {translate('cont-pay-now')}
       </Button>
       <Button variant="outlined" color="secondary" customStyle="flex-1" onClick={() => handleClose(false)}>
-        Cancel
+        {translate('cont-cancel')}
       </Button>
     </div>
   );
@@ -59,7 +60,7 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
         }}
       >
         <Icon name="plus" fontSize={20} className="text-Brand-700" />
-        Add a new card
+        {translate('cont-add-card')}
       </Button>
       {offer && offer?.currency && (
         <PaymentSummary
@@ -76,8 +77,8 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
   return (
     <>
       <Modal
-        title="Escrow payment"
-        subTitle="Proceed to payment"
+        title={translate('cont-escrow-payment')}
+        subTitle={translate('cont-proceed-payment')}
         content={contentJsx}
         footer={footerJsx}
         open={open}
@@ -93,7 +94,7 @@ export const PaymentFiat: React.FC<PaymentFiatProps> = ({ offer, open, handleClo
         />
       )}
       <AlertModal
-        title="Failed"
+        title={translate('cont-failed')}
         message={errorMessage}
         open={openErrorModal}
         onClose={() => setOpenErrorModal(false)}

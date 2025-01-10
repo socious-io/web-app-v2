@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { isTouchDevice } from 'src/core/device-type-detector';
 
-export const useSeeMore = (copy: string, expectedLenght?: number) => {
+export const useSeeMore = (copy: string, expectedLength?: number) => {
   const [seeMore, setSeeMore] = useState(false);
-  const [copyProccessed, setCopyProccessed] = useState(copy);
+  const [copyProcessed, setCopyProcessed] = useState(copy);
+
+  useEffect(() => {
+    truncateString();
+  }, [copy]);
 
   const truncateString = () => {
     const len = copy?.length || 0;
-    const maxLen = expectedLenght || (isTouchDevice() ? 160 : 360);
+    const maxLen = expectedLength || (isTouchDevice() ? 160 : 360);
 
     if (copy && len <= maxLen) {
-      setCopyProccessed(copy);
+      setCopyProcessed(copy);
       setSeeMore(false);
       return;
     }
@@ -21,22 +25,18 @@ export const useSeeMore = (copy: string, expectedLenght?: number) => {
         const idx = truncated.lastIndexOf(' ');
         truncated = truncated.slice(0, idx);
       }
-      setCopyProccessed(truncated.concat('...'));
+      setCopyProcessed(truncated.concat('...'));
       setSeeMore(true);
     }
   };
 
   const handleSeeMore = () => {
-    setCopyProccessed(copy);
+    setCopyProcessed(copy);
     setSeeMore(false);
   };
 
-  useEffect(() => {
-    truncateString();
-  }, [copy]);
-
   return {
-    data: { seeMore, copyProccessed },
+    data: { seeMore, copyProcessed },
     operations: { handleSeeMore },
   };
 };

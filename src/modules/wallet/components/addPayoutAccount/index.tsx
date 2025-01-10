@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { COUNTRIES } from 'src/constants/COUNTRIES';
+import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
@@ -20,22 +21,23 @@ export const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handle
         icon={<FeaturedIcon iconName="credit-card-down" size="lg" type="modern" theme="gray" />}
         mobileFullHeight={false}
         headerDivider={false}
+        customStyle="md:max-w-[480px]"
       >
         <div className="flex flex-col p-4 md:p-6 gap-6">
           <div className="flex flex-col gap-1">
-            <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">Add a payout account</div>
+            <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">
+              {translate('pay-add-account-title')}
+            </div>
             <div className="font-normal text-sm leading-5 text-Gray-light-mode-600">
-              Socious partners with Stripe for transactions payments. By selecting continue you will be directed to
-              Stripe’s website.
+              {translate('pay-add-account-desc')}
             </div>
           </div>
           <SearchDropdown
-            placeholder="Search a country"
+            placeholder={translate('pay-search-country')}
             icon="search-lg"
             options={COUNTRIES}
             isSearchable
             onChange={onSelectCountry}
-            //
           />
           <div className="flex flex-col md:flex-row-reverse gap-3 md:mt-2">
             <Button
@@ -47,10 +49,10 @@ export const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handle
               to={stripeLink}
               target="_blank"
             >
-              Continue
+              {translate('pay-continue')}
             </Button>
-            <Button variant="outlined" color="secondary" fullWidth onClick={handleClose}>
-              Cancel
+            <Button variant="outlined" color="info" fullWidth onClick={handleClose}>
+              {translate('pay-cancel')}
             </Button>
           </div>
         </div>
@@ -59,7 +61,7 @@ export const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handle
         open={openErrorModal}
         onClose={() => setOpenErrorModal(false)}
         message={errorMsg}
-        title="Failed"
+        title={translate('pay-failed')}
         customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />}
         closeButtn={false}
         submitButton={false}

@@ -5,7 +5,7 @@ export interface AvatarProps extends CSSProperties {
   type: 'organizations' | 'users';
   img?: string;
   iconName?: string;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
   customStyle?: string;
   iconCustomStyle?: string;
   badge?: { image: string; color: string; width?: string; height?: string };
