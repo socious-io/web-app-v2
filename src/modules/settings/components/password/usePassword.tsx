@@ -4,22 +4,23 @@ import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { changePassword } from 'src/core/api';
 import { passwordPattern } from 'src/core/regexs';
+import { translate } from 'src/core/utils';
 import * as yup from 'yup';
 
 import { Inputs } from './password.type';
 
 const schema = yup.object().shape({
-  current_password: yup.string().required('Current password is required'),
+  current_password: yup.string().required(translate('password.errors.currentPasswordRequired')),
   password: yup
     .string()
-    .required('Password is required')
+    .required(translate('password.errors.passwordRequired'))
     .notOneOf([yup.ref('current_password'), null], 'cantMatch')
-    .min(8, 'Minimum 8 characters')
-    .matches(passwordPattern, 'Password complexity is week'),
+    .min(8, translate('password.errors.minimumLength'))
+    .matches(passwordPattern, translate('password.errors.complexityWeak')),
   confirm: yup
     .string()
-    .required('Confirm password is required')
-    .oneOf([yup.ref('password')], 'Passwords must match'),
+    .required(translate('password.errors.confirmPasswordRequired'))
+    .oneOf([yup.ref('password')], translate('password.errors.passwordsMustMatch')),
 });
 
 export const usePassword = () => {
@@ -39,8 +40,8 @@ export const usePassword = () => {
   const [isPasswordPatternValid, setIsPasswordPatternValid] = useState(false);
 
   const alertContent = {
-    ['cantMatch']: 'Your password cannot be the same as the current password',
-    ['incorrect']: 'Your current password is incorrect',
+    ['cantMatch']: translate('password.alerts.cantMatch'),
+    ['incorrect']: translate('password.alerts.incorrect'),
   };
 
   const current_password = watch('current_password');
@@ -56,7 +57,7 @@ export const usePassword = () => {
       await changePassword({ current_password, password });
       reset();
     } catch (error: unknown) {
-      console.log('error is changing password', error);
+      console.log('Error changing password:', error);
       if (error instanceof AxiosError) {
         if (error.response?.data.error === 'Not matched') setError('password', { message: 'incorrect' });
       }
