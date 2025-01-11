@@ -1,3 +1,5 @@
+import { translate } from 'src/core/utils';
+
 export const EVENTS_QUERIES = {
-  tech4impact: 'Tech for Impact Summit 2024',
+  tech4impact: translate('events.tec4impact'),
 };

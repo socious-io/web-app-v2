@@ -1,0 +1,50 @@
+{
+  "search": {
+    "title": "{{query}} の検索",
+    "subtitle": "{{total}} {{type}} が見つかりました {{country}}",
+    "inCountry": "{{country}} で",
+    "filters": "フィルター",
+    "seeMore": "さらに表示",
+    "filterTitle": "フィルターで選択",
+    "filterSubtitle": "{{type}} を社会的理由、スキルなどでフィルター"
+  },
+  "search-modal": {
+    "mobile-header": "検索",
+    "placeholder": "ジョブ、人材、組織を検索",
+    "see-all-results": "全結果表示",
+    "tabs": {
+      "jobs": "ジョブ",
+      "people": "人材",
+      "organizations": "組織"
+    }
+  },
+  "filter-slider": {
+    "jobPreferences": "ジョブの好み",
+    "location": "場所",
+    "selectLocation": "場所を選択",
+    "remotePreference": "リモートでの好み",
+    "jobCategory": "ジョブカテゴリー",
+    "selectCategory": "カテゴリーを選択",
+    "jobLength": "ジョブ期間",
+    "experienceLevel": "経験レベル",
+    "paymentType": "支払い方法",
+    "event": "イベント",
+    "selectEvent": "イベントを選択",
+    "socialCauses": "社会的理由",
+    "skills": "スキル",
+    "cancel": "キャンセル",
+    "apply": "申請"
+  },
+  "result-not-found": {
+    "title": {
+      "users": "該当する人材が見つかりません",
+      "organizations": "該当する組織が見つかりません",
+      "projects": "該当するジョブが見つかりません"
+    },
+    "message": "おっとっと！「{searchTerm}」に該当する結果はありません。",
+    "suggestion": "別のキーワードを試してみましょう。",
+    "button": {
+      "view-jobs": "ジョブを見る"
+    }
+  }
+}

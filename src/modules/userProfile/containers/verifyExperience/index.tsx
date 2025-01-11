@@ -1,5 +1,6 @@
 import React from 'react';
 import { Experience } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -51,23 +52,23 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="title"
-        label="Job title*"
+        label={translate('verifyExperience.title')}
         required
         name="title"
         register={register}
-        placeholder="Enter job title"
+        placeholder={translate('verifyExperience.title.placeholder')}
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
       />
       <div className="flex gap-4 items-start">
         <SearchDropdown
           id="start-month"
           value={startMonth}
-          label="Start date*"
+          label={translate('verifyExperience.startDate')}
           options={months}
           hasDropdownIcon
           onChange={onSelectStartMonth}
           className="flex-1"
-          placeholder="Month"
+          placeholder={translate('verifyExperience.startDate.month')}
           isSearchable
           errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           maxMenuHeight={200}
@@ -77,12 +78,10 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           value={startDay}
           options={startDays}
           hasDropdownIcon
-          onChange={value => {
-            onSelectStartDay(value);
-          }}
+          onChange={onSelectStartDay}
           label="&nbsp;"
           className="flex-1"
-          placeholder="Day"
+          placeholder={translate('verifyExperience.startDate.day')}
           maxMenuHeight={200}
         />
         <SearchDropdown
@@ -90,12 +89,10 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           value={startYear}
           options={years}
           hasDropdownIcon
-          onChange={value => {
-            onSelectStartYear(value);
-          }}
+          onChange={onSelectStartYear}
           label="&nbsp;"
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('verifyExperience.startDate.year')}
           isSearchable
           maxMenuHeight={200}
         />
@@ -104,13 +101,11 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
         <SearchDropdown
           id="end-month"
           value={endMonth}
-          label="End date*"
+          label={translate('verifyExperience.endDate')}
           options={months}
           hasDropdownIcon
-          onChange={value => {
-            onSelectEndMonth(value);
-          }}
-          placeholder="Month"
+          onChange={onSelectEndMonth}
+          placeholder={translate('verifyExperience.endDate.month')}
           className="flex-1"
           isSearchable
           errors={endDateErrors ? [endDateErrors.toString()] : undefined}
@@ -122,10 +117,8 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           value={endDay}
           options={endDays}
           hasDropdownIcon
-          onChange={value => {
-            onSelectEndDay(value);
-          }}
-          placeholder="Day"
+          onChange={onSelectEndDay}
+          placeholder={translate('verifyExperience.endDate.day')}
           className="flex-1"
           maxMenuHeight={200}
         />
@@ -135,11 +128,9 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
           value={endYear}
           options={years}
           hasDropdownIcon
-          onChange={value => {
-            onSelectEndYear(value);
-          }}
+          onChange={onSelectEndYear}
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('verifyExperience.endDate.year')}
           isSearchable
           maxMenuHeight={200}
         />
@@ -147,21 +138,21 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
       <div className="flex flex-col">
         <Checkbox
           id="forgot-info"
-          label="I don’t remember my exact information"
+          label={translate('verifyExperience.forgotInfo')}
           checked={forgotInfo}
           onChange={e => handleForgotInfo(e.target.checked)}
           value
         />
-        <span className="text-sm ml-6 text-Gray-light-mode-600">These information will be requested</span>
+        <span className="text-sm ml-6 text-Gray-light-mode-600">{translate('verifyExperience.forgotInfo.note')}</span>
       </div>
       <Input
         id="message"
         name="message"
-        label="Message*"
+        label={translate('verifyExperience.message')}
         multiline
         customHeight="130px"
         register={register}
-        placeholder="e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints."
+        placeholder={translate('verifyExperience.message.placeholder')}
       />
     </div>
   );
@@ -169,10 +160,10 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        Send
+        {translate('verifyExperience.send')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {translate('verifyExperience.cancel')}
       </Button>
     </div>
   );
@@ -182,11 +173,11 @@ export const VerifyExperience: React.FC<VerifyExperienceProps> = ({
       handleClose={handleClose}
       title={
         <div className="flex flex-col items-start">
-          <Icon name="shield-tick" className="p-3 mb-4 border border-solid border-Gray-light-mode-200 rounded-lg" />{' '}
-          Verify experience
+          <Icon name="shield-tick" className="p-3 mb-4 border border-solid border-Gray-light-mode-200 rounded-lg" />
+          {translate('verifyExperience.titleModal')}
         </div>
       }
-      subTitle={`Confirm your information and send a request to ${experience?.org.name} to verify your experience.`}
+      subTitle={translate('verifyExperience.subtitle', { company: experience?.org.name })}
       content={contentJSX}
       footer={modalFooterJsx}
     />
