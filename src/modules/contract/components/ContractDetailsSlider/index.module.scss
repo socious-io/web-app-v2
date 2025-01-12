@@ -1,0 +1,33 @@
+@import 'src/styles/constants/_primitives.scss';
+
+@mixin flexCol {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.container {
+    @include flexCol;
+    gap: 1rem;
+
+    .header {
+        @include flexCol;
+        gap: 1.5rem;
+
+        &__info {
+            @include flexCol;
+            font-size: 1rem;
+            font-weight: normal;
+            line-height: 24px;
+            color: $color-grey-600;
+            cursor: pointer;
+        }
+
+        &__name {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 32px;
+            color: $color-grey-900;
+        }
+    }
+}
