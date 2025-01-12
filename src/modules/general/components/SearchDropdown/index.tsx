@@ -4,6 +4,7 @@ import AsyncSelect from 'react-select/async';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import StateManagedSelect from 'react-select/dist/declarations/src/stateManager';
 import { Icon } from 'src/modules/general/components/Icon';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import css from './search-dropdown.module.scss';
 import { SelectProps } from './search-dropdown.types';
@@ -12,7 +13,7 @@ const CustomControl = (props: any) => {
   const { icon, children } = props;
   return (
     <components.Control {...props} className={css.input}>
-      {icon && <Icon className={css.startIcon} name={icon} fontSize={20} color="#667085" />}
+      {icon && <Icon className={css.startIcon} name={icon} fontSize={20} color={variables.color_grey_500} />}
       {children}
     </components.Control>
   );
@@ -54,9 +55,17 @@ const CustomSingleValue = (props: any) => {
 };
 
 const CustomClearIndicator = (props: ClearIndicatorProps) => {
+  const { setValue } = props;
+
   return (
     <components.ClearIndicator {...props}>
-      <Icon name="x-close" fontSize={20} color="#667085" className="cursor-pointer" />
+      <Icon
+        name="x-close"
+        fontSize={20}
+        color="#667085"
+        className="cursor-pointer"
+        onClick={() => setValue(null, 'deselect-option')}
+      />
     </components.ClearIndicator>
   );
 };
