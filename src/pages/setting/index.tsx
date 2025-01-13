@@ -4,7 +4,7 @@ import { CurrentIdentity } from 'src/core/api';
 import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import Account from 'src/modules/settings/components/account/';
-import Languge from 'src/modules/settings/components/languge';
+import Language from 'src/modules/settings/components/Language';
 import Notification from 'src/modules/settings/components/notification';
 import { OrgTeam } from 'src/modules/settings/components/orgTeam';
 import Password from 'src/modules/settings/components/password';
@@ -50,8 +50,8 @@ export const Setting = () => {
     });
 
   tabs.push({
-    label: 'Languge',
-    content: <Languge />,
+    label: 'Language',
+    content: <Language />,
   });
   const items: any[] = [
     { label: 'Account', value: 'Account' },
@@ -66,7 +66,7 @@ export const Setting = () => {
     });
 
   if (currentIdentity?.type === 'users') items.push({ label: 'Notifications', value: 'Notification' });
-  items.push({ label: 'Languge', value: 'Languge' });
+  items.push({ label: 'Language', value: 'Language' });
   const [content, setContent] = useState<ReactNode>();
 
   const setValue = value => {
@@ -76,7 +76,7 @@ export const Setting = () => {
     if (value.value === 'Team' && currentIdentity?.type === 'users') return setContent(<UserTeam />);
     if (value.value === 'Team' && currentIdentity?.type === 'organizations') return setContent(<OrgTeam />);
     if (value.value === 'Plan') return setContent(<Plan />);
-    if (value.value === 'Languge') return setContent(<Languge />);
+    if (value.value === 'Language') return setContent(<Language />);
   };
 
   useEffect(() => {
