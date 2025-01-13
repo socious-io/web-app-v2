@@ -11,11 +11,11 @@ import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import { AddPayoutAccountProps } from './index.types';
 import { useAddPayoutAccount } from './useAddPayoutAccount';
 
-const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handleClose, offer }) => {
+const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handleClose, currency }) => {
   const {
     data: { stripeLink, errorMsg, openErrorModal },
     operations: { onSelectCountry, setOpenErrorModal },
-  } = useAddPayoutAccount(offer);
+  } = useAddPayoutAccount(currency);
 
   return (
     <>

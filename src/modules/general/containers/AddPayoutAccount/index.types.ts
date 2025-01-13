@@ -1,7 +1,7 @@
-import { Offer } from 'src/core/api';
+import { PaymentCurrency } from 'src/core/api';
 
 export interface AddPayoutAccountProps {
   open: boolean;
   handleClose: () => void;
-  offer?: Offer;
+  currency?: PaymentCurrency;
 }
