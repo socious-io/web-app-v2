@@ -8,6 +8,7 @@ const config: CapacitorConfig = {
   server: {
     hostname: 'app.socious.io',
     androidScheme: 'https',
+    iosScheme: 'https',
   },
   plugins: {
     CapacitorCookies: {

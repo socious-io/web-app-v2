@@ -185,7 +185,6 @@ const ServiceCreateForm = () => {
               name="hours"
               id="hours"
               placeholder="0"
-              type="number"
               postfix={<p>{translate('service-form.hours-postfix')}</p>}
               noBorderPostfix
               inputProps={{ style: { textAlign: 'right' } }}

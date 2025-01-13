@@ -28,9 +28,15 @@ const schema = yup.object().shape({
     label: yup.string().required(),
     value: yup.string().required(translate('service-form.error-message')),
   }),
-  hours: yup.string().required(translate('service-form.error-message')),
+  hours: yup
+    .string()
+    .matches(/^[0-9]*\.?[0-9]+$/, translate('service-form.error-positive-message'))
+    .required(translate('service-form.error-message')),
   payment: yup.string().default('FIAT').required(translate('service-form.error-message')),
-  price: yup.string().required(translate('service-form.error-message')),
+  price: yup
+    .string()
+    .matches(/^[0-9]*\.?[0-9]+$/, translate('service-form.error-positive-message'))
+    .required(translate('service-form.error-message')),
   currency: yup.string().required(translate('service-form.error-message')),
   skills: yup
     .array()
@@ -209,14 +215,12 @@ export const useServiceCreateForm = () => {
       skills: formData.skills.map(skill => skill.value) || [],
       samples: (attachmentIds as string[]) || [],
     };
-    const { error } = await createOrUpdateServiceAdaptor(payload, serviceId, isDuplicate);
-    if (error) return;
-    else {
-      if (formData.payment === 'FIAT' && !hasStripeAccounts) {
-        setOpenModal({ name: 'stripe', open: true });
-      } else {
-        setOpenModal({ name: 'publish', open: true });
-      }
+    if (formData.payment === 'FIAT' && !hasStripeAccounts) {
+      setOpenModal({ name: 'stripe', open: true });
+    } else {
+      const { error } = await createOrUpdateServiceAdaptor(payload, serviceId, isDuplicate);
+      if (error) return;
+      else setOpenModal({ name: 'publish', open: true });
     }
   };
 
