@@ -4,7 +4,7 @@ import { Button } from 'src/modules/general/components/Button';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 
 import { LanguageOption } from './index.types';
-import { useLanguage } from './useLanguge';
+import { useLanguage } from './useLanguage';
 const Languge = () => {
   const { onCancel, onSave, selectedLanguage, setSelectedLanguage } = useLanguage();
   const FlagGenerator = ({ value }) => <img src={`/icons/countries/${value}.svg`} width={20} height={20} alt={value} />;
