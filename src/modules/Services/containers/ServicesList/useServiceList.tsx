@@ -21,7 +21,10 @@ export const useServiceList = () => {
 
   const onChangePage = async (newPage: number) => {
     setPage(newPage);
-    const { data } = await getServicesAdaptor(newPage, limit, { kind: 'SERVICE' });
+    const { data } = await getServicesAdaptor(newPage, limit, {
+      identity_id: user?.id || '',
+      kind: 'SERVICE',
+    });
     data && setCurrentServices(data);
   };
 

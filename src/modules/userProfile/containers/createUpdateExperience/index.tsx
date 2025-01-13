@@ -85,6 +85,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         isDisabled={readonly}
       />
       <SearchDropdown
+        isClearable
         id="company"
         value={companyVal}
         placeholder="Search for company"
@@ -101,6 +102,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
 
       <SearchDropdown
         id="city"
+        isClearable
         value={cityVal}
         placeholder="Search for city"
         isAsync
