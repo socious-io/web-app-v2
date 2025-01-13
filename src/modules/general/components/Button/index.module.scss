@@ -157,6 +157,21 @@
     }
 }
 
+.warning {
+    &:global(.MuiButton-textWarning) {
+        color: $color-warning-700;
+
+        &:hover,
+        &:focus {
+            color: $color-warning-800;
+        }
+
+        &:disabled {
+            color: $color-warning-300;
+        }
+    }
+}
+
 .info {
     &:global(.MuiButton-root) {
         text-transform: none;
