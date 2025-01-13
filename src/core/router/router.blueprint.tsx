@@ -66,10 +66,11 @@ export const blueprint: RouteObject[] = [
                     path: 'view',
                     loader: async ({ params }) => {
                       if (params.id) {
-                        const [user, services] = await Promise.all([
-                          otherProfileByUsername(params.id),
-                          getServicesAdaptor(1, 5, { kind: 'SERVICE' }),
-                        ]);
+                        const user = await otherProfileByUsername(params.id);
+                        const services = await getServicesAdaptor(1, 5, {
+                          identity_id: user?.id || '',
+                          kind: 'SERVICE',
+                        });
                         // Keep this, it might be needed in the future
                         // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
                         return {
