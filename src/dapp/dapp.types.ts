@@ -1,18 +1,10 @@
 import { Interface, InterfaceAbi, JsonRpcSigner } from 'ethers';
-
-export type Chain = {
-  rpcUrl: string;
-  explorerUrl: string;
-  currency: string;
-  name: string;
-  chainId: number;
-  testnet?: boolean;
-};
+import { Chain } from 'viem';
 
 export interface Token {
   name: string;
   symbol: string;
-  address: string;
+  address?: string;
   decimals?: number;
 }
 

@@ -1,64 +1,10 @@
-import { DappConfig, Chain } from './dapp.types';
+import { bscTestnet, bsc, sepolia } from 'wagmi/chains';
 
-export const milkomeda: Chain = {
-  chainId: 2001,
-  name: 'Milkomeda',
-  currency: 'MILKADA',
-  rpcUrl: 'https://rpc-mainnet-cardano-evm.c1.milkomeda.com/',
-  explorerUrl: 'https://explorer-mainnet-cardano-evm.c1.milkomeda.com/',
-};
-
-export const milkomedaTestnet: Chain = {
-  chainId: 200101,
-  name: 'Milkomeda Testnet',
-  currency: 'MILKTADA',
-  rpcUrl: 'https://rpc-devnet-cardano-evm.c1.milkomeda.com',
-  explorerUrl: 'https://explorer-devnet-cardano-evm.c1.milkomeda.com',
-  testnet: true,
-};
-
-export const bscTestnet: Chain = {
-  chainId: 97,
-  name: 'BNB Smart Chain Testnet',
-  currency: 'BNB',
-  rpcUrl: 'https://data-seed-prebsc-2-s2.binance.org:8545/',
-  explorerUrl: 'https://testnet.bscscan.com',
-  testnet: true,
-};
-
-export const bsc: Chain = {
-  chainId: 56,
-  name: 'BNB Smart Chain',
-  currency: 'BNB',
-  rpcUrl: 'https://bsc-dataseed1.defibit.io',
-  explorerUrl: 'https://bscscan.com',
-  testnet: true,
-};
-
-export const sepoliaTestnet: Chain = {
-  chainId: 11155111,
-  name: 'Sepolia Testnet',
-  currency: 'SepoliaETH',
-  rpcUrl: 'https://rpc2.sepolia.org',
-  explorerUrl: 'https://sepolia.etherscan.io',
-  testnet: true,
-};
+import { DappConfig } from './dapp.types';
 
 export const dappConfig: DappConfig = {
   walletConnetProjectId: '40ce0f320baccb067909071c983ca357',
   testnet: [
-    {
-      chain: milkomedaTestnet,
-      escrow: '0x646B17ede805b17537Fc42B1895477e6c61dF190',
-      logic: '0x646B17ede805b17537Fc42B1895477e6c61dF190',
-      tokens: [
-        {
-          name: 'USDC',
-          symbol: 'USDC',
-          address: '0xC12F6Ee5c853393105f29EF0310e61e6B494a70F',
-        },
-      ],
-    },
     {
       chain: bscTestnet,
       escrow: '0xE6b7fdf37b4D297d7E4BcB055Df06AF5DDbf82Ce',
@@ -79,7 +25,7 @@ export const dappConfig: DappConfig = {
       ],
     },
     {
-      chain: sepoliaTestnet,
+      chain: sepolia,
       escrow: '0x383fdB2917B1bB02841116811f94159D9263D53d',
       logic: '0x383fdB2917B1bB02841116811f94159D9263D53d',
       tokens: [
@@ -93,43 +39,6 @@ export const dappConfig: DappConfig = {
     },
   ],
   mainet: [
-    {
-      chain: milkomeda,
-      logic: '0x7e365aEE9EeFa407F5817A7BFF383d060c9eE87C',
-      escrow: '0x7e365aEE9EeFa407F5817A7BFF383d060c9eE87C',
-      tokens: [
-        {
-          name: 'USD Coin',
-          symbol: 'USDC',
-          address: '0xB44a9B6905aF7c801311e8F4E76932ee959c663C',
-        },
-        {
-          name: 'USD Coin',
-          symbol: 'mUSDC',
-          address: '0x063139a927FE02B3a6A5E0d5B48c8BeDFA7de954',
-        },
-        {
-          name: 'Tether',
-          symbol: 'USDT',
-          address: '0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844',
-        },
-        {
-          name: 'Dai',
-          symbol: 'DAI',
-          address: '0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C',
-        },
-        {
-          name: 'Djed',
-          symbol: 'SC',
-          address: '0xbfB54440448e6b702fa2A1d7033cd5fB0d9C5A27',
-        },
-        {
-          name: 'Wrapped ADA',
-          symbol: 'WADA',
-          address: '0xAE83571000aF4499798d1e3b0fA0070EB3A3E3F9',
-        },
-      ],
-    },
     {
       chain: bsc,
       escrow: '0x2Bdf475Bf5353cF52Aa4339A0FA308B4e1e22C3A',
@@ -149,27 +58,6 @@ export const dappConfig: DappConfig = {
         },
       ],
     },
-    /* {
-      chain: polygon,
-      escrow: '0x057e82120fc16ddDAF8B1Fb697ab5506f8874B6e',
-      tokens: [
-        {
-          name: 'USD Coin',
-          symbol: 'USDC',
-          address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
-        },
-        {
-          name: 'Tether',
-          symbol: 'USDT',
-          address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
-        },
-        {
-          name: 'Dai',
-          symbol: 'DAI',
-          address: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
-        },
-      ],
-    }, */
   ],
 
   abis: {

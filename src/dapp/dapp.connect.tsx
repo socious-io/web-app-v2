@@ -1,16 +1,17 @@
-import {
-  createWeb3Modal,
-  defaultConfig,
-  useWeb3Modal,
-  useWeb3ModalAccount,
-  useWeb3ModalProvider,
-} from '@web3modal/ethers/react';
+import '@rainbow-me/rainbowkit/styles.css';
+import { connectorsForWallets, RainbowKitProvider, ConnectButton } from '@rainbow-me/rainbowkit';
+import { metaMaskWallet, walletConnectWallet, trustWallet } from '@rainbow-me/rainbowkit/wallets';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { BrowserProvider, JsonRpcSigner } from 'ethers';
 import React, { useState, useEffect } from 'react';
 import { config } from 'src/config';
+import { Chain } from 'viem';
+import { useAccount, WagmiProvider, createConfig, http } from 'wagmi';
+import { injected } from 'wagmi/connectors';
 
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
+import { laceWallet } from './wallets/lace';
 
 export const NETWORKS: Network[] = config.dappENV === 'mainet' ? dappConfig.mainet : dappConfig.testnet;
 
@@ -25,20 +26,51 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
 };
 
-createWeb3Modal({
-  ethersConfig: defaultConfig({ metadata }),
-  chains,
-  projectId,
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: 'Recommended',
+      wallets: [metaMaskWallet, walletConnectWallet],
+    },
+    {
+      groupName: 'Cardano',
+      wallets: [laceWallet],
+    },
+  ],
+  {
+    appName: metadata.name,
+    projectId,
+  },
+);
+
+const wagmiConfig = createConfig({
+  chains: chains as [Chain, ...Chain[]],
+  transports: {
+    [chains[0].id]: http('https://mainnet.example.com'),
+  },
+  connectors,
 });
+
+const queryClient = new QueryClient();
+
+const RainbowKitWrapper = ({ children }) => {
+  return (
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>{children}</RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+};
 
 export const useWeb3 = () => {
   const [provider, setProvier] = useState<BrowserProvider | undefined>();
-  const { address, isConnected, chainId } = useWeb3ModalAccount();
-  const { open, close } = useWeb3Modal();
-  const [signer, setSigner] = useState<JsonRpcSigner | undefined>();
-  const { walletProvider } = useWeb3ModalProvider();
+  // const { address, isConnected } = useAccount();
+  // const { open, close } =  useWeb3Modal();
+  // const [signer, setSigner] = useState<JsonRpcSigner | undefined>();
+  // const { walletProvider } = /useWeb3ModalProvider();
 
-  useEffect(() => {
+  /* useEffect(() => {
     const checkNetwork = async (ethers: BrowserProvider) => {
       const net = await ethers.getNetwork();
       const selectd = chains.filter(c => BigInt(c.chainId) === net.chainId);
@@ -58,15 +90,15 @@ export const useWeb3 = () => {
       ethers.getSigner().then(s => setSigner(s));
       checkNetwork(ethers);
     }
-  }, [address, isConnected, walletProvider]);
+  }, [address, isConnected, walletProvider]); */
 
-  return { account: address, provider, isConnected, signer, chainId, open, close };
+  return { account: '', provider, isConnected: false, signer: {}, chainId: 22, open, close };
 };
 
 export const Connect: React.FC = () => {
   return (
-    <>
-      <w3m-button />
-    </>
+    <RainbowKitWrapper>
+      <ConnectButton />
+    </RainbowKitWrapper>
   );
 };
