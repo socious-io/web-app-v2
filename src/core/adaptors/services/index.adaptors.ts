@@ -15,7 +15,7 @@ import { AdaptorRes, PaymentMode, Service, ServiceReq, ServicesRes, SuccessRes }
 export const getServicesAdaptor = async (
   page = 1,
   limit = 10,
-  filters?: { kind?: 'SERVICE' },
+  filters?: { identity_id: string; kind?: 'SERVICE' },
 ): Promise<AdaptorRes<ServicesRes>> => {
   try {
     const { results, total } = await services({ page, limit }, filters);
