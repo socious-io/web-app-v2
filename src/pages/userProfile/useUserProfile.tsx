@@ -17,7 +17,9 @@ export const useUserProfile = () => {
   const myProfile = currentIdentity?.id === user?.id;
   const tabs = [
     { label: 'About', content: <About /> },
-    ...(myProfile || services?.items.length ? [{ label: 'Services', content: <ServicesList /> }] : []),
+    ...(myProfile || services?.items.length
+      ? [{ label: 'Services', content: <ServicesList key={user?.id || ''} /> }]
+      : []),
   ];
   const activeTabIndex = {
     '#services': 1,
