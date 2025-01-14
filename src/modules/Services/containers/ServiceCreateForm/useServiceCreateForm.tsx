@@ -169,7 +169,7 @@ export const useServiceCreateForm = () => {
 
   useEffect(() => {
     setValue('currency', initCurrencyValue(service));
-  }, [service, tokens, selectedPaymentMethod]);
+  }, [service, tokens.length, selectedPaymentMethod]);
 
   const handleCloseModal = () => setOpenModal({ name: '', open: false });
 
@@ -218,9 +218,9 @@ export const useServiceCreateForm = () => {
     if (formData.payment === 'FIAT' && !hasStripeAccounts) {
       setOpenModal({ name: 'stripe', open: true });
     } else {
-      const { error } = await createOrUpdateServiceAdaptor(payload, serviceId, isDuplicate);
+      const { error, data } = await createOrUpdateServiceAdaptor(payload, serviceId, isDuplicate);
       if (error) return;
-      else setOpenModal({ name: 'publish', open: true });
+      else if (data) setOpenModal({ name: 'publish', open: true });
     }
   };
 
