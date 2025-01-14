@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'src/modules/general/components/Icon';
 

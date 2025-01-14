@@ -124,7 +124,7 @@ export const Email = () => {
               customStyle="flex gap-3 mt-3"
             >
               <Apple />
-              Continue with Apple
+              {translate('login-continue-apple')}
             </Button>
           </div>
           <div className="my-5 text-center">
@@ -150,7 +150,7 @@ export const Email = () => {
         </div>
         <div className={css.copy}>
           <div>
-            <span className={css.copyText}>© Socious Global Inc. 2023</span>
+            <span className={css.copyText}>© {translate('sign-up-copywrite')}</span>
           </div>
         </div>
         <div className="md:absolute md:top-8 md:left-8 md:transform-none flex justify-center">

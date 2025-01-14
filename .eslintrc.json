@@ -36,5 +36,13 @@
         }
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.stories.js", "**/*.stories.jsx", "**/*.stories.ts", "**/*.stories.tsx"],
+      "rules": {
+        "i18next/no-literal-string": "off"
+      }
+    }
+  ]
 }

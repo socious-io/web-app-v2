@@ -1,0 +1,22 @@
+{
+    "user-team": {
+      "leave-team-title": "Leave team?",
+      "leave-team-last-member-subtitle": "You currently are the last member of this team. Unfortunately, this means you can't leave the team until you add another member.",
+      "leave-team-options": "Here are your options:",
+      "assign-member-label": "Assign member:",
+      "assign-member-description": "Choose another team member you trust and grant them rights. This will allow you to leave the team while ensuring someone remains to manage it.",
+      "delete-org-label": "Delete the organization:",
+      "delete-org-description": "If the organization is no longer needed, you can choose to delete it entirely.",
+      "leave-team-subtitle": "Are you sure you want to leave {{name}}?",
+      "team-management-title": "Team management",
+      "team-management-subtitle": "Manage your teams",
+      "on-teams-title": "On teams",
+      "on-teams-subtitle": "You’re currently on these teams.",
+      "leave": "Leave"
+    },
+    "common": {
+      "close": "Close",
+      "cancel": "Cancel"
+    }
+  }
+  

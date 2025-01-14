@@ -54,7 +54,7 @@ export const UserTeam = () => {
               onClick: handleCloseModal,
             },
             {
-              children: translate('userTeam.leaveModal.buttons.leave'),
+              children: translate('user-team.leave'),
               color: 'error',
               onClick: () => handleLeave(selectedMember.id),
             },
@@ -67,10 +67,10 @@ export const UserTeam = () => {
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-1">
             <span className="text-lg font-semibold leading-7 text-Gray-light-mode-900">
-              {translate('userTeam.teamManagement.title')}
+              {translate('user-team.team-management-title')}
             </span>
             <span className="text-sm font-normal leading-5 text-Gray-light-mode-600">
-              {translate('userTeam.teamManagement.subtitle')}
+              {translate('user-team.team-management-subtitle')}
             </span>
           </div>
           <Divider />
@@ -81,6 +81,7 @@ export const UserTeam = () => {
               </span>
               <span className="text-sm font-normal text-Gray-light-mode-600">
                 {translate('userTeam.onTeams.subtitle')}
+                {translate('user-team.on-teams-title')}
               </span>
             </div>
             <div className="flex-1 flex flex-col">
@@ -105,7 +106,7 @@ export const UserTeam = () => {
                       style={{ color: variables.color_grey_600 }}
                       onClick={() => handleOpenModal(item.id, meta.name)}
                     >
-                      {translate('userTeam.leaveButton')}
+                      {translate('user-team.leave')}
                     </Button>
                   </div>
                 );

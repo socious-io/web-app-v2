@@ -1,0 +1,21 @@
+{
+    "user-team": {
+      "leave-team-title": "チームを退出しますか？",
+      "leave-team-last-member-subtitle": "現在、このチームの最後のメンバーです。そのため、他のメンバーを追加するまでチームを退出することはできません。",
+      "leave-team-options": "次の選択肢があります：",
+      "assign-member-label": "メンバーを任命:",
+      "assign-member-description": "信頼できる他のチームメンバーを選択し、権限を付与してください。これにより、チームの管理者を残しつつ、あなたが退出できるようになります。",
+      "delete-org-label": "組織を削除:",
+      "delete-org-description": "この組織が不要であれば、完全に削除することもできます。",
+      "leave-team-subtitle": "{{name}} を退出してもよろしいですか？",
+      "team-management-title": "チーム管理",
+      "team-management-subtitle": "チームを管理する",
+      "on-teams-title": "所属チーム",
+      "on-teams-subtitle": "現在所属しているチームです。",
+      "leave": "退出"
+    },
+    "common": {
+      "close": "閉じる",
+      "cancel": "キャンセル"
+    }
+  }

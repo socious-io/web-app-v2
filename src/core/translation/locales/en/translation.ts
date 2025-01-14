@@ -3,6 +3,7 @@ import companySize from './companySize.json';
 import connections from './connections.json';
 import constants from './constants.json';
 import contracts from './contracts.json';
+import contribute from './contribute.json';
 import credential from './credential.json';
 import dashboard from './dashboard.json';
 import dispute from './disputes.json';
@@ -27,6 +28,9 @@ import settings from './setting.json';
 import signup from './signup.json';
 import skills from './skills.json';
 import socialCauses from './socialCauses.json';
+import termsCondition from './termsCondition.json';
+import userTeam from './userTeam.json';
+
 export function generateTranslationFile() {
   return Object.assign(
     {},
@@ -59,5 +63,8 @@ export function generateTranslationFile() {
     settings,
     search,
     constants,
+    termsCondition,
+    userTeam,
+    contribute,
   );
 }

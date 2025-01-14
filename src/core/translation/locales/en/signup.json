@@ -49,5 +49,6 @@
   "sign-up-name-error": "first name is required",
   "sign-up-last-name-error": "last name is required",
   "sign-up-congrats": "Congratulations",
-  "sign-up-congrats-desc": "Your account has been successfully created"
+  "sign-up-congrats-desc": "Your account has been successfully created",
+  "sign-up-copywrite": "Socious Global Inc . 2023"
 }
