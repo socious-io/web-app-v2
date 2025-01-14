@@ -169,7 +169,7 @@ export const useServiceCreateForm = () => {
 
   useEffect(() => {
     setValue('currency', initCurrencyValue(service));
-  }, [service, tokens, selectedPaymentMethod]);
+  }, [service, tokens.length, selectedPaymentMethod]);
 
   const handleCloseModal = () => setOpenModal({ name: '', open: false });
 
