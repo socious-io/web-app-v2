@@ -1,3 +1,5 @@
+import { bsc } from 'viem/chains';
+
 export interface CIP30Provider {
   enable(): Promise<string[]>;
   getNetworkId(): Promise<number>;
@@ -27,27 +29,27 @@ export class CIP30ToEIP1193Provider {
    * Maps CIP-30 methods to EIP-1193 equivalent functionality.
    */
   async request({ method, params }: EIP1193RequestParams): Promise<any> {
-    const res = await this.monitor({ method, params });
-    console.log(method, '-->', res, '******************@@@@@@@');
-    return res;
-  }
-
-  /**
-   * EIP-1193 request method
-   * Maps CIP-30 methods to EIP-1193 equivalent functionality.
-   */
-  async monitor({ method, params }: EIP1193RequestParams): Promise<any> {
     switch (method) {
       case 'eth_requestAccounts':
-        return this.enabled.enable(); // Enable Lace wallet
+        this.enabled = await this.provider.enable();
+        return this.getAccount();
       case 'eth_accounts':
         this.enabled = await this.provider.enable();
         return this.enabled.getAccounts(); // Get accounts
       case 'eth_chainId':
         return this.enabled.getNetworkId();
+      case 'wallet_requestPermissions':
+        return [];
       default:
-        console.log(`Unsupported method: ${method}***************************`);
+        throw new Error(`Unsupported method: ${method}`);
     }
+  }
+
+  async getAccount() {
+    let addresses = await this.enabled.getUsedAddresses();
+    if (addresses.length < 1) addresses = await this.enabled.getUnusedAddresses();
+    // TODO: need to parse hex addresses
+    return addresses;
   }
 
   /**
@@ -61,7 +63,6 @@ export class CIP30ToEIP1193Provider {
   }
 
   async once(event: string, listener: (...args: any[]) => void): Promise<void> {
-    console.log(this.provider, '-------------------------------@@@', this.enabled);
     this.enabled = await this.provider.enable();
     const onceListener = (...args: any[]) => {
       listener(...args);

@@ -69,7 +69,7 @@ export const useServiceCreateForm = () => {
   });
   const { usernameVal } = getIdentityMeta(currentIdentity);
   const walletAddress = currentIdentity?.meta.wallet_address;
-  const { isConnected, open: openConnect, chainId, account } = Dapp.useWeb3();
+  const { Web3Connect, isConnected, chainId, account } = Dapp.useWeb3();
   const tokens = useTokens(isConnected, chainId);
   const [openModal, setOpenModal] = useState<{ name: 'publish' | 'cancel' | 'stripe' | ''; open: boolean }>({
     name: '',
@@ -250,7 +250,7 @@ export const useServiceCreateForm = () => {
       handleCloseModal,
       onCancelClick,
       onBack,
-      openConnect,
+      Web3Connect,
       handleSubmit,
       onSubmit,
       onSelectSearchDropdown,

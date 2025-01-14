@@ -21,7 +21,7 @@ export const identitySlice = createSlice({
     setIdentityList: (state, action) => {
       state.entities = action.payload;
       if (action.payload.length) state.status = 'succeeded';
-      const identity = state.entities.find((identity) => identity.current);
+      const identity = state.entities.find(identity => identity.current);
       if (identity && identity.meta) {
         state.avatarImage =
           'avatar' in identity.meta
@@ -35,9 +35,9 @@ export const identitySlice = createSlice({
       return initState;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(currentIdentities.pending, (state) => {
+      .addCase(currentIdentities.pending, state => {
         state.status = 'loading';
       })
       .addCase(currentIdentities.fulfilled, (state, action) => {

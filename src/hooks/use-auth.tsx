@@ -3,8 +3,8 @@ import { CurrentIdentity } from 'src/core/api';
 import { RootState } from 'src/store';
 
 export const useAuth = () => {
-  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>((state) => {
-    return state.identity.entities.find((identity) => identity.current);
+  const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
+    return state.identity.entities.find(identity => identity.current);
   });
 
   const isLoggedIn = !!currentIdentity;

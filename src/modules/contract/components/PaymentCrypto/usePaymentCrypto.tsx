@@ -4,7 +4,7 @@ import { translate } from 'src/core/utils';
 import dapp from 'src/dapp';
 
 export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => void, offer?: Offer) => {
-  const { chainId, signer, account, isConnected, open } = dapp.useWeb3();
+  const { chainId, signer, account, isConnected, Web3Connect } = dapp.useWeb3();
   const [disabledPayment, setDisabledPayment] = useState(!isConnected);
   const [openErrorModal, setOpenErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -83,7 +83,7 @@ export const usePaymentCrypto = (handleCloseModal: (paymentSuccess: boolean) => 
     proceedCryptoPayment,
     setOpenErrorModal,
     isConnected,
-    openConnect: open,
+    Web3Connect,
     unit,
   };
 };

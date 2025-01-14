@@ -44,7 +44,7 @@ const ServiceCreateForm = () => {
       handleCloseModal,
       onCancelClick,
       onBack,
-      openConnect,
+      Web3Connect,
       handleSubmit,
       onSubmit,
       onSelectSearchDropdown,
@@ -82,27 +82,23 @@ const ServiceCreateForm = () => {
           <span className={styles['row__description']}>{translate('service-form.payment-crypto-description')}</span>
         </div>
         <div className={styles['row__right']}>
-          {isConnected ? (
-            <>
-              <div className={styles['dapp']}>
-                <Dapp.Connect />
-              </div>
-              <Input
-                register={register}
-                name="price"
-                id="price"
-                placeholder="0"
-                errors={errors['price']?.message ? [errors['price'].message.toString()] : undefined}
-                postfixDropdown={{
-                  options: tokens,
-                  value: tokens.find(token => token.value === selectedCurrency),
-                  onChange: token => onSelectValue('currency', token),
-                }}
-              />
-            </>
-          ) : (
-            <ConnectButton handleClick={openConnect} />
-          )}
+          <>
+            <div className={styles['dapp']}>
+              <Web3Connect />
+            </div>
+            <Input
+              register={register}
+              name="price"
+              id="price"
+              placeholder="0"
+              errors={errors['price']?.message ? [errors['price'].message.toString()] : undefined}
+              postfixDropdown={{
+                options: tokens,
+                value: tokens.find(token => token.value === selectedCurrency),
+                onChange: token => onSelectValue('currency', token),
+              }}
+            />
+          </>
         </div>
       </>
     ),

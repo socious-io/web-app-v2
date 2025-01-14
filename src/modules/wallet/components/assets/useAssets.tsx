@@ -9,7 +9,7 @@ import { Resolver } from './assets.types';
 
 export const useAssets = () => {
   const { stripeProfileRes, jpStripeProfileRes } = useLoaderData() as Resolver;
-  const { isConnected, open: openConnect, account } = dapp.useWeb3();
+  const { isConnected, Web3Connect, account } = dapp.useWeb3();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
@@ -32,5 +32,5 @@ export const useAssets = () => {
     }
   }, [isConnected, account]);
 
-  return { stripeAccounts, openAddAccount, setOpenAddAccount, isConnected, openConnect };
+  return { stripeAccounts, openAddAccount, setOpenAddAccount, isConnected, Web3Connect };
 };

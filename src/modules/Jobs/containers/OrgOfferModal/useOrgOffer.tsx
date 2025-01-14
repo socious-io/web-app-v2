@@ -44,7 +44,7 @@ const schema = yup.object().shape({
   description: yup.string().required('Description is required'),
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
-  const { chainId, isConnected } = Dapp.useWeb3();
+  const { chainId, isConnected, Web3Connect } = Dapp.useWeb3();
   const [tokens, setTokens] = useState<
     {
       value: string;
@@ -74,7 +74,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
   useEffect(() => {
     const getTokens = async () => {
       if (isConnected) {
-        const selectedNetwork = Dapp.NETWORKS.filter(n => n.chain.chainId === chainId)[0];
+        const selectedNetwork = Dapp.NETWORKS.filter(n => n.chain.id === chainId)[0];
         const mapTokens = selectedNetwork.tokens.map(token => {
           return {
             value: token.address,
@@ -176,5 +176,6 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     paymentMethodOptions,
     setSelected,
     preventArrow,
+    Web3Connect,
   };
 };

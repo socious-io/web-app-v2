@@ -9,7 +9,7 @@ export const PROJECT_PAYMENT_SCHEME_DROPDOWN = [
 ];
 
 export function translatePaymentTerms(value: string) {
-  const obj = PROJECT_PAYMENT_SCHEME.find((item) => item.value === value);
+  const obj = PROJECT_PAYMENT_SCHEME.find(item => item.value === value);
   if (obj) {
     return obj.label;
   }

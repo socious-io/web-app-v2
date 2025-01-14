@@ -39,7 +39,7 @@ platforms:
           TARGETED_DEVICE_FAMILY: 1 #1: iPhone ,2:iPhone&iPad, 3:iPad
           CODE_SIGN_STYLE: Manual
           CODE_SIGN_IDENTITY: iPhone Distribution
-          
+
   android:
     packageName: $ANDROID_PACKAGE_NAME
     versionName: $VERSION

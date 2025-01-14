@@ -1,16 +1,14 @@
+import { ConnectButton as RKButton } from '@rainbow-me/rainbowkit';
 import React from 'react';
-import { Icon } from 'src/modules/general/components/Icon';
 
+// import { Icon } from 'src/modules/general/components/Icon';
 import css from './connectButton.module.scss';
 
-interface ConnectButtonProps {
-  handleClick: () => void;
-}
-export const ConnectButton: React.FC<ConnectButtonProps> = ({ handleClick }) => {
+export const ConnectButton: React.FC = () => {
+  // TODO: fix buttn style need to overied rainbowkit button style
   return (
-    <button type="button" className={css.btn} onClick={handleClick}>
-      <Icon name="wallet-connect-01" fontSize={20} color="#0099FF" />
-      WalletConnect
-    </button>
+    <div className={css.btn}>
+      <RKButton label="Connect Wallet" />
+    </div>
   );
 };

@@ -1,57 +1,12 @@
-import { Wallet, getWalletConnectConnector } from '@rainbow-me/rainbowkit';
-import { bitgetWallet } from '@rainbow-me/rainbowkit/wallets';
+import { Wallet } from '@rainbow-me/rainbowkit';
 import { createConnector } from 'wagmi';
-import { injected, coinbaseWallet } from 'wagmi/connectors';
+import { injected } from 'wagmi/connectors';
 
-import { CIP30ToEIP1193Provider } from './cip.convertor';
+import { CIP30ToEIP1193Provider } from './cip-30';
 
 export interface MyWalletOptions {
   projectId: string;
 }
-
-const proxy = new Proxy(new CIP30ToEIP1193Provider(window.cardano?.lace), {
-  get(target, prop, receiver) {
-    const value = Reflect.get(target, prop, receiver);
-
-    // Intercept and log `request` calls
-    if (prop === 'request' && typeof value === 'function') {
-      return async function (...args) {
-        console.log(`[Ethereum Request] Method called:`, args);
-        const result = await value.apply(this, args);
-        console.log(`[Ethereum Request] Response received:`, result);
-
-        // Log class details for the result (you can add more specific logic depending on the result type)
-        if (result && typeof result === 'object') {
-          console.log(`[Ethereum Request] Response class type:`, result.constructor.name);
-        } else {
-          console.log(`[Ethereum Request] Response is primitive value:`, result);
-        }
-
-        return result;
-      };
-    }
-
-    // Intercept and log `send` calls (legacy support)
-    if (prop === 'send' && typeof value === 'function') {
-      return function (...args) {
-        console.log(`[Ethereum Send] Method called:`, args);
-        const result = value.apply(this, args);
-        console.log(`[Ethereum Send] Response received:`, result);
-
-        // Log class details for the result (you can add more specific logic depending on the result type)
-        if (result && typeof result === 'object') {
-          console.log(`[Ethereum Send] Response class type:`, result.constructor.name);
-        } else {
-          console.log(`[Ethereum Send] Response is primitive value:`, result);
-        }
-
-        return result;
-      };
-    }
-
-    return value;
-  },
-});
 
 export const laceWallet = ({ projectId }: MyWalletOptions): Wallet => ({
   id: 'lace.wallet',
@@ -59,10 +14,10 @@ export const laceWallet = ({ projectId }: MyWalletOptions): Wallet => ({
   iconUrl: '/lace.svg',
   iconBackground: '#0000',
   downloadUrls: {
-    android: 'https://play.google.com/store/apps/details?id=my.wallet',
-    ios: 'https://apps.apple.com/us/app/my-wallet',
-    chrome: 'https://chrome.google.com/webstore/detail/my-wallet',
-    qrCode: 'https://my-wallet/qr',
+    android: 'https://play.google.com/store/apps/details?id=lace',
+    ios: 'https://apps.apple.com/us/app/lace',
+    chrome: 'https://chromewebstore.google.com/detail/lace/gafhhkghbfjjkeiendhlofajokpaflmk?hl=en',
+    qrCode: 'https://lace.io',
   },
   mobile: {
     getUri: (uri: string) => uri,
@@ -70,7 +25,7 @@ export const laceWallet = ({ projectId }: MyWalletOptions): Wallet => ({
   qrCode: {
     getUri: (uri: string) => uri,
     instructions: {
-      learnMoreUrl: 'https://my-wallet/learn-more',
+      learnMoreUrl: 'https://lace.io',
       steps: [
         {
           description: 'We recommend putting My Wallet on your home screen for faster access to your wallet.',
@@ -87,7 +42,7 @@ export const laceWallet = ({ projectId }: MyWalletOptions): Wallet => ({
   },
   extension: {
     instructions: {
-      learnMoreUrl: 'https://my-wallet/learn-more',
+      learnMoreUrl: 'https://lace.io',
       steps: [
         {
           description: 'We recommend pinning My Wallet to your taskbar for quicker access to your wallet.',
@@ -108,7 +63,7 @@ export const laceWallet = ({ projectId }: MyWalletOptions): Wallet => ({
       ],
     },
   },
-  createConnector: createInjectedConnector(proxy),
+  createConnector: createInjectedConnector(new CIP30ToEIP1193Provider(window.cardano?.lace)),
 });
 
 function createInjectedConnector(provider) {

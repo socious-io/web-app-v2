@@ -13,7 +13,7 @@ export const useTokens = (isConnected: boolean, chainId: number | undefined) => 
   useEffect(() => {
     const getTokens = async () => {
       if (isConnected) {
-        const selectedNetwork = Dapp.NETWORKS.find(network => network.chain.chainId === chainId);
+        const selectedNetwork = Dapp.NETWORKS.find(network => network.chain.id === chainId);
         if (selectedNetwork) {
           const mapTokens = selectedNetwork.tokens.map(token => ({
             value: token.address,

@@ -1,13 +1,13 @@
 import '@rainbow-me/rainbowkit/styles.css';
-import { connectorsForWallets, RainbowKitProvider, ConnectButton } from '@rainbow-me/rainbowkit';
-import { metaMaskWallet, walletConnectWallet, trustWallet } from '@rainbow-me/rainbowkit/wallets';
+import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { metaMaskWallet, walletConnectWallet, trustWallet, ledgerWallet } from '@rainbow-me/rainbowkit/wallets';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { BrowserProvider, JsonRpcSigner } from 'ethers';
+import { BrowserProvider, Eip1193Provider, JsonRpcSigner } from 'ethers';
 import React, { useState, useEffect } from 'react';
 import { config } from 'src/config';
+import { ConnectButton } from 'src/modules/wallet/components/connectButton';
 import { Chain } from 'viem';
-import { useAccount, WagmiProvider, createConfig, http } from 'wagmi';
-import { injected } from 'wagmi/connectors';
+import { useConnectors, useChainId, useAccount, WagmiProvider, createConfig, http } from 'wagmi';
 
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
@@ -30,7 +30,7 @@ const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [metaMaskWallet, walletConnectWallet],
+      wallets: [metaMaskWallet, walletConnectWallet, trustWallet, ledgerWallet],
     },
     {
       groupName: 'Cardano',
@@ -45,9 +45,7 @@ const connectors = connectorsForWallets(
 
 const wagmiConfig = createConfig({
   chains: chains as [Chain, ...Chain[]],
-  transports: {
-    [chains[0].id]: http('https://mainnet.example.com'),
-  },
+  transports: Object.fromEntries(chains.map(chain => [chain.id, http(chain.rpcUrls.default?.http[0])])),
   connectors,
 });
 
@@ -64,41 +62,44 @@ const RainbowKitWrapper = ({ children }) => {
 };
 
 export const useWeb3 = () => {
-  const [provider, setProvier] = useState<BrowserProvider | undefined>();
+  const [provider, setProvider] = useState<BrowserProvider>();
+  const [connected, setConnected] = useState<boolean>(false);
+  const [account, setAccount] = useState<string>();
+  const [chainId, setChainId] = useState<number>(0);
+  // const connectors = useConnectors()
   // const { address, isConnected } = useAccount();
-  // const { open, close } =  useWeb3Modal();
-  // const [signer, setSigner] = useState<JsonRpcSigner | undefined>();
+  const [signer, setSigner] = useState<JsonRpcSigner>();
   // const { walletProvider } = /useWeb3ModalProvider();
 
-  /* useEffect(() => {
-    const checkNetwork = async (ethers: BrowserProvider) => {
-      const net = await ethers.getNetwork();
-      const selectd = chains.filter(c => BigInt(c.chainId) === net.chainId);
-      if (selectd.length < 1) {
-        try {
-          await ethers.send('wallet_switchEthereumChain', [{ chainId: `0x${chains[0].chainId.toString(16)}` }]);
-        } catch (err: any) {
-          if (err.code === 4902) {
-            await ethers.send('wallet_addEthereumChain', [chains[0]]);
-          }
-        }
-      }
+  const Button: React.FC = () => {
+    const { address, isConnected, connector } = useAccount();
+
+    const updateProvider = async () => {
+      if (!connector?.getChainId) return;
+      setChainId(await connector.getChainId());
+      const eipProvider = await connector.getProvider();
+      const ethers = new BrowserProvider(eipProvider as Eip1193Provider);
+      setProvider(ethers);
+      setSigner(await ethers.getSigner());
     };
-    if (isConnected && walletProvider) {
-      const ethers = new BrowserProvider(walletProvider);
-      setProvier(ethers);
-      ethers.getSigner().then(s => setSigner(s));
-      checkNetwork(ethers);
-    }
-  }, [address, isConnected, walletProvider]); */
 
-  return { account: '', provider, isConnected: false, signer: {}, chainId: 22, open, close };
-};
+    useEffect(() => {
+      setConnected(isConnected);
+      setAccount(account);
 
-export const Connect: React.FC = () => {
-  return (
-    <RainbowKitWrapper>
-      <ConnectButton />
-    </RainbowKitWrapper>
-  );
+      if (isConnected && connector?.getChainId && !chainId) updateProvider();
+    }, [isConnected, address, connector]);
+
+    return <ConnectButton />;
+  };
+
+  const Web3Connect: React.FC = () => {
+    return (
+      <RainbowKitWrapper>
+        <Button />
+      </RainbowKitWrapper>
+    );
+  };
+
+  return { Web3Connect, account, provider, isConnected: connected, signer, chainId };
 };

@@ -1,11 +1,11 @@
 {
-    "kyc-open-wallet": "Socious Walletアプリを開く",
-    "kyc-verify-identity": "本人確認を行う",
-    "kyc-verify-subtitle": "全てのSocious機能にアクセスするために、本人確認を行ってください",
-    "kyc-desc": "Sociousはブロックチェーン技術を使用して、資格を透明かつ追跡可能にします。",
-    "kyc-partner": "私たちはAtala Prismと提携しており、分散型IDを通じて検証可能な資格を受け取ることができます。",
-    "kyc-how-verify": "本人確認の方法",
-    "kyc-step-1": "1. アプリのオンボーディングプロセスを通過して、Atala Prismで分散型IDを作成します。",
-    "kyc-step-2": "2. 私たちのKYCパートナーであるVeriffで本人確認を行います。",
-    "kyc-download-app": "Socious Walletアプリをダウンロード"
+  "kyc-open-wallet": "Socious Walletアプリを開く",
+  "kyc-verify-identity": "本人確認を行う",
+  "kyc-verify-subtitle": "全てのSocious機能にアクセスするために、本人確認を行ってください",
+  "kyc-desc": "Sociousはブロックチェーン技術を使用して、資格を透明かつ追跡可能にします。",
+  "kyc-partner": "私たちはAtala Prismと提携しており、分散型IDを通じて検証可能な資格を受け取ることができます。",
+  "kyc-how-verify": "本人確認の方法",
+  "kyc-step-1": "1. アプリのオンボーディングプロセスを通過して、Atala Prismで分散型IDを作成します。",
+  "kyc-step-2": "2. 私たちのKYCパートナーであるVeriffで本人確認を行います。",
+  "kyc-download-app": "Socious Walletアプリをダウンロード"
 }
