@@ -30,8 +30,6 @@
     <string>“Socious” Would Like to Access Your Photos. Allow access to photos to upload photos from your library in order to add your profile photo or attach images to your post.</string>
     <key>NSFaceIDUsageDescription</key>
     <string>Socious uses Face ID for secure sign-in authentication.</string>
-    <key>NSUserTrackingUsageDescription</key>
-    <string>Socious collects data to provide personalized user experiences and for authentication purposes.</string>
     <key>UIRequiredDeviceCapabilities</key>
     <array>
         <string>armv7</string>
