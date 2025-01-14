@@ -11,6 +11,7 @@
 
     @media (max-width: $width-xl) {
         flex-direction: column;
+        gap: 0;
         padding: 0;
     }
 
@@ -40,7 +41,7 @@
 
         @media (max-width: $width-xl) {
             width: 100%;
-            padding: 0 1rem;
+            padding: 1rem;
         }
 
         &--full {

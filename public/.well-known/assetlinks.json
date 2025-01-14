@@ -1,12 +1,13 @@
 [
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "jp.socious.network",
-      "sha256_cert_fingerprints": [
-        "FD:AE:5F:A0:8E:BE:BC:08:F2:00:6E:B0:01:90:11:A9:AA:B4:01:19:1C:7E:F8:10:2B:D5:E6:2B:2E:CE:35:15"
-      ]
-    }
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "jp.socious.network",
+        "sha256_cert_fingerprints": [
+          "2C:7E:E3:60:E7:51:DA:30:55:44:AD:EF:43:AC:7B:8F:C7:B0:F6:45:A9:BD:78:05:82:05:F8:A7:D8:96:65:BF",
+          "FD:AE:5F:A0:8E:BE:BC:08:F2:00:6E:B0:01:90:11:A9:AA:B4:01:19:1C:7E:F8:10:2B:D5:E6:2B:2E:CE:35:15"
+        ]
+      }
   }
 ]
