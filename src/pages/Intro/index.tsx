@@ -8,7 +8,7 @@ import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/modules/Auth/containers/ServiceIntro';
 import { reviews, onboardingOptions } from 'src/modules/Auth/statics/intro';
 import { Button } from 'src/modules/general/components/Button';
-import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
+import CardRadioButton from 'src/modules/general/components/CardRadioButton';
 import { Link } from 'src/modules/general/components/link';
 import { RootState } from 'src/store';
 

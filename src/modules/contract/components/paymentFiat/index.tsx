@@ -2,7 +2,7 @@ import React from 'react';
 import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
-import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
+import CardRadioButton from 'src/modules/general/components/CardRadioButton';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Modal } from 'src/modules/general/components/modal';
