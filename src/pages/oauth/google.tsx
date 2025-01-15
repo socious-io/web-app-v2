@@ -7,6 +7,7 @@ import { config } from 'src/config';
 import { EVENTS_QUERIES } from 'src/constants/EVENTS_QUERIES';
 import { EventsRes, GoogleAuthRes, User, googleOauth, identities, profile } from 'src/core/api';
 import { setAuthParams } from 'src/core/api/auth/auth.service';
+import { DeepLinks } from 'src/core/deepLinks';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
@@ -107,5 +108,11 @@ export const GoogleOauth2 = () => {
     }
   }, [code]);
 
-  return <></>;
+  // TODO: Implement using third party.
+  // Where everelse Deeplink is not called after user returned from google oauth.
+  return (
+    <>
+      <DeepLinks />
+    </>
+  );
 };

@@ -38,10 +38,19 @@ import { Layout as NowruzLayout } from 'src/modules/layout';
 import FallBack from 'src/pages/fallback/fallback';
 import { RootState } from 'src/store';
 
+import { DeepLinks } from '../deepLinks';
 import { checkSearchFilters } from '../utils';
 
 export const blueprint: RouteObject[] = [
-  { path: '/', element: <DefaultRoute /> },
+  {
+    path: '/',
+    element: (
+      <>
+        <DeepLinks />
+        <DefaultRoute />
+      </>
+    ),
+  },
   {
     path: 'captcha',
     async lazy() {
