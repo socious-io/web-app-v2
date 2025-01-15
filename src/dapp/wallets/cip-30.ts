@@ -17,9 +17,6 @@ export class CIP30ToEIP1193Provider {
   private enabled: any;
 
   constructor(provider: CIP30Provider) {
-    if (!provider) {
-      throw new Error('Lace provider is required');
-    }
     this.provider = provider;
     this.listeners = {};
   }
