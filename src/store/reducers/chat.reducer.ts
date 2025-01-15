@@ -25,9 +25,9 @@ export const chatSlice = createSlice({
       state.entities = action.payload.items;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(getUnreadCount.pending, (state) => {
+      .addCase(getUnreadCount.pending, state => {
         state.status = 'loading';
         state.error = '';
       })

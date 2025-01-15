@@ -10,7 +10,7 @@ import { ConnectButton } from 'src/modules/wallet/components/connectButton';
 import { WalletModalProps } from './walletModal.types';
 
 export const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, handleAccept, walletAddress }) => {
-  const { isConnected, open: openConnect, account } = Dapp.useWeb3();
+  const { isConnected, account, Web3Connect } = Dapp.useWeb3();
 
   useEffect(() => {
     if (isConnected && account && (!walletAddress || String(walletAddress) !== account)) {
@@ -35,7 +35,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, han
           <div className="font-medium text-sm leading-5 text-Gray-light-mode-700 ">
             {translate('cont-connect-wallet-desc')}
           </div>
-          {isConnected ? <Dapp.Connect /> : <ConnectButton handleClick={() => openConnect()} />}
+          <Web3Connect />
         </div>
         <div className="flex flex-col gap-3 md:mt-2">
           <Button variant="contained" color="primary" disabled={!isConnected} fullWidth onClick={handleAccept}>

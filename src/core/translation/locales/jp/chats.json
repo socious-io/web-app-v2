@@ -1,10 +1,10 @@
 {
-    "chat-title": "メッセージ",
-    "chat-new": "新しいメッセージ",
-    "chat-to": "宛先:",
-    "chat-send": "送信",
-    "chat-send-placeholder": "メッセージを送信",
-    "chat-error-alert": "選択した連絡先とのチャットを開始できません",
-    "chat-error-alert-title": "失敗",
-    "chat-type-name": "名前を入力..."
+  "chat-title": "メッセージ",
+  "chat-new": "新しいメッセージ",
+  "chat-to": "宛先:",
+  "chat-send": "送信",
+  "chat-send-placeholder": "メッセージを送信",
+  "chat-error-alert": "選択した連絡先とのチャットを開始できません",
+  "chat-error-alert-title": "失敗",
+  "chat-type-name": "名前を入力..."
 }

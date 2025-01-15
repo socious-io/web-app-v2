@@ -12,16 +12,8 @@ import { usePaymentCrypto } from './usePaymentCrypto';
 import { PaymentSummary } from '../paymentSummary';
 
 export const PaymentCrypto: React.FC<PaymentCryptoProps> = ({ open, handleClose, offer }) => {
-  const {
-    disabledPayment,
-    openErrorModal,
-    errorMessage,
-    proceedCryptoPayment,
-    setOpenErrorModal,
-    isConnected,
-    openConnect,
-    unit,
-  } = usePaymentCrypto(handleClose, offer);
+  const { disabledPayment, openErrorModal, errorMessage, proceedCryptoPayment, setOpenErrorModal, unit, Web3Connect } =
+    usePaymentCrypto(handleClose, offer);
 
   const footerJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
@@ -42,7 +34,7 @@ export const PaymentCrypto: React.FC<PaymentCryptoProps> = ({ open, handleClose,
 
   const contentJsx = (
     <div className="w-full p-4 md:p-6 flex flex-col items-center gap-5">
-      {isConnected ? <Dapp.Connect /> : <ConnectButton handleClick={() => openConnect()} />}
+      <Web3Connect />
       <PaymentSummary
         currency={unit.toString()}
         amount={offer?.amount || 0}

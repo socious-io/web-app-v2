@@ -26,6 +26,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
     paymentMethodOptions,
     setSelected,
     preventArrow,
+    Web3Connect,
   } = useOrgOffer(applicant, onClose, onSuccess);
 
   const paymentMode = PROJECT_PAYMENT_MODE;
@@ -113,7 +114,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                   {isCrypto && renderfieldInfo('Your wallet', 'Connect wallet to send an offer')}
                   {isCrypto && (
                     <div className="flex justify-center my-5 z-30">
-                      <Dapp.Connect />
+                      <Web3Connect />
                     </div>
                   )}
                   <div>
