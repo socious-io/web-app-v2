@@ -15,7 +15,7 @@ const ServiceDetailHeader: React.FC<ServiceDetailHeaderProps> = ({ name, account
       <div className={styles['content']}>
         <div className={styles['content__info']}>
           {name}
-          <AvatarLabelGroup account={account} customStyle="!p-0" />
+          <AvatarLabelGroup account={account} customStyle="!p-0" avatarSize="48px" />
         </div>
         <div className={styles['content__actions']}>
           {/* <Button
