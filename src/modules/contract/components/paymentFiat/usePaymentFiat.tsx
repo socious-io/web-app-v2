@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Card, cards, hireOffer, payByOffer } from 'src/core/api';
-import { CardRadioButtonItem } from 'src/modules/general/components/cardRadioButton/cardRadioButton.types';
+import { CardRadioButtonItem } from 'src/modules/general/components/CardRadioButton/index.types';
 
 export const usePaymentFiat = (handleCloseModal: (paymentSuccess: boolean) => void, offerId?: string) => {
   const [cardOptionList, setCardOptionList] = useState<CardRadioButtonItem[]>([]);

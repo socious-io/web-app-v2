@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { contestMission, CurrentIdentity, feedbackMission, Offer } from 'src/core/api';
 import { translate } from 'src/core/utils';
-import { CardRadioButtonItem } from 'src/modules/general/components/cardRadioButton/cardRadioButton.types';
+import { CardRadioButtonItem } from 'src/modules/general/components/CardRadioButton/index.types';
 import { RootState } from 'src/store';
 import { updateFeedback } from 'src/store/reducers/contracts.reducer';
 import * as yup from 'yup';
