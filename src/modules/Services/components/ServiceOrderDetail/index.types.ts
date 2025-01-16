@@ -1,8 +1,7 @@
-import { Service } from 'src/core/adaptors';
-import { NewContractStatus } from 'src/core/api';
+import { SemanticContractStatus, Service } from 'src/core/adaptors';
 
 export type OrderStatus = {
-  status: NewContractStatus;
+  status: SemanticContractStatus;
   orderId: string;
   date: string;
 };
