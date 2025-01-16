@@ -1,0 +1,56 @@
+import { Identity, PaymentMode, ProjectPaymentType } from 'src/core/api';
+
+import { CurrencyDetail, PaginateRes } from '..';
+
+export type ContractStatus = 'CREATED' | 'SIGNED' | 'PROVIDER_CANCELED' | 'CLIENT_CANCELED' | 'APPLIED' | 'COMPLETED';
+
+export type SemanticContractStatus =
+  | 'Pending'
+  | 'Offer sent'
+  | 'Offer received'
+  | 'Awaiting confirmation'
+  | 'Payment required'
+  | 'Ongoing'
+  | 'Completed'
+  | 'Canceled'
+  | 'Withdrawn'
+  | 'Kicked out'
+  | 'Closed';
+
+export interface Contract {
+  id: string;
+  status: ContractStatus;
+  semanticStatus?: SemanticContractStatus;
+  orderId: string;
+  date: string;
+  name: string;
+  description: string;
+  price: number;
+  currency: CurrencyDetail;
+  payment: PaymentMode;
+  type?: ProjectPaymentType;
+  projectId?: string;
+  client?: Identity;
+  clientId?: string;
+  paymentId?: string;
+  provider?: Identity;
+  providerId?: string;
+  applicantId?: string;
+  offerId?: string;
+  missionId?: string;
+  partner?: Identity;
+}
+
+export type ContractRes = PaginateRes<Contract>;
+
+export interface ContractReq {
+  name: string;
+  description: string;
+  type: ProjectPaymentType;
+  price: number;
+  currency: string;
+  payment: PaymentMode;
+  projectId: string;
+  clientId: string;
+  applicantId?: string;
+}

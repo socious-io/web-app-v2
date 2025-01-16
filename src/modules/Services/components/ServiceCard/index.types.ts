@@ -1,4 +1,5 @@
-import { CurrencyDetail, PaymentMode } from 'src/core/adaptors';
+import { CurrencyDetail } from 'src/core/adaptors';
+import { PaymentMode } from 'src/core/api';
 
 export interface ServiceCardProps {
   id: string;

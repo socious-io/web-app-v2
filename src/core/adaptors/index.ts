@@ -1,5 +1,16 @@
+export * from './auth/index.adaptors';
+
 export * from './services/index.adaptors';
 export * from './services/index.types';
+
+export * from './contracts/index.adaptors';
+export * from './contracts/index.types';
+
+export interface CurrencyDetail {
+  name: string;
+  symbol?: string;
+  address?: string;
+}
 
 export interface CustomError {
   response: { data: { error: string } };
@@ -19,16 +30,6 @@ export interface PaginateRes<T> {
   limit: number;
   total: number;
   items: T[];
-}
-
-export interface OptionType {
-  value: string;
-  label: string;
-}
-
-export interface OptionType {
-  value: string;
-  label: string;
 }
 
 export interface OptionType {

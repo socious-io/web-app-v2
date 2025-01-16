@@ -2,6 +2,7 @@
   "cont-title": "契約",
   "cont-subtitle": "求人のオファーや業務を管理する",
   "cont-status": {
+    "Pending": "保留中",
     "Offer sent": "オファー送信済み",
     "Offer received": "オファー受信済み",
     "Awaiting confirmation": "確認待ち",
@@ -23,6 +24,7 @@
   "cont-decline": "辞退",
   "cont-accept": "承諾",
   "cont-offer-sent-alert": "応募者にオファーを送信しました",
+  "cont-pending-alert": "{{seller}}からの確認待ちで購入が保留されています",
   "cont-bank-account-alert": "銀行口座が必要です",
   "cont-bank-account-alert-subtitle": "このオファーを受け入れるには支払い口座を追加する必要があります",
   "cont-add-account": "支払い口座を追加",
@@ -106,5 +108,8 @@
   "cont-review-submit-msg": "レビューが正常に送信されました",
   "cont-review-submit-msg-title": "レビューが送信されました",
   "cont-review-satisfactory": "満足",
-  "cont-review-unsatisfactory": "不満"
+  "cont-review-unsatisfactory": "不満",
+  "cont-create-error": "契約を作成中にエラーが発生しました。もう一度お試しください。",
+  "cont-crypto-escrow-error": "暗号通貨の支払い中にエラーが発生しました。",
+  "cont-deposit-error": "契約のデポジット処理中にエラーが発生しました。もう一度お試しください。"
 }
