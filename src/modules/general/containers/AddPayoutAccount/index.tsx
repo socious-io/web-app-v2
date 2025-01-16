@@ -8,11 +8,15 @@ import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 
-import { AddCardModalUserProps } from './addCardModalUser.types';
-import { useAddCardModalUser } from './useAddCardModalUser';
+import { AddPayoutAccountProps } from './index.types';
+import { useAddPayoutAccount } from './useAddPayoutAccount';
 
-const AddCardModalUser: React.FC<AddCardModalUserProps> = ({ open, handleClose, offer }) => {
-  const { onSelectCountry, errorMsg, openErrorModal, setOpenErrorModal, stripeLink } = useAddCardModalUser(offer);
+const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handleClose, offer }) => {
+  const {
+    data: { stripeLink, errorMsg, openErrorModal },
+    operations: { onSelectCountry, setOpenErrorModal },
+  } = useAddPayoutAccount(offer);
+
   return (
     <>
       <Modal
@@ -21,23 +25,23 @@ const AddCardModalUser: React.FC<AddCardModalUserProps> = ({ open, handleClose, 
         icon={<FeaturedIcon iconName="credit-card-down" size="lg" type="modern" theme="gray" />}
         mobileFullHeight={false}
         headerDivider={false}
+        customStyle="md:max-w-[480px]"
       >
         <div className="flex flex-col p-4 md:p-6 gap-6">
           <div className="flex flex-col gap-1">
             <div className="font-semibold text-lg  leading-7 text-Gray-light-mode-900">
-              {translate('wallet-add-card-title')}
+              {translate('general-payout-account.title')}
             </div>
             <div className="font-normal text-sm leading-5 text-Gray-light-mode-600">
-              {translate('wallet-add-card-subtitle')}
+              {translate('general-payout-account.subtitle')}
             </div>
           </div>
           <SearchDropdown
-            placeholder="Search a country"
+            placeholder={translate('general-payout-account.country-placeholder')}
             icon="search-lg"
             options={COUNTRIES}
             isSearchable
             onChange={onSelectCountry}
-            //
           />
           <div className="flex flex-col md:flex-row-reverse gap-3 md:mt-2">
             <Button
@@ -49,10 +53,10 @@ const AddCardModalUser: React.FC<AddCardModalUserProps> = ({ open, handleClose, 
               to={stripeLink}
               target="_blank"
             >
-              {translate('wallet-continue')}
+              {translate('general-payout-account.continue')}
             </Button>
-            <Button variant="outlined" color="secondary" fullWidth onClick={handleClose}>
-              {translate('wallet-cancel')}
+            <Button variant="outlined" color="info" fullWidth onClick={handleClose}>
+              {translate('general-payout-account.cancel')}
             </Button>
           </div>
         </div>
@@ -61,7 +65,7 @@ const AddCardModalUser: React.FC<AddCardModalUserProps> = ({ open, handleClose, 
         open={openErrorModal}
         onClose={() => setOpenErrorModal(false)}
         message={errorMsg}
-        title={translate('wallet-failed')}
+        title={translate('general-payout-account.failed')}
         customIcon={<FeaturedIcon iconName="alert-circle" size="md" theme="error" type="light-circle-outlined" />}
         closeButtn={false}
         submitButton={false}
@@ -70,4 +74,4 @@ const AddCardModalUser: React.FC<AddCardModalUserProps> = ({ open, handleClose, 
   );
 };
 
-export default AddCardModalUser;
+export default AddPayoutAccount;

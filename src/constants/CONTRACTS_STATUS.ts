@@ -1,3 +1,6 @@
+import { NewContractStatus } from 'src/core/api';
+import { StatusProps } from 'src/modules/general/components/Status/index.types';
+
 export const APPLICANT_STATUS = {
   PENDING: 'PENDING',
   OFFERED: 'OFFERED',
@@ -47,3 +50,42 @@ export function getOrganizationStatusLabel(status: keyof typeof APPLICANT_STATUS
   }
   return ORGANIZATION_STATUS_DICT[status];
 }
+
+//FIXME: semantic status key for both side
+export const contractStatus: Record<NewContractStatus, StatusProps> = {
+  CREATED: {
+    label: 'Pending',
+    theme: 'warning',
+    icon: 'dot',
+  },
+  CLIENT_APPROVED: {
+    label: 'Completed',
+    theme: 'success',
+    icon: '',
+  },
+  SIGNED: {
+    label: 'Ongoing',
+    theme: 'success',
+    icon: 'dot',
+  },
+  PROVIDER_CANCELED: {
+    label: 'Canceled',
+    theme: 'secondary',
+    icon: '',
+  },
+  CLIENT_CANCELED: {
+    label: 'Canceled',
+    theme: 'secondary',
+    icon: '',
+  },
+  APPLIED: {
+    label: 'Completed',
+    theme: 'success',
+    icon: '',
+  },
+  COMPLETED: {
+    label: 'Completed',
+    theme: 'success',
+    icon: '',
+  },
+};

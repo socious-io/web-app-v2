@@ -6,7 +6,7 @@ import { UserType } from 'src/core/types';
 import { getIdentityMeta, navigateToProfile, translate } from 'src/core/utils';
 import dapp from 'src/dapp';
 import { useWeb3 } from 'src/dapp/dapp.connect';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { MenuItem } from 'src/modules/general/components/threeDotButton/threeDotButton.types';
 import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';

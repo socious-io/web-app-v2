@@ -17,7 +17,7 @@ export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = ({
 
   return (
     <div
-      className={`${nonFull} h-fit flex flex-row gap-3 py-3 px-4 ${customStyle} ${handleClick && !justAvatarClickable && 'cursor-pointer'}`}
+      className={`${nonFull} h-fit flex items-center gap-3 py-3 px-4 ${customStyle} ${handleClick && !justAvatarClickable && 'cursor-pointer'}`}
       onClick={e => !justAvatarClickable && handleClick?.(e)}
     >
       <Avatar

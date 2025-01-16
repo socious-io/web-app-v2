@@ -76,10 +76,27 @@
     "purchase": "購入",
     "more": "続きを読む",
     "order": {
+      "step-1": "注文詳細",
+      "step-2": "確認と支払い",
+      "step-3": "必要事項を提出",
       "summary": "注文概要",
       "fee": "Socious手数料",
       "total": "合計",
-      "checkout-button": "チェックアウトに進む"
+      "checkout-button": "チェックアウトに進む",
+      "confirm-button": "確認して支払う",
+      "card-header": "保存された支払いオプション",
+      "card-subheader": "カードを選択",
+      "card-new": "新しいカードを追加",
+      "wallet-header": "ウォレットを選択",
+      "status": "ステータス",
+      "number": "注文",
+      "date": "日付",
+      "success-payment": "ご購入ありがとうございます",
+      "requirements-description": "注文を送信するには必要事項を提出してください",
+      "requirements-description-placeholder": "説明を入力してください...",
+      "requirements-files": "ファイルを添付（任意）",
+      "requirements-files-desc": "最大{{max}}ファイル",
+      "send-button": "送信"
     }
   }
 }

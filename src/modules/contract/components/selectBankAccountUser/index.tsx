@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
-import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
-import { CardRadioButtonItem } from 'src/modules/general/components/cardRadioButton/cardRadioButton.types';
+import CardRadioButton from 'src/modules/general/components/CardRadioButton';
+import { CardRadioButtonItem } from 'src/modules/general/components/CardRadioButton/index.types';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
 

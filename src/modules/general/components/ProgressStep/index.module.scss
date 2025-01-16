@@ -1,0 +1,100 @@
+@import 'src/styles/constants/_primitives.scss';
+
+$icon-size: 1.5rem;
+$step-gap: 0.25rem;
+$indicator-size: 0.25rem;
+
+.container {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+
+    @media (max-width: $width-xl) {
+        flex-direction: column;
+    }
+
+    .progress {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 0.75rem;
+
+        @media (max-width: $width-xl) {
+            flex-direction: row;
+        }
+    }
+
+    .step {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: $step-gap;
+
+        @media (max-width: $width-xl) {
+            height: 3.5rem;
+            flex-direction: column;
+        }
+
+        .icon {
+            width: $icon-size;
+            height: $icon-size;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid $color-grey-600;
+            border-radius: $radius-xl;
+
+            &--active {
+                box-shadow: 0px 0px 0px 4px $color-primary-100;
+                margin: 0 0.25rem;
+
+                @media (max-width: $width-xl) {
+                    margin: 0.25rem 0;
+                }
+            }
+
+            &--inactive {
+                border-color: $color-grey-200;
+            }
+        }
+
+        .indicator {
+            flex: 1;
+            height: $indicator-size;
+            border-radius: 0.25rem;
+            background-color: $color-grey-200;
+
+            @media (max-width: $width-xl) {
+                width: calc($indicator-size / 2);
+                height: 100%;
+            }
+
+            &__before {
+                margin-left: -$step-gap;
+
+                @media (max-width: $width-xl) {
+                    margin-left: 0;
+                    margin-top: -$step-gap;
+                }
+            }
+
+            &--active {
+                background-color: $color-primary-600;
+            }
+        }
+    }
+
+    .title {
+        padding: 0 0.5rem;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        color: $color-grey-700;
+        white-space: nowrap;
+
+        &--active {
+            color: $color-primary-700;
+        }
+    }
+}

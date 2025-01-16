@@ -1,0 +1,72 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.container {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: $radius-xl;
+
+    &--primary {
+        border: 1px solid $color-primary-300;
+        background-color: $color-primary-25;
+    }
+
+    &--success {
+        border: 1px solid $color-success-300;
+        background-color: $color-success-25;
+    }
+
+    &--warning {
+        border: 1px solid $color-warning-300;
+        background-color: $color-warning-25;
+    }
+
+    &--error {
+        border: 1px solid $color-error-300;
+        background-color: $color-error-25;
+    }
+
+    &--gray {
+        border: 1px solid $color-grey-300;
+        background-color: $color-grey-25;
+    }
+
+    .header {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .title,
+    .subtitle {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+    }
+
+    .title {
+        font-weight: 600;
+
+        &--primary {
+            color: $color-primary-700;
+        }
+
+        &--success {
+            color: $color-success-700;
+        }
+
+        &--warning {
+            color: $color-warning-700;
+        }
+
+        &--error {
+            color: $color-error-700;
+        }
+
+        &--gray {
+            color: $color-grey-700;
+        }
+    }
+}

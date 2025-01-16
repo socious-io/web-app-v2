@@ -106,5 +106,8 @@
   "cont-review-submit-msg": "Your review has been successfully submitted",
   "cont-review-submit-msg-title": "Review submitted",
   "cont-review-satisfactory": "Satisfactory",
-  "cont-review-unsatisfactory": "Unsatisfactory"
+  "cont-review-unsatisfactory": "Unsatisfactory",
+  "cont-create-error": "An error occurred while creating the contract before processing the deposit. Please try again.",
+  "cont-crypto-escrow-error": "An error occurred during crypto payment.",
+  "cont-deposit-error": "An error occurred while processing the contract deposit. Please try again."
 }
