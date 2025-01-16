@@ -27,8 +27,8 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
   const { feePercentage, fee, total } = orderPayment;
   const { status, orderId, date } = orderStatus || {};
 
-  const generatePriceFormat = (price: string | number, currency: string) =>
-    `${CURRENCY_SIGNS[currency] || ''}${price} ${currency}`;
+  const generatePriceFormat = (price: number, currency: string) =>
+    `${CURRENCY_SIGNS[currency] || ''}${price.toFixed(2)} ${currency}`;
 
   return (
     <div className={styles['container']}>
@@ -66,7 +66,7 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
               {status && (
                 <div className={styles['order__label']}>
                   {translate('service-detail.order.status')}
-                  <Status {...CONTRACT_STATUS[status]} />
+                  <Status label={translate(`cont-status.${status}`)} transparent {...CONTRACT_STATUS[status]} />
                 </div>
               )}
               <div className={styles['order__label']}>
