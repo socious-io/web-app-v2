@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Service } from 'src/core/adaptors';
-import { connectionStatus, CurrentIdentity } from 'src/core/api';
+import { connectionStatus, CurrentIdentity, OrgMeta } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { RootState } from 'src/store';
 
@@ -23,7 +23,7 @@ export const useServiceDetail = () => {
     payment: service.payment,
   };
   const maxLengthDescription = isTouchDevice() ? 130 : 1150;
-  const feePercentage = 2;
+  const feePercentage = (currentIdentity?.meta as OrgMeta).verified ? 2 : 3;
   const feeCalculation = parseFloat(service.price) * (feePercentage / 100);
   const orderPayment = { feePercentage, fee: feeCalculation, total: feeCalculation + parseFloat(service.price) };
 
