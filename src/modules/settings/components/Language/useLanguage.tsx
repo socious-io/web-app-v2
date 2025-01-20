@@ -1,10 +1,10 @@
 import i18next from 'i18next';
 import { useState } from 'react';
+import useSwitchLanguage from 'src/core/hooks/useSwitchLanguage';
 import { translate } from 'src/core/utils';
 
 export const useLanguage = () => {
-  const initialLanguage = localStorage.getItem('language') || 'en';
-
+  const { switchLanguage, selectedLanguage: initialLanguage } = useSwitchLanguage();
   const getLanguageOption = lang => {
     const languageMap = {
       en: { label: translate('setting-language-labels.en'), value: 'en' },
@@ -13,22 +13,18 @@ export const useLanguage = () => {
 
     return languageMap[lang] || { label: 'English (US)', value: 'en' };
   };
-  const [selectedLanguage, setSelectedLanguage] = useState(getLanguageOption(initialLanguage));
 
-  // Save the initial state
-  const [initialState, setInitialState] = useState(getLanguageOption(initialLanguage));
+  const [unsSavedValue, setUnSavedValue] = useState(getLanguageOption(initialLanguage));
 
   const onSave = () => {
-    i18next.changeLanguage(selectedLanguage.value);
-    localStorage.setItem('language', selectedLanguage.value);
-    setInitialState(selectedLanguage);
+    switchLanguage(unsSavedValue.value);
   };
 
   // Reset the selected language to the last saved state
   const onCancel = () => {
-    setSelectedLanguage(initialState);
-    i18next.changeLanguage(initialState.value);
+    setUnSavedValue(unsSavedValue);
+    i18next.changeLanguage(unsSavedValue.value);
   };
 
-  return { onSave, onCancel, selectedLanguage, setSelectedLanguage };
+  return { onSave, onCancel, unsSavedValue, setUnSavedValue };
 };

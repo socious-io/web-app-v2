@@ -1,4 +1,6 @@
 import { NotificationType as CoreNotificationType } from 'src/core/api';
+import { LanguageOption } from 'src/core/api/settings/settings.types';
+import { translate } from 'src/core/utils';
 
 export const SocialCauses = {
   SOCIAL: 'SOCIAL',
@@ -871,5 +873,16 @@ export const NotificationSettings = [
     in_app: true,
     email: true,
     push: true,
+  },
+];
+
+export const supportedLanguages: LanguageOption[] = [
+  {
+    value: 'en',
+    label: translate('setting-language-labels.en'),
+  },
+  {
+    value: 'jp',
+    label: translate('setting-language-labels.jp'),
   },
 ];

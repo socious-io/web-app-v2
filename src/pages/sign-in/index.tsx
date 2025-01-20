@@ -7,6 +7,7 @@ import { EventsRes } from 'src/core/api';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import { SignInForm } from 'src/modules/Auth/containers/signin/SignInForm';
 import TechSummit from 'src/modules/Events/TechSummit';
+import { LanguageSwitcher } from 'src/modules/general/components/LanguageSwitcher';
 import { RootState } from 'src/store';
 
 export const SignIn = () => {
@@ -33,18 +34,23 @@ export const SignIn = () => {
   };
 
   return (
-    <div className="flex items-center h-screen">
-      <div className="flex-1">
-        <div className={`pt-12 px-4  md:pt-24 form-container`}>
-          <IntroHeader
-            title={intro[eventName]?.title || defaultIntro.title}
-            description={intro[eventName]?.description || defaultIntro.description}
-            logo={<Logo width={48} height={48} />}
-          />
-          <SignInForm event={{ id: eventId, name: eventName }} />
+    <div className="relative h-screen">
+      <div className="flex flex-col md:flex-row items-center h-full">
+        <div className="flex-1 ">
+          <div className={`pt-12 px-4 md:pt-24 form-container`}>
+            <IntroHeader
+              title={intro[eventName]?.title || defaultIntro.title}
+              description={intro[eventName]?.description || defaultIntro.description}
+              logo={<Logo width={48} height={48} />}
+            />
+            <SignInForm event={{ id: eventId, name: eventName }} />
+          </div>
         </div>
+        <div className="md:absolute md:top-8 md:left-8 md:transform-none flex justify-center">
+          <LanguageSwitcher />
+        </div>
+        {intro[eventName]?.component}
       </div>
-      {intro[eventName]?.component}
     </div>
   );
 };
