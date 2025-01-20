@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Job, Organization, search, User } from 'src/core/api';
-import { translate } from 'src/core/utils'; // Added for translations
+import { Job, Organization, search, Service, ServiceSearchRes, User, UserMeta, UsersRes } from 'src/core/api';
 import { RootState } from 'src/store';
 
 import { SearchItem, TabValue } from './SearchModal.types';
@@ -19,6 +19,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
       : []),
     { label: translate('search-modal.tabs.people'), value: 'users' as TabValue },
     { label: translate('search-modal.tabs.organizations'), value: 'organizations' as TabValue },
+    { label: 'Services', value: 'services' as TabValue },
   ];
 
   const [selectedTab, setSelectedTab] = useState<TabValue>('projects');
@@ -33,10 +34,18 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     fetchSearchResult(searchTerm);
   }, [selectedTab]);
 
+  const debouncedFetchSearchResult = _.debounce((q: string) => {
+    fetchSearchResult(q);
+  }, 500);
+
+  const handleInputChange = (q: string) => {
+    setSearchTerm(q);
+    debouncedFetchSearchResult(q);
+  };
+
   const fetchSearchResult = async (q: string) => {
     setShowNoResult(false);
     setSelectedItem(null);
-    setSearchTerm(q);
     props.setSearchText(q);
     if (q.length) {
       const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
@@ -54,7 +63,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     navigate(`/search?q=${searchTerm}&type=${selectedTab}&page=1`);
   };
 
-  const searchIntoList = (list: Array<User | Organization | Job>) => {
+  const searchIntoList = (list: Array<User | Organization | Job | ServiceSearchRes>) => {
     if (!list.length) return [];
     switch (selectedTab) {
       case 'users':
@@ -98,12 +107,25 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
             isVerified: false,
           };
         });
+      case 'services':
+        return list.map(item => {
+          const service = item as ServiceSearchRes;
+          return {
+            title: `${service.title}`,
+            username: service.identity_meta.name,
+            image: service.identity_meta.avatar || '',
+            id: service.id,
+            type: selectedTab,
+            bio: '',
+            isVerified: false,
+          };
+        });
     }
   };
   return {
     tabs,
     setSelectedTab,
-    fetchSearchResult,
+    handleInputChange,
     list,
     setSelectedItem,
     selectedItem,
