@@ -16,6 +16,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     ...(identityType === 'users' ? [{ label: 'Jobs', value: 'projects' as TabValue }] : []),
     { label: 'People', value: 'users' as TabValue },
     { label: 'Organizations', value: 'organizations' as TabValue },
+    { label: 'Services', value: 'services' as TabValue },
   ];
 
   const [selectedTab, setSelectedTab] = useState<TabValue>('projects');
@@ -35,8 +36,11 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     setSelectedItem(null);
     setSearchTerm(q);
     props.setSearchText(q);
+    console.log(selectedTab);
     if (q.length) {
-      const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
+      const filter = selectedTab === 'services' ? { kind: 'SERVICE' } : {};
+      const type = selectedTab === 'services' ? 'projects' : selectedTab;
+      const result = await search({ type, q, filter }, { page: 1, limit: 20 });
       setList(searchIntoList(result.items));
       if (q && result.items.length === 0) setShowNoResult(true);
     }
@@ -89,6 +93,20 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
             title: `${projectItem.title}`,
             username: projectItem.identity_meta.name,
             image: projectItem.identity_meta.image || '',
+            id: projectItem.id,
+            type: selectedTab,
+            bio: '',
+            isVerified: false,
+          };
+        });
+      case 'services':
+        console.log(list);
+        return list.map(item => {
+          const projectItem = item as Job;
+          return {
+            title: `${projectItem.title}`,
+            username: projectItem.identity_meta.name,
+            image: projectItem.identity_meta.avatar || '',
             id: projectItem.id,
             type: selectedTab,
             bio: '',
