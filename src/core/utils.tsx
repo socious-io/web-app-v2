@@ -2,7 +2,7 @@ import { t } from 'i18next';
 
 export const translate = t;
 
-import { Credential, Identity, OrgMeta, Organization, User, UserMeta } from './api';
+import { Credential, Identity, OrgMeta, Organization, SearchReq, User, UserMeta } from './api';
 import { UserType } from './types';
 
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
@@ -195,4 +195,12 @@ export const checkSearchFilters = (
   });
 
   return authorizedFilters;
+};
+
+export const addServiceToSearchPayload = (payload: SearchReq) => {
+  if (payload.type === 'services') {
+    const newPayload: SearchReq = { ...payload, type: 'projects', filter: { ...payload.filter, kind: 'SERVICE' } };
+    return newPayload;
+  }
+  return payload;
 };

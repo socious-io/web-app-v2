@@ -9,9 +9,9 @@ export interface ServiceCardProps {
   skills: string[];
   delivery: string;
   payment: PaymentMode;
-  price: string;
+  price?: string;
   currency: CurrencyDetail;
   myProfile: boolean;
   onCardClick: (serviceId: string) => void;
-  onActions: (actionName: 'duplicate' | 'delete' | 'edit', serviceId: string) => void;
+  onActions?: (actionName: 'duplicate' | 'delete' | 'edit', serviceId: string) => void;
 }

@@ -2,7 +2,7 @@ import { CredentialStatus, PaginateRes } from 'src/core/api';
 import { UserType } from 'src/core/types';
 
 export interface SearchReq {
-  type: 'projects' | 'users' | 'posts' | 'organizations' | 'applicants';
+  type: 'projects' | 'users' | 'posts' | 'organizations' | 'applicants' | 'services';
   q: string;
   filter: any;
 }

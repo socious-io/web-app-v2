@@ -152,24 +152,28 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
       </div>
     );
   };
-
+  const renderServicesFilters = () => {
+    return <>services filter </>;
+  };
   return (
     <>
       <div className="h-auto py-6">
-        <div className="pb-4">
-          <MultiSelect
-            id="social-causes"
-            searchTitle={translate('filter-slider.socialCauses')}
-            max={5}
-            maxLabel=""
-            items={causesItems}
-            componentValue={filters.causes}
-            setComponentValue={value => onSelectMultiSelect('causes', value)}
-            customHeight="135px"
-            popularLabel={false}
-            displayDefaultBadges={false}
-          />
-        </div>
+        {type !== 'services' && (
+          <div className="pb-4">
+            <MultiSelect
+              id="social-causes"
+              searchTitle="Social causes"
+              max={5}
+              maxLabel=""
+              items={causesItems}
+              componentValue={filters.causes}
+              setComponentValue={value => onSelectMultiSelect('causes', value)}
+              customHeight="135px"
+              popularLabel={false}
+              displayDefaultBadges={false}
+            />
+          </div>
+        )}
         {type !== 'organization' && (
           <div>
             <MultiSelect
@@ -192,6 +196,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
         {type === 'organization' && renderOrganizationFilters()}
         {type === 'jobs' && renderJobFilters()}
         {type === 'people' && renderPeopleFilters()}
+        {type === 'services' && renderServicesFilters()}
       </div>
       <div className="flex justify-end items-center sticky bottom-0 p-4 bg-Base-White border-t border-0 border-solid border-Gray-light-mode-200 text-Brand-700 font-semibold m-[-24px]">
         <div className="flex flex-row gap-2 w-1/2">
