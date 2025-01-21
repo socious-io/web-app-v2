@@ -38,9 +38,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     props.setSearchText(q);
     console.log(selectedTab);
     if (q.length) {
-      const filter = selectedTab === 'services' ? { kind: 'SERVICE' } : {};
-      const type = selectedTab === 'services' ? 'projects' : selectedTab;
-      const result = await search({ type, q, filter }, { page: 1, limit: 20 });
+      const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
       setList(searchIntoList(result.items));
       if (q && result.items.length === 0) setShowNoResult(true);
     }

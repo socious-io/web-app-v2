@@ -1,12 +1,13 @@
 import { MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { Job, JobsRes, Organization, OrganizationsRes, User, UsersRes } from 'src/core/api';
+import { Job, JobsRes, Organization, OrganizationsRes, Service, User, UsersRes } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
 import { JobListingCard } from 'src/modules/Jobs/components/JobListingCard';
 import { SearchResultProfile } from 'src/modules/Search/components/searchResultProfile';
+import { ServiceResult } from 'src/modules/Search/components/ServiceResult';
 
 export type FilterReq = {
   causes_tags?: Array<string>;
@@ -73,9 +74,11 @@ export const useSearch = () => {
 
   const fetchMore = async () => {
     try {
+      const updatedType = type === 'services' ? 'projects' : type;
+      const updatedFilter = type === 'services' ? { ...filter, kind: 'SERVICE' } : filter;
       const body = {
-        filter: filter ? removeValuesFromObject(filterNeeded(filter), ['', null, undefined]) : {},
-        type,
+        filter: updatedFilter ? removeValuesFromObject(filterNeeded(filter), ['', null, undefined]) : {},
+        type: updatedType,
       } as any;
       if (q?.trim()) {
         Object.assign(body, { q });
@@ -118,6 +121,7 @@ export const useSearch = () => {
 
   const readableType = useMemo(() => {
     if (type === 'projects') return { title: 'jobs', type: 'jobs' };
+    if (type === 'services') return { title: 'services', type: 'services' };
     if (type === 'users') {
       if (filter.events?.length) return { title: 'event attendees', type: 'people' };
       return { title: 'people', type: 'people' };
@@ -142,13 +146,16 @@ export const useSearch = () => {
   };
 
   const card = useCallback(
-    (item: Job | Organization | User, index: number) => {
+    (item: Job | Organization | User | Service, index: number) => {
       if (type && ['users', 'organizations'].includes(type)) {
         return (
           <div onClick={e => handleNavigate(e, item as Organization | User)} className="cursor-pointer">
             <SearchResultProfile identity={item as User | Organization} />
           </div>
         );
+      }
+      if (type && ['services'].includes(type)) {
+        return <ServiceResult service={item as Service} />;
       }
       return <JobListingCard job={item as Job} page={page} scrollIndex={index} />;
     },

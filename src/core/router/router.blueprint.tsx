@@ -563,14 +563,21 @@ export const blueprint: RouteObject[] = [
                     | 'projects'
                     | 'users'
                     | 'posts'
-                    | 'organizations';
+                    | 'organizations'
+                    | 'service';
 
                   localStorage.setItem('type', type || 'projects');
                   localStorage.setItem('searchTerm', q || '');
                   localStorage.setItem('navigateToSearch', 'true');
+                  console.log('service si ', type);
+                  const typeWithService = type === 'service' ? 'projects' : type;
+                  const filterWithService = type === 'service' ? { kind: 'SERVICE' } : {};
                   const body = {
-                    filter: checkSearchFilters(type || 'projects', JSON.parse(localStorage.getItem('filter') || '{}')),
-                    type,
+                    filter: {
+                      ...checkSearchFilters(type || 'projects', JSON.parse(localStorage.getItem('filter') || '{}')),
+                      ...filterWithService,
+                    },
+                    type: typeWithService,
                     q,
                   };
                   // if (q?.trim()) {

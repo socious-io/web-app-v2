@@ -21,7 +21,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   onCardClick,
   onActions,
 }) => {
-  const actionsJSX = (
+  const actionsJSX = onActions && (
     <>
       <Button
         variant="text"
@@ -80,18 +80,20 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             <Icon name="hourglass-03" fontSize={20} color={variables.color_grey_700} />
             {delivery} {translate('service-card.delivery')}
           </div>
-          <span className={styles['content__price']}>
-            {payment === 'FIAT' ? (
-              <Icon
-                name={`currency-${currency.name === 'USD' ? 'dollar' : 'yen'}-circle`}
-                fontSize={20}
-                color={variables.color_grey_700}
-              />
-            ) : (
-              <img src={`/icons/crypto/${currency.symbol}.svg`} width={20} alt={currency.name} />
-            )}
-            {price} {currency.name}
-          </span>
+          {price && (
+            <span className={styles['content__price']}>
+              {payment === 'FIAT' ? (
+                <Icon
+                  name={`currency-${currency.name === 'USD' ? 'dollar' : 'yen'}-circle`}
+                  fontSize={20}
+                  color={variables.color_grey_700}
+                />
+              ) : (
+                <img src={`/icons/crypto/${currency.symbol}.svg`} width={20} alt={currency.name} />
+              )}
+              {price} {currency.name}
+            </span>
+          )}
         </div>
       </div>
       {myProfile && <div className={`${styles['content__actions']} flex md:hidden`}>{actionsJSX}</div>}

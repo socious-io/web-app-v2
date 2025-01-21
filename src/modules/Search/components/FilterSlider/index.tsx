@@ -172,24 +172,28 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
       </div>
     );
   };
-
+  const renderServicesFilters = () => {
+    return <>services filter </>;
+  };
   return (
     <>
       <div className="h-auto py-6">
-        <div className="pb-4">
-          <MultiSelect
-            id="social-causes"
-            searchTitle="Social causes"
-            max={5}
-            maxLabel=""
-            items={causesItems}
-            componentValue={filters.causes}
-            setComponentValue={value => onSelectMultiSelect('causes', value)}
-            customHeight="135px"
-            popularLabel={false}
-            displayDefaultBadges={false}
-          />
-        </div>
+        {type !== 'services' && (
+          <div className="pb-4">
+            <MultiSelect
+              id="social-causes"
+              searchTitle="Social causes"
+              max={5}
+              maxLabel=""
+              items={causesItems}
+              componentValue={filters.causes}
+              setComponentValue={value => onSelectMultiSelect('causes', value)}
+              customHeight="135px"
+              popularLabel={false}
+              displayDefaultBadges={false}
+            />
+          </div>
+        )}
         {type !== 'organization' && (
           <div>
             <MultiSelect
@@ -221,6 +225,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
         {type === 'organization' && renderOrganizationFilters()}
         {type === 'jobs' && renderJobFilters()}
         {type === 'people' && renderPeopleFilters()}
+        {type === 'services' && renderServicesFilters()}
       </div>
       <div
         className="flex justify-end items-center sticky bottom-0 p-4
