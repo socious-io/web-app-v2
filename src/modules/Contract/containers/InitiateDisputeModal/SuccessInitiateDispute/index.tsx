@@ -1,5 +1,4 @@
 import { Slide, SlideProps } from '@mui/material';
-import React from 'react';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { FeaturedIconOutlined } from 'src/modules/general/components/featuredIconOutlined';
 import CustomSnackbar from 'src/modules/general/components/Snackbar';

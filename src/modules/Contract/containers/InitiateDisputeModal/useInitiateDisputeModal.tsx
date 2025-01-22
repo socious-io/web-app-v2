@@ -66,9 +66,7 @@ export const useInitiateDisputeModal = (
 
   useEffect(() => initializeValues(), [open]);
 
-  const onSelectCategory = value => {
-    setValue('category', value);
-  };
+  const onSelectCategory = value => setValue('category', value);
 
   const handleUpload = (uploadedFile: PostMediaUploadRes[]) => {
     clearErrors('evidences');
@@ -107,14 +105,12 @@ export const useInitiateDisputeModal = (
           respondDate: formatDateToCustomUTC(addDaysToDate(created_at, WAIT_TO_RESPOND_DAYS)),
         });
       } catch (e) {
-        console.log('error in initiating dispute', e);
+        console.log('Error in initiating dispute', e);
       }
     }
   };
 
-  const backToPreviousStep = () => {
-    setStep(prev => prev - 1);
-  };
+  const backToPreviousStep = () => setStep(prev => prev - 1);
 
   return {
     data: { register, errors, files, showFiles, step, category, openSuccessModal },
