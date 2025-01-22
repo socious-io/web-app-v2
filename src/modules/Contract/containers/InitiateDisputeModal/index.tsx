@@ -1,4 +1,3 @@
-import React from 'react';
 import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
 import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
@@ -12,7 +11,7 @@ import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import { InitiateDisputeModalProps } from './index.types';
-import SuccessInitiateDispute from './successInitiateDispute';
+import SuccessInitiateDispute from './SuccessInitiateDispute';
 import { useInitiateDisputeModal } from './useInitiateDisputeModal';
 
 const InitiateDisputeModal: React.FC<InitiateDisputeModalProps> = ({ open, handleClose, respondentId, missionId }) => {
