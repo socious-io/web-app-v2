@@ -106,5 +106,8 @@
   "cont-review-submit-msg": "レビューが正常に送信されました",
   "cont-review-submit-msg-title": "レビューが送信されました",
   "cont-review-satisfactory": "満足",
-  "cont-review-unsatisfactory": "不満"
+  "cont-review-unsatisfactory": "不満",
+  "cont-create-error": "契約を作成中にエラーが発生しました。もう一度お試しください。",
+  "cont-crypto-escrow-error": "暗号通貨の支払い中にエラーが発生しました。",
+  "cont-deposit-error": "契約のデポジット処理中にエラーが発生しました。もう一度お試しください。"
 }

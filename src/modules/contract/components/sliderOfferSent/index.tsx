@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Contract, CurrentIdentity, cancelOffer } from 'src/core/api';
 import { translate } from 'src/core/utils';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { RootState } from 'src/store';
 import { updateStatus } from 'src/store/reducers/contracts.reducer';
@@ -48,7 +48,12 @@ export const SliderOfferSent: React.FC<SliderSentOfferProps> = ({ contract, disa
         </Button>
       </div>
 
-      <AlertMessage theme="gray" iconName="check-circle" title={translate('cont-offer-sent-alert')} subtitle="" />
+      <AlertMessage
+        theme="gray"
+        iconName="check-circle"
+        title={translate('cont-offer-sent-alert')}
+        containerClassName="!items-center"
+      />
     </div>
   );
 };

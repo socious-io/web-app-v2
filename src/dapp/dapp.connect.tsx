@@ -85,7 +85,7 @@ export const useWeb3 = () => {
 
     useEffect(() => {
       setConnected(isConnected);
-      setAccount(account);
+      setAccount(address);
 
       if (isConnected && connector?.getChainId && !chainId) updateProvider();
     }, [isConnected, address, connector]);

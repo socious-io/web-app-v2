@@ -1,13 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import {
-  Applicant,
-  PaymentService,
-  ProjectPaymentSchemeType,
-  ProjectPaymentType,
-  offerByApplicant,
-} from 'src/core/api';
+import { Applicant, ProjectPaymentType, offerByApplicant } from 'src/core/api';
 import { removeValuesFromObject } from 'src/core/utils';
 import Dapp from 'src/dapp';
 import * as yup from 'yup';

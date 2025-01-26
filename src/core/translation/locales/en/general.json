@@ -9,5 +9,13 @@
     "or": "or",
     "max": "max"
   },
-  "general-copy": "Copy"
+  "general-copy": "Copy",
+  "general-payout-account": {
+    "title": "Add a payout account",
+    "subtitle": "Socious partners with Stripe for transactions payments. By selecting continue you will be directed to Stripe’s website.",
+    "country-placeholder": "Search a country",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "failed": "Failed"
+  }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'src/core/utils';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 
 interface SliderCanceledProps {
@@ -19,7 +19,7 @@ export const SliderDefault: React.FC<SliderCanceledProps> = ({ alertMessage, dis
           </Button>
         )}
       </div>
-      <AlertMessage theme="gray" iconName="alert-circle" title={alertMessage} subtitle="" />
+      <AlertMessage theme="gray" iconName="alert-circle" title={alertMessage} containerClassName="!items-center" />
     </div>
   );
 };

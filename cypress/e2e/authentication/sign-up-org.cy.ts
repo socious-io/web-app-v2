@@ -89,7 +89,7 @@ describe('Sign up', () => {
   it('it should check the sign up process for organization user', () => {
     //Approach the sign-up page
     cy.visit(`${APP_URL}/intro`);
-    cy.contains('div', 'I am hiring purpose-driven talent').parent().parent().click();
+    cy.contains('div', 'I am hiring purpose-driven talent').parent().click();
     cy.contains('button', 'Continue').click();
 
     // Fill in the random email address, continue and check the route

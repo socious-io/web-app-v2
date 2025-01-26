@@ -1,11 +1,11 @@
 import React from 'react';
 import { Contract } from 'src/core/api';
 import { translate } from 'src/core/utils';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
+import AddPayoutAccount from 'src/modules/general/containers/AddPayoutAccount';
 
 import { useSliderOfferReceived } from './useSliderOfferReceived';
-import AddCardModalUser from '../addCardModalUser';
 import { SelectBankAccountUser } from '../selectBankAccountUser';
 import { WalletModal } from '../walletModal';
 
@@ -61,14 +61,11 @@ export const SliderOfferReceived: React.FC<SliderOfferReceivedProps> = ({
           </AlertMessage>
         )}
       </div>
-
-      {openModal?.name === 'addCard' && openModal.open && (
-        <AddCardModalUser
-          offer={contract}
-          open={openModal?.name === 'addCard' && openModal.open}
-          handleClose={() => setOpenModal({ name: 'addCard', open: false })}
-        />
-      )}
+      <AddPayoutAccount
+        open={openModal?.name === 'addCard' && openModal.open}
+        handleClose={() => setOpenModal({ name: 'addCard', open: false })}
+        offer={contract}
+      />
       {openModal?.name === 'selectCard' && openModal.open && (
         <SelectBankAccountUser
           open={openModal?.name === 'selectCard' && openModal.open}

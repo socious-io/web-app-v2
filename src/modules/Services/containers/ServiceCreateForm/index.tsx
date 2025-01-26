@@ -3,14 +3,14 @@ import { translate } from 'src/core/utils';
 import Dapp from 'src/dapp';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
-import { FileUploader } from 'src/modules/general/components/FileUploader';
+import FileUploader from 'src/modules/general/components/FileUploader';
 import { Input } from 'src/modules/general/components/input/input';
 import MultiSelect from 'src/modules/general/components/multiSelect/multiSelect';
 import { RadioGroup } from 'src/modules/general/components/RadioGroup';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import AddPayoutAccount from 'src/modules/general/containers/AddPayoutAccount';
 import ConfirmModal from 'src/modules/general/containers/ConfirmModal';
 import ServiceCreateHeader from 'src/modules/Services/components/ServiceCreateHeader';
-import { AddPayoutAccount } from 'src/modules/wallet/components/addPayoutAccount';
 import { ConnectButton } from 'src/modules/wallet/components/connectButton';
 import variables from 'src/styles/constants/_exports.module.scss';
 
