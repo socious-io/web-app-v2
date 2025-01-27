@@ -20,7 +20,6 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
   const [rejected, setRejected] = useState<ApplicantsRes>(initialVal);
   const [offered, setOffered] = useState<ApplicantsRes>(initialVal);
   const [refetch, setRefetch] = useState(false);
-
   const overviewJSX = () => {
     return (
       <div className="flex flex-col md:flex-row gap-8 md:gap-16">
@@ -44,7 +43,7 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
   }, []);
 
   const tabs = useMemo(() => {
-    const applicantsCount = pending.items;
+    const applicantsCount = pending.total_count;
     return [
       {
         label: 'Overview',
@@ -54,9 +53,9 @@ export const useJobDetailTabs = (jobDetail: Job, isUser: boolean) => {
         label: (
           <>
             Applicants
-            {!!applicantsCount.length && (
+            {!!applicantsCount && (
               <div className="ml-2 hidden md:block">
-                <Badge content={applicantsCount.length.toString()} />
+                <Badge content={applicantsCount.toString()} />
               </div>
             )}
           </>
