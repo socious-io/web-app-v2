@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Job, Organization, search, User, UserMeta, UsersRes } from 'src/core/api';
@@ -31,12 +32,19 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     fetchSearchResult(searchTerm);
   }, [selectedTab]);
 
+  const debouncedFetchSearchResult = _.debounce((q: string) => {
+    fetchSearchResult(q);
+  }, 500);
+
+  const handleInputChange = (q: string) => {
+    setSearchTerm(q);
+    debouncedFetchSearchResult(q);
+  };
+
   const fetchSearchResult = async (q: string) => {
     setShowNoResult(false);
     setSelectedItem(null);
-    setSearchTerm(q);
     props.setSearchText(q);
-    console.log(selectedTab);
     if (q.length) {
       const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
       setList(searchIntoList(result.items));
@@ -98,7 +106,6 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
           };
         });
       case 'services':
-        console.log(list);
         return list.map(item => {
           const projectItem = item as Job;
           return {
@@ -116,7 +123,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
   return {
     tabs,
     setSelectedTab,
-    fetchSearchResult,
+    handleInputChange,
     list,
     setSelectedItem,
     selectedItem,

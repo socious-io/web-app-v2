@@ -158,7 +158,7 @@ export const navigateToProfile = (username: string, type: UserType) => {
 };
 
 export const checkSearchFilters = (
-  type: 'organizations' | 'projects' | 'users' | 'posts',
+  type: 'organizations' | 'projects' | 'users' | 'posts' | 'services',
   filter: Record<string, any>,
 ) => {
   let authorizedKeys: string[] = [];
@@ -185,6 +185,8 @@ export const checkSearchFilters = (
     case 'posts':
       authorizedKeys = ['causes_tags', 'hashtags', 'identity_tags', 'identity_id'];
       break;
+    case 'services':
+      authorizedKeys = ['city', 'country', 'job_category_id', 'project_length', 'remote_preference', 'skills'];
   }
 
   const authorizedFilters: Record<string, any> = {};
