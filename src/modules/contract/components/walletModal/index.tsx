@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { updateWallet } from 'src/core/api';
 import { translate } from 'src/core/utils';
 import Dapp from 'src/dapp';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
-import { ConnectButton } from 'src/modules/wallet/components/connectButton';
 
 import { WalletModalProps } from './walletModal.types';
 

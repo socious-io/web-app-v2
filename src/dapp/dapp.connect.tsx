@@ -3,11 +3,11 @@ import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit
 import { metaMaskWallet, walletConnectWallet, trustWallet, ledgerWallet } from '@rainbow-me/rainbowkit/wallets';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { BrowserProvider, Eip1193Provider, JsonRpcSigner } from 'ethers';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { config } from 'src/config';
-import { ConnectButton } from 'src/modules/wallet/components/connectButton';
+import ConnectButton from 'src/modules/wallet/components/ConnectButton';
 import { Chain } from 'viem';
-import { useConnectors, useChainId, useAccount, WagmiProvider, createConfig, http } from 'wagmi';
+import { useAccount, WagmiProvider, createConfig, http } from 'wagmi';
 
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
@@ -62,14 +62,13 @@ const RainbowKitWrapper = ({ children }) => {
 };
 
 export const useWeb3 = () => {
+  // const connectors = useConnectors()
+  // const { walletProvider } = /useWeb3ModalProvider();
   const [provider, setProvider] = useState<BrowserProvider>();
   const [connected, setConnected] = useState<boolean>(false);
   const [account, setAccount] = useState<string>();
   const [chainId, setChainId] = useState<number>(0);
-  // const connectors = useConnectors()
-  // const { address, isConnected } = useAccount();
   const [signer, setSigner] = useState<JsonRpcSigner>();
-  // const { walletProvider } = /useWeb3ModalProvider();
 
   const Button: React.FC = () => {
     const { address, isConnected, connector } = useAccount();

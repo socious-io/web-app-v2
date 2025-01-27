@@ -1,11 +1,9 @@
 import React from 'react';
 import { translate } from 'src/core/utils';
-import Dapp from 'src/dapp';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
-import { ConnectButton } from 'src/modules/wallet/components/connectButton';
 
 import { PaymentCryptoProps } from './paymentCrypto.types';
 import { usePaymentCrypto } from './usePaymentCrypto';

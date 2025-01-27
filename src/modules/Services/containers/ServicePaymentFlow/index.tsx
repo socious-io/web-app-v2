@@ -104,7 +104,9 @@ const ServicePaymentFlow = () => {
               />
             </>
           ) : (
-            <Web3Connect />
+            <div className="self-center">
+              <Web3Connect />
+            </div>
           )}
         </div>
       </>
