@@ -1,13 +1,14 @@
 import { MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
+import { searchServiceMapper } from 'src/core/adaptors';
 import { Job, JobsRes, Organization, OrganizationsRes, Service, User, UsersRes } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
 import { JobListingCard } from 'src/modules/Jobs/components/JobListingCard';
 import { SearchResultProfile } from 'src/modules/Search/components/searchResultProfile';
-import { ServiceResult } from 'src/modules/Search/components/ServiceResult';
+import ServiceCard from 'src/modules/Services/components/ServiceCard';
 
 export type FilterReq = {
   causes_tags?: Array<string>;
@@ -74,11 +75,9 @@ export const useSearch = () => {
 
   const fetchMore = async () => {
     try {
-      const updatedType = type === 'services' ? 'projects' : type;
-      const updatedFilter = type === 'services' ? { ...filter, kind: 'SERVICE' } : filter;
       const body = {
-        filter: updatedFilter ? removeValuesFromObject(filterNeeded(filter), ['', null, undefined]) : {},
-        type: updatedType,
+        filter: filter ? removeValuesFromObject(filterNeeded(filter), ['', null, undefined]) : {},
+        type,
       } as any;
       if (q?.trim()) {
         Object.assign(body, { q });
@@ -155,7 +154,7 @@ export const useSearch = () => {
         );
       }
       if (type && ['services'].includes(type)) {
-        return <ServiceResult service={item as Service} />;
+        return <ServiceCard {...searchServiceMapper(item)} onCardClick={() => navigate(`/services/${item.id}`)} />;
       }
       return <JobListingCard job={item as Job} page={page} scrollIndex={index} />;
     },

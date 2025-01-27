@@ -22,7 +22,7 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
         path = `/profile/organizations/${item.username}/view`;
         break;
       case 'services':
-        path = `/profile/organizations/${item.username}/view`;
+        path = `/services/${item.id}`;
         break;
       default:
         path = `/profile/users/${item.username}/view`;

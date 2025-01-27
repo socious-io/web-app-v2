@@ -17,7 +17,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
   const {
     tabs,
     setSelectedTab,
-    fetchSearchResult,
+    handleInputChange,
     list,
     selectedItem,
     searchTerm,
@@ -61,7 +61,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
           <div className={css.searchInput}>
             <SearchInput
               value={searchTerm}
-              onChange={fetchSearchResult}
+              onChange={handleInputChange}
               onEnter={navigateFullSearch}
               onEscape={onClose}
               placeholder={translate('search-modal.placeholder')}

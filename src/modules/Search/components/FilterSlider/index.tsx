@@ -153,7 +153,52 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
     );
   };
   const renderServicesFilters = () => {
-    return <>services filter </>;
+    return (
+      <div className="flex flex-col gap-6">
+        <SearchDropdown
+          id="location"
+          label="Location"
+          isAsync
+          value={filters.location}
+          loadOptions={searchCities}
+          isClearable={!!filters.location?.value}
+          icon="search-lg"
+          hasDropdownIcon={!filters.location?.value}
+          placeholder="Select a location"
+          onChange={onSelectCity}
+        />
+        <SearchDropdown
+          id="preference"
+          label="Remote preference"
+          value={filters.preference}
+          options={PROJECT_REMOTE_PREFERENCES_V2}
+          isSearchable
+          icon="search-lg"
+          hasDropdownIcon={true}
+          onChange={value => onSelectSearchDropdown('preference', value)}
+        />
+
+        <SearchDropdown
+          id="service-category"
+          label="Service category"
+          value={filters.jobCategory}
+          options={categoriesList}
+          isSearchable
+          icon="search-lg"
+          hasDropdownIcon={true}
+          placeholder="Select a category"
+          onChange={value => onSelectSearchDropdown('jobCategory', value)}
+        />
+
+        <CheckboxGroup
+          id="service-length"
+          label="Service length"
+          items={PROJECT_LENGTH_V2}
+          selectedItems={filters.jobLength}
+          onChange={value => onSelectCheckboxs('jobLength', value)}
+        />
+      </div>
+    );
   };
   return (
     <>
