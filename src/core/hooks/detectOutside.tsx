@@ -4,7 +4,12 @@ const useDetectOutside = (ref, onClick: () => void) => {
   useEffect(() => {
     function handleClickOutside(event) {
       const ignoreClick = document.querySelector('[data-ignore-outside-click="true"]');
-      if (ref.current && !ref.current.contains(event.target) && !ignoreClick) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !event.target.closest('[aria-modal="true"][role="dialog"]') &&
+        !ignoreClick
+      ) {
         onClick();
       }
     }

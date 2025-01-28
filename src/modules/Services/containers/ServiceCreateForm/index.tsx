@@ -1,6 +1,5 @@
 import { OptionType } from 'src/core/adaptors';
 import { translate } from 'src/core/utils';
-import Dapp from 'src/dapp';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import FileUploader from 'src/modules/general/components/FileUploader';
@@ -11,7 +10,6 @@ import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import AddPayoutAccount from 'src/modules/general/containers/AddPayoutAccount';
 import ConfirmModal from 'src/modules/general/containers/ConfirmModal';
 import ServiceCreateHeader from 'src/modules/Services/components/ServiceCreateHeader';
-import { ConnectButton } from 'src/modules/wallet/components/connectButton';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import styles from './index.module.scss';
@@ -22,7 +20,6 @@ const ServiceCreateForm = () => {
     data: {
       openModal,
       isEdit,
-      isConnected,
       categories,
       serviceLength,
       paymentModes,
@@ -83,7 +80,7 @@ const ServiceCreateForm = () => {
         </div>
         <div className={styles['row__right']}>
           <>
-            <div className={styles['dapp']}>
+            <div className="flex-1">
               <Web3Connect />
             </div>
             <Input

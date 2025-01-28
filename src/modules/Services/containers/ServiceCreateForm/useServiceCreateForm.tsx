@@ -228,7 +228,6 @@ export const useServiceCreateForm = () => {
     data: {
       openModal,
       isEdit,
-      isConnected,
       categories,
       serviceLength,
       paymentModes,

@@ -1,12 +1,10 @@
 import { Divider } from '@mui/material';
 import { translate } from 'src/core/utils';
-import dapp from 'src/dapp';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import AddPayoutAccount from 'src/modules/general/containers/AddPayoutAccount';
 
 import { useAssets } from './useAssets';
-import { ConnectButton } from '../connectButton';
 import { StripeAccountItem } from '../stripeAccountItem';
 
 export const Assets = () => {

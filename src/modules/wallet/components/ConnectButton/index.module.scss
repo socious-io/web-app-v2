@@ -1,0 +1,24 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.chain,
+.account {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 16px;
+    font-weight: 600;
+    color: $color-grey-600;
+    cursor: pointer;
+}
+
+.account {
+    flex: 1;
+    color: $color-grey-400;
+    border-left: 1px solid $color-grey-300;
+    padding-left: 0.75rem;
+
+    &__balance {
+        color: $color-grey-300;
+    }
+}
