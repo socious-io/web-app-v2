@@ -172,24 +172,73 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
       </div>
     );
   };
+  const renderServicesFilters = () => {
+    return (
+      <div className="flex flex-col gap-6">
+        <SearchDropdown
+          id="location"
+          label="Location"
+          isAsync
+          value={filters.location}
+          loadOptions={searchCities}
+          isClearable={!!filters.location?.value}
+          icon="search-lg"
+          hasDropdownIcon={!filters.location?.value}
+          placeholder="Select a location"
+          onChange={onSelectCity}
+        />
+        <SearchDropdown
+          id="preference"
+          label="Remote preference"
+          value={filters.preference}
+          options={PROJECT_REMOTE_PREFERENCES_V2}
+          isSearchable
+          icon="search-lg"
+          hasDropdownIcon={true}
+          onChange={value => onSelectSearchDropdown('preference', value)}
+        />
 
+        <SearchDropdown
+          id="service-category"
+          label="Service category"
+          value={filters.jobCategory}
+          options={categoriesList}
+          isSearchable
+          icon="search-lg"
+          hasDropdownIcon={true}
+          placeholder="Select a category"
+          onChange={value => onSelectSearchDropdown('jobCategory', value)}
+        />
+
+        <CheckboxGroup
+          id="service-length"
+          label="Service length"
+          items={PROJECT_LENGTH_V2}
+          selectedItems={filters.jobLength}
+          onChange={value => onSelectCheckboxs('jobLength', value)}
+        />
+      </div>
+    );
+  };
   return (
     <>
       <div className="h-auto py-6">
-        <div className="pb-4">
-          <MultiSelect
-            id="social-causes"
-            searchTitle="Social causes"
-            max={5}
-            maxLabel=""
-            items={causesItems}
-            componentValue={filters.causes}
-            setComponentValue={value => onSelectMultiSelect('causes', value)}
-            customHeight="135px"
-            popularLabel={false}
-            displayDefaultBadges={false}
-          />
-        </div>
+        {type !== 'services' && (
+          <div className="pb-4">
+            <MultiSelect
+              id="social-causes"
+              searchTitle="Social causes"
+              max={5}
+              maxLabel=""
+              items={causesItems}
+              componentValue={filters.causes}
+              setComponentValue={value => onSelectMultiSelect('causes', value)}
+              customHeight="135px"
+              popularLabel={false}
+              displayDefaultBadges={false}
+            />
+          </div>
+        )}
         {type !== 'organization' && (
           <div>
             <MultiSelect
@@ -221,6 +270,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
         {type === 'organization' && renderOrganizationFilters()}
         {type === 'jobs' && renderJobFilters()}
         {type === 'people' && renderPeopleFilters()}
+        {type === 'services' && renderServicesFilters()}
       </div>
       <div
         className="flex justify-end items-center sticky bottom-0 p-4

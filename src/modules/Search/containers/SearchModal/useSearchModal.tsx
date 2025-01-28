@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Job, Organization, search, User, UserMeta, UsersRes } from 'src/core/api';
@@ -16,6 +17,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     ...(identityType === 'users' ? [{ label: 'Jobs', value: 'projects' as TabValue }] : []),
     { label: 'People', value: 'users' as TabValue },
     { label: 'Organizations', value: 'organizations' as TabValue },
+    { label: 'Services', value: 'services' as TabValue },
   ];
 
   const [selectedTab, setSelectedTab] = useState<TabValue>('projects');
@@ -30,10 +32,18 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     fetchSearchResult(searchTerm);
   }, [selectedTab]);
 
+  const debouncedFetchSearchResult = _.debounce((q: string) => {
+    fetchSearchResult(q);
+  }, 500);
+
+  const handleInputChange = (q: string) => {
+    setSearchTerm(q);
+    debouncedFetchSearchResult(q);
+  };
+
   const fetchSearchResult = async (q: string) => {
     setShowNoResult(false);
     setSelectedItem(null);
-    setSearchTerm(q);
     props.setSearchText(q);
     if (q.length) {
       const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
@@ -95,12 +105,25 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
             isVerified: false,
           };
         });
+      case 'services':
+        return list.map(item => {
+          const projectItem = item as Job;
+          return {
+            title: `${projectItem.title}`,
+            username: projectItem.identity_meta.name,
+            image: projectItem.identity_meta.avatar || '',
+            id: projectItem.id,
+            type: selectedTab,
+            bio: '',
+            isVerified: false,
+          };
+        });
     }
   };
   return {
     tabs,
     setSelectedTab,
-    fetchSearchResult,
+    handleInputChange,
     list,
     setSelectedItem,
     selectedItem,

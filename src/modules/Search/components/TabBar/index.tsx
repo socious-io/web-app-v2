@@ -15,7 +15,7 @@ export const TabPreview: React.FC<TabPreviewProps> = ({ tabs, onSelect, defaultT
     <div className={css.tabContainer}>
       {tabs.map((tab: Tab, index) => (
         <div
-          key={tab.value}
+          key={tab.label}
           onClick={() => onSelectTab(index)}
           className={`${css.tab} ${selectedTab === index ? css.selectedTab : ''}`}
         >

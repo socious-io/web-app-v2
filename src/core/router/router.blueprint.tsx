@@ -563,7 +563,8 @@ export const blueprint: RouteObject[] = [
                     | 'projects'
                     | 'users'
                     | 'posts'
-                    | 'organizations';
+                    | 'organizations'
+                    | 'services';
 
                   localStorage.setItem('type', type || 'projects');
                   localStorage.setItem('searchTerm', q || '');

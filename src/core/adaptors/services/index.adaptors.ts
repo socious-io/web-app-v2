@@ -1,6 +1,10 @@
+import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
+import { SKILLS } from 'src/constants/SKILLS';
 import { services, service, createService, updateService, deleteService, PaymentMode } from 'src/core/api';
+import { StripeAccount, stripeProfile } from 'src/core/api';
 import { getIdentityMeta, translate } from 'src/core/utils';
 import { getSelectedTokenDetail } from 'src/dapp/dapp.service';
+import { ServiceCardProps } from 'src/modules/Services/components/ServiceCard/index.types';
 
 import { AdaptorRes, Service, ServiceReq, ServicesRes, SuccessRes } from '..';
 
@@ -124,3 +128,21 @@ export const deleteServiceAdaptor = async (serviceId: string): Promise<AdaptorRe
     return { data: null, error: 'Error in deleting service' };
   }
 };
+
+export const searchServiceMapper = (service): Omit<ServiceCardProps, 'onCardClick'> => ({
+  id: service.id,
+  subtitle: `by ${service.identity_meta.name}`,
+  name: service.title,
+  skills: service.skills.map((skill: string) => SKILLS[skill]),
+  delivery: translate(`service-form.delivery-options.${service.project_length}`),
+  payment: service.payment_mode,
+  currency:
+    service.payment_mode === 'CRYPTO'
+      ? getSelectedTokenDetail(service.payment_currency)
+      : { name: service.payment_currency },
+  myProfile: false,
+  price: service.payment_range_higher,
+  avatarUrl: service.identity_meta.avatar,
+  hasAvatar: true,
+  sample: service.work_samples.length ? service.work_samples[0].url : '',
+});
