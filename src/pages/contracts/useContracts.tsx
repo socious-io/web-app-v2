@@ -1,33 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Contract, CurrentIdentity } from 'src/core/api';
+import { Contract } from 'src/core/adaptors';
+import { CurrentIdentity } from 'src/core/api';
 import { translate } from 'src/core/utils';
 import { ButtonGroupItem } from 'src/modules/general/components/ButtonGroups/buttonGroups.types';
 import store, { RootState } from 'src/store';
-import { handleDisplaySlider, updateFilter, updatePage } from 'src/store/reducers/contracts.reducer';
-import { getContracts, getContractsByFilter } from 'src/store/thunks/contracts.thunk';
+import { ContractsState, handleDisplaySlider, updateFilter, updatePage } from 'src/store/reducers/contracts.reducer';
+import { getContracts } from 'src/store/thunks/contracts.thunk';
 
 export const useContracts = () => {
   const dispatch = useDispatch();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
-  const contractList = useSelector<RootState, Contract[]>(state => {
-    return state.contracts.offers;
-  });
-
-  const { filter, page, openSlider, totalCount } = useSelector<RootState, any>(state => state.contracts);
+  const {
+    filter,
+    page,
+    openSlider,
+    total,
+    list: contractList,
+  } = useSelector<RootState, ContractsState>(state => state.contracts);
   const activeFilter = ['all', 'ongoing', 'archived'].findIndex(item => item === filter);
   const PER_PAGE = 10;
-  const pageCount = Math.ceil(totalCount / PER_PAGE);
+  const pageCount = Math.ceil(total / PER_PAGE);
+
   const fetchMore = async () => {
     if (!currentIdentity) return;
     dispatch(handleDisplaySlider(false));
 
-    if (filter === 'all')
-      await store.dispatch(getContracts({ page, limit: PER_PAGE, identityType: currentIdentity.type }));
-    else
-      await store.dispatch(getContractsByFilter({ filter, page, limit: PER_PAGE, identityType: currentIdentity.type }));
+    if (filter === 'all') await store.dispatch(getContracts({ page, limit: PER_PAGE }));
+    else return;
+    // await store.dispatch(getContractsByFilter({ filter, page, limit: PER_PAGE, identityType: currentIdentity.type }));
   };
 
   const handleChangeFilter = (newFilter: 'all' | 'ongoing' | 'archived') => {

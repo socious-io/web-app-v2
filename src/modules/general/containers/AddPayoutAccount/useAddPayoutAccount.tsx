@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getStripeLink, Offer } from 'src/core/api';
+import { getStripeLink, PaymentCurrency } from 'src/core/api';
 
-export const useAddPayoutAccount = (offer?: Offer) => {
+export const useAddPayoutAccount = (currency?: PaymentCurrency) => {
   const [selectedCountry, setSelectedCountry] = useState('');
   const [stripeLink, setStripeLink] = useState('');
   const [openErrorModal, setOpenErrorModal] = useState(false);
@@ -20,7 +20,7 @@ export const useAddPayoutAccount = (offer?: Offer) => {
     try {
       const result = await getStripeLink({
         country: country,
-        is_jp: offer?.currency === 'JPY',
+        is_jp: currency === 'JPY',
         redirect_url: window.location.href,
       });
       const {
