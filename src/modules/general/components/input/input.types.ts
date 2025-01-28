@@ -26,4 +26,5 @@ export interface InputProps extends DefaultProps {
   noBorderPostfix?: boolean;
   noBorderPrefix?: boolean;
   onEnter?: (search: string) => void;
+  containerClassName?: string;
 }

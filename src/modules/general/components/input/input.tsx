@@ -26,6 +26,7 @@ export const Input: React.FC<InputProps> = ({
   noBorderPrefix = true,
   postfixDropdown,
   onEnter,
+  containerClassName = '',
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -89,7 +90,7 @@ export const Input: React.FC<InputProps> = ({
     </>
   );
   return (
-    <div>
+    <div className={containerClassName}>
       {label && (
         <div className={css.labelContainer}>
           <label htmlFor={id} className={css.label} aria-describedby={id}>
