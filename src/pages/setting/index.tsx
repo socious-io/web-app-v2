@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CurrentIdentity } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import Account from 'src/modules/settings/components/account/';
@@ -18,16 +19,16 @@ export const Setting = () => {
   );
   const tabs = [
     {
-      label: 'Account',
+      label: translate('settings.tabs.account'),
       content: <Account />,
       default: true,
     },
     {
-      label: 'Team',
+      label: translate('settings.tabs.team'),
       content: currentIdentity?.type === 'users' ? <UserTeam /> : <OrgTeam />,
     },
     {
-      label: 'Password',
+      label: translate('settings.tabs.password'),
       content: <Password />,
     },
 
@@ -39,34 +40,35 @@ export const Setting = () => {
 
   if (currentIdentity?.type === 'organizations')
     tabs.push({
-      label: 'Plan',
+      label: translate('settings.tabs.plan'),
       content: <Plan />,
     });
 
   if (currentIdentity?.type === 'users')
     tabs.push({
-      label: 'Notifications',
+      label: translate('settings.tabs.notifications'),
       content: <Notification />,
     });
 
   tabs.push({
-    label: 'Language',
+    label: translate('settings.tabs.language'),
     content: <Language />,
   });
   const items: any[] = [
-    { label: 'Account', value: 'Account' },
-    { label: 'Team', value: 'Team' },
-    { label: 'Password', value: 'Password' },
+    { label: translate('settings.items.account'), value: 'Account' },
+    { label: translate('settings.items.team'), value: 'Team' },
+    { label: translate('settings.items.password'), value: 'Password' },
   ];
 
   if (currentIdentity?.type === 'organizations')
     items.push({
-      label: 'Plan',
+      label: translate('settings.items.plan'),
       value: 'Plan',
     });
 
-  if (currentIdentity?.type === 'users') items.push({ label: 'Notifications', value: 'Notification' });
-  items.push({ label: 'Language', value: 'Language' });
+  if (currentIdentity?.type === 'users')
+    items.push({ label: translate('settings.items.notifications'), value: 'Notification' });
+  items.push({ label: translate('settings.items.language'), value: 'Languge' });
   const [content, setContent] = useState<ReactNode>();
 
   const setValue = value => {
@@ -80,7 +82,7 @@ export const Setting = () => {
   };
 
   useEffect(() => {
-    setValue({ label: 'Account', value: 'Account' });
+    setValue({ label: translate('settings.items.account'), value: 'Account' });
   }, []);
 
   return (
@@ -88,7 +90,7 @@ export const Setting = () => {
       <div className="container">
         <div className="w-full">
           <div className="p-4 md:px-8">
-            <h2 className="gap-5 text-3xl mb-6">Settings</h2>
+            <h2 className="gap-5 text-3xl mb-6">{translate('settings.title')}</h2>
 
             <div className="block md:hidden">
               <SearchDropdown
