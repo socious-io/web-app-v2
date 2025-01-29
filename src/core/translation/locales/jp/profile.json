@@ -2,5 +2,189 @@
   "profile-view": "プロフィールを見る",
   "profile-connection-number": "{{number}} つの接続",
   "profile-follower-number": "{{number}} 人のフォロワー",
-  "profile-location": "場所"
+  "profile-location": "場所",
+  "profile-header": {
+    "verify-identity": {
+      "title": "本人確認を行う",
+      "subtitle": "紹介機能にアクセスするには、Atala PRISM DIDを持ち、本人確認を行う必要があります。",
+      "learn-more": "詳細を確認",
+      "verify-now": "今すぐ確認"
+    },
+    "upload-banner": "バナーをアップロード",
+    "actions": {
+      "share": "共有",
+      "request-sent": "リクエスト送信済み",
+      "connect": "接続",
+      "message": "メッセージ"
+    }
+  },
+  "main-info": {
+    "connections": "つながり",
+    "followers": "フォロワー",
+    "impact-points": "インパクトポイント",
+    "open-to-volunteer": "ボランティアに参加可能",
+    "location": "場所",
+    "languages": "言語",
+    "industry": "業界",
+    "size": "規模",
+    "website": "ウェブサイト"
+  },
+  "user-profile": {
+    "about": "概要",
+    "services": "サービス"
+  },
+  "summary": {
+    "title": "概要",
+    "see-more": "さらに表示"
+  },
+  "culture": {
+    "title": "文化"
+  },
+  "experiences": {
+    "title": "経験",
+    "addExperience": "経験を追加",
+    "now": "現在",
+    "verificationPending": "確認保留中",
+    "verifyExperience": "経験を確認",
+    "claimCertificate": "証明書を申請",
+    "certificateClaimed": "証明書を申請済み",
+    "rejectedFrom": "却下された",
+    "showAll": "すべて表示",
+    "verificationRequestSent": "確認リクエストが正常に送信されました",
+    "requestSent": "リクエスト送信済み",
+    "close": "閉じる",
+    "unverified": "未確認"
+  },
+  "claimCertificate": {
+    "claimYourCertificate": "証明書を申請する",
+    "openSociousWallet": "Sociousウォレットアプリを開く",
+    "sociousUsesBlockchain": "Sociousはブロックチェーン技術を使用して証明書を透明かつ追跡可能にします。",
+    "partneredWithAtala": "Atala Prismと提携しており、分散型IDを通じて検証可能な資格情報を受け取ることができます。",
+    "howToGetYourCertificate": "証明書を取得する方法",
+    "openSociousWalletText": "Sociousウォレットを開く",
+    "scanQRCode": "以下のQRコードをスキャン",
+    "acceptRequest": "リクエストを受け入れて証明書を取得",
+    "downloadSociousWallet": "Sociousウォレットアプリをダウンロード"
+  },
+  "experience": {
+    "title": "職種名*",
+    "title.placeholder": "職種名を入力",
+    "jobCategory": "職種カテゴリ",
+    "jobCategory.placeholder": "職種カテゴリを検索",
+    "company": "会社名*",
+    "company.placeholder": "会社名を検索",
+    "location": "場所",
+    "city.placeholder": "都市を検索",
+    "volunteer": "ボランティア経験ですか？",
+    "volunteer.yes": "はい",
+    "employmentType": "雇用形態*",
+    "employmentType.placeholder": "選択してください",
+    "currentlyWorking": "現在この職務に従事している",
+    "startDate": "開始日*",
+    "startDate.month": "月",
+    "startDate.year": "年",
+    "endDate": "終了日{{required}}",
+    "endDate.month": "月",
+    "endDate.year": "年",
+    "description": "説明",
+    "description.placeholder": "例: Stripeのカスタマーサクセスチームに参加し、チェックアウト製品のスケールをサポートしました。主に新規顧客のオンボーディングとクレームの解決に注力しました。",
+    "save": "保存",
+    "add": "経験を追加",
+    "cancel": "キャンセル",
+    "delete": "経験を削除",
+    "editTitle": "経験を編集",
+    "addTitle": "経験を追加",
+    "addSubtitle": "プロフィールに勤務先を共有しましょう。"
+  },
+  "verifyExperience": {
+    "title": "職種名*",
+    "title.placeholder": "職種名を入力",
+    "startDate": "開始日*",
+    "startDate.month": "月",
+    "startDate.day": "日",
+    "startDate.year": "年",
+    "endDate": "終了日*",
+    "endDate.month": "月",
+    "endDate.day": "日",
+    "endDate.year": "年",
+    "forgotInfo": "正確な情報を覚えていない",
+    "forgotInfo.note": "これらの情報がリクエストされます",
+    "message": "メッセージ*",
+    "message.placeholder": "例: Stripeのカスタマーサクセスチームに参加し、チェックアウト製品のスケールをサポートしました。主に新規顧客のオンボーディングとクレームの解決に注力しました。",
+    "send": "送信",
+    "cancel": "キャンセル",
+    "titleModal": "経験を確認",
+    "subtitle": "情報を確認し、{{company}}に経験確認のリクエストを送信します。"
+  },
+  "createUpdateEducation": {
+    "school": {
+      "label": "学校*",
+      "placeholder": "学校を検索"
+    },
+    "degree": {
+      "label": "資格",
+      "placeholder": "資格名"
+    },
+    "field": {
+      "label": "専攻分野*",
+      "placeholder": "専門分野"
+    },
+    "startDate": {
+      "label": "開始日*",
+      "monthPlaceholder": "月",
+      "yearPlaceholder": "年"
+    },
+    "endDate": {
+      "label": "終了日",
+      "monthPlaceholder": "月",
+      "yearPlaceholder": "年"
+    },
+    "grade": {
+      "label": "成績",
+      "placeholder": "成績"
+    },
+    "description": {
+      "label": "説明",
+      "placeholder": "説明を入力..."
+    },
+    "save": "保存",
+    "add": "学歴を追加",
+    "cancel": "キャンセル",
+    "delete": "学歴を削除",
+    "edit": "学歴を編集"
+  },
+  "verifyEducationModal": {
+    "send": "送信",
+    "cancel": "キャンセル",
+    "sendToLabel": "送信先*",
+    "requestCertificate": "証明書をリクエスト",
+    "emailLabel": "送信先*",
+    "emailPlaceholder": "メールアドレスを入力",
+    "credentialNameLabel": "資格名*",
+    "awardedDateLabel": "授与日*",
+    "monthPlaceholder": "月",
+    "dayPlaceholder": "日",
+    "yearPlaceholder": "年",
+    "forgotInfo": "正確な情報を覚えていない",
+    "forgotInfoHint": "雇用主がこれらの詳細を記入することを求められます。",
+    "messageLabel": "メッセージ*",
+    "messagePlaceholder": "メッセージを入力..."
+  },
+  "educations": {
+    "title": "学歴",
+    "addEducation": "学歴を追加",
+    "now": "現在",
+    "credentialRequestSent": "資格リクエストが送信されました",
+    "requestCertificate": "証明書をリクエスト",
+    "claimCertificate": "証明書を申請",
+    "certificateClaimed": "証明書を申請済み",
+    "rejectedFrom": "{{org}} から却下されました",
+    "showAll": "すべて表示",
+    "unverified": "未確認"
+  },
+  "certificates": {
+    "title": "証明書",
+    "addCertificate": "証明書を追加",
+    "showAll": "すべて表示"
+  }
 }

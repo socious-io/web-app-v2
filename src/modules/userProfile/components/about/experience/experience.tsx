@@ -1,10 +1,12 @@
 import React from 'react';
 import { verificationStatus } from 'src/core/utils';
+import { translate } from 'src/core/utils'; // Assuming translate function is available
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Icon } from 'src/modules/general/components/Icon';
 import { StepperCard } from 'src/modules/general/components/stepperCard';
+import { Verified } from 'src/modules/general/components/stepperCard/stepperCard.types';
 import { CreateUpdateExperience } from 'src/modules/userProfile/containers/createUpdateExperience';
 import { VerifyExperience } from 'src/modules/userProfile/containers/verifyExperience';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -44,11 +46,11 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
   return (
     <>
       <div className="w-full flex flex-col gap-5">
-        <div className={css.title}>Experience</div>
+        <div className={css.title}>{translate('experiences.title')}</div>
         {myProfile && (
           <Button variant="text" color="primary" className={css.addBtn} onClick={handleAdd}>
             <Icon name="plus" fontSize={20} color={variables.color_primary_700} />
-            Add experience
+            {translate('experiences.addExperience')}
           </Button>
         )}
         {userExperiences && (
@@ -62,10 +64,14 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
                   title={item.title}
                   subtitle={item.org.name}
                   supprtingText={`${getStringDate(item.start_at)} - ${
-                    item.end_at ? getStringDate(item.end_at) : 'Now'
+                    item.end_at ? getStringDate(item.end_at) : translate('experiences.now')
                   }`}
                   DisplayVerificationStatus
-                  verified={item.credential?.status ? verificationStatus[item.credential?.status] : 'unverified'}
+                  verified={
+                    item.credential?.status
+                      ? verificationStatus[item.credential?.status]
+                      : (translate('experiences.unverified') as Verified)
+                  }
                   description={item.description}
                   editable={myProfile}
                   deletable={myProfile}
@@ -73,14 +79,19 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
                   handleDelete={() => handleDelete(item.id)}
                   verifyButton={{
                     display: myProfile && (!item.credential || item.credential?.status === 'PENDING'),
-                    label: item.credential ? 'Verification pending' : 'Verify experience',
+                    label: item.credential
+                      ? translate('experiences.verificationPending')
+                      : translate('experiences.verifyExperience'),
                     disabled: !!item.credential,
                     action: () => onOpenVerifyModal(item),
                   }}
                   claimButton={{
                     display:
                       myProfile && (item.credential?.status === 'APPROVED' || item.credential?.status === 'SENT'),
-                    label: item.credential?.status === 'APPROVED' ? 'Claim certificate' : 'Certificate claimed',
+                    label:
+                      item.credential?.status === 'APPROVED'
+                        ? translate('experiences.claimCertificate')
+                        : translate('experiences.certificateClaimed'),
                     disabled: !!disabledClaims[item.credential?.id || ''] || item.credential?.status === 'SENT',
                     action: userVerified ? () => handleOpenClaimModal(item.credential?.id) : handleOpenVerifyModal,
                   }}
@@ -91,14 +102,16 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
                     style={{ borderColor: variables.color_error_500, color: variables.color_error_500 }}
                   >
                     <Icon name="x-close" color={variables.color_error_500} />
-                    <span>Rejected from {item.org.name}</span>
+                    <span>
+                      {translate('experiences.rejectedFrom')} {item.org.name}
+                    </span>
                   </div>
                 )}
               </>
             ))}
             {!showAll && hasMoreExperiences && (
               <span className={css.more} onClick={() => setShowAll(true)}>
-                Show all
+                {translate('experiences.showAll')}
               </span>
             )}
           </div>
@@ -107,11 +120,11 @@ export const Experiences: React.FC<ExperienceProps> = ({ handleOpenVerifyModal }
       <AlertModal
         open={reqModelShow}
         onClose={handleClose}
-        message={`Verfication request has been sent successfully`}
-        title="Request sent"
+        message={translate('experiences.verificationRequestSent')}
+        title={translate('experiences.requestSent')}
         customIcon={<FeaturedIcon iconName="check-circle" size="md" theme="success" type="light-circle-outlined" />}
         closeButtn={true}
-        closeButtonLabel="Close"
+        closeButtonLabel={translate('experiences.close')}
         submitButton={false}
       />
       {claimUrl && (

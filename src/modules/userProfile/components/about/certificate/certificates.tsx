@@ -1,4 +1,5 @@
 import { CertificateMeta } from 'src/core/api/additionals/additionals.types';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { StepperCard } from 'src/modules/general/components/stepperCard';
@@ -24,14 +25,15 @@ export const Certificates = () => {
     showAll,
     setShowAll,
   } = useCertificate();
+
   return (
     <>
       <div className="w-full flex flex-col gap-5">
-        <div className={css.title}>Certificates</div>
+        <div className={css.title}>{translate('certificates.title')}</div>
         {myProfile && (
           <Button variant="text" color="primary" className={css.addBtn} onClick={handleAdd}>
             <Icon name="plus" fontSize={20} color={variables.color_primary_700} />
-            Add certificate
+            {translate('certificates.addCertificate')}
           </Button>
         )}
         {userCertificates && (
@@ -53,7 +55,7 @@ export const Certificates = () => {
             ))}
             {!showAll && hasMoreCertificates && (
               <span className={css.more} onClick={() => setShowAll(true)}>
-                Show all
+                {translate('certificates.showAll')}
               </span>
             )}
           </div>

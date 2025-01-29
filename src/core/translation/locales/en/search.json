@@ -1,0 +1,38 @@
+{
+  "search": {
+    "title": "Search for {{query}}",
+    "subtitle": "{{total}} {{type}} found {{country}}",
+    "inCountry": "in {{country}}",
+    "filters": "Filters",
+    "seeMore": "See more",
+    "filterTitle": "Filter by",
+    "filterSubtitle": "Filter {{type}} by social causes, skills and more"
+  },
+  "search-modal": {
+    "mobile-header": "Search",
+    "placeholder": "Search jobs, people, organizations",
+    "see-all-results": "See all results",
+    "tabs": {
+      "jobs": "Jobs",
+      "people": "People",
+      "organizations": "Organizations"
+    }
+  },
+  "filter-slider": {
+    "jobPreferences": "Job Preferences",
+    "location": "Location",
+    "selectLocation": "Select a location",
+    "remotePreference": "Remote Preference",
+    "jobCategory": "Job Category",
+    "selectCategory": "Select a category",
+    "jobLength": "Job Length",
+    "experienceLevel": "Experience Level",
+    "paymentType": "Payment Type",
+    "event": "Event",
+    "selectEvent": "Select an event",
+    "socialCauses": "Social Causes",
+    "skills": "Skills",
+    "cancel": "Cancel",
+    "apply": "Apply"
+  }
+}

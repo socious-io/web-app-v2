@@ -1,0 +1,33 @@
+{
+  "contributor-dashboard": {
+    "title": "Your Contributor Dashboard",
+    "subtitle": "From here, you can manage your tasks and grow as a valued member of our community.",
+    "stop-notifications": "Stop receiving new task notifications",
+    "new-join-title": "Thank you for joining the Socious Contributor program!",
+    "new-join-subtitle": "Your dedication and expertise are invaluable in maintaining the integrity and growth of our platform. Let's work together to make a lasting impact on the Socious community.",
+    "latest-disputes": "Latest disputes",
+    "see-all-disputes": "See all disputes",
+    "leave-section": "Leave",
+    "leave-program": "Leave the Contributor Program",
+    "modal-title": "Leave the Contributor Program",
+    "modal-subtitle": "Are you sure you want to opt out from the Socious Contributor Program?",
+    "modal-body-1": "We value your contributions and would be sad to see you go! If you need a break, you might consider pausing your participation instead.",
+    "modal-body-2": "By pausing your contributor status, you will:",
+    "modal-bullet-1": "Temporarily stop receiving new task notifications",
+    "modal-bullet-2": "Retain your contributor status",
+    "modal-bullet-3": "Have the flexibility to resume your participation whenever you're ready",
+    "modal-body-3": "If you still wish to opt out, please keep in mind that:",
+    "modal-bullet-4": "You will be removed from the Contributor Program and stop receiving all task notifications",
+    "modal-bullet-5": "You will lose your contributor status",
+    "modal-bullet-6": "You'll need to go through the opt-in process again if you decide to rejoin in the future",
+    "leave": "Leave"
+  },
+  "common": {
+    "cancel": "Cancel"
+  },
+  "empty-list": {
+    "image-alt": "Cloud icon",
+    "no-disputes": "No disputes found",
+    "description": "Here are all your latest disputes."
+  }
+}

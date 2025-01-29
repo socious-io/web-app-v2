@@ -2,5 +2,189 @@
   "profile-view": "View profile",
   "profile-connection-number": "{{number}} connections",
   "profile-follower-number": "{{number}} followers",
-  "profile-location": "Location"
+  "profile-location": "Location",
+  "profile-header": {
+    "verify-identity": {
+      "title": "Verify your identity",
+      "subtitle": "In order to access referrals, you need to have a Atala PRISM DID and verify your identity.",
+      "learn-more": "Learn more",
+      "verify-now": "Verify now"
+    },
+    "upload-banner": "Upload banner",
+    "actions": {
+      "share": "Share",
+      "request-sent": "Request sent",
+      "connect": "Connect",
+      "message": "Message"
+    }
+  },
+  "main-info": {
+    "connections": "connections",
+    "followers": "followers",
+    "impact-points": "Impact Points",
+    "open-to-volunteer": "Open to volunteer",
+    "location": "Location",
+    "languages": "Languages",
+    "industry": "Industry",
+    "size": "Size",
+    "website": "Website"
+  },
+  "user-profile": {
+    "about": "About",
+    "services": "Services"
+  },
+  "summary": {
+    "title": "Summary",
+    "see-more": "See more"
+  },
+  "culture": {
+    "title": "Culture"
+  },
+  "experiences": {
+    "title": "Experience",
+    "addExperience": "Add experience",
+    "now": "Now",
+    "verificationPending": "Verification pending",
+    "verifyExperience": "Verify experience",
+    "claimCertificate": "Claim certificate",
+    "certificateClaimed": "Certificate claimed",
+    "rejectedFrom": "Rejected from",
+    "showAll": "Show all",
+    "verificationRequestSent": "Verification request has been sent successfully",
+    "requestSent": "Request sent",
+    "close": "Close",
+    "unverified": "unverified"
+  },
+  "claimCertificate": {
+    "claimYourCertificate": "Claim your certificate",
+    "openSociousWallet": "Open Socious Wallet app",
+    "sociousUsesBlockchain": "Socious uses blockchain technology to make credentials transparent and traceable.",
+    "partneredWithAtala": "We’ve partnered with Atala Prism through which your decentralized ID can receive verifiable credentials.",
+    "howToGetYourCertificate": "How to get your certificate",
+    "openSociousWalletText": "Open your Socious Wallet",
+    "scanQRCode": "Scan the QR code below",
+    "acceptRequest": "Accept the request to get your certificate",
+    "downloadSociousWallet": "Download the Socious Wallet app"
+  },
+  "experience": {
+    "title": "Job title*",
+    "title.placeholder": "Enter job title",
+    "jobCategory": "Job category",
+    "jobCategory.placeholder": "Search for job category",
+    "company": "Company*",
+    "company.placeholder": "Search for company",
+    "location": "Location",
+    "city.placeholder": "Search for city",
+    "volunteer": "Volunteer experience?",
+    "volunteer.yes": "Yes",
+    "employmentType": "Employment type*",
+    "employmentType.placeholder": "Please select",
+    "currentlyWorking": "I am currently working in this role",
+    "startDate": "Start date*",
+    "startDate.month": "Month",
+    "startDate.year": "Year",
+    "endDate": "End date{{required}}",
+    "endDate.month": "Month",
+    "endDate.year": "Year",
+    "description": "Description",
+    "description.placeholder": "e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints.",
+    "save": "Save",
+    "add": "Add experience",
+    "cancel": "Cancel",
+    "delete": "Delete experience",
+    "editTitle": "Edit experience",
+    "addTitle": "Add experience",
+    "addSubtitle": "Share where you’ve worked on your profile."
+  },
+  "verifyExperience": {
+    "title": "Job title*",
+    "title.placeholder": "Enter job title",
+    "startDate": "Start date*",
+    "startDate.month": "Month",
+    "startDate.day": "Day",
+    "startDate.year": "Year",
+    "endDate": "End date*",
+    "endDate.month": "Month",
+    "endDate.day": "Day",
+    "endDate.year": "Year",
+    "forgotInfo": "I don’t remember my exact information",
+    "forgotInfo.note": "These information will be requested",
+    "message": "Message*",
+    "message.placeholder": "e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints.",
+    "send": "Send",
+    "cancel": "Cancel",
+    "titleModal": "Verify experience",
+    "subtitle": "Confirm your information and send a request to {{company}} to verify your experience."
+  },
+  "createUpdateEducation": {
+    "school": {
+      "label": "School*",
+      "placeholder": "Search for school"
+    },
+    "degree": {
+      "label": "Credential",
+      "placeholder": "Credential name"
+    },
+    "field": {
+      "label": "Field of study*",
+      "placeholder": "Specialities"
+    },
+    "startDate": {
+      "label": "Start date*",
+      "monthPlaceholder": "Month",
+      "yearPlaceholder": "Year"
+    },
+    "endDate": {
+      "label": "End date",
+      "monthPlaceholder": "Month",
+      "yearPlaceholder": "Year"
+    },
+    "grade": {
+      "label": "Grade",
+      "placeholder": "Grade"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Enter a description..."
+    },
+    "save": "Save",
+    "add": "Add education",
+    "cancel": "Cancel",
+    "delete": "Delete education",
+    "edit": "Edit education"
+  },
+  "verifyEducationModal": {
+    "send": "Send",
+    "cancel": "Cancel",
+    "sendToLabel": "Send to*",
+    "requestCertificate": "Request certificate",
+    "emailLabel": "Send to*",
+    "emailPlaceholder": "Enter an email address",
+    "credentialNameLabel": "Credential name*",
+    "awardedDateLabel": "Awarded date*",
+    "monthPlaceholder": "Month",
+    "dayPlaceholder": "Day",
+    "yearPlaceholder": "Year",
+    "forgotInfo": "I don’t remember my exact information",
+    "forgotInfoHint": "Your employer will be requested to fill in these details.",
+    "messageLabel": "Message*",
+    "messagePlaceholder": "Type your message..."
+  },
+  "educations": {
+    "title": "Educations",
+    "addEducation": "Add education",
+    "now": "Now",
+    "credentialRequestSent": "Credential request sent",
+    "requestCertificate": "Request certificate",
+    "claimCertificate": "Claim certificate",
+    "certificateClaimed": "Certificate claimed",
+    "rejectedFrom": "Rejected from {{org}}",
+    "showAll": "Show all",
+    "unverified": "unverified"
+  },
+  "certificates": {
+    "title": "Certificates",
+    "addCertificate": "Add certificate",
+    "showAll": "Show all"
+  }
 }

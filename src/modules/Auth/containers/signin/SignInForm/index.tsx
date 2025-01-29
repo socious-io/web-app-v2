@@ -90,7 +90,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ event }) => {
             customStyle="flex gap-3 mt-3"
           >
             <Apple />
-            Continue with Apple
+            {translate('login-continue-apple')}
           </Button>
           {/*
             <Button variant="outlined" color="secondary" className={css.button}>

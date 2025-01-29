@@ -1,25 +1,27 @@
+import { translate } from 'src/core/utils';
+
 export const PROJECT_LENGTH = [
-  { title: 'Less than a day', value: 'LESS_THAN_A_DAY' },
-  { title: 'Less than a month', value: 'LESS_THAN_A_MONTH' },
-  { title: '1-3 months', value: '1_3_MONTHS' },
-  { title: '3-6 months', value: '3_6_MONTHS' },
-  { title: 'More than 6 months', value: '6_MONTHS_OR_MORE' },
+  { title: translate('project_length.less_than_a_day'), value: 'LESS_THAN_A_DAY' },
+  { title: translate('project_length.less_than_a_month'), value: 'LESS_THAN_A_MONTH' },
+  { title: translate('project_length.1_3_months'), value: '1_3_MONTHS' },
+  { title: translate('project_length.3_6_months'), value: '3_6_MONTHS' },
+  { title: translate('project_length.more_than_6_months'), value: '6_MONTHS_OR_MORE' },
 ];
 
 export const PROJECT_LENGTH_V2 = [
-  { label: 'Less than a day', value: 'LESS_THAN_A_DAY' },
-  { label: 'Less than a month', value: 'LESS_THAN_A_MONTH' },
-  { label: '1-3 months', value: '1_3_MONTHS' },
-  { label: '3-6 months', value: '3_6_MONTHS' },
-  { label: 'More than 6 months', value: '6_MONTHS_OR_MORE' },
+  { label: translate('project_length.less_than_a_day'), value: 'LESS_THAN_A_DAY' },
+  { label: translate('project_length.less_than_a_month'), value: 'LESS_THAN_A_MONTH' },
+  { label: translate('project_length.1_3_months'), value: '1_3_MONTHS' },
+  { label: translate('project_length.3_6_months'), value: '3_6_MONTHS' },
+  { label: translate('project_length.more_than_6_months'), value: '6_MONTHS_OR_MORE' },
 ];
 
 export const PROJECT_LENGTH_V3 = [
-  { label: '<1 day', value: 'LESS_THAN_A_DAY' },
-  { label: '<1 month', value: 'LESS_THAN_A_MONTH' },
-  { label: '1-3 months', value: '1_3_MONTHS' },
-  { label: '3-6 months', value: '3_6_MONTHS' },
-  { label: '>6 months', value: '6_MONTHS_OR_MORE' },
+  { label: translate('project_length.less_than_1_day'), value: 'LESS_THAN_A_DAY' },
+  { label: translate('project_length.less_than_1_month'), value: 'LESS_THAN_A_MONTH' },
+  { label: translate('project_length.1_3_months'), value: '1_3_MONTHS' },
+  { label: translate('project_length.3_6_months'), value: '3_6_MONTHS' },
+  { label: translate('project_length.more_than_6_months'), value: '6_MONTHS_OR_MORE' },
 ];
 
 export function translateProjectLength(value: string) {
