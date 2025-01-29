@@ -103,6 +103,7 @@ export const useFileUploader = (
     onDrop,
     accept: getAcceptedFileTypes(),
     maxFiles: maxFileNumbers,
+    disabled: files.length + 1 > maxFileNumbers,
   });
 
   return {
