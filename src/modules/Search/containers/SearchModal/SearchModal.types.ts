@@ -3,7 +3,7 @@ export interface SearchModalProps {
   open: boolean;
   setSearchText: (s: string) => void;
 }
-export type TabValue = 'users' | 'organizations' | 'projects';
+export type TabValue = 'users' | 'organizations' | 'projects' | 'services';
 export interface SearchItem {
   title: string;
   username: string;

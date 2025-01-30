@@ -19,6 +19,8 @@ export const useResultNotFound = () => {
       case 'projects':
         title = translate('result-not-found.title.projects');
         break;
+      case 'services':
+        title = translate('result-not-found.title.services');
     }
     return title;
   };

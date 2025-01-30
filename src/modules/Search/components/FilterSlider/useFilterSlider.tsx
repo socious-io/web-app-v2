@@ -61,11 +61,11 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     dispatch({ type: 'location', payload: { label, value, countryCode } });
   };
 
-  const onSelectCheckboxs = (type: 'organizationSize' | 'jobLength' | 'experienceLevel', value: Item[]) => {
+  const onSelectCheckboxs = (type: 'organizationSize' | 'length' | 'experienceLevel', value: Item[]) => {
     dispatch({ type, payload: value });
   };
 
-  const onSelectSearchDropdown = (type: 'preference' | 'jobCategory' | 'events', value) => {
+  const onSelectSearchDropdown = (type: 'preference' | 'category' | 'events', value) => {
     dispatch({ type, payload: value });
   };
 
@@ -84,8 +84,8 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       // organizationSize,
       location,
       preference,
-      jobCategory,
-      jobLength,
+      category,
+      length,
       experienceLevel,
       paymentType,
       openToVolunteer,
@@ -93,7 +93,6 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     } = filters || {};
     const { value, label, countryCode } = location || {};
     const isValidLocation = countryCode && label && value;
-
     const filter = {
       ...(causes.length > 0 && type === 'jobs' && { causes_tags: causes.map((c: LabelValue) => c.value) }),
       ...(causes.length > 0 && type !== 'jobs' && { social_causes: causes.map((c: LabelValue) => c.value) }),
@@ -105,8 +104,8 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
         location: { value, label, countryCode },
       }),
       ...(preference && { remote_preference: preference.value }),
-      ...(jobCategory && { job_category_id: jobCategory.value }),
-      ...(jobLength.length > 0 && { project_length: jobLength.map((j: LabelValue) => j.value) }),
+      ...(category && { job_category_id: category.value }),
+      ...(length.length > 0 && { project_length: length.map((j: LabelValue) => j.value) }),
       ...(experienceLevel.length > 0 && { experience_level: experienceLevel.map((e: LabelValue) => e.value) }),
       ...(paymentType && { payment_type: type !== 'organization' ? paymentType.value : '' }),
       ...(openToVolunteer && { open_to_volunteer: openToVolunteer }),
@@ -148,12 +147,12 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     }
     if (filter.job_category_id) {
       dispatch({
-        type: 'jobCategory',
+        type: 'category',
         payload: categoriesList?.current?.find(c => c.value === filter.job_category_id),
       });
     }
     if (filter.project_length?.length) {
-      dispatch({ type: 'jobLength', payload: getOptionsFromValues(filter.project_length || [], PROJECT_LENGTH_V2) });
+      dispatch({ type: 'length', payload: getOptionsFromValues(filter.project_length || [], PROJECT_LENGTH_V2) });
     }
     if (filter.experience_level?.length) {
       const payload = EXPERIENCE_LEVEL_V2.filter(option => (filter.experience_level || []).includes(option.value));

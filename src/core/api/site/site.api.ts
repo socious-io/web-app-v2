@@ -1,3 +1,5 @@
+import { addServiceToSearchPayload } from 'src/core/utils';
+
 import { CurrentIdentity, Device, DeviceReq, EventsRes, SearchReq, Skill, SkillRes } from './site.types';
 import { post, get } from '../http';
 import { ApplicantsRes, JobsRes } from '../jobs/jobs.types';
@@ -7,7 +9,7 @@ import { PaginateReq, PaginateRes, SuccessRes } from '../types';
 import { UsersRes } from '../users/users.types';
 
 export async function search(payload: SearchReq, params: PaginateReq) {
-  const { data } = await post<PaginateRes>('search', payload, { params });
+  const { data } = await post<PaginateRes>('search', addServiceToSearchPayload(payload), { params });
   switch (payload.type) {
     case 'organizations':
       return data as OrganizationsRes;
