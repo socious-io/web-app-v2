@@ -67,7 +67,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
     <div className={styles['container']} onClick={() => onCardClick(id)}>
       {sample && <img src={sample} alt="work-sample" className={styles['image']} />}
       <div className={`${styles['content']} ${!sample && styles['content--full']}`}>
-        <div className="flex">
+        <div className="flex w-full">
           {hasAvatar && (
             <Avatar img={avatarUrl} size="32px" type="users" iconSize={32} customStyle={styles['content__avatar']} />
           )}
