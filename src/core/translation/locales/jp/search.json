@@ -1,30 +1,32 @@
 {
   "search": {
     "title": "{{query}}を検索",
-    "subtitle": "{{total}}件の{{type}}が{{country}}で見つかりました",
+    "subtitle": "{{country}}で{{total}}件の{{type}}が見つかりました",
     "inCountry": "{{country}}で",
     "filters": "フィルター",
-    "seeMore": "もっと見る",
-    "filterTitle": "フィルター条件",
-    "filterSubtitle": "{{type}}を社会的課題、スキルなどで絞り込む"
+    "seeMore": "さらに表示",
+    "filterTitle": "フィルター",
+    "filterSubtitle": "{{type}}を社会的課題、スキルなどでフィルター",
+    "filterSubtitleService": "スキル、場所などでサービスをフィルター"
   },
   "search-modal": {
     "mobile-header": "検索",
-    "placeholder": "仕事、人、団体を検索",
+    "placeholder": "仕事、人、団体、サービスを検索",
     "see-all-results": "すべての結果を見る",
     "tabs": {
       "jobs": "仕事",
       "people": "人",
-      "organizations": "団体"
+      "organizations": "団体",
+      "services": "サービス"
     }
   },
   "filter-slider": {
-    "jobPreferences": "仕事の希望条件",
-    "location": "勤務地",
-    "selectLocation": "勤務地を選択",
+    "jobPreferences": "仕事の希望",
+    "location": "場所",
+    "selectLocation": "場所を選択",
     "remotePreference": "リモート希望",
-    "jobCategory": "仕事のカテゴリー",
-    "selectCategory": "カテゴリーを選択",
+    "jobCategory": "職種",
+    "selectCategory": "カテゴリを選択",
     "jobLength": "仕事の期間",
     "experienceLevel": "経験レベル",
     "paymentType": "支払いタイプ",
@@ -34,5 +36,18 @@
     "skills": "スキル",
     "cancel": "キャンセル",
     "apply": "適用"
+  },
+  "result-not-found": {
+    "title": {
+      "users": "該当する人が見つかりません",
+      "organizations": "該当する団体が見つかりません",
+      "projects": "該当する仕事が見つかりません",
+      "services": "該当するサービスが見つかりません"
+    },
+    "message": "おっと！ '{{searchTerm}}' の結果が見つかりませんでした。",
+    "suggestion": "別のキーワードを試してみましょう。",
+    "button": {
+      "view-jobs": "仕事を見る"
+    }
   }
 }

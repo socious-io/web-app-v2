@@ -8,8 +8,8 @@ export type FiltersType = {
   organizationSize: Item[];
   location: { value: number; label: string; countryCode: string } | null;
   preference: LabelValue | null;
-  jobCategory: LabelValue | null;
-  jobLength: Item[];
+  category: LabelValue | null;
+  length: Item[];
   experienceLevel: Item[];
   paymentType: LabelValue;
   openToVolunteer: boolean | null;
@@ -22,8 +22,8 @@ export const initialFilters: FiltersType = {
   organizationSize: [],
   location: null,
   preference: null,
-  jobCategory: null,
-  jobLength: [],
+  category: null,
+  length: [],
   experienceLevel: [],
   paymentType: { label: 'Paid', value: 'PAID' },
   openToVolunteer: null,
@@ -44,10 +44,10 @@ export function filtersReducer(filters: FiltersType, action: { type: keyof Filte
       return { ...filters, location: action.payload };
     case 'preference':
       return { ...filters, preference: action.payload };
-    case 'jobCategory':
-      return { ...filters, jobCategory: action.payload };
-    case 'jobLength':
-      return { ...filters, jobLength: action.payload };
+    case 'category':
+      return { ...filters, category: action.payload };
+    case 'length':
+      return { ...filters, length: action.payload };
     case 'experienceLevel':
       return { ...filters, experienceLevel: action.payload };
     case 'paymentType':

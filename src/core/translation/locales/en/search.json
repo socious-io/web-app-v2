@@ -6,16 +6,18 @@
     "filters": "Filters",
     "seeMore": "See more",
     "filterTitle": "Filter by",
-    "filterSubtitle": "Filter {{type}} by social causes, skills and more"
+    "filterSubtitle": "Filter {{type}} by social causes, skills and more",
+    "filterSubtitleService": "Filter services by skills, location and more"
   },
   "search-modal": {
     "mobile-header": "Search",
-    "placeholder": "Search jobs, people, organizations",
+    "placeholder": "Search jobs, people, organizations, services",
     "see-all-results": "See all results",
     "tabs": {
       "jobs": "Jobs",
       "people": "People",
-      "organizations": "Organizations"
+      "organizations": "Organizations",
+      "services": "Services"
     }
   },
   "filter-slider": {
@@ -34,5 +36,18 @@
     "skills": "Skills",
     "cancel": "Cancel",
     "apply": "Apply"
+  },
+  "result-not-found": {
+    "title": {
+      "users": "No people found",
+      "organizations": "No organizations found",
+      "projects": "No jobs found",
+      "services": "No services found"
+    },
+    "message": "Whoops! No results for '{{searchTerm}}'.",
+    "suggestion": "Let's try different keywords.",
+    "button": {
+      "view-jobs": "View jobs"
+    }
   }
 }

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Job, Organization, search, Service, ServiceSearchRes, User, UserMeta, UsersRes } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { RootState } from 'src/store';
 
 import { SearchItem, TabValue } from './SearchModal.types';
@@ -19,7 +20,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
       : []),
     { label: translate('search-modal.tabs.people'), value: 'users' as TabValue },
     { label: translate('search-modal.tabs.organizations'), value: 'organizations' as TabValue },
-    { label: 'Services', value: 'services' as TabValue },
+    { label: translate('search-modal.tabs.services'), value: 'services' as TabValue },
   ];
 
   const [selectedTab, setSelectedTab] = useState<TabValue>('projects');

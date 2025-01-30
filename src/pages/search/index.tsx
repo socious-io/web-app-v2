@@ -73,7 +73,11 @@ export const Search = () => {
         open={sliderFilterOpen}
         onClose={handleCloseOrApplyFilter}
         title={translate('search.filterTitle')}
-        subtitle={translate('search.filterSubtitle', { type: readableType.title })}
+        subtitle={
+          readableType.title === 'services'
+            ? translate('search.filterSubtitleService')
+            : translate('search.filterSubtitle', { type: readableType.title })
+        }
       >
         <FilterSlider type={readableType.type} onApply={onApply} onClose={onClose} filter={filter} />
       </Slider>

@@ -1,5 +1,3 @@
-import { translateProjectLength } from 'src/constants/PROJECT_LENGTH';
-import { SKILLS } from 'src/constants/SKILLS';
 import {
   services,
   service,
@@ -11,9 +9,8 @@ import {
 } from 'src/core/api';
 import { getIdentityMeta, translate } from 'src/core/utils';
 import { getSelectedTokenDetail } from 'src/dapp/dapp.service';
-import { ServiceCardProps } from 'src/modules/Services/components/ServiceCard/index.types';
 
-import { AdaptorRes, Service, ServiceReq, ServicesRes, SuccessRes } from '..';
+import { AdaptorRes, Service, ServiceDetails, ServiceReq, ServicesRes, SuccessRes } from '..';
 
 export const getServicesAdaptor = async (
   page = 1,
@@ -136,11 +133,11 @@ export const deleteServiceAdaptor = async (serviceId: string): Promise<AdaptorRe
   }
 };
 
-export const searchServiceMapper = (service: ServiceSearchRes): Omit<ServiceCardProps, 'onCardClick'> => ({
+export const searchServiceAdaptor = (service: ServiceSearchRes): Omit<ServiceDetails, 'onCardClick'> => ({
   id: service.id,
   subtitle: `by ${service.identity_meta.name}`,
   name: service.title,
-  skills: service.skills.map((skill: string) => translate(SKILLS[skill])),
+  skills: service.skills.map((skill: string) => translate(skill)),
   delivery: translate(`service-form.delivery-options.${service.project_length}`),
   payment: service.payment_mode,
   currency:

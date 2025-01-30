@@ -68,21 +68,21 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
         <SearchDropdown
           id="job-category"
           label={translate('filter-slider.jobCategory')}
-          value={filters.jobCategory}
+          value={filters.category}
           options={categoriesList}
           isSearchable
           icon="search-lg"
           hasDropdownIcon={true}
           placeholder={translate('filter-slider.selectCategory')}
-          onChange={value => onSelectSearchDropdown('jobCategory', value)}
+          onChange={value => onSelectSearchDropdown('category', value)}
         />
 
         <CheckboxGroup
           id="job-length"
           label={translate('filter-slider.jobLength')}
           items={PROJECT_LENGTH_V2}
-          selectedItems={filters.jobLength}
-          onChange={value => onSelectCheckboxs('jobLength', value)}
+          selectedItems={filters.length}
+          onChange={value => onSelectCheckboxs('length', value)}
         />
 
         <CheckboxGroup
@@ -181,21 +181,21 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
         <SearchDropdown
           id="service-category"
           label="Service category"
-          value={filters.jobCategory}
+          value={filters.category}
           options={categoriesList}
           isSearchable
           icon="search-lg"
           hasDropdownIcon={true}
           placeholder="Select a category"
-          onChange={value => onSelectSearchDropdown('jobCategory', value)}
+          onChange={value => onSelectSearchDropdown('category', value)}
         />
 
         <CheckboxGroup
           id="service-length"
-          label="Service length"
+          label="Delivery time"
           items={PROJECT_LENGTH_V2}
-          selectedItems={filters.jobLength}
-          onChange={value => onSelectCheckboxs('jobLength', value)}
+          selectedItems={filters.length}
+          onChange={value => onSelectCheckboxs('length', value)}
         />
       </div>
     );
