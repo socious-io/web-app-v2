@@ -1,9 +1,11 @@
 import React from 'react';
 import { AdditionalRes } from 'src/core/api/additionals/additionals.types';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import { CompanySearchDropdown } from 'src/modules/general/containers/CompanySearchDropdown';
 
 import { useCreateUpdateCertificate } from './useCreateUpdateCertificate';
 
@@ -24,7 +26,6 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
     register,
     errors,
     orgVal,
-    searchOrgs,
     onSelectOrg,
     issueMonth,
     issueYear,
@@ -46,41 +47,28 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="name"
-        label="Name*"
+        label={translate('certificates.name-label')}
         required
         name="name"
         register={register}
-        placeholder="Certificate name"
+        placeholder={translate('certificates.name-placeholder')}
         errors={errors['name']?.message ? [errors['name']?.message.toString()] : undefined}
       />
-      <SearchDropdown
-        required
-        id="organization"
-        placeholder="Search for organization"
+      <CompanySearchDropdown
+        onChange={onSelectOrg}
         value={orgVal}
-        isAsync
-        creatable
-        loadOptions={searchOrgs}
-        icon="search-lg"
-        hasDropdownIcon={false}
-        label="Issuing organization*"
-        onChange={value => {
-          onSelectOrg(value);
-        }}
-        noOptionsMessage={({ inputValue }) => inputValue}
         errors={errors['orgName']?.message ? [errors['orgName']?.message.toString()] : undefined}
       />
-
       <div className="flex gap-4 items-start">
         <SearchDropdown
           id="issue-month"
           value={issueMonth}
-          label="Issue date"
+          label={translate('certificates.issue-date-label')}
           options={months}
           hasDropdownIcon
           onChange={onSelectIssueMonth}
           className="flex-1"
-          placeholder="Month"
+          placeholder={translate('certificates.month-placeholder')}
           isSearchable
           errors={issueDateErrors ? [issueDateErrors.toString()] : undefined}
           maxMenuHeight={200}
@@ -93,7 +81,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           hasDropdownIcon
           onChange={onSelectIssueYear}
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('certificates.year-placeholder')}
           isSearchable
           maxMenuHeight={200}
         />
@@ -102,11 +90,11 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
         <SearchDropdown
           id="expiration-month"
           value={expMonth}
-          label="Expiration date"
+          label={translate('certificates.expiration-date-label')}
           options={months}
           hasDropdownIcon
           onChange={onSelectExpMonth}
-          placeholder="Month"
+          placeholder={translate('certificates.month-placeholder')}
           className="flex-1"
           isSearchable
           errors={expireDateErrors ? [expireDateErrors.toString()] : undefined}
@@ -120,46 +108,46 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           hasDropdownIcon
           onChange={onSelectExpYear}
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('certificates.year-placeholder')}
           isSearchable
           maxMenuHeight={200}
         />
       </div>
       <Input
         id="credential-id"
-        label="Credential ID"
+        label={translate('certificates.credential-id-label')}
         name="credentialId"
         register={register}
-        placeholder="ID"
+        placeholder={translate('certificates.credential-id-placeholder')}
         errors={errors['credentialId']?.message ? [errors['credentialId']?.message.toString()] : undefined}
       />
       <Input
         id="credential-url"
         name="credentialUrl"
-        label="Credential URL"
+        label={translate('certificates.credential-url-label')}
         register={register}
-        placeholder="www.example.com"
+        placeholder={translate('certificates.credential-url-placeholder')}
         errors={errors['credentialUrl']?.message ? [errors['credentialUrl']?.message.toString()] : undefined}
         prefix="https://"
       />
       <Input
         id="description"
         name="description"
-        label="Description"
+        label={translate('certificates.description-label')}
         multiline
         customHeight="130px"
         register={register}
-        placeholder="Enter a description..."
+        placeholder={translate('certificates.description-placeholder')}
       />
     </div>
   );
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        {certificate ? 'Save' : 'Add certificate'}
+        {certificate ? translate('certificates.save') : translate('certificates.add-certificate')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {translate('certificates.cancel')}
       </Button>
       {certificate && (
         <Button
@@ -168,7 +156,7 @@ const CreateUpdateCertificate: React.FC<CreateUpdateCertificateProps> = ({
           customStyle="ml-0 mr-auto text-Gray-light-mode-600 w-full md:w-fit"
           onClick={onDelete}
         >
-          Delete certificate
+          {translate('certificates.delete-certificate')}
         </Button>
       )}
     </div>

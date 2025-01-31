@@ -6,6 +6,7 @@ import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import { CompanySearchDropdown } from 'src/modules/general/containers/CompanySearchDropdown';
 
 import { useCreateUpdateExperience } from './useCreateUpdateExperience';
 
@@ -27,7 +28,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     register,
     errors,
     onChangeCategory,
-    searchCompanies,
     companyVal,
     onSelectCompany,
     cityVal,
@@ -85,22 +85,11 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         placeholder={translate('experience.jobCategory.placeholder')}
         isDisabled={readonly}
       />
-      <SearchDropdown
-        isClearable
-        id="company"
-        value={companyVal}
-        placeholder={translate('experience.company.placeholder')}
-        isAsync
-        creatable
-        loadOptions={searchCompanies}
-        icon="search-lg"
-        hasDropdownIcon={false}
-        label={translate('experience.company')}
+      <CompanySearchDropdown
         onChange={onSelectCompany}
+        value={companyVal}
         errors={errors['org']?.label?.message ? [errors['org']?.label?.message.toString()] : undefined}
-        isDisabled={readonly}
       />
-
       <SearchDropdown
         id="city"
         isClearable

@@ -5,6 +5,7 @@ export interface SearchReq {
   type: 'projects' | 'users' | 'posts' | 'organizations' | 'applicants' | 'services';
   q: string;
   filter: any;
+  sort?: any;
 }
 
 export interface DeviceReq {

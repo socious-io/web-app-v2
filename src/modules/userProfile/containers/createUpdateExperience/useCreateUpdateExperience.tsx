@@ -259,30 +259,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   const onChangeCategory = newCategory => {
     setValue('jobCategory', newCategory, { shouldValidate: true });
   };
-  const orgToOption = (orgs: Organization[], searchText: string) => {
-    let options: OptionType[] = [];
-    options = orgs.map(org => ({
-      value: org.id,
-      label: org.name,
-      icon: org.image ? (
-        <img src={org.image.url} width={24} height={24} alt="" />
-      ) : (
-        <Avatar type="organizations" size="24px" />
-      ),
-    }));
-    return options;
-  };
-
-  const searchCompanies = async (searchText: string, cb) => {
-    try {
-      if (searchText) {
-        const response = await search({ type: 'organizations', q: searchText, filter: {} }, { page: 1, limit: 10 });
-        cb(orgToOption(response.items, searchText));
-      }
-    } catch (error) {
-      console.error('Error fetching city data:', error);
-    }
-  };
 
   const onSelectCompany = newCompanyVal => {
     const value = newCompanyVal?.value === newCompanyVal?.label ? '' : newCompanyVal?.value;
@@ -407,7 +383,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     category: getValues().jobCategory,
     onChangeCategory,
     companyVal: getValues().org,
-    searchCompanies,
     onSelectCompany,
     cityVal: getValues().city,
     searchCities,
