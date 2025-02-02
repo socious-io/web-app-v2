@@ -7,7 +7,7 @@ import { SearchDropdown } from '../SearchDropdown';
 export const LanguageSwitcher = () => {
   const { selectedLanguage, switchLanguage } = useSwitchLanguage();
   return (
-    <div className="w-[180px]">
+    <div className="w-[200px]">
       <SearchDropdown
         border={false}
         id="size"
