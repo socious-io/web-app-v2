@@ -1,5 +1,5 @@
 import { DISPUTE_CATEGORY } from 'src/constants/DISPUTE_CATEGORY';
-import RespondDisputeModal from 'src/modules/contract/components/respondDisputeModal';
+import RespondDisputeModal from 'src/modules/dispute/components/respondDisputeModal';
 import { SubmitDecision } from 'src/modules/dispute/components/submitDecisionModal';
 import { TimelineItem } from 'src/modules/dispute/components/timelineItem';
 import { AlertModal } from 'src/modules/general/components/AlertModal';

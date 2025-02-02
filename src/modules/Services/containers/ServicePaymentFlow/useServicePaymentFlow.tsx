@@ -39,7 +39,7 @@ export const useServicePaymentFlow = () => {
   });
   const [step, setStep] = useState(1);
   const [cardsList, setCardsList] = useState(cards || []);
-  const [selectedCardId, setSelectedCardId] = useState(cardsList.length ? cards[0].id : '');
+  const [selectedCardId, setSelectedCardId] = useState(cardsList.length ? cards[0]?.id : '');
   const [openAddCardModal, setOpenAddCardModal] = useState(false);
   const [contractId, setContractId] = useState('');
   const [contractLoading, setContractLoading] = useState(false);
@@ -79,9 +79,9 @@ export const useServicePaymentFlow = () => {
   };
 
   const createContractBeforeDeposit = async (service: Service) => {
-    const { name: title, description, price, currency, payment, id: projectId } = service;
+    const { name, description, price, currency, payment, id: projectId } = service;
     const contractPayload = {
-      title,
+      name,
       description,
       type: 'PAID' as ProjectPaymentType,
       price: parseFloat(price),
@@ -150,8 +150,11 @@ export const useServicePaymentFlow = () => {
         throw new Error(translate('cont-deposit-error'));
       }
 
-      setOrderStatus(depositData);
-      setStep(prev => prev + 1);
+      if (depositData) {
+        const { semanticStatus = 'Canceled', orderId, date } = depositData || {};
+        setOrderStatus({ status: semanticStatus, orderId, date });
+        setStep(prev => prev + 1);
+      }
     } catch (error: any) {
       console.error('Payment error:', error);
       setErrorMessage(error.message);

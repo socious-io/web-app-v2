@@ -1,5 +1,5 @@
 import { CircularProgress, Divider } from '@mui/material';
-import { contractStatus } from 'src/constants/CONTRACTS_STATUS';
+import { CONTRACT_STATUS } from 'src/constants/CONTRACTS_STATUS';
 import { CURRENCY_SIGNS } from 'src/constants/PAYMENT_CURRENCY';
 import { translate } from 'src/core/utils';
 import { AccountItem } from 'src/modules/general/components/avatarDropDown/avatarDropDown.types';
@@ -27,8 +27,8 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
   const { feePercentage, fee, total } = orderPayment;
   const { status, orderId, date } = orderStatus || {};
 
-  const generatePriceFormat = (price: string | number, currency: string) =>
-    `${CURRENCY_SIGNS[currency] || ''}${price} ${currency}`;
+  const generatePriceFormat = (price: number, currency: string) =>
+    `${CURRENCY_SIGNS[currency] || ''}${price.toFixed(2)} ${currency}`;
 
   return (
     <div className={styles['container']}>
@@ -66,7 +66,7 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
               {status && (
                 <div className={styles['order__label']}>
                   {translate('service-detail.order.status')}
-                  <Status {...contractStatus[status]} />
+                  <Status label={translate(`cont-status.${status}`)} transparent {...CONTRACT_STATUS[status]} />
                 </div>
               )}
               <div className={styles['order__label']}>
@@ -87,11 +87,11 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
           <div className={styles['payment']}>
             <div className={styles['payment__fee']}>
               {translate('service-detail.order.fee')} ({feePercentage}%)
-              <span>{generatePriceFormat(fee, currency.name)}</span>
+              <span className="text-end">{generatePriceFormat(fee, currency.name)}</span>
             </div>
             <div className={styles['payment__total']}>
               {translate('service-detail.order.total')}
-              <span>{generatePriceFormat(total, currency.name)}</span>
+              <span className="text-end">{generatePriceFormat(total, currency.name)}</span>
             </div>
           </div>
           <Divider />

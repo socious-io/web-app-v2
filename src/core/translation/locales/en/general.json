@@ -17,5 +17,10 @@
     "continue": "Continue",
     "cancel": "Cancel",
     "failed": "Failed"
+  },
+  "general-card": {
+    "remove": "Remove",
+    "expiry": "Expiry",
+    "ending": "ending in"
   }
 }

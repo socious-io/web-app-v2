@@ -1,0 +1,41 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.modal {
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        padding: 1.5rem;
+
+        @media (max-width: $width-xl) {
+            padding: 1rem;
+        }
+
+        .card {
+            &__remove {
+                height: fit-content;
+                width: fit-content;
+                justify-content: flex-start;
+                margin-top: 0.5rem;
+                padding: 0;
+                font-size: 14px;
+
+                &:hover {
+                    background-color: unset;
+                }
+            }
+        }
+    }
+
+    &__footer {
+        width: 100%;
+        display: flex;
+        gap: 0.75rem;
+        padding: 1.5rem;
+
+        @media (max-width: $width-xl) {
+            padding: 1rem;
+            flex-direction: column-reverse;
+        }
+    }
+}
