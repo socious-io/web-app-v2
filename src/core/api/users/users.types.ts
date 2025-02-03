@@ -212,6 +212,25 @@ export interface Preference {
 export interface ReferReq {
   emails: string[];
 }
+
+export interface ImportExperiencesRes {
+  job: string;
+  company: Organization;
+  end_date: Date;
+  location: string;
+  start_date: Date;
+  descriptions: string;
+}
+
+export interface ImportEducationRes {
+  name: string;
+  grade: string;
+  degree: string;
+  end_at: string;
+  start_at: string;
+  organization: Organization;
+}
+
 export interface ImportRes {
   id: string;
   identity_id: string;
@@ -227,7 +246,7 @@ export interface ImportRes {
     skills: string[];
     summary: string;
     Languages: LanguageReq[];
-    educations: EducationsReq[];
-    experiences: ExperienceReq[];
+    educations: ImportEducationRes[];
+    experiences: ImportExperiencesRes[];
   };
 }
