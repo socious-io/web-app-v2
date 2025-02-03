@@ -7,9 +7,11 @@ import { translate } from 'src/core/utils';
 import { Causes } from 'src/modules/Auth/containers/onboarding/Causes';
 import { City } from 'src/modules/Auth/containers/onboarding/City';
 import { CreateOrganization } from 'src/modules/Auth/containers/onboarding/CreateOrganization';
-import Experiences from 'src/modules/Auth/containers/onboarding/Experiences';
 import { ImageBio } from 'src/modules/Auth/containers/onboarding/ImageBio';
-import ImportProfileChoices from 'src/modules/Auth/containers/onboarding/ImportProfileChoices';
+import Educations from 'src/modules/Auth/containers/onboarding/ImportLinkedin/Educations';
+import Experiences from 'src/modules/Auth/containers/onboarding/ImportLinkedin/Experiences';
+import ImportProfileChoices from 'src/modules/Auth/containers/onboarding/ImportLinkedin/ImportProfileChoices';
+import Languages from 'src/modules/Auth/containers/onboarding/ImportLinkedin/Languages';
 import { OpWelcome } from 'src/modules/Auth/containers/onboarding/OpWelcome';
 import { OrganizationCauses } from 'src/modules/Auth/containers/onboarding/OrganizationCauses';
 import { OrganizationContact } from 'src/modules/Auth/containers/onboarding/OrganizationContact';
@@ -33,7 +35,7 @@ export const Onboarding = () => {
   const primary = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
-  const { importedLinkedIn } = useSelector((state: RootState) => state.linkedin);
+  const { isImportingLinkedIn } = useSelector((state: RootState) => state.linkedin);
 
   useEffect(() => {
     const getIdentities = async () => {
@@ -115,10 +117,11 @@ export const Onboarding = () => {
             steps={[
               { component: <Welcome />, skippable: false },
               { component: <ImportProfileChoices />, skippable: false },
-              ...(importedLinkedIn
+              ...(isImportingLinkedIn
                 ? [
                     { component: <Experiences />, skippable: false, back: false },
-                    { component: <div>educations</div>, skippable: false },
+                    { component: <Educations />, skippable: false },
+                    { component: <Languages />, skippable: false },
                   ]
                 : []),
               { component: <Causes />, skippable: false },

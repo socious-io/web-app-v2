@@ -20,7 +20,8 @@ export const useImportLinkedInModal = () => {
   const importLinkedinProfile = async () => {
     try {
       const res = await importLinkedin(showFiles[0]);
-      dispatch(setLinkedIn(res.body));
+      //FIXME: BE correct Languages to languages
+      dispatch(setLinkedIn({ ...res.body, languages: res.body.Languages || [] }));
       updateSelectedStep(2);
     } catch (e) {
       console.log('error in import linkedin API: ', e);

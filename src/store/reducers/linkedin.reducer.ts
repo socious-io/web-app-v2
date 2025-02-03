@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { EducationsReq, ExperienceReq, LanguageReq } from 'src/core/api';
+import { Education, Experience, Language } from 'src/core/api';
 
 interface LinkedInState {
-  experiences: ExperienceReq[];
-  educations: EducationsReq[];
-  languages: LanguageReq[];
-  importedLinkedIn: boolean;
+  experiences: Experience[];
+  educations: Education[];
+  languages: Language[];
+  isImportingLinkedIn: boolean;
 }
 
 const initialState = {
   experiences: [],
   educations: [],
   languages: [],
-  importedLinkedIn: false,
+  isImportingLinkedIn: false,
 } as LinkedInState;
 
 export const linkedInSlice = createSlice({
@@ -20,10 +20,13 @@ export const linkedInSlice = createSlice({
   initialState,
   reducers: {
     setLinkedIn: (state, action) => {
-      state.importedLinkedIn = true;
+      state.isImportingLinkedIn = true;
       Object.assign(state, action.payload);
+    },
+    finishLinkedInImport: state => {
+      state.isImportingLinkedIn = false;
     },
   },
 });
 
-export const { setLinkedIn } = linkedInSlice.actions;
+export const { setLinkedIn, finishLinkedInImport } = linkedInSlice.actions;

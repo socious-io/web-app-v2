@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react';
-
-import { StepsContext } from '../Stepper';
+import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 
 export const useImportProfileChoices = () => {
   const { updateSelectedStep } = useContext(StepsContext);

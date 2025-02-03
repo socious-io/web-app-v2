@@ -1,8 +1,8 @@
+import LinkedInButton from 'src/modules/Auth/components/LinkedInButton';
 import { Button } from 'src/modules/general/components/Button';
 import { FileUploaderMultiple } from 'src/modules/general/components/fileUploaderMultiple';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Modal } from 'src/modules/general/components/modal';
-import LinkedInButton from 'src/modules/ImportLinkedIn/components/LinkedInButton';
 
 import css from './index.module.scss';
 import { ImportModalProps } from './index.types';

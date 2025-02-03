@@ -1,8 +1,8 @@
+import LinkedInButton from 'src/modules/Auth/components/LinkedInButton';
 import Step from 'src/modules/Auth/components/Step';
+import ImportLinkedInModal from 'src/modules/Auth/containers/onboarding/ImportLinkedin/ImportLinkedInModal';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
-import LinkedInButton from 'src/modules/ImportLinkedIn/components/LinkedInButton';
-import ImportLinkedInModal from 'src/modules/ImportLinkedIn/containers/ImportLinkedInModal';
 
 import css from './index.module.scss';
 import { useImportProfileChoices } from './useImportProfileChoices';
