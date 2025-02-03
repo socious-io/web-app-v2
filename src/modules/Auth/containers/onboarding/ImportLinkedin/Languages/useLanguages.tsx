@@ -5,7 +5,7 @@ import { Language } from 'src/core/api';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { LanguageProps } from 'src/modules/userProfile/containers/editInfo/editInfo.types';
 import { RootState } from 'src/store';
-import { setNormalOnboarding } from 'src/store/reducers/linkedin.reducer';
+import { finishLinkedInImport } from 'src/store/reducers/linkedin.reducer';
 
 const mapLanguageToItems = (languages: Language[]) => {
   const mappedObj = languages.map(item => {
@@ -24,7 +24,7 @@ export const useLanguages = () => {
   const [currentLanguages, setCurrentLanguages] = useState<LanguageProps[]>(mapLanguageToItems(languages || []));
 
   const onNextStep = () => {
-    dispatch(setNormalOnboarding());
+    dispatch(finishLinkedInImport());
     updateSelectedStep(3);
   };
 
