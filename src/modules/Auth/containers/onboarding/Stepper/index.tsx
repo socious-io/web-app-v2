@@ -1,16 +1,9 @@
-import React, { useState, ReactNode, createContext } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useState, createContext } from 'react';
+import { translate } from 'src/core/utils';
 import { BackLink } from 'src/modules/general/components/BackLink';
 
-import css from './stepper.module.scss';
-
-interface Props {
-  components: { Component: ReactNode; skippable: boolean }[];
-}
-interface ContextValue {
-  step: number;
-  updateSelectedStep: (newStep: number) => void;
-}
+import styles from './index.module.scss';
+import { ContextValue, StepperProps } from './index.types';
 
 export const StepsContext = createContext<ContextValue>({
   step: 0,
@@ -19,31 +12,34 @@ export const StepsContext = createContext<ContextValue>({
   },
 });
 
-const Steper: React.FC<Props> = ({ components }) => {
+const Stepper: React.FC<StepperProps> = ({ steps }) => {
+  const initialSteps = steps.map(step => ({
+    ...step,
+    back: step.back ?? true,
+  }));
   const [step, setStep] = useState(0);
+  const hasPrevStep = step > 0;
 
   const updateSelectedStep = (newStep: number) => {
     setStep(newStep);
   };
 
-  const hasPrevStep = step > 0;
-
   const handleBack = () => {
     if (hasPrevStep) updateSelectedStep(step - 1);
   };
-  const { t } = useTranslation();
+
   return (
     <StepsContext.Provider value={{ step, updateSelectedStep }}>
-      {components.map(({ Component }, index) => {
-        if (index === step) return <React.Fragment key={index}>{Component}</React.Fragment>;
+      {initialSteps.map(({ component }, index) => {
+        if (index === step) return <React.Fragment key={index}>{component}</React.Fragment>;
       })}
-      {step > 1 && (
-        <div className={css.back}>
-          <BackLink title={t('general-back')} onBack={handleBack} block />
+      {step > 1 && initialSteps[step].back && (
+        <div className={styles['back']}>
+          <BackLink title={translate('general-back')} block onBack={handleBack} />
         </div>
       )}
     </StepsContext.Provider>
   );
 };
 
-export default Steper;
+export default Stepper;

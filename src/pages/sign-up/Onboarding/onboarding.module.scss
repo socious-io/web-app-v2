@@ -20,11 +20,3 @@
     border: 0.75px solid $color-grey-900;
     opacity: 0.08;
 }
-
-.headerImage {
-    width: 32px;
-    height: 32px;
-    @media screen and (min-width: 600px) {
-        width: 131px;
-    }
-}

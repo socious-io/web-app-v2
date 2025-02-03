@@ -212,3 +212,41 @@ export interface Preference {
 export interface ReferReq {
   emails: string[];
 }
+
+export interface ImportExperiencesRes {
+  job: string;
+  company: Organization;
+  end_date: Date;
+  location: string;
+  start_date: Date;
+  descriptions: string;
+}
+
+export interface ImportEducationRes {
+  name: string;
+  grade: string;
+  degree: string;
+  end_at: string;
+  start_at: string;
+  organization: Organization;
+}
+
+export interface ImportRes {
+  id: string;
+  identity_id: string;
+  // TODO: define all possible types
+  type: 'LINKDIN';
+  //TODO: define all possible statuses
+  status: string; //"PENDING"
+  updated_at: Date;
+  created_at: Date;
+  body: {
+    name: string;
+    email: string;
+    skills: string[];
+    summary: string;
+    Languages: LanguageReq[];
+    educations: ImportEducationRes[];
+    experiences: ImportExperiencesRes[];
+  };
+}

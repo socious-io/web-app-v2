@@ -21,6 +21,7 @@ import {
   Education,
   Preference,
   ReferReq,
+  ImportRes,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -146,4 +147,10 @@ export async function updatePreferences(payload: { preferences: Preference[] }):
 
 export async function sendRefers(payload: ReferReq): Promise<SuccessRes> {
   return (await post<SuccessRes>('user/emails/refers', payload)).data;
+}
+
+export async function importLinkedin(file: File): Promise<ImportRes> {
+  const formData = new FormData();
+  formData.append('file', file);
+  return (await post<ImportRes>('user/imports/linkdin', formData)).data;
 }

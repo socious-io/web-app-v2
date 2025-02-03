@@ -67,6 +67,10 @@ export const useFileUploader = (
   };
   const onDrop = async (acceptedFiles: File[]) => {
     try {
+      if (uploaded.length + acceptedFiles.length > maxFileNumbers) {
+        setError('You are allowed to upload maximum ' + maxFileNumbers + ' files');
+        return;
+      }
       setProgress(0);
       setError('');
       const requests: Promise<PostMediaUploadRes>[] = [];
@@ -97,12 +101,14 @@ export const useFileUploader = (
     setFiles(filtered);
     setShowFiles?.(filtered);
     setUploaded(uploaded.filter(item => files.map(f => f.name).includes(item.filename)));
+    setError('');
   };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: getAcceptedFileTypes(),
     maxFiles: maxFileNumbers,
+    disabled: files.length + 1 > maxFileNumbers,
   });
 
   return {
