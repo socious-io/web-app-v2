@@ -8,12 +8,7 @@ import { UseUpdateLanguage } from './useUpdateLanguage';
 import { UpdateLanguagesProps } from '../../containers/editInfo/editInfo.types';
 
 export const UpdateLanguages: React.FC<UpdateLanguagesProps> = ({ languages, setLanguages, errors, setErrors }) => {
-  const { addNewLanguage, editLanguage, deleteLanguage } = UseUpdateLanguage(
-    languages,
-    setLanguages,
-    errors,
-    setErrors,
-  );
+  const { addNewLanguage, editLanguage, deleteLanguage } = UseUpdateLanguage(languages, setLanguages, setErrors);
 
   return (
     <div className="w-full flex flex-col gap-4 py-5 items-start">
