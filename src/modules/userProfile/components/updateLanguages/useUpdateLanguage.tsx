@@ -5,8 +5,7 @@ import { Error, LanguageProps } from 'src/modules/userProfile/containers/editInf
 export const UseUpdateLanguage = (
   languages: LanguageProps[] | null,
   setLanguages: (newVal: LanguageProps[]) => void,
-  errors: Error[],
-  setErrors: (val: Error[]) => void,
+  setErrors?: (val: Error[]) => void,
 ) => {
   const addNewLanguage = () => {
     let langs = languages?.length ? [...languages] : [];
@@ -31,7 +30,7 @@ export const UseUpdateLanguage = (
         errRes.push({ id: l.id, type: 'duplicated', messages: 'Selected language is duplicated' });
       }
     });
-    setErrors(errRes);
+    setErrors?.(errRes);
   };
 
   useEffect(() => {
