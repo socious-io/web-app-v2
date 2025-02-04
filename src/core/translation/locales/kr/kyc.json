@@ -1,0 +1,11 @@
+{
+  "kyc-open-wallet": "Socious Wallet 앱 열기",
+  "kyc-verify-identity": "신원 확인",
+  "kyc-verify-subtitle": "모든 Socious 기능을 사용하려면 신원을 확인하세요",
+  "kyc-desc": "Socious는 블록체인 기술을 사용하여 자격 증명을 투명하고 추적 가능하게 만듭니다.",
+  "kyc-partner": "우리는 Atala Prism과 협력하여 분산형 ID가 검증된 자격 증명을 받을 수 있도록 지원합니다.",
+  "kyc-how-verify": "신원 확인 방법",
+  "kyc-step-1": "1. 앱의 온보딩 프로세스를 진행하여 Atala Prism에서 분산형 ID를 생성하세요.",
+  "kyc-step-2": "2. 우리의 KYC 파트너인 Veriff를 통해 신원을 확인하세요.",
+  "kyc-download-app": "Socious Wallet 앱 다운로드"
+}

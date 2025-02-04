@@ -1,0 +1,58 @@
+{
+  "profile-view": "프로필 보기",
+  "profile-connection-number": "{{number}}개의 연결",
+  "profile-follower-number": "{{number}}명의 팔로워",
+  "profile-location": "위치",
+  "profile-header": {
+    "verify-identity": {
+      "title": "신원 확인",
+      "subtitle": "추천을 받으려면 Atala PRISM DID가 필요하며 신원을 확인해야 합니다.",
+      "learn-more": "자세히 알아보기",
+      "verify-now": "지금 확인하기"
+    },
+    "upload-banner": "배너 업로드",
+    "actions": {
+      "share": "공유",
+      "request-sent": "요청 전송됨",
+      "connect": "연결",
+      "message": "메시지"
+    }
+  },
+  "main-info": {
+    "connections": "연결",
+    "followers": "팔로워",
+    "impact-points": "임팩트 포인트",
+    "open-to-volunteer": "자원봉사 가능",
+    "location": "위치",
+    "languages": "언어",
+    "industry": "산업",
+    "size": "규모",
+    "website": "웹사이트"
+  },
+  "user-profile": {
+    "about": "소개",
+    "services": "서비스"
+  },
+  "summary": {
+    "title": "요약",
+    "see-more": "더 보기"
+  },
+  "culture": {
+    "title": "문화"
+  },
+  "experiences": {
+    "title": "경력",
+    "addExperience": "경력 추가",
+    "now": "현재",
+    "verificationPending": "검증 대기 중",
+    "verifyExperience": "경력 검증",
+    "claimCertificate": "자격 증명 요청",
+    "certificateClaimed": "자격 증명 완료",
+    "rejectedFrom": "{{company}}에서 거부됨",
+    "showAll": "모두 보기",
+    "verificationRequestSent": "검증 요청이 성공적으로 전송됨",
+    "requestSent": "요청 전송됨",
+    "close": "닫기",
+    "unverified": "미검증"
+  }
+}

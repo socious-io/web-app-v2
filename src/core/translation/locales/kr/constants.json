@@ -1,0 +1,93 @@
+{
+  "remote-preferences": {
+    "onsite": "현장 근무",
+    "remote": "원격 근무",
+    "hybrid": "하이브리드"
+  },
+  "project-type": {
+    "one-off": "단기 프로젝트",
+    "part-time": "파트타임",
+    "full-time": "풀타임"
+  },
+  "service-length": {
+    "less-than-a-day": "하루 미만",
+    "1-3-days": "1-3일",
+    "1-week": "1주",
+    "2-weeks": "2주",
+    "less-than-a-month": "한 달 미만",
+    "1-3-months": "1-3개월",
+    "3-6-months": "3-6개월",
+    "more-than-6-months": "6개월 이상"
+  },
+  "dispute-category": {
+    "scope-and-contract-disputes-issues": "업무 범위 및 계약 분쟁 문제",
+    "incomplete-or-unsatisfactory-work": "미완성 또는 불만족스러운 작업",
+    "communication-problems": "의사소통 문제",
+    "scope-and-contract-disputes": "업무 범위 및 계약 분쟁",
+    "intellectual-property-and-confidentiality": "지적 재산권 및 기밀 유지",
+    "professionalism-and-conduct": "전문성 및 행동",
+    "cancellation-and-refunds": "취소 및 환불",
+    "others": "기타"
+  },
+  "events": {
+    "tec4impact": "Tech for Impact Summit 2024"
+  },
+  "experience_level": {
+    "no_experience": "경력 없음",
+    "entry": "초급",
+    "intermediate": "중급",
+    "expert": "고급"
+  },
+  "organization_size": {
+    "self_employed": "자영업",
+    "1_10_employees": "1-10명 직원",
+    "11_50_employees": "11-50명 직원",
+    "51_200_employees": "51-200명 직원",
+    "201_500_employees": "201-500명 직원",
+    "501_1000_employees": "501-1000명 직원",
+    "1001_5000_employees": "1001-5000명 직원",
+    "5001_10000_employees": "5001-10,000명 직원",
+    "10001_plus_employees": "10,001명 이상 직원"
+  },
+  "organization_type": {
+    "social_business": "소셜 비즈니스",
+    "non_profit": "비영리 단체 / 자선 단체",
+    "social_cooperative": "사회적 협동조합",
+    "impact_investing": "임팩트 투자 펀드 / 재단",
+    "public_institution": "공공 기관",
+    "intergovernmental": "국제기구 (예: UN)",
+    "impact_department": "영리 기업 내 임팩트 부서 (예: CSR)",
+    "other": "기타"
+  },
+  "payment_range": {
+    "label": "지급 범위"
+  },
+  "commitment": {
+    "label": "업무 몰입도"
+  },
+  "weekly_hours": {
+    "label": "주간 근무 시간"
+  },
+  "project_length": {
+    "less_than_a_day": "하루 미만",
+    "less_than_a_month": "한 달 미만",
+    "1_3_months": "1-3개월",
+    "3_6_months": "3-6개월",
+    "more_than_6_months": "6개월 이상",
+    "less_than_1_day": "1일 미만",
+    "less_than_1_month": "1개월 미만"
+  },
+  "payment_scheme": {
+    "hourly": "시간제",
+    "fixed": "고정 급여"
+  },
+  "project_type": {
+    "one_off": "단기 프로젝트",
+    "part_time": "파트타임",
+    "full_time": "풀타임"
+  },
+  "payment_type": {
+    "volunteer": "자원봉사",
+    "paid": "유급"
+  }
+}

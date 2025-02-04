@@ -885,4 +885,12 @@ export const supportedLanguages: LanguageOption[] = [
     value: 'jp',
     label: translate('setting-language-labels.jp'),
   },
+  {
+    value: 'es',
+    label: translate('setting-language-labels.jp'),
+  },
+  {
+    value: 'kr',
+    label: translate('setting-language-labels.jp'),
+  },
 ];

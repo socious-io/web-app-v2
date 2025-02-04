@@ -1,0 +1,15 @@
+{
+  "org-type-startup": "Startup de impacto",
+  "org-type-social": "Negocio social",
+  "org-type-non-profit": "Organización sin fines de lucro / Caridad",
+  "org-type-social-cooperative": "Cooperativa social",
+  "org-type-iif": "Fondo / Fundación de inversión de impacto",
+  "org-type-public": "Institución pública",
+  "org-type-inter-gov": "Organización intergubernamental",
+  "org-type-edu": "Institución educativa",
+  "org-type-health-care": "Organización de atención médica",
+  "org-type-religious": "Organización religiosa",
+  "org-type-commercial": "Empresas comerciales",
+  "org-type-department": "Departamento de impacto en una empresa con fines de lucro",
+  "org-type-other": "Otro"
+}

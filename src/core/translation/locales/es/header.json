@@ -1,0 +1,16 @@
+{
+  "header-search-skill": "Buscar por título, habilidad u organización",
+  "header-search": "Buscar",
+  "header-status": "Estado",
+  "header-open-to-work": "Disponible para trabajar",
+  "header-open-to-work-desc": "Estás disponible para trabajos remunerados. Podrás recibir ofertas.",
+  "header-volunteer": "Disponible para voluntariado",
+  "header-volunteer-desc": "Estás disponible para trabajos voluntarios.",
+  "header-hiring": "Contratando",
+  "header-hiring-desc": "Actualmente estás contratando profesionales activamente.",
+  "header-create-org": "Crear una organización",
+  "header-create-talent": "Crear un perfil de talento",
+  "header-view-profile": "Ver perfil",
+  "header-settings": "Configuración",
+  "header-logout": "Cerrar sesión"
+}

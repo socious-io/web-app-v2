@@ -1,0 +1,125 @@
+{
+  "orgTeam": {
+    "teamManagement": {
+      "title": "팀 관리",
+      "subtitle": "팀 멤버와 계정 권한을 관리하세요."
+    },
+    "inviteMembers": {
+      "title": "팀원 초대",
+      "subtitle": "조직을 관리하거나 게시할 팀원을 초대하세요.",
+      "placeholder": "팀원 선택",
+      "addAnother": "추가",
+      "addMember": "팀원 추가"
+    },
+    "teamMembers": {
+      "title": "팀원",
+      "subtitle": "기존 팀을 관리하고 역할/권한을 변경하세요.",
+      "nameHeader": "이름",
+      "delete": "삭제"
+    },
+    "leaveDeleteModal": {
+      "title": "팀원을 삭제하시겠습니까?",
+      "subtitle": "{memberName}을(를) 삭제하시겠습니까? 삭제 후에는 더 이상 조직을 관리할 수 없습니다.",
+      "buttons": {
+        "cancel": "취소",
+        "delete": "삭제"
+      }
+    }
+  },
+  "userTeam": {
+    "teamManagement": {
+      "title": "팀 관리",
+      "subtitle": "내 팀 관리"
+    },
+    "onTeams": {
+      "title": "소속된 팀",
+      "subtitle": "현재 참여 중인 팀입니다."
+    },
+    "leaveButton": "탈퇴",
+    "leaveModal": {
+      "lastMemberTitle": "팀을 떠나시겠습니까?",
+      "lastMemberSubtitle": "현재 이 팀의 마지막 멤버입니다. 다른 멤버를 추가하기 전까지 팀을 떠날 수 없습니다.",
+      "optionsTitle": "다음 옵션을 선택하세요:",
+      "assignMemberTitle": "새 멤버 지정:",
+      "assignMemberDescription": "신뢰할 수 있는 팀원을 선택하고 권한을 부여하세요. 이렇게 하면 팀을 떠나더라도 관리할 사람이 남게 됩니다.",
+      "deleteOrganizationTitle": "조직 삭제:",
+      "deleteOrganizationDescription": "더 이상 필요하지 않은 경우 조직을 완전히 삭제할 수 있습니다.",
+      "defaultTitle": "팀 탈퇴",
+      "defaultSubtitle": "{teamName}에서 탈퇴하시겠습니까?",
+      "buttons": {
+        "close": "닫기",
+        "cancel": "취소",
+        "leave": "탈퇴"
+      }
+    }
+  },
+  "settings": {
+    "title": "설정",
+    "tabs": {
+      "account": "계정",
+      "team": "팀",
+      "password": "비밀번호",
+      "plan": "요금제",
+      "notifications": "알림",
+      "language": "언어"
+    }
+  },
+  "account": {
+    "info": {
+      "title": "계정 정보"
+    },
+    "buttons": {
+      "cancel": "취소",
+      "save": "저장"
+    },
+    "fields": {
+      "name": "이름",
+      "email": "이메일 주소",
+      "username": "사용자 이름",
+      "role": "역할",
+      "city": "도시"
+    },
+    "closeAccount": {
+      "link": "계정 닫기",
+      "title": "계정을 닫으시겠습니까?",
+      "description": "계정을 닫으면 Socious에서의 모든 활동이 삭제되며 연결, 채용 및 계약 정보도 삭제됩니다.",
+      "irreversible": "이 작업은 되돌릴 수 없습니다.",
+      "reason": "이유 (선택 사항)",
+      "placeholder": "계정을 닫는 이유를 알려주세요.",
+      "buttons": {
+        "cancel": "취소",
+        "delete": "영구적으로 계정 삭제"
+      }
+    }
+  },
+  "setting-language": "언어",
+  "setting-language-change": "언어 변경",
+  "setting-language-select": "기본 언어를 선택하세요.",
+  "setting-buttons": {
+    "save": "저장",
+    "cancel": "취소"
+  },
+  "password": {
+    "title": "비밀번호",
+    "description": "비밀번호를 변경하려면 현재 비밀번호를 입력하세요. Google로 가입한 경우 로그아웃한 후 '비밀번호 찾기'를 사용하세요.",
+    "labels": {
+      "currentPassword": "현재 비밀번호",
+      "newPassword": "새 비밀번호",
+      "confirmPassword": "새 비밀번호 확인"
+    },
+    "placeholders": {
+      "currentPassword": "현재 비밀번호",
+      "newPassword": "새 비밀번호",
+      "confirmPassword": "새 비밀번호 확인"
+    },
+    "validations": {
+      "minLength": "최소 8자 이상",
+      "specialCharacter": "특수 문자가 포함되어야 합니다",
+      "passwordsMatch": "비밀번호가 일치합니다"
+    },
+    "buttons": {
+      "cancel": "취소",
+      "update": "비밀번호 변경"
+    }
+  }
+}

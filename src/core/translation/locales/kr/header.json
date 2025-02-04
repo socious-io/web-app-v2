@@ -1,0 +1,16 @@
+{
+  "header-search-skill": "직책, 기술 또는 조직으로 검색",
+  "header-search": "검색",
+  "header-status": "상태",
+  "header-open-to-work": "일할 준비가 됨",
+  "header-open-to-work-desc": "유급 작업이 가능합니다. 제안을 받을 수 있습니다.",
+  "header-volunteer": "자원봉사 가능",
+  "header-volunteer-desc": "자원봉사 작업이 가능합니다.",
+  "header-hiring": "채용 중",
+  "header-hiring-desc": "현재 전문가를 적극적으로 채용 중입니다.",
+  "header-create-org": "조직 생성",
+  "header-create-talent": "인재 프로필 생성",
+  "header-view-profile": "프로필 보기",
+  "header-settings": "설정",
+  "header-logout": "로그아웃"
+}

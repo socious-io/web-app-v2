@@ -1,0 +1,53 @@
+{
+  "search": {
+    "title": "{{query}} 검색",
+    "subtitle": "{{country}}에서 {{total}}개의 {{type}} 검색됨",
+    "inCountry": "{{country}}에서",
+    "filters": "필터",
+    "seeMore": "더 보기",
+    "filterTitle": "필터 기준",
+    "filterSubtitle": "{{type}}을(를) 사회적 가치, 기술 등으로 필터링",
+    "filterSubtitleService": "서비스를 기술, 위치 등으로 필터링"
+  },
+  "search-modal": {
+    "mobile-header": "검색",
+    "placeholder": "채용 공고, 사람, 조직, 서비스 검색",
+    "see-all-results": "모든 결과 보기",
+    "tabs": {
+      "jobs": "채용 공고",
+      "people": "사람",
+      "organizations": "조직",
+      "services": "서비스"
+    }
+  },
+  "filter-slider": {
+    "jobPreferences": "채용 선호",
+    "location": "위치",
+    "selectLocation": "위치 선택",
+    "remotePreference": "원격 근무 선호",
+    "jobCategory": "직무 카테고리",
+    "selectCategory": "카테고리 선택",
+    "jobLength": "근무 기간",
+    "experienceLevel": "경력 수준",
+    "paymentType": "지급 유형",
+    "event": "이벤트",
+    "selectEvent": "이벤트 선택",
+    "socialCauses": "사회적 가치",
+    "skills": "기술",
+    "cancel": "취소",
+    "apply": "적용"
+  },
+  "result-not-found": {
+    "title": {
+      "users": "일치하는 사람이 없습니다",
+      "organizations": "일치하는 조직이 없습니다",
+      "projects": "일치하는 채용 공고가 없습니다",
+      "services": "일치하는 서비스가 없습니다"
+    },
+    "message": "앗! '{{searchTerm}}'에 대한 결과가 없습니다.",
+    "suggestion": "다른 키워드를 시도해 보세요.",
+    "button": {
+      "view-jobs": "채용 공고 보기"
+    }
+  }
+}

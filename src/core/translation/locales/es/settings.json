@@ -1,0 +1,95 @@
+{
+  "orgTeam": {
+    "teamManagement": {
+      "title": "Gestión del equipo",
+      "subtitle": "Administra a los miembros de tu equipo y sus permisos aquí."
+    },
+    "inviteMembers": {
+      "title": "Invitar miembros del equipo",
+      "subtitle": "Invita a miembros para publicar o gestionar tu organización.",
+      "placeholder": "Seleccionar miembro del equipo",
+      "addAnother": "Agregar otro",
+      "addMember": "Agregar miembro"
+    },
+    "teamMembers": {
+      "title": "Miembros del equipo",
+      "subtitle": "Administra tu equipo actual y cambia roles/permisos.",
+      "nameHeader": "Nombre",
+      "delete": "Eliminar"
+    },
+    "leaveDeleteModal": {
+      "title": "¿Eliminar miembro?",
+      "subtitle": "¿Estás seguro de que deseas eliminar a {memberName}? No podrán administrar tu organización.",
+      "buttons": {
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
+      }
+    }
+  },
+  "userTeam": {
+    "teamManagement": {
+      "title": "Gestión del equipo",
+      "subtitle": "Administra tus equipos"
+    },
+    "onTeams": {
+      "title": "Equipos actuales",
+      "subtitle": "Actualmente perteneces a estos equipos."
+    },
+    "leaveButton": "Salir",
+    "leaveModal": {
+      "lastMemberTitle": "¿Salir del equipo?",
+      "lastMemberSubtitle": "Eres el último miembro del equipo. No puedes salir hasta agregar otro miembro.",
+      "optionsTitle": "Opciones disponibles:",
+      "assignMemberTitle": "Asignar un miembro:",
+      "assignMemberDescription": "Selecciona un miembro de confianza para otorgarle permisos y poder salir del equipo sin problemas.",
+      "deleteOrganizationTitle": "Eliminar la organización:",
+      "deleteOrganizationDescription": "Si la organización ya no es necesaria, puedes optar por eliminarla completamente.",
+      "defaultTitle": "¿Salir del equipo?",
+      "defaultSubtitle": "¿Seguro que quieres salir de {teamName}?",
+      "buttons": {
+        "close": "Cerrar",
+        "cancel": "Cancelar",
+        "leave": "Salir"
+      }
+    }
+  },
+  "settings": {
+    "title": "Configuraciones",
+    "tabs": {
+      "account": "Cuenta",
+      "team": "Equipo",
+      "password": "Contraseña",
+      "plan": "Plan",
+      "notifications": "Notificaciones",
+      "language": "Idioma"
+    }
+  },
+  "account": {
+    "info": {
+      "title": "Información de la cuenta"
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "fields": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "username": "Nombre de usuario",
+      "role": "Rol",
+      "city": "Ciudad"
+    }
+  },
+  "setting-language": "Idioma",
+  "setting-language-change": "Cambiar idioma",
+  "setting-language-select": "Selecciona tu idioma predeterminado.",
+  "password": {
+    "title": "Contraseña",
+    "description": "Introduce tu contraseña actual para cambiarla. Si te registraste con Google, usa 'restablecer contraseña'.",
+    "labels": {
+      "currentPassword": "Contraseña actual",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña"
+    }
+  }
+}
