@@ -1,0 +1,33 @@
+{
+  "contributor-dashboard": {
+    "title": "Tu Panel de Contribuidor",
+    "subtitle": "Desde aquí, puedes gestionar tus tareas y crecer como un miembro valioso de nuestra comunidad.",
+    "stop-notifications": "Dejar de recibir notificaciones de nuevas tareas",
+    "new-join-title": "¡Gracias por unirte al programa de Contribuidores de Socious!",
+    "new-join-subtitle": "Tu dedicación y experiencia son invaluables para mantener la integridad y el crecimiento de nuestra plataforma. Trabajemos juntos para generar un impacto duradero en la comunidad de Socious.",
+    "latest-disputes": "Últimas disputas",
+    "see-all-disputes": "Ver todas las disputas",
+    "leave-section": "Salir",
+    "leave-program": "Salir del Programa de Contribuidores",
+    "modal-title": "Salir del Programa de Contribuidores",
+    "modal-subtitle": "¿Estás seguro de que deseas salir del Programa de Contribuidores de Socious?",
+    "modal-body-1": "Valoramos tus contribuciones y nos entristecería verte partir. Si necesitas un descanso, podrías considerar pausar tu participación en su lugar.",
+    "modal-body-2": "Al pausar tu estado de contribuidor, podrás:",
+    "modal-bullet-1": "Dejar de recibir temporalmente nuevas notificaciones de tareas",
+    "modal-bullet-2": "Mantener tu estado de contribuidor",
+    "modal-bullet-3": "Reanudar tu participación cuando estés listo",
+    "modal-body-3": "Si aún deseas salir, ten en cuenta que:",
+    "modal-bullet-4": "Serás eliminado del Programa de Contribuidores y dejarás de recibir notificaciones de tareas",
+    "modal-bullet-5": "Perderás tu estado de contribuidor",
+    "modal-bullet-6": "Deberás pasar por el proceso de inscripción nuevamente si decides regresar en el futuro",
+    "leave": "Salir"
+  },
+  "common": {
+    "cancel": "Cancelar"
+  },
+  "empty-list": {
+    "image-alt": "Ícono de nube",
+    "no-disputes": "No se encontraron disputas",
+    "description": "Aquí están todas tus últimas disputas."
+  }
+}

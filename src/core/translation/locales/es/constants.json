@@ -1,0 +1,93 @@
+{
+  "remote-preferences": {
+    "onsite": "Presencial",
+    "remote": "Remoto",
+    "hybrid": "Híbrido"
+  },
+  "project-type": {
+    "one-off": "Proyecto único",
+    "part-time": "Tiempo parcial",
+    "full-time": "Tiempo completo"
+  },
+  "service-length": {
+    "less-than-a-day": "Menos de un día",
+    "1-3-days": "1-3 días",
+    "1-week": "1 semana",
+    "2-weeks": "2 semanas",
+    "less-than-a-month": "Menos de un mes",
+    "1-3-months": "1-3 meses",
+    "3-6-months": "3-6 meses",
+    "more-than-6-months": "Más de 6 meses"
+  },
+  "dispute-category": {
+    "scope-and-contract-disputes-issues": "Problemas de alcance y disputas contractuales",
+    "incomplete-or-unsatisfactory-work": "Trabajo incompleto o insatisfactorio",
+    "communication-problems": "Problemas de comunicación",
+    "scope-and-contract-disputes": "Disputas sobre alcance y contratos",
+    "intellectual-property-and-confidentiality": "Propiedad intelectual y confidencialidad",
+    "professionalism-and-conduct": "Profesionalismo y conducta",
+    "cancellation-and-refunds": "Cancelaciones y reembolsos",
+    "others": "Otros"
+  },
+  "events": {
+    "tec4impact": "Tech for Impact Summit 2024"
+  },
+  "experience_level": {
+    "no_experience": "Sin experiencia",
+    "entry": "Principiante",
+    "intermediate": "Intermedio",
+    "expert": "Experto"
+  },
+  "organization_size": {
+    "self_employed": "Autónomo",
+    "1_10_employees": "1-10 empleados",
+    "11_50_employees": "11-50 empleados",
+    "51_200_employees": "51-200 empleados",
+    "201_500_employees": "201-500 empleados",
+    "501_1000_employees": "501-1000 empleados",
+    "1001_5000_employees": "1001-5000 empleados",
+    "5001_10000_employees": "5001-10,000 empleados",
+    "10001_plus_employees": "10,001+ empleados"
+  },
+  "organization_type": {
+    "social_business": "Negocio social",
+    "non_profit": "Organización sin ánimo de lucro / Caridad",
+    "social_cooperative": "Cooperativa social",
+    "impact_investing": "Fondos/Fundaciones de inversión de impacto",
+    "public_institution": "Institución pública",
+    "intergovernmental": "Organización intergubernamental (ej. ONU)",
+    "impact_department": "Departamento de impacto en una empresa con fines de lucro (ej. RSC)",
+    "other": "Otro"
+  },
+  "payment_range": {
+    "label": "Rango de pago"
+  },
+  "commitment": {
+    "label": "Compromiso"
+  },
+  "weekly_hours": {
+    "label": "Horas semanales"
+  },
+  "project_length": {
+    "less_than_a_day": "Menos de un día",
+    "less_than_a_month": "Menos de un mes",
+    "1_3_months": "1-3 meses",
+    "3_6_months": "3-6 meses",
+    "more_than_6_months": "Más de 6 meses",
+    "less_than_1_day": "<1 día",
+    "less_than_1_month": "<1 mes"
+  },
+  "payment_scheme": {
+    "hourly": "Por hora",
+    "fixed": "Fijo"
+  },
+  "project_type": {
+    "one_off": "Proyecto único",
+    "part_time": "Tiempo parcial",
+    "full_time": "Tiempo completo"
+  },
+  "payment_type": {
+    "volunteer": "Voluntario",
+    "paid": "Pagado"
+  }
+}

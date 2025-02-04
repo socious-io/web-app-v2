@@ -1,0 +1,23 @@
+{
+  "nav-dashboard": "대시보드",
+  "nav-jobs": "채용 공고",
+  "nav-find-job": "채용 공고 찾기",
+  "nav-saved-jobs": "저장된 채용 공고",
+  "nav-applied-jobs": "지원한 채용 공고",
+  "nav-contracts": "계약",
+  "nav-overview": "개요",
+  "nav-disputes": "분쟁",
+  "nav-communities": "커뮤니티",
+  "nav-feeds": "피드",
+  "nav-connections": "연결",
+  "nav-messages": "메시지",
+  "nav-payments": "결제",
+  "nav-credentials": "자격 증명",
+  "nav-refer": "추천하고 보상받기",
+  "nav-contributor": "기여자",
+  "nav-contributor-dashboard": "기여자 대시보드",
+  "nav-dispute-resolution": "분쟁 해결",
+  "nav-setting": "설정",
+  "nav-logout": "로그아웃",
+  "nav-login": "로그인"
+}

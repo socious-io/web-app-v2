@@ -1,0 +1,55 @@
+{
+  "job-saved": "저장된 채용 공고",
+  "job-your-saved": "내가 저장한 채용 공고",
+  "job-find-work": "나와 세상에 의미 있는 일을 찾아보세요",
+  "job-see-more": "더 보기",
+  "job-fixed-price": "(고정 금액)",
+  "job-not-see": "이 공고는 다시 표시되지 않습니다",
+  "job-read-more": "더 읽기",
+  "job-recommended": "추천된 공고",
+  "job-profile-based-recommendation": "프로필 및 검색 기록 기반 추천",
+  "job-see-recommendations": "모든 추천 보기",
+  "job-all": "전체 채용 공고",
+  "job-discover": "최신 채용 공고를 확인하세요",
+  "job-not-interested": "관심 없음",
+  "job-preference": {
+    "ONSITE": "현장 근무",
+    "REMOTE": "원격 근무",
+    "HYBRID": "하이브리드"
+  },
+  "job-length": {
+    "LESS_THAN_A_DAY": "1일 미만",
+    "LESS_THAN_A_MONTH": "1개월 미만",
+    "1_3_MONTHS": "1-3개월",
+    "3_6_MONTHS": "3-6개월",
+    "6_MONTHS_OR_MORE": "6개월 이상"
+  },
+  "job-type": {
+    "ONE_OFF": "단기 프로젝트",
+    "PART_TIME": "파트타임",
+    "FULL_TIME": "풀타임"
+  },
+  "job-experience": {
+    "0": "경력 없음",
+    "1": "초급",
+    "2": "중급",
+    "3": "고급"
+  },
+  "job-volunteer": "자원봉사",
+  "job-successful-app": "지원이 성공적으로 제출되었습니다",
+  "job-already-applied": "이미 이 공고에 지원하셨습니다",
+  "job-copy": "복사",
+  "job-anywhere": "어디서든 가능",
+  "job-about": "이 공고에 대해",
+  "job-apply": "지금 지원하기",
+  "job-close": "닫기",
+  "job-close-alert": "이 채용 공고를 닫으시겠습니까? 닫으면 보관됩니다.",
+  "job-close-title": "채용 공고 닫기",
+  "job-desc": "채용 공고 설명",
+  "job-about-company": "{{name}}에 대해",
+  "job-website": "웹사이트",
+  "job-back": "뒤로",
+  "job-list-title": "{{number}}개의 임팩트 채용 공고",
+  "job-applied": "지원한 채용 공고",
+  "job-my-applied": "내가 지원한 채용 공고"
+}

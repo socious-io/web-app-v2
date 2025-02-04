@@ -1,0 +1,161 @@
+{
+  "orgTeam": {
+    "teamManagement": {
+      "title": "Gestión del equipo",
+      "subtitle": "Gestiona a los miembros de tu equipo y sus permisos de cuenta aquí."
+    },
+    "inviteMembers": {
+      "title": "Invitar a miembros del equipo",
+      "subtitle": "Invita a miembros para publicar o gestionar tu organización",
+      "placeholder": "Selecciona un miembro del equipo",
+      "addAnother": "Añadir otro",
+      "addMember": "Añadir miembro"
+    },
+    "teamMembers": {
+      "title": "Miembros del equipo",
+      "subtitle": "Gestiona tu equipo existente y cambia roles/permisos.",
+      "nameHeader": "Nombre",
+      "delete": "Eliminar"
+    },
+    "leaveDeleteModal": {
+      "title": "¿Eliminar miembro?",
+      "subtitle": "¿Estás seguro de que deseas eliminar a {memberName}? Ya no podrán gestionar tu organización.",
+      "buttons": {
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
+      }
+    }
+  },
+  "userTeam": {
+    "teamManagement": {
+      "title": "Gestión del equipo",
+      "subtitle": "Gestiona tus equipos"
+    },
+    "onTeams": {
+      "title": "En equipos",
+      "subtitle": "Actualmente estás en estos equipos."
+    },
+    "leaveButton": "Dejar",
+    "leaveModal": {
+      "lastMemberTitle": "¿Dejar equipo?",
+      "lastMemberSubtitle": "Actualmente eres el último miembro de este equipo. Desafortunadamente, esto significa que no puedes dejar el equipo hasta que añadas otro miembro.",
+      "optionsTitle": "Aquí están tus opciones:",
+      "assignMemberTitle": "Asignar miembro:",
+      "assignMemberDescription": "Elige a otro miembro del equipo en el que confíes y otórgales derechos. Esto te permitirá dejar el equipo mientras aseguras que alguien más se quede para gestionarlo.",
+      "deleteOrganizationTitle": "Eliminar la organización:",
+      "deleteOrganizationDescription": "Si la organización ya no es necesaria, puedes optar por eliminarla por completo.",
+      "defaultTitle": "¿Dejar equipo?",
+      "defaultSubtitle": "¿Estás seguro de que deseas dejar {teamName}?",
+      "buttons": {
+        "close": "Cerrar",
+        "cancel": "Cancelar",
+        "leave": "Dejar"
+      }
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "tabs": {
+      "account": "Cuenta",
+      "team": "Equipo",
+      "password": "Contraseña",
+      "plan": "Plan",
+      "notifications": "Notificaciones",
+      "language": "Idioma"
+    },
+    "items": {
+      "account": "Cuenta",
+      "team": "Equipo",
+      "password": "Contraseña",
+      "plan": "Plan",
+      "notifications": "Notificaciones",
+      "language": "Idioma"
+    }
+  },
+  "account": {
+    "info": {
+      "title": "Información de la cuenta"
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "save": "Guardar"
+    },
+    "fields": {
+      "name": "Nombre",
+      "email": "Dirección de correo electrónico",
+      "username": "Nombre de usuario",
+      "role": "Rol",
+      "city": "Ciudad"
+    },
+    "closeAccount": {
+      "link": "Cerrar tu cuenta",
+      "title": "¿Cerrar cuenta?",
+      "description": "Cerrar tu cuenta eliminará toda tu actividad existente en Socious, incluyendo las conexiones que hayas hecho, trabajos y contratos.",
+      "irreversible": "Esta acción es irreversible.",
+      "reason": "Razón (opcional)",
+      "placeholder": "Por favor, dinos por qué estás cerrando tu cuenta.",
+      "buttons": {
+        "cancel": "Cancelar",
+        "delete": "Eliminar mi cuenta permanentemente"
+      }
+    }
+  },
+  "setting-language": "idioma",
+  "setting-language-change": "Cambiar idioma",
+  "setting-language-select": "Selecciona tu idioma predeterminado.",
+  "setting-buttons": {
+    "save": "guardar",
+    "cancel": "cancelar"
+  },
+  "setting-language-labels": {
+    "en": "English (US)",
+    "jp": "Japanese 日本語",
+    "es": "Spanish Español",
+    "kr": "Korean 한국어"
+  },
+  "password": {
+    "title": "Contraseña",
+    "description": "Por favor ingresa tu contraseña actual para cambiarla. Si te registraste a través de Google, cierra sesión y usa 'olvidé mi contraseña' para restablecer tu contraseña.",
+    "labels": {
+      "currentPassword": "Contraseña actual",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar nueva contraseña"
+    },
+    "placeholders": {
+      "currentPassword": "Contraseña actual",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar nueva contraseña"
+    },
+    "validations": {
+      "minLength": "Debe tener al menos 8 caracteres",
+      "specialCharacter": "Debe contener un carácter especial",
+      "passwordsMatch": "Las contraseñas coinciden"
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "update": "Actualizar Contraseña"
+    },
+    "errors": {
+      "currentPasswordRequired": "Se requiere la contraseña actual",
+      "passwordRequired": "Se requiere la contraseña",
+      "minimumLength": "Mínimo 8 caracteres",
+      "complexityWeak": "La complejidad de la contraseña es débil",
+      "confirmPasswordRequired": "Se requiere confirmar la contraseña",
+      "passwordsMustMatch": "Las contraseñas deben coincidir"
+    },
+    "alerts": {
+      "cantMatch": "Tu contraseña no puede ser igual a la contraseña actual",
+      "incorrect": "Tu contraseña actual es incorrecta"
+    }
+  },
+  "notification": {
+    "title": "Configuración de notificaciones",
+    "description": "Podemos seguir enviándote notificaciones importantes sobre tu cuenta fuera de la configuración de notificaciones.",
+    "saveButton": "Guardar"
+  },
+  "plan": {
+    "title": "Plan",
+    "description": "Gestiona tu plan y detalles de pago a través de Stripe.",
+    "manageSubscription": "Gestionar mi suscripción"
+  }
+}

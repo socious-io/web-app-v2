@@ -1,0 +1,26 @@
+{
+  "general-back": "Atrás",
+  "general-log-out": "Cerrar sesión",
+  "general-cause-social": "Problemas sociales (General)",
+  "general-popular": "Popular",
+  "general-file-uploader": {
+    "click": "Haz clic para subir",
+    "drag": "o arrastra y suelta",
+    "or": "o",
+    "max": "máx"
+  },
+  "general-copy": "Copiar",
+  "general-payout-account": {
+    "title": "Agregar una cuenta de pago",
+    "subtitle": "Socious se asocia con Stripe para pagos. Al continuar, serás dirigido al sitio web de Stripe.",
+    "country-placeholder": "Buscar un país",
+    "continue": "Continuar",
+    "cancel": "Cancelar",
+    "failed": "Fallido"
+  },
+  "general-card": {
+    "remove": "Eliminar",
+    "expiry": "Vencimiento",
+    "ending": "termina en"
+  }
+}

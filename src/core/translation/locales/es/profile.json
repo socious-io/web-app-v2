@@ -1,0 +1,58 @@
+{
+  "profile-view": "Ver perfil",
+  "profile-connection-number": "{{number}} conexiones",
+  "profile-follower-number": "{{number}} seguidores",
+  "profile-location": "Ubicación",
+  "profile-header": {
+    "verify-identity": {
+      "title": "Verifica tu identidad",
+      "subtitle": "Para acceder a las recomendaciones, necesitas un DID de Atala PRISM y verificar tu identidad.",
+      "learn-more": "Más información",
+      "verify-now": "Verificar ahora"
+    },
+    "upload-banner": "Subir banner",
+    "actions": {
+      "share": "Compartir",
+      "request-sent": "Solicitud enviada",
+      "connect": "Conectar",
+      "message": "Mensaje"
+    }
+  },
+  "main-info": {
+    "connections": "conexiones",
+    "followers": "seguidores",
+    "impact-points": "Puntos de impacto",
+    "open-to-volunteer": "Disponible para voluntariado",
+    "location": "Ubicación",
+    "languages": "Idiomas",
+    "industry": "Industria",
+    "size": "Tamaño",
+    "website": "Sitio web"
+  },
+  "user-profile": {
+    "about": "Acerca de",
+    "services": "Servicios"
+  },
+  "summary": {
+    "title": "Resumen",
+    "see-more": "Ver más"
+  },
+  "culture": {
+    "title": "Cultura"
+  },
+  "experiences": {
+    "title": "Experiencia",
+    "addExperience": "Agregar experiencia",
+    "now": "Ahora",
+    "verificationPending": "Verificación pendiente",
+    "verifyExperience": "Verificar experiencia",
+    "claimCertificate": "Solicitar certificado",
+    "certificateClaimed": "Certificado reclamado",
+    "rejectedFrom": "Rechazado por {{company}}",
+    "showAll": "Mostrar todo",
+    "verificationRequestSent": "Solicitud de verificación enviada con éxito",
+    "requestSent": "Solicitud enviada",
+    "close": "Cerrar",
+    "unverified": "No verificado"
+  }
+}

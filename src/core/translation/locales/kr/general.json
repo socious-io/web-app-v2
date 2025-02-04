@@ -1,0 +1,26 @@
+{
+  "general-back": "뒤로",
+  "general-log-out": "로그아웃",
+  "general-cause-social": "사회 문제 (일반)",
+  "general-popular": "인기",
+  "general-file-uploader": {
+    "click": "클릭하여 업로드",
+    "drag": "또는 끌어서 놓기",
+    "or": "또는",
+    "max": "최대"
+  },
+  "general-copy": "복사",
+  "general-payout-account": {
+    "title": "지급 계좌 추가",
+    "subtitle": "Socious는 Stripe과 협력하여 결제를 처리합니다. 계속을 선택하면 Stripe 웹사이트로 이동합니다.",
+    "country-placeholder": "국가 검색",
+    "continue": "계속",
+    "cancel": "취소",
+    "failed": "실패"
+  },
+  "general-card": {
+    "remove": "제거",
+    "expiry": "유효기간",
+    "ending": "끝자리"
+  }
+}

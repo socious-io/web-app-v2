@@ -1,0 +1,23 @@
+{
+  "nav-dashboard": "Panel de control",
+  "nav-jobs": "Empleos",
+  "nav-find-job": "Buscar empleo",
+  "nav-saved-jobs": "Empleos guardados",
+  "nav-applied-jobs": "Empleos aplicados",
+  "nav-contracts": "Contratos",
+  "nav-overview": "Resumen",
+  "nav-disputes": "Disputas",
+  "nav-communities": "Comunidades",
+  "nav-feeds": "Publicaciones",
+  "nav-connections": "Conexiones",
+  "nav-messages": "Mensajes",
+  "nav-payments": "Pagos",
+  "nav-credentials": "Credenciales",
+  "nav-refer": "Recomendar y ganar",
+  "nav-contributor": "Colaborador",
+  "nav-contributor-dashboard": "Panel de colaboradores",
+  "nav-dispute-resolution": "Resolución de disputas",
+  "nav-setting": "Configuración",
+  "nav-logout": "Cerrar sesión",
+  "nav-login": "Iniciar sesión"
+}

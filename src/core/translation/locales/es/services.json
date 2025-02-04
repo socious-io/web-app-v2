@@ -1,0 +1,79 @@
+{
+  "service-new": "Agregar un servicio",
+  "service-empty": {
+    "title": "Crear un nuevo servicio",
+    "subtitle": "Cuanto más claro sea el servicio, más rápido te contratarán."
+  },
+  "service-card": {
+    "delivery": "entrega",
+    "duplicate": "Duplicar",
+    "delete": "Eliminar",
+    "edit": "Editar"
+  },
+  "service-delete": {
+    "title": "¿Eliminar servicio?",
+    "subtitle": "¿Estás seguro de que deseas eliminar este servicio?",
+    "cancel-button": "Cancelar",
+    "delete-button": "Eliminar"
+  },
+  "service-form": {
+    "header": "Crear nuevo servicio",
+    "header-edit": "Editar servicio",
+    "subheader": "Cuéntanos más sobre tu servicio",
+    "error-message": "Este campo es obligatorio",
+    "error-positive-message": "El valor debe ser un número positivo",
+    "name": "Nombre del servicio",
+    "name-description": "Agrega un nombre claro y conciso para el servicio que deseas ofrecer",
+    "name-placeholder": "Ejemplo: Diseño de logotipo",
+    "category": "Categoría del servicio",
+    "category-placeholder": "Selecciona una categoría",
+    "description": "Descripción",
+    "description-description": "Ingresa una descripción de lo que ofrecerás",
+    "description-placeholder": "Escribe unas frases sobre tu servicio",
+    "delivery": "Tiempo de entrega",
+    "delivery-placeholder": "Selecciona un tiempo de entrega",
+    "delivery-options": {
+      "LESS_THAN_A_DAY": "Menos de un día",
+      "1_3_DAYS": "1-3 días",
+      "1_WEEK": "1 semana",
+      "2_WEEKS": "2 semanas",
+      "LESS_THAN_A_MONTH": "Menos de un mes",
+      "1_3_MONTHS": "1-3 meses",
+      "3_6_MONTHS": "3-6 meses",
+      "6_MONTHS_OR_MORE": "Más de 6 meses"
+    },
+    "hours": "Horas estimadas totales",
+    "hours-postfix": "horas",
+    "payment": "Métodos de pago",
+    "payment-fiat": "Precio",
+    "payment-crypto": "Tu billetera",
+    "payment-crypto-description": "Conecta una billetera para ingresar un precio",
+    "skills": "Habilidades",
+    "skills-description": "Selecciona al menos 1 y hasta 5 habilidades relevantes",
+    "skills-placeholder": "Buscar una habilidad",
+    "samples": "Ejemplos de trabajo",
+    "samples-description": "Máximo 3 imágenes",
+    "cancel": {
+      "title": "¿Descartar cambios?",
+      "subtitle": "Tienes cambios no guardados. ¿Estás seguro de que deseas salir?",
+      "button": "Cancelar",
+      "leave-button": "Salir"
+    },
+    "publish": {
+      "title": "Servicio publicado",
+      "subtitle": "Tu servicio se ha actualizado correctamente",
+      "button": "Publicar",
+      "close-button": "Cerrar"
+    }
+  },
+  "service-detail": {
+    "header": "Volver a servicios",
+    "share": "Compartir",
+    "edit": "Editar servicio",
+    "contact": "Contáctame",
+    "about": "Acerca de este servicio",
+    "fixed": "Precio fijo",
+    "purchase": "Comprar",
+    "more": "Leer más"
+  }
+}
