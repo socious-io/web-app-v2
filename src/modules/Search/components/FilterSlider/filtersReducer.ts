@@ -14,6 +14,7 @@ export type FiltersType = {
   paymentType: LabelValue;
   openToVolunteer: boolean | null;
   events: LabelValue | null;
+  'languages.name': LabelValue[];
 };
 
 export const initialFilters: FiltersType = {
@@ -28,6 +29,7 @@ export const initialFilters: FiltersType = {
   paymentType: { label: 'Paid', value: 'PAID' },
   openToVolunteer: null,
   events: null,
+  'languages.name': [],
 };
 
 export function filtersReducer(filters: FiltersType, action: { type: keyof FiltersType | 'reset'; payload: any }) {
@@ -38,6 +40,8 @@ export function filtersReducer(filters: FiltersType, action: { type: keyof Filte
       return { ...filters, causes: action.payload };
     case 'skills':
       return { ...filters, skills: action.payload };
+    case 'languages.name':
+      return { ...filters, 'languages.name': action.payload };
     case 'organizationSize':
       return { ...filters, organizationSize: action.payload };
     case 'location':
@@ -57,7 +61,6 @@ export function filtersReducer(filters: FiltersType, action: { type: keyof Filte
     case 'events':
       return { ...filters, events: action.payload };
     default:
-      console.log('Not valid', action.payload);
       return filters;
   }
 }
