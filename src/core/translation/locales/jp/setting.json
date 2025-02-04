@@ -109,7 +109,9 @@
   },
   "setting-language-labels": {
     "en": "English (US)",
-    "jp": "Japanese 日本語"
+    "jp": "Japanese 日本語",
+    "es": "Spanish Español",
+    "ko": "Korean 한국어"
   },
   "password": {
     "title": "パスワード",

@@ -887,10 +887,10 @@ export const supportedLanguages: LanguageOption[] = [
   },
   {
     value: 'es',
-    label: translate('setting-language-labels.jp'),
+    label: translate('setting-language-labels.es'),
   },
   {
     value: 'kr',
-    label: translate('setting-language-labels.jp'),
+    label: translate('setting-language-labels.kr'),
   },
 ];
