@@ -38,6 +38,7 @@ export interface OptionType {
 }
 
 //FIXME: create a specific directory for each adaptor later
+import { Languages } from 'src/constants/constants';
 import { SOCIAL_CAUSES } from 'src/constants/SOCIAL_CAUSES';
 import store from 'src/store';
 import { setEvents } from 'src/store/reducers/events.reducer';
@@ -134,4 +135,11 @@ export function eventsToCategory(events: Event[] = []) {
   } catch {
     return [];
   }
+}
+
+export function languagesToCategoryAdaptor() {
+  return Object.entries(Languages).map(([value, label]) => ({
+    value,
+    label,
+  }));
 }
