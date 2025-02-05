@@ -15,12 +15,17 @@ interface CreateUpdateExperienceProps {
   handleClose: () => void;
   experience?: Experience;
   readonly?: boolean;
+  hasDeleteButton?: boolean;
+  onAddExperience?: (experience: Experience, isEdit: boolean) => void;
 }
+
 export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
   open,
   handleClose,
   experience,
   readonly,
+  hasDeleteButton = true,
+  onAddExperience,
 }) => {
   const {
     jobCategories,
@@ -55,7 +60,8 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     endDateErrors,
     volunteer,
     handleCheckVolunteer,
-  } = useCreateUpdateExperience(handleClose, experience);
+    setCompanies,
+  } = useCreateUpdateExperience(handleClose, experience, onAddExperience);
 
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
@@ -89,6 +95,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         onChange={onSelectCompany}
         value={companyVal}
         errors={errors['org']?.label?.message ? [errors['org']?.label?.message.toString()] : undefined}
+        onSetCompanies={setCompanies}
       />
       <SearchDropdown
         id="city"
@@ -219,7 +226,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
         {translate('experience.cancel')}
       </Button>
-      {experience && (
+      {hasDeleteButton && experience && (
         <Button
           variant="text"
           color="primary"
