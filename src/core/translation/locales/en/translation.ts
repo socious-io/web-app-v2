@@ -1,3 +1,4 @@
+import certificates from './certificate.json';
 import chats from './chats.json';
 import companySize from './companySize.json';
 import connections from './connections.json';
@@ -66,5 +67,6 @@ export function generateTranslationFile() {
     termsCondition,
     userTeam,
     contribute,
+    certificates,
   );
 }
