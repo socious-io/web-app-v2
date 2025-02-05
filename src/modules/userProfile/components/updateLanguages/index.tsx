@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 
@@ -13,7 +14,7 @@ export const UpdateLanguages: React.FC<UpdateLanguagesProps> = ({ languages, set
   return (
     <div className="w-full flex flex-col gap-4 py-5 items-start">
       <Typography variant="h4" className="text-Gray-light-mode-700">
-        Languages
+        {translate('languages.title')}
       </Typography>
       {languages?.map(l => (
         <LanguageItem
@@ -26,7 +27,7 @@ export const UpdateLanguages: React.FC<UpdateLanguagesProps> = ({ languages, set
       ))}
       <Button variant="text" color="primary" onClick={addNewLanguage} customStyle={css.addBtn}>
         <Icon fontSize={20} name="plus" className="text-Brand-700" />
-        Add a language
+        {translate('languages.add')}
       </Button>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { LanguageCode, LanguageLevel } from 'src/core/api';
 import { Error, LanguageProps } from 'src/modules/userProfile/containers/editInfo/editInfo.types';
+import { v4 as uuidv4 } from 'uuid';
 
 export const UseUpdateLanguage = (
   languages: LanguageProps[] | null,
@@ -10,7 +11,7 @@ export const UseUpdateLanguage = (
   const addNewLanguage = () => {
     let langs = languages?.length ? [...languages] : [];
     const newLang: LanguageProps = {
-      id: languages?.length.toString() || '0',
+      id: uuidv4(),
       name: undefined,
       level: undefined,
       isNew: true,
