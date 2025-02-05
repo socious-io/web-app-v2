@@ -3,6 +3,7 @@ import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 // import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
+import { SERVICE_LENGTH } from 'src/constants/SERVICE_LENGTH';
 import { translate } from 'src/core/utils'; // Added for translations
 import Accordion from 'src/modules/general/components/Accordion';
 import { Button } from 'src/modules/general/components/Button';
@@ -155,7 +156,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
   const renderServicesFilters = () => {
     return (
       <div className="flex flex-col gap-6">
-        <SearchDropdown
+        {/* <SearchDropdown
           id="location"
           label="Location"
           isAsync
@@ -176,7 +177,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
           icon="search-lg"
           hasDropdownIcon={true}
           onChange={value => onSelectSearchDropdown('preference', value)}
-        />
+        /> */}
 
         <SearchDropdown
           id="service-category"
@@ -193,7 +194,7 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
         <CheckboxGroup
           id="service-length"
           label="Delivery time"
-          items={PROJECT_LENGTH_V2}
+          items={SERVICE_LENGTH}
           selectedItems={filters.length}
           onChange={value => onSelectCheckboxs('length', value)}
         />
