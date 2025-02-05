@@ -27,7 +27,7 @@ export const OrgCards: React.FC<OrgCardsProps> = () => {
         title={translate('dashboard-find-professional')}
         description={translate('dashboard-find-professional-desc')}
         bgColor={variables.color_dark_vanilla_100}
-        redirectUrl="/"
+        redirectUrl="/search?q=&type=users&page=1"
         buttonLabel="Explore"
       />
 
