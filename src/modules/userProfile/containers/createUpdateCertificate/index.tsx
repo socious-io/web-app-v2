@@ -5,7 +5,7 @@ import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
-import { CompanySearchDropdown } from 'src/modules/general/containers/CompanySearchDropdown';
+import CompanySearchDropdown from 'src/modules/general/containers/CompanySearchDropdown';
 
 import { useCreateUpdateCertificate } from './useCreateUpdateCertificate';
 

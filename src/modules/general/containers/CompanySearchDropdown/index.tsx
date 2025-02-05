@@ -6,7 +6,7 @@ import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 
 import { CompanySearchDropdownProps } from './index.types';
 
-export const CompanySearchDropdown: React.FC<CompanySearchDropdownProps> = ({ value, onChange, errors, ...rest }) => {
+const CompanySearchDropdown: React.FC<CompanySearchDropdownProps> = ({ value, onChange, errors, ...rest }) => {
   const searchCompanies = async (searchText: string, cb: (options: any) => void) => {
     try {
       if (searchText) {
@@ -62,3 +62,4 @@ export const CompanySearchDropdown: React.FC<CompanySearchDropdownProps> = ({ va
     />
   );
 };
+export default CompanySearchDropdown;
