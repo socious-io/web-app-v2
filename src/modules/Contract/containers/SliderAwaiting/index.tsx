@@ -109,9 +109,11 @@ const SliderAwaiting: React.FC<ContractSliderProps> = ({ contract, disableMessag
         disableSubmitButton={!allowConfirm}
         submitButtonLabel={translate('cont-confirm')}
       >
-        <div className="mb-6">
-          <Web3Connect />
-        </div>
+        {contract.payment === 'CRYPTO' && (
+          <div className="mb-6">
+            <Web3Connect />
+          </div>
+        )}
       </AlertModal>
       <InitiateDisputeModal
         open={openInitiateDisputeModal}
