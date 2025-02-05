@@ -15,6 +15,7 @@ import intro from './intro.json';
 import jobs from './jobs.json';
 import kyc from './kyc.json';
 import languages from './languages.json';
+import linkedin from './linkedin.json';
 import login from './login.json';
 import navigation from './navigation.json';
 import onboarding from './onboarding.json';
@@ -68,5 +69,6 @@ export function generateTranslationFile() {
     userTeam,
     contribute,
     certificates,
+    linkedin,
   );
 }
