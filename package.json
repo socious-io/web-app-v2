@@ -90,6 +90,7 @@
     "react-select": "^5.8.0",
     "socket.io-client": "^4.8.1",
     "ssi-auth-lib": "^0.0.12",
+    "uuid": "^11.0.5",
     "viem": "^2.22.4",
     "vite-tsconfig-paths": "^4.0.5",
     "wagmi": "^2.14.6",
