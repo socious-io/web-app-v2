@@ -18,6 +18,7 @@ export const Avatar: React.FC<AvatarProps> = props => {
     iconName,
     iconSize,
     iconCustomStyle,
+    badgeSize = '20px',
     ...rest
   } = props;
 
@@ -58,7 +59,7 @@ export const Avatar: React.FC<AvatarProps> = props => {
         </div>
       )}
       {isVerified && (
-        <div className={css.verifiedBadge}>
+        <div className={css.verifiedBadge} style={{ width: badgeSize, height: badgeSize || '20px' }}>
           <img src="/icons/verified-blue.svg" />
         </div>
       )}

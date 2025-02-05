@@ -1,0 +1,18 @@
+{
+  "certificates.save": "Save",
+  "certificates.add-certificate": "Add Certificate",
+  "certificates.cancel": "Cancel",
+  "certificates.delete-certificate": "Delete Certificate",
+  "certificates.name-label": "Name*",
+  "certificates.name-placeholder": "Certificate name",
+  "certificates.issue-date-label": "Issue date",
+  "certificates.expiration-date-label": "Expiration date",
+  "certificates.month-placeholder": "Month",
+  "certificates.year-placeholder": "Year",
+  "certificates.credential-id-label": "Credential ID",
+  "certificates.credential-id-placeholder": "ID",
+  "certificates.credential-url-label": "Credential URL",
+  "certificates.credential-url-placeholder": "www.example.com",
+  "certificates.description-label": "Description",
+  "certificates.description-placeholder": "Enter a description..."
+}

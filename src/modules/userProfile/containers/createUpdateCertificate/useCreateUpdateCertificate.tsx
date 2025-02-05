@@ -2,13 +2,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrganization, Organization, otherProfileByUsername, search, User } from 'src/core/api';
+import { createOrganization, Organization, otherProfileByUsername, User } from 'src/core/api';
 import { createAdditional, removeAdditional, updateAdditional } from 'src/core/api/additionals/additionals.api';
 import { AdditionalReq, AdditionalRes, CertificateMeta } from 'src/core/api/additionals/additionals.types';
 import { urlPattern } from 'src/core/regexs';
 import { monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
-import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 import * as yup from 'yup';
@@ -165,32 +164,6 @@ export const useCreateUpdateCertificate = (
     } else setDateError('');
   }, [issueMonthVal, issueYearVal, expireMonthVal, expireYearVal]);
 
-  const orgToOption = (orgList: Organization[], searchText: string) => {
-    const options = orgList.map(s => ({
-      value: s.id,
-      label: s.name,
-      icon: s.image ? (
-        <img src={s.image.url} width={24} height={24} alt="" />
-      ) : (
-        <Avatar type="organizations" size="24px" />
-      ),
-      city: s.city,
-      imageId: s.image?.id,
-      imageUrl: s.image?.url,
-    }));
-    return options;
-  };
-  const searchOrgs = async (searchText: string, cb) => {
-    try {
-      if (searchText) {
-        const response = await search({ type: 'organizations', q: searchText, filter: {} }, { page: 1, limit: 10 });
-        cb(orgToOption(response.items, searchText));
-      }
-    } catch (error) {
-      console.error('Error fetching city data:', error);
-    }
-  };
-
   const onSelectOrg = newCompanyVal => {
     const value = newCompanyVal.value === newCompanyVal.label ? '' : newCompanyVal.value;
     setValue('orgId', value, { shouldValidate: true });
@@ -290,7 +263,6 @@ export const useCreateUpdateCertificate = (
     user,
     errors,
     orgVal,
-    searchOrgs,
     onSelectOrg,
     issueYear,
     issueMonth,
