@@ -186,5 +186,8 @@
     "title": "証明書",
     "addCertificate": "証明書を追加",
     "showAll": "すべて表示"
+  },
+  "card": {
+    "view": "プロフィールを見る"
   }
 }

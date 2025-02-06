@@ -31,5 +31,11 @@
   "dashboard-impact-see": "See my impact",
   "dashboard-total-hours": "Total hours contributed",
   "dashboard-hours-worked": "Hours worked",
-  "dashboard-hours-volunteer": "Hours volunteered"
+  "dashboard-hours-volunteer": "Hours volunteered",
+  "dashboard-find-professional-title": "Find services",
+  "dashboard-find-professional-description": "Hire mission-aligned services for your organization’s needs.",
+  "dashboard-find-professional-button-label": "Explore",
+  "dashboard-create-service-title": "Create service",
+  "dashboard-create-service-description": "Sell your skills and start earning today",
+  "dashboard-create-service-button-label": "Create now"
 }

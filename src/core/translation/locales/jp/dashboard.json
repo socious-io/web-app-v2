@@ -31,5 +31,11 @@
   "dashboard-impact-see": "私のインパクトを見る",
   "dashboard-total-hours": "貢献した総時間",
   "dashboard-hours-worked": "働いた時間",
-  "dashboard-hours-volunteer": "ボランティア時間"
+  "dashboard-hours-volunteer": "ボランティア時間",
+  "dashboard-find-professional-title": "サービスを探す",
+  "dashboard-find-professional-description": "組織のニーズに合ったミッション指向のサービスを依頼しましょう。",
+  "dashboard-find-professional-button-label": "探索する",
+  "dashboard-create-service-title": "サービスを作成する",
+  "dashboard-create-service-description": "あなたのスキルを売って、今日から稼ぎ始めましょう",
+  "dashboard-create-service-button-label": "今すぐ作成"
 }

@@ -186,5 +186,6 @@
     "title": "Certificates",
     "addCertificate": "Add certificate",
     "showAll": "Show all"
-  }
+  },
+  "card": { "view": "View profile" }
 }
