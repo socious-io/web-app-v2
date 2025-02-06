@@ -187,5 +187,11 @@
     "addCertificate": "Add certificate",
     "showAll": "Show all"
   },
-  "card": { "view": "View profile" }
+  "card": {
+    "view": "View profile"
+  },
+  "languages": {
+    "title": "Languages",
+    "add": "Add a language"
+  }
 }

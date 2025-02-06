@@ -19,6 +19,7 @@ import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
+import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
 const schema = yup
@@ -56,11 +57,15 @@ interface OptionType {
   label: string;
 }
 
-export const useCreateUpdateEducation = (handleClose: () => void, education?: Education) => {
+export const useCreateUpdateEducation = (
+  handleClose: () => void,
+  education?: Education,
+  onAddEducation?: (education: Education, isEdit: boolean) => void,
+) => {
   const user = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   }) as User;
-
+  const [schools, setSchools] = useState<Organization[]>([]);
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
   const [dateError, setDateError] = useState('');
@@ -172,6 +177,7 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
     try {
       if (searchText) {
         const response = await search({ type: 'organizations', q: searchText, filter: {} }, { page: 1, limit: 10 });
+        setSchools(response.items as Organization[]);
         cb(schoolToOption(response.items, searchText));
       }
     } catch (error) {
@@ -231,12 +237,23 @@ export const useCreateUpdateEducation = (handleClose: () => void, education?: Ed
       end_at: !endYear?.value && !endMonth?.value ? '' : endDate,
     };
 
-    payload = removedEmptyProps(payload) as EducationsReq;
-    if (education) await updateEducations(education.id, payload);
-    else await addEducations(payload);
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
-    dispatch(setIdentityType('users'));
+    if (onAddEducation) {
+      onAddEducation(
+        {
+          ...payload,
+          org: (schools?.find(school => school.id === organizationId) as Organization) || education?.org,
+          id: education ? education.id : uuidv4(),
+        },
+        !!education,
+      );
+    } else {
+      payload = removedEmptyProps(payload) as EducationsReq;
+      if (education) await updateEducations(education.id, payload);
+      else await addEducations(payload);
+      const updated = await otherProfileByUsername(user?.username || '');
+      dispatch(setIdentity(updated));
+      dispatch(setIdentityType('users'));
+    }
     handleClose();
   };
 

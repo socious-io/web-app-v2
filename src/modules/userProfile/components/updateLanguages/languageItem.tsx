@@ -11,14 +11,14 @@ interface LanguageItemProps {
   language: LanguageProps;
   editLanguage: (id: string, name: LanguageCode, level: string) => void;
   deleteLanguage: (id: string) => void;
-  errors: Error[];
+  errors?: Error[];
 }
-export const LanguageItem: React.FC<LanguageItemProps> = ({ language, editLanguage, deleteLanguage, errors }) => {
+export const LanguageItem: React.FC<LanguageItemProps> = ({ language, editLanguage, deleteLanguage, errors = [] }) => {
   const { name, level, onSelectLanguage, onSelectLevel, languageOptions, levelOptions } = useLanguageItem(
     language,
     editLanguage,
   );
-  const error = errors.find(e => e.id === language.id);
+  const error = errors?.find(e => e.id === language.id);
   return (
     <div className="flex flex-col w-full">
       <div className="w-full flex gap-4">

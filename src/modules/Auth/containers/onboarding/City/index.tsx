@@ -4,7 +4,7 @@ import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import css from './city.module.scss';
 import { useCity } from './useCity';
 export const City = () => {
-  const { searchCities, onSelectCity, updateSelectedStep, isFormValid, value, translate } = useCity();
+  const { searchCities, onSelectCity, onNextStep, isFormValid, value, translate } = useCity();
   return (
     <div className="md:pt-24 px-4 flex flex-col">
       <div className={css.header}>
@@ -33,7 +33,7 @@ export const City = () => {
       </div>
       <div className="flex-grow"></div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>
-        <Button disabled={!isFormValid} color="primary" block onClick={() => updateSelectedStep(4)}>
+        <Button disabled={!isFormValid} color="primary" block onClick={onNextStep}>
           {translate('onboarding-user-next-photo')}
         </Button>
       </div>

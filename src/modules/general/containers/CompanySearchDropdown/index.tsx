@@ -6,7 +6,13 @@ import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 
 import { CompanySearchDropdownProps } from './index.types';
 
-const CompanySearchDropdown: React.FC<CompanySearchDropdownProps> = ({ value, onChange, errors, ...rest }) => {
+const CompanySearchDropdown: React.FC<CompanySearchDropdownProps> = ({
+  value,
+  onChange,
+  errors,
+  onSetCompanies,
+  ...rest
+}) => {
   const searchCompanies = async (searchText: string, cb: (options: any) => void) => {
     try {
       if (searchText) {
@@ -21,6 +27,7 @@ const CompanySearchDropdown: React.FC<CompanySearchDropdownProps> = ({ value, on
           },
           { page: 1, limit: 10 },
         );
+        onSetCompanies?.(response.items);
         cb(orgToOption(response.items));
       }
     } catch (error) {

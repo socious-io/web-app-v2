@@ -738,6 +738,14 @@ export const LanguageLevel = {
   NATIVE: 'NATIVE',
 };
 
+export const LinkedInLanguageLevel = {
+  '(Elementary)': 'BASIC',
+  '(Limited Working)': 'CONVERSANT',
+  '(Professional Working)': 'PROFICIENT',
+  '(Full Professional)': 'FLUENT',
+  '(Native or Bilingual)': 'NATIVE',
+};
+
 export const MissionStatus = {
   ACTIVE: 'ACTIVE',
   COMPLETE: 'COMPLETE',

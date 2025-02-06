@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import { LanguageCode, LanguageLevel } from 'src/core/api';
 import { Error, LanguageProps } from 'src/modules/userProfile/containers/editInfo/editInfo.types';
+import { v4 as uuidv4 } from 'uuid';
 
 export const UseUpdateLanguage = (
   languages: LanguageProps[] | null,
   setLanguages: (newVal: LanguageProps[]) => void,
-  errors: Error[],
-  setErrors: (val: Error[]) => void,
+  setErrors?: (val: Error[]) => void,
 ) => {
   const addNewLanguage = () => {
     let langs = languages?.length ? [...languages] : [];
     const newLang: LanguageProps = {
-      id: languages?.length.toString() || '0',
+      id: uuidv4(),
       name: undefined,
       level: undefined,
       isNew: true,
@@ -31,7 +31,7 @@ export const UseUpdateLanguage = (
         errRes.push({ id: l.id, type: 'duplicated', messages: 'Selected language is duplicated' });
       }
     });
-    setErrors(errRes);
+    setErrors?.(errRes);
   };
 
   useEffect(() => {

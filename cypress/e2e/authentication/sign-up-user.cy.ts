@@ -118,6 +118,9 @@ describe('Sign up (User)', () => {
     //Just hit Complete your profile
     cy.contains('button', 'Complete your profile').click();
 
+    //Fill out manually
+    cy.contains('button', 'Fill out manually').click();
+
     //Select 3 social causes
     socialCauses.forEach(socialCause => cy.contains('span', socialCause).parent().click());
     cy.contains('button', 'Next: Skills').parent().click();

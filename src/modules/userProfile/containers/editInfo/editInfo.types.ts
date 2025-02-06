@@ -5,6 +5,7 @@ export interface Error {
   id: string;
   messages: string;
 }
+
 export interface LanguageProps {
   id: string;
   name: LanguageCode | undefined;
@@ -15,6 +16,6 @@ export interface LanguageProps {
 export interface UpdateLanguagesProps {
   languages: LanguageProps[] | null;
   setLanguages: (newval: LanguageProps[]) => void;
-  errors: Error[];
-  setErrors: (val: Error[]) => void;
+  errors?: Error[];
+  setErrors?: (val: Error[]) => void;
 }

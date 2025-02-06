@@ -13,6 +13,8 @@ interface CreateUpdateEducationProps {
   handleClose: () => void;
   education?: Education;
   readonly?: boolean;
+  hasDeleteButton?: boolean;
+  onAddEducation?: (education: Education, isEdit: boolean) => void;
 }
 
 export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
@@ -20,6 +22,8 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
   handleClose,
   education,
   readonly,
+  hasDeleteButton = true,
+  onAddEducation,
 }) => {
   const {
     schoolVal,
@@ -42,7 +46,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
     onDelete,
     startDateErrors,
     endDateErrors,
-  } = useCreateUpdateEducation(handleClose, education);
+  } = useCreateUpdateEducation(handleClose, education, onAddEducation);
 
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
@@ -171,7 +175,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
         {translate('createUpdateEducation.cancel')}
       </Button>
-      {education && (
+      {hasDeleteButton && education && (
         <Button
           variant="text"
           color="primary"
