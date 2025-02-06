@@ -33,6 +33,13 @@ export const UserCards: React.FC<UserCardsProps> = ({ profileCompleted, profileU
         />
       )}
       <DashboardCard
+        title={translate('dashboard-create-service-title')}
+        description={translate('dashboard-create-service-description')}
+        bgColor={variables.color_dark_vanilla_100}
+        redirectUrl="/services/create"
+        buttonLabel={translate('dashboard-create-service-button-label')}
+      />
+      <DashboardCard
         title={translate('dashboard-find-job')}
         description={translate('dashboard-find-job-desc')}
         bgColor={variables.color_dark_vanilla_100}
