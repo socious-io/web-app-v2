@@ -28,7 +28,7 @@
     "category": "Categoría del servicio",
     "category-placeholder": "Selecciona una categoría",
     "description": "Descripción",
-    "description-description": "Ingresa una descripción de lo que ofrecerás",
+    "description-description": "Ingresa una descripción de lo que vas a ofrecer",
     "description-placeholder": "Escribe unas frases sobre tu servicio",
     "delivery": "Tiempo de entrega",
     "delivery-placeholder": "Selecciona un tiempo de entrega",
@@ -42,38 +42,61 @@
       "3_6_MONTHS": "3-6 meses",
       "6_MONTHS_OR_MORE": "Más de 6 meses"
     },
-    "hours": "Horas estimadas totales",
+    "hours": "Total estimado de horas",
     "hours-postfix": "horas",
     "payment": "Métodos de pago",
     "payment-fiat": "Precio",
     "payment-crypto": "Tu billetera",
-    "payment-crypto-description": "Conecta una billetera para ingresar un precio",
-    "skills": "Habilidades",
-    "skills-description": "Selecciona al menos 1 y hasta 5 habilidades relevantes",
-    "skills-placeholder": "Buscar una habilidad",
-    "samples": "Ejemplos de trabajo",
-    "samples-description": "Máximo 3 imágenes",
-    "cancel": {
-      "title": "¿Descartar cambios?",
-      "subtitle": "Tienes cambios no guardados. ¿Estás seguro de que deseas salir?",
-      "button": "Cancelar",
-      "leave-button": "Salir"
-    },
-    "publish": {
-      "title": "Servicio publicado",
-      "subtitle": "Tu servicio se ha actualizado correctamente",
-      "button": "Publicar",
-      "close-button": "Cerrar"
-    }
+    "payment-crypto-description": "Conecta una billetera para ingresar un precio"
+  },
+  "skills": "Habilidades",
+  "skills-description": "Por favor, selecciona al menos de 1 a 5 habilidades relevantes",
+  "skills-placeholder": "Buscar una habilidad",
+  "samples": "Muestras de trabajo",
+  "samples-description": "Máximo 3 imágenes",
+  "cancel": {
+    "title": "¿Descartar cambios?",
+    "subtitle": "Tienes cambios sin guardar. ¿Estás seguro de que deseas salir?",
+    "button": "Cancelar",
+    "leave-button": "Salir"
+  },
+  "publish": {
+    "title": "Servicio publicado",
+    "subtitle": "Tu servicio ha sido actualizado correctamente",
+    "button": "Publicar",
+    "close-button": "Cerrar"
   },
   "service-detail": {
     "header": "Volver a servicios",
     "share": "Compartir",
     "edit": "Editar servicio",
     "contact": "Contáctame",
-    "about": "Acerca de este servicio",
+    "about": "Sobre este servicio",
     "fixed": "Precio fijo",
     "purchase": "Comprar",
-    "more": "Leer más"
+    "more": "Leer más",
+    "order": {
+      "step-1": "Detalles del pedido",
+      "step-2": "Confirmar y pagar",
+      "step-3": "Envío de requisitos",
+      "summary": "Resumen del pedido",
+      "fee": "Tarifa de Socious",
+      "total": "Total",
+      "checkout-button": "Continuar con el pago",
+      "confirm-button": "Confirmar y pagar",
+      "card-header": "Opciones de pago guardadas",
+      "card-subheader": "Elige una tarjeta",
+      "card-new": "Agregar una nueva tarjeta",
+      "wallet-header": "Selecciona una billetera",
+      "status": "Estado",
+      "number": "Pedido",
+      "date": "Fecha",
+      "success-payment": "Gracias por tu compra",
+      "requirements-description": "Envía tus requisitos para completar tu pedido",
+      "requirements-description-placeholder": "Introduce una descripción...",
+      "requirements-files": "Adjuntar archivos (opcional)",
+      "requirements-files-desc": "Máximo {{max}} archivo(s)",
+      "send-button": "Enviar"
+    }
   }
 }

@@ -1,11 +1,10 @@
 {
-    "chat-title": "Mensajes",
-    "chat-new": "Nuevo mensaje",
-    "chat-to": "Para:",
-    "chat-send": "Enviar",
-    "chat-send-placeholder": "Escribe un mensaje",
-    "chat-error-alert": "No puedes iniciar un chat con el contacto seleccionado",
-    "chat-error-alert-title": "Error",
-    "chat-type-name": "Escribe un nombre..."
-  }
-  
+  "chat-title": "Mensajes",
+  "chat-new": "Nuevo mensaje",
+  "chat-to": "Para:",
+  "chat-send": "Enviar",
+  "chat-send-placeholder": "Escribe un mensaje",
+  "chat-error-alert": "No puedes iniciar un chat con el contacto seleccionado",
+  "chat-error-alert-title": "Error",
+  "chat-type-name": "Escribe un nombre..."
+}
