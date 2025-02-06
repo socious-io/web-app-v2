@@ -33,7 +33,7 @@ const ServiceDetail = () => {
               ))}
             </div>
           )}
-          <span className={styles['content__title']}>Description</span>
+          <span className={styles['content__title']}>{translate('service-detail.description')}</span>
           <ExpandableText
             seeMoreText={translate('service-detail.more')}
             text={service.description}
@@ -45,7 +45,7 @@ const ServiceDetail = () => {
         <ServiceDetailBox
           customStyle={styles['content__right']}
           serviceDetail={serviceDetail}
-          onPurchase={!isOwner ? onPurchase : undefined}
+          // onPurchase={!isOwner ? onPurchase : undefined}
         />
       </div>
       <Slider
