@@ -8,12 +8,12 @@ import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import { useLanguage } from './useLanguage';
 const Languge = () => {
   const { onCancel, onSave, unsavedValue, setUnsavedValue } = useLanguage();
-  const FlagGenerator = ({ value }) => <img src={`/icons/countries/${value}.svg`} width={20} height={20} alt={value} />;
+  // const FlagGenerator = ({ value }) => <img src={`/icons/countries/${value}.svg`} width={20} height={20} alt={value} />;
 
-  const languageOptions: LanguageOption[] = supportedLanguages.map(lang => ({
-    ...lang,
-    icon: <FlagGenerator value={lang.value} />,
-  }));
+  // const languageOptions: LanguageOption[] = supportedLanguages.map(lang => ({
+  //   ...lang,
+  //   icon: <FlagGenerator value={lang.value} />,
+  // }));
 
   const customFormatOptionLabel = (option: LanguageOption) => (
     <div className="flex items-center">
@@ -41,9 +41,9 @@ const Languge = () => {
                 className="mb-5"
                 placeholder={'English (US)'}
                 formatOptionLabel={data => customFormatOptionLabel(data as LanguageOption)}
-                options={languageOptions}
+                options={supportedLanguages}
                 isSearchable={false}
-                value={languageOptions.find(option => option.value === unsavedValue.value)}
+                value={supportedLanguages.find(option => option.value === unsavedValue.value)}
                 onChange={(newValue: unknown) => {
                   const value = newValue as { label: string; value: string };
                   setUnsavedValue(value);

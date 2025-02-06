@@ -1,0 +1,21 @@
+{
+    "user-team": {
+      "leave-team-title": "팀을 떠나시겠습니까?",
+      "leave-team-last-member-subtitle": "현재 이 팀의 마지막 멤버입니다. 다른 멤버를 추가하기 전까지 팀을 떠날 수 없습니다.",
+      "leave-team-options": "선택 가능한 옵션:",
+      "assign-member-label": "멤버 지정:",
+      "assign-member-description": "신뢰할 수 있는 다른 팀 멤버를 선택하고 권한을 부여하세요. 이를 통해 팀을 떠나면서도 관리할 사람이 남도록 할 수 있습니다.",
+      "delete-org-label": "조직 삭제:",
+      "delete-org-description": "더 이상 조직이 필요하지 않다면, 전체 삭제를 선택할 수 있습니다.",
+      "leave-team-subtitle": "{{name}}을(를) 떠나시겠습니까?",
+      "team-management-title": "팀 관리",
+      "team-management-subtitle": "팀을 관리하세요",
+      "on-teams-title": "소속된 팀",
+      "on-teams-subtitle": "현재 참여 중인 팀 목록입니다.",
+      "leave": "떠나기"
+    },
+    "common": {
+      "close": "닫기",
+      "cancel": "취소"
+    }
+}

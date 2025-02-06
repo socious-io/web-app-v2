@@ -1,0 +1,20 @@
+{
+  "login-title": "계정에 로그인",
+  "login-subtitle": "다시 오신 것을 환영합니다! 정보를 입력해주세요.",
+  "login-email": "이메일",
+  "login-email-placeholder": "이메일을 입력하세요",
+  "login-email-error": "올바른 이메일을 입력하세요",
+  "login-password": "비밀번호",
+  "login-password-placeholder": "비밀번호를 입력하세요",
+  "login-password-error": "올바른 비밀번호를 입력하세요",
+  "login-error-not-matched": "아이디 또는 비밀번호가 일치하지 않습니다",
+  "login-checkbox-keep-logged-in": "로그인 상태 유지",
+  "login-forget-password": "비밀번호 찾기",
+  "login-continue": "계속하기",
+  "login-continue-google": "Google로 계속하기",
+  "login-not-account": "계정이 없으신가요?",
+  "login-sign-up": "회원가입",
+  "login-tech-title": "Tech for Impact Summit 2024",
+  "login-tech-subtitle": "Socious를 통해 서밋 네트워크를 확장하세요",
+  "login-continue-apple": "Apple로 계속하기"
+}

@@ -1,0 +1,33 @@
+{
+  "contributor-dashboard": {
+    "title": "기여자 대시보드",
+    "subtitle": "여기에서 작업을 관리하고 커뮤니티의 소중한 구성원으로 성장할 수 있습니다.",
+    "stop-notifications": "새로운 작업 알림 중지",
+    "new-join-title": "Socious 기여자 프로그램에 가입해 주셔서 감사합니다!",
+    "new-join-subtitle": "귀하의 헌신과 전문성은 플랫폼의 신뢰성과 성장을 유지하는 데 매우 중요합니다. Socious 커뮤니티에 지속적인 영향을 미치기 위해 함께 노력합시다.",
+    "latest-disputes": "최신 분쟁",
+    "see-all-disputes": "모든 분쟁 보기",
+    "leave-section": "나가기",
+    "leave-program": "기여자 프로그램 탈퇴",
+    "modal-title": "기여자 프로그램 탈퇴",
+    "modal-subtitle": "Socious 기여자 프로그램에서 탈퇴하시겠습니까?",
+    "modal-body-1": "귀하의 기여를 소중히 여기며 떠나신다면 아쉬울 것입니다! 잠시 휴식이 필요하다면 참여를 일시 중지하는 것도 고려해보세요.",
+    "modal-body-2": "기여자 상태를 일시 중지하면:",
+    "modal-bullet-1": "새로운 작업 알림을 일시적으로 중지할 수 있습니다",
+    "modal-bullet-2": "기여자 상태를 유지할 수 있습니다",
+    "modal-bullet-3": "언제든 다시 참여할 수 있는 유연성을 가질 수 있습니다",
+    "modal-body-3": "그래도 탈퇴를 원하시면 다음 사항을 유념하세요:",
+    "modal-bullet-4": "기여자 프로그램에서 제거되며 모든 작업 알림을 받지 못합니다",
+    "modal-bullet-5": "기여자 상태를 잃게 됩니다",
+    "modal-bullet-6": "향후 다시 참여하려면 가입 절차를 다시 진행해야 합니다",
+    "leave": "탈퇴"
+  },
+  "common": {
+    "cancel": "취소"
+  },
+  "empty-list": {
+    "image-alt": "구름 아이콘",
+    "no-disputes": "분쟁이 없습니다",
+    "description": "여기에 귀하의 최신 분쟁이 표시됩니다."
+  }
+}
