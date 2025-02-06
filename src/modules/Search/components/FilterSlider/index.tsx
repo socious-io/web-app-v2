@@ -26,7 +26,7 @@ export type FilterSliderProps = {
 
 export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, filter }) => {
   const {
-    data: { filters, causesItems, skillItems, categoriesList, paymentTypeOptions, eventItems },
+    data: { filters, causesItems, skillItems, categoriesList, paymentTypeOptions, eventItems, languageItems },
     operations: {
       onSelectMultiSelect,
       onSelectCity,
@@ -125,6 +125,21 @@ export const FilterSlider: FC<FilterSliderProps> = ({ type, onApply, onClose, fi
   const renderPeopleFilters = () => {
     return (
       <div className="flex flex-col gap-6">
+        <MultiSelect
+          id="languages"
+          searchTitle="Languages"
+          items={languageItems}
+          maxLabel=""
+          max={10}
+          componentValue={filters['languages.name']}
+          setComponentValue={value => onSelectMultiSelect('languages.name', value)}
+          chipBorderColor={variables.color_grey_200}
+          chipBgColor={variables.color_grey_50}
+          chipFontColor={variables.color_grey_700}
+          popularLabel={false}
+          customHeight="135px"
+          displayDefaultBadges={false}
+        />
         <SearchDropdown
           id="location"
           label={translate('filter-slider.location')}
