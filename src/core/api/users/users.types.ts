@@ -35,6 +35,7 @@ export interface UpdateProfileReq {
   certificates?: string[];
   goals?: string;
   educations?: string[];
+  languages?: LanguageReq[];
 }
 
 export interface UpdateWalletReq {
@@ -139,7 +140,7 @@ export interface UserProfile extends User {
 
 export interface Language extends LanguageReq {
   id: string;
-  created_at: Date;
+  created_at?: Date;
 }
 
 export interface Experience extends ExperienceReq {
