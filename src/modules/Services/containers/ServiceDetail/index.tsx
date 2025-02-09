@@ -45,7 +45,7 @@ const ServiceDetail = () => {
         <ServiceDetailBox
           customStyle={styles['content__right']}
           serviceDetail={serviceDetail}
-          // onPurchase={!isOwner ? onPurchase : undefined}
+          onPurchase={!isOwner ? onPurchase : undefined}
         />
       </div>
       <Slider
