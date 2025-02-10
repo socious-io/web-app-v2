@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core';
 import { Slide } from '@mui/material';
 import React, { useRef } from 'react';
 import useDetectOutside from 'src/core/hooks/detectOutside';
@@ -31,7 +32,11 @@ const Slider: React.FC<SliderProps> = ({
 
   return (
     <Slide in={open} direction={direction} mountOnEnter={mountOnEnter} unmountOnExit={unmountOnExit} {...props}>
-      <div ref={ref} className={`${styles['container']} ${containerClassName}`} id="slider">
+      <div
+        ref={ref}
+        className={`${styles['container']} ${containerClassName} ${Capacitor.getPlatform() === 'ios' ? 'pt-6' : ''}`}
+        id="slider"
+      >
         <div className={headerClass}>
           <div className="flex flex-col">
             {title && <div className={`${styles['title']} ${titleClassName}`}>{title}</div>}
