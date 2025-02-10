@@ -51,5 +51,6 @@
   "job-back": "戻る",
   "job-list-title": "{{number}}のインパクト求人",
   "job-applied": "応募済みの求人",
-  "job-my-applied": "私の応募済みの求人"
+  "job-my-applied": "私の応募済みの求人",
+  "job-card-posted-on": "投稿日"
 }
