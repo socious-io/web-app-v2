@@ -49,7 +49,6 @@ export const Setting = () => {
       label: translate('settings.tabs.notifications'),
       content: <Notification />,
     });
-
   tabs.push({
     label: translate('settings.tabs.language'),
     content: <Language />,
@@ -68,7 +67,7 @@ export const Setting = () => {
 
   if (currentIdentity?.type === 'users')
     items.push({ label: translate('settings.items.notifications'), value: 'Notification' });
-  items.push({ label: translate('settings.items.language'), value: 'Languge' });
+  items.push({ label: translate('settings.items.language'), value: 'Language' });
   const [content, setContent] = useState<ReactNode>();
 
   const setValue = value => {
