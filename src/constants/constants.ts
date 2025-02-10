@@ -887,18 +887,18 @@ export const NotificationSettings = [
 export const supportedLanguages: LanguageOption[] = [
   {
     value: 'en',
-    label: translate('setting-language-labels.en'),
+    label: 'English (US)',
   },
   {
     value: 'jp',
-    label: translate('setting-language-labels.jp'),
+    label: 'Japanese 日本語',
   },
   {
     value: 'es',
-    label: translate('setting-language-labels.es'),
+    label: 'Spanish Español',
   },
   {
     value: 'kr',
-    label: translate('setting-language-labels.kr'),
+    label: 'Korean 한국어',
   },
 ];
