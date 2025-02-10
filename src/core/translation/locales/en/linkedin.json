@@ -1,0 +1,20 @@
+{
+  "linkedin-title": "First, let’s get to know each other",
+  "linkedin-subtitle": "Quickly complete your profile by importing your details.",
+  "linkedin-cv": "We'll create your profile automatically using your LinkedIn CV; you'll be able to make changes later.",
+  "linkedin-instruction-title": "How to setup your profile?",
+  "linkedin-instruction-subtitle": "It takes a only few steps",
+  "linkedin-instruction-description": "Go to your LinkedIn profile, click on “More” and then click “Save to PDF” to download your LinkedIn CV in PDF",
+  "linkedin-instruction-upload": "Upload the downloaded PDF file here",
+  "linkedin-normal-onboarding": "If you don’t have LinkedIn CV or simply would like to create your profile manually click here",
+  "linkedin-fill-out-button": "Fill out manually",
+  "linkedin-import-button": "Import your LinkedIn CV",
+  "linkedin-steps": {
+    "step-1-title": "Upload your LinkedIn CV",
+    "step-1-subtitle": "We will import your information, experiences, education and others",
+    "step-2-title": "Add some extras",
+    "step-2-subtitle": "Share your skills and the social issues you are passionate about.",
+    "step-3-title": "Add your photo",
+    "step-3-subtitle": "Your avatar is the first step for genuine connections."
+  }
+}

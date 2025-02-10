@@ -1,3 +1,4 @@
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { Pagination } from 'src/modules/general/components/Pagination';
@@ -31,15 +32,19 @@ export const Search = () => {
     <div className={css.container}>
       <div className={css.headerContainer}>
         <div className={headerClass}>
-          <h1 className={css.title}>{`Search for ${q}`}</h1>
-          <h2
-            className={css.subtitle}
-          >{`${total} ${readableType.title} found ${countryName ? `in ${countryName}` : ``}`}</h2>
+          <h1 className={css.title}>{translate('search.title', { query: q })}</h1>
+          <h2 className={css.subtitle}>
+            {translate('search.subtitle', {
+              total,
+              type: readableType.title,
+              country: countryName ? `in ${countryName}` : '',
+            })}
+          </h2>
         </div>
         <div>
           <Button color="secondary" variant="outlined" className={css.filterButton} onClick={handleCloseOrApplyFilter}>
             <Icon fontSize={20} name="filter-lines" color={variables.color_grey_700} />
-            Filters
+            {translate('search.filters')}
           </Button>
         </div>
       </div>
@@ -59,7 +64,7 @@ export const Search = () => {
         {(searchResult.items?.length ?? 0) < total && (
           <div className="mt-5 flex items-center justify-center md:hidden">
             <Button color="primary" variant="text" onClick={handleChangeMobilePage}>
-              See more
+              {translate('search.seeMore')}
             </Button>
           </div>
         )}
@@ -67,8 +72,12 @@ export const Search = () => {
       <Slider
         open={sliderFilterOpen}
         onClose={handleCloseOrApplyFilter}
-        title="Filter by"
-        subtitle={`Filter ${readableType.title} by social causes, skills and more`}
+        title={translate('search.filterTitle')}
+        subtitle={
+          readableType.title === 'services'
+            ? translate('search.filterSubtitleService')
+            : translate('search.filterSubtitle', { type: readableType.title })
+        }
       >
         <FilterSlider type={readableType.type} onApply={onApply} onClose={onClose} filter={filter} />
       </Slider>

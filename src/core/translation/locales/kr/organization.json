@@ -1,0 +1,15 @@
+{
+  "org-type-startup": "임팩트 스타트업",
+  "org-type-social": "사회적 기업",
+  "org-type-non-profit": "비영리 단체 / 자선 단체",
+  "org-type-social-cooperative": "사회적 협동조합",
+  "org-type-iif": "임팩트 투자 펀드 / 재단",
+  "org-type-public": "공공 기관",
+  "org-type-inter-gov": "국제기구",
+  "org-type-edu": "교육 기관",
+  "org-type-health-care": "보건 의료 기관",
+  "org-type-religious": "종교 단체",
+  "org-type-commercial": "상업 기업",
+  "org-type-department": "영리 기업 내 임팩트 부서",
+  "org-type-other": "기타"
+}

@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 # Project Title: Socious Web App
 
 **Description**: Socious is a talent marketplace that makes impact work accessible and transparent. We connect purpose-driven professionals with impact organizations through AI matching. We use blockchain to make impact work traceable and reward contributions.
@@ -14,6 +7,7 @@ Problem: 94% of young people want to contribute to social causes, but only 10% a
 Solution: That’s why we built Socious to provide a new path for these purpose-driven professionals so that they don’t need to choose between their career and their desire to do good, because they can achieve both at the same time on Socious. And we make their impact work transparent and traceable.
 
 ---
+
 # Key Technologies and Tools
 
 - **TypeScript**: Provides static type checking to enhance code quality and maintainability.
@@ -29,6 +23,7 @@ Solution: That’s why we built Socious to provide a new path for these purpose-
 - **React-router**: Our router package
 
 ---
+
 # Guidance on how to contribute
 
 > All contributions to this project will be released under the GNU General Public License (GPL) v3.
@@ -61,6 +56,7 @@ the project prescribes. In the absence of such guidelines, mimic the styles
 and patterns in the existing codebase.
 
 ---
+
 ## Installation
 
 Use the package manager [npm](https://www.npmjs.com/) to install the app. The app pipeline is created with `‍npm`‍

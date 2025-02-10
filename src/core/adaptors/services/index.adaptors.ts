@@ -4,13 +4,13 @@ import {
   createService,
   updateService,
   deleteService,
-  StripeAccount,
-  stripeProfile,
+  PaymentMode,
+  ServiceSearchRes,
 } from 'src/core/api';
 import { getIdentityMeta, translate } from 'src/core/utils';
 import { getSelectedTokenDetail } from 'src/dapp/dapp.service';
 
-import { AdaptorRes, PaymentMode, Service, ServiceReq, ServicesRes, SuccessRes } from '..';
+import { AdaptorRes, Service, ServiceDetails, ServiceReq, ServicesRes, SuccessRes } from '..';
 
 export const getServicesAdaptor = async (
   page = 1,
@@ -133,20 +133,20 @@ export const deleteServiceAdaptor = async (serviceId: string): Promise<AdaptorRe
   }
 };
 
-export const getStripAccountsAdaptor = async (): Promise<AdaptorRes<StripeAccount[]>> => {
-  try {
-    const requests = [stripeProfile({}), stripeProfile({ is_jp: true })];
-    const [stripeProfileRes, jpStripeProfileRes] = await Promise.all(requests);
-    const stripeAccounts: StripeAccount[] = [
-      ...(stripeProfileRes?.external_accounts?.data || []),
-      ...(jpStripeProfileRes?.external_accounts?.data || []),
-    ];
-    return {
-      data: stripeAccounts,
-      error: null,
-    };
-  } catch (error) {
-    console.error('Error in getting stripe accounts', error);
-    return { data: null, error: 'Error in getting stripe accounts' };
-  }
-};
+export const searchServiceAdaptor = (service: ServiceSearchRes): Omit<ServiceDetails, 'onCardClick'> => ({
+  id: service.id,
+  subtitle: `by ${service.identity_meta.name}`,
+  name: service.title,
+  skills: service.skills.map((skill: string) => translate(skill)),
+  delivery: translate(`service-form.delivery-options.${service.project_length}`),
+  payment: service.payment_mode,
+  currency:
+    service.payment_mode === 'CRYPTO'
+      ? getSelectedTokenDetail(service.payment_currency)
+      : { name: service.payment_currency },
+  myProfile: false,
+  price: service.payment_range_higher,
+  avatarUrl: service.identity_meta.avatar,
+  hasAvatar: true,
+  sample: service.work_samples.length ? service.work_samples[0].url : '',
+});

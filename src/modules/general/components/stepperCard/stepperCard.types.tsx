@@ -6,7 +6,7 @@ export interface ActionButton {
   disabled: boolean;
   action: () => void;
 }
-
+export type Verified = 'verified' | 'unverified' | 'pending';
 export interface StepperCardProps {
   iconName?: string;
   customIcon?: ReactNode;
@@ -22,7 +22,7 @@ export interface StepperCardProps {
   handleEdit?: () => void;
   handleDelete?: () => void;
   DisplayVerificationStatus?: boolean;
-  verified?: 'verified' | 'unverified' | 'pending';
+  verified?: Verified;
   verifyButton?: ActionButton;
   claimButton?: ActionButton;
 }

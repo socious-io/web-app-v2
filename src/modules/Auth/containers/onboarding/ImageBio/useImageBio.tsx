@@ -3,14 +3,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-  CurrentIdentity,
-  profile,
-  uploadMedia,
-  updateProfile as updateProfileApi,
-  UserMeta,
-  UpdateProfileReq,
-} from 'src/core/api';
+import { applyLinkedInProfileAdaptor } from 'src/core/adaptors/users/index.adaptors';
+import { CurrentIdentity, profile, uploadMedia, updateProfile as updateProfileApi, UserMeta } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
 import { useUser } from 'src/modules/Auth/contexts/onboarding/sign-up-user-onboarding.context';
@@ -19,6 +13,7 @@ import { RootState } from 'src/store';
 export const useImageBio = () => {
   const { t: translate } = useTranslation();
   const navigate = useNavigate();
+  const linkedin = useSelector((state: RootState) => state.linkedin);
   const filter = localStorage.getItem('filter');
   const { events } = filter ? (JSON.parse(filter) as { events: string[] }) : { events: [] };
   const [uploadError, setUploadError] = useState('');
@@ -53,6 +48,8 @@ export const useImageBio = () => {
       Note: this is just make sure fix miss use state for updating profile and this going to make issue when
       registered for ORG want to complete onboarding for signed up user
     */
+
+    await applyLinkedInProfileAdaptor(linkedin);
 
     if (!updatedObj.username) {
       const p = await profile();

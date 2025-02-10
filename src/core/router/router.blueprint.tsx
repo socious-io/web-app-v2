@@ -32,16 +32,26 @@ import {
   OrgMeta,
   disputes,
   invitations,
+  cards,
 } from 'src/core/api';
 import { events, search as searchReq } from 'src/core/api/site/site.api';
 import { Layout as NowruzLayout } from 'src/modules/layout';
 import FallBack from 'src/pages/fallback/fallback';
 import { RootState } from 'src/store';
 
+import { DeepLinks } from '../deepLinks';
 import { checkSearchFilters } from '../utils';
 
 export const blueprint: RouteObject[] = [
-  { path: '/', element: <DefaultRoute /> },
+  {
+    path: '/',
+    element: (
+      <>
+        <DeepLinks />
+        <DefaultRoute />
+      </>
+    ),
+  },
   {
     path: 'captcha',
     async lazy() {
@@ -337,8 +347,8 @@ export const blueprint: RouteObject[] = [
                 path: ':id/pay',
                 loader: async ({ params }) => {
                   if (params.id) {
-                    const [serviceDetail] = await Promise.all([getServiceAdaptor(params.id)]);
-                    return { serviceDetail: serviceDetail?.data };
+                    const [serviceDetail, cardsList] = await Promise.all([getServiceAdaptor(params.id), cards({})]);
+                    return { serviceDetail: serviceDetail?.data, cards: cardsList.items };
                   }
                 },
                 async lazy() {
@@ -553,7 +563,8 @@ export const blueprint: RouteObject[] = [
                     | 'projects'
                     | 'users'
                     | 'posts'
-                    | 'organizations';
+                    | 'organizations'
+                    | 'services';
 
                   localStorage.setItem('type', type || 'projects');
                   localStorage.setItem('searchTerm', q || '');

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Experience } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import CompanySearchDropdown from 'src/modules/general/containers/CompanySearchDropdown';
 
 import { useCreateUpdateExperience } from './useCreateUpdateExperience';
 
@@ -13,12 +15,17 @@ interface CreateUpdateExperienceProps {
   handleClose: () => void;
   experience?: Experience;
   readonly?: boolean;
+  hasDeleteButton?: boolean;
+  onAddExperience?: (experience: Experience, isEdit: boolean) => void;
 }
+
 export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
   open,
   handleClose,
   experience,
   readonly,
+  hasDeleteButton = true,
+  onAddExperience,
 }) => {
   const {
     jobCategories,
@@ -26,7 +33,6 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     register,
     errors,
     onChangeCategory,
-    searchCompanies,
     companyVal,
     onSelectCompany,
     cityVal,
@@ -54,24 +60,25 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     endDateErrors,
     volunteer,
     handleCheckVolunteer,
-  } = useCreateUpdateExperience(handleClose, experience);
+    setCompanies,
+  } = useCreateUpdateExperience(handleClose, experience, onAddExperience);
 
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
       <Input
         id="title"
-        label="Job title*"
+        label={translate('experience.title')}
         required
         name="title"
         register={register}
-        placeholder="Enter job title"
+        placeholder={translate('experience.title.placeholder')}
         errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
         disabled={readonly}
       />
       <SearchDropdown
         id="job-category"
         value={category}
-        label="Job category"
+        label={translate('experience.jobCategory')}
         options={jobCategories}
         icon="search-lg"
         hasDropdownIcon={false}
@@ -81,35 +88,25 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         className="flex-1"
         isSearchable
         errors={errors['jobCategory']?.label?.message ? [errors['jobCategory']?.label.message.toString()] : undefined}
-        placeholder="Search for job category"
+        placeholder={translate('experience.jobCategory.placeholder')}
         isDisabled={readonly}
       />
-      <SearchDropdown
-        isClearable
-        id="company"
-        value={companyVal}
-        placeholder="Search for company"
-        isAsync
-        creatable
-        loadOptions={searchCompanies}
-        icon="search-lg"
-        hasDropdownIcon={false}
-        label="Company*"
+      <CompanySearchDropdown
         onChange={onSelectCompany}
+        value={companyVal}
         errors={errors['org']?.label?.message ? [errors['org']?.label?.message.toString()] : undefined}
-        isDisabled={readonly}
+        onSetCompanies={setCompanies}
       />
-
       <SearchDropdown
         id="city"
         isClearable
         value={cityVal}
-        placeholder="Search for city"
+        placeholder={translate('experience.city.placeholder')}
         isAsync
         loadOptions={searchCities}
         icon="search-lg"
         hasDropdownIcon={false}
-        label="Location"
+        label={translate('experience.location')}
         onChange={value => {
           onSelectCity(value);
         }}
@@ -117,10 +114,10 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         isDisabled={readonly}
       />
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium leading-5 text-Gray-light-mode-700">Volunteer experience?</p>
+        <p className="text-sm font-medium leading-5 text-Gray-light-mode-700">{translate('experience.volunteer')}</p>
         <Checkbox
           id="volunteer-experience"
-          label={'Yes'}
+          label={translate('experience.volunteer.yes')}
           checked={volunteer}
           onChange={e => handleCheckVolunteer(e.target.checked)}
           value
@@ -130,8 +127,8 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
       <SearchDropdown
         id="employment-type"
         value={employmentTypeVal}
-        placeholder="Please select"
-        label="Employment type*"
+        placeholder={translate('experience.employmentType.placeholder')}
+        label={translate('experience.employmentType')}
         options={employmentTypes}
         icon="search-lg"
         hasDropdownIcon={false}
@@ -145,7 +142,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
       />
       <Checkbox
         id="currently-working"
-        label={'I am currently working in this role'}
+        label={translate('experience.currentlyWorking')}
         checked={currentlyWorking}
         onChange={e => handleCheckWorking(e.target.checked)}
         value
@@ -155,12 +152,12 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         <SearchDropdown
           id="start-month"
           value={startMonth}
-          label="Start date*"
+          label={translate('experience.startDate')}
           options={months}
           hasDropdownIcon
           onChange={onSelectStartMonth}
           className="flex-1"
-          placeholder="Month"
+          placeholder={translate('experience.startDate.month')}
           isSearchable
           errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
@@ -174,7 +171,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           onChange={onSelectStartYear}
           label="&nbsp;"
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('experience.startDate.year')}
           isSearchable
           isDisabled={readonly}
           maxMenuHeight={200}
@@ -184,11 +181,11 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
         <SearchDropdown
           id="end-month"
           value={endMonth}
-          label={`End date${!currentlyWorking ? '*' : ''}`}
+          label={translate('experience.endDate', { required: !currentlyWorking ? '*' : '' })}
           options={months}
           hasDropdownIcon
           onChange={onSelectEndMonth}
-          placeholder="Month"
+          placeholder={translate('experience.endDate.month')}
           className="flex-1"
           isSearchable
           errors={endDateErrors ? [endDateErrors.toString()] : undefined}
@@ -203,7 +200,7 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
           hasDropdownIcon
           onChange={onSelectEndYear}
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('experience.endDate.year')}
           isSearchable
           isDisabled={currentlyWorking || readonly}
           maxMenuHeight={200}
@@ -212,11 +209,11 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
       <Input
         id="description"
         name="description"
-        label="Description"
+        label={translate('experience.description')}
         multiline
         customHeight="130px"
         register={register}
-        placeholder="e.g. I joined Stripe’s Customer Success team to help them scale their checkout product. I focused mainly on onboarding new customers and resolving complaints."
+        placeholder={translate('experience.description.placeholder')}
       />
     </div>
   );
@@ -224,19 +221,19 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        {experience ? 'Save' : 'Add experience'}
+        {translate(experience ? 'experience.save' : 'experience.add')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {translate('experience.cancel')}
       </Button>
-      {experience && (
+      {hasDeleteButton && experience && (
         <Button
           variant="text"
           color="primary"
           customStyle="ml-0 mr-auto text-Gray-light-mode-600 w-full md:w-fit"
           onClick={onDelete}
         >
-          Delete experience
+          {translate('experience.delete')}
         </Button>
       )}
     </div>
@@ -245,8 +242,8 @@ export const CreateUpdateExperience: React.FC<CreateUpdateExperienceProps> = ({
     <Modal
       open={open}
       handleClose={handleClose}
-      title={experience ? 'Edit experience' : 'Add experience'}
-      subTitle={experience ? '' : 'Share where you’ve worked on your profile.'}
+      title={translate(experience ? 'experience.editTitle' : 'experience.addTitle')}
+      subTitle={translate(experience ? '' : 'experience.addSubtitle')}
       content={contentJSX}
       footer={modalFooterJsx}
     />

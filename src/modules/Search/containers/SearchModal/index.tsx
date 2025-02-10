@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { translate } from 'src/core/utils'; // Updated for translations
 import { Icon } from 'src/modules/general/components/Icon';
 import { ResultList } from 'src/modules/Search/components/ResultList';
 import { SearchInput } from 'src/modules/Search/components/SearchInput';
@@ -16,7 +17,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
   const {
     tabs,
     setSelectedTab,
-    fetchSearchResult,
+    handleInputChange,
     list,
     selectedItem,
     searchTerm,
@@ -41,7 +42,6 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
   return (
     <Modal
       width={width}
-      // height="516px"
       zIndex={51}
       onClose={() => {
         onClose();
@@ -51,7 +51,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
     >
       <>
         <div className={css.mobileHeader}>
-          <span>Search</span>
+          <span>{translate('search-modal.mobile-header')}</span>
           <Icon name="x-close" fontSize={24} color={variables.color_grey_700} onClick={onClose} />
         </div>
         <div className={css.container}>
@@ -61,10 +61,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
           <div className={css.searchInput}>
             <SearchInput
               value={searchTerm}
-              onChange={fetchSearchResult}
+              onChange={handleInputChange}
               onEnter={navigateFullSearch}
               onEscape={onClose}
-              placeholder="Search jobs, people, organizations"
+              placeholder={translate('search-modal.placeholder')}
               open={open}
             />
           </div>
@@ -77,7 +77,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ open, onClose, setSear
           {!!list?.length && (
             <div className={`${css.footer} ${selectedItem ? css.footerSelecteItem : ''}`}>
               <div className={css.showResults} onClick={navigateFullSearch}>
-                See all results
+                {translate('search-modal.see-all-results')}
               </div>
             </div>
           )}

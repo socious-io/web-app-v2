@@ -1,0 +1,53 @@
+{
+  "search": {
+    "title": "Buscar '{{query}}'",
+    "subtitle": "{{total}} {{type}} encontrado {{country}}",
+    "inCountry": "en {{country}}",
+    "filters": "Filtros",
+    "seeMore": "Ver más",
+    "filterTitle": "Filtrar por",
+    "filterSubtitle": "Filtrar {{type}} por causas sociales, habilidades y más",
+    "filterSubtitleService": "Filtrar servicios por habilidades, ubicación y más"
+  },
+  "search-modal": {
+    "mobile-header": "Buscar",
+    "placeholder": "Buscar empleos, personas, organizaciones, servicios",
+    "see-all-results": "Ver todos los resultados",
+    "tabs": {
+      "jobs": "Empleos",
+      "people": "Personas",
+      "organizations": "Organizaciones",
+      "services": "Servicios"
+    }
+  },
+  "filter-slider": {
+    "jobPreferences": "Preferencias de empleo",
+    "location": "Ubicación",
+    "selectLocation": "Seleccionar ubicación",
+    "remotePreference": "Preferencia de trabajo remoto",
+    "jobCategory": "Categoría de empleo",
+    "selectCategory": "Seleccionar una categoría",
+    "jobLength": "Duración del empleo",
+    "experienceLevel": "Nivel de experiencia",
+    "paymentType": "Tipo de pago",
+    "event": "Evento",
+    "selectEvent": "Seleccionar un evento",
+    "socialCauses": "Causas sociales",
+    "skills": "Habilidades",
+    "cancel": "Cancelar",
+    "apply": "Aplicar"
+  },
+  "result-not-found": {
+    "title": {
+      "users": "No se encontraron personas",
+      "organizations": "No se encontraron organizaciones",
+      "projects": "No se encontraron empleos",
+      "services": "No se encontraron servicios"
+    },
+    "message": "¡Vaya! No hay resultados para '{{searchTerm}}'.",
+    "suggestion": "Intentemos con diferentes palabras clave.",
+    "button": {
+      "view-jobs": "Ver empleos"
+    }
+  }
+}

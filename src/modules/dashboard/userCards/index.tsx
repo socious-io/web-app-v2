@@ -12,7 +12,7 @@ interface UserCardsProps {
 export const UserCards: React.FC<UserCardsProps> = ({ profileCompleted, profileUrl }) => {
   return (
     <div className="w-full h-fit flex gap-4 overflow-x-scroll">
-      {!profileCompleted ? (
+      {!profileCompleted && (
         <DashboardCard
           title={translate('dashboard-complete-profile')}
           description={translate('dashboard-get-discovered')}
@@ -22,7 +22,22 @@ export const UserCards: React.FC<UserCardsProps> = ({ profileCompleted, profileU
           supportingText1={translate('dashboard-add-summary')}
           supportingText2={translate('dashboard-add-experience')}
         />
-      ) : (
+      )}
+      <DashboardCard
+        title={translate('dashboard-create-service-title')}
+        description={translate('dashboard-create-service-description')}
+        bgColor={variables.color_dark_vanilla_100}
+        redirectUrl="/services/create"
+        buttonLabel={translate('dashboard-create-service-button-label')}
+      />
+      <DashboardCard
+        title={translate('dashboard-find-job')}
+        description={translate('dashboard-find-job-desc')}
+        bgColor={variables.color_dark_vanilla_100}
+        redirectUrl="/jobs"
+        buttonLabel={translate('dashboard-find-job')}
+      />
+      {profileCompleted && (
         <DashboardCard
           title={translate('dashboard-refer-earn')}
           description={translate('dashboard-refer-earn-desc')}
@@ -32,14 +47,6 @@ export const UserCards: React.FC<UserCardsProps> = ({ profileCompleted, profileU
           buttonIcon="star-06"
         />
       )}
-      <DashboardCard
-        title={translate('dashboard-find-job')}
-        description={translate('dashboard-find-job-desc')}
-        bgColor={variables.color_dark_vanilla_100}
-        redirectUrl="/jobs"
-        buttonLabel={translate('dashboard-find-job')}
-      />
-
       {/* <DashboardCard
         title="Sell your services"
         description="Showcase your unique offerings and attract clients"

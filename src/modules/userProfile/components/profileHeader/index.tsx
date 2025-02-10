@@ -1,7 +1,8 @@
 import { IconButton as MUIIconButton } from '@mui/material';
+import { translate } from 'src/core/utils';
 import { ConnectRequestModal } from 'src/modules/connections/connectRequestModal';
 import { ThreeDotsButton } from 'src/modules/connections/threeDotsButton';
-import { AlertMessage } from 'src/modules/general/components/alertMessage';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { EditInfoModal } from 'src/modules/userProfile/containers/editInfo';
@@ -53,15 +54,17 @@ export const ProfileHeader = () => {
         <AlertMessage
           theme="warning"
           iconName="alert-circle"
-          title="Verify your identity"
-          subtitle="In order to access referrals, you need to have a Atala PRISM DID and verify your identity."
+          title={translate('profile-header.verify-identity.title')}
+          subtitle={translate('profile-header.verify-identity.subtitle')}
         >
           <div className="flex">
             <button className="cursor-pointer border-none text-sm leading-5 font-semibold text-Warning-600">
-              Learn more
+              {translate('profile-header.verify-identity.learn-more')}
             </button>
             <button className="cursor-pointer border-none flex">
-              <div className="text-sm leading-5 font-semibold text-Error-700 pl-3 pr-2">Verify now</div>
+              <div className="text-sm leading-5 font-semibold text-Error-700 pl-3 pr-2">
+                {translate('profile-header.verify-identity.verify-now')}
+              </div>
               <Icon name="arrow-right" fontSize={20} color={variables.color_error_700} />
             </button>
           </div>
@@ -70,7 +73,11 @@ export const ProfileHeader = () => {
 
       <div className={`${css.container} md:mb-12 mb-6`}>
         {myProfile && (
-          <MUIIconButton aria-label="upload-banner" className={`${css.iconCamera}`} onClick={handleOpenEditHeader}>
+          <MUIIconButton
+            aria-label={translate('profile-header.upload-banner')}
+            className={`${css.iconCamera}`}
+            onClick={handleOpenEditHeader}
+          >
             <Icon name="camera-01" color="white" fontSize={20} className={css.camera} />
           </MUIIconButton>
         )}
@@ -112,7 +119,7 @@ export const ProfileHeader = () => {
             onClick={handleOpenQRCodeModal}
           >
             <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
-            Share
+            {translate('profile-header.actions.share')}
           </Button>
           {displayConnectButton() && (
             <Button
@@ -123,7 +130,9 @@ export const ProfileHeader = () => {
               style={{ height: '40px', fontSize: '14px' }}
               onClick={() => setOpenConnectRequest(true)}
             >
-              {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
+              {connectStatus === 'PENDING'
+                ? translate('profile-header.actions.request-sent')
+                : translate('profile-header.actions.connect')}
             </Button>
           )}
           {displayMessageButton() && (
@@ -134,7 +143,7 @@ export const ProfileHeader = () => {
               style={{ height: '40px', fontSize: '14px' }}
               onClick={redirectToChat}
             >
-              Message
+              {translate('profile-header.actions.message')}
             </Button>
           )}
           {displayThreeDotsButton() && <ThreeDotsButton otherIdentityId={identity?.id || ''} />}

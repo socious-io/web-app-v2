@@ -1,0 +1,20 @@
+{
+  "linkedin-title": "まずはお互いを知りましょう",
+  "linkedin-subtitle": "あなたの詳細情報をインポートして、プロフィールをすばやく完成させましょう。",
+  "linkedin-cv": "LinkedInの履歴書を使用してプロフィールを自動作成します。後で変更することもできます。",
+  "linkedin-instruction-title": "プロフィールの設定方法",
+  "linkedin-instruction-subtitle": "わずか数ステップで完了します",
+  "linkedin-instruction-description": "LinkedInのプロフィールに移動し、「その他」をクリックして「PDFで保存」を選択し、LinkedInの履歴書をPDF形式でダウンロードしてください。",
+  "linkedin-instruction-upload": "ダウンロードしたPDFファイルをここにアップロード",
+  "linkedin-normal-onboarding": "LinkedInの履歴書をお持ちでない場合や、手動でプロフィールを作成したい場合はこちらをクリック",
+  "linkedin-fill-out-button": "手動で入力",
+  "linkedin-import-button": "LinkedInの履歴書をインポート",
+  "linkedin-steps": {
+    "step-1-title": "LinkedInの履歴書をアップロード",
+    "step-1-subtitle": "あなたの情報、経験、学歴などをインポートします。",
+    "step-2-title": "追加情報を入力",
+    "step-2-subtitle": "あなたのスキルや関心のある社会問題を共有しましょう。",
+    "step-3-title": "写真を追加",
+    "step-3-subtitle": "あなたのアバターは本物のつながりを生む第一歩です。"
+  }
+}

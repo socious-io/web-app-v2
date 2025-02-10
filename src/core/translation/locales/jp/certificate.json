@@ -1,0 +1,18 @@
+{
+  "certificates.save": "保存",
+  "certificates.add-certificate": "証明書を追加",
+  "certificates.cancel": "キャンセル",
+  "certificates.delete-certificate": "証明書を削除",
+  "certificates.name-label": "名前*",
+  "certificates.name-placeholder": "証明書の名前",
+  "certificates.issue-date-label": "発行日",
+  "certificates.expiration-date-label": "有効期限",
+  "certificates.month-placeholder": "月",
+  "certificates.year-placeholder": "年",
+  "certificates.credential-id-label": "資格ID",
+  "certificates.credential-id-placeholder": "ID",
+  "certificates.credential-url-label": "資格URL",
+  "certificates.credential-url-placeholder": "www.example.com",
+  "certificates.description-label": "説明",
+  "certificates.description-placeholder": "説明を入力..."
+}

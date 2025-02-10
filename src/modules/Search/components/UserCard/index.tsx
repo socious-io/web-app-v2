@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Button } from 'src/modules/general/components/Button';
 import { Chip } from 'src/modules/general/components/Chip';
@@ -37,7 +38,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
           customStyle={css.buttons}
           onClick={() => viewProfile(user.type, user.username)}
         >
-          View profile
+          {translate('card.view')}
         </Button>
       </div>
     </div>

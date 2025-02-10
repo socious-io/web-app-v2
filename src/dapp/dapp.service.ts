@@ -8,7 +8,7 @@ export const allowance = async (params: AllowanceParams) => {
   const contract = new Contract(params.token, dappConfig.abis.token, params.signer);
   const decimals = params.decimals || (await contract.decimals());
   const amount = parseUnits(`${params.amount}`, decimals);
-  const selectedNetwork = NETWORKS.filter(n => n.chain.chainId === params.chainId)[0];
+  const selectedNetwork = NETWORKS.filter(n => n.chain.id === params.chainId)[0];
 
   const tx = await contract.approve(selectedNetwork.escrow, amount);
   await tx.wait();
@@ -17,7 +17,7 @@ export const allowance = async (params: AllowanceParams) => {
 
 export const escrow = async (params: EscrowParams) => {
   const { chainId, signer } = params;
-  const selectedNetwork = NETWORKS.filter(n => n.chain.chainId === chainId)[0];
+  const selectedNetwork = NETWORKS.filter(n => n.chain.id === chainId)[0];
   let token = params.token;
   if (!token) token = selectedNetwork.tokens[0].address;
   const tokenConfig = selectedNetwork.tokens.find(t => t.address === token);
@@ -67,7 +67,7 @@ export const escrow = async (params: EscrowParams) => {
 };
 
 export const withdrawnEscrow = async (params: WithdrawnParams) => {
-  const selectedNetwork = NETWORKS.filter(n => n.chain.chainId === params.chainId)[0];
+  const selectedNetwork = NETWORKS.filter(n => n.chain.id === params.chainId)[0];
   const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
   const tx = await contract.withdrawn(params.escrowId);
 

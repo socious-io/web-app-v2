@@ -1,8 +1,7 @@
 import { StoryFn } from '@storybook/react';
-import { template } from 'cypress/types/lodash';
 import { useState } from 'react';
-import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
-import { CardRadioButtonItem } from 'src/modules/general/components/cardRadioButton/cardRadioButton.types';
+import CardRadioButton from 'src/modules/general/components/CardRadioButton';
+import { CardRadioButtonItem } from 'src/modules/general/components/CardRadioButton/index.types';
 
 export default {
   title: 'General/Card-Radio-Button',

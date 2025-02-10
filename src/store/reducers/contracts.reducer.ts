@@ -1,29 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Contract } from 'src/core/api';
+import { Contract, ContractFilters } from 'src/core/adaptors';
 
-import { getContractStatus, getContracts, getContractsByFilter } from '../thunks/contracts.thunk';
+import { getContractStatus, getContracts } from '../thunks/contracts.thunk';
 
-interface ContractsState {
-  offers: Contract[];
+export interface ContractsState {
+  list: Contract[];
   page: number;
   limit: number;
-  totalCount: number;
+  total: number;
   error: string;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   selectedOfferId?: string;
-  filter: 'all' | 'ongoing' | 'archived';
+  filter: ContractFilters;
   openSlider: boolean;
 }
 const initialState = {
-  offers: [],
+  list: [],
   page: 1,
   limit: 5,
-  totalCount: 0,
+  total: 0,
   error: '',
   status: 'idle',
   filter: 'all',
   openSlider: false,
 } as ContractsState;
+
 export const contractsSlice = createSlice({
   name: 'contracts',
   initialState,
@@ -31,22 +32,18 @@ export const contractsSlice = createSlice({
     setSelected: (state, action) => {
       state.selectedOfferId = action.payload;
     },
-
     updateStatus: (state, action) => {
-      state.offers = state.offers.map(item =>
+      state.list = state.list.map(item =>
         item.id === action.payload.id
           ? {
               ...item,
-              status: action.payload.offerStatus,
-              contractStatus: getContractStatus(
+              status: action.payload.status,
+              semanticStatus: getContractStatus(
+                action.payload.status,
+                action.payload.isCurrentProvider,
                 action.payload.type,
-                action.payload.paymentType,
-                action.payload.offerStatus,
-                action.payload.missionStatus,
+                !!action.payload.paymentId,
               ),
-              mission: item.mission
-                ? { ...item.mission, status: action.payload.missionStatus || item.mission }
-                : undefined,
             }
           : item,
       );
@@ -55,8 +52,8 @@ export const contractsSlice = createSlice({
       state.filter = action.payload;
     },
     updateFeedback: (state, action) => {
-      state.offers = state.offers.map(item =>
-        item.id === action.payload.id ? { ...item, org_feedback: action.payload.orgFeedback } : item,
+      state.list = state.list.map(item =>
+        item.id === action.payload.id ? { ...item, feedback: action.payload.feedback } : item,
       );
     },
     updatePage: (state, action) => {
@@ -73,30 +70,14 @@ export const contractsSlice = createSlice({
         state.error = '';
       })
       .addCase(getContracts.fulfilled, (state, action) => {
-        state.offers = action.payload.offers;
-        state.page = action.payload.page;
-        state.limit = action.payload.limit;
-        state.totalCount = action.payload.totalCount;
+        state.list = action.payload?.contracts || [];
+        state.page = action.payload?.page || 1;
+        state.limit = action.payload?.limit || 10;
+        state.total = action.payload?.total || 0;
         state.status = 'succeeded';
         state.error = '';
       })
       .addCase(getContracts.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message || '';
-      })
-      .addCase(getContractsByFilter.pending, state => {
-        state.status = 'loading';
-        state.error = '';
-      })
-      .addCase(getContractsByFilter.fulfilled, (state, action) => {
-        state.offers = action.payload.offers;
-        state.page = action.payload.page;
-        state.limit = action.payload.limit;
-        state.totalCount = action.payload.totalCount;
-        state.status = 'succeeded';
-        state.error = '';
-      })
-      .addCase(getContractsByFilter.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || '';
       });

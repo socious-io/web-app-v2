@@ -1,26 +1,20 @@
 import React from 'react';
+import { supportedLanguages } from 'src/constants/constants';
+import { LanguageOption } from 'src/core/api/settings/settings.types';
 import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 
-import { LanguageOption } from './index.types';
 import { useLanguage } from './useLanguage';
 const Languge = () => {
-  const { onCancel, onSave, selectedLanguage, setSelectedLanguage } = useLanguage();
-  const FlagGenerator = ({ value }) => <img src={`/icons/countries/${value}.svg`} width={20} height={20} alt={value} />;
+  const { onCancel, onSave, unsavedValue, setUnsavedValue } = useLanguage();
+  // const FlagGenerator = ({ value }) => <img src={`/icons/countries/${value}.svg`} width={20} height={20} alt={value} />;
 
-  const languageOptions: LanguageOption[] = [
-    {
-      value: 'en',
-      label: translate('setting-language-labels.en'),
-      icon: <FlagGenerator value="en" />,
-    },
-    {
-      value: 'jp',
-      label: translate('setting-language-labels.jp'),
-      icon: <FlagGenerator value="jp" />,
-    },
-  ];
+  // const languageOptions: LanguageOption[] = supportedLanguages.map(lang => ({
+  //   ...lang,
+  //   icon: <FlagGenerator value={lang.value} />,
+  // }));
+
   const customFormatOptionLabel = (option: LanguageOption) => (
     <div className="flex items-center">
       {option.icon}
@@ -47,12 +41,12 @@ const Languge = () => {
                 className="mb-5"
                 placeholder={'English (US)'}
                 formatOptionLabel={data => customFormatOptionLabel(data as LanguageOption)}
-                options={languageOptions}
+                options={supportedLanguages}
                 isSearchable={false}
-                value={languageOptions.find(option => option.value === selectedLanguage.value)}
+                value={supportedLanguages.find(option => option.value === unsavedValue.value)}
                 onChange={(newValue: unknown) => {
                   const value = newValue as { label: string; value: string };
-                  setSelectedLanguage(value);
+                  setUnsavedValue(value);
                 }}
               />
             </div>

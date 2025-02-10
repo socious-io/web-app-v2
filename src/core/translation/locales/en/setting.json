@@ -1,4 +1,105 @@
 {
+  "orgTeam": {
+    "teamManagement": {
+      "title": "Team management",
+      "subtitle": "Manage your team members and their account permissions here."
+    },
+    "inviteMembers": {
+      "title": "Invite team members",
+      "subtitle": "Invite members to post or manage your organization",
+      "placeholder": "Select team member",
+      "addAnother": "Add another",
+      "addMember": "Add member"
+    },
+    "teamMembers": {
+      "title": "Team members",
+      "subtitle": "Manage your existing team and change roles/permissions.",
+      "nameHeader": "Name",
+      "delete": "Delete"
+    },
+    "leaveDeleteModal": {
+      "title": "Delete member?",
+      "subtitle": "Are you sure you want to delete {memberName}? They will not be able to manage your organization anymore.",
+      "buttons": {
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
+    }
+  },
+  "userTeam": {
+    "teamManagement": {
+      "title": "Team management",
+      "subtitle": "Manage your teams"
+    },
+    "onTeams": {
+      "title": "On teams",
+      "subtitle": "You’re currently on these teams."
+    },
+    "leaveButton": "Leave",
+    "leaveModal": {
+      "lastMemberTitle": "Leave team?",
+      "lastMemberSubtitle": "You currently are the last member of this team. Unfortunately, this means you can't leave the team until you add another member.",
+      "optionsTitle": "Here are your options:",
+      "assignMemberTitle": "Assign member:",
+      "assignMemberDescription": " Choose another team member you trust and grant them rights. This will allow you to leave the team while ensuring someone remains to manage it.",
+      "deleteOrganizationTitle": "Delete the organization:",
+      "deleteOrganizationDescription": " If the organization is no longer needed, you can choose to delete it entirely.",
+      "defaultTitle": "Leave team?",
+      "defaultSubtitle": "Are you sure you want to leave {teamName}?",
+      "buttons": {
+        "close": "Close",
+        "cancel": "Cancel",
+        "leave": "Leave"
+      }
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "tabs": {
+      "account": "Account",
+      "team": "Team",
+      "password": "Password",
+      "plan": "Plan",
+      "notifications": "Notifications",
+      "language": "Language"
+    },
+    "items": {
+      "account": "Account",
+      "team": "Team",
+      "password": "Password",
+      "plan": "Plan",
+      "notifications": "Notifications",
+      "language": "Language"
+    }
+  },
+  "account": {
+    "info": {
+      "title": "Account Information"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email Address",
+      "username": "Username",
+      "role": "Role",
+      "city": "City"
+    },
+    "closeAccount": {
+      "link": "Close your Account",
+      "title": "Close account?",
+      "description": "Closing your account will erase all your existing activity on Socious, including connections you’ve made, jobs and contracts.",
+      "irreversible": "This action is irreversible.",
+      "reason": "Reason (optional)",
+      "placeholder": "Please let us know why you are closing your account.",
+      "buttons": {
+        "cancel": "Cancel",
+        "delete": "Permanently delete my account"
+      }
+    }
+  },
   "setting-language": "language",
   "setting-language-change": "Change language",
   "setting-language-select": "Select your default language.",
@@ -8,6 +109,53 @@
   },
   "setting-language-labels": {
     "en": "English (US)",
-    "jp": "Japanese (JP)"
+    "jp": "Japanese 日本語",
+    "es": "Spanish Español",
+    "kr": "Korean 한국어"
+  },
+  "password": {
+    "title": "Password",
+    "description": "Please enter your current password to change your password. If you have signed up via Google, please log out and use 'forgot password' to reset your password.",
+    "labels": {
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password"
+    },
+    "placeholders": {
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password"
+    },
+    "validations": {
+      "minLength": "Must be at least 8 characters",
+      "specialCharacter": "Must contain one special character",
+      "passwordsMatch": "Passwords match"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "update": "Update Password"
+    },
+    "errors": {
+      "currentPasswordRequired": "Current password is required",
+      "passwordRequired": "Password is required",
+      "minimumLength": "Minimum 8 characters",
+      "complexityWeak": "Password complexity is weak",
+      "confirmPasswordRequired": "Confirm password is required",
+      "passwordsMustMatch": "Passwords must match"
+    },
+    "alerts": {
+      "cantMatch": "Your password cannot be the same as the current password",
+      "incorrect": "Your current password is incorrect"
+    }
+  },
+  "notification": {
+    "title": "Notification settings",
+    "description": "We may still send you important notifications about your account outside of your notification settings.",
+    "saveButton": "Save"
+  },
+  "plan": {
+    "title": "Plan",
+    "description": "Manage your plan and payment details via Stripe.",
+    "manageSubscription": "Manage my subscription"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "chat-title": "메시지",
+  "chat-new": "새 메시지",
+  "chat-to": "받는 사람:",
+  "chat-send": "보내기",
+  "chat-send-placeholder": "메시지를 입력하세요",
+  "chat-error-alert": "선택한 연락처와 채팅을 시작할 수 없습니다",
+  "chat-error-alert-title": "실패",
+  "chat-type-name": "이름을 입력하세요..."
+}

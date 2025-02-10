@@ -33,7 +33,7 @@ const ServiceDetail = () => {
               ))}
             </div>
           )}
-          <span className={styles['content__title']}>Description</span>
+          <span className={styles['content__title']}>{translate('service-detail.description')}</span>
           <ExpandableText
             seeMoreText={translate('service-detail.more')}
             text={service.description}

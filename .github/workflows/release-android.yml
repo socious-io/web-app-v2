@@ -14,7 +14,6 @@ on:
 # echo '${{ github.event.release.name }}' -> title
 # echo '${{ github.event.release.body }}' -> body
 
-
 env:
   CI: false
   ANDROID_PACKAGE_NAME: ${{ vars.ANDROID_PACKAGE_NAME }}

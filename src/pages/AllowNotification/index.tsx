@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
-import { CurrentIdentity, Notification } from 'src/core/api';
-import { isTouchDevice } from 'src/core/device-type-detector';
+import { CurrentIdentity } from 'src/core/api';
 import { UserType } from 'src/core/types';
 import { getIdentityMeta } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
@@ -11,7 +10,6 @@ import { RootState } from 'src/store';
 import css from './allow-notification.module.scss';
 import { useAllowNotification } from './useAllowNotification';
 export const AllowNotification = () => {
-  const isMobile = isTouchDevice();
   const type = localStorage.getItem('registerFor');
 
   const { onAllowNotification, items, onSkip } = useAllowNotification();
@@ -25,7 +23,8 @@ export const AllowNotification = () => {
   return (
     <div className="flex flex-col h-screen justify-between items-center">
       <div className="flex flex-row justify-between py-4 px-8 w-full">
-        <img className={css.headerImage} src={isMobile ? '/images/logo/logo.svg' : '/images/logo/logo-text.svg'} />
+        <img src="/images/logo/logo.svg" width={32} height={32} className="md:hidden" />
+        <img src="/images/logo/logo-text.svg" className="hidden md:block" />
         <IconDropDown iconItems={items} type={type === 'user' ? 'users' : 'organizations'} accounts={accounts} />
       </div>
       <div className="flex flex-col h-screen justify-between">

@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { translate } from 'src/core/utils';
 
 import css from './result-not-found.module.scss';
 
@@ -10,14 +11,16 @@ export const useResultNotFound = () => {
     let title = '';
     switch (type) {
       case 'users':
-        title = 'No people found';
+        title = translate('result-not-found.title.users');
         break;
       case 'organizations':
-        title = 'No organizations found';
+        title = translate('result-not-found.title.organizations');
         break;
       case 'projects':
-        title = 'No jobs found';
+        title = translate('result-not-found.title.projects');
         break;
+      case 'services':
+        title = translate('result-not-found.title.services');
     }
     return title;
   };
@@ -27,21 +30,24 @@ export const useResultNotFound = () => {
 
     message = (
       <div className={css.message}>
-        Whoops! No results for &apos;{searchTerm}&apos;.
+        {translate('result-not-found.message', { searchTerm })}
         <br />
-        Let&apos;s try different keywords.
+        {translate('result-not-found.suggestion')}
       </div>
     );
 
     return message;
   };
+
   const onClick = (type: string) => {
     navigate('/jobs');
   };
+
   const generatButtonText = (type: string) => {
     let text = '';
-    text = 'View jobs';
+    text = translate('result-not-found.button.view-jobs');
     return text;
   };
+
   return { generateMessage, generateTextTitle, onClick, generatButtonText };
 };

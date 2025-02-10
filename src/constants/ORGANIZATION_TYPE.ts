@@ -1,10 +1,12 @@
+import { translate } from 'src/core/utils';
+
 export const ORGANIZATION_TYPE = [
-  { id: 'SOCIAL', value: 'SOCIAL', label: 'Social Business' },
-  { id: 'NONPROFIT', value: 'NONPROFIT', label: 'Non-profit / Charity' },
-  { id: 'COOP', value: 'COOP', label: 'Social Co-operative' },
-  { id: 'IIF', value: 'IIF', label: 'Impact Investing Funds/Foundations' },
-  { id: 'PUBLIC', value: 'PUBLIC', label: 'Public Institution' },
-  { id: 'INTERGOV', value: 'INTERGOV', label: 'Intergovernmental Organization (e.g. UN)' },
-  { id: 'DEPARTMENT', value: 'DEPARTMENT', label: 'Impact department of a for profit company (e.g. CSR)' },
-  { id: 'OTHER', value: 'OTHER', label: 'Other' },
+  { id: 'SOCIAL', value: 'SOCIAL', label: translate('organization_type.social_business') },
+  { id: 'NONPROFIT', value: 'NONPROFIT', label: translate('organization_type.non_profit') },
+  { id: 'COOP', value: 'COOP', label: translate('organization_type.social_cooperative') },
+  { id: 'IIF', value: 'IIF', label: translate('organization_type.impact_investing') },
+  { id: 'PUBLIC', value: 'PUBLIC', label: translate('organization_type.public_institution') },
+  { id: 'INTERGOV', value: 'INTERGOV', label: translate('organization_type.intergovernmental') },
+  { id: 'DEPARTMENT', value: 'DEPARTMENT', label: translate('organization_type.impact_department') },
+  { id: 'OTHER', value: 'OTHER', label: translate('organization_type.other') },
 ];

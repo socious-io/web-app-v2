@@ -40,7 +40,6 @@ export const Layout = () => {
       </div>
 
       <NavBar open={open} setOpen={setOpen} logout={logOut} />
-      <DeepLinks />
     </div>
   );
 };

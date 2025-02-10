@@ -8,7 +8,8 @@ import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
 import ServiceIntro from 'src/modules/Auth/containers/ServiceIntro';
 import { reviews, onboardingOptions } from 'src/modules/Auth/statics/intro';
 import { Button } from 'src/modules/general/components/Button';
-import { CardRadioButton } from 'src/modules/general/components/cardRadioButton/cardRadioButton';
+import CardRadioButton from 'src/modules/general/components/CardRadioButton';
+import { LanguageSwitcher } from 'src/modules/general/components/LanguageSwitcher';
 import { Link } from 'src/modules/general/components/link';
 import { RootState } from 'src/store';
 
@@ -76,6 +77,9 @@ export const Intro = () => {
               {translate('intro-have-account')}
             </Typography>
             <Link href="/sign-in" label={translate('intro-login')} customStyle="!font-semibold" />
+          </div>
+          <div className="md:absolute md:top-0 md:left-0 md:transform-none flex justify-center">
+            <LanguageSwitcher />
           </div>
         </div>
         <div className={css.copy}>

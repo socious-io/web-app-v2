@@ -1,4 +1,105 @@
 {
+  "orgTeam": {
+    "teamManagement": {
+      "title": "チーム管理",
+      "subtitle": "ここでチームメンバーと彼らのアカウント権限を管理してください。"
+    },
+    "inviteMembers": {
+      "title": "チームメンバーを招待する",
+      "subtitle": "組織をポストまたは管理するメンバーを招待してください。",
+      "placeholder": "チームメンバーを選択してください",
+      "addAnother": "もう1人追加",
+      "addMember": "メンバーを追加"
+    },
+    "teamMembers": {
+      "title": "チームメンバー",
+      "subtitle": "既存のチームを管理し、役割/権限を変更してください。",
+      "nameHeader": "名前",
+      "delete": "削除"
+    },
+    "leaveDeleteModal": {
+      "title": "{memberName}を削除する?",
+      "subtitle": "{memberName}を削除すると、彼はあなたの組織をもう管理できなくなります。",
+      "buttons": {
+        "cancel": "キャンセル",
+        "delete": "削除"
+      }
+    }
+  },
+  "userTeam": {
+    "teamManagement": {
+      "title": "チーム管理",
+      "subtitle": "チームを管理してください。"
+    },
+    "onTeams": {
+      "title": "現在のチーム",
+      "subtitle": "あなたが現在これらのチームに所属しています。"
+    },
+    "leaveButton": "退出",
+    "leaveModal": {
+      "lastMemberTitle": "チームから退出する?",
+      "lastMemberSubtitle": "あなたはこのチームの一人きりのメンバーです。不幸にも、これは意味しますか、あなたはチームから退出できないままでしょう。",
+      "optionsTitle": "ここにはあなたの選択肢があります:",
+      "assignMemberTitle": "メンバーを割り当てる:",
+      "assignMemberDescription": " 信頼できる他のチームメンバーを選んで、権限を与えましょう。これにより、あなたはチームから退出しつつ、チームを管理する誰かが残ることを保証できます。",
+      "deleteOrganizationTitle": "組織を削除する:",
+      "deleteOrganizationDescription": " もう組織が不要になった場合、あなたは完全に削除することもできます。",
+      "defaultTitle": "{teamName}から退出する?",
+      "defaultSubtitle": "{teamName}を退出するには確かにいいですか？",
+      "buttons": {
+        "close": "閉じる",
+        "cancel": "キャンセル",
+        "leave": "退出"
+      }
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "tabs": {
+      "account": "アカウント",
+      "team": "チーム",
+      "password": "パスワード",
+      "plan": "プラン",
+      "notifications": "通知",
+      "language": "言語"
+    },
+    "items": {
+      "account": "アカウント",
+      "team": "チーム",
+      "password": "パスワード",
+      "plan": "プラン",
+      "notifications": "通知",
+      "language": "言語"
+    }
+  },
+  "account": {
+    "info": {
+      "title": "アカウント情報"
+    },
+    "buttons": {
+      "cancel": "キャンセル",
+      "save": "保存"
+    },
+    "fields": {
+      "name": "名前",
+      "email": "メールアドレス",
+      "username": "ユーザー名",
+      "role": "役割",
+      "city": "都市"
+    },
+    "closeAccount": {
+      "link": "アカウントを閉じる",
+      "title": "アカウントを閉じる?",
+      "description": "アカウントを閉じると、Sociousで作成したすべての既存の活動、つまり作成した接続、仕事、および契約が削除されます。",
+      "irreversible": "この操作は取り消せません。",
+      "reason": "理由（任意）",
+      "placeholder": "アカウントを閉じる理由をお知らせください。",
+      "buttons": {
+        "cancel": "キャンセル",
+        "delete": "アカウントを完全に削除"
+      }
+    }
+  },
   "setting-language": "言語",
   "setting-language-change": "言語を変更する",
   "setting-language-select": "デフォルトの言語を選択してください。",
@@ -7,7 +108,54 @@
     "cancel": "キャンセル"
   },
   "setting-language-labels": {
-    "en": "英語 (US)",
-    "jp": "日本語 (JP)"
+    "en": "English (US)",
+    "jp": "Japanese 日本語",
+    "es": "Spanish Español",
+    "ko": "Korean 한국어"
+  },
+  "password": {
+    "title": "パスワード",
+    "description": "現在のパスワードを入力して、パスワードを変更してください。Googleで登録した場合は、ログアウトしてから'パスワードを忘れた場合'でパスワードをリセットしてください。",
+    "labels": {
+      "currentPassword": "現在のパスワード",
+      "newPassword": "新しいパスワード",
+      "confirmPassword": "新しいパスワードを確認"
+    },
+    "placeholders": {
+      "currentPassword": "現在のパスワード",
+      "newPassword": "新しいパスワード",
+      "confirmPassword": "新しいパスワードを確認"
+    },
+    "validations": {
+      "minLength": "少なくとも8文字以上でなければなりません",
+      "specialCharacter": "1つの特殊文字を含める必要があります",
+      "passwordsMatch": "パスワードが一致します"
+    },
+    "buttons": {
+      "cancel": "キャンセル",
+      "update": "パスワードを更新"
+    },
+    "errors": {
+      "currentPasswordRequired": "現在のパスワードが必要です",
+      "passwordRequired": "パスワードが必要です",
+      "minimumLength": "最低8文字",
+      "complexityWeak": "パスワードの複雑さが弱いです",
+      "confirmPasswordRequired": "確認用パスワードが必要です",
+      "passwordsMustMatch": "パスワードが一致する必要があります"
+    },
+    "alerts": {
+      "cantMatch": "現在のパスワードと同じではできません",
+      "incorrect": "現在のパスワードが正しくありません"
+    }
+  },
+  "notification": {
+    "title": "通知設定",
+    "description": "あなたのアカウントに関する重要な通知については、通知設定外でも送信する可能性があります。",
+    "saveButton": "保存"
+  },
+  "plan": {
+    "title": "プラン",
+    "description": "Stripeを使用してプランと支払い情報を管理してください。",
+    "manageSubscription": "サブスクリプションを管理"
   }
 }

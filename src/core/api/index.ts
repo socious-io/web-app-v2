@@ -48,3 +48,6 @@ export * from './disputes/disputes.types';
 
 export * from './services/services.api';
 export * from './services/services.types';
+
+export * from './contracts/contracts.api';
+export * from './contracts/contracts.types';

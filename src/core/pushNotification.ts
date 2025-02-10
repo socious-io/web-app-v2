@@ -21,7 +21,7 @@ export const getToken = async (): Promise<string> => {
 };
 
 export const addNotificationReceivedListener = async () => {
-  await FirebaseMessaging.addListener('notificationReceived', (event) => {
+  await FirebaseMessaging.addListener('notificationReceived', event => {
     console.log('notificationReceived', { event });
   });
 };

@@ -27,10 +27,16 @@ export const OrgCards: React.FC<OrgCardsProps> = () => {
         title={translate('dashboard-find-professional')}
         description={translate('dashboard-find-professional-desc')}
         bgColor={variables.color_dark_vanilla_100}
-        redirectUrl="/"
+        redirectUrl="/search?q=&type=users&page=1"
         buttonLabel="Explore"
       />
-
+      <DashboardCard
+        title={translate('dashboard-find-professional-title')}
+        description={translate('dashboard-find-professional-description')}
+        bgColor={variables.color_dark_vanilla_100}
+        redirectUrl="/search?q=&type=services&page=1"
+        buttonLabel={translate('dashboard-find-professional-button-label')}
+      />
       <DashboardCard
         title={translate('dashboard-create-job')}
         description={translate('dashboard-create-job-desc')}

@@ -1,16 +1,14 @@
 import { Divider } from '@mui/material';
 import { translate } from 'src/core/utils';
-import dapp from 'src/dapp';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
+import AddPayoutAccount from 'src/modules/general/containers/AddPayoutAccount';
 
 import { useAssets } from './useAssets';
-import { AddPayoutAccount } from '../addPayoutAccount';
-import { ConnectButton } from '../connectButton';
 import { StripeAccountItem } from '../stripeAccountItem';
 
 export const Assets = () => {
-  const { stripeAccounts, openAddAccount, setOpenAddAccount, isConnected, openConnect } = useAssets();
+  const { stripeAccounts, openAddAccount, setOpenAddAccount, Web3Connect } = useAssets();
 
   return (
     <>
@@ -29,9 +27,9 @@ export const Assets = () => {
         ))}
         <Divider />
         <div className="text-lg font-semibold leading-7 text-Gray-light-mode-900">{translate('pay-wallet')}</div>
-        {isConnected ? <dapp.Connect /> : <ConnectButton handleClick={() => openConnect()} />}
+        <Web3Connect />
       </div>
-      {openAddAccount && <AddPayoutAccount open={openAddAccount} handleClose={() => setOpenAddAccount(false)} />}
+      <AddPayoutAccount open={openAddAccount} handleClose={() => setOpenAddAccount(false)} />
     </>
   );
 };

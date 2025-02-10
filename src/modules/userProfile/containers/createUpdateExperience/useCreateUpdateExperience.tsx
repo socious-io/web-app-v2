@@ -24,6 +24,7 @@ import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
+import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 
 const schema = yup
@@ -108,12 +109,17 @@ interface OptionType {
   value: string;
   label: string;
 }
-export const useCreateUpdateExperience = (handleClose: () => void, experience?: Experience) => {
+export const useCreateUpdateExperience = (
+  handleClose: () => void,
+  experience?: Experience,
+  onAddExperience?: (experience: Experience, isEdit: boolean) => void,
+) => {
   const user = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   }) as User;
   const dispatch = useDispatch();
   const [jobCategories, setJobCategories] = useState<OptionType[]>();
+  const [companies, setCompanies] = useState<Organization[]>([]);
   const [employmentTypes, setEmploymentTypes] = useState<OptionType[]>();
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
@@ -259,30 +265,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
   const onChangeCategory = newCategory => {
     setValue('jobCategory', newCategory, { shouldValidate: true });
   };
-  const orgToOption = (orgs: Organization[], searchText: string) => {
-    let options: OptionType[] = [];
-    options = orgs.map(org => ({
-      value: org.id,
-      label: org.name,
-      icon: org.image ? (
-        <img src={org.image.url} width={24} height={24} alt="" />
-      ) : (
-        <Avatar type="organizations" size="24px" />
-      ),
-    }));
-    return options;
-  };
-
-  const searchCompanies = async (searchText: string, cb) => {
-    try {
-      if (searchText) {
-        const response = await search({ type: 'organizations', q: searchText, filter: {} }, { page: 1, limit: 10 });
-        cb(orgToOption(response.items, searchText));
-      }
-    } catch (error) {
-      console.error('Error fetching city data:', error);
-    }
-  };
 
   const onSelectCompany = newCompanyVal => {
     const value = newCompanyVal?.value === newCompanyVal?.label ? '' : newCompanyVal?.value;
@@ -382,11 +364,23 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     }
 
     payload = removedEmptyProps(payload) as ExperienceReq;
-    if (experience) await updateExperiences(experience.id, payload);
-    else await addExperiences(payload);
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
-    dispatch(setIdentityType('users'));
+    if (onAddExperience) {
+      onAddExperience(
+        {
+          ...payload,
+          job_category: jobCategory.value ? { id: jobCategory.value || '', name: jobCategory.label || '' } : undefined,
+          org: (companies?.find(company => company.id === organizationId) as Organization) || experience?.org,
+          id: experience ? experience.id : uuidv4(),
+        },
+        !!experience,
+      );
+    } else {
+      if (experience) await updateExperiences(experience.id, payload);
+      else await addExperiences(payload);
+      const updated = await otherProfileByUsername(user?.username || '');
+      dispatch(setIdentity(updated));
+      dispatch(setIdentityType('users'));
+    }
     handleClose();
   };
 
@@ -407,7 +401,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     category: getValues().jobCategory,
     onChangeCategory,
     companyVal: getValues().org,
-    searchCompanies,
     onSelectCompany,
     cityVal: getValues().city,
     searchCities,
@@ -433,5 +426,6 @@ export const useCreateUpdateExperience = (handleClose: () => void, experience?: 
     onDelete,
     startDateErrors,
     endDateErrors,
+    setCompanies,
   };
 };

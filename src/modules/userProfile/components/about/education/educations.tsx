@@ -1,9 +1,11 @@
 import React from 'react';
 import { getStringDate } from 'src/core/time';
 import { verificationStatus } from 'src/core/utils';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { StepperCard } from 'src/modules/general/components/stepperCard';
+import { Verified } from 'src/modules/general/components/stepperCard/stepperCard.types';
 import { CreateUpdateEducation } from 'src/modules/userProfile/containers/createUpdateEducation';
 import { VerifyEducationModal } from 'src/modules/userProfile/containers/verifyEducationModal';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -42,11 +44,11 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
   return (
     <>
       <div className="w-full flex flex-col gap-5">
-        <div className={css.title}>Educations</div>
+        <div className={css.title}>{translate('educations.title')}</div>
         {myProfile && (
           <Button variant="text" color="primary" className={css.addBtn} onClick={handleAdd}>
             <Icon name="plus" fontSize={20} color={variables.color_primary_700} />
-            Add education
+            {translate('educations.addEducation')}
           </Button>
         )}
         {userEducations && (
@@ -60,7 +62,7 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
                   title={item.org.name}
                   subtitle={getDegree(item)}
                   supprtingText={`${getStringDate(item.start_at)} - ${
-                    item.end_at ? getStringDate(item.end_at) : 'Now'
+                    item.end_at ? getStringDate(item.end_at) : translate('educations.now')
                   }`}
                   editable={myProfile}
                   deletable={myProfile}
@@ -68,17 +70,26 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
                   handleEdit={() => handleEdit(item)}
                   handleDelete={() => handleDelete(item.id)}
                   DisplayVerificationStatus
-                  verified={item.credential?.status ? verificationStatus[item.credential?.status] : 'unverified'}
+                  verified={
+                    item.credential?.status
+                      ? verificationStatus[item.credential?.status]
+                      : (translate('educations.unverified') as Verified)
+                  }
                   verifyButton={{
                     display: myProfile && (!item.credential || item.credential?.status === 'PENDING'),
-                    label: item.credential ? 'Credential request sent' : 'Request certificate',
+                    label: item.credential
+                      ? translate('educations.credentialRequestSent')
+                      : translate('educations.requestCertificate'),
                     disabled: !!item.credential,
                     action: isVerified ? () => onOpenVerifyModal(item) : handleOpenVerifyModal,
                   }}
                   claimButton={{
                     display:
                       myProfile && (item.credential?.status === 'APPROVED' || item.credential?.status === 'SENT'),
-                    label: item.credential?.status === 'APPROVED' ? 'Claim certificate' : 'Certificate claimed',
+                    label:
+                      item.credential?.status === 'APPROVED'
+                        ? translate('educations.claimCertificate')
+                        : translate('educations.certificateClaimed'),
                     disabled: !!disabledClaims[item.credential?.id || ''] || item.credential?.status === 'SENT',
                     action: isVerified ? () => onOpenClaimModal(item.credential?.id) : handleOpenVerifyModal,
                   }}
@@ -89,14 +100,14 @@ export const Educations: React.FC<ExperienceProps> = ({ handleOpenVerifyModal })
                     style={{ borderColor: variables.color_error_500, color: variables.color_error_500 }}
                   >
                     <Icon name="x-close" color={variables.color_error_500} />
-                    <span>Rejected from {item.org.name}</span>
+                    <span>{translate('educations.rejectedFrom', { org: item.org.name })}</span>
                   </div>
                 )}
               </>
             ))}
             {!showAll && hasMoreEducations && (
               <span className={css.more} onClick={() => setShowAll(true)}>
-                Show all
+                {translate('educations.showAll')}
               </span>
             )}
           </div>

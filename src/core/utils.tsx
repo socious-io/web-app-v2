@@ -2,7 +2,7 @@ import { t } from 'i18next';
 
 export const translate = t;
 
-import { Credential, Identity, OrgMeta, Organization, User, UserMeta } from './api';
+import { Credential, Identity, OrgMeta, Organization, SearchReq, User, UserMeta } from './api';
 import { UserType } from './types';
 
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
@@ -158,7 +158,7 @@ export const navigateToProfile = (username: string, type: UserType) => {
 };
 
 export const checkSearchFilters = (
-  type: 'organizations' | 'projects' | 'users' | 'posts',
+  type: 'organizations' | 'projects' | 'users' | 'posts' | 'services',
   filter: Record<string, any>,
 ) => {
   let authorizedKeys: string[] = [];
@@ -180,11 +180,13 @@ export const checkSearchFilters = (
       ];
       break;
     case 'users':
-      authorizedKeys = ['social_causes', 'city', 'country', 'skills', 'events'];
+      authorizedKeys = ['social_causes', 'city', 'country', 'skills', 'events', 'languages.name'];
       break;
     case 'posts':
       authorizedKeys = ['causes_tags', 'hashtags', 'identity_tags', 'identity_id'];
       break;
+    case 'services':
+      authorizedKeys = ['city', 'country', 'job_category_id', 'project_length', 'remote_preference', 'skills'];
   }
 
   const authorizedFilters: Record<string, any> = {};
@@ -195,4 +197,12 @@ export const checkSearchFilters = (
   });
 
   return authorizedFilters;
+};
+
+export const addServiceToSearchPayload = (payload: SearchReq) => {
+  if (payload.type === 'services') {
+    const newPayload: SearchReq = { ...payload, type: 'projects', filter: { ...payload.filter, kind: 'SERVICE' } };
+    return newPayload;
+  }
+  return payload;
 };

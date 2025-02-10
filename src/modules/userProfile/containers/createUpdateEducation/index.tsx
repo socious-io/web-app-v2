@@ -1,5 +1,6 @@
 import React from 'react';
 import { Education } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
@@ -12,6 +13,8 @@ interface CreateUpdateEducationProps {
   handleClose: () => void;
   education?: Education;
   readonly?: boolean;
+  hasDeleteButton?: boolean;
+  onAddEducation?: (education: Education, isEdit: boolean) => void;
 }
 
 export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
@@ -19,6 +22,8 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
   handleClose,
   education,
   readonly,
+  hasDeleteButton = true,
+  onAddEducation,
 }) => {
   const {
     schoolVal,
@@ -41,7 +46,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
     onDelete,
     startDateErrors,
     endDateErrors,
-  } = useCreateUpdateEducation(handleClose, education);
+  } = useCreateUpdateEducation(handleClose, education, onAddEducation);
 
   const contentJSX = (
     <div className="p-6 w-full h-full flex flex-col gap-5 overflow-y-auto">
@@ -53,28 +58,28 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
         loadOptions={searchSchools}
         icon="search-lg"
         hasDropdownIcon={false}
-        label="School*"
+        label={translate('createUpdateEducation.school.label')}
         onChange={onSelectSchool}
-        placeholder="Search for school"
+        placeholder={translate('createUpdateEducation.school.placeholder')}
         noOptionsMessage={({ inputValue }) => inputValue}
         errors={errors['school']?.label?.message ? [errors['school']?.label.message.toString()] : undefined}
         isDisabled={readonly}
       />
       <Input
         id="degree"
-        label="Credential"
+        label={translate('createUpdateEducation.degree.label')}
         name="degree"
         register={register}
-        placeholder="Credential name"
+        placeholder={translate('createUpdateEducation.degree.placeholder')}
         errors={errors['degree']?.message ? [errors['degree']?.message.toString()] : undefined}
         disabled={readonly}
       />
       <Input
         id="field-of-study"
-        label="Field of study*"
+        label={translate('createUpdateEducation.field.label')}
         name="field"
         register={register}
-        placeholder="Specialities"
+        placeholder={translate('createUpdateEducation.field.placeholder')}
         errors={errors['field']?.message ? [errors['field']?.message.toString()] : undefined}
         disabled={readonly}
       />
@@ -83,12 +88,12 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           required
           id="start-month"
           value={startMonth}
-          label="Start date*"
+          label={translate('createUpdateEducation.startDate.label')}
           options={months}
           hasDropdownIcon
           onChange={onSelectStartMonth}
           className="flex-1"
-          placeholder="Month"
+          placeholder={translate('createUpdateEducation.startDate.monthPlaceholder')}
           isSearchable
           errors={startDateErrors ? [startDateErrors.toString()] : undefined}
           isDisabled={readonly}
@@ -103,7 +108,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           hasDropdownIcon
           onChange={onSelectStartYear}
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('createUpdateEducation.startDate.yearPlaceholder')}
           isSearchable
           isDisabled={readonly}
           maxMenuHeight={200}
@@ -114,11 +119,11 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           required
           id="end-month"
           value={endMonth}
-          label="End date"
+          label={translate('createUpdateEducation.endDate.label')}
           options={months}
           hasDropdownIcon
           onChange={onSelectEndMonth}
-          placeholder="Month"
+          placeholder={translate('createUpdateEducation.endDate.monthPlaceholder')}
           className="flex-1"
           isSearchable
           errors={endDateErrors ? [endDateErrors.toString()] : undefined}
@@ -134,7 +139,7 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
           hasDropdownIcon
           onChange={onSelectEndYear}
           className="flex-1"
-          placeholder="Year"
+          placeholder={translate('createUpdateEducation.endDate.yearPlaceholder')}
           isSearchable
           isDisabled={readonly}
           maxMenuHeight={200}
@@ -142,50 +147,52 @@ export const CreateUpdateEducation: React.FC<CreateUpdateEducationProps> = ({
       </div>
       <Input
         id="grade"
-        label="Grade"
+        label={translate('createUpdateEducation.grade.label')}
         name="grade"
         register={register}
-        placeholder="Grade"
+        placeholder={translate('createUpdateEducation.grade.placeholder')}
         errors={errors['grade']?.message ? [errors['grade']?.message.toString()] : undefined}
         disabled={readonly}
       />
       <Input
         id="description"
         name="description"
-        label="Description"
+        label={translate('createUpdateEducation.description.label')}
         multiline
         customHeight="130px"
         register={register}
-        placeholder="Enter a description..."
+        placeholder={translate('createUpdateEducation.description.placeholder')}
         disabled={readonly}
       />
     </div>
   );
+
   const modalFooterJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
       <Button customStyle="w-full md:w-fit " variant="contained" color="primary" onClick={handleSubmit(onSave)}>
-        {education ? 'Save' : 'Add education'}
+        {education ? translate('createUpdateEducation.save') : translate('createUpdateEducation.add')}
       </Button>
       <Button customStyle="w-full md:w-fit " variant="outlined" color="primary" onClick={handleClose}>
-        Cancel
+        {translate('createUpdateEducation.cancel')}
       </Button>
-      {education && (
+      {hasDeleteButton && education && (
         <Button
           variant="text"
           color="primary"
           customStyle="ml-0 mr-auto text-Gray-light-mode-600 w-full md:w-fit"
           onClick={onDelete}
         >
-          Delete education
+          {translate('createUpdateEducation.delete')}
         </Button>
       )}
     </div>
   );
+
   return (
     <Modal
       open={open}
       handleClose={handleClose}
-      title={education ? 'Edit education' : 'Add education'}
+      title={education ? translate('createUpdateEducation.edit') : translate('createUpdateEducation.add')}
       content={contentJSX}
       footer={modalFooterJsx}
     />

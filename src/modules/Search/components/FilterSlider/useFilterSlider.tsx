@@ -4,7 +4,12 @@ import { EXPERIENCE_LEVEL_V2 } from 'src/constants/EXPERIENCE_LEVEL';
 import { PROJECT_LENGTH_V2 } from 'src/constants/PROJECT_LENGTH';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
 import { PROJECT_REMOTE_PREFERENCES_V2 } from 'src/constants/PROJECT_REMOTE_PREFERENCE';
-import { eventsToCategoryAdaptor, skillsToCategoryAdaptor, socialCausesToCategoryAdaptor } from 'src/core/adaptors';
+import {
+  eventsToCategoryAdaptor,
+  languagesToCategoryAdaptor,
+  skillsToCategoryAdaptor,
+  socialCausesToCategoryAdaptor,
+} from 'src/core/adaptors';
 import { JobCategoriesRes, Location, openToVolunteer, searchLocation } from 'src/core/api';
 import { Item } from 'src/modules/general/components/CheckboxGroup/index.types';
 import { MultiSelectItem } from 'src/modules/general/components/multiSelect/multiSelect.types';
@@ -21,6 +26,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
   const [causesItems, setCausesItems] = useState<LabelValue[]>([]);
   const [skillItems, setSkillItems] = useState<LabelValue[]>([]);
   const [eventItems, setEventItems] = useState<LabelValue[]>([]);
+  const [languageItems, setLanguageItems] = useState<LabelValue[]>([]);
 
   categoriesList.current = categories.map(item => ({ label: item.name, value: item.id }));
   const paymentTypeOptions = PROJECT_PAYMENT_TYPE.slice().reverse();
@@ -52,7 +58,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     }
   };
 
-  const onSelectMultiSelect = (type: 'causes' | 'skills', value: MultiSelectItem[]) => {
+  const onSelectMultiSelect = (type: 'causes' | 'skills' | 'languages.name', value: MultiSelectItem[]) => {
     dispatch({ type, payload: value });
   };
 
@@ -61,11 +67,11 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     dispatch({ type: 'location', payload: { label, value, countryCode } });
   };
 
-  const onSelectCheckboxs = (type: 'organizationSize' | 'jobLength' | 'experienceLevel', value: Item[]) => {
+  const onSelectCheckboxs = (type: 'organizationSize' | 'length' | 'experienceLevel', value: Item[]) => {
     dispatch({ type, payload: value });
   };
 
-  const onSelectSearchDropdown = (type: 'preference' | 'jobCategory' | 'events', value) => {
+  const onSelectSearchDropdown = (type: 'preference' | 'category' | 'events', value) => {
     dispatch({ type, payload: value });
   };
 
@@ -84,8 +90,8 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       // organizationSize,
       location,
       preference,
-      jobCategory,
-      jobLength,
+      category,
+      length,
       experienceLevel,
       paymentType,
       openToVolunteer,
@@ -93,11 +99,13 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     } = filters || {};
     const { value, label, countryCode } = location || {};
     const isValidLocation = countryCode && label && value;
-
     const filter = {
       ...(causes.length > 0 && type === 'jobs' && { causes_tags: causes.map((c: LabelValue) => c.value) }),
       ...(causes.length > 0 && type !== 'jobs' && { social_causes: causes.map((c: LabelValue) => c.value) }),
       ...(skills.length > 0 && { skills: skills.map((s: LabelValue) => s.value) }),
+      ...(filters['languages.name'].length > 0 && {
+        'languages.name': filters['languages.name'].map((s: LabelValue) => s.value),
+      }),
       // ...(organizationSize.length > 0 && { organizationSize: organizationSize.map((o: LabelValue) => o.value) }),
       ...(countryCode && { country: countryCode }),
       ...(label && { city: label.split(',')[0] }),
@@ -105,8 +113,8 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
         location: { value, label, countryCode },
       }),
       ...(preference && { remote_preference: preference.value }),
-      ...(jobCategory && { job_category_id: jobCategory.value }),
-      ...(jobLength.length > 0 && { project_length: jobLength.map((j: LabelValue) => j.value) }),
+      ...(category && { job_category_id: category.value }),
+      ...(length.length > 0 && { project_length: length.map((j: LabelValue) => j.value) }),
       ...(experienceLevel.length > 0 && { experience_level: experienceLevel.map((e: LabelValue) => e.value) }),
       ...(paymentType && { payment_type: type !== 'organization' ? paymentType.value : '' }),
       ...(openToVolunteer && { open_to_volunteer: openToVolunteer }),
@@ -119,9 +127,16 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     skillsToCategoryAdaptor().then(data => setSkillItems(data));
     setCausesItems(socialCausesToCategoryAdaptor());
     eventsToCategoryAdaptor().then(data => setEventItems(data));
+    setLanguageItems(languagesToCategoryAdaptor());
   }, []);
 
   useEffect(() => {
+    if (filter['languages.name']?.length) {
+      dispatch({
+        type: 'languages.name',
+        payload: getOptionsFromValues(filter['languages.name'] || [], languageItems),
+      });
+    }
     if (filter.causes_tags?.length) {
       dispatch({ type: 'causes', payload: getOptionsFromValues(filter.causes_tags || [], causesItems) });
     }
@@ -148,12 +163,12 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
     }
     if (filter.job_category_id) {
       dispatch({
-        type: 'jobCategory',
+        type: 'category',
         payload: categoriesList?.current?.find(c => c.value === filter.job_category_id),
       });
     }
     if (filter.project_length?.length) {
-      dispatch({ type: 'jobLength', payload: getOptionsFromValues(filter.project_length || [], PROJECT_LENGTH_V2) });
+      dispatch({ type: 'length', payload: getOptionsFromValues(filter.project_length || [], PROJECT_LENGTH_V2) });
     }
     if (filter.experience_level?.length) {
       const payload = EXPERIENCE_LEVEL_V2.filter(option => (filter.experience_level || []).includes(option.value));
@@ -192,6 +207,7 @@ export const useFilterSlider = (onApply: (filter: FilterReq) => void, filter: Fi
       categoriesList: categoriesList.current,
       paymentTypeOptions,
       eventItems,
+      languageItems,
     },
     operations: {
       onSelectMultiSelect,

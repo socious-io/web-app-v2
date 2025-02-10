@@ -33,8 +33,10 @@ const Slider: React.FC<SliderProps> = ({
     <Slide in={open} direction={direction} mountOnEnter={mountOnEnter} unmountOnExit={unmountOnExit} {...props}>
       <div ref={ref} className={`${styles['container']} ${containerClassName}`} id="slider">
         <div className={headerClass}>
-          {title && <span className={`${styles['title']} ${titleClassName}`}>{title}</span>}
-          {subtitle && <span className={styles['subtitle']}>{subtitle}</span>}
+          <div className="flex flex-col">
+            {title && <div className={`${styles['title']} ${titleClassName}`}>{title}</div>}
+            {subtitle && <span className={styles['subtitle']}>{subtitle}</span>}
+          </div>
           {hasHeader ? (
             <CloseButton handleClose={onClose} customStyle={closeButtonClass} />
           ) : (

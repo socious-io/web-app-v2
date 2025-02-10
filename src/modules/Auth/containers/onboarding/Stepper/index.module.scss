@@ -1,0 +1,14 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.back {
+    margin: 0.75rem 0;
+
+    @media (max-width: $width-xl) {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        margin: 0;
+        background-color: $color-white;
+        height: 3.75rem;
+    }
+}

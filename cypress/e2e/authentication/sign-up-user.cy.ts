@@ -83,7 +83,7 @@ describe('Sign up (User)', () => {
   it('it should check the sign up process for normal user', () => {
     //Approach the sign-up page
     cy.visit(`${APP_URL}/intro`);
-    cy.contains('div', 'I am seeking impact work').parent().parent().click();
+    cy.contains('div', 'I am seeking impact work').parent().click();
     cy.contains('button', 'Continue').click();
 
     // Fill in the random email address, continue and check the route
@@ -117,6 +117,9 @@ describe('Sign up (User)', () => {
 
     //Just hit Complete your profile
     cy.contains('button', 'Complete your profile').click();
+
+    //Fill out manually
+    cy.contains('button', 'Fill out manually').click();
 
     //Select 3 social causes
     socialCauses.forEach(socialCause => cy.contains('span', socialCause).parent().click());

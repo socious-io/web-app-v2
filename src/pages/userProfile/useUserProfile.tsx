@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLoaderData, useLocation } from 'react-router-dom';
 import { ServicesRes } from 'src/core/adaptors';
 import { CurrentIdentity, UserProfile } from 'src/core/api';
+import { translate } from 'src/core/utils';
 import ServicesList from 'src/modules/Services/containers/ServicesList';
 import { About } from 'src/modules/userProfile/components/about';
 import { RootState } from 'src/store';
@@ -16,9 +17,9 @@ export const useUserProfile = () => {
   });
   const myProfile = currentIdentity?.id === user?.id;
   const tabs = [
-    { label: 'About', content: <About /> },
+    { label: translate('user-profile.about'), content: <About /> },
     ...(myProfile || services?.items.length
-      ? [{ label: 'Services', content: <ServicesList key={user?.id || ''} /> }]
+      ? [{ label: translate('user-profile.services'), content: <ServicesList /> }]
       : []),
   ];
   const activeTabIndex = {
