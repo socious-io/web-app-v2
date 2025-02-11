@@ -31,7 +31,14 @@
   },
   "user-profile": {
     "about": "概要",
-    "services": "サービス"
+    "services": "サービス",
+    "reviews": "レビュー"
+  },
+  "org-profile": {
+    "about": "概要",
+    "jobs": "求人",
+    "preferences": "設定",
+    "reviews": "レビュー"
   },
   "summary": {
     "title": "概要",
