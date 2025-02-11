@@ -1,6 +1,7 @@
 import { Offer } from 'src/core/types';
 
 import { AdditionalRes } from '../additionals/additionals.types';
+import { NewContract } from '../contracts/contracts.types';
 import { Category, Mission } from '../jobs/jobs.types';
 import { Job } from '../jobs/jobs.types';
 import { Media } from '../media/media.types';
@@ -127,6 +128,7 @@ export interface User {
   identity_verified: boolean;
   name?: string;
   events?: Event[] | null;
+  rate: number;
 }
 
 export interface UserProfile extends User {
@@ -249,4 +251,20 @@ export interface ImportRes {
     educations: ImportEducationRes[];
     experiences: ImportExperiencesRes[];
   };
+}
+
+export interface Review {
+  id: string;
+  content: string;
+  identity_id: string;
+  project_id: string;
+  created_at: Date;
+  contract_id: string;
+  satisfied: boolean;
+  identity: Identity;
+  contract: NewContract;
+}
+
+export interface Reviews extends PaginateRes {
+  items: Review[];
 }
