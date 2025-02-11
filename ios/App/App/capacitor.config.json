@@ -32,6 +32,6 @@
 		"PreferencesPlugin",
 		"PushNotificationsPlugin",
 		"ToastPlugin",
-		"GoogleAuth"
+		"SocialLoginPlugin"
 	]
 }
