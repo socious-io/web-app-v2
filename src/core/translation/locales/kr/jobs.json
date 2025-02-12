@@ -51,5 +51,6 @@
   "job-back": "뒤로",
   "job-list-title": "{{number}}개의 임팩트 채용 공고",
   "job-applied": "지원한 채용 공고",
-  "job-my-applied": "내가 지원한 채용 공고"
+  "job-my-applied": "내가 지원한 채용 공고",
+  "job-card-posted-on": "게시 날짜"
 }

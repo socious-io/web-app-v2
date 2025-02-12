@@ -51,5 +51,6 @@
   "job-back": "Back",
   "job-list-title": "{{number}} impact jobs",
   "job-applied": "Applied jobs",
-  "job-my-applied": "My applied jobs"
+  "job-my-applied": "My applied jobs",
+  "job-card-posted-on": "Posted on"
 }
