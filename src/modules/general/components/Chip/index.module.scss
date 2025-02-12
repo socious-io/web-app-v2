@@ -35,6 +35,11 @@
     &--sharp {
         border-radius: 6px;
     }
+
+    .icon {
+        display: flex;
+        align-items: center;
+    }
 }
 
 .primary {
@@ -108,5 +113,15 @@
         background-color: transparent;
         color: $color-grey-blue-600;
         border: 1.5px solid $color-grey-blue-600;
+    }
+}
+
+.grey {
+    background-color: $color-grey-50;
+    color: $color-grey-700;
+    border: 1.5px solid $color-grey-200;
+
+    &--transparent {
+        background-color: transparent;
     }
 }
