@@ -31,7 +31,14 @@
   },
   "user-profile": {
     "about": "About",
-    "services": "Services"
+    "services": "Services",
+    "reviews": "Reviews"
+  },
+  "org-profile": {
+    "about": "About",
+    "jobs": "Jobs",
+    "preferences": "Preferences",
+    "reviews": "Reviews"
   },
   "summary": {
     "title": "Summary",

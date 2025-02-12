@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getLinkedinProfileAdaptor } from 'src/core/adaptors/users/index.adaptors';
+import { getLinkedinProfileAdaptor } from 'src/core/adaptors';
 import { PostMediaUploadRes } from 'src/core/api';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { setLinkedIn } from 'src/store/reducers/linkedin.reducer';

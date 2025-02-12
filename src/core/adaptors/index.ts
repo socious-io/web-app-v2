@@ -6,6 +6,9 @@ export * from './services/index.types';
 export * from './contracts/index.adaptors';
 export * from './contracts/index.types';
 
+export * from './users/index.adaptors';
+export * from './users/index.types';
+
 export interface CurrencyDetail {
   name: string;
   symbol?: string;

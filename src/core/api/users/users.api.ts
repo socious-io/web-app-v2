@@ -22,6 +22,7 @@ import {
   Preference,
   ReferReq,
   ImportRes,
+  Reviews,
 } from './users.types';
 
 export async function profile(): Promise<User> {
@@ -153,4 +154,8 @@ export async function importLinkedin(file: File): Promise<ImportRes> {
   const formData = new FormData();
   formData.append('file', file);
   return (await post<ImportRes>('user/imports/linkdin', formData)).data;
+}
+
+export async function reviews(params: PaginateReq, filters?: FilterReq): Promise<Reviews> {
+  return (await get<Reviews>('user/reviews', { params }, filters)).data;
 }

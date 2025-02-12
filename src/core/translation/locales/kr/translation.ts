@@ -22,6 +22,7 @@ import payments from './payments.json';
 import preferences from './preferences.json';
 import profile from './profile.json';
 import referral from './referral.json';
+import reviews from './reviews.json';
 import search from './search.json';
 import services from './services.json';
 import setting from './setting.json';
@@ -66,5 +67,6 @@ export function generateTranslationFile() {
     termsCondition,
     userTeam,
     contribute,
+    reviews,
   );
 }

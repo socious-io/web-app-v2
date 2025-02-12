@@ -31,7 +31,14 @@
   },
   "user-profile": {
     "about": "소개",
-    "services": "서비스"
+    "services": "서비스",
+    "reviews": "리뷰"
+  },
+  "org-profile": {
+    "about": "소개",
+    "jobs": "채용",
+    "preferences": "설정",
+    "reviews": "리뷰"
   },
   "summary": {
     "title": "요약",

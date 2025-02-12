@@ -1,0 +1,61 @@
+@import 'src/styles/constants/_primitives.scss';
+
+@mixin SmallFont {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+
+    .avatar {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        @include SmallFont;
+
+        &__info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25rem;
+            color: $color-grey-600;
+        }
+
+        &__name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            color: $color-grey-700;
+        }
+    }
+
+    .review {
+        &__date {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 18px;
+            color: $color-grey-600;
+        }
+
+        &__content {
+            padding: 0.75rem 0;
+            @include SmallFont;
+            color: $color-grey-700;
+        }
+    }
+
+    .job {
+        @include SmallFont;
+        color: $color-grey-600;
+
+        &__name {
+            font-weight: 500;
+            color: $color-primary-600;
+        }
+    }
+}

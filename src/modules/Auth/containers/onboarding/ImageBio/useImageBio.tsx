@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { applyLinkedInProfileAdaptor } from 'src/core/adaptors/users/index.adaptors';
+import { applyLinkedInProfileAdaptor } from 'src/core/adaptors';
 import { CurrentIdentity, profile, uploadMedia, updateProfile as updateProfileApi, UserMeta } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
