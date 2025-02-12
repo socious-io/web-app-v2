@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   CurrentIdentity,
   Identity,
@@ -20,6 +21,7 @@ import { setIdentity } from 'src/store/reducers/profile.reducer';
 export const useHeaderNavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const identities = useSelector<RootState, Identity[]>(state => {
     return state.identity.entities;
   });
@@ -63,6 +65,11 @@ export const useHeaderNavBar = () => {
       getNotification();
     }
   }, [currentIdentity]);
+  useEffect(() => {
+    if (!location.pathname.includes('/search')) {
+      setSearchTerm('');
+    }
+  }, [location]);
 
   useEffect(() => {
     const accList = identities.map(i => {
