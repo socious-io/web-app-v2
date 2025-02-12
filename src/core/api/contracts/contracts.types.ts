@@ -84,4 +84,5 @@ export interface SubmitReq {
 
 export interface FeedbackReq {
   content: string;
+  satisfied: boolean;
 }

@@ -237,9 +237,13 @@ export const completeContractAdaptor = async (contractId: string): Promise<Adapt
   }
 };
 
-export const feedbackContractAdaptor = async (contractId: string, content: string): Promise<AdaptorRes<SuccessRes>> => {
+export const feedbackContractAdaptor = async (
+  contractId: string,
+  content: string,
+  satisfied: boolean,
+): Promise<AdaptorRes<SuccessRes>> => {
   try {
-    await feedbackContract(contractId, { content });
+    await feedbackContract(contractId, { content, satisfied });
     return { data: { message: 'success' }, error: null };
   } catch (error) {
     console.error('Error in giving feedback on a contract', error);
