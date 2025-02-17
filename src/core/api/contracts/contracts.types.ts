@@ -1,10 +1,17 @@
 import { Identity, Media } from 'src/core/api';
+
 import { Payment } from '../payments/payments.types';
 import { PaymentCurrency, PaymentMode, ProjectPaymentType, CommitmentPeriod, PaginateResV3 } from '../types';
 
+export type DepositReqMeta = {
+  escrowId: string;
+  token: string;
+  txHash: string;
+};
+
 export type CurrencyPayloadMap = {
   FIAT: { card_id: string };
-  CRYPTO: { txid: string };
+  CRYPTO: { txid: string; meta: DepositReqMeta };
 };
 
 export type DepositReq<K extends keyof CurrencyPayloadMap> = CurrencyPayloadMap[K];

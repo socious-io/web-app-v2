@@ -8,6 +8,7 @@ import {
   createContract,
   depositContract,
   DepositReq,
+  DepositReqMeta,
   feedbackContract,
   PaymentMode,
   signContract,
@@ -150,6 +151,7 @@ export const depositContractAdaptor = async (
   contractId: string,
   identifier: string,
   currency: PaymentMode,
+  meta?: DepositReqMeta,
 ): Promise<AdaptorRes<Contract>> => {
   const currentIdentity = store.getState().identity.entities.find(identity => identity.current);
   const currentIdentityId = currentIdentity?.id;
@@ -158,7 +160,7 @@ export const depositContractAdaptor = async (
       contractId,
       currency === 'FIAT'
         ? ({ card_id: identifier } as DepositReq<'FIAT'>)
-        : ({ txid: identifier } as DepositReq<'CRYPTO'>),
+        : ({ txid: identifier, meta } as DepositReq<'CRYPTO'>),
     );
     const data = {
       id: res.id,

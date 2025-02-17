@@ -42,12 +42,12 @@ export const useSliderAwaiting = (contract: Contract) => {
     setOpenAlert(false);
     setDisabledPrimaryButton(true);
     try {
-      if (contract.payment === 'CRYPTO' && signer && chainId) {
-        console.log('escrow check on crypto job');
+      const escrowId = contract?.escrowId || '';
+      if (contract.payment === 'CRYPTO' && signer && chainId && escrowId) {
         const result = await dapp.withdrawnEscrow({
           signer,
           chainId,
-          escrowId: contract?.escrowId as string,
+          escrowId,
         });
 
         if (!result) {
