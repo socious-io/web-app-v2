@@ -1,21 +1,21 @@
 {
-    "user-team": {
-      "leave-team-title": "¿Salir del equipo?",
-      "leave-team-last-member-subtitle": "Actualmente eres el último miembro de este equipo. Desafortunadamente, esto significa que no puedes salir hasta que agregues a otro miembro.",
-      "leave-team-options": "Aquí están tus opciones:",
-      "assign-member-label": "Asignar miembro:",
-      "assign-member-description": "Elige a otro miembro de confianza y asígnale derechos. Esto te permitirá salir del equipo asegurando que alguien siga gestionándolo.",
-      "delete-org-label": "Eliminar la organización:",
-      "delete-org-description": "Si la organización ya no es necesaria, puedes optar por eliminarla por completo.",
-      "leave-team-subtitle": "¿Seguro que quieres salir de {{name}}?",
-      "team-management-title": "Gestión de equipos",
-      "team-management-subtitle": "Administra tus equipos",
-      "on-teams-title": "En equipos",
-      "on-teams-subtitle": "Actualmente formas parte de estos equipos.",
-      "leave": "Salir"
-    },
-    "common": {
-      "close": "Cerrar",
-      "cancel": "Cancelar"
-    }
+  "user-team": {
+    "leave-team-title": "¿Salir del equipo?",
+    "leave-team-last-member-subtitle": "Actualmente eres el último miembro de este equipo. Desafortunadamente, esto significa que no puedes salir hasta que agregues a otro miembro.",
+    "leave-team-options": "Aquí están tus opciones:",
+    "assign-member-label": "Asignar miembro:",
+    "assign-member-description": "Elige a otro miembro de confianza y asígnale derechos. Esto te permitirá salir del equipo asegurando que alguien siga gestionándolo.",
+    "delete-org-label": "Eliminar la organización:",
+    "delete-org-description": "Si la organización ya no es necesaria, puedes optar por eliminarla por completo.",
+    "leave-team-subtitle": "¿Seguro que quieres salir de {{name}}?",
+    "team-management-title": "Gestión de equipos",
+    "team-management-subtitle": "Administra tus equipos",
+    "on-teams-title": "En equipos",
+    "on-teams-subtitle": "Actualmente formas parte de estos equipos.",
+    "leave": "Salir"
+  },
+  "common": {
+    "close": "Cerrar",
+    "cancel": "Cancelar"
+  }
 }

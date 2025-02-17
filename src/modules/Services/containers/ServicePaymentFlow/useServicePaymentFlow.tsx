@@ -151,7 +151,7 @@ export const useServicePaymentFlow = () => {
       }
 
       if (depositData) {
-        const { semanticStatus = 'Canceled', orderId, date } = depositData || {};
+        const { semanticStatus = 'Canceled', orderId = '', date } = depositData || {};
         setOrderStatus({ status: semanticStatus, orderId, date });
         setStep(prev => prev + 1);
       }
