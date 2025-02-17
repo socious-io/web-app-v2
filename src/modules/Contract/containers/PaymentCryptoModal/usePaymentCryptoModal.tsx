@@ -39,7 +39,11 @@ export const usePaymentCryptoModal = (contract: Contract, onSucceedPayment?: (co
         applyOrgFeeDiscount: false,
         applyContFeeDiscount: false,
       });
-      const { error, data } = await depositContractAdaptor(contract.id, result.txHash, contract.payment);
+      const { error, data } = await depositContractAdaptor(contract.id, result.txHash, contract.payment, {
+        escrowId: result.id,
+        token: result?.token || '',
+        txHash: result.txHash,
+      });
       if (error) {
         throw new Error(translate('cont-deposit-error'));
       } else if (data) {
