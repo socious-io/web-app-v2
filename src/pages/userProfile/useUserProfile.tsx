@@ -3,6 +3,7 @@ import { useLoaderData, useLocation } from 'react-router-dom';
 import { ServicesRes } from 'src/core/adaptors';
 import { CurrentIdentity, UserProfile } from 'src/core/api';
 import { translate } from 'src/core/utils';
+import ReviewsList from 'src/modules/Reviews/containers/ReviewsList';
 import ServicesList from 'src/modules/Services/containers/ServicesList';
 import { About } from 'src/modules/userProfile/components/about';
 import { RootState } from 'src/store';
@@ -21,6 +22,7 @@ export const useUserProfile = () => {
     ...(myProfile || services?.items.length
       ? [{ label: translate('user-profile.services'), content: <ServicesList /> }]
       : []),
+    { label: translate('user-profile.reviews'), content: <ReviewsList /> },
   ];
   const activeTabIndex = {
     '#services': 1,

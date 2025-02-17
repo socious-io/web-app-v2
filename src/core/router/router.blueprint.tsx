@@ -39,6 +39,7 @@ import { Layout as NowruzLayout } from 'src/modules/layout';
 import FallBack from 'src/pages/fallback/fallback';
 import { RootState } from 'src/store';
 
+import { getReviewsAdaptor } from '../adaptors/users/index.adaptors';
 import { DeepLinks } from '../deepLinks';
 import { checkSearchFilters } from '../utils';
 
@@ -81,11 +82,13 @@ export const blueprint: RouteObject[] = [
                           identity_id: user?.id || '',
                           kind: 'SERVICE',
                         });
+                        const reviews = await getReviewsAdaptor(1, 5);
                         // Keep this, it might be needed in the future
                         // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
                         return {
                           user,
                           services: services.data,
+                          reviews: reviews.data,
                           // badges: userBadges,
                           // missions,
                         };
@@ -136,10 +139,12 @@ export const blueprint: RouteObject[] = [
                           limit: 2,
                           identity_id: organization.id,
                         });
+                        const reviews = await getReviewsAdaptor(1, 5);
 
                         return {
                           organization,
                           orgJobs,
+                          reviews: reviews.data,
                         };
                       }
                     },
