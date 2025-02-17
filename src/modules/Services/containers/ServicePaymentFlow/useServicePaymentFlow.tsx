@@ -125,7 +125,7 @@ export const useServicePaymentFlow = () => {
         applyOrgFeeDiscount: false,
         applyContFeeDiscount: false,
       });
-      return result.txHash;
+      return result;
     } catch (error) {
       console.error(error);
       throw new Error(translate('cont-crypto-escrow-error'));
@@ -139,19 +139,33 @@ export const useServicePaymentFlow = () => {
       const contract = await createContractBeforeDeposit(service);
       if (!contract) return;
 
-      const identifier = paymentIsFiat ? selectedCardId : await handleCryptoPayment(contract);
+      let identifier = '';
+      let result: { txHash: any; token: string | undefined; id: string } | undefined = undefined;
+
+      if (paymentIsFiat) {
+        identifier = selectedCardId;
+        result = undefined;
+      } else {
+        result = await handleCryptoPayment(contract);
+        identifier = result?.txHash || '';
+      }
 
       const { error: depositError, data: depositData } = await depositContractAdaptor(
         contract.id,
         identifier,
         service.payment,
+        result && {
+          escrowId: result.id,
+          token: result?.token || '',
+          txHash: result.txHash,
+        },
       );
       if (depositError) {
         throw new Error(translate('cont-deposit-error'));
       }
 
       if (depositData) {
-        const { semanticStatus = 'Canceled', orderId, date } = depositData || {};
+        const { semanticStatus = 'Canceled', orderId = '', date } = depositData || {};
         setOrderStatus({ status: semanticStatus, orderId, date });
         setStep(prev => prev + 1);
       }

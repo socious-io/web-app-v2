@@ -41,6 +41,7 @@ export interface Payment {
   verified_at?: Date;
 
   meta: {
+    escrowId?: string;
     id?: string;
     offer_id: string;
     project_id: string;

@@ -2,16 +2,16 @@
 
 android {
   compileOptions {
-      sourceCompatibility JavaVersion.VERSION_17
-      targetCompatibility JavaVersion.VERSION_17
+      sourceCompatibility JavaVersion.VERSION_21
+      targetCompatibility JavaVersion.VERSION_21
   }
 }
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
+    implementation project(':capacitor-community-apple-sign-in')
     implementation project(':capacitor-firebase-crashlytics')
     implementation project(':capacitor-firebase-messaging')
-    implementation project(':capacitor-community-apple-sign-in')
     implementation project(':capacitor-action-sheet')
     implementation project(':capacitor-app')
     implementation project(':capacitor-camera')
@@ -20,7 +20,7 @@ dependencies {
     implementation project(':capacitor-preferences')
     implementation project(':capacitor-push-notifications')
     implementation project(':capacitor-toast')
-    implementation project(':codetrix-studio-capacitor-google-auth')
+    implementation project(':capgo-capacitor-social-login')
 
 }
 

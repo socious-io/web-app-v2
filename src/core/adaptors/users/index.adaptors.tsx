@@ -8,11 +8,13 @@ import {
   importLinkedin,
   LanguageCode,
   ProjectType,
+  reviews,
 } from 'src/core/api';
+import { getIdentityMeta } from 'src/core/utils';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AdaptorRes, SuccessRes } from '..';
-import { ImportLinkedInRes } from './index.types';
+import { ImportLinkedInRes, ReviewsRes } from './index.types';
 
 export const getLinkedinProfileAdaptor = async (file: File): Promise<AdaptorRes<ImportLinkedInRes>> => {
   try {
@@ -97,5 +99,34 @@ export const applyLinkedInProfileAdaptor = async (linkedin: ImportLinkedInRes): 
   } catch (error) {
     console.error('Error in applying LinkedIn Profile: ', error);
     return { data: null, error: 'Error in applying LinkedIn Profile' };
+  }
+};
+
+export const getReviewsAdaptor = async (page = 1, limit = 10): Promise<AdaptorRes<ReviewsRes>> => {
+  try {
+    const { items: reviewsList, total_count: total } = await reviews({ page, limit });
+    const items = reviewsList.map(review => {
+      const { name, username, usernameVal, type = 'organizations', profileImage } = getIdentityMeta(review.identity);
+      return {
+        id: review.id,
+        identity: { id: review.identity_id, type, name, username, usernameVal, img: profileImage },
+        date: review.created_at,
+        review: review.content,
+        job: review.contract.name,
+        isSatisfied: review.satisfied,
+      };
+    });
+    return {
+      data: {
+        items,
+        page,
+        limit,
+        total,
+      },
+      error: null,
+    };
+  } catch (error) {
+    console.error('Error in getting reviews list: ', error);
+    return { data: null, error: 'Error in getting reviews list' };
   }
 };

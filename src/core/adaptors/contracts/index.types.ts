@@ -22,7 +22,7 @@ export interface Contract {
   id: string;
   status: ContractStatus;
   semanticStatus?: SemanticContractStatus;
-  orderId: string;
+  orderId?: string;
   date: string;
   name: string;
   description: string;
@@ -45,6 +45,7 @@ export interface Contract {
   requirement?: string;
   file?: Media | null;
   feedback?: boolean;
+  escrowId?: string;
 }
 
 export type ContractRes = PaginateRes<Contract>;

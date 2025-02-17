@@ -17,6 +17,7 @@ export const useReviewModal = (closeReviewModal: () => void, contract: Contract)
   const partnerName = contract.partner?.meta.name || '';
   const [selectedReviewValue, setSelectedReviewValue] = useState('satisfactory');
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
+  const isSatisfied = selectedReviewValue === 'satisfactory';
   const {
     register,
     handleSubmit,
@@ -26,10 +27,7 @@ export const useReviewModal = (closeReviewModal: () => void, contract: Contract)
   });
 
   const onSubmit: SubmitHandler<Form> = async (formData: Form) => {
-    const { error, data } =
-      selectedReviewValue === 'satisfactory'
-        ? await feedbackContractAdaptor(contract.id, formData.content)
-        : await feedbackContractAdaptor(contract.id, formData.content);
+    const { error, data } = await feedbackContractAdaptor(contract.id, formData.content, isSatisfied);
     if (error) return;
     else if (data) {
       dispatch(updateFeedback({ id: contract.id, feedback: true }));

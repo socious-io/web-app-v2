@@ -1,10 +1,17 @@
 import { Identity, Media } from 'src/core/api';
 
+import { Payment } from '../payments/payments.types';
 import { PaymentCurrency, PaymentMode, ProjectPaymentType, CommitmentPeriod, PaginateResV3 } from '../types';
+
+export type DepositReqMeta = {
+  escrowId: string;
+  token: string;
+  txHash: string;
+};
 
 export type CurrencyPayloadMap = {
   FIAT: { card_id: string };
-  CRYPTO: { txid: string };
+  CRYPTO: { txid: string; meta: DepositReqMeta };
 };
 
 export type DepositReq<K extends keyof CurrencyPayloadMap> = CurrencyPayloadMap[K];
@@ -47,7 +54,8 @@ export interface NewContract {
   client: Identity;
   status: NewContractStatus;
   provider: Identity;
-  payment_id: string;
+  payment_id?: string;
+  payment?: Payment;
   offer_id: string;
   mission_id: string;
   created_at: Date;
@@ -84,4 +92,5 @@ export interface SubmitReq {
 
 export interface FeedbackReq {
   content: string;
+  satisfied: boolean;
 }

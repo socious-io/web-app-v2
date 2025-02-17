@@ -21,9 +21,17 @@ export const Chip: React.FC<ChipProps> = ({
 
   return (
     <div className={chipClasses}>
-      {startIcon && <div onClick={onStartIconClick}>{startIcon}</div>}
+      {startIcon && (
+        <div className={styles['icon']} onClick={onStartIconClick}>
+          {startIcon}
+        </div>
+      )}
       {label}
-      {endIcon && <div onClick={onEndIconClick}>{endIcon}</div>}
+      {endIcon && (
+        <div className={styles['icon']} onClick={onEndIconClick}>
+          {endIcon}
+        </div>
+      )}
     </div>
   );
 };
