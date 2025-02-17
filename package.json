@@ -63,7 +63,7 @@
     "country-flag-icons": "^1.5.13",
     "ethers": "^6.13.4",
     "firebase": "^11.3.0",
-    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-browser-languagedetector": "^8.0.3",
     "iso-country-currency": "^0.7.2",
     "js-base64": "^3.7.7",
     "js-cookie": "^3.0.1",
