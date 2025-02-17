@@ -69,10 +69,12 @@ const ServiceOrderDetail: React.FC<ServiceOrderDetailProps> = ({
                   <Status label={translate(`cont-status.${status}`)} transparent {...CONTRACT_STATUS[status]} />
                 </div>
               )}
-              <div className={styles['order__label']}>
-                {translate('service-detail.order.number')}
-                <span className={styles['order__value']}>{orderId}</span>
-              </div>
+              {orderId && (
+                <div className={styles['order__label']}>
+                  {translate('service-detail.order.number')}
+                  <span className={styles['order__value']}>{orderId}</span>
+                </div>
+              )}
               <div className={styles['order__label']}>
                 {translate('service-detail.order.date')}
                 <span className={styles['order__value']}>{date}</span>

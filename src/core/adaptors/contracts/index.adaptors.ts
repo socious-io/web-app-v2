@@ -39,7 +39,6 @@ export const getContractsAdaptor = async (
             contract.type,
             !!contract.payment_id,
           ),
-          orderId: contract.payment_id,
           date: contract.created_at.toString(),
           updated: contract.updated_at.toString(),
           name: contract.name,
@@ -64,6 +63,7 @@ export const getContractsAdaptor = async (
           feedback:
             (currentIdentityId === contract.provider.id ? contract.provider_feedback : contract.client_feedback) ||
             false,
+          escrowId: contract.payment?.meta?.escrowId || '',
         }))
       : [];
     return {
@@ -87,7 +87,6 @@ export const getContractAdaptor = async (contractId: string): Promise<AdaptorRes
     const data = {
       id: res.id,
       status: res.status,
-      orderId: res.payment_id,
       date: res.created_at.toString(),
       name: res.name,
       description: res.description,
@@ -95,6 +94,7 @@ export const getContractAdaptor = async (contractId: string): Promise<AdaptorRes
       amounts: res.amounts,
       currency: res.payment_type === 'CRYPTO' ? getSelectedTokenDetail(res.crypto_currency) : { name: res.currency },
       payment: res.payment_type,
+      paymentObj: res.payment,
       projectId: res.project_id,
       client: res.client,
       provider: res.provider,
@@ -128,7 +128,6 @@ export const createContractAdaptor = async (payload: ContractReq): Promise<Adapt
     const data = {
       id: res.id,
       status: res.status,
-      orderId: res.payment_id,
       date: res.created_at.toString(),
       name: res.name,
       description: res.description,
@@ -165,7 +164,7 @@ export const depositContractAdaptor = async (
       id: res.id,
       status: res.status,
       semanticStatus: getContractStatus(res.status, currentIdentityId === res.provider.id, res.type, !!res.payment_id),
-      orderId: res.payment_id,
+      orderId: res?.payment_id || '',
       date: formatDate(res.created_at),
       name: res.name,
       description: res.description,

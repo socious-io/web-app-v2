@@ -47,7 +47,7 @@ export const useSliderAwaiting = (contract: Contract) => {
         const result = await dapp.withdrawnEscrow({
           signer,
           chainId,
-          escrowId: contract?.paymentId as string,
+          escrowId: contract?.escrowId as string,
         });
 
         if (!result) {

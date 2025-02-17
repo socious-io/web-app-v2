@@ -1,5 +1,5 @@
 import { Identity, Media } from 'src/core/api';
-
+import { Payment } from '../payments/payments.types';
 import { PaymentCurrency, PaymentMode, ProjectPaymentType, CommitmentPeriod, PaginateResV3 } from '../types';
 
 export type CurrencyPayloadMap = {
@@ -47,7 +47,8 @@ export interface NewContract {
   client: Identity;
   status: NewContractStatus;
   provider: Identity;
-  payment_id: string;
+  payment_id?: string;
+  payment?: Payment;
   offer_id: string;
   mission_id: string;
   created_at: Date;
