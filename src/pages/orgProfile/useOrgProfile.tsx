@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLoaderData, useLocation } from 'react-router-dom';
+import { ReviewsRes } from 'src/core/adaptors';
 import { JobsRes, OrganizationProfile } from 'src/core/api';
 import { translate } from 'src/core/utils';
 import Badge from 'src/modules/general/components/Badge';
@@ -12,10 +13,15 @@ import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer
 
 export const useOrgProfile = () => {
   const location = useLocation();
-  const [active, setActive] = useState(0);
   const dispatch = useDispatch();
-  const { organization, orgJobs } = useLoaderData() as { organization: OrganizationProfile; orgJobs: JobsRes };
+  const { organization, orgJobs, reviews } = useLoaderData() as {
+    organization: OrganizationProfile;
+    orgJobs: JobsRes;
+    reviews: ReviewsRes;
+  };
+  const [active, setActive] = useState(0);
   const totalJobs = orgJobs?.total_count || 0;
+  const totalReviews = reviews?.total || 0;
 
   dispatch(setIdentity(organization));
   dispatch(setIdentityType('organizations'));
@@ -38,7 +44,7 @@ export const useOrgProfile = () => {
       content: <OrganizationJobs />,
     },
     { label: translate('org-profile.preferences'), content: <OrgPreferences /> },
-    { label: translate('org-profile.reviews'), content: <ReviewsList /> },
+    ...(totalReviews ? [{ label: translate('org-profile.reviews'), content: <ReviewsList /> }] : []),
   ];
 
   return { tabs, active, setActive };
