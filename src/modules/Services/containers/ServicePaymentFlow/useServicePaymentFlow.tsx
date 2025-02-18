@@ -122,8 +122,10 @@ export const useServicePaymentFlow = () => {
         token: contract.currency.address,
         projectId: contract?.projectId || '',
         verifiedOrg: (contract.provider?.meta as OrgMeta).verified_impact || false,
-        applyOrgFeeDiscount: false,
-        applyContFeeDiscount: false,
+        applyOrgFeeDiscount: contract.amounts?.org_fee_discount || false,
+        addressReferringOrg: contract.amounts?.org_referrer_wallet,
+        applyContFeeDiscount: contract.amounts?.user_fee_discount || false,
+        addressReferringCont: contract.amounts?.user_referrer_wallet,
       });
       return result;
     } catch (error) {

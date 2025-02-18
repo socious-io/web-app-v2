@@ -32,6 +32,10 @@ export type Amounts = {
   payout: number;
   stripe_fee: number;
   total: number;
+  org_fee_discount: boolean;
+  org_referrer_wallet: string;
+  user_fee_discount: boolean;
+  user_referrer_wallet: string;
 };
 
 //FIXME: replace it with Contract when the old one is removed
