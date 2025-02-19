@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Job, Organization, search, Service, ServiceSearchRes, User, UserMeta, UsersRes } from 'src/core/api';
 import { translate } from 'src/core/utils';
 import { RootState } from 'src/store';
@@ -13,6 +13,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
   const identityType = useSelector<RootState, 'users' | 'organizations'>(state => {
     return state.profile.type;
   });
+  const location = useLocation();
 
   const tabs = [
     ...(identityType === 'users'
@@ -34,6 +35,12 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     setSelectedItem(null);
     fetchSearchResult(searchTerm);
   }, [selectedTab]);
+
+  useEffect(() => {
+    if (!location.pathname.includes('/search')) {
+      setSearchTerm('');
+    }
+  }, [location.pathname]);
 
   const debouncedFetchSearchResult = _.debounce((q: string) => {
     fetchSearchResult(q);
