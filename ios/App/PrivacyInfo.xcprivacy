@@ -1,38 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
+  <dict>
     <key>NSPrivacyTracking</key>
     <false/>
-
     <key>NSPrivacyAccessedAPITypes</key>
     <array>
-        <!-- Authentication API -->
-        <dict>
-            <key>NSPrivacyAccessedAPIType</key>
-            <string>Authentication</string>
-            <key>NSPrivacyAccessedAPITypeUsage</key>
-            <string>App Functionality</string>
-        </dict>
+      <dict>
+        <key>NSPrivacyAccessedAPIType</key>
+        <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+        <key>NSPrivacyAccessedAPITypeReasons</key>
+        <array>
+          <string>CA92.1</string>
+        </array>
+      </dict>
     </array>
-
-    <key>NSPrivacyCollectedDataTypes</key>
-    <array>
-        <!-- Email collected via Google Login -->
-        <dict>
-            <key>NSPrivacyCollectedDataType</key>
-            <string>Email</string>
-            <key>NSPrivacyCollectedDataTypeUsage</key>
-            <string>App Functionality</string>
-        </dict>
-
-        <!-- User identifier (Google UID) -->
-        <dict>
-            <key>NSPrivacyCollectedDataType</key>
-            <string>Identifiers</string>
-            <key>NSPrivacyCollectedDataTypeUsage</key>
-            <string>App Functionality</string>
-        </dict>
-    </array>
-</dict>
+    <key>NSPrivacyTrackingDomains</key>
+    <array/>
+  </dict>
 </plist>
