@@ -1,5 +1,5 @@
 import { Interface, InterfaceAbi, JsonRpcSigner } from 'ethers';
-import { Chain } from 'viem';
+import { Chain, HttpTransport } from 'viem';
 
 export interface Token {
   name: string;
@@ -27,6 +27,7 @@ export interface DappConfig {
 }
 
 export interface EscrowParams {
+  walletProvider?: unknown;
   signer: JsonRpcSigner;
   chainId: number;
   totalAmount: number;

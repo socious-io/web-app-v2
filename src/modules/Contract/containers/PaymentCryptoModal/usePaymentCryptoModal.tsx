@@ -5,7 +5,7 @@ import { translate } from 'src/core/utils';
 import Dapp from 'src/dapp';
 
 export const usePaymentCryptoModal = (contract: Contract, onSucceedPayment?: (contract: Contract) => void) => {
-  const { chainId, signer, isConnected, Web3Connect } = Dapp.useWeb3();
+  const { chainId, signer, isConnected, Web3Connect, walletProvider } = Dapp.useWeb3();
   const [disabledPayment, setDisabledPayment] = useState(!isConnected);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -28,6 +28,7 @@ export const usePaymentCryptoModal = (contract: Contract, onSucceedPayment?: (co
 
       setDisabledPayment(true);
       const result = await Dapp.escrow({
+        walletProvider,
         signer,
         chainId,
         totalAmount: contract.amounts?.total || 0,

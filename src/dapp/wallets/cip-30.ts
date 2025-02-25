@@ -1,5 +1,4 @@
-import { bsc } from 'viem/chains';
-
+import { ethers } from 'ethers';
 export interface CIP30Provider {
   enable(): Promise<string[]>;
   getNetworkId(): Promise<number>;
@@ -12,13 +11,19 @@ export type EIP1193RequestParams = {
 };
 
 export class CIP30ToEIP1193Provider {
+
+  public isCIP30 = true;
+  public name: string;
   private provider: CIP30Provider;
   private listeners: { [event: string]: Array<(...args: any[]) => void> };
   private enabled: any;
+  private tmpChainId: number
 
-  constructor(provider: CIP30Provider) {
+  constructor(provider: CIP30Provider, name: string, tmpChainId: number) {
     this.provider = provider;
     this.listeners = {};
+    this.tmpChainId = tmpChainId;
+    this.name = name;
   }
 
   /**
@@ -26,15 +31,17 @@ export class CIP30ToEIP1193Provider {
    * Maps CIP-30 methods to EIP-1193 equivalent functionality.
    */
   async request({ method, params }: EIP1193RequestParams): Promise<any> {
+    this.enabled = await this.provider.enable();
     switch (method) {
       case 'eth_requestAccounts':
-        this.enabled = await this.provider.enable();
-        return this.getAccount();
+        const accounts = await this.getAccounts()
+        this.emit('connect', { chainId: await this.enabled.getNetworkId() });
+        this.emit('accountsChanged', accounts);
+        return accounts;
       case 'eth_accounts':
-        this.enabled = await this.provider.enable();
-        return this.enabled.getAccounts(); // Get accounts
+        return this.getAccounts();
       case 'eth_chainId':
-        return this.enabled.getNetworkId();
+        return  this.tmpChainId;
       case 'wallet_requestPermissions':
         return [];
       default:
@@ -42,11 +49,20 @@ export class CIP30ToEIP1193Provider {
     }
   }
 
-  async getAccount() {
+  async getAccounts() {
     let addresses = await this.enabled.getUsedAddresses();
     if (addresses.length < 1) addresses = await this.enabled.getUnusedAddresses();
-    // TODO: need to parse hex addresses
-    return addresses;
+  
+    // Convert Cardano addresses to Ethereum-compatible addresses
+    const ethereumAddresses = addresses.map(address => {
+      // Hash the Cardano address using Keccak-256
+      const hash = ethers.keccak256(ethers.toUtf8Bytes(address));
+      // Take the last 20 bytes (40 characters) of the hash
+      const ethereumAddress = `0x${hash.slice(-40)}`;
+      return ethereumAddress;
+    });
+  
+    return ethereumAddresses;
   }
 
   /**
