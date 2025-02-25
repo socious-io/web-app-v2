@@ -8,7 +8,7 @@ export interface MyWalletOptions {
   projectId: string;
 }
 
-export const laceWallet = ({ projectId }: MyWalletOptions): Wallet => ({
+export const laceWallet = (tmpChainId: number) => ({ projectId }: MyWalletOptions): Wallet => ({
   id: 'lace.wallet',
   name: 'Lace',
   iconUrl: '/lace.svg',
@@ -63,7 +63,7 @@ export const laceWallet = ({ projectId }: MyWalletOptions): Wallet => ({
       ],
     },
   },
-  createConnector: createInjectedConnector(new CIP30ToEIP1193Provider(window.cardano?.lace)),
+  createConnector: createInjectedConnector(new CIP30ToEIP1193Provider(window.cardano?.lace, 'lace', tmpChainId)),
 });
 
 function createInjectedConnector(provider) {

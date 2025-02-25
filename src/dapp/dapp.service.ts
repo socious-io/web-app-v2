@@ -1,8 +1,24 @@
 import { Contract, parseUnits } from 'ethers';
-
+import { config } from 'src/config';
 import { dappConfig } from './dapp.config';
-import { NETWORKS } from './dapp.connect';
+import { CardanoEscrow, NETWORKS } from './dapp.connect';
 import { AllowanceParams, EscrowParams, FlattenToken, WithdrawnParams } from './dapp.types';
+import {
+  BlockfrostProvider,
+  BrowserWallet,
+  IFetcher,
+  IWallet,
+  LanguageVersion,
+  MeshTxBuilder,
+  MeshWallet,
+  serializePlutusScript,
+  UTxO,
+  Asset,
+  deserializeDatum,
+  deserializeAddress,
+  pubKeyAddress,
+} from '@meshsdk/core';
+
 
 export const allowance = async (params: AllowanceParams) => {
   const contract = new Contract(params.token, dappConfig.abis.token, params.signer);
@@ -16,10 +32,30 @@ export const allowance = async (params: AllowanceParams) => {
 };
 
 export const escrow = async (params: EscrowParams) => {
-  const { chainId, signer } = params;
+  const { chainId, signer, walletProvider } = params;
+
   const selectedNetwork = NETWORKS.filter(n => n.chain.id === chainId)[0];
   let token = params.token;
-  if (!token) token = selectedNetwork.tokens[0].address;
+  if (!token) token = selectedNetwork.tokens[0].address as string;
+
+  if (walletProvider?.isCIP30) {
+    console.log(walletProvider.enabled, '----------------------------');
+    const addrr = await CardanoEscrow.getWalletDappAddress();
+    
+    console.log(deserializeAddress(addrr), '*********@@@')
+    console.log('---------------------------@@@ 1');
+    const txHash = await CardanoEscrow.deposit({
+      unit: token,
+      quantity: `${(params.totalAmount * 1000000)}`
+    });
+    console.log('---------------------------@@@ 2');
+    return {
+      txHash,
+      id: txHash,
+      token,
+    };
+  }
+  
   const tokenConfig = selectedNetwork.tokens.find(t => t.address === token);
   if (!tokenConfig) throw new Error("Offered token is not exists on this network you'd selected!");
 
