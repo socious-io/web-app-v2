@@ -199,9 +199,13 @@ export const checkSearchFilters = (
   return authorizedFilters;
 };
 
-export const addServiceToSearchPayload = (payload: SearchReq) => {
+export const addFiltersToSearch = (payload: SearchReq) => {
   if (payload.type === 'services') {
     const newPayload: SearchReq = { ...payload, type: 'projects', filter: { ...payload.filter, kind: 'SERVICE' } };
+    return newPayload;
+  }
+  if (payload.type === 'projects') {
+    const newPayload: SearchReq = { ...payload, type: 'projects', filter: { ...payload.filter, kind: 'JOB' } };
     return newPayload;
   }
   return payload;
