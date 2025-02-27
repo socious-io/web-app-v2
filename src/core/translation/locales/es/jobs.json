@@ -1,56 +1,57 @@
 {
-    "job-saved": "Trabajos guardados",
-    "job-your-saved": "Tus trabajos guardados",
-    "job-find-work": "Encuentra un trabajo que importe para ti y para el mundo",
-    "job-see-more": "Ver más",
-    "job-fixed-price": "(Precio fijo)",
-    "job-not-see": "No volverás a ver esta oferta de trabajo",
-    "job-read-more": "Leer más",
-    "job-recommended": "Recomendado para ti",
-    "job-profile-based-recommendation": "Basado en tu perfil e historial de búsqueda",
-    "job-see-recommendations": "Ver todas las recomendaciones",
-    "job-all": "Todos los trabajos",
-    "job-discover": "Descubre nuestras ofertas de trabajo más recientes",
-    "job-not-interested": "No me interesa",
-    "job-preference": {
-      "ONSITE": "Presencial",
-      "REMOTE": "Remoto",
-      "HYBRID": "Híbrido"
-    },
-    "job-length": {
-      "LESS_THAN_A_DAY": "Menos de 1 día",
-      "LESS_THAN_A_MONTH": "Menos de 1 mes",
-      "1_3_MONTHS": "1-3 meses",
-      "3_6_MONTHS": "3-6 meses",
-      "6_MONTHS_OR_MORE": "Más de 6 meses"
-    },
-    "job-type": {
-      "ONE_OFF": "Trabajo puntual",
-      "PART_TIME": "Tiempo parcial",
-      "FULL_TIME": "Tiempo completo"
-    },
-    "job-experience": {
-      "0": "Sin experiencia",
-      "1": "Principiante",
-      "2": "Intermedio",
-      "3": "Experto"
-    },
-    "job-volunteer": "Voluntariado",
-    "job-successful-app": "Tu solicitud se ha enviado con éxito",
-    "job-already-applied": "Ya has aplicado a este trabajo",
-    "job-copy": "Copiar",
-    "job-anywhere": "Cualquier lugar",
-    "job-about": "Sobre este trabajo",
-    "job-apply": "Aplicar ahora",
-    "job-close": "Cerrar",
-    "job-close-alert": "¿Estás seguro de que deseas cerrar esta oferta de trabajo? Se archivará.",
-    "job-close-title": "Cerrar oferta de trabajo",
-    "job-desc": "Descripción del trabajo",
-    "job-about-company": "Sobre {{name}}",
-    "job-website": "Sitio web",
-    "job-back": "Atrás",
-    "job-list-title": "{{number}} trabajos de impacto",
-    "job-applied": "Trabajos aplicados",
-    "job-my-applied": "Mis trabajos aplicados"
-  }
-  
+  "job-saved": "Trabajos guardados",
+  "job-your-saved": "Tus trabajos guardados",
+  "job-find-work": "Encuentra un trabajo que importe para ti y para el mundo",
+  "job-see-more": "Ver más",
+  "job-fixed-price": "(Precio fijo)",
+  "job-not-see": "No volverás a ver esta oferta de trabajo",
+  "job-read-more": "Leer más",
+  "job-recommended": "Recomendado para ti",
+  "job-profile-based-recommendation": "Basado en tu perfil e historial de búsqueda",
+  "job-see-recommendations": "Ver todas las recomendaciones",
+  "job-all": "Todos los trabajos",
+  "job-discover": "Descubre nuestras ofertas de trabajo más recientes",
+  "job-not-interested": "No me interesa",
+  "job-preference": {
+    "ONSITE": "Presencial",
+    "REMOTE": "Remoto",
+    "HYBRID": "Híbrido"
+  },
+  "job-length": {
+    "LESS_THAN_A_DAY": "Menos de 1 día",
+    "LESS_THAN_A_MONTH": "Menos de 1 mes",
+    "1_3_MONTHS": "1-3 meses",
+    "3_6_MONTHS": "3-6 meses",
+    "6_MONTHS_OR_MORE": "Más de 6 meses"
+  },
+  "job-type": {
+    "ONE_OFF": "Trabajo puntual",
+    "PART_TIME": "Tiempo parcial",
+    "FULL_TIME": "Tiempo completo"
+  },
+  "job-experience": {
+    "0": "Sin experiencia",
+    "1": "Principiante",
+    "2": "Intermedio",
+    "3": "Experto"
+  },
+  "job-volunteer": "Voluntariado",
+  "job-successful-app": "Tu solicitud se ha enviado con éxito",
+  "job-already-applied": "Ya has aplicado a este trabajo",
+  "job-copy": "Copiar",
+  "job-anywhere": "Cualquier lugar",
+  "job-about": "Sobre este trabajo",
+  "job-apply": "Aplicar ahora",
+  "job-close": "Cerrar",
+  "job-close-alert": "¿Estás seguro de que deseas cerrar esta oferta de trabajo? Se archivará.",
+  "job-close-title": "Cerrar oferta de trabajo",
+  "job-desc": "Descripción del trabajo",
+  "job-about-company": "Sobre {{name}}",
+  "job-website": "Sitio web",
+  "job-back": "Atrás",
+  "job-list-title": "{{number}} trabajos de impacto",
+  "job-applied": "Trabajos aplicados",
+  "job-my-applied": "Mis trabajos aplicados",
+  "jobs-applicants-message": "Mensaje",
+  "jobs-applicants-reject": "Rechazar"
+}
