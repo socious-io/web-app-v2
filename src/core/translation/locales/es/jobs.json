@@ -52,5 +52,6 @@
   "job-list-title": "{{number}} trabajos de impacto",
   "job-applied": "Trabajos aplicados",
   "job-my-applied": "Mis trabajos aplicados",
-  "job-card-posted-on": "Publicado el"
+  "jobs-applicants-message": "Mensaje",
+  "jobs-applicants-reject": "Rechazar"
 }
